@@ -83,7 +83,9 @@ function raw(sourceRole = 'candidate', engine = 'chromium', phase = 'soak') {
 const closed = { status: 'closed', exitCode: 0 };
 
 test('the checked-in draft refuses execution before a reviewed phase release', () => {
-  assert.throws(() => bindSustainedJob(manifest, 'chromium', 1), /release/);
+  const unreleased = clone(manifest);
+  unreleased.release.status = 'pending-review';
+  assert.throws(() => bindSustainedJob(unreleased, 'chromium', 1), /release/);
   for (const change of [
     { previousPhase: 'diagnostics' },
     { noUnclosedOwners: false },
@@ -92,6 +94,101 @@ test('the checked-in draft refuses execution before a reviewed phase release', (
   ]) {
     assert.throws(() => validateRelease({ ...admitted().release, ...change }, 'soak'));
   }
+});
+test('independent soak diagnostic admission retains failed prerequisite and all original source/order/bounds', () => {
+  assert.equal(manifest.phase, 'soak');
+  for (const engine of ['chromium', 'webkit'])
+    for (const repetition of [1, 2, 3]) {
+      const p = bindSustainedJob(manifest, engine, repetition);
+      assert.equal(p.release.firstEightAllCorrectnessPassed, false);
+      assert.equal(p.performanceExclusion, true);
+      assert.equal(p.helperTimeoutMs, 145 * 60000);
+      assert.deepEqual(
+        p.rows.map((r) => r.source),
+        repetition === 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate'],
+      );
+      assert(p.rows.every((r) => r.timeoutMs === 2640000 && r.performanceExclusion));
+    }
+  for (const change of [
+    { firstEightAllCorrectnessPassed: true },
+    { performanceQualification: 'passed' },
+    { automaticRetries: 1 },
+    { automaticPhaseContinuation: true },
+    { noUnclosedOwners: false },
+    { allPriorPlannedJobsClosed: false },
+    { priorProofInspected: false },
+    { evidence: [] },
+    { predecessorRun: 1 },
+    { scope: 'qualification' },
+  ]) {
+    const m = clone(manifest);
+    Object.assign(m.release, change);
+    assert.throws(() => bindSustainedJob(m, 'chromium', 1));
+  }
+});
+test('independent soak diagnostic changes neither observations nor numerical, resource and elapsed verdicts', () => {
+  for (const engine of ['chromium', 'webkit']) {
+    const p = bindSustainedJob(manifest, engine, 1),
+      q = plan('soak', engine),
+      row = p.rows[1];
+    const args = (plan) =>
+      sustainedArguments(
+        { plan, here: '/tools', modeState: { cpu: 2, recipePath: '/owned/recipe.json' } },
+        row,
+        'http://localhost/game/',
+        '/evidence',
+      );
+    assert.deepEqual(args(p), args(q));
+    for (const performance of [
+      'pass-observed-window',
+      'fail',
+      'inconclusive',
+      'review-required',
+      'partial-baseline-internal-unknown',
+      'invalid-evidence',
+    ]) {
+      const r = raw('candidate', engine);
+      r.performanceGateStatus = performance;
+      const command = { ...closed, exitCode: performance === 'fail' ? 2 : 0 };
+      const observed = lifecycleAssessment(p, row, r, command, '123.4');
+      const original = lifecycleAssessment(q, row, r, command, '123.4');
+      assert.equal(observed.status, original.status);
+      assert.equal(observed.status, performance === 'pass-observed-window' ? 'passed' : 'failed');
+      assert.equal(observed.rawPerformanceGateStatus, performance);
+      assert.equal(observed.performanceQualification, 'not-qualified-diagnostic-only');
+      assert.equal(observed.firstEightAllCorrectnessPassed, false);
+    }
+    for (const mutate of [
+      (r) => (r.actions[0].elapsedMs = 1799999),
+      (r) => (r.resources[0].status = 'unobserved'),
+      (r) => (r.resources[0].status = 'fail'),
+      (r) => (r.replay.nativeVerification.status = 'fail'),
+      (r) => (r.contextCleanupFailure = 'not-closed'),
+    ]) {
+      const r = raw('candidate', engine);
+      mutate(r);
+      assert.equal(lifecycleAssessment(p, row, r, closed, '123.4').status, 'failed');
+    }
+  }
+});
+test('soak diagnostic release freezes tools and runs only the declared event edge', async () => {
+  for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools]) {
+    const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
+    assert.equal(bytes.length, ref.bytes, ref.path);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+  }
+  const workflow = await readFile(
+    new URL('../.github/workflows/solo-remote-sustained-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  assert.match(
+    workflow,
+    /github\.event\.action == 'synchronize' && github\.event\.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'/,
+  );
+  assert.match(workflow, /max-parallel: 6/);
+  assert.match(workflow, /fail-fast: false/);
+  assert.match(workflow, /cancel-in-progress: false/);
+  assert(!workflow.includes('fetch-depth: 0'));
 });
 test('24 fixed jobs retain exactly three source pairs per engine and six ten-pair overhead batches', () => {
   const jobs = [];
@@ -401,7 +498,7 @@ test('preparation materializes exact upload and recipe bytes without a browser o
   t.after(() => rm(temporary, { recursive: true, force: true }));
   const work = join(temporary, 'work');
   await mkdir(work);
-  const p = plan('soak', 'webkit');
+  const p = bindSustainedJob(manifest, 'webkit', 1);
   const moduleBytes = await readFile(new URL('./solo-remote-sustained.mjs', import.meta.url));
   p.frozenTools = [
     {
@@ -430,6 +527,10 @@ test('preparation materializes exact upload and recipe bytes without a browser o
   };
   const mode = await prepareSustainedMode(ctx);
   assert(admittedBaseline);
+  assert.equal(ctx.report.firstEightAllCorrectnessPassed, false);
+  assert.equal(ctx.report.performanceExclusion, true);
+  assert.equal(ctx.report.performanceQualification, 'not-qualified-diagnostic-only');
+  assert.equal(ctx.report.timingQualification, 'not-qualified-diagnostic-only');
   assert.equal(mode.cpu, 1);
   assert.equal(mode.calibration, null);
   assert.deepEqual(await ctx.digest(mode.recipePath), {

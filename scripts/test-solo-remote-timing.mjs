@@ -97,7 +97,9 @@ function report(p, role = 'candidate') {
 }
 
 test('the prospective latest-source draft cannot execute without actual artifact and release', () => {
-  assert.throws(() => bindTimingJob(draft, 'chromium', 1));
+  const unreleased = structuredClone(draft);
+  unreleased.release.status = 'pending-review';
+  assert.throws(() => bindTimingJob(unreleased, 'chromium', 1));
   for (const mutate of [
     (p) => {
       p.release.firstEightAllCorrectnessPassed = false;
@@ -125,6 +127,115 @@ test('the prospective latest-source draft cannot execute without actual artifact
     mutate(p);
     assert.throws(() => validateTimingPlan(p));
   }
+});
+
+test('independent diagnostic admission retains false prerequisite, exact source and six equivalent jobs', () => {
+  const matrix = timingMatrix(draft);
+  assert.equal(draft.phase, 'cold-first30');
+  assert.equal(matrix.include.length, 6);
+  assert.equal(draft.release.firstEightAllCorrectnessPassed, false);
+  for (const { engine, repetition } of matrix.include) {
+    const p = bindTimingJob(draft, engine, repetition);
+    assert.equal(p.candidate.revision, '3adcd53792043ef02459e86168c6b33a66d6ef00');
+    assert.equal(p.baseline.revision, baseline);
+    assert.equal(p.performanceExclusion, true);
+    assert.equal(p.release.performanceQualification, 'not-qualified-diagnostic-only');
+    assert.deepEqual(
+      p.rows.map((r) => r.source),
+      repetition === 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate'],
+    );
+    assert(p.rows.every((r) => r.timeoutMs === 480000 && r.performanceExclusion));
+  }
+  for (const change of [
+    { firstEightAllCorrectnessPassed: true },
+    { performanceQualification: 'passed' },
+    { automaticRetries: 1 },
+    { automaticPhaseContinuation: true },
+    { noUnclosedOwners: false },
+    { allPriorPlannedJobsClosed: false },
+    { priorProofInspected: false },
+    { evidence: [] },
+    { predecessorRun: 1 },
+    { scope: 'qualification' },
+  ]) {
+    const m = structuredClone(draft);
+    Object.assign(m.release, change);
+    assert.throws(() => timingMatrix(m));
+  }
+  const changed = structuredClone(draft);
+  changed.candidate.revision =
+    changed.latestSourceRevision =
+    changed.release.candidateRevision =
+      '1'.repeat(40);
+  assert.throws(() => timingMatrix(changed));
+});
+
+test('diagnostic admission preserves cold/warm/combat recipe commands and every numeric failure', () => {
+  for (const phase of Object.keys(TIMING_PHASES))
+    for (const engine of ['chromium', 'webkit']) {
+      const m = structuredClone(draft);
+      m.phase = m.release.phase = phase;
+      m.release.previousPhase = TIMING_PHASES[phase].previous;
+      const p = bindTimingJob(m, engine, 1),
+        row = p.rows[1];
+      const q = structuredClone(p);
+      q.release.status = 'reviewed-and-released';
+      q.release.firstEightAllCorrectnessPassed = true;
+      q.performanceExclusion = false;
+      for (const r of q.rows) r.performanceExclusion = false;
+      validateTimingPlan(q);
+      const args = (plan) =>
+        sustainedArguments(
+          { plan, here: '/tools', modeState: { cpu: 2, recipePath: '/owned/recipe.json' } },
+          row,
+          'http://localhost/game/',
+          '/evidence',
+        );
+      assert.deepEqual(args(p), args(q));
+      for (const performance of [
+        'pass-observed-window',
+        'fail',
+        'inconclusive',
+        'review-required',
+        'partial-baseline-internal-unknown',
+        'invalid-evidence',
+      ]) {
+        const r = report(p);
+        r.performanceGateStatus = performance;
+        const command = { ...closed, exitCode: performance === 'fail' ? 2 : 0 };
+        const observed = timingAssessment(p, row, r, command, '123.4');
+        const original = timingAssessment(q, row, r, command, '123.4');
+        assert.equal(observed.status, original.status);
+        assert.equal(observed.status, performance === 'pass-observed-window' ? 'passed' : 'failed');
+        assert.equal(observed.rawPerformanceGateStatus, performance);
+        assert.equal(observed.performanceQualification, 'not-qualified-diagnostic-only');
+        assert.equal(observed.firstEightAllCorrectnessPassed, false);
+        assert.equal(observed.correctness, original.correctness);
+      }
+      const r = report(p);
+      r.replay.nativeVerification.status = 'fail';
+      assert.equal(timingAssessment(p, row, r, closed, '123.4').status, 'failed');
+    }
+});
+
+test('cold diagnostic release freezes tools and runs only the declared event edge', async () => {
+  for (const ref of [...draft.adapterInputs, ...draft.frozenTools]) {
+    const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
+    assert.equal(bytes.length, ref.bytes, ref.path);
+    assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+  }
+  const workflow = await readFile(
+    new URL('../.github/workflows/solo-remote-timing-temporary.yml', import.meta.url),
+    'utf8',
+  );
+  assert.match(
+    workflow,
+    /github\.event\.action == 'synchronize' && github\.event\.before == '69fdc854ecc07eca46a3becc3e38c233a3865fb0'/,
+  );
+  assert.match(workflow, /max-parallel: 6/);
+  assert.match(workflow, /fail-fast: false/);
+  assert.match(workflow, /cancel-in-progress: false/);
+  assert(!workflow.includes('fetch-depth: 0'));
 });
 
 test('four explicit releases produce24jobs and48paired observations with fixed order and bounds', () => {

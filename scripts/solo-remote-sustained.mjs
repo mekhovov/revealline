@@ -80,6 +80,25 @@ export const TIMING_PHASES = Object.freeze({
 });
 const timingPlan = (plan) => plan.format === 'SoloHostedTimingPlanV1';
 const roleRevision = (plan, role) => (timingPlan(plan) ? plan[role].revision : source[role]);
+const diagnosticComparison = (plan) => plan.release?.status === 'reviewed-diagnostic-only';
+function validateDiagnosticComparison(release) {
+  assert.equal(release.scope, 'independent-comparison-diagnostics');
+  assert.equal(release.predecessorRun, 38985941469);
+  assert.equal(release.firstEightAllCorrectnessPassed, false);
+  assert.equal(release.performanceQualification, 'not-qualified-diagnostic-only');
+  assert.equal(release.automaticRetries, 0);
+  assert.equal(release.automaticPhaseContinuation, false);
+  assert.equal(release.candidateRevision, source.candidate);
+}
+function comparisonLabels(plan) {
+  return diagnosticComparison(plan)
+    ? {
+        comparisonAdmission: 'independent-diagnostic',
+        performanceQualification: 'not-qualified-diagnostic-only',
+        firstEightAllCorrectnessPassed: false,
+      }
+    : {};
+}
 
 export function validateTimingPlan(plan) {
   assert.equal(plan.format, 'SoloHostedTimingPlanV1');
@@ -97,11 +116,16 @@ export function validateTimingPlan(plan) {
   assert([1, 2, 3].includes(plan.repetition));
   const release = plan.release;
   assert.equal(release.format, 'SoloHostedTimingReleaseV1');
-  assert.equal(
-    release.status,
-    'reviewed-and-released',
+  const diagnostic = diagnosticComparison(plan);
+  assert(
+    diagnostic || release.status === 'reviewed-and-released',
     'Explicit latest-source timing release required',
   );
+  if (diagnostic) {
+    validateDiagnosticComparison(release);
+    assert.equal(plan.candidate.revision, source.candidate);
+    assert.equal(plan.latestRuntimeRevision, '0d9fef1120face4c0f9998ebd24a94e6df0d85c0');
+  }
   assert.equal(release.phase, plan.phase);
   assert.equal(release.previousPhase, spec.previous);
   assert.equal(release.candidateRevision, plan.candidate.revision);
@@ -111,10 +135,10 @@ export function validateTimingPlan(plan) {
     'noUnclosedOwners',
     'allPriorPlannedJobsClosed',
     'priorProofInspected',
-    'firstEightAllCorrectnessPassed',
     'latestProductionPackageVerified',
   ])
     assert.equal(release[field], true);
+  assert.equal(release.firstEightAllCorrectnessPassed, !diagnostic);
   assert(
     Array.isArray(release.evidence) && release.evidence.length > 0 && release.evidence.length <= 32,
   );
@@ -131,7 +155,7 @@ export function validateTimingPlan(plan) {
   assert.equal(plan.calibrationPreset, 'mid');
   assert.equal(plan.evidenceBytes, 512 * MiB);
   assert.equal(plan.rowEvidenceBytes, 128 * MiB);
-  assert.equal(plan.performanceExclusion, false);
+  assert.equal(plan.performanceExclusion, diagnostic);
   assert.deepEqual(
     plan.adapterInputs.map((ref) => ref.path),
     ['scripts/solo-remote-sustained.mjs', 'scripts/solo-remote-baseline.mjs'],
@@ -152,7 +176,7 @@ export function validateTimingPlan(plan) {
     assert.equal(row.kind, 'timing');
     assert.equal(row.engine, plan.engine);
     assert.equal(row.timeoutMs, 480000);
-    assert.equal(row.performanceExclusion, false);
+    assert.equal(row.performanceExclusion, diagnostic);
   }
   assert.deepEqual(
     Object.keys(plan.recipes).sort(),
@@ -200,14 +224,14 @@ export function bindTimingJob(manifest, engine, repetition) {
   plan.engine = engine;
   plan.repetition = repetition;
   plan.helperTimeoutMs = 75 * 60000;
-  plan.performanceExclusion = false;
+  plan.performanceExclusion = diagnosticComparison(plan);
   plan.rows = roleOrder(repetition, plan.phase).map((role) => ({
     id: `timing-${plan.phase}-${engine}-r${repetition}-${role}`,
     kind: 'timing',
     engine,
     source: role,
     timeoutMs: 480000,
-    performanceExclusion: false,
+    performanceExclusion: plan.performanceExclusion,
   }));
   return validateTimingPlan(plan);
 }
@@ -242,11 +266,12 @@ function roleOrder(repetition, phase) {
 export function validateRelease(release, phase) {
   assert(SUSTAINED_PHASES[phase], 'Unknown phase');
   assert.equal(release.format, 'SoloHostedPhaseReleaseV1');
-  assert.equal(
-    release.status,
-    'reviewed-and-released',
+  const diagnostic = release.status === 'reviewed-diagnostic-only';
+  assert(
+    diagnostic || release.status === 'reviewed-and-released',
     'An explicit reviewed phase release is required',
   );
+  if (diagnostic) validateDiagnosticComparison(release);
   assert.equal(release.phase, phase);
   assert.equal(release.previousPhase, SUSTAINED_PHASES[phase].previous);
   assert.equal(release.candidateRevision, source.candidate);
@@ -264,8 +289,8 @@ export function validateRelease(release, phase) {
     assert.match(ref.summarySHA256, /^[a-f0-9]{64}$/);
     assert(['passed', 'failed-reviewed'].includes(ref.disposition));
   }
-  if (['soak', 'long29'].includes(phase))
-    assert.equal(release.firstEightAllCorrectnessPassed, true);
+  if (diagnostic || ['soak', 'long29'].includes(phase))
+    assert.equal(release.firstEightAllCorrectnessPassed, !diagnostic);
   return release;
 }
 
@@ -299,7 +324,7 @@ export function validateSustainedPlan(plan) {
     assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < MiB);
     assert.match(ref.sha256, /^[a-f0-9]{64}$/);
   }
-  assert.equal(plan.performanceExclusion, plan.phase === 'retry');
+  assert.equal(plan.performanceExclusion, diagnosticComparison(plan) || plan.phase === 'retry');
   const roles = roleOrder(plan.repetition, plan.phase);
   assert.deepEqual(
     plan.rows.map((row) => row.source),
@@ -311,7 +336,7 @@ export function validateSustainedPlan(plan) {
     assert.equal(row.kind, plan.phase === 'diagnostics' ? 'diagnostics' : 'lifecycle');
     assert.equal(row.engine, plan.engine);
     assert.equal(row.timeoutMs, spec.timeoutMs);
-    assert.equal(row.performanceExclusion, plan.phase === 'retry');
+    assert.equal(row.performanceExclusion, plan.performanceExclusion);
   }
   if (spec.recipe) assert.equal(plan.recipes[spec.recipe].sha256, spec.hash);
   for (const ref of Object.values(plan.recipes)) {
@@ -345,7 +370,7 @@ export function bindSustainedJob(manifest, engine, repetition) {
   const spec = SUSTAINED_PHASES[plan.phase];
   assert(spec);
   plan.helperTimeoutMs = spec.helperMinutes * 60000;
-  plan.performanceExclusion = plan.phase === 'retry';
+  plan.performanceExclusion = diagnosticComparison(plan) || plan.phase === 'retry';
   plan.rows = roleOrder(repetition, plan.phase).map((role) => ({
     id: `${plan.phase}-${engine}-r${repetition}-${role}`,
     kind: plan.phase === 'diagnostics' ? 'diagnostics' : 'lifecycle',
@@ -478,8 +503,12 @@ export async function prepareSustainedMode(ctx) {
   }
   Object.assign(ctx.report, {
     performanceExclusion: ctx.plan.performanceExclusion,
-    timingQualification:
-      ctx.plan.phase === 'retry' ? 'excluded-retention-profiling' : 'new-linux-stratum-only',
+    timingQualification: diagnosticComparison(ctx.plan)
+      ? 'not-qualified-diagnostic-only'
+      : ctx.plan.phase === 'retry'
+        ? 'excluded-retention-profiling'
+        : 'new-linux-stratum-only',
+    ...comparisonLabels(ctx.plan),
     phaseRelease: ctx.plan.release,
     sustainedStratum: {
       engine: ctx.plan.engine,
@@ -585,6 +614,7 @@ export function lifecycleAssessment(plan, row, raw, command, browserVersion) {
       (eligible ? performance === 'pass-observed-window' && command.exitCode === 0 : retained)
         ? 'passed'
         : 'failed',
+    ...comparisonLabels(plan),
   };
 }
 
@@ -632,8 +662,9 @@ export function timingAssessment(plan, row, raw, command, browserVersion) {
     protocolStatus: valid ? 'pass' : 'fail',
     correctness: valid ? inherited.correctness : 'fail',
     status: valid ? inherited.status : 'failed',
-    scope:
-      'Latest-source hosted timing only; neither physical-device evidence nor replacement credit for historical macOS observations.',
+    scope: diagnosticComparison(plan)
+      ? 'Independent hosted comparison diagnostics only. Raw numerical/replay/protocol failures remain unchanged; prerequisite remains false and overall performance is not qualified.'
+      : 'Latest-source hosted timing only; neither physical-device evidence nor replacement credit for historical macOS observations.',
   };
 }
 
@@ -730,6 +761,7 @@ export function longRecordingAssessment(plan, row, raw, command, browserVersion)
       [0, 2].includes(command.exitCode)
         ? 'passed'
         : 'failed',
+    ...comparisonLabels(plan),
   };
 }
 
@@ -850,6 +882,7 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
         assert.equal(row.browserVersion, ctx.modeState.browserVersion);
       else ctx.modeState.browserVersion = row.browserVersion;
     }
+    Object.assign(row, comparisonLabels(ctx.plan));
     await verifyInputs(ctx);
   } finally {
     if (server) {

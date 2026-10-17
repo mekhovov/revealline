@@ -1,6 +1,6 @@
 {
   "format": "SoloHostedSustainedManifestV1",
-  "cohort": "linux-sustained-3adcd537-pending-release",
+  "cohort": "linux-sustained-3ad-independent-diagnostic-v1",
   "phase": "soak",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
@@ -181,22 +181,35 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 49275,
-      "sha256": "1fea4a3d16ada4136ed4ed2e0df9539bb9ea6b13eb5feff9c971d15059566b64"
+      "bytes": 50572,
+      "sha256": "9a2c0b4c865c7655b9f101494964efb3ab0d423405545bf7a8253fa2af958e04"
     }
   ],
   "release": {
     "format": "SoloHostedPhaseReleaseV1",
-    "status": "pending-latest-first-eight-and-soak-review",
+    "status": "reviewed-diagnostic-only",
     "phase": "soak",
     "previousPhase": "first8",
     "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
-    "noUnclosedOwners": false,
-    "allPriorPlannedJobsClosed": false,
-    "priorProofInspected": false,
+    "noUnclosedOwners": true,
+    "allPriorPlannedJobsClosed": true,
+    "priorProofInspected": true,
     "firstEightAllCorrectnessPassed": false,
-    "evidence": []
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929",
+        "disposition": "failed-reviewed"
+      }
+    ],
+    "scope": "independent-comparison-diagnostics",
+    "predecessorRun": 38985941469,
+    "automaticRetries": 0,
+    "automaticPhaseContinuation": false,
+    "performanceQualification": "not-qualified-diagnostic-only"
   },
   "resources": {
     "serial": true,
@@ -208,12 +221,12 @@
     "minimumInitialMemoryBytes": 12884901888,
     "minimumInitialDiskBytes": 8589934592,
     "minimumRemainingDiskBytes": 1073741824,
-    "setupBounds": "Same existing disjoint145min helper/190min job: source/artifact40min, Chromium calibration5min, two44min arms and12min nonresettable finalization remainder; outside45min checkout/dependencies/policy/cleanup/upload.29min play and public saved reload remain inside unchanged40min scenario.",
+    "setupBounds": "Original disjoint145min helper/190min job: source/artifact40min, Chromium calibration5min, two44min arms and12min nonresettable finalization remainder; outside45min checkout/dependencies/policy/cleanup/upload.30min soak floor remains inside unchanged40min scenario.",
     "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
     "finalizationReserveBytes": 4194304,
     "setupEvidenceMaximumBytes": 25165824
   },
-  "scope": "Prospective fifth separate phase: three exact-source pairs per engine, same existing owner/calibration/limits.29real minutes uninterrupted recording, exact public saved reload, pre-reload performance only. Actual30min soak remains distinct; no physical/thermal/offline/OS durability claim.",
+  "scope": "Independent excluded30-minute repeated capture/result/Retry soak diagnostic at exact3ad/b117, three counterbalanced pairs per engine. Original145min helper/190min job,1800000ms session floor,44min arm deadline, resource/replay/raw timing guards unchanged. It is not30uninterrupted active minutes, the separate29min recording, or physical/thermal qualification. First-eight prerequisite remains false; later phases need separate review.",
   "phaseOrder": ["soak", "next", "retry", "diagnostics", "long29"],
   "remainingDistinctScope": [
     "Actual30minute soak remains separate and does not prove continuous recording.",
@@ -304,8 +317,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 34629,
-      "sha256": "74009ba6e142c9e8ad7641c62d33db0c7feac844778dbc9b4b833f929797aed7"
+      "bytes": 36495,
+      "sha256": "348c73c75261b0d676632d4276ec4f65323e495e5d7842e9a9274235f7e4664c"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -314,12 +327,21 @@
     }
   ],
   "bindingScope": {
-    "status": "metadata-and-git-source-bound-release-held",
+    "status": "reviewed-independent-diagnostic-only",
     "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
     "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
     "candidateArtifact": 12082915872,
-    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "firstEight": "Retained run38985941469 failed7/8; source/archive proof passed and all commands closed. firstEightAllCorrectnessPassed remains false; no qualification promotion.",
     "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
     "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
+  },
+  "performanceExclusion": true,
+  "admissionReview": {
+    "distinction": "Admission permits collecting independently declared diagnostic observations. It neither certifies the failed first-eight prerequisite nor weakens any raw timing, replay, resource, sample-count or duration gate.",
+    "prerequisite": "Run38985941469 remains failed:7/8rows passed, WebKit active worker row failed. Both source/archive proofs passed and all8owned commands closed. This retained failure can be investigated while independent comparisons run.",
+    "ownershipScope": "Prior closure refers to this declared predecessor cohort, not unrelated concurrent jobs on separately owned hosted machines. Current job archive/source/RSS/disk/process ownership guards remain mandatory.",
+    "phaseScope": "Only this selected phase is released; three fixed counterbalanced source pairs per engine, all failures and partial results retained. Later phase review may accept failed-reviewed predecessor evidence, never unreviewed or unclosed ownership.",
+    "execution": "No changes to original recipes, controls, elapsed timing, calibration, repetition counts, scenario/command deadlines, row evidence limits or result evaluation. No automatic retry, continuation or inserted Resume.",
+    "limits": "Overall performance remains not-qualified-diagnostic-only even if individual observed-window numeric components pass. Missing baseline internal counters and candidate input samples remain unresolved. Hosted Linux stress is not physical iPhone/Steam Deck or thermal qualification."
   }
 }
