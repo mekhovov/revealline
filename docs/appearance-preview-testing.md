@@ -88,11 +88,15 @@ Use Node 22.13.1 and the PR head. First read the accepted policy with
   test-file list in `.github/workflows/appearance-preview.yml` with
   `node --test --test-concurrency=1`.
 
-The workflow first runs a separate 23-file prerequisite for optional replay,
-save readback, deferred Library ownership and Demo resource observations. Its
-five-minute test bound is separate from the existing 118-file preview gate.
-A second prerequisite runs six complete Team/Versus artwork, preparation and
-controller files, with a ten-minute test bound in a separate 24-minute job. Both prerequisite
+The workflow retains the original 17-file prerequisite for optional replay,
+save readback and deferred Library ownership. Its five-minute test bound is
+separate from the existing 118-file preview gate. The six added Demo ownership,
+transition and resource files run in a separate 19-minute prerequisite job with
+the same five-minute test bound. Both partitions are required; their exact union
+is the previous 23-file set.
+The six Team/Versus and controller files are partitioned into the complete
+installed-chapter file and the other five complete files. Each partition keeps
+a ten-minute test bound in a separate 24-minute job. All four prerequisite
 proofs and uploaded artifacts must match the package source, source tree, Node
 version and accepted test policy before packaging can proceed. Failure or
 cancellation retains available output and blocks packaging. The original
