@@ -38,6 +38,7 @@ async function fixture(
     serviceWorker,
     home = false,
     blurOnTitleMount = false,
+    windowOptions = {},
     ...factories
   } = {},
 ) {
@@ -94,6 +95,7 @@ async function fixture(
     },
     setTimeout: (fn) => fn(),
     URL: { createObjectURL: () => 'blob:flight-test', revokeObjectURL() {} },
+    ...windowOptions,
   });
   Object.defineProperty(win, 'localStorage', {
     get() {
@@ -196,6 +198,97 @@ function radioProfile(pad) {
     switches: { arm: null, pause: null, reset: null },
   };
 }
+
+test('Academy prepares a saved aircraft with exact geometry, course advice and continuous practice controls', async (t) => {
+  const [tuning, presets, workers] = await Promise.all([
+    import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+    import('../../optional-practice/civilian-fpv/aircraft-presets.mjs'),
+    import('../../optional-practice/civilian-fpv/advanced-worker.mjs'),
+  ]);
+  const data = new Map(),
+    storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    };
+  const library = tuning.createTuningLibraryStore({ storage });
+  await library.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'whoop',
+    profileId: 'whoop-rates',
+    rates: 'defaults',
+  });
+  class Worker extends Events {
+    constructor() {
+      super();
+      this.closed = false;
+      this.handler = workers.createAdvancedWorkerHandler((data) => {
+        if (!this.closed) this.emit('message', { data });
+      });
+    }
+    postMessage(value) {
+      void this.handler.receive(value).finally(() => {
+        if (this.closed) this.handler.dispose();
+      });
+    }
+    terminate() {
+      this.closed = true;
+      this.handler.dispose();
+    }
+  }
+  let shownAircraft;
+  const h = await fixture(t, {
+    storage,
+    windowOptions: { Worker, setTimeout, clearTimeout },
+    rendererFactory: () => ({
+      available: true,
+      setCourse() {},
+      setPath() {},
+      setAircraft(value) {
+        shownAircraft = structuredClone(value);
+      },
+      draw() {},
+      dispose() {},
+    }),
+  });
+  const preset = presets.createPresetConfiguration('meteor75-analog-2022');
+  assert.equal(h.view.snapshot().reason, 'prepared');
+  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 500);
+  assert.deepEqual(shownAircraft.geometry, preset.aircraft.geometry);
+  assert.match(h.doc.body.textContent, /All courses remain available in practice/);
+  assert.equal(h.doc.querySelector('.aircraft-practice-controls').hidden, false);
+  h.$('arm').click();
+  for (let tick = 0; tick < 8; tick++) {
+    h.tick();
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.ok(h.view.snapshot().ticks > 0);
+  assert.equal(h.view.snapshot().advancedTelemetry.usedAh, 0);
+  for (const [action, fov] of [
+    ['Apply & restart', '106'],
+    ['Test draft · unscored', '108'],
+  ]) {
+    h.view.pause();
+    h.$('academy-shell-action-settings').click();
+    const settings = h.$('academy-shell-settings-dialog');
+    assert.equal(settings.open, true);
+    await openAcademyTuning(h);
+    const camera = academyTuningControl(h, 'Vertical FOV (degrees)');
+    camera.value = fov;
+    camera.emit('input');
+    await academyTuningClick(h, action);
+    await h.view.settled();
+    assert.equal(h.doc.querySelector('.fpv-tuning').open, false, action);
+    assert.equal(settings.open, false, `${action} must leave Settings before flight`);
+    assert.equal(h.view.snapshot().reason, 'prepared', action);
+    assert.equal(h.view.snapshot().ticks, 0, action);
+    h.$('arm').click();
+    for (let tick = 0; tick < 8; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.ok(h.view.snapshot().ticks > 0, `${action} must allow arming from the flight button`);
+  }
+});
 
 test('SIM world selection freezes on first arm and applies queued preference only on reset', async (t) => {
   const h = await fixture(t);

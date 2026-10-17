@@ -81,15 +81,71 @@
   flex-wrap: wrap;
   margin-block: 12px;
 }
-.tuning-fields fieldset {
+.tuning-aircraft {
+  background: #142c3b;
+  padding: 16px;
+  border: 1px solid #52718b;
+  border-radius: 8px;
+}
+.tuning-aircraft > button {
+  margin: 4px 8px 4px 0;
+}
+.tuning-aircraft a {
+  display: block;
+  color: #8ec5ff;
+  overflow-wrap: anywhere;
+  margin-block: 6px;
+}
+.fpv-tuning fieldset {
   min-width: 0;
   border: 1px solid #52718b;
   border-radius: 8px;
   padding: 12px;
 }
-.tuning-fields legend {
+.fpv-tuning legend {
   padding-inline: 6px;
   font-weight: 650;
+}
+.fpv-aircraft-course-filter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 1fr);
+  gap: 6px 12px;
+  align-items: center;
+  min-width: 0;
+  margin-block: 12px;
+  padding: 12px;
+  border: 1px solid #52718b;
+  border-radius: 8px;
+  color: #edf5ff;
+  background: #142c3b;
+}
+.fpv-aircraft-course-filter > span {
+  font-weight: 650;
+}
+.fpv-aircraft-course-filter > small {
+  grid-column: 1 / -1;
+  color: #c4d5e5;
+  line-height: 1.5;
+}
+.fpv-aircraft-course-filter select {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px solid #7695ae;
+  border-radius: 6px;
+  color: #edf5ff;
+  background: #1b3346;
+  font: inherit;
+}
+.fpv-aircraft-course-filter :focus-visible {
+  outline: 3px solid #f1ca72;
+  outline-offset: 3px;
+}
+@media (max-width: 540px) {
+  .fpv-aircraft-course-filter {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 .tuning-number {
   border-bottom: 1px solid #36536a;

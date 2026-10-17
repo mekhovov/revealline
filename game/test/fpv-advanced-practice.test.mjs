@@ -12,6 +12,12 @@ import {
   replayAdvancedRecording,
 } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
+import {
+  createPresetConfiguration,
+  applyAircraftComponents,
+} from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
+import { DEFAULT_RESPONSE } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
+import { createTuningLibraryStore } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
 
 class LocalWorker extends Events {
   static instances = [];
@@ -37,6 +43,186 @@ class LocalWorker extends Events {
     this.handler.dispose();
   }
 }
+
+test('aircraft arena keeps Legacy rates explicitly, applies preset starter rates by default, and saves a frozen draft', async (t) => {
+  const preset = createPresetConfiguration('meteor75-analog-2022'),
+    saves = [];
+  const data = new Map();
+  const store = createTuningLibraryStore({
+    storage: {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    },
+  });
+  const f = await fixture(t, {
+    configuration: preset,
+    response: DEFAULT_RESPONSE,
+    async onSaveConfiguration(value, metadata) {
+      const current = store.snapshot();
+      await store.saveAircraftConfiguration(
+        {
+          setupId: current.selectedSetupId,
+          newProfileId: `aircraft-${saves.length}`,
+          advanced: value,
+          response: metadata.response,
+          camera: { tilt: metadata.camera.tilt, verticalFov: metadata.camera.fov },
+          preset: metadata.preset,
+          components: metadata.components,
+        },
+        current.revision,
+      );
+      saves.push({ value, metadata });
+    },
+  });
+  let worker = LocalWorker.instances.at(-1);
+  assert.equal(worker.messages[0].options.aircraft.format, 'AdvancedAircraft.v2');
+  assert.deepEqual(worker.messages[0].options.response.response, DEFAULT_RESPONSE);
+  assert.equal(f.session.getTelemetry().frequency, 500);
+  const chooseAircraft = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));
+  const rates = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'keep'));
+  assert.equal(rates.value, 'defaults');
+  rates.value = 'keep';
+  chooseAircraft.value = 'holybro-x650-v2';
+  chooseAircraft.emit('change');
+  f.button('Restart practice').click();
+  await waitFor(
+    () => LocalWorker.instances.at(-1) !== worker && !f.button('Start practice').disabled,
+  );
+  worker = LocalWorker.instances.at(-1);
+  assert.deepEqual(worker.messages[0].options.response.response, DEFAULT_RESPONSE);
+  assert.equal(worker.messages[0].options.aircraft.id, 'holybro-x650-v2');
+  rates.value = 'defaults';
+  chooseAircraft.value = 'meteor75-analog-2022';
+  chooseAircraft.emit('change');
+  f.button('Save aircraft for next flight').click();
+  await waitFor(() => saves.length === 1);
+  assert.deepEqual(saves[0].metadata.response, preset.response);
+  assert.equal(saves[0].value.aircraft.battery.depletion, false);
+  assert.deepEqual(saves[0].metadata.camera, {
+    tilt: preset.camera.tilt,
+    fov: preset.camera.verticalFov,
+  });
+  assert.deepEqual(store.effective().camera, preset.camera);
+  const savedSetup = store.snapshot().setups.find((setup) => setup.id === 'my-drone');
+  assert.deepEqual(savedSetup.preset, preset.preset);
+  assert.equal(savedSetup.components.presetId, preset.preset.id);
+  assert.equal(savedSetup.components.cameraPayload.massGrams, 0);
+  assert.equal(worker.messages[0].options.aircraft.id, 'holybro-x650-v2');
+  f.button('Restart practice').click();
+  await waitFor(
+    () => LocalWorker.instances.at(-1) !== worker && !f.button('Start practice').disabled,
+  );
+  assert.deepEqual(
+    LocalWorker.instances.at(-1).messages[0].options.response.response,
+    preset.response,
+  );
+});
+
+for (const rateModel of ['Actual', 'Legacy'])
+  test(`Advanced preserves an unsaved component edit exactly once through save and revert with ${rateModel} rates`, async (t) => {
+    const preset = createPresetConfiguration('meteor75-analog-2022');
+    const draft = applyAircraftComponents(preset.aircraft, preset.components, {
+      battery: preset.components.battery,
+      cameraPayload: { massGrams: 4 },
+    });
+    const data = new Map();
+    const store = createTuningLibraryStore({
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => data.set(key, value),
+      },
+    });
+    await store.createPresetSetup({
+      presetId: preset.preset.id,
+      setupId: 'payload-whoop',
+      profileId: 'payload-rates',
+      rates: 'defaults',
+    });
+    let saved = false;
+    const response = rateModel === 'Actual' ? preset.response : DEFAULT_RESPONSE;
+    const f = await fixture(t, {
+      configuration: { aircraft: draft.aircraft, controller: preset.controller },
+      components: draft.components,
+      response,
+      camera: { tilt: preset.camera.tilt, fov: preset.camera.verticalFov },
+      async onSaveConfiguration(advanced, metadata) {
+        assert.equal(Object.hasOwn(metadata, 'preset'), false);
+        const current = store.snapshot();
+        await store.saveAircraftConfiguration(
+          {
+            setupId: current.selectedSetupId,
+            newProfileId: 'saved-payload-rates',
+            advanced,
+            response: metadata.response,
+            camera: { tilt: metadata.camera.tilt, verticalFov: metadata.camera.fov },
+            components: metadata.components,
+          },
+          current.revision,
+        );
+        saved = true;
+      },
+    });
+    const aircraft = f.container
+      .querySelectorAll('select')
+      .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));
+    aircraft.value = 'holybro-x650-v2';
+    aircraft.emit('change');
+    f.button('Revert aircraft draft').click();
+    f.button('Save aircraft for next flight').click();
+    await waitFor(() => saved);
+    const setup = store.snapshot().setups.find((item) => item.id === 'payload-whoop');
+    assert.equal(setup.components.cameraPayload.massGrams, 4);
+    assert.equal(setup.advanced.aircraft.mass, preset.aircraft.mass + 0.004);
+    assert.deepEqual(store.effective().response, response);
+    const reopened = applyAircraftComponents(setup.advanced.aircraft, setup.components, {
+      battery: setup.components.battery,
+      cameraPayload: setup.components.cameraPayload,
+    });
+    assert.deepEqual(reopened.aircraft, draft.aircraft);
+    assert.deepEqual(reopened.components, draft.components);
+  });
+
+test('aircraft preview reports insufficient thrust instead of a zero-percent hover point', async (t) => {
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  preset.aircraft.mass = 1;
+  const f = await fixture(t, { configuration: preset, response: preset.response });
+  assert.match(f.container.textContent, /Estimated hover throttle: Insufficient thrust for hover/);
+});
+
+test('aircraft arena verifies checkpoint clips and retains usable practice controls', async (t) => {
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  const f = await fixture(t, { configuration: preset, response: preset.response });
+  const options = LocalWorker.instances.at(-1).messages[0].options;
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry()?.missionTick === 1);
+  f.button('Pause').click();
+  f.button('Keep this practice as reference').click();
+  await waitFor(() => f.session.getComparison()?.verified);
+  assert.equal(f.session.getComparison().samples, 2);
+  assert.equal(f.session.getComparison().scored, false);
+  assert.match(f.container.textContent, /starting checkpoint/);
+  assert.equal(f.button('Start practice').disabled, false);
+  const aircraft = f.container
+    .querySelectorAll('select')
+    .find((select) => select.children.some((option) => option.value === 'holybro-x650-v2'));
+  aircraft.value = 'freestyle';
+  aircraft.emit('change');
+  let reads = 0;
+  const { recording } = comparisonRecording(options);
+  importComparison(f, recording, {
+    size: 8 * 1024 * 1024 + 1,
+    text: async () => {
+      reads++;
+      return JSON.stringify(recording);
+    },
+  });
+  await waitFor(() => reads === 1 && !f.button('Start practice').disabled);
+  assert.equal(f.session.getComparison().samples, 5);
+});
 
 async function fixture(t, { waitReady = true, ...options } = {}) {
   const doc = new Document(),
