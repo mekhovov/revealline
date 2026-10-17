@@ -1,5 +1,43 @@
 import { evaluateQualificationBudgets } from './solo-qualification.mjs';
 
+/** Node-side error-event metadata only. Never stringify arbitrary thrown values
+ * or inspect nested properties; even hostile accessors must not break retention.
+ * The three UTF-16 limits keep added JSON below 32 KiB even when every character
+ * requires a six-byte JSON escape. The existing legacy string stays separate. */
+export function qualificationPageErrorDetails(error) {
+  const fields = {};
+  for (const [name, limit] of [
+    ['name', 128],
+    ['message', 1024],
+    ['stack', 4096],
+  ]) {
+    let value;
+    try {
+      value = error?.[name];
+    } catch {
+      fields[name] = { value: null, type: 'unavailable', readFailed: true, truncated: false };
+      continue;
+    }
+    const type = value === null ? 'null' : typeof value;
+    fields[name] =
+      type === 'string'
+        ? {
+            value: value.slice(0, limit),
+            type,
+            readFailed: false,
+            truncated: value.length > limit,
+            originalCodeUnits: value.length,
+          }
+        : { value: null, type, readFailed: false, truncated: false };
+  }
+  return {
+    format: 'SoloQualificationPageErrorDetailsV1',
+    thrownType: error === null ? 'null' : typeof error,
+    fields,
+    scope: 'Error-event fields only; top-level page URL is not the exception frame identity.',
+  };
+}
+
 /** rAF timestamps describe frame time, which can precede observer registration.
  * Only two callbacks establish an interval. Preserve later gaps unchanged. */
 export function createRafIntervalClock(

@@ -9,6 +9,12 @@ import {
   comparisonSetupSuccessor,
 } from './solo-remote-sustained.mjs';
 import { assertFinalWaveBindings } from './solo-final-wave-witness.mjs';
+import {
+  PAGE_ERROR_WITNESS_PATH,
+  validatePageErrorSourceWitness,
+  historicalPageErrorRefs,
+  readHistoricalPageErrorRefs,
+} from './solo-page-error-source-witness.mjs';
 const root = new URL('../', import.meta.url);
 const read = (path) => readFile(new URL(path, root));
 const originalSoak = JSON.parse(await read('docs/performance/solo-final-soak-plan.json'));
@@ -125,11 +131,18 @@ test('eight concrete releases preserve exact package, routes, diagnostic gates a
   }
 });
 
-test('prospective helpers match current bytes while first-wave execution declarations remain immutable', async () => {
+test('dispatched declarations preserve exact old observation refs while remaining helpers match current bytes', async () => {
   for (const phase of stages) {
     const p = names(phase),
       m = JSON.parse(await read(p.manifest));
+    const historical = await readHistoricalPageErrorRefs(p.manifest, p.workflow);
     for (const ref of [...m.frozenTools, ...m.adapterInputs, ...Object.values(m.recipes)]) {
+      if (historical.has(ref.path)) {
+        const expected = historical.get(ref.path);
+        assert.equal(ref.bytes, expected.bytes, ref.path);
+        assert.equal(ref.sha256, expected.sha256, ref.path);
+        continue;
+      }
       const bytes = await read(ref.path);
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
@@ -203,4 +216,56 @@ test('concrete release guards reject changed packages, evidence claims and setup
     ])
       assert.throws(() => check(original, workflow.replace(from, to), phase));
   }
+});
+
+test('historical error witness rejects changed metadata, declarations and workflow pairings', async () => {
+  const bytes = await read(PAGE_ERROR_WITNESS_PATH),
+    witness = validatePageErrorSourceWitness(bytes);
+  const changed = JSON.parse(bytes);
+  changed.sources[0].refs[0].sha256 = '0'.repeat(64);
+  assert.throws(() => validatePageErrorSourceWitness(Buffer.from(JSON.stringify(changed))));
+  for (const source of witness.sources)
+    for (const { manifest, workflow } of source.releases) {
+      const manifestBytes = await read(manifest),
+        workflowBytes = await read(workflow);
+      const refs = historicalPageErrorRefs(
+        witness,
+        manifest,
+        workflow,
+        manifestBytes,
+        workflowBytes,
+      );
+      assert(refs.size > 0);
+      assert(
+        [...refs.keys()].every((path) =>
+          [
+            'scripts/qualify-solo-runtime.mjs',
+            'scripts/solo-qualification-observation.mjs',
+          ].includes(path),
+        ),
+      );
+      const altered = JSON.parse(manifestBytes);
+      altered.frozenTools.find((ref) => refs.has(ref.path)).sha256 = '0'.repeat(64);
+      assert.throws(() =>
+        historicalPageErrorRefs(
+          witness,
+          manifest,
+          workflow,
+          Buffer.from(JSON.stringify(altered)),
+          workflowBytes,
+        ),
+      );
+      assert.throws(() =>
+        historicalPageErrorRefs(
+          witness,
+          manifest,
+          workflow,
+          manifestBytes,
+          Buffer.concat([workflowBytes, Buffer.from(' ')]),
+        ),
+      );
+      assert.throws(() =>
+        historicalPageErrorRefs(witness, manifest, 'unknown', manifestBytes, workflowBytes),
+      );
+    }
 });

@@ -54,6 +54,7 @@ import {
   frozenExternalCadence,
   externalQualificationBudgets,
   aggregateQualificationGates,
+  qualificationPageErrorDetails,
 } from './solo-qualification-observation.mjs';
 
 // Public UI only. Never write application storage, run state, clocks or caches.
@@ -383,6 +384,7 @@ try {
         observedAt: new Date().toISOString(),
         observedTopLevelURL: page.url().slice(0, 4096),
         action: activeAction,
+        details: qualificationPageErrorDetails(error),
       });
       report.pageErrors.push(String(error.stack ?? error));
     }
