@@ -23,6 +23,10 @@ import { createTuningLibraryStore } from './tuning-library.mjs';
 import { mountFlightTuning } from './tuning-ui.mjs';
 import { TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
 import { mountAdvancedPractice } from './advanced-practice.mjs';
+import { createAircraftCourseSession } from './aircraft-course-session.mjs';
+import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
+import { mountAircraftPracticeControls } from './aircraft-practice-controls.mjs';
+import { aircraftCourseAdvice, mountAircraftCourseFilter } from './aircraft-course-advice.mjs';
 import {
   mountFlightFullscreen,
   mountFlightCameraControls,
@@ -151,6 +155,10 @@ export function mountFlightApp({
   }
   let tuningStorage,
     tuning = null,
+    aircraftControls = null,
+    aircraftAdvice = null,
+    aircraftAdviceText = null,
+    courseClassFilter = null,
     tuningPractice = false,
     advancedPractice = null;
   try {
@@ -567,6 +575,9 @@ export function mountFlightApp({
     message = 'preparingGraphics';
     pendingScene = (async () => {
       try {
+        const preparedFlight = flight;
+        if (preparedFlight.prepare) await preparedFlight.prepare();
+        if (preparedFlight !== flight || controller.signal.aborted || disposed) return false;
         const result = await renderer.prepare?.({ signal: controller.signal });
         if (
           result === false ||
@@ -696,16 +707,28 @@ export function mountFlightApp({
     if (!tuningDraft) tuning?.endDraftTest();
     if (!tuningDraft) tuningStore.refresh();
     const configuration = tuningDraft ?? tuningStore.effective();
+    const physicalAircraft = configuration.advanced?.aircraft?.format === 'AdvancedAircraft.v2';
+    tuningPractice ||= physicalAircraft;
     response = structuredClone(configuration.response);
     $('camera-fov').value = String(configuration.camera.verticalFov);
     $('camera-tilt').value = String(configuration.camera.tilt);
     input.ratesApplied(response.format === TUNED_RESPONSE_FORMAT);
-    const nextFlight = createFlight({
-      course: previewCourse ?? courses[index],
-      mode: nextMode,
-      response,
-      unscoredPractice: tuningPractice,
-    });
+    const nextFlight = physicalAircraft
+      ? createAircraftCourseSession(
+          {
+            course: previewCourse ?? courses[index],
+            mode: nextMode,
+            configuration,
+            legacy: true,
+          },
+          { createClient: () => createAdvancedWorkerClient({ Worker: win.Worker }) },
+        )
+      : createFlight({
+          course: previewCourse ?? courses[index],
+          mode: nextMode,
+          response,
+          unscoredPractice: tuningPractice,
+        });
     cancelReview();
     epoch++;
     gamepad.reset();
@@ -723,6 +746,7 @@ export function mountFlightApp({
     mode = nextMode;
     authoringCourse = previewCourse ? nextFlight.course() : null;
     audio.pause();
+    void flight?.dispose?.();
     flight = nextFlight;
     audio.setCourse(flight.course());
     recorder = tuningPractice
@@ -736,6 +760,10 @@ export function mountFlightApp({
     const acceptedAppearance = appearanceSession.begin(appearanceControls.resolve().appearance);
     renderer.setPresentation?.(acceptedAppearance);
     renderer.setCourse?.(flight.course(), mode);
+    renderer.setAircraft?.(physicalAircraft ? configuration.advanced.aircraft : null);
+    aircraftAdvice = physicalAircraft
+      ? aircraftCourseAdvice(flight.course(), configuration.advanced.aircraft)
+      : null;
     appearanceControls.refresh();
     renderer.setPath?.([]);
     void prepareScene();
@@ -953,6 +981,7 @@ export function mountFlightApp({
     const playable = playableSimAppearance(appearance);
     renderer.setPresentation?.(playable.appearance);
     renderer.setCourse?.(courses[index], mode);
+    renderer.setAircraft?.(null);
     appearanceControls.refresh();
     renderer.setPath?.(checked.path);
     paint(true);
@@ -1002,6 +1031,7 @@ export function mountFlightApp({
       'aria-label',
       locale === 'uk' ? 'Розділи симулятора' : 'Simulator navigation',
     );
+    courseClassFilter?.refresh();
     missionChooser?.refresh();
     $('fallback').textContent = c()[graphicsLost ? 'contextLost' : 'fallback'];
     $('viewport').setAttribute('aria-label', c().title);
@@ -1022,6 +1052,11 @@ export function mountFlightApp({
   function paint(force = false, now = 0) {
     if (!flight || disposed) return;
     const state = replay ? replay.flight.snapshot() : flight.snapshot();
+    aircraftControls?.update(state);
+    if (aircraftAdviceText) {
+      aircraftAdviceText.hidden = !aircraftAdvice;
+      aircraftAdviceText.textContent = aircraftAdvice?.advisories[locale] ?? '';
+    }
     // A recording can end before its objective; exhausting its commands is a
     // presentation result, never a simulated completion or resumable flight.
     const replayEnded = !!replay && replay.at >= replay.proof.frames.length;
@@ -1400,6 +1435,10 @@ export function mountFlightApp({
       // Every recorded command still advances the fixed-step model exactly once.
       if (active) accumulator += Math.max(0, elapsed) * (replay ? replayRate : 1);
       while (active && accumulator >= 1000 / FLIGHT_HZ) {
+        if (!replay && flight.stepPending?.()) {
+          accumulator = Math.min(accumulator, 1000 / FLIGHT_HZ);
+          break;
+        }
         accumulator -= 1000 / FLIGHT_HZ;
         if (replay) {
           if (replay.at >= replay.proof.frames.length) {
@@ -1426,7 +1465,32 @@ export function mountFlightApp({
                 : input.sample(1 / FLIGHT_HZ);
           const before = flight.snapshot().ticks;
           audio.update(flight.snapshot(), { active: true });
-          flight.step(command);
+          const selectedFlight = flight;
+          const result = flight.step(command);
+          if (result && typeof result.then === 'function') {
+            const source = input.owner();
+            const diagnostics =
+              source === 'radio'
+                ? radio.diagnostics({ refresh: false })
+                : source === 'controller'
+                  ? gamepad.diagnostics()
+                  : input.diagnostics();
+            void result
+              .then((state) => {
+                if (disposed || flight !== selectedFlight) return;
+                if (state.ticks !== before)
+                  inputDiagnostics.record(flight, source, command, diagnostics, state);
+                audio.update(state, { active: state.status === 'active' });
+                paint(true);
+              })
+              .catch((error) => {
+                if (disposed || flight !== selectedFlight) return;
+                pause();
+                message = error.message;
+                paint(true);
+              });
+            break;
+          }
           audio.update(flight.snapshot(), { active: flight.snapshot().status === 'active' });
           if (flight.snapshot().ticks !== before) {
             inputDiagnostics.record(
@@ -1801,8 +1865,24 @@ export function mountFlightApp({
   listen($('review'), 'click', () => {
     if (lastProof) void review(academyRecording(lastProof, lastPresentation)).catch(() => {});
   });
-  listen($('export-attempt'), 'click', () => {
+  listen($('export-attempt'), 'click', async () => {
     pause();
+    if (!replay && flight.recording) {
+      try {
+        const recording = await flight.recording();
+        const url = win.URL.createObjectURL(
+          new Blob([JSON.stringify(recording)], { type: 'application/json' }),
+        );
+        const link = doc.createElement('a');
+        link.href = url;
+        link.download = 'aircraft-practice-clip.json';
+        link.click();
+        win.setTimeout(() => win.URL.revokeObjectURL(url), 0);
+      } catch (error) {
+        $('transfer-status').textContent = error.message;
+      }
+      return;
+    }
     if (!recorder && !replay) return;
     const proof = replay?.proof ?? recorder.export();
     const recording = academyRecording(proof, replay?.presentation ?? appearanceSession.current());
@@ -1949,45 +2029,44 @@ export function mountFlightApp({
   });
   const expert = menuSection('sim-shell-expert');
   for (const id of ['notebook-button', 'help']) expert.append($(id));
-  const missionLibrary = createSimMissionLibrary([
-    {
-      id: 'sim-academy',
-      editionId: 'academy',
-      edition: 'FPV SIM · Academy',
-      collection: 'Classic',
-      entries: courses,
-      describe: (course) => ({
-        id: course.id,
-        revision: course.revision ?? '',
-        campaignKey: 'academy',
-        campaignTitle: locale === 'uk' ? 'Академія польотів' : 'Flight Academy',
-        name: course.locales[locale].title,
-        levelIndex: courses.indexOf(course),
-        canonicalLevelKey: `sim-academy:${course.id}:${course.revision ?? ''}`,
-        globalLevelNumber: courses.indexOf(course) + 1,
-        modes: ['solo'],
-        tags: ['FPV', 'Practice'],
-        hook: course.locales[locale].brief,
-      }),
-      presentation: (course) => ({
-        name: course.locales[locale].title,
-        campaignTitle: locale === 'uk' ? 'Академія польотів' : 'Flight Academy',
-        hook: course.locales[locale].brief,
-      }),
-      availability: () => ({ state: 'ready' }),
-      card: (course) => course,
-      progressState: (course) => ({
-        state: notebook?.snapshot?.().attempts.some((attempt) => attempt.course === course.id)
-          ? 'completed'
-          : 'new',
-        bestStars: null,
-      }),
-      launch: (course) => {
-        reset(courses.indexOf(course), mode, null);
-        return startPrepared();
-      },
+  const academyMissions = {
+    id: 'sim-academy',
+    editionId: 'academy',
+    edition: 'FPV SIM · Academy',
+    collection: 'Classic',
+    entries: courses,
+    describe: (course) => ({
+      id: course.id,
+      revision: course.revision ?? '',
+      campaignKey: 'academy',
+      campaignTitle: locale === 'uk' ? 'Академія польотів' : 'Flight Academy',
+      name: course.locales[locale].title,
+      levelIndex: courses.indexOf(course),
+      canonicalLevelKey: `sim-academy:${course.id}:${course.revision ?? ''}`,
+      globalLevelNumber: courses.indexOf(course) + 1,
+      modes: ['solo'],
+      tags: ['FPV', 'Practice'],
+      hook: course.locales[locale].brief,
+    }),
+    presentation: (course) => ({
+      name: course.locales[locale].title,
+      campaignTitle: locale === 'uk' ? 'Академія польотів' : 'Flight Academy',
+      hook: course.locales[locale].brief,
+    }),
+    availability: () => ({ state: 'ready' }),
+    card: (course) => course,
+    progressState: (course) => ({
+      state: notebook?.snapshot?.().attempts.some((attempt) => attempt.course === course.id)
+        ? 'completed'
+        : 'new',
+      bestStars: null,
+    }),
+    launch: (course) => {
+      reset(courses.indexOf(course), mode, null);
+      return startPrepared();
     },
-  ]);
+  };
+  const missionLibrary = createSimMissionLibrary([academyMissions]);
   const missionTools = doc.createElement('div');
   missionTools.className = 'dialog-actions';
   const watchMission = doc.createElement('button');
@@ -2099,6 +2178,21 @@ export function mountFlightApp({
         : null;
     },
   });
+  courseClassFilter = mountAircraftCourseFilter({
+    document: doc,
+    locale: () => locale,
+    onChange: () => {
+      missionLibrary.register({
+        ...academyMissions,
+        entries: courses.filter(courseClassFilter.matches),
+      });
+      missionChooser.refresh();
+    },
+  });
+  (
+    missionChooser.elements.filters.querySelector('.journey-filter-options') ??
+    missionChooser.elements.filters
+  ).append(courseClassFilter.root);
   missionChooser.elements.footer.append(missionTools);
   playShell = mountSimPlayShell({
     document: doc,
@@ -2207,6 +2301,8 @@ export function mountFlightApp({
         window: win,
         locale,
         configuration: configuration.advanced,
+        components: configuration.components,
+        response: configuration.response,
         profile: configuration.response.rates,
         camera: { tilt: configuration.camera.tilt, fov: configuration.camera.verticalFov },
         getControls: () => {
@@ -2214,11 +2310,24 @@ export function mountFlightApp({
           return sample.verified ? sample.controls : null;
         },
         onPause: () => pause(),
-        async onSaveConfiguration(advanced) {
+        async onSaveConfiguration(advanced, metadata = {}) {
           const library = tuningStore.snapshot(),
             setup = library.setups.find((item) => item.id === library.selectedSetupId);
-          await tuningStore.saveSetup({ ...setup, advanced }, library.revision);
-          tuning.acceptOwnSave(library.revision);
+          await tuningStore.saveAircraftConfiguration(
+            {
+              setupId: setup.id,
+              newProfileId: `aircraft-${win.crypto?.randomUUID?.() ?? Date.now()}`,
+              advanced,
+              response: metadata.response,
+              ...(metadata.camera
+                ? { camera: { tilt: metadata.camera.tilt, verticalFov: metadata.camera.fov } }
+                : {}),
+              ...(metadata.preset ? { preset: metadata.preset } : {}),
+              ...(metadata.components !== undefined ? { components: metadata.components } : {}),
+            },
+            library.revision,
+          );
+          tuning.acceptOwnSave(library.revision, { reloadAircraft: true });
         },
         onClose() {
           advancedPractice?.dispose();
@@ -2245,6 +2354,18 @@ export function mountFlightApp({
     },
   });
   tuning.button(playShell.elements.content.pause);
+  tuning.button(shellBriefing);
+  aircraftAdviceText = doc.createElement('p');
+  aircraftAdviceText.hidden = true;
+  shellBriefing.append(aircraftAdviceText);
+  aircraftControls = mountAircraftPracticeControls({
+    parent: playShell.elements.content.pause,
+    window: win,
+    key: 'academy',
+    locale: () => locale,
+    getSession: () => (replay ? null : flight),
+    onPause: () => pause(),
+  });
   $('viewport').append(tuning.returnButton);
   for (const cameraId of ['camera-fov', 'camera-tilt'])
     listen($(cameraId), 'change', () => {
@@ -2572,8 +2693,9 @@ export function mountFlightApp({
       await pendingScene;
     },
     snapshot: () => flight.snapshot(),
-    exportAttempt: () => recorder.export(),
-    exportRecording: () => academyRecording(recorder.export(), appearanceSession.current()),
+    exportAttempt: () => flight.recording?.() ?? recorder.export(),
+    exportRecording: () =>
+      flight.recording?.() ?? academyRecording(recorder.export(), appearanceSession.current()),
     appearance: () => ({
       ...appearanceControls.resolve(),
       accepted: appearanceSession.current(),
@@ -2589,7 +2711,9 @@ export function mountFlightApp({
       if (frameId !== null) win.cancelAnimationFrame(frameId);
       setup?.dispose();
       tuning?.dispose();
+      aircraftControls?.dispose();
       advancedPractice?.dispose();
+      void flight?.dispose?.();
       void notebook?.dispose();
       studio?.dispose();
       globalTools?.dispose();
@@ -2605,6 +2729,7 @@ export function mountFlightApp({
       missionChooser.destroy();
       missionLibrary.dispose();
       watchMission.onclick = null;
+      courseClassFilter?.dispose();
       flightComfort?.dispose();
       flightSetup?.dispose();
       practiceFlow?.dispose();

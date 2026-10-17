@@ -37,6 +37,16 @@ test('simulator qualification build retains both complete package closures, iden
     'sim-boot.mjs',
     'advanced-worker.mjs',
     'advanced-controller.mjs',
+    'advanced-aircraft-runtime.mjs',
+    'aircraft-physics.mjs',
+    'aircraft-response.mjs',
+    'aircraft-presets.mjs',
+    'aircraft-recording.mjs',
+    'aircraft-terrain.mjs',
+    'aircraft-course-session.mjs',
+    'aircraft-mission-checkpoint.mjs',
+    'aircraft-practice-controls.mjs',
+    'aircraft-course-advice.mjs',
     'vendor/rapier/rapier.mjs',
   ])
     assert.ok(files.has(`optional-practice/civilian-fpv/${module}`), module);

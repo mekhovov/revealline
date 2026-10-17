@@ -96,7 +96,7 @@ for (const packageId of ['civilian-fpv', 'fpv-worlds']) {
         result.sectors.map((row) => row.index),
         [0, 1],
       );
-      assert.equal(result.inputs.length, packageId === 'civilian-fpv' ? 26 : 27);
+      assert.equal(result.inputs.length, packageId === 'civilian-fpv' ? 27 : 28);
     });
   }
 }
