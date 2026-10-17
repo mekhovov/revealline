@@ -9,6 +9,9 @@ on:
       - 'game/couch/couch.mjs'
       - 'game/couch/couch-shell.mjs'
       - 'game/couch/couch-static-pictures.mjs'
+      - 'game/ui/controller-navigation.mjs'
+      - 'game/test/controller-navigation.test.mjs'
+      - 'game/test/controller-reading.test.mjs'
       - 'game/test/couch-static-pictures.test.mjs'
       - 'game/test/couch-static-picture-host.test.mjs'
       - 'game/test/couch-shell.test.mjs'
@@ -259,6 +262,8 @@ env:
     game/test/couch-static-picture-host.test.mjs
     game/test/couch-shell.test.mjs
     game/test/couch-installed-chapters.test.mjs
+    game/test/controller-navigation.test.mjs
+    game/test/controller-reading.test.mjs
   APPEARANCE_ADMISSION_TEST_FILES: >-
     game/test/journey-performance-admission.test.mjs
     game/test/journey-performance-observation-admission.test.mjs
@@ -428,7 +433,7 @@ jobs:
         timeout-minutes: 3
         if: steps.test_policy.outputs.runTests == 'true'
         run: npm ci
-      - name: Run complete Team artwork and preparation regressions
+      - name: Run complete Team artwork, preparation and controller regressions
         timeout-minutes: 10
         id: admission_tests
         if: steps.test_policy.outputs.runTests == 'true'
