@@ -9,13 +9,14 @@ import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
 import { attachPublishedAudio, createPublishedCues } from '../ui/published-audio.mjs';
 import { emptySoundtrackLibrary, BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
+import { pcmWave, pcmWaveBlob } from './helpers/pcm-wave.mjs';
 import { Events } from './helpers/couch-dom.mjs';
 import {
   validateCampaignFeedback,
   CAMPAIGN_FEEDBACK_FORMAT,
 } from '../journey/campaign-feedback.mjs';
 
-const bytes = new Uint8Array([82, 73, 70, 70, 0, 0, 0, 0, 87, 65, 86, 69]);
+const bytes = pcmWave();
 const blob = new Blob([bytes], { type: 'audio/wav' });
 const hash = await hashPresentationBytes(bytes);
 const published = (readBlob = async () => blob, allowed = () => true) => ({
@@ -792,7 +793,7 @@ test('switching presentation during cue decoding discards the old cache and uses
     host = {
       async readAudio(slot, options) {
         reads.push({ slot, options, owner: current });
-        return { blob };
+        return { blob: pcmWaveBlob({ seconds: 0.2 }) };
       },
     };
     owner.setPresentation(current);

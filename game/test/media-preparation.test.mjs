@@ -1,3 +1,4 @@
+import { pcmWaveBlob } from './helpers/pcm-wave.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { setImmediate as tick } from 'node:timers/promises';
@@ -49,7 +50,7 @@ test('published cue buffers stay bounded without stopping an already playing voi
   });
   const cues = createPublishedCues({
     sound: h.soundscape,
-    readAudio: async () => ({ blob: new Blob([new Uint8Array(16)]) }),
+    readAudio: async () => ({ blob: pcmWaveBlob({ seconds: 15, sampleRate: 8000, channels: 2 }) }),
   });
   t.after(() => cues.close());
   await cues.prepare(['focus']);
