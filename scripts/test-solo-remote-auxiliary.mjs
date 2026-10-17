@@ -11,6 +11,7 @@ import {
   auxiliaryArguments,
   auxiliaryAssessment,
   bindAuxiliaryJob,
+  prepareAuxiliaryMode,
   readAuxiliaryJSON,
   validateAuxiliaryPlan,
 } from './solo-remote-auxiliary.mjs';
@@ -212,6 +213,179 @@ function preparationManifest() {
   return value;
 }
 
+function finalRecoveryManifest() {
+  // In-memory admission control only: no real final archive has been declared.
+  const value = preparationManifest();
+  value.candidate.revision = 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4';
+  value.candidate.tree = '6b13627e324f695b6ee8d9f2dee2eeeb7217c332';
+  value.baseline.revision = '8b01991942dc764b8aa4726851699ce1985e53ae';
+  value.baseline.tree = '9373b6a74aea8fa1ef47aa17ace140b4cf714609';
+  value.runtimeRevision = '32abd322afd8243e4537ce4784e2f78ee45ecbec';
+  Object.assign(value.release, {
+    format: 'SoloFinalRecoveryConfirmationReleaseV1',
+    scope: 'independent-final-source-recovery-confirmation',
+    predecessorRun: 38995660472,
+    candidateRevision: value.candidate.revision,
+    onceOnlyBefore: value.candidate.revision,
+  });
+  delete value.release.runtimeFix;
+  return value;
+}
+
+test('final-source recovery retains six candidate-only observations, original recipes and exclusion', () => {
+  const value = finalRecoveryManifest();
+  const old = preparationManifest();
+  assert.deepEqual(auxiliaryMatrix(value), auxiliaryMatrix(old));
+  for (const { job, repetition } of auxiliaryMatrix(value).include) {
+    const current = bindAuxiliaryJob(value, job, repetition);
+    const previous = bindAuxiliaryJob(old, job, repetition);
+    assert.deepEqual(current.rows, previous.rows);
+    assert.deepEqual(current.recipes, previous.recipes);
+    for (const key of [
+      'setupTimeoutMs',
+      'fixturePreparationTimeoutMs',
+      'helperTimeoutMs',
+      'evidenceBytes',
+      'rowEvidenceBytes',
+      'performanceExclusion',
+      'cpu',
+    ])
+      assert.equal(current[key], previous[key]);
+    const row = current.rows[0];
+    const args = auxiliaryArguments(
+      { here: '/tools', plan: current, modeState: { recipePath: '/scenario' } },
+      row,
+      'http://localhost/game/',
+      '/evidence',
+    );
+    assert(args.includes(`--source-revision=${value.candidate.revision}`));
+    const observed = raw(current, row);
+    const result = auxiliaryAssessment(current, row, observed, closed, '123.4');
+    assert.equal(result.status, 'passed');
+    assert.equal(result.performanceQualification, 'excluded');
+    assert.match(result.scope, /Synthetic.*no Demo or actual GPU/);
+    observed.sourceRevision = old.candidate.revision;
+    assert.equal(auxiliaryAssessment(current, row, observed, closed, '123.4').status, 'failed');
+  }
+});
+
+test('final recovery rejects old identities, altered limits, wider jobs and invented qualification', () => {
+  for (const mutate of [
+    (p) => (p.candidate.revision = preparationManifest().candidate.revision),
+    (p) => (p.candidate.tree = '0'.repeat(40)),
+    (p) => (p.baseline.revision = manifest.baseline.revision),
+    (p) => (p.baseline.tree = '0'.repeat(40)),
+    (p) => delete p.runtimeRevision,
+    (p) => (p.runtimeRevision = '0'.repeat(40)),
+    (p) => (p.release.format = 'unknown'),
+    (p) => (p.release.runtimeFix = '0'.repeat(40)),
+    (p) => (p.release.candidateRevision = '0'.repeat(40)),
+    (p) => (p.release.onceOnlyBefore = '0'.repeat(40)),
+    (p) => (p.release.predecessorRun = 38985941469),
+    (p) => (p.release.firstEightAllCorrectnessPassed = true),
+    (p) => (p.release.performanceQualification = 'passed'),
+    (p) => (p.release.repetitions = [1, 2]),
+    (p) => (p.release.selectedJobs = ['music-webkit']),
+    (p) => (p.release.automaticRetries = 1),
+    (p) => (p.recipes.recovery.sha256 = '0'.repeat(64)),
+    (p) => (p.setupTimeoutMs += 1),
+    (p) => (p.rowEvidenceBytes *= 2),
+  ]) {
+    const value = finalRecoveryManifest();
+    mutate(value);
+    assert.throws(() => auxiliaryMatrix(value));
+  }
+  const p = bindAuxiliaryJob(finalRecoveryManifest(), 'recovery-chromium', 1);
+  p.rows.push({ ...p.rows[0], id: 'recovery-chromium-r1-baseline', source: 'baseline' });
+  assert.throws(() => validateAuxiliaryPlan(p));
+});
+
+test('final recovery preparation requires exact admitted candidate archive without preparing a baseline', async (t) => {
+  const value = finalRecoveryManifest();
+  const repository = await realpath(new URL('..', import.meta.url));
+  for (const ref of [
+    ...Object.values(value.recipes),
+    ...value.uploads,
+    ...value.frozenTools,
+    ...value.adapterInputs,
+  ]) {
+    const bytes = await readFile(join(repository, ref.path));
+    ref.bytes = bytes.length;
+    ref.sha256 = createHash('sha256').update(bytes).digest('hex');
+  }
+  const p = bindAuxiliaryJob(value, 'recovery-chromium', 1);
+  const work = await realpath(await mkdtemp(join(tmpdir(), 'solo-final-recovery-')));
+  t.after(() => rm(work, { recursive: true, force: true }));
+  const admitted = {
+    sourceRevision: p.candidate.revision,
+    sourceTree: p.candidate.tree,
+    manifestSHA256: p.candidate.manifestSHA256,
+    archiveIdentity: p.candidate.inner,
+  };
+  const ctx = {
+    plan: p,
+    repository,
+    work,
+    report: {},
+    admitted: { status: 'passed', artifacts: { candidate: admitted } },
+    ensureBaseline: () => assert.fail('Recovery must not prepare a baseline arm'),
+    async digest(path) {
+      const bytes = await readFile(path);
+      return { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
+    },
+  };
+  const prepared = await prepareAuxiliaryMode(ctx);
+  assert.equal(prepared.audioFixture, null);
+  assert.equal(ctx.report.performanceExclusion, true);
+  for (const [key, bad] of [
+    ['sourceRevision', preparationManifest().candidate.revision],
+    ['sourceTree', '0'.repeat(40)],
+    ['manifestSHA256', '0'.repeat(64)],
+    ['archiveIdentity', { bytes: 1, sha256: '0'.repeat(64) }],
+  ]) {
+    await assert.rejects(
+      prepareAuxiliaryMode({
+        ...ctx,
+        admitted: { status: 'passed', artifacts: { candidate: { ...admitted, [key]: bad } } },
+      }),
+    );
+  }
+});
+
+test('final recovery declaration binds an isolated exact-source repetition without eager tool imports', async (t) => {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-final-recovery-cli-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const module = join(dir, 'adapter.mjs'),
+    input = join(dir, 'manifest.json'),
+    output = join(dir, 'bound.json');
+  const value = finalRecoveryManifest();
+  await writeFile(module, await readFile(new URL('./solo-remote-auxiliary.mjs', import.meta.url)));
+  await writeFile(input, JSON.stringify(value));
+  const options = { encoding: 'utf8', cwd: dir, timeout: 10000, maxBuffer: 1024 * 1024 };
+  assert.equal(
+    execFileSync(process.execPath, [module, 'matrix-plan', input], options),
+    `matrix=${JSON.stringify(auxiliaryMatrix(value))}\n`,
+  );
+  execFileSync(
+    process.execPath,
+    [module, 'bind-plan', input, output, 'recovery-webkit', '3'],
+    options,
+  );
+  const bound = JSON.parse(await readFile(output));
+  validateAuxiliaryPlan(bound);
+  assert.equal(bound.observationId, 'recovery-webkit-r3');
+  assert.equal(bound.candidate.revision, value.candidate.revision);
+  assert.equal(bound.runtimeRevision, value.runtimeRevision);
+  assert.equal(bound.rows.length, 1);
+  assert.equal(bound.rows[0].source, 'candidate');
+  assert.equal(
+    bound.manifestInput.sha256,
+    createHash('sha256')
+      .update(await readFile(input))
+      .digest('hex'),
+  );
+});
+
 test('preparation confirmation declares six distinct existing-recipe observations with unchanged bounds', () => {
   const value = preparationManifest();
   const matrix = auxiliaryMatrix(value);
@@ -385,16 +559,43 @@ test('source, recipe, resource, row and concurrency changes cannot enter a job',
     assert.throws(() => validateAuxiliaryPlan(p));
   }
 });
-test('all preserved recipe/upload bytes and the adapter pin match the draft manifest', async () => {
-  for (const ref of [
-    ...Object.values(manifest.recipes),
-    ...manifest.uploads,
-    ...manifest.adapterInputs,
-  ]) {
+test('preserved recipe and upload bytes remain unchanged after the historical declaration', async () => {
+  for (const ref of [...Object.values(manifest.recipes), ...manifest.uploads]) {
     const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
     assert.equal(bytes.length, ref.bytes);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256);
   }
+});
+test('executed auxiliary declaration retains independently verified historical adapter pins', async () => {
+  const witnessBytes = await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-final-recovery/historical-a6-source.json',
+      import.meta.url,
+    ),
+  );
+  const check = (bytes, declaration) => {
+    assert.equal(
+      createHash('sha256').update(bytes).digest('hex'),
+      '6b4ec51540a7e472056f65f8421c660a4d5c64a990a78af1f79717562e99ade4',
+    );
+    const witness = JSON.parse(bytes);
+    assert.equal(witness.sourceRevision, 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4');
+    assert.equal(witness.sourceTree, '6b13627e324f695b6ee8d9f2dee2eeeb7217c332');
+    assert.deepEqual(
+      JSON.parse(declaration).adapterInputs,
+      witness.adapterInputs.map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })),
+    );
+    assert.equal(declaration.length, witness.manifest.bytes);
+    assert.equal(createHash('sha256').update(declaration).digest('hex'), witness.manifest.sha256);
+  };
+  const declaration = await readFile(
+    new URL('../docs/performance/solo-remote-auxiliary-plan.json', import.meta.url),
+  );
+  check(witnessBytes, declaration);
+  assert.throws(() => check(Buffer.concat([witnessBytes, Buffer.from(' ')]), declaration));
+  const changed = JSON.parse(declaration);
+  changed.adapterInputs[0].sha256 = '0'.repeat(64);
+  assert.throws(() => check(witnessBytes, Buffer.from(JSON.stringify(changed))));
 });
 test('audio and recovery argv preserve exact tools, engine context and intrusive exclusion', () => {
   for (const job of Object.keys(AUXILIARY_JOBS)) {

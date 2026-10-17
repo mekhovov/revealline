@@ -15,10 +15,20 @@ const PREPARATION_SOURCE = 'bffcbd838a7bb925da8aaf030695773f893d8bda';
 const PREPARATION_FIX = 'b5b985f7049537a278632ba82228bb671f7f135a';
 const preparationConfirmation = (plan) =>
   plan.release?.format === 'SoloStartPreparationConfirmationReleaseV1';
+const finalRecovery = (plan) => plan.release?.format === 'SoloFinalRecoveryConfirmationReleaseV1';
+const repeatedRecovery = (plan) => preparationConfirmation(plan) || finalRecovery(plan);
+const FINAL_RECOVERY = Object.freeze({
+  candidate: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+  candidateTree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
+  baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+  runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
+});
 const importDiagnostic = (plan) => plan.release?.format === 'SoloMusicImportDiagnosticReleaseV1';
 const rolesFor = (plan, spec) => (importDiagnostic(plan) ? ['candidate'] : spec.roles);
 function sourceRevision(plan, role) {
   assert(['baseline', 'candidate'].includes(role));
+  if (finalRecovery(plan)) return FINAL_RECOVERY[role];
   return role === 'candidate' && preparationConfirmation(plan) ? PREPARATION_SOURCE : SOURCE[role];
 }
 export const AUXILIARY_JOBS = Object.freeze({
@@ -81,19 +91,21 @@ function validateRelease(plan) {
   assert(diagnostic || plan.status === 'reviewed-and-released');
   assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);
   if (plan.release.musicProofBytes !== undefined) {
-    assert(diagnostic && !preparationConfirmation(plan));
+    assert(diagnostic && !repeatedRecovery(plan));
     assert.equal(plan.release.musicProofBytes, 32 * MiB);
   }
   if (diagnostic) {
     assert.equal(
       plan.release.scope,
-      preparationConfirmation(plan)
-        ? 'independent-start-preparation-confirmation'
-        : importDiagnostic(plan)
-          ? 'independent-audio-import-duration-diagnostic'
-          : 'independent-audio-and-synthetic-recovery',
+      finalRecovery(plan)
+        ? 'independent-final-source-recovery-confirmation'
+        : preparationConfirmation(plan)
+          ? 'independent-start-preparation-confirmation'
+          : importDiagnostic(plan)
+            ? 'independent-audio-import-duration-diagnostic'
+            : 'independent-audio-and-synthetic-recovery',
     );
-    assert.equal(plan.release.predecessorRun, 38985941469);
+    assert.equal(plan.release.predecessorRun, finalRecovery(plan) ? 38995660472 : 38985941469);
     assert.equal(plan.release.automaticRetries, 0);
     assert.equal(plan.release.performanceQualification, 'excluded');
   }
@@ -104,10 +116,14 @@ function validateRelease(plan) {
     assert.deepEqual(plan.release.importProbe, { elements: 8, records: 64 });
     assert.equal(plan.release.musicProofBytes, 32 * MiB);
   } else assert.equal(plan.release.importProbe, undefined);
-  if (preparationConfirmation(plan)) {
+  if (repeatedRecovery(plan)) {
     assert(diagnostic, 'Start confirmation remains independent correctness evidence');
-    assert.equal(plan.release.runtimeFix, PREPARATION_FIX);
-    assert.equal(plan.release.candidateRevision, PREPARATION_SOURCE);
+    if (finalRecovery(plan)) {
+      assert.equal(plan.runtimeRevision, FINAL_RECOVERY.runtime);
+      assert.equal(plan.release.runtimeFix, undefined);
+      assert.equal(plan.release.onceOnlyBefore, FINAL_RECOVERY.candidate);
+    } else assert.equal(plan.release.runtimeFix, PREPARATION_FIX);
+    assert.equal(plan.release.candidateRevision, sourceRevision(plan, 'candidate'));
     assert.deepEqual(plan.release.selectedJobs, ['recovery-chromium', 'recovery-webkit']);
     assert.deepEqual(plan.release.repetitions, [1, 2, 3]);
   } else assert.equal(plan.release.repetitions, undefined);
@@ -145,14 +161,18 @@ export function validateAuxiliaryPlan(plan) {
   if (plan.release.selectedJobs)
     assert(plan.release.selectedJobs.includes(plan.job), 'Job is outside this reviewed release');
   assert.equal(plan.candidate.revision, sourceRevision(plan, 'candidate'));
-  if (preparationConfirmation(plan)) {
+  if (repeatedRecovery(plan)) {
     assert(plan.release.repetitions.includes(plan.repetition));
     assert.equal(plan.observationId, `${plan.job}-r${plan.repetition}`);
   } else {
     assert.equal(plan.repetition, undefined);
     assert.equal(plan.observationId, undefined);
   }
-  assert.equal(plan.baseline.revision, SOURCE.baseline);
+  assert.equal(plan.baseline.revision, sourceRevision(plan, 'baseline'));
+  if (finalRecovery(plan)) {
+    assert.equal(plan.candidate.tree, FINAL_RECOVERY.candidateTree);
+    assert.equal(plan.baseline.tree, FINAL_RECOVERY.baselineTree);
+  }
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
   assert.equal(plan.performanceExclusion, true);
@@ -225,7 +245,7 @@ export function bindAuxiliaryJob(manifest, job, repetition = 1) {
   delete plan.jobs;
   plan.format = 'SoloHostedAuxiliaryPlanV1';
   plan.job = job;
-  if (preparationConfirmation(plan)) {
+  if (repeatedRecovery(plan)) {
     assert(plan.release.repetitions.includes(repetition));
     plan.repetition = repetition;
     plan.observationId = `${job}-r${repetition}`;
@@ -300,6 +320,14 @@ async function verifyInputs(ctx) {
 export async function prepareAuxiliaryMode(ctx) {
   validateAuxiliaryPlan(ctx.plan);
   await verifyInputs(ctx);
+  if (finalRecovery(ctx.plan)) {
+    assert.equal(ctx.admitted.status, 'passed');
+    const admitted = ctx.admitted.artifacts.candidate;
+    assert.equal(admitted.sourceRevision, FINAL_RECOVERY.candidate);
+    assert.equal(admitted.sourceTree, FINAL_RECOVERY.candidateTree);
+    assert.equal(admitted.manifestSHA256, ctx.plan.candidate.manifestSHA256);
+    assert.deepEqual(admitted.archiveIdentity, ctx.plan.candidate.inner);
+  }
   const spec = AUXILIARY_JOBS[ctx.plan.job];
   if (rolesFor(ctx.plan, spec).includes('baseline')) await ctx.ensureBaseline();
   const inputs = join(ctx.work, 'auxiliary-inputs');
