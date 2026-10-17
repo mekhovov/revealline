@@ -222,6 +222,7 @@ export function validateQualification(scenario) {
           'directionChangesWithMovement',
           'maximumTrailCells',
           'maximumClaimedCells',
+          'maximumCaptureCells',
         ].includes(key),
       );
       integer(value, 1, 1000000, 'replay feature minimum');

@@ -73,6 +73,13 @@ export function inspectReplayMechanics(
     maximumTrailCells: 0,
     maximumClaimedCells: 0,
   };
+  // Opt in without changing historical undeclared reports. Cumulative claimed
+  // coverage cannot establish the cost of a single large capture.
+  const inspectCaptureSize = Object.prototype.hasOwnProperty.call(
+    requirements,
+    'maximumCaptureCells',
+  );
+  if (inspectCaptureSize) features.maximumCaptureCells = 0;
   let previousAcceptedMovingDirection = null;
   for (const segment of replay.segments) {
     if (segment.releaseBefore) releaseInputs(run);
@@ -109,7 +116,16 @@ export function inspectReplayMechanics(
         previousAcceptedMovingDirection = requested;
       }
       for (const event of run.events) {
-        if (event.type === 'cut.closed') features.closures++;
+        if (event.type === 'cut.closed') {
+          features.closures++;
+          if (inspectCaptureSize) {
+            check(
+              Number.isSafeInteger(event.cells) && event.cells >= 0,
+              'Capture event has no valid individual cell count',
+            );
+            features.maximumCaptureCells = Math.max(features.maximumCaptureCells, event.cells);
+          }
+        }
         if (event.type === 'cells.eroded') features.eroded++;
         if (event.type === 'combat.fired') features.shots++;
       }
