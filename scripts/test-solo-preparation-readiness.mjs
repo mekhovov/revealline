@@ -271,6 +271,40 @@ test('mutated executed witness, declaration or original workflow cannot acquire 
     assert.throws(() => executedBindings(...args));
 });
 
+const diagnosedWitnessBytes = await read(
+  'docs/performance/fixtures/solo-readiness-diagnosed/92ff-execution-source.json',
+);
+function diagnosedExecutedBindings(bytes, declarationBytes, workflowBytes) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '12a8d98f6cffab37d84684537849a9818a7a77e633bc8f312263f657edf93b83',
+  );
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.head, '92ff7ef800e542617b4fc3efad96bd07ce6cbecb');
+  assert.equal(witness.tree, '0cbdde8dbe125e0194d6e23df0b2da288f6c751e');
+  for (const [path, input] of [
+    ['docs/performance/solo-readiness-diagnosed-239-plan.json', declarationBytes],
+    ['.github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml', workflowBytes],
+  ]) {
+    const ref = witness.records.find((r) => r.path === path);
+    assert(ref);
+    assert.equal(input.length, ref.bytes);
+    assert.equal(createHash('sha256').update(input).digest('hex'), ref.sha256);
+  }
+  const declaration = JSON.parse(declarationBytes);
+  for (const ref of [
+    ...declaration.adapterInputs,
+    ...declaration.frozenTools,
+    declaration.fixture,
+    ...declaration.additionalFixtures,
+  ]) {
+    const actual = witness.records.find((r) => r.path === ref.path);
+    assert(actual, ref.path);
+    assert.equal(actual.bytes, ref.bytes);
+    assert.equal(actual.sha256, ref.sha256);
+  }
+}
+
 const diagnosedManifest = JSON.parse(
   await read('docs/performance/solo-readiness-diagnosed-239-plan.json'),
 );
@@ -368,19 +402,27 @@ test('actual239 successor admits only the two diagnosed WebKit recipes and prese
     assert.throws(() => assertReleaseGuard(workflow.replace(condition, 'true'), conditions));
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((match) => match[1]);
   assert.equal(new Set(sparse).size, sparse.length);
+  diagnosedExecutedBindings(
+    diagnosedWitnessBytes,
+    await read('docs/performance/solo-readiness-diagnosed-239-plan.json'),
+    Buffer.from(workflow),
+  );
   for (const ref of [
     ...diagnosedManifest.adapterInputs,
     ...diagnosedManifest.frozenTools,
     diagnosedManifest.fixture,
     ...diagnosedManifest.additionalFixtures,
-  ]) {
-    const bytes = await read(ref.path);
-    assert.deepEqual(
-      { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') },
-      { bytes: ref.bytes, sha256: ref.sha256 },
-      ref.path,
-    );
+  ])
     assert(sparse.includes(ref.path), ref.path);
+  for (const mutation of ['witness', 'declaration', 'workflow']) {
+    const inputs = [
+      diagnosedWitnessBytes,
+      await read('docs/performance/solo-readiness-diagnosed-239-plan.json'),
+      Buffer.from(workflow),
+    ];
+    const index = ['witness', 'declaration', 'workflow'].indexOf(mutation);
+    inputs[index] = Buffer.concat([inputs[index], Buffer.from(' ')]);
+    assert.throws(() => diagnosedExecutedBindings(...inputs));
   }
   assert.match(workflow, /engine: \[webkit\]/);
   assert(workflow.includes('playwright" install --with-deps chromium webkit'));

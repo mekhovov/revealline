@@ -22,6 +22,27 @@ const old = JSON.parse(await read(oldPath)),
   manifest = JSON.parse(await read(path)),
   workflow = (await read(workflowPath)).toString();
 const before = '239c574ecddd5bb6d5896e621d9edc53e7f6a313';
+const historicalBytes = await read(
+  'docs/performance/fixtures/solo-optional-start-audio/92ff-execution-source.json',
+);
+assert.equal(
+  hash(historicalBytes),
+  '84a4e2228b9aa23e058c9043c2927903baaa801b4828cc37171ec8be1c6e47dc',
+);
+const historical = JSON.parse(historicalBytes);
+assert.equal(historical.revision, '92ff7ef800e542617b4fc3efad96bd07ce6cbecb');
+const historicalPaths = new Set([
+  'scripts/run-solo-remote-correctness.mjs',
+  'scripts/solo-remote-readiness.mjs',
+  'scripts/solo-qualification-readiness.mjs',
+]);
+for (const p of [path, workflowPath]) {
+  const b = await read(p),
+    r = historical.records.find((r) => r.path === p);
+  assert.equal(b.length, r.bytes);
+  assert.equal(hash(b), r.sha256);
+}
+
 function engineInventory(source) {
   const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }),
     found = [];
@@ -136,7 +157,7 @@ test('new explicit setup edge preserves every candidate-only workload field and 
   oldWithNewProof.release.setupCorrection = p.release.setupCorrection;
   assert.throws(() => validateReadinessPlan(oldWithNewProof));
 });
-test('current prospective inputs, exact source/limits and four-condition before239 guard are checked independently', async () => {
+test('executed setup inputs, exact source/limits and four-condition before239 guard remain checked independently', async () => {
   const terms = [
     'github.event.pull_request.number == 1544',
     'github.event.pull_request.head.repo.full_name == github.repository',
@@ -170,9 +191,14 @@ test('current prospective inputs, exact source/limits and four-condition before2
   const sparse = [...workflow.matchAll(/^            \/([^\n]+)$/gm)].map((m) => m[1]);
   assert.equal(sparse.length, new Set(sparse).size);
   for (const ref of [...manifest.adapterInputs, ...manifest.frozenTools, manifest.fixture]) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(hash(b), ref.sha256, ref.path);
+    if (historicalPaths.has(ref.path)) {
+      const record = historical.records.find((r) => r.path === ref.path);
+      assert.deepEqual({ path: record.path, bytes: record.bytes, sha256: record.sha256 }, ref);
+    } else {
+      const b = await read(ref.path);
+      assert.equal(b.length, ref.bytes, ref.path);
+      assert.equal(hash(b), ref.sha256, ref.path);
+    }
     assert(sparse.includes(ref.path), ref.path);
   }
   for (const input of [

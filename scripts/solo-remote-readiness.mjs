@@ -369,6 +369,31 @@ export const OPTIONAL_AUDIO_READINESS_FIXTURE = Object.freeze({
   bytes: 4520,
   sha256: '05ce2d60b858eff3f1ee67d23c17c815efe1a0c7f3da196c89b98b931139d096',
 });
+export const OPTIONAL_AUDIO_SETTINGS_FIXTURE = Object.freeze({
+  path: 'docs/performance/fixtures/solo-readiness-media/optional-audio-start-missing-settings-v2.qualification.fixture',
+  bytes: 4878,
+  sha256: '307f46d055838f1b76fc8e825b22317a0fb85231a8ca3a7cfd43de92f7109e11',
+});
+export const OPTIONAL_AUDIO_ROUTE_CORRECTION = Object.freeze({
+  format: 'SoloOptionalAudioPublicSettingsRouteV1',
+  priorRun: 39054542054,
+  priorJob: 117459720437,
+  priorTooling: '92ff7ef800e542617b4fc3efad96bd07ce6cbecb',
+  priorConclusion: 'failure',
+  priorNativeAudioObservations: 0,
+  priorClaimedAudioRequests: 0,
+  originalDeclaration: {
+    path: 'docs/performance/solo-optional-start-audio-e1cc-v2-plan.json',
+    bytes: 13819,
+    sha256: 'e93a11fe470a9e8bb4b3062778f9d3543c7fee355d81b10b21199aef7c2de413',
+  },
+  reason: 'Campaign-selector-is-owned-by-Settings-Gameplay',
+  publicRoute: 'settings-gameplay-v2',
+  runtimeChanged: false,
+  scenarioChanged: true,
+  gateChanged: false,
+  automaticRetries: 0,
+});
 const optionalAudioPlan = (plan) => plan?.sourceCohort === OPTIONAL_AUDIO_READINESS_COHORT;
 export function optionalAudioReadinessSelection(plan) {
   assert(optionalAudioPlan(plan));
@@ -376,7 +401,10 @@ export function optionalAudioReadinessSelection(plan) {
   assert.equal(plan.engine, 'chromium');
   return {
     source: GEOMETRY_READINESS_SOURCE,
-    fixture: OPTIONAL_AUDIO_READINESS_FIXTURE,
+    fixture:
+      plan.release?.routeCorrection !== undefined
+        ? OPTIONAL_AUDIO_SETTINGS_FIXTURE
+        : OPTIONAL_AUDIO_READINESS_FIXTURE,
     protocol: 'optional-audio-start-missing-v1',
     mediaFault: true,
     audioFault: true,
@@ -658,6 +686,49 @@ export function validateReadinessPlan(plan) {
       DIAGNOSED_READINESS_FIXTURES['required-original-cancel'],
     ]);
     assert.equal(plan.release.comparisonScope, 'diagnosed-webkit-readiness-only');
+    if (plan.release.setupCorrection !== undefined) {
+      assert.deepEqual(plan.release.setupCorrection, {
+        format: 'SoloSharedSourceCheckoutSuccessorV1',
+        priorRun: 39054543070,
+        priorJob: 117459722576,
+        priorTooling: '92ff7ef800e542617b4fc3efad96bd07ce6cbecb',
+        priorConclusion: 'failure',
+        priorNativeObservations: 0,
+        priorRowsNotRun: 2,
+        originalDeclaration: {
+          path: 'docs/performance/solo-readiness-diagnosed-239-plan.json',
+          bytes: 13916,
+          sha256: '3e844079b1d18ee727a943a289c4534d5f112a8bcf61713f3a34bccf8df6a850',
+        },
+        originalWorkflow: {
+          path: '.github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml',
+          bytes: 26105,
+          sha256: 'ddad751bd28f6c43f5400c3dd345c26654117a9e648f87cde124736e6b4f476f',
+        },
+        reason: 'candidate-fetch-timeout-shared-object-store-setup-correction',
+        checkoutProtocol: 'shared-job-object-store-distinct-full-worktrees-v1',
+        candidateCheckoutTimeoutMs: 180000,
+        runtimeChanged: false,
+        scenarioChanged: false,
+        gateChanged: false,
+        automaticRetries: 0,
+      });
+      assert.equal(plan.release.onceOnlyBefore, '92ff7ef800e542617b4fc3efad96bd07ce6cbecb');
+      assert.deepEqual(plan.sourceCheckout, {
+        protocol: 'shared-job-object-store-distinct-full-worktrees-v1',
+        baseline: 'unchanged exact baseline worktree',
+        candidate:
+          'exact detached full candidate worktree sharing only job-local Git metadata/objects',
+        checkoutStepMs: 180000,
+        filters: false,
+        automaticFetchRetries: 0,
+        credentials: 'fetch child environment only; no Git config/argv persistence',
+        verification:
+          'Both HEAD/tree/clean full source roots independently rechecked; remote full package/source/CSP unchanged',
+      });
+    } else {
+      assert.equal(plan.release.onceOnlyBefore, DIAGNOSED_READINESS_SOURCE.revision);
+    }
     for (const row of plan.rows) validateReadinessPlan(preparationRowPlan(plan, row));
     const refs = combinedFixtureInputs(plan);
     assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
@@ -740,6 +811,7 @@ export function validateReadinessPlan(plan) {
   assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
   assert.equal(plan.status, 'reviewed-readiness-diagnostic-only');
   const selected = selection(plan);
+  if (!selected.audioFault) assert.equal(plan.release.routeCorrection, undefined);
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
@@ -781,8 +853,12 @@ export function validateReadinessPlan(plan) {
         gateChanged: false,
         automaticRetries: 0,
       });
-      assert.equal(plan.release.onceOnlyBefore, '239c574ecddd5bb6d5896e621d9edc53e7f6a313');
+      if (plan.release.routeCorrection !== undefined) {
+        assert.deepEqual(plan.release.routeCorrection, OPTIONAL_AUDIO_ROUTE_CORRECTION);
+        assert.equal(plan.release.onceOnlyBefore, '92ff7ef800e542617b4fc3efad96bd07ce6cbecb');
+      } else assert.equal(plan.release.onceOnlyBefore, '239c574ecddd5bb6d5896e621d9edc53e7f6a313');
     } else {
+      assert.equal(plan.release.routeCorrection, undefined);
       assert.equal(plan.release.onceOnlyBefore, '7c7cc2648331870683ac7b76850bbeff859f802e');
     }
   }
