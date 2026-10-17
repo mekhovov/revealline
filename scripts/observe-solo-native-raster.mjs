@@ -22,6 +22,7 @@ import {
   primitiveInputPremises,
   RASTER_SOURCE_LIMITS,
   assertRasterSourceBody,
+  EARNED_RASTER_PROTOCOL,
 } from './solo-remote-raster.mjs';
 const MiB = 1024 ** 2;
 const hash = (b) => createHash('sha256').update(b).digest('hex');
@@ -30,14 +31,19 @@ const plan = await readRasterJSON(planPath, 2 * MiB);
 assert.equal(plan.format, 'SoloHostedRasterExecutionV1');
 assert(['chromium', 'webkit'].includes(plan.engine));
 assert.equal(plan.observationTimeoutMs, 120000);
+assert(plan.protocol === undefined || plan.protocol === EARNED_RASTER_PROTOCOL);
+const earned = plan.protocol === EARNED_RASTER_PROTOCOL;
 const output = resolve(outputPath);
 await mkdir(output, { recursive: false });
 const fixtureBytes = await readFile(plan.fixture.path);
 assert.equal(hash(fixtureBytes), plan.fixture.sha256);
-const fixture = JSON.parse(fixtureBytes).expectedReplayDefinition;
+const fixture = earned
+  ? JSON.parse(fixtureBytes)
+  : JSON.parse(fixtureBytes).expectedReplayDefinition;
 const playwright = await import(pathToFileURL(plan.browserModule));
 const report = {
-  format: 'SoloHostedNativeRasterV1',
+  format: earned ? 'SoloHostedEarnedNativeRasterV1' : 'SoloHostedNativeRasterV1',
+  ...(earned ? { protocol: EARNED_RASTER_PROTOCOL } : {}),
   status: 'failed',
   sourceRevision: plan.sourceRevision,
   artifact: plan.artifact,
@@ -46,8 +52,9 @@ const report = {
   performanceExclusion: true,
   primary: null,
   localization: [],
-  scope:
-    'Fresh Linux default-native-API synthetic presentation. No software forcing, physical scanout, iPhone, heat or historical Mac failure resolution.',
+  scope: earned
+    ? 'Fresh Linux legal source-core earned capture/erosion raster. No timing, repair, shipped-art, iPhone or historical Mac failure resolution.'
+    : 'Fresh Linux default-native-API synthetic presentation. No software forcing, physical scanout, iPhone, heat or historical Mac failure resolution.',
 };
 const persist = async () => {
   const text = JSON.stringify(report, null, 2) + '\n';
@@ -86,7 +93,7 @@ async function stage(kind, run, persistent = plan.engine === 'webkit') {
     sourceAdmissionFailures: [],
     cleanup: null,
   };
-  if (kind === 'full12') report.primary = value;
+  if (kind === 'full12' || kind === 'earned7') report.primary = value;
   else report.localization.push(value);
   await persist();
   let owner,
@@ -369,9 +376,58 @@ async function rasterResult({ page, value, directory, scopeCheck }, protocol, co
   }
   value.outputBytes = total;
 }
+async function earnedRasterResult({ page, value, directory, scopeCheck }) {
+  const { earnedRasterProtocol } = await import('./solo-earned-raster-protocol.mjs');
+  const result = await page.evaluate(earnedRasterProtocol, { base: plan.address, fixture });
+  scopeCheck();
+  assert.equal(result.format, 'SoloEarnedNativeRasterV1');
+  value.cases = result.rows;
+  value.invariantFailures = result.failures;
+  value.notObserved = result.notObserved;
+  value.environment = result.environment;
+  value.fixtureScope = result.scope;
+  value.canvasIdentities = result.canvasIdentities;
+  const { recording, ...proof } = result.proof;
+  value.earnedProof = proof;
+  assert(result.rows.length > 0 && result.rows.length <= 21);
+  assert.equal(result.rows.length + result.notObserved.length, 21);
+  const replayBytes = Buffer.from(JSON.stringify(recording) + '\n');
+  assert(replayBytes.length <= MiB);
+  const replayPath = join(directory, 'earned-replay.json');
+  await writeFile(replayPath, replayBytes, { flag: 'wx' });
+  value.replayArtifact = { path: replayPath, bytes: replayBytes.length, sha256: hash(replayBytes) };
+  assert(result.captures.length <= 48);
+  let total = replayBytes.length,
+    rawCount = 0;
+  const names = new Set();
+  for (const capture of result.captures) {
+    assert(/^[a-z0-9-]+$/.test(capture.name) && !names.has(capture.name));
+    names.add(capture.name);
+    for (const [extension, base64] of [
+      ['png', capture.png],
+      ['rgba', capture.rgba],
+    ]) {
+      if (base64 === undefined) continue;
+      assert(typeof base64 === 'string' && base64.length <= 12 * MiB);
+      const bytes = Buffer.from(base64, 'base64');
+      total += bytes.length;
+      assert(bytes.length <= 8 * MiB && total <= 64 * MiB);
+      if (extension === 'rgba') {
+        assert.equal(bytes.length, 1200 * 600 * 4);
+        assert(++rawCount <= 6, 'Only the first failed row has raw comparators');
+      }
+      const path = join(directory, `${capture.name}.${extension}`);
+      await writeFile(path, bytes, { flag: 'wx' });
+      value.captures.push({ path, bytes: bytes.length, sha256: hash(bytes) });
+    }
+  }
+  value.outputBytes = total;
+}
 try {
-  const primary = await stage('full12', (ctx) => rasterResult(ctx, fullProtocol, 12));
-  if (strictControlReproduced(primary, 12)) {
+  const primary = earned
+    ? await stage('earned7', earnedRasterResult)
+    : await stage('full12', (ctx) => rasterResult(ctx, fullProtocol, 12));
+  if (!earned && strictControlReproduced(primary, 12)) {
     const control = await stage('prefix', (ctx) => rasterResult(ctx, prefixProtocol, 2));
     if (strictControlReproduced(control, 2)) {
       const primaryCaptures = new Map(primary.captures.map((r) => [r.path.split('/').at(-1), r]));
@@ -506,8 +562,11 @@ try {
     report.localizationDisposition = primary.clean
       ? 'strict-control-not-reproduced-no-localization'
       : 'primary-incomplete-no-localization';
+  if (earned) report.localizationDisposition = 'separate-earned-protocol-no-synthetic-localization';
   report.status =
-    primary.clean && primary.invariantFailures.length === 0
+    primary.clean &&
+    (!earned || primary.cases.length === 21) &&
+    primary.invariantFailures.length === 0
       ? 'automated-invariants-pass-visual-review-pending'
       : 'failed';
 } catch (e) {

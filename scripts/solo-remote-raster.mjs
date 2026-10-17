@@ -24,6 +24,29 @@ export const RASTER_CASES = ['full', 'reduced', 'minimal'].flatMap((quality) =>
   ['settled', 'acquire', 'warning', 'active'].map((mode) => ({ quality, mode })),
 );
 export const RASTER_JOBS = ['raster-chromium', 'raster-webkit'];
+export const EARNED_RASTER_PROTOCOL = 'earned-capture-erosion-v1';
+export const EARNED_RASTER_STAGES = [
+  'initial',
+  'pre-capture',
+  'post-capture',
+  'erosion-warning',
+  'post-erosion',
+  'large-capture',
+  'final',
+];
+export const EARNED_RASTER_CHECKPOINTS = [
+  [0, '1a2d0faf53398b0a'],
+  [605, '8d9c4d5c2ee4ff1b'],
+  [606, 'ab2c5bb9da4cbeff'],
+  [1213, '9073a37c1eed5f46'],
+  [1273, '32408d538f72e813'],
+  [1806, '0a44b69b5a02cfdf'],
+  [3570, '4e10c76cdb1ad249'],
+];
+export const EARNED_RASTER_CASES = ['full', 'reduced', 'minimal'].flatMap((quality) =>
+  EARNED_RASTER_STAGES.map((mode) => ({ quality, mode })),
+);
+const earnedRaster = (plan) => plan.raster.protocol === EARNED_RASTER_PROTOCOL;
 function validateRelease(plan) {
   const diagnostic = plan.status === 'reviewed-diagnostic-only';
   assert(diagnostic || plan.status === 'reviewed-and-released');
@@ -80,8 +103,9 @@ export function validateRasterPlan(plan) {
   assert.equal(plan.raster.observationTimeoutMs, 120000);
   assert.equal(plan.raster.retryCount, 0);
   assert.equal(plan.raster.pixelTolerance, 0);
-  assert.deepEqual(plan.raster.cases, RASTER_CASES);
-  assert.equal(plan.raster.conditionalLocalization, true);
+  assert(plan.raster.protocol === undefined || earnedRaster(plan), 'Unknown raster protocol');
+  assert.deepEqual(plan.raster.cases, earnedRaster(plan) ? EARNED_RASTER_CASES : RASTER_CASES);
+  assert.equal(plan.raster.conditionalLocalization, !earnedRaster(plan));
   assert.deepEqual(plan.raster.sourceObservation, RASTER_SOURCE_LIMITS);
   assert.deepEqual(
     plan.adapterInputs.map((r) => r.path),
@@ -99,6 +123,23 @@ export function validateRasterPlan(plan) {
     assert(/^(scripts|docs)\/[a-zA-Z0-9_./-]+$/.test(r.path) && !r.path.split('/').includes('..'));
     assert.match(r.sha256, /^[a-f0-9]{64}$/);
     assert(Number.isSafeInteger(r.bytes) && r.bytes > 0 && r.bytes < MiB);
+  }
+  if (earnedRaster(plan)) {
+    assert.equal(plan.status, 'reviewed-diagnostic-only');
+    assert.equal(plan.candidate.revision, 'cce49c81d82b79aefc24898f32eeebc609e569fb');
+    assert.equal(plan.candidate.tree, '71f7e4cb3b0a39c1d281635774371a693794dd22');
+    assert.deepEqual(plan.raster.fixture, {
+      path: 'docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture',
+      bytes: 3425,
+      sha256: 'f645e2f2d07571e0a5423ab15ec72f365e5658fea6dc844bb30934411daf119d',
+    });
+    assert.deepEqual(plan.raster.primitiveInputs, {});
+    assert.equal(
+      plan.frozenTools.filter((ref) => ref.path === 'scripts/solo-earned-raster-protocol.mjs')
+        .length,
+      1,
+    );
+    return plan;
   }
   assert.equal(
     plan.raster.fixture.sha256,
@@ -190,7 +231,9 @@ export function primitiveInputPremises(inputs) {
   }
   return true;
 }
-export function rasterAssessment(raw, command, source, engine) {
+export function rasterAssessment(raw, command, source, engine, protocol) {
+  if (protocol === EARNED_RASTER_PROTOCOL)
+    return earnedRasterAssessment(raw, command, source, engine);
   const clean =
     command?.status === 'closed' &&
     !command.forcedCleanup &&
@@ -229,6 +272,95 @@ export function rasterAssessment(raw, command, source, engine) {
     localization: raw?.localizationDisposition ?? 'separate-diagnostic-results-retained',
   };
 }
+export function earnedRasterAssessment(raw, command, source, engine) {
+  const primary = raw?.primary,
+    proof = primary?.earnedProof;
+  const clean =
+    command?.status === 'closed' &&
+    !command.forcedCleanup &&
+    !command.cleanupUnconfirmed &&
+    !command.violation &&
+    command.survivors?.length === 0 &&
+    command.ambiguous?.length === 0;
+  const complete =
+    clean &&
+    raw?.format === 'SoloHostedEarnedNativeRasterV1' &&
+    raw.protocol === EARNED_RASTER_PROTOCOL &&
+    raw.sourceRevision === source &&
+    raw.engine === engine &&
+    primary?.clean &&
+    primary?.cases?.length === EARNED_RASTER_CASES.length &&
+    primary.cases.every(
+      (row, index) =>
+        row.quality === EARNED_RASTER_CASES[index].quality &&
+        row.mode === EARNED_RASTER_CASES[index].mode &&
+        row.tick === EARNED_RASTER_CHECKPOINTS[index % 7][0] &&
+        row.checkpoint?.hash === EARNED_RASTER_CHECKPOINTS[index % 7][1],
+    ) &&
+    proof?.ticks === 3570 &&
+    proof.finalCheckpoint?.hash === '4e10c76cdb1ad249' &&
+    proof.replay?.match === true &&
+    proof.replay?.status === 'won' &&
+    proof.replay?.checkpoint?.hash === '4e10c76cdb1ad249' &&
+    proof.mechanics?.closures === 5 &&
+    proof.mechanics?.erosions === 3 &&
+    proof.mechanics?.warnings === 4 &&
+    Array.isArray(proof.mechanics?.repairedCells) &&
+    proof.mechanics.repairedCells.length === 0 &&
+    proof.repair === 'unobserved-no-eroded-cell-recapture-on-this-route' &&
+    primary.notObserved?.length === 0 &&
+    !raw.failure;
+  const strictPixels =
+    complete &&
+    primary.cases.every(
+      (row, index) =>
+        ['stableA', 'deterministicA', 'populatedMatchesRebuiltA', 'populatedMatchesRebuiltB'].every(
+          (name) =>
+            row.controls?.[name]?.equal === true && row.controls[name].changedChannels === 0,
+        ) &&
+        row.concealmentStatus === 'observed' &&
+        row.hidden?.samples > 1000 &&
+        row.hidden.changed === 0 &&
+        row.presentationSeconds === 0 &&
+        row.manualInvalidation === false &&
+        row.controlHistory?.controlOnlyInvalidation === true &&
+        row.controlHistory.precedingDraws === (index % 7) * 2 &&
+        Array.isArray(row.controlHistory.independentRepeats) &&
+        row.controlHistory.independentRepeats.length === 2 &&
+        row.controlHistory.independentRepeats.every((count) => count === (index % 7) * 2) &&
+        row.exposedRequired === (index % 7 !== 0) &&
+        (!row.exposedRequired ||
+          (row.exposed?.samples > 1000 && row.exposed.changed > row.exposed.samples / 2)) &&
+        Array.isArray(row.owners) &&
+        row.owners.length === 2 &&
+        row.owners[0] !== row.owners[1] &&
+        row.owners.every(
+          (id, owner) =>
+            Number.isSafeInteger(id) &&
+            id > 0 &&
+            id === primary.cases[index - (index % 7)].owners?.[owner],
+        ),
+    );
+  const pass =
+    strictPixels &&
+    command.exitCode === 0 &&
+    raw.status === 'automated-invariants-pass-visual-review-pending' &&
+    primary.invariantFailures?.length === 0;
+  return {
+    status: pass ? 'passed' : 'failed',
+    raster: pass
+      ? 'automated-invariants-pass-visual-review-pending'
+      : complete
+        ? 'failed-strict-invariants'
+        : 'incomplete',
+    performanceQualification: 'excluded',
+    physicalQualification: 'unobserved',
+    repair: proof?.repair ?? 'unobserved',
+    historicalMacFailure: 'retained-unresolved',
+    scope:
+      'Legal earned capture/erosion source-core raster only; synthetic protocol and historical Mac discrepancy remain separate.',
+  };
+}
 async function verifyInputs(ctx) {
   for (const r of [
     ...ctx.plan.frozenTools,
@@ -257,8 +389,9 @@ export async function prepareRasterMode(ctx) {
     assert.deepEqual(await ctx.digest(join(inputs, name)), { bytes: r.bytes, sha256: r.sha256 });
   }
   return {
-    scope:
-      'Fresh Linux native-API synthetic full12; default browser backend is not inferred as GPU, and historical Mac failure remains unresolved.',
+    scope: earnedRaster(ctx.plan)
+      ? 'Legal earned capture/erosion native raster; repair unobserved and historical Mac failure remains unresolved.'
+      : 'Fresh Linux native-API synthetic full12; default browser backend is not inferred as GPU, and historical Mac failure remains unresolved.',
     firstEightAllCorrectnessPassed: ctx.plan.release.firstEightAllCorrectnessPassed,
     performanceQualification: 'excluded',
   };
@@ -301,6 +434,7 @@ export async function runRasterRow(ctx, row, dir, tmp) {
     const absolute = (r) => ({ ...r, path: resolve(ctx.repository, r.path) });
     const execution = {
       format: 'SoloHostedRasterExecutionV1',
+      ...(earnedRaster(ctx.plan) ? { protocol: EARNED_RASTER_PROTOCOL } : {}),
       sourceRevision: ctx.plan.candidate.revision,
       engine: row.engine,
       address: new URL('game/', server.url).href,
@@ -350,7 +484,16 @@ export async function runRasterRow(ctx, row, dir, tmp) {
       },
     );
     const raw = await readRasterJSON(join(dir, 'raster/report.json'));
-    Object.assign(row, rasterAssessment(raw, row.command, ctx.plan.candidate.revision, row.engine));
+    Object.assign(
+      row,
+      rasterAssessment(
+        raw,
+        row.command,
+        ctx.plan.candidate.revision,
+        row.engine,
+        ctx.plan.raster.protocol,
+      ),
+    );
     row.browserVersion = raw.browserVersion;
     await verifyInputs(ctx);
   } finally {
