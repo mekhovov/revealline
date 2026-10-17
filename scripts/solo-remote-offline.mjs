@@ -1,6 +1,8 @@
 // Adapter only. The common runner retains artifact, process, resource and finalization ownership.
 import assert from 'node:assert/strict';
 import { isDeepStrictEqual } from 'node:util';
+import { createHash } from 'node:crypto';
+import { constants } from 'node:fs';
 import { readFile, writeFile, lstat, realpath, open } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import {
@@ -109,8 +111,53 @@ export function offlineSetupSuccessor() {
       'Sparse tooling omitted selected source-verifier validators. Original failed admission and not-run row are retained; complete verifier smoke is required before new artifact admission.',
   };
 }
+export function offlineEvidenceCopySuccessor() {
+  return {
+    format: 'SoloOfflineFixedEvidenceSuccessorV1',
+    priorRun: 39015298590,
+    priorTooling: 'c41a02216c0811952232a387fd1743e09452c269',
+    priorConclusion: 'failure',
+    priorNativeObservations: 0,
+    priorManifest: {
+      path: 'docs/performance/solo-remote-offline-candidate-v2-plan.json',
+      bytes: 17555,
+      sha256: 'e9aaaaa9c5643e72874be701d986b7b0c647ee3f2889dab4e80959ba0767a807',
+    },
+    priorSummarySHA256: '62738eac6c200bcbd02271cd423612b83270f2a0cc6cca51e32b7e4a957bcbb3',
+    fixedPaths: ['scripts/run-solo-remote-correctness.mjs', 'scripts/solo-remote-archive.py'],
+    runtimeChanged: false,
+    scenarioChanged: false,
+    gateChanged: false,
+    automaticRetries: 0,
+  };
+}
 export function validateOfflinePlan(plan) {
   const successor = plan.setupSuccessor !== undefined;
+  const fixedSuccessor = plan.evidenceCopySuccessor !== undefined;
+  if (fixedSuccessor) {
+    assert(successor, 'The original verifier-closure successor remains required');
+    assert.deepEqual(plan.evidenceCopySuccessor, offlineEvidenceCopySuccessor());
+    assert.deepEqual(
+      plan.fixedEvidenceInputs?.map((ref) => ref.path),
+      plan.evidenceCopySuccessor.fixedPaths,
+    );
+    assert.deepEqual(plan.fixedEvidenceInputs[0], plan.diagnosticRelease.ownerCorrection);
+    const refs = [...plan.adapterInputs, ...plan.fixedEvidenceInputs];
+    assert.equal(
+      new Set(refs.map((ref) => ref.path.split('/').at(-1))).size,
+      refs.length,
+      'Evidence names must be unique',
+    );
+    for (const ref of plan.fixedEvidenceInputs) {
+      assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes <= MiB);
+      assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+    }
+  } else
+    assert.equal(
+      plan.fixedEvidenceInputs,
+      undefined,
+      'Fixed evidence requires explicit successor admission',
+    );
   if (successor) {
     assert.equal(plan.format, INDEPENDENT_OFFLINE_FORMAT);
     assert.deepEqual(plan.setupSuccessor, offlineSetupSuccessor());
@@ -154,7 +201,11 @@ export function validateOfflinePlan(plan) {
     assert.equal(release.performanceQualificationReleased, false);
     assert.equal(
       release.onceOnlyBefore,
-      successor ? 'a7e0219818842f02399317ca6d2a14bdd506da3d' : sources.candidate,
+      fixedSuccessor
+        ? 'c41a02216c0811952232a387fd1743e09452c269'
+        : successor
+          ? 'a7e0219818842f02399317ca6d2a14bdd506da3d'
+          : sources.candidate,
     );
     assert.equal(release.nativeStateEvidence.run, 39001646012);
     assert.equal(
@@ -221,6 +272,49 @@ export function validateOfflinePlan(plan) {
   assert.equal(plan.resources.automaticRetries, 0);
   assert.equal(plan.offline.driver.path, 'scripts/observe-solo-offline-persistence.mjs');
   assert.match(plan.offline.driver.sha256, /^[a-f0-9]{64}$/);
+}
+
+// Called before the common runner and again before native preparation. The
+// common runner still exclusively creates these two evidence files itself.
+export async function verifyOfflineFixedEvidence(plan, repository, evidence = null) {
+  validateOfflinePlan(plan);
+  assert(plan.evidenceCopySuccessor, 'Explicit fixed-evidence successor required');
+  const records = [];
+  for (const ref of plan.fixedEvidenceInputs) {
+    for (const [scope, path] of [
+      ['source', join(repository, ref.path)],
+      ...(evidence ? [['retained', join(evidence, ref.path.split('/').at(-1))]] : []),
+    ]) {
+      const file = await open(path, constants.O_RDONLY | constants.O_NOFOLLOW);
+      try {
+        const before = await file.stat();
+        assert(
+          before.isFile() && before.size === ref.bytes,
+          'Exact regular fixed evidence required',
+        );
+        const bytes = Buffer.alloc(ref.bytes + 1);
+        let used = 0;
+        while (used < bytes.length) {
+          const result = await file.read(bytes, used, bytes.length - used, null);
+          if (!result.bytesRead) break;
+          used += result.bytesRead;
+        }
+        const after = await file.stat();
+        for (const key of ['dev', 'ino', 'size', 'mtimeMs', 'ctimeMs'])
+          assert.equal(after[key], before[key]);
+        assert.equal(used, ref.bytes, 'Fixed evidence byte identity');
+        assert.equal(
+          createHash('sha256').update(bytes.subarray(0, used)).digest('hex'),
+          ref.sha256,
+          'Fixed evidence hash identity',
+        );
+        records.push({ scope, ...ref });
+      } finally {
+        await file.close();
+      }
+    }
+  }
+  return { format: 'SoloOfflineFixedEvidenceReadbackV1', status: 'passed', records };
 }
 
 export function assertPairedBaselineArtifact(
@@ -425,6 +519,11 @@ export function assertStarterGameplaySelection(core, catalogue, navigation, chap
 
 export async function prepareOfflineMode(ctx) {
   const { plan, here, repository, evidence, admitted, required, digest } = ctx;
+  if (plan.evidenceCopySuccessor)
+    await save(
+      join(evidence, 'fixed-evidence-readback.json'),
+      await verifyOfflineFixedEvidence(plan, repository, evidence),
+    );
   assert(admitted.artifacts.baseline && admitted.artifacts.candidate);
   const ref = async (path) => ({ path, ...(await digest(path)) });
   const executables = {};

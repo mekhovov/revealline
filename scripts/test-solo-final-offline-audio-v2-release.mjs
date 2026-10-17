@@ -9,6 +9,19 @@ import {
 } from './solo-remote-auxiliary.mjs';
 import { offlineSetupSuccessor, validateOfflinePlan } from './solo-remote-offline.mjs';
 const root = new URL('../', import.meta.url);
+const witnessPath = 'docs/performance/fixtures/solo-remote-offline/c41-evidence-source.json';
+function validateOfflineWitness(bytes) {
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '4cd3439ff35fbebabeed4684711d2aecec85bc4e7a34110550c33f61dcff5e2d',
+  );
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.revision, 'c41a02216c0811952232a387fd1743e09452c269');
+  assert.equal(witness.tree, '7fff7e134c67aa268e63cab5b08a7f3473bb5703');
+  assert.equal(witness.files.length, 3);
+  return witness;
+}
+
 const pairs = {
   audio: [
     'docs/performance/solo-final-audio-plan.json',
@@ -89,9 +102,22 @@ for (const [kind, [oldPath, path, workflowPath]] of Object.entries(pairs)) {
         ? [...plan.adapterInputs, ...plan.frozenTools]
         : [...plan.adapterInputs, plan.diagnosticRelease.ownerCorrection];
     for (const ref of refs) {
-      const bytes = await readFile(new URL(ref.path, root));
-      assert.equal(bytes.length, ref.bytes, ref.path);
-      assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+      if (kind === 'offline' && ref.path === 'scripts/solo-remote-offline.mjs') {
+        const witness = validateOfflineWitness(await readFile(new URL(witnessPath, root)));
+        for (const historical of [path, workflowPath]) {
+          const actual = await readFile(new URL(historical, root));
+          const expected = witness.files.find((f) => f.path === historical);
+          assert.equal(actual.length, expected.bytes);
+          assert.equal(createHash('sha256').update(actual).digest('hex'), expected.sha256);
+        }
+        const expected = witness.files.find((f) => f.path === ref.path);
+        assert.equal(ref.bytes, expected.bytes);
+        assert.equal(ref.sha256, expected.sha256);
+      } else {
+        const bytes = await readFile(new URL(ref.path, root));
+        assert.equal(bytes.length, ref.bytes, ref.path);
+        assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
+      }
     }
   });
   test(`${kind} v2 rejects changed scenario, source, gate, one-shot or smoke omission`, () => {
@@ -115,3 +141,11 @@ for (const [kind, [oldPath, path, workflowPath]] of Object.entries(pairs)) {
       assert.throws(() => check(plan, alter(workflow)));
   });
 }
+
+test('historical c41 witness rejects altered source or authority', async () => {
+  const bytes = await readFile(new URL(witnessPath, root));
+  validateOfflineWitness(bytes);
+  const changed = JSON.parse(bytes);
+  changed.files[2].sha256 = '0'.repeat(64);
+  assert.throws(() => validateOfflineWitness(Buffer.from(JSON.stringify(changed))));
+});
