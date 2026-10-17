@@ -47,6 +47,32 @@ export const EARNED_RASTER_CASES = ['full', 'reduced', 'minimal'].flatMap((quali
   EARNED_RASTER_STAGES.map((mode) => ({ quality, mode })),
 );
 const earnedRaster = (plan) => plan.raster.protocol === EARNED_RASTER_PROTOCOL;
+const finalEarnedSource = Object.freeze({
+  cohort: 'earned-raster-candidatea6e',
+  revision: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
+  tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
+  runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
+  baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+});
+function validateEarnedSource(plan) {
+  if (plan.sourceCohort === undefined) {
+    assert.equal(plan.release.sourceCohort, undefined);
+    return false;
+  }
+  assert.equal(plan.sourceCohort, finalEarnedSource.cohort);
+  assert.equal(plan.release.sourceCohort, finalEarnedSource.cohort);
+  assert(earnedRaster(plan), 'Final source selector is limited to the earned protocol');
+  assert.equal(plan.runtimeRevision, finalEarnedSource.runtime);
+  assert.equal(plan.candidate.revision, finalEarnedSource.revision);
+  assert.equal(plan.candidate.tree, finalEarnedSource.tree);
+  assert.equal(plan.baseline.revision, finalEarnedSource.baseline);
+  assert.equal(plan.baseline.tree, finalEarnedSource.baselineTree);
+  assert(!plan.baseline.publishVerifiedNormal, 'Raster has no baseline build');
+  assert.equal(plan.baseline.publisher, undefined);
+  assert.equal(plan.baseline.reusableArtifact, undefined);
+  return true;
+}
 function validateRelease(plan) {
   const diagnostic = plan.status === 'reviewed-diagnostic-only';
   assert(diagnostic || plan.status === 'reviewed-and-released');
@@ -71,6 +97,7 @@ function validateRelease(plan) {
 export function validateRasterPlan(plan) {
   assert.equal(plan.format, 'SoloHostedRasterPlanV1');
   validateRelease(plan);
+  const finalEarned = validateEarnedSource(plan);
   assert.equal(plan.release.candidateRevision, plan.candidate.revision);
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.node, '22.13.1');
@@ -126,8 +153,14 @@ export function validateRasterPlan(plan) {
   }
   if (earnedRaster(plan)) {
     assert.equal(plan.status, 'reviewed-diagnostic-only');
-    assert.equal(plan.candidate.revision, 'cce49c81d82b79aefc24898f32eeebc609e569fb');
-    assert.equal(plan.candidate.tree, '71f7e4cb3b0a39c1d281635774371a693794dd22');
+    assert.equal(
+      plan.candidate.revision,
+      finalEarned ? finalEarnedSource.revision : 'cce49c81d82b79aefc24898f32eeebc609e569fb',
+    );
+    assert.equal(
+      plan.candidate.tree,
+      finalEarned ? finalEarnedSource.tree : '71f7e4cb3b0a39c1d281635774371a693794dd22',
+    );
     assert.deepEqual(plan.raster.fixture, {
       path: 'docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture',
       bytes: 3425,
