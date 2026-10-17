@@ -1,3 +1,4 @@
+/* global window */
 // Explicit correctness-only observer. Historical timing recipes and gates stay intact.
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -58,6 +59,27 @@ export const SELECTED_FONT_POST_COMMAND_PILOT = Object.freeze({
   documents: 1,
   records: 8,
   bytes: 16384,
+});
+export const SELECTED_FONT_SETTLEMENT_PILOT = Object.freeze({
+  ...SELECTED_FONT_POST_COMMAND_PILOT,
+  protocol: 'selected-font-request-settlement-v4',
+  scenarioSHA256: 'de25a01e745fb70db09642d5f419969e2ca31a69db19aa252f04eb87b015bd3b',
+  settlementObservation: 'original-demand-v1',
+});
+export const SELECTED_FONT_SOURCE_BINDING = Object.freeze({
+  revision: 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+  css: Object.freeze({
+    path: 'game/ui/field-kit-fonts.css',
+    bytes: 1045,
+    sha256: '620b327398af390290dd5ce2ed1a1d6b9d26bf22bd0f2b1129daf15c0e49692c',
+  }),
+  themeHost: Object.freeze({
+    path: 'game/presentation/theme-host.mjs',
+    bytes: 18674,
+    sha256: '033b7c05cf1602326ca0d7783f2b45d2c9d04e52d4b38211c34d92d53cf6e76a',
+  }),
+  attribution:
+    'Exact admitted source and direct stylesheet rule; FontFace-to-CSS-rule identity is not exposed.',
 });
 export const COMPACT_SAVED_READINESS_PILOT = Object.freeze({
   protocol: 'saved-resume-v1',
@@ -149,10 +171,23 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
   const cancel = flags.filter((flag) => flag.startsWith('--readiness-cancel-boundary'));
   if (cancel.length) {
     assert.deepEqual(cancel, ['--readiness-cancel-boundary=post-command-v3']);
-    assert.deepEqual(selected, ['--readiness-probe=selected-font-cancel-post-command-v3']);
+    assert(
+      selected.length === 1 &&
+        [
+          '--readiness-probe=selected-font-cancel-post-command-v3',
+          '--readiness-probe=selected-font-request-settlement-v4',
+        ].includes(selected[0]),
+    );
     assert.equal(geometry.length, 0);
   }
-  if (selected.includes('--readiness-probe=selected-font-cancel-post-command-v3'))
+  if (
+    selected.some((flag) =>
+      [
+        '--readiness-probe=selected-font-cancel-post-command-v3',
+        '--readiness-probe=selected-font-request-settlement-v4',
+      ].includes(flag),
+    )
+  )
     assert.equal(cancel.length, 1, 'Post-command font requires exact boundary opt-in');
   if (geometry.length) {
     assert.deepEqual(geometry, ['--readiness-geometry=phase-boundary-v1']);
@@ -196,7 +231,9 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
                     : SELECTED_FONT_JOINED_PILOT
                   : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
                     ? SELECTED_FONT_POST_COMMAND_PILOT
-                    : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
+                    : protocol === SELECTED_FONT_SETTLEMENT_PILOT.protocol
+                      ? SELECTED_FONT_SETTLEMENT_PILOT
+                      : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
   assert(pilot, 'Unknown readiness protocol');
   if (MEDIA_FAULT_PILOTS[protocol]) {
     assert.deepEqual(scenario.mediaReadinessFault, {
@@ -222,6 +259,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_JOINED_PILOT,
       SELECTED_FONT_JOINED_C696_PILOT,
       SELECTED_FONT_POST_COMMAND_PILOT,
+      SELECTED_FONT_SETTLEMENT_PILOT,
     ].includes(pilot)
   )
     assert(
@@ -252,6 +290,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_JOINED_PILOT,
       SELECTED_FONT_JOINED_C696_PILOT,
       SELECTED_FONT_POST_COMMAND_PILOT,
+      SELECTED_FONT_SETTLEMENT_PILOT,
     ].includes(pilot)
   ) {
     assert.equal(scenario.kind, 'lifecycle');
@@ -266,7 +305,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       ),
     );
   }
-  if (pilot === SELECTED_FONT_POST_COMMAND_PILOT) {
+  if ([SELECTED_FONT_POST_COMMAND_PILOT, SELECTED_FONT_SETTLEMENT_PILOT].includes(pilot)) {
     assert.equal(scenario.selectedFontCancellation.protocol, pilot.protocol);
     assert.equal(scenario.selectedFontCancellation.sourceRevision, pilot.sourceRevision);
   }
@@ -291,6 +330,7 @@ export function createBrowserReadinessProbe(
       'selected-font-cancel-v1',
       'selected-font-cancel-joined-v2',
       'selected-font-cancel-post-command-v3',
+      'selected-font-request-settlement-v4',
       'required-original-cancel-v1',
       'optional-icon-missing-v1',
       'optional-audio-start-missing-v1',
@@ -310,18 +350,24 @@ export function createBrowserReadinessProbe(
     throw new Error('Required-original Start callback requires its explicit protocol');
   let initialRequiredStartSeen = false;
   const resume = protocol.endsWith('-resume-v1'),
-    postCommand = protocol === 'selected-font-cancel-post-command-v3',
+    postCommand = [
+      'selected-font-cancel-post-command-v3',
+      'selected-font-request-settlement-v4',
+    ].includes(protocol),
     font = [
       'selected-font-cancel-v1',
       'selected-font-cancel-joined-v2',
       'selected-font-cancel-post-command-v3',
+      'selected-font-request-settlement-v4',
     ].includes(protocol);
   if (
     cancelBoundaryObservation !== false &&
     (cancelBoundaryObservation !== true ||
-      !['selected-font-cancel-joined-v2', 'selected-font-cancel-post-command-v3'].includes(
-        protocol,
-      ))
+      ![
+        'selected-font-cancel-joined-v2',
+        'selected-font-cancel-post-command-v3',
+        'selected-font-request-settlement-v4',
+      ].includes(protocol))
   )
     throw new Error('Cancel boundary observation requires the explicit joined-font protocol');
   if (postCommand && !cancelBoundaryObservation)
@@ -2857,5 +2903,758 @@ export function assertOptionalAudioFallback(application, audioCheck) {
   return {
     scope:
       'Nonblocking gameplay fallback and observed native operation calls only; no specific replacement tone, audibility, native decoder memory or timing proof.',
+  };
+}
+
+// Separate explicit diagnostic; no remote declaration or workflow is supplied.
+// Serialized into the original document immediately before theme selection. Does not
+// invoke FontFace.load or make an additional FontFaceSet.load request.
+export function createSelectedFontSettlementProbe(environment = globalThis) {
+  const doc = environment.document;
+  const fonts = doc?.fonts;
+  const target = "600 16px 'Field Kit Display', 'Handjet', sans-serif";
+  const sample = 'Workshop Майстерня 012345';
+  const faces = [],
+    calls = [],
+    boundaries = [],
+    events = [];
+  const identities = new WeakMap();
+  let css = null;
+  let disposed = false,
+    invalid = false,
+    overflow = false,
+    sequence = 0;
+  let installed = false,
+    windowListening = false,
+    lastAt = -1;
+  const listening = [];
+  const original = fonts?.load;
+  const own = fonts && Object.getOwnPropertyDescriptor(fonts, 'load');
+  const now = () => {
+    const at = environment.performance?.now();
+    if (!Number.isFinite(at) || at < 0 || at < lastAt) {
+      invalid = true;
+      throw new Error('Invalid font witness clock');
+    }
+    lastAt = at;
+    return at;
+  };
+  const text = (value, cap) => (typeof value === 'string' && value.length <= cap ? value : null);
+  const errorText = (error) => {
+    const out = {};
+    for (const key of ['name', 'message']) {
+      try {
+        out[key] = text(error?.[key], 160);
+      } catch {
+        out[key] = null;
+      }
+    }
+    return out;
+  };
+  const event = (kind, fields = {}) => {
+    if (disposed) return;
+    if (events.length >= 32) {
+      overflow = true;
+      return;
+    }
+    try {
+      events.push({ kind, atMs: now(), ...fields });
+    } catch {
+      invalid = true;
+    }
+  };
+  function observe(face) {
+    if (!face || typeof face !== 'object') {
+      invalid = true;
+      return null;
+    }
+    if (identities.has(face)) return identities.get(face);
+    let family;
+    try {
+      family = text(face.family, 96)?.replace(/^(['"])(.*)\1$/, '$2');
+    } catch {
+      invalid = true;
+      return null;
+    }
+    if (family !== 'Field Kit Display') return null;
+    if (faces.length >= 8) {
+      overflow = true;
+      return null;
+    }
+    const row = {
+      id: ++sequence,
+      firstSeenAtMs: now(),
+      firstSeenBoundaryCount: boundaries.length,
+      descriptors: {},
+      settlement: 'unsettled-observed',
+    };
+    for (const key of ['family', 'weight', 'style', 'stretch', 'unicodeRange', 'display']) {
+      try {
+        row.descriptors[key] = text(face[key], key === 'unicodeRange' ? 128 : 96);
+      } catch {
+        row.descriptors[key] = null;
+      }
+      if (row.descriptors[key] === null) invalid = true;
+    }
+    if (row.descriptors.weight !== '600') return null;
+    identities.set(face, row.id);
+    faces.push(row);
+    event('face-observed', { face: row.id });
+    try {
+      // Native promise observation is passive; reading loaded does not demand a font.
+      Promise.prototype.then
+        .call(
+          face.loaded,
+          (resolved) => {
+            if (disposed) return;
+            if (resolved !== face) {
+              invalid = true;
+              return;
+            }
+            row.settlement = 'fulfilled';
+            row.settledAtMs = now();
+            event('face-fulfilled', { face: row.id });
+          },
+          (error) => {
+            if (disposed) return;
+            row.settlement = 'rejected';
+            row.settledAtMs = now();
+            row.error = errorText(error);
+            event('face-rejected', { face: row.id });
+          },
+        )
+        .catch(() => {
+          if (!disposed) invalid = true;
+        });
+    } catch {
+      invalid = true;
+    }
+    return row.id;
+  }
+  function scan() {
+    const result = [];
+    try {
+      const iterator = fonts[Symbol.iterator]();
+      let done = false;
+      for (let i = 0; i < 64; i++) {
+        const next = iterator.next();
+        if (next.done) {
+          done = true;
+          break;
+        }
+        const id = observe(next.value);
+        if (id === null) continue;
+        const status = next.value.status;
+        if (!['unloaded', 'loading', 'loaded', 'error'].includes(status)) invalid = true;
+        result.push({ id, status, settlement: faces.find((row) => row.id === id).settlement });
+      }
+      if (!done) overflow = true;
+    } catch {
+      invalid = true;
+    }
+    return result;
+  }
+  function directCss() {
+    const sheets = doc.styleSheets;
+    if (!sheets || !Number.isSafeInteger(sheets.length) || sheets.length > 32)
+      throw new Error('Bounded selected-font stylesheet inventory unavailable');
+    const matched = [];
+    for (const sheet of sheets) {
+      if (typeof sheet.href !== 'string') continue;
+      const href = new URL(sheet.href, doc.baseURI);
+      if (
+        href.origin !== new URL(doc.baseURI).origin ||
+        href.pathname !== '/game/ui/field-kit-fonts.css'
+      )
+        continue;
+      const visit = (rules, depth) => {
+        if (!rules || !Number.isSafeInteger(rules.length) || rules.length > 8 || depth > 2)
+          throw new Error('Selected-font CSS rule bound');
+        for (const rule of rules) {
+          if (rule.type === 5) {
+            const property = (key) => text(rule.style.getPropertyValue(key), 256)?.trim();
+            const family = property('font-family')?.replace(/^(['"])(.*)\1$/, '$2');
+            if (family !== 'Field Kit Display') continue;
+            const src = property('src'),
+              match = /^url\(["']?([^"')]+)["']?\)\s+format\(["']woff2["']\)$/.exec(src ?? '');
+            if (!match) throw new Error('Exact selected-font CSS src unavailable');
+            const source = new URL(match[1], href);
+            if (source.origin !== href.origin) throw new Error('Selected-font CSS origin changed');
+            matched.push({
+              format: 'SoloSelectedFontDirectCssRuleV1',
+              hrefPath: href.pathname,
+              family,
+              weight: property('font-weight'),
+              style: property('font-style'),
+              display: property('font-display'),
+              sourcePath: source.pathname,
+            });
+          } else if (rule.type !== 3 && rule.cssRules) visit(rule.cssRules, depth + 1);
+        }
+      };
+      visit(sheet.cssRules, 0);
+    }
+    if (matched.length !== 1) throw new Error('One direct selected-font CSS rule required');
+    return matched[0];
+  }
+  function observedLoad(...args) {
+    if (disposed || this !== fonts || args.length !== 2 || args[0] !== target || args[1] !== sample)
+      return Reflect.apply(original, this, args);
+    let row;
+    if (calls.length >= 8) overflow = true;
+    else
+      try {
+        scan();
+        row = { id: calls.length + 1, atMs: now(), settlement: 'unsettled-observed', faces: [] };
+        calls.push(row);
+      } catch {
+        invalid = true;
+      }
+    let promise;
+    try {
+      promise = Reflect.apply(original, this, args);
+    } catch (error) {
+      if (row) {
+        row.settlement = 'threw';
+        row.error = errorText(error);
+      }
+      throw error;
+    }
+    if (row) {
+      event('existing-load-invoked', { call: row.id });
+      try {
+        Promise.prototype.then
+          .call(
+            promise,
+            (loaded) => {
+              if (disposed) return;
+              if (!Array.isArray(loaded) || loaded.length > 8) {
+                invalid = true;
+                return;
+              }
+              row.faces = loaded.map(observe);
+              if (
+                !row.faces.length ||
+                row.faces.some((id) => id === null) ||
+                new Set(row.faces).size !== row.faces.length
+              )
+                invalid = true;
+              row.settlement = 'fulfilled';
+              row.settledAtMs = now();
+              event('existing-load-fulfilled', { call: row.id, faces: row.faces.slice() });
+            },
+            (error) => {
+              if (disposed) return;
+              row.settlement = 'rejected';
+              row.settledAtMs = now();
+              row.error = errorText(error);
+              event('existing-load-rejected', { call: row.id });
+            },
+          )
+          .catch(() => {
+            if (!disposed) invalid = true;
+          });
+      } catch {
+        invalid = true;
+      }
+    }
+    return promise; // Exact original identity, fulfillment and rejection remain caller-owned.
+  }
+  const changed = (e) => {
+    if (disposed) return;
+    if (events.length >= 32) {
+      overflow = true;
+      return;
+    }
+    scan();
+    event(e.type);
+  };
+  const pagehide = () => dispose();
+  function dispose() {
+    if (disposed) return;
+    disposed = true; // A reentrant native cleanup cannot amend or revive this observation.
+    if (installed)
+      try {
+        if (fonts?.load === observedLoad) {
+          if (own) Object.defineProperty(fonts, 'load', own);
+          else delete fonts.load;
+        } else invalid = true;
+      } catch {
+        invalid = true;
+      }
+    for (const name of listening)
+      try {
+        fonts.removeEventListener(name, changed);
+      } catch {
+        invalid = true;
+      }
+    if (windowListening)
+      try {
+        environment.removeEventListener('pagehide', pagehide);
+      } catch {
+        invalid = true;
+      }
+  }
+  if (
+    typeof original !== 'function' ||
+    typeof fonts?.[Symbol.iterator] !== 'function' ||
+    typeof fonts.addEventListener !== 'function' ||
+    typeof fonts.removeEventListener !== 'function'
+  )
+    throw new Error('Native font settlement observation unavailable');
+  try {
+    Object.defineProperty(fonts, 'load', {
+      value: observedLoad,
+      writable: true,
+      configurable: true,
+    });
+    installed = true;
+    for (const name of ['loading', 'loadingdone', 'loadingerror']) {
+      fonts.addEventListener(name, changed);
+      listening.push(name);
+    }
+    if (
+      typeof environment.addEventListener === 'function' &&
+      typeof environment.removeEventListener === 'function'
+    ) {
+      environment.addEventListener('pagehide', pagehide, { once: true });
+      windowListening = true;
+    }
+    scan();
+  } catch (error) {
+    dispose();
+    throw error;
+  }
+  return {
+    boundary(label) {
+      if (
+        disposed ||
+        !['before-selection', 'cancel-command-complete', 'after-original-release'].includes(
+          label,
+        ) ||
+        boundaries.some((row) => row.label === label)
+      )
+        throw new Error('Invalid font diagnostic boundary');
+      if (doc.body?.dataset.flightState === 'running')
+        throw new Error('Font diagnostic cannot sample active play');
+      const expected = ['before-selection', 'cancel-command-complete', 'after-original-release'][
+        boundaries.length
+      ];
+      if (expected !== label) throw new Error('Font diagnostic boundary order');
+      if (label === 'before-selection') css = directCss();
+      boundaries.push({
+        label,
+        atMs: now(),
+        faces: scan(),
+        calls: calls.map((row) => ({ id: row.id, settlement: row.settlement })),
+      });
+    },
+    export() {
+      if (doc.body?.dataset.flightState === 'running')
+        throw new Error('Font diagnostic export requires paused state');
+      const value = {
+        format: 'SoloSelectedFontSettlementDiagnosticV1',
+        target,
+        sample,
+        bounds: { faces: 8, scan: 64, calls: 8, events: 32, bytes: 16384 },
+        disposed,
+        invalid,
+        overflow,
+        faces,
+        calls,
+        boundaries,
+        events,
+        css,
+        scope:
+          'Passive settlement of original demand only; status error is not a rejection witness. No qualification verdict.',
+      };
+      const serialized = JSON.stringify(value);
+      if (new TextEncoder().encode(serialized).byteLength > 16384)
+        throw new Error('Font diagnostic evidence cap');
+      return JSON.parse(serialized);
+    },
+    dispose,
+  };
+}
+
+// One original document; short setup/readback operations within one fixed observation
+// deadline. Unsettled native work never authorizes the next public action.
+export function createSelectedFontSettlementOwner({
+  page,
+  now = () => performance.now(),
+  setTimer = setTimeout,
+  clearTimer = clearTimeout,
+}) {
+  const started = now(),
+    deadline = started + 60000,
+    cleanupDeadline = deadline + 2000;
+  assert(Number.isFinite(started) && started >= 0 && Number.isFinite(cleanupDeadline));
+  let last = started,
+    stopped = false,
+    installed = false,
+    closed = false,
+    evidence = null;
+  const operations = [],
+    failures = [];
+  const clock = () => {
+    const at = now();
+    assert(Number.isFinite(at) && at >= last, 'Invalid font owner clock');
+    last = at;
+    return at;
+  };
+  async function native(kind, work, cleanup = false) {
+    assert(operations.length < 5, 'Font owner operation cap');
+    assert(cleanup || !stopped, 'Font observation stopped');
+    let timer;
+    const row = { kind, invoked: false, settled: false, timedOut: false };
+    operations.push(row);
+    try {
+      const at = clock(),
+        until = Math.min(cleanup ? cleanupDeadline : deadline, at + 2000);
+      assert(until > at, 'Font observation deadline');
+      const pending = Promise.resolve().then(() => {
+        assert(clock() < until, 'Font operation expired before invocation');
+        row.invoked = true;
+        return work();
+      });
+      const handled = pending.then(
+        (value) => {
+          row.settled = true;
+          return value;
+        },
+        (error) => {
+          row.settled = true;
+          throw error;
+        },
+      );
+      // Install both handlers before any further clock read, including failed prechecks.
+      handled.catch(() => {});
+      const remaining = until - clock();
+      assert(remaining > 0, 'Font operation expired before wait');
+      const result = await Promise.race([
+        handled,
+        new Promise((_, reject) => {
+          timer = setTimer(() => {
+            row.timedOut = true;
+            reject(new Error('Font operation timeout'));
+          }, remaining);
+        }),
+      ]);
+      assert(clock() < until && !row.timedOut, 'Late font operation result');
+      return result;
+    } catch (error) {
+      stopped = true;
+      failures.push(String(error.message ?? error).slice(0, 256));
+      throw error;
+    } finally {
+      if (timer !== undefined) clearTimer(timer);
+    }
+  }
+  return {
+    async install() {
+      assert(!installed && operations.length === 0, 'One font installation');
+      evidence = await native('install-before-selection', () =>
+        page.evaluate(`(() => {
+        if (window.soloQualificationFontSettlement) throw new Error('Duplicate font observer');
+        const probe = (${createSelectedFontSettlementProbe.toString()})();
+        window.soloQualificationFontSettlement = probe;
+        try { probe.boundary('before-selection'); return probe.export(); }
+        catch (error) { probe.dispose(); throw error; }
+      })()`),
+      );
+      installed = true;
+      assertSelectedFontSettlementEvidence(evidence, 1);
+    },
+    async boundary(label) {
+      assert(installed && !closed, 'Font observer is not installed');
+      evidence = await native(label, () =>
+        page.evaluate((name) => {
+          const probe = window.soloQualificationFontSettlement;
+          probe.boundary(name);
+          return probe.export();
+        }, label),
+      );
+      assertSelectedFontSettlementEvidence(evidence, label === 'cancel-command-complete' ? 2 : 3);
+      return evidence;
+    },
+    async close() {
+      if (closed) return;
+      // Do not race cleanup against a native installation/readback still in flight.
+      if (operations.some((row) => !row.settled)) {
+        stopped = true;
+        return;
+      }
+      evidence = await native(
+        'dispose-readback',
+        () =>
+          page.evaluate(() => {
+            const probe = window.soloQualificationFontSettlement;
+            if (!probe) throw new Error('Missing font observer at cleanup');
+            probe.dispose();
+            return probe.export();
+          }),
+        true,
+      );
+      closed = true;
+    },
+    snapshot() {
+      return {
+        format: 'SoloSelectedFontSettlementOwnerV1',
+        sourceBinding: SELECTED_FONT_SOURCE_BINDING,
+        bounds: { durationMs: 60000, operationMs: 2000, cleanupMs: 2000, operations: 5 },
+        installed,
+        closed,
+        stopped,
+        operations: operations.map((row) => ({ ...row })),
+        failures: failures.slice(),
+        evidence: evidence === null ? null : structuredClone(evidence),
+      };
+    },
+  };
+}
+
+export function assertSelectedFontSettlementEvidence(value, boundaryCount) {
+  assert.equal(value?.format, 'SoloSelectedFontSettlementDiagnosticV1');
+  assert.equal(value.target, "600 16px 'Field Kit Display', 'Handjet', sans-serif");
+  assert.equal(value.sample, 'Workshop Майстерня 012345');
+  assert.deepEqual(value.bounds, { faces: 8, scan: 64, calls: 8, events: 32, bytes: 16384 });
+  assert.equal(value.invalid, false);
+  assert.equal(value.overflow, false);
+  assert(Buffer.byteLength(JSON.stringify(value)) <= 16384);
+  assert(value.faces.length > 0 && value.faces.length <= 8);
+  assert(value.calls.length <= 8 && value.events.length <= 32);
+  assert.equal(value.boundaries.length, boundaryCount);
+  assert.deepEqual(
+    value.boundaries.map((row) => row.label),
+    ['before-selection', 'cancel-command-complete', 'after-original-release'].slice(
+      0,
+      boundaryCount,
+    ),
+  );
+  assert.equal(value.css?.format, 'SoloSelectedFontDirectCssRuleV1');
+  assert.equal(value.css.hrefPath, '/game/ui/field-kit-fonts.css');
+  assert.equal(value.css.family, 'Field Kit Display');
+  assert.equal(value.css.weight, '600');
+  assert.equal(value.css.style, 'normal');
+  assert.equal(value.css.display, 'swap');
+  assert.equal(value.css.sourcePath, '/game/ui/fonts/field-kit/handjet-display-600.woff2');
+  const ids = new Set();
+  for (const face of value.faces) {
+    assert(Number.isSafeInteger(face.id) && face.id > 0 && !ids.has(face.id));
+    ids.add(face.id);
+    assert.equal(face.descriptors.family.replace(/^(['"])(.*)\1$/, '$2'), 'Field Kit Display');
+    assert.equal(face.descriptors.weight, '600');
+    assert(['unsettled-observed', 'fulfilled', 'rejected'].includes(face.settlement));
+    assert(Number.isFinite(face.firstSeenAtMs) && face.firstSeenAtMs >= 0);
+  }
+  assert.equal(typeof value.disposed, 'boolean');
+  const callIds = new Set();
+  for (const call of value.calls) {
+    assert(Number.isSafeInteger(call.id) && call.id > 0 && !callIds.has(call.id));
+    callIds.add(call.id);
+    assert(Number.isFinite(call.atMs) && call.atMs >= 0);
+    assert(['unsettled-observed', 'fulfilled', 'rejected', 'threw'].includes(call.settlement));
+    assert(Array.isArray(call.faces) && call.faces.length <= 8);
+    assert(new Set(call.faces).size === call.faces.length && call.faces.every((id) => ids.has(id)));
+    if (call.settlement === 'fulfilled') assert(call.faces.length > 0);
+    else assert.equal(call.faces.length, 0);
+    if (['fulfilled', 'rejected'].includes(call.settlement))
+      assert(Number.isFinite(call.settledAtMs) && call.settledAtMs >= call.atMs);
+  }
+  for (const event of value.events) assert(Number.isFinite(event.atMs) && event.atMs >= 0);
+  for (let i = 0; i < value.boundaries.length; i++) {
+    const row = value.boundaries[i];
+    assert(Number.isFinite(row.atMs) && row.atMs >= 0);
+    if (i) assert(row.atMs >= value.boundaries[i - 1].atMs);
+    assert(
+      row.faces.length <= 8 && new Set(row.faces.map((face) => face.id)).size === row.faces.length,
+    );
+    assert(
+      row.faces.every(
+        (face) =>
+          ids.has(face.id) &&
+          ['unloaded', 'loading', 'loaded', 'error'].includes(face.status) &&
+          ['unsettled-observed', 'fulfilled', 'rejected'].includes(face.settlement),
+      ),
+    );
+    assert(
+      row.calls.length <= 8 && new Set(row.calls.map((call) => call.id)).size === row.calls.length,
+    );
+    assert(
+      row.calls.every(
+        (call) =>
+          callIds.has(call.id) &&
+          ['unsettled-observed', 'fulfilled', 'rejected', 'threw'].includes(call.settlement),
+      ),
+    );
+  }
+  return value;
+}
+
+// Preserve trusted public cancellation proof, but do not confuse public display
+// status with the requested face's original promise settlement.
+export function assertSelectedFontSettlementCancelled(observation, evidence) {
+  assert.equal(observation?.protocol, SELECTED_FONT_SETTLEMENT_PILOT.protocol);
+  assert.equal(observation.format, 'SoloFirstRunningReadinessV1');
+  assert.equal(observation.capacity, 8);
+  assert.equal(observation.maximumBytes, 16384);
+  assert.equal(observation.dropped, 0);
+  assert.equal(observation.errors, 0);
+  assert(Buffer.byteLength(JSON.stringify(observation)) <= 16384);
+  assert.deepEqual(
+    observation.records.map((row) => row.kind),
+    ['start-click', 'cancel-back', 'cancel-early-microtask', 'cancel-command-complete'],
+  );
+  const [start, back, early, completed] = observation.records;
+  assert(start.trusted && back.trusted && early.trusted && completed.trusted);
+  for (const row of [back, early, completed]) {
+    assert(row.visible && row.focused && row.phase !== 'running');
+    assert.equal(row.tick, 0);
+    assert(Number.isSafeInteger(row.run) && row.run > 0);
+    assert.equal(row.run, back.run);
+    assert.equal(row.levelId, 'first-return');
+    assert.equal(row.font?.openDialogs, 0);
+    assert.equal(row.font.selectedTheme, true);
+    assert.notEqual(row.font.acceptedTheme, 'dnipro-porcelain');
+  }
+  assert.equal(back.font.preparation, 'busy');
+  assert.equal(completed.font.preparation, 'cancelled');
+  assert.equal(completed.font.defaultPrevented, true);
+  assert.equal(completed.cancelBoundary.defaultPrevented, true);
+  assert.deepEqual(back.cancelBoundary.eventPath, completed.cancelBoundary.eventPath);
+  for (let i = 0; i < observation.records.length; i++) {
+    assert(Number.isFinite(observation.records[i].atMs) && observation.records[i].atMs >= 0);
+    if (i) assert(observation.records[i].atMs >= observation.records[i - 1].atMs);
+  }
+  assertSelectedFontSettlementEvidence(evidence, 2);
+  const [before, cancelled] = evidence.boundaries,
+    prior = new Set(before.calls.map((row) => row.id));
+  const selected = cancelled.calls.filter((row) => !prior.has(row.id));
+  assert(
+    selected.length > 0 && selected.every((row) => row.settlement === 'unsettled-observed'),
+    'Exact selected demand was not observed unsettled through cancellation',
+  );
+  assert(
+    cancelled.atMs >= completed.atMs,
+    'Settlement snapshot predates awaited public cancellation',
+  );
+  return completed;
+}
+
+export function assessSelectedFontSettlementReadiness(
+  observation,
+  application,
+  documents,
+  transport,
+  owner,
+) {
+  const failures = [];
+  let attribution = null;
+  try {
+    assert.equal(documents, 1);
+    assert.equal(owner?.format, 'SoloSelectedFontSettlementOwnerV1');
+    assert.deepEqual(owner.sourceBinding, SELECTED_FONT_SOURCE_BINDING);
+    assert(owner.installed && owner.closed && !owner.stopped);
+    assert.deepEqual(owner.failures, []);
+    assert.deepEqual(
+      owner.operations.map((row) => row.kind),
+      [
+        'install-before-selection',
+        'cancel-command-complete',
+        'after-original-release',
+        'dispose-readback',
+      ],
+    );
+    assert(owner.operations.every((row) => row.invoked && row.settled && !row.timedOut));
+    const e = assertSelectedFontSettlementEvidence(owner.evidence, 3);
+    assert(Buffer.byteLength(JSON.stringify(observation)) <= 16384);
+    for (let i = 0; i < observation.records.length; i++) {
+      assert(Number.isFinite(observation.records[i].atMs) && observation.records[i].atMs >= 0);
+      if (i) assert(observation.records[i].atMs >= observation.records[i - 1].atMs);
+    }
+    assert.equal(e.disposed, true);
+    assert.deepEqual(
+      observation.records.map((row) => row.kind),
+      [
+        'start-click',
+        'cancel-back',
+        'cancel-early-microtask',
+        'cancel-command-complete',
+        'font-release-no-start',
+        'start-click',
+        'first-running',
+        'after-running',
+      ],
+    );
+    const cancelled = assertSelectedFontSettlementCancelled(
+      { ...observation, records: observation.records.slice(0, 4) },
+      { ...e, boundaries: e.boundaries.slice(0, 2) },
+    );
+    const [before, cancel, released] = e.boundaries,
+      prior = new Set(before.calls.map((row) => row.id));
+    const selected = e.calls.filter((row) => !prior.has(row.id));
+    assert(
+      selected.length > 0 &&
+        selected.every(
+          (row) =>
+            row.settlement === 'fulfilled' &&
+            row.settledAtMs >= cancel.atMs &&
+            row.settledAtMs <= released.atMs,
+        ),
+    );
+    const requested = new Set(selected.flatMap((row) => row.faces));
+    assert(requested.size > 0);
+    for (const id of requested) {
+      const face = e.faces.find((row) => row.id === id),
+        pending = cancel.faces.find((row) => row.id === id);
+      assert(face && pending, 'Requested face was not enrolled before cancellation');
+      assert.equal(pending.settlement, 'unsettled-observed');
+      assert.equal(face.settlement, 'fulfilled');
+      assert(face.settledAtMs >= cancel.atMs && face.settledAtMs <= released.atMs);
+    }
+    attribution = {
+      requestedFaces: [...requested],
+      requestedErrorThenFulfilled: cancel.faces
+        .filter((row) => requested.has(row.id) && row.status === 'error')
+        .map((row) => row.id),
+      unmatchedUnloadedFaces: cancel.faces
+        .filter((row) => !requested.has(row.id) && row.status === 'unloaded')
+        .map((row) => row.id),
+      cssRuleIdentity: 'not-exposed; exact direct rule and admitted source bound separately',
+    };
+    const [release, start, active, after] = observation.records.slice(4);
+    assert(
+      released.atMs >= release.atMs && released.atMs <= start.atMs,
+      'Final font readback must precede the later public Start',
+    );
+    for (const row of [release, start, active]) {
+      assert.equal(row.run, cancelled.run);
+      assert.equal(row.tick, 0);
+      assert.equal(row.levelId, 'first-return');
+      assert(row.visible && row.focused);
+      assert.equal(row.font?.openDialogs, 0);
+      assert.equal(row.font.selectedTheme, true);
+      assert.equal(row.font.acceptedTheme, 'dnipro-porcelain');
+    }
+    assert.notEqual(release.phase, 'running');
+    assert.notEqual(start.phase, 'running');
+    assert.equal(start.trusted, true);
+    assert.equal(active.phase, 'running');
+    assertSelectedFontTransport(transport, 'same-url-two-v2');
+    const ready = assessReadinessPilot(
+      { ...observation, protocol: READINESS_PILOT.protocol, records: [start, active, after] },
+      application,
+      documents,
+    );
+    assert.equal(ready.status, 'passed', ready.failures.join(', '));
+  } catch (error) {
+    failures.push(String(error.message ?? error).slice(0, 2048));
+  }
+  return {
+    status: failures.length ? 'failed' : 'passed',
+    failures,
+    attribution,
+    scope:
+      'Original requested-face settlement and trusted public Cancel/explicit Start only. Native replay, numerical gates and historical failures remain separate.',
   };
 }

@@ -119,15 +119,18 @@ const readinessModule =
 const readinessOptions = readinessModule?.qualificationReadinessOptions(flags, scenario, bytes);
 let readinessDocuments = 0,
   selectedFontHold = null,
+  selectedFontSettlementOwner = null,
   mediaFaultOwner = null,
   mediaFaultInterception = true;
 const selectedFontReadiness = [
   'selected-font-cancel-v1',
   'selected-font-cancel-joined-v2',
   'selected-font-cancel-post-command-v3',
+  'selected-font-request-settlement-v4',
 ].includes(readinessOptions?.protocol);
+const selectedFontSettlement = readinessOptions?.protocol === 'selected-font-request-settlement-v4';
 const selectedFontPostCommand =
-  readinessOptions?.protocol === 'selected-font-cancel-post-command-v3';
+  readinessOptions?.protocol === 'selected-font-cancel-post-command-v3' || selectedFontSettlement;
 const mediaFaultReadiness = Boolean(
   readinessModule?.MEDIA_FAULT_PILOTS[readinessOptions?.protocol],
 );
@@ -299,6 +302,9 @@ if (readinessOptions) {
     ...(readinessOptions.cancelBoundaryObservation
       ? { cancelBoundaryObservation: readinessOptions.cancelBoundaryObservation }
       : {}),
+    ...(readinessOptions.settlementObservation
+      ? { settlementObservation: readinessOptions.settlementObservation }
+      : {}),
     ...(readinessOptions.geometryObservation
       ? { geometryObservation: readinessOptions.geometryObservation }
       : {}),
@@ -308,9 +314,11 @@ if (readinessOptions) {
     scope:
       readinessOptions.protocol === 'first-running-v1'
         ? 'Fixed external settled120 B and original first30 actions/raw gates are retained. This is not an equivalent ordinary timing comparator.'
-        : readinessOptions.protocol === 'selected-font-cancel-v1'
-          ? 'Fixed external settled120 B and raw gates are retained. One exact held native font response, public cancellation and explicit Start are correctness-only.'
-          : 'Fixed external settled120 B and raw gates are retained. The short public Resume route is correctness-only, not an ordinary timing comparator.',
+        : readinessOptions.protocol === 'selected-font-request-settlement-v4'
+          ? 'Original selected-font demand/settlement with trusted public Cancel and explicit Start; separate correctness attribution only. Raw numerical gates remain unchanged.'
+          : readinessOptions.protocol === 'selected-font-cancel-v1'
+            ? 'Fixed external settled120 B and raw gates are retained. One exact held native font response, public cancellation and explicit Start are correctness-only.'
+            : 'Fixed external settled120 B and raw gates are retained. The short public Resume route is correctness-only, not an ordinary timing comparator.',
   };
 }
 const resumeReadiness = readinessOptions?.protocol.endsWith('-resume-v1') === true;
@@ -1121,6 +1129,11 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       const timeout = remaining(action),
         locator = action.selector ? page.locator(action.selector) : null;
       try {
+        if (selectedFontSettlement && action.label === 'selected-theme') {
+          selectedFontSettlementOwner = readinessModule.createSelectedFontSettlementOwner({ page });
+          await selectedFontSettlementOwner.install();
+          report.selectedFontSettlement = selectedFontSettlementOwner.snapshot();
+        }
         if (requiredOriginalReadiness && action.label === 'required-original-fresh-start') {
           readinessModule.assertRequiredOriginalAfterCancel(report.requiredOriginalWitness);
           readinessModule.assertReadinessMediaTransport(
@@ -1549,21 +1562,36 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             report.selectedFontPostCommandObservation = await page.evaluate(
               () => window.soloQualificationProbe.export().readiness,
             );
+            if (selectedFontSettlementOwner) {
+              await selectedFontSettlementOwner.boundary('cancel-command-complete');
+              report.selectedFontSettlement = selectedFontSettlementOwner.snapshot();
+            }
             await save();
           }
           if (action.label === 'public-cancelled') {
             const witness = await page.evaluate(
               () => window.soloQualificationProbe.export().readiness,
             );
-            if (selectedFontPostCommand)
+            if (selectedFontSettlement)
+              readinessModule.assertSelectedFontSettlementCancelled(
+                witness,
+                selectedFontSettlementOwner.snapshot().evidence,
+              );
+            else if (selectedFontPostCommand)
               readinessModule.assertSelectedFontPostCommandCancelled(witness);
             else readinessModule.assertSelectedFontCancelled(witness, readinessOptions.protocol);
             selectedFontHold.releaseAfterPublicCancellation();
           }
-          if (action.label === 'no-automatic-start-after-release')
+          if (action.label === 'no-automatic-start-after-release') {
             await page.evaluate(() =>
               window.soloQualificationProbe.readinessBoundary('font-release-no-start'),
             );
+            if (selectedFontSettlementOwner) {
+              await selectedFontSettlementOwner.boundary('after-original-release');
+              await selectedFontSettlementOwner.close();
+              report.selectedFontSettlement = selectedFontSettlementOwner.snapshot();
+            }
+          }
         }
         if (mediaFaultOwner) {
           if (action.label === 'required-original-blocks-start')
@@ -1689,6 +1717,22 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         report.scenarioStatus = 'fail';
         process.exitCode = 1;
       }
+    }
+  }
+  if (selectedFontSettlementOwner) {
+    try {
+      await selectedFontSettlementOwner.close();
+    } catch (error) {
+      report.selectedFontSettlementCleanupFailure = String(error.stack ?? error);
+    }
+    report.selectedFontSettlement = selectedFontSettlementOwner.snapshot();
+    if (
+      !report.selectedFontSettlement.closed ||
+      report.selectedFontSettlement.stopped ||
+      report.selectedFontSettlementCleanupFailure
+    ) {
+      report.scenarioStatus = 'fail';
+      process.exitCode = 1;
     }
   }
   if (selectedFontHold) {
@@ -1902,20 +1946,28 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         startRetention: readinessOptions.requiredStartRetention ?? null,
       });
     } else if (selectedFontReadiness) {
-      report.readinessAssessment = selectedFontPostCommand
-        ? readinessModule.assessSelectedFontPostCommandReadiness(
+      report.readinessAssessment = selectedFontSettlement
+        ? readinessModule.assessSelectedFontSettlementReadiness(
             report.readinessObservation,
             report.snapshots.at(-1)?.application,
             readinessDocuments,
             report.selectedFontTransport,
+            report.selectedFontSettlement,
           )
-        : readinessModule.assessSelectedFontReadiness(
-            report.readinessObservation,
-            report.snapshots.at(-1)?.application,
-            readinessDocuments,
-            report.selectedFontTransport,
-            readinessOptions.requestPolicy ?? 'single-v1',
-          );
+        : selectedFontPostCommand
+          ? readinessModule.assessSelectedFontPostCommandReadiness(
+              report.readinessObservation,
+              report.snapshots.at(-1)?.application,
+              readinessDocuments,
+              report.selectedFontTransport,
+            )
+          : readinessModule.assessSelectedFontReadiness(
+              report.readinessObservation,
+              report.snapshots.at(-1)?.application,
+              readinessDocuments,
+              report.selectedFontTransport,
+              readinessOptions.requestPolicy ?? 'single-v1',
+            );
     } else if (resumeReadiness) {
       const before = report.snapshots.find((row) => row.group === 'before-resume');
       const restored = report.snapshots.find((row) => row.group === 'saved-restored-before-resume');

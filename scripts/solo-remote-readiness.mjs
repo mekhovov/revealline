@@ -431,7 +431,30 @@ export function optionalAudioReadinessSelection(plan) {
     documents: 1,
   };
 }
+export const SELECTED_FONT_SETTLEMENT_COHORT = 'readiness-selected-font-settlement-candidatee1cc';
+export const SELECTED_FONT_SETTLEMENT_FIXTURE = Object.freeze({
+  path: 'docs/performance/fixtures/solo-readiness-font/selected-font-request-settlement-v4.qualification.fixture',
+  bytes: 5773,
+  sha256: 'de25a01e745fb70db09642d5f419969e2ca31a69db19aa252f04eb87b015bd3b',
+});
+const fontSettlementPlan = (plan) => plan?.sourceCohort === SELECTED_FONT_SETTLEMENT_COHORT;
+export function selectedFontSettlementSelection(plan) {
+  assert.equal(plan.sourceCohort, SELECTED_FONT_SETTLEMENT_COHORT);
+  assert.equal(plan.phase, 'selected-font-cancel');
+  assert.equal(plan.engine, 'webkit');
+  return {
+    source: GEOMETRY_READINESS_SOURCE,
+    fixture: SELECTED_FONT_SETTLEMENT_FIXTURE,
+    protocol: 'selected-font-request-settlement-v4',
+    requestPolicy: 'same-url-two-v2',
+    font: true,
+    settlement: true,
+    cancelBoundary: true,
+    documents: 1,
+  };
+}
 function selection(plan) {
+  if (fontSettlementPlan(plan)) return selectedFontSettlementSelection(plan);
   if (optionalAudioPlan(plan)) return optionalAudioReadinessSelection(plan);
   if (preparationPlan(plan))
     return preparationReadinessSelection({
@@ -838,7 +861,7 @@ export function validateReadinessPlan(plan) {
   assert.equal(plan.candidate.revision, selected.source.revision);
   assert.equal(plan.candidate.tree, selected.source.tree);
   assert.equal(plan.runtimeRevision, selected.source.revision);
-  if (selected.audioFault) {
+  if (selected.audioFault || selected.settlement) {
     assert.deepEqual(plan.candidate.run, 39037874955);
     assert.deepEqual(plan.candidate.artifact, 12104590541);
     assert.deepEqual(plan.candidate.outer, {
@@ -853,7 +876,25 @@ export function validateReadinessPlan(plan) {
       plan.candidate.manifestSHA256,
       '23f555db20036838cc1601f2cebf8f1a75eb62fb0c6cf36f1e1988035b3e1b64',
     );
-    if (plan.release.setupCorrection !== undefined) {
+    if (selected.settlement) {
+      assert.equal(plan.release.onceOnlyBefore, 'bab3b2790944c6257f9c1f9b346839996bbefebb');
+      assert.deepEqual(plan.release.observationCorrection, {
+        format: 'SoloSelectedFontRequestedSettlementV1',
+        priorRun: 39049194995,
+        priorArtifact: 12107311023,
+        priorTooling: '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+        priorConclusion: 'failure',
+        priorRowStatus: 'failed',
+        protocol: 'selected-font-request-settlement-v4',
+        originalDemandOnly: true,
+        runtimeChanged: false,
+        publicActionsChanged: false,
+        numericalGatesChanged: false,
+        automaticRetries: 0,
+      });
+      for (const key of ['setupCorrection', 'routeCorrection', 'observerCorrection'])
+        assert.equal(plan.release[key], undefined);
+    } else if (plan.release.setupCorrection !== undefined) {
       assert.deepEqual(plan.release.setupCorrection, {
         format: 'SoloOptionalAudioBrowserInventorySuccessorV1',
         priorRun: 39049195073,
@@ -926,7 +967,7 @@ export function validateReadinessPlan(plan) {
     'diagnosticStatus-passed-and-readinessCorrectness-pass',
   );
   assert.equal(plan.release.candidateRevision, selected.source.revision);
-  if (selected.audioFault || selected.diagnosed) {
+  if (selected.audioFault || selected.diagnosed || selected.settlement) {
     assert.equal(plan.release.firstEightRequired, false);
     assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
   } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
@@ -995,7 +1036,7 @@ export function bindReadinessJob(manifest, engine) {
     manifest.engines,
     optionalAudioPlan(manifest)
       ? ['chromium']
-      : diagnosedPlan(manifest)
+      : diagnosedPlan(manifest) || fontSettlementPlan(manifest)
         ? ['webkit']
         : READINESS_ENGINES,
   );
@@ -1021,7 +1062,7 @@ export function readinessMatrix(manifest) {
   return {
     include: (optionalAudioPlan(manifest)
       ? ['chromium']
-      : diagnosedPlan(manifest)
+      : diagnosedPlan(manifest) || fontSettlementPlan(manifest)
         ? ['webkit']
         : READINESS_ENGINES
     ).map((engine) => {
@@ -1050,7 +1091,8 @@ export async function prepareReadinessMode(ctx) {
   assert.equal(a.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(a.archiveIdentity, ctx.plan.candidate.inner);
   ctx.report.performanceExclusion = true;
-  if (selected.audioFault || selected.diagnosed) ctx.report.firstEightRequired = false;
+  if (selected.audioFault || selected.diagnosed || selected.settlement)
+    ctx.report.firstEightRequired = false;
   else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
     scope: selected.diagnosed
@@ -1141,6 +1183,7 @@ export async function readinessAssessment(
     assessResumeReadiness,
     assessSelectedFontReadiness,
     assessSelectedFontPostCommandReadiness,
+    assessSelectedFontSettlementReadiness,
     assessReadinessGeometry,
     assessReadinessMediaFault,
   } = await import('./solo-qualification-readiness.mjs');
@@ -1148,45 +1191,53 @@ export async function readinessAssessment(
     selected.documents === 2
       ? ['before-resume', 'saved-restored-before-resume', 'after-resume']
       : ['before-resume', 'after-resume'];
-  const readiness = selected.mediaFault
-    ? assessReadinessMediaFault({
-        protocol: selected.protocol,
-        observation: raw?.readinessObservation,
-        application: raw?.snapshots?.at(-1)?.application,
-        documents: raw?.readinessDocuments,
-        transport: raw?.mediaFaultTransport,
-        witness: raw?.requiredOriginalWitness,
-        fallback: raw?.optionalIconFallback,
-        cleanupFailure: raw?.mediaFaultCleanupFailure,
-        startRetention: selected.requiredStartRetention ?? null,
-        ...(selected.audioFault ? { audioCheck: raw?.audioCheck } : {}),
-      })
-    : selected.font
-      ? (selected.cancelBoundary
-          ? assessSelectedFontPostCommandReadiness
-          : assessSelectedFontReadiness)(
-          raw?.readinessObservation,
-          raw?.snapshots?.at(-1)?.application,
-          raw?.readinessDocuments,
-          raw?.selectedFontTransport,
-          selected.requestPolicy ?? 'single-v1',
-        )
-      : selected.resume
-        ? assessResumeReadiness({
-            protocol: selected.protocol,
-            documents: raw?.readinessDocuments,
-            observations: raw?.readinessObservations,
-            applications: groups.map(
-              (group) => raw?.snapshots?.find((s) => s.group === group)?.application,
-            ),
-            replayEvidence: raw?.readinessReplayEvidence,
-            finalReplayText,
-          })
-        : assessReadinessPilot(
+  const readiness = selected.settlement
+    ? assessSelectedFontSettlementReadiness(
+        raw?.readinessObservation,
+        raw?.snapshots?.at(-1)?.application,
+        raw?.readinessDocuments,
+        raw?.selectedFontTransport,
+        raw?.selectedFontSettlement,
+      )
+    : selected.mediaFault
+      ? assessReadinessMediaFault({
+          protocol: selected.protocol,
+          observation: raw?.readinessObservation,
+          application: raw?.snapshots?.at(-1)?.application,
+          documents: raw?.readinessDocuments,
+          transport: raw?.mediaFaultTransport,
+          witness: raw?.requiredOriginalWitness,
+          fallback: raw?.optionalIconFallback,
+          cleanupFailure: raw?.mediaFaultCleanupFailure,
+          startRetention: selected.requiredStartRetention ?? null,
+          ...(selected.audioFault ? { audioCheck: raw?.audioCheck } : {}),
+        })
+      : selected.font
+        ? (selected.cancelBoundary
+            ? assessSelectedFontPostCommandReadiness
+            : assessSelectedFontReadiness)(
             raw?.readinessObservation,
             raw?.snapshots?.at(-1)?.application,
             raw?.readinessDocuments,
-          );
+            raw?.selectedFontTransport,
+            selected.requestPolicy ?? 'single-v1',
+          )
+        : selected.resume
+          ? assessResumeReadiness({
+              protocol: selected.protocol,
+              documents: raw?.readinessDocuments,
+              observations: raw?.readinessObservations,
+              applications: groups.map(
+                (group) => raw?.snapshots?.find((s) => s.group === group)?.application,
+              ),
+              replayEvidence: raw?.readinessReplayEvidence,
+              finalReplayText,
+            })
+          : assessReadinessPilot(
+              raw?.readinessObservation,
+              raw?.snapshots?.at(-1)?.application,
+              raw?.readinessDocuments,
+            );
   const geometry = selected.geometry
     ? assessReadinessGeometry(
         selected.resume ? raw?.readinessObservations : [raw?.readinessObservation],
@@ -1248,6 +1299,10 @@ export async function readinessAssessment(
     assert.equal(raw.baselineRuntime, false);
     assert.equal(raw.readinessPilot.protocol, selected.protocol);
     assert.equal(raw.readinessPilot.performanceQualification, false);
+    if (selected.settlement) {
+      assert.equal(raw.readinessPilot.cancelBoundaryObservation, 'post-command-v3');
+      assert.equal(raw.readinessPilot.settlementObservation, 'original-demand-v1');
+    }
     if (selected.requiredStartRetention)
       assert.equal(raw.readinessPilot.requiredStartRetention, selected.requiredStartRetention);
     assert.equal(raw.startupCadenceObservations.length, selected.documents);
@@ -1274,6 +1329,7 @@ export async function readinessAssessment(
       'finalReadFailure',
       'failureCleanupFailure',
       ...(selected.font ? ['selectedFontFailure'] : []),
+      ...(selected.settlement ? ['selectedFontSettlementCleanupFailure'] : []),
       ...(selected.mediaFault ? ['mediaFaultFailure', 'mediaFaultCleanupFailure'] : []),
     ])
       assert(!raw[key], key);
@@ -1336,7 +1392,7 @@ export async function readinessAssessment(
     rawPerformanceGateStatus: numeric,
     numericObservationStatus: numeric,
     hitchJournalVerification: journal,
-    ...(selected.audioFault || selected.diagnosed
+    ...(selected.audioFault || selected.diagnosed || selected.settlement
       ? { firstEightRequired: false }
       : { firstEightAllCorrectnessPassed: false }),
     performanceQualification: 'excluded',

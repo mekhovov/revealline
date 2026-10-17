@@ -379,7 +379,19 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
       assert.equal(plan.performanceExclusion, true);
-      if (plan.sourceCohort === 'readiness-optional-start-audio-candidatee1cc') {
+      if (plan.sourceCohort === 'readiness-selected-font-settlement-candidatee1cc') {
+        const { selectedFontSettlementSelection } = await import('./solo-remote-readiness.mjs');
+        const selected = selectedFontSettlementSelection(plan);
+        assert.equal(plan.candidate.revision, selected.source.revision);
+        assert.equal(plan.runtimeRevision, selected.source.revision);
+        assert.equal(plan.candidate.tree, selected.source.tree);
+        assert.deepEqual(plan.fixture, selected.fixture);
+        assert.equal(plan.protocol.name, selected.protocol);
+        assert.equal(raw.readinessPilot.protocol, selected.protocol);
+        assert.equal(plan.protocol.cancelBoundaryObservation, 'post-command-v3');
+        assert.equal(raw.readinessPilot.cancelBoundaryObservation, 'post-command-v3');
+        assert.equal(raw.readinessPilot.settlementObservation, 'original-demand-v1');
+      } else if (plan.sourceCohort === 'readiness-optional-start-audio-candidatee1cc') {
         const { optionalAudioReadinessSelection } = await import('./solo-remote-readiness.mjs');
         const selected = optionalAudioReadinessSelection(plan);
         assert.equal(plan.candidate.revision, selected.source.revision);
