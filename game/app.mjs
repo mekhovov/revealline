@@ -2443,6 +2443,7 @@ try {
   try {
     if (!runtimeContent)
       presentationHost = createPresentationHost({
+        preparation: sound.mediaPreparation,
         skipTitleArtwork: true,
         baseURL: new URL('presentation/compiled/', gameDocumentURL(location.href)),
       });
@@ -2458,7 +2459,10 @@ try {
           return snapshot;
         })
         .catch((error) => {
-          if (error.name === 'AbortError') return null;
+          if (error.name === 'AbortError') {
+            presentationFeedback.update({ status: 'cancelled', message: '' });
+            return null;
+          }
           compiledPresentationWarning = t(
             'interface:releaseArtworkIsUnavailableSourceArtworkIsShown',
           );
