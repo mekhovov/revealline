@@ -1,0 +1,122 @@
+{
+  "format": "FPVPublicUpdateEvidence.v1",
+  "mode": "prepare",
+  "generatedAt": "2026-10-17T02:37:48.577Z",
+  "publicRoot": "https://mekhovov.github.io/revealline/",
+  "expectedRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+  "runnerSha256": "294da9106bfdb8e23b3b972ff90e0b10dee312138164a1e390f5979e7b76a0aa",
+  "passed": true,
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "base": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/",
+      "profile": "/tmp/fpv-public-update-civilian-fpv-fwSkPQ",
+      "preparation": {
+        "control": "Prepare offline package",
+        "completion": "This exact optional package is ready offline."
+      },
+      "oldWorkerRevision": "3c695f880ce0bd4056234b052a15ff9674dec131c8844d09cb2db94b8d8d4fae",
+      "settings": {
+        "tilt": 27,
+        "verticalFov": 108,
+        "keyboard": "two-stick",
+        "touch": "direct"
+      },
+      "storageSha256": "38333d1178a7e7c666b2203cf49712d26ef1658bb08ae7e304e5e96fd6f212d9",
+      "passwordFormAccepted": true,
+      "pageErrors": []
+    },
+    {
+      "id": "fpv-worlds",
+      "base": "https://mekhovov.github.io/revealline/optional-practice/fpv-worlds/",
+      "profile": "/tmp/fpv-public-update-fpv-worlds-Vdpdgp",
+      "preparation": {
+        "control": "Prepare simulator offline",
+        "completion": "Offline runtime preparation completed."
+      },
+      "oldWorkerRevision": "a4ea20b2c21aefa0eef3d03e330670e65c4b99cd92df2b6923edf52b7b6f8882",
+      "settings": {
+        "tilt": 27,
+        "verticalFov": 108,
+        "keyboard": "two-stick",
+        "touch": "direct"
+      },
+      "storageSha256": "bfa4e44811b471f65f943032a367b748effb5920bc8ff2b809c75963558c2d44",
+      "passwordFormAccepted": true,
+      "pageErrors": []
+    }
+  ],
+  "authentication": "Ordinary public password form in isolated persistent Chrome profiles; no unlock injection.",
+  "limits": [
+    "Single local Chrome host using public HTTPS; no physical-device, pilot, aircraft or performance qualification.",
+    "No publication, cache clearing, forced worker activation, browser-profile replacement or existing user data access.",
+    "Legacy calibration is synthetic and unverified. Camera/input preferences use production DOM handlers.",
+    "New profile/backup checks use production library APIs; CLI patch uses the visible editor. Full backup download/upload UI and raw preset bundles are not covered.",
+    "Advanced remains optional and unscored. Regional scene admission, OS-installed PWAs, storage eviction and other browsers are not covered."
+  ],
+  "publicBinding": {
+    "metadata": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "sourceCommittedAt": "2026-10-17T01:45:42Z",
+      "buildVersion": "main-8b01991942dc",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    },
+    "metadataSha256": "e4a9e1a685d0ffde4a9187f606467971e138b56a7d923c3bbb4efe33468ff056",
+    "manifestSha256": "2daa85149b7d3a4eebfe8a456b05d91c657f2b80b6c9231e4ba69eeea550eebe",
+    "pins": {
+      "game/access-gate.mjs": {
+        "path": "game/access-gate.mjs",
+        "bytes": 6833,
+        "sha256": "fdf26e7925bf76a441f22fcb5fcf8d8071180b00a62ba3c7828e815204808db0"
+      },
+      "optional-practice/civilian-fpv/radio-profile.mjs": {
+        "path": "optional-practice/civilian-fpv/radio-profile.mjs",
+        "bytes": 18265,
+        "sha256": "5edfc0ff6a04119758537f887f35b4d61da4f617c45abe032a0161ed91df9b44"
+      },
+      "optional-practice/civilian-fpv/app.mjs": {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "bytes": 91200,
+        "sha256": "14d093ef41ecd88f45ac047c96d77fa451ae42c5933fb977cb33fe9bd0cb5b60"
+      },
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 382499,
+        "sha256": "a4e7f91ab66c4a55b9dd1059b78e6a50772bf43bf3aab82d6a5544dc9bdb1a60"
+      },
+      "optional-practice/civilian-fpv/index.html": {
+        "path": "optional-practice/civilian-fpv/index.html",
+        "bytes": 16356,
+        "sha256": "05bf1a15825e7ffd5f277917f3c1e03fc19deacb6caac8881a814e30a1b066cb"
+      },
+      "optional-practice/civilian-fpv/worker.js": {
+        "path": "optional-practice/civilian-fpv/worker.js",
+        "bytes": 18676,
+        "sha256": "bd0b15dbb3d5531adba2b3ab177492fd85373d95e09ddb5371108374f69ef6de"
+      },
+      "optional-practice/fpv-worlds/index.html": {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "bytes": 50299,
+        "sha256": "341de7f578381ddaf09e690d9a75c47f5e29f4e95a9e799eb14c9f656ffbf385"
+      },
+      "optional-practice/fpv-worlds/worker.js": {
+        "path": "optional-practice/fpv-worlds/worker.js",
+        "bytes": 27960,
+        "sha256": "1746e2e5abf906223fba941332ebea9f6eec5435c12aa6971700b7e3a0cb7027"
+      }
+    },
+    "workers": {
+      "civilian-fpv": "3c695f880ce0bd4056234b052a15ff9674dec131c8844d09cb2db94b8d8d4fae",
+      "fpv-worlds": "a4ea20b2c21aefa0eef3d03e330670e65c4b99cd92df2b6923edf52b7b6f8882"
+    },
+    "tuningAvailable": false
+  },
+  "browser": {
+    "engine": "chrome",
+    "version": "155.0.8059.85"
+  },
+  "runnerStable": true
+}

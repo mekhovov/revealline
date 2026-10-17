@@ -1,4 +1,5 @@
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
+import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
 import {
   WORLD_CATALOGUE,
   BEGINNER_LESSONS,
@@ -37,6 +38,7 @@ import {
 import { mountBeginnerCoach, learningObjectiveFeedback } from './beginner-coach.mjs';
 import {
   createFlightInput,
+  createFlightInputDiagnostics,
   createFlightMenuNavigation,
   createFlightGamepad,
   keyboardFlightPreset,
@@ -46,11 +48,19 @@ import {
 import { createRadioRuntime } from './radio-runtime.mjs';
 import { restoreVerifiedRadio } from './radio-session.mjs';
 import { mountRadioSetup } from './radio-setup.mjs';
+import { createTuningLibraryStore } from './tuning-library.mjs';
+import { mountFlightTuning } from './tuning-ui.mjs';
+import { TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
+import { mountAdvancedPractice } from './advanced-practice.mjs';
+import { createAdvancedRegionalSession } from './advanced-regional.mjs';
+import { createAdvancedWorkerClient, ADVANCED_VERIFICATION_WATCHDOG_MS } from './advanced-worker-client.mjs';
+import { ADVANCED_REGIONAL_RECOVERY_BYTES } from './advanced-simulation.mjs';
 import {
   mountFlightFullscreen,
   mountFlightCameraControls,
   mountFlightSetup,
   mountFlightComfort,
+  restoreFlightComfortCamera,
   mountFlightPractice,
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
@@ -378,6 +388,7 @@ const COPY_EN = {
   next: 'Next in playlist',
   exportProof: 'Export recording',
   tilt: 'Camera tilt',
+  verticalFov: 'Vertical field of view (°)',
   keys: keyboardFlightHelp('two-stick', 'en', { combat: true }),
 };
 const COPY_UK = {
@@ -581,6 +592,7 @@ const COPY_UK = {
   next: 'Наступне завдання',
   exportProof: 'Експорт запису',
   tilt: 'Нахил камери',
+  verticalFov: 'Вертикальне поле зору (°)',
   keys: keyboardFlightHelp('two-stick', 'uk', { combat: true }),
   themePreview: 'Авторська тема',
   snap: 'Прив’язка',
@@ -1028,6 +1040,9 @@ export function mountWorldApp({
     runtimeOfflineFeedback = null,
     regionalRecoveryControls = null,
     regionalStartControls = null,
+    regionalAdvancedControls = null,
+    regionalNativeLifecycle = null,
+    removeRegionalNativeInactive = null,
     regionalLocationControls = null,
     regionalLocationsStore = null,
     regionalNavigation = null;
@@ -1076,6 +1091,9 @@ export function mountWorldApp({
     accumulator = 0,
     raf = 0,
     radioSetup = null,
+    tuning = null,
+    tuningReturnEntry = null,
+    advancedPractice = null,
     response = { ...DEFAULT_RESPONSE },
     recovery = null,
     replayProof = null,
@@ -1221,6 +1239,18 @@ export function mountWorldApp({
     /* Embedded previews without a normal URL retain their saved locale. */
   }
   setLocale(locale, { persist: false });
+  restoreFlightComfortCamera({
+    window: win,
+    host: 'worlds',
+    fov: $('world-fov'),
+    tilt: $('world-tilt'),
+  });
+  const tuningStore = createTuningLibraryStore({
+    storage,
+    locks: win.navigator?.locks,
+    response,
+    camera: { tilt: Number($('world-tilt').value), verticalFov: Number($('world-fov').value) },
+  });
   const savePreferences = () => {
     try {
       storage?.setItem(
@@ -1968,6 +1998,7 @@ export function mountWorldApp({
     },
   });
   const input = createFlightInput({ window: win, document: doc, onPause: () => pauseFlight() });
+  const inputDiagnostics = createFlightInputDiagnostics({ now: () => win.performance.now() });
   input.touchResponse($('flight-touch-response').value);
   input.keyboardPreset($('flight-keyboard-preset').value);
   const gamepad = createFlightGamepad({ window: win, document: doc });
@@ -2050,6 +2081,7 @@ export function mountWorldApp({
   input.bindStick($('world-left-stick'), 'left');
   input.bindStick($('world-right-stick'), 'right');
   const radio = createRadioRuntime({
+    now: () => win.performance.now(),
     getGamepads: () => win.navigator.getGamepads?.() ?? [],
     onCamera: () => cameraControls?.cycle(),
     onFreeze: () => {
@@ -4643,7 +4675,6 @@ export function mountWorldApp({
           record.packIdentity === entry.packIdentity &&
           record.proof.course === entry.course.id &&
           compatibleGhost(record, identity) &&
-          Object.entries(identity).every(([key, value]) => record.proof[key] === value) &&
           (requestedId === undefined || record.id === requestedId),
       )
       .map((record) => ({ id: record.id, proof: clone(record.proof) }))
@@ -4770,6 +4801,7 @@ export function mountWorldApp({
     paintRegionalLocations(state);
     const controls = regionalStartControls;
     if (!controls) return;
+    paintRegionalAdvanced(state);
     controls.root.hidden = !current?.regional;
     if (!current?.regional) {
       controls.owner = null;
@@ -4861,6 +4893,36 @@ export function mountWorldApp({
     controls.off.disabled = !regionalNavigation;
     const status = regionalNavigation ? `${txt('Guiding to', 'Напрямок до')}: ${regionalNavigationLabel()}` : txt('Direction guidance is off.', 'Показ напрямку вимкнено.');
     if (controls.status.textContent !== status) controls.status.textContent = status;
+  }
+  function paintRegionalAdvanced(state = null) {
+    const controls = regionalAdvancedControls;
+    if (!controls) return;
+    controls.root.hidden = !current?.regional;
+    if (!current?.regional) return;
+    const advanced = Boolean(current.regionalAdvanced);
+    const unavailable = typeof win.Worker !== 'function';
+    controls.button.textContent = advanced
+      ? txt('Use Legacy flight · restart', 'Політ Legacy · перезапустити')
+      : txt('Try Advanced here · restart', 'Спробувати Advanced тут · перезапустити');
+    controls.button.disabled = Boolean(controls.busy || regionalPreparing || (!advanced && unavailable));
+    for (const control of [controls.exportRecording, controls.exportRecovery, controls.restore]) {
+      control.hidden = !advanced;
+      control.disabled = Boolean(controls.busy || regionalPreparing || !flight?.snapshot().advanced || flight?.snapshot().reason === 'worker-error');
+    }
+    controls.exportRecording.textContent = txt('Export Advanced recording', 'Експорт запису Advanced');
+    controls.exportRecovery.textContent = txt('Export recovery', 'Експорт відновлення');
+    controls.restore.textContent = txt('Restore recovery file', 'Відновити з файлу');
+    controls.cancelRecovery.textContent = txt('Cancel recovery verification', 'Скасувати перевірку відновлення');
+    controls.cancelRecovery.hidden = !advanced || !controls.recovery;
+    controls.help.textContent = unavailable && !advanced
+      ? txt('Advanced is unavailable: this platform cannot start a simulation worker.', 'Advanced недоступний: платформа не підтримує окремий потік симуляції.')
+      : txt('Experimental Acro · unscored · air start 2 m above the selected point. Landings and collisions use the verified terrain. Uses portable rates, or Actual defaults for Legacy feel.',
+        'Експериментальний Acro · без заліку · старт у повітрі на 2 м вище вибраної точки. Посадки та зіткнення використовують перевірену геометрію місцевості. Використовуються переносні рейти або типові Actual для Legacy feel.');
+    const flightState = state ?? flight?.snapshot();
+    if (advanced && flightState?.reason === 'worker-error')
+      paintText('flight-status', txt('Advanced worker interrupted. Restart to fly again.', 'Потік Advanced перервано. Перезапустіть політ.'));
+    if (advanced && flightState?.reason === 'region-edge')
+      paintText('flight-status', txt('Region boundary reached. Restart to return to the launch point.', 'Межу регіону досягнуто. Перезапустіть, щоб повернутися до старту.'));
   }
   function savedLocationError(error) {
     if (error?.code === 'regional-location-outside' || error?.code === 'regional-location-revision')
@@ -5202,6 +5264,7 @@ export function mountWorldApp({
     paintText('flight-objective', objective);
     $('world-arm').disabled =
       !sceneReady ||
+      Boolean(current.regionalAdvanced && regionalAdvancedControls?.busy) ||
       (current.regional && state.reason !== 'prepared' && state.status !== 'active') ||
       Boolean(ghostLookup) ||
       beginnerCoach.blocksArm() ||
@@ -5846,6 +5909,7 @@ export function mountWorldApp({
     // therefore cannot resume a flight simply because the tab regained focus.
     if (
       sceneReady &&
+      !(current?.regionalAdvanced && regionalAdvancedControls?.busy) &&
       (!current.regional || flight.snapshot().reason === 'prepared') &&
       !ghostLookup &&
       !replayProof &&
@@ -5879,6 +5943,11 @@ export function mountWorldApp({
       audio.update(flight.snapshot(), { active: !replayProof });
       accumulator += elapsed * (replayProof ? replayRate : 1);
       while (accumulator >= 20 && flight.snapshot().status === 'active') {
+        if (flight.stepPending?.()) {
+          // A worker transaction never creates an unbounded catch-up queue.
+          accumulator = Math.min(accumulator, 20);
+          break;
+        }
         accumulator -= 20;
         let controls =
           !replayProof && $('flight-source').value === 'radio'
@@ -5907,7 +5976,11 @@ export function mountWorldApp({
           break;
         }
         const before = flight.snapshot().ticks;
-        flight.step(
+        const selectedFlight = flight;
+        const inputSource = replayProof ? 'recording' : $('flight-source').value;
+        const sampledDiagnostics = inputSource === 'radio' ? radio.diagnostics({ refresh: false })
+          : inputSource === 'controller' ? gamepad.diagnostics() : input.diagnostics();
+        const result = flight.step(
           current.legacy
             ? controls
             : {
@@ -5919,6 +5992,26 @@ export function mountWorldApp({
                     : 0,
               },
         );
+        if (result && typeof result.then === 'function') {
+          // Only Advanced Regional sessions step asynchronously. Keep rendering
+          // their last committed state until full terrain admission completes.
+          void result.then((state) => {
+            if (disposed || flight !== selectedFlight) return;
+            if (state.ticks > before) {
+              inputDiagnostics.record(selectedFlight, inputSource, controls, sampledDiagnostics, state);
+              renderer?.observePresentation?.(state);
+            }
+            if (state.reason === 'terrain-required') void prepareRegionalFlight().catch(reportError);
+            else if (['region-edge', 'worker-error'].includes(state.reason)) pauseFlight();
+            updateHUD(state);
+          }).catch((error) => {
+            if (disposed || flight !== selectedFlight) return;
+            pauseFlight();
+            updateHUD(selectedFlight.snapshot());
+            reportError(error);
+          });
+          break;
+        }
         if (current.regional && flight.snapshot().reason === 'terrain-required') {
           void prepareRegionalFlight().catch(reportError);
           break;
@@ -5932,6 +6025,7 @@ export function mountWorldApp({
           break;
         }
         if (flight.snapshot().ticks > before) {
+          if (!replayProof) inputDiagnostics.record(flight, inputSource, controls, sampledDiagnostics);
           renderer?.observePresentation?.(flight.snapshot());
           audio.update(flight.snapshot(), {
             active: !replayProof && flight.snapshot().status === 'active',
@@ -6151,6 +6245,7 @@ export function mountWorldApp({
     return operation;
   }
   async function startRegionalFlight(entry, options = {}) {
+    if (!options.tuningDraft) tuning?.endDraftTest();
     const token = ++flightToken;
     const ownsLaunch = () =>
       !disposed && token === flightToken && options.isCurrent?.() !== false;
@@ -6164,16 +6259,43 @@ export function mountWorldApp({
     await initWorldRuntime();
     if (!canAdopt()) return;
     // Validate paired sources before releasing a usable previous flight.
-    const nextFlight = createRegionalSession({
+    tuningStore.refresh();
+    const tuningConfiguration = options.tuningDraft ?? tuningStore.effective();
+    const regionalAdvanced = Boolean(entry.regionalAdvanced);
+    if (regionalAdvanced && typeof win.Worker !== 'function')
+      throw new Error(txt('Advanced is unavailable on this platform.', 'Advanced недоступний на цій платформі.'));
+    if (regionalAdvanced) {
+      regionalNativeLifecycle ??= onNativeInactive(() => pauseFlight(), { locationRef: win.location })
+        .then((remove) => {
+          if (disposed) return Promise.resolve(remove());
+          removeRegionalNativeInactive = remove;
+        });
+      await regionalNativeLifecycle;
+      if (!canAdopt()) return;
+    }
+    response = clone(tuningConfiguration.response);
+    $('world-fov').value = String(tuningConfiguration.camera.verticalFov);
+    $('world-tilt').value = String(tuningConfiguration.camera.tilt);
+    input.ratesApplied(regionalAdvanced || response.format === TUNED_RESPONSE_FORMAT);
+    const sessionConfiguration = {
       ...regionalPresentationOptions(entry.configuration, $('flight-quality').value),
-      mode: options.mode ?? $('flight-mode').value,
+      mode: regionalAdvanced ? 'acro' : options.mode ?? $('flight-mode').value,
       response,
+      ...(regionalAdvanced ? { advanced: tuningConfiguration.advanced, rateProfile: response.rates } : {}),
       prepareFrame: async (group, options) => {
         if (flight === nextFlight) regionalPreparationStage = 'graphics';
         await renderer.prepareRegionalFrame(group, options);
         if (flight === nextFlight) regionalPreparationStage = 'source';
       },
-    });
+    };
+    const nextFlight = regionalAdvanced
+      ? createAdvancedRegionalSession(sessionConfiguration, {
+          createClient: () => createAdvancedWorkerClient({
+            Worker: win.Worker,
+            url: new URL('../fpv-worlds/advanced-worker.mjs', import.meta.url),
+          }),
+        })
+      : createRegionalSession(sessionConfiguration);
     try {
       await flight?.dispose?.();
     } catch (error) {
@@ -6187,6 +6309,7 @@ export function mountWorldApp({
     regionalPreparing = null;
     flight = nextFlight;
     current = entry;
+    if (!options.tuningDraft) tuningReturnEntry = null;
     recorder = null;
     checkpointRequest = checkpointSession = replayProof = playingPlaylist = null;
     learningDemoReturn = lessonReturn = null;
@@ -6199,7 +6322,7 @@ export function mountWorldApp({
     scenePreparationGeneration++;
     beginnerCoach.close();
     restoreLearningPreferences();
-    $('flight-mode').value = options.mode ?? $('flight-mode').value;
+    $('flight-mode').value = regionalAdvanced ? 'acro' : options.mode ?? $('flight-mode').value;
     if (options.lessonCamera) $('flight-camera').value = options.lessonCamera;
     $('flight-dialog').classList.remove('learning-flight', 'learning-replay');
     $('flight-dialog').dataset.flightMenuOpen = 'false';
@@ -6210,6 +6333,7 @@ export function mountWorldApp({
       $('flight-source').disabled =
       $('radio-setup-button').disabled =
         false;
+    $('flight-mode').disabled = regionalAdvanced;
     $('world-touch').hidden = $('flight-source').value !== 'touch';
     sectors.reset();
     sectorReference = sectorReferenceProof = sectorReferenceId = null;
@@ -6219,7 +6343,9 @@ export function mountWorldApp({
     lastTime = null;
     accumulator = 0;
     $('flight-title').textContent = label(entry);
-    $('flight-collection').textContent = entry.regionalReview
+    $('flight-collection').textContent = regionalAdvanced
+      ? txt('REGIONAL ADVANCED · EXPERIMENTAL · UNSCORED', 'РЕГІОН ADVANCED · ЕКСПЕРИМЕНТАЛЬНИЙ · БЕЗ ЗАЛІКУ')
+      : entry.regionalReview
       ? txt('REGIONAL REVIEW · UNSCORED', 'ПЕРЕВІРКА РЕГІОНУ · БЕЗ ЗАЛІКУ')
       : [txt('REGIONAL FREE FLIGHT · UNSCORED', 'ВІЛЬНИЙ ПОЛІТ У РЕГІОНІ · БЕЗ ЗАЛІКУ'), entry.installedRevision].filter(Boolean).join(' · ');
     $('flight-brief').textContent = $('flight-menu-brief').textContent =
@@ -6279,6 +6405,7 @@ export function mountWorldApp({
     }
   }
   async function startFlight(entry, options = {}) {
+    if (!options.tuningDraft) tuning?.endDraftTest();
     if (entry.regional) return startRegionalFlight(entry, options);
     regionalManifestRequest?.abort();
     const requestedCamera =
@@ -6416,6 +6543,7 @@ export function mountWorldApp({
     if (!ownsAttempt()) return;
     flight = null;
     current = entry;
+    if (!options.tuningDraft) tuningReturnEntry = null;
     if (!options.replayProof && !options.preview && !options.checkpoint && !entry.freeFlight)
       lastCatalogueFlightKey = keyOf(entry);
     recorder = null;
@@ -6426,7 +6554,9 @@ export function mountWorldApp({
     const needsAcro = !entry.legacy && worldCourseRequiresAcro(entry.course);
     modePractice = needsAcro && requestedMode === 'self-level';
     const learning =
-      (!checkpointRequest || checkpointRequest.watch) && learningById.get(entry.beginner);
+      !options.tuningDraft &&
+      (!checkpointRequest || checkpointRequest.watch) &&
+      learningById.get(entry.beginner);
     if (learning) {
       learningPreferences ??= {
         'flight-camera': $('flight-camera').value,
@@ -6646,6 +6776,13 @@ export function mountWorldApp({
       });
       $('flight-mode').value = options.recover.mode;
     } else {
+      if (!learning && !replayProof) {
+        tuningStore.refresh();
+        const tuningConfiguration = options.tuningDraft ?? tuningStore.effective();
+        response = clone(tuningConfiguration.response);
+        $('world-fov').value = String(tuningConfiguration.camera.verticalFov);
+        $('world-tilt').value = String(tuningConfiguration.camera.tilt);
+      }
       flight = (entry.legacy ? createFlight : createWorldFlight)({
         course: entry.course,
         mode: $('flight-mode').value,
@@ -6665,6 +6802,7 @@ export function mountWorldApp({
                   : 'practice',
             });
     }
+    input.ratesApplied(flight.response().format === TUNED_RESPONSE_FORMAT);
     enemyStatsRunId = win.crypto?.randomUUID?.() ?? globalThis.crypto.randomUUID();
     if (options.recover) {
       try {
@@ -7080,6 +7218,7 @@ export function mountWorldApp({
     if (playlistDraft && $('playlist-title').value === playlistDraft.title[previousLocale])
       $('playlist-title').value = localized(playlistDraft.title);
     paintLanguage();
+    tuning?.refresh();
     $('search').placeholder = txt('Find a world or challenge…', 'Знайти світ або завдання…');
     renderFilters();
     renderCatalogue();
@@ -7380,6 +7519,7 @@ export function mountWorldApp({
     immersive.closeControls();
     if (
       !sceneReady ||
+      (current?.regionalAdvanced && regionalAdvancedControls?.busy) ||
       ghostLookup ||
       !flight ||
       terminal(flight.snapshot()) ||
@@ -7444,6 +7584,9 @@ export function mountWorldApp({
   doc.querySelector('main').append(menuHint);
   function menuContext() {
     if (disposed) return null;
+    // Keep flight keys in the reference arena and radio samples in the rate preview.
+    if (advancedPractice) return null;
+    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: true };
     const globalToolRoot = globalTools?.root();
     if (globalToolRoot)
       return {
@@ -7520,6 +7663,10 @@ export function mountWorldApp({
       if (menuHint.textContent !== value) menuHint.textContent = value;
     },
     onBack() {
+      if (tuning?.root.open) {
+        tuning.close();
+        return;
+      }
       if ($('sim-flight-hud-details')?.open) flightHud.closeDetails();
       else if (enemyGuide.dialog.open) enemyGuide.close();
       else if (packRemovalReview?.dialog.open) $('pack-removal-cancel').click();
@@ -7954,6 +8101,10 @@ export function mountWorldApp({
       window: win,
       runtime: radio,
       locale,
+      onOpenRates() {
+        closeRadio();
+        tuning.open();
+      },
       onDone() {
         if ($('flight-source').value !== 'radio') {
           $('flight-source').value = 'radio';
@@ -7962,16 +8113,21 @@ export function mountWorldApp({
         closeRadio();
       },
       onResponse: (rates) => {
-        if (learningPreferences) learningResponse = { ...rates };
-        response = learningPreferences ? { ...DEFAULT_RESPONSE } : rates;
-        if (current && $('flight-dialog').open)
-          void startFlight(current, {
-            preview,
-            playlist: playingPlaylist,
-            index: playlistIndex,
-            checkpoint: checkpointRequest,
-            paused: true,
-          }).catch(reportError);
+        void tuningStore
+          .saveProfile(tuningStore.snapshot().defaultProfileId, { response: rates })
+          .then(() => {
+            if (learningPreferences) learningResponse = clone(rates);
+            response = learningPreferences ? { ...DEFAULT_RESPONSE } : rates;
+            if (current && $('flight-dialog').open)
+              return startFlight(current, {
+                preview,
+                playlist: playingPlaylist,
+                index: playlistIndex,
+                checkpoint: checkpointRequest,
+                paused: true,
+              });
+          })
+          .catch(reportError);
       },
     });
     $('world-radio-dialog').showModal();
@@ -8486,6 +8642,124 @@ export function mountWorldApp({
   on(regionalStartGuide, 'click', () => guideRegionalSelection('start'));
   on(regionalNavigationOff, 'click', () => { regionalNavigation = null; if (flight) updateHUD(flight.snapshot()); });
   playShell.elements.content.pause.querySelector('.sim-flight-practice').append(regionalStartRoot);
+  const regionalAdvancedRoot = el('section'),
+    regionalAdvancedButton = el('button'),
+    regionalAdvancedHelp = el('p'),
+    regionalAdvancedExport = el('button'),
+    regionalAdvancedRecoveryExport = el('button'),
+    regionalAdvancedRestore = el('button'),
+    regionalAdvancedCancelRecovery = el('button'),
+    regionalAdvancedRecoveryFile = el('input'),
+    regionalAdvancedMessage = el('p');
+  regionalAdvancedRoot.hidden = true;
+  regionalAdvancedButton.type = 'button';
+  regionalAdvancedButton.dataset.regionalAdvanced = 'toggle';
+  regionalAdvancedHelp.id = 'regional-advanced-help';
+  regionalAdvancedButton.setAttribute('aria-describedby', regionalAdvancedHelp.id);
+  for (const control of [regionalAdvancedExport, regionalAdvancedRecoveryExport, regionalAdvancedRestore, regionalAdvancedCancelRecovery]) control.type = 'button';
+  regionalAdvancedCancelRecovery.hidden = true;
+  regionalAdvancedRecoveryFile.type = 'file';
+  regionalAdvancedRecoveryFile.accept = '.json,application/json';
+  regionalAdvancedRecoveryFile.hidden = true;
+  regionalAdvancedMessage.setAttribute('role', 'status');
+  regionalAdvancedRoot.append(regionalAdvancedButton, regionalAdvancedHelp, regionalAdvancedExport, regionalAdvancedRecoveryExport, regionalAdvancedRestore, regionalAdvancedCancelRecovery, regionalAdvancedRecoveryFile, regionalAdvancedMessage);
+  regionalAdvancedControls = { root: regionalAdvancedRoot, button: regionalAdvancedButton, help: regionalAdvancedHelp, exportRecording: regionalAdvancedExport, exportRecovery: regionalAdvancedRecoveryExport, restore: regionalAdvancedRestore, cancelRecovery: regionalAdvancedCancelRecovery, recovery: null, busy: false };
+  regionalStartRoot.after(regionalAdvancedRoot);
+  on(regionalAdvancedButton, 'click', async () => {
+    if (!current?.regional || regionalAdvancedControls.busy || regionalAdvancedButton.disabled) return;
+    const selected = { ...current, regionalAdvanced: !current.regionalAdvanced };
+    regionalAdvancedControls.busy = true;
+    paintRegionalAdvanced();
+    try { await startRegionalFlight(selected, { mode: selected.regionalAdvanced ? 'acro' : $('flight-mode').value }); }
+    catch (error) { reportError(error); }
+    finally {
+      regionalAdvancedControls.busy = false;
+      if (!disposed && flight) updateHUD(flight.snapshot());
+    }
+  });
+  async function exportRegionalAdvanced(recoveryFile) {
+    if (!current?.regionalAdvanced || regionalAdvancedControls.busy || !flight?.recording) return;
+    pauseFlight();
+    const selected = flight;
+    regionalAdvancedControls.busy = true;
+    paintRegionalAdvanced();
+    try {
+      const value = await (recoveryFile ? selected.captureRecovery() : selected.recording());
+      if (disposed || flight !== selected) return;
+      const outcome = await exportJSONFile(value, recoveryFile ? 'regional-advanced-recovery.json' : 'regional-advanced-recording.json', {
+        locationRef: win.location, documentRef: doc, URLImpl: win.URL ?? globalThis.URL,
+        BlobImpl: win.Blob ?? globalThis.Blob, schedule: win.setTimeout.bind(win),
+      });
+      if (disposed || flight !== selected) return;
+      regionalAdvancedMessage.textContent = outcome.status === 'shared'
+        ? txt('File shared.', 'Файл надіслано.')
+        : outcome.status === 'cancelled'
+          ? txt('Export cancelled.', 'Експорт скасовано.')
+          : txt('Download requested. Check your downloads or Save dialog.', 'Завантаження запитано. Перевірте завантаження або вікно збереження.');
+    } catch (error) {
+      if (!disposed && flight === selected) regionalAdvancedMessage.textContent = txt(`Export failed: ${error.message}`, `Не вдалося експортувати: ${error.message}`);
+    } finally {
+      regionalAdvancedControls.busy = false;
+      if (!disposed && flight) updateHUD(flight.snapshot());
+    }
+  }
+  on(regionalAdvancedExport, 'click', () => exportRegionalAdvanced(false));
+  on(regionalAdvancedRecoveryExport, 'click', () => exportRegionalAdvanced(true));
+  on(regionalAdvancedRestore, 'click', () => {
+    if (regionalAdvancedRestore.disabled) return;
+    pauseFlight();
+    regionalAdvancedRecoveryFile.value = '';
+    regionalAdvancedRecoveryFile.click();
+  });
+  on(regionalAdvancedCancelRecovery, 'click', () => regionalAdvancedControls.recovery?.cancel());
+  on(regionalAdvancedRecoveryFile, 'change', async () => {
+    const file = regionalAdvancedRecoveryFile.files?.[0], selected = flight;
+    if (!file || !current?.regionalAdvanced || !selected?.restoreRecovery || regionalAdvancedControls.busy) return;
+    regionalAdvancedControls.busy = true;
+    pauseFlight();
+    let rejectCancellation;
+    const cancelled = new Promise((_, reject) => { rejectCancellation = reject; });
+    const owner = { restoreStarted: false, cancel() {
+      if (owner.restoreStarted) selected.cancelPreparation();
+      rejectCancellation(new DOMException('Recovery verification cancelled', 'AbortError'));
+    } };
+    regionalAdvancedControls.recovery = owner;
+    paintRegionalAdvanced();
+    regionalAdvancedMessage.textContent = txt('Verifying recovery. Flight stays paused; you can cancel.', 'Перевірка відновлення. Політ залишається на паузі; перевірку можна скасувати.');
+    let recoveryTimeout = null;
+    try {
+      if (file.size > ADVANCED_REGIONAL_RECOVERY_BYTES) throw new Error(txt('Recovery file is too large.', 'Файл відновлення завеликий.'));
+      const value = JSON.parse(await Promise.race([file.text(), cancelled]));
+      if (disposed || flight !== selected) return;
+      owner.restoreStarted = true;
+      await Promise.race([
+        selected.restoreRecovery(value),
+        cancelled,
+        new Promise((_, reject) => {
+          recoveryTimeout = win.setTimeout(() => {
+            if (!disposed && flight === selected) selected.cancelPreparation();
+            reject(new DOMException('Regional recovery preparation timed out', 'TimeoutError'));
+          }, ADVANCED_VERIFICATION_WATCHDOG_MS);
+        }),
+      ]);
+      win.clearTimeout(recoveryTimeout);
+      regionalAdvancedControls.recovery = null;
+      paintRegionalAdvanced();
+      if (disposed || flight !== selected) return;
+      sceneReady = false;
+      await prepareRegionalFlight();
+      regionalAdvancedMessage.textContent = txt('Recovery restored. Flight stays paused; arm when ready.', 'Політ відновлено на паузі; увімкніть, коли будете готові.');
+    } catch (error) {
+      if (!disposed && flight === selected) regionalAdvancedMessage.textContent = error.name === 'AbortError'
+        ? txt('Recovery verification cancelled. The current flight is unchanged.', 'Перевірку відновлення скасовано. Поточний політ не змінено.')
+        : txt(`Recovery failed: ${error.message}`, `Не вдалося відновити: ${error.message}`);
+    } finally {
+      win.clearTimeout(recoveryTimeout);
+      if (regionalAdvancedControls.recovery === owner) regionalAdvancedControls.recovery = null;
+      regionalAdvancedControls.busy = false;
+      if (!disposed && flight) updateHUD(flight.snapshot());
+    }
+  });
   const placesRoot = el('section'), placesTitle = el('h3'),
     placeNameLabel = el('label'), placeNameText = el('span'), placeName = el('input'),
     placeSelectLabel = el('label'), placeSelectText = el('span'), placeSelect = el('select'),
@@ -8532,6 +8806,103 @@ export function mountWorldApp({
   on(placeKeep, 'click', () => { placeReview.hidden = true; regionalLocationControls.removal = null; });
   on(placeConfirm, 'click', removeRegionalLocation);
   regionalStartRoot.after(placesRoot);
+  tuning = mountFlightTuning({
+    document: doc,
+    window: win,
+    store: tuningStore,
+    locale: () => locale,
+    onOpen: () => pauseFlight(),
+    onApply() {
+      const entry =
+        tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
+      tuningReturnEntry = null;
+      if (entry) void startFlight(entry).catch(reportError);
+    },
+    onTest(configuration) {
+      const entry =
+        tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
+      if (!entry) return;
+      tuningReturnEntry = entry;
+      void startFlight(
+        { ...entry, freeFlight: true },
+        { preview: true, tuningDraft: configuration },
+      ).catch(reportError);
+    },
+    getDiagnostics: () => inputDiagnostics.read(
+      flight,
+      replayProof ? 'recording' : $('flight-source').value,
+      !replayProof && $('flight-source').value === 'radio' ? radio.diagnostics() : null,
+    ),
+    onAdvanced(configuration) {
+      pauseFlight();
+      const container = doc.createElement('dialog');
+      container.className = 'fpv-advanced-dialog';
+      doc.body.append(container);
+      container.showModal();
+      const session = mountAdvancedPractice({
+        workerURL: new URL('../fpv-worlds/advanced-worker.mjs', import.meta.url),
+        container,
+        window: win,
+        locale,
+        configuration: configuration.advanced,
+        profile: configuration.response.rates,
+        camera: { tilt: configuration.camera.tilt, fov: configuration.camera.verticalFov },
+        getControls: () => {
+          const sample = radio.preview();
+          return sample.verified ? sample.controls : null;
+        },
+        onPause: () => pauseFlight(),
+        async onSaveConfiguration(advanced) {
+          const library = tuningStore.snapshot(),
+            setup = library.setups.find((item) => item.id === library.selectedSetupId);
+          await tuningStore.saveSetup({ ...setup, advanced }, library.revision);
+          tuning.acceptOwnSave(library.revision);
+        },
+        onClose() {
+          advancedPractice?.dispose();
+          advancedPractice = null;
+          container.close();
+          container.remove();
+          tuning.open({ keepDraft: true });
+        },
+      });
+      advancedPractice = {
+        ...session,
+        dispose() {
+          session.dispose();
+          container.close();
+          container.remove();
+        },
+      };
+      container.addEventListener('cancel', (event) => {
+        event.preventDefault();
+        advancedPractice?.dispose();
+        advancedPractice = null;
+        tuning.open({ keepDraft: true });
+      });
+    },
+  });
+  tuning.button(playShell.elements.content.pause);
+  tuning.button($('drone-hangar'));
+  $('world-viewport').append(tuning.returnButton);
+  for (const cameraId of ['world-fov', 'world-tilt'])
+    on($(cameraId), 'change', () => {
+      tuningStore.refresh();
+      const library = tuningStore.snapshot(),
+        setup = library.setups.find((item) => item.id === library.selectedSetupId);
+      void tuningStore
+        .saveSetup(
+          {
+            ...setup,
+            camera: {
+              tilt: Number($('world-tilt').value),
+              verticalFov: Number($('world-fov').value),
+            },
+          },
+          library.revision,
+        )
+        .catch(reportError);
+    });
   modeSettingsView = mountSimModeSettings({
     root: $('sim-settings'),
     content: settingsContent,
@@ -8545,6 +8916,7 @@ export function mountWorldApp({
     groups: {
       gameplay: [settingLabel('flight-mode')],
       controls: [
+        tuning.button(),
         settingLabel('flight-source'),
         $('radio-setup-button'),
         settingLabel('flight-touch-response'),
@@ -8896,6 +9268,7 @@ export function mountWorldApp({
           input.dispose();
           gamepad.dispose();
           radioSetup?.dispose();
+          await removeRegionalNativeInactive?.();
           void regionalLocationsStore?.then((store) => store.close()).catch(() => {});
           await flight?.dispose?.();
           flight = null;
@@ -8929,6 +9302,8 @@ export function mountWorldApp({
           flightComfort?.dispose();
           flightSetup?.dispose();
           practiceFlow?.dispose();
+          tuning?.dispose();
+          advancedPractice?.dispose();
           cameraControls?.dispose();
           playShell?.dispose();
         } finally {
