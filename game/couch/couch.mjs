@@ -601,7 +601,11 @@ try {
         track: null,
         pictureEntry: baseEntry,
         musicCampaignKey: campaignKey(campaign),
-        authoredBackground: null,
+        authoredBackground:
+          baseEntry.levelVisuals.find((visual) => visual.levelId === level.id)?.visualOverrides
+            ?.background ??
+          baseEntry.visualOverrides.background ??
+          null,
       }));
   let featuredSource,
     featuredStatus = '';
