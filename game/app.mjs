@@ -11740,16 +11740,17 @@ try {
             (candidateHost?.progressMission?.(activeEntry, levelIndex) ?? journeyMission());
           if (mission) {
             const acceptedPicture = flightPictures?.current();
+            const gameplayId = dataIdentity({
+              ruleset: run.ruleset,
+              level: run.level,
+              classes: run.classRecipes,
+            });
             const completion = {
               type: 'complete',
               mode: 'solo',
               missionId: mission.id,
               runId,
-              gameplayId: dataIdentity({
-                ruleset: run.ruleset,
-                level: run.level,
-                classes: run.classRecipes,
-              }),
+              gameplayId,
               difficulty: activeEntry.difficulty || 'standard',
               stars: run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
               ...(candidateHost?.owns(activeEntry) &&
@@ -11766,11 +11767,7 @@ try {
                       levelId: run.levelId,
                       levelRevision: String(flightPictures.context.levelRevision),
                       runId,
-                      gameplayId: dataIdentity({
-                        ruleset: run.ruleset,
-                        level: run.level,
-                        classes: run.classRecipes,
-                      }),
+                      gameplayId,
                       difficulty: activeEntry.difficulty || 'standard',
                       name: mission.name,
                       campaignTitle: mission.campaignTitle,

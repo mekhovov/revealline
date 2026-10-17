@@ -521,7 +521,7 @@ export function exportReplay(recorder, state) {
   });
 }
 
-function prepareReplay(source) {
+function snapshotReplaySource(source) {
   if (typeof source === 'string') {
     if (encoder.encode(source).length > MAX_REPLAY_BYTES)
       reject('Replay exceeds 32 MiB.', 'json-budget');
@@ -531,7 +531,15 @@ function prepareReplay(source) {
       reject('Replay is not valid JSON.');
     }
   }
-  const data = boundedCopy(source);
+  return boundedCopy(source);
+}
+
+function prepareReplay(source) {
+  return prepareReplayData(snapshotReplaySource(source));
+}
+
+// Accept only the owned source snapshot produced inside this module.
+function prepareReplayData(data) {
   if (['xonix-replay.v1', 'xonix-replay.v2'].includes(data?.version))
     reject(
       'Legacy replay version: use its archived game build. Current runs use replay v3 with class switches and signal challenges.',
@@ -736,9 +744,14 @@ export async function verifyReplayAsync(
   // state, and the ordinary verifier path retains its exact result contract.
   const requestedMastery = masteryRequest(mastery);
   checkAbort(signal);
-  const prepared = prepareReplay(data);
+  const snapshot = scheduleChunk ? snapshotReplaySource(data) : null;
+  let prepared = scheduleChunk ? null : prepareReplay(data);
   await yieldToHost();
   checkAbort(signal);
+  if (scheduleChunk)
+    await admittedChunk(() => {
+      prepared = prepareReplayData(snapshot);
+    });
   if (requestedMastery) {
     const setup = () => {
       if (prepared.versions.ruleset !== LEGACY_VERSIONS.ruleset)
