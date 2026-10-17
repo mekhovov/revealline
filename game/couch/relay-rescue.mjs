@@ -2664,7 +2664,10 @@ export function bootCoop({
         ...(artworkSource ? { artworkSource } : {}),
       },
       lease: teamMedia
-        ? createCreatorTeamMediaPictureLease(teamMedia, { decodeImage: decodeCoopPicture })
+        ? createCreatorTeamMediaPictureLease(teamMedia, {
+            decodeImage: decodeCoopPicture,
+            getSnapshot: presentationPage.current,
+          })
         : journeyRow?.background && !artworkSource
           ? createCandidateTeamPictures({
               row: journeyRow,
@@ -3152,6 +3155,11 @@ export function bootCoop({
           ? null
           : acceptedPicture.artworkSource,
       nextDiscoveryRow?.installedEditionId ?? acceptedPicture.installedEditionId ?? null,
+      nextDiscoveryRow
+        ? (nextDiscoveryRow.teamMedia ?? null)
+        : navigation.nextRow
+          ? null
+          : acceptedPicture.teamMedia,
     );
     const rememberBuiltIn = selection.sourcePack === COOP_STARTER_PACK;
     const operation = {

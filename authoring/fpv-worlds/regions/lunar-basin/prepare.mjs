@@ -198,6 +198,76 @@ function shelter(id, x, z, sx, sz, roofHeight) {
       0.7,
       colours.marker,
     );
+  if (id !== 'survey-shelter' && id !== 'service-gallery') return;
+  // Attached roof ribs and corner equipment preserve both open central flight axes.
+  for (const lane of [-1, 0, 1]) {
+    box(
+      `${id}-roof-rib-${lane + 1}`,
+      x + (lane * sx) / 3,
+      top - 0.65,
+      z,
+      0.55,
+      1.3,
+      sz - 1.6,
+      colours.light,
+    );
+  }
+  for (const side of [-1, 1]) {
+    box(
+      `${id}-side-stringer-${side < 0 ? 'w' : 'e'}`,
+      x + side * (sx / 2 - 1),
+      top - 0.65,
+      z,
+      1.6,
+      1.3,
+      sz,
+      colours.metal,
+    );
+  }
+  for (const [index, side] of [-1, 1].entries()) {
+    const ex = x + side * (sx / 2 - 6),
+      ez = z - sz / 2 + 6;
+    const points = [-1.8, 0, 1.8].flatMap((dx) =>
+      [-1.6, 0, 1.6].map((dz) => sampledHeight(ex + dx, ez + dz)),
+    );
+    const floor = Math.min(...points) - 0.12,
+      deck = Math.max(...points) + 0.28;
+    box(
+      `${id}-equipment-plinth-${index}`,
+      ex,
+      (floor + deck) / 2,
+      ez,
+      3.6,
+      deck - floor,
+      3.2,
+      colours.light,
+    );
+    box(`${id}-equipment-cabinet-${index}`, ex, deck + 1.9, ez, 2.8, 3.8, 2.4, colours.metal);
+    // These are solid instrument faces with backing, not deceptive fly-through apertures.
+    box(
+      `${id}-instrument-backing-${index}`,
+      ex,
+      deck + 2.15,
+      ez + 1.26,
+      2.1,
+      2.3,
+      0.18,
+      colours.dark,
+    );
+    for (const row of [-1, 0, 1]) {
+      box(
+        `${id}-instrument-strip-${index}-${row + 1}`,
+        ex,
+        deck + 2.15 + row * 0.56,
+        ez + 1.37,
+        1.65,
+        0.12,
+        0.12,
+        row === 0 ? colours.marker : colours.light,
+      );
+    }
+    box(`${id}-cabinet-cap-${index}`, ex, deck + 3.88, ez, 3.05, 0.16, 2.65, colours.light);
+  }
 }
 // Each natural feature has a different footprint and approach; roofs retain open sides.
 shelter('survey-shelter', 104, 144, 48, 48, 11);
@@ -369,7 +439,13 @@ for (const [layer, sources, compile] of [
       ]) {
         const id = `${source.chunkId}-${kind}`,
           path = `${source.chunkId}.${kind === 'scene' ? 'glb' : 'json'}`;
-        assets.push({ id, kind, path, bytes: bytes.length, sha256: hash(bytes) });
+        assets.push({
+          id,
+          kind,
+          path,
+          bytes: bytes.length,
+          sha256: hash(bytes),
+        });
         ids.push(id);
         await writeFile(resolve(output, layer, path), bytes);
       }

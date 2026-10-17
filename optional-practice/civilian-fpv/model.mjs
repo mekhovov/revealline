@@ -15,11 +15,36 @@ import {
 } from './radio-profile.mjs';
 import { Q, attitude, clamp, integrateOrientation, isqrt, mul, roundDiv } from './math.mjs';
 import { createSectorTracker } from './flight-sectors.mjs';
+import { TUNED_RESPONSE_FORMAT, responseComparisonIdentity } from './flight-response.mjs';
+import { createRateEvaluator } from './rates.mjs';
 export const FLIGHT_MODEL = 'civilian-quad-fixed.v1';
 export const FLIGHT_HZ = 50;
 export const MAX_FLIGHT_TICKS = 50 * 60 * 12;
 export const FLIGHT_MODES = Object.freeze(['self-level', 'acro']);
+/** Full replay identity stays exact; comparison replaces only personal rotation curves. */
+export function flightComparisonIdentity(identity, response) {
+  const context = Object.fromEntries(
+    [
+      'model',
+      'backend',
+      'course',
+      'courseIdentity',
+      'worldIdentity',
+      'mode',
+      'rulesIdentity',
+      'conditionsIdentity',
+    ]
+      .filter((key) => Object.hasOwn(identity, key))
+      .map((key) => [key, identity[key]]),
+  );
+  return dataIdentity({
+    format: 'FlightComparison.v1',
+    ...context,
+    responseIdentity: responseComparisonIdentity(response),
+  });
+}
 const unscoredFlights = new WeakSet();
+const rateEvaluators = new WeakMap();
 const int = (n, a, b) => Number.isSafeInteger(n) && n >= a && n <= b;
 const vector = (v, min, max) => {
   exactKeys(v, ['x', 'y', 'z'], 'position');
@@ -213,16 +238,23 @@ function sweepBox(a, b, box) {
  */
 export function advanceFlightAir(state, command, mode, rates, displacement) {
   const angles = attitude(state.orientation);
+  const tuned = rates.format === TUNED_RESPONSE_FORMAT;
+  if (tuned && !rateEvaluators.has(rates))
+    rateEvaluators.set(rates, createRateEvaluator(rates.rates));
+  const evaluator = tuned ? rateEvaluators.get(rates) : null;
   for (const key of ['roll', 'pitch', 'yaw']) {
-    const shaped = responseCurve(command[key], rates.expo);
+    const shaped = tuned ? command[key] : responseCurve(command[key], rates.expo);
+    const maximum = tuned ? rates.rates.axes[key].limit : rates.maxRate;
     const desired =
       mode === 'self-level' && key !== 'yaw'
         ? clamp(
             (roundDiv(shaped * rates.maxTilt * 100, 1000) - angles[key]) * 4,
-            -rates.maxRate * 100,
-            rates.maxRate * 100,
+            -maximum * 100,
+            maximum * 100,
           )
-        : roundDiv(shaped * rates.maxRate * 100, 1000);
+        : tuned
+          ? Math.round(evaluator.rate(key, command[key] / 1000) * 100)
+          : roundDiv(shaped * rates.maxRate * 100, 1000);
     const difference = desired - state.angular[key];
     state.angular[key] += difference
       ? Math.sign(difference) * Math.max(1, Math.abs(roundDiv(difference, rates.responseTicks)))
@@ -230,7 +262,11 @@ export function advanceFlightAir(state, command, mode, rates, displacement) {
   }
   state.orientation = integrateOrientation(state.orientation, state.angular, FLIGHT_HZ);
   const nextAttitude = attitude(state.orientation),
-    thrust = roundDiv(command.throttle * 19620, 1000);
+    thrust = roundDiv(
+      (tuned ? Math.round(evaluator.throttle(command.throttle / 1000) * 1000) : command.throttle) *
+        19620,
+      1000,
+    );
   for (const axis of ['x', 'y', 'z']) {
     const acceleration = mul(nextAttitude.up[axis], thrust) - (axis === 'y' ? 9810 : 0);
     state.velocity[axis] = clamp(
@@ -260,6 +296,9 @@ export function createFlight({
     mode,
     responseIdentity: responseIdentity(rates),
   };
+  if (rates.format === TUNED_RESPONSE_FORMAT)
+    identity.comparisonIdentity = flightComparisonIdentity(identity, rates);
+  Object.freeze(identity);
   let state,
     lastObjectiveFeedback = null;
   const reset = () => {
@@ -426,7 +465,7 @@ export function createFlight({
   const flight = {
     identity,
     course: () => structuredClone(source),
-    response: () => ({ ...rates }),
+    response: () => structuredClone(rates),
     snapshot,
     objectiveFeedback: () => structuredClone(lastObjectiveFeedback),
     step,
@@ -493,6 +532,7 @@ function prepareFlightReplay(course, input, sampleEvery, includeSectors) {
       'courseIdentity',
       'mode',
       'responseIdentity',
+      'comparisonIdentity',
       'response',
       'frames',
     ],
@@ -507,7 +547,9 @@ function prepareFlightReplay(course, input, sampleEvery, includeSectors) {
   );
   const flight = createFlight({ course, mode: proof.mode, response: proof.response });
   required(
-    Object.entries(flight.identity).every(([key, value]) => proof[key] === value),
+    Object.hasOwn(proof, 'comparisonIdentity') ===
+      Object.hasOwn(flight.identity, 'comparisonIdentity') &&
+      Object.entries(flight.identity).every(([key, value]) => proof[key] === value),
     'Exact flight model, course, mode and response required',
   );
   flight.arm();

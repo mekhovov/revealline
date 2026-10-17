@@ -16,7 +16,16 @@ export function createRadioRuntime({
   onFreeze = () => {},
   onReset = () => {},
   onCamera = () => {},
+  now = () => globalThis.performance?.now?.() ?? 0,
 }) {
+  let diagnostic = null,
+    previousTimestamp = null,
+    timestampIntervals = [];
+  const clearDiagnostics = () => {
+    diagnostic = null;
+    previousTimestamp = null;
+    timestampIntervals = [];
+  };
   let selected = null,
     profile = null,
     verified = false,
@@ -82,10 +91,35 @@ export function createRadioRuntime({
   }
   function sample() {
     const pad = read();
-    if (!pad || !profile) return null;
+    if (!pad || !profile) {
+      clearDiagnostics();
+      return null;
+    }
     try {
-      return normalizeRadioInput(profile, pad);
+      const controls = normalizeRadioInput(profile, pad);
+      const timestamp = Number.isFinite(pad.timestamp) && pad.timestamp > 0 ? pad.timestamp : null;
+      if (timestamp !== null && previousTimestamp !== null && timestamp > previousTimestamp)
+        timestampIntervals = [...timestampIntervals, timestamp - previousTimestamp].slice(-20);
+      if (timestamp === null || (previousTimestamp !== null && timestamp < previousTimestamp))
+        timestampIntervals = [];
+      previousTimestamp = timestamp;
+      diagnostic = {
+        raw: Object.fromEntries(
+          FLIGHT_CONTROLS.map((axis) => [axis, pad.axes[profile.channels[axis].axis]]),
+        ),
+        calibrated: { ...controls },
+        sampledAtMs: now(),
+        sampleAgeMs: timestamp === null ? null : Math.max(0, now() - timestamp),
+        cadenceHz: timestampIntervals.length
+          ? Math.round(
+              (1000 * timestampIntervals.length) /
+                timestampIntervals.reduce((sum, interval) => sum + interval, 0),
+            )
+          : null,
+      };
+      return controls;
     } catch {
+      clearDiagnostics();
       if (reason !== 'invalid-sample') freeze('invalid-sample');
       verified = false;
       return null;
@@ -135,6 +169,7 @@ export function createRadioRuntime({
     devices,
     select(index) {
       freeze('device-selected');
+      clearDiagnostics();
       verified = false;
       profile = null;
       selected = null;
@@ -157,6 +192,7 @@ export function createRadioRuntime({
     },
     setProfile(value, { restoring = false } = {}) {
       freeze('profile-changed');
+      clearDiagnostics();
       profile = validateRadioProfile(value);
       verified = false;
       // Losing hardware during restoration is not an unsaved calibration edit.
@@ -176,6 +212,7 @@ export function createRadioRuntime({
     freeze,
     disconnect(index) {
       if (selected?.index === index) {
+        clearDiagnostics();
         connectionLost = true;
         freeze('device-lost');
         verified = false;
@@ -216,6 +253,12 @@ export function createRadioRuntime({
         stickMode: profile?.stickMode ?? 2,
         verified: !!controls && verified,
       };
+    },
+    diagnostics({ refresh = true } = {}) {
+      if (refresh) sample();
+      return diagnostic
+        ? structuredClone(diagnostic)
+        : { raw: null, calibrated: null, sampleAgeMs: null, cadenceHz: null };
     },
     raw: read,
     poll() {

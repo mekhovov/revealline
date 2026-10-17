@@ -27,12 +27,23 @@ for (const [name, anchor, camera, target] of lunarViews) {
   const cameraClearance = camera[1] - sampledHeight(camera[0], camera[2]);
   assert.ok(cameraClearance >= 9.999, `${name}: camera too close to terrain`);
   assert.ok(camera.every(Number.isFinite) && target.every(Number.isFinite));
-  receipts.push({ name, cameraClearance, minimumClearance, samples: 401, residentBoundsM: bounds });
+  receipts.push({
+    name,
+    cameraClearance,
+    minimumClearance,
+    samples: 401,
+    residentBoundsM: bounds,
+  });
 }
-assert.equal(receipts.length, 13);
+assert.equal(receipts.length, 15);
 console.log(
   JSON.stringify(
-    { passed: true, cameras: receipts, geometryChanged: false, nativeAccepted: false },
+    {
+      passed: true,
+      cameras: receipts,
+      geometryChanged: false,
+      nativeAccepted: false,
+    },
     null,
     2,
   ),

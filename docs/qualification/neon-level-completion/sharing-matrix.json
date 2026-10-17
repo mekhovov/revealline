@@ -1,0 +1,44 @@
+{
+  "format": "revealline-neon-sharing-matrix.v1",
+  "date": "2026-10-16",
+  "scope": "Native browser localhost source/packaged hosts, with isolated origins. No public deployment, fresh browser profile, automatic clipboard-byte or every-mode claim.",
+  "cases": [
+    {
+      "name": "Current Neon Channels",
+      "result": "Exact Current-rules edition launched after chooser activation; URL retained"
+    },
+    {
+      "name": "Original Neon Channels",
+      "result": "Original Arcade rules launched; refresh retained original 75% briefing"
+    },
+    {
+      "name": "Gentle Channels Restart",
+      "result": "5 lives, 75% target, Picture ready; same Current-rules authored identity"
+    },
+    {
+      "name": "Manual Next",
+      "result": "Native Gentle First Signal win, 52.2%, 5 lives, 0:03; native Next: Relay Orchard prepared original and changed URL to signal-02; 58% target and one relay observed"
+    },
+    {
+      "name": "Missing exact level",
+      "requestIdentity": "[\"[\\\"classic\\\",\\\"base\\\",null]\",\"fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718\",\"first-signal/2/88639f3aab7b6cc1\",\"missing-neon-level\",\"1\"]",
+      "result": "Refused: exact mission edition not available in Solo; no different mission started"
+    },
+    {
+      "name": "Archived metadata bookmark",
+      "result": "Opened Archive chooser for Orchard Window; no replacement automatically started. Registry archive-only owners do not mint public played links."
+    },
+    {
+      "name": "Optional metadata fixture",
+      "result": "Not counted as exact optional acceptance: legacy metadata fixture opened chooser; explicitly selected current canonical Pressure Lines card has a different identity. Superseded by UI-minted optional Journey case."
+    },
+    {
+      "name": "Optional Journey, Cross-stitch crossings",
+      "sourceURL": "http://127.0.0.1:8792/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22ornament-crossings-study%5C%22%2C%5C%22ornament-crossings%5C%22%5D%22%2C%22candidate%2Fornament-crossings-study%2Fornament-crossings%2Fcross-stitch-crossings%22%2C%22%22%5D",
+      "recipientURL": "http://127.0.0.1:8797/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22ornament-crossings-study%5C%22%2C%5C%22ornament-crossings%5C%22%5D%22%2C%22candidate%2Fornament-crossings-study%2Fornament-crossings%2Fcross-stitch-crossings%22%2C%22%22%5D",
+      "result": "Normal chooser cross-host handoff verified the old save, then opened correct 70% optional briefing. UI-minted URL retained map on refresh. Separate-origin recipient opened same map with Standard 3 lives instead of source Gentle 5 lives; Start/Pause passed in both origins."
+    }
+  ],
+  "linkContract": "Map/catalog edition/revision only; difficulty and seed remain recipient preferences.",
+  "clipboard": "Previously recorded policy-denied manual copy/paste was exact. Automatic clipboard bytes remain unqualified; no unrelated clipboard read."
+}
