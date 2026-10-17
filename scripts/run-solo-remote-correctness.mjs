@@ -559,7 +559,9 @@ async function main() {
         : extension === 'sustained'
           ? 'source-and-host-scoped-raw-gates-required'
           : extension === 'diagnostics'
-            ? 'app-diagnostics-overhead-only'
+            ? plan.probe === 'journal-hook-cost-v1'
+              ? 'scoped-synchronous-journal-hooks-only'
+              : 'app-diagnostics-overhead-only'
             : 'not-attempted',
     startedAt: new Date().toISOString(),
     rows: plan.rows.map((row) => ({ ...row, status: 'not-run' })),
@@ -1301,7 +1303,9 @@ async function main() {
         : extension === 'sustained'
           ? `Candidate exact retained CI package; ${baselineScope}. Hosted source/context-scoped raw timing gates only; common process/resource supervisor is part of this environment. No authentication, physical-device, GPU or thermal qualification.`
           : extension === 'diagnostics'
-            ? 'Candidate exact retained CI package; fixed matched app-diagnostics overhead only. No baseline gameplay, hitch-journal overhead, gameplay performance, physical-device, GPU or thermal qualification. Common ownership/resource supervision is included in this hosted stratum.'
+            ? plan.probe === 'journal-hook-cost-v1'
+              ? 'Candidate exact retained CI package; matched synchronous journal-hook/application envelope only. Setup, observer registration/browser delivery, paused draining/export, outside-endpoint meter costs, GPU and total browser CPU are unobserved. No gameplay, physical-device or thermal qualification. Common ownership/resource supervision is included.'
+              : 'Candidate exact retained CI package; fixed matched app-diagnostics overhead only. No baseline gameplay, hitch-journal overhead, gameplay performance, physical-device, GPU or thermal qualification. Common ownership/resource supervision is included in this hosted stratum.'
             : `Candidate exact retained CI package; ${baselineScope}. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification.`;
     const finalSpace = await statfs(output);
     assert(finalSpace.bavail * finalSpace.bsize >= GiB + 4 * MiB, 'Final evidence disk reserve');

@@ -478,7 +478,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       const counts = phases.map(() => new Float64Array(bounds.length));
       const totals = new Float64Array(phases.length * 5),
         tail = new Float64Array(256 * 4);
-      let observedGame, phaser;
+      let observedGame, phaser, costScene;
       const workBounds = [
         0.25,
         0.5,
@@ -647,6 +647,12 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
           if (!workProbe || workSubscribed) return;
           if (!observedGame)
             throw new Error('Phaser owner unavailable for independent observation');
+          if (cost) {
+            const scenes =
+              observedGame.scene?.scenes?.filter((scene) => Object.hasOwn(scene, 'lastPaint')) ??
+              [];
+            if (scenes.length === 1) costScene = scenes[0];
+          }
           workSubscribed = true;
           if (cost) cost.begin(7);
           if (hitchJournal) window.soloQualificationHitchJournal.subscribe(performance.now());
@@ -665,7 +671,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             const workEnded = performance.now(),
               elapsed = workEnded - workStarted;
             if (cost) {
-              cost.endWork(workEnded);
+              cost.endWork(workEnded, costScene?.lastPaint?.quality);
               cost.begin(4);
             }
             if (hitchJournal) window.soloQualificationHitchJournal.endWork(workEnded, phase);
