@@ -236,9 +236,14 @@ test('the unchanged 15-second readiness failure retains bounded pending read pro
         assert.equal(report.timeoutMs, 15000);
         assert.ok(report.elapsedMs >= 15000);
         assert.equal(report.pictureState, 'pending');
-        assert.ok(report.presentationFixture.pending.length > 0);
-        assert.ok(report.presentationFixture.pending.length <= 8);
-        assert.ok(report.presentationFixture.pending.some((row) => row.elapsedMs > 0));
+        // Public failure diagnostics retain a bounded count, not the fixture's
+        // private per-read provenance array.
+        const pending = reader.snapshot().pending;
+        assert.ok(Number.isInteger(report.presentationFixture.pending));
+        assert.ok(report.presentationFixture.pending > 0);
+        assert.ok(report.presentationFixture.pending <= 8);
+        assert.equal(report.presentationFixture.pending, pending.length);
+        assert.ok(pending.some((row) => row.elapsedMs > 0));
         assert.equal(report.presentationFixture.retainedBytes, 0);
         assert.equal(report.presentationFixture.failures, 0);
         assert.ok(Buffer.byteLength(JSON.stringify(report)) < 65536);
