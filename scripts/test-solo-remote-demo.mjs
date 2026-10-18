@@ -1568,13 +1568,22 @@ function actualDemoHostFunction(name) {
   const visit = (node) => {
     if (!node || typeof node !== 'object') return;
     if (node.type === 'FunctionDeclaration' && node.id?.name === name) found.push(node);
+    if (
+      node.type === 'VariableDeclarator' &&
+      node.id?.name === name &&
+      node.init?.type === 'ArrowFunctionExpression'
+    )
+      found.push(node);
     for (const value of Object.values(node))
       if (Array.isArray(value)) value.forEach(visit);
       else if (value && typeof value === 'object') visit(value);
   };
   visit(parse(demoHostSource, { ecmaVersion: 'latest', sourceType: 'module' }));
   assert.equal(found.length, 1, name);
-  return demoHostSource.slice(found[0].start, found[0].end);
+  const node = found[0];
+  return node.type === 'VariableDeclarator'
+    ? `const ${demoHostSource.slice(node.start, node.end)};`
+    : demoHostSource.slice(node.start, node.end);
 }
 
 test('actual host permits paused resize before Close but retires paint before every disposal callback', () => {
@@ -1585,7 +1594,7 @@ test('actual host permits paused resize before Close but retires paint before ev
       'let draws=0,reads=0,context=null,picture=null,source=null,practice=null,detailsOpen=false;',
       'let publishedPreparationPhase=null,handoffPending=false,epoch=0,handoffGeneration=0;',
       'let adoptedPlayer=null,paintOwner={},armed=false,busy=false,rewardAge=0,transitionAge=0;',
-      'const interrupted=false,origin=null,doc={hidden:false},state={tick:33,status:"running"};',
+      'const interrupted=false,lifecycleSuspended=false,origin=null,doc={hidden:false},state={tick:33,status:"running"};',
       'const canvas={width:640,height:480,clientWidth:640,clientHeight:480,getContext:()=>({})};',
       'const dialog={dataset:{},close:()=>{assert.equal(active,false);paint(0);}};',
       'const sceneTransition={paint(){},clear(){paint(0);}},reward={reset(){paint(0);}};',
