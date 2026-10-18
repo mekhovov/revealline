@@ -148,9 +148,15 @@ const click = async (selector) => {
 };
 const phase = (value) =>
   page.waitForFunction((v) => document.body?.dataset.flightState === v, value, { timeout: 60000 });
-const snap = async (label) => {
+const snap = async (label, retainedOnly = false) => {
   ensure();
-  const value = await page.evaluate((label) => window.demoRecoveryProbe.snapshot(label), label);
+  const value = await page.evaluate(
+    ({ label, retainedOnly }) =>
+      retainedOnly
+        ? window.demoRecoveryProbe.state(label)
+        : window.demoRecoveryProbe.snapshot(label),
+    { label, retainedOnly },
+  );
   retain(report.snapshots, value, 64);
   assert(value.visible && value.focused);
   assert.deepEqual(value.viewport, { width: 1280, height: 800, dpr: 1 });
@@ -240,6 +246,7 @@ const fault = async (id) => {
     ({ surface, id }) => window.demoRecoveryProbe.retain(surface, id),
     { surface, id },
   );
+  // Keep the fault at the active boundary: diagnostics export is paused-only.
   arm.loss = await page.evaluate((id) => window.demoRecoveryProbe.event(id, 'contextlost'), id);
   assert.equal(arm.loss.before.demo.id, arm.active.id);
   assert(arm.loss.before.demo.tick >= arm.active.tick);
@@ -251,7 +258,7 @@ const fault = async (id) => {
   await page.keyboard.press('ArrowUp');
   await wait(500);
   ensure();
-  arm.lost = await snap(id + '-lost');
+  arm.lost = await snap(id + '-lost', true);
   unchanged(arm.loss.after, arm.lost);
   assert.equal(arm.lost.drawCount, arm.loss.after.drawCount);
   assert(Object.values(arm.lost.disabled).every((v) => v === true));
@@ -261,19 +268,19 @@ const fault = async (id) => {
   );
   assert.equal(arm.restore.isTrusted, false);
   await pausedDraw({ afterDraw: arm.lost.drawCount });
-  arm.restored = await snap(id + '-restored');
+  arm.restored = await snap(id + '-restored', true);
   unchanged(arm.lost, arm.restored);
   assert(arm.restored.drawCount > arm.lost.drawCount);
   await wait(500);
   ensure();
-  arm.held = await snap(id + '-restore-held');
+  arm.held = await snap(id + '-restore-held', true);
   unchanged(arm.restored, arm.held);
   assert.equal(arm.held.drawCount, arm.restored.drawCount);
   await click('#demo-resume');
   if (practice) {
     await wait(500);
     ensure();
-    arm.armed = await snap(id + '-armed');
+    arm.armed = await snap(id + '-armed', true);
     unchanged(arm.held, arm.armed);
     await page.keyboard.press('ArrowLeft');
   }
@@ -495,7 +502,7 @@ const observation = async () => {
   );
   await click('#demo-back');
   await openDemo();
-  const newer = await snap('reopened');
+  const newer = await snap('reopened', true);
   assert.notEqual(newer.painterId, oldPainter.painterId);
   const oldLoss = await page.evaluate(() => window.demoRecoveryProbe.event('stale', 'contextlost')),
     oldRestore = await page.evaluate(() =>
@@ -503,7 +510,7 @@ const observation = async () => {
     );
   await wait(500);
   ensure();
-  const afterStale = await snap('after-retired-events');
+  const afterStale = await snap('after-retired-events', true);
   assert.equal(afterStale.demo.id, newer.demo.id);
   assert(afterStale.demo.tick > newer.demo.tick);
   assert.equal(afterStale.watchPaused, 'false');
