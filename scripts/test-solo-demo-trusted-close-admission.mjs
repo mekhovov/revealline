@@ -248,8 +248,11 @@ test('both actual Demo setup commands select complete close/history controls and
     assert.throws(() =>
       checkSourceInputs(
         workflow.replace(
-          command,
-          command.replace('scripts/test-solo-demo-trusted-close-admission.mjs ', ''),
+          body,
+          body.replace(
+            command,
+            command.replace('scripts/test-solo-demo-trusted-close-admission.mjs ', ''),
+          ),
         ),
         lane,
       ),
@@ -257,8 +260,11 @@ test('both actual Demo setup commands select complete close/history controls and
     assert.throws(() =>
       checkSourceInputs(
         workflow.replace(
-          command,
-          command.replace('--test-concurrency=2 ', '') + ' --test-concurrency=2',
+          body,
+          body.replace(
+            command,
+            command.replace('--test-concurrency=2 ', '') + ' --test-concurrency=2',
+          ),
         ),
         lane,
       ),
