@@ -489,7 +489,10 @@ try {
   report.limitations.push(
     'Service workers are explicitly blocked for controlled online qualification; offline/update lifecycle is separate.',
   );
-  page = await context.newPage();
+  if (sharedModeOptions && contextMode === 'persistent') {
+    const provenance = (report.environment.sharedModePageInitialization = {});
+    page = await sharedModeModule.claimSharedModeInitialPage(context, provenance);
+  } else page = await context.newPage();
   if (memoryProfile || cpuProfile || frameTraceOptions || cpu !== 1)
     cdp = await context.newCDPSession(page);
   page.on('pageerror', (error) => {

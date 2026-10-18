@@ -399,6 +399,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-shared-owner-declared-source.mjs
+            /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
             /.github/workflows/solo-native-package-consumer.yml
@@ -1016,6 +1018,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-shared-owner-declared-source.mjs
+            /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
             /docs/performance/solo-remote-9d5139b-correctness-plan.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
@@ -1395,6 +1399,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-shared-owner-declared-source.mjs
+            /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
             /docs/performance/solo-remote-9d5139b-correctness-plan.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
@@ -2753,6 +2759,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-shared-owner-declared-source.mjs
+            /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
             /docs/performance/solo-remote-9d5139b-correctness-plan.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
@@ -5725,6 +5733,10 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json
+            /scripts/solo-shared-owner-declared-source.mjs
+            /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
+            /scripts/test-solo-shared-mode-owner-admission.mjs
             /docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json
             /docs/performance/fixtures/solo-shared-mode/public-return-boot-ready.qualification.fixture
             /scripts/test-solo-shared-mode-boot-admission.mjs
@@ -6190,8 +6202,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-auxiliary.mjs scripts/test-solo-qualification.mjs scripts/test-solo-shared-mode-public-return.mjs scripts/test-solo-shared-mode-797e03-admission.mjs scripts/test-solo-shared-mode-boot-admission.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-auxiliary.mjs bind-plan docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json "$RUNNER_TEMP/shared-return-plan.json" "${{ matrix.job }}"
+          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-auxiliary.mjs scripts/test-solo-qualification.mjs scripts/test-solo-shared-mode-public-return.mjs scripts/test-solo-shared-mode-797e03-admission.mjs scripts/test-solo-shared-mode-owner-admission.mjs scripts/test-solo-shared-mode-boot-admission.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-auxiliary.mjs bind-plan docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json "$RUNNER_TEMP/shared-return-plan.json" "${{ matrix.job }}"
       - name: Run fixed public Team and Versus return observations
         timeout-minutes: 63
         working-directory: tools
@@ -6256,6 +6268,10 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json
+            /scripts/solo-shared-owner-declared-source.mjs
+            /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
+            /scripts/test-solo-shared-mode-owner-admission.mjs
             /docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json
             /scripts/test-solo-demo-797e03-tooling-admission.mjs
             /docs/performance/solo-demo-resources-797e03-tooling-plan.json
@@ -6797,6 +6813,10 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json
+            /scripts/solo-shared-owner-declared-source.mjs
+            /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
+            /scripts/test-solo-shared-mode-owner-admission.mjs
             /docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json
             /scripts/test-solo-demo-797e03-tooling-admission.mjs
             /docs/performance/solo-demo-resources-797e03-tooling-plan.json

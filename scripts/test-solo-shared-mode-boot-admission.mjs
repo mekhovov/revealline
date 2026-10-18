@@ -1,3 +1,4 @@
+import { assertSharedOwnerDeclaredTool } from './solo-shared-owner-declared-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -269,12 +270,13 @@ test('actual successor keeps scoped first-eight proof, exact package and origina
     assert.throws(() => auxiliaryMatrix(p));
   }
 });
-test('new declaration binds every current byte and original stale pins still reject before native effects', async () => {
+test('executed boot declaration retains exact helper history and original stale pins still reject before native effects', async () => {
   for (const ref of [
     ...manifest.adapterInputs,
     ...manifest.frozenTools,
     manifest.recipes.recovery,
   ]) {
+    if (await assertSharedOwnerDeclaredTool(planPath, ref)) continue;
     const b = await read(ref.path);
     assert.equal(b.length, ref.bytes, ref.path);
     assert.equal(sha(b), ref.sha256, ref.path);
