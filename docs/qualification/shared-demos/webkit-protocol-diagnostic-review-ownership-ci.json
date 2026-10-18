@@ -1,0 +1,102 @@
+{
+  "format": "SharedDemoWebKitProtocolReviewV1",
+  "created": "2026-10-18T19:27:58.649347+00:00",
+  "acceptance": "Strict WebKit navigation diagnostic gate remains FAILED. This is a bounded investigation, not a passing runtime qualification.",
+  "protocolReceipt": {
+    "path": "docs/qualification/shared-demos/webkit-context-stopped-protocol-ownership-ci.json",
+    "sha256": "64c86c314d6aca08ecfcb1700c41658de868a64b0346d0a58bc428884495b042",
+    "captureComplete": true,
+    "meaning": "The wrapper complete flag only records bounded protocol collection and child browser/server cleanup. It does not override child strictDiagnosticGate=false or childExit=1.",
+    "events": 81,
+    "overflow": 0,
+    "unparseable": 0
+  },
+  "childReceipt": {
+    "path": "docs/qualification/shared-demos/webkit-owner-protocol-reloads-ownership-ci.json",
+    "sha256": "68410a6394efbb8d81087066750f353cc4f598cdc7d79770e8d62b7011635e52",
+    "functionalChecks": 4,
+    "functionalComplete": true,
+    "complete": false,
+    "strictDiagnosticGate": false,
+    "pageErrors": 2,
+    "browserCloseCompleted": true,
+    "previewClosed": true
+  },
+  "sourceScope": {
+    "description": "The task-owned fixture server pinned an unchanged ordinary app snapshot and an explicitly instrumented presentation host. Remaining runtime dependencies could change during parallel lazy-Classic work, so the manifest is descriptive, not a full-tree freeze claim. No production or stable qualification script changed.",
+    "overrides": [
+      {
+        "path": "/game/presentation/host.mjs",
+        "originalSHA256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+        "candidateSHA256": "bc48d550a3ba47d3c9e89289cd9f442e9d38a1f1030cde2f1bc96084966454d1",
+        "candidatePath": ".cache/webkit-owner-observation/host.mjs",
+        "scope": "Temporary server-only instrumentation. Existing main/load rejection handlers log; fetch catch records then rethrows the same error. No production files modified."
+      },
+      {
+        "path": "/game/app.mjs",
+        "originalSHA256": "aabdf3b7fdee28fdf7911fda86be8fd54fab29d005e5396b4789816aaafd0da8",
+        "candidateSHA256": "aabdf3b7fdee28fdf7911fda86be8fd54fab29d005e5396b4789816aaafd0da8",
+        "candidatePath": ".cache/webkit-owner-observation/app.mjs",
+        "scope": "Unmodified task-owned snapshot of the ordinary app served by the diagnostic server to hold the navigation policy stable while unrelated live-tree work continues."
+      }
+    ]
+  },
+  "perEvent": [
+    {
+      "receivedAt": "2026-10-18T19:25:57.261Z",
+      "native": "Console.messageAdded",
+      "category": {
+        "source": "javascript",
+        "level": "error",
+        "type": "log"
+      },
+      "message": "Cannot load blob:http://127.0.0.1:8771/1873bc37-e44f-4379-8140-87dbc498a641 due to access control checks.",
+      "operation": 82,
+      "documentId": "1792351543738-0.2862558694520053",
+      "classification": "Native blob-loader console diagnostic associated with an owned decode rejection in the departing document.",
+      "evidence": [
+        "Old document beforeunload and decode admission at19:25:57.260.",
+        "Pre-existing main rejection owner and load catch receive the same InvalidStateError at19:25:57.263.",
+        "Old document pagehide at19:25:57.286; host.close at19:25:57.305; next document initializes at19:25:57.310."
+      ],
+      "limits": "The internal blob URL is not exposed in the JavaScript decode call. Association uses the sole contemporaneous decode operation, matching native stack and rejection timing, not a direct JavaScript blob-URL equality assertion."
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.127Z",
+      "native": "Console.messageAdded",
+      "category": {
+        "source": "javascript",
+        "level": "error",
+        "type": "log"
+      },
+      "message": "Fetch API cannot load the compiled fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef.woff2 URL due to access control checks.",
+      "operation": 104,
+      "classification": "Native fetch-loader diagnostic; exact request URL matches the host fetch operation, and its later rejection records aborted=true and closed=true.",
+      "evidence": [
+        "The request starts at19:26:10.126.",
+        "Old document pagehide at19:26:10.129; host.close observes pending=true at19:26:10.153.",
+        "Fetch catch and load catch record the same request rejection at19:26:10.164, with its owner already closed and signal aborted."
+      ],
+      "limits": "Late observer document IDs are not authoritative: this diagnostic helper resolves its sink from globalThis at call time. The URL, operation number and closed/aborted closure state remain recorded, but this is not evidence of the new page owning that old request."
+    }
+  ],
+  "inspectorEvaluations": {
+    "observed": "Separate Runtime.callFunctionOn replies returned code-32000 and Missing injected script for given objectId around document replacement. They were retained with their request metadata and did not generate the two pageerrors.",
+    "notClaimed": "These inspector failures are not the Context is stopped error and do not establish its origin."
+  },
+  "contextIsStopped": {
+    "status": "UNCLASSIFIED; did not recur in these four protocol-observed reloads.",
+    "priorEvidence": "docs/qualification/shared-demos/webkit-ordinary-reload-owner-diagnostic-ownership-ci.json retains it after host.close and before next-document initialization.",
+    "claimBoundary": "No exact native operation, JavaScript rejection owner, inspector evaluation or codec is established. Absent DOM error events and temporal teardown association are insufficient for an exemption. Earlier strict failures remain failed."
+  },
+  "interpretation": "Pinned WebKit loader source and installed Playwright1.62.1 explain why the observed native JavaScript-category console logs become pageerror independently of DOM unhandledrejection. This source-level mechanism and observed ownership establish narrow event classifications only; they do not justify filtering all native messages.",
+  "priorReview": "docs/qualification/shared-demos/webkit-navigation-ownership-review-ownership-ci.json",
+  "primarySources": [
+    "https://github.com/microsoft/playwright/blob/v1.62.1/packages/playwright-core/src/server/webkit/wkPage.ts",
+    "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/loader/ThreadableLoader.cpp",
+    "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/loader/DocumentThreadableLoader.cpp",
+    "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/Modules/fetch/FetchResponse.cpp"
+  ],
+  "nextStep": "No further browser probe scheduled. Preserve ordinary navigation semantics and all failed receipts; any later investigation should capture the diagnostic sink once per document and target a specific unresolved event rather than suppressing errors or running unbounded retries.",
+  "cleanup": "Browser and task-owned preview server closed; browser slot released. No owned diagnostic process remains."
+}
