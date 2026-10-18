@@ -1,6 +1,6 @@
 # FPV / LINE — consolidated improvement and delivery plan
 
-**Review version: 18 October 2026**
+**Review version: 19 October 2026**
 
 ## 1. Summary, priorities and current evidence
 
@@ -10,7 +10,7 @@ This plan replaces the earlier roadmap, retains **F01–F81**, and incorporates 
 
 **Execution authorized: 18 October 2026.** Current implementation, evidence, priorities and remaining work are recorded in [the live progress board](progress.md) and [structured tracker](progress.json). Existing local work remains preserved. Physical-device qualification is pending because no iPhone or Steam Deck is available.
 
-**Implementation review update:** **F83a, F81, F75 and F17 are merged; 13 feature PRs are ready for checks and 30 remain draft or reviewed stacks.** The next delivery priority is reconciling reviewed foundations so dependent archive, controls, presets, menu and content PRs can merge independently. Survival’s actual package passes Save → reload → paused Restore → terminal record → checkpoint retirement. All three keyboard slices have scoped source/browser review. Text-size compatibility and touch translation are ready; the separate primary200% layout is in review. About’s placeholder is corrected, with a newly observed resize-only focus-return gap tracked separately. F82 passes169 current integration checks and full source gates after prerequisite1633 merged; its earlier built-package receipt remains pinned to that earlier source. Hardware acceptance, prepared Pages capacity and live publication remain separate.
+**Implementation review update:** **F83a, F81, F75 and F17 are merged; 14 feature PRs are ready for checks and 30 remain draft or reviewed stacks.** The next delivery priority is reconciling reviewed foundations so dependent archive, controls, presets, menu and content PRs can merge independently. Survival’s actual package passes Save → reload → paused Restore → terminal record → checkpoint retirement. All three keyboard slices have scoped source/browser review. Text-size compatibility and touch translation are ready; the separate primary 200% layout remains draft after actual compact/landscape clipping findings and is being corrected. Survival/Raid support export and return paths are reviewed. Continue and Duel foundations are integrated. About’s placeholder is corrected, with a newly observed resize-only focus-return gap tracked separately. F82 passes169 current integration checks and full source gates after prerequisite1633 merged; its earlier built-package receipt remains pinned to that earlier source. Hardware acceptance, prepared Pages capacity and live publication remain separate.
 
 - **F75:** the 30-minute recording cap and the two-hour legacy collection validator have different owners. Authored Journey completion uses separate events; do not imply that every Journey loses progress at two hours.
 - **F82/F14:** the committed package passes desktop missing-module recovery, explicit repair and offline Home startup after full worker activation. Core-only preparation leaves selected Journey artwork unavailable, so full offline gameplay remains unqualified. Readiness must report these separately. A test that removed files during worker activation was invalid and is excluded.

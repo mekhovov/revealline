@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedDate": "2026-10-18",
+  "updatedDate": "2026-10-19",
   "timezone": "Europe/Berlin",
   "authorization": "User instructed continuing the staged plan until complete and maintaining priorities/progress.",
   "baseline": {
@@ -15,7 +15,7 @@
   },
   "nextPriority": [
     "Reconcile reviewed foundation PRs with currentmain and pass exact-head merge gates",
-    "Finish primary200% layout and remaining actual-browser reviews",
+    "Correct and re-review confirmed primary200% compact/landscape blockers; retain draft until usable",
     "Admit reviewed Survival checkpoint, archive, keyboard, comfort and menu stacks",
     "Fix confirmed responsive nested-tool focus gap and demonstrated critical-cue/readability gaps",
     "Remaining diagnostic host adapters and accepted P1 work",
@@ -54,7 +54,9 @@
         "Independent review complete; all registered exact-head checks including release-ready passed. Fastline merged PR1613. General test/build were skipped by scope classification, not counted as passes."
       ],
       "mergeCommit": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
-      "mergedAt": "2026-10-18T17:46:47Z"
+      "mergedAt": "2026-10-18T17:46:47Z",
+      "deliveryState": "merged",
+      "mergeState": "UNKNOWN"
     },
     {
       "id": "F83b",
@@ -109,11 +111,14 @@
         {
           "id": "responsive-nested-tool-return",
           "priority": "P1",
-          "status": "confirmed_browser_gap",
+          "status": "developing",
           "evidence": "Actual Snake536: open About at desktop width, resize to316px, Back closes child while parent shows categories and old opener is hidden; focus falls to document. Ordinary compact open/close returns opener correctly. Relevant close logic and responsive Settings are unchanged from dd337; no separate baseline browser replay claimed.",
-          "next": "Restore a visible category or opener after nested-tool close across width changes, preserving parent state; independent complete follow-up PR after foundation integration."
+          "next": "Bounded shared-owner correction stacked on1670: restore visible opener panel or valid category after child close, retaining visit/disposal guards and paused host. Red/green regression and actual resize review required.",
+          "owner": "lane-c"
         }
-      ]
+      ],
+      "deliveryState": "merged",
+      "mergeState": "UNKNOWN"
     },
     {
       "id": "F76a",
@@ -211,18 +216,26 @@
           "status": "integration_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1629",
           "commit": "9b8aade8b877d9efe72aa4fb7acdfe3930c5fac1",
-          "evidence": "83 focused checks and 9 regressions; real owner/view with modeled full/blocked storage and cross-tab changes, retry verification, focus and EN/UK 320px component layout inspected.",
+          "evidence": [
+            "83 focused checks and 9 regressions; real owner/view with modeled full/blocked storage and cross-tab changes, retry verification, focus and EN/UK 320px component layout inspected.",
+            "31a integration independently reviewed:6 original feature blobs identical. Canonical generation adds the previously omitted5-line Retry-button CSS to the embedded SIM stylesheet; provenance checks and84 focused/full lint/format pass. Full validation queued behind audio; not a completed gate."
+          ],
           "deliveryState": "draft",
-          "mergeState": "UNSTABLE"
+          "mergeState": "UNSTABLE",
+          "candidateCommit": "31a10cec85455652a64a9f78035a88d68368f57b"
         },
         {
           "id": "audio-warning-ownership",
           "status": "integration_review",
-          "evidence": "119focused tests and all source/generator gates pass; two unrelated keyboard assertions reproduce clean base. Actual Solo host with modeled storage confirms own-warning clear, newer-notice preservation and localized silent-write failure. Artwork fallback obscured player footer; no full notice presentation or acoustic claim.",
+          "evidence": [
+            "119focused tests and all source/generator gates pass; two unrelated keyboard assertions reproduce clean base. Actual Solo host with modeled storage confirms own-warning clear, newer-notice preservation and localized silent-write failure. Artwork fallback obscured player footer; no full notice presentation or acoustic claim.",
+            "b623 integration independently reviewed: app feature patch identical and7 other owner/locale/test/generated blobs unchanged.119 focused and full tracked lint/format pass; full validation running. Remote head remains old until all gates pass."
+          ],
           "pr": "https://github.com/mekhovov/revealline/pull/1632",
           "commit": "c665620564968e805afc875e2d2b76997b070854",
           "deliveryState": "draft",
-          "mergeState": "DIRTY"
+          "mergeState": "DIRTY",
+          "candidateCommit": "b6233d1b91fbde8c92548b10cd72eab916661b0f"
         },
         {
           "id": "menu-animation",
@@ -248,7 +261,7 @@
       "impact": "H/H",
       "effort": "**0.5–1.5d**",
       "featureId": "F05",
-      "status": "integration_review",
+      "status": "ready_for_checks",
       "owner": "lane-a",
       "qualification": {
         "automated": "focused_passed_with_documented_baseline_failures",
@@ -257,16 +270,17 @@
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1622",
-      "commit": "f25a2121d8026f357b4e495959c28d5972b0a4e9",
+      "commit": "e5405b462b6d7411ecd45d872892f0a26f720088",
       "next": "Exact-head CI and merge reconciliation; rebase source gates passed.",
       "evidence": [
         "90 title-entry/mode/operation checks and 68 menu/controller checks pass; lint, validation and changed-file formatting pass.",
         "Actual browser: saved Continue identifies Prologue / First return / Solo, verifies then resumes the flight; Pause → Home changes copy to paused-flight resume. Native window inspection only.",
         "Nine companion suite failures reproduce on clean 20555cd (old Sound selectors, craft feedback, save timestamps, old FPV link and mission localization). No waiver or pass claimed.",
-        "Rebased onto461ace72; official locale build,90title,68menu/controller,full lint/validate and changed-format pass. Independent source review retained browser receipt."
+        "Rebased onto461ace72; official locale build,90title,68menu/controller,full lint/validate and changed-format pass. Independent source review retained browser receipt.",
+        "Independent dd337 integration review:6 feature blobs byte-identical, app/index feature patches identical, all main locale values retained plus exact3 original keys.90+68 focused checks, full validation/lint/format pass; exact lease push complete. Current CI queued, no merge claimed."
       ],
-      "deliveryState": "draft",
-      "mergeState": "DIRTY"
+      "deliveryState": "ready",
+      "mergeState": "UNSTABLE"
     },
     {
       "id": "F12",
@@ -351,7 +365,9 @@
         "PR1625 merged at6acfa2fb639fcc4d3b20970faa0972c77d2a7e1a after exact-head admission. No actual flight, compact overlay, physical-device or live-publication claim."
       ],
       "mergeCommit": "6acfa2fb639fcc4d3b20970faa0972c77d2a7e1a",
-      "mergedAt": "2026-10-18T21:27:52Z"
+      "mergedAt": "2026-10-18T21:27:52Z",
+      "deliveryState": "merged",
+      "mergeState": "UNKNOWN"
     },
     {
       "id": "F75",
@@ -379,7 +395,9 @@
         "All registered exact-head checks, including release-ready and preview admissions, passed; trusted controller merged at237b405437 on2026-10-18T21:07:44Z. General test/build scope-skipped, not counted as passes."
       ],
       "mergeCommit": "237b405437def3c41b01165fe057af1ab06f618c",
-      "mergedAt": "2026-10-18T21:07:44Z"
+      "mergedAt": "2026-10-18T21:07:44Z",
+      "deliveryState": "merged",
+      "mergeState": "UNKNOWN"
     },
     {
       "id": "F76b",
@@ -448,12 +466,16 @@
       "implementationSlices": [
         {
           "id": "capture-context",
-          "status": "ready_for_checks",
+          "status": "integration_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1634",
           "commit": "c9dbbe0a9c41ad5f6a8e17e37a16702639e430d8",
-          "evidence": "Corrected shared Hunt labels; 54 context/title tests and full source gates. Earlier201f230 actual Capture EN/UK browsing/Back receipt retained; final Hunt correction source-tested. Independent review passed.",
-          "deliveryState": "ready",
-          "mergeState": "DIRTY"
+          "evidence": [
+            "Corrected shared Hunt labels; 54 context/title tests and full source gates. Earlier201f230 actual Capture EN/UK browsing/Back receipt retained; final Hunt correction source-tested. Independent review passed.",
+            "Independent dd337 integration review confirms app/index feature patches and6 original feature blobs unchanged, all mainlocale values plus exact3 original additions retained.109 shared checks pass. Initial54-host cohort51passed/3failed after unchanged5second preparation timeout; unchanged exact case then passes3/3 isolated. Full validation and complete serial54-case rerun remain required; no timeout or assertion weakening."
+          ],
+          "deliveryState": "draft",
+          "mergeState": "DIRTY",
+          "candidateCommit": "9c23a13f5ef1d58f520a9e12f35b2aa218312af1"
         },
         {
           "id": "snake-context",
@@ -922,7 +944,9 @@
           "deliveryState": "draft",
           "mergeState": "UNSTABLE"
         }
-      ]
+      ],
+      "deliveryState": "draft",
+      "mergeState": "CLEAN"
     },
     {
       "id": "F80",
@@ -950,7 +974,7 @@
         "Exact dfe browser: UK/EN review defaults Keep; Keep preserves content and returns focus. Confirmed offload removes Play while retaining recovery; reinstall restores Play. Recovery-download review inspected and cancelled. No actual recovery-copy deletion or earned-progress equality claimed."
       ],
       "deliveryState": "draft",
-      "mergeState": "UNSTABLE"
+      "mergeState": "CLEAN"
     },
     {
       "id": "F04a",
@@ -1094,7 +1118,9 @@
           "deliveryState": "draft",
           "mergeState": "UNSTABLE"
         }
-      ]
+      ],
+      "deliveryState": "draft",
+      "mergeState": "CLEAN"
     },
     {
       "id": "F14",
@@ -1190,13 +1216,17 @@
         },
         {
           "id": "survival-raid-host",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1671",
           "commit": "3dfcd3a362a9d6ac52a1aed8c22841a94a48464b",
           "dependency": "PR1661 exact47c8693a",
-          "evidence": "55focused/full source gates pass; independent C review clear. All5operations, read-only existing controller sampler and honest unknown save permission; noF04dependency. Immutable actualhostfixture available, browser/export review pending.",
+          "evidence": [
+            "55focused/full source gates pass; independent C review clear. All5operations, read-only existing controller sampler and honest unknown save permission; noF04dependency. Immutable actualhostfixture available, browser/export review pending.",
+            "Root actual3df browser: direct Single Drone Start→direction→Pause→Settings Data→Prepare;943-byte downloaded JSON parsed-equals preview (/tmp/f58-survival-native-browser-preview.json), SHA256 d4f15bb96b8977e5a9bba3f0c2c09b3c9fe5aedbf1457aee20a7c62db11b130a. Back returns paused host with Settings focus; explicit Resume; reopening clears preview/disables Download. Paused Ukrainian preview and idle Marathon UK identity overflight-marathon verified. Wrapper download produced no observed file; direct native path succeeded. No numerical paused-timer, replay, real-controller or physical claim."
+          ],
           "deliveryState": "draft",
-          "mergeState": "UNSTABLE"
+          "mergeState": "UNSTABLE",
+          "next": "Integrate after1661; keep exact-head source/browser scope and merge gates."
         }
       ]
     },
@@ -1385,12 +1415,15 @@
       "implementationSlices": [
         {
           "id": "duel-keyboard",
-          "status": "integration_review",
+          "status": "ready_for_checks",
           "pr": "https://github.com/mekhovov/revealline/pull/1662",
-          "commit": "fffcc404cd44a1f55720881c0281102acd8c0388",
-          "evidence": "84 focused+4 host+14 offline/i18n checks initially pass; independent review reproduces cross-owner lost update. Successor with short dedicated Web Lock and session-only fallback in validation. Publishedfffcc404 corrects serialization and delayed departure;95 focused, full localization and lint/format pass. Final root async browser review pending. Finalfff full validate and actual lock/Retry/normal Duel Pause/Resume reviewed; promoted ready.",
-          "deliveryState": "draft",
-          "mergeState": "DIRTY"
+          "commit": "6845548a086467354a2e26d946fcf0706c88006b",
+          "evidence": [
+            "84 focused+4 host+14 offline/i18n checks initially pass; independent review reproduces cross-owner lost update. Successor with short dedicated Web Lock and session-only fallback in validation. Publishedfffcc404 corrects serialization and delayed departure;95 focused, full localization and lint/format pass. Final root async browser review pending. Finalfff full validate and actual lock/Retry/normal Duel Pause/Resume reviewed; promoted ready.",
+            "Integrated ondd337 at6845548:95 focused/full validation/lint/format pass. Independent review confirms13 noncatalog feature blobs identical and all main locale values plus exact33 original additions retained. Lease-pushed ready; current required CI pending. Earlier browser receipts retain their original source identity."
+          ],
+          "deliveryState": "ready",
+          "mergeState": "UNSTABLE"
         },
         {
           "id": "team-keyboard",
@@ -1400,7 +1433,7 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1666",
           "commit": "0a8f69e1c85041974cdf6be485cd4c410d973017",
           "deliveryState": "draft",
-          "mergeState": "UNSTABLE"
+          "mergeState": "DIRTY"
         },
         {
           "id": "snake-keyboard",
@@ -1451,12 +1484,22 @@
         },
         {
           "id": "primary-200-percent",
-          "status": "draft_review",
-          "commit": "a0f2cf1752b6ce98fdea4097f415c56ad38330ed",
+          "status": "changes_requested",
+          "commit": "82076c652dbc61851a8551924902dc95637c1d26",
           "dependency": "PR1668 compatibility",
-          "evidence": "Frozen candidate extends541 explicit font/line-height declarations over41 sheets and primary canvas feedback; defaultscale1.497focused across runs, inherited5sStart timeout then isolated11pass. Fullsourcevalidation and actual CSS/geometry/browser qualification pending; no200% acceptance claim."
+          "evidence": [
+            "Frozen candidate extends541 explicit font/line-height declarations over41 sheets and primary canvas feedback; defaultscale1.497focused across runs, inherited5sStart timeout then isolated11pass. Fullsourcevalidation and actual CSS/geometry/browser qualification pending; no200% acceptance claim.",
+            "Actual browser review of frozen a0f at320×720 and844×390 found acceptance blockers: Home labels break midword, chooser actions/cards compress, briefing title is above the viewport and wheel scrolling cannot reveal it, and Pause keeps narrow columns with clipped actions. Primary200% remains draft until viewport scrolling and compact reflow are corrected and re-reviewed; no font-size reduction accepted as a fix.",
+            "Actual Extra large selection persists in the shared record. Start and directional play worked; First return reached34.3% in7seconds and automatic Next opened Choose your share. Pause0:04 remained paused through resize. This does not qualify results layout or physical devices. Later820 adds initial-boot scaling and regenerated reaction/SIM projections; final uninterrupted validation was still pending at this snapshot."
+          ],
+          "pr": "https://github.com/mekhovov/revealline/pull/1672",
+          "next": "Correct confirmed compact/short-landscape blockers, regenerate canonical projections, pass exact source gates and repeat actual layout/return-path review.",
+          "deliveryState": "draft",
+          "mergeState": "UNSTABLE"
         }
-      ]
+      ],
+      "deliveryState": "ready",
+      "mergeState": "UNSTABLE"
     },
     {
       "id": "F09b",
@@ -2972,6 +3015,11 @@
       "date": "2026-10-18",
       "item": "Integrated recovery and accessibility review",
       "reason": "F17 and prerequisite1633 merged; F16 integrated ready; F82 final169checks/fullsourcepassed. F09compat and touch ready; About/Snake browserpassed withresponsivefocusfollowup. Primary200% andSurvival diagnostics underreview.4merged/13ready/30draft/0live. Foundation reconciliation now prioritized."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Foundation integration and actual scaling findings",
+      "reason": "F05 and Duel integrated ready; Survival/Raid support download and return paths reviewed. Primary200%1672 remains draft after actual compact/landscape blockers. Audio/preferences/Capture integration checks continue, including honest timeout diagnosis.4merged/14ready/30draft/0live;113 deliverables preserved."
     }
   ],
   "deliveryDependencies": [
@@ -2988,7 +3036,7 @@
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 13,
+    "featurePRsReady": 14,
     "featurePRsDraft": 30,
     "deliverablesMerged": 4,
     "verifiedLive": 0,
