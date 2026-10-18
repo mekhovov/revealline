@@ -1,5 +1,17 @@
 # Flight practice: completion plan and priority review
 
+## Latest review checkpoint — 19 October 2026
+
+Use the [Mac mini follow-up and updated remaining-order table](flight-practice-execution-2026-10-19.md).
+The approved share resolves output space; bounded writes pass 47 targeted tests.
+The current normal full build still fails its unchanged ten-minute limit before
+output materialization. Preparation was caught in main-game localization/level
+normalization; whole-run attribution is not established. The owner selected
+continued local diagnosis with an external supervisor. R1–R9 remain open
+as detailed there; no current production journey or new offline pass is claimed.
+Hosting, hardware and historical Worlds stay owner-deferred, not passed. Earlier
+disk measurements and source-specific results below are preserved history.
+
 ## Current accepted-main checkpoint — 237b40543
 
 Use the [latest execution status and remaining-order table](flight-practice-execution-2026-10-18.md)

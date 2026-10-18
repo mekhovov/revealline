@@ -1,5 +1,11 @@
 # Flight practice: status, remaining work and estimates — 18 October 2026
 
+> **Latest, 19 October:** [Mac mini staging follow-up and remaining work](flight-practice-execution-2026-10-19.md).
+> The share provides sufficient output space. A new 47-test writer/build check
+> passes, but the normal full build still times out during preparation, before
+> writing output. The earlier storage-only blocker description below is historical.
+> No new production/browser, performance, human or publication pass is claimed.
+
 > **Latest:** [accepted main 237b40543: verified work, blockers and remaining estimates](flight-practice-execution-2026-10-18.md).
 > Source `6177d2cc8` passes 1,270 Practice and 756 local-UX tests, fresh package
 > admission, ten native exercises, current guides/backups and Gym continuity.
