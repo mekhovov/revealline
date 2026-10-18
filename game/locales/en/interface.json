@@ -5947,5 +5947,8 @@
   "couchKeyboard.teamTitle": "Team keyboard: two players",
   "couchKeyboard.teamIntro": "Each physical key controls one player and action. Hold Support to help your partner. Escape or P always pauses. These choices apply to Team; Duel and other games keep their existing controls.",
   "couchKeyboard.support": "Support",
-  "couchKeyboard.teamKeys": "{{player}}: {{move}} steer, {{boost}} Boost, {{support}} Support."
+  "couchKeyboard.teamKeys": "{{player}}: {{move}} steer, {{boost}} Boost, {{support}} Support.",
+  "couchKeyboard.snakeTitle": "Snake keyboard: two players",
+  "couchKeyboard.snakeIntro": "These four steering keys per player apply to both Snake Duel and Snake Team. Solo keeps its arrows / WASD controls. Each physical key belongs to one player and direction. Escape / P, Space / Enter and R keep their pause, start and retry actions. Other games keep their own keys.",
+  "couchKeyboard.snakeKeys": "P1: {{first}} · P2: {{second}} · Esc / P to pause · each pad controls its own snake"
 }

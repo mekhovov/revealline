@@ -7,6 +7,7 @@ import {
 import { claimProfileWriter, ownsProfileWriter } from '../profile-writer.mjs';
 
 export const COUCH_KEYBOARD_KEY = 'revealline.couch-keyboard.v1';
+export const SNAKE_KEYBOARD_KEY = 'revealline.snake-keyboard.v1';
 export const TEAM_KEYBOARD_KEY = 'revealline.team-keyboard.v1';
 const decode = (raw, mode) => {
   if (typeof raw !== 'string' || raw.length > 4096) return null;
@@ -24,7 +25,12 @@ export function createCouchKeyboardPreferences({
   getLockManager = () => globalThis.navigator?.locks,
 } = {}) {
   const actions = couchKeyboardActions(mode),
-    storageKey = mode === 'team' ? TEAM_KEYBOARD_KEY : COUCH_KEYBOARD_KEY,
+    storageKey =
+      mode === 'team'
+        ? TEAM_KEYBOARD_KEY
+        : mode === 'snake'
+          ? SNAKE_KEYBOARD_KEY
+          : COUCH_KEYBOARD_KEY,
     writerKey = `${storageKey}:writer`;
   let state = resolveCouchKeyboard(null, mode),
     status = 'idle',
