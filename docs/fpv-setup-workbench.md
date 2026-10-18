@@ -1,5 +1,7 @@
 # SIM Setup Workbench
 
+Current progress, priorities and remaining acceptance: [SIM completion plan](fpv-current-completion-plan.md). The release records below retain their original source scope.
+
 The workbench uses one complete setup draft across Academy, World and Regional. It preserves aircraft/physics identities, existing `FpvTuningLibrary.v1` data and immutable attempt configurations. Baseline: `a3db2c95b4ce446f2232b829f9551b73e0f51514` (main, refreshed before implementation).
 
 ## Delivery
