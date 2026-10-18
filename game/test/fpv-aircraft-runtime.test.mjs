@@ -52,7 +52,7 @@ test('all catalog aircraft run physical self-level and Acro sessions with indepe
           sim.stepMission();
         }
         const telemetry = sim.telemetry();
-        assert.equal(telemetry.backend, 'civilian-quad-aircraft.v1');
+        assert.equal(telemetry.backend, 'civilian-quad-aircraft.v2');
         assert.ok(Number.isFinite(telemetry.position.y), `${item.id} ${mode}`);
         assert.equal(telemetry.usedAh, 0);
         assert.ok(telemetry.supportHeight > 0);

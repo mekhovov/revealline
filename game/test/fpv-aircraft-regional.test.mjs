@@ -28,6 +28,7 @@ async function sessionFixture(
     beforeProposal,
     coverage,
     challenge,
+    backend,
   } = {},
 ) {
   let simulation, options;
@@ -47,8 +48,8 @@ async function sessionFixture(
         let owner;
         return {
           async initialize(next) {
-            options = next;
-            owner = simulation = createAdvancedSimulation(next);
+            options = { ...next, ...(backend ? { backend } : {}) };
+            owner = simulation = createAdvancedSimulation(options);
             return { telemetry: owner.telemetry() };
           },
           async propose(sample) {
@@ -106,6 +107,43 @@ async function sessionFixture(
   await session.prepare();
   return { session, simulation: () => simulation, options: () => options };
 }
+
+test('current Regional host resumes historical v1 recovery and continues with the original solver', async (t) => {
+  const historical = await sessionFixture(t, 'meteor75-analog-2022', {
+    backend: 'civilian-quad-aircraft-regional.v1',
+  });
+  const current = await sessionFixture(t, 'meteor75-analog-2022');
+  assert.equal(current.simulation().configuration().backend, 'civilian-quad-aircraft-regional.v2');
+  historical.session.arm();
+  const controls = { ...neutral, throttle: 0.5 };
+  for (let tick = 0; tick < 30; tick++) await historical.session.step(controls);
+  historical.session.pause();
+  const saved = await historical.session.captureRecovery();
+  await current.session.restoreRecovery(saved);
+  assert.equal(current.session.snapshot().status, 'paused');
+  assert.equal(current.simulation().configuration().backend, 'civilian-quad-aircraft-regional.v1');
+  assert.equal(current.simulation().stateHash(), historical.simulation().stateHash());
+  historical.session.arm();
+  current.session.arm();
+  for (let tick = 0; tick < 20; tick++) {
+    await historical.session.step(controls);
+    await current.session.step(controls);
+  }
+  historical.session.pause();
+  current.session.pause();
+  const expected = current.simulation().stateHash();
+  assert.equal(
+    expected,
+    historical.simulation().stateHash(),
+    'Continuation uses the original solver',
+  );
+  for (const backend of ['civilian-quad-aircraft-regional.v99', 'civilian-quad-aircraft.v1']) {
+    const invalid = structuredClone(saved);
+    invalid.simulation.config.backend = backend;
+    await assert.rejects(current.session.restoreRecovery(invalid), /backend/);
+    assert.equal(current.simulation().stateHash(), expected);
+  }
+});
 
 test('Regional optional challenge rules remain frozen in worker identity and reject cross-rule recovery', async (t) => {
   const challenge = {

@@ -1975,6 +1975,111 @@ async function openAcademyTuning(h) {
   assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
 }
 
+test('Academy mode, reset and input changes preserve the tested draft until a normal course launch', async (t) => {
+  const [tuning, workers] = await Promise.all([
+    import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+    import('../../optional-practice/civilian-fpv/advanced-worker.mjs'),
+  ]);
+  const data = new Map(),
+    storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    };
+  const store = tuning.createTuningLibraryStore({ storage });
+  await store.createPresetSetup({
+    presetId: 'helion-pro-o4',
+    setupId: 'saved-helion',
+    profileId: 'saved-rates',
+    rates: 'defaults',
+  });
+  const saved = store.export(),
+    instances = [];
+  const comfortKey = 'revealline.fpv.flight-comfort.v1.academy.camera',
+    savedComfort = JSON.stringify({ fov: 99, tilt: 17 });
+  data.set(comfortKey, savedComfort);
+  class Worker extends Events {
+    constructor() {
+      super();
+      this.closed = false;
+      this.messages = [];
+      instances.push(this);
+      this.handler = workers.createAdvancedWorkerHandler((data) => {
+        if (!this.closed) this.emit('message', { data });
+      });
+    }
+    postMessage(value) {
+      this.messages.push(structuredClone(value));
+      void this.handler.receive(value).finally(() => {
+        if (this.closed) this.handler.dispose();
+      });
+    }
+    terminate() {
+      this.closed = true;
+      this.handler.dispose();
+    }
+  }
+  const h = await fixture(t, { storage, windowOptions: { Worker, setTimeout, clearTimeout } });
+  await openAcademyTuning(h);
+  const aircraft = academyTuningControl(h, 'Aircraft preset', 'select');
+  aircraft.value = 'meteor75-analog-2022';
+  aircraft.emit('change');
+  await academyTuningClick(h, 'Use in draft');
+  const fov = academyTuningControl(h, 'Vertical FOV (degrees)');
+  fov.value = '103';
+  fov.emit('input');
+  await academyTuningClick(h, 'Test draft · unscored');
+  await h.view.settled();
+  const init = () => instances.at(-1).messages.find((message) => message.type === 'init').options;
+  const draft = init();
+  assert.equal(draft.aircraft.id, 'meteor75-analog-2022');
+  h.$('camera-fov').value = '106';
+  h.$('camera-fov').emit('input');
+  h.$('camera-fov').emit('change');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(
+    data.get('revealline.fpv.tuning.v1'),
+    saved,
+    'Trial camera must not edit saved Helion',
+  );
+  assert.equal(data.get(comfortKey), savedComfort);
+  for (const action of ['mode', 'reset', 'input', 'retry', 'keyboard-reset']) {
+    if (action === 'mode') {
+      h.$('mode').value = 'acro';
+      h.$('mode').emit('change');
+    } else if (action === 'input') {
+      h.$('input-source').value = 'touch';
+      h.$('input-source').emit('change');
+    } else if (action === 'keyboard-reset') {
+      h.$('viewport').focus();
+      h.key('KeyR');
+    } else h.$(action).click();
+    await h.view.settled();
+    assert.deepEqual(init().aircraft, draft.aircraft, `${action} must retain the tested aircraft`);
+    assert.deepEqual(init().controller, draft.controller);
+    assert.deepEqual(init().response, draft.response);
+    assert.equal(init().assist.mode, 'acro');
+    assert.equal(h.$('camera-fov').value, '103');
+    assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+    assert.equal(data.get('revealline.fpv.tuning.v1'), saved);
+    h.view.pause();
+  }
+  h.$('next').click();
+  await h.view.settled();
+  assert.equal(init().aircraft.id, 'helion-pro-o4');
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, true);
+  h.$('camera-fov').value = '109';
+  h.$('camera-fov').emit('input');
+  h.$('camera-fov').emit('change');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(JSON.parse(data.get(comfortKey)).fov, 109);
+  assert.equal(
+    JSON.parse(data.get('revealline.fpv.tuning.v1')).setups.find(
+      (setup) => setup.id === 'saved-helion',
+    ).camera.verticalFov,
+    109,
+  );
+});
+
 for (const source of ['keyboard', 'touch', 'controller', 'radio'])
   test(`Academy tuning diagnostics follow ${source} ownership with a different calibrated radio connected`, async (t) => {
     const h = await fixture(t);
