@@ -101,7 +101,9 @@
   "nativeRouteProtocol": "authored-next-geometric-v1",
   "ordering": {
     "scope": "Three independent candidate-only repetitions per engine; no baseline observation or pooled timing.",
-    "roles": ["candidate"]
+    "roles": [
+      "candidate"
+    ]
   },
   "cohort": "next-candidatede332-geometric-v1",
   "sourceCohort": "next-candidatede332-geometric-v1",
@@ -223,8 +225,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 91250,
-      "sha256": "978a4383294f764f8c14f751902221ae09465329b196d2050fa7283a368b3a59"
+      "bytes": 103574,
+      "sha256": "ddfec248b76941fed837f552af95bea5fca98683e1682d0b64acc8bad0679458"
     }
   ],
   "frozenTools": [
@@ -310,8 +312,8 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 90635,
-      "sha256": "d1b08eaa79dfe88c32407196c206fe64318988ed17ad378f2dcf6a22546f226d"
+      "bytes": 92172,
+      "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
     },
     {
       "path": "scripts/reviewed-soundtrack-batches.mjs",
@@ -320,8 +322,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 74631,
-      "sha256": "eed1a4931bdd3472464a7f3fdef3e210a17dee606703ec5df98e70d035b9859a"
+      "bytes": 74932,
+      "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
     },
     {
       "path": "scripts/serve-production-preview.mjs",
@@ -365,8 +367,8 @@
     },
     {
       "path": "scripts/solo-qualification-hitch-journal.mjs",
-      "bytes": 33228,
-      "sha256": "393afd9eb51c9262168c7382c022de56234d3838357427e947f8d4812954161d"
+      "bytes": 35102,
+      "sha256": "eb2ef67ccf2b7ac8a592e5837a840b579c374ed6cfbbdf93fa46842768dcb3ee"
     },
     {
       "path": "scripts/solo-qualification-native-replay.mjs",
@@ -405,8 +407,8 @@
     },
     {
       "path": "scripts/solo-qualification.mjs",
-      "bytes": 27178,
-      "sha256": "f5c06fd279f55da4cab7d44a386f60b01d3b361ebbf519d82f5331200c13dda3"
+      "bytes": 28205,
+      "sha256": "448f8467573b75960453381a810b388a9650d73ee7faf813ec07f40dd37a6f24"
     },
     {
       "path": "scripts/solo-remote-archive.py",

@@ -18,7 +18,16 @@ export const TOUCH_DE332_SOURCE = Object.freeze({
   tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
   runtime: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
 });
+export const TOUCH_RUNTIME73_COHORT = 'native-touch-candidate73';
+export const TOUCH_RUNTIME73_SOURCE = Object.freeze({
+  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+  runtime: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+});
+const sourceBoundTouch = (sourceCohort) =>
+  [TOUCH_DE332_COHORT, TOUCH_RUNTIME73_COHORT].includes(sourceCohort);
 export function touchSource(sourceCohort) {
+  if (sourceCohort === TOUCH_RUNTIME73_COHORT) return TOUCH_RUNTIME73_SOURCE;
   if (sourceCohort === undefined) return TOUCH_SOURCE;
   assert.equal(sourceCohort, TOUCH_DE332_COHORT, 'Undeclared touch source');
   return TOUCH_DE332_SOURCE;
@@ -64,6 +73,28 @@ export function touchCase(job, repetition) {
 }
 export function assertTouchCandidate(candidate, sourceCohort) {
   touchSource(sourceCohort);
+  if (sourceCohort === TOUCH_RUNTIME73_COHORT) {
+    const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
+    assert.deepEqual(
+      { revision, tree, run, artifact, outer, inner, manifestSHA256 },
+      {
+        revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+        tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+        run: 39099979283,
+        artifact: 12127570566,
+        outer: {
+          bytes: 1094639407,
+          sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+        },
+        inner: {
+          bytes: 1075807617,
+          sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+        },
+        manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+      },
+    );
+    return;
+  }
   if (sourceCohort === TOUCH_DE332_COHORT) {
     assert.deepEqual(
       {
@@ -135,13 +166,13 @@ export function validateTouchPlan(plan) {
   assert.deepEqual(plan.fixture, TOUCH_FIXTURE);
   assert.equal(plan.release.scope, 'native-touch-submission-only');
   assert.equal(plan.release.candidateRevision, source.revision);
-  if (plan.sourceCohort === TOUCH_DE332_COHORT) {
+  if (sourceBoundTouch(plan.sourceCohort)) {
     assert.equal(plan.release.firstEightRequired, false);
     assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
     assert.deepEqual(plan.release.dispatch, {
       workflow: '.github/workflows/solo-native-package-consumer.yml',
       lane: 'touch',
-      source: TOUCH_DE332_SOURCE.revision,
+      source: source.revision,
     });
     assert.equal(plan.release.onceOnlyBefore, undefined);
   } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
@@ -290,7 +321,7 @@ export async function prepareTouchMode(ctx) {
     30000,
   );
   ctx.report.performanceExclusion = true;
-  if (ctx.plan.sourceCohort === TOUCH_DE332_COHORT) ctx.report.firstEightRequired = false;
+  if (sourceBoundTouch(ctx.plan.sourceCohort)) ctx.report.firstEightRequired = false;
   else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
     executables,

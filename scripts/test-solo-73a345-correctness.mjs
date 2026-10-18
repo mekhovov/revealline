@@ -1,3 +1,4 @@
+import { readExecuted73Source, assertExecuted73Ref } from './solo-73-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -13,7 +14,8 @@ const priorPath = 'docs/performance/solo-remote-de332-correctness-tooling-plan.j
 const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const plan = JSON.parse(await read(planPath));
 const prior = JSON.parse(await read(priorPath));
-const workflow = (await read(workflowPath)).toString();
+const executed = await readExecuted73Source();
+const workflow = executed.workflow;
 const job = workflow.split('\n  correctness:\n')[1].split('\n  declare:\n')[0];
 const source = '73a345cec696d7789198cf295ca5c37b17ca0e71';
 const guard =
@@ -223,12 +225,12 @@ async function current(ref) {
   assert.equal(bytes.length, ref.bytes, ref.path);
   assert.equal(sha(bytes), ref.sha256, ref.path);
 }
-test('current runtime refs and complete read inputs are bound in the actual first-eight sparse job', async () => {
+test('executed runtime refs and original complete read inputs remain bound to exact570', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.fixture];
   const sparse = [...job.matchAll(/^            \/(.+)$/gm)].map((match) => match[1]);
   assert.equal(new Set(refs.map((ref) => ref.path)).size, refs.length);
   assert.equal(new Set(sparse).size, sparse.length);
-  for (const ref of refs) await current(ref);
+  for (const ref of refs) assertExecuted73Ref(executed.refs, ref);
   for (const path of [
     planPath,
     workflowPath,
@@ -237,8 +239,8 @@ test('current runtime refs and complete read inputs are bound in the actual firs
   ])
     assert(sparse.includes(path), path);
   const runner = refs.find((ref) => ref.path === 'scripts/run-solo-remote-correctness.mjs');
-  await assert.rejects(() => current({ ...runner, sha256: '0'.repeat(64) }));
-  await assert.rejects(() => current({ ...runner, bytes: runner.bytes + 1 }));
+  assert.throws(() => assertExecuted73Ref(executed.refs, { ...runner, sha256: '0'.repeat(64) }));
+  assert.throws(() => assertExecuted73Ref(executed.refs, { ...runner, bytes: runner.bytes + 1 }));
 });
 
 test('actual default-baseline admission still rejects altered helper identity before evidence publication', async () => {

@@ -13,7 +13,13 @@ import {
 } from './solo-qualification-export.mjs';
 import { verifyNativeQualificationReplay } from './solo-qualification-native-replay.mjs';
 import { installDemoRecoveryProbe } from './solo-demo-recovery-probe.mjs';
-import { DEMO_ARMS, unchanged, validQuality } from './solo-remote-demo.mjs';
+import {
+  DEMO_ARMS,
+  unchanged,
+  validQuality,
+  validateDemoResourceContract,
+  assessDemoResourceCycles,
+} from './solo-remote-demo.mjs';
 
 const [planPath, outputPath] = process.argv.slice(2);
 assert(planPath && outputPath);
@@ -27,14 +33,17 @@ assert.equal(process.platform, 'linux');
 assert.equal(process.env.GITHUB_ACTIONS, 'true');
 assert(process.env.DISPLAY);
 assert.match(process.env.SOLO_REMOTE_OWNER ?? '', /^[a-f0-9-]{36}$/);
-assert.equal(plan.format, 'SoloHostedDemoRecoveryCaseV1');
+const resourceMode = plan.format === 'SoloHostedDemoResourceCaseV1';
+assert(resourceMode || plan.format === 'SoloHostedDemoRecoveryCaseV1');
+if (resourceMode) validateDemoResourceContract(plan.resourceCycles, plan.sourceRevision);
+else assert.equal(plan.resourceCycles, undefined);
 assert.equal(plan.status, 'pinned-for-execution');
 assert.equal(plan.sourceRole, 'candidate');
 assert.equal(plan.cpuThrottle, 1);
 assert.equal(plan.observationTimeoutMs, 360000);
 assert.equal(plan.replayTimeoutMs, 120000);
-assert.deepEqual(plan.arms, DEMO_ARMS);
-assert.deepEqual(plan.qualityWindowsMs, [5000, 2500]);
+assert.deepEqual(plan.arms, resourceMode ? [] : DEMO_ARMS);
+assert.deepEqual(plan.qualityWindowsMs, resourceMode ? [] : [5000, 2500]);
 for (const ref of [plan.driver, plan.probe]) {
   const bytes = await readFile(join(root, ref.path));
   assert.equal(bytes.length, ref.bytes);
@@ -80,7 +89,8 @@ for (const [p, dev, ino] of [
 const free = await statfs(scratch);
 assert(free.bavail * free.bsize >= 1024 ** 3);
 const report = {
-  format: 'SoloHostedDemoRecoveryV1',
+  format: resourceMode ? 'SoloHostedDemoResourceV1' : 'SoloHostedDemoRecoveryV1',
+  ...(resourceMode ? { resourceContract: plan.resourceCycles, cycles: [] } : {}),
   status: 'fail',
   sourceRevision: plan.sourceRevision,
   plan: { path: planPath, sha256: sha(planBytes) },
@@ -177,15 +187,23 @@ const pause = async (practice) => {
   await click(practice ? '#demo-pause' : '#demo-watch-pause');
   await pausedDraw();
 };
-const openDemo = async () => {
-  await click('#shell-options');
+const openDemo = async (differentRun = null) => {
+  // Back restores the Settings owner for this public entry route. A repeated
+  // visit must use that visible dialog rather than Home beneath its modal.
+  if (!differentRun || !(await page.locator('#settings-dialog').isVisible()))
+    await click('#shell-options');
   await click('#settings-tab-extras');
   await click('#shell-demo');
   await page.waitForFunction(
-    () =>
-      document.getElementById('demo-dialog')?.dataset.scene === 'playing' &&
-      window.demoRecoveryProbe.readiness().tick > 0,
-    null,
+    (differentRun) => {
+      const state = window.demoRecoveryProbe.readiness();
+      return (
+        document.getElementById('demo-dialog')?.dataset.scene === 'playing' &&
+        state.tick > 0 &&
+        (!differentRun || (state.id !== differentRun && state.paused === false))
+      );
+    },
+    differentRun,
     { timeout: 60000 },
   );
 };
@@ -295,6 +313,170 @@ const fault = async (id) => {
   arm.status = 'pass';
   await save();
 };
+// Read-only, bounded web-storage proof. IndexedDB is deliberately not inferred.
+const readDemoWebStorage = async () => {
+  const result = {};
+  let total = 0;
+  for (const name of ['localStorage', 'sessionStorage']) {
+    const storage = window[name],
+      rows = [];
+    if (storage.length > 256) throw Error('Web storage key cap');
+    for (let i = 0; i < storage.length; i++) {
+      const key = storage.key(i);
+      if (typeof key !== 'string' || key.length > 256) throw Error('Web storage key bound');
+      const value = storage.getItem(key);
+      if (typeof value !== 'string' || value.length > 4 * 1024 ** 2)
+        throw Error('Web storage value bound');
+      const bytes = new TextEncoder().encode(value);
+      if (bytes.length > 4 * 1024 ** 2) throw Error('Web storage encoded value bound');
+      total += bytes.length;
+      if (total > 8 * 1024 ** 2) throw Error('Web storage aggregate bound');
+      const digest = await window.crypto.subtle.digest('SHA-256', bytes);
+      rows.push({
+        key,
+        bytes: bytes.length,
+        sha256: [...new Uint8Array(digest)].map((x) => x.toString(16).padStart(2, '0')).join(''),
+      });
+    }
+    rows.sort((a, b) => (a.key < b.key ? -1 : a.key > b.key ? 1 : 0));
+    result[name] = rows;
+  }
+  return result;
+};
+const resourceCycles = async () => {
+  await click('#demo-back');
+  await snap('resource-initial-closed');
+  for (const mode of plan.resourceCycles.modes) {
+    for (let cycle = 1; cycle <= 10; cycle++) {
+      ensure();
+      const row = { mode, cycle, status: 'pending', actions: [], fork: null };
+      retain(report.cycles, row, 20);
+      row.storageBefore = await bounded('web storage before', () =>
+        page.evaluate(readDemoWebStorage),
+      );
+      const previousRun = await page.evaluate(() => window.demoRecoveryProbe.readiness().id);
+      await openDemo(previousRun);
+      row.actions.push('open');
+      row.opened = await page.evaluate(() => window.demoRecoveryProbe.readiness());
+      assert(row.opened.tick > 0 && row.opened.paused === false);
+      await pause(false);
+      row.actions.push('watch-pause');
+      if (mode === 'practice') {
+        const source = await page.evaluate(
+          () => window.demoRecoveryProbe.state('fork-source').demo,
+        );
+        await click('#demo-details-toggle');
+        row.actions.push('details');
+        await click('#demo-takeover');
+        row.actions.push('takeover');
+        await page.waitForFunction(
+          () => document.getElementById('demo-dialog')?.classList.contains('is-practice'),
+          null,
+          { timeout: 60000 },
+        );
+        await pausedDraw({ differentRun: source.id });
+        const demo = await page.evaluate(
+          () => window.demoRecoveryProbe.state('fork-practice').demo,
+        );
+        row.fork = { source, demo };
+        assert.notEqual(demo.id, source.id);
+        assert.equal(demo.tick, source.tick);
+        await click('#demo-resume');
+        row.actions.push('resume');
+        assert(
+          await page.evaluate(
+            () => document.activeElement === document.getElementById('demo-canvas'),
+          ),
+          'Public Resume must focus Demo before input',
+        );
+        row.direction = 'right';
+        row.actions.push('ArrowRight');
+        await page.keyboard.down('ArrowRight');
+        try {
+          await wait(250);
+          ensure();
+        } finally {
+          await page.keyboard.up('ArrowRight');
+        }
+        await pause(true);
+        row.actions.push('pause');
+      }
+      const paused = await snap(`${mode}-${cycle}-paused`);
+      row.paused = report.snapshots.length - 1;
+      assert.equal(paused.lastDraw.paused, true);
+      assert.equal(paused.practice, mode === 'practice');
+      unchanged(ordinaryBefore, paused, 'ordinary');
+      validQuality(paused);
+      await click('#demo-back');
+      row.actions.push('back');
+      const closed = await snap(`${mode}-${cycle}-closed`);
+      row.closed = report.snapshots.length - 1;
+      assert.equal(closed.open, false);
+      unchanged(ordinaryBefore, closed, 'ordinary');
+      row.storageAfter = await bounded('web storage after', () =>
+        page.evaluate(readDemoWebStorage),
+      );
+      assert.deepEqual(row.storageAfter, row.storageBefore);
+      row.status = 'pass';
+      await save();
+    }
+  }
+};
+// Same served core/practice implementation, independently reconstructed after
+// observation. No private player handle or invented public practice recording.
+const reconstructResourceCycles = async ({ source, cycles, snapshots, base }) => {
+  const core = await import(new URL('core/index.mjs', base));
+  const replay = await import(new URL('replay.mjs', base));
+  const { createDemoPractice } = await import(new URL('demo-experience.mjs', base));
+  const recording = JSON.parse(source);
+  const prefix = (target) => {
+    if (!Number.isSafeInteger(target) || target < 0 || target > recording.ticks)
+      throw Error('Demo prefix tick bound');
+    const state = core.createRun(recording.level, recording.options);
+    for (const segment of recording.segments) {
+      if (state.tick >= target) break;
+      if (segment.releaseBefore) core.releaseInputs(state);
+      for (let i = 0; i < segment.ticks && state.tick < target; i++)
+        core.stepRun(state, segment.input, core.FIXED_DT);
+    }
+    if (target === recording.ticks && recording.releaseAfter) core.releaseInputs(state);
+    return state;
+  };
+  const rows = cycles.map((row) => {
+    const target = snapshots[row.paused].demo;
+    let state, sourceMatch;
+    if (row.mode === 'spectator') {
+      state = prefix(target.tick);
+      sourceMatch = true;
+    } else {
+      state = prefix(row.fork.source.tick);
+      sourceMatch = replay.authoritativeCheckpoint(state).hash === row.fork.source.checkpoint.hash;
+      const practice = createDemoPractice(state);
+      sourceMatch &&= replay.authoritativeCheckpoint(state).hash === row.fork.demo.checkpoint.hash;
+      const ticks = target.tick - state.tick;
+      if (!Number.isSafeInteger(ticks) || ticks <= 0 || ticks > 1200 || row.direction !== 'right')
+        throw Error('Practice reconstruction tick/input bound');
+      practice.start({ direction: 'right' });
+      for (let i = 0; i < ticks; i++) practice.advance(core.FIXED_DT);
+      practice.pause();
+    }
+    const actual = replay.authoritativeCheckpoint(state);
+    return {
+      mode: row.mode,
+      cycle: row.cycle,
+      sourceMatch,
+      actual,
+      expected: target.checkpoint,
+      match: sourceMatch && state.tick === target.tick && actual.hash === target.checkpoint.hash,
+    };
+  });
+  return {
+    status: rows.every((row) => row.match) ? 'pass' : 'fail',
+    rows,
+    scope:
+      'Verified source spectator prefixes and exact public-direction practice reconstruction; no public practice replay export exists.',
+  };
+};
 const observation = async () => {
   const playwright = await import(pathToFileURL(plan.playwrightModule));
   ensure();
@@ -376,7 +558,9 @@ const observation = async () => {
     const cap = asset.role === 'module' ? 1024 * 1024 : 256 * 1024;
     assert(Number.isSafeInteger(asset.bytes) && asset.bytes > 0 && asset.bytes <= cap);
   }
-  let sourceBytes = 0;
+  let sourceBytes = 0,
+    sourceResponses = 0;
+  const resourceSources = new Map();
   const expected = new Map(assets.map((a) => [new URL(a.relative, plan.address).href, a]));
   assert.equal(expected.size, assets.length);
   page.on('response', (response) => {
@@ -386,7 +570,15 @@ const observation = async () => {
       report.unexpectedSourceFetch = true;
       return;
     }
-    if (report.sources.length >= 16) {
+    if (
+      resourceMode &&
+      ++sourceResponses > assets.reduce((sum, a) => sum + (a.role === 'module' ? 1 : 21), 0)
+    ) {
+      report.overflow = true;
+      return;
+    }
+    const prior = resourceMode ? resourceSources.get(response.url()) : null;
+    if (!prior && report.sources.length >= 16) {
       report.overflow = true;
       return;
     }
@@ -395,8 +587,16 @@ const observation = async () => {
       report.overflow = true;
       return;
     }
-    const row = { url: response.url(), role: asset.role, status: response.status() };
-    report.sources.push(row);
+    const row = prior ?? { url: response.url(), role: asset.role, status: response.status() };
+    if (!prior) report.sources.push(row);
+    if (resourceMode) {
+      resourceSources.set(response.url(), row);
+      row.responses = (row.responses ?? 0) + 1;
+      if (row.responses > (asset.role === 'module' ? 1 : 21)) {
+        report.overflow = true;
+        return;
+      }
+    }
     pending.push(
       (async () => {
         assert(response.ok());
@@ -405,6 +605,7 @@ const observation = async () => {
         assert.equal(sha(bytes), asset.sha256);
         Object.assign(row, { bytes: bytes.length, sha256: sha(bytes) });
         if (asset.role !== 'module') row.text = bytes.toString('utf8');
+        if (resourceMode) row.verifiedResponses = (row.verifiedResponses ?? 0) + 1;
       })().catch((error) => {
         row.failure = String(error);
       }),
@@ -448,6 +649,11 @@ const observation = async () => {
     ]);
     window.demoRecoveryProbe.install(BoardPainter, authoritativeCheckpoint);
   }, plan.address);
+  if (resourceMode)
+    await page.evaluate(
+      (contract) => window.demoRecoveryProbe.configureResources(contract),
+      plan.resourceCycles.resources,
+    );
   await click('#shell-featured');
   await phase('running');
   await page.keyboard.down('ArrowRight');
@@ -459,6 +665,10 @@ const observation = async () => {
   recordingBefore = await readPublicQualificationReplay(page, 20000);
   await writeFile(output + '.before.replay.json', recordingBefore, { flag: 'wx' });
   await closeExport();
+  if (resourceMode)
+    report.resourceStorageBaseline = await bounded('web storage baseline', () =>
+      page.evaluate(readDemoWebStorage),
+    );
   await openDemo();
   await pause(false);
   await bounded('source response drain', () => Promise.all(pending));
@@ -479,44 +689,50 @@ const observation = async () => {
       ),
       'Required served module witness',
     );
-  await qualityWindow(false, 5000);
-  await fault(DEMO_ARMS[0]);
-  await fault(DEMO_ARMS[1]);
-  const takeover = await snap('takeover-source');
-  await click('#demo-details-toggle');
-  await click('#demo-takeover');
-  await page.waitForFunction(
-    () => document.getElementById('demo-dialog')?.classList.contains('is-practice'),
-    null,
-    { timeout: 60000 },
-  );
-  await pausedDraw({ differentRun: takeover.demo.id });
-  practiceAtTakeover = await snap('takeover-practice');
-  assert.notEqual(practiceAtTakeover.demo.id, takeover.demo.id);
-  assert.equal(practiceAtTakeover.demo.tick, takeover.demo.tick);
-  await qualityWindow(true, 2500);
-  await fault(DEMO_ARMS[2]);
-  await fault(DEMO_ARMS[3]);
-  const oldPainter = await page.evaluate(() =>
-    window.demoRecoveryProbe.retain('owned-concealment-layer', 'stale'),
-  );
-  await click('#demo-back');
-  await openDemo();
-  const newer = await snap('reopened', true);
-  assert.notEqual(newer.painterId, oldPainter.painterId);
-  const oldLoss = await page.evaluate(() => window.demoRecoveryProbe.event('stale', 'contextlost')),
-    oldRestore = await page.evaluate(() =>
-      window.demoRecoveryProbe.event('stale', 'contextrestored'),
+  if (resourceMode) {
+    await resourceCycles();
+  } else {
+    await qualityWindow(false, 5000);
+    await fault(DEMO_ARMS[0]);
+    await fault(DEMO_ARMS[1]);
+    const takeover = await snap('takeover-source');
+    await click('#demo-details-toggle');
+    await click('#demo-takeover');
+    await page.waitForFunction(
+      () => document.getElementById('demo-dialog')?.classList.contains('is-practice'),
+      null,
+      { timeout: 60000 },
     );
-  await wait(500);
-  ensure();
-  const afterStale = await snap('after-retired-events', true);
-  assert.equal(afterStale.demo.id, newer.demo.id);
-  assert(afterStale.demo.tick > newer.demo.tick);
-  assert.equal(afterStale.watchPaused, 'false');
-  report.staleOwner = { status: 'pass', oldPainter, newer, oldLoss, oldRestore, afterStale };
-  await pause(false);
-  await click('#demo-back');
+    await pausedDraw({ differentRun: takeover.demo.id });
+    practiceAtTakeover = await snap('takeover-practice');
+    assert.notEqual(practiceAtTakeover.demo.id, takeover.demo.id);
+    assert.equal(practiceAtTakeover.demo.tick, takeover.demo.tick);
+    await qualityWindow(true, 2500);
+    await fault(DEMO_ARMS[2]);
+    await fault(DEMO_ARMS[3]);
+    const oldPainter = await page.evaluate(() =>
+      window.demoRecoveryProbe.retain('owned-concealment-layer', 'stale'),
+    );
+    await click('#demo-back');
+    await openDemo();
+    const newer = await snap('reopened', true);
+    assert.notEqual(newer.painterId, oldPainter.painterId);
+    const oldLoss = await page.evaluate(() =>
+        window.demoRecoveryProbe.event('stale', 'contextlost'),
+      ),
+      oldRestore = await page.evaluate(() =>
+        window.demoRecoveryProbe.event('stale', 'contextrestored'),
+      );
+    await wait(500);
+    ensure();
+    const afterStale = await snap('after-retired-events', true);
+    assert.equal(afterStale.demo.id, newer.demo.id);
+    assert(afterStale.demo.tick > newer.demo.tick);
+    assert.equal(afterStale.watchPaused, 'false');
+    report.staleOwner = { status: 'pass', oldPainter, newer, oldLoss, oldRestore, afterStale };
+    await pause(false);
+    await click('#demo-back');
+  }
   const afterClose = await snap('ordinary-after');
   unchanged(ordinaryBefore, afterClose, 'ordinary');
   if (await page.locator('#settings-dialog').isVisible())
@@ -529,52 +745,68 @@ const observation = async () => {
   sourceCapture = false;
   await bounded('final source drain', () => Promise.all(pending));
   assert(!report.sources.some((s) => s.failure));
-  const snapshots = report.snapshots.filter((s) => s.demo && !s.practice && s.open);
-  const proof = await page.evaluate(
-    async ({ source, snapshots, practice, base }) => {
-      const core = await import(new URL('core/index.mjs', base)),
-        replay = await import(new URL('replay.mjs', base));
-      const recording = JSON.parse(source);
-      const reconstruct = (target) => {
-        const state = core.createRun(recording.level, recording.options);
-        for (const segment of recording.segments) {
-          if (state.tick >= target) break;
-          if (segment.releaseBefore) core.releaseInputs(state);
-          for (let i = 0; i < segment.ticks && state.tick < target; i++)
-            core.stepRun(state, segment.input, core.FIXED_DT);
-        }
-        if (target === recording.ticks && recording.releaseAfter) core.releaseInputs(state);
-        return state;
-      };
-      const rows = snapshots.map((s) => {
-        const state = reconstruct(s.demo.tick),
-          actual = replay.authoritativeCheckpoint(state);
-        return {
-          label: s.label,
-          tick: s.demo.tick,
-          actual,
-          expected: s.demo.checkpoint,
-          match: state.tick === s.demo.tick && actual.hash === s.demo.checkpoint.hash,
+  if (resourceMode) {
+    report.cycleProof = await page.evaluate(reconstructResourceCycles, {
+      source: sourceText,
+      cycles: report.cycles,
+      snapshots: report.snapshots,
+      base: plan.address,
+    });
+    assert.equal(report.cycleProof.status, 'pass');
+    report.resourceAssessment = assessDemoResourceCycles(
+      report,
+      plan.sourceRevision,
+      plan.resourceCycles,
+    );
+    assert(report.sources.every((row) => row.responses === row.verifiedResponses));
+  } else {
+    const snapshots = report.snapshots.filter((s) => s.demo && !s.practice && s.open);
+    const proof = await page.evaluate(
+      async ({ source, snapshots, practice, base }) => {
+        const core = await import(new URL('core/index.mjs', base)),
+          replay = await import(new URL('replay.mjs', base));
+        const recording = JSON.parse(source);
+        const reconstruct = (target) => {
+          const state = core.createRun(recording.level, recording.options);
+          for (const segment of recording.segments) {
+            if (state.tick >= target) break;
+            if (segment.releaseBefore) core.releaseInputs(state);
+            for (let i = 0; i < segment.ticks && state.tick < target; i++)
+              core.stepRun(state, segment.input, core.FIXED_DT);
+          }
+          if (target === recording.ticks && recording.releaseAfter) core.releaseInputs(state);
+          return state;
         };
-      });
-      const fork = reconstruct(practice.demo.tick);
-      core.releaseInputs(fork);
-      const actual = replay.authoritativeCheckpoint(fork);
-      return {
-        prefix: { status: rows.every((r) => r.match) ? 'pass' : 'fail', rows },
-        practice: {
-          status: actual.hash === practice.demo.checkpoint.hash ? 'pass' : 'fail',
-          actual,
-          expected: practice.demo.checkpoint,
-        },
-      };
-    },
-    { source: sourceText, snapshots, practice: practiceAtTakeover, base: plan.address },
-  );
-  report.prefixProof = proof.prefix;
-  report.practiceForkProof = proof.practice;
-  assert.equal(proof.prefix.status, 'pass');
-  assert.equal(proof.practice.status, 'pass');
+        const rows = snapshots.map((s) => {
+          const state = reconstruct(s.demo.tick),
+            actual = replay.authoritativeCheckpoint(state);
+          return {
+            label: s.label,
+            tick: s.demo.tick,
+            actual,
+            expected: s.demo.checkpoint,
+            match: state.tick === s.demo.tick && actual.hash === s.demo.checkpoint.hash,
+          };
+        });
+        const fork = reconstruct(practice.demo.tick);
+        core.releaseInputs(fork);
+        const actual = replay.authoritativeCheckpoint(fork);
+        return {
+          prefix: { status: rows.every((r) => r.match) ? 'pass' : 'fail', rows },
+          practice: {
+            status: actual.hash === practice.demo.checkpoint.hash ? 'pass' : 'fail',
+            actual,
+            expected: practice.demo.checkpoint,
+          },
+        };
+      },
+      { source: sourceText, snapshots, practice: practiceAtTakeover, base: plan.address },
+    );
+    report.prefixProof = proof.prefix;
+    report.practiceForkProof = proof.practice;
+    assert.equal(proof.prefix.status, 'pass');
+    assert.equal(proof.practice.status, 'pass');
+  }
   assert.equal(report.errors.length, 0);
   assert.equal(report.failedRequests.length, 0);
   assert(!report.overflow && !report.unexpectedSourceFetch);

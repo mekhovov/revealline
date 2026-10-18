@@ -7,7 +7,8 @@ export function installDemoRecoveryProbe(env = globalThis) {
     check,
     drawCount = 0,
     last = null,
-    nextId = 1;
+    nextId = 1,
+    resourceContract = null;
   const ids = new WeakMap(),
     namespaces = new WeakSet(),
     surfaces = new Map();
@@ -67,6 +68,12 @@ export function installDemoRecoveryProbe(env = globalThis) {
       diagnosticsSource: diagnostics ? 'public-paused-export' : 'not-requested',
       quality: diagnostics?.quality ?? null,
       calibration: diagnostics?.cadenceCalibration ?? null,
+      ...(resourceContract && diagnostics
+        ? {
+            resourceContract: { ...resourceContract },
+            resources: structuredClone(diagnostics.resources),
+          }
+        : {}),
       disabled: Object.fromEntries(
         ['demo-resume', 'demo-takeover', 'demo-next', 'demo-watch-pause', 'demo-return'].map(
           (id) => [id, doc.getElementById(id)?.disabled],
@@ -85,6 +92,17 @@ export function installDemoRecoveryProbe(env = globalThis) {
     return { canvas: selected[1].canvas, name: String(selected[0]) };
   }
   env.demoRecoveryProbe = {
+    configureResources(contract) {
+      if (
+        resourceContract ||
+        contract?.format !== 'DemoOwnedResourcesV1' ||
+        typeof contract.sourceRevision !== 'string' ||
+        !/^[a-f0-9]{40}$/.test(contract.sourceRevision) ||
+        Object.keys(contract).length !== 2
+      )
+        throw Error('Exact one-time Demo resource contract required');
+      resourceContract = { ...contract };
+    },
     install(Painter, checkpoint) {
       if (check) throw Error('Observer installed twice');
       check = checkpoint;

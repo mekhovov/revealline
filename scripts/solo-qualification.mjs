@@ -24,6 +24,7 @@ const types = new Set([
   'audio-ready',
   'result',
   'authored-next-route',
+  'shared-mode-public-return',
 ]);
 function integer(value, minimum, maximum, name) {
   assert(Number.isInteger(value) && value >= minimum && value <= maximum, `Invalid ${name}`);
@@ -71,7 +72,12 @@ export function qualificationDisplayOptions(flags) {
     'Mobile context is a Boolean flag',
   );
   const isMobile = flags.includes('--mobile-context');
-  return { viewport: { width, height }, deviceScaleFactor, isMobile, hasTouch: isMobile };
+  return {
+    viewport: { width, height },
+    deviceScaleFactor,
+    isMobile,
+    hasTouch: isMobile,
+  };
 }
 
 export function qualificationCacheMode(
@@ -134,6 +140,18 @@ export function validateQualification(scenario) {
   string(scenario.id, 'scenario id');
   if (scenario.nativeRouteProtocol !== undefined)
     assert.equal(scenario.nativeRouteProtocol, 'authored-next-geometric-v1');
+  if (scenario.sharedModeProtocol !== undefined) {
+    assert.equal(scenario.sharedModeProtocol, 'shared-mode-public-return-v1');
+    assert.equal(scenario.kind, 'recovery');
+    assert.equal(scenario.timeoutMs, 180000);
+    assert.deepEqual(scenario.query, { journey: 'legacy' });
+    assert.equal(scenario.nativeRouteProtocol, undefined);
+    assert.equal(scenario.actions?.[0]?.type, 'shared-mode-public-return');
+    assert.equal(
+      scenario.actions.filter((action) => action.type === 'shared-mode-public-return').length,
+      1,
+    );
+  }
   if (scenario.cacheMode !== undefined) assert.equal(scenario.cacheMode, 'warm-http-reload');
   assert(['performance', 'lifecycle', 'recovery'].includes(scenario.kind), 'Invalid evidence kind');
   if (scenario.evidenceStorage !== undefined)
@@ -289,6 +307,14 @@ export function validateQualification(scenario) {
           ].includes(action.mission),
         );
       }
+      if (action.type === 'shared-mode-public-return') {
+        assert.equal(depth, 0);
+        assert.equal(scenario.sharedModeProtocol, 'shared-mode-public-return-v1');
+        assert.deepEqual(action, {
+          type: 'shared-mode-public-return',
+          timeoutMs: 120000,
+        });
+      }
       if (action.type === 'key') {
         assert(keys.includes(action.key), 'Only gameplay keys are admitted');
         integer(action.ms, 1, 60_000, 'key duration');
@@ -435,7 +461,14 @@ export function evaluateQualificationBudgets(application) {
         : bound.lowerExclusiveMs >= limitMs
           ? 'fail'
           : 'inconclusive';
-    checks.push({ name, status, count: stats.count, fraction, limitMs, ...bound });
+    checks.push({
+      name,
+      status,
+      count: stats.count,
+      fraction,
+      limitMs,
+      ...bound,
+    });
   }
   quantile('playing-work-p95', playing?.work, 0.95, Math.min(10, 0.6 * B), 100);
   quantile('playing-cadence-p95', playing?.frames, 0.95, 1.2 * B, 100);
@@ -637,7 +670,10 @@ export function createManifestMirror(manifest, publicURL, localURL) {
   return (requestURL) => {
     const request = new URL(requestURL);
     if (request.origin !== publicRoot.origin)
-      return { kind: 'remote', reason: 'Different origin; ordinary browser CSP still applies.' };
+      return {
+        kind: 'remote',
+        reason: 'Different origin; ordinary browser CSP still applies.',
+      };
     if (request.pathname.startsWith(publicRoot.pathname)) {
       let path;
       try {
@@ -647,7 +683,11 @@ export function createManifestMirror(manifest, publicURL, localURL) {
       }
       if (!path || path.endsWith('/')) path += 'index.html';
       if (!paths.has(path))
-        return { kind: 'blocked', path, reason: 'Absent from frozen package manifest' };
+        return {
+          kind: 'blocked',
+          path,
+          reason: 'Absent from frozen package manifest',
+        };
       const mapped = new URL(path + request.search, localRoot);
       assert.equal(mapped.origin, localRoot.origin);
       assert(mapped.pathname.startsWith(localRoot.pathname));
@@ -656,7 +696,10 @@ export function createManifestMirror(manifest, publicURL, localURL) {
     // The default soundtrack publication is a sibling repository on the same
     // public origin. No other absent runtime path is allowed to float forward.
     if (request.pathname.startsWith('/revealline-soundtracks/'))
-      return { kind: 'remote', reason: 'Explicit external soundtrack publication' };
+      return {
+        kind: 'remote',
+        reason: 'Explicit external soundtrack publication',
+      };
     return {
       kind: 'blocked',
       reason: 'Outside frozen deployment and explicit soundtrack publication',

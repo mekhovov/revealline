@@ -384,7 +384,7 @@ function observation(configuration, diagnostics, browser) {
   return [
     {
       status: 'observed',
-      sourceRevision: DIAGNOSTICS_SOURCE,
+      sourceRevision: configuration.sourceRevision,
       requestedActiveMs: 30000,
       address: configuration.address + `&performance=${Number(diagnostics)}`,
       diagnostics,
@@ -410,7 +410,7 @@ function observation(configuration, diagnostics, browser) {
         ? {
             application: {
               enabled: true,
-              sourceRevision: DIAGNOSTICS_SOURCE,
+              sourceRevision: configuration.sourceRevision,
               interruptions: { count: 0 },
               failures: { count: 0 },
               quality: { tier: 'full' },
@@ -448,7 +448,7 @@ function observation(configuration, diagnostics, browser) {
 
 async function cohort(t, change = {}) {
   const dir = await temporary(t);
-  const plan = bindDiagnosticsJob(await manifest(), 'chromium');
+  const plan = bindDiagnosticsJob(change.manifest ?? (await manifest()), 'chromium');
   const url = 'http://127.0.0.1:9000/game/?journey=opening';
   const config = diagnosticsConfiguration({ plan }, url, dir);
   const row = structuredClone(plan.rows[0]),
@@ -631,3 +631,159 @@ test('explicit final diagnostics setup successors retain prior failed declaratio
     }
   }
 });
+
+for (const sourceLabel of ['de332', '73']) {
+  const sourceRevision =
+    sourceLabel === '73'
+      ? '73a345cec696d7789198cf295ca5c37b17ca0e71'
+      : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+  // Source73 uses the actual reviewed correctness receipt. The older de332
+  // declarations remain held; their modeled release never grants execution.
+  async function prospectiveManifest(journal = false) {
+    const f = JSON.parse(
+      await readFile(
+        join(
+          repository,
+          `docs/performance/solo-${sourceLabel}-${journal ? 'journal-cost' : 'app-diagnostics'}-plan.json`,
+        ),
+      ),
+    );
+    if (sourceLabel === '73') return f;
+    f.release.status = 'reviewed-diagnostic-only';
+    for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
+      f.release[key] = true;
+    f.release.evidence = [
+      {
+        runId: 1,
+        artifactId: 1,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        disposition: 'failed-reviewed',
+      },
+    ];
+    return f;
+  }
+  test(`${sourceLabel}: exact package/method/bounds retain reviewed73 receipt and held predecessor refusal`, async () => {
+    for (const journal of [false, true]) {
+      const name = journal ? 'journal-cost' : 'app-diagnostics';
+      const held = JSON.parse(
+        await readFile(join(repository, `docs/performance/solo-${sourceLabel}-${name}-plan.json`)),
+      );
+      if (sourceLabel === '73') {
+        assert.equal(held.release.status, 'reviewed-diagnostic-only');
+        assert.equal(held.release.noUnclosedOwners, true);
+        assert.equal(held.release.evidence[0].runId, 39105055762);
+        assert.equal(held.release.evidence[0].scope, 'first-eight-correctness-only');
+        assert.equal(held.release.evidence[0].numericalFailures.length, 3);
+        assert.equal(bindDiagnosticsJob(held, 'chromium').candidate.revision, sourceRevision);
+        const unreleased = structuredClone(held);
+        unreleased.release.status = 'held-for-review';
+        assert.throws(() => bindDiagnosticsJob(unreleased, 'chromium'));
+      } else {
+        assert.equal(held.release.status, 'held-for-review');
+        assert.equal(held.release.noUnclosedOwners, false);
+        assert.deepEqual(held.release.evidence, []);
+        assert.throws(() => bindDiagnosticsJob(held, 'chromium'));
+      }
+      const f = await prospectiveManifest(journal);
+      const old = JSON.parse(
+        await readFile(join(repository, `docs/performance/solo-final-${name}-v2-plan.json`)),
+      );
+      assert.deepEqual(f.observation, old.observation);
+      assert.deepEqual(diagnosticsMatrix(f), diagnosticsMatrix(old));
+      for (const engine of ['chromium', 'webkit']) {
+        const plan = bindDiagnosticsJob(f, engine);
+        assert.equal(plan.candidate.revision, sourceRevision);
+        assert.deepEqual(plan.rows, bindDiagnosticsJob(old, engine).rows);
+        assert.equal(plan.analysisMethod, 'paired-p95-endpoint-box-v1');
+        for (const mutate of [
+          (p) => delete p.analysisMethod,
+          (p) => (p.analysisMethod = 'other'),
+          (p) => (p.candidate.inner.sha256 = 'f'.repeat(64)),
+          (p) => p.candidate.artifact++,
+          (p) => (p.candidate.tree = 'f'.repeat(40)),
+          (p) => (p.runtimeRevision = 'f'.repeat(40)),
+          (p) => (p.release.dispatch.lane = 'next'),
+          (p) => (p.release.dispatch.ref = 'refs/heads/unreviewed'),
+          (p) => (p.release.onceOnlyBefore = p.candidate.revision),
+          (p) => (p.release.noUnclosedOwners = false),
+          (p) => (p.release.evidence = []),
+          (p) => (p.release.unconditionalClockGuarantee = true),
+          (p) => (p.release.firstEightAllCorrectnessPassed = true),
+          (p) => (p.observation.pairs = 9),
+          (p) => (p.observation.overheadLimit = 0.06),
+          (p) => (p.observation.crossOriginIsolationOverride = true),
+          (p) => (p.observation.cpuRate = 2),
+          (p) => p.observation.activeMs++,
+          (p) => p.rows[0].timeoutMs++,
+          (p) =>
+            (p.frozenTools = p.frozenTools.filter(
+              (r) => r.path !== 'scripts/solo-overhead-interval.mjs',
+            )),
+        ]) {
+          const changed = structuredClone(plan);
+          mutate(changed);
+          assert.throws(() => validateDiagnosticsPlan(changed));
+        }
+      }
+    }
+    const old = bindDiagnosticsJob(await manifest(), 'chromium');
+    old.analysisMethod = 'paired-p95-endpoint-box-v1';
+    assert.throws(() => validateDiagnosticsPlan(old));
+  });
+  test(`${sourceLabel}: actual prospective adapter forwards method before timer and all20 reports into the bounded assessor`, async (t) => {
+    const result = await cohort(t, { manifest: await prospectiveManifest() });
+    assert.equal(result.calls.length, 21);
+    assert.equal(result.manifest.analysisMethod, 'paired-p95-endpoint-box-v1');
+    assert.equal(result.analysis.analysisMethod, result.manifest.analysisMethod);
+    assert.equal(result.analysis.completePairs, 10);
+    assert.equal(result.analysis.adjustedInterval.vertices, 1024);
+    assert.equal(result.analysis.status, 'pass');
+    assert.match(result.analysis.assumptions.join(' '), /assum|jitter/);
+    assert.equal(result.analysis.limit, 0.05);
+    assert.deepEqual(
+      result.manifest.executions.map(({ order, pair, diagnostics }) => ({
+        order,
+        pair,
+        diagnostics,
+      })),
+      diagnosticsSchedule(10, 1544),
+    );
+    assert(
+      result.manifest.executions.every((x) => x.reportSha256 && x.command.status === 'closed'),
+    );
+  });
+  test(`${sourceLabel}: prospective adapter preserves failed quality and unclosed-owner observations rather than replacing arms`, async (t) => {
+    const failed = await cohort(t, {
+      manifest: await prospectiveManifest(),
+      raw: (rows, order) => {
+        if (order === 4) rows[0].external.qualityProbe.samples[2].quality = 'reduced';
+      },
+    });
+    assert.equal(failed.calls.length, 21);
+    assert.equal(failed.row.status, 'failed');
+    assert.equal(failed.analysis.observations.length, 20);
+    assert.equal(failed.analysis.status, 'unresolved');
+    const stopped = await cohort(t, { manifest: await prospectiveManifest(), throwOwner: 2 });
+    assert.equal(stopped.calls.length, 4);
+    assert.equal(stopped.row.status, 'failed');
+    assert(stopped.manifest.executions.slice(3).every((x) => x.status === 'not-observed'));
+  });
+
+  test(`${sourceLabel}: prospective cohort retains one 1800s deadline and conditional coarse-clock refusal`, async (t) => {
+    const limited = await cohort(t, {
+      manifest: await prospectiveManifest(),
+      elapsedPerArm: 400000,
+    });
+    assert.equal(limited.calls.length, 6);
+    assert.equal(limited.calls.at(-1).timeout, 200000);
+    assert.match(limited.row.cohortFailure, /cohort deadline/);
+    assert(limited.manifest.executions.slice(5).every((x) => x.status === 'not-observed'));
+    assert.equal(limited.analysis.status, 'unresolved');
+    const coarse = await cohort(t, { manifest: await prospectiveManifest(), quantum: 0.1 });
+    assert.equal(coarse.calls.length, 21);
+    assert.equal(coarse.analysis.completePairs, 10);
+    assert.equal(coarse.analysis.status, 'unresolved');
+    assert.equal(coarse.analysis.limit, 0.05);
+  });
+}
