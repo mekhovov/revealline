@@ -1,0 +1,292 @@
+TAP version 13
+# Subtest: rotation begins approachable and avoids consecutive same-level replay/bot scenes
+ok 1 - rotation begins approachable and avoids consecutive same-level replay/bot scenes
+  ---
+  duration_ms: 2.854709
+  ...
+# Subtest: failed sources are skipped once for this director session
+ok 2 - failed sources are skipped once for this director session
+  ---
+  duration_ms: 0.778541
+  ...
+# Subtest: late cancelled preparation cannot replace a newer player and releases its ownership
+ok 3 - late cancelled preparation cannot replace a newer player and releases its ownership
+  ---
+  duration_ms: 0.330916
+  ...
+# Subtest: suspension cancels loading and requires an explicit play gesture after lifecycle return
+ok 4 - suspension cancels loading and requires an explicit play gesture after lifecycle return
+  ---
+  duration_ms: 0.291833
+  ...
+# Subtest: completion remains available for a host-owned dwell, pause survives asynchronous load
+ok 5 - completion remains available for a host-owned dwell, pause survives asynchronous load
+  ---
+  duration_ms: 0.119166
+  ...
+# Subtest: visible stalls skip spectator time and repeated completed scenes keep rotating without input
+ok 6 - visible stalls skip spectator time and repeated completed scenes keep rotating without input
+  ---
+  duration_ms: 1.133208
+  ...
+# Subtest: empty or wholly unavailable rotation has a stable terminal state
+ok 7 - empty or wholly unavailable rotation has a stable terminal state
+  ---
+  duration_ms: 0.2915
+  ...
+# Subtest: source exceptions during playback skip only that source and preserve next-source ownership
+ok 8 - source exceptions during playback skip only that source and preserve next-source ownership
+  ---
+  duration_ms: 3.123583
+  ...
+# Subtest: expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+ok 9 - expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+  ---
+  duration_ms: 0.3775
+  ...
+# Subtest: a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+ok 10 - a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+  ---
+  duration_ms: 0.391917
+  ...
+# (node:36024) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+ok 11 - the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+  ---
+  duration_ms: 632.2425
+  ...
+# Subtest: no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+ok 12 - no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+  ---
+  duration_ms: 0.555417
+  ...
+# Subtest: preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+ok 13 - preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+  ---
+  duration_ms: 0.614208
+  ...
+# Subtest: Next cancels a preparation which never returns and retains only its newer owner
+ok 14 - Next cancels a preparation which never returns and retains only its newer owner
+  ---
+  duration_ms: 0.62225
+  ...
+# Subtest: dispose settles preparation immediately and disposes its ignored-abort late adapter once
+ok 15 - dispose settles preparation immediately and disposes its ignored-abort late adapter once
+  ---
+  duration_ms: 0.1945
+  ...
+# Subtest: wholly timed-out recordings end unavailable after one bounded attempt per source
+ok 16 - wholly timed-out recordings end unavailable after one bounded attempt per source
+  ---
+  duration_ms: 0.251333
+  ...
+# Subtest: recovery checks its total 29997ms before adopting a prepared source
+ok 17 - recovery checks its total 29997ms before adopting a prepared source
+  ---
+  duration_ms: 0.243292
+  ...
+# Subtest: recovery checks its total 30000ms before adopting a prepared source
+ok 18 - recovery checks its total 30000ms before adopting a prepared source
+  ---
+  duration_ms: 0.285791
+  ...
+# Subtest: recovery checks its total 33000ms before adopting a prepared source
+ok 19 - recovery checks its total 33000ms before adopting a prepared source
+  ---
+  duration_ms: 0.157334
+  ...
+# Subtest: synchronous retirement and replacement preparation share the recovery budget
+ok 20 - synchronous retirement and replacement preparation share the recovery budget
+  ---
+  duration_ms: 0.141041
+  ...
+# Subtest: retirement that exhausts recovery cannot begin another source or quarantine the old source
+ok 21 - retirement that exhausts recovery cannot begin another source or quarantine the old source
+  ---
+  duration_ms: 0.157417
+  ...
+# Subtest: a pending scene picture releases its painter on deadline before the decoder settles
+ok 22 - a pending scene picture releases its painter on deadline before the decoder settles
+  ---
+  duration_ms: 2152.468584
+  ...
+# Subtest: a pending scene picture releases its painter on Back before the decoder settles
+ok 23 - a pending scene picture releases its painter on Back before the decoder settles
+  ---
+  duration_ms: 1676.806166
+  ...
+# Subtest: catalogue fetch which ignores abort still has a finite total loading deadline
+ok 24 - catalogue fetch which ignores abort still has a finite total loading deadline
+  ---
+  duration_ms: 1.081416
+  ...
+# Subtest: catalogue body which ignores abort still has a finite total loading deadline
+ok 25 - catalogue body which ignores abort still has a finite total loading deadline
+  ---
+  duration_ms: 0.151792
+  ...
+# Subtest: fetch and body share a budget; success retires timers and caller listeners
+ok 26 - fetch and body share a budget; success retires timers and caller listeners
+  ---
+  duration_ms: 0.422792
+  ...
+# Subtest: replay body timeout and parent cancellation settle before an uncooperative body returns
+ok 27 - replay body timeout and parent cancellation settle before an uncooperative body returns
+  ---
+  duration_ms: 0.498208
+  ...
+# Subtest: cancelled late fetch cancels its body without starting text parsing
+ok 28 - cancelled late fetch cancels its body without starting text parsing
+  ---
+  duration_ms: 0.199792
+  ...
+# Subtest: loading cleans up synchronous failure, early abort, late rejection and failing late disposal
+ok 29 - loading cleans up synchronous failure, early abort, late rejection and failing late disposal
+  ---
+  duration_ms: 0.270375
+  ...
+# Subtest: slow fetch cannot restart the body deadline and all cancellation listeners are retired
+ok 30 - slow fetch cannot restart the body deadline and all cancellation listeners are retired
+  ---
+  duration_ms: 0.278458
+  ...
+# Subtest: overdue synchronous preparation is rejected and retired before its timer can run
+ok 31 - overdue synchronous preparation is rejected and retired before its timer can run
+  ---
+  duration_ms: 0.116375
+  ...
+# Subtest: settlement checks elapsed time at 14999ms without relying on timer delivery
+ok 32 - settlement checks elapsed time at 14999ms without relying on timer delivery
+  ---
+  duration_ms: 0.156916
+  ...
+# Subtest: settlement checks elapsed time at 15000ms without relying on timer delivery
+ok 33 - settlement checks elapsed time at 15000ms without relying on timer delivery
+  ---
+  duration_ms: 0.070125
+  ...
+# Subtest: settlement checks elapsed time at 15001ms without relying on timer delivery
+ok 34 - settlement checks elapsed time at 15001ms without relying on timer delivery
+  ---
+  duration_ms: 0.09875
+  ...
+# Subtest: overdue synchronous and asynchronous errors retain timeout classification
+ok 35 - overdue synchronous and asynchronous errors retain timeout classification
+  ---
+  duration_ms: 0.100584
+  ...
+# Subtest: a delayed optional catalog cannot starve available modes or freeze localization
+ok 36 - a delayed optional catalog cannot starve available modes or freeze localization
+  ---
+  duration_ms: 1.200917
+  ...
+# Subtest: prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+ok 37 - prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+  ---
+  duration_ms: 0.857959
+  ...
+# Subtest: the next prefetched recording is consumed once and never creates a second player early
+ok 38 - the next prefetched recording is consumed once and never creates a second player early
+  ---
+  duration_ms: 0.930833
+  ...
+# Subtest: modes and level variants have equal performance weight despite duplicate recordings
+ok 39 - modes and level variants have equal performance weight despite duplicate recordings
+  ---
+  duration_ms: 1.852917
+  ...
+# Subtest: an unavailable graphics engine is attempted once, not once per authored level
+ok 40 - an unavailable graphics engine is attempted once, not once per authored level
+  ---
+  duration_ms: 1.654625
+  ...
+# Subtest: a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+ok 41 - a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+  ---
+  duration_ms: 0.820208
+  ...
+# Subtest: a deferred mode returns with its next recording while healthy mode cycles keep progressing
+ok 42 - a deferred mode returns with its next recording while healthy mode cycles keep progressing
+  ---
+  duration_ms: 0.343334
+  ...
+# Subtest: duplicate bad recordings cannot hold the next level behind repeated verified fallback
+ok 43 - duplicate bad recordings cannot hold the next level behind repeated verified fallback
+  ---
+  duration_ms: 0.304084
+  ...
+# Subtest: all fallback attempts together stop at thirty seconds
+ok 44 - all fallback attempts together stop at thirty seconds
+  ---
+  duration_ms: 1.691792
+  ...
+# Subtest: replacement waits for asynchronous graphics disposal
+ok 45 - replacement waits for asynchronous graphics disposal
+  ---
+  duration_ms: 0.349666
+  ...
+# Subtest: fallback waits for cleanup of a source rejected after preparation
+ok 46 - fallback waits for cleanup of a source rejected after preparation
+  ---
+  duration_ms: 0.359041
+  ...
+# Subtest: captions retain five explanations, stay six seconds, and discard stale warnings
+ok 47 - captions retain five explanations, stay six seconds, and discard stale warnings
+  ---
+  duration_ms: 0.303042
+  ...
+# Subtest: caption history translates observed events without replaying or dropping their reading interval
+ok 48 - caption history translates observed events without replaying or dropping their reading interval
+  ---
+  duration_ms: 0.078167
+  ...
+# Subtest: natural completion retains the last explanation and the recap for six seconds each
+ok 49 - natural completion retains the last explanation and the recap for six seconds each
+  ---
+  duration_ms: 0.125375
+  ...
+# Subtest: atomic report preserves the last complete sample after failWrite
+ok 50 - atomic report preserves the last complete sample after failWrite
+  ---
+  duration_ms: 1.131791
+  ...
+# Subtest: atomic report preserves the last complete sample after failRename
+ok 51 - atomic report preserves the last complete sample after failRename
+  ---
+  duration_ms: 0.098292
+  ...
+# Subtest: atomic report replaces after a complete write and leaves colliding files alone
+ok 52 - atomic report replaces after a complete write and leaves colliding files alone
+  ---
+  duration_ms: 0.155625
+  ...
+# Subtest: dead-page diagnostics and ENOSPC still close and emit the primary failure
+ok 53 - dead-page diagnostics and ENOSPC still close and emit the primary failure
+  ---
+  duration_ms: 1.342833
+  ...
+# Subtest: hung diagnostics are bounded and a failed close cannot suppress output
+ok 54 - hung diagnostics are bounded and a failed close cannot suppress output
+  ---
+  duration_ms: 6.49975
+  ...
+# Subtest: a persistence-only failure fails qualification with bounded diagnostics
+ok 55 - a persistence-only failure fails qualification with bounded diagnostics
+  ---
+  duration_ms: 0.195458
+  ...
+# Subtest: the actual CLI closes a launched browser when context setup fails
+ok 56 - the actual CLI closes a launched browser when context setup fails
+  ---
+  duration_ms: 34.111125
+  ...
+1..56
+# tests 56
+# suites 0
+# pass 56
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4143.124333

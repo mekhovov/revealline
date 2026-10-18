@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir } from 'node:fs/promises';
+import {
+  writeQualificationReport,
+  diagnoseQualificationFailure,
+  finishQualification,
+} from './shared-demo-browser-report.mjs';
 import { pathToFileURL } from 'node:url';
 import { pbkdf2Sync } from 'node:crypto';
 
@@ -9,7 +14,6 @@ const args = Object.fromEntries(
   process.argv.slice(2).map((arg) => arg.replace(/^--/, '').split('=')),
 );
 const runtime = args.runtime ?? 'playwright';
-const playwright = await import(runtime.startsWith('/') ? pathToFileURL(runtime).href : runtime);
 const engine = args.browser ?? 'chromium';
 const duration = Number(args.seconds ?? 0);
 const nativeEntries = {
@@ -37,37 +41,7 @@ const report = {
   errors: [],
   complete: false,
 };
-await mkdir(new URL('../.cache/', import.meta.url), { recursive: true });
-const browser = await playwright[engine].launch({
-  headless: true,
-  ...(args.executable ? { executablePath: args.executable } : {}),
-});
-const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
-// Same test-only credential as access-gate-runtime.test.mjs. Route rewriting is
-// confined to this ephemeral local test context; production files are untouched.
-const baseURL = args.url ?? 'http://127.0.0.1:8768';
-assert.ok(['127.0.0.1', 'localhost'].includes(new URL(baseURL).hostname));
-const salt = Buffer.from('password-gate-test');
-const verifier = pbkdf2Sync('fixture-password', salt, 150000, 32, 'sha256').toString('base64url');
-await context.route(`${baseURL}/**`, async (route) => {
-  if (route.request().resourceType() !== 'document') return route.continue();
-  const response = await route.fetch();
-  let body = await response.text();
-  for (const [name, value] of [
-    ['salt', salt.toString('base64url')],
-    ['verifier', verifier],
-    ['id', 'demo-browser-fixture'],
-  ])
-    body = body.replace(
-      new RegExp(`(name="revealline-access-${name}"\\s+content=")[^"]+`),
-      `$1${value}`,
-    );
-  await route.fulfill({ response, body });
-});
-const page = await context.newPage();
-page.on('pageerror', (error) => {
-  if (report.errors.length < 64) report.errors.push(String(error.stack ?? error));
-});
+let browser, context, page;
 const snapshot = () =>
   page.locator('#demo-dialog').evaluate((node) => ({
     mode: node.dataset.demoMode,
@@ -96,6 +70,38 @@ const ready = (timeout = 35000) =>
     { timeout },
   );
 try {
+  const playwright = await import(runtime.startsWith('/') ? pathToFileURL(runtime).href : runtime);
+  await mkdir(new URL('../.cache/', import.meta.url), { recursive: true });
+  browser = await playwright[engine].launch({
+    headless: true,
+    ...(args.executable ? { executablePath: args.executable } : {}),
+  });
+  context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+  // Same test-only credential as access-gate-runtime.test.mjs. Route rewriting is
+  // confined to this ephemeral local test context; production files are untouched.
+  const baseURL = args.url ?? 'http://127.0.0.1:8768';
+  assert.ok(['127.0.0.1', 'localhost'].includes(new URL(baseURL).hostname));
+  const salt = Buffer.from('password-gate-test');
+  const verifier = pbkdf2Sync('fixture-password', salt, 150000, 32, 'sha256').toString('base64url');
+  await context.route(`${baseURL}/**`, async (route) => {
+    if (route.request().resourceType() !== 'document') return route.continue();
+    const response = await route.fetch();
+    let body = await response.text();
+    for (const [name, value] of [
+      ['salt', salt.toString('base64url')],
+      ['verifier', verifier],
+      ['id', 'demo-browser-fixture'],
+    ])
+      body = body.replace(
+        new RegExp(`(name="revealline-access-${name}"\\s+content=")[^"]+`),
+        `$1${value}`,
+      );
+    await route.fulfill({ response, body });
+  });
+  page = await context.newPage();
+  page.on('pageerror', (error) => {
+    if (report.errors.length < 64) report.errors.push(String(error.stack ?? error));
+  });
   await page.goto(`${baseURL}${nativeEntries[args.entry] ?? '/game/?journey=legacy'}`);
   await page.getByLabel('Password', { exact: true }).fill('fixture-password');
   await page.getByRole('button', { name: 'Unlock', exact: true }).click();
@@ -299,8 +305,7 @@ try {
     previousSignature = signature;
     report.samples.push({ at: new Date().toISOString(), workers: page.workers().length, ...value });
     if (report.samples.length > 800) report.samples.shift();
-    if (report.samples.length % 6 === 0)
-      await writeFile(reportPath, JSON.stringify(report, null, 2));
+    if (report.samples.length % 6 === 0) await writeQualificationReport(reportPath, report);
   }
   report.enduranceFinished = new Date().toISOString();
   await page.locator('#demo-back').click();
@@ -331,20 +336,14 @@ try {
   });
   report.complete = true;
 } catch (error) {
-  report.failure = String(error.stack ?? error);
-  report.visibleText = (await page.locator('body').innerText()).slice(0, 12000);
-  await page.screenshot({ path: reportPath.replace(/\.json$/, '.png') });
   process.exitCode = 1;
+  await diagnoseQualificationFailure({
+    report,
+    error,
+    page,
+    screenshotPath: reportPath.replace(/\.json$/, '.png'),
+  });
 } finally {
-  report.finished = new Date().toISOString();
-  await writeFile(reportPath, JSON.stringify(report, null, 2));
-  await browser.close();
+  const summary = await finishQualification({ report, reportPath, browser });
+  if (!summary.complete) process.exitCode = 1;
 }
-console.log(
-  JSON.stringify({
-    reportPath,
-    complete: report.complete,
-    checks: report.checks.length,
-    failure: report.failure,
-  }),
-);

@@ -209,3 +209,71 @@ test('slow fetch cannot restart the body deadline and all cancellation listeners
   assert.equal(clock.pending, 0);
   assert.equal(getEventListeners(controller.signal, 'abort').length, 0);
 });
+
+test('overdue synchronous preparation is rejected and retired before its timer can run', async () => {
+  const clock = demoLoadingClock();
+  const value = {};
+  let childSignal,
+    disposals = 0;
+  const request = withDemoLoadingDeadline(
+    (signal) => {
+      childSignal = signal;
+      clock.elapse(15001);
+      return value;
+    },
+    {
+      ...clock.options,
+      onLateResult: (late) => {
+        assert.equal(late, value);
+        disposals++;
+      },
+    },
+  );
+  await assert.rejects(request, { code: 'demo-load-timeout' });
+  assert.equal(childSignal.aborted, true);
+  assert.equal(disposals, 1);
+  assert.equal(clock.pending, 0);
+  clock.advance(15000);
+  assert.equal(disposals, 1, 'The abandoned owner is retired exactly once.');
+});
+
+for (const elapsed of [14999, 15000, 15001])
+  test(`settlement checks elapsed time at ${elapsed}ms without relying on timer delivery`, async () => {
+    const clock = demoLoadingClock();
+    const value = {};
+    let resolve,
+      childSignal,
+      disposals = 0;
+    const request = withDemoLoadingDeadline(
+      (signal) => {
+        childSignal = signal;
+        return new Promise((done) => {
+          resolve = done;
+        });
+      },
+      { ...clock.options, onLateResult: () => disposals++ },
+    );
+    clock.elapse(elapsed);
+    resolve(value);
+    if (elapsed < 15000) assert.equal(await request, value);
+    else await assert.rejects(request, { code: 'demo-load-timeout' });
+    assert.equal(childSignal.aborted, elapsed >= 15000);
+    assert.equal(disposals, elapsed >= 15000 ? 1 : 0);
+    assert.equal(clock.pending, 0);
+  });
+
+test('overdue synchronous and asynchronous errors retain timeout classification', async () => {
+  for (const asynchronous of [false, true]) {
+    const clock = demoLoadingClock();
+    await assert.rejects(
+      withDemoLoadingDeadline(() => {
+        clock.elapse(15000);
+        const error = new Error('Late content failure');
+        if (asynchronous) return Promise.reject(error);
+        throw error;
+      }, clock.options),
+      { code: 'demo-load-timeout' },
+    );
+    assert.equal(clock.pending, 0);
+  }
+});

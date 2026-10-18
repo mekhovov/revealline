@@ -1,6 +1,6 @@
 # Shared demo qualification evidence
 
-**Current delivery status:** see the [18 October plan review](../../shared-game-demos-plan.md). Latest main is now `20555cda6b`, 91 commits beyond the integration documented below, and is not yet integrated. Earlier receipts remain evidence for their recorded sources. The delayed-timer deadline defect, exact-tick diagnostic gap, final listener/endurance checks, and human/device review remain open. Disk space is available again but volatile; the previous storage failure is historical, not a completed endurance check.
+**Current delivery status:** see the [live priority plan](../../shared-game-demos-plan.md) and [draft PR #1615](https://github.com/mekhovov/revealline/pull/1615). The implementation is now committed and rebased onto main `e3a20a2a34`. Latest integration checks passed 258 tests; the deadline/harness correction passed 56 focused tests. Earlier receipts below remain evidence for their recorded sources. Exact-tick diagnostics, final listener/endurance checks, and human/device review remain unfinished. Disk space is available again but volatile; the previous storage failure is historical, not a completed endurance check.
 
 Audit snapshot: 18 October 2026. The required inventory is **890 authored level/variant entries**. Additional recordings and browser-specific performances do not add levels. The [feature documentation](../../shared-game-demos.md) defines scope and the remaining release checks.
 
