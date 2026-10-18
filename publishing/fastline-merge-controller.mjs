@@ -679,13 +679,20 @@ const exactKeys = (value, keys) =>
   equal(Object.keys(value).sort(), [...keys].sort());
 const policyBlobsValid = (entries) =>
   Array.isArray(entries) &&
-  entries.length === POLICY_FILES.length &&
-  entries.every(
-    (entry, index) =>
-      Array.isArray(entry) &&
-      entry.length === 2 &&
-      entry[0] === POLICY_FILES[index] &&
-      exactSha(entry[1]),
+  // The immutable #1558 record keeps its original complete seven-file shape.
+  // This validates a record, not admission: all exact source/blob/digest/path
+  // comparisons below still apply, and ordinary admission still uses current
+  // POLICY_FILES. Never treat an arbitrary shorter inventory as a legacy one.
+  [POLICY_FILES, TRUSTED_POLICY_1558.map(([name]) => name)].some(
+    (profile) =>
+      entries.length === profile.length &&
+      entries.every(
+        (entry, index) =>
+          Array.isArray(entry) &&
+          entry.length === 2 &&
+          entry[0] === profile[index] &&
+          exactSha(entry[1]),
+      ),
   );
 const pathsValid = (paths) =>
   Array.isArray(paths) &&
