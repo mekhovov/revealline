@@ -60,6 +60,7 @@ test('repository and shipped guides name the current rendered radio setup contro
 
 test('all player guides distinguish radio calibration from complete tuning-library backup and restoration', async () => {
   const tuning = await source('optional-practice/civilian-fpv/tuning-ui.mjs');
+  assert(tuning.includes("t('Aircraft, rates & throttle', 'Дрон, рейти й газ')"));
   assert.match(
     tuning,
     /workbench\.add\('library', toolbar, libraryPreviews, affected, management, transfer\)/,
@@ -81,11 +82,13 @@ test('all player guides distinguish radio calibration from complete tuning-libra
     for (const guide of await localizedGuides(locale)) {
       assert(guide.includes(calibrationLabels[index]));
       assert(
-        guide.includes(
-          locale === 'en'
-            ? 'Rates &amp; throttle → Library → Import'
-            : 'Рейти й газ → Бібліотека → Імпорт',
-        ) || guide.includes('Rates & throttle → Library → Import'),
+        guide
+          .replace(/&amp;/g, '&')
+          .includes(
+            locale === 'en'
+              ? 'Settings → Controls → Aircraft, rates & throttle → Library → Import'
+              : 'Налаштування → Керування → Дрон, рейти й газ → Бібліотека → Імпорт',
+          ),
       );
       for (const pair of labels)
         assert(guide.includes(pair[index]), `Missing ${locale} backup step`);
