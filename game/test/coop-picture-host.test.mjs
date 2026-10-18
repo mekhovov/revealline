@@ -378,7 +378,7 @@ test('BFCache suspension keeps accepted artwork and shared preferences; terminal
   );
 });
 
-test('paused menu/display edits retain HUD continuity and the accepted picture with only shared preference reads/writes', async (t) => {
+test('paused menu/display edits retain HUD continuity and the accepted picture with only shared preference writes', async (t) => {
   const savedReaction = JSON.stringify({ format: 'JourneyReactionPreferencesV1', enabled: false });
   const writes = [],
     storageReads = [],
@@ -427,20 +427,31 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   assert.equal(f.doc.body.dataset.menuOrnaments, 'off');
   assert.equal(f.$('coop-journey-reactions-enabled').checked, false);
   assert.equal(values.get(reactionKey), savedReaction);
+  // This recorder spans boot and Start as well as Settings: include the existing
+  // preference/cursor readers, while the write check below stays Settings-only.
   assert.deepEqual([...new Set(storageReads)].sort(), [
+    'revealline-enemy-stats-session.v1:host:team',
+    'revealline-enemy-stats.v1:writer',
     'revealline.actor-style.v1',
     'revealline.appearance.v2',
     'revealline.audio-master.v1',
     'revealline.couch-radio-setup.v1',
+    'revealline.destruction.v1',
     'revealline.display.v1',
     'revealline.encounter-display.v1',
+    'revealline.encounter-variant.v1',
     'revealline.gameplay-tuning.v1',
+    'revealline.hunt-records.v1',
     'revealline.installed-app.v1',
     'revealline.journey-preferences.v1',
     reactionKey,
     'revealline.menu-style.v1',
+    'revealline.reaction-presentation.v1',
+    'revealline.running-enemies.v1',
+    'revealline.running-enemies.v2',
     'revealline.team-arena.v1',
     'revealline.team-contextual-teaching.v1',
+    'revealline.team-hunt-attempt.v1',
     'revealline.theme-family.v1',
     'revealline.touch.v1',
   ]);
