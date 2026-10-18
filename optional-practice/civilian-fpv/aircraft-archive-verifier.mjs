@@ -20,13 +20,19 @@ import {
 
 /** Browser entry point: cancellation and worker failures affect this detached
  * verifier only, never the worker that owns a currently flying aircraft. */
-export async function verifyAircraftArchiveInWorker(
+export async function verifyAircraftArchiveInWorker(source, options) {
+  return verifyArchiveWithWorker(source, options);
+}
+async function verifyArchiveWithWorker(
   source,
   { signal, onProgress, Worker, workerURL, verificationWatchdogMs } = {},
+  courseRequest = null,
 ) {
   const cancelled = () => new DOMException('Aircraft archive verification cancelled', 'AbortError');
   if (signal?.aborted) throw cancelled();
   const checked = validateAircraftArchivePackage(source);
+  const course =
+    !courseRequest || courseRequest.source == null ? null : boundedCourse(courseRequest.source);
   const client = createAdvancedWorkerClient({
     ...(Worker === undefined ? {} : { Worker }),
     ...(workerURL === undefined ? {} : { url: workerURL }),
@@ -41,7 +47,9 @@ export async function verifyAircraftArchiveInWorker(
       numericalReference: checked.manifest.config.frequency === 2000,
       recording: false,
     });
-    return await client.verifyArchive(checked, { onProgress });
+    return await (courseRequest
+      ? client.verifyCourseArchive(checked, course, { onProgress })
+      : client.verifyArchive(checked, { onProgress }));
   } finally {
     signal?.removeEventListener('abort', abort);
     client.dispose();
@@ -357,7 +365,7 @@ export async function verifyAircraftCourseArchive(
             simulation.stateHash() === archive.segments[0].initialHash,
           'noncanonical-session-reset',
         );
-        return { telemetry: simulation.telemetry() };
+        return { telemetry: simulation.telemetry(), comparison: simulation.comparison() };
       },
       async stageTerrainFrame(frame) {
         requireValue(same(frame, cursor.terrain()), 'generated-terrain-mismatch');
@@ -450,6 +458,7 @@ export async function verifyAircraftCourseArchive(
       ...(completedAtTick === null ? { reason: 'incomplete-course' } : {}),
       mode: config.response.mode,
       completedAtTick,
+      ...(completedAtTick === null ? {} : { referenceIdentity: session.referenceIdentity() }),
       missionHz: 50,
       verifiedSegments: segmentCount,
       verifiedThroughMission: archive.manifest.endTick,
@@ -468,32 +477,6 @@ export async function verifyAircraftCourseArchive(
 }
 
 /** Dedicated, cancellable course proof; never grants scored comparison eligibility. */
-export async function verifyAircraftCourseArchiveInWorker(
-  source,
-  courseSource,
-  { signal, onProgress, Worker, workerURL, verificationWatchdogMs } = {},
-) {
-  const cancelled = () => new DOMException('Aircraft archive verification cancelled', 'AbortError');
-  if (signal?.aborted) throw cancelled();
-  const checked = validateAircraftArchivePackage(source);
-  const course = courseSource == null ? null : boundedCourse(courseSource);
-  const client = createAdvancedWorkerClient({
-    ...(Worker === undefined ? {} : { Worker }),
-    ...(workerURL === undefined ? {} : { url: workerURL }),
-    ...(verificationWatchdogMs === undefined ? {} : { verificationWatchdogMs }),
-  });
-  const abort = () => client.dispose(cancelled());
-  signal?.addEventListener('abort', abort, { once: true });
-  try {
-    if (signal?.aborted) throw cancelled();
-    await client.initialize({
-      ...checked.manifest.config,
-      numericalReference: checked.manifest.config.frequency === 2000,
-      recording: false,
-    });
-    return await client.verifyCourseArchive(checked, course, { onProgress });
-  } finally {
-    signal?.removeEventListener('abort', abort);
-    client.dispose();
-  }
+export async function verifyAircraftCourseArchiveInWorker(source, courseSource, options) {
+  return verifyArchiveWithWorker(source, options, { source: courseSource });
 }

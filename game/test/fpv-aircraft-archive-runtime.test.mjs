@@ -408,7 +408,7 @@ async function recordedCourse(t, { family = 'world', model, ticks = 8, mode = 's
             ...config,
             recordingOptions: { segmentBytes: 5000 },
           });
-          return { telemetry: simulation.telemetry() };
+          return { telemetry: simulation.telemetry(), comparison: simulation.comparison() };
         },
         async stageTerrainFrame(frame) {
           return simulation.stageTerrainFrame(frame);
@@ -441,7 +441,7 @@ async function recordedCourse(t, { family = 'world', model, ticks = 8, mode = 's
   assert.equal(session.snapshot().step, 1);
   const packet = archive(initial, segments);
   packet.manifest.host = family;
-  return { packet, course };
+  return { packet, course, referenceIdentity: session.referenceIdentity() };
 }
 const worldCourseAdapter = {
   format: 'FlightCourse.v2',
@@ -487,7 +487,7 @@ const worldWorkerURL = new URL(
 test('course worker reconstructs supported adapters and preserves separate physical-only verification', async (t) => {
   for (const family of ['academy', 'world'])
     for (const model of ['aircraft-course-practice.v1', 'aircraft-course-practice.v2']) {
-      const { packet, course } = await recordedCourse(t, { family, model });
+      const { packet, course, referenceIdentity } = await recordedCourse(t, { family, model });
       for (const workerURL of family === 'academy'
         ? [undefined, worldWorkerURL]
         : [worldWorkerURL]) {
@@ -502,6 +502,7 @@ test('course worker reconstructs supported adapters and preserves separate physi
         assert.equal(result.course.verified, true);
         assert.equal(result.missionModel, model);
         assert.equal(result.course.completedAtTick, 3);
+        assert.deepEqual(result.course.referenceIdentity, referenceIdentity);
         assert.equal(result.course.splits.length, 1);
         assert.equal(result.scored, false);
         assert.equal(Object.hasOwn(result, 'toolingOnly'), false);
@@ -557,6 +558,7 @@ test('course workers report unsupported, mismatched and partial cases without pr
     });
     assert.equal(result.physics.verified, true);
     assert.equal(result.course.verified, false);
+    assert.equal(Object.hasOwn(result.course, 'referenceIdentity'), false);
     assert.equal(result.course.reason, reason);
     assert.equal(result.scored, false);
   }
