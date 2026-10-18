@@ -200,11 +200,11 @@ from 150 to **151** for Academy and 210 to **211** for World. Byte limits and
 third-party dependencies are unchanged. Missing-solver negative tests protect
 the offline dependency. The three focused package suites pass **19/19**.
 
-| Build | Runtime files | Runtime bytes | Complete source files | Complete source bytes |
-| --- | ---: | ---: | ---: | ---: |
-| Academy standalone | 149 | 12,089,844 | 151 | 12,132,214 |
-| World standalone | 209 | 18,596,589 | 211 | 18,646,931 |
-| Native inventory | 214 | 18,985,854 | — | — |
+| Build              | Runtime files | Runtime bytes | Complete source files | Complete source bytes |
+| ------------------ | ------------: | ------------: | --------------------: | --------------------: |
+| Academy standalone |           149 |    12,089,844 |                   151 |            12,132,214 |
+| World standalone   |           209 |    18,596,589 |                   211 |            18,646,931 |
+| Native inventory   |           214 |    18,985,854 |                     — |                     — |
 
 Academy original inputs are 13,267,453 bytes, leaving 36,355 bytes under their
 existing cap. World original inputs are 19,752,688 bytes. Bundled Academy is
@@ -221,3 +221,21 @@ content: `propulsion-evidence-ui.mjs` is 39,752 bytes with SHA-256
 The combined evaluator, kernel and DOM suites pass **46/46**. Independent source,
 test and documentation review found no blocking issue. This increment qualifies
 local inspection software and packaging, not a measured propulsion runtime.
+
+### Rendered inspector acceptance
+
+On 18 October 2026, the local World source preview at `40611b264` opened the
+inspector through the ordinary Settings → Workbench → Expert PID → Advanced
+reference practice path. An explicitly invented voltage sweep, `I(V) = V` at
+constant command, produced **2.5 V**, **2.5 A**, **12.5 W** at the ideal source,
+**6.25 W** delivered and **6.25 W** series loss for manual inputs 5 V / 1 Ω / one
+load. Residual was zero. Missing thrust and torque remained unavailable and the
+synthetic provenance was visible.
+
+Editing resistance cleared all prior result values immediately. Loading the
+built-in command-axis example disabled calculation and explained that command or
+RPM sweeps cannot be reinterpreted as voltage sweeps. No practice was started,
+aircraft values applied or library saved. The temporary draft was reverted and
+Basic view restored before closing the test tab. This is an English desktop
+source-preview check, separate from EN/UK DOM coverage and offline package tests;
+it does not qualify Ukrainian rendering, mobile layout or a deployed release.
