@@ -1,6 +1,6 @@
 # Solo fixes for the Pages testing build
 
-The user authorized fixing and merging [PR #1544](https://github.com/mekhovov/revealline/pull/1544) on 18 October 2026, prioritizing the published HTTPS game for iPhone 17 Pro Safari and Steam Deck OLED Chrome testing. Main `ce98e93743c0eb2d393d1d24bcc907d728c94951` was incorporated by merge `cb218aa1025590cb83e4d87ba205ffe3af0f7041`, preserving the existing performance history and incoming FPV Workbench changes. The separate unfinished FPV checkout remains untouched.
+The user authorized fixing and merging [PR #1544](https://github.com/mekhovov/revealline/pull/1544) on 18 October 2026, prioritizing the published HTTPS game for iPhone 17 Pro Safari and Steam Deck OLED Chrome testing. Main `ce98e93743c0eb2d393d1d24bcc907d728c94951` was incorporated by merge `cb218aa1025590cb83e4d87ba205ffe3af0f7041`, preserving the existing performance history and incoming FPV Workbench changes. The separate unfinished FPV checkout remains untouched. Subsequent main `b7f65a138d34c8a62d58246f3be9de86564c4279` was incorporated cleanly by `3dda202b11a46c6e0311e4e25a963d11b8d8b317` before the final candidate push, retaining the newer FPV Setup comparisons.
 
 ## Retained failures and corrections
 

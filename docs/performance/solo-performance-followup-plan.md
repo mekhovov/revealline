@@ -2,7 +2,7 @@
 
 Updated 18 October 2026 for [draft PR #1544](https://github.com/mekhovov/revealline/pull/1544).
 
-The affected devices are **iPhone 17 Pro Safari on the published HTTPS site** and **Steam Deck OLED Chrome**. Work remains isolated on `codex/solo-performance`; latest fetched main `ce98e93743c0eb2d393d1d24bcc907d728c94951` was integrated in `cb218aa1025590cb83e4d87ba205ffe3af0f7041`. Its newer FPV Workbench changes are preserved. The original checkout and unfinished FPV work are untouched.
+The affected devices are **iPhone 17 Pro Safari on the published HTTPS site** and **Steam Deck OLED Chrome**. Work remains isolated on `codex/solo-performance`; latest fetched main `b7f65a138d34c8a62d58246f3be9de86564c4279` was integrated in `3dda202b11a46c6e0311e4e25a963d11b8d8b317`. Its newer FPV Workbench changes are preserved. The original checkout and unfinished FPV work are untouched.
 
 **Qualification is incomplete.** The principal Solo runtime fixes and identified shared-mode defects are implemented, but failed timing rows, earlier unattributed source-test timeouts and unavailable physical-device checks remain. Do not describe correctness checks or a successful build as a performance pass. On 18 October, the user authorized fixing and merging PR #1544 with priority for testing on GitHub Pages. Complete the release-blocking source/build checks, then publish the merged main revision through the existing Pages workflow. The remaining performance and physical-device qualification stays open; it is not a claimed release result.
 
@@ -88,7 +88,7 @@ A separate CPU-report reader incorrectly expected generic `pass` while the actua
 
 ## Next execution order
 
-The current priority is an integrated, checked Pages build for device testing. Latest main `ce98e93743c0eb2d393d1d24bcc907d728c94951` is incorporated by merge `cb218aa1025590cb83e4d87ba205ffe3af0f7041`; the existing performance history and evidence bindings are preserved. Resolve the current source-test failures without weakening their assertions, complete the PR checks, and merge. The rolling-main Pages workflow then builds and deploys the merged revision automatically. Confirm that public `main-deployment.json` and `game/build-info.json` identify that revision before device testing. No release tag, version bump or frozen-release selector update is needed for this route.
+The current priority is an integrated, checked Pages build for device testing. Latest main `b7f65a138d34c8a62d58246f3be9de86564c4279` is incorporated by merge `3dda202b11a46c6e0311e4e25a963d11b8d8b317`; the existing performance history and evidence bindings are preserved. Resolve the current source-test failures without weakening their assertions, complete the PR checks, and merge. The rolling-main Pages workflow then builds and deploys the merged revision automatically. Confirm that public `main-deployment.json` and `game/build-info.json` identify that revision before device testing. No release tag, version bump or frozen-release selector update is needed for this route.
 
 This changes delivery order, not the performance targets below. Keep the unsuccessful timing observations, incomplete diagnostic proposals and remaining device scenarios visible after publication. Native benchmarks must continue to use an explicitly identified build.
 
