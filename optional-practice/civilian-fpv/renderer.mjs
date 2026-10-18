@@ -153,7 +153,7 @@ export function buildPhysicalAircraftVisual({
 }) {
   const aircraft = validateAircraftPhysics(configuration);
   const appearance = aircraftAppearance(aircraft.id);
-  const underslungBattery = aircraft.id === 'mobula8-analog-2023';
+  const underslungBattery = appearance.underslungBattery;
   const unit = 0.22 / aircraft.radius;
   const body = aircraft.geometry.bodyHalfExtents,
     radius = aircraft.geometry.propellerRadius;
@@ -227,7 +227,7 @@ export function buildPhysicalAircraftVisual({
     bodyParts,
   );
   lens.rotation.x = Math.PI / 2;
-  if (aircraft.id === 'mobula8-analog-2023') {
+  if (appearance.canopy) {
     const canopy = part(
       new THREE.SphereGeometry(1, 12, 8),
       tint,

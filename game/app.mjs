@@ -54,6 +54,7 @@ import {
 } from './ui/gameplay-copy.mjs';
 import { contentText } from './i18n/content.mjs';
 import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';
+import { captureFlightLimits, createFlightLimitNotices } from './capture-flight-limits.mjs';
 import {
   createPreparationCadence,
   PreparationCadenceTimeoutError,
@@ -2895,6 +2896,50 @@ try {
   if (scenario?.music) assignMusic(scenario.music);
   function warning(message, cue = null, role = 'host.unknown') {
     return flightInformation.warning(message, cue, role);
+  }
+  const flightLimitNotices = createFlightLimitNotices();
+  let flightLimitViewKey = '';
+  function refreshCaptureFlightLimits() {
+    const eligible =
+      started &&
+      !practice &&
+      !courseSession &&
+      !courseEntry &&
+      !['won', 'lost'].includes(run.status) &&
+      !recoverGameplayTuning(run.level)?.adminOverride;
+    const visible = eligible && paused && $('game-overlay').dataset.kind === 'pause';
+    const panel = $('capture-flight-limits');
+    const wasVisible = !panel.hidden;
+    if (wasVisible !== visible) panel.hidden = !visible;
+    if (!eligible) return;
+    const view = captureFlightLimits({
+      recordingTicks: recorder?.ticks,
+      recordingStopped,
+      elapsedSeconds: run.time,
+      // Authored Journey clears/pictures do not pass through library time validation.
+      collectionLimited: !candidateHost?.owns(activeEntry),
+    });
+    if (!paused)
+      for (const key of flightLimitNotices(run, view))
+        warning(localizedMessage(`interface:flightLimits.${key}`), null, 'host.flight-limits');
+    if (visible && !wasVisible) panel.open = view.urgent;
+    const busy = contentSwitchBusy || sessionBusy || backupBusy;
+    const key = JSON.stringify([view, visible, busy, !!replayDownload]);
+    if (key === flightLimitViewKey) return;
+    flightLimitViewKey = key;
+    localizedText($('capture-flight-limits-summary'), () =>
+      t(`interface:flightLimits.${view.urgent ? 'attention' : 'title'}`),
+    );
+    localizedText($('capture-recording-limit'), () =>
+      t(`interface:flightLimits.recording.${view.recording}`, {
+        minutes: formatNumber(view.minutes ?? 0),
+      }),
+    );
+    localizedText($('capture-collection-limit'), () =>
+      t(`interface:flightLimits.collection.${view.collection}`),
+    );
+    $('capture-limit-saves').disabled = busy;
+    $('capture-limit-replay').disabled = !recorder || !!replayDownload;
   }
   function dialogOpen() {
     return modalNavigation
@@ -8367,6 +8412,11 @@ try {
       warning(e.message);
     }
   };
+  $('capture-limit-saves').onclick = () => {
+    if (contentSwitchBusy || sessionBusy || backupBusy) return;
+    return libraryPanel.open('saves');
+  };
+  $('capture-limit-replay').onclick = () => $('export-replay').click();
   $('hangar-button').onclick = () => {
     if (!craftSwitchAvailable()) return;
     pause(true);
@@ -11018,6 +11068,7 @@ try {
     if (pauseTrace?.complete) markPauseWork(pauseTrace, 'pause-end');
   }
   function refreshHUDClocks() {
+    refreshCaptureFlightLimits();
     localizedText($('time'), () =>
       timeLabel(
         run.rules.timeLimitSeconds ? Math.max(0, run.rules.timeLimitSeconds - run.time) : run.time,
@@ -11302,7 +11353,7 @@ try {
       refreshInputPresentation();
       $('pause-button').disabled = courseBlocked() || campaignOverview;
       $('save-attempt-button').disabled =
-        !started || practice || ['won', 'lost'].includes(run.status);
+        !started || practice || !recorder || ['won', 'lost'].includes(run.status);
       const near = run.hangars?.some(
         (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,
       );
@@ -11851,6 +11902,7 @@ try {
         if (!recordingStopped && recorder.ticks >= MAX_REPLAY_TICKS) {
           recordingStopped = true;
           recorder = null;
+          hudDirty = true;
           $('export-replay').disabled = true;
           warning(localizedMessage('interface:the30MinuteReplayBudgetIsFullRecordingWasDiscarded'));
         }
@@ -11948,6 +12000,7 @@ try {
           } catch {
             recordingStopped = true;
             recorder = null;
+            hudDirty = true;
             $('export-replay').disabled = true;
             warning(localizedMessage('interface:replayRecordingStoppedYouCanKeepPlayingStartANew'));
           }
