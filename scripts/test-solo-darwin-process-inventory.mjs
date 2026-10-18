@@ -1892,3 +1892,128 @@ test('only the actual Cocoa owner boundary explicitly selects V2; common and ord
   assert(!preflight.includes('identity-maps-v2'));
   assert(!preflight.includes('retainAmbiguityInventories'));
 });
+
+function observedCVMModel() {
+  // Exact final ambiguous scalar row in run39105057083/artifact12128351464,
+  // owner-preflight-command.json. Surrounding maps use the existing controlled
+  // model; this does not reclassify the original failed native observation.
+  const m = observedPsModel();
+  m.all.delete(m.row.pid);
+  m.row = {
+    pid: 6410,
+    ppid: 1,
+    pgid: 6410,
+    birth: '00000000000000006410',
+    state: 'R',
+    rss: 0,
+    argv: '/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/CVMServer',
+    ownerTagged: false,
+    inspectionIncomplete: true,
+    pathInspection: 'complete',
+    rssInspection: 'unavailable',
+    ownerTagInspection: 'unavailable',
+    identityKind: 'private-unique-id-uint64',
+    euid: 0,
+    ruid: 0,
+    parentUniqueId: '1',
+    version: 13372,
+  };
+  m.all.set(m.row.pid, m.row);
+  return m;
+}
+const cvmWitness = (m) =>
+  darwinKnownNonBrowserProcessWitness(m.row, m.before, m.all, m.owned, m.leader);
+
+test('retained CVM root kernel row classifies only the exact graphics service with unknown resources', () => {
+  const m = observedCVMModel(),
+    owned = [...m.owned];
+  assert.deepEqual(collectModel(m), []);
+  const witness = m.record.foreignSystemProcesses[0];
+  assert.equal(witness.format, 'SoloKnownNonBrowserProcessWitnessV1');
+  assert.equal(witness.process.executable, m.row.argv);
+  assert.equal(witness.process.birth, '00000000000000006410');
+  assert.equal(witness.process.version, 13372);
+  assert.equal(witness.process.rss, null);
+  assert.equal(witness.process.ownerTagged, null);
+  assert.equal(m.row.inspectionIncomplete, true);
+  assert.deepEqual([...m.owned], owned);
+  assert.deepEqual(collectModel(m, false), [m.row]);
+});
+
+test('CVM classification rejects altered path, privilege, launchd lineage and incomplete kernel provenance', () => {
+  for (const mutate of [
+    (m) => (m.row.argv += '-helper'),
+    (m) => (m.row.argv += ' -- WebKit'),
+    (m) => (m.row.argv = '/tmp/CVMServer'),
+    (m) => (m.row.argv = '/owned/WebKitWebProcess'),
+    (m) => (m.row.ppid = 2),
+    (m) => (m.row.parentUniqueId = '2'),
+    (m) => (m.row.pgid = 2),
+    (m) => (m.row.euid = 501),
+    (m) => (m.row.ruid = 501),
+    (m) => (m.row.pathInspection = 'unavailable'),
+    (m) => (m.row.pathInspection = 'unobserved'),
+    (m) => (m.row.ownerTagged = true),
+    (m) => (m.row.ownerTagInspection = 'present'),
+    (m) => (m.row.ownerTagInspection = 'unobserved'),
+    (m) => (m.row.rssInspection = 'unobserved'),
+    (m) => (m.row.rss = 1),
+    (m) => (m.row.identityKind = 'timestamp'),
+    (m) => (m.row.birth = '0'),
+    (m) => (m.row.version = -1),
+    (m) => delete m.owned.get(m.leader).euid,
+    (m) => (m.owned.get(m.leader).ruid = 0),
+  ]) {
+    const m = observedCVMModel();
+    mutate(m);
+    assert.equal(cvmWitness(m), null, String(mutate));
+    assert.deepEqual(collectModel(m), [m.row], String(mutate));
+    assert.equal(m.record.foreignSystemProcesses.length, 0);
+  }
+  const contradictory = observedCVMModel();
+  contradictory.row.inspectionIncomplete = false;
+  assert.equal(cvmWitness(contradictory), null);
+});
+
+test('CVM classification never admits owned/reused identities or a changed current executable', () => {
+  for (const mutate of [
+    (m) => m.before.set(m.row.pid, { ...m.row }),
+    (m) => m.owned.set(m.row.pid, { ...m.row }),
+    (m) => (m.row.pgid = m.leader),
+    (m) => (m.row.ppid = m.leader),
+    (m) => m.all.set(m.row.pid, { ...m.row, birth: '00000000000000906410' }),
+    (m) => m.all.set(m.row.pid, { ...m.row, version: m.row.version + 1 }),
+    (m) => m.all.set(m.row.pid, { ...m.row, argv: '/owned/WebKitWebProcess' }),
+    (m) => m.all.set(m.row.pid, { ...m.row, pathInspection: 'unavailable' }),
+  ]) {
+    const m = observedCVMModel();
+    mutate(m);
+    assert.equal(cvmWitness(m), null, String(mutate));
+    assert.equal(m.record.foreignSystemProcesses.length, 0);
+  }
+});
+
+test('CVM exception leaves a simultaneous unowned browser ambiguous and preserves cap failure', () => {
+  const m = observedCVMModel();
+  const browser = {
+    ...m.row,
+    pid: 6411,
+    pgid: 6411,
+    birth: '00000000000000006411',
+    euid: 501,
+    ruid: 501,
+    argv: '/owned/WebKitWebProcess',
+  };
+  m.all.set(browser.pid, browser);
+  assert.deepEqual(collectModel(m), [browser]);
+  assert.equal(m.record.foreignSystemProcesses.length, 1);
+  const full = observedCVMModel();
+  for (let i = 0; i < 64; i++) {
+    const pid = 17000 + i;
+    full.all.set(pid, { ...full.row, pid, pgid: pid, birth: String(pid).padStart(20, '0') });
+  }
+  assert.equal(collectModel(full).length, 1);
+  assert.equal(full.record.foreignSystemProcesses.length, 64);
+  assert.equal(full.record.foreignSystemProcessOverflow, true);
+  assert.deepEqual([...full.owned.keys()], [3266]);
+});

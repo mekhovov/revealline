@@ -77,6 +77,12 @@ const nextRouteModule =
     ? await import('./solo-qualification-next-route.mjs')
     : null;
 const nextRouteOptions = nextRouteModule?.qualificationNextRouteOptions(flags, scenario, bytes);
+const sharedModeModule =
+  scenario.sharedModeProtocol !== undefined ||
+  flags.some((flag) => flag.startsWith('--shared-mode-public-return'))
+    ? await import('./solo-qualification-shared-mode.mjs')
+    : null;
+const sharedModeOptions = sharedModeModule?.qualificationSharedModeOptions(flags, scenario, bytes);
 const display = qualificationDisplayOptions(flags);
 const snapshotStorageOptions = qualificationSnapshotStorage(flags, scenario);
 const engine = option('browser', 'chromium'),
@@ -192,7 +198,11 @@ assert(
     ['localhost', '127.0.0.1', '[::1]'].includes(localURL.hostname),
   'Access fixture requires a local transport',
 );
-const cacheMode = qualificationCacheMode(scenario, { workProbe, fixtureAccess, mirrored });
+const cacheMode = qualificationCacheMode(scenario, {
+  workProbe,
+  fixtureAccess,
+  mirrored,
+});
 if (scenario.query)
   for (const [key, value] of Object.entries(scenario.query)) url.searchParams.set(key, value);
 url.searchParams.set('performance', '1');
@@ -277,7 +287,12 @@ const report = {
           'Original origin is preserved. All manifest-admitted deployment paths use local transport, including authoring imports. Missing deployment paths are blocked; only the explicit sibling soundtrack publication may use the live public origin. Policy is unchanged.',
         ]
       : []),
-    ...(scenario.kind === 'recovery'
+    ...(sharedModeOptions
+      ? [
+          'Public shared-mode return diagnostic: unfinished Team/Versus checkpoints, recording verification, resource release, per-player motion and raster equality are unobserved. Final Solo public recording is independently verified; real mode links do not carry the optional diagnostics query.',
+        ]
+      : []),
+    ...(scenario.kind === 'recovery' && !sharedModeOptions
       ? [
           'Synthetic lifecycle/Canvas events test application handlers only; they do not lose or restore a native context.',
         ]
@@ -300,7 +315,9 @@ if (readinessOptions) {
       ? { requiredStartRetention: readinessOptions.requiredStartRetention }
       : {}),
     ...(readinessOptions.cancelBoundaryObservation
-      ? { cancelBoundaryObservation: readinessOptions.cancelBoundaryObservation }
+      ? {
+          cancelBoundaryObservation: readinessOptions.cancelBoundaryObservation,
+        }
       : {}),
     ...(readinessOptions.settlementObservation
       ? { settlementObservation: readinessOptions.settlementObservation }
@@ -395,7 +412,10 @@ async function sealHitchDocument(boundary) {
 async function profileMemory() {
   if (!memoryProfile) return undefined;
   if (memorySnapshots++ >= 64)
-    return { status: 'unobserved-cap', reason: '64 pause-only profiles per run maximum.' };
+    return {
+      status: 'unobserved-cap',
+      reason: '64 pause-only profiles per run maximum.',
+    };
   const read = async () => {
     const [heap, dom] = await Promise.all([
       cdp.send('Runtime.getHeapUsage'),
@@ -429,7 +449,11 @@ async function profileMemory() {
 }
 try {
   playwright = await import(pathToFileURL(resolve(process.env.PLAYWRIGHT_MODULE)).href);
-  const contextOptions = { ...display, reducedMotion: 'no-preference', serviceWorkers: 'block' };
+  const contextOptions = {
+    ...display,
+    reducedMotion: 'no-preference',
+    serviceWorkers: 'block',
+  };
   if (contextMode === 'persistent') {
     persistentOwner = createPersistentQualificationOwner({
       browserType: playwright.webkit,
@@ -468,7 +492,10 @@ try {
   });
   page.on('response', (response) => {
     if (response.status() >= 400 && report.failedResponses.length < 100)
-      report.failedResponses.push({ url: response.url(), status: response.status() });
+      report.failedResponses.push({
+        url: response.url(),
+        status: response.status(),
+      });
   });
   if (selectedFontReadiness)
     selectedFontHold = readinessModule.createSelectedFontHold(url.href, {
@@ -491,7 +518,10 @@ try {
       const decision = mirror?.(requested.href);
       if (decision?.kind === 'blocked') {
         if (report.failedResponses.length < 100)
-          report.failedResponses.push({ url: requested.href, blocked: decision.reason });
+          report.failedResponses.push({
+            url: requested.href,
+            blocked: decision.reason,
+          });
         return route.abort('blockedbyclient');
       }
       const mapped = decision?.kind === 'local' ? decision.url : null;
@@ -891,7 +921,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         ...(nextRouteRead ? { nextRouteRead } : {}),
         readinessBoundary: (label) => readiness?.boundary(label),
         ...(readinessCancelBoundary
-          ? { completeSelectedFontCancellation: () => readiness.cancelCommandComplete() }
+          ? {
+              completeSelectedFontCancellation: () => readiness.cancelCommandComplete(),
+            }
           : {}),
         ...(requiredWitness
           ? {
@@ -1203,7 +1235,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
               record.preparation,
             );
           }
-          const href = await locator.getAttribute('href', { timeout: followRemaining() });
+          const href = await locator.getAttribute('href', {
+            timeout: followRemaining(),
+          });
           assert(href, 'Missing prepared UI link');
           const destination = new URL(href, page.url());
           assert.equal(
@@ -1334,6 +1368,16 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
               throw error;
             }
           }
+        } else if (action.type === 'shared-mode-public-return') {
+          assert(sharedModeOptions, 'Exact shared-mode opt-in required');
+          const observation = {};
+          report.sharedModeObservation = observation;
+          await sharedModeModule.executeSharedModePublicReturn({
+            page,
+            deadline: performance.now() + Math.min(timeout, deadline - Date.now()),
+            record: observation,
+          });
+          report.sharedModeAssessment = sharedModeModule.assessSharedModePublicReturn(observation);
         } else if (action.type === 'authored-next-route') {
           assert(nextRouteOptions, 'Exact authored route opt-in required');
           await nextRouteModule.executeNextRoute({
@@ -1457,8 +1501,10 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             if (!target) throw new Error('Missing injected-event target');
             target.dispatchEvent(
               new Event(
-                { 'canvas-loss': 'contextlost', 'canvas-restore': 'contextrestored' }[event] ??
-                  event,
+                {
+                  'canvas-loss': 'contextlost',
+                  'canvas-restore': 'contextrestored',
+                }[event] ?? event,
               ),
             );
           }, action);
@@ -1667,7 +1713,11 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
   if (scenario.expectAudio) {
     const probe = await page.evaluate(() => window.soloQualificationProbe.export());
     const audio = report.snapshots.at(-1)?.application?.audio;
-    report.audioCheck = { observed: probe.audio, master: audio, requirement: scenario.expectAudio };
+    report.audioCheck = {
+      observed: probe.audio,
+      master: audio,
+      requirement: scenario.expectAudio,
+    };
     if (audio || !baselineRuntime) {
       assert.equal(
         audio?.muted,
@@ -1919,7 +1969,10 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       report.performanceGateStatus = 'invalid-evidence';
       report.performanceGateFailure = String(error.stack ?? error);
     }
-  } else report.performanceGateStatus = 'excluded-synthetic-recovery';
+  } else
+    report.performanceGateStatus = sharedModeOptions
+      ? 'excluded-public-shared-mode-recovery'
+      : 'excluded-synthetic-recovery';
   if (hitchStore && hitchStore.finish().status !== 'complete') {
     report.performanceGateStatusBeforeHitchJournal = report.performanceGateStatus;
     report.performanceGateStatus = 'invalid-evidence';

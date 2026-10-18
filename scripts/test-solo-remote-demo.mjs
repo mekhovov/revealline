@@ -2,7 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'acorn';
-import { DEMO_ARMS, validateDemoPlan, assertDemoResult, unchanged } from './solo-remote-demo.mjs';
+import { createHash } from 'node:crypto';
+import {
+  DEMO_ARMS,
+  DEMO_RESOURCE_MODE,
+  DEMO_RESOURCE_SOURCE_PATHS,
+  validateDemoResourceContract,
+  assessDemoResourceCycles,
+  validateDemoPlan,
+  assertDemoResult,
+  unchanged,
+} from './solo-remote-demo.mjs';
 import { installDemoRecoveryProbe } from './solo-demo-recovery-probe.mjs';
 const source = 'a'.repeat(40),
   version = '151.0.1.2';
@@ -483,4 +493,639 @@ test('active reopened and stale-owner driver reads use retained state without ex
     const escaped = label.replaceAll('-', '\\-');
     assert.match(driverSource, new RegExp(`snap\\('` + escaped + `', true\\)`));
   }
+});
+
+const cycleContract = () => ({
+  mode: DEMO_RESOURCE_MODE,
+  sourceRevision: source,
+  resources: { format: 'DemoOwnedResourcesV1', sourceRevision: source },
+  cyclesPerMode: 10,
+  modes: ['spectator', 'practice'],
+  snapshotLimit: 64,
+});
+const demoHostSource = await readFile(new URL('../game/ui/demo-host.mjs', import.meta.url), 'utf8');
+const snapshotStart = demoHostSource.indexOf('  function resourceSnapshot() {');
+const snapshotEnd = demoHostSource.indexOf('\n  const listen =', snapshotStart);
+assert(snapshotStart > 0 && snapshotEnd > snapshotStart);
+const actualDemoSnapshot = new Function(
+  'active',
+  `
+  const canvas={width:640,height:480},resourceOwners=new Set(),disposed=false,
+    preparationPhase=()=>active?'paused':null,pendingSourceLoads=0,pendingPreparations=0,
+    workerHandles=0,workersCreated=0,workerTerminationRequests=0;
+  const zero={canvases:0,pixels:0,rgbaBytesEstimate:0};
+  const sceneTransition={resourceSnapshot:()=>({...zero,loading:false})};
+  const reward={resourceSnapshot:()=>({pendingPreparations:0,poster:zero,presentation:null,presentationUnavailable:false})};
+  ${demoHostSource.slice(snapshotStart, snapshotEnd)}
+  return resourceSnapshot();`,
+);
+function resourceBoundary(label, active, practice, id, tick) {
+  return {
+    ...snapshot(tick),
+    label,
+    open: active,
+    practice,
+    ordinary: { id: 1, tick: 5, checkpoint: { hash: 'ordinary' } },
+    demo: { id, tick, checkpoint: { hash: String(tick) } },
+    diagnosticsSource: 'public-paused-export',
+    resourceContract: cycleContract().resources,
+    resources: { demo: actualDemoSnapshot(active) },
+    lastDraw: { quality: 'full', width: 640, paused: true },
+  };
+}
+function resourceReport() {
+  const r = {
+    ...report(),
+    format: 'SoloHostedDemoResourceV1',
+    resourceContract: cycleContract(),
+    resourceStorageBaseline: { localStorage: [], sessionStorage: [] },
+    sources: [
+      {
+        url: 'https://example.test/catalog.json',
+        role: 'catalog',
+        status: 200,
+        responses: 21,
+        verifiedResponses: 21,
+        bytes: 1,
+        sha256: 'a'.repeat(64),
+      },
+    ],
+    arms: [],
+    qualityWindows: [],
+    snapshots: [resourceBoundary('initial', false, false, 2, 0)],
+    cycles: [],
+  };
+  for (let i = 0; i < 20; i++) {
+    const practice = i >= 10,
+      mode = practice ? 'practice' : 'spectator',
+      cycle = (i % 10) + 1,
+      id = 10 + i * 2;
+    const paused = r.snapshots.length;
+    r.snapshots.push(
+      resourceBoundary(`${mode}-${cycle}-paused`, true, practice, practice ? id + 1 : id, 20),
+    );
+    const closed = r.snapshots.length;
+    r.snapshots.push(
+      resourceBoundary(`${mode}-${cycle}-closed`, false, false, practice ? id + 1 : id, 20),
+    );
+    const storage = { localStorage: [], sessionStorage: [] };
+    r.cycles.push({
+      mode,
+      cycle,
+      status: 'pass',
+      opened: { id, tick: 10, paused: false },
+      paused,
+      closed,
+      storageBefore: storage,
+      storageAfter: structuredClone(storage),
+      direction: practice ? 'right' : undefined,
+      actions: practice
+        ? ['open', 'watch-pause', 'details', 'takeover', 'resume', 'ArrowRight', 'pause', 'back']
+        : ['open', 'watch-pause', 'back'],
+      fork: practice
+        ? {
+            source: { id, tick: 10, checkpoint: { hash: '10' } },
+            demo: { id: id + 1, tick: 10, checkpoint: { hash: '10' } },
+          }
+        : null,
+    });
+  }
+  r.cycleProof = {
+    status: 'pass',
+    rows: r.cycles.map((row) => ({
+      mode: row.mode,
+      cycle: row.cycle,
+      sourceMatch: true,
+      match: true,
+      actual: r.snapshots[row.paused].demo.checkpoint,
+      expected: r.snapshots[row.paused].demo.checkpoint,
+    })),
+  };
+  r.resourceAssessment = assessDemoResourceCycles(r, source, cycleContract());
+  return r;
+}
+test('resource mode is explicit, source-bound and does not admit recovery as cycle evidence', async () => {
+  const contract = cycleContract();
+  validateDemoResourceContract(contract, source);
+  for (const change of [
+    (c) => (c.cyclesPerMode = 9),
+    (c) => (c.snapshotLimit = 65),
+    (c) => c.modes.reverse(),
+    (c) => (c.sourceRevision = 'b'.repeat(40)),
+    (c) => (c.resources.format = 'unknown'),
+  ]) {
+    const c = structuredClone(contract);
+    change(c);
+    assert.throws(() => validateDemoResourceContract(c, source));
+  }
+  const p = JSON.parse(
+    await readFile(
+      new URL('../docs/performance/solo-remote-demo-plan.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  p.format = 'SoloHostedDemoResourcePlanV1';
+  p.status = 'pinned-for-execution';
+  p.candidate = {
+    revision: source,
+    tree: 'b'.repeat(40),
+    run: 1,
+    artifact: 2,
+    manifestSHA256: 'c'.repeat(64),
+    outer: { bytes: 1, sha256: 'd'.repeat(64) },
+    inner: { bytes: 1, sha256: 'e'.repeat(64) },
+  };
+  p.release = { status: 'reviewed', candidateRevision: source };
+  p.rows[0].id = 'candidate-demo-close-reopen-resources';
+  Object.assign(p.demo, {
+    arms: [],
+    qualityWindowsMs: [],
+    resourceCycles: contract,
+    sourcePaths: DEMO_RESOURCE_SOURCE_PATHS,
+  });
+  validateDemoPlan(p);
+  for (const change of [
+    (p) => (p.format = 'SoloHostedDemoRecoveryPlanV1'),
+    (p) => (p.demo.resourceCycles = null),
+    (p) => (p.demo.arms = DEMO_ARMS),
+    (p) => p.demo.observationTimeoutMs++,
+    (p) => (p.demo.sourcePaths = DEMO_RESOURCE_SOURCE_PATHS.slice(0, -1)),
+  ]) {
+    const changed = structuredClone(p);
+    change(changed);
+    assert.throws(() => validateDemoPlan(changed));
+  }
+  const r = resourceReport();
+  assertDemoResult(r, command(), source, version, contract);
+  assert.throws(() => assertDemoResult(r, command(), source, version));
+  assert.throws(() => assertDemoResult(report(), command(), source, version, contract));
+  assert.equal(r.resourceAssessment.nativeMemoryQualification, false);
+  assert.equal(r.resourceAssessment.recoveryQualification, false);
+  assert.equal(
+    r.resourceAssessment.bounds.status,
+    'inconclusive',
+    'Unobserved other owners remain unknown',
+  );
+});
+test('cycle acceptance rejects drops, duplicates, wrong actions, active exports, storage drift and owner drift', () => {
+  const valid = resourceReport();
+  for (const change of [
+    (r) => r.cycles.pop(),
+    (r) => (r.cycles[1].opened.id = r.cycles[0].opened.id),
+    (r) => (r.cycles[0].closed = r.cycles[0].paused),
+    (r) => (r.cycles[0].actions = ['open', 'back']),
+    (r) => (r.snapshots[1].diagnosticsSource = 'not-requested'),
+    (r) => (r.snapshots[1].lastDraw.paused = false),
+    (r) => (r.snapshots[1].resources.demo.pendingPreparations = 1),
+    (r) => (r.snapshots[1].resources.demo = null),
+    (r) => (r.snapshots[2].resources.demo.active = true),
+    (r) => r.snapshots[1].ordinary.tick++,
+    (r) => (r.cycles[0].storageBefore = undefined),
+    (r) => r.cycles[0].storageAfter.localStorage.push({ key: 'changed' }),
+    (r) => (r.cycles[10].direction = 'left'),
+    (r) => (r.cycles[10].fork.demo.id = r.cycles[10].opened.id),
+    (r) => (r.snapshots[21].demo.tick = 10),
+    (r) => (r.snapshots[3].quality.tier = 'reduced'),
+    (r) => (r.resourceContract.resources.sourceRevision = 'b'.repeat(40)),
+    (r) => (r.cycleProof.rows[0].match = false),
+    (r) => (r.resourceAssessment.bounds.failures = 0.5),
+    (r) => (r.parentReplay.status = 'fail'),
+    (r) => (r.cleanupFailure = 'unclosed'),
+    (r) => (r.failure = 'earlier raw failure'),
+    (r) => r.sources[0].verifiedResponses--,
+    (r) => r.sources.push({ ...r.sources[0] }),
+    (r) => (r.sources[0].failure = 'corrupt earlier response'),
+  ]) {
+    const r = structuredClone(valid);
+    change(r);
+    assert.throws(
+      () => assertDemoResult(r, command(), source, version, cycleContract()),
+      String(change),
+    );
+  }
+  const pending = structuredClone(valid);
+  pending.snapshots[2].resources.demo.pendingPreparations = 1;
+  pending.resourceAssessment = assessDemoResourceCycles(pending, source, cycleContract());
+  assertDemoResult(pending, command(), source, version, cycleContract());
+  assert.equal(pending.resourceAssessment.rows[1].values['demo.pendingPreparations'], 1);
+});
+test('probe adds owned resources only under explicit contract and successful paused public export', () => {
+  const f = pausedExportFixture(),
+    probe = f.env.demoRecoveryProbe;
+  f.env.RevealLineSoloPerformance.export = () => ({
+    quality: { tier: 'full' },
+    cadenceCalibration: { samples: 30 },
+    resources: { demo: actualDemoSnapshot(true) },
+  });
+  assert.equal(probe.snapshot('legacy').resources, undefined);
+  probe.configureResources(cycleContract().resources);
+  const observed = probe.snapshot('paused');
+  assert.equal(observed.resources.demo.format, 'DemoOwnedResourcesV1');
+  assert.deepEqual(observed.resourceContract, cycleContract().resources);
+  assert.equal(probe.state('active').resources, undefined);
+  assert.throws(() => probe.configureResources(cycleContract().resources));
+  const failure = Error('preparation unsettled');
+  f.env.RevealLineSoloPerformance.export = () => {
+    throw failure;
+  };
+  assert.throws(
+    () => probe.snapshot('denied'),
+    (e) => e === failure,
+  );
+  assert.equal(probe.state('still-passive').resources, undefined);
+});
+
+function publicCycleFixture({ failAfterClose = 0 } = {}) {
+  const f = pausedExportFixture(),
+    probe = f.env.demoRecoveryProbe;
+  probe.configureResources(cycleContract().resources);
+  let active = true,
+    practice = false,
+    current = f.run,
+    running = false,
+    closes = 0,
+    exports = 0;
+  const actions = [],
+    stored = new Map();
+  const doc = f.env.document;
+  doc.getElementById('demo-dialog').classList.contains = () => practice;
+  f.env.crypto = globalThis.crypto;
+  for (const name of ['localStorage', 'sessionStorage'])
+    f.env[name] = {
+      get length() {
+        return stored.size;
+      },
+      key: (i) => [...stored.keys()][i],
+      getItem: (key) => stored.get(key),
+    };
+  const draw = (paused) =>
+    f.painter.draw({ canvas: f.display }, current, 0, {
+      quality: 'full',
+      paused,
+      displayCSSWidth: 640,
+    });
+  f.env.RevealLineSoloPerformance.export = () => {
+    assert(!active || !running, 'Active play must not request resources');
+    exports++;
+    return {
+      quality: { tier: 'full' },
+      cadenceCalibration: { samples: 30 },
+      resources: { demo: actualDemoSnapshot(active) },
+    };
+  };
+  const openDemo = async () => {
+    actions.push('open');
+    active = true;
+    practice = false;
+    running = true;
+    current = { ...f.run, tick: 1 };
+    doc.getElementById('demo-dialog').open = true;
+    draw(false);
+  };
+  const pause = async (expectedPractice) => {
+    assert.equal(expectedPractice, practice);
+    actions.push(practice ? 'pause' : 'watch-pause');
+    running = false;
+    draw(true);
+  };
+  const click = async (selector) => {
+    actions.push(selector);
+    if (selector === '#demo-back') {
+      assert(!running);
+      active = false;
+      practice = false;
+      doc.getElementById('demo-dialog').open = false;
+      if (++closes === failAfterClose) stored.set('unexpected', 'change');
+    } else if (selector === '#demo-takeover') {
+      assert(active && !running && !practice);
+      practice = true;
+      current = { ...current };
+      draw(true);
+    } else {
+      assert(['#demo-details-toggle', '#demo-resume'].includes(selector));
+      if (selector === '#demo-resume') doc.activeElement = f.display;
+    }
+  };
+  const report = {
+    snapshots: [],
+    cycles: [],
+    resourceStorageBaseline: { localStorage: [], sessionStorage: [] },
+  };
+  const page = {
+    evaluate: async (fn, arg) => fn(arg),
+    waitForFunction: async (fn, arg) => assert(fn(arg)),
+    keyboard: {
+      down: async (key) => {
+        assert.equal(key, 'ArrowRight');
+        assert(practice);
+        running = true;
+      },
+      up: async () => {},
+    },
+  };
+  const retain = (rows, value, cap) => {
+    assert(rows.length < cap);
+    rows.push(value);
+  };
+  const common = { window: f.env, document: doc, assert, ensure: () => {}, page, report, retain };
+  const snap = actualDriverFunction('snap', common);
+  const ordinaryBefore = probe.snapshot('ordinary-before');
+  report.snapshots.push(ordinaryBefore);
+  const readDemoWebStorage = actualDriverFunction('readDemoWebStorage', {
+    window: f.env,
+    TextEncoder,
+    Uint8Array,
+  });
+  const cycles = actualDriverFunction('resourceCycles', {
+    ...common,
+    plan: { resourceCycles: cycleContract() },
+    snap,
+    click,
+    openDemo,
+    pause,
+    readDemoWebStorage,
+    bounded: async (label, fn) => fn(),
+    pausedDraw: async () => assert(probe.readiness().paused),
+    wait: async (ms) => {
+      assert.equal(ms, 250);
+      assert(running);
+      current.tick++;
+      draw(false);
+    },
+    unchanged,
+    validQuality: (s) => assert.equal(s.lastDraw.paused, true),
+    ordinaryBefore,
+    save: async () => {},
+  });
+  return { cycles, report, actions, exports: () => exports };
+}
+test('actual repeat driver performs all twenty public cycles and exports only after Pause or Close', async () => {
+  const f = publicCycleFixture();
+  await f.cycles();
+  assert.equal(f.report.cycles.length, 20);
+  assert.equal(f.actions.filter((x) => x === 'open').length, 20);
+  assert.equal(f.actions.filter((x) => x === '#demo-takeover').length, 10);
+  assert.equal(f.actions.filter((x) => x === '#demo-back').length, 21);
+  assert.equal(f.report.snapshots.length, 42);
+  assert.equal(f.exports(), 42);
+  const result = assessDemoResourceCycles(
+    { ...f.report, sourceRevision: source },
+    source,
+    cycleContract(),
+  );
+  assert.equal(result.bounds.failures, 0);
+  assert.equal(result.groups['practice-closed'].observed, 10);
+});
+test('actual repeat driver retains failed storage boundary and stops instead of completing later cycles', async () => {
+  const f = publicCycleFixture({ failAfterClose: 2 });
+  await assert.rejects(f.cycles(), /deep-equal/);
+  assert.equal(f.report.cycles.length, 1);
+  assert.equal(f.report.cycles[0].status, 'pending');
+  assert.equal(f.report.snapshots.length, 4);
+  assert(f.report.cycles[0].storageAfter.localStorage.length > 0);
+});
+test('actual bounded web-storage reader rejects oversized or invalid storage before digest', async () => {
+  let digests = 0;
+  const read = actualDriverFunction('readDemoWebStorage', {
+    window: {
+      localStorage: { length: 1, key: () => 'x'.repeat(257), getItem: () => '' },
+      sessionStorage: { length: 0 },
+      crypto: {
+        subtle: {
+          digest: () => {
+            digests++;
+          },
+        },
+      },
+    },
+    TextEncoder,
+    Uint8Array,
+  });
+  await assert.rejects(read(), /key bound/);
+  assert.equal(digests, 0);
+});
+test('actual cycle reconstruction checks source fork and final public-direction practice state', async () => {
+  const core = await import('../game/core/index.mjs'),
+    replay = await import('../game/replay.mjs');
+  const { createDemoPractice } = await import('../game/demo-experience.mjs');
+  const text = await readFile(
+    new URL('../game/demo-data/first-signal-left.replay.json', import.meta.url),
+    'utf8',
+  );
+  const recording = JSON.parse(text),
+    state = core.createRun(recording.level, recording.options);
+  assert.equal(recording.segments[0].ticks, 1);
+  core.stepRun(state, recording.segments[0].input, core.FIXED_DT);
+  const sourceRecord = { tick: state.tick, checkpoint: replay.authoritativeCheckpoint(state) };
+  const practice = createDemoPractice(state),
+    fork = { tick: state.tick, checkpoint: replay.authoritativeCheckpoint(state) };
+  practice.start({ direction: 'right' });
+  for (let i = 0; i < 3; i++) practice.advance(core.FIXED_DT);
+  practice.pause();
+  const target = { tick: state.tick, checkpoint: replay.authoritativeCheckpoint(state) };
+  const fn = actualDriverFunction('reconstructResourceCycles', {});
+  const input = {
+    source: text,
+    cycles: [
+      {
+        mode: 'practice',
+        cycle: 1,
+        direction: 'right',
+        paused: 0,
+        fork: { source: sourceRecord, demo: fork },
+      },
+    ],
+    snapshots: [{ demo: target }],
+    base: new URL('../game/', import.meta.url).href,
+  };
+  assert.equal((await fn(input)).status, 'pass');
+  const changed = structuredClone(input);
+  changed.snapshots[0].demo.checkpoint.hash = 'changed';
+  assert.equal((await fn(changed)).status, 'fail');
+  const wrong = structuredClone(input);
+  wrong.cycles[0].fork.source.checkpoint.hash = 'changed';
+  assert.equal((await fn(wrong)).status, 'fail');
+  const direction = structuredClone(input);
+  direction.cycles[0].direction = 'left';
+  await assert.rejects(fn(direction), /tick\/input bound/);
+});
+
+test('full retained resource shape and forty cycle boundaries stay within the existing report cap', async () => {
+  const retained = JSON.parse(
+    await readFile(
+      new URL(
+        '../docs/performance/fixtures/solo-resource-assessment/retained-3ad-soak.fixture',
+        import.meta.url,
+      ),
+      'utf8',
+    ),
+  );
+  const r = resourceReport();
+  for (const snapshot of r.snapshots)
+    snapshot.resources = {
+      ...structuredClone(retained.snapshots[1].application.resources),
+      demo: snapshot.resources.demo,
+    };
+  r.resourceAssessment = assessDemoResourceCycles(r, source, cycleContract());
+  assertDemoResult(r, command(), source, version, cycleContract());
+  assert(Buffer.byteLength(JSON.stringify(r, null, 2)) < 2 * 1024 ** 2);
+});
+
+function responseFixture(resourceMode, assets) {
+  let callback;
+  const visit = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (
+      node.type === 'CallExpression' &&
+      node.callee.object?.name === 'page' &&
+      node.callee.property?.name === 'on' &&
+      node.arguments[0]?.value === 'response'
+    )
+      callback = node.arguments[1];
+    for (const value of Object.values(node))
+      if (Array.isArray(value)) value.forEach(visit);
+      else if (value && typeof value === 'object') visit(value);
+  };
+  visit(driverAST);
+  assert(callback);
+  const report = { sources: [] },
+    pending = [],
+    expected = new Map(assets.map((a) => [a.url, a]));
+  const hash = (b) => createHash('sha256').update(b).digest('hex');
+  const handler = Function(
+    'resourceMode',
+    'assets',
+    'report',
+    'pending',
+    'expected',
+    'assert',
+    'sha',
+    `
+    let sourceCapture=true,sourceBytes=0,sourceResponses=0;const resourceSources=new Map();
+    return (${driverSource.slice(callback.start, callback.end)});`,
+  )(resourceMode, assets, report, pending, expected, assert, hash);
+  return { report, pending, handler, hash };
+}
+test('actual source-response observer verifies every repeat without growing distinct source records', async () => {
+  const bytes = Buffer.from('abc'),
+    hash = createHash('sha256').update(bytes).digest('hex');
+  const asset = {
+    url: 'https://example.test/demo-data/source.json',
+    role: 'replay',
+    bytes: 3,
+    sha256: hash,
+  };
+  const f = responseFixture(true, [asset]);
+  const response = {
+    url: () => asset.url,
+    status: () => 200,
+    ok: () => true,
+    body: async () => bytes,
+  };
+  for (let i = 0; i < 21; i++) f.handler(response);
+  await Promise.all(f.pending);
+  assert.equal(f.report.sources.length, 1);
+  assert.equal(f.report.sources[0].responses, 21);
+  assert.equal(f.report.sources[0].verifiedResponses, 21);
+  assert.equal(f.report.overflow, undefined);
+  f.handler(response);
+  assert.equal(f.report.overflow, true);
+  const bad = responseFixture(true, [asset]);
+  bad.handler({ ...response, body: async () => Buffer.from('abd') });
+  bad.handler(response);
+  await Promise.all(bad.pending);
+  assert(bad.report.sources[0].failure);
+  assert.equal(bad.report.sources[0].responses, 2);
+  assert.equal(bad.report.sources[0].verifiedResponses, 1);
+  const old = responseFixture(false, [asset]);
+  for (let i = 0; i < 17; i++) old.handler(response);
+  await Promise.all(old.pending);
+  assert.equal(old.report.sources.length, 16);
+  assert.equal(old.report.overflow, true);
+});
+test('actual repeat source observer retains the original distinct-record and aggregate-byte caps', async () => {
+  const bytes = Buffer.alloc(1024 * 1024),
+    hash = createHash('sha256').update(bytes).digest('hex');
+  const assets = Array.from({ length: 9 }, (_, i) => ({
+    url: `https://example.test/${i}.mjs`,
+    role: 'module',
+    bytes: bytes.length,
+    sha256: hash,
+  }));
+  const f = responseFixture(true, assets);
+  for (const a of assets)
+    f.handler({ url: () => a.url, status: () => 200, ok: () => true, body: async () => bytes });
+  await Promise.all(f.pending);
+  assert.equal(f.report.sources.length, 8);
+  assert.equal(f.report.overflow, true);
+  const small = Buffer.from('x'),
+    digest = createHash('sha256').update(small).digest('hex');
+  const many = Array.from({ length: 17 }, (_, i) => ({
+    url: `https://example.test/${i}.mjs`,
+    role: 'module',
+    bytes: 1,
+    sha256: digest,
+  }));
+  const capped = responseFixture(true, many);
+  for (const a of many)
+    capped.handler({
+      url: () => a.url,
+      status: () => 200,
+      ok: () => true,
+      body: async () => small,
+    });
+  await Promise.all(capped.pending);
+  assert.equal(capped.report.sources.length, 16);
+  assert.equal(capped.report.overflow, true);
+});
+
+test('actual reopen waits for a fresh owner and reuses visible Settings instead of covered Home', async () => {
+  for (const settingsVisible of [true, false]) {
+    let state = { id: 10, tick: 20, paused: true };
+    const clicks = [],
+      old = [];
+    const open = actualDriverFunction('openDemo', {
+      window: { demoRecoveryProbe: { readiness: () => state } },
+      document: { getElementById: () => ({ dataset: { scene: 'playing' } }) },
+      click: async (selector) => {
+        if (settingsVisible)
+          assert.notEqual(selector, '#shell-options', 'Home is covered by Settings');
+        clicks.push(selector);
+      },
+      page: {
+        locator: (selector) => {
+          assert.equal(selector, '#settings-dialog');
+          return { isVisible: async () => settingsVisible };
+        },
+        waitForFunction: async (fn, previous, options) => {
+          assert.equal(options.timeout, 60000);
+          assert.equal(previous, 10);
+          old.push(fn(previous));
+          state = { id: 11, tick: 1, paused: true };
+          old.push(fn(previous));
+          state.paused = false;
+          assert.equal(fn(previous), true);
+        },
+      },
+    });
+    await open(10);
+    assert.deepEqual(old, [false, false]);
+    assert.deepEqual(clicks, [
+      ...(settingsVisible ? [] : ['#shell-options']),
+      '#settings-tab-extras',
+      '#shell-demo',
+    ]);
+  }
+  const clicks = [];
+  const legacy = actualDriverFunction('openDemo', {
+    click: async (selector) => clicks.push(selector),
+    page: {
+      waitForFunction: async (fn, previous, options) => {
+        assert.equal(previous, null);
+        assert.equal(options.timeout, 60000);
+      },
+    },
+  });
+  await legacy();
+  assert.deepEqual(clicks, ['#shell-options', '#settings-tab-extras', '#shell-demo']);
 });

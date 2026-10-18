@@ -62,15 +62,24 @@ export const DE332_EARNED_RASTER_SOURCE = Object.freeze({
   tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
   runtime: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
 });
+export const RUNTIME73_EARNED_RASTER_SOURCE = Object.freeze({
+  ...finalEarnedSource,
+  cohort: 'earned-raster-candidate73a345',
+  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+  runtime: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+});
 function validateEarnedSource(plan) {
   if (plan.sourceCohort === undefined) {
     assert.equal(plan.release.sourceCohort, undefined);
     return false;
   }
   const source =
-    plan.sourceCohort === DE332_EARNED_RASTER_SOURCE.cohort
-      ? DE332_EARNED_RASTER_SOURCE
-      : finalEarnedSource;
+    plan.sourceCohort === RUNTIME73_EARNED_RASTER_SOURCE.cohort
+      ? RUNTIME73_EARNED_RASTER_SOURCE
+      : plan.sourceCohort === DE332_EARNED_RASTER_SOURCE.cohort
+        ? DE332_EARNED_RASTER_SOURCE
+        : finalEarnedSource;
   assert.equal(plan.sourceCohort, source.cohort);
   assert.equal(plan.release.sourceCohort, source.cohort);
   assert(earnedRaster(plan), 'Final source selector is limited to the earned protocol');
@@ -88,7 +97,12 @@ function validateRelease(plan) {
   const diagnostic = plan.status === 'reviewed-diagnostic-only';
   assert(diagnostic || plan.status === 'reviewed-and-released');
   assert.equal(plan.release?.status, 'reviewed');
-  if (plan.sourceCohort === DE332_EARNED_RASTER_SOURCE.cohort) {
+  if (
+    [DE332_EARNED_RASTER_SOURCE.cohort, RUNTIME73_EARNED_RASTER_SOURCE.cohort].includes(
+      plan.sourceCohort,
+    )
+  ) {
+    const runtime73 = plan.sourceCohort === RUNTIME73_EARNED_RASTER_SOURCE.cohort;
     assert(diagnostic, 'Current raster remains an excluded diagnostic');
     assert.equal(plan.release.scope, 'independent-native-raster');
     assert.equal(plan.release.performanceQualification, 'excluded');
@@ -104,21 +118,37 @@ function validateRelease(plan) {
           plan.candidate[key],
         ]),
       ),
-      {
-        revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
-        tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
-        run: 39091745654,
-        artifact: 12123463810,
-        inner: {
-          bytes: 1075789325,
-          sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
-        },
-        outer: {
-          bytes: 1094606342,
-          sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
-        },
-        manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
-      },
+      runtime73
+        ? {
+            revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+            tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+            run: 39099979283,
+            artifact: 12127570566,
+            inner: {
+              bytes: 1075807617,
+              sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+            },
+            outer: {
+              bytes: 1094639407,
+              sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+            },
+            manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+          }
+        : {
+            revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+            tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+            run: 39091745654,
+            artifact: 12123463810,
+            inner: {
+              bytes: 1075789325,
+              sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+            },
+            outer: {
+              bytes: 1094606342,
+              sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+            },
+            manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+          },
     );
     assert.deepEqual(plan.release.dispatch, {
       workflow: '.github/workflows/solo-native-package-consumer.yml',
@@ -126,14 +156,26 @@ function validateRelease(plan) {
       lane: 'raster',
       reviewOrder: 'manual-after-current-first-eight',
     });
-    assert.deepEqual(plan.release.evidence, [
-      {
-        runId: 39096176143,
-        artifactId: 12125002138,
-        artifactSHA256: 'd6b5ed1d46c6f89eab6d40361893f2dedb2d6698a50b6ba612cf6058c68c705d',
-        summarySHA256: 'c67a520f87683b2a43479919f27e798c7cb3adff9a0d0896d815d554d5918955',
-      },
-    ]);
+    assert.deepEqual(
+      plan.release.evidence,
+      runtime73
+        ? [
+            {
+              runId: 39105055762,
+              artifactId: 12127359946,
+              artifactSHA256: '17665afe978ae63cfaf8d24b1a9626e1d7f607b7ee2611fc637c9e680f3d46d8',
+              summarySHA256: 'a33416a355620817896366d5312fbecb44f0c7e6b8f7220941c8447886d99762',
+            },
+          ]
+        : [
+            {
+              runId: 39096176143,
+              artifactId: 12125002138,
+              artifactSHA256: 'd6b5ed1d46c6f89eab6d40361893f2dedb2d6698a50b6ba612cf6058c68c705d',
+              summarySHA256: 'c67a520f87683b2a43479919f27e798c7cb3adff9a0d0896d815d554d5918955',
+            },
+          ],
+    );
     return;
   }
   assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);

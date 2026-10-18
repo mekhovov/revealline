@@ -169,13 +169,37 @@ const finalLifecycle = Object.freeze({
     hash: '5ffad85e4dc752ea3e8bcf236f88e65c09875d58ac339c096890c0b6f2133150',
   },
 });
+export const DE332_LIFECYCLE_COHORTS = Object.freeze({
+  retry: 'retry-main8b-candidatede332-v1',
+  soak: 'soak-main8b-candidatede332-v1',
+  long29: 'long29-main8b-candidatede332-v1',
+});
+export const RUNTIME73_LIFECYCLE_COHORTS = Object.freeze({
+  retry: 'retry-main8b-candidate73-v1',
+  soak: 'soak-main8b-candidate73-v1',
+  long29: 'long29-main8b-candidate73-v1',
+});
+const runtime73LifecyclePlan = (plan) =>
+  Object.hasOwn(RUNTIME73_LIFECYCLE_COHORTS, plan.phase) &&
+  plan.sourceCohort === RUNTIME73_LIFECYCLE_COHORTS[plan.phase];
+const de332LifecyclePlan = (plan) =>
+  Object.hasOwn(DE332_LIFECYCLE_COHORTS, plan.phase) &&
+  plan.sourceCohort === DE332_LIFECYCLE_COHORTS[plan.phase];
+const prospectiveLifecyclePlan = (plan) => de332LifecyclePlan(plan) || runtime73LifecyclePlan(plan);
+const anchoredSoakPlan = (plan) =>
+  plan.sourceCohort === finalSoakCohort ||
+  (prospectiveLifecyclePlan(plan) && plan.phase === 'soak');
 const finalLifecyclePlan = (plan) =>
-  Boolean(finalLifecycle[plan.phase]) && plan.sourceCohort === finalLifecycle[plan.phase].cohort;
+  (Boolean(finalLifecycle[plan.phase]) &&
+    plan.sourceCohort === finalLifecycle[plan.phase].cohort) ||
+  (prospectiveLifecyclePlan(plan) && plan.phase !== 'soak');
 const finalSustainedPlan = (plan) =>
-  plan.sourceCohort === finalSoakCohort || finalLifecyclePlan(plan) || geometricNextPlan(plan);
+  anchoredSoakPlan(plan) || finalLifecyclePlan(plan) || geometricNextPlan(plan);
 
 function selectedSustainedSource(plan) {
   if (plan.sourceCohort === undefined) return null;
+  if (runtime73LifecyclePlan(plan)) return runtime73LifecycleSource;
+  if (de332LifecyclePlan(plan)) return de332LifecycleSource;
   if (geometricNextPlan(plan)) {
     assert.equal(plan.phase, 'next');
     return geometricNextSource(plan);
@@ -186,6 +210,12 @@ function selectedSustainedSource(plan) {
 }
 function selectedTimingSource(plan) {
   if (plan.sourceCohort === undefined) return null;
+  if (prospectiveTimingPlan(plan)) {
+    assert(Object.hasOwn(DE332_TIMING_PHASES, plan.phase), 'Unreviewed de332 timing phase');
+    return plan.sourceCohort === RUNTIME73_TIMING_COHORT
+      ? runtime73TimingSource
+      : de332TimingSource;
+  }
   if (plan.sourceCohort === coldSourceCohort.name) {
     assert.equal(plan.phase, 'cold-first30');
     return coldSourceCohort;
@@ -259,6 +289,210 @@ export const TIMING_PHASES = Object.freeze({
     hash: 'b9afaecaadcbd0f657dd8064b9f7932c0c7ec12d6433f7d2b76f60de7ef19528',
   },
 });
+export const DE332_TIMING_COHORT = 'timing-main8b-candidatede332-v1';
+const de332TimingSource = Object.freeze({
+  ...GEOMETRIC_NEXT_DE332_SOURCE,
+  name: DE332_TIMING_COHORT,
+});
+export const RUNTIME73_TIMING_COHORT = 'timing-main8b-candidate73-v1';
+const runtime73TimingSource = Object.freeze({
+  ...de332TimingSource,
+  name: RUNTIME73_TIMING_COHORT,
+  candidate: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  candidateTree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+  runtime: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+});
+const runtime73LifecycleSource = Object.freeze({ ...runtime73TimingSource });
+const runtime73TimingCandidate = {
+  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+  run: 39099979283,
+  artifact: 12127570566,
+  outer: {
+    bytes: 1094639407,
+    sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+  },
+  inner: {
+    bytes: 1075807617,
+    sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+  },
+  manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+  producer:
+    'Exact successful Appearance39099979283, Node22.13.1. Full hosted archive/member/source/CSP verification remains mandatory.',
+};
+export const DE332_TIMING_PHASES = Object.freeze({
+  'cold-first30': {
+    previous: 'latest-first8',
+    hash: 'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5',
+  },
+  'warm-first30': {
+    previous: 'cold-first30',
+    hash: '6da01ca449068ca6705012f3d6604362c581fe52c4583407797c0961acf3156d',
+  },
+  'sentry-latency': {
+    previous: 'warm-first30',
+    hash: '225c05486cb28516086acf3bbefb2bd4bcdabe30d5e1a990c7c07137f583a5d9',
+    uploadKey: 'sentry-latency-level',
+    fileName: 'sentry-detour.xonix.json',
+  },
+  'long-rail-latency': {
+    previous: 'sentry-latency',
+    hash: '95521abcc88e38128b574dbea8d12e5958c1a98fd7a7789a4a8cfbd7df079768',
+    uploadKey: 'long-rail-latency-level',
+    fileName: 'long-rail.xonix.json',
+  },
+  'large-capture-erosion': {
+    previous: 'long-rail-latency',
+    hash: 'cd5aab3aa2c3f200588438feae32a3bf36b43d52b0c6c56806c30ea1777416a4',
+    uploadKey: 'large-capture-erosion-level',
+    fileName: 'first-fracture.xonix.json',
+  },
+  'jammer-steering': {
+    previous: 'large-capture-erosion',
+    hash: '9169d2a4d583b563cb322d5e374bb62179ef5d6dfa2c2f3d5351926969e5b78f',
+    uploadKey: 'jammer-steering-level',
+    fileName: 'signal-07.xonix.json',
+  },
+});
+const de332TimingRecipes = {
+  'cold-first30': {
+    path: 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
+    bytes: 6387,
+    sha256: 'aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5',
+  },
+  'warm-first30': {
+    path: 'docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture',
+    bytes: 6570,
+    sha256: '6da01ca449068ca6705012f3d6604362c581fe52c4583407797c0961acf3156d',
+  },
+  'sentry-latency': {
+    path: 'docs/performance/fixtures/solo-latency-supplement/sentry.qualification.fixture',
+    bytes: 8290,
+    sha256: '225c05486cb28516086acf3bbefb2bd4bcdabe30d5e1a990c7c07137f583a5d9',
+  },
+  'sentry-latency-level': {
+    path: 'docs/performance/fixtures/solo-remote-timing/sentry-detour.xonix.fixture',
+    bytes: 4049,
+    sha256: 'caad15d6f4770bc5e48935db1655e2892cfb5bd9093a72d0d7795125e8d2d3fa',
+  },
+  'long-rail-latency': {
+    path: 'docs/performance/fixtures/solo-latency-supplement/long-rail-anchored.qualification.fixture',
+    bytes: 7512,
+    sha256: '95521abcc88e38128b574dbea8d12e5958c1a98fd7a7789a4a8cfbd7df079768',
+  },
+  'long-rail-latency-level': {
+    path: 'docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture',
+    bytes: 3563,
+    sha256: '821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c',
+  },
+  'large-capture-erosion': {
+    path: 'docs/performance/fixtures/solo-representative/first-fracture-large-capture.qualification.fixture',
+    bytes: 7383,
+    sha256: 'cd5aab3aa2c3f200588438feae32a3bf36b43d52b0c6c56806c30ea1777416a4',
+  },
+  'large-capture-erosion-level': {
+    path: 'docs/performance/fixtures/solo-representative/first-fracture.xonix.fixture',
+    bytes: 3194,
+    sha256: '312d005cf9f548804016ed08afd4688187a76249de174bae9a534beb472934b4',
+  },
+  'jammer-steering': {
+    path: 'docs/performance/fixtures/solo-representative/signal-07-steering.qualification.fixture',
+    bytes: 7300,
+    sha256: '9169d2a4d583b563cb322d5e374bb62179ef5d6dfa2c2f3d5351926969e5b78f',
+  },
+  'jammer-steering-level': {
+    path: 'docs/performance/fixtures/solo-remote-auxiliary/signal-07.xonix.fixture',
+    bytes: 3011,
+    sha256: '5c9c935dac1049314c7ce644a1dcb747e7770bac3d8e1dd9f14b75e7c3dab015',
+  },
+};
+const de332TimingCandidate = {
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+  run: 39091745654,
+  artifact: 12123463810,
+  outer: {
+    bytes: 1094606342,
+    sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+  },
+  inner: {
+    bytes: 1075789325,
+    sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+  },
+  manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+  producer:
+    'Exact successful Appearance39091745654, Node22.13.1; full remote package/source/CSP verification remains mandatory.',
+};
+const de332TimingBaseline = {
+  revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
+  tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+  producer:
+    'Exact previously verified normal main8b V2 package; complete archive, readiness, source and CSP verification remains mandatory. No rebuild, fallback or republishing.',
+  reusableArtifact: {
+    format: 'SoloHostedNormalBaselineReuseV2',
+    sourceRevision: '8b01991942dc764b8aa4726851699ce1985e53ae',
+    sourceTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+    run: 38998342742,
+    artifact: 12088541389,
+    name: 'solo-normal-baseline-8b019919-38998342742-1',
+    producer: {
+      repository: 'mekhovov/revealline',
+      workflow: '.github/workflows/solo-remote-baseline-temporary.yml',
+      run: 38998342742,
+      attempt: 1,
+      toolingRevision: 'c9e637ad81fadf49caec884155d1bd0c2496c59c',
+      toolingTree: '4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c',
+    },
+    outer: {
+      bytes: 1073805912,
+      sha256: '63545549d9d087e96dcade7e549369a3e2cc00eaa8ae292c314686d0b0563230',
+    },
+    inner: {
+      bytes: 1073243091,
+      sha256: '8f8808fe79390429308cb4637c66ea34aeb5043947616a14b9cffcacf044dc1e',
+    },
+    manifestSHA256: '3b448d181f75bf54aa1f2929e30f8b6a3fbc39a8b4eeb58914f5b29a704a85e8',
+    ready: {
+      bytes: 1599,
+      sha256: '22b6a3cfdba87f242daa41309611ba2671dac18bcf6455cd7ebb68cb6b741d88',
+    },
+  },
+};
+const de332LifecycleSource = Object.freeze({ ...GEOMETRIC_NEXT_DE332_SOURCE });
+const de332LifecycleRecipes = {
+  soak: {
+    path: 'docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture',
+    bytes: 4737,
+    sha256: anchoredSoakHash,
+  },
+  retry: {
+    path: 'docs/performance/fixtures/solo-remote-sustained/retry-first-return-anchored.qualification.fixture',
+    bytes: 4556,
+    sha256: finalLifecycle.retry.hash,
+  },
+  long29: {
+    path: 'docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture',
+    bytes: 4765,
+    sha256: finalLifecycle.long29.hash,
+  },
+  opening: {
+    path: 'docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture',
+    bytes: 2897,
+    sha256: 'd36ab449fe115f49b3caf9f29e7f6558d155e6a83ef973748fab08784b8fda3e',
+  },
+};
+const de332TimingPlan = (plan) => plan.sourceCohort === DE332_TIMING_COHORT;
+const prospectiveTimingPlan = (plan) =>
+  de332TimingPlan(plan) || plan.sourceCohort === RUNTIME73_TIMING_COHORT;
+const timingPhases = (plan) => (prospectiveTimingPlan(plan) ? DE332_TIMING_PHASES : TIMING_PHASES);
+const timingPreparation = (plan) =>
+  prospectiveTimingPlan(plan)
+    ? DE332_TIMING_PHASES[plan.phase]?.uploadKey
+      ? 'representative-timing-v1'
+      : null
+    : ['sentry', 'long-rail'].includes(plan.phase)
+      ? 'timing-heavy-v1'
+      : null;
 const timingPlan = (plan) => plan.format === 'SoloHostedTimingPlanV1';
 const roleRevision = (plan, role) =>
   timingPlan(plan) || finalSustainedPlan(plan) ? plan[role].revision : source[role];
@@ -270,7 +504,11 @@ function validateDiagnosticComparison(release, candidate = source.candidate) {
       ? 'independent-candidate-transition-diagnostics'
       : 'independent-comparison-diagnostics',
   );
-  if (candidate === GEOMETRIC_NEXT_DE332_SOURCE.candidate) {
+  if (prospectiveLifecyclePlan(release)) {
+    assert(Number.isSafeInteger(release.predecessorRun) && release.predecessorRun > 0);
+    assert.equal(release.firstEightRequired, false);
+    assert.equal(release.firstEightAllCorrectnessPassed, undefined);
+  } else if (candidate === GEOMETRIC_NEXT_DE332_SOURCE.candidate) {
     assert.equal(release.predecessorRun, 39073210040);
     assert.equal(release.firstEightRequired, false);
     assert.equal(release.firstEightAllCorrectnessPassed, undefined);
@@ -288,7 +526,8 @@ function comparisonLabels(plan) {
     ? {
         comparisonAdmission: 'independent-diagnostic',
         performanceQualification: 'not-qualified-diagnostic-only',
-        ...(geometricNextSource(plan) === GEOMETRIC_NEXT_DE332_SOURCE
+        ...(geometricNextSource(plan) === GEOMETRIC_NEXT_DE332_SOURCE ||
+        prospectiveLifecyclePlan(plan)
           ? { firstEightRequired: false }
           : { firstEightAllCorrectnessPassed: false }),
         ...(plan.sourceCohort ? { sourceCohort: plan.sourceCohort } : {}),
@@ -304,7 +543,44 @@ function validateSourceCohort(plan, selected) {
     return null;
   }
   assert.equal(plan.release.sourceCohort, plan.sourceCohort);
-  assert.equal(plan.release.status, 'reviewed-diagnostic-only');
+  if ([de332LifecycleSource, runtime73LifecycleSource].includes(selected)) {
+    assert(prospectiveLifecyclePlan(plan));
+    assert.equal(plan.release.status, 'reviewed-diagnostic-only');
+    assert.deepEqual(
+      plan.candidate,
+      selected.candidate === runtime73TimingCandidate.revision
+        ? runtime73TimingCandidate
+        : de332TimingCandidate,
+    );
+    assert.deepEqual(plan.baseline, de332TimingBaseline);
+    assert.deepEqual(plan.recipes, de332LifecycleRecipes);
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+    assert.equal(plan.setupSuccessor, undefined);
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      ref: 'refs/heads/main',
+      lane: 'lifecycle',
+      phase: plan.phase,
+    });
+  } else if ([de332TimingSource, runtime73TimingSource].includes(selected)) {
+    assert.equal(plan.release.status, 'reviewed-and-released');
+    assert.deepEqual(
+      plan.candidate,
+      selected.candidate === runtime73TimingCandidate.revision
+        ? runtime73TimingCandidate
+        : de332TimingCandidate,
+    );
+    assert.deepEqual(plan.baseline, de332TimingBaseline);
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      ref: 'refs/heads/main',
+      lane: 'timing',
+      phase: plan.phase,
+    });
+    assert.equal(plan.setupSuccessor, undefined);
+    assert.equal(plan.hitchJournal, 'bounded-v1');
+  } else assert.equal(plan.release.status, 'reviewed-diagnostic-only');
   assert.equal(plan.candidate.revision, selected.candidate);
   assert.equal(plan.candidate.tree, selected.candidateTree);
   assert.equal(plan.baseline.revision, selected.baseline);
@@ -426,6 +702,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         plan.sourceCohort,
       ) ||
         ([
+          'readiness-preparation-row-candidate73',
           'readiness-preparation-row-candidatede332',
           'readiness-geometry-corrected-package',
           'readiness-preparation-row-candidatee1cc',
@@ -435,9 +712,14 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
       assert.equal(plan.performanceExclusion, true);
-      if (plan.sourceCohort === 'readiness-preparation-row-candidatede332') {
-        const { de332ReadinessSelection } = await import('./solo-remote-readiness.mjs');
-        const selected = de332ReadinessSelection(plan);
+      if (
+        [
+          'readiness-preparation-row-candidatede332',
+          'readiness-preparation-row-candidate73',
+        ].includes(plan.sourceCohort)
+      ) {
+        const { preparationReadinessSelection } = await import('./solo-remote-readiness.mjs');
+        const selected = preparationReadinessSelection(plan);
         assert.equal(plan.candidate.revision, selected.source.revision);
         assert.equal(plan.runtimeRevision, selected.source.revision);
         assert.equal(plan.candidate.tree, selected.source.tree);
@@ -650,8 +932,8 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     );
     assert.equal(report.activeDocumentPolicy, firstActive ? 'first-before-reload-v1' : undefined);
     const retry = finalLifecyclePlan(plan) && plan.phase === 'retry';
-    const anchored = plan.sourceCohort === finalSoakCohort,
-      heavy = ['sentry', 'long-rail'].includes(plan.phase),
+    const anchored = anchoredSoakPlan(plan),
+      heavy = Boolean(timingPreparation(plan)),
       warm = plan.phase === 'warm-first30';
     assert.equal(
       report.preparationPolicy,
@@ -660,7 +942,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         : retry
           ? 'first-return-retry-anchored-v1'
           : heavy
-            ? 'timing-heavy-v1'
+            ? timingPreparation(plan)
             : null,
     );
     const url = new URL(soloURL);
@@ -899,7 +1181,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
 
 export function validateTimingPlan(plan) {
   assert.equal(plan.format, 'SoloHostedTimingPlanV1');
-  const spec = TIMING_PHASES[plan.phase];
+  const spec = timingPhases(plan)[plan.phase];
   assert(spec, 'Unknown timing phase');
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.node, '22.13.1');
@@ -982,31 +1264,39 @@ export function validateTimingPlan(plan) {
     assert.equal(row.timeoutMs, 480000);
     assert.equal(row.performanceExclusion, diagnostic);
   }
-  assert.deepEqual(
-    Object.keys(plan.recipes).sort(),
-    [
-      'cold-first30',
-      'warm-first30',
-      'sentry',
-      'long-rail',
-      'sentry-level',
-      'long-rail-level',
-    ].sort(),
-  );
-  for (const [phase, value] of Object.entries(TIMING_PHASES))
-    assert.equal(plan.recipes[phase].sha256, value.hash);
-  assert.equal(
-    plan.recipes['sentry-level'].sha256,
-    'caad15d6f4770bc5e48935db1655e2892cfb5bd9093a72d0d7795125e8d2d3fa',
-  );
-  assert.equal(
-    plan.recipes['long-rail-level'].sha256,
-    '821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c',
-  );
-  for (const ref of Object.values(plan.recipes)) {
-    assert.match(ref.path, /^docs\/performance\/fixtures\/solo-remote-timing\/[a-z0-9.-]+$/);
-    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes <= 16384);
-    assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+  if ([de332TimingSource, runtime73TimingSource].includes(selected)) {
+    assert.deepEqual(
+      plan.recipes,
+      de332TimingRecipes,
+      'Exact six recipes and four public uploads required',
+    );
+  } else {
+    assert.deepEqual(
+      Object.keys(plan.recipes).sort(),
+      [
+        'cold-first30',
+        'warm-first30',
+        'sentry',
+        'long-rail',
+        'sentry-level',
+        'long-rail-level',
+      ].sort(),
+    );
+    for (const [phase, value] of Object.entries(TIMING_PHASES))
+      assert.equal(plan.recipes[phase].sha256, value.hash);
+    assert.equal(
+      plan.recipes['sentry-level'].sha256,
+      'caad15d6f4770bc5e48935db1655e2892cfb5bd9093a72d0d7795125e8d2d3fa',
+    );
+    assert.equal(
+      plan.recipes['long-rail-level'].sha256,
+      '821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c',
+    );
+    for (const ref of Object.values(plan.recipes)) {
+      assert.match(ref.path, /^docs\/performance\/fixtures\/solo-remote-timing\/[a-z0-9.-]+$/);
+      assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes <= 16384);
+      assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+    }
   }
   assert(
     Array.isArray(plan.frozenTools) && plan.frozenTools.length > 0 && plan.frozenTools.length <= 64,
@@ -1052,7 +1342,11 @@ export function timingMatrix(manifest) {
         phase: plan.phase,
         engine,
         repetition,
-        jobMinutes: selectedTimingSource(plan) === finalTimingSource ? 122 : 120,
+        jobMinutes: [finalTimingSource, de332TimingSource, runtime73TimingSource].includes(
+          selectedTimingSource(plan),
+        )
+          ? 122
+          : 120,
         stepMinutes: 78,
         outerSeconds: 77 * 60,
       };
@@ -1095,7 +1389,8 @@ export function validateRelease(release, phase, selected = null) {
   }
   if (
     (diagnostic || ['soak', 'long29'].includes(phase)) &&
-    selected !== GEOMETRIC_NEXT_DE332_SOURCE
+    selected !== GEOMETRIC_NEXT_DE332_SOURCE &&
+    ![de332LifecycleSource, runtime73LifecycleSource].includes(selected)
   )
     assert.equal(release.firstEightAllCorrectnessPassed, !diagnostic);
   return release;
@@ -1354,8 +1649,23 @@ export async function prepareSustainedMode(ctx) {
     for (const [key, name] of timingPlan(ctx.plan)
       ? [
           [ctx.plan.phase, 'scenario.qualification.json'],
-          ...(ctx.plan.phase === 'sentry' ? [['sentry-level', 'sentry-detour.xonix.json']] : []),
-          ...(ctx.plan.phase === 'long-rail' ? [['long-rail-level', 'long-rail.xonix.json']] : []),
+          ...(prospectiveTimingPlan(ctx.plan)
+            ? DE332_TIMING_PHASES[ctx.plan.phase].uploadKey
+              ? [
+                  [
+                    DE332_TIMING_PHASES[ctx.plan.phase].uploadKey,
+                    DE332_TIMING_PHASES[ctx.plan.phase].fileName,
+                  ],
+                ]
+              : []
+            : [
+                ...(ctx.plan.phase === 'sentry'
+                  ? [['sentry-level', 'sentry-detour.xonix.json']]
+                  : []),
+                ...(ctx.plan.phase === 'long-rail'
+                  ? [['long-rail-level', 'long-rail.xonix.json']]
+                  : []),
+              ]),
         ]
       : [
           [ctx.plan.phase, 'scenario.qualification.json'],
@@ -1369,7 +1679,7 @@ export async function prepareSustainedMode(ctx) {
     mode.recipePath = join(inputs, 'scenario.qualification.json');
     const recipe = await checkedJSON(mode.recipePath, MiB);
     mode.snapshotStorage = sustainedSnapshotStorage(ctx.plan, recipe);
-    if (ctx.plan.sourceCohort === finalSoakCohort)
+    if (anchoredSoakPlan(ctx.plan))
       assert(mode.snapshotStorage, 'Anchored soak requires chunked evidence');
   }
   if (ctx.plan.engine === 'chromium') {
@@ -1439,12 +1749,10 @@ export function sustainedArguments(ctx, row, url, dir) {
     '--work-probe',
     ...(geometricNextPlan(ctx.plan) ? ['--authored-next-route=authored-next-geometric-v1'] : []),
     ...(planHasHitchJournal(ctx.plan) ? ['--hitch-journal'] : []),
-    ...(planHasHitchJournal(ctx.plan) && ['sentry', 'long-rail'].includes(ctx.plan.phase)
-      ? ['--hitch-journal-preparation=timing-heavy-v1']
+    ...(planHasHitchJournal(ctx.plan) && timingPreparation(ctx.plan)
+      ? [`--hitch-journal-preparation=${timingPreparation(ctx.plan)}`]
       : []),
-    ...(ctx.plan.sourceCohort === finalSoakCohort
-      ? ['--hitch-journal-preparation=first-return-anchored-v1']
-      : []),
+    ...(anchoredSoakPlan(ctx.plan) ? ['--hitch-journal-preparation=first-return-anchored-v1'] : []),
     ...(finalLifecyclePlan(ctx.plan) && ctx.plan.phase === 'retry'
       ? ['--hitch-journal-preparation=first-return-retry-anchored-v1']
       : []),
@@ -1527,7 +1835,7 @@ export async function anchoredSoakAssessment(
   browserVersion,
   journalVerification,
 ) {
-  assert.equal(plan.sourceCohort, finalSoakCohort);
+  assert(anchoredSoakPlan(plan));
   const inherited = lifecycleAssessment(plan, row, raw, command, browserVersion);
   const { assessSoloOwnedResources } = await import('./solo-owned-resource-assessment.mjs');
   let owned;
@@ -2052,7 +2360,7 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
       Object.assign(
         row,
         await (
-          ctx.plan.sourceCohort === finalSoakCohort
+          anchoredSoakPlan(ctx.plan)
             ? anchoredSoakAssessment
             : geometricNextPlan(ctx.plan)
               ? geometricNextAssessment
