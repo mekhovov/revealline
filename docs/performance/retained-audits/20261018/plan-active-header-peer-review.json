@@ -1,0 +1,71 @@
+{
+  "format": "PlanHeaderPeerReviewV1",
+  "proposal": {
+    "blob": "3575bb4951bb58c699c40207f4a3ed6166f760a1",
+    "bytes": 16870,
+    "sha256": "6f32487df2e6932de8de7a94430e436afed92980dcfcbcef9eeea5dc975ef658"
+  },
+  "base": {
+    "commit": "153b13445a5c32f3aa6b63113b56fb3c11a008cc",
+    "path": "docs/performance/solo-performance-followup-plan.md",
+    "blob": "5d62fa7512d0ccd25042aa629c8a78737b2f922c",
+    "bytes": 143735,
+    "sha256": "92c3a5956caa50717eda1206524e8ef44cd26685c6fe3892e3341109f05aa444"
+  },
+  "historicalBoundary": {
+    "marker": "## Current evidence and limits",
+    "occurrences": 1,
+    "bytes": 126143,
+    "sha256": "d31ad625087f70e4e507accdcce3bad037a3d44410ba77893c9484c011074bff",
+    "condition": "Final publication must retain these exact tail bytes; the header proposal itself contains only replacement text, not a composed complete document."
+  },
+  "scope": "Independent source-only review of completion distinctions, priorities, release sequence, limits and ETA arithmetic. No additional queue polling or execution.",
+  "decision": "Clean source-only plan review with both requested corrections explicitly accepted by root before publication.",
+  "findings": [
+    {
+      "priority": "clarity",
+      "text": "Replace 'four ready heads' with 'four release-cohort heads', or explicitly say review-ready: #1628 still lists its final release gate as remaining. The plan otherwise separates source-tested, merged, published and native-qualified."
+    },
+    {
+      "priority": "estimate",
+      "text": "Do not describe 1\u20133 hours per physical device as full qualification if the same three matched baseline/candidate 30-minute runs are required: sustained observations alone total at least three hours per device. Label 1\u20133 hours initial checks, or state a minimum of three hours plus remaining scenarios/setup/repair."
+    }
+  ],
+  "verifiedReviewPoints": [
+    "Original #1544 being merged/published does not mark the remaining plan complete.",
+    "Finite queue/policy order names the current cohort, public observation and three draft admissions before #1654; held work does not extend its hold indefinitely.",
+    "Native observation keeps exact public identity and existing bounded owners; no automatic retry or source-pass substitution.",
+    "Original trace-v2 precedes shared adapter changes; historical package expiry and availability remain explicit.",
+    "Current/next music, cold/warm Start, long cuts, raster/recovery, repeated/sustained, resource, timing-overhead and physical-device gates remain open.",
+    "Six aggregate browser-hours is correct for three matched baseline/candidate 30-minute repetitions in two engines.",
+    "Export-scope paragraph matches independently verified e837ef4 audit: Solo raw formatting is intentional; shared terminal change would not close Solo long-recording qualification; proof/durable-save protections remain.",
+    "Prior failures and historical packages are not promoted to current-source qualification.",
+    "Worker proposal's twelve new controls remain explicitly unexecuted."
+  ],
+  "publicationUpdatesAllowedByRoot": [
+    "fresh actual timestamp",
+    "completed worker branch and independent review details",
+    "verified evidence-index count, digest and reference",
+    "the two clarity/estimate corrections"
+  ],
+  "execution": {
+    "product": false,
+    "tests": false,
+    "build": false,
+    "browser": false,
+    "localWrites": false,
+    "queuePolling": false,
+    "sourceMutation": false
+  },
+  "priorReview": "8454f1df520533046962790fa3b5eb51c16dfd10",
+  "acceptedCorrections": [
+    {
+      "text": "Use four release-cohort heads rather than ambiguous four ready heads.",
+      "confirmation": "Root confirmed correction applied in draft."
+    },
+    {
+      "text": "Same three matched baseline/candidate 30-minute physical repetitions require at least three hours per device plus other checks/setup; device availability has no ETA.",
+      "confirmation": "Root confirmed correction applied in draft."
+    }
+  ]
+}

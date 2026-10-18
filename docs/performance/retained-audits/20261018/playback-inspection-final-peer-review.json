@@ -1,0 +1,124 @@
+{
+  "schema": "revealline-source-peer-review-v1",
+  "reviewedAt": "2026-10-18T23:25:23.963Z",
+  "reviewer": "status_checks",
+  "repository": "mekhovov/revealline",
+  "proposal": {
+    "gitBlob": "c5dbf33da538de4fe686347df44fdd7d5da84de3",
+    "bytes": 368214,
+    "sha256": "d04d6453243dba926e1181304ee26aa6ffaa1378e46c34d393a01f8529fc1474"
+  },
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "conclusion": "Source review clean; no blocking finding. This is not a functional, native-browser, device, or performance pass.",
+  "scope": "Four-path MP3 inspection delegation and its twelve new controls only; no branch or PR mutation.",
+  "identities": {
+    "allFourBeforeObjectsMatchedExactBase": true,
+    "allEightContentReceiptsRecomputed": true,
+    "entries": [
+      {
+        "path": "game/soundtrack-source.mjs",
+        "before": {
+          "gitBlob": "7a0d3b7d7d6fad7c9d545cfaa54afe892f155505",
+          "bytes": 4918,
+          "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83"
+        },
+        "after": {
+          "bytes": 5305,
+          "sha256": "cbad7bf6561138d35851e37430d1c7219e9413495e4a11f385d735b6b9c1549e",
+          "gitBlob": "106eb9d719004c12aad2ab4ad95488b79dff20ca"
+        }
+      },
+      {
+        "path": "game/ui/soundtrack-player.mjs",
+        "before": {
+          "gitBlob": "fc2c8b5bd334ecb589ae32022e8158c8b0618f4a",
+          "bytes": 62236,
+          "sha256": "63ce0b026ff6dfdc5a165cfba0e0049e6dd6fb6560a26fa6d69abf259b7f1115"
+        },
+        "after": {
+          "bytes": 64273,
+          "sha256": "9033a34d3b8f26faa06ceaf06ab808786e5b03d9457e173580be0185dc620e6c",
+          "gitBlob": "640acdf98815047953d4131e67b13e32cfd78a56"
+        }
+      },
+      {
+        "path": "game/test/soundtrack-source.test.mjs",
+        "before": {
+          "gitBlob": "533eb352210c38dd3d967822be96081e9544b410",
+          "bytes": 11720,
+          "sha256": "4ef3895e384549bcd24561a8a1bddab44367716e47b5b2c0fa0915f4ca91d179"
+        },
+        "after": {
+          "bytes": 13731,
+          "sha256": "8b209957d3316e89c5964e20311c28b391ad06f7c1e997288dd62be2e89e8a78",
+          "gitBlob": "588d449fc42de183962f8caa7ae64ea345fbc20c"
+        }
+      },
+      {
+        "path": "game/test/soundtrack-player.test.mjs",
+        "before": {
+          "gitBlob": "6a2400b0d5c5881d1e475ef6a48d7b8c03ec514a",
+          "bytes": 81316,
+          "sha256": "a8cac3d5e9cc61ddf8b4b034ddac683ae5ad11be940bc457f9f118244175e60e"
+        },
+        "after": {
+          "bytes": 91273,
+          "sha256": "aa7692b36a8382fec722633ed8b1294e16849fc34e635d2c7e7b346903e03cf7",
+          "gitBlob": "354b19260773058c4a0b401ed2bab167d4ffeef1"
+        }
+      }
+    ]
+  },
+  "reviewed": [
+    {
+      "area": "Source validation",
+      "finding": "readAsset retains inspectMP3 as its default inspector, normalizes the bounded downloaded bytes to an owned native MPEG Blob before delegated inspection, checks the child abort afterward, preserves the full pinned descriptor comparison, and returns that exact immutable original identity."
+    },
+    {
+      "area": "Per-load evidence ownership",
+      "finding": "The player privately captures facts only after its existing inspector succeeds during the same open acquisition. Reuse requires strict equality with the returned original Blob. Ignored, failed, late, local or different-object paths undergo ordinary validation; no general trusted flag or cross-load cache is added."
+    },
+    {
+      "area": "Cancellation and lifecycle",
+      "finding": "Transport, source-child and acquisition-close signals are linked and listeners removed in finally. Acquisition close aborts unawaited worker or fallback work. Existing generation, disposed and abort checks prevent late deck publication. Source 60-second and inspector 30-second deadlines are unchanged."
+    },
+    {
+      "area": "Admission and fallback",
+      "finding": "The existing inspector and shared preparation owner are reused. Nested reservations use separate fetch, inspect and main queues. Worker-unavailable main-thread scanning remains deferred during active play; the source child deadline and transport cancellation can retire it. Offline/export callers retain default validation and independent installation ownership."
+    },
+    {
+      "area": "Final media integrity",
+      "finding": "Native Blob ownership/brand and byte-limit checks still precede use; both source and player pinned-descriptor comparisons remain. Object URLs are installed only after final validation and lifecycle checks."
+    },
+    {
+      "area": "Test coverage",
+      "finding": "Two source and ten player controls cover normalized exact identity, corrupted facts, abort, real static Node worker, local originals, ignored/same/different/failed custom callbacks, late callback, paused fallback, source timeout, unrelated signal cancellation and current-plus-next worker reuse. All twelve are source-reviewed and unexecuted."
+    },
+    {
+      "area": "Fixtures",
+      "finding": "The actual existing audio helper constructs Soundscape and tracks object URLs; the album helper supplies a real Response. The worker fixture uses a separate Node worker importing the production static module, restores the original Worker descriptor and terminates live workers. Source bytes are prepared before the main-realm Blob materialization spy. Existing bounded settleUntil timeout is unchanged."
+    }
+  ],
+  "fixtureIdentities": [
+    {
+      "path": "game/test/helpers/soundtrack-audio.mjs",
+      "gitBlob": "c0bb1a97f6ec7a6923dea64f05c48ecee665fd5c"
+    },
+    {
+      "path": "game/test/helpers/soundtrack-albums.mjs",
+      "gitBlob": "3d1cb956e08ea2e474e4b462a419153042f58277"
+    }
+  ],
+  "closureReference": {
+    "gitBlob": "4a25fcfc074111646d0aa842811bb8f961859b5a",
+    "note": "Separate author closure audit covers exact runtime callers/imports and existing full-checkout test ownership; this peer did not repeat its broad inventory."
+  },
+  "limitations": [
+    "No local functional tests, builds, browser runs or filesystem writes were performed.",
+    "Author-reported RAM formatting/lint is static evidence only.",
+    "Remote functional admission must execute the twelve new controls and existing regression suites before release.",
+    "The source removes duplicate main-thread structural scanning on this path; no measured millisecond gain or claim that all media work is eliminated.",
+    "Other concrete cold recorded-speech container parsing remains separately identified in audit 10648bc9ec0d6b1cbf354ba13d51ebed9f9ad316."
+  ],
+  "recommendedNextStep": "Preserve as a held independently reviewable branch under the parent release sequence, then admit existing remote source and Appearance checks without weakening gates."
+}

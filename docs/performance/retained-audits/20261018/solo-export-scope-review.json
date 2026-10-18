@@ -1,0 +1,139 @@
+{
+  "schema": "revealline-source-audit.v1",
+  "topic": "Solo replay and shared terminal export serialization scope",
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "kind": "source-only-no-runtime-execution",
+  "conclusion": "No source change proposed: the shared terminal helper serves Team/Versus, while ordinary Solo deliberately owns indented display text and compact download bytes. A generic callback/snapshot API does not remove both representations and is not justified as Solo gameplay performance progress.",
+  "sources": [
+    {
+      "path": "game/ui/terminal-recording-export.mjs",
+      "gitBlob": "fb73c19bf603e356c9dfb3845bdf15abe59c2519",
+      "bytes": 4841,
+      "sha256": "0f52dca53043736e409127eeaba2d066bdf3126c720d8aad212f9229eaf7026b"
+    },
+    {
+      "path": "game/platform.mjs",
+      "gitBlob": "e6ee2c96eb496a9c6be2cd20e946efe22b3f1034",
+      "bytes": 4198,
+      "sha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec"
+    },
+    {
+      "path": "game/test/terminal-recording-export.test.mjs",
+      "gitBlob": "074b503003724fc7122e5680ac79d0f8c344a2c2",
+      "bytes": 5865,
+      "sha256": "e54c69dbee7aa2122e1c1a091504528317823ac2b482b075cfc549b455a38afb"
+    },
+    {
+      "path": "game/test/platform.test.mjs",
+      "gitBlob": "a51bcb851671c028ef5688cfe2240cdd5082003b",
+      "bytes": 6105,
+      "sha256": "79f5a59efb690d3ee4d5bf6a3b5fc855f70c6aa4ed36df1a93e93e50d79b60a9"
+    },
+    {
+      "path": "game/content.mjs",
+      "gitBlob": "ebef2b49e0e256c8d46b409bb460a44abe19621a",
+      "bytes": 27811,
+      "sha256": "d092bccc466e10d37fa993829ae6037e5c10f8d6a067ef36f20888d7cc197e00"
+    },
+    {
+      "path": "game/app.mjs",
+      "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "bytes": 619315,
+      "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+    },
+    {
+      "path": "game/journey/profile.mjs",
+      "gitBlob": "ef26e16fecdb0f0135d719d2e3319cc36425e39f",
+      "bytes": 42500,
+      "sha256": "fa2b8e2acdca8a01d5b8e7feb7b8083e7e1665bf1e71a36eb3a5972531e15ccb"
+    },
+    {
+      "path": "game/test/replay-appearance-solo-host.test.mjs",
+      "gitBlob": "19294d0795084b5656897f94153980863038c675",
+      "bytes": 11301,
+      "sha256": "7cfb297365ccb0ee3ad4e363127da5f5497df89453714f73df213bb999a3001a"
+    },
+    {
+      "path": "game/test/solo-performance-host.test.mjs",
+      "gitBlob": "eb536af63b77f3dc3cb1cb5b4c376d0f49441b00",
+      "bytes": 33127,
+      "sha256": "3d8313f0707ce92720025e18b129cb12fb51a6c38c7222214d588886a18f246d"
+    },
+    {
+      "path": "game/replay.mjs",
+      "gitBlob": "fa473c568bec333395636541cc82fe3dd8b597f6",
+      "bytes": 33108,
+      "sha256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41"
+    }
+  ],
+  "findings": [
+    {
+      "priority": "P2",
+      "owner": "game/ui/terminal-recording-export.mjs:102\u2013109",
+      "fact": "The terminal owner serializes a recording into the retained manual-copy field before passing the original value to exportFile. The default platform owner serializes it again before UTF-8 validation and browser/native delivery.",
+      "scope": "Actual production callers identified by prior retained source audit are game/couch/relay-rescue.mjs and game/couch/couch.mjs, not Main Solo.",
+      "decision": "Retain source finding; no callback or prepared-snapshot API added. No measured duration or gameplay impact is claimed."
+    },
+    {
+      "priority": "P2",
+      "owner": "game/app.mjs:12799\u201312898; game/content.mjs:693\u2013694; game/platform.mjs:39\u201343",
+      "fact": "Solo pauses before export. Raw replay display uses JSON.stringify(raw,null,2); the download uses compact JSON.stringify(value). Recorded-actor display and download are compact. Later raw-download action uses lastReplay while leaving the displayed recorded-actor wrapper intact.",
+      "compatibility": "A callback that overwrites the display for every download would break the wrapper/raw-download ownership contract. Replacing raw display with compact text or passing its indented text through the compact download path changes behavior or portable-envelope budgeting.",
+      "decision": "Do not consolidate these representations as an alleged duplicate. Shared terminal change would not close Solo long-recording qualification."
+    },
+    {
+      "priority": "P2",
+      "owner": "game/journey/profile.mjs:934\u2013958,1072\u20131096; game/app.mjs:14630\u201314663",
+      "fact": "Journey backup export currently returns indented serialized raw text after paused-state/cancellation/evidence checks. App parses that text, then exportJSONFile serializes it compact for download. This creates an intermediate text and parsed graph before compact delivery.",
+      "guard": "The profile owner explicitly refuses export work unless canRunPerformanceWork() remains true, rechecks the abort signal and progress around asynchronous backup collection, and marks unavailable durable evidence as partial recovery. Those checks and the recovery filename must stay intact.",
+      "decision": "Record a separate possible compact-backup owner improvement; no API or validation removed. Reusing existing indented text directly could violate the compact complete-backup envelope budget. A future change must preserve ordinary export()/exportAsync() contracts, exact complete-versus-recovery bytes, and native/browser UTF-8 admission."
+    },
+    {
+      "priority": "keep",
+      "owner": "game/replay.mjs:123\u2013173,598\u2013600",
+      "fact": "exportReplay uses boundedCopy to reject nonplain objects, getters, cycles, nonfinite numbers, structural budget excess and an oversized final serialized copy. The final stringify is part of byte-budget validation.",
+      "decision": "Do not remove it as an apparent duplicate without preserving final-envelope admission."
+    },
+    {
+      "priority": "keep",
+      "owner": "game/platform.mjs:32\u201356",
+      "fact": "Ordinary exportJSONFile rejects unsafe filenames before serialization, rejects undefined text, verifies UTF-8 byte size, then sends exactly that text to the native bridge or Blob. URL revocation remains delayed under existing owner.",
+      "decision": "No caller-controlled raw string, forged snapshot or identity-only cache is introduced. Existing toJSON side-effect ordering and error delivery remain unchanged."
+    }
+  ],
+  "existingControlsRead": [
+    {
+      "path": "game/test/replay-appearance-solo-host.test.mjs",
+      "lines": "95\u2013109,127\u2013165",
+      "scope": "Actual Solo host compares parsed displayed/downloaded JSON, verifies exact checkpoint/replay, preserves accepted actor pin, and ensures raw download does not replace the recorded-actor envelope."
+    },
+    {
+      "path": "game/test/solo-performance-host.test.mjs",
+      "lines": "394\u2013400",
+      "scope": "Existing actual Solo export verifies replay and authoritative checkpoint."
+    },
+    {
+      "path": "game/test/terminal-recording-export.test.mjs",
+      "scope": "Retained manual copy, download/clipboard failure, late ownership replacement and disposal controls; read only."
+    },
+    {
+      "path": "game/test/platform.test.mjs",
+      "scope": "Web and iOS delivery, filename validation, delayed revoke and portable budget compatibility controls; read only."
+    }
+  ],
+  "requiredBeforeAnyFutureChange": [
+    "Source review distinguishing formatting from duplicate work and proving exact retained-copy/download snapshot ownership.",
+    "Hosted current-source tests for browser/native rejection and current-owner replacement, including meaningful toJSON behavior for generic platform callers.",
+    "UTF-8 byte-budget boundary tests, complete/recovery backup distinction, no relaxation of validation or durable storage/readback guarantees.",
+    "Matched native paused export/long-recording observation to establish actual cost; no active-play performance claim from static call count."
+  ],
+  "execution": {
+    "product": false,
+    "tests": false,
+    "build": false,
+    "browser": false,
+    "localWrites": false,
+    "branchOrPR": false
+  },
+  "relatedAudit": "dcb866ebfaef48da9785018bbe593a555d7ca9d9"
+}

@@ -1,0 +1,293 @@
+{
+  "schema": "SoloMediaInspectionBoundaryReviewV1",
+  "reviewedAt": "2026-10-18T23:13:21.230Z",
+  "source": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "sourceTree": "b1214330108fe62c8a89e45902be4f84c628ed99",
+  "scope": "Read-only source review of known production MP3 and adjacent speech callers. No local functional execution, profiling, browser run, implementation or exhaustive current-source import census.",
+  "sources": [
+    {
+      "path": "game/soundtrack-source.mjs",
+      "gitBlob": "7a0d3b7d7d6fad7c9d545cfaa54afe892f155505",
+      "bytes": 4918,
+      "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "gitBlob": "fc2c8b5bd334ecb589ae32022e8158c8b0618f4a",
+      "bytes": 62236,
+      "sha256": "63ce0b026ff6dfdc5a165cfba0e0049e6dd6fb6560a26fa6d69abf259b7f1115"
+    },
+    {
+      "path": "game/ui/mp3-inspector.mjs",
+      "gitBlob": "7635aa12b27d0fcff28301688199f1a6ea2c2cef",
+      "bytes": 4084,
+      "sha256": "55e366fab87020cf84176b6fec678e62abd5fbdbe8b44be5715d48bd19ef2533"
+    },
+    {
+      "path": "game/mp3-inspection.mjs",
+      "gitBlob": "962e33c0c9d69673e1915f69cc52bcff03a6e7e4",
+      "bytes": 5487,
+      "sha256": "ca767a143f1aa51a8327c63df0926af3a197f90b08e8965c60f9514331b14fa1"
+    },
+    {
+      "path": "game/ui/media-preparation.mjs",
+      "gitBlob": "be4547b8ff6eb740e79b968b1f4a2860a5f5d8fd",
+      "bytes": 5332,
+      "sha256": "9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad"
+    },
+    {
+      "path": "game/soundtrack-album-download.mjs",
+      "gitBlob": "8ae92d75ab71033f3b74a964e2ffa6ea44d8421e",
+      "bytes": 8412,
+      "sha256": "fc4d942f71ea10c9a89e4ff83ddc6058d1813012be0459cf4c88f84b6fe37b40"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "gitBlob": "aa2d1c828fc9d7a9f6f8a8a355af2d511c7495b8",
+      "bytes": 17073,
+      "sha256": "20e5e4585e7eaf81791cc0b2d489f8031965391a5fcbceb1e22e6e18de2a4c97"
+    },
+    {
+      "path": "game/downloads.mjs",
+      "gitBlob": "847de8d88f3c8fbdefbf3c81ac575913f9b695e5",
+      "bytes": 38787,
+      "sha256": "9846e6382b6b5f0cc1b911748d94aeed6861400bb0ea803f143ec89f799708a5"
+    },
+    {
+      "path": "game/published-cue-inspection.mjs",
+      "gitBlob": "6e051a5993da5f3f287f2f86493d9d058b50046c",
+      "bytes": 5893,
+      "sha256": "c8784637f163a8e10941a1c23266aa01586568f6000c41840ab89697848e50bf"
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "gitBlob": "92012eb3d8fd1ab8e74907c230e7a1ca03c7538f",
+      "bytes": 14722,
+      "sha256": "df3e6b15ee8ba163044f6a72388a44e00141a310f164b4e1c7cb9d61b0802916"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "gitBlob": "6bc193e24ecbf36b9de764e6a59c8829800176cd",
+      "bytes": 150675,
+      "sha256": "d77fc9461fcb1ba7f5ea98f18216d71b4eebb644a596656c345e7d660661c69c"
+    },
+    {
+      "path": "game/soundtrack-bundle.mjs",
+      "gitBlob": "b5b02a135a502757bf745ce1bf03abf057adf5b9",
+      "bytes": 12028,
+      "sha256": "fa6a98e404ca7d169c2dc4fd5383065d79d69f2f8af25e3ca7c4ee6f67d745fd"
+    },
+    {
+      "path": "game/rewards/audio-original.mjs",
+      "gitBlob": "d9092af54d5bd3d837126f03122914b8099e3cfe",
+      "bytes": 1943,
+      "sha256": "74dafb724bf6839abb209ceafc3a86af1710976646b8b0d481475ca7508cfb99"
+    },
+    {
+      "path": "game/content-design/discovery-audio-handoff.mjs",
+      "gitBlob": "6ddc65eed5b97c302d47b36c59e8975833f4c87e",
+      "bytes": 3804,
+      "sha256": "db1a45c45274c34a9ca77967decfec162be3a770e3cbadc944e0d91d358eff82"
+    },
+    {
+      "path": "game/managed-media-store.mjs",
+      "gitBlob": "07ee39b8c47b689c1399d17005c00d120bc55772",
+      "bytes": 54466,
+      "sha256": "3a06f17393d0442001a3b4b48abba34c59b7af24a53085634252214f66c0150b"
+    },
+    {
+      "path": "game/soundtrack-store-legacy.mjs",
+      "gitBlob": "3a521502d00a508c420838a88d938ec114819116",
+      "bytes": 9377,
+      "sha256": "9a575c14632a5d566d6cd2402d1e3f909a694fd0cf504ddb3669d991b681e37d"
+    },
+    {
+      "path": "game/official-downloads.mjs",
+      "gitBlob": "66c30dce706e797f90852955daee448a05685e6d",
+      "bytes": 18820,
+      "sha256": "f6788b3453f345fd6eb26641afe33566aa268b451ca912fc42b16b33988ffcb0"
+    },
+    {
+      "path": "game/ui/demo-audio.mjs",
+      "gitBlob": "3fa462ff6628d4d591eb55b7d31f9ae5023c3e6d",
+      "bytes": 9602,
+      "sha256": "0f70da15264c77cf72e569acc38646a28bbea8b8da94ac91b7669f2bedd2b05d"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "gitBlob": "4914bcb57fca852dc5323a12bba133370060d2ec",
+      "bytes": 48965,
+      "sha256": "05ede7977f47efe0c3f895e4245ccda710e66948c2053626f8b743fcc0abae33"
+    },
+    {
+      "path": "game/journey/reaction-voice-cache.mjs",
+      "gitBlob": "c507b47ad3f295344404c86b4eac05fcb650d168",
+      "bytes": 9031,
+      "sha256": "efd1d95cc6e80a11f39e6a1f1489d213eefb647d2de906d39a7240fbcc2c88f5"
+    },
+    {
+      "path": "game/journey/reaction-recording-format.mjs",
+      "gitBlob": "8521572095d75283bd01287002322e3ea01c89b4",
+      "bytes": 7722,
+      "sha256": "cdcd3da4bf5ab6c13190968cd1d286bcae070a005e879e9d291db92a31fef0f4"
+    },
+    {
+      "path": "game/journey/reaction-voice-library.mjs",
+      "gitBlob": "ec756023db67d130f4cc365991be61b2b9744783",
+      "bytes": 20707,
+      "sha256": "366fe4931bf91315971873853cda38a487cb8501151ad36a25bc925031951afd"
+    },
+    {
+      "path": "game/ui/contextual-reactions.mjs",
+      "gitBlob": "9c68ce0aba148cc8ef013b76380d7cd6985ee402",
+      "bytes": 26063,
+      "sha256": "e02752554b2651b19713c4039e31b4570c480bb0fad3c1093b953edfdfee1113"
+    },
+    {
+      "path": "game/app.mjs",
+      "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "bytes": 619315,
+      "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+    }
+  ],
+  "findings": [
+    {
+      "id": "playback-source-scan",
+      "status": "confirmed source defect",
+      "detail": "A fetched official/bundled/archive original is fully inspected by source before readAsset returns; the transport then performs its own worker inspection. The source scan uses inspectMP3 default immediate schedule while acquisition is admitted as fetch, so it can scan during active play.",
+      "minimalDesign": "Per-read worker inspection callback bound to current transport acquisition, default complete inspection unchanged for offline/export; private successful facts reusable only for exact returned immutable Blob identity; normalize before inspection, keep pinned comparisons, native Blob ownership/size validation, source deadline and transport cancellation. No verified flag/global cache/new worker owner."
+    },
+    {
+      "id": "published-cues",
+      "status": "already safe-phase admitted",
+      "detail": "Published MP3/WAV cue inspection requires scheduleScan and the real owner uses main admission for each stage. No equivalent direct full-MP3 bypass found here."
+    },
+    {
+      "id": "explicit-soundtrack-authoring",
+      "status": "explicit paused-menu work in Main",
+      "detail": "Studio import/export/backup/discovery and prepared-library commits scan complete assets. Main onOpen pauses gameplay. Busy Studio tasks prevent normal close; cancellation must settle. Keep default integrity validation. Studio discovery-audio-handoff is another explicit authoring path."
+    },
+    {
+      "id": "offline-and-official",
+      "status": "ownership preserved",
+      "detail": "Official cache read path does not call inspectMP3. downloads page explicitly acquires with download:true; source default complete inspection remains required. Do not cancel a separate tab owned installation or replace offline/export validation with a trust flag."
+    },
+    {
+      "id": "demo-style",
+      "status": "separate P2 profiling target",
+      "detail": "Demo Play Style calls Main prepareSoundtrackLibrary on saved assets and managed audio commit while Demo controls do not pause its clock. Main Solo is covered/paused. Preserve atomic saves; no new implementation in this review."
+    },
+    {
+      "id": "recorded-speech",
+      "status": "bounded cold-demand work remains unadmitted; no measured hitch",
+      "detail": "After fetch, demand voice loading invokes inspectReactionRecording directly. It materializes a <=2MiB Blob and parses WAV/M4A outside safe-phase main admission before native metadata/decode. Local saved revisions additionally decode base64 with Uint8Array.from before parser. This is not an MP3 scan or whole-track PCM decode.",
+      "fallback": "A live cache miss immediately retains caption behavior and schedules preparation for a future occurrence; completion never replays the expired reaction. Failed load returns false and has30s backoff. Owner10s timeout, at most2loads,24buffers,12MiB decoded cache and6MiB per-decode limits remain.",
+      "warmup": "At most24 relevant current-cast/shared clips, two background workers; new speculative loads stop during playing/suspended and honor prefs/mute/hidden. Main does not await complete warmup in the attempt lease. Thus cannot claim most clips are ready before play.",
+      "bound": "WAV parser consumes at least8bytes per chunk. For valid<=2MiB WAV with required fmt>=16payload and nonempty data, at most262140 chunk iterations fit; malformed input can enter up to262143 iterations before terminal rejection. M4A has eight fixed boxes() traversals, each capped at2048accepted entries (<=16384 total accepted box objects), plus<=1600stts rows; no unbounded recursion. These are source-derived operation bounds, not timing measurements.",
+      "recommendation": "Profile cold demanded short shipped clips and large saved clips, including dense valid WAV chunks, before altering live cue readiness. Do not defer all demand to Pause, change recorded-speech prefs, or add another worker/generic service solely from this source review."
+    }
+  ],
+  "excerpts": [
+    {
+      "path": "game/soundtrack-source.mjs",
+      "startLine": 44,
+      "endLine": 107,
+      "text": "        download = false,\n        purpose = download ? 'offline' : 'playback',\n        localOnly = false,\n      } = {},\n    ) {\n      required(typeof localOnly === 'boolean', 'Invalid local soundtrack acquisition policy.');\n      required(\n        ['playback', 'offline', 'export'].includes(purpose),\n        'Unknown soundtrack byte purpose.',\n      );\n      const track = byHash.get(hash);\n      const permission = {\n        playback: 'webPlayback',\n        offline: 'offlineCache',\n        export: 'redistribute',\n      }[purpose];\n      if (track)\n        required(\n          soundtrackRights(track, { catalogue: trusted })[permission] === 'allowed',\n          `This recording is not approved for ${purpose}. Preserve its reference instead.`,\n        );\n      throwIfSoundtrackAborted(signal);\n      const local =\n        (await readLocal(hash, { signal })) || (track ? await readOfficial(hash) : null);\n      throwIfSoundtrackAborted(signal);\n      if (local) return local;\n      const core = bundledByHash.get(hash);\n      // Silent preparation only uses already-owned originals. A core registration\n      // cannot authorize requests until the host explicitly allows acquisition.\n      if (localOnly || (purpose === 'playback' && localPlayback())) return null;\n      required(track, 'This recording is missing locally. Restore its complete soundtrack backup.');\n      required(\n        purpose !== 'playback' || !installedOnly() || core,\n        'Installed only is on. Download this album before listening offline.',\n      );\n\n      return soundtrackDownloadOperation(\n        async (current, cleanupTimeoutMs) => {\n          const url = core\n            ? soundtrackDownloadURL(core.path, baseURL)\n            : track.archiveId\n              ? await archiveSource.urlFor(track, { signal: current, cleanupTimeoutMs })\n              : soundtrackDownloadURL(track.path, baseURL);\n          const blob = await readSoundtrackDownload(url, {\n            fetch: request,\n            signal: current,\n            limit: SOUNDTRACK_LIMITS.trackBytes,\n            exactBytes: track.asset.bytes,\n            cleanupTimeoutMs,\n            ...(track.archiveId && !core ? { credentials: 'omit', mode: 'cors' } : {}),\n          });\n          const actual = await inspectMP3(blob, { signal: current });\n          required(\n            canonicalJSON(actual) === canonicalJSON(track.asset),\n            'Downloaded recording differs from its pinned catalogue original.',\n          );\n          return blob.slice(0, blob.size, 'audio/mpeg');\n        },\n        { signal, timeoutMs: 60000 },\n      );\n    },\n  });\n}\n"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "startLine": 582,
+      "endLine": 623,
+      "text": "    const original = await preparationQueue.run(\n      'fetch',\n      () =>\n        track.kind === 'published'\n          ? track.readBlob({ signal })\n          : readAsset(track.asset.sha256, {\n              signal,\n              purpose: 'playback',\n              localOnly: localOnly || localPlayback,\n            }),\n      { signal, priority: token === null ? 'demand' : 'required' },\n    );\n    throwIfSoundtrackAborted(signal);\n    if (localOnly && original == null) return false;\n    const blob = track.kind === 'published' ? original : ownSoundtrackBlob(original);\n    if (track.kind === 'published') {\n      required(\n        blob instanceof Blob &&\n          blob.size > 0 &&\n          blob.size <= 4 * 1024 * 1024 &&\n          ['audio/wav', 'audio/ogg', 'audio/mpeg'].includes(blob.type),\n        t('interface:publishedAudioIsUnavailable'),\n      );\n    } else {\n      if (token !== null && token === generation) {\n        preparation = {\n          generation: token,\n          stage: 'verifying',\n          message: t('interface:verifyingTheAudioOriginal'),\n        };\n        emit();\n      }\n      const actual = await mp3Inspector.inspect(blob, { signal });\n      required(\n        canonicalJSON(actual) === canonicalJSON(track.asset),\n        t('interface:storedAudioBytesDoNotMatchThisTrack'),\n      );\n    }\n    throwIfSoundtrackAborted(signal);\n    if (disposed) throw new DOMException(t('interface:musicPlayerDisposed'), 'AbortError');\n    installDeckURL(deck, track, URLImpl.createObjectURL(blob), { blobBytes: blob.size });\n    return true;"
+    },
+    {
+      "path": "game/ui/mp3-inspector.mjs",
+      "startLine": 88,
+      "endLine": 144,
+      "text": "  return Object.freeze({\n    inspect(source, { signal } = {}) {\n      const blob = ownSoundtrackBlob(source);\n      ownedBytes += blob.size;\n      pendingRequests++;\n      return preparation\n        .run(\n          'inspect',\n          async () => {\n            if (closed) throw aborted();\n            throwIfSoundtrackAborted(signal);\n            try {\n              return await inspectWorker(blob, signal);\n            } catch (error) {\n              if (!error.workerUnavailable) throw error;\n              return inspect(blob, {\n                signal,\n                scheduleScan: (work) =>\n                  preparation.run('main', work, {\n                    signal,\n                    eligible: () => !closed,\n                  }),\n              });\n            }\n          },\n          { signal, eligible: () => !closed },\n        )\n        .finally(() => {\n          ownedBytes -= blob.size;\n          pendingRequests--;\n        });\n    },\n    snapshot: () =>\n      Object.freeze({\n        workerOwned: worker !== null,\n        workerActive: pending !== null,\n        workerOwnedBytes: ownedBytes,\n        pendingRequests,\n      }),\n    close() {\n      closed = true;\n      pending?.();\n      retire();\n      preparation.refresh();\n    },\n  });\n}\n"
+    },
+    {
+      "path": "game/ui/published-audio.mjs",
+      "startLine": 110,
+      "endLine": 130,
+      "text": "        if (!result || !eligible()) return null;\n        const seconds = HUMAN_REACTION_CUES.includes(name)\n          ? 0.7\n          : DESTRUCTION_CUES.includes(name)\n            ? 1\n            : 15;\n        const inspected = await inspectPublishedCue(result.blob, {\n          sampleRate: context.sampleRate,\n          maxDuration: seconds,\n          signal: controller.signal,\n          scheduleScan: (work) => preparation.run('main', work, admission),\n        });\n        const decoded = await preparation.run(\n          'decode',\n          async () => {\n            const bytes = await inspected.blob.arrayBuffer();\n            if (!eligible()) throw new DOMException('Cue decode cancelled.', 'AbortError');\n            return context.decodeAudioData(bytes);\n          },\n          { ...admission, bytes: inspected.reservedBytes },\n        );"
+    },
+    {
+      "path": "game/app.mjs",
+      "startLine": 2324,
+      "endLine": 2334,
+      "text": "            },\n            onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),\n            onOpen: () => {\n              pause(true);\n              clearInput();\n              $('settings-dialog').close();\n            },\n            onClose: () => {\n              clearInput();\n              $('settings-dialog').showModal();\n              void storageRetention.refresh();"
+    },
+    {
+      "path": "game/app.mjs",
+      "startLine": 15030,
+      "endLine": 15069,
+      "text": "    async selectStyle(mode) {\n      cancelDemoAudio();\n      if (!SOUNDTRACK_MODES.includes(mode) || !soundtrackPlayer || !soundtrackStore)\n        throw new Error(t('demo:audio.unavailable'));\n      const operation = demoAudioOperation;\n      const pending = new AbortController();\n      demoAudioController = pending;\n      const signal = pending.signal;\n      const current = () =>\n        !signal.aborted && operation === demoAudioOperation && !soundtrackDisposed;\n      const saved = await soundtrackStore.read({ signal });\n      const draft = structuredClone(upgradeSoundtrackLibrary(saved.library));\n      draft.selection.playlistId = null;\n      draft.listening.mode = mode;\n      const prepared = await prepareSoundtrackLibrary(draft, saved.assets, {\n        signal,\n        catalogue: SOUNDTRACK_CATALOGUE,\n      });\n      if (!current()) return false;\n      const committed = await soundtrackStore.commit(prepared, {\n        signal,\n        expectedGeneration: saved.generation,\n      });\n      // An atomic save remains authoritative even if a later Pause cancels playback.\n      if (committed.generation >= soundtrackGeneration) {\n        soundtrackGeneration = committed.generation;\n        soundtrackLibrary = setCatalogueTracks(\n          upgradeSoundtrackLibrary(committed.library),\n          SOUNDTRACK_CATALOGUE.tracks,\n        );\n        soundtrackAssets = new Map(prepared.assets.map(({ sha256, blob }) => [sha256, blob]));\n      }\n      if (!soundtrackDisposed) {\n        soundtrackPlayer?.setLibrary(soundtrackLibrary);\n        notifyDemoAudio();\n      }\n      if (!current()) return false;\n      await soundtrackPlayer.selectListening(soundtrackLibrary.listening);\n      if (!current()) return false;\n      return soundtrackPlayer.play();"
+    },
+    {
+      "path": "game/ui/demo-audio.mjs",
+      "startLine": 176,
+      "endLine": 221,
+      "text": "  function run(action) {\n    if (disposed || !active()) return;\n    const ticket = ++operation,\n      current = () => !disposed && ticket === operation && active();\n    warning = false;\n    const failed = (error) => {\n      if (!current()) return;\n      warning = true;\n      onError(error);\n    };\n    try {\n      const pending = action();\n      render();\n      Promise.resolve(pending)\n        .catch(failed)\n        .finally(() => {\n          if (current()) render();\n        });\n    } catch (error) {\n      failed(error);\n      render();\n    }\n  }\n  function withWake(action) {\n    // Both calls stay in the original user activation task.\n    const wake = audio?.wake?.();\n    try {\n      return Promise.all([wake, action()]);\n    } catch (error) {\n      return Promise.all([wake, Promise.reject(error)]);\n    }\n  }\n  mute.onclick = () =>\n    run(() => {\n      const muted = !state()?.muted,\n        changed = audio?.setMuted?.(muted);\n      return muted ? changed : withWake(() => changed);\n    });\n  toggle.onclick = () =>\n    run(() => (pausable(state()) ? audio?.pause?.() : withWake(() => audio?.play?.())));\n  next.onclick = () => run(() => withWake(() => audio?.next?.()));\n  volume.control.oninput = () => run(() => audio?.setVolume?.(Number(volume.control.value)));\n  style.control.onchange = () => {\n    if (SOUNDTRACK_MODES.includes(style.control.value)) draftStyle = style.control.value;\n  };\n  playStyle.onclick = () => run(() => withWake(() => audio?.selectStyle?.(draftStyle)));"
+    },
+    {
+      "path": "game/downloads.mjs",
+      "startLine": 499,
+      "endLine": 512,
+      "text": "  if (playing.size) throw localError('interface:downloads.musicPausedForGame');\n  const imported = createManagedMediaStore({ soundtrackCatalogue: true });\n  try {\n    await store.download({\n      edition: 'soundtracks',\n      group: group.id,\n      files: downloadFiles(catalogue, [group.id]),\n      baseURL,\n      signal,\n      acquire: (file, options) => source.readAsset(file.sha256, { ...options, download: true }),\n      readExisting: (file) => imported.readSelectedBlob(file.sha256, { signal }),\n      onProgress: progress,\n    });\n  } finally {"
+    },
+    {
+      "path": "game/journey/reaction-voice-cache.mjs",
+      "startLine": 15,
+      "endLine": 30,
+      "text": "export async function inspectReactionRecording(\n  blob,\n  { signal, document = globalThis.document } = {},\n) {\n  if (signal?.aborted) return Promise.reject(aborted());\n  if (!blob?.size || blob.size > REACTION_VOICE_LIMITS.bytes || !document?.createElement)\n    return Promise.reject(\n      new Error('A recording up to 2 MiB and browser media inspection are required.'),\n    );\n  const container = inspectRecordingContainer(await blob.arrayBuffer());\n  if (signal?.aborted) throw aborted();\n  return new Promise((resolve, reject) => {\n    const media = document.createElement('audio');\n    let url = null,\n      timer = null,\n      settled = false;"
+    },
+    {
+      "path": "game/journey/reaction-voice-cache.mjs",
+      "startLine": 105,
+      "endLine": 163,
+      "text": "  async function load(lineId, locale, { priority = 'demand' } = {}) {\n    if (closed || !sound.context) return false;\n    if (context !== sound.context) {\n      context = sound.context;\n      await cancel({ clear: true });\n    }\n    const key = keyFor(lineId, locale),\n      revision = generation,\n      audioContext = context;\n    if (buffers.has(key)) return true;\n    if (pending.has(key)) {\n      const request = pending.get(key);\n      if (request.priority === 'background' && priority === 'demand') {\n        request.priority = 'demand';\n        preparation.promote?.(request.abort.signal, 'demand');\n      }\n      return request.promise;\n    }\n    if (pending.size >= REACTION_VOICE_LIMITS.loads || now() < (failures.get(key) ?? 0))\n      return false;\n    const abort = new AbortController(),\n      timeout = setTimeout(() => abort.abort(), 10000),\n      request = { abort, promise: null, priority };\n    let cancelled = false;\n    const eligible = () =>\n      !closed &&\n      revision === generation &&\n      audioContext === sound.context &&\n      !sound.audioMaster?.muted &&\n      sound.audioMaster?.volume !== 0 &&\n      (request.priority !== 'background' ||\n        !['playing', 'suspended'].includes(preparation.snapshot().phase));\n    const admission = { signal: abort.signal, priority, eligible };\n    request.promise = (async () => {\n      try {\n        const recording = await preparation.run(\n          'fetch',\n          () => library.resolve(lineId, locale, { signal: abort.signal }),\n          admission,\n        );\n        if (!recording || !eligible() || abort.signal.aborted) return false;\n        if (\n          !recording.bytes?.byteLength ||\n          recording.bytes.byteLength > REACTION_VOICE_LIMITS.bytes\n        )\n          return false;\n        const metadata = await inspect(\n          new Blob([recording.bytes], { type: recording.mime ?? 'audio/mp4' }),\n          {\n            signal: abort.signal,\n          },\n        );\n        if (closed || abort.signal.aborted || revision !== generation) return false;\n        const reservedBytes = admitReactionDecode(metadata, audioContext.sampleRate);\n        const buffer = await preparation.run(\n          'decode',\n          () => audioContext.decodeAudioData(recording.bytes.slice(0)),\n          { ...admission, priority: request.priority, bytes: reservedBytes },\n        );"
+    },
+    {
+      "path": "game/journey/reaction-recording-format.mjs",
+      "startLine": 13,
+      "endLine": 115,
+      "text": "    buffer instanceof ArrayBuffer &&\n      buffer.byteLength >= 16 &&\n      buffer.byteLength <= 2 * 1024 * 1024,\n  );\n  const data = new DataView(buffer),\n    bytes = new Uint8Array(buffer);\n  const text = (offset, length) => String.fromCharCode(...bytes.subarray(offset, offset + length));\n  const u32 = (offset) => data.getUint32(offset),\n    u16 = (offset) => data.getUint16(offset);\n  function compatible(channels, sampleRate, maxDecodedSeconds, format, decodeChannels = channels) {\n    requireValue(\n      (channels === 1 || channels === 2) &&\n        sampleRate >= 8000 &&\n        sampleRate <= 96000 &&\n        maxDecodedSeconds > 0 &&\n        maxDecodedSeconds <= 15.25,\n    );\n    return Object.freeze({ channels, decodeChannels, sampleRate, maxDecodedSeconds, format });\n  }\n  if (text(0, 4) === 'RIFF' && text(8, 4) === 'WAVE') {\n    requireValue(data.getUint32(4, true) + 8 === bytes.length);\n    let offset = 12,\n      format = null,\n      audioBytes = null;\n    while (offset < bytes.length) {\n      requireValue(offset + 8 <= bytes.length);\n      const kind = text(offset, 4),\n        size = data.getUint32(offset + 4, true),\n        start = offset + 8;\n      requireValue(start + size <= bytes.length);\n      if (kind === 'fmt ') {\n        requireValue(!format && size >= 16);\n        let codec = data.getUint16(start, true);\n        const channels = data.getUint16(start + 2, true),\n          sampleRate = data.getUint32(start + 4, true),\n          byteRate = data.getUint32(start + 8, true),\n          align = data.getUint16(start + 12, true),\n          bits = data.getUint16(start + 14, true);\n        if (codec === 0xfffe) {\n          requireValue(size >= 40 && data.getUint16(start + 16, true) >= 22);\n          codec = data.getUint32(start + 24, true);\n          requireValue(\n            text(start + 28, 12) ===\n              String.fromCharCode(0, 0, 16, 0, 128, 0, 0, 170, 0, 56, 155, 113),\n          );\n        }\n        requireValue(\n          (codec === 1 && [8, 16, 24, 32].includes(bits)) || (codec === 3 && bits === 32),\n        );\n        requireValue(align === (channels * bits) / 8 && byteRate === sampleRate * align);\n        format = { channels, sampleRate, align };\n      } else if (kind === 'data') {\n        requireValue(audioBytes === null);\n        audioBytes = size;\n      }\n      offset = start + size + (size % 2);\n    }\n    requireValue(\n      format && audioBytes > 0 && audioBytes % format.align === 0 && offset === bytes.length,\n    );\n    return compatible(\n      format.channels,\n      format.sampleRate,\n      audioBytes / format.align / format.sampleRate,\n      'pcm-wav',\n    );\n  }\n  function boxes(start, end) {\n    const result = [];\n    while (start < end) {\n      requireValue(result.length < 2048);\n      requireValue(start + 8 <= end);\n      let size = u32(start),\n        header = 8;\n      if (size === 1) {\n        requireValue(start + 16 <= end && u32(start + 8) === 0);\n        size = u32(start + 12);\n        header = 16;\n      }\n      if (size === 0) size = end - start;\n      requireValue(size >= header && start + size <= end);\n      result.push({ kind: text(start + 4, 4), start: start + header, end: start + size });\n      start += size;\n    }\n    return result;\n  }\n  const one = (entries, kind) => {\n    const matched = entries.filter((entry) => entry.kind === kind);\n    requireValue(matched.length === 1);\n    return matched[0];\n  };\n  const children = (box) => boxes(box.start, box.end);\n  const root = boxes(0, bytes.length);\n  requireValue(!root.some((box) => box.kind === 'moof'));\n  one(root, 'ftyp');\n  one(root, 'mdat');\n  const movie = children(one(root, 'moov'));\n  requireValue(!movie.some((box) => box.kind === 'mvex'));\n  const tracks = movie.filter((box) => box.kind === 'trak');\n  requireValue(tracks.length === 1);\n  const media = children(one(children(tracks[0]), 'mdia'));\n  const handler = one(media, 'hdlr');\n  requireValue(handler.end - handler.start >= 12 && text(handler.start + 8, 4) === 'soun');"
+    },
+    {
+      "path": "game/journey/reaction-voice-library.mjs",
+      "startLine": 38,
+      "endLine": 49,
+      "text": "function base64ToBytes(value) {\n  if (\n    typeof value !== 'string' ||\n    value.length > MAX_CLIP * 1.4 ||\n    !/^[A-Za-z0-9+/]*={0,2}$/.test(value)\n  )\n    throw new Error('Invalid recording bytes.');\n  return Uint8Array.from(atob(value), (character) => character.charCodeAt(0));\n}\nasync function digest(bytes) {\n  return [...new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', bytes))]\n    .map((value) => value.toString(16).padStart(2, '0'))"
+    },
+    {
+      "path": "game/journey/reaction-voice-library.mjs",
+      "startLine": 397,
+      "endLine": 428,
+      "text": "    async resolve(lineId, locale, { signal, revision } = {}) {\n      checkAbort(signal);\n      lineFor(lineId, locale);\n      let record;\n      try {\n        record = await read(lineId, locale);\n      } catch {\n        /* Bundled voices work without writable storage. */\n      }\n      checkAbort(signal);\n      const selected = revision === undefined ? record?.active : revision;\n      const active = record?.revisions.find((entry) => entry.sha256 === selected);\n      if (revision && !active) throw new Error('Voice revision missing.');\n      if (active)\n        return {\n          bytes: base64ToBytes(active.base64).buffer,\n          sha256: active.sha256,\n          duration: active.duration,\n          mime: active.mime,\n        };\n      if (record?.original)\n        return {\n          bytes: base64ToBytes(record.original.base64).buffer,\n          sha256: record.original.sha256,\n          mime: record.original.mime,\n        };\n      const original = await readOriginal(lineId, locale, { signal });\n      return original\n        ? { bytes: original.bytes, sha256: original.metadata.sha256, mime: original.metadata.mime }\n        : null;\n    },\n    async replace({ lineId, locale, blob, kind, credit = '', duration, signal }) {"
+    },
+    {
+      "path": "game/ui/contextual-reactions.mjs",
+      "startLine": 29,
+      "endLine": 45,
+      "text": " * must not displace the current encounter from the bounded decoded cache. */\nexport function reactionWarmupLineIds({ families = [], originals = [], available = [], locale }) {\n  const active = new Set(families.map(resolveActorFamily).filter(Boolean));\n  const relevant = (id) => {\n    const line = REACTION_LINES.find((entry) => entry.id === id);\n    return line && (!actorDefinition(line.speaker) || active.has(line.speaker));\n  };\n  return [\n    ...new Set([\n      ...REACTION_LINES.filter((line) => active.has(line.speaker)).map((line) => line.id),\n      ...originals\n        .filter((line) => line.locale === locale && relevant(line.lineId))\n        .map((line) => line.lineId),\n      ...available.filter(relevant),\n    ]),\n  ].slice(0, 24);\n}"
+    },
+    {
+      "path": "game/ui/contextual-reactions.mjs",
+      "startLine": 410,
+      "endLine": 470,
+      "text": "  function prepare(families) {\n    if (Array.isArray(families))\n      voiceFamilies = [...new Set(families.map(resolveActorFamily).filter(Boolean))].sort();\n    if (\n      closed ||\n      !preferences.snapshot().enabled ||\n      !options.snapshot().speech ||\n      !sound.context ||\n      sound.audioMaster?.muted ||\n      sound.audioMaster?.volume === 0 ||\n      ['playing', 'suspended'].includes(sound.mediaPreparation?.snapshot().phase) ||\n      doc.hidden\n    )\n      return;\n    const locale = getLocale(),\n      context = sound.context,\n      revision = generation;\n    const previous = prepared.get(locale);\n    if (\n      previous?.context === context &&\n      previous.generation === revision &&\n      previous.families === voiceFamilies.join('|') &&\n      Date.now() - previous.time < 30000\n    )\n      return;\n    prepared.set(locale, {\n      context,\n      generation: revision,\n      families: voiceFamilies.join('|'),\n      time: Date.now(),\n    });\n    const warmup = ++warmupRevision,\n      activeFamilies = [...voiceFamilies];\n    // Two bounded asset decoders warm pilot and local recordings before events.\n    // Missing recordings never enqueue or replay an already-expired reaction.\n    void Promise.resolve(voiceLibrary.available?.(locale) ?? [])\n      .then(async (available) => {\n        await cache.ready();\n        const ids = reactionWarmupLineIds({\n          families: activeFamilies,\n          originals: voiceLibrary.originals ?? [],\n          available,\n          locale,\n        });\n        let index = 0;\n        const warm = async () => {\n          while (\n            index < ids.length &&\n            !closed &&\n            generation === revision &&\n            warmup === warmupRevision &&\n            getLocale() === locale &&\n            !doc.hidden &&\n            !['playing', 'suspended'].includes(sound.mediaPreparation?.snapshot().phase) &&\n            sound.context === context\n          )\n            await cache.load(ids[index++], locale, { priority: 'background' });\n        };\n        await Promise.all([warm(), warm()]);\n      })\n      .catch(() => {});"
+    },
+    {
+      "path": "game/ui/contextual-reactions.mjs",
+      "startLine": 505,
+      "endLine": 531,
+      "text": "    const state = options.snapshot(),\n      buffer = cache.get(line.id, getLocale());\n    if (state.speech && speak && buffer) {\n      activeVoice = sound.playDialogue(buffer, {\n        // An accepted result may speak after gameplay SFX are retired. This\n        // never bypasses gesture, full lifecycle pause, mute or dialogue prefs.\n        ui: terminal === true,\n        onended: () => {\n          activeVoice = null;\n          release();\n        },\n      });\n      if (activeVoice) {\n        try {\n          lease = acquireGain({ factor: DIALOGUE_MUSIC_GAIN });\n        } catch {\n          lease = null;\n        }\n        duration = Math.max(duration, buffer.duration * 1000 + 350);\n      }\n    } else if (state.sounds && !terminal && line.family === 'capture') {\n      sound.feedbackDirector?.play('confirm', { gain: 0.12, priority: 1 });\n    }\n    if (!buffer && state.speech) void cache.load(line.id, getLocale());\n    if (!terminal) {\n      captionUntil = Date.now() + duration;\n      timer = setTimeout(hide, duration);"
+    }
+  ],
+  "limits": [
+    "No observed millisecond saving or causality claim.",
+    "Source-scan fix alone does not close every adjacent media-work path.",
+    "No local app/test execution or remote dispatch."
+  ]
+}

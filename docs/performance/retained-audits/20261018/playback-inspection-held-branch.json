@@ -1,0 +1,18 @@
+{
+  "format": "HeldBranchReceiptV1",
+  "createdAt": "2026-10-18T23:25:58.628315+00:00",
+  "branch": "codex/solo-playback-inspection-owner",
+  "head": "3b5c7fb459ec9d1762c8c09d0dc2eeba8ef06933",
+  "tree": "93d369be4d6ac29a113fe091693df245ef68a1ab",
+  "parent": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "proposal": "c5dbf33da538de4fe686347df44fdd7d5da84de3",
+  "peerReview": "58607551daa8d1251e732164e51be93f0e301735",
+  "paths": [
+    "game/soundtrack-source.mjs",
+    "game/ui/soundtrack-player.mjs",
+    "game/test/soundtrack-source.test.mjs",
+    "game/test/soundtrack-player.test.mjs"
+  ],
+  "verification": "Exact before and after bytes/hashes, complete tree union, parent, branch readback and four-path comparison verified. Root and independent peer source review. Static formatting/lint only; twelve new controls unexecuted. No PR or native dispatch.",
+  "releaseOrder": "Held; first CI after finite current cohort/public observation/new draft admissions and #1654 policy update. No ready head modified."
+}

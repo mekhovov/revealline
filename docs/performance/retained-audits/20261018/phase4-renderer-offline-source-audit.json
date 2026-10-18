@@ -1,0 +1,294 @@
+{
+  "schema": "revealline.source-review-audit.v1",
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "asOf": "2026-10-18 23:19:46 UTC",
+  "scope": "Phase4 context recovery/offline ownership and Phase2 MP3 worker boundaries; read-only source review, no new executed acceptance.",
+  "findings": [
+    {
+      "area": "Canvas2D recovery",
+      "status": "Source coverage found; native qualification remains open",
+      "references": [
+        [
+          "game/app.mjs",
+          [
+            494,
+            495,
+            504,
+            2489,
+            10654,
+            13082,
+            13480
+          ]
+        ],
+        [
+          "game/ui/render.mjs",
+          [
+            483,
+            580,
+            699
+          ]
+        ],
+        [
+          "game/ui/analog-signal.mjs",
+          [
+            100,
+            137
+          ]
+        ],
+        [
+          "game/test/solo-performance-host.test.mjs",
+          [
+            403
+          ]
+        ],
+        [
+          "game/test/solo-render-submission.test.mjs",
+          [
+            34
+          ]
+        ],
+        [
+          "game/test/render-performance.test.mjs",
+          [
+            81,
+            272,
+            301
+          ]
+        ]
+      ],
+      "conclusion": "Loss reports distinct surface owners, resets scene clock and invalidates painter/submission caches, pauses authoritative play, rejects Resume while any owner remains lost or page hidden, and requires explicit Resume after restoration. No preventDefault on Canvas2D contextlost found in inspected handlers. Existing source controls cover multiple owners and retirement; no fresh native loss or visual pass inferred."
+    },
+    {
+      "area": "Offline observation and preparation ownership",
+      "status": "No additional concrete defect established by this review; shared-worker/native cross-tab check remains",
+      "references": [
+        [
+          "game/ui/offline-panel.mjs",
+          [
+            46,
+            76
+          ]
+        ],
+        [
+          "game/offline.mjs",
+          [
+            211,
+            375,
+            438
+          ]
+        ],
+        [
+          "game/downloads.mjs",
+          [
+            117,
+            128,
+            516,
+            582
+          ]
+        ],
+        [
+          "game/offline/service-worker.template.js",
+          [
+            243,
+            479
+          ]
+        ],
+        [
+          "game/test/offline.test.mjs",
+          [
+            650,
+            1874,
+            1910,
+            1947
+          ]
+        ],
+        [
+          "game/test/offline-panel.test.mjs",
+          [
+            206
+          ]
+        ]
+      ],
+      "conclusion": "Settings observer aborts only its observation and does not opt into cancelPreparation. Explicit Downloads owns its approved operation and requests opt-in preparation pause; core worker preserves atomic verified checkpoints. Do not add a generic gameplay pause message because the underlying worker is shared. The inspected worker authorizes pause by scope/build, not a new per-tab lease; no new ownership system or broad cancellation is proposed."
+    },
+    {
+      "area": "MP3 worker admission",
+      "status": "Concrete live source bypass; held four-file proposal prepared",
+      "references": [
+        [
+          "game/soundtrack-source.mjs",
+          [
+            80,
+            95,
+            100
+          ]
+        ],
+        [
+          "game/ui/soundtrack-player.mjs",
+          [
+            143,
+            582,
+            614,
+            702
+          ]
+        ],
+        [
+          "game/ui/mp3-inspector.mjs",
+          [
+            104
+          ]
+        ],
+        [
+          "game/mp3-inspection.mjs",
+          [
+            115
+          ]
+        ],
+        [
+          "game/ui/media-preparation.mjs",
+          [
+            43,
+            65
+          ]
+        ],
+        [
+          "game/test/mp3-inspector.test.mjs",
+          [
+            78,
+            116,
+            170,
+            215
+          ]
+        ]
+      ],
+      "conclusion": "Source performs default full inspection before player worker validation; active current/next loading can reach it. Proposed private per-load exact-Blob facts reuse routes source work through existing inspector and retains both pinned comparisons, original deadlines and safe fallback phase. No device-cause or timing claim.",
+      "proposal": {
+        "bytes": 366934,
+        "sha256": "d99532e03e73a8ea26393b98a6829cde0104629bb4aa014b65796e5da80f5cae",
+        "gitBlob": "7cd029569d1b91ccaa50da88803995f97be063ec",
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/7cd029569d1b91ccaa50da88803995f97be063ec"
+      },
+      "closure": {
+        "bytes": 230316,
+        "sha256": "371dea5ced369413094822fb744d8544527aaea23e4de26a5261f8ea74f24beb",
+        "gitBlob": "4a25fcfc074111646d0aa842811bb8f961859b5a",
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/4a25fcfc074111646d0aa842811bb8f961859b5a"
+      }
+    }
+  ],
+  "sourceReceipts": [
+    {
+      "path": "game/app.mjs",
+      "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "bytes": 619315,
+      "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "gitBlob": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+      "bytes": 64882,
+      "sha256": "ce86a96a38d9fc636ef11bd4cb7ff469b7592d8b25f0c695f646ebfbcb9f1798"
+    },
+    {
+      "path": "game/ui/analog-signal.mjs",
+      "gitBlob": "815973287f40f39bc7d5cf3630d11ccaa3b51833",
+      "bytes": 6187,
+      "sha256": "ffabbc99b5892f309962fd8b53ef36ae6b1af690b4c3776a6382d6f5cf33534c"
+    },
+    {
+      "path": "game/ui/offline-panel.mjs",
+      "gitBlob": "fc77b99bda5839087a04ded2b49512231f65a540",
+      "bytes": 5014,
+      "sha256": "cb73ffd2eb536e577e7a604a7e5cf76de5a06ea6dd119585c7d3e66d9be22280"
+    },
+    {
+      "path": "game/offline.mjs",
+      "gitBlob": "36a7a1c10ba570bf0d035d670d71706ea21bf71f",
+      "bytes": 21132,
+      "sha256": "0e522b848534421dc6a66a9e8170562fb9c7a052d18f50e0657239c6cf5f5fee"
+    },
+    {
+      "path": "game/downloads.mjs",
+      "gitBlob": "847de8d88f3c8fbdefbf3c81ac575913f9b695e5",
+      "bytes": 38787,
+      "sha256": "9846e6382b6b5f0cc1b911748d94aeed6861400bb0ea803f143ec89f799708a5"
+    },
+    {
+      "path": "game/offline/service-worker.template.js",
+      "gitBlob": "6ec645638f74266fe92318159f608bb6489d0b35",
+      "bytes": 20030,
+      "sha256": "f4eef36f40a74fb30fc4597ce3591d1a1d09903bba8a7b7e0dadf005ab1e3056"
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "gitBlob": "7a0d3b7d7d6fad7c9d545cfaa54afe892f155505",
+      "bytes": 4918,
+      "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "gitBlob": "fc2c8b5bd334ecb589ae32022e8158c8b0618f4a",
+      "bytes": 62236,
+      "sha256": "63ce0b026ff6dfdc5a165cfba0e0049e6dd6fb6560a26fa6d69abf259b7f1115"
+    },
+    {
+      "path": "game/ui/mp3-inspector.mjs",
+      "gitBlob": "7635aa12b27d0fcff28301688199f1a6ea2c2cef",
+      "bytes": 4084,
+      "sha256": "55e366fab87020cf84176b6fec678e62abd5fbdbe8b44be5715d48bd19ef2533"
+    },
+    {
+      "path": "game/mp3-inspection.mjs",
+      "gitBlob": "962e33c0c9d69673e1915f69cc52bcff03a6e7e4",
+      "bytes": 5487,
+      "sha256": "ca767a143f1aa51a8327c63df0926af3a197f90b08e8965c60f9514331b14fa1"
+    },
+    {
+      "path": "game/ui/media-preparation.mjs",
+      "gitBlob": "be4547b8ff6eb740e79b968b1f4a2860a5f5d8fd",
+      "bytes": 5332,
+      "sha256": "9f6ca3ff23a673d1f39e0df49f84ec747a2a59a3530cc7c1ba562f7e42a620ad"
+    },
+    {
+      "path": "game/test/solo-performance-host.test.mjs",
+      "gitBlob": "eb536af63b77f3dc3cb1cb5b4c376d0f49441b00",
+      "bytes": 33127,
+      "sha256": "3d8313f0707ce92720025e18b129cb12fb51a6c38c7222214d588886a18f246d"
+    },
+    {
+      "path": "game/test/solo-render-submission.test.mjs",
+      "gitBlob": "af62acbde72267361362c43500106986e7082957",
+      "bytes": 22982,
+      "sha256": "27432bd746d8cd356e317c158016e57938a8d8f76a7f0a6fea80c170a2785e4e"
+    },
+    {
+      "path": "game/test/render-performance.test.mjs",
+      "gitBlob": "346d0c2de394f12e31b86deb97c222d46bcc578b",
+      "bytes": 12931,
+      "sha256": "f47136698cd554c36fc350784d40a8faa8e908e87ac40d2c3d593ff3b26e1d9c"
+    },
+    {
+      "path": "game/test/offline.test.mjs",
+      "gitBlob": "5ac6792c317ff855f40400c82921b32f41c0424a",
+      "bytes": 86959,
+      "sha256": "d3cf55f8b6a3335ba35fa53a5cea94a7e12eff21a97f178e62138e33128a7297"
+    },
+    {
+      "path": "game/test/offline-panel.test.mjs",
+      "gitBlob": "3bc6ead3f6e6869f386f3de427c6035afc958da5",
+      "bytes": 15768,
+      "sha256": "f8043e58d9221344cc113a37314a2b701da6cee0f1615ec704f16bfe2dffb7ce"
+    },
+    {
+      "path": "game/test/mp3-inspector.test.mjs",
+      "gitBlob": "716aca12104606e49611bb0bc2ee719e8cd9cb1d",
+      "bytes": 8145,
+      "sha256": "d8cd6e78ddddb66d51b33f5e4662bbbc92ce4f39e9aaacc445cf215f88a9674b"
+    }
+  ],
+  "remaining": [
+    "Remote complete controls/build/offline closure and native music transition qualification for new proposal.",
+    "Final-runtime native context restoration, background/foreground and shared-worker cross-tab scenarios.",
+    "Physical iPhone17Pro Safari and SteamDeckOLED Chrome remain unavailable."
+  ]
+}

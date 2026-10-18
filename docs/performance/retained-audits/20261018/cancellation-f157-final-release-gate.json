@@ -1,0 +1,50 @@
+{
+  "format": "FinalGateReceiptV1",
+  "observedAt": "2026-10-18T23:26:29.862503+00:00",
+  "pullRequest": 1654,
+  "head": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+  "draft": true,
+  "merged": false,
+  "run": {
+    "id": 39160878387,
+    "status": "completed",
+    "conclusion": "success",
+    "updatedAt": "2026-10-18T22:53:53Z"
+  },
+  "finalGate": {
+    "id": 117803949673,
+    "name": "release-ready",
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-10-18T22:53:50Z",
+    "completed_at": "2026-10-18T22:53:53Z",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T22:53:50Z",
+        "completed_at": "2026-10-18T22:53:51Z"
+      },
+      {
+        "name": "Apply the selected PR gate policy",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-18T22:53:51Z",
+        "completed_at": "2026-10-18T22:53:51Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-18T22:53:51Z",
+        "completed_at": "2026-10-18T22:53:51Z"
+      }
+    ]
+  },
+  "log": "\ufeff2026-10-18T22:53:50.9996382Z Current runner version: '2.337.0'\n2026-10-18T22:53:51.0015659Z ##[group]Runner Image Provisioner\n2026-10-18T22:53:51.0016183Z Hosted Compute Agent\n2026-10-18T22:53:51.0016601Z Version: 20261012.601\n2026-10-18T22:53:51.0016976Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-18T22:53:51.0017464Z Build Date: 2026-10-12T17:48:21Z\n2026-10-18T22:53:51.0017915Z Worker ID: {55929524-6916-4f1c-920f-cdf1e791d131}\n2026-10-18T22:53:51.0018315Z Region: centralus\n2026-10-18T22:53:51.0018700Z Cloud: Azure\n2026-10-18T22:53:51.0019024Z ##[endgroup]\n2026-10-18T22:53:51.0019867Z ##[group]Operating System\n2026-10-18T22:53:51.0020230Z Ubuntu\n2026-10-18T22:53:51.0020544Z 24.04.5\n2026-10-18T22:53:51.0020889Z LTS\n2026-10-18T22:53:51.0021197Z ##[endgroup]\n2026-10-18T22:53:51.0021546Z ##[group]Runner Image\n2026-10-18T22:53:51.0021971Z Image: ubuntu-24.04\n2026-10-18T22:53:51.0022310Z Version: 20261012.334.1\n2026-10-18T22:53:51.0023093Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-18T22:53:51.0024196Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-18T22:53:51.0024782Z ##[endgroup]\n2026-10-18T22:53:51.0025407Z ##[group]GITHUB_TOKEN Permissions\n2026-10-18T22:53:51.0026883Z Contents: read\n2026-10-18T22:53:51.0027274Z Metadata: read\n2026-10-18T22:53:51.0027658Z ##[endgroup]\n2026-10-18T22:53:51.0029213Z Secret source: Actions\n2026-10-18T22:53:51.0029811Z Cache mode: write\n2026-10-18T22:53:51.0030362Z Prepare workflow directory\n2026-10-18T22:53:51.0239671Z Prepare all required actions\n2026-10-18T22:53:51.0309658Z Complete job name: release-ready\n2026-10-18T22:53:51.0820708Z ##[group]Run test \"$PREFLIGHT_RESULT\" = success\n2026-10-18T22:53:51.0821279Z test \"$PREFLIGHT_RESULT\" = success\n2026-10-18T22:53:51.0821763Z if [ \"$ADMISSION\" != hold ]; then\n2026-10-18T22:53:51.0822320Z   if [ \"$FOCUSED_REQUIRED\" = true ]; then\n2026-10-18T22:53:51.0822770Z     test \"$FOCUSED_RESULT\" = success\n2026-10-18T22:53:51.0823185Z   else\n2026-10-18T22:53:51.0823540Z     test \"$FOCUSED_REQUIRED\" = false\n2026-10-18T22:53:51.0824123Z     test \"$FOCUSED_RESULT\" = skipped\n2026-10-18T22:53:51.0824540Z   fi\n2026-10-18T22:53:51.0824868Z fi\n2026-10-18T22:53:51.0825216Z if [ \"$ADMISSION\" = maintenance ]; then\n2026-10-18T22:53:51.0826041Z   echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'\n2026-10-18T22:53:51.0826863Z   exit 0\n2026-10-18T22:53:51.0827269Z fi\n2026-10-18T22:53:51.0827641Z if [ \"$ADMISSION\" = scheduled ]; then\n2026-10-18T22:53:51.0828308Z   echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'\n2026-10-18T22:53:51.0829009Z   exit 0\n2026-10-18T22:53:51.0829351Z fi\n2026-10-18T22:53:51.0829691Z if [ \"$ADMISSION\" = release-evidence ]; then\n2026-10-18T22:53:51.0830421Z   echo 'Docs-only post-merge release evidence: exact-source validation is required without allocating another product version.'\n2026-10-18T22:53:51.0831092Z   test \"$BUILD_RESULT\" = success\n2026-10-18T22:53:51.0831496Z   exit 0\n2026-10-18T22:53:51.0831850Z fi\n2026-10-18T22:53:51.0832233Z if [ \"$ADMISSION\" != release ]; then\n2026-10-18T22:53:51.0832987Z   echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'\n2026-10-18T22:53:51.0833706Z   exit 1\n2026-10-18T22:53:51.0834138Z fi\n2026-10-18T22:53:51.0834489Z test \"$BUILD_RESULT\" = success\n2026-10-18T22:53:51.0834860Z if [ \"$FULL_CI\" = true ]; then\n2026-10-18T22:53:51.0835290Z   test \"$TEST_RESULT\" = success\n2026-10-18T22:53:51.0835854Z else\n2026-10-18T22:53:51.0836329Z   echo \"Full tests are deferred and do not block this PR.\"\n2026-10-18T22:53:51.0836766Z fi\n2026-10-18T22:53:51.1658375Z shell: /usr/bin/bash -e {0}\n2026-10-18T22:53:51.1659133Z env:\n2026-10-18T22:53:51.1659494Z   ADMISSION: maintenance\n2026-10-18T22:53:51.1659907Z   BUILD_RESULT: skipped\n2026-10-18T22:53:51.1660302Z   FOCUSED_RESULT: success\n2026-10-18T22:53:51.1660708Z   FOCUSED_REQUIRED: true\n2026-10-18T22:53:51.1661101Z   FULL_CI: false\n2026-10-18T22:53:51.1661480Z   PREFLIGHT_RESULT: success\n2026-10-18T22:53:51.1661882Z   TEST_RESULT: skipped\n2026-10-18T22:53:51.1662284Z ##[endgroup]\n2026-10-18T22:53:51.1843516Z Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.\n2026-10-18T22:53:51.1943299Z Cleaning up orphan processes\n",
+  "limit": "Source release gate only. Current policy hold is unchanged through current release/public observation and #1674/#1675/#1676. Fresh-main policy reconciliation still required; no current ready receipt invalidated."
+}

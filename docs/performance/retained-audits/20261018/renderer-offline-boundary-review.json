@@ -1,0 +1,72 @@
+{
+  "format": "SourceBoundaryReviewV1",
+  "createdAt": "2026-10-18T23:14:51.711691+00:00",
+  "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "files": [
+    {
+      "path": "game/app.mjs",
+      "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "bytes": 619315,
+      "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "gitBlob": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+      "bytes": 64882,
+      "sha256": "ce86a96a38d9fc636ef11bd4cb7ff469b7592d8b25f0c695f646ebfbcb9f1798"
+    },
+    {
+      "path": "game/offline.mjs",
+      "gitBlob": "36a7a1c10ba570bf0d035d670d71706ea21bf71f",
+      "bytes": 21132,
+      "sha256": "0e522b848534421dc6a66a9e8170562fb9c7a052d18f50e0657239c6cf5f5fee"
+    },
+    {
+      "path": "game/ui/offline-panel.mjs",
+      "gitBlob": "fc77b99bda5839087a04ded2b49512231f65a540",
+      "bytes": 5014,
+      "sha256": "cb73ffd2eb536e577e7a604a7e5cf76de5a06ea6dd119585c7d3e66d9be22280"
+    },
+    {
+      "path": "game/test/render-performance.test.mjs",
+      "gitBlob": "346d0c2de394f12e31b86deb97c222d46bcc578b",
+      "bytes": 12931,
+      "sha256": "f47136698cd554c36fc350784d40a8faa8e908e87ac40d2c3d593ff3b26e1d9c"
+    },
+    {
+      "path": "game/test/solo-cadence-readiness-host.test.mjs",
+      "gitBlob": "10d57a3a923f4b83db3978ddcb248a8fd800e517",
+      "bytes": 19564,
+      "sha256": "a05bc8de2d7e8bf11eb51d327e2770fe2ca4503f5b97af53a53559d083b2e46a"
+    },
+    {
+      "path": "game/test/demo-context-recovery-host.test.mjs",
+      "gitBlob": "8c443e7f2ff158caf75ea6593c43cb9aefb139a1",
+      "bytes": 17732,
+      "sha256": "4f846ed493b9f60029c7606025de1aba67ffcc1d074db90a013521dbae137716"
+    }
+  ],
+  "findings": [
+    {
+      "boundary": "Displayed and owned Canvas2D interruption",
+      "source": "app.mjs:494-509,2489-2491,13082-13110",
+      "finding": "Loss records owner, invalidates submission, resets clock and pauses. Restore clears only that owner and invalidates painter after all owners return. Display and detached board listeners restore transform and smoothing, never preventDefault; pagehide retires listeners only outside BFCache."
+    },
+    {
+      "boundary": "Cached painter surfaces",
+      "source": "render.mjs:475-495, owned layer listeners,695-725",
+      "finding": "Retirement removes context listeners and zeroes owned canvas storage; retiring a lost owner settles that owner's marker. Invalidation clears layer registry before retiring entries, so restoration callbacks cannot recursively revisit the same layer. Procedural scene art regenerates original accepted theme/level/seed on restoration."
+    },
+    {
+      "boundary": "Existing source controls",
+      "finding": "render-performance covers capture/erosion/equal-coverage topology, owner context loss without preventDefault, multiple lost surfaces, procedural picture/ground rebuild and late-decode reservations. Solo cadence host covers loss during pending readiness; Demo host covers displayed/scratch/multiple-owner/lifecycle recovery. This review did not execute these tests or establish new native recovery results."
+    },
+    {
+      "boundary": "Offline pause ownership",
+      "source": "offline.mjs:211-219,375-387,418-447;offline-panel.mjs",
+      "finding": "prepareOffline requires deliberate caller action. Ordinary observation cancellation detaches; worker pause is sent only for explicit cancelPreparation with a download catalogue. The common panel describes itself as an observer and detaches on close/pagehide, preserving independent explicit installation. No new automatic Main startup bulk preparation or permission to cancel another tab was inferred."
+    }
+  ],
+  "decision": "No additional renderer/offline source change from these inspected boundaries; retain existing ownership and separately qualify actual native restoration/offline scenarios.",
+  "limits": "Targeted source review only, not an exhaustive whole-app absence-of-bugs proof. Local functional tests, generators, builds and browser work remain suspended."
+}
