@@ -127,6 +127,39 @@ test('Settings recovery stays lazy, uses the supplied version and keeps Settings
   assert.equal(h.calls.closes, 1);
 });
 
+test('native child close refreshes entry without bypassing busy restrictions or retaining a disposed listener', async () => {
+  let reason = 'Finish the pending save first.',
+    checks = 0;
+  const h = fixture({ unavailable: () => (checks++, reason) });
+  const child = h.doc.createElement('dialog');
+  h.doc.body.append(child);
+  child.showModal();
+  child.close();
+  assert.equal(h.$('open').disabled, true);
+  assert.equal(h.$('entry-status').textContent, reason);
+  reason = '';
+  child.showModal();
+  child.close();
+  assert.equal(h.$('open').disabled, false);
+  assert.equal(h.calls.loads, 0, 'Returning does not open or prepare recovery');
+  await h.host.open();
+  child.showModal();
+  child.close();
+  assert.equal(h.$('open').disabled, true, 'The current recovery reader still owns entry');
+  await h.host.close();
+  h.settings.open = false;
+  const hiddenChecks = checks;
+  child.showModal();
+  child.close();
+  assert.equal(checks, hiddenChecks, 'Closed Settings does not refresh unrelated tools');
+  h.settings.open = true;
+  await h.host.dispose();
+  const disposedChecks = checks;
+  child.showModal();
+  child.close();
+  assert.equal(checks, disposedChecks);
+});
+
 test('Escape and Back join pending reader cleanup and revoke raw URLs before native close', async () => {
   const pending = deferred();
   let closes = 0;
