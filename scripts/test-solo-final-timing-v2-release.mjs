@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
+import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';
 import test from 'node:test';
 import {
   timingMatrix,
@@ -18,8 +18,7 @@ import {
   historicalPageErrorRefs,
   readHistoricalPageErrorRefs,
 } from './solo-page-error-source-witness.mjs';
-const root = new URL('../', import.meta.url);
-const read = (path) => readFile(new URL(path, root));
+const read = readSoloDiagnosticSource;
 const originalSoak = JSON.parse(await read('docs/performance/solo-final-soak-plan.json'));
 const stages = [
   'cold-first30',
