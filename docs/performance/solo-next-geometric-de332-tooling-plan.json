@@ -223,8 +223,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 89944,
-      "sha256": "b96e56d302ca2fd0a9e7d0dfaee09c1cc6b49108792ab3c16c47c53a0b5a567d"
+      "bytes": 91250,
+      "sha256": "978a4383294f764f8c14f751902221ae09465329b196d2050fa7283a368b3a59"
     }
   ],
   "frozenTools": [
@@ -310,8 +310,8 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 90506,
-      "sha256": "930d90a6df8b4af6cd351a782b6bf473a2b464c1ca99a42a00d3259dc4f64689"
+      "bytes": 90635,
+      "sha256": "d1b08eaa79dfe88c32407196c206fe64318988ed17ad378f2dcf6a22546f226d"
     },
     {
       "path": "scripts/reviewed-soundtrack-batches.mjs",
@@ -320,8 +320,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 72137,
-      "sha256": "a478ba10d5a3ea7a1f9e6b9d29cf88bcaeadff1e729fd12cc575672c07554573"
+      "bytes": 74631,
+      "sha256": "eed1a4931bdd3472464a7f3fdef3e210a17dee606703ec5df98e70d035b9859a"
     },
     {
       "path": "scripts/serve-production-preview.mjs",

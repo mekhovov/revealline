@@ -282,10 +282,11 @@ test('Next is explicit main-branch manual selection only, never a PR event or au
 
 test('current helper digest mismatch rejects before any package or native operation', async () => {
   const target = 'scripts/run-solo-remote-correctness.mjs';
+  const currentPlan = await json('docs/performance/solo-next-geometric-de332-tooling-plan.json');
   let sideEffects = 0;
   await assert.rejects(
     prepareSustainedMode({
-      plan: bindSustainedJob(plan, 'webkit', 1),
+      plan: bindSustainedJob(currentPlan, 'webkit', 1),
       repository: process.cwd(),
       digest: async (path) => {
         const b = await readFile(path);

@@ -1489,6 +1489,164 @@ test('actual owner opts in only to the exact identity evidence protocol when the
 });
 
 const compactMaps = (m) => captureIdentityMaps(m, true, 'identity-maps-v2');
+
+function cocoaLauncherModel() {
+  const m = shellAmbiguityModel();
+  m.all.delete(m.row.pid);
+  // Actual first latch from run39098132775 attempt2. Later identities below
+  // are modeled; that run retained no successor identity for PID3527.
+  m.row = {
+    ...m.row,
+    pid: 3527,
+    pgid: 1,
+    birth: '00000000000000003527',
+    version: 7300,
+    argv: '/usr/libexec/xpcproxy',
+  };
+  m.all.set(m.row.pid, m.row);
+  m.record.violation = 'unattributed-new-browser';
+  m.record.status = 'failed';
+  m.record.forcedCleanup = true;
+  return m;
+}
+
+test('V2 cleanup follow-up preserves first failure and later same-lifetime exec without ownership', () => {
+  const m = cocoaLauncherModel(),
+    plain = cocoaLauncherModel();
+  assert.deepEqual(compactMaps(m), collectModel(plain));
+  assert.equal(m.record.firstAmbiguousIdentityFollowup, undefined);
+  const first = structuredClone(m.record.firstAmbiguousInventory);
+  const maps = structuredClone(m.record.firstAmbiguousIdentityMaps);
+  const owned = structuredClone(m.owned);
+  assert.deepEqual(compactMaps(m), collectModel(plain));
+  assert.equal(m.record.firstAmbiguousIdentityFollowup.last.kind, 'same-exec-identity');
+  assert.equal(m.record.firstAmbiguousIdentityFollowup.firstChange, null);
+  const successor = {
+    ...m.row,
+    version: 7301,
+    pgid: m.row.pid,
+    argv: observedMetalCompilerModel().row.argv,
+  };
+  m.all.set(successor.pid, successor);
+  plain.all.set(successor.pid, { ...successor });
+  assert.deepEqual(compactMaps(m), collectModel(plain));
+  const followup = structuredClone(m.record.firstAmbiguousIdentityFollowup);
+  assert.equal(followup.firstChange.kind, 'later-exec-version');
+  const [retained] = JSON.parse(followup.firstChange.snapshot.rowsJSON);
+  assert.equal(retained.pid, 3527);
+  assert.equal(retained.birth, first.row.birth);
+  assert.equal(retained.version, 7301);
+  assert.equal(retained.executable, successor.argv);
+  assert.equal(retained.rss, null);
+  assert.equal(retained.ownerTagged, null);
+  successor.argv = '/mutated-after-read';
+  assert.equal(
+    JSON.parse(followup.firstChange.snapshot.rowsJSON)[0].executable,
+    retained.executable,
+  );
+  m.all.delete(3527);
+  plain.all.delete(3527);
+  assert.deepEqual(compactMaps(m), collectModel(plain));
+  assert.equal(m.record.firstAmbiguousIdentityFollowup.last.kind, 'absent');
+  assert.equal(m.record.firstAmbiguousIdentityFollowup.last.snapshot, null);
+  assert.deepEqual(m.record.firstAmbiguousIdentityFollowup.firstChange, followup.firstChange);
+  assert.deepEqual(m.record.firstAmbiguousInventory, first);
+  assert.deepEqual(m.record.firstAmbiguousIdentityMaps, maps);
+  assert.deepEqual(m.owned, owned);
+  assert.equal(m.record.violation, 'unattributed-new-browser');
+  assert.equal(m.record.status, 'failed');
+  assert.equal(m.record.forcedCleanup, true);
+});
+
+test('V2 follow-up never exempts browser exec, PID reuse, missing rows or incomplete identity', () => {
+  for (const [patch, kind] of [
+    [{ version: 7301, argv: '/unowned/WebKitWebProcess' }, 'later-exec-version'],
+    [{ birth: '00000000000000999999', argv: '/unowned/WebKitWebProcess' }, 'pid-reused'],
+    [{ version: 7299 }, 'inconsistent-exec-identity'],
+    [{ argv: '/unowned/WebKitWebProcess' }, 'inconsistent-exec-identity'],
+    [{ pathInspection: 'unavailable', argv: 'untrusted fallback' }, 'path-unavailable'],
+    [{ version: -1 }, 'identity-unavailable'],
+    [null, 'absent'],
+  ]) {
+    const m = cocoaLauncherModel(),
+      plain = cocoaLauncherModel();
+    compactMaps(m);
+    collectModel(plain);
+    for (const model of [m, plain]) {
+      if (patch) model.all.set(3527, { ...model.row, ...patch });
+      else model.all.delete(3527);
+    }
+    assert.deepEqual(compactMaps(m), collectModel(plain));
+    assert.equal(m.record.firstAmbiguousIdentityFollowup.last.kind, kind);
+    const snapshot = m.record.firstAmbiguousIdentityFollowup.last.snapshot;
+    if (kind === 'path-unavailable')
+      assert.equal(JSON.parse(snapshot.rowsJSON)[0].executable, null);
+    if (kind === 'identity-unavailable') assert.equal(snapshot.status, 'unavailable');
+    assert(!m.owned.has(3527));
+    assert.equal(m.record.violation, 'unattributed-new-browser');
+    assert.equal(m.record.status, 'failed');
+  }
+});
+
+test('V2 follow-up is absent for ordinary, V1, Linux and noneligible original latches', () => {
+  for (const [darwin, mode, patch] of [
+    [true, false, {}],
+    [true, true, {}],
+    [false, 'identity-maps-v2', {}],
+    [true, 'identity-maps-v2', { argv: '/bin/bash' }],
+    [true, 'identity-maps-v2', { euid: 501 }],
+    [true, 'identity-maps-v2', { pgid: 3527 }],
+    [true, 'identity-maps-v2', { pathInspection: 'unavailable' }],
+  ]) {
+    const m = cocoaLauncherModel();
+    Object.assign(m.row, patch);
+    captureIdentityMaps(m, darwin, mode);
+    m.all.delete(3527);
+    captureIdentityMaps(m, darwin, mode);
+    assert.equal(m.record.firstAmbiguousIdentityFollowup, undefined);
+  }
+});
+
+test('V2 follow-up retains fixed-size immutable snapshots across repeated existing inventories', () => {
+  const m = cocoaLauncherModel();
+  compactMaps(m);
+  for (let version = 7301; version < 8000; version++) {
+    m.all.set(3527, { ...m.row, version, argv: '/unowned/WebKitWebProcess' });
+    assert.equal(compactMaps(m).length, 1);
+  }
+  const proof = m.record.firstAmbiguousIdentityFollowup;
+  assert.equal(JSON.parse(proof.firstChange.snapshot.rowsJSON)[0].version, 7301);
+  assert.equal(JSON.parse(proof.last.snapshot.rowsJSON)[0].version, 7999);
+  assert.equal(Object.keys(proof).length, 6);
+  assert(
+    Buffer.byteLength(JSON.stringify(proof, null, 2).replace(/^/gm, ' '.repeat(24))) <= 16 * 1024,
+  );
+  assert(Buffer.byteLength(JSON.stringify(m.record, null, 2)) < 1024 * 1024);
+  assert.equal(m.record.violation, 'unattributed-new-browser');
+});
+
+test('V2 follow-up reports escaped-byte overflow without truncating or granting classification', () => {
+  let overflow;
+  for (let length = 700; length <= 1900; length += 100) {
+    const m = cocoaLauncherModel();
+    compactMaps(m);
+    m.all.set(3527, { ...m.row, version: 7301, argv: '/"'.repeat(length) });
+    assert.equal(compactMaps(m).length, 1);
+    if (m.record.firstAmbiguousIdentityFollowup.status === 'overflow') {
+      overflow = m;
+      break;
+    }
+  }
+  assert(overflow, 'Actual escaped enclosing snapshot reaches its fixed cap');
+  const retained = structuredClone(overflow.record.firstAmbiguousIdentityFollowup);
+  assert.equal(retained.firstChange, null);
+  assert.equal(retained.last, null);
+  assert(retained.minimumSerializationBytes > retained.maximumBytes);
+  overflow.all.delete(3527);
+  compactMaps(overflow);
+  assert.deepEqual(overflow.record.firstAmbiguousIdentityFollowup, retained);
+  assert.equal(overflow.record.violation, 'unattributed-new-browser');
+});
 const nestedIdentityBytes = (snapshot) =>
   Buffer.byteLength(JSON.stringify(snapshot, null, 2).replace(/^/gm, ' '.repeat(24)));
 

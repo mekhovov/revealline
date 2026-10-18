@@ -1130,7 +1130,10 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         locator = action.selector ? page.locator(action.selector) : null;
       try {
         if (selectedFontSettlement && action.label === 'selected-theme') {
-          selectedFontSettlementOwner = readinessModule.createSelectedFontSettlementOwner({ page });
+          selectedFontSettlementOwner = readinessModule.createSelectedFontSettlementOwner({
+            page,
+            sourceRevision: readinessOptions.sourceRevision,
+          });
           await selectedFontSettlementOwner.install();
           report.selectedFontSettlement = selectedFontSettlementOwner.snapshot();
         }
@@ -1953,6 +1956,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             readinessDocuments,
             report.selectedFontTransport,
             report.selectedFontSettlement,
+            readinessOptions.sourceRevision,
           )
         : selectedFontPostCommand
           ? readinessModule.assessSelectedFontPostCommandReadiness(

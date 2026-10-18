@@ -409,6 +409,73 @@ function ambiguityIdentityMaps(before, all, owned, leaderPid, compact = false) {
   };
 }
 
+// Reuse only inventories already collected after the first failure. Never wait
+// for an exec, query another process, or feed this evidence back into admission.
+function retainAmbiguousIdentityFollowup(all, record) {
+  const first = record.firstAmbiguousInventory?.row;
+  if (
+    record.firstAmbiguousIdentityMaps?.format !== 'SoloFirstAmbiguousIdentityMapsV2' ||
+    !darwinKernelIdentity(first) ||
+    first.state !== 'R' ||
+    first.euid !== 0 ||
+    first.ruid !== 0 ||
+    first.ppid !== 1 ||
+    first.pgid !== 1 ||
+    first.parentUniqueId !== '1' ||
+    first.pathInspection !== 'complete' ||
+    first.argv !== '/usr/libexec/xpcproxy' ||
+    first.argvTruncated !== false ||
+    first.argvCodeUnits !== first.argv.length ||
+    record.firstAmbiguousIdentityFollowup?.status === 'overflow'
+  )
+    return;
+  const row = all.get(first.pid);
+  const snapshot = row
+    ? ambiguityIdentityMap(new Map([[first.pid, row]]), 8 * 1024, false, true)
+    : null;
+  const kind = !row
+    ? 'absent'
+    : snapshot.status !== 'complete'
+      ? 'identity-unavailable'
+      : row.birth !== first.birth
+        ? 'pid-reused'
+        : row.version < first.version ||
+            (row.version === first.version &&
+              row.pathInspection === 'complete' &&
+              row.argv !== first.argv)
+          ? 'inconsistent-exec-identity'
+          : row.version > first.version
+            ? 'later-exec-version'
+            : row.pathInspection !== 'complete'
+              ? 'path-unavailable'
+              : 'same-exec-identity';
+  const last = { kind, snapshot };
+  const next = {
+    format: 'SoloFirstAmbiguousIdentityFollowupV1',
+    status: 'observed',
+    maximumBytes: 16 * 1024,
+    scope:
+      'Later existing inventories only; no service, ownership, signalling or closure authority.',
+    firstChange:
+      record.firstAmbiguousIdentityFollowup?.firstChange ??
+      (kind === 'same-exec-identity' ? null : last),
+    last,
+  };
+  const bytes = Buffer.byteLength(JSON.stringify(next, null, 2).replace(/^/gm, ' '.repeat(24)));
+  record.firstAmbiguousIdentityFollowup =
+    bytes <= next.maximumBytes
+      ? next
+      : {
+          format: next.format,
+          status: 'overflow',
+          reason: 'byte-cap',
+          maximumBytes: next.maximumBytes,
+          minimumSerializationBytes: bytes,
+          firstChange: null,
+          last: null,
+        };
+}
+
 export function collectUnattributedProcesses(
   all,
   before,
@@ -418,6 +485,8 @@ export function collectUnattributedProcesses(
   darwin = false,
   retainInventories = false,
 ) {
+  if (darwin && retainInventories === 'identity-maps-v2')
+    retainAmbiguousIdentityFollowup(all, record);
   const ambiguous = [];
   for (const row of all.values()) {
     if (

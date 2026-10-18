@@ -153,8 +153,8 @@
     },
     {
       "path": "scripts/run-solo-remote-correctness.mjs",
-      "bytes": 72137,
-      "sha256": "a478ba10d5a3ea7a1f9e6b9d29cf88bcaeadff1e729fd12cc575672c07554573"
+      "bytes": 74631,
+      "sha256": "eed1a4931bdd3472464a7f3fdef3e210a17dee606703ec5df98e70d035b9859a"
     },
     {
       "path": "scripts/serve-production-preview.mjs",

@@ -160,6 +160,46 @@ export const COMPACT_WARM_READINESS_PILOT = Object.freeze({
   scenarioSHA256: 'bc65978e26f21507b84d8c999928c069478b0ac1d91fc4866a2c2a7616314829',
   geometryObservation: 'phase-boundary-v1',
 });
+export const DE332_READINESS_REVISION = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+export const DE332_READINESS_PILOTS = Object.freeze({
+  'first-running-v1': Object.freeze({
+    ...geometryReadinessPilot('first-running-v1'),
+    sourceRevision: DE332_READINESS_REVISION,
+  }),
+  'warm-resume-v1': Object.freeze({
+    ...COMPACT_WARM_READINESS_PILOT,
+    sourceRevision: DE332_READINESS_REVISION,
+  }),
+  'saved-resume-v1': Object.freeze({
+    ...geometryReadinessPilot('saved-resume-v1'),
+    sourceRevision: DE332_READINESS_REVISION,
+  }),
+  'selected-font-request-settlement-v4': Object.freeze({
+    ...SELECTED_FONT_SETTLEMENT_PILOT,
+    sourceRevision: DE332_READINESS_REVISION,
+    scenarioSHA256: '10e8ea2983a25dc3c7a4c5ff90a906256b1acf9ddd3f935faf9e0ce3b600565f',
+  }),
+  'required-original-cancel-v1': Object.freeze({
+    ...REQUIRED_ORIGINAL_START_PILOT,
+    sourceRevision: DE332_READINESS_REVISION,
+    scenarioSHA256: '88f5c21bd2bbd5f75eb99bcb848e053e1b6b96632ae49e7f4c870a0aed9c46a6',
+  }),
+  'optional-icon-missing-v1': Object.freeze({
+    ...MEDIA_FAULT_PILOTS['optional-icon-missing-v1'],
+    sourceRevision: DE332_READINESS_REVISION,
+    scenarioSHA256: '2fe33ea0291018b09174338ac777a66ae62b22ccc9c911e02d4af1dcbe0ca1b7',
+  }),
+});
+export function selectedFontSourceBinding(sourceRevision = SELECTED_FONT_SOURCE_BINDING.revision) {
+  assert(
+    [SELECTED_FONT_SOURCE_BINDING.revision, DE332_READINESS_REVISION].includes(sourceRevision),
+    'Undeclared font source binding',
+  );
+  return sourceRevision === SELECTED_FONT_SOURCE_BINDING.revision
+    ? SELECTED_FONT_SOURCE_BINDING
+    : Object.freeze({ ...SELECTED_FONT_SOURCE_BINDING, revision: DE332_READINESS_REVISION });
+}
+
 export function qualificationReadinessOptions(flags, scenario, bytes) {
   const selected = flags.filter((flag) => flag.startsWith('--readiness-probe'));
   const requiredStart = flags.filter((flag) => flag.startsWith('--readiness-required-start'));
@@ -208,9 +248,11 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
   const successorSaved =
     protocol === 'saved-resume-v1' &&
     flags.includes('--source-revision=c696af41857840359ae473558b90682f3d71f2db');
-  const pilot =
-    protocol === 'optional-audio-start-missing-v1' &&
-    scenario.mediaReadinessFault?.route === 'settings-gameplay-v2'
+  const de332 = flags.includes('--source-revision=' + DE332_READINESS_REVISION);
+  const pilot = de332
+    ? DE332_READINESS_PILOTS[protocol]
+    : protocol === 'optional-audio-start-missing-v1' &&
+        scenario.mediaReadinessFault?.route === 'settings-gameplay-v2'
       ? OPTIONAL_AUDIO_SETTINGS_PILOT
       : requiredStart.length
         ? REQUIRED_ORIGINAL_START_PILOT
@@ -235,6 +277,10 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
                       ? SELECTED_FONT_SETTLEMENT_PILOT
                       : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
   assert(pilot, 'Unknown readiness protocol');
+  if (de332) {
+    assert.equal(geometry.length, pilot.geometryObservation ? 1 : 0);
+    assert.equal(requiredStart.length, pilot.requiredStartRetention ? 1 : 0);
+  }
   if (MEDIA_FAULT_PILOTS[protocol]) {
     assert.deepEqual(scenario.mediaReadinessFault, {
       protocol,
@@ -260,6 +306,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_JOINED_C696_PILOT,
       SELECTED_FONT_POST_COMMAND_PILOT,
       SELECTED_FONT_SETTLEMENT_PILOT,
+      DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
     ].includes(pilot)
   )
     assert(
@@ -291,6 +338,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_JOINED_C696_PILOT,
       SELECTED_FONT_POST_COMMAND_PILOT,
       SELECTED_FONT_SETTLEMENT_PILOT,
+      DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
     ].includes(pilot)
   ) {
     assert.equal(scenario.kind, 'lifecycle');
@@ -305,7 +353,13 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       ),
     );
   }
-  if ([SELECTED_FONT_POST_COMMAND_PILOT, SELECTED_FONT_SETTLEMENT_PILOT].includes(pilot)) {
+  if (
+    [
+      SELECTED_FONT_POST_COMMAND_PILOT,
+      SELECTED_FONT_SETTLEMENT_PILOT,
+      DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
+    ].includes(pilot)
+  ) {
     assert.equal(scenario.selectedFontCancellation.protocol, pilot.protocol);
     assert.equal(scenario.selectedFontCancellation.sourceRevision, pilot.sourceRevision);
   }
@@ -3295,10 +3349,12 @@ export function createSelectedFontSettlementProbe(environment = globalThis) {
 // deadline. Unsettled native work never authorizes the next public action.
 export function createSelectedFontSettlementOwner({
   page,
+  sourceRevision = SELECTED_FONT_SOURCE_BINDING.revision,
   now = () => performance.now(),
   setTimer = setTimeout,
   clearTimer = clearTimeout,
 }) {
+  const sourceBinding = selectedFontSourceBinding(sourceRevision);
   const started = now(),
     deadline = started + 60000,
     cleanupDeadline = deadline + 2000;
@@ -3414,7 +3470,7 @@ export function createSelectedFontSettlementOwner({
     snapshot() {
       return {
         format: 'SoloSelectedFontSettlementOwnerV1',
-        sourceBinding: SELECTED_FONT_SOURCE_BINDING,
+        sourceBinding,
         bounds: { durationMs: 60000, operationMs: 2000, cleanupMs: 2000, operations: 5 },
         installed,
         closed,
@@ -3561,13 +3617,14 @@ export function assessSelectedFontSettlementReadiness(
   documents,
   transport,
   owner,
+  sourceRevision = SELECTED_FONT_SOURCE_BINDING.revision,
 ) {
   const failures = [];
   let attribution = null;
   try {
     assert.equal(documents, 1);
     assert.equal(owner?.format, 'SoloSelectedFontSettlementOwnerV1');
-    assert.deepEqual(owner.sourceBinding, SELECTED_FONT_SOURCE_BINDING);
+    assert.deepEqual(owner.sourceBinding, selectedFontSourceBinding(sourceRevision));
     assert(owner.installed && owner.closed && !owner.stopped);
     assert.deepEqual(owner.failures, []);
     assert.deepEqual(
