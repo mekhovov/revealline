@@ -309,13 +309,13 @@
     }
     .field-kit.game-shell #shell-missions:not([data-view='brief']) #shell-missions-context {
       margin: 0 0 4px;
-      font-size: var(--fk-text-secondary);
+      font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
       line-height: var(--fk-leading-control);
     }
     .field-kit.game-shell #shell-missions:not([data-view='brief']) #shell-missions-title {
       margin-block: 0;
       font-family: var(--fk-font-ui);
-      font-size: var(--fk-text-body);
+      font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
       line-height: var(--fk-leading-control);
       letter-spacing: normal;
       text-wrap: wrap;

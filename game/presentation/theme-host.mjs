@@ -242,6 +242,7 @@ export function installThemeHost({
       accessibility: {
         ...display.snapshot(),
         ...intent,
+        extraLarge: doc.documentElement?.dataset.textScaling === 'solo',
         coarsePointer: coarse?.matches === true,
         ...(body.textFace ? { textFace: body.textFace } : {}),
         ...(body.textSize ? { textSize: body.textSize } : {}),

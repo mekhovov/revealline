@@ -59,6 +59,7 @@ export function createDisplayPreferences({
   getStorage = () => globalThis.localStorage,
   matchMedia = (query) => eventTarget?.matchMedia?.(query),
   legacyPreferences,
+  extraLarge = false,
   writable = () => true,
   onWarning = () => {},
 } = {}) {
@@ -91,7 +92,7 @@ export function createDisplayPreferences({
   const initial = first.value ?? legacy(legacyPreferences);
   let state = Object.freeze({
     ...initial,
-    effectiveTextSize: effectiveTextSize(initial.textSize),
+    effectiveTextSize: effectiveTextSize(initial.textSize, { extraLarge }),
     effectiveReducedEffects: initial.reducedEffects || systemReduced,
     revision: 0,
   });
@@ -114,7 +115,7 @@ export function createDisplayPreferences({
   const apply = (values) => {
     state = Object.freeze({
       ...values,
-      effectiveTextSize: effectiveTextSize(values.textSize),
+      effectiveTextSize: effectiveTextSize(values.textSize, { extraLarge }),
       effectiveReducedEffects: values.reducedEffects || systemReduced,
       revision: state.revision + 1,
     });

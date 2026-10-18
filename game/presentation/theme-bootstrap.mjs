@@ -1511,7 +1511,9 @@
     /* Ignore damaged local data. */
   }
   const studio = doc.currentScript?.dataset.themeDensity === 'studio';
-  const large = display?.textSize === 'large' || display?.textSize === 'extra-large';
+  const extraLarge = display?.textSize === 'extra-large' && root.dataset.textScaling === 'solo';
+  const large =
+    display?.textSize === 'large' || (display?.textSize === 'extra-large' && !extraLarge);
   const plain = display?.textFace === 'plain';
   let coarse = false,
     reduced = display?.reducedEffects === true;
@@ -1532,7 +1534,7 @@
   if (plain)
     variables['--iw-font-display'] = variables['--iw-font-ui'] =
       "'Field Kit UI', 'Exo 2', sans-serif";
-  variables['--iw-target'] = studio && !coarse && !large ? '32px' : '44px';
+  variables['--iw-target'] = studio && !coarse && !large && !extraLarge ? '32px' : '44px';
   variables['--iw-text-size'] = large ? '20px' : '16px';
   for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
   Object.assign(root.dataset, {
@@ -1547,7 +1549,7 @@
     themeHud: high || intent.opaqueHud ? 'opaque' : 'normal',
     themeMotion: reduced ? 'reduced' : 'full',
     themeDensity: studio ? 'studio' : 'player',
-    themeTextSize: large ? 'large' : 'standard',
+    themeTextSize: extraLarge ? 'extra-large' : large ? 'large' : 'standard',
     themeBootstrapped: 'true',
   });
   const meta = doc.querySelector?.('meta[name="theme-color"]');

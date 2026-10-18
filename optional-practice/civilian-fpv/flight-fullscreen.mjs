@@ -7484,10 +7484,10 @@ if(!TEXT_SIZES.includes(value))throw new TypeError('Unsupported text size.');
 return value;
 }
 
-/** Preserve desired intent separately. No host is qualified for the additional
-     * size yet; the established Large presentation is the explicit fallback. */
-function effectiveTextSize(value){
-return resolveTextSize(value)==='extra-large'?'large':value;
+/** Hosts must explicitly opt into their qualified extra-large layout. The
+     * established Large presentation remains every other host's fallback. */
+function effectiveTextSize(value,{extraLarge=false}={}){
+return resolveTextSize(value)==='extra-large'&& !extraLarge?'large':value;
 }
 
 return{TEXT_SIZES,DEFAULT_TEXT_SIZE,resolveTextSize,effectiveTextSize};
@@ -7557,6 +7557,7 @@ window:eventTarget=globalThis,
 getStorage=()=>globalThis.localStorage,
 matchMedia=(query)=>eventTarget?.matchMedia?.(query),
 legacyPreferences,
+extraLarge=false,
 writable=()=>true,
 onWarning=()=>{},
 }={}){
@@ -7589,7 +7590,7 @@ stored= !!first.value;
 const initial=first.value??legacy(legacyPreferences);
 let state=Object.freeze({
 ...initial,
-effectiveTextSize:effectiveTextSize(initial.textSize),
+effectiveTextSize:effectiveTextSize(initial.textSize,{extraLarge}),
 effectiveReducedEffects:initial.reducedEffects||systemReduced,
 revision:0,
 });
@@ -7612,7 +7613,7 @@ return state;
 const apply=(values)=>{
 state=Object.freeze({
 ...values,
-effectiveTextSize:effectiveTextSize(values.textSize),
+effectiveTextSize:effectiveTextSize(values.textSize,{extraLarge}),
 effectiveReducedEffects:values.reducedEffects||systemReduced,
 revision:state.revision+1,
 });
@@ -8437,25 +8438,30 @@ notice.hidden=desired!=='extra-large';
 }
 }
 
-/** Render existing desired intent without making an unqualified size selectable.
-     * This view never saves, dispatches change or moves keyboard focus. */
-function renderTextSizeControl(control,desired,{locale}={}){
+/** Only a qualified host can offer the additional size; other hosts retain
+     * existing intent as a disabled choice. Never save, dispatch or move focus. */
+function renderTextSizeControl(control,desired,{locale,extraLarge=false}={}){
 resolveTextSize(desired);
 if(!control)return;
 let retained=control.querySelector('[data-text-size-retained]');
 let notice=notices.get(control);
-if(desired==='extra-large'){
+if(extraLarge||desired==='extra-large'){
 if(!retained){
 retained=control.ownerDocument.createElement('option');
 retained.value='extra-large';
-retained.disabled=true;
 retained.dataset.textSizeRetained='true';
 control.append(retained);
 }
+retained.disabled= !extraLarge;
 localizedText(retained,()=>
-t('interface:textSizeCompatibility.retained',{lng:locale}),
+t(
+extraLarge
+?'interface:textSizeCompatibility.extraLarge'
+:'interface:textSizeCompatibility.retained',
+{lng:locale},
+),
 );
-if(!notice){
+if(!notice&& !extraLarge){
 notice=control.ownerDocument.createElement('span');
 notice.id=`${control.id||`text-size-${++nextNotice}`}-fallback`;
 notice.className='micro-note';
@@ -8463,13 +8469,22 @@ notice.dataset.textSizeFallback='true';
 control.after(notice);
 notices.set(control,notice);
 }
-localizedText(notice,()=>t('interface:textSizeCompatibility.fallback',{lng:locale}));
-notice.hidden=false;
+if(notice){
+localizedText(notice,()=>
+t('interface:textSizeCompatibility.fallback',{lng:locale}),
+);
+notice.hidden=extraLarge;
+}
 const descriptions=new Set(
 (control.getAttribute('aria-describedby')??'').split(/\s+/).filter(Boolean),
 );
-descriptions.add(notice.id);
+if(notice){
+if(extraLarge)descriptions.delete(notice.id);
+else descriptions.add(notice.id);
+}
+if(descriptions.size)
 control.setAttribute('aria-describedby',[...descriptions].join(' '));
+else control.removeAttribute('aria-describedby');
 }else{
 retained?.remove();
 if(notice){

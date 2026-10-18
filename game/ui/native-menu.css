@@ -76,7 +76,7 @@
     width: min(var(--native-menu-width), 100%);
     margin: 0 0 24px;
     font-family: var(--fk-font-pixel, 'Reveal Line Pixel', monospace);
-    font-size: 66px;
+    font-size: calc(66px * var(--primary-text-scale, 1));
     font-weight: 400;
     line-height: 1.05;
     letter-spacing: -2px;
@@ -123,7 +123,7 @@
     display: block;
   }
   body.field-kit #shell-home.native-landing #shell-title.native-edition-title {
-    font-size: 44px;
+    font-size: calc(44px * var(--primary-text-scale, 1));
     letter-spacing: -1px;
   }
   body.field-kit
@@ -226,7 +226,8 @@
     padding: 15px 3px 7px;
     margin: 0;
     color: var(--fk-text, #f3f5ef);
-    font: 600 clamp(11px, 2.6vw, 16px) / 1.2 var(--fk-font-ui, sans-serif);
+    font: 600 calc(clamp(11px, 2.6vw, 16px) * var(--primary-text-scale, 1)) / 1.2
+      var(--fk-font-ui, sans-serif);
     text-align: center;
     white-space: nowrap;
     text-decoration: none;
@@ -271,7 +272,8 @@
     border-image: none;
     border-radius: 0;
     box-shadow: none;
-    font: 400 var(--native-action-size) / 1.35 var(--fk-font-pixel, 'Reveal Line Pixel', monospace);
+    font: 400 calc(var(--native-action-size) * var(--primary-text-scale, 1)) / 1.35
+      var(--fk-font-pixel, 'Reveal Line Pixel', monospace);
     text-align: left;
     text-decoration: none;
     overflow-wrap: normal;
@@ -319,7 +321,8 @@
     justify-content: flex-start;
     gap: 12px;
     padding: 8px 12px;
-    font: 400 var(--native-action-size, 22px) / 1.4 var(--fk-font-pixel, monospace);
+    font: 400 calc(var(--native-action-size, 22px) * var(--primary-text-scale, 1)) / 1.4
+      var(--fk-font-pixel, monospace);
   }
   body.field-kit .native-landing .native-menu-utilities {
     display: grid;
@@ -346,7 +349,7 @@
     box-shadow: none;
     background: #08121dde;
     color: #d0dae1;
-    font: 400 14px / 1.35 var(--fk-font-ui, sans-serif);
+    font: 400 calc(14px * var(--primary-text-scale, 1)) / 1.35 var(--fk-font-ui, sans-serif);
     text-align: left;
     overflow-wrap: normal;
     word-break: normal;
@@ -355,7 +358,7 @@
     grid-column: 1 / -1;
     margin: 0;
     max-width: var(--native-menu-width);
-    font: 400 14px/1.4 var(--fk-font-ui, sans-serif);
+    font: 400 calc(14px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
     color: var(--fk-muted, #c1cbd4);
   }
   body.field-kit
@@ -375,7 +378,7 @@
     justify-content: space-between;
     gap: 16px;
     color: #d0dae1;
-    font: 400 14px/1.4 var(--fk-font-ui, sans-serif);
+    font: 400 calc(14px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
   }
   body.field-kit .native-menu-song {
     min-width: 0;
@@ -391,7 +394,7 @@
     font: inherit;
   }
   body.field-kit .native-landing :is(.home-status, .operation-status) {
-    font: 400 16px/1.4 var(--fk-font-ui, sans-serif);
+    font: 400 calc(16px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
     max-width: var(--native-menu-width);
   }
   body.field-kit #coop-menu.native-landing :is(.lead, .objective, .coop-picture-preview),
@@ -489,7 +492,7 @@
     > :is(h1, h2) {
     min-width: 0;
     margin: 0;
-    font: 600 22px/1.25 var(--fk-font-ui, sans-serif);
+    font: 600 calc(22px * var(--primary-text-scale, 1)) / 1.25 var(--fk-font-ui, sans-serif);
     overflow-wrap: normal;
     word-break: normal;
   }
@@ -508,7 +511,7 @@
     width: auto;
     min-height: 44px;
     padding: 8px 12px;
-    font: 400 18px/1.3 var(--fk-font-ui, sans-serif);
+    font: 400 calc(18px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
   }
   body.field-kit
     :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
@@ -537,7 +540,8 @@
     flex: 0 0 auto;
     width: 100%;
     padding: 10px 12px;
-    font: 400 var(--native-action-size) / 1.25 var(--fk-font-pixel, 'Reveal Line Pixel', monospace);
+    font: 400 calc(var(--native-action-size) * var(--primary-text-scale, 1)) / 1.25
+      var(--fk-font-pixel, 'Reveal Line Pixel', monospace);
     text-align: left;
     color: #f3f5ef;
     background: var(--native-panel, #15172d);
@@ -623,7 +627,7 @@
     :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
     .field-kit-settings-panel
     > h3 {
-    font-size: 22px;
+    font-size: calc(22px * var(--primary-text-scale, 1));
     margin: 0 0 20px;
   }
   body.field-kit[data-text-face='plain'] .native-landing :is(h1, button, a),
@@ -658,7 +662,7 @@
       justify-content: safe center;
     }
     body.field-kit .native-landing :is(#shell-title, #race-title, #coop-title) {
-      font-size: 44px;
+      font-size: calc(44px * var(--primary-text-scale, 1));
       letter-spacing: -1px;
       margin-bottom: 20px;
     }
@@ -704,7 +708,7 @@
       :is(#settings-dialog, #race-options-panel, #coop-options).native-settings
       .shared-settings-heading
       > :is(h1, h2) {
-      font: 600 18px/1.25 var(--fk-font-ui, sans-serif);
+      font: 600 calc(18px * var(--primary-text-scale, 1)) / 1.25 var(--fk-font-ui, sans-serif);
       max-width: calc(100% - 60px);
       margin: 0;
     }
@@ -793,7 +797,7 @@
   }
   .native-menu-input-hints {
     color: var(--fk-muted, #c1cbd4);
-    font: 400 13px/1.4 var(--fk-font-ui, sans-serif);
+    font: 400 calc(13px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
     pointer-events: none;
   }
   .native-menu-input-hints > span {

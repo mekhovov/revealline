@@ -59,14 +59,14 @@
     body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       .telemetry
       strong {
-      font-size: var(--handheld-value);
+      font-size: calc(var(--handheld-value) * var(--primary-text-scale, 1));
       line-height: 1.15;
       margin: 0;
     }
     body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       .telemetry
       span {
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.15;
     }
     body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
@@ -90,7 +90,7 @@
       max-height: 2.6em;
       line-height: 1.3;
       background: var(--fk-bg);
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       pointer-events: none;
     }
     /* Own the complete handheld fit up to 600px. The older desktop stylesheet
@@ -141,7 +141,7 @@
       flex-wrap: wrap;
       gap: 5px;
       align-items: center;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       padding: 0;
       min-width: 0;
     }
@@ -151,7 +151,7 @@
       display: none;
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .hud .team-status strong {
-      font-size: var(--handheld-value);
+      font-size: calc(var(--handheld-value) * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .live-objective {
       display: none;
@@ -178,7 +178,7 @@
       position: static;
       grid-column: 1 / -1;
       grid-row: 4;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       max-height: 2.5em;
       overflow: auto;
       background: var(--fk-bg);
@@ -194,7 +194,7 @@
     }
     body.race-focus .racer-stats {
       margin: 0;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.race-focus .race-hud {
       min-height: 44px;
@@ -278,7 +278,7 @@
       body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
         .telemetry
         strong {
-        font-size: var(--handheld-value);
+        font-size: calc(var(--handheld-value) * var(--primary-text-scale, 1));
         margin: 0;
       }
       body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
@@ -335,7 +335,7 @@
         width: 100%;
         margin: 0;
         min-height: 0;
-        font-size: var(--handheld-label);
+        font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
         line-height: 1.3;
         max-height: 2.6em;
         overflow: auto;
@@ -388,7 +388,7 @@
       .telemetry
       #lives::after {
       content: attr(data-compact-value);
-      font-size: var(--handheld-value);
+      font-size: calc(var(--handheld-value) * var(--primary-text-scale, 1));
     }
   }
 
@@ -402,7 +402,7 @@
   @media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
     body.field-kit.playing:has(#coop-overlay[hidden]) #coop-coverage::after {
       content: attr(data-target);
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden]):has(
         #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
@@ -415,7 +415,7 @@
       display: block;
       grid-row: 2;
       margin: 0;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.3;
     }
     body.field-kit.playing:has(#coop-overlay[hidden]):has(
@@ -444,7 +444,7 @@
       height: 26px;
       min-width: 26px;
       margin: 0;
-      font-size: 14px;
+      font-size: calc(14px * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span:not(.player-number) {
       margin: 0;
@@ -522,7 +522,7 @@
       gap: 0 8px;
       padding: 0 96px 0 0;
       border: 0;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity {
       display: grid;
@@ -530,7 +530,7 @@
       gap: 0 2px;
       padding: 0;
       line-height: 1.15;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .hud .player-number {
       position: static;
@@ -540,7 +540,7 @@
       height: 18px;
       min-width: 18px;
       margin: 0;
-      font-size: 12px;
+      font-size: calc(12px * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span:not(.player-number) {
       margin: 0;
@@ -557,7 +557,7 @@
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .hud [data-compact]::after {
       content: attr(data-compact) / '';
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden])
       .hud
@@ -568,12 +568,12 @@
       display: none;
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) #coop-coverage {
-      font-size: var(--handheld-value);
+      font-size: calc(var(--handheld-value) * var(--primary-text-scale, 1));
       line-height: 1.1;
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) #coop-coverage::after {
       content: attr(data-target);
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) #coop-pause {
       position: fixed;
@@ -584,7 +584,7 @@
       height: 44px;
       min-height: 44px;
       padding: 0;
-      font-size: 14px;
+      font-size: calc(14px * var(--primary-text-scale, 1));
       z-index: 12;
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) #coop-controls {
@@ -602,7 +602,7 @@
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) #coop-message {
       margin: 0;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.25;
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .arena-wrap {
@@ -642,7 +642,7 @@
       padding-block: 0;
     }
     body.field-kit.race-focus #race-clock {
-      font-size: var(--handheld-value);
+      font-size: calc(var(--handheld-value) * var(--primary-text-scale, 1));
     }
     body.field-kit.race-focus .race-boards {
       gap: 8px;
@@ -667,7 +667,7 @@
     body.field-kit.race-focus .racer[data-player] .racer-stats {
       grid-row: 2;
       margin: 0;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.field-kit.race-focus .racer[data-player] .racer-encounter {
       grid-row: 3;
@@ -779,7 +779,7 @@
       #coop-objective:is([data-kind='stronghold'], [data-kind='expedition']) {
       grid-row: 2;
       margin: 0;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.field-kit.playing:has(#coop-overlay[hidden]):has(
         #coop-objective:is([data-kind='stronghold'], [data-kind='expedition'])
@@ -817,7 +817,7 @@
     body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       #coverage::after {
       content: attr(data-target);
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
   }
 
@@ -871,7 +871,7 @@
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .hud .identity > span[data-compact]::after {
       content: attr(data-compact) / '';
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
   }
 
@@ -895,7 +895,7 @@
     }
     body.field-kit.race-focus #race-clock::after {
       content: attr(data-compact) / '';
-      font-size: var(--handheld-value);
+      font-size: calc(var(--handheld-value) * var(--primary-text-scale, 1));
     }
   }
   @media (max-width: 1024px) and (orientation: landscape) and (max-height: 600px) {
@@ -943,7 +943,7 @@
         [data-flight-layout='preparing']
       )
       .first-flight-task {
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.3;
       margin: 0;
       background: var(--fk-bg);
@@ -1108,7 +1108,7 @@
       max-inline-size: 100%;
       white-space: normal;
       overflow-wrap: anywhere;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.1;
       padding: 2px;
     }
@@ -1178,7 +1178,7 @@
         max(16px, var(--safe-left));
     }
     body.field-kit.game-shell #shell-title {
-      font-size: clamp(28px, 7.5vw, 48px);
+      font-size: calc(clamp(28px, 7.5vw, 48px) * var(--primary-text-scale, 1));
       line-height: 1.2;
       letter-spacing: -1px;
       margin: 8px 0 12px;
@@ -1263,7 +1263,7 @@
       right: max(12px, var(--safe-right));
       width: auto;
       transform: none;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.4;
       margin: 0;
       padding: 4px 8px;
@@ -1280,7 +1280,7 @@
       bottom: var(--safe-bottom);
       margin: 4px 0;
       width: auto;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.25;
       max-height: 2.5em;
       overflow: auto;
@@ -1318,7 +1318,7 @@
       bottom: max(4px, var(--safe-bottom));
       transform: none;
       width: auto;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.3;
       background: var(--fk-bg, #070b12);
     }
@@ -1463,7 +1463,7 @@
       transform: none;
       margin: 0;
       padding: 4px 8px;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.3;
       background: var(--fk-bg, #070b12);
     }
@@ -1572,7 +1572,7 @@
       height: auto;
       min-height: 44px;
       padding: 0;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.1;
     }
     body.field-kit.playing:has(#coop-overlay[hidden]) .race-pad > button[data-action]::before {
@@ -1608,7 +1608,7 @@
       margin: 0;
       flex-wrap: nowrap;
       background: var(--fk-bg);
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
     }
     body.field-kit.game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       #game-now-playing-title {
@@ -1641,7 +1641,7 @@
       height: 44px;
       min-height: 44px;
       margin: 0;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1.2;
     }
     body.field-kit.race-focus #race-music-now-playing .couch-music-credit-title,
@@ -1727,7 +1727,7 @@
       height: 44px;
       min-height: 44px;
       padding: 2px 4px;
-      font-size: var(--handheld-label);
+      font-size: calc(var(--handheld-label) * var(--primary-text-scale, 1));
       line-height: 1;
       overflow: hidden;
       flex-shrink: 0;
