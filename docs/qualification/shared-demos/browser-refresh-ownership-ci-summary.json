@@ -1,0 +1,315 @@
+{
+  "format": "SharedDemoOwnershipCIBrowserRefreshV1",
+  "created": "2026-10-18T19:21:37.652469+00:00",
+  "complete": false,
+  "scope": "Existing unmodified short browser gates refreshed against the ownership/CI runtime. Remaining Fresh gates are intentionally paused for the parent-confirmed fresh-profile Solo enumeration repair.",
+  "binding": {
+    "before": {
+      "at": "2026-10-18T19:01:20.612392+00:00",
+      "head": "af3ec193426dda82aebdde016d82bbd51b2938e1",
+      "manifest": {
+        "created": "2026-10-18T18:59:08.330364+00:00",
+        "integrationBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+        "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+        "sourceFingerprint": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+        "files": 9991,
+        "bytes": 404326765
+      },
+      "manifestSha256": "52ee5b71e98b2c82de12899dd6f92c931eb77593f9aa251818298b260d355cda",
+      "files": 9991,
+      "bytes": 404326765,
+      "digests": {
+        "raw": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+        "hex": "3be0683c19ff9e3c61373c1012fe9054844448d9fa867b33abdc54db6eaeb6c8",
+        "hexNewline": "5d186b7883e83d7edb0bb6ba229433a71dc476cd7b0e43374d8c0d023f3be34f",
+        "rawNewline": "61059ad143df539d5cf56d466e494240e3d63fd2bf44b67390196bb1fd0e379b"
+      },
+      "harnesses": {
+        "scripts/qualify-shared-demo-browser.mjs": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+        "scripts/qualify-shared-demo-listeners.mjs": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+        "scripts/shared-demo-listener-probe.mjs": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+        "scripts/qualify-survival-fresh-browser.mjs": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc",
+        "scripts/qualify-sim-fresh-browser.mjs": "714fc37ab4605a6a06c9e0f93ff197f9dfcd4662323dd5ca54f7469ee04f4555",
+        "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df"
+      }
+    },
+    "after": {
+      "at": "2026-10-18T19:21:37.652469+00:00",
+      "head": "5c69d1d932815d44a5ceec87b74a119f0cd21d61",
+      "files": 9991,
+      "bytes": 404326765,
+      "sourceFingerprint": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+      "manifestSha256": "52ee5b71e98b2c82de12899dd6f92c931eb77593f9aa251818298b260d355cda",
+      "harnesses": {
+        "scripts/qualify-shared-demo-browser.mjs": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+        "scripts/qualify-shared-demo-listeners.mjs": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+        "scripts/shared-demo-listener-probe.mjs": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+        "scripts/qualify-survival-fresh-browser.mjs": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc",
+        "scripts/qualify-sim-fresh-browser.mjs": "714fc37ab4605a6a06c9e0f93ff197f9dfcd4662323dd5ca54f7469ee04f4555",
+        "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df"
+      }
+    },
+    "fullProductionFingerprintUnchanged": true,
+    "sixExistingHarnessesUnchanged": true,
+    "manifestBytesUnchanged": true,
+    "servedHostVerifiedSHA256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2"
+  },
+  "results": [
+    {
+      "path": "docs/qualification/shared-demos/mixed-chromium-ownership-ci.json",
+      "sha256": "5944e9383c81baa79e86ce93d7e34161aeedcbc4debef74514bb7dcee9f89f43",
+      "actualProcessExitCode": 0,
+      "complete": true,
+      "checks": 28,
+      "sourceAdmissionsByMode": {
+        "snake": 4,
+        "survival": 4,
+        "sim": 4,
+        "solo": 4
+      },
+      "started": "2026-10-18T19:01:28.777Z",
+      "finished": "2026-10-18T19:02:53.304Z",
+      "browserCloseAttempted": true,
+      "browserCloseCompleted": true,
+      "errors": [],
+      "secondaryDiagnostics": [],
+      "failure": null,
+      "uniqueSourceFailures": []
+    },
+    {
+      "path": "docs/qualification/shared-demos/mixed-firefox-ownership-ci.json",
+      "sha256": "4d17e4c78fbf64e195f2b0c97f34e76814dbcb147c32cad4e61a92a24ce4e94c",
+      "actualProcessExitCode": 1,
+      "complete": false,
+      "checks": 12,
+      "sourceAdmissionsByMode": {
+        "solo": 1,
+        "snake": 1,
+        "sim": 2
+      },
+      "started": "2026-10-18T19:04:47.031Z",
+      "finished": "2026-10-18T19:05:23.194Z",
+      "browserCloseAttempted": true,
+      "browserCloseCompleted": true,
+      "errors": [],
+      "secondaryDiagnostics": [],
+      "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'sim',\n    'snake',\n    'solo',\n-   'survival'\n  ]\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:182:10",
+      "uniqueSourceFailures": [
+        {
+          "event": "failed",
+          "sourceId": "survival:river-port-floodgate-yard:standard",
+          "modeId": "survival",
+          "at": 1792350319250,
+          "loadingMs": 15092,
+          "preparation": {
+            "status": "failed",
+            "stage": "renderer",
+            "elapsedMs": 15092,
+            "durationsMs": {
+              "preparation": 0,
+              "prefetch": 1,
+              "retirement": 0,
+              "adapter": 0,
+              "source": 0,
+              "payload": 0,
+              "verification": 14296,
+              "scene-import": 84,
+              "artwork": 517,
+              "renderer": 194,
+              "mount": 0
+            },
+            "candidates": [
+              {
+                "variant": "firefox",
+                "engineHint": "firefox",
+                "prefetched": true,
+                "status": "verified",
+                "code": null,
+                "tick": 19478,
+                "totalTicks": 19478,
+                "elapsedMs": 14296
+              }
+            ]
+          },
+          "code": "demo-load-timeout",
+          "message": "Demo preparation exceeded its loading deadline.",
+          "stack": "timeoutFailure@http://127.0.0.1:8769/game/demo-loading.mjs:26:19\nwithDemoLoadingDeadline/</<@http://127.0.0.1:8769/game/demo-loading.mjs:56:51\npromise callback*withDemoLoadingDeadline/<@http://127.0.0.1:8769/game/demo-loading.mjs:52:48\nwithDemoLoadingDeadline@http://127.0.0.1:8769/game/demo-loading.mjs:30:10\nnext@http://127.0.0.1:8769/game/demo-director.mjs:195:26\nasync*attachDemoHost/<@http://127.0.0.1:8769/game/ui/demo-host.mjs:1231:21"
+        }
+      ]
+    },
+    {
+      "path": "docs/qualification/shared-demos/mixed-firefox-ownership-ci-retry.json",
+      "sha256": "bba6374ed7fd5e5cbda33f9e7f6c24b0515ee6933e77afbfc51728ac4e8eb2ea",
+      "actualProcessExitCode": 0,
+      "complete": true,
+      "checks": 27,
+      "sourceAdmissionsByMode": {
+        "sim": 4,
+        "snake": 4,
+        "survival": 4,
+        "solo": 4
+      },
+      "started": "2026-10-18T19:13:35.062Z",
+      "finished": "2026-10-18T19:14:25.327Z",
+      "browserCloseAttempted": true,
+      "browserCloseCompleted": true,
+      "errors": [],
+      "secondaryDiagnostics": [],
+      "failure": null,
+      "uniqueSourceFailures": []
+    },
+    {
+      "path": "docs/qualification/shared-demos/mixed-webkit-ownership-ci.json",
+      "sha256": "19337122ffc1264027346a9df8f7834078f3fe57c90433ccb130f4cd5e7b370c",
+      "actualProcessExitCode": 0,
+      "complete": true,
+      "checks": 27,
+      "sourceAdmissionsByMode": {
+        "snake": 4,
+        "survival": 4,
+        "sim": 4,
+        "solo": 4
+      },
+      "started": "2026-10-18T19:14:52.257Z",
+      "finished": "2026-10-18T19:15:55.996Z",
+      "browserCloseAttempted": true,
+      "browserCloseCompleted": true,
+      "errors": [],
+      "secondaryDiagnostics": [],
+      "failure": null,
+      "uniqueSourceFailures": []
+    },
+    {
+      "path": "docs/qualification/shared-demos/graphics-chromium-ownership-ci.json",
+      "sha256": "7d87539bc92d534d1e92a978a2e00242d3d6549e298ae42f1f17339631f33e2d",
+      "actualProcessExitCode": 0,
+      "complete": true,
+      "checks": 7,
+      "sourceAdmissionsByMode": {
+        "sim": 1,
+        "snake": 1,
+        "solo": 1,
+        "survival": 1
+      },
+      "started": "2026-10-18T19:18:26.633Z",
+      "finished": "2026-10-18T19:18:45.582Z",
+      "browserCloseAttempted": true,
+      "browserCloseCompleted": true,
+      "errors": [],
+      "secondaryDiagnostics": [],
+      "failure": null,
+      "uniqueSourceFailures": [
+        {
+          "event": "playback-failed",
+          "sourceId": "sim:snake-hunt-loops-02-acro-cb5af0f8873b2a63",
+          "modeId": "sim",
+          "at": 1792351120476,
+          "loadingMs": null,
+          "preparation": null,
+          "code": "demo-mode-unavailable",
+          "message": "SIM graphics context was lost.",
+          "stack": "Error: SIM graphics context was lost.\n    at failMode (http://127.0.0.1:8769/game/demo-modes/sim.mjs:3:17)\n    at onContextLost (http://127.0.0.1:8769/game/demo-modes/sim.mjs:156:23)\n    at HTMLCanvasElement.lost (http://127.0.0.1:8769/optional-practice/civilian-fpv/renderer.mjs:3555:5)"
+        }
+      ]
+    },
+    {
+      "path": "docs/qualification/shared-demos/offline-chromium-ownership-ci.json",
+      "sha256": "87a359a9e9c23bbe9cb1b4776936344800ae39257706ccbfba2c7491c1331a5f",
+      "actualProcessExitCode": 0,
+      "complete": true,
+      "checks": 8,
+      "sourceAdmissionsByMode": {
+        "snake": 1,
+        "sim": 1,
+        "survival": 1,
+        "solo": 1
+      },
+      "started": "2026-10-18T19:18:51.522Z",
+      "finished": "2026-10-18T19:19:12.629Z",
+      "browserCloseAttempted": true,
+      "browserCloseCompleted": true,
+      "errors": [],
+      "secondaryDiagnostics": [],
+      "failure": null,
+      "uniqueSourceFailures": [
+        {
+          "event": "failed",
+          "sourceId": "sim:snake-hunt-chase-03-self-level-01b9494dd4385932",
+          "modeId": "sim",
+          "at": 1792351151641,
+          "loadingMs": 3.800000000745058,
+          "preparation": {
+            "status": "failed",
+            "stage": "source",
+            "elapsedMs": 3.8,
+            "durationsMs": {
+              "preparation": 0,
+              "prefetch": 0,
+              "retirement": 1.700000001117587,
+              "adapter": 0,
+              "source": 2.1,
+              "payload": 0,
+              "verification": 0,
+              "scene-import": 0,
+              "artwork": 0,
+              "renderer": 0,
+              "mount": 0
+            },
+            "candidates": []
+          },
+          "code": null,
+          "message": "Failed to fetch",
+          "stack": "TypeError: Failed to fetch\n    at read (http://127.0.0.1:8769/game/demo-modes/sim.mjs:24:28)\n    at Object.create (http://127.0.0.1:8769/game/demo-modes/sim.mjs:108:37)\n    at prepareScene (http://127.0.0.1:8769/game/ui/demo-host.mjs:816:33)\n    at async prepare (http://127.0.0.1:8769/game/ui/demo-host.mjs:801:14)"
+        }
+      ]
+    },
+    {
+      "path": "docs/qualification/shared-demos/listener-cleanup-ownership-ci.json",
+      "sha256": "427fc821c94d3ec82fb6e48f973c4efe58d5d2dee79d68789cc988f97e17a8b9",
+      "actualProcessExitCode": 0,
+      "complete": true,
+      "checks": 4,
+      "sourceAdmissionsByMode": {},
+      "started": "2026-10-18T19:19:19.324Z",
+      "finished": "2026-10-18T19:20:24.352Z",
+      "browserCloseAttempted": true,
+      "browserCloseCompleted": true,
+      "errors": [],
+      "secondaryDiagnostics": [],
+      "failure": null,
+      "uniqueSourceFailures": []
+    }
+  ],
+  "passedGates": {
+    "mixedChromiumChecks": 28,
+    "mixedFirefoxRetryChecks": 27,
+    "mixedWebKitChecks": 27,
+    "graphicsChecks": 7,
+    "offlineChecks": 8,
+    "directListenerChecks": 4,
+    "directListenerTransitionsAfterWarmup": 12
+  },
+  "preservedFailure": {
+    "report": "mixed-firefox-ownership-ci.json",
+    "audit": "firefox-loading-ownership-ci-audit.json",
+    "reason": "One preferred prefetchedFirefox Survival performance fully verified in14296ms but exceeded15s duringrenderer mounting; application fallback was functional, strict firstcycleall4modes assertion failed.",
+    "retry": "Identical harness/runtime after separately owned heavy main-pages build completed;27checks passed. No causal claim about resource contention."
+  },
+  "runPolicy": {
+    "browserConcurrencyByThisAgent": 1,
+    "runtimeOrHarnessEditsDuringMatrix": false,
+    "noBrowserLeftRunning": true,
+    "runtime": "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "url": "http://127.0.0.1:8769"
+  },
+  "pending": [
+    "Fresh Survival Chromium/Firefox/WebKit and SIM exact handoffs were not rerun at this fingerprint. Parent requested pause after directlisteners.",
+    "Parent confirmed fresh-profile Solo enumeration151/240, requiring runtime repair. These mixed gates do not test exhaustive inventory availability.",
+    "A new complete120minute actual-wall-clock rotation remains required after the final runtime stabilizes."
+  ],
+  "limitations": [
+    "Source admission counts are brief playback/transition observations, not claims that16 complete performances were watched in each mixed run. Full native proof qualification is separate.",
+    "The original Firefox failure is not erased by a later passing retry.",
+    "WebKit ordinaryreload diagnostics belong to separate preserved restoration receipts and remain under investigation."
+  ]
+}
