@@ -1,6 +1,7 @@
 // Stable legacy-named CI entry point; complete contracts below check current797
 // bindings plus immutable historical declarations, including reviewed Warm/Retry
-// admission and failed predecessor retention. No native execution is admitted.
+// admission, failed predecessor retention and actual shared-return CLI admission.
+// No native execution is admitted.
 // Include complete preparation read coverage when repairing native runner setup.
 import './solo-de332-diagnostics.test.mjs';
 import './solo-de332-timing.test.mjs';
