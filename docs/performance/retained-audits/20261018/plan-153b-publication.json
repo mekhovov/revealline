@@ -1,0 +1,16 @@
+{
+  "format": "SoloPlanStatusPublicationV1",
+  "at": "2026-10-18T22:42:46.560145+00:00",
+  "pr": 1623,
+  "before": "86067c7cf265c2917335b20501ca99bc91beac4f",
+  "after": "153b13445a5c32f3aa6b63113b56fb3c11a008cc",
+  "tree": "b438cfc1ad33c2a7531be2a2a2ecdfce857a250c",
+  "path": "docs/performance/solo-performance-followup-plan.md",
+  "blob": "5d62fa7512d0ccd25042aa629c8a78737b2f922c",
+  "bytes": 143735,
+  "sha256": "92c3a5956caa50717eda1206524e8ef44cd26685c6fe3892e3341109f05aa444",
+  "reviewedProposal": "6919e2a1370fa0715e8fa41194809bffc9f5324f",
+  "reviewRefinement": "Use hosted scheduling rather than asserting runner capacity as the precise cause.",
+  "historicalTailPreserved": true,
+  "runtimeChanged": false
+}

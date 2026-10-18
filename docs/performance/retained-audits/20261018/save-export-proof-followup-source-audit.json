@@ -1,0 +1,135 @@
+{
+  "kind": "remaining-save-proof-export-source-owner-review",
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "observedAt": "2026-10-18T22:57:52.123149+00:00",
+  "sources": [
+    {
+      "path": "game/ui/terminal-recording-export.mjs",
+      "gitBlob": "fb73c19bf603e356c9dfb3845bdf15abe59c2519",
+      "bytes": 4841,
+      "sha256": "0f52dca53043736e409127eeaba2d066bdf3126c720d8aad212f9229eaf7026b",
+      "anchors": [
+        {
+          "line": 102,
+          "text": "output.value = JSON.stringify(recording);"
+        },
+        {
+          "line": 109,
+          "text": "result = await exportFile(recording, filename);"
+        }
+      ]
+    },
+    {
+      "path": "game/platform.mjs",
+      "gitBlob": "e6ee2c96eb496a9c6be2cd20e946efe22b3f1034",
+      "bytes": 4198,
+      "sha256": "29682ff18fd1571eeaf5c53a21c1bda5e60f4a93e542bfc718c2ca9bfd6a20ec",
+      "anchors": [
+        {
+          "line": 14,
+          "text": "export const MAX_EXPORT_BYTES = 88 * 1024 * 1024 + 40960;"
+        },
+        {
+          "line": 39,
+          "text": "const text = JSON.stringify(value);"
+        },
+        {
+          "line": 41,
+          "text": "if (new TextEncoder().encode(text).length > MAX_EXPORT_BYTES)"
+        }
+      ]
+    },
+    {
+      "path": "game/replay-proof-store.mjs",
+      "gitBlob": "0b5d0bed7820525cdafc4b5f64d3b9aa0293f4fa",
+      "bytes": 10351,
+      "sha256": "45a33a4c98c8cf5bd9e779f0cab715ab82b33bd01bd3138b01c28dd8be9fd99d",
+      "anchors": [
+        {
+          "line": 9,
+          "text": "async function proofIdentity(value) {"
+        },
+        {
+          "line": 176,
+          "text": "if (recoverySources.size) storage.setItem(recoveryKey, JSON.stringify(recoveryEnvelope()));"
+        },
+        {
+          "line": 178,
+          "text": "boundedJSON(serialized, { ...limits, maxBytes: STORAGE_BYTES });"
+        },
+        {
+          "line": 179,
+          "text": "storage.setItem(key, serialized);"
+        }
+      ]
+    },
+    {
+      "path": "game/data-json.mjs",
+      "gitBlob": "d2bcdc57882777f6bb09b1fe5868e31c4e848780",
+      "bytes": 5594,
+      "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd",
+      "anchors": [
+        {
+          "line": 13,
+          "text": "export function boundedJSON("
+        },
+        {
+          "line": 31,
+          "text": "const length = encoder.encode(JSON.stringify(value)).byteLength;"
+        },
+        {
+          "line": 103,
+          "text": "if (encoder.encode(JSON.stringify(copied)).byteLength > maxBytes)"
+        }
+      ]
+    },
+    {
+      "path": "game/test/solo-dense-replay-persistence.test.mjs",
+      "gitBlob": "d3534b22e81b91c15f6d25b270900ce8decd3da7",
+      "bytes": 11648,
+      "sha256": "1e87debf991961ad07bbdf2673ace2617b87f49dab6fd10f6a06e18e573f3c8d",
+      "anchors": [
+        {
+          "line": 100,
+          "text": "test("
+        },
+        {
+          "line": 159,
+          "text": "test("
+        },
+        {
+          "line": 215,
+          "text": "test("
+        },
+        {
+          "line": 253,
+          "text": "new Error().stack.includes('at attemptReadbackMatches (')"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "priority": "follow-up",
+      "owner": "shared terminal recording export and platform download",
+      "fact": "The terminal owner prepares compact JSON in its visible recovery output, then the default platform export serializes the same recording again before byte admission and Blob/native export.",
+      "safeNextStep": "Consider passing an owned prepared compact representation through the existing export owner only after preserving filename validation, exact byte budget, recovery output before failure, original gesture/native bridge, and durable semantics.",
+      "status": "No implementation or timing measurement."
+    },
+    {
+      "priority": "follow-up",
+      "owner": "replay proof store",
+      "fact": "prove computes identity and then verify validates/copies the final proof envelope and computes identity again. The second copy also validates final-envelope structure/budget including proofId. Persistence separately bounds serialized storage and publishes only after existing durable operations.",
+      "safeNextStep": "Retain this as investigation. Do not remove the second copy/hash without preserving complete final-envelope admission and codec ownership guarantees; do not weaken storage or durable-save guarantees.",
+      "status": "No implementation, leak claim, or measured-cost claim."
+    },
+    {
+      "priority": "already-delivered source controls; native scope remaining",
+      "owner": "dense Solo replay persistence",
+      "fact": "Existing dense-replay source tests exercise near-limit storage/readback, oversized old-slot preservation, 216000-input portable export, and the actual public Continue/Save path with serialized readback avoiding a second parse.",
+      "safeNextStep": "Use final-current-source long-recording/native qualification to evaluate remaining device cost; do not reopen already addressed serialized readback work or replace its synchronous public contract speculatively.",
+      "status": "This audit does not execute those tests or promote historical evidence to current native evidence."
+    }
+  ],
+  "notBundled": "Only the separately reviewed trail-allocation proposal191b9a26 is being prepared. These save/proof/export owners remain recorded follow-up items."
+}

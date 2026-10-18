@@ -1,0 +1,254 @@
+{
+  "kind": "solo-missions-exact-head-final-gate-census",
+  "observedAt": "2026-10-18T22:46:47.512175+00:00",
+  "pr": 1620,
+  "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+  "baseAtApi": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+  "currentMain": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "draft": false,
+  "mergeable": true,
+  "mergeableState": "clean",
+  "checks": [
+    {
+      "id": 117803024912,
+      "name": "release-ready",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T22:42:26Z",
+      "completed_at": "2026-10-18T22:42:30Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117803024912"
+    },
+    {
+      "id": 117792289295,
+      "name": "focused",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T22:05:44Z",
+      "completed_at": "2026-10-18T22:05:54Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117792289295"
+    },
+    {
+      "id": 117783806906,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T21:11:41Z",
+      "completed_at": "2026-10-18T21:11:56Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39162204938/job/117783806906"
+    },
+    {
+      "id": 117782732805,
+      "name": "preview",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T21:27:59Z",
+      "completed_at": "2026-10-18T22:03:28Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253015/job/117782732805"
+    },
+    {
+      "id": 117775832441,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-10-18T20:03:53Z",
+      "completed_at": "2026-10-18T20:03:52Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117775832441"
+    },
+    {
+      "id": 117775832023,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-10-18T20:03:53Z",
+      "completed_at": "2026-10-18T20:03:52Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117775832023"
+    },
+    {
+      "id": 117775831108,
+      "name": "focused_shards (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T21:13:52Z",
+      "completed_at": "2026-10-18T21:16:51Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117775831108"
+    },
+    {
+      "id": 117775831073,
+      "name": "focused_shards (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T21:09:45Z",
+      "completed_at": "2026-10-18T21:13:05Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117775831073"
+    },
+    {
+      "id": 117775831007,
+      "name": "focused_shards (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:47:32Z",
+      "completed_at": "2026-10-18T21:05:39Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117775831007"
+    },
+    {
+      "id": 117775831000,
+      "name": "focused_shards (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:49:21Z",
+      "completed_at": "2026-10-18T20:51:49Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117775831000"
+    },
+    {
+      "id": 117774051191,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:38:46Z",
+      "completed_at": "2026-10-18T20:38:59Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159509176/job/117774051191"
+    },
+    {
+      "id": 117773566664,
+      "name": "browser",
+      "status": "completed",
+      "conclusion": "skipped",
+      "started_at": "2026-10-18T19:53:40Z",
+      "completed_at": "2026-10-18T19:53:40Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253001/job/117773566664"
+    },
+    {
+      "id": 117769247725,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:03:41Z",
+      "completed_at": "2026-10-18T20:03:52Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117769247725"
+    },
+    {
+      "id": 117769039493,
+      "name": "optional-practice",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:39:19Z",
+      "completed_at": "2026-10-18T20:53:49Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253033/job/117769039493"
+    },
+    {
+      "id": 117769039363,
+      "name": "candidate",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:32:53Z",
+      "completed_at": "2026-10-18T20:53:37Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253033/job/117769039363"
+    },
+    {
+      "id": 117768882364,
+      "name": "feature (gameplay)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:00:06Z",
+      "completed_at": "2026-10-18T20:07:47Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882364"
+    },
+    {
+      "id": 117768882340,
+      "name": "feature (recordings)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:53:50Z",
+      "completed_at": "2026-10-18T20:56:06Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882340"
+    },
+    {
+      "id": 117768882328,
+      "name": "feature (presentation)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T19:58:03Z",
+      "completed_at": "2026-10-18T20:00:24Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882328"
+    },
+    {
+      "id": 117768882300,
+      "name": "feature (creator)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T19:56:55Z",
+      "completed_at": "2026-10-18T20:00:49Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882300"
+    },
+    {
+      "id": 117768882290,
+      "name": "feature (local-ux)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T21:14:28Z",
+      "completed_at": "2026-10-18T21:20:55Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882290"
+    },
+    {
+      "id": 117768882215,
+      "name": "feature (rooms)",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T21:06:48Z",
+      "completed_at": "2026-10-18T21:09:24Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882215"
+    },
+    {
+      "id": 117768881909,
+      "name": "installed_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:29:54Z",
+      "completed_at": "2026-10-18T20:33:40Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253015/job/117768881909"
+    },
+    {
+      "id": 117768881866,
+      "name": "demo_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:32:16Z",
+      "completed_at": "2026-10-18T20:34:11Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253015/job/117768881866"
+    },
+    {
+      "id": 117768881834,
+      "name": "admission",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:00:55Z",
+      "completed_at": "2026-10-18T20:03:57Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253015/job/117768881834"
+    },
+    {
+      "id": 117768881651,
+      "name": "team_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T20:01:15Z",
+      "completed_at": "2026-10-18T20:05:34Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253015/job/117768881651"
+    },
+    {
+      "id": 117768879817,
+      "name": "source",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2026-10-18T19:53:20Z",
+      "completed_at": "2026-10-18T19:53:40Z",
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39159253001/job/117768879817"
+    }
+  ],
+  "scope": "All intended exact-head checks terminal: 23 successes plus intentional focused-lane test/build skips and PR browser skip. Earlier retained artifacts establish actual source/host/Appearance/build evidence. This census is not a new test execution, main merge, publication, or native gameplay qualification.",
+  "relatedActualEvidence": [
+    "49778719f4bf4ad88fb1a957afb47628f1e39c35",
+    "202679b9f8bdd69ddd701d45e069d1b6008b23a6",
+    "1d3dcf17738858180edeef1eead4e8d47ec81c38",
+    "09dc7d7479b6bf0e89b98c5164752814d799abc4"
+  ]
+}

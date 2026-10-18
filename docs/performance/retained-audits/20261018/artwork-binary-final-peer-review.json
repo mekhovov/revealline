@@ -1,0 +1,26 @@
+{
+  "kind": "independent-binary-artwork-final-source-review",
+  "observedAt": "2026-10-18T22:59:26.837622+00:00",
+  "proposal": {
+    "gitBlob": "73a9cfd270604cb0f29cd953ad6fb0c22d30a97e",
+    "bytes": 817240,
+    "sha256": "0baee057cb7f7febdb62ba70a82fffbf63f1c09425cf988b29be58c02f74cd01"
+  },
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "priorReviewedProposal": "72d6a62819b3b82432419b2e89d58187ab245058",
+  "checks": [
+    "Prior ten before receipts independently checked against exact base tree and bytes; all ten final after receipts independently match contents.",
+    "Only two fixture/control files changed from clean72d6; all five production paths byte-identical.",
+    "Existing exact byte/digest/raster/dimension admission and private branding remain; default serialized Studio preview preserved; initial/restore and subsequent Main acquisition use owned binary images.",
+    "Object URLs stay live through complete decode/display transfer and retire on release/error; late injected decoder results remain disposed by the existing decoder owner.",
+    "Fixture teardown now requests normal pagehide, awaits the existing turn, and sweeps only remaining codecBlobs in finally through their actual native/audio URL owner. Removing current Map entries during iteration preserves remaining entries.",
+    "Nested host control observes both unadopted URLs before teardown and their native/audio cleanup afterward. Existing production release/cancellation assertions remain before t.after; teardown cannot turn those failed assertions into passes."
+  ],
+  "finding": "No blocking source-review finding.",
+  "newControls": {
+    "topLevel": 11,
+    "child": 1,
+    "executed": false
+  },
+  "scope": "Source and receipt review only. No local tests/build/browser, hosted test pass, native gameplay, performance result, PR mutation, or publication."
+}

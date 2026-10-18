@@ -1,0 +1,83 @@
+{
+  "kind": "final-subagent-source-gate-publication-snapshot",
+  "observedAt": "2026-10-18T23:00:05.126078+00:00",
+  "pr1620": {
+    "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "mergeCommit": "513669732b51e55eafe734a431156057a4e6c5a9",
+    "checkCounts": {
+      "success": 23,
+      "skipped": 3
+    },
+    "completeCheckCount": 26,
+    "priorFullGateCensus": "6af32fdca5ecf87e53d432ee333a1cf6b40b2820"
+  },
+  "mainBefore": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "mainAfter": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "publicURL": "https://mekhovov.github.io/revealline/main-deployment.json?final-source-audit=20261018T230002Z",
+  "publicIdentity": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+    "sourceCommittedAt": "2026-10-18T21:05:19Z",
+    "buildVersion": "main-e4400303952d",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "publicSHA256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+  "publishers": [
+    {
+      "id": 39168765766,
+      "head": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "status": "queued",
+      "conclusion": null,
+      "updatedAt": "2026-10-18T22:54:32Z",
+      "jobs": [
+        {
+          "id": 117813536487,
+          "name": "build",
+          "status": "queued",
+          "conclusion": null,
+          "started_at": "2026-10-18T22:54:32Z",
+          "completed_at": null
+        }
+      ]
+    },
+    {
+      "id": 39166266155,
+      "head": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+      "status": "completed",
+      "conclusion": "success",
+      "updatedAt": "2026-10-18T22:54:32Z",
+      "jobs": [
+        {
+          "id": 117789791613,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T21:33:16Z",
+          "completed_at": "2026-10-18T21:43:22Z"
+        },
+        {
+          "id": 117798198305,
+          "name": "deploy",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T22:19:19Z",
+          "completed_at": "2026-10-18T22:19:47Z"
+        },
+        {
+          "id": 117806055366,
+          "name": "verify",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T22:53:58Z",
+          "completed_at": "2026-10-18T22:54:31Z"
+        }
+      ]
+    }
+  ],
+  "scope": "Read-only source-gate and publication identity snapshot only. Exact eb2 earlier artifact evidence is retained independently; publication does not establish native gameplay or performance. No native dispatch, merge or test rerun."
+}

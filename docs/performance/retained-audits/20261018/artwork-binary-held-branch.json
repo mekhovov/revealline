@@ -1,0 +1,24 @@
+{
+  "format": "HeldBranchReceiptV1",
+  "createdAt": "2026-10-18T23:04:05.418212+00:00",
+  "branch": "codex/solo-owned-binary-artwork",
+  "head": "e2cf2cbc2a268028c39afb1a5b4235e1d4faaadf",
+  "tree": "c359da2b12d43a35d97e4ddc43bede62c39156c7",
+  "parent": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "proposal": "73a9cfd270604cb0f29cd953ad6fb0c22d30a97e",
+  "peerReview": "2a0fdebd734a39c1767da469e545cd78ce023016",
+  "paths": [
+    "game/content-design/assets.mjs",
+    "game/content-design/picture.mjs",
+    "game/content-design/attempt.mjs",
+    "game/content-design/solo-host.mjs",
+    "game/app.mjs",
+    "game/test/content-assets.test.mjs",
+    "game/test/content-picture.test.mjs",
+    "game/test/solo-cadence-readiness-host.test.mjs",
+    "game/test/helpers/solo-dom.mjs",
+    "game/test/gameplay-pressure-host.test.mjs"
+  ],
+  "verification": "Exact before and after blobs, entire tree union, one parent, branch readback and ten-path comparison verified. No PR, functional test or native measurement.",
+  "releaseOrder": "Held; first CI after current cohort, public Missions observation, admitted menu/authoring/backup drafts and finite #1654 policy update."
+}

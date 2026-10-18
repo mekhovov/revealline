@@ -1,0 +1,151 @@
+{
+  "format": "SoloPolicyReleaseOrderReviewV2",
+  "at": "2026-10-18T22:50:30.653613+00:00",
+  "readOnlySourceReview": true,
+  "repo": "mekhovov/revealline",
+  "refs": {
+    "main": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "menus": "e379c2749e0815538f23500ef5a3b2117569c0c6",
+    "soundtrack": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+    "backup": "73eb20a2d32edf194cdc7915d6fb055753df8925"
+  },
+  "policyFileGitIdentities": {
+    "main": [
+      [
+        ".github/workflows/deploy-pages.yml",
+        "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+      ],
+      [
+        "publishing/admission-binding.mjs",
+        "bbc451129f21407143e4d3034d819711e5539dd2"
+      ],
+      [
+        "publishing/admission-preflight.mjs",
+        "9750b8dc5aef171f9124563966f726c2cbe15237"
+      ],
+      [
+        "publishing/focused-tests.mjs",
+        "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+      ],
+      [
+        "publishing/focused-test-map.json",
+        "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+      ],
+      [
+        "publishing/test-policy.json",
+        "e067e704a165e16e449761989e3e1b611dc35181"
+      ],
+      [
+        "publishing/test-policy.mjs",
+        "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+      ]
+    ],
+    "menus": [
+      [
+        ".github/workflows/deploy-pages.yml",
+        "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+      ],
+      [
+        "publishing/admission-binding.mjs",
+        "bbc451129f21407143e4d3034d819711e5539dd2"
+      ],
+      [
+        "publishing/admission-preflight.mjs",
+        "9750b8dc5aef171f9124563966f726c2cbe15237"
+      ],
+      [
+        "publishing/focused-tests.mjs",
+        "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+      ],
+      [
+        "publishing/focused-test-map.json",
+        "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+      ],
+      [
+        "publishing/test-policy.json",
+        "e067e704a165e16e449761989e3e1b611dc35181"
+      ],
+      [
+        "publishing/test-policy.mjs",
+        "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+      ]
+    ],
+    "soundtrack": [
+      [
+        ".github/workflows/deploy-pages.yml",
+        "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+      ],
+      [
+        "publishing/admission-binding.mjs",
+        "bbc451129f21407143e4d3034d819711e5539dd2"
+      ],
+      [
+        "publishing/admission-preflight.mjs",
+        "9750b8dc5aef171f9124563966f726c2cbe15237"
+      ],
+      [
+        "publishing/focused-tests.mjs",
+        "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+      ],
+      [
+        "publishing/focused-test-map.json",
+        "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+      ],
+      [
+        "publishing/test-policy.json",
+        "e067e704a165e16e449761989e3e1b611dc35181"
+      ],
+      [
+        "publishing/test-policy.mjs",
+        "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+      ]
+    ],
+    "backup": [
+      [
+        ".github/workflows/deploy-pages.yml",
+        "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+      ],
+      [
+        "publishing/admission-binding.mjs",
+        "bbc451129f21407143e4d3034d819711e5539dd2"
+      ],
+      [
+        "publishing/admission-preflight.mjs",
+        "9750b8dc5aef171f9124563966f726c2cbe15237"
+      ],
+      [
+        "publishing/focused-tests.mjs",
+        "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+      ],
+      [
+        "publishing/focused-test-map.json",
+        "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+      ],
+      [
+        "publishing/test-policy.json",
+        "e067e704a165e16e449761989e3e1b611dc35181"
+      ],
+      [
+        "publishing/test-policy.mjs",
+        "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+      ]
+    ]
+  },
+  "allNewDraftsMatchCurrentMainPolicy": true,
+  "unchangedValidationPolicyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+  "priorControllerAndReceiptSourceAudit": {
+    "gitBlob": "0f99f3c331a9a7d79d763954fbfbc54476d32b73",
+    "bytes": 64294,
+    "sha256": "4b7959667754f8e4373ddf77a19ebfb75238d2d826e9ac92ccc4bb7395bda9df"
+  },
+  "finding": "PR1654 changes one of the seven trusted policy files. Merging it before the three current draft heads would make their candidate policy identities differ from current main and invalidate their current policy-bound receipts; the controller must refuse until reconciliation and fresh admission, not bypass the digest check.",
+  "finiteOrder": [
+    "Complete existing runtime cohort and P0 published observation.",
+    "Admit and merge current runtime drafts1674,1675,1676.",
+    "Reconcile1654 with fresh main and complete exact-head checks before its reviewed merge.",
+    "Compose later heap, overhead, artwork and trail changes against the new policy before first qualifying CI; they do not extend this finite hold."
+  ],
+  "urgentException": "An earlier policy release requires explicit reconciliation and fresh receipts for affected heads; no controller/settings exception is proposed.",
+  "testsExecuted": false,
+  "prOrRefMutation": false
+}

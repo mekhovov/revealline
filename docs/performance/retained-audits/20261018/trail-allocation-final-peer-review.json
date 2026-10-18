@@ -1,0 +1,95 @@
+{
+  "format": "SoloTrailAllocationSourcePeerReviewV1",
+  "at": "2026-10-18T22:55:38.199009+00:00",
+  "proposal": {
+    "gitBlob": "191b9a26e7a1272c50a44d250d58bb84449f7102",
+    "bytes": 35996,
+    "sha256": "1d35651aab7810dde1dd5bed0dc1d9eb397afc96696c695f2ef93d1ded1cd778",
+    "base": "dd337c8120fd6f875544c1479713d3aa4299c323"
+  },
+  "paths": [
+    {
+      "path": "game/core/capture.mjs",
+      "before": {
+        "gitBlob": "7f3207d69107d058b6986bf8099052d1ed554044",
+        "bytes": 7509,
+        "sha256": "9ea5eec1db293445c3e93cf809ca08bded13062bbbdfe3ac6b7c1306a3cac731"
+      },
+      "after": {
+        "gitBlob": "bb381f963cf857b62ef6b9b635238e43d79c342e",
+        "bytes": 7865,
+        "sha256": "8847c26ec7459a706261303f185b86c2a4f83691f110bf1809173bc2cc43a6b3"
+      }
+    },
+    {
+      "path": "game/test/core-capture.test.mjs",
+      "before": {
+        "gitBlob": "feddfdbf24d245a9e7f3326163d8b4fad074791a",
+        "bytes": 10599,
+        "sha256": "74c97abf558f7f43e4f9088283d2b323274b9f5d02b3970533d2f1131a3f4e7a"
+      },
+      "after": {
+        "gitBlob": "f05cbae7bdf291aab5b392a7966685e2b90c0ffe",
+        "bytes": 15692,
+        "sha256": "0124c14a24c0f0df65fae418d2bbee8f9385b7d355bde33b3ac76da3e691b7bf"
+      }
+    }
+  ],
+  "independentSourceReads": [
+    {
+      "path": "game/core/geometry.mjs",
+      "bytes": 4290,
+      "sha256": "ad980ff30fef2cb8afd307f2a8dccf0329d1dc996dbd9fa3d13e3d2e9f2ae3d4",
+      "gitBlob": "aa07810c45f57b3f817a1990de38bf8909a3c904"
+    },
+    {
+      "path": "game/core/index.mjs",
+      "bytes": 23285,
+      "sha256": "d5fead46c41a9651da86003f70417a9d2bbd5a61830c007011b205581b2a3330",
+      "gitBlob": "a5f1d4cfbd8dfdfc1e1c9f91441c2c6e18264633"
+    },
+    {
+      "path": "game/replay.mjs",
+      "bytes": 33108,
+      "sha256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+      "gitBlob": "fa473c568bec333395636541cc82fe3dd8b597f6"
+    },
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "bytes": 19972,
+      "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+    },
+    {
+      "path": ".github/workflows/appearance-preview.yml",
+      "bytes": 59546,
+      "sha256": "cbdb72e7c93bc3ce268caa5641f87c94f566e3297b74a8dff6a8ed02dd44fa6f",
+      "gitBlob": "3eba59c40de952d8353ee0ac487cf2382b88abde"
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "bytes": 33959,
+      "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "bytes": 14501,
+      "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+    }
+  ],
+  "review": "clean source review",
+  "findings": [
+    "The sole private prior-segment array remains owned by selfContact. Its segment objects are read-only; geometry receives newly constructed point values, and actual core appendTrail mutation follows completion of contact/failure selection.",
+    "All existing EPS checks, horizon fraction arithmetic, traversal order, same-tail reversal selection, contact minimization and append clipping/merging are unchanged. New empty-trace branches return the same valid-core result while avoiding unnecessary Sets/segment preparation.",
+    "Five direct controls cover empty idle/live trace, immutable63-segment bent trail and earliest horizon, within-trace crossing/reversal, cell-only order, and tail ownership through accepted clipping/merge. The Set spy encloses only two synchronous calls and restores in finally before assertions/checkpoint hashing.",
+    "Compared with original877 proposal, production and the five direct controls are byte-identical. Only createHash/verifyReplay imports and two full-route golden cases are removed.",
+    "Ordinary changed-test admission uses Node20.19.x, whereas known Appearance/Demo admission pins22.13.1. No ordinary-runtime full-checkpoint support for the two goldens was established. Their source material remains held in877; no skip, weaker checkpoint rule or new workflow is introduced.",
+    "Current source policy directly admits the changed core-capture test; existing exact replay/portability and native full-checkpoint acceptance remain required on the final combined source. Source review does not establish a measured speedup or attribute any observed stall."
+  ],
+  "priorHeldGoldenProposal": "877cb266fa955751d7c3bf348f12653c92e7b4ea",
+  "functionalTestsExecuted": false,
+  "nativeTestsExecuted": false,
+  "noPrOrRefMutation": true
+}

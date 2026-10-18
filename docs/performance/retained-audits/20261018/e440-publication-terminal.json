@@ -1,0 +1,46 @@
+{
+  "kind": "main-pages-publisher-terminal-verification",
+  "observedAt": "2026-10-18T22:56:38.977282+00:00",
+  "run": {
+    "id": 39166266155,
+    "head_sha": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-10-18T22:54:32Z",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39166266155"
+  },
+  "verifyJob": {
+    "id": 117806055366,
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-10-18T22:53:58Z",
+    "completed_at": "2026-10-18T22:54:31Z",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39166266155/job/117806055366"
+  },
+  "publicIdentityObservedByJob": {
+    "root": "https://mekhovov.github.io/revealline",
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+    "buildVersion": "main-e4400303952d",
+    "play": "game/"
+  },
+  "receiptArtifact": {
+    "id": 12154015747,
+    "name": "practice-site-receipt-e4400303952d4d6dcfd6416d6d085131ce71466b",
+    "size_in_bytes": 284,
+    "digest": "sha256:566ea2bae8d30c288adfd04ee83dc25278d7a3cabb6d6efc5f905e94d16b8a84"
+  },
+  "receipt": {
+    "indexURL": "https://mekhovov.github.io/revealline/practice/index.json",
+    "checked": [],
+    "missingCatalogueIsFailure": true
+  },
+  "receiptZipCRCPassed": true,
+  "rawLog": {
+    "bytes": 26840,
+    "sha256": "490d48de0b1ceebc0e37324594d83a7b05e8bd07a1e22f3d64f9b341ced6ebe4"
+  },
+  "priorIndependent20PayloadReadback": "7e455691f020f53f4189023d9cc397fcca36bc82",
+  "scope": "Publisher's final identity and practice catalogue verification completed. The practice receipt contains zero checked package entries; this is not a nonempty optional package or browser gameplay pass. Prior independently retained readback matched 20 selected exact inventory payloads. No new native dispatch or physical-device qualification."
+}

@@ -1,0 +1,1551 @@
+{
+  "format": "ReadOnlyFixtureSourceAuditV1",
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "testTree": "0da01fd407e0eb07930a1154e69f5e47b9153633",
+  "truncated": false,
+  "scannedModuleCount": 2075,
+  "exactLocalBlobMatches": 2045,
+  "exactRemoteReplacementCount": 30,
+  "soloDomImportCount": 245,
+  "scope": "Every current game/test .mjs source was read from local bytes only on exact Git-blob equality; the remaining 30 were fetched by immutable Git blob. This is source inspection, not execution.",
+  "consumers": [
+    {
+      "path": "game/test/actor-appearance-solo-host.test.mjs",
+      "gitBlob": "05c3043b3ca8b029ac2d31fc319728561bfb0f89",
+      "bytes": 24547,
+      "sha256": "6153cf605dc7f4e4aeaff61038b950d627eec2ccae703fa7f115d150df389c4a"
+    },
+    {
+      "path": "game/test/actor-appearance-versus-host.test.mjs",
+      "gitBlob": "68acf1adc87c278f85f6515894153fbb9505a461",
+      "bytes": 13258,
+      "sha256": "41d203855f5dc6b2626b5739ee843cb930bd2931e493321d66818a5c795b9102"
+    },
+    {
+      "path": "game/test/art-review-host-navigation.test.mjs",
+      "gitBlob": "93fbbd9b318d3f1a8fd373efb5b78716e9d2f4f4",
+      "bytes": 7471,
+      "sha256": "0f38b74dc0c2741cdf6300533ca7982a52e6be043b6493ab38b3ca923afcf1e3"
+    },
+    {
+      "path": "game/test/asset-studio-return.test.mjs",
+      "gitBlob": "94a7f2d66f4c4f59eb5e91952367660991378b85",
+      "bytes": 8498,
+      "sha256": "d3ccd3eb84389f43e23dca5fa76e3b9a35c157def704884964a42f9b26c5f5e8"
+    },
+    {
+      "path": "game/test/authored-mode-entry-host.test.mjs",
+      "gitBlob": "b98ef3ddd24c0c3727088e5c20bec64a2314faac",
+      "bytes": 13101,
+      "sha256": "c99a330f9a9688190e741d70c5184c7fc04edc0905015ae052cd8a4fd37e272b"
+    },
+    {
+      "path": "game/test/backup-content-feedback-host.test.mjs",
+      "gitBlob": "3648ae0b5fc821dbe0a39b588bfb7cb73421ff72",
+      "bytes": 12554,
+      "sha256": "f081b23b940d516015fcbdece05a2d219a839c625fe482e4fc6f2432c262e4f6"
+    },
+    {
+      "path": "game/test/backup-pending-mastery-host.test.mjs",
+      "gitBlob": "aecdb3c2d4bec5698f12f7b6dafb693f07fa1289",
+      "bytes": 15100,
+      "sha256": "2efd9627d743b345d9a23973a715ca3e7c587521f37f5700d968898d5c1bfb13"
+    },
+    {
+      "path": "game/test/backup-set-host.test.mjs",
+      "gitBlob": "ee5b968f83abfd04a34d2af037b249d4259aa2d3",
+      "bytes": 15677,
+      "sha256": "f96921d7b2223d2846d3843697a66a33ff6584f9c7f379b28cb8d095faa0b210"
+    },
+    {
+      "path": "game/test/battlefield-ground.test.mjs",
+      "gitBlob": "32c1dac1854a7ff2d3fcc1d599477b3865d18bfe",
+      "bytes": 11230,
+      "sha256": "146a56529ae37a174737be976dff497ad3271d0160425b8959ba720b351e5ccb"
+    },
+    {
+      "path": "game/test/boot-host.test.mjs",
+      "gitBlob": "aa25bab151dd279f065fd390dd73f548acf2180b",
+      "bytes": 2361,
+      "sha256": "478c67360fc3239954fe9e6f6b8a01367091b2f8746c82d255b383a8fdf04fbe"
+    },
+    {
+      "path": "game/test/campaign-feedback-host.test.mjs",
+      "gitBlob": "4e3063872853fe0af23c539509a293b3e8d82568",
+      "bytes": 3674,
+      "sha256": "5a98c4e3d44774e3f1ea8bb75078f8c0daf2d8d6030ecdf35549a86156ac4fc5"
+    },
+    {
+      "path": "game/test/campaign-feedback.test.mjs",
+      "gitBlob": "35f1d93b5cefe561b3232693c05fcb753ba16fae",
+      "bytes": 9340,
+      "sha256": "0b9312cd61e788e91225d11f373c303c2948b755d840fa65978153c53d45265f"
+    },
+    {
+      "path": "game/test/candidate-legacy-save-host.test.mjs",
+      "gitBlob": "ae12ec86fe959096dbabc9ce47a752cdcd3c2051",
+      "bytes": 2833,
+      "sha256": "b5824a35cfa0ff586ad77b7b69119d5faca17fb72806a647992802a4e9d98448"
+    },
+    {
+      "path": "game/test/candidate-solo-host.test.mjs",
+      "gitBlob": "6098f55d657f2ae31f8b164fa300b68cc8f637df",
+      "bytes": 26867,
+      "sha256": "72fa1344e339a49000d2a73e275b2c26769a3e7b3eccb254f53961ed7450ea1c"
+    },
+    {
+      "path": "game/test/candidate-versus-host.test.mjs",
+      "gitBlob": "814310efe11616a3ad3fbeebbdbd3e4c5ad7ceb5",
+      "bytes": 26532,
+      "sha256": "96b044d32e19c7c327a8e17123861f2dd6cc913855a48b99a9adddcc668b7794"
+    },
+    {
+      "path": "game/test/capture-attempt-appearance-host.test.mjs",
+      "gitBlob": "518a89f052cf31c4f2ce4aa4f2a510c9e1e856a3",
+      "bytes": 10359,
+      "sha256": "2c389d5c6dd8617a18236b79f543f7c53f58c43c9b91ca43605bd0392c1f23c6"
+    },
+    {
+      "path": "game/test/chapter-download-host.test.mjs",
+      "gitBlob": "54cd5745d0d4f040d92104c8256595d8a112ff5c",
+      "bytes": 17209,
+      "sha256": "68f7af3f3a08c2bb6f4831186733f7e48e8a5803d0600855c27377a17aa03016"
+    },
+    {
+      "path": "game/test/classic-host.test.mjs",
+      "gitBlob": "32df686ebe2d7216124f88dd4434e61690cee329",
+      "bytes": 8739,
+      "sha256": "7a3536c6cf25ab14793300ae44f9aaad5ebfe32fe8358e71428aadf737431ca9"
+    },
+    {
+      "path": "game/test/collection-context-host.test.mjs",
+      "gitBlob": "0ac5a510ab32b43ccb3c3fc10ff0aa6764c7e873",
+      "bytes": 16793,
+      "sha256": "a71c39e98e0dd51b2ad4917c8a021019052707f9e714a0a110739322e168c619"
+    },
+    {
+      "path": "game/test/collection-records-return-host.test.mjs",
+      "gitBlob": "77762931685b9137181ae3a0f9df146ec62b83fa",
+      "bytes": 14577,
+      "sha256": "170e3814c2afd90e85a29174eafa44067f3c75e4d3643fdd3c78ea3e8e04b8f9"
+    },
+    {
+      "path": "game/test/combat-brief.test.mjs",
+      "gitBlob": "d152f053729826217b8580bdb7c94b5a0e26a242",
+      "bytes": 9844,
+      "sha256": "df9de43073d8296659d048b44eae12bf453f064a9baafcfe52461c5b2cf369f8"
+    },
+    {
+      "path": "game/test/community-friendly-host.test.mjs",
+      "gitBlob": "f5f9048106cd4fe3c0c6568f114890c8e1ed646a",
+      "bytes": 13408,
+      "sha256": "e307b32a1bac2ec24c0e8533603e4e1eab344163b52b0dede1b2511098436f73"
+    },
+    {
+      "path": "game/test/compact-flight-captions-host.test.mjs",
+      "gitBlob": "15f0abaa722d9e45ae18dda6e13ba5acafce4651",
+      "bytes": 1274,
+      "sha256": "90178bbfee9cbcef469e2a7649a2dd88837dd9a6688bab16ca2997be7257e791"
+    },
+    {
+      "path": "game/test/company-library-examples-host.test.mjs",
+      "gitBlob": "fe7273ce391a9f20e31584447f2bb8bc6578e8ce",
+      "bytes": 3346,
+      "sha256": "57fe2cde9a12fa29e2e26609fa5589b604e45898b5a8f38447f6faada2cefe0b"
+    },
+    {
+      "path": "game/test/company-selector-identity-host.test.mjs",
+      "gitBlob": "cc0a2691ca4603909caca9a23679c57f1e617134",
+      "bytes": 5744,
+      "sha256": "b78dcacc1482290071de3824b67378d7926b152d6990593719c671fa3198710e"
+    },
+    {
+      "path": "game/test/continuous-host.test.mjs",
+      "gitBlob": "b32657812f82c30bd83ff7385dee02172c3c443c",
+      "bytes": 24693,
+      "sha256": "4f4f34940421849b5a33d5e688ebdf7af880582b95d6781992f22f787c41cf20"
+    },
+    {
+      "path": "game/test/controller-practice-pause-host.test.mjs",
+      "gitBlob": "80cc2524151cf7d132dfd6f347f571c1c2f00ea1",
+      "bytes": 12547,
+      "sha256": "883b05e1e66260dc3caaea2bf4f6dde8e3120a7a3300e0f30fb4a641feba1e9c"
+    },
+    {
+      "path": "game/test/couch-audio-master.test.mjs",
+      "gitBlob": "d63030d2bcebb8ffdfe3ee7f92c96719ce6d1f29",
+      "bytes": 50936,
+      "sha256": "8909ca7710b6e4bc97e93cfc619ab6f72fc82f5e5ababbe6dd015320da5b3771"
+    },
+    {
+      "path": "game/test/couch-encounter-help.test.mjs",
+      "gitBlob": "5c25b2690c7636a35c3a07d3cef0427ed658e421",
+      "bytes": 12210,
+      "sha256": "0cdb32713ba9e4f37778f970b0877307ea9c53accd27b16f5a7e40275bdae28a"
+    },
+    {
+      "path": "game/test/countercurrent-chapter-host.test.mjs",
+      "gitBlob": "ee80f435a81fcef0176278231b85fda53035ce73",
+      "bytes": 20227,
+      "sha256": "73b1d1365a0caff914baaab17fa4b51c6e547a7bdce7a5b3d9e2bfeaca4685fc"
+    },
+    {
+      "path": "game/test/course-pause-host.test.mjs",
+      "gitBlob": "db4a31bba0879b8cdb371d8d5ad89bf5ce22bfaa",
+      "bytes": 3626,
+      "sha256": "be80233e913f17a244f3cbd8793bd4d8a6d9876f399f4ec47a05f6c92cdb92c6"
+    },
+    {
+      "path": "game/test/course-selection-host.test.mjs",
+      "gitBlob": "a10a77be50f55c16c9ccd6be360241be73e056a4",
+      "bytes": 8591,
+      "sha256": "83c4f2c9af28926fabfc9410b61dd5b54340502a1cae93619b2095d574f66bfa"
+    },
+    {
+      "path": "game/test/creator-tools-scope-host.test.mjs",
+      "gitBlob": "5111dbadf567729072b462d90b18baf5b8b8b61e",
+      "bytes": 5244,
+      "sha256": "58299fc9ca93e193d73f386105afac59e6f3b448edd1ab0658dc277b536af440"
+    },
+    {
+      "path": "game/test/curated-community-theme-host.test.mjs",
+      "gitBlob": "12bc78f738e6592617421389547a210196698a22",
+      "bytes": 11042,
+      "sha256": "d48e2db187119b4d3bbdcaa577dd1c1a9da5b3a5ac419a9512dcbe23c31e6665"
+    },
+    {
+      "path": "game/test/default-journey-endings-host.test.mjs",
+      "gitBlob": "cb3133f948f765258f6cb410b5c8fde996bc06c8",
+      "bytes": 14114,
+      "sha256": "c4162dccd66666e5f448f83b7e6feb1c7c07f87418a0540ab7920487d01a7ba9"
+    },
+    {
+      "path": "game/test/default-solo-entry-host.test.mjs",
+      "gitBlob": "46dd3d942eaca3f3c15e3e049619b2917e91894d",
+      "bytes": 16345,
+      "sha256": "dc44a47ad39a218fdd0df5de53d988fd78b3560cff6068f202099ce020f6c5c8"
+    },
+    {
+      "path": "game/test/defeat-presentation-host.test.mjs",
+      "gitBlob": "ea4f0c810133b52ea20d544e29f16fb524acf886",
+      "bytes": 11557,
+      "sha256": "c14df7b5a50958eeef7fc461aedbc01b22f0179a96897cf5f6c2b08157148b2e"
+    },
+    {
+      "path": "game/test/demo-audio-host.test.mjs",
+      "gitBlob": "b519c37d6c7836277ea4ad5736e091b6bccfcfb8",
+      "bytes": 10843,
+      "sha256": "4eefcf347723fdd41805038aa9e9a4eae7bcdec156355f647c671e3b96ff1deb"
+    },
+    {
+      "path": "game/test/demo-back-host.test.mjs",
+      "gitBlob": "d37d60ebd454308681a5f11c0dce19bc09b3cfba",
+      "bytes": 5711,
+      "sha256": "5e52d3a4f68aa9d2fcda320f94ad44d9ee76b47ab670d875855d9cfdd8a1200c"
+    },
+    {
+      "path": "game/test/demo-background.test.mjs",
+      "gitBlob": "f9494aa061f12d66dcbdafc76d34c206b9aa8271",
+      "bytes": 12349,
+      "sha256": "28b8f2c8d126943e56ba4384c11bb54bf38fa386a4782b4ad13e2a4da22bc0b0"
+    },
+    {
+      "path": "game/test/demo-clear-pictures-host.test.mjs",
+      "gitBlob": "aac9d8acb49c4d3728747e49ba1b77afca012e5d",
+      "bytes": 6964,
+      "sha256": "475fdcf15880e78b94767f5cd572b27c70402a00eeb96be30d4ccc303e9f31ab"
+    },
+    {
+      "path": "game/test/demo-confirm-host.test.mjs",
+      "gitBlob": "7fbe232b4d72f8c28a3457c8e3c54c35f6a87c9e",
+      "bytes": 9915,
+      "sha256": "75e96a42b2b2dee30a7301f855f544558f58ff57ee5052692cd4e1dabc30dfa0"
+    },
+    {
+      "path": "game/test/demo-confirm-settings-host.test.mjs",
+      "gitBlob": "490495f5320bec625f8437b6a67a2adf94a32fa3",
+      "bytes": 8052,
+      "sha256": "700416842ddcd009d48a529c58811354a349f2562ccfc5bb62e2085d5c74bf55"
+    },
+    {
+      "path": "game/test/demo-context-recovery-host.test.mjs",
+      "gitBlob": "8c443e7f2ff158caf75ea6593c43cb9aefb139a1",
+      "bytes": 17732,
+      "sha256": "4f846ed493b9f60029c7606025de1aba67ffcc1d074db90a013521dbae137716"
+    },
+    {
+      "path": "game/test/demo-earned-picture-host.test.mjs",
+      "gitBlob": "00af3dc0ae62b2a128e23403bec8ac84e51c4345",
+      "bytes": 11281,
+      "sha256": "fe7a6268e1e71cb29a569b469afde3e7899f2e6db189dec4975f640b693bb958"
+    },
+    {
+      "path": "game/test/demo-host.test.mjs",
+      "gitBlob": "f9aefe228f66065f850287e5bea8328b170c7a5b",
+      "bytes": 26433,
+      "sha256": "f501a8dbe04196752970ff08c5de6373d767cca107fc9b225e61d7094764d7f6"
+    },
+    {
+      "path": "game/test/demo-retained-presentation-host.test.mjs",
+      "gitBlob": "9fd189dc728aa6ee1b8c262b43d333a159ae87ba",
+      "bytes": 3442,
+      "sha256": "dd3253c941d37bb5290973eb6d2e743a2632c7a22d50b995076209fd87997664"
+    },
+    {
+      "path": "game/test/demo-retention-host.test.mjs",
+      "gitBlob": "b8abeae228fc1c9b25c6bb2df490d36ea1718737",
+      "bytes": 15139,
+      "sha256": "994a4e5ddb4620680345042bb2283496e84cee89e8b60adc644f9dc89d6d93f9"
+    },
+    {
+      "path": "game/test/demo-visual-quality-host.test.mjs",
+      "gitBlob": "2dbf618a85d404c36f29d741a03654005fc8d6b0",
+      "bytes": 6804,
+      "sha256": "86f6c7e07d1cb3565cd4e0143271efd0b40637ff2eb3efd443276bbdbb41b2bf"
+    },
+    {
+      "path": "game/test/device-controls-host.test.mjs",
+      "gitBlob": "fe9ef2319ce95a3779ae9f33467046bda05eb8d6",
+      "bytes": 32406,
+      "sha256": "3c20de729875ff2d65c85b245977fc53026daec67d822891869f93e798876af2"
+    },
+    {
+      "path": "game/test/difficulty-host.test.mjs",
+      "gitBlob": "ced99e80c8f95eddfab2f094ef5a4b68189f2f68",
+      "bytes": 26355,
+      "sha256": "3cae74158d8b90b3f394d5463bfc6b2f9cd35bb12014b2318b4a5f641221a91d"
+    },
+    {
+      "path": "game/test/display-preferences-host.test.mjs",
+      "gitBlob": "218ce6f403fe898b9438762495a38184554dbd09",
+      "bytes": 15671,
+      "sha256": "2171440c573f181540c34491dd00d9e038438062066b8c342fedbbb3763abdee"
+    },
+    {
+      "path": "game/test/edition-appearance-host.test.mjs",
+      "gitBlob": "1d54026a61ab61a5022783b50ffd332bd4d6a1f3",
+      "bytes": 8330,
+      "sha256": "e6141d1cbad537a8d2f40ef92bd17d7c4d41a0ccebe17d82d5c35d77e9d17cc2"
+    },
+    {
+      "path": "game/test/edition-cosmetic-host.test.mjs",
+      "gitBlob": "82677a427261159025443b62000b035d188208fc",
+      "bytes": 6840,
+      "sha256": "0059eb209b064f8fbf5d88468c674c3515a3d49d200fb3a30e347c37d9ee1518"
+    },
+    {
+      "path": "game/test/edition-example-packs-host.test.mjs",
+      "gitBlob": "c34538590aad07498ac983343a10babc2cfe84a7",
+      "bytes": 2936,
+      "sha256": "83f86c4af0dc3e01eda41c1ca5219db6679cd946c52ab24b8664a4c355797d88"
+    },
+    {
+      "path": "game/test/edition-lessons.test.mjs",
+      "gitBlob": "2b81f02dea5f53b941dfe4add5c6ba8fa22f1c8b",
+      "bytes": 32091,
+      "sha256": "6fdd4ec48bc278e9430bae05fd5caa1101309ab9901510d24efc09ffef315ecc"
+    },
+    {
+      "path": "game/test/edition-localization.test.mjs",
+      "gitBlob": "24ea77e2f55b469897eecca92848d8bb1a4ca318",
+      "bytes": 14744,
+      "sha256": "cab43e0025a90356e2024202909ab9e0c48f01b93dd04eb1ba439bedd62fb34f"
+    },
+    {
+      "path": "game/test/edition-mastery-host.test.mjs",
+      "gitBlob": "324f62653ba7663fbaccf8d4777bf93039342386",
+      "bytes": 6098,
+      "sha256": "4ac8f3d1e208963d5d1e1052ea49e22dda3fdcc1b2049b22a86d48edb1f2f28d"
+    },
+    {
+      "path": "game/test/edition-mastery.test.mjs",
+      "gitBlob": "85472a46bef5a1bad54748494a2233be900f6516",
+      "bytes": 13013,
+      "sha256": "cafab99317f1aba9544667020ddf3cb59702b128a60c7e431c51fb8213bfc205"
+    },
+    {
+      "path": "game/test/edition-solo-host.test.mjs",
+      "gitBlob": "4c9cfd079707824092a91e341cb50aeffe5734cc",
+      "bytes": 50906,
+      "sha256": "3dd4b4019bf1010e33f97f2af6868ca9c9990186d07fb289b623c5272d3df189"
+    },
+    {
+      "path": "game/test/encounter-display-host.test.mjs",
+      "gitBlob": "960e9417ed9c5d0d37eb0d4f1b9c3363d53e872b",
+      "bytes": 3130,
+      "sha256": "0b7487f2d0eac6962e95a57c024edc0be2a64e9202d1e324bbefd49a704b456f"
+    },
+    {
+      "path": "game/test/enemy-appearance-controls.test.mjs",
+      "gitBlob": "f7c308b99f559753bd865d693fe7e6f642e7004b",
+      "bytes": 9225,
+      "sha256": "f75a78cee06d6175eb63f72010c0e556dccc938ba97dd20305204506bcfd57a7"
+    },
+    {
+      "path": "game/test/enemy-catalog-panel.test.mjs",
+      "gitBlob": "2460ee61f10b05139bb9f90d7db6a731c61d6ec6",
+      "bytes": 16348,
+      "sha256": "69f1ebbb7ad19ffa53ea7d798247e8796208b43d6bae665d19f1a9e33f9cac01"
+    },
+    {
+      "path": "game/test/enemy-guide-edition-host.test.mjs",
+      "gitBlob": "d95c60fe54daefb6fe280456f6bc8f067e4be141",
+      "bytes": 10555,
+      "sha256": "20686c70d480ba7fc21250c659d0bb847935b099a3fd48d54cc9f5713f01c7d7"
+    },
+    {
+      "path": "game/test/enemy-guide-edition.test.mjs",
+      "gitBlob": "57018bba133023b440921a5e23aac1120e0361cb",
+      "bytes": 8444,
+      "sha256": "3f6f08c6a868a92578b4794482ee00ace782283958c7dd3edd6924082284b8a6"
+    },
+    {
+      "path": "game/test/enemy-guide-host.test.mjs",
+      "gitBlob": "f6c3a64eeb9222e7a64fd7e1c8f0b1deb4f36c8b",
+      "bytes": 46633,
+      "sha256": "622881288325e128a692da208020d7d0a85a4faafd934d5dbd20772424cab0af"
+    },
+    {
+      "path": "game/test/enemy-guide-panel.test.mjs",
+      "gitBlob": "c4d02057ebccd5436899b1a71ba72b46058ac273",
+      "bytes": 42753,
+      "sha256": "bfba4f42969c51611a61daafddbb9dced023087bab31c3cd630d31093efea1ae"
+    },
+    {
+      "path": "game/test/enemy-workshop-return.test.mjs",
+      "gitBlob": "beea3bfb8abfe46b3725f53433098d05f2519706",
+      "bytes": 10041,
+      "sha256": "2cca870bbe86bd897e7e97052ac0d08bc0e895f225475504b6e78e80d15d10a8"
+    },
+    {
+      "path": "game/test/equipment-help-host.test.mjs",
+      "gitBlob": "15f216802851426c3fc01aaa698ff9c5068241a7",
+      "bytes": 11675,
+      "sha256": "686887c5ed45e73463b15f942f9c4b3c6108c57613ea8933a7d4f98f3ed571c2"
+    },
+    {
+      "path": "game/test/external-backup-host.test.mjs",
+      "gitBlob": "87bc059bc5daa3a895924da5e54e9e78cf38934f",
+      "bytes": 22511,
+      "sha256": "195b7c4fcf941d15503723e080d4ce6835cf06deb72e10c9d4f575d172b7bbdb"
+    },
+    {
+      "path": "game/test/external-chapter-app.test.mjs",
+      "gitBlob": "bd7d823883bff39b658ba17c478c912f5c195d28",
+      "bytes": 40785,
+      "sha256": "e8c7a49c85ae4aa526fa73a4eb29a16d3989dfe18d85d8147c46184d38a42538"
+    },
+    {
+      "path": "game/test/external-chapter-card-focus.test.mjs",
+      "gitBlob": "6a23124f63bf8adb8de2507b2ef6675f87c5f825",
+      "bytes": 13374,
+      "sha256": "d0f957bb526014bedad0bf7a4e3fd86198e8fa3bebff396c57e4b78323fdf617"
+    },
+    {
+      "path": "game/test/external-chapters-panel.test.mjs",
+      "gitBlob": "155550243cd3638ae70d16061eb9cd620e213f71",
+      "bytes": 13847,
+      "sha256": "4f3ab331a79fcf920c15c7c02a04d063ca7dbc764903ce504131cdfdab89184e"
+    },
+    {
+      "path": "game/test/featured-chapter.test.mjs",
+      "gitBlob": "b7073ebd4b41241ec9b9dfdcbd53a260c327f49c",
+      "bytes": 10269,
+      "sha256": "be997066a06a6503cfa950a0006eea3626e8a279794d50b8db2937034fc577e4"
+    },
+    {
+      "path": "game/test/field-kit-flow.test.mjs",
+      "gitBlob": "fc42734eb5d1e019bcb4816ab8b8810638da320a",
+      "bytes": 19335,
+      "sha256": "ca9e9c1a2ff4771b982de06e8db9cae6369a4cbd82d25bd16fabe6b20b5d9413"
+    },
+    {
+      "path": "game/test/field-kit-surfaces.test.mjs",
+      "gitBlob": "917f554f0c340d08b314ce8378633a9a7b498b28",
+      "bytes": 11537,
+      "sha256": "06e7398b6bdeaa8bb6023163218410ad6e71402b84f48886532358b93bea8612"
+    },
+    {
+      "path": "game/test/first-journey-entry-host.test.mjs",
+      "gitBlob": "e608fcb3eebafc79e89eafbe1d1faf7441e621e6",
+      "bytes": 12241,
+      "sha256": "80329adb6672ff7a907dcd440f9957c1ca0099a508757ee7c0cb48dace5a5058"
+    },
+    {
+      "path": "game/test/first-light-playthrough.test.mjs",
+      "gitBlob": "40b1e544acf9208b154af0569c038ba33198da38",
+      "bytes": 3551,
+      "sha256": "ec290f45613b36147a9ff2ff17fdec3de11862da201631245607408bc1a1c696"
+    },
+    {
+      "path": "game/test/flight-information-backup-host.test.mjs",
+      "gitBlob": "29aa49fde62d671114c553aad12b36498fa0cf8d",
+      "bytes": 7530,
+      "sha256": "0d255d7d2d03120b90b9979b9592965a3265756f74c60f3dbf4f99f9cc908f27"
+    },
+    {
+      "path": "game/test/flight-information-combat-details-host.test.mjs",
+      "gitBlob": "2b834f89f0ab4601f3e368372161e205f5acb17c",
+      "bytes": 13927,
+      "sha256": "69cb3d3def81845b7651b9e74469552ee2e0e03efbffb03c7423a6d7dadbdfe2"
+    },
+    {
+      "path": "game/test/flight-information-details-host.test.mjs",
+      "gitBlob": "9746950caeeb6f06e96dd6a8ebbcceb65bcb54b7",
+      "bytes": 21507,
+      "sha256": "f5fe131a9ca9beeb86b4d772165ce3a676cdbab25b0b4660ac1199e396fdeeb5"
+    },
+    {
+      "path": "game/test/flight-information-host.test.mjs",
+      "gitBlob": "68c83b2292d6ea4b3b9d0354b91a519b4b8d005f",
+      "bytes": 11281,
+      "sha256": "32fcc1f99373c0a29399eb5a2467b0527dfb2481b8ca992ec5cbdaf997779b5d"
+    },
+    {
+      "path": "game/test/flight-pictures-host.test.mjs",
+      "gitBlob": "779068e76a632d33882445fa4859d256fbd6bf03",
+      "bytes": 30792,
+      "sha256": "db5aa4bf1a91d18033034b42319e617e0f4be2bea51964b8b412f2cd56471120"
+    },
+    {
+      "path": "game/test/flight-preparation-status-host.test.mjs",
+      "gitBlob": "69e2d64b9cc02ad903a3f781e01af1839e3dc7ab",
+      "bytes": 6179,
+      "sha256": "049654103707ceef14c44047139dcf75755830d9fd634f62986b1f6453bf3afa"
+    },
+    {
+      "path": "game/test/foundation-feedback.test.mjs",
+      "gitBlob": "b930e52a684d9bab155b2f4c8432bcc2c7fe5a11",
+      "bytes": 9101,
+      "sha256": "edc0ffed468ab06e13f11a9f0fc0746e1f82e495e7de3893c5235c00adca10dd"
+    },
+    {
+      "path": "game/test/foundation-host.test.mjs",
+      "gitBlob": "78b372e472493e4af77cc90ce68903d3a87172c2",
+      "bytes": 2781,
+      "sha256": "f768825894ce44bc7635124eb151d4194bf9c7105422f736ff8612f4a0d0d5d2"
+    },
+    {
+      "path": "game/test/fpv-role-host.test.mjs",
+      "gitBlob": "e1c47c1173ea27a43cabf2f263ea8741005060a7",
+      "bytes": 10592,
+      "sha256": "cadff37d1a1d8fdc81f54d8293ac8796ac338ab242e8fc4c9f1cdca1ad30cddf"
+    },
+    {
+      "path": "game/test/fracture-chapter-host.test.mjs",
+      "gitBlob": "278a19924e121467caa3640bb15932c458be5fb5",
+      "bytes": 20247,
+      "sha256": "111caa54900c411c37cd45fcc78b255249636882ac18f42c65b9e6723b09dd6b"
+    },
+    {
+      "path": "game/test/fresh-visual-host.test.mjs",
+      "gitBlob": "1daaccd372282826b473c409f6b863679507a411",
+      "bytes": 10538,
+      "sha256": "5a67a529db368d8e720db5f33d5266b680f2a23b5002af860f6046e412e6faaf"
+    },
+    {
+      "path": "game/test/gallery-return-host.test.mjs",
+      "gitBlob": "5d362e0f5945530f303bd691da6968893efa14df",
+      "bytes": 12032,
+      "sha256": "a4f519063541d5580108fe5072693ad4cc996c8e3cb264ed3c82f698770cd849"
+    },
+    {
+      "path": "game/test/gameplay-pressure-completion-host.test.mjs",
+      "gitBlob": "02a9c476a30fcea007dd795422be67abc1305fef",
+      "bytes": 4736,
+      "sha256": "ef4ae0f2e03538dd8419fd4fd9d67b9426b8058b5a499f7796398cdf0c7580eb"
+    },
+    {
+      "path": "game/test/gameplay-pressure-host.test.mjs",
+      "gitBlob": "4449c95d769f3cfde134499647094c48b1c1214e",
+      "bytes": 5904,
+      "sha256": "48a6e3fcdc093d173453d3f7ffb28690ffa062ac18edd1dbc0c4407bdf584f80"
+    },
+    {
+      "path": "game/test/gameplay-tuning-native-restore.test.mjs",
+      "gitBlob": "4d41bbc146ea18beee9102b1fb611200331f488c",
+      "bytes": 9520,
+      "sha256": "d0c96d61281c8c8179d29c2818c3bb6b872999e5af5acbc993e3f4a9d6b513e0"
+    },
+    {
+      "path": "game/test/handheld-short-tap-confirm.test.mjs",
+      "gitBlob": "929325f3b76ded22b24b0de8b3fadd82fd9cb98e",
+      "bytes": 2126,
+      "sha256": "323824a20f33a309876847d6a9bedfa31dcbbc98826a509a1da1b56171a3c56e"
+    },
+    {
+      "path": "game/test/helpers/backup-preflight.mjs",
+      "gitBlob": "afa1850a13982090168b90566c4cd35043dee74c",
+      "bytes": 632,
+      "sha256": "9e4f093f1fa8775f8388b2dc216d1b19bba24264fbde7a891e95e0103a8b0dd9"
+    },
+    {
+      "path": "game/test/helpers/demo-host-fixture.mjs",
+      "gitBlob": "5809c927b0ef454979076a84bb4d5198ec53f8aa",
+      "bytes": 5144,
+      "sha256": "1ba2ea57f04eee6bd3e9dd216a9302f02f03393e93b670afea7f62676f8603f9"
+    },
+    {
+      "path": "game/test/helpers/host-action.mjs",
+      "gitBlob": "9896546351426087337853cc7989c1b8929010f4",
+      "bytes": 1343,
+      "sha256": "04594d07c2b574a23cf6a09517cadf0333dfdcf3cc32d953eaf9fa86c69c7b7e"
+    },
+    {
+      "path": "game/test/helpers/mode-return-host-cases.mjs",
+      "gitBlob": "7017177112a7ca19f334d55025422636fca6f612",
+      "bytes": 25373,
+      "sha256": "68baef6fce9f743bf9c8c1d5a34de61e99c7697dd05ad9ae558fff5ab098ff02"
+    },
+    {
+      "path": "game/test/helpers/still-workshop.mjs",
+      "gitBlob": "9b0d8967ec81bfddb88a4fd86ed1fa5facbf0bfd",
+      "bytes": 4791,
+      "sha256": "432fcb1feee330994a3865666402e81057155adadc82f1f5bde527822728137e"
+    },
+    {
+      "path": "game/test/history-picture-host.test.mjs",
+      "gitBlob": "5f08047b3b5d3cea6600114a0275617fd5ddbd51",
+      "bytes": 17499,
+      "sha256": "04b8f8212585c8d1db7f6b379c0a87c9998b7966455b373d9794960f5f0e6567"
+    },
+    {
+      "path": "game/test/host-presentation-size.test.mjs",
+      "gitBlob": "2d9d6222b56af8849debcaa7b819ea105bc5b0c7",
+      "bytes": 9700,
+      "sha256": "03b8d6bf536d95d446659bdc1a99561826cc5fbed46cf3f1fddae9bd411a39c1"
+    },
+    {
+      "path": "game/test/hud-numeric-values.test.mjs",
+      "gitBlob": "e068480ec26de0aa12686ee871a48d431d1a38c3",
+      "bytes": 3305,
+      "sha256": "2144b959a74c6e2be4cd6f2d561bca075e7eff71bc5421d69ec686e451c6ea53"
+    },
+    {
+      "path": "game/test/hud-status-cues.test.mjs",
+      "gitBlob": "1e31834985092605e97de223e76b50eda8385db7",
+      "bytes": 11164,
+      "sha256": "642aae36753152046678c473adcf5316b2c53df9a0e90b9fbd5d28e508a96bfc"
+    },
+    {
+      "path": "game/test/immutable-presentation-fixture.test.mjs",
+      "gitBlob": "f46fbbbe80bc4f11f71822012036c0ee3c9ca3da",
+      "bytes": 9934,
+      "sha256": "878ffb2018c8e952fb1e2b1a9d2cf27a8c2fde4c3ca35aa82600bccd44fe6397"
+    },
+    {
+      "path": "game/test/initial-focus-host.test.mjs",
+      "gitBlob": "1aeb91d82665cc420e04d140296e37435be79070",
+      "bytes": 6359,
+      "sha256": "66703a0490be50ae2406af3cc475186ef8666e68a7cdd1e9b2f572b9dab07035"
+    },
+    {
+      "path": "game/test/journey-actor-host.test.mjs",
+      "gitBlob": "ac63a1b9394de3e95a3ad0e194f39e33ac6d5994",
+      "bytes": 4167,
+      "sha256": "db54773934884eb741a8aa09fcf9b5084067643b95cbc9c4b706f185807dd56f"
+    },
+    {
+      "path": "game/test/journey-backup.test.mjs",
+      "gitBlob": "9d25597adeae89a5b643e77749a8ef486518c0f7",
+      "bytes": 15554,
+      "sha256": "ba8e71e4f5e33ea61f6a348661e1d1a0bc1f811a8d4eb1ebb56f004f05ecec23"
+    },
+    {
+      "path": "game/test/journey-capture-stop-differential-host.test.mjs",
+      "gitBlob": "b651b73545528ae4e9648f289b9d789b5969d079",
+      "bytes": 11805,
+      "sha256": "a50ced9569548d37c4507fef66681c77a3fc1d4ea857bbdd7a8507f0decb320f"
+    },
+    {
+      "path": "game/test/journey-continue-caption-host.test.mjs",
+      "gitBlob": "49aedc4e03373253aedc0b2837c9e0588b449543",
+      "bytes": 4921,
+      "sha256": "dc2c64fc9beb504c56fd696595579341717e219304d1de6a7f46441c8459282a"
+    },
+    {
+      "path": "game/test/journey-host.test.mjs",
+      "gitBlob": "c0b58ed35dc3c86d1d22554a9c3f19fad7ffc007",
+      "bytes": 15101,
+      "sha256": "818f4322753a054fcd17b24ec597e81f2bba5846d1b8db1c6beed6e7083ade21"
+    },
+    {
+      "path": "game/test/journey-menu-return-host.test.mjs",
+      "gitBlob": "b50ead2f37d5c2e6de211fb076185d11e3041fda",
+      "bytes": 6501,
+      "sha256": "ca353cea44b47c3f3161352c8276070457a31eff8027f66ccb2a78bdaf940274"
+    },
+    {
+      "path": "game/test/journey-mode-navigation.test.mjs",
+      "gitBlob": "4ca7335baf974aeb1fc9dfbaa8d32177dc0fde7c",
+      "bytes": 8775,
+      "sha256": "bbb1923896e9e0cc5753313835470f9b6318d64c20bf6d87069a94c2c46047ba"
+    },
+    {
+      "path": "game/test/journey-owned-controls.test.mjs",
+      "gitBlob": "f242b980a5924ffcef707d3b33f2c80bbddf3e9b",
+      "bytes": 5375,
+      "sha256": "7ef79f50e1c89329a45d7a5709bd4b50d28b51b8f0b3b4dbfaf39034c12efa2e"
+    },
+    {
+      "path": "game/test/journey-profile-editions.test.mjs",
+      "gitBlob": "601ed2c5c318fa4ebcc1f56b232376fd51c0d989",
+      "bytes": 7284,
+      "sha256": "33d7d1a088beb4e8423803dbfbecc264ce101fa55289fb3094dd07d53fb90ed1"
+    },
+    {
+      "path": "game/test/journey-reactions-host.test.mjs",
+      "gitBlob": "f0fb506b59e8cdd6f43cccbad6572e219132e41a",
+      "bytes": 11398,
+      "sha256": "8153e524e354fa98887ab49819ff591d639648145e7f331542297605dbc7c27b"
+    },
+    {
+      "path": "game/test/journey-reactions.test.mjs",
+      "gitBlob": "17baaee47a2c82a54b36216a60508747b162b2d6",
+      "bytes": 8514,
+      "sha256": "0715c60c99ea6f8e9e62399939f1823a550bc689a2148e46c7ae02dcfdf3fdad"
+    },
+    {
+      "path": "game/test/journey-rewards-host.test.mjs",
+      "gitBlob": "4094afb29b0c68aa8bc58257c3271c810c0f9749",
+      "bytes": 7148,
+      "sha256": "37e71fd845faf16b504d12957e71a05a11800f8fb927ebde51c20daef3b34d95"
+    },
+    {
+      "path": "game/test/key-capture-navigation-host.test.mjs",
+      "gitBlob": "9f80da9f2bab8b8e17a3f1b6fe3c7c68bce16c22",
+      "bytes": 5886,
+      "sha256": "70c293f92e4f6e58d3836aed8eaecd8d140960737c8957c8b1a468258702696f"
+    },
+    {
+      "path": "game/test/key-settings-locale-host.test.mjs",
+      "gitBlob": "476b4f5060b8787f7df559c2d64c90aebc82c4c5",
+      "bytes": 4472,
+      "sha256": "a8644604217903d1ea3f07071ad9509b3a9cc6079604186bdfc7090ffafc03ed"
+    },
+    {
+      "path": "game/test/large-profile-route-host.test.mjs",
+      "gitBlob": "e81ea57b69a835d28c8e1b9ab916994ecb28c71c",
+      "bytes": 5812,
+      "sha256": "bcd9c51d1409ad020f7b9a8e074459252df0ab54b557bdfabee139545265f6db"
+    },
+    {
+      "path": "game/test/library-launch-host.test.mjs",
+      "gitBlob": "2f7800ef35ee10e5b64d93ec6f4505f4c3da6752",
+      "bytes": 27444,
+      "sha256": "de93ef9683857ae7888f8ceea4479246c0c4933ff28d10c5bed4cb0e8c45114f"
+    },
+    {
+      "path": "game/test/library-pager-host.test.mjs",
+      "gitBlob": "a127d4ae65bb467180e06446037c05b2821b8883",
+      "bytes": 23108,
+      "sha256": "2a245a61443eb38dc6b2821183ef2896e978f60e1f161e39ab5065510e9e59ac"
+    },
+    {
+      "path": "game/test/library-preparation-focus-host.test.mjs",
+      "gitBlob": "b6cec76ffecc02665fa82066e5207ee68f78ff37",
+      "bytes": 5518,
+      "sha256": "961ebc4e2b3fa0dd2348ce3f4afeddc87897aae2614d44d639ae1c0c13d3508e"
+    },
+    {
+      "path": "game/test/library-row-focus-host.test.mjs",
+      "gitBlob": "7779447e4cb01f307596d8a59d021270217f944b",
+      "bytes": 16841,
+      "sha256": "abfc4ce5b31239ba31343ada294eff07c5926a03f1bb5ba1eb52a6b2e35d692a"
+    },
+    {
+      "path": "game/test/localization-flight-host.test.mjs",
+      "gitBlob": "3c421851321402c178a01a976a3cd251aa7ab77a",
+      "bytes": 5467,
+      "sha256": "eaa8ab5c83798a5e74de44bd5999fc5e54f89a9019b7ede3cbd4532b089bb596"
+    },
+    {
+      "path": "game/test/localization-optional-chapters.test.mjs",
+      "gitBlob": "8a40afaf0182f9dc865f499a1c9739d3953afacb",
+      "bytes": 10386,
+      "sha256": "3033a110107b1166be9e4e4af66cd340cdfaaea8e8643b09674af3564fccb899"
+    },
+    {
+      "path": "game/test/main-menu-collection-host.test.mjs",
+      "gitBlob": "e68667982cb65579754b8dd091419142a4afcb2a",
+      "bytes": 18267,
+      "sha256": "1b74146f2105ce806edeb28b34d7f735e9461eb9ec6406caf2c6a847170b2001"
+    },
+    {
+      "path": "game/test/menu-retune-host.test.mjs",
+      "gitBlob": "6749911bd7aee0047b7c6764269bd2213249f0e3",
+      "bytes": 2189,
+      "sha256": "d8d91cc9e4b858db9458d4bd9e80025b2ed020ef88fc205aa2beca3507b4f810"
+    },
+    {
+      "path": "game/test/menu-style-host.test.mjs",
+      "gitBlob": "da80ef2e103490b697f0e22fc22e303f3941e426",
+      "bytes": 20519,
+      "sha256": "d0c88b0b7ab73ef83745e86171dfb58d83dfd1509882ea7a5976ce5ec91e7b5a"
+    },
+    {
+      "path": "game/test/mission-goal-preferences.test.mjs",
+      "gitBlob": "d7788be415eacd171a37d2fa59838bbf6cef0f41",
+      "bytes": 5120,
+      "sha256": "676dbfce5ff76c970a590df8806b85f1bbc02f7f701c4bf4d605660cbef0a960"
+    },
+    {
+      "path": "game/test/mission-library-controller-host.test.mjs",
+      "gitBlob": "e6482e05c2ec9485a086974d5b27727ec4a6c09c",
+      "bytes": 25087,
+      "sha256": "d259cf0c4a1bf2c5320483b4c5045cb4cce30f53d44541146e2fe5836062d3b8"
+    },
+    {
+      "path": "game/test/mission-library-goal.test.mjs",
+      "gitBlob": "652f3577cf8cdaa3f1a556bbd542d4b28d79110e",
+      "bytes": 6045,
+      "sha256": "35d607f25f0e8a7ff2c0724f1d4510f37484ac29278404fde042a8dc1d51c9cd"
+    },
+    {
+      "path": "game/test/mission-library-return-intent-host.test.mjs",
+      "gitBlob": "79be21ecf74e936b2c1f480b4a70bea7bfb73120",
+      "bytes": 23121,
+      "sha256": "11698dfc09faea8c8ae08dbe2a1c3bfe927c83b69b65b06c6e752d3b09ec491c"
+    },
+    {
+      "path": "game/test/mission-library-solo-host.test.mjs",
+      "gitBlob": "63c1ecb45f2070d1626021981a06b2b54eaa5291",
+      "bytes": 30462,
+      "sha256": "affad71754dd885d0425230e7ca8ef8871ac3fa60d902b5a6a8abe94f29c163b"
+    },
+    {
+      "path": "game/test/mission-library-solo-lifecycle-host.test.mjs",
+      "gitBlob": "ad243a3242ae3859d8f26a23ae0777206e584037",
+      "bytes": 6175,
+      "sha256": "af748ccbfff3a97bc34a193b90672b73fd695b281e1d49c348ade767a7e9af60"
+    },
+    {
+      "path": "game/test/mission-library-solo-result-supersession-host.test.mjs",
+      "gitBlob": "1b1b582fd79e88aa8abe8d1efbde07d967a400aa",
+      "bytes": 3933,
+      "sha256": "e379566c67e7ac3ea855ea8702325b46539e7204fe18d34b05f45dcbbbe15e9a"
+    },
+    {
+      "path": "game/test/mission-picker-older.test.mjs",
+      "gitBlob": "e1caba263b7736cf38643776ca17dd37445beb94",
+      "bytes": 23559,
+      "sha256": "2961c8e46c79462e8775be11a0b929bac8b72e1fceea0a4a28d39331c64df087"
+    },
+    {
+      "path": "game/test/mission-picker.test.mjs",
+      "gitBlob": "dbf8be30a813e3e398fce0e915765473edf3bd52",
+      "bytes": 9917,
+      "sha256": "7cffe65f8bb3da2f1a562f178bbbd115b52d7e746009b032c07f35d384559eb7"
+    },
+    {
+      "path": "game/test/mission-replacement-host.test.mjs",
+      "gitBlob": "2d926c909bb654bc78517ce404d5831ca900fc2e",
+      "bytes": 22990,
+      "sha256": "468c49ecb4516bafca2114dad0103d8480d9ad77e892377873adc28e6da3ad7e"
+    },
+    {
+      "path": "game/test/mission-selection-focus-host.test.mjs",
+      "gitBlob": "01d3432dc8e3ee66624276d57042c7663b9578fa",
+      "bytes": 12140,
+      "sha256": "0e09004d3c75951cf65b08420e14d0904bf3c836bb5355e2354dfa9eb385eb7b"
+    },
+    {
+      "path": "game/test/modal-navigation.test.mjs",
+      "gitBlob": "71d2ec432ac79451f107a1e11f899e89db021173",
+      "bytes": 75982,
+      "sha256": "e9b5a542e7067acc4c6c5e9f4a4a226805032bb10e91bf48e11522ab06d30791"
+    },
+    {
+      "path": "game/test/native-landing-fullscreen.test.mjs",
+      "gitBlob": "49398a744d038b3d8268d930bc312ddcbf55440f",
+      "bytes": 8334,
+      "sha256": "6b9195d3230666cab1679926a9e1f2ad4c353c645fd4b0c827e6ec7d0c7c0a27"
+    },
+    {
+      "path": "game/test/native-landing-whitelist.test.mjs",
+      "gitBlob": "f237d1820869899a593ff070ccc35b917e62418d",
+      "bytes": 10927,
+      "sha256": "651da2f1075a5e781dde6f091e38a3d9d0587c6085222140475e43b6e7d8d163"
+    },
+    {
+      "path": "game/test/nonmodal-header-navigation.test.mjs",
+      "gitBlob": "2c3e7f02f62f08c2eb8c04c766a4a47753456de9",
+      "bytes": 16636,
+      "sha256": "351a7b277f54a9dde6600be6d5dfca997d217befebe1a265c82b3188562a18b4"
+    },
+    {
+      "path": "game/test/operation-focus-host.test.mjs",
+      "gitBlob": "eaa15aa997102807a61e90d54b52bf2818ea77a5",
+      "bytes": 10618,
+      "sha256": "58c1a3e5ef63f6ec97bd737ec1eb95913af6e93cb0a0eae3c72d5941f9b0a3d1"
+    },
+    {
+      "path": "game/test/optional-chapter-descriptions.test.mjs",
+      "gitBlob": "705967dabaf7002ec3bce6fdc0d6846fba3e8ae3",
+      "bytes": 12542,
+      "sha256": "0b0c3b9435c246a65111eb12141560f4216663a24b63945e85a78c62c07d11c3"
+    },
+    {
+      "path": "game/test/optional-chapters-scenarios.mjs",
+      "gitBlob": "d60d46d5ff01e891c922666a3a2945f892b106f4",
+      "bytes": 34731,
+      "sha256": "ecd086ea42cb8a0b68baf6524aea580eead23499737b8dbbd1692f7b32d64e38"
+    },
+    {
+      "path": "game/test/optional-world-play-lifetime.test.mjs",
+      "gitBlob": "c6a0fbc502a2e636b0a9b608537f36c3f3604977",
+      "bytes": 18513,
+      "sha256": "d1fd3a4ae8c54469f87302ddb441a17c48091e6e283bd0888474415160c98533"
+    },
+    {
+      "path": "game/test/optional-world-play-scenarios.mjs",
+      "gitBlob": "f40383fe4fef219cfe97bb54a80b9e3d717ef55e",
+      "bytes": 32319,
+      "sha256": "bd14f8600987c942b573de820fa18560e3ae8e8cabf2f01160c7a9b6ab3c8a80"
+    },
+    {
+      "path": "game/test/overflight-commentator.test.mjs",
+      "gitBlob": "f9b405b1909991501a9cc4c6037f3f030f18bffa",
+      "bytes": 12447,
+      "sha256": "7daebe9a9259cac0ee1700118037062c7e7e746b458e03974de4e6da50eb0d63"
+    },
+    {
+      "path": "game/test/pause-menu-host.test.mjs",
+      "gitBlob": "3c742566a9118af277a530749677d6c4700862d9",
+      "bytes": 10934,
+      "sha256": "a1f38db082e73eac6e3c42f7995cb9177a88f0799d881a81c4f4bacaf865132a"
+    },
+    {
+      "path": "game/test/picture-ready-status.test.mjs",
+      "gitBlob": "b5a0b8ed18dd52825a5fc19a1c655534a71aa367",
+      "bytes": 10379,
+      "sha256": "79012dfd568492477df62250b0ea5d7df16790d1a66ae61705dc4a58601c4843"
+    },
+    {
+      "path": "game/test/playground-tab-boundary.test.mjs",
+      "gitBlob": "15021286abb0ef25743b0dd1af53a477617417bc",
+      "bytes": 7510,
+      "sha256": "df3f30ec33016215007f14ba9326b920e7b12a7aa833f37905b6214504088c19"
+    },
+    {
+      "path": "game/test/practice-brief-host.test.mjs",
+      "gitBlob": "d7578a22c6b61190bd4d74f4f422f164199b1f6d",
+      "bytes": 21646,
+      "sha256": "b19441133066e6a787096476af77620a50b4a7bc9f08993cb5c093f47a6fc7ea"
+    },
+    {
+      "path": "game/test/practice-media-v3-host.test.mjs",
+      "gitBlob": "1c817babda716955b74a9fdca56bf025ea3130d5",
+      "bytes": 7438,
+      "sha256": "25f99dc16f220ef21d8cd2d572ab4518fdfee824a75935734e3a46c43ba4b998"
+    },
+    {
+      "path": "game/test/practice-presentation-host.test.mjs",
+      "gitBlob": "8608fed168c40a58e320ea86dce41f6284b97cec",
+      "bytes": 6452,
+      "sha256": "a913d27f77e981912bbfcd1be20fd1fbef680c1e65728f83711af92ed37c0817"
+    },
+    {
+      "path": "game/test/practice-render-failure-host.test.mjs",
+      "gitBlob": "2df9875716302d098f2c0e8073aa4f9e06a487cc",
+      "bytes": 10136,
+      "sha256": "408670618c8273654be58306cedf25d0dc1797ddffdb27c45f6efd56128a4869"
+    },
+    {
+      "path": "game/test/practice-retry.test.mjs",
+      "gitBlob": "e7dac9d0a80c6eae92d9099ed62735371fc27511",
+      "bytes": 5654,
+      "sha256": "3268e9a85786603473d4627f69473629288c24b6e54eb25382e90f0f9272771f"
+    },
+    {
+      "path": "game/test/pressure-combination-practice.test.mjs",
+      "gitBlob": "49006142a2010c6ab2b7e31e4164c11b24b2943a",
+      "bytes": 16921,
+      "sha256": "fff89f1d13c035ae868bfac3f989115cc6287433daf21378e8f5fb0cad4c0a8f"
+    },
+    {
+      "path": "game/test/published-solo-entry-host.test.mjs",
+      "gitBlob": "35a0dd27928d571dc7befb719257f40bedccf63d",
+      "bytes": 18582,
+      "sha256": "7ea965972c5181053954f5728d3df26ce7ded350d6b2cdf900965a889c92d5c0"
+    },
+    {
+      "path": "game/test/reading-prompts-host.test.mjs",
+      "gitBlob": "8309523265f4ac3c482bdd669fdeb71b046e7072",
+      "bytes": 6170,
+      "sha256": "487ad106eceddd53935605fd926d1d2e2dc44c4eb16d412ae711ae77047821b9"
+    },
+    {
+      "path": "game/test/replay-appearance-solo-host.test.mjs",
+      "gitBlob": "19294d0795084b5656897f94153980863038c675",
+      "bytes": 11301,
+      "sha256": "7cfb297365ccb0ee3ad4e363127da5f5497df89453714f73df213bb999a3001a"
+    },
+    {
+      "path": "game/test/replay-theater-actor-appearance.test.mjs",
+      "gitBlob": "9c8f907c495afec26d58e056f465e022bd15caa3",
+      "bytes": 24552,
+      "sha256": "d3313202ba921e5a511ff4346785a9ce0fb7e18436c3a428198a4d260e5b9ec6"
+    },
+    {
+      "path": "game/test/restart-navigation-host.test.mjs",
+      "gitBlob": "c6ebe64cec223bb02938fb2508a63518def60994",
+      "bytes": 11117,
+      "sha256": "ad5b590f31ca9035b89bf1390039999dc2477d2802b7d9b259eb3f0881d29031"
+    },
+    {
+      "path": "game/test/restart-picture-retention.test.mjs",
+      "gitBlob": "3e9001328edc0e6bf8e6eab6efe135c1411fba18",
+      "bytes": 7175,
+      "sha256": "b2f9fd7a6e92398ccedf3cf2a943f6eb656d3f6badd237e5d288eb6a07279911"
+    },
+    {
+      "path": "game/test/route-worlds-host.test.mjs",
+      "gitBlob": "f2af018f153fd043c652c1adbff9f55ea450900e",
+      "bytes": 21195,
+      "sha256": "15389cdd46972b4038ee01f19d8bd66a3e4ba04f19dd23b2f9231eed0592453e"
+    },
+    {
+      "path": "game/test/saved-visual-host.test.mjs",
+      "gitBlob": "6dc95ce7cdb153fe99a15c5ff40696ba0378d412",
+      "bytes": 17832,
+      "sha256": "d26f7150f511579d24133cb3283c6eaefe0648189fc05e0a0a91096872b5a995"
+    },
+    {
+      "path": "game/test/selection-bookmark-host.test.mjs",
+      "gitBlob": "e4544a228f6be470b8a65cb59d9d818285645676",
+      "bytes": 5377,
+      "sha256": "25bf85e3c80c40471ee09b5f485a31fbde76f4489aecd87167ae045f3a065e4e"
+    },
+    {
+      "path": "game/test/sentinel-theme-host.test.mjs",
+      "gitBlob": "d695b5e8e0facbdac18e6b34a228e8e49cc8c984",
+      "bytes": 15762,
+      "sha256": "42c6e898348513049c18f526e0d4fb83e76776377e1e0d4bbb5737857f70fee4"
+    },
+    {
+      "path": "game/test/sentry-impact-recovery-host.test.mjs",
+      "gitBlob": "6f4d36520dad277a6f2b04cb6b270495d5c1bb3f",
+      "bytes": 13290,
+      "sha256": "402d128d23196ccf4227d84102aad6f3c0917ae832ea4c422e312dcb99f6b95b"
+    },
+    {
+      "path": "game/test/sentry-practice-qualification.test.mjs",
+      "gitBlob": "34535783949d57c6d094174386793c2c6c912f58",
+      "bytes": 12712,
+      "sha256": "505656e41512fcd4794ccfbfc8cc02727fd40c9e46c1285bda310f539b89532e"
+    },
+    {
+      "path": "game/test/session-only-release-next-host.test.mjs",
+      "gitBlob": "a29cb5d9dcccc252dadbbb716eaa5020a0dfb57c",
+      "bytes": 11776,
+      "sha256": "fe817855772059c832e80d245c5e9a1271e3603bf4fbf3a8bde95f0577308bbb"
+    },
+    {
+      "path": "game/test/settings-assists-host.test.mjs",
+      "gitBlob": "87605ba202cd81188348769c5b27b3d009c7d1bb",
+      "bytes": 5808,
+      "sha256": "0a2ffba001b2a208d797e0d044abbc46380cf96d9b965acef39dc16e52c9674c"
+    },
+    {
+      "path": "game/test/settings-panels-locale-host.test.mjs",
+      "gitBlob": "f7d710cb0f707a9890b2c5745837976194323cad",
+      "bytes": 6355,
+      "sha256": "dbc38857b31d8a9c44fcc1d5dd53502053c8dda2cfe8f9240c4383c9995504ba"
+    },
+    {
+      "path": "game/test/settings-restoration-host.test.mjs",
+      "gitBlob": "831d6b6073911fa8f146ff7d04143f1ab16f9c92",
+      "bytes": 10470,
+      "sha256": "85903d7b504bb0dbf360b692f972aca158af8b6d15010d707b7550764efbf4e1"
+    },
+    {
+      "path": "game/test/shared-settings-solo.test.mjs",
+      "gitBlob": "78061855bdcb67dcbbe1266c8759ccb81dc03fec",
+      "bytes": 7350,
+      "sha256": "261d4d871d0613ff1c2818964f864b5ab95d29b8673e1838ed9d0cf0dd44abca"
+    },
+    {
+      "path": "game/test/showcase-studio-playthrough.test.mjs",
+      "gitBlob": "4db1c4e301bec79a09260bc7648b873774a486f5",
+      "bytes": 34960,
+      "sha256": "da479423a3778e54184cb448f0bafa0402a7222e5993d1fac1fc5b6a02114a21"
+    },
+    {
+      "path": "game/test/social-drone-sky-watch.test.mjs",
+      "gitBlob": "bf9f9c1c1013dff2a5b84af59f7c3ab7c2915989",
+      "bytes": 14739,
+      "sha256": "b9b0f69507dd62fb6b176ac70fe53f692f24b5ac1acba00658f3268a40605542"
+    },
+    {
+      "path": "game/test/solo-auto-next-preferences-host.test.mjs",
+      "gitBlob": "69d78a1d6511e8042eb9665b2943e1fdc1bd9bd1",
+      "bytes": 5407,
+      "sha256": "5d8fc1be03b0f2b12c12bdc4e88bd613409f41c3059cb0eeb610d67473e2fd6f"
+    },
+    {
+      "path": "game/test/solo-cadence-input-host.test.mjs",
+      "gitBlob": "6898fb4f3dd3c6c85f4fb2204cd3dc4f9a940812",
+      "bytes": 16702,
+      "sha256": "3b20b73ca6c3ab5433e737c792025a1bf0a9d800710128f0ee5a5b09366479b8"
+    },
+    {
+      "path": "game/test/solo-cadence-readiness-host.test.mjs",
+      "gitBlob": "10d57a3a923f4b83db3978ddcb248a8fd800e517",
+      "bytes": 19564,
+      "sha256": "a05bc8de2d7e8bf11eb51d327e2770fe2ca4503f5b97af53a53559d083b2e46a"
+    },
+    {
+      "path": "game/test/solo-continue-freeze-presentation.test.mjs",
+      "gitBlob": "9e841b389a3998fcce9a6cc985cc664a35d94a46",
+      "bytes": 12120,
+      "sha256": "db945b8fdbca01bafe076e06ee79d9d6f821f42391b94f37074917d4ab231a08"
+    },
+    {
+      "path": "game/test/solo-continuous-library-next-host.test.mjs",
+      "gitBlob": "2a831f1cc59520c20d6ec65571dd8ad4ed07bd6c",
+      "bytes": 16591,
+      "sha256": "340fa43de85d41c04351132ded20b2aa43358c740a7132771269b3961cf1bfee"
+    },
+    {
+      "path": "game/test/solo-database.test.mjs",
+      "gitBlob": "f37902c49a6bcc1400e0323784e6aaaa133ff65b",
+      "bytes": 4040,
+      "sha256": "a7226b30dfd38996098dc00f11c79d0b49411dbc70dcd998b01b693b3c717919"
+    },
+    {
+      "path": "game/test/solo-demo-media-admission-host.test.mjs",
+      "gitBlob": "95fdefcbbbdd4edfb7f3269b09e783517ab0d2b3",
+      "bytes": 9607,
+      "sha256": "c138fa0de7afd32865a762e940b72a06776a4bcbf0bf7dab33ac9819d40411bc"
+    },
+    {
+      "path": "game/test/solo-dense-replay-persistence.test.mjs",
+      "gitBlob": "d3534b22e81b91c15f6d25b270900ce8decd3da7",
+      "bytes": 11648,
+      "sha256": "1e87debf991961ad07bbdf2673ace2617b87f49dab6fd10f6a06e18e573f3c8d"
+    },
+    {
+      "path": "game/test/solo-late-library-admission-host.test.mjs",
+      "gitBlob": "24534ae89cf363e3ea2f2e009547d2cff33cb5e3",
+      "bytes": 5160,
+      "sha256": "307698219ec712e5b86d17edaabbdf3e36ba11a9f07a51bf69c6cffe0dffe4d5"
+    },
+    {
+      "path": "game/test/solo-lazy-library-host.test.mjs",
+      "gitBlob": "6720ff7d54489686d11a364dcc8c1a00eb541a0c",
+      "bytes": 2875,
+      "sha256": "94cbbb0bcc5c5b1914f6c2afb0ec4a18732a39399cf8728813ebe8de386fbcfe"
+    },
+    {
+      "path": "game/test/solo-mission-list-admission-host.test.mjs",
+      "gitBlob": "dba93d93226057b707128a6068e75d6a0bc10799",
+      "bytes": 4079,
+      "sha256": "db5c142930da7d680863bc8cba83187de16ec7257bf50a682fa9f4bd1a2b8a5d"
+    },
+    {
+      "path": "game/test/solo-optional-audio-settings-route-host.test.mjs",
+      "gitBlob": "b6bfbabcd23c5f4f20baa63aa768651f3aa5117c",
+      "bytes": 9592,
+      "sha256": "8b673e2271368bad9c17f2c16e6a1cd0dcdc236ed27975c1b1c599b13773fc36"
+    },
+    {
+      "path": "game/test/solo-pending-verification-gameplay-host.test.mjs",
+      "gitBlob": "674134b4b2d520f02b5ac0b4711da5505fcac434",
+      "bytes": 12631,
+      "sha256": "1bb8ef80e31771875dc56c4d094338b9da8de99ee9896131289b2e6d4de5839e"
+    },
+    {
+      "path": "game/test/solo-preparation-invalidation-host.test.mjs",
+      "gitBlob": "1e21a072fd271406609c529c791f2785c30add12",
+      "bytes": 7658,
+      "sha256": "6b39236f129d5634f6884021a90a140bf770bab4d384cc76b387d924d9b2ce1e"
+    },
+    {
+      "path": "game/test/solo-preparation-layout-host.test.mjs",
+      "gitBlob": "2675afe2d0309ce3d7d88af0a893a634bd9eb4a8",
+      "bytes": 12532,
+      "sha256": "148b8ef6f9a69356dcc80ac77f4b6ae6df2c49efb2e2a4b0bb903acb8d5d5dc9"
+    },
+    {
+      "path": "game/test/solo-radio-host.test.mjs",
+      "gitBlob": "ba9ce77cc3a511c2d733e26c73bb6bca8d6dd209",
+      "bytes": 2232,
+      "sha256": "729e6b7cad003073e079ef2075b6f0648892be95cd5ecacfacaad307a6301ece"
+    },
+    {
+      "path": "game/test/solo-render-submission.test.mjs",
+      "gitBlob": "af62acbde72267361362c43500106986e7082957",
+      "bytes": 22982,
+      "sha256": "27432bd746d8cd356e317c158016e57938a8d8f76a7f0a6fea80c170a2785e4e"
+    },
+    {
+      "path": "game/test/solo-required-progress-preparation-host.test.mjs",
+      "gitBlob": "94235d1cc4f48e9d40afcca49d2eae7d92e71db6",
+      "bytes": 7391,
+      "sha256": "f8a25c1dc4fe7ca12fbcefbb7e3d1d5b5a2d49a7dde2ed2b0d232c42af958a81"
+    },
+    {
+      "path": "game/test/solo-result-continuation-host.test.mjs",
+      "gitBlob": "d33c707217cfb7613c06eec642ec2403ffb1dd8e",
+      "bytes": 23727,
+      "sha256": "f290114460e11a7bcdfca671501f43bcccbc52627311e6256b91ba83410e4ba5"
+    },
+    {
+      "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+      "gitBlob": "f26fe925daf68b52c7470e37e6e2032c7fa51c41",
+      "bytes": 7230,
+      "sha256": "ce46c854ec598e92f5641f3701a89d949434a2feba923e93e5922b46b5fca929"
+    },
+    {
+      "path": "game/test/solo-soundtrack-context-host.test.mjs",
+      "gitBlob": "4f34700c0a4c8f3b4bcb7a5ea1eb643c712b7fda",
+      "bytes": 4367,
+      "sha256": "ec2b7577dffea602622c35c377252c03048f97edc4fe699ea975ac91df65e4b9"
+    },
+    {
+      "path": "game/test/solo-touch-latency-host.test.mjs",
+      "gitBlob": "d55305a93a2f2e900367af4c5c8026c973f92b34",
+      "bytes": 5055,
+      "sha256": "559e8ed5b0cecbf01a70629fae8e3e46193cfd984d92a9d41b820fa666283c8a"
+    },
+    {
+      "path": "game/test/solo-transition-performance-host.test.mjs",
+      "gitBlob": "75e600d867639671301c5b0a6647992c8768cfe4",
+      "bytes": 8202,
+      "sha256": "65cd42e55ca8ff38e8c22d6baff661aa0aec4e8e08710c5ade1b7dd34c66daf5"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "gitBlob": "542454f59f5353a0ca7af1fecefe9fd542915ee4",
+      "bytes": 47308,
+      "sha256": "e8a0a08f2e37ded0aa5c66b282b27e2140a4f9f5d34f20801832cdca21f81e7b"
+    },
+    {
+      "path": "game/test/soundtrack-master-keyboard-host.test.mjs",
+      "gitBlob": "6787392563c377b57a10506b35dd0d93b299114c",
+      "bytes": 8910,
+      "sha256": "98f7719a76884d0006a70f2cdbc17c33805c8dd96323f3dfcf80114cf5075131"
+    },
+    {
+      "path": "game/test/starting-setup-host.test.mjs",
+      "gitBlob": "c1149bbd97f7a91199a9050e715b388d5263eb19",
+      "bytes": 22038,
+      "sha256": "a8489379a8041a5f5e287a312266ffef99bf22b29146ce1df9bdda57ea199b0a"
+    },
+    {
+      "path": "game/test/still-media-host.test.mjs",
+      "gitBlob": "ed2262530b3b8427d3b026b7b8a62448d9a32741",
+      "bytes": 45943,
+      "sha256": "0af091db1847b532c07d06b22ae65115e65039a116edc8aeb4561a2e638c303d"
+    },
+    {
+      "path": "game/test/still-media-panel.test.mjs",
+      "gitBlob": "35e1d17740453933f8320cdb290136da90eb79aa",
+      "bytes": 37322,
+      "sha256": "3eb9e6fca8e8f9575e2f53e56a3dfde5f7e6dd9d6f3fde87beee957416f92ac3"
+    },
+    {
+      "path": "game/test/still-story-lifecycle.test.mjs",
+      "gitBlob": "9e5a19b41c7863820ef6ffe2f5de4ee942470aad",
+      "bytes": 12372,
+      "sha256": "e573cc0d22df90ee55c6d6d298fb42705b7f6e508cbcf79ff084ee2ff045f200"
+    },
+    {
+      "path": "game/test/still-story-panel.test.mjs",
+      "gitBlob": "0f38456b9d2dcd153e97bbadb92a63a6404acb57",
+      "bytes": 22839,
+      "sha256": "70db647d4fd68aabee0626daa9b4f905a87a79c95d9bc03a6cd4d76c29296ba2"
+    },
+    {
+      "path": "game/test/storage-retention-host.test.mjs",
+      "gitBlob": "3c792e0b828b9f1bf1bc939e4a3d6e24ccb9fce8",
+      "bytes": 8043,
+      "sha256": "95ed8c57ff02190139f70a6e9c5d2a888f938d60ee62705af554907d25d4e9ec"
+    },
+    {
+      "path": "game/test/story-dialog.test.mjs",
+      "gitBlob": "443d0157508229c46cf49af7520339c01de0006b",
+      "bytes": 14657,
+      "sha256": "d5e720318cab8cb208cf7d98715cac2ecae6d7d2bd4d4d4cb990359196da03c5"
+    },
+    {
+      "path": "game/test/story-flight-host.test.mjs",
+      "gitBlob": "e493a6ef2d5803fb63a23c5587aab41dae3d647d",
+      "bytes": 9865,
+      "sha256": "3c365d656bd7bba988be7aa459c85ebe20761d25ae894575723c25d4b361f157"
+    },
+    {
+      "path": "game/test/studio-preview-session.test.mjs",
+      "gitBlob": "5f27919ee478bfa61f68f47c57ecd5d72e288dc5",
+      "bytes": 8901,
+      "sha256": "dd84c117ed875ea3a19ce0afa29dd0b9ddb40f73e949bd91ab5e368019a1ca83"
+    },
+    {
+      "path": "game/test/team-hunt-settings-host.test.mjs",
+      "gitBlob": "ee7cdecba93f55d0b0a12d73423e1aef65270940",
+      "bytes": 2104,
+      "sha256": "8c307d9595499ead4cdf451e5e5010512ed95c1d1540cbc6789546aa857762e0"
+    },
+    {
+      "path": "game/test/terminal-navigation.test.mjs",
+      "gitBlob": "57f41e0fe451a8b2fc86b08d479870e11b697470",
+      "bytes": 26141,
+      "sha256": "8fa54f19a4ebe3bf51e5cd33b5b0fcb8e7f0a364e317503dcff8aeb0e15ba469"
+    },
+    {
+      "path": "game/test/text-face-host.test.mjs",
+      "gitBlob": "1595a6c038798c33a7dfee6975223c202695336b",
+      "bytes": 4838,
+      "sha256": "bc00ecf88c80f4c91ac2a1df0aecd58f681666e1ae89c5dffde8c65c1e735ced"
+    },
+    {
+      "path": "game/test/text-size-host.test.mjs",
+      "gitBlob": "555d3ac3e20dc8a17c5ed232412753a6bebe3c24",
+      "bytes": 12646,
+      "sha256": "8d52155cc22bc5fdc139c401f1175b8187bbde1dfd44cf6ac40397c005618aba"
+    },
+    {
+      "path": "game/test/theme-family-host.test.mjs",
+      "gitBlob": "2eb968f6128eb946dc76d01ba9cf40625898bb90",
+      "bytes": 3811,
+      "sha256": "a5aac205ea56025fbd7438034015b0f5904c9421e38fe0f44d1fcba78fafe330"
+    },
+    {
+      "path": "game/test/theme-picker-materials.test.mjs",
+      "gitBlob": "05435602b89fe7d2675ad20cbd404fdf0514cedc",
+      "bytes": 8762,
+      "sha256": "f3649dccbf6c8b63a3337e0c5801c66c72a44356cda0747e0c920b5906c9d80c"
+    },
+    {
+      "path": "game/test/timed-bonus-host.test.mjs",
+      "gitBlob": "8edee6884308d8a32233607ddb539fe060750164",
+      "bytes": 2665,
+      "sha256": "970374f8c9a139a5179f2f79a7efd94ac0962f74823f4d03afcfa7e53ebd4748"
+    },
+    {
+      "path": "game/test/title-entry-host.test.mjs",
+      "gitBlob": "44fe4f3907c3518425b843f1a6c31eb88f214076",
+      "bytes": 24088,
+      "sha256": "5c9a8ee35a63b0e8d6bec34bc2d31c224248400441e2ce19c224402395d415e1"
+    },
+    {
+      "path": "game/test/title-mode-departure-host.test.mjs",
+      "gitBlob": "82f856e96201c34638a2bcec7e723dbe65d7c535",
+      "bytes": 25568,
+      "sha256": "5cce34c29d92d1635291942cee3710ec3f1429236d4a8375e3f9815e9ba5ad2a"
+    },
+    {
+      "path": "game/test/title-operation-status-host.test.mjs",
+      "gitBlob": "de5e94852829c8556effee443cb8d32ec7309708",
+      "bytes": 6219,
+      "sha256": "39533830beae71325fd92372ada19c8d33130fedcee32e5fbae8be5b65463b02"
+    },
+    {
+      "path": "game/test/title-visual-quality-host.test.mjs",
+      "gitBlob": "b8b2d612615304ad3a61856f22670341cdc998cc",
+      "bytes": 5458,
+      "sha256": "3b1b3185c2493ec7aed6dc18adbfd49b8455aadc89f10dc7d66031f20cb8555e"
+    },
+    {
+      "path": "game/test/touchscreen-controller-host.test.mjs",
+      "gitBlob": "838a66aecd582c5d9fa78a6de6c1929e6ac49610",
+      "bytes": 22856,
+      "sha256": "16dcd8e3c60f09f69db8e6cef7d5230201b5293b5dd31db96bf5102177e350ea"
+    },
+    {
+      "path": "game/test/ukraine-role-host.test.mjs",
+      "gitBlob": "81cd0ac993fde1f3d91fd9300c1bad4087e198bb",
+      "bytes": 11073,
+      "sha256": "f8a3bb7c674c5ad9f9934e676f83f2614ac6afce2269c5cf15f1842e03940b03"
+    },
+    {
+      "path": "game/test/versus-default-entry.test.mjs",
+      "gitBlob": "b9043e81626c4bf460e64b869b99a74333cd5739",
+      "bytes": 11435,
+      "sha256": "80561a518dceda6b449a98f3c0ebc2514fb4aa9be78db45bbdae7ff2f4cf8423"
+    },
+    {
+      "path": "game/test/video-poster-workshop.test.mjs",
+      "gitBlob": "f4a569d0b67ff71cb019160314514055384fd7f5",
+      "bytes": 35729,
+      "sha256": "ded7ab6fa3ae82de96214443d6c20b1f9f6c7b031e7f3b8fe760eb5caefc9d2d"
+    },
+    {
+      "path": "game/test/whole-field-host.test.mjs",
+      "gitBlob": "15105f481dda40d2619ce473f921b3a84ebdffd7",
+      "bytes": 6782,
+      "sha256": "c9774e9e6b3bc9daf3c86d95fd5dc5fc6fee413aa54e1442dba242f89192f284"
+    },
+    {
+      "path": "game/test/whole-originals-host-scenarios.mjs",
+      "gitBlob": "cb1a1f3484546722928a2e2caef37d2059ab5969",
+      "bytes": 13424,
+      "sha256": "045114a39788d6896b8223fe6a5b9b962ceccd565efde84dfb04fbc9c1cf9ec8"
+    },
+    {
+      "path": "game/test/whole-sorting-host.test.mjs",
+      "gitBlob": "9b889211d3de55bc012cd9f5c21aae398e469dcf",
+      "bytes": 7150,
+      "sha256": "0f17903b13da3d1b8fac3e70dba67db324ccebc33bbfcb6c28918ff562c68732"
+    },
+    {
+      "path": "game/test/whole-spatial-host.test.mjs",
+      "gitBlob": "e9f55e250a170d8b9833f27654121c7be322a008",
+      "bytes": 9036,
+      "sha256": "1f6f412177ee40a43bff18abfecdbe553463104da7fd18c54c5a20bf045fa9ea"
+    },
+    {
+      "path": "game/test/whole-timed-host.test.mjs",
+      "gitBlob": "190b8f329230abd243f0e00fc52f4427a49d8f19",
+      "bytes": 8950,
+      "sha256": "e90e67c9b9c880cef680fa54a5665bc1a5720cfc7112bf72cf50dcc2e5531d1e"
+    },
+    {
+      "path": "game/test/whole-variety-host.test.mjs",
+      "gitBlob": "27f4e565dfeacdeb4873520161155f1ca401a62e",
+      "bytes": 13451,
+      "sha256": "dd8e654b848dd562cb2054a4b1ad26c1d63d6e5ff81a7375847780f2857f8781"
+    },
+    {
+      "path": "game/test/win-picture-host.test.mjs",
+      "gitBlob": "9aa4b94d45c3c3a7b147846d74a9189165269739",
+      "bytes": 11813,
+      "sha256": "37bd09b23e78d89ea46435ead96b0514db89654068ad2f3d3d7b2b65c4c481d1"
+    },
+    {
+      "path": "game/test/workshop-return.test.mjs",
+      "gitBlob": "81c254955c9a7edc0e8b291982e450f8717cd44e",
+      "bytes": 13290,
+      "sha256": "292c3fb9025253662f13563da64680220592972daae2c66756582d1f9285774a"
+    },
+    {
+      "path": "game/test/worlds-browser.test.mjs",
+      "gitBlob": "a85ede56c2fa9e313422a933b18468259c47fd04",
+      "bytes": 14689,
+      "sha256": "57986a558d0341bdce90fcb525ba6752c0f398a5e9a3a79b993c5c9f70940ac5"
+    },
+    {
+      "path": "game/test/capture-flight-limits-host.test.mjs",
+      "gitBlob": "eb59a23497d2d9c1650645a6ed339bf8683bc569",
+      "bytes": 8268,
+      "sha256": "6938588713d0fb16b93d5059b8449aab7292836ab6906ad5ceabf43ff7e5fdd8"
+    },
+    {
+      "path": "game/test/journey-performance-host.test.mjs",
+      "gitBlob": "ff29b2fe02fbe7d7d10a24e74e984dc3c2898000",
+      "bytes": 6697,
+      "sha256": "9607a4d002b6b19d6e049d1fad8a66f31dc326da467cb66eea94a4204a84efad"
+    },
+    {
+      "path": "game/test/journey-performance-observation-admission.test.mjs",
+      "gitBlob": "fc2c4a04b271413380b024db7058843cc0476345",
+      "bytes": 44545,
+      "sha256": "ab86e1736637fa6342dac74ba01508d8dee0217134db6c21805ea750354926a5"
+    },
+    {
+      "path": "game/test/profile-recovery-settings-host.test.mjs",
+      "gitBlob": "065a3d8d49fa27799bcd337f4d369e7fe98ff71a",
+      "bytes": 10330,
+      "sha256": "0696428d6be0e7e42a0df1496f38c697d147a39c6ebc4135b6e6898658a094f6"
+    },
+    {
+      "path": "game/test/steamdeck-menu-confirm-race-host.test.mjs",
+      "gitBlob": "6f1c8ebf18fdff55d8dc0737392ac09c1fb466fa",
+      "bytes": 13611,
+      "sha256": "a1e5ee35d7bc3f91d75770f1e21d51ffae622d607deb0b27b5bd4fcb39a507c5"
+    },
+    {
+      "path": "game/test/solo-share-link-host.test.mjs",
+      "gitBlob": "410b8854816b8ad5972948d205faeac2287a496f",
+      "bytes": 9773,
+      "sha256": "b18d60939da1bfe03c1298b1d0c7fec0aff25f3e6e6534accda00e5c6dac7fe5"
+    },
+    {
+      "path": "game/test/steamdeck-menu-confirm-host.test.mjs",
+      "gitBlob": "6686e9893ab1944e0f38173b8b5c76d9408c885d",
+      "bytes": 14751,
+      "sha256": "b26bb5e64497173a5c4d0399eb0e12c9e5617d1e2bf540ccf89f3ded9a55884d"
+    },
+    {
+      "path": "game/test/solo-optional-ui-loading.test.mjs",
+      "gitBlob": "d10543a8640f089f626bb6ac89f46e8cee3c5a92",
+      "bytes": 4215,
+      "sha256": "4f5064b93b7287f0056d2658aca131db041dbd6f93bc98a6d8430ac2302b6f4e"
+    },
+    {
+      "path": "game/test/solo-performance-host.test.mjs",
+      "gitBlob": "eb536af63b77f3dc3cb1cb5b4c376d0f49441b00",
+      "bytes": 33127,
+      "sha256": "3d8313f0707ce92720025e18b129cb12fb51a6c38c7222214d588886a18f246d"
+    }
+  ],
+  "findings": [
+    {
+      "path": "game/test/helpers/solo-dom.mjs",
+      "finding": "Default Image supports its codec Blob registry. Existing URL wrapper routed every Blob into synthetic audio URL IDs when audioHarness was installed; those cannot be resolved by PNGImage/RasterImage. Successor routes image MIME blobs to real native Node URLs and remembers audio-owned IDs for cleanup. Non-image URL owner behavior stays unchanged."
+    },
+    {
+      "path": "game/test/gameplay-pressure-host.test.mjs",
+      "finding": "One Journey whole-spatial-v5 fixture parsed every image source as base64. Successor uses existing PNGImage instead, preserving all assertions and actual raster header validation."
+    },
+    {
+      "path": "game/test/helpers/png-image.mjs",
+      "gitBlob": "d969c500136c42eae7f28154700d4f182e4ed014",
+      "finding": "Already reads actual Node Blob URL bytes, validates PNG signature/dimensions, awaits pending decode and disposes src. Unchanged."
+    },
+    {
+      "path": "game/test/helpers/raster-image.mjs",
+      "gitBlob": "140be5c81ff0a2247018c776ef3c8f4d5197153d",
+      "finding": "Already resolves real Blob URLs or existing serialized PNG/JPEG/WebP bytes and validates headers. Unchanged."
+    }
+  ],
+  "reviewedApparentDataOnlyFixtures": [
+    {
+      "path": "game/test/chapter-download-host.test.mjs",
+      "gitBlob": "54cd5745d0d4f040d92104c8256595d8a112ff5c",
+      "finding": "Existing PNGImage subclass explicitly admits Blob sources; data-URL allowlist is only for serialized Legacy original artwork."
+    },
+    {
+      "path": "game/test/device-controls-host.test.mjs",
+      "gitBlob": "fe9ef2319ce95a3779ae9f33467046bda05eb8d6",
+      "finding": "Existing PNGImage subclass explicitly admits Blob sources; data-URL allowlist is only for serialized Legacy original artwork."
+    },
+    {
+      "path": "game/test/equipment-help-host.test.mjs",
+      "gitBlob": "15f216802851426c3fc01aaa698ff9c5068241a7",
+      "finding": "Existing PNGImage subclass explicitly admits Blob sources; data-URL allowlist is only for serialized Legacy original artwork."
+    },
+    {
+      "path": "game/test/gameplay-pressure-host.test.mjs",
+      "gitBlob": "4449c95d769f3cfde134499647094c48b1c1214e",
+      "finding": "Corrected Journey-specific data-only decoder."
+    },
+    {
+      "path": "game/test/fpv-role-host.test.mjs",
+      "gitBlob": "e1c47c1173ea27a43cabf2f263ea8741005060a7",
+      "finding": "Legacy-only host fixture; Main candidate acquisition path is not selected."
+    },
+    {
+      "path": "game/test/ukraine-role-host.test.mjs",
+      "gitBlob": "81cd0ac993fde1f3d91fd9300c1bad4087e198bb",
+      "finding": "Legacy-only host fixture; Main candidate acquisition path is not selected."
+    },
+    {
+      "path": "game/test/optional-world-play-scenarios.mjs",
+      "gitBlob": "f40383fe4fef219cfe97bb54a80b9e3d717ef55e",
+      "finding": "Serialized pack validation remains unchanged and display Picture already fetches actual blob bytes."
+    },
+    {
+      "path": "game/test/authored-mode-entry-host.test.mjs",
+      "gitBlob": "b98ef3ddd24c0c3727088e5c20bec64a2314faac",
+      "finding": "Data-only byte reading is in the separate Team image override; Solo uses source-agnostic CandidateImage."
+    },
+    {
+      "path": "game/test/mission-library-controller-host.test.mjs",
+      "gitBlob": "e6482e05c2ec9485a086974d5b27727ec4a6c09c",
+      "finding": "Data-only byte reading is in the separate Team image override; Solo uses source-agnostic CandidateImage."
+    }
+  ],
+  "remaining": "Full hosted functional source and broader package/native checks remain required; static inspection does not establish all suite results."
+}

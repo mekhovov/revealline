@@ -1,0 +1,20 @@
+{
+  "kind": "main-and-public-identity-after-e440-publisher-terminal",
+  "observedAt": "2026-10-18T22:57:05.267457+00:00",
+  "mainBefore": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "mainAfter": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "publicURL": "https://mekhovov.github.io/revealline/main-deployment.json?source-audit=20261018T225704Z",
+  "publicIdentity": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+    "sourceCommittedAt": "2026-10-18T21:05:19Z",
+    "buildVersion": "main-e4400303952d",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "publicBytes": 303,
+  "publicSHA256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+  "terminalPublisherAudit": "ec88de773134f3767b561b86bd83f661bb6adb6a",
+  "scope": "Fresh identity only, after completed publisher verification. dd337 main remains unpublished at this observation. No browser/gameplay execution."
+}

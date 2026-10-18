@@ -1,0 +1,343 @@
+{
+  "schema": "SoloReleaseGateCensusV1",
+  "observedAt": "2026-10-18T23:01:27.488Z",
+  "scope": "Read-only exact-head final gate census. Prior full TAP/package/source audits are not repeated. No branch/readiness/merge mutation or local test execution.",
+  "pull": {
+    "number": 1619,
+    "url": "https://github.com/mekhovov/revealline/pull/1619",
+    "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "apiBaseField": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+    "state": "open",
+    "draft": false,
+    "merged": false,
+    "mergeable": true,
+    "mergeState": "clean"
+  },
+  "currentMain": {
+    "sha": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "tree": "b1214330108fe62c8a89e45902be4f84c628ed99"
+  },
+  "trustedPolicy": {
+    "definitionPath": "publishing/admission-binding.mjs",
+    "definitionGitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+    "paths": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "main": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "head": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98"
+      },
+      {
+        "path": "publishing/admission-binding.mjs",
+        "main": "bbc451129f21407143e4d3034d819711e5539dd2",
+        "head": "bbc451129f21407143e4d3034d819711e5539dd2"
+      },
+      {
+        "path": "publishing/admission-preflight.mjs",
+        "main": "9750b8dc5aef171f9124563966f726c2cbe15237",
+        "head": "9750b8dc5aef171f9124563966f726c2cbe15237"
+      },
+      {
+        "path": "publishing/focused-tests.mjs",
+        "main": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "head": "d21dc682fe9c928d6345843195a39ed0e2e160ac"
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "main": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "head": "61dda74f9db14d20b6055e725cf5836b3b539bfe"
+      },
+      {
+        "path": "publishing/test-policy.json",
+        "main": "e067e704a165e16e449761989e3e1b611dc35181",
+        "head": "e067e704a165e16e449761989e3e1b611dc35181"
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "main": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "head": "aa9f1efc79301cd227dbe7eb874dcba6b601003c"
+      }
+    ],
+    "allEqual": true,
+    "scope": "Equality of all seven source policy blob identities; not a new controller admission or merge decision."
+  },
+  "checks": [
+    {
+      "id": 117803379569,
+      "name": "release-ready",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T22:53:54Z",
+      "completedAt": "2026-10-18T22:53:56Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117803379569"
+    },
+    {
+      "id": 117796521517,
+      "name": "reconcile",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T22:05:55Z",
+      "completedAt": "2026-10-18T22:06:06Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39164443646/job/117796521517"
+    },
+    {
+      "id": 117790229093,
+      "name": "focused",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T22:07:16Z",
+      "completedAt": "2026-10-18T22:07:28Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117790229093"
+    },
+    {
+      "id": 117776990767,
+      "name": "preview",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T21:01:43Z",
+      "completedAt": "2026-10-18T21:36:58Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641633/job/117776990767"
+    },
+    {
+      "id": 117776664872,
+      "name": "build",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "skipped",
+      "startedAt": "2026-10-18T20:07:26Z",
+      "completedAt": "2026-10-18T20:07:26Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117776664872"
+    },
+    {
+      "id": 117776664782,
+      "name": "test",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "skipped",
+      "startedAt": "2026-10-18T20:07:26Z",
+      "completedAt": "2026-10-18T20:07:26Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117776664782"
+    },
+    {
+      "id": 117776663459,
+      "name": "focused_shards (2)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:54:11Z",
+      "completedAt": "2026-10-18T20:56:58Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117776663459"
+    },
+    {
+      "id": 117776663453,
+      "name": "focused_shards (1)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:59:34Z",
+      "completedAt": "2026-10-18T21:07:34Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117776663453"
+    },
+    {
+      "id": 117776663438,
+      "name": "focused_shards (4)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:46:26Z",
+      "completedAt": "2026-10-18T20:49:08Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117776663438"
+    },
+    {
+      "id": 117776663378,
+      "name": "focused_shards (3)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:39:14Z",
+      "completedAt": "2026-10-18T20:43:03Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117776663378"
+    },
+    {
+      "id": 117768873453,
+      "name": "installed_admission",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:23:51Z",
+      "completedAt": "2026-10-18T19:29:44Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641633/job/117768873453"
+    },
+    {
+      "id": 117768870540,
+      "name": "demo_admission",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:25:50Z",
+      "completedAt": "2026-10-18T19:27:42Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641633/job/117768870540"
+    },
+    {
+      "id": 117768843253,
+      "name": "team_admission",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:27:46Z",
+      "completedAt": "2026-10-18T19:32:06Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641633/job/117768843253"
+    },
+    {
+      "id": 117768841425,
+      "name": "admission",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:05:40Z",
+      "completedAt": "2026-10-18T20:08:54Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641633/job/117768841425"
+    },
+    {
+      "id": 117767869350,
+      "name": "preflight",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:07:12Z",
+      "completedAt": "2026-10-18T20:07:26Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117767869350"
+    },
+    {
+      "id": 117761187710,
+      "name": "reconcile",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:46:25Z",
+      "completedAt": "2026-10-18T19:46:36Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641635/job/117761187710"
+    },
+    {
+      "id": 117758188552,
+      "name": "feature (creator)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:20:47Z",
+      "completedAt": "2026-10-18T19:24:47Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641718/job/117758188552"
+    },
+    {
+      "id": 117758188488,
+      "name": "optional-practice",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:02:41Z",
+      "completedAt": "2026-10-18T19:17:01Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641570/job/117758188488"
+    },
+    {
+      "id": 117758188434,
+      "name": "feature (presentation)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:14:34Z",
+      "completedAt": "2026-10-18T19:17:36Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641718/job/117758188434"
+    },
+    {
+      "id": 117758188423,
+      "name": "feature (local-ux)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:31:27Z",
+      "completedAt": "2026-10-18T20:39:07Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641718/job/117758188423"
+    },
+    {
+      "id": 117758188405,
+      "name": "feature (gameplay)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:01:28Z",
+      "completedAt": "2026-10-18T19:05:51Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641718/job/117758188405"
+    },
+    {
+      "id": 117758188371,
+      "name": "feature (rooms)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:03:59Z",
+      "completedAt": "2026-10-18T20:06:32Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641718/job/117758188371"
+    },
+    {
+      "id": 117758188120,
+      "name": "feature (recordings)",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:48:21Z",
+      "completedAt": "2026-10-18T19:51:52Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641718/job/117758188120"
+    },
+    {
+      "id": 117758187690,
+      "name": "candidate",
+      "headSha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:59:17Z",
+      "completedAt": "2026-10-18T19:27:09Z",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39155641570/job/117758187690"
+    }
+  ],
+  "counts": {
+    "total": 24,
+    "success": 22,
+    "skipped": 2,
+    "pending": 0,
+    "failed": 0
+  },
+  "sourceRun": {
+    "id": 39155641770,
+    "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "createdAt": "2026-10-18T18:45:44Z",
+    "updatedAt": "2026-10-18T22:53:57Z",
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39155641770"
+  },
+  "releaseReadyJob": {
+    "id": 117803379569,
+    "runId": 39155641770,
+    "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "status": "completed",
+    "conclusion": "success",
+    "startedAt": "2026-10-18T22:53:54Z",
+    "completedAt": "2026-10-18T22:53:56Z",
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117803379569",
+    "log": {
+      "bytes": 5052,
+      "sha256": "b3f622eb7cae775a5bd3bd138b81e699e5816c4ffbb397ca16663395da8732e0",
+      "raw": "﻿2026-10-18T22:53:55.2802946Z Current runner version: '2.337.0'\n2026-10-18T22:53:55.2842008Z ##[group]Runner Image Provisioner\n2026-10-18T22:53:55.2843388Z Hosted Compute Agent\n2026-10-18T22:53:55.2844385Z Version: 20261012.601\n2026-10-18T22:53:55.2845411Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-18T22:53:55.2846431Z Build Date: 2026-10-12T17:48:21Z\n2026-10-18T22:53:55.2847549Z Worker ID: {0f78b720-9e15-4b9b-bcd0-cab7baa1b1ac}\n2026-10-18T22:53:55.2848590Z Region: eastus\n2026-10-18T22:53:55.2849349Z Cloud: Azure\n2026-10-18T22:53:55.2850230Z ##[endgroup]\n2026-10-18T22:53:55.2852306Z ##[group]Operating System\n2026-10-18T22:53:55.2853419Z Ubuntu\n2026-10-18T22:53:55.2854427Z 24.04.5\n2026-10-18T22:53:55.2855222Z LTS\n2026-10-18T22:53:55.2855954Z ##[endgroup]\n2026-10-18T22:53:55.2856724Z ##[group]Runner Image\n2026-10-18T22:53:55.2857705Z Image: ubuntu-24.04\n2026-10-18T22:53:55.2858487Z Version: 20261012.334.1\n2026-10-18T22:53:55.2860482Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-18T22:53:55.2862910Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-18T22:53:55.2864614Z ##[endgroup]\n2026-10-18T22:53:55.2866255Z ##[group]GITHUB_TOKEN Permissions\n2026-10-18T22:53:55.2869090Z Contents: read\n2026-10-18T22:53:55.2869882Z Metadata: read\n2026-10-18T22:53:55.2870857Z ##[endgroup]\n2026-10-18T22:53:55.2873975Z Secret source: Actions\n2026-10-18T22:53:55.2875581Z Cache mode: write\n2026-10-18T22:53:55.2877062Z Prepare workflow directory\n2026-10-18T22:53:55.3316429Z Prepare all required actions\n2026-10-18T22:53:55.3462391Z Complete job name: release-ready\n2026-10-18T22:53:55.4398388Z ##[group]Run test \"$PREFLIGHT_RESULT\" = success\n2026-10-18T22:53:55.4399070Z \u001b[36;1mtest \"$PREFLIGHT_RESULT\" = success\u001b[0m\n2026-10-18T22:53:55.4399569Z \u001b[36;1mif [ \"$ADMISSION\" != hold ]; then\u001b[0m\n2026-10-18T22:53:55.4400351Z \u001b[36;1m  if [ \"$FOCUSED_REQUIRED\" = true ]; then\u001b[0m\n2026-10-18T22:53:55.4400847Z \u001b[36;1m    test \"$FOCUSED_RESULT\" = success\u001b[0m\n2026-10-18T22:53:55.4401319Z \u001b[36;1m  else\u001b[0m\n2026-10-18T22:53:55.4401716Z \u001b[36;1m    test \"$FOCUSED_REQUIRED\" = false\u001b[0m\n2026-10-18T22:53:55.4402224Z \u001b[36;1m    test \"$FOCUSED_RESULT\" = skipped\u001b[0m\n2026-10-18T22:53:55.4402693Z \u001b[36;1m  fi\u001b[0m\n2026-10-18T22:53:55.4403034Z \u001b[36;1mfi\u001b[0m\n2026-10-18T22:53:55.4403422Z \u001b[36;1mif [ \"$ADMISSION\" = maintenance ]; then\u001b[0m\n2026-10-18T22:53:55.4404668Z \u001b[36;1m  echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'\u001b[0m\n2026-10-18T22:53:55.4405709Z \u001b[36;1m  exit 0\u001b[0m\n2026-10-18T22:53:55.4406096Z \u001b[36;1mfi\u001b[0m\n2026-10-18T22:53:55.4406466Z \u001b[36;1mif [ \"$ADMISSION\" = scheduled ]; then\u001b[0m\n2026-10-18T22:53:55.4407339Z \u001b[36;1m  echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'\u001b[0m\n2026-10-18T22:53:55.4408216Z \u001b[36;1m  exit 0\u001b[0m\n2026-10-18T22:53:55.4408582Z \u001b[36;1mfi\u001b[0m\n2026-10-18T22:53:55.4409017Z \u001b[36;1mif [ \"$ADMISSION\" = release-evidence ]; then\u001b[0m\n2026-10-18T22:53:55.4409952Z \u001b[36;1m  echo 'Docs-only post-merge release evidence: exact-source validation is required without allocating another product version.'\u001b[0m\n2026-10-18T22:53:55.4410846Z \u001b[36;1m  test \"$BUILD_RESULT\" = success\u001b[0m\n2026-10-18T22:53:55.4411306Z \u001b[36;1m  exit 0\u001b[0m\n2026-10-18T22:53:55.4411695Z \u001b[36;1mfi\u001b[0m\n2026-10-18T22:53:55.4412103Z \u001b[36;1mif [ \"$ADMISSION\" != release ]; then\u001b[0m\n2026-10-18T22:53:55.4413082Z \u001b[36;1m  echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'\u001b[0m\n2026-10-18T22:53:55.4414103Z \u001b[36;1m  exit 1\u001b[0m\n2026-10-18T22:53:55.4414467Z \u001b[36;1mfi\u001b[0m\n2026-10-18T22:53:55.4414845Z \u001b[36;1mtest \"$BUILD_RESULT\" = success\u001b[0m\n2026-10-18T22:53:55.4415314Z \u001b[36;1mif [ \"$FULL_CI\" = true ]; then\u001b[0m\n2026-10-18T22:53:55.4415774Z \u001b[36;1m  test \"$TEST_RESULT\" = success\u001b[0m\n2026-10-18T22:53:55.4416444Z \u001b[36;1melse\u001b[0m\n2026-10-18T22:53:55.4416902Z \u001b[36;1m  echo \"Full tests are deferred and do not block this PR.\"\u001b[0m\n2026-10-18T22:53:55.4417439Z \u001b[36;1mfi\u001b[0m\n2026-10-18T22:53:55.6021582Z shell: /usr/bin/bash -e {0}\n2026-10-18T22:53:55.6022679Z env:\n2026-10-18T22:53:55.6023060Z   ADMISSION: maintenance\n2026-10-18T22:53:55.6023483Z   BUILD_RESULT: skipped\n2026-10-18T22:53:55.6024048Z   FOCUSED_RESULT: success\n2026-10-18T22:53:55.6024475Z   FOCUSED_REQUIRED: true\n2026-10-18T22:53:55.6024888Z   FULL_CI: false\n2026-10-18T22:53:55.6025283Z   PREFLIGHT_RESULT: success\n2026-10-18T22:53:55.6025716Z   TEST_RESULT: skipped\n2026-10-18T22:53:55.6026142Z ##[endgroup]\n2026-10-18T22:53:55.6236470Z Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.\n2026-10-18T22:53:55.6385295Z Cleaning up orphan processes\n"
+    }
+  },
+  "limits": [
+    "Source release-ready used maintenance admission, focused required=true and success, build/test intentionally skipped. Skips are not passes.",
+    "Appearance preview, Company, Industrial, host admission and focused source checks are independently listed; release-ready success alone is not native gameplay or performance qualification.",
+    "PR API base field is not the actual current main ref. Current main was separately read.",
+    "Fresh Fastline/controller reconciliation remains the merge authority; this receipt performs no merge."
+  ]
+}

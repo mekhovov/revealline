@@ -1,0 +1,64 @@
+{
+  "format": "SoloStatusPlanPeerReviewV1",
+  "at": "2026-10-18T22:49:38.106226+00:00",
+  "proposal": {
+    "gitBlob": "6919e2a1370fa0715e8fa41194809bffc9f5324f",
+    "bytes": 144961,
+    "sha256": "cf6dc7104e83d0f134450508fee2d7a55261a43f26a1ff677b57759ca8c6d285",
+    "beforeBlob": "594054b22b4a66de5d9a450328349cfb785f665e",
+    "afterBytes": 143740,
+    "afterSHA256": "861780c3bb110faf91695c40f78d34005ee9acf58ba7f510defcadc1aca39ce2"
+  },
+  "published": {
+    "commit": "153b13445a5c32f3aa6b63113b56fb3c11a008cc",
+    "path": "docs/performance/solo-performance-followup-plan.md",
+    "bytes": 143735,
+    "sha256": "92c3a5956caa50717eda1206524e8ef44cd26685c6fe3892e3341109f05aa444"
+  },
+  "historyTailMarker": "## Current evidence and limits\n",
+  "proposalAndPublishedHistoricalTailByteIdentical": true,
+  "newDraftReadbacks": [
+    {
+      "pr": 1674,
+      "head": "e379c2749e0815538f23500ef5a3b2117569c0c6",
+      "draft": true,
+      "state": "open",
+      "merged": false,
+      "dependencies": [
+        "1620"
+      ]
+    },
+    {
+      "pr": 1675,
+      "head": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+      "draft": true,
+      "state": "open",
+      "merged": false,
+      "dependencies": [
+        "1619"
+      ]
+    },
+    {
+      "pr": 1676,
+      "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+      "draft": true,
+      "state": "open",
+      "merged": false,
+      "dependencies": [
+        "1620"
+      ]
+    }
+  ],
+  "retainedIndex": {
+    "commit": "9644cf5ce35d0d262eb54d441fe6c8eac578f795",
+    "bytes": 29793,
+    "sha256": "58032edd5d088a20d283b21f377f04687c77511efb58676e99e7c04951d78018",
+    "listCounts": {
+      "records": 129
+    }
+  },
+  "verdict": "Source review clean. Active labels preserve source/native/public distinctions, conditional estimates, no whole-site/performance acceptance, and new-draft dependency/hold status. Published wording correctly uses hosted scheduling rather than inferring runner capacity from queues.",
+  "testsExecuted": false,
+  "runtimeChanges": false,
+  "refOrPrMutation": false
+}

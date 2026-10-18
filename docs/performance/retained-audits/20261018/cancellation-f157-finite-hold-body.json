@@ -1,0 +1,11 @@
+{
+  "format": "SoloPolicyReleaseOrderUpdateV1",
+  "at": "2026-10-18T22:49:53.965305+00:00",
+  "pr": 1654,
+  "unchangedHead": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+  "draft": true,
+  "beforeBodySHA256": "68f77d822ae3c7dffdeef56e04b954a91742110ea4a4a1c69159e576b30d134e",
+  "afterBodySHA256": "57180656676f750de1b8fc34b922ed7e2d9456d418440afcdafff0263faf27d7",
+  "addedText": "Release-order update: keep this PR draft through the P0 published check and admission/merge of #1674, #1675 and #1676, following the existing runtime cohort. Then reconcile with fresh main and complete exact-head checks once. An urgent earlier policy release would require explicit reconciliation and new receipts for affected heads. Later heap, overhead, artwork and trail work will compose against the new policy before their first qualifying CI; they do not extend this finite hold.",
+  "runtimeOrPolicySourceChanged": false
+}

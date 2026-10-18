@@ -1,0 +1,30 @@
+{
+  "format": "SoloHeldSourceBranchV1",
+  "at": "2026-10-18T22:56:34.767151+00:00",
+  "branch": "codex/solo-trail-allocation",
+  "head": "d1cec960ca866c3c27a7959856f4dd3e331052dd",
+  "tree": "74a0445745cd0ae91150b0ee8ebdc7439612db64",
+  "parent": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "sourceProposal": "191b9a26e7a1272c50a44d250d58bb84449f7102",
+  "peerReview": "1a98e2c04a7e5b1c38432e85afaac3de9494934d",
+  "paths": [
+    {
+      "path": "game/core/capture.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bb381f963cf857b62ef6b9b635238e43d79c342e"
+    },
+    {
+      "path": "game/test/core-capture.test.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f05cbae7bdf291aab5b392a7966685e2b90c0ffe"
+    }
+  ],
+  "newControls": 5,
+  "sourceReviewed": true,
+  "functionalTestsExecuted": false,
+  "prCreated": false,
+  "nativeDispatched": false,
+  "hold": "Reconcile with new policy after finite current cohort/P0 observation/1674-1676/1654 sequence, then first qualifying CI and final replay/native gates."
+}

@@ -1,0 +1,413 @@
+{
+  "format": "SoloOriginalFrameReadbackHarnessReviewV1",
+  "at": "2026-10-18T22:50:26.180389+00:00",
+  "readOnlyArtifactAndSourceAnalysis": true,
+  "originalAttributionAudit": "afafe415c8ce313cc383ce1263cff78046c0ad1a",
+  "artifact": {
+    "id": 12141982962,
+    "bytes": 4780169,
+    "sha256": "4db3792a97693d2ab4b600efc36d3c6e8a109bc1e6d3ec80151d1f0e4463c716",
+    "zipCRCVerified": true
+  },
+  "trace": {
+    "member": "solo-linux-9d5139-frame-failure/evidence/warm-browser-frame-trace-chromium-candidate/report.json.frame-trace.json",
+    "bytes": 21173242,
+    "sha256": "d4e4f6d638d10763ff94c468c34d8356ab849e9a50c552f662cd8b9bc8abafaa",
+    "eventCount": 84807,
+    "incompleteDataLoss": true,
+    "matchingEventNames": {
+      "GLES2::ReadPixels": 8
+    },
+    "readPixels": [
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376090741,
+        "dur": 71953,
+        "ph": "X",
+        "args": {}
+      },
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376230161,
+        "dur": 63474,
+        "ph": "X",
+        "args": {}
+      },
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376353635,
+        "dur": 71644,
+        "ph": "X",
+        "args": {}
+      },
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376459042,
+        "dur": 100595,
+        "ph": "X",
+        "args": {}
+      },
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376628684,
+        "dur": 71104,
+        "ph": "X",
+        "args": {}
+      },
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376726954,
+        "dur": 63497,
+        "ph": "X",
+        "args": {}
+      },
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376839644,
+        "dur": 85624,
+        "ph": "X",
+        "args": {}
+      },
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376960538,
+        "dur": 72146,
+        "ph": "X",
+        "args": {}
+      }
+    ],
+    "featuredClick": [
+      {
+        "name": "FunctionCall",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 377067602,
+        "dur": 8975,
+        "ph": "X",
+        "args": {
+          "data": {
+            "columnNumber": 44,
+            "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+            "functionName": "featured.onclick",
+            "isolate": "13377590218590354790",
+            "lineNumber": 661,
+            "sampleTraceId": 6881431429599400,
+            "scriptId": "187",
+            "url": "http://127.0.0.1:36721/game/ui/game-shell.mjs"
+          }
+        }
+      }
+    ],
+    "selected125msTask": {
+      "name": "RunTask",
+      "pid": 4129,
+      "tid": 4129,
+      "ts": 376443702,
+      "dur": 125891,
+      "ph": "X",
+      "args": {}
+    },
+    "selectedNestedOwnerEvents": [
+      {
+        "name": "FunctionCall",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376444641,
+        "dur": 44,
+        "ph": "X",
+        "args": {
+          "data": {
+            "columnNumber": 21,
+            "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+            "functionName": "frame",
+            "isolate": "13377590218590354790",
+            "lineNumber": 187,
+            "sampleTraceId": 6881431429599685,
+            "scriptId": "29",
+            "url": ""
+          }
+        }
+      },
+      {
+        "name": "FunctionCall",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376444705,
+        "dur": 4745,
+        "ph": "X",
+        "args": {
+          "data": {
+            "columnNumber": 147165,
+            "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+            "functionName": "e",
+            "isolate": "13377590218590354790",
+            "lineNumber": 1,
+            "sampleTraceId": 6881431429599684,
+            "scriptId": "72",
+            "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+          }
+        }
+      },
+      {
+        "name": "FunctionCall",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376449515,
+        "dur": 656,
+        "ph": "X",
+        "args": {
+          "data": {
+            "columnNumber": 14,
+            "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+            "functionName": "tick",
+            "isolate": "13377590218590354790",
+            "lineNumber": 279,
+            "sampleTraceId": 6881431429599683,
+            "scriptId": "635",
+            "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+          }
+        }
+      },
+      {
+        "name": "FunctionCall",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376450182,
+        "dur": 6756,
+        "ph": "X",
+        "args": {
+          "data": {
+            "columnNumber": 17,
+            "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+            "functionName": "raf",
+            "isolate": "13377590218590354790",
+            "lineNumber": 7247,
+            "sampleTraceId": 6881431429599682,
+            "scriptId": "662",
+            "url": ""
+          }
+        }
+      },
+      {
+        "name": "UpdateLayoutTree",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376452609,
+        "dur": 3144,
+        "ph": "X",
+        "args": {
+          "beginData": {
+            "frame": "BF348988AFAB0DE61E172D5B11E9A198"
+          },
+          "elementCount": 23
+        }
+      },
+      {
+        "name": "FunctionCall",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376456963,
+        "dur": 29,
+        "ph": "X",
+        "args": {
+          "data": {
+            "columnNumber": 21,
+            "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+            "functionName": "frame",
+            "isolate": "13377590218590354790",
+            "lineNumber": 187,
+            "sampleTraceId": 6881431429599680,
+            "scriptId": "29",
+            "url": ""
+          }
+        }
+      },
+      {
+        "name": "Commit",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376458830,
+        "dur": 110660,
+        "ph": "X",
+        "args": {
+          "frameSeqId": 1962,
+          "layerTreeId": 3
+        }
+      },
+      {
+        "name": "GLES2::ReadPixels",
+        "pid": 4129,
+        "tid": 4129,
+        "ts": 376459042,
+        "dur": 100595,
+        "ph": "X",
+        "args": {}
+      }
+    ]
+  },
+  "firstFourActions": [
+    {
+      "path": "0",
+      "type": "snapshot",
+      "label": null,
+      "startedAt": "2026-10-18T15:52:51.431Z",
+      "status": "pass",
+      "completedAt": "2026-10-18T15:52:51.595Z"
+    },
+    {
+      "path": "1",
+      "type": "reload",
+      "label": null,
+      "startedAt": "2026-10-18T15:52:51.597Z",
+      "status": "pass",
+      "completedAt": "2026-10-18T15:53:05.381Z"
+    },
+    {
+      "path": "2",
+      "type": "snapshot",
+      "label": null,
+      "startedAt": "2026-10-18T15:53:05.381Z",
+      "status": "pass",
+      "completedAt": "2026-10-18T15:53:05.522Z"
+    },
+    {
+      "path": "3",
+      "type": "click",
+      "label": null,
+      "startedAt": "2026-10-18T15:53:05.537Z",
+      "status": "pass",
+      "completedAt": "2026-10-18T15:53:06.731Z"
+    }
+  ],
+  "sources": [
+    {
+      "sourceKind": "repository",
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "url": "https://github.com/mekhovov/revealline/blob/fd78700a0e3167e104da7c854a8b04f2cea9a19f/scripts/qualify-solo-runtime.mjs",
+      "bytes": 95425,
+      "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373",
+      "gitBlob": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54",
+      "pixelOrVideoCallTerms": {
+        "screenshot(": 0,
+        "getImageData(": 0,
+        "toDataURL(": 0,
+        "toBlob(": 0,
+        "recordVideo": 0,
+        "tracing.start(": 0
+      },
+      "numberedExcerpts": "465:   const contextOptions = {\n466:     ...display,\n467:     reducedMotion: 'no-preference',\n468:     serviceWorkers: 'block',\n469:   };\n470:   if (contextMode === 'persistent') {\n471:     persistentOwner = createPersistentQualificationOwner({\n472:       browserType: playwright.webkit,\n473:       launchOptions: { headless: !flags.includes('--headed') },\n474:       contextOptions,\n475:     });\n476:     report.environment.contextOwner = persistentOwner.report;\n477:     ({ browser, context } = await persistentOwner.launch());\n478:     report.limitations.push(\n479:       'Explicit fresh persistent WebKit profile per observation; not physical Safari or a privacy-setting equivalence claim. Compare only with the same declared context mode.',\n480:     );\n481:   } else {\n482:     browser = await playwright[engine].launch({\n483:       ...(engine === 'chromium' ? { executablePath: process.env.CHROME_EXECUTABLE } : {}),\n484:       headless: !flags.includes('--headed'),\n485:     });\n486:     context = await browser.newContext(contextOptions);\n487:   }\n943:         presentation: () => ({\n944:           atMs: performance.now(),\n945:           phase: document.body?.dataset.flightState,\n946:           submittedTier:\n947:             observedGame?.scene?.scenes?.find((scene) => scene.lastPaint)?.lastPaint?.quality ??\n948:             null,\n949:           scope:\n950:             'Retained last submitted paint record only; sparse action-boundary observations do not establish the tier between samples.',\n951:         }),\n952:         ...(nextRouteRead ? { nextRouteRead } : {}),\n1211:         // Hash-bound warm recipe: setup precedes public Start without extending its deadline.\n1212:         if (frameRecorder && path === '3') {\n1213:           const setupStarted = Date.now(),\n1214:             actionDeadline = setupStarted + timeout;\n1215:           await frameRecorder.start();\n1216:           report.frameTrace.preStartSetupMs = Date.now() - setupStarted;\n1217:           timeout = Math.min(remaining(action), actionDeadline - Date.now());\n1218:           assert(timeout > 0, 'Frame trace setup exhausted the original public Start deadline');\n1219:         }\n1250:             'Repeat cap reached before requested duration',\n1251:           );\n1252:         } else if (action.type === 'click') {\n1253:           if (action.optional && !(await locator.isVisible()))\n1254:             record.status = 'skipped-not-visible';\n1255:           else await locator.click({ timeout });\n1256:         } else if (action.type === 'reload') {\n1257:           if (hitchStore) await sealHitchDocument(`before-reload-${path}`);\n1618:           const snapshot = await page.evaluate(() => {\n1619:             const phase = document.body.dataset.flightState;\n1620:             if (phase === 'running')\n1621:               throw new Error('Resource snapshots require an explicit paused/result boundary');\n1622:             return {\n1623:               phase,\n1624:               application: window.RevealLineSoloPerformance?.export() ?? null,\n1625:               presentation: window.soloQualificationProbe.presentation(),\n1626:               probe: window.soloQualificationProbe.export(),\n1627:               audioProof: window.soloAudioProof?.export() ?? null,\n1628:               hud: Object.fromEntries(\n1629:                 ['coverage', 'lives', 'time', 'score', 'run-message'].map((id) => [\n1630:                   id,\n1631:                   document.getElementById(id)?.textContent ?? null,\n1632:                 ]),\n1633:               ),\n1634:             };\n1635:           });"
+    },
+    {
+      "sourceKind": "repository",
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "url": "https://github.com/mekhovov/revealline/blob/fd78700a0e3167e104da7c854a8b04f2cea9a19f/scripts/solo-qualification-cpu-profile.mjs",
+      "bytes": 19962,
+      "sha256": "b47327db20a192d12ba09053ed9726d67811d544b9b2b9a32957a70a14df1658",
+      "gitBlob": "3c70bfff3d049d7ac7f96f90cfbfb6741d01e93c",
+      "pixelOrVideoCallTerms": {
+        "screenshot(": 0,
+        "getImageData(": 0,
+        "toDataURL(": 0,
+        "toBlob(": 0,
+        "recordVideo": 0,
+        "tracing.start(": 0
+      },
+      "numberedExcerpts": "361:           void stop('trace-duration-limit').catch(fail);\n362:           void requestOwnerClose('trace-duration-limit');\n363:         }, FRAME_TRACE_LIMITS.maximumMs);\n364:         timer.unref?.();\n365:         const startOperation = cdp.send('Tracing.start', {\n366:           transferMode: 'ReturnAsStream',\n367:           streamFormat: 'json',\n368:           streamCompression: 'none',\n369:           bufferUsageReportingInterval: 1000,\n370:           traceConfig: {\n371:             recordMode: 'recordUntilFull',\n372:             traceBufferSizeInKb: FRAME_TRACE_LIMITS.bufferKiB,\n373:             enableSampling: false,\n374:             enableSystrace: false,\n375:             includedCategories: [...FRAME_TRACE_CATEGORIES],\n376:             excludedCategories: ['*'],\n377:           },\n378:         });\n379:         void startOperation.then(\n380:           () => {\n381:             report.startAcknowledged = true;\n382:             if (report.startOutcomeUnknown || stopPromise) {\n383:               fail(\n384:                 new Error('Tracing.start acknowledged after setup had already failed or stopped'),\n385:               );\n386:               void requestOwnerClose('late-start-acknowledgement');\n387:             }\n388:           },\n389:           () => {},\n390:         );\n391:         await bounded(() => startOperation, 'Tracing.start');\n392:         assert(!stopPromise && !report.failure, 'Trace start completed after its owned window');\n393:         started = true;\n394:         report.status = 'recording';\n395:         await anchor('start');\n396:       } catch (error) {\n397:         fail(error);\n398:         if (startRequested && !started) {\n399:           report.startOutcomeUnknown = true;\n400:           void requestOwnerClose('trace-start-unconfirmed');\n401:         }\n402:         await stop('setup-failure');\n403:         throw error;\n404:       }\n405:     },\n406:     afterDirectionThree() {\n407:       if (endPromise) return;\n408:       assert(started, 'Frame trace was not started');\n409:       // Deliberately not awaited by the action loop; no extra active-action wait."
+    },
+    {
+      "sourceKind": "repository",
+      "path": "docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture",
+      "url": "https://github.com/mekhovov/revealline/blob/fd78700a0e3167e104da7c854a8b04f2cea9a19f/docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture",
+      "bytes": 6570,
+      "sha256": "6da01ca449068ca6705012f3d6604362c581fe52c4583407797c0961acf3156d",
+      "gitBlob": "98008c904544bdd16011c23f5a17c39ee7b2f459",
+      "pixelOrVideoCallTerms": {
+        "screenshot(": 0,
+        "getImageData(": 0,
+        "toDataURL(": 0,
+        "toBlob(": 0,
+        "recordVideo": 0,
+        "tracing.start(": 0
+      },
+      "numberedExcerpts": "1: {\n2:   \"format\": \"SoloQualificationV1\",\n3:   \"id\": \"original-art-opening-warm-first30-border-v3\",\n4:   \"kind\": \"performance\",\n5:   \"timeoutMs\": 360000,\n6:   \"query\": {\n7:     \"journey\": \"opening\"\n8:   },\n9:   \"cacheMode\": \"warm-http-reload\",\n10:   \"coverage\": [\n11:     \"first30seconds after publicStart on original FirstReturn\",\n12:     \"30 meaningful alternating safe-top-border steering commands\",\n13:     \"native input event-to-tick-to-submitted-render\",\n14:     \"same-context warm HTTP reload remains separately labeled when selected\"\n15:   ],\n16:   \"replayRequirements\": {\n17:     \"movingTicks\": 3300,\n18:     \"directionChangesWithMovement\": 20\n19:   },\n20:   \"actions\": [\n21:     {\n22:       \"type\": \"snapshot\",\n23:       \"group\": \"warm-primer-ready\"\n24:     },\n25:     {\n26:       \"type\": \"reload\",\n27:       \"timeoutMs\": 120000\n28:     },\n29:     {\n30:       \"type\": \"snapshot\",\n31:       \"group\": \"warm-reloaded-ready\"\n32:     },\n33:     {\n34:       \"type\": \"click\",\n35:       \"selector\": \"#shell-featured\",\n36:       \"timeoutMs\": 60000\n37:     },\n38:     {\n39:       \"type\": \"wait\",\n40:       \"phase\": \"running\",\n41:       \"timeoutMs\": 60000\n42:     },\n43:     {\n44:       \"type\": \"key\",\n45:       \"key\": \"ArrowLeft\",\n46:       \"ms\": 1000,\n47:       \"label\": \"safe-border-direction-1\"\n48:     },\n49:     {\n50:       \"type\": \"key\",\n51:       \"key\": \"ArrowRight\",\n52:       \"ms\": 1000,\n53:       \"label\": \"safe-border-direction-2\"\n54:     },\n55:     {\n56:       \"type\": \"key\",\n57:       \"key\": \"ArrowLeft\",\n58:       \"ms\": 1000,\n59:       \"label\": \"safe-border-direction-3\"\n60:     },\n61:     {\n62:       \"type\": \"key\",\n63:       \"key\": \"ArrowRight\",\n64:       \"ms\": 1000,\n65:       \"label\": \"safe-border-direction-4\"\n66:     },\n67:     {\n68:       \"type\": \"key\",\n69:       \"key\": \"ArrowLeft\",\n70:       \"ms\": 1000,\n71:       \"label\": \"safe-border-direction-5\"\n72:     },\n73:     {\n74:       \"type\": \"key\",\n75:       \"key\": \"ArrowRight\",\n76:       \"ms\": 1000,\n77:       \"label\": \"safe-border-direction-6\"\n78:     },\n79:     {\n80:       \"type\": \"key\",\n81:       \"key\": \"ArrowLeft\",\n82:       \"ms\": 1000,\n83:       \"label\": \"safe-border-direction-7\"\n84:     },\n85:     {\n86:       \"type\": \"key\",\n87:       \"key\": \"ArrowRight\",\n88:       \"ms\": 1000,\n89:       \"label\": \"safe-border-direction-8\"\n90:     },\n91:     {\n92:       \"type\": \"key\",\n93:       \"key\": \"ArrowLeft\",\n94:       \"ms\": 1000,\n95:       \"label\": \"safe-border-direction-9\"\n96:     },\n97:     {\n98:       \"type\": \"key\",\n99:       \"key\": \"ArrowRight\",\n100:       \"ms\": 1000,"
+    },
+    {
+      "sourceKind": "playwright",
+      "path": "packages/injected/src/injectedScript.ts",
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/injected/src/injectedScript.ts",
+      "bytes": 81319,
+      "sha256": "8c9b8d4a975159d57e21e77eef78954fb21fb4b23053acd2019df6df71f15735",
+      "gitBlob": "4c61203318e792f74965a59104f4d240bbe4d967",
+      "pixelOrVideoCallTerms": {
+        "screenshot(": 0,
+        "getImageData(": 0,
+        "toDataURL(": 0,
+        "toBlob(": 0,
+        "recordVideo": 0,
+        "tracing.start(": 0
+      },
+      "numberedExcerpts": "655:         if (enclosingLabel && enclosingLabel.control)\n656:           element = enclosingLabel.control;\n657:       }\n658:     }\n659:     return element;\n660:   }\n661: \n662:   async checkElementStates(node: Node, states: ElementState[]): Promise<'error:notconnected' | { missingState: ElementState } | undefined> {\n663:     if (states.includes('stable')) {\n664:       const stableResult = await this._checkElementIsStable(node);\n665:       if (stableResult === false)\n666:         return { missingState: 'stable' };\n667:       if (stableResult === 'error:notconnected')\n668:         return 'error:notconnected';\n669:     }\n670:     for (const state of states) {\n671:       if (state !== 'stable') {\n672:         const result = this.elementState(node, state);\n673:         if (result.received === 'error:notconnected')\n674:           return 'error:notconnected';\n675:         if (!result.matches)\n676:           return { missingState: state };\n677:       }\n678:     }\n679:   }\n680: \n681:   private async _checkElementIsStable(node: Node): Promise<'error:notconnected' | boolean> {\n682:     const continuePolling = Symbol('continuePolling');\n683:     let lastRect: { x: number, y: number, width: number, height: number } | undefined;\n684:     let stableRafCounter = 0;\n685:     let lastTime = 0;\n686: \n687:     const check = () => {\n688:       const element = this.retarget(node, 'no-follow-label');\n689:       if (!element)\n690:         return 'error:notconnected';\n691: \n692:       // Drop frames that are shorter than 16ms - WebKit Win bug.\n693:       const time = this.utils.builtins.performance.now();\n694:       if (this._stableRafCount > 1 && time - lastTime < 15)\n695:         return continuePolling;\n696:       lastTime = time;\n697: \n698:       const clientRect = element.getBoundingClientRect();\n699:       const rect = { x: clientRect.top, y: clientRect.left, width: clientRect.width, height: clientRect.height };\n700:       if (lastRect) {\n701:         const samePosition = rect.x === lastRect.x && rect.y === lastRect.y && rect.width === lastRect.width && rect.height === lastRect.height;\n702:         if (!samePosition)\n703:           return false;\n704:         if (++stableRafCounter >= this._stableRafCount)\n705:           return true;\n706:       }\n707:       lastRect = rect;\n708:       return continuePolling;\n709:     };\n710: \n711:     let fulfill: (result: 'error:notconnected' | boolean) => void;\n712:     let reject: (error: Error) => void;\n713:     const result = new Promise<'error:notconnected' | boolean>((f, r) => { fulfill = f; reject = r; });\n714: \n715:     const raf = () => {\n716:       try {\n717:         const success = check();\n718:         if (success !== continuePolling)\n719:           fulfill(success);\n720:         else\n721:           this.utils.builtins.requestAnimationFrame(raf);\n722:       } catch (e) {\n723:         reject(e);\n724:       }\n725:     };\n726:     this.utils.builtins.requestAnimationFrame(raf);\n727: \n728:     return result;\n729:   }"
+    },
+    {
+      "sourceKind": "playwright",
+      "path": "packages/playwright-core/src/server/frames.ts",
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/frames.ts",
+      "bytes": 82658,
+      "sha256": "969a36135189949746e2d6018c2cb2ed3cd34f96df0a12066751fba90754279a",
+      "gitBlob": "170843cfe6839c58068b0613d870998e3d8b8710",
+      "pixelOrVideoCallTerms": {
+        "screenshot(": 0,
+        "getImageData(": 0,
+        "toDataURL(": 0,
+        "toBlob(": 0,
+        "recordVideo": 0,
+        "tracing.start(": 0
+      },
+      "numberedExcerpts": "1246:       }\n1247:     });\n1248:   }\n1249: \n1250:   async rafrafTimeoutScreenshotElementWithProgress(progress: Progress, selector: string, timeout: number, options: ScreenshotOptions): Promise<Buffer> {\n1251:     return await this._retryWithProgressIfNotConnected(progress, selector, { strict: true, performActionPreChecks: true }, async (progress, handle) => {\n1252:       await handle._frame.rafrafTimeout(progress, timeout);\n1253:       return await this._page.screenshotter.screenshotElement(progress, handle, options);\n1254:     });\n1255:   }\n1256: \n1257:   async click(progress: Progress, selector: string, options: { noWaitAfter?: boolean } & types.MouseClickOptions & types.PointerActionWaitOptions) {\n1258:     return dom.assertDone(await this._retryWithProgressIfNotConnected(progress, selector, options, (progress, handle) => handle._click(progress, { ...options, waitAfter: !options.noWaitAfter })));\n1259:   }\n1260: \n1261:   async dblclick(progress: Progress, selector: string, options: types.MouseMultiClickOptions & types.PointerActionWaitOptions) {\n1262:     return dom.assertDone(await this._retryWithProgressIfNotConnected(progress, selector, options, (progress, handle) => handle._dblclick(progress, options)));"
+    },
+    {
+      "sourceKind": "playwright",
+      "path": "packages/playwright-core/src/server/dom.ts",
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/dom.ts",
+      "bytes": 48456,
+      "sha256": "bd7440495211f693d5e1d92f8dc1864de04a7b07131e179eaa8dca96f67d1b21",
+      "gitBlob": "c46aa5ebedc7ebd954c2af82a641b852dc2d4442",
+      "pixelOrVideoCallTerms": {
+        "screenshot(": 1,
+        "getImageData(": 0,
+        "toDataURL(": 0,
+        "toBlob(": 0,
+        "recordVideo": 0,
+        "tracing.start(": 0
+      },
+      "numberedExcerpts": "400:   async _performPointerAction(\n401:     progress: Progress,\n402:     actionName: ActionName,\n403:     waitForEnabled: boolean,\n404:     action: (progress: Progress, point: types.Point) => Promise<void>,\n405:     forceScrollOptions: ScrollIntoViewOptions | undefined,\n406:     options: { waitAfter: boolean | 'disabled' } & types.PointerActionOptions & types.PointerActionWaitOptions,\n407:   ): Promise<PerformActionResult> {\n408:     const { force = false, position, scroll } = options;\n409: \n410:     const doScrollIntoView = async (progress: Progress): Promise<'error:notvisible' | 'error:notconnected' | 'done'> => {\n411:       if (scroll === 'none')\n412:         return 'done';\n413:       if (forceScrollOptions) {\n414:         return await progress.race(this.evaluateInUtility(([injected, node, options]) => {\n415:           if (node.nodeType === 1 /* Node.ELEMENT_NODE */)\n416:             (node as Node as Element).scrollIntoView(options);\n417:           return 'done' as const;\n418:         }, forceScrollOptions));\n419:       }\n420:       return await this._scrollRectIntoViewIfNeeded(progress, position ? { x: position.x, y: position.y, width: 0, height: 0 } : undefined);\n421:     };\n422: \n423:     if (this._frame.parentFrame()) {\n424:       // Best-effort scroll to make sure any iframes containing this element are scrolled\n425:       // into view and visible, so they are not throttled.\n426:       // See https://github.com/microsoft/playwright/issues/27196 for an example.\n427:       await doScrollIntoView(progress).catch(() => {});\n428:     }\n429: \n430:     if ((options as any).__testHookBeforeStable)\n431:       await progress.race((options as any).__testHookBeforeStable());\n432: \n433:     if (!force) {\n434:       const elementStates: ElementState[] = waitForEnabled ? ['visible', 'enabled', 'stable'] : ['visible', 'stable'];\n435:       progress.log(`  waiting for element to be ${waitForEnabled ? 'visible, enabled and stable' : 'visible and stable'}`);\n436:       const result = await progress.race(this.evaluateInUtility(async ([injected, node, { elementStates }]) => {\n437:         return await injected.checkElementStates(node, elementStates);\n438:       }, { elementStates }));\n439:       if (result)\n440:         return result;\n441:       progress.log(`  element is ${waitForEnabled ? 'visible, enabled and stable' : 'visible and stable'}`);\n442:     }\n443: \n444:     if ((options as any).__testHookAfterStable)\n445:       await progress.race((options as any).__testHookAfterStable());\n446: \n447:     progress.log('  scrolling into view if needed');\n448:     const scrolled = await doScrollIntoView(progress);\n449:     if (scrolled !== 'done')\n450:       return scrolled;\n451:     progress.log('  done scrolling');\n452: \n453:     const maybeResult = position ? await this._offsetPoint(progress, position) : await this._clickablePoint(progress);\n454:     if (typeof maybeResult === 'string')\n455:       return maybeResult;\n456:     const point = roundPoint(maybeResult.point);\n457:     await progress.race(this.instrumentation.onBeforeInputAction(this, progress.metadata, point, maybeResult.box));\n458: \n846:   }\n847: \n848:   async boundingBox(progress: Progress): Promise<types.Rect | null> {\n849:     return await progress.race(this._page.delegate.getBoundingBox(this));\n850:   }\n851: \n852:   async screenshot(progress: Progress, options: ScreenshotOptions): Promise<Buffer> {\n853:     return await this._page.screenshotter.screenshotElement(progress, this, options);\n854:   }\n855: \n856:   async querySelector(progress: Progress, selector: string, options: types.StrictOptions): Promise<ElementHandle | null> {\n857:     return progress.race(this._querySelector(selector, options));"
+    }
+  ],
+  "findings": [
+    "The exact original qualifier has no explicit screenshot, getImageData, toDataURL, toBlob, video recording or Playwright tracing call. Its snapshot action exports numeric/application/DOM-text state rather than pixels.",
+    "Snapshot2 completes before action3 starts; the frame recorder starts inside action3 before locator.click. The eight compositor ReadPixels lie before the actual featured.onclick handler, during the click preparation/auto-wait interval.",
+    "The exact Playwright1.62.1 click flow performs pointer actionability and RAF-based position stability checks through getBoundingClientRect. Its screenshot methods are separate. These checks may induce style/layout but do not intentionally take screenshots or call readPixels.",
+    "The recorder explicitly selects categories and excludes all others; no screenshot category is enabled. The retained trace's capture-related name scan finds only eight GLES2::ReadPixels events.",
+    "The largest retained readback is nested in compositor BeginMainFrame/Commit/DoUpdateLayers. Some title-scene paint and automation RAF/layout work are also retained, but no ownership map identifies the readback surface. Title rendering is therefore not established as its cause.",
+    "This CPU-stressed, headless, traced, incomplete run cannot exclude indirect observer/compositor effects or prove the same costs in ordinary play. No untraced comparison, exact renderer backend, complete flow or physical-device qualification is available."
+  ],
+  "testsExecuted": false,
+  "protocolChanged": false,
+  "prOrRefMutation": false
+}
