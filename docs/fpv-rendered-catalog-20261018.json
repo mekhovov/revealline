@@ -1,0 +1,195 @@
+{
+  "source": "c7cafc72330271ed99ebf8f7b50b758beb8e7aa9",
+  "host": "localhost source preview; World Lift and land unscored draft practice",
+  "date": "2026-10-18",
+  "scope": "Short rendered keyboard takeoff/yaw/pitch checks; not complete routes, sustained hovering, or real-aircraft fidelity",
+  "meteor75ProRetestObservation": "Immediately after gentler 1600 ms ramp: upright, 0.6 m, +2.5 m/s vertical, 57% throttle. The stored retry read below was sampled later.",
+  "observations": [
+    {
+      "aircraft": "BETAFPV Air65 II Racing · 2026 · analog · 30000 KV",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 9.6 m · +15.1 m/s vertical · 0.4 m/s drift",
+      "input": "Yaw 0%, Throttle 85%"
+    },
+    {
+      "aircraft": "BETAFPV Meteor75 · 2022 · analog · 19500 KV",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 7.2 m · +11.7 m/s vertical · 0.5 m/s drift",
+      "input": "Yaw 0%, Throttle 84%"
+    },
+    {
+      "aircraft": "BETAFPV Meteor75 Pro · Matrix · analog · 21000 KV",
+      "mode": "Self-level",
+      "response": "Drone response.  Inverted. descending. 9.8 m · -1.9 m/s vertical · 1.7 m/s drift",
+      "input": "Yaw 0%, Throttle 85%"
+    },
+    {
+      "aircraft": "BETAFPV Meteor75 Pro · Matrix · analog · 21000 KV",
+      "mode": "Self-level",
+      "retry": "Gentler 1600 ms throttle ramp after first pass hit the 10 m ceiling",
+      "response": "Drone response.   vertical speed near zero. 10.0 m · +0.0 m/s vertical · 0.0 m/s drift"
+    },
+    {
+      "aircraft": "BETAFPV Meteor85 · Analog · 11000 KV · LAVA battery",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 1.8 m · +4.9 m/s vertical · 0.3 m/s drift",
+      "input": "Yaw 0%, Throttle 57%"
+    },
+    {
+      "aircraft": "Happymodel Mobula8 · 2023 · analog · SPI ELRS · 11000 KV",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 1.6 m · +4.5 m/s vertical · 0.3 m/s drift",
+      "input": "Yaw 0%, Throttle 56%"
+    },
+    {
+      "aircraft": "BETAFPV Cetus X · 2022 · analog · Betaflight SPI ELRS · original 30C cells",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 1.2 m · +3.6 m/s vertical · 0.3 m/s drift",
+      "input": "Yaw 0%, Throttle 57%"
+    },
+    {
+      "aircraft": "CADDXFPV Protos 1.6 · AIO 1.0 · Ascent Lite · inferred flying mass · SIM response",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 0.2 m · +0.7 m/s vertical · 0.1 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "BETAFPV Pavo20 Pro II · O4 Pro · ELRS · 4S · 5500 KV",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 3.9 m · +8.8 m/s vertical · 0.4 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "GEPRC SMART35 · Analog · 3850 KV · 3.5 inch",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 2.9 m · +7.2 m/s vertical · 0.3 m/s drift",
+      "input": "Yaw 0%, Throttle 61%"
+    },
+    {
+      "aircraft": "iFlight Nazgul ECO XL5 · V1.1 · analog · 6S · 1800 KV",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 3.6 m · +8.9 m/s vertical · 0.3 m/s drift",
+      "input": "Yaw 0%, Throttle 56%"
+    },
+    {
+      "aircraft": "iFlight Mach R5 Sport · European 2050 KV · analog · canopy",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 6.5 m · +14.2 m/s vertical · 0.4 m/s drift",
+      "input": "Yaw 0%, Throttle 57%"
+    },
+    {
+      "aircraft": "HGLRC Rekon7 PRO · DJI O3 · 1350 KV · 7 inch",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 3.6 m · +8.2 m/s vertical · 0.3 m/s drift",
+      "input": "Yaw 0%, Throttle 57%"
+    },
+    {
+      "aircraft": "iFlight Chimera7 Pro V2 · O4 · 1250 KV · 7.5 inch",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 2.9 m · +6.9 m/s vertical · 0.2 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "iFlight Helion Pro · O4 · 900 KV · 10 inch",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 3.9 m · +8.6 m/s vertical · 0.3 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "Holybro X650 V2 · MN4014 330 KV · Gemfan 1555",
+      "mode": "Self-level",
+      "response": "Drone response.   climbing. 1.2 m · +3.4 m/s vertical · 0.1 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "BETAFPV Air65 II Racing · 2026 · analog · 30000 KV",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 1.6 m · +4.1 m/s vertical · 0.8 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "BETAFPV Meteor75 · 2022 · analog · 19500 KV",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 0.9 m · +2.6 m/s vertical · 0.6 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "BETAFPV Meteor75 Pro · Matrix · analog · 21000 KV",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 2.0 m · +4.7 m/s vertical · 0.9 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "BETAFPV Meteor85 · Analog · 11000 KV · LAVA battery",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 2.4 m · +5.9 m/s vertical · 0.7 m/s drift",
+      "input": "Yaw 0%, Throttle 59%"
+    },
+    {
+      "aircraft": "Happymodel Mobula8 · 2023 · analog · SPI ELRS · 11000 KV",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 2.8 m · +6.5 m/s vertical · 0.9 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "BETAFPV Cetus X · 2022 · analog · Betaflight SPI ELRS · original 30C cells",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 1.4 m · +4.1 m/s vertical · 0.6 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "CADDXFPV Protos 1.6 · AIO 1.0 · Ascent Lite · inferred flying mass · SIM response",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 0.2 m · +0.7 m/s vertical · 0.5 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "BETAFPV Pavo20 Pro II · O4 Pro · ELRS · 4S · 5500 KV",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 4.2 m · +9.0 m/s vertical · 1.3 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "GEPRC SMART35 · Analog · 3850 KV · 3.5 inch",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 2.8 m · +6.6 m/s vertical · 1.4 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "iFlight Nazgul ECO XL5 · V1.1 · analog · 6S · 1800 KV",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 4.6 m · +10.2 m/s vertical · 1.7 m/s drift",
+      "input": "Yaw 0%, Throttle 57%"
+    },
+    {
+      "aircraft": "iFlight Mach R5 Sport · European 2050 KV · analog · canopy",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 7.8 m · +14.9 m/s vertical · 2.6 m/s drift",
+      "input": "Yaw 0%, Throttle 56%"
+    },
+    {
+      "aircraft": "HGLRC Rekon7 PRO · DJI O3 · 1350 KV · 7 inch",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 3.5 m · +8.1 m/s vertical · 1.0 m/s drift",
+      "input": "Yaw 0%, Throttle 57%"
+    },
+    {
+      "aircraft": "iFlight Chimera7 Pro V2 · O4 · 1250 KV · 7.5 inch",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 3.1 m · +7.1 m/s vertical · 0.9 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "iFlight Helion Pro · O4 · 900 KV · 10 inch",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 4.6 m · +9.4 m/s vertical · 1.5 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    },
+    {
+      "aircraft": "Holybro X650 V2 · MN4014 330 KV · Gemfan 1555",
+      "mode": "Acro",
+      "response": "Drone response.   climbing. 1.3 m · +3.5 m/s vertical · 0.4 m/s drift",
+      "input": "Yaw 0%, Throttle 60%"
+    }
+  ]
+}

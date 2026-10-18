@@ -16,7 +16,7 @@ test('shared archive file chooser stays visible when mounted directly in the Adv
     /\.aircraft-archive-controls input\[type=['"]file['"]\]\s*\{[^}]*display:\s*block/,
   );
 });
-function fixture(t, { verify, begin, append, key = 'academy' } = {}) {
+function fixture(t, { verify, begin, append, list, remove, key = 'academy' } = {}) {
   const document = new Document(),
     window = new Events(),
     records = new Map(),
@@ -67,13 +67,16 @@ function fixture(t, { verify, begin, append, key = 'academy' } = {}) {
       row.revision++;
       return structuredClone(row);
     },
-    async list() {
+    async list(options) {
+      if (list) await list(options);
       return [...records.values()].map((row) => structuredClone(row));
     },
     async exportPackage(id) {
       return { manifest: structuredClone(records.get(id)) };
     },
     async delete(id) {
+      calls.push(['delete', id]);
+      if (remove) await remove(id);
       records.delete(id);
     },
     close() {},
@@ -250,6 +253,168 @@ test('refreshing saved sessions replaces preparation feedback with success in bo
   assert.match(f.ui.root.textContent, /Список збережених сесій оновлено/);
   assert.equal(f.ui.root.querySelector('select').children.length, 1);
   assert.deepEqual([...f.records.values()], before, 'refreshing changes only the displayed list');
+});
+
+const savedRow = (id) => ({
+  id,
+  name: id,
+  host: 'world',
+  revision: 1,
+  startTick: 0,
+  endTick: 50,
+  state: 'ended',
+});
+
+test('an initial archive-list failure is visible and retries only through explicit refresh', async (t) => {
+  for (const [language, refresh, failure, success] of [
+    [
+      'en',
+      'Refresh saved sessions',
+      /Could not load saved sessions.*list may be incomplete/,
+      /Saved sessions refreshed/,
+    ],
+    [
+      'uk',
+      'Оновити збережені сесії',
+      /Не вдалося завантажити збережені сесії.*список може бути неповним/,
+      /Список збережених сесій оновлено/,
+    ],
+  ]) {
+    let fail = true,
+      reads = 0;
+    const f = fixture(t, {
+      list: async () => {
+        reads++;
+        if (fail) throw new Error('database connection is closing');
+      },
+    });
+    f.setLocale(language);
+    f.records.set('kept', savedRow('kept'));
+    f.update();
+    await settle();
+    assert.match(f.ui.root.textContent, failure);
+    assert.match(f.ui.root.textContent, /database connection is closing/);
+    assert.equal(f.ui.root.querySelector('select').children.length, 0);
+    assert.equal(f.records.size, 1);
+    for (let i = 0; i < 20; i++) f.update();
+    await settle();
+    assert.equal(reads, 1, 'painting does not retry the failed read');
+    assert.deepEqual(f.calls, [], 'inventory failure does not write or delete archives');
+    fail = false;
+    f.button(refresh).click();
+    await settle();
+    assert.equal(reads, 2);
+    assert.equal(f.ui.root.querySelector('select').children.length, 1);
+    assert.match(f.ui.root.textContent, success);
+    assert.doesNotMatch(f.ui.root.textContent, /database connection is closing/);
+  }
+});
+
+test('a committed archive deletion is distinguished from a failed inventory refresh in both languages', async (t) => {
+  for (const [language, button, receipt, refresh] of [
+    [
+      'en',
+      'Delete selected local archive',
+      /Selected local archive deleted.*Could not refresh the remaining sessions.*current status is unknown/,
+      'Refresh saved sessions',
+    ],
+    [
+      'uk',
+      'Видалити вибраний локальний архів',
+      /Вибраний локальний архів видалено.*Не вдалося оновити решту сесій.*поточний стан невідомий/,
+      'Оновити збережені сесії',
+    ],
+  ]) {
+    let fail = false,
+      reads = 0;
+    const f = fixture(t, {
+      list: async () => {
+        reads++;
+        if (fail) throw new Error('database connection is closing');
+      },
+      remove: async () => {
+        fail = true;
+      },
+    });
+    f.setLocale(language);
+    f.records.set('selected', savedRow('selected'));
+    f.records.set('protected', savedRow('protected'));
+    f.update();
+    await settle();
+    f.ui.root.querySelector('select').value = 'selected';
+    f.button(button).click();
+    await settle();
+    assert.match(f.ui.root.textContent, receipt);
+    assert.doesNotMatch(f.ui.root.textContent, /Could not complete|Не вдалося завершити/);
+    assert.deepEqual([...f.records.keys()], ['protected']);
+    assert.deepEqual(
+      f.ui.root.querySelector('select').children.map((row) => row.value),
+      ['protected'],
+    );
+    for (let i = 0; i < 20; i++) f.update();
+    await settle();
+    assert.equal(reads, 2, 'a failed post-commit refresh is not retried automatically');
+    assert.deepEqual(f.calls, [['delete', 'selected']]);
+    fail = false;
+    f.button(refresh).click();
+    await settle();
+    assert.equal(reads, 3);
+    assert.deepEqual(f.calls, [['delete', 'selected']], 'refresh never repeats the deletion');
+    assert.doesNotMatch(f.ui.root.textContent, /database connection is closing/);
+  }
+});
+
+test('a failed archive deletion does not claim success or remove its cached row', async (t) => {
+  const f = fixture(t, {
+    remove: async () => {
+      throw new Error('delete transaction failed');
+    },
+  });
+  f.records.set('selected', savedRow('selected'));
+  f.records.set('protected', savedRow('protected'));
+  f.update();
+  await settle();
+  f.ui.root.querySelector('select').value = 'selected';
+  f.button('Delete selected local archive').click();
+  await settle();
+  assert.match(f.ui.root.textContent, /Could not complete.*delete transaction failed/);
+  assert.doesNotMatch(f.ui.root.textContent, /archive deleted/);
+  assert.deepEqual([...f.records.keys()], ['selected', 'protected']);
+  assert.equal(f.ui.root.querySelector('select').children.length, 2);
+  assert.deepEqual(f.calls, [['delete', 'selected']]);
+});
+
+test('cancelling the inventory refresh after deletion preserves the committed receipt', async (t) => {
+  let deleted = false;
+  const f = fixture(t, {
+    remove: async () => {
+      deleted = true;
+    },
+    list: async ({ signal }) => {
+      if (deleted)
+        await new Promise((_resolve, reject) =>
+          signal.addEventListener('abort', () =>
+            reject(new DOMException('cancelled', 'AbortError')),
+          ),
+        );
+    },
+  });
+  f.records.set('selected', savedRow('selected'));
+  f.records.set('protected', savedRow('protected'));
+  f.update();
+  await settle();
+  f.ui.root.querySelector('select').value = 'selected';
+  f.button('Delete selected local archive').click();
+  await settle();
+  f.button('Cancel archive operation').click();
+  await settle();
+  assert.match(
+    f.ui.root.textContent,
+    /Selected local archive deleted.*Refreshing saved sessions was cancelled/,
+  );
+  assert.doesNotMatch(f.ui.root.textContent, /Archive operation cancelled/);
+  assert.deepEqual([...f.records.keys()], ['protected']);
+  assert.deepEqual(f.calls, [['delete', 'selected']]);
 });
 
 test('archive verification distinguishes challenge outcomes from physics-only clip verification', async (t) => {
