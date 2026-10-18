@@ -160,6 +160,7 @@ export function mountFlightApp({
     aircraftControls = null,
     aircraftChallengeControls = null,
     aircraftAttemptConfiguration = null,
+    workbenchAttemptConfiguration = null,
     aircraftAdvice = null,
     aircraftAdviceText = null,
     courseClassFilter = null,
@@ -743,6 +744,7 @@ export function mountFlightApp({
         capacityAh: configuration.advanced.aircraft.battery.capacityAh,
       });
     aircraftAttemptConfiguration = physicalAircraft ? structuredClone(baselineConfiguration) : null;
+    workbenchAttemptConfiguration = structuredClone(baselineConfiguration);
     cancelReview();
     epoch++;
     gamepad.reset();
@@ -859,6 +861,7 @@ export function mountFlightApp({
     paint(true);
     return true;
   }
+  let tuningCalibrationReturn = null;
   const dialogOpeners = new Map();
   function closeDialog(id) {
     cancelReview();
@@ -870,6 +873,7 @@ export function mountFlightApp({
     if (id === 'setup-dialog') {
       setup?.dispose();
       setup = null;
+      if (tuningCalibrationReturn) { const done=tuningCalibrationReturn; tuningCalibrationReturn=null; done(); return; }
     }
     const opener = dialogOpeners.get(id);
     (opener?.isConnected && !opener.closest('[hidden],[inert]')
@@ -1727,7 +1731,12 @@ export function mountFlightApp({
   for (const button of doc.querySelectorAll('[data-close]'))
     listen(button, 'click', () => closeDialog(button.dataset.close));
   for (const id of dialogIds)
-    listen($(id), 'cancel', () => {
+    listen($(id), 'cancel', (event) => {
+      if (id === 'setup-dialog' && tuningCalibrationReturn) {
+        event.preventDefault();
+        closeDialog(id);
+        return;
+      }
       setup?.dispose();
       setup = null;
       pause();
@@ -1745,7 +1754,7 @@ export function mountFlightApp({
   const menuContext = () => {
     // The reference arena owns its flight keys and raw controller preview.
     if (advancedPractice) return null;
-    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: true };
+    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: tuning.captureActive(), blockDevices: tuning.captureActive(), captureControllerIndex: gamepad.status().index, onCaptureBack: () => tuning.releaseCapture() };
     const globalToolRoot = globalTools?.root();
     if (globalToolRoot)
       return {
@@ -2291,6 +2300,8 @@ export function mountFlightApp({
     store: tuningStore,
     locale: () => locale,
     onOpen: () => pause(),
+    getFlightConfiguration: () => workbenchAttemptConfiguration,
+    onCalibration(done) { tuningCalibrationReturn = done; openDialog('setup-dialog'); },
     onApply() {
       playShell?.enterPlay();
       reset();
@@ -2303,7 +2314,7 @@ export function mountFlightApp({
       inputDiagnostics.read(
         flight,
         replay ? 'recording' : input.owner(),
-        !replay && input.owner() === 'radio' ? radio.diagnostics() : null,
+        !replay && input.owner() === 'radio' ? radio.diagnostics() : !replay && input.owner() === 'controller' ? gamepad.previewDiagnostics() : null,
       ),
     onAdvanced(configuration) {
       pause();
@@ -2326,23 +2337,7 @@ export function mountFlightApp({
         },
         onPause: () => pause(),
         async onSaveConfiguration(advanced, metadata = {}) {
-          const library = tuningStore.snapshot(),
-            setup = library.setups.find((item) => item.id === library.selectedSetupId);
-          await tuningStore.saveAircraftConfiguration(
-            {
-              setupId: setup.id,
-              newProfileId: `aircraft-${win.crypto?.randomUUID?.() ?? Date.now()}`,
-              advanced,
-              response: metadata.response,
-              ...(metadata.camera
-                ? { camera: { tilt: metadata.camera.tilt, verticalFov: metadata.camera.fov } }
-                : {}),
-              ...(metadata.preset ? { preset: metadata.preset } : {}),
-              ...(metadata.components !== undefined ? { components: metadata.components } : {}),
-            },
-            library.revision,
-          );
-          tuning.acceptOwnSave(library.revision, { reloadAircraft: true });
+          await tuning.savePracticeDraft(advanced, metadata);
         },
         onClose() {
           advancedPractice?.dispose();

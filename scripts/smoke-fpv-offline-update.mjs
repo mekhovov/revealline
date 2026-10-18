@@ -153,13 +153,14 @@ export async function smokeFPVOfflineUpdate({ playwrightModule, output }) {
           .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
           .filter({ visible: true })
           .click();
-        await page
-          .getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true })
-          .waitFor();
+        await page.getByRole('dialog', { name: 'Setup workbench', exact: true }).waitFor();
+        await page.getByRole('button', { name: 'Library', exact: true }).click();
       };
       const enterAdvanced = async (rate) => {
         await openTuning();
         await page.getByLabel('Rate profile', { exact: true }).selectOption('update-rates');
+        await page.getByRole('button', { name: 'Use rate profile in draft', exact: true }).click();
+        await page.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
         assert.equal(
           await page
             .getByRole('group', { name: 'Roll', exact: true })
@@ -167,6 +168,7 @@ export async function smokeFPVOfflineUpdate({ playwrightModule, output }) {
             .inputValue(),
           String(rate),
         );
+        await page.getByRole('button', { name: 'Flight response / PID', exact: true }).click();
         await page
           .getByRole('button', { name: 'Advanced reference quad · experimental', exact: true })
           .click();

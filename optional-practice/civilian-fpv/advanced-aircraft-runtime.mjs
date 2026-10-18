@@ -735,20 +735,42 @@ export function createAircraftSimulation(options = {}) {
     contacts(velocity);
     state.substep++;
   }
-  function runMission(motionSource) {
+  // Requested explicitly by the isolated response bench. These copied samples
+  // are observations only: they never enter dynamics, checkpoints or hashes.
+  function physicsSample() {
+    const angular = rotate(body.rotation(), body.angvel(), true),
+      diagnostic = controller.telemetry();
+    return {
+      substep: state.substep,
+      seconds: state.substep / hz,
+      requestedRates: { roll: state.target.roll, pitch: state.target.pitch, yaw: state.target.yaw },
+      achievedRates: {
+        roll: (-angular.z * 180) / Math.PI,
+        pitch: (-angular.x * 180) / Math.PI,
+        yaw: (-angular.y * 180) / Math.PI,
+      },
+      motors: [...state.motorSpeeds],
+      requestedTorque: diagnostic.requestedTorque,
+      achievedTorque: diagnostic.achievedTorque,
+      saturated: diagnostic.saturated,
+    };
+  }
+  function runMission(motionSource, diagnostics = false) {
     required(!regional || terrain, 'Verified terrain is required before aircraft flight');
     required(safeTick(state.missionTick + 1), 'Aircraft clock exhausted safe integer precision');
     const motions = validateMotions(motionSource),
       events = [];
     if (motions.length) events.push(['motion', state.missionTick, motions]);
     state.contact.impactSpeed = 0;
-    const trace = [{ ...body.translation(), ...hullExtents() }];
+    const trace = [{ ...body.translation(), ...hullExtents() }],
+      physicsSamples = diagnostics ? [] : null;
     for (let step = 0; step < missionSteps; step++) {
       substep(events, motions, (step + 1) / missionSteps);
       trace.push({ ...body.translation(), ...hullExtents() });
+      if (diagnostics) physicsSamples.push(physicsSample());
     }
     state.missionTick++;
-    return { trace, events };
+    return { trace, events, physicsSamples };
   }
   function accepted(events) {
     recorder.append({
@@ -830,18 +852,26 @@ export function createAircraftSimulation(options = {}) {
     else if (admitted && kind === 'mission') accepted([]);
     return { admitted, adopted: admitted, telemetry: telemetry() };
   }
-  function stepMission({ admitMotion, motions } = {}) {
+  function stepMission({ admitMotion, motions, diagnostics = false } = {}) {
     unlocked();
+    required(typeof diagnostics === 'boolean', 'Invalid aircraft diagnostics request');
     const before = transactionCapture();
     try {
-      const result = runMission(motions);
+      const result = runMission(motions, diagnostics);
       const admitted = admitMotion
         ? admitMotion(result.trace[0], result.trace.at(-1), clone(result.trace))
         : true;
       required(typeof admitted === 'boolean', 'Motion admission must return a boolean');
       if (!admitted) restoreInternal(before);
       else accepted(result.events);
-      return { admitted, telemetry: telemetry(), trace: result.trace };
+      return {
+        admitted,
+        telemetry: telemetry(),
+        trace: result.trace,
+        ...(diagnostics
+          ? { physicsHz: hz, physicsSamples: admitted ? result.physicsSamples : [] }
+          : {}),
+      };
     } catch (error) {
       restoreInternal(before);
       throw error;
