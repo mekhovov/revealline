@@ -1,0 +1,1053 @@
+{
+  "format": "SoloOverheadFrozenSourceAvailabilityAuditV1",
+  "ref": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "scope": "Read-only comparison of unchanged historical797 declarations against current main bytes; no native/test execution or admission change.",
+  "results": [
+    {
+      "plan": "docs/performance/solo-797-app-diagnostics-plan.json",
+      "source": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "analysisMethod": "paired-p95-endpoint-box-v1",
+      "count": 30,
+      "mismatches": [],
+      "entries": [
+        {
+          "path": "scripts/solo-remote-diagnostics.mjs",
+          "expected": {
+            "bytes": 32157,
+            "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97"
+          },
+          "actual": {
+            "bytes": 32157,
+            "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97",
+            "gitBlob": "93903085fc95fbfa793d84edd53a48cc0d9a469a"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/brand-icons.mjs",
+          "expected": {
+            "bytes": 12391,
+            "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+          },
+          "actual": {
+            "bytes": 12391,
+            "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda",
+            "gitBlob": "c627f4d23b35a4b0ac3238d5ea389bd44e9d1e61"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/build-entry-writer.mjs",
+          "expected": {
+            "bytes": 1815,
+            "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+          },
+          "actual": {
+            "bytes": 1815,
+            "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874",
+            "gitBlob": "9c38c9b83c64816bab76ca6e6d959e058888ce70"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/core-soundtrack-publication.mjs",
+          "expected": {
+            "bytes": 5789,
+            "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+          },
+          "actual": {
+            "bytes": 5789,
+            "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726",
+            "gitBlob": "19f0cc1bb36e3c43d647b658951b3f6b1f63344e"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/default-runtime-metadata.mjs",
+          "expected": {
+            "bytes": 10256,
+            "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+          },
+          "actual": {
+            "bytes": 10256,
+            "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107",
+            "gitBlob": "b0ccaf28edad0dc26162e17cd36d552523d4beaa"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/edition-code-indentation.mjs",
+          "expected": {
+            "bytes": 3700,
+            "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+          },
+          "actual": {
+            "bytes": 3700,
+            "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e",
+            "gitBlob": "f223346098c5617055e0cc79a86057f8bae313f7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/external-distribution.mjs",
+          "expected": {
+            "bytes": 6651,
+            "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+          },
+          "actual": {
+            "bytes": 6651,
+            "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd",
+            "gitBlob": "3ed47cde695bb23cd4b80b4b4b4f7c444323cea2"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/game-cli.mjs",
+          "expected": {
+            "bytes": 94310,
+            "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+          },
+          "actual": {
+            "bytes": 94310,
+            "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5",
+            "gitBlob": "099d15b351c504da7e4f1de641d0d5aeadb339a7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/hosted-soundtrack-publication.mjs",
+          "expected": {
+            "bytes": 10450,
+            "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+          },
+          "actual": {
+            "bytes": 10450,
+            "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6",
+            "gitBlob": "7503e95a3802f989849c88698e3130d2f0cfb1b7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/localization-audit.mjs",
+          "expected": {
+            "bytes": 10005,
+            "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+          },
+          "actual": {
+            "bytes": 10005,
+            "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d",
+            "gitBlob": "041499a37a327408517691aa901b0667f07ac224"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/localization-content.mjs",
+          "expected": {
+            "bytes": 16926,
+            "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+          },
+          "actual": {
+            "bytes": 16926,
+            "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393",
+            "gitBlob": "cfdf836d9deb71bddbabd182de6976e878d3658d"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/localization.mjs",
+          "expected": {
+            "bytes": 13957,
+            "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+          },
+          "actual": {
+            "bytes": 13957,
+            "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b",
+            "gitBlob": "23b5581d83bf42043c6f9ab7d03147c3a290f6f8"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/observe-solo-performance.mjs",
+          "expected": {
+            "bytes": 19115,
+            "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+          },
+          "actual": {
+            "bytes": 19115,
+            "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91",
+            "gitBlob": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/offline-core-closure.mjs",
+          "expected": {
+            "bytes": 9292,
+            "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+          },
+          "actual": {
+            "bytes": 9292,
+            "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635",
+            "gitBlob": "af7f49bd9c31760b731930d20825c1768494842a"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/optional-artwork.mjs",
+          "expected": {
+            "bytes": 4613,
+            "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+          },
+          "actual": {
+            "bytes": 4613,
+            "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e",
+            "gitBlob": "e42c4b343b84f34ba2c370718f668b597d25ee61"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/optional-distribution.mjs",
+          "expected": {
+            "bytes": 2584,
+            "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+          },
+          "actual": {
+            "bytes": 2584,
+            "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71",
+            "gitBlob": "797f6d96f1d882174f277c30ddbcdc7b8c3bea81"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/pack-indexes.mjs",
+          "expected": {
+            "bytes": 5421,
+            "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+          },
+          "actual": {
+            "bytes": 5421,
+            "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e",
+            "gitBlob": "2a4564ee1e88ef4f61b556b79f415aced69523aa"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/qualify-solo-diagnostics.mjs",
+          "expected": {
+            "bytes": 18407,
+            "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f"
+          },
+          "actual": {
+            "bytes": 18407,
+            "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f",
+            "gitBlob": "954d79349078934e4c22ee0f3e26156a9da0196c"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/reviewed-soundtrack-batches.mjs",
+          "expected": {
+            "bytes": 16280,
+            "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+          },
+          "actual": {
+            "bytes": 16280,
+            "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa",
+            "gitBlob": "413f94d96d30686a0b76c8ebf3c7f87cdc299665"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "expected": {
+            "bytes": 74932,
+            "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+          },
+          "actual": {
+            "bytes": 74932,
+            "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1",
+            "gitBlob": "ce977d2d6c0c2bf58d3357f9276b602542b4312b"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/serve-production-preview.mjs",
+          "expected": {
+            "bytes": 10414,
+            "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+          },
+          "actual": {
+            "bytes": 10414,
+            "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab",
+            "gitBlob": "0176a28b0eb56e634a12112d5737211a6ec6de8f"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-build-archive.mjs",
+          "expected": {
+            "bytes": 5262,
+            "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+          },
+          "actual": {
+            "bytes": 5262,
+            "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368",
+            "gitBlob": "236b891c910f696f1b3646442bfb91a77afe5e1f"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-build-worker-closure.mjs",
+          "expected": {
+            "bytes": 1658,
+            "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+          },
+          "actual": {
+            "bytes": 1658,
+            "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1",
+            "gitBlob": "d4266ac6f7f4c76a552bfc7cd373e432fb3d575e"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-diagnostics-analysis.mjs",
+          "expected": {
+            "bytes": 19029,
+            "sha256": "0c0a9686868ee58febf27c47f207aa1d99c37513c2a9d5cefa4a5392a31387ae"
+          },
+          "actual": {
+            "bytes": 19029,
+            "sha256": "0c0a9686868ee58febf27c47f207aa1d99c37513c2a9d5cefa4a5392a31387ae",
+            "gitBlob": "ef080174125a1b5c14ffb037e28acf78e227334e"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-observation-lifecycle.mjs",
+          "expected": {
+            "bytes": 1313,
+            "sha256": "3b94fa9c52f4356a0fcaded21863bb47c1e26c031e4a59efb38a3216aea14554"
+          },
+          "actual": {
+            "bytes": 1313,
+            "sha256": "3b94fa9c52f4356a0fcaded21863bb47c1e26c031e4a59efb38a3216aea14554",
+            "gitBlob": "d9cb369291d6d3b8d71d60412f28ec858027e3c7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-remote-archive.py",
+          "expected": {
+            "bytes": 22756,
+            "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+          },
+          "actual": {
+            "bytes": 22756,
+            "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6",
+            "gitBlob": "7a56298d0509ebe0a33c257bef3efe2d0cbdbddc"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/soundtrack-archive-admissions.mjs",
+          "expected": {
+            "bytes": 5614,
+            "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+          },
+          "actual": {
+            "bytes": 5614,
+            "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d",
+            "gitBlob": "1477214eeb1f0d10e83fde01cc598f63874e29be"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/soundtrack-distribution.mjs",
+          "expected": {
+            "bytes": 15378,
+            "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+          },
+          "actual": {
+            "bytes": 15378,
+            "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2",
+            "gitBlob": "b96deeb1d1e439c302f6c390f0dea5d34300f98b"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/verify-solo-build.mjs",
+          "expected": {
+            "bytes": 16212,
+            "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+          },
+          "actual": {
+            "bytes": 16212,
+            "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d",
+            "gitBlob": "794186eb657f5a898795f70ea3bce3b16643af10"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-overhead-interval.mjs",
+          "expected": {
+            "bytes": 4062,
+            "sha256": "bd9a53ab4b52169289b3d31b9217690e7cc41b07cff3966b4619c84328508f34"
+          },
+          "actual": {
+            "bytes": 4062,
+            "sha256": "bd9a53ab4b52169289b3d31b9217690e7cc41b07cff3966b4619c84328508f34",
+            "gitBlob": "31c760da042dd32810963eca73d192ffe6716045"
+          },
+          "matches": true
+        }
+      ]
+    },
+    {
+      "plan": "docs/performance/solo-797-journal-cost-plan.json",
+      "source": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "analysisMethod": "paired-p95-endpoint-box-v1",
+      "count": 47,
+      "mismatches": [
+        {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "expected": {
+            "bytes": 92172,
+            "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+          },
+          "actual": {
+            "bytes": 95425,
+            "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373",
+            "gitBlob": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54"
+          },
+          "matches": false
+        },
+        {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "expected": {
+            "bytes": 3270,
+            "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+          },
+          "actual": {
+            "bytes": 19962,
+            "sha256": "b47327db20a192d12ba09053ed9726d67811d544b9b2b9a32957a70a14df1658",
+            "gitBlob": "3c70bfff3d049d7ac7f96f90cfbfb6741d01e93c"
+          },
+          "matches": false
+        }
+      ],
+      "entries": [
+        {
+          "path": "scripts/solo-remote-diagnostics.mjs",
+          "expected": {
+            "bytes": 32157,
+            "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97"
+          },
+          "actual": {
+            "bytes": 32157,
+            "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97",
+            "gitBlob": "93903085fc95fbfa793d84edd53a48cc0d9a469a"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/brand-icons.mjs",
+          "expected": {
+            "bytes": 12391,
+            "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+          },
+          "actual": {
+            "bytes": 12391,
+            "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda",
+            "gitBlob": "c627f4d23b35a4b0ac3238d5ea389bd44e9d1e61"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/build-entry-writer.mjs",
+          "expected": {
+            "bytes": 1815,
+            "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+          },
+          "actual": {
+            "bytes": 1815,
+            "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874",
+            "gitBlob": "9c38c9b83c64816bab76ca6e6d959e058888ce70"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/core-soundtrack-publication.mjs",
+          "expected": {
+            "bytes": 5789,
+            "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+          },
+          "actual": {
+            "bytes": 5789,
+            "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726",
+            "gitBlob": "19f0cc1bb36e3c43d647b658951b3f6b1f63344e"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/default-runtime-metadata.mjs",
+          "expected": {
+            "bytes": 10256,
+            "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+          },
+          "actual": {
+            "bytes": 10256,
+            "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107",
+            "gitBlob": "b0ccaf28edad0dc26162e17cd36d552523d4beaa"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/edition-code-indentation.mjs",
+          "expected": {
+            "bytes": 3700,
+            "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+          },
+          "actual": {
+            "bytes": 3700,
+            "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e",
+            "gitBlob": "f223346098c5617055e0cc79a86057f8bae313f7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/external-distribution.mjs",
+          "expected": {
+            "bytes": 6651,
+            "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+          },
+          "actual": {
+            "bytes": 6651,
+            "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd",
+            "gitBlob": "3ed47cde695bb23cd4b80b4b4b4f7c444323cea2"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/game-cli.mjs",
+          "expected": {
+            "bytes": 94310,
+            "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+          },
+          "actual": {
+            "bytes": 94310,
+            "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5",
+            "gitBlob": "099d15b351c504da7e4f1de641d0d5aeadb339a7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/hosted-soundtrack-publication.mjs",
+          "expected": {
+            "bytes": 10450,
+            "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+          },
+          "actual": {
+            "bytes": 10450,
+            "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6",
+            "gitBlob": "7503e95a3802f989849c88698e3130d2f0cfb1b7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/localization-audit.mjs",
+          "expected": {
+            "bytes": 10005,
+            "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+          },
+          "actual": {
+            "bytes": 10005,
+            "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d",
+            "gitBlob": "041499a37a327408517691aa901b0667f07ac224"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/localization-content.mjs",
+          "expected": {
+            "bytes": 16926,
+            "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+          },
+          "actual": {
+            "bytes": 16926,
+            "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393",
+            "gitBlob": "cfdf836d9deb71bddbabd182de6976e878d3658d"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/localization.mjs",
+          "expected": {
+            "bytes": 13957,
+            "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+          },
+          "actual": {
+            "bytes": 13957,
+            "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b",
+            "gitBlob": "23b5581d83bf42043c6f9ab7d03147c3a290f6f8"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/observe-solo-performance.mjs",
+          "expected": {
+            "bytes": 19115,
+            "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+          },
+          "actual": {
+            "bytes": 19115,
+            "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91",
+            "gitBlob": "1467f63305a3fe43b423bf7d1cedca0ccb8bbdda"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/offline-core-closure.mjs",
+          "expected": {
+            "bytes": 9292,
+            "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+          },
+          "actual": {
+            "bytes": 9292,
+            "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635",
+            "gitBlob": "af7f49bd9c31760b731930d20825c1768494842a"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/optional-artwork.mjs",
+          "expected": {
+            "bytes": 4613,
+            "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+          },
+          "actual": {
+            "bytes": 4613,
+            "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e",
+            "gitBlob": "e42c4b343b84f34ba2c370718f668b597d25ee61"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/optional-distribution.mjs",
+          "expected": {
+            "bytes": 2584,
+            "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+          },
+          "actual": {
+            "bytes": 2584,
+            "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71",
+            "gitBlob": "797f6d96f1d882174f277c30ddbcdc7b8c3bea81"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/pack-indexes.mjs",
+          "expected": {
+            "bytes": 5421,
+            "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+          },
+          "actual": {
+            "bytes": 5421,
+            "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e",
+            "gitBlob": "2a4564ee1e88ef4f61b556b79f415aced69523aa"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/qualify-solo-diagnostics.mjs",
+          "expected": {
+            "bytes": 18407,
+            "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f"
+          },
+          "actual": {
+            "bytes": 18407,
+            "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f",
+            "gitBlob": "954d79349078934e4c22ee0f3e26156a9da0196c"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/qualify-solo-runtime.mjs",
+          "expected": {
+            "bytes": 92172,
+            "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+          },
+          "actual": {
+            "bytes": 95425,
+            "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373",
+            "gitBlob": "586f167f8caa735d5a5fc6c8b2d5c4eaaf1e7a54"
+          },
+          "matches": false
+        },
+        {
+          "path": "scripts/reviewed-soundtrack-batches.mjs",
+          "expected": {
+            "bytes": 16280,
+            "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+          },
+          "actual": {
+            "bytes": 16280,
+            "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa",
+            "gitBlob": "413f94d96d30686a0b76c8ebf3c7f87cdc299665"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/run-solo-remote-correctness.mjs",
+          "expected": {
+            "bytes": 74932,
+            "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+          },
+          "actual": {
+            "bytes": 74932,
+            "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1",
+            "gitBlob": "ce977d2d6c0c2bf58d3357f9276b602542b4312b"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/serve-production-preview.mjs",
+          "expected": {
+            "bytes": 10414,
+            "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+          },
+          "actual": {
+            "bytes": 10414,
+            "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab",
+            "gitBlob": "0176a28b0eb56e634a12112d5737211a6ec6de8f"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-build-archive.mjs",
+          "expected": {
+            "bytes": 5262,
+            "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+          },
+          "actual": {
+            "bytes": 5262,
+            "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368",
+            "gitBlob": "236b891c910f696f1b3646442bfb91a77afe5e1f"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-build-worker-closure.mjs",
+          "expected": {
+            "bytes": 1658,
+            "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+          },
+          "actual": {
+            "bytes": 1658,
+            "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1",
+            "gitBlob": "d4266ac6f7f4c76a552bfc7cd373e432fb3d575e"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-diagnostics-analysis.mjs",
+          "expected": {
+            "bytes": 19029,
+            "sha256": "0c0a9686868ee58febf27c47f207aa1d99c37513c2a9d5cefa4a5392a31387ae"
+          },
+          "actual": {
+            "bytes": 19029,
+            "sha256": "0c0a9686868ee58febf27c47f207aa1d99c37513c2a9d5cefa4a5392a31387ae",
+            "gitBlob": "ef080174125a1b5c14ffb037e28acf78e227334e"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-journal-cost-analysis.mjs",
+          "expected": {
+            "bytes": 16599,
+            "sha256": "f74b8577a4a9fd116e60e882132962e5eebc7e0c20053154041f290a1109b2e7"
+          },
+          "actual": {
+            "bytes": 16599,
+            "sha256": "f74b8577a4a9fd116e60e882132962e5eebc7e0c20053154041f290a1109b2e7",
+            "gitBlob": "c8862c5718ad095789f26426b8bdcd7e4b6f02c8"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-observation-lifecycle.mjs",
+          "expected": {
+            "bytes": 1313,
+            "sha256": "3b94fa9c52f4356a0fcaded21863bb47c1e26c031e4a59efb38a3216aea14554"
+          },
+          "actual": {
+            "bytes": 1313,
+            "sha256": "3b94fa9c52f4356a0fcaded21863bb47c1e26c031e4a59efb38a3216aea14554",
+            "gitBlob": "d9cb369291d6d3b8d71d60412f28ec858027e3c7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-audio.mjs",
+          "expected": {
+            "bytes": 19077,
+            "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+          },
+          "actual": {
+            "bytes": 19077,
+            "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1",
+            "gitBlob": "0f47c93d792e5532e47e00e57e975a060b0a1f94"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-browser-context.mjs",
+          "expected": {
+            "bytes": 4026,
+            "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+          },
+          "actual": {
+            "bytes": 4026,
+            "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f",
+            "gitBlob": "ccf6ac62a7e456c77e1f48c5973ead2b0cd0b3d9"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-cadence.mjs",
+          "expected": {
+            "bytes": 7999,
+            "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+          },
+          "actual": {
+            "bytes": 7999,
+            "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc",
+            "gitBlob": "05142bcde221dacd1c53e34f3125533aee4f47c0"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-cpu-profile.mjs",
+          "expected": {
+            "bytes": 3270,
+            "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+          },
+          "actual": {
+            "bytes": 19962,
+            "sha256": "b47327db20a192d12ba09053ed9726d67811d544b9b2b9a32957a70a14df1658",
+            "gitBlob": "3c70bfff3d049d7ac7f96f90cfbfb6741d01e93c"
+          },
+          "matches": false
+        },
+        {
+          "path": "scripts/solo-qualification-export.mjs",
+          "expected": {
+            "bytes": 5553,
+            "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+          },
+          "actual": {
+            "bytes": 5553,
+            "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77",
+            "gitBlob": "adec0f8686908dbf623cd669d9422eda62d618e3"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-hitch-journal.mjs",
+          "expected": {
+            "bytes": 35102,
+            "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3"
+          },
+          "actual": {
+            "bytes": 35102,
+            "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3",
+            "gitBlob": "2419fde3c8e863ac0eee817f12632179fded98c6"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-journal-cost.mjs",
+          "expected": {
+            "bytes": 13023,
+            "sha256": "8589b149d8d1588cd326d30ac1b0370d8a9b30b7d86578781974642511a62cda"
+          },
+          "actual": {
+            "bytes": 13023,
+            "sha256": "8589b149d8d1588cd326d30ac1b0370d8a9b30b7d86578781974642511a62cda",
+            "gitBlob": "08faa4dbb5c4f42e509cff6f15e52aab76447701"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-native-replay.mjs",
+          "expected": {
+            "bytes": 9513,
+            "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+          },
+          "actual": {
+            "bytes": 9513,
+            "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c",
+            "gitBlob": "3a73ab1789500e68492ac4bf7572ef84d7bf0ab3"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-observation.mjs",
+          "expected": {
+            "bytes": 24474,
+            "sha256": "fc8d6b03d49d44e2010acebb4f89188334503ef2a01316e0a9bdd4406e3b3d94"
+          },
+          "actual": {
+            "bytes": 24474,
+            "sha256": "fc8d6b03d49d44e2010acebb4f89188334503ef2a01316e0a9bdd4406e3b3d94",
+            "gitBlob": "d1a27cf253174f1016b5c13b0428da56d9ba9885"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-replay-core.mjs",
+          "expected": {
+            "bytes": 6588,
+            "sha256": "410efba766a4afd11062e43345d7503a4d49d468a8b0496a3303b333b58bb1cd"
+          },
+          "actual": {
+            "bytes": 6588,
+            "sha256": "410efba766a4afd11062e43345d7503a4d49d468a8b0496a3303b333b58bb1cd",
+            "gitBlob": "8c60fde0dcdcd196a6a92238f6bd9a6161a4f67a"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-replay-identity.mjs",
+          "expected": {
+            "bytes": 1866,
+            "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+          },
+          "actual": {
+            "bytes": 1866,
+            "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb",
+            "gitBlob": "0577102f967889361a72675935ffe194c09da9c7"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification-replay.mjs",
+          "expected": {
+            "bytes": 1260,
+            "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+          },
+          "actual": {
+            "bytes": 1260,
+            "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf",
+            "gitBlob": "2ac39051782d5c9ef7a0e5ea49536c9da825663c"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-qualification.mjs",
+          "expected": {
+            "bytes": 28205,
+            "sha256": "448f8467573b75960453381a810b388a9650d73ee7faf813ec07f40dd37a6f24"
+          },
+          "actual": {
+            "bytes": 28205,
+            "sha256": "448f8467573b75960453381a810b388a9650d73ee7faf813ec07f40dd37a6f24",
+            "gitBlob": "4bac1f37fe65a396bd367346f4ff2ac12d9d585d"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-remote-archive.py",
+          "expected": {
+            "bytes": 22756,
+            "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+          },
+          "actual": {
+            "bytes": 22756,
+            "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6",
+            "gitBlob": "7a56298d0509ebe0a33c257bef3efe2d0cbdbddc"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-remote-sustained.mjs",
+          "expected": {
+            "bytes": 107356,
+            "sha256": "ba1d2ee933ff00cea34108c10eb757e036ef63ed8c3eb2cf39f7d1997428d400"
+          },
+          "actual": {
+            "bytes": 107356,
+            "sha256": "ba1d2ee933ff00cea34108c10eb757e036ef63ed8c3eb2cf39f7d1997428d400",
+            "gitBlob": "6fa56e38dd274717bdb406d4a009dc91ff9ea442"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/soundtrack-archive-admissions.mjs",
+          "expected": {
+            "bytes": 5614,
+            "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+          },
+          "actual": {
+            "bytes": 5614,
+            "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d",
+            "gitBlob": "1477214eeb1f0d10e83fde01cc598f63874e29be"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/soundtrack-distribution.mjs",
+          "expected": {
+            "bytes": 15378,
+            "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+          },
+          "actual": {
+            "bytes": 15378,
+            "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2",
+            "gitBlob": "b96deeb1d1e439c302f6c390f0dea5d34300f98b"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/verify-solo-build.mjs",
+          "expected": {
+            "bytes": 16212,
+            "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+          },
+          "actual": {
+            "bytes": 16212,
+            "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d",
+            "gitBlob": "794186eb657f5a898795f70ea3bce3b16643af10"
+          },
+          "matches": true
+        },
+        {
+          "path": "scripts/solo-overhead-interval.mjs",
+          "expected": {
+            "bytes": 4062,
+            "sha256": "bd9a53ab4b52169289b3d31b9217690e7cc41b07cff3966b4619c84328508f34"
+          },
+          "actual": {
+            "bytes": 4062,
+            "sha256": "bd9a53ab4b52169289b3d31b9217690e7cc41b07cff3966b4619c84328508f34",
+            "gitBlob": "31c760da042dd32810963eca73d192ffe6716045"
+          },
+          "matches": true
+        },
+        {
+          "path": "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+          "expected": {
+            "bytes": 6387,
+            "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
+          },
+          "actual": {
+            "bytes": 6387,
+            "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5",
+            "gitBlob": "4f5b894e23c10de56dd73ef50dc9d38f6fb55554"
+          },
+          "matches": true
+        }
+      ]
+    }
+  ]
+}

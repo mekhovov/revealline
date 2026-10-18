@@ -1,0 +1,199 @@
+{
+  "format": "revealline-exact-head-source-validation-audit.v1",
+  "observedAt": "2026-10-18T21:14:23.197Z",
+  "pr": 1619,
+  "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+  "tree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+  "runId": 39155641770,
+  "job": {
+    "id": 117776663453,
+    "run_id": 39155641770,
+    "workflow_name": "Validate source for continuous main",
+    "head_branch": "codex/solo-demanded-soundtrack-catalogue",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39155641770",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbbAlDnQ",
+    "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117776663453",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117776663453",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-18T20:07:26Z",
+    "started_at": "2026-10-18T20:59:34Z",
+    "completed_at": "2026-10-18T21:07:34Z",
+    "name": "focused_shards (1)",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T20:59:35Z",
+        "completed_at": "2026-10-18T20:59:36Z"
+      },
+      {
+        "name": "Check out exact pull-request source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-18T20:59:36Z",
+        "completed_at": "2026-10-18T21:00:59Z"
+      },
+      {
+        "name": "Check out trusted focused-gate automation",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-18T21:00:59Z",
+        "completed_at": "2026-10-18T21:01:01Z"
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-18T21:01:01Z",
+        "completed_at": "2026-10-18T21:01:14Z"
+      },
+      {
+        "name": "Download the immutable preflight path inventory",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-10-18T21:01:14Z",
+        "completed_at": "2026-10-18T21:01:15Z"
+      },
+      {
+        "name": "Capture the reviewed changed-path set",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-10-18T21:01:15Z",
+        "completed_at": "2026-10-18T21:01:15Z"
+      },
+      {
+        "name": "Select the fail-closed focused gate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-10-18T21:01:15Z",
+        "completed_at": "2026-10-18T21:01:15Z"
+      },
+      {
+        "name": "Verify exact tracked source before commands",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-10-18T21:01:15Z",
+        "completed_at": "2026-10-18T21:01:39Z"
+      },
+      {
+        "name": "Install dependencies once for selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-10-18T21:01:39Z",
+        "completed_at": "2026-10-18T21:01:40Z"
+      },
+      {
+        "name": "Install pinned authoring dependencies for selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-10-18T21:01:40Z",
+        "completed_at": "2026-10-18T21:01:41Z"
+      },
+      {
+        "name": "Run selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-10-18T21:01:41Z",
+        "completed_at": "2026-10-18T21:07:08Z"
+      },
+      {
+        "name": "Verify exact tracked source after commands",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-10-18T21:07:08Z",
+        "completed_at": "2026-10-18T21:07:31Z"
+      },
+      {
+        "name": "Retain available focused shard evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-18T21:07:31Z",
+        "completed_at": "2026-10-18T21:07:32Z"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24,
+        "started_at": "2026-10-18T21:07:32Z",
+        "completed_at": "2026-10-18T21:07:32Z"
+      },
+      {
+        "name": "Post Check out trusted focused-gate automation",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 25,
+        "started_at": "2026-10-18T21:07:32Z",
+        "completed_at": "2026-10-18T21:07:32Z"
+      },
+      {
+        "name": "Post Check out exact pull-request source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 26,
+        "started_at": "2026-10-18T21:07:32Z",
+        "completed_at": "2026-10-18T21:07:32Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 27,
+        "started_at": "2026-10-18T21:07:32Z",
+        "completed_at": "2026-10-18T21:07:32Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117776663453",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000042735,
+    "runner_name": "GitHub Actions 1000042735",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "artifact": {
+    "id": 12151130944,
+    "name": "focused-shard-39155641770-1-1",
+    "bytes": 2725,
+    "sha256": "34c6280d7b22611150ac44985aec61855117fed08b330b469d2ee64d2f222f2d",
+    "crcVerified": true
+  },
+  "members": [
+    {
+      "path": "output.log",
+      "bytes": 4292,
+      "sha256": "0c48f8f8db653b025af07a6cfd2386da3ecfa109d240a0b409571d47447e7bf7",
+      "text": "### Focused release gate\n\nCategories: bounded non-runtime change\nCommands: 4\nFallback validation: game/test/solo-soundtrack-admission-host.test.mjs, game/test/soundtrack-host.test.mjs, game/test/soundtrack-panel.test.mjs, game/ui/soundtrack-panel.mjs\nFocused shard 1/4: 1/4 commands; plan e9d1209f61b87bfa8ea9f00e4c133d4659953a7594643f1c5c09b42348b04539\n\n[focused:unknown-runtime-validate] npm run validate\n\n> revealline@0.151.1 validate\n> npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs && node scripts/refresh-fpv-reaction-runtime.mjs --check && node scripts/refresh-fpv-academy-audio.mjs --check && node scripts/refresh-fpv-play-shell.mjs --check && node scripts/refresh-fpv-presentation-assets.mjs --check && node scripts/refresh-optional-worker.mjs --check && node scripts/refresh-fpv-world-visuals.mjs --check && node scripts/produce-industrial-environments.mjs --check\n\n\n> revealline@0.151.1 i18n:check\n> node scripts/localization.mjs check\n\n{\n  \"localization\": {\n    \"locales\": [\n      \"en\",\n      \"uk\"\n    ],\n    \"messages\": 13654,\n    \"references\": 9052\n  }\n}\n{\n  \"version\": \"0.151.1\",\n  \"files\": 3373,\n  \"literalReferencesValid\": true,\n  \"navigationWarnings\": [\n    \"game/downloads.html → ../app/update.html\",\n    \"game/downloads.html → ../app/\",\n    \"game/index.html → ../app/update.html\",\n    \"game/index.html → ../diagnostics/\",\n    \"site/about.html → ../releases/\",\n    \"site/about.html → ../privacy.html\",\n    \"site/about.html → ../credits.html\"\n  ],\n  \"contentSnapshots\": [\n    {\n      \"file\": \"game/content-design/whole-spatial-data.mjs\",\n      \"bytes\": 528831,\n      \"sha256\": \"e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3\"\n    }\n  ],\n  \"campaign\": \"first-signal\",\n  \"levels\": 12,\n  \"themes\": 4,\n  \"classes\": 7,\n  \"packs\": 14,\n  \"packLevels\": 89,\n  \"packGoals\": 6,\n  \"coopPacks\": 1,\n  \"coopLevels\": 2\n}\n{\"source\":{\"id\":\"field-kit\",\"revision\":104},\"bytes\":4729041,\"sha256\":\"c905cab9ce4519379d57bdecf3ef02146b44d5a2ad82430a3939b2d2fc00f617\",\"formatting\":\"bounded-canonical\"}\n{\"status\":\"verified-byte-identical\",\"modules\":32,\"recordings\":24,\"bytes\":920458}\n{\"status\":\"verified-byte-identical\",\"modules\":13,\"externalModules\":1,\"bytes\":122545,\"target\":\"optional-practice/civilian-fpv/sim-presentation.mjs\"}\n{\"status\":\"verified-byte-identical\",\"sourceSha256\":\"c72c76aff2abf1bb486d89a7377176e11c5c6d1f6de191b5a672d6e9f1fc55c2\",\"bytes\":287136,\"packageSlotsAdded\":0}\n{\"status\":\"verified-byte-identical\",\"assets\":{\"ui\":{\"source\":\"game/ui/fonts/field-kit/exo2-ui-400-600.woff2\",\"bytes\":76652,\"sha256\":\"fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef\",\"license\":\"OFL-1.1\"},\"pixel\":{\"source\":\"game/ui/fonts/departure-mono/DepartureMono-Regular.woff2\",\"bytes\":22496,\"sha256\":\"5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb\",\"license\":\"OFL-1.1\"},\"mono\":{\"source\":\"game/ui/fonts/field-kit/ibm-plex-mono-500.woff2\",\"bytes\":40080,\"sha256\":\"0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8\",\"license\":\"OFL-1.1\"},\"display\":{\"source\":\"game/ui/fonts/field-kit/handjet-display-600.woff2\",\"bytes\":38120,\"sha256\":\"4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145\",\"license\":\"OFL-1.1\"},\"focus\":{\"source\":\"game/audio/effects/focus.wav\",\"bytes\":2924,\"sha256\":\"0eb2a24d7e17e79c6d2b4dc4c1be57ba0622d2e3e8e177999c12eb18c54d3256\",\"license\":\"CC0-1.0\"},\"confirm\":{\"source\":\"game/audio/effects/confirm.wav\",\"bytes\":5864,\"sha256\":\"52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1\",\"license\":\"CC0-1.0\"},\"cancel\":{\"source\":\"game/audio/effects/cancel.wav\",\"bytes\":3948,\"sha256\":\"d59b933dbe794b9d36f962c8505513f3a85a30a6c2c3e2ed1d6895769d0a2616\",\"license\":\"CC0-1.0\"}}}\n{\"status\":\"verified-byte-identical\",\"source\":\"optional-practice/worker-source.mjs\",\"sourceSha256\":\"1ca98dcf144a3faea89f15ae158ed17dce522b319cd82fdff7890d6ebf6ef095\",\"bytes\":7243,\"packageSlotsAdded\":0}\n{\"status\":\"verified-byte-identical\",\"source\":\"optional-practice/civilian-fpv/world-visuals-source.mjs\",\"sourceSha256\":\"3902d7308e38f1b776b8799ad0640ec60461a6137b06a1ed059f001079ea94fc\",\"bytes\":122616,\"packageSlotsAdded\":0}\n{\"files\":16,\"sourceRows\":852,\"roomRows\":276,\"roomPreparations\":756,\"moduleBytes\":422824,\"packageBytes\":13837091,\"decodedBytesPerChapterMax\":3072}\n"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 1324,
+      "sha256": "c829189dc765182f910da95047ab56e7f4ba5a761d213a2d95a61aa46fbf6a85",
+      "text": "{\"format\":\"revealline-focused-shard.v1\",\"state\":\"complete\",\"shard\":{\"index\":1,\"total\":4},\"identity\":{\"sourceRevision\":\"0eef99dfa3fef571281b32d260c1b4d00efb625d\",\"workflowRevision\":\"fa43184f036f5ee5e24f3cea4e12befb47bddc50\",\"policyDigest\":\"bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142\",\"testPolicySha256\":\"ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2\",\"manifestSha256\":\"d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479\",\"changedPathsSha256\":\"6b7df9d167527f080ef0e9f2e00d35e5e6e83c4a7196928420c6210a7989c3fa\",\"fallbackHandled\":false,\"sourceTree\":\"bcc6145844d909668cf09fc4e1da3fc7ca76893f\"},\"plan\":{\"commands\":[{\"id\":\"unknown-runtime-validate\",\"command\":\"npm\",\"args\":[\"run\",\"validate\"],\"timeoutMs\":1800000},{\"id\":\"changed-test:game/test/solo-soundtrack-admission-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/solo-soundtrack-admission-host.test.mjs\"]},{\"id\":\"changed-test:game/test/soundtrack-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/soundtrack-host.test.mjs\"]},{\"id\":\"changed-test:game/test/soundtrack-panel.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/soundtrack-panel.test.mjs\"]}],\"sha256\":\"e9d1209f61b87bfa8ea9f00e4c133d4659953a7594643f1c5c09b42348b04539\"},\"indices\":[0],\"result\":{\"attempted\":1,\"failures\":[],\"exitCode\":0}}\n"
+    }
+  ],
+  "otherSourceEvidence": [
+    "21035a8df59aafe992084062e0fbbe55ee97b369",
+    "337a7082d0eab5c49af6247c86e433b5e6407af9",
+    "4e1163e20ef4766be36146640684da248284c73b"
+  ],
+  "conclusion": "All four exact-head source commands succeeded: validation and 233 tests across three audio groups. Focused aggregate remains queued; Appearance preview still running. No complete-release or native-performance pass inferred."
+}

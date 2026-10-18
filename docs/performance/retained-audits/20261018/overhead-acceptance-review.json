@@ -1,0 +1,167 @@
+{
+  "format": "SoloOverheadProspectiveAcceptanceReviewV1",
+  "observedAt": "2026-10-18T21:03:39.098486+00:00",
+  "ref": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "scope": "Read-only source and mathematical review. No source edits, tests, analyzer execution on historic data, workflow dispatch or changed verdict.",
+  "sources": [
+    {
+      "path": "scripts/solo-overhead-interval.mjs",
+      "bytes": 4062,
+      "sha256": "bd9a53ab4b52169289b3d31b9217690e7cc41b07cff3966b4619c84328508f34",
+      "gitBlob": "31c760da042dd32810963eca73d192ffe6716045"
+    },
+    {
+      "path": "scripts/solo-diagnostics-analysis.mjs",
+      "bytes": 19029,
+      "sha256": "0c0a9686868ee58febf27c47f207aa1d99c37513c2a9d5cefa4a5392a31387ae",
+      "gitBlob": "ef080174125a1b5c14ffb037e28acf78e227334e"
+    },
+    {
+      "path": "scripts/solo-journal-cost-analysis.mjs",
+      "bytes": 16599,
+      "sha256": "f74b8577a4a9fd116e60e882132962e5eebc7e0c20053154041f290a1109b2e7",
+      "gitBlob": "c8862c5718ad095789f26426b8bdcd7e4b6f02c8"
+    },
+    {
+      "path": "scripts/solo-remote-diagnostics.mjs",
+      "bytes": 32157,
+      "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97",
+      "gitBlob": "93903085fc95fbfa793d84edd53a48cc0d9a469a"
+    },
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "bytes": 18407,
+      "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f",
+      "gitBlob": "954d79349078934e4c22ee0f3e26156a9da0196c"
+    },
+    {
+      "path": "scripts/solo-overhead-interval.test.mjs",
+      "bytes": 6864,
+      "sha256": "527b6dd04499e5ca6ca74e7438ed40352c777246bea410b1da7f97cf5ea46f9d",
+      "gitBlob": "bec6d6db699a7f198ec06a402b662371784e511f"
+    },
+    {
+      "path": "docs/performance/solo-797-app-diagnostics-plan.json",
+      "bytes": 9165,
+      "sha256": "e482949eef93c96967db02cd021d8825a776fd5d7531b0d3f7ec40a562f8c8f8",
+      "gitBlob": "bc2f61d2e469f37bdf0700adf15ad9ef2cd222e5"
+    },
+    {
+      "path": "docs/performance/solo-797-journal-cost-plan.json",
+      "bytes": 12324,
+      "sha256": "940f8e40eda9970d1934f85f629dcb7491459068c630e56c641f37ff2efca23f",
+      "gitBlob": "4cf89cba49ccc1239f70a969b7b2d264f90e38bc"
+    },
+    {
+      "path": "docs/performance/solo-overhead-prospective-method-20261018.md",
+      "bytes": 3267,
+      "sha256": "c1d59cbd67ed81b4efb6b4803aed764ca53ecc59e2a535bb90d8e22543ea3421",
+      "gitBlob": "84e569d583c2bf31f6eb7ca31421a02fb63b29c1"
+    }
+  ],
+  "methodFindings": [
+    {
+      "finding": "Interval enclosure is mathematically justified conditional on each sample error bound.",
+      "reason": "Nearest-rank p95 is componentwise monotone. For paired log-ratio vector x, mean(x)+c*norm(Px) is convex and mean(x)-c*norm(Px) is concave, so maximum upper/minimum lower endpoints over an interval rectangle occur at vertices. Ten pairs give1024 vertices; df9 critical2.263 is rounded conservatively.",
+      "peer": "Independent source/math review by status_checks agrees; no tests executed."
+    },
+    {
+      "finding": "The statistical interpretation remains conditional.",
+      "reason": "The target is geometric mean of per-run p95 on/off ratios under independent matched pairs and approximately normal pair log ratios, not pooled-frame p95 or a universal/device claim. ABBA ordering/fresh profiles do not prove independence or remove all serial host drift."
+    },
+    {
+      "finding": "Minimum observed clock increment is not a justified uniform error bound.",
+      "reason": "The browser probe samples a separate same-origin page for100ms and requires20 positive increments. W3C permits implementation-defined coarsening and jitter; observing a minimum increment cannot establish the maximum duration error or later clock-policy stability."
+    },
+    {
+      "finding": "Journal method measures only synchronous invoked hook/application envelopes.",
+      "reason": "Setup, observer delivery/drain/export, meter instructions outside endpoints, GPU work and total-browser CPU remain unobserved by explicit scope."
+    }
+  ],
+  "acceptanceGap": {
+    "severity": "Blocks unconditional prospective <=5% qualification; no current passing native result is asserted.",
+    "app": {
+      "path": "scripts/solo-diagnostics-analysis.mjs",
+      "probeLines": [
+        381,
+        388
+      ],
+      "passLine": 447,
+      "status": "pass"
+    },
+    "journal": {
+      "path": "scripts/solo-journal-cost-analysis.mjs",
+      "probeLines": [
+        301,
+        309
+      ],
+      "passLine": 386,
+      "status": "pass-scoped-envelope"
+    },
+    "nativeAdapter": {
+      "path": "scripts/solo-remote-diagnostics.mjs",
+      "lines": [
+        732,
+        736
+      ],
+      "effect": "Promotes either analyzer label to row.status=passed without an independently justified bound."
+    },
+    "standaloneCLI": {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "lines": [
+        321,
+        447
+      ],
+      "effect": "Exit0 when analysis.status is pass."
+    },
+    "declarations": {
+      "analysisMethod": "paired-p95-endpoint-box-v1",
+      "clockErrorAssumption": "observed-minimum-step-bounds-duration-error",
+      "unconditionalClockGuarantee": false,
+      "gateEffect": "False guarantee is descriptive metadata, not refusal of app/synchronous-overhead pass."
+    }
+  },
+  "proposedCorrection": {
+    "publication": "Not implemented; source proposal only.",
+    "method": "Use a separately versioned prospective assessment; retain computed intervals as conditional sensitivity evidence, but return unresolved/nonpassing for qualification when only empirical minimum-step evidence exists.",
+    "boundAdmission": "Only a separately reviewed and exact source/browser/policy-bound error contract could justify a bounded qualification claim; do not use a self-reported flag or infer it from minimum step.",
+    "controls": [
+      "Upper conditional interval <=5% with empirical-only quantum cannot qualify.",
+      "Adapter/CLI/report propagation retains nonpassing status.",
+      "Historical v1 declarations/results and existing unchanged thresholds/workloads remain immutable.",
+      "All20 arms/10pairs, source/recipe/browser/quality, failure/owner and endpoint coverage gates remain required."
+    ],
+    "noAutomaticChange": [
+      "No threshold, workload, timer-security policy or sample-count changes.",
+      "No retrospective cohort reclassification or successful-subset pooling."
+    ]
+  },
+  "frozenSourceAudit": {
+    "blob": "da6380bb1be2d663e4cd01fbdde854ff1f573f66",
+    "bytes": 38439,
+    "sha256": "290514a70ede65e1699f41902d24903fae80e573c03586040e813053597dc6c9",
+    "app797": "30/30 current references match cb8; still historical runtime only.",
+    "journal797": "45/47 match; qualifier and CPU-profile helper remain deliberately frozen old identities and fail current native input equality."
+  },
+  "finalSourceChecklist": [
+    "Freeze exact combined normal Appearance package with actual producer/source/tree/archive/member/worker/CSP evidence; Pages identity is separate.",
+    "Use separately named final-source declarations and actual first-eight correctness proof; never repin historical declarations.",
+    "Bind actual recipe bytes, tool and sparse dependencies to source freeze; preserve10pairs/seed1544/30s/CPU1/no-retry schedule, all errors and original deadlines.",
+    "Retain matched browser/audio/cache/viewport/quality and independent run-level inference assumptions; report adequate clock-evidence limitations explicitly.",
+    "Complete native acceptance only after source checks; public critical-flow, physical-device, total browser cost and thermal obligations remain separate."
+  ],
+  "primarySources": [
+    {
+      "url": "https://www.itl.nist.gov/div898/handbook/prc/section3/prc311.htm",
+      "supports": "Paired-difference mean/SD and t construction, conditional on paired sampling."
+    },
+    {
+      "url": "https://www.itl.nist.gov/div898/handbook/eda/section3/eda3672.htm",
+      "supports": "df9 two-sided95% critical2.262; code's2.263 is conservative rounding."
+    },
+    {
+      "url": "https://www.w3.org/TR/hr-time-3/",
+      "supports": "Current Working Draft permits limiting/coarsening high-resolution timestamps; a measured minimum increment is not a guaranteed privacy-jitter error bound."
+    }
+  ]
+}

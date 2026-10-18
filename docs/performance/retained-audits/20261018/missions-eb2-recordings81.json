@@ -1,0 +1,294 @@
+{
+  "at": "2026-10-18T21:00:04.210164+00:00",
+  "runId": 39159252989,
+  "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+  "scope": "Completed exact-head software regressions only; remaining cohorts and all native/performance gates are separate.",
+  "cohorts": [
+    {
+      "phase": "recordings",
+      "artifact": {
+        "id": 12150741166,
+        "node_id": "MDg6QXJ0aWZhY3QxMjE1MDc0MTE2Ng==",
+        "name": "industrial-recordings-eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "size_in_bytes": 5925,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150741166",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150741166/zip",
+        "expired": false,
+        "digest": "sha256:598d65890acd11973579612d2f2b658dc86f33961beedb426685854a5129c9d2",
+        "created_at": "2026-10-18T20:56:03Z",
+        "updated_at": "2026-10-18T20:56:03Z",
+        "expires_at": "2026-11-01T20:56:03Z",
+        "workflow_run": {
+          "id": 39159252989,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/solo-missions-stage-observation",
+          "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+        }
+      },
+      "job": {
+        "id": 117768882340,
+        "run_id": 39159252989,
+        "workflow_name": "Industrial feature verification",
+        "head_branch": "codex/solo-missions-stage-observation",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159252989",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAba5KIpA",
+        "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117768882340",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882340",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-18T19:32:46Z",
+        "started_at": "2026-10-18T20:53:50Z",
+        "completed_at": "2026-10-18T20:56:06Z",
+        "name": "feature (recordings)",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T20:53:51Z",
+            "completed_at": "2026-10-18T20:53:53Z"
+          },
+          {
+            "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T20:53:53Z",
+            "completed_at": "2026-10-18T20:54:38Z"
+          },
+          {
+            "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T20:54:38Z",
+            "completed_at": "2026-10-18T20:54:49Z"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T20:54:49Z",
+            "completed_at": "2026-10-18T20:54:51Z"
+          },
+          {
+            "name": "Install pinned SIM host-test dependencies",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 5,
+            "started_at": "2026-10-18T20:54:51Z",
+            "completed_at": "2026-10-18T20:54:51Z"
+          },
+          {
+            "name": "Verify the phase runner and restored policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T20:54:51Z",
+            "completed_at": "2026-10-18T20:54:55Z"
+          },
+          {
+            "name": "Verify multiplayer delivery and observation tools",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T20:54:55Z",
+            "completed_at": "2026-10-18T20:54:57Z"
+          },
+          {
+            "name": "Execute the feature phase on the exact PR head",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T20:54:57Z",
+            "completed_at": "2026-10-18T20:56:02Z"
+          },
+          {
+            "name": "Retain TAP and source-bound receipts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-18T20:56:02Z",
+            "completed_at": "2026-10-18T20:56:03Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T20:56:03Z",
+            "completed_at": "2026-10-18T20:56:04Z"
+          },
+          {
+            "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-18T20:56:04Z",
+            "completed_at": "2026-10-18T20:56:04Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-18T20:56:04Z",
+            "completed_at": "2026-10-18T20:56:04Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117768882340",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000042713,
+        "runner_name": "GitHub Actions 1000042713",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      "crcVerified": true,
+      "runReceipt": {
+        "format": "revealline-industrial-test-run.v1",
+        "source": {
+          "revision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "tree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+            "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+            "files": 44776,
+            "bytes": 3407721337,
+            "aggregateSha256": "70138943a3aa182f9a64a7db31ef06ac6e6b73339c5c560c144b27d878e1c106",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "selected": "recordings",
+        "phases": [
+          "recordings"
+        ],
+        "startedAt": "2026-10-18T20:55:18.209Z",
+        "finishedAt": "2026-10-18T20:56:02.979Z",
+        "status": "passed"
+      },
+      "phaseReceipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "recordings",
+        "startedAt": "2026-10-18T20:55:18.210Z",
+        "finishedAt": "2026-10-18T20:56:02.978Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "tree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+            "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+            "files": 44776,
+            "bytes": 3407721337,
+            "aggregateSha256": "70138943a3aa182f9a64a7db31ef06ac6e6b73339c5c560c144b27d878e1c106",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/fpv-endurance-attribution.test.mjs",
+          "game/test/multiplayer-recording.test.mjs",
+          "game/test/terminal-recording-export.test.mjs",
+          "game/test/recording-verification-navigation.test.mjs",
+          "game/test/multiplayer-finale-strategies.test.mjs",
+          "game/test/multiplayer-finale-mistakes.test.mjs",
+          "game/test/fpv-world-record-archive.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/fpv-endurance-attribution.test.mjs",
+            "sha256": "ef690af8bb5dfa2bdc0205b6907b7d4f665a8ab187696a5951c383553b194d13"
+          },
+          {
+            "file": "game/test/multiplayer-recording.test.mjs",
+            "sha256": "087ef2aabe96642982cb26074441eebfda3675841b29d35f8af62ea3c56a2ae9"
+          },
+          {
+            "file": "game/test/terminal-recording-export.test.mjs",
+            "sha256": "e54c69dbee7aa2122e1c1a091504528317823ac2b482b075cfc549b455a38afb"
+          },
+          {
+            "file": "game/test/recording-verification-navigation.test.mjs",
+            "sha256": "62a2cc959a00f3799bd953b7900fed4d5321489144755001c78478808dcf1a99"
+          },
+          {
+            "file": "game/test/multiplayer-finale-strategies.test.mjs",
+            "sha256": "0b17c4293b0e987c7c72d7d5c8976604153595f1db1df34a97db125ebf0fd8b9"
+          },
+          {
+            "file": "game/test/multiplayer-finale-mistakes.test.mjs",
+            "sha256": "43bc77f509c2ef95c51b4124dea60098bb59186af7c80714390fdfa4f931a9f8"
+          },
+          {
+            "file": "game/test/fpv-world-record-archive.test.mjs",
+            "sha256": "eb7b3f7f713198e46327386654261f3854c7fc5b255bd9ef0a2ebeb5d98b404e"
+          }
+        ],
+        "logSha256": "26cb8dcbf68d061c02f3d86e87847bd9bd10cced71b73c53bac5e9d185065702",
+        "logReadError": null,
+        "summary": {
+          "tests": 81,
+          "pass": 81,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": "TAP version 13\n# Subtest: a delayed final snapshot retains early observer-time overlaps after the phase ring wraps\nok 1 - a delayed final snapshot retains early observer-time overlaps after the phase ring wraps\n  ---\n  duration_ms: 2.959104\n  type: 'test'\n  ...\n# Subtest: receipt-time matching keeps known counts but only twelve bounded overlap examples\nok 2 - receipt-time matching keeps known counts but only twelve bounded overlap examples\n  ---\n  duration_ms: 0.445916\n  type: 'test'\n  ...\n# Subtest: unfinished spans remain unknown as received even if the phase finishes before final snapshot\nok 3 - unfinished spans remain unknown as received even if the phase finishes before final snapshot\n  ---\n  duration_ms: 0.346034\n  type: 'test'\n  ...\n# Subtest: late observer delivery discloses overwritten history instead of presenting zero as exhaustive\nok 4 - late observer delivery discloses overwritten history instead of presenting zero as exhaustive\n  ---\n  duration_ms: 0.866152\n  type: 'test'\n  ...\n# Subtest: returned snapshots and later observer input mutations cannot change retained overlap facts\nok 5 - returned snapshots and later observer input mutations cannot change retained overlap facts\n  ---\n  duration_ms: 0.584796\n  type: 'test'\n  ...\n# Subtest: stop drains available entries once, then freezes retained associations without future callbacks\nok 6 - stop drains available entries once, then freezes retained associations without future callbacks\n  ---\n  duration_ms: 0.194275\n  type: 'test'\n  ...\n# Subtest: preparation receipt offsets distinguish async lifecycle, completion observation and receipt time\nok 7 - preparation receipt offsets distinguish async lifecycle, completion observation and receipt time\n  ---\n  duration_ms: 0.379956\n  type: 'test'\n  ...\n# Subtest: outer synchronous frame span exposes an unlabelled callback gap without treating an await as CPU\nok 8 - outer synchronous frame span exposes an unlabelled callback gap without treating an await as CPU\n  ---\n  duration_ms: 0.182356\n  type: 'test'\n  ...\n# Subtest: preparation history stays bounded and discloses overwritten late completions\nok 9 - preparation history stays bounded and discloses overwritten late completions\n  ---\n  duration_ms: 0.463632\n  type: 'test'\n  ...\n# Subtest: LoAF preparation associations freeze pending and completed receipts at receive time\nok 10 - LoAF preparation associations freeze pending and completed receipts at receive time\n  ---\n  duration_ms: 0.471865\n  type: 'test'\n  ...\n# Subtest: preparation overlap caps disclose missing examples and discarded history\nok 11 - preparation overlap caps disclose missing examples and discarded history\n  ---\n  duration_ms: 0.187454\n  type: 'test'\n  ...\n# Subtest: receipt sanitization copies only finite known fields and never retains error or source text\nok 12 - receipt sanitization copies only finite known fields and never retains error or source text\n  ---\n  duration_ms: 0.23061\n  type: 'test'\n  ...\n# Subtest: invalid offsets stay unknown and returned receipt snapshots cannot mutate retained state\nok 13 - invalid offsets stay unknown and returned receipt snapshots cannot mutate retained state\n  ---\n  duration_ms: 0.137839\n  type: 'test'\n  ...\n# Subtest: stop drains existing preparation associations and freezes late completion/cancellation\nok 14 - stop drains existing preparation associations and freezes late completion/cancellation\n  ---\n  duration_ms: 0.123597\n  type: 'test'\n  ...\n# Subtest: saturated preparation and script histories retain bounded private-free diagnostic payloads\nok 15 - saturated preparation and script histories retain bounded private-free diagnostic payloads\n  ---\n  duration_ms: 7.503179\n  type: 'test'\n  ...\n# Subtest: checksummed export/import keeps a genuine published demonstration but never trusts verification\nok 16 - checksummed export/import keeps a genuine published demonstration but never trusts verification\n  ---\n  duration_ms: 202.349224\n  type: 'test'\n  ...\n# Subtest: legacy v1 and current archives preserve unavailable/invalid raw records without importing trust\nok 17 - legacy v1 and current archives preserve unavailable/invalid raw records without importing trust\n  ---\n  duration_ms: 3.957988\n  type: 'test'\n  ...\n# Subtest: v3 retains a genuine legacy proof appearance and includes it in the recording identity\nok 18 - v3 retains a genuine legacy proof appearance and includes it in the recording identity\n  ---\n  duration_ms: 13.997841\n  type: 'test'\n  ...\n# Subtest: transport checksum and recording identity each reject tampering independently\nok 19 - transport checksum and recording identity each reject tampering independently\n  ---\n  duration_ms: 14.735028\n  type: 'test'\n  ...\n# Subtest: empty and multipart archives preserve order, duplicates and independent part import\nok 20 - empty and multipart archives preserve order, duplicates and independent part import\n  ---\n  duration_ms: 64.941534\n  type: 'test'\n  ...\n# Subtest: invalid archive format, part indices and excessive selections are rejected\nok 21 - invalid archive format, part indices and excessive selections are rejected\n  ---\n  duration_ms: 15.491424\n  type: 'test'\n  ...\n# Subtest: malformed records cannot enter an otherwise well formed legacy archive\nok 22 - malformed records cannot enter an otherwise well formed legacy archive\n  ---\n  duration_ms: 1.629379\n  type: 'test'\n  ...\n# Subtest: archive boundaries reject oversized files/records, deep data and getters without invoking them\nok 23 - archive boundaries reject oversized files/records, deep data and getters without invoking them\n  ---\n  duration_ms: 10.692191\n  type: 'test'\n  ...\n# Subtest: team-highland-reunion: an input omission exposes the cut, then legal commands bank further progress\nok 24 - team-highland-reunion: an input omission exposes the cut, then legal commands bank further progress\n  ---\n  duration_ms: 230.821522\n  type: 'test'\n  ...\n# Subtest: team-expedition-homecoming: an input omission exposes the cut, then legal commands bank further progress\nok 25 - team-expedition-homecoming: an input omission exposes the cut, then legal commands bank further progress\n  ---\n  duration_ms: 436.580894\n  type: 'test'\n  ...\n# Subtest: versus-archive-decider: an input omission exposes the cut, then legal commands bank further progress\nok 26 - versus-archive-decider: an input omission exposes the cut, then legal commands bank further progress\n  ---\n  duration_ms: 409.838694\n  type: 'test'\n  ...\n# Subtest: versus-highland-finish: an input omission exposes the cut, then legal commands bank further progress\nok 27 - versus-highland-finish: an input omission exposes the cut, then legal commands bank further progress\n  ---\n  duration_ms: 252.853893\n  type: 'test'\n  ...\n# Subtest: the strategy evidence covers exactly the final authored mission of all 24 chapter packs\nok 28 - the strategy evidence covers exactly the final authored mission of all 24 chapter packs\n  ---\n  duration_ms: 1.623717\n  type: 'test'\n  ...\n# Subtest: a change in timestamps alone cannot satisfy the capture or trail geometry requirements\nok 29 - a change in timestamps alone cannot satisfy the capture or trail geometry requirements\n  ---\n  duration_ms: 0.433406\n  type: 'test'\n  ...\n# Subtest: team-harbor-homecoming: two spatial strategies clear, survive paused ticks and replay exactly\nok 30 - team-harbor-homecoming: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 802.497453\n  type: 'test'\n  ...\n# Subtest: team-garden-reunion: two spatial strategies clear, survive paused ticks and replay exactly\nok 31 - team-garden-reunion: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 506.306208\n  type: 'test'\n  ...\n# Subtest: team-night-junction: two spatial strategies clear, survive paused ticks and replay exactly\nok 32 - team-night-junction: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 254.150425\n  type: 'test'\n  ...\n# Subtest: team-all-hands-home: two spatial strategies clear, survive paused ticks and replay exactly\nok 33 - team-all-hands-home: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 414.422902\n  type: 'test'\n  ...\n# Subtest: team-observatory-accord: two spatial strategies clear, survive paused ticks and replay exactly\nok 34 - team-observatory-accord: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 409.265182\n  type: 'test'\n  ...\n# Subtest: team-foundry-handshake: two spatial strategies clear, survive paused ticks and replay exactly\nok 35 - team-foundry-handshake: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 397.603296\n  type: 'test'\n  ...\n# Subtest: team-archive-home-route: two spatial strategies clear, survive paused ticks and replay exactly\nok 36 - team-archive-home-route: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 240.937057\n  type: 'test'\n  ...\n# Subtest: team-highland-reunion: two spatial strategies clear, survive paused ticks and replay exactly\nok 37 - team-highland-reunion: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 183.292746\n  type: 'test'\n  ...\n# Subtest: team-watchtower-accord: two spatial strategies clear, survive paused ticks and replay exactly\nok 38 - team-watchtower-accord: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 269.452373\n  type: 'test'\n  ...\n# Subtest: team-coastal-repair-pact: two spatial strategies clear, survive paused ticks and replay exactly\nok 39 - team-coastal-repair-pact: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 285.861531\n  type: 'test'\n  ...\n# Subtest: team-citadel-shared-crown: two spatial strategies clear, survive paused ticks and replay exactly\nok 40 - team-citadel-shared-crown: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 192.960304\n  type: 'test'\n  ...\n# Subtest: team-expedition-homecoming: two spatial strategies clear, survive paused ticks and replay exactly\nok 41 - team-expedition-homecoming: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 267.514506\n  type: 'test'\n  ...\n# Subtest: versus-horizon-photo-finish: two spatial strategies clear, survive paused ticks and replay exactly\nok 42 - versus-horizon-photo-finish: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 1124.066709\n  type: 'test'\n  ...\n# Subtest: versus-horizon-photo-finish: both routes race and the result follows the strategy when seats reverse\nok 43 - versus-horizon-photo-finish: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 897.702356\n  type: 'test'\n  ...\n# Subtest: versus-signal-sprint-finale: two spatial strategies clear, survive paused ticks and replay exactly\nok 44 - versus-signal-sprint-finale: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 468.866906\n  type: 'test'\n  ...\n# Subtest: versus-signal-sprint-finale: both routes race and the result follows the strategy when seats reverse\nok 45 - versus-signal-sprint-finale: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 576.131598\n  type: 'test'\n  ...\n# Subtest: versus-neon-switch-final: two spatial strategies clear, survive paused ticks and replay exactly\nok 46 - versus-neon-switch-final: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 408.764087\n  type: 'test'\n  ...\n# Subtest: versus-neon-switch-final: both routes race and the result follows the strategy when seats reverse\nok 47 - versus-neon-switch-final: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 472.299574\n  type: 'test'\n  ...\n# Subtest: versus-dockyard-decider: two spatial strategies clear, survive paused ticks and replay exactly\nok 48 - versus-dockyard-decider: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 823.455304\n  type: 'test'\n  ...\n# Subtest: versus-dockyard-decider: both routes race and the result follows the strategy when seats reverse\nok 49 - versus-dockyard-decider: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 1089.768551\n  type: 'test'\n  ...\n# Subtest: versus-prism-photo-finish: two spatial strategies clear, survive paused ticks and replay exactly\nok 50 - versus-prism-photo-finish: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 961.343298\n  type: 'test'\n  ...\n# Subtest: versus-prism-photo-finish: both routes race and the result follows the strategy when seats reverse\nok 51 - versus-prism-photo-finish: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 1016.315011\n  type: 'test'\n  ...\n# Subtest: versus-afterglow-finish: two spatial strategies clear, survive paused ticks and replay exactly\nok 52 - versus-afterglow-finish: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 683.24598\n  type: 'test'\n  ...\n# Subtest: versus-afterglow-finish: both routes race and the result follows the strategy when seats reverse\nok 53 - versus-afterglow-finish: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 791.150311\n  type: 'test'\n  ...\n# Subtest: versus-archive-decider: two spatial strategies clear, survive paused ticks and replay exactly\nok 54 - versus-archive-decider: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 226.572284\n  type: 'test'\n  ...\n# Subtest: versus-archive-decider: both routes race and the result follows the strategy when seats reverse\nok 55 - versus-archive-decider: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 177.061417\n  type: 'test'\n  ...\n# Subtest: versus-highland-finish: two spatial strategies clear, survive paused ticks and replay exactly\nok 56 - versus-highland-finish: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 177.55613\n  type: 'test'\n  ...\n# Subtest: versus-highland-finish: both routes race and the result follows the strategy when seats reverse\nok 57 - versus-highland-finish: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 154.473277\n  type: 'test'\n  ...\n# Subtest: versus-watch-line-finish: two spatial strategies clear, survive paused ticks and replay exactly\nok 58 - versus-watch-line-finish: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 481.220095\n  type: 'test'\n  ...\n# Subtest: versus-watch-line-finish: both routes race and the result follows the strategy when seats reverse\nok 59 - versus-watch-line-finish: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 523.254568\n  type: 'test'\n  ...\n# Subtest: versus-unbroken-finish: two spatial strategies clear, survive paused ticks and replay exactly\nok 60 - versus-unbroken-finish: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 896.337625\n  type: 'test'\n  ...\n# Subtest: versus-unbroken-finish: both routes race and the result follows the strategy when seats reverse\nok 61 - versus-unbroken-finish: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 1138.530041\n  type: 'test'\n  ...\n# Subtest: versus-crown-photo-finish: two spatial strategies clear, survive paused ticks and replay exactly\nok 62 - versus-crown-photo-finish: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 363.447445\n  type: 'test'\n  ...\n# Subtest: versus-crown-photo-finish: both routes race and the result follows the strategy when seats reverse\nok 63 - versus-crown-photo-finish: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 359.675148\n  type: 'test'\n  ...\n# Subtest: versus-expedition-decider: two spatial strategies clear, survive paused ticks and replay exactly\nok 64 - versus-expedition-decider: two spatial strategies clear, survive paused ticks and replay exactly\n  ---\n  duration_ms: 277.976089\n  type: 'test'\n  ...\n# Subtest: versus-expedition-decider: both routes race and the result follows the strategy when seats reverse\nok 65 - versus-expedition-decider: both routes race and the result follows the strategy when seats reverse\n  ---\n  duration_ms: 368.891151\n  type: 'test'\n  ...\n# Subtest: the observation contract pins native generations and refuses successor or mixed-board states\nok 66 - the observation contract pins native generations and refuses successor or mixed-board states\n  ---\n  duration_ms: 11.699732\n  type: 'test'\n  ...\n# Subtest: terminal-only native timed duel export verifies its real result and per-seat pause releases\nok 67 - terminal-only native timed duel export verifies its real result and per-seat pause releases\n  ---\n  duration_ms: 125.151119\n  type: 'test'\n  ...\n# Subtest: one native clear ends a paired race and retains the other board in the full checkpoint\nok 68 - one native clear ends a paired race and retains the other board in the full checkpoint\n  ---\n  duration_ms: 80.064373\n  type: 'test'\n  ...\n# Subtest: Team continuation includes old journal and every new release, support/steer and terminal cleanup\nok 69 - Team continuation includes old journal and every new release, support/steer and terminal cleanup\n  ---\n  duration_ms: 98.639985\n  type: 'test'\n  ...\n# Subtest: v2 observes exact terminal outcomes separately from continuous native-state bits; v1 never falls back\nok 70 - v2 observes exact terminal outcomes separately from continuous native-state bits; v1 never falls back\n  ---\n  duration_ms: 134.531918\n  type: 'test'\n  ...\n# Subtest: v2 rejects changed topology, objectives, target identity, counters and native random state\nok 71 - v2 rejects changed topology, objectives, target identity, counters and native random state\n  ---\n  duration_ms: 1772.579907\n  type: 'test'\n  ...\n# Subtest: v2 binds the complete consumed input/release journal and refuses missing or unknown contracts\nok 72 - v2 binds the complete consumed input/release journal and refuses missing or unknown contracts\n  ---\n  duration_ms: 64.466773\n  type: 'test'\n  ...\n# Subtest: v2 Team checks both seats, rescue/support counters and terminal release state\nok 73 - v2 Team checks both seats, rescue/support counters and terminal release state\n  ---\n  duration_ms: 104.856216\n  type: 'test'\n  ...\n# Subtest: verification owns the complete input before yielding and responds to cancellation\nok 74 - verification owns the complete input before yielding and responds to cancellation\n  ---\n  duration_ms: 1372.935709\n  type: 'test'\n  ...\n# Subtest: v1 import requires complete source pins while preserving optional community ownership\nok 75 - v1 import requires complete source pins while preserving optional community ownership\n  ---\n  duration_ms: 15.473803\n  type: 'test'\n  ...\n# Subtest: import rejects injected state, excessive timelines and getter execution; live budget exhaustion only disables export\nok 76 - import rejects injected state, excessive timelines and getter execution; live budget exhaustion only disables export\n  ---\n  duration_ms: 25.013518\n  type: 'test'\n  ...\n# Subtest: terminal recording navigation remains inside the active build without forwarding launch or credential hints\nok 77 - terminal recording navigation remains inside the active build without forwarding launch or credential hints\n  ---\n  duration_ms: 1.841887\n  type: 'test'\n  ...\n# Subtest: terminal exports expose exact copyable bytes before the web download and never auto-copy\nok 78 - terminal exports expose exact copyable bytes before the web download and never auto-copy\n  ---\n  duration_ms: 12.18745\n  type: 'test'\n  ...\n# Subtest: download and clipboard denial retain manual selection without claiming a file was saved\nok 79 - download and clipboard denial retain manual selection without claiming a file was saved\n  ---\n  duration_ms: 2.410567\n  type: 'test'\n  ...\n# Subtest: Retry clears the retained recording and late export or clipboard completion stays silent\nok 80 - Retry clears the retained recording and late export or clipboard completion stays silent\n  ---\n  duration_ms: 1.591167\n  type: 'test'\n  ...\n# Subtest: replacement during hashing discards the old copy before requesting any platform export\nok 81 - replacement during hashing discards the old copy before requesting any platform export\n  ---\n  duration_ms: 0.956126\n  type: 'test'\n  ...\n1..81\n# tests 81\n# suites 0\n# pass 81\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 25185.212573\n",
+      "memberReceipts": [
+        {
+          "name": "recordings.json",
+          "bytes": 3243,
+          "sha256": "1e40e8ce6ff0bc8b93251674d6f539efe2ccfdba580dae84fcfb803b71725287"
+        },
+        {
+          "name": "recordings.tap",
+          "bytes": 20961,
+          "sha256": "26cb8dcbf68d061c02f3d86e87847bd9bd10cced71b73c53bac5e9d185065702"
+        },
+        {
+          "name": "run.json",
+          "bytes": 989,
+          "sha256": "6c34ffc8cd8a3b134bca8351440a23577c3d2803f42de8b58226edb6463f001a"
+        }
+      ]
+    }
+  ]
+}

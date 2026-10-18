@@ -1,0 +1,173 @@
+{
+  "format": "SoloPublishedCompletionAuditV1",
+  "capturedAt": "2026-10-18T21:10:13.415497+00:00",
+  "scope": "Publisher completes exact cb8 public identity. Earlier independent20-file inventory/hash readback remains separately retained. Empty selected-practice catalogue means zero practice payloads checked; no native gameplay or performance pass. Main advanced independently after this publication; current-main acceptance remains separate.",
+  "run": {
+    "id": 39158010225,
+    "head_sha": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39158010225",
+    "updated_at": "2026-10-18T21:05:39Z"
+  },
+  "job": {
+    "id": 117781490697,
+    "run_id": 39158010225,
+    "workflow_name": "Publish GitHub Pages from main",
+    "head_branch": "main",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39158010225",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbbFLsCQ",
+    "head_sha": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117781490697",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39158010225/job/117781490697",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-18T20:28:46Z",
+    "started_at": "2026-10-18T21:05:00Z",
+    "completed_at": "2026-10-18T21:05:39Z",
+    "name": "verify",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T21:05:01Z",
+        "completed_at": "2026-10-18T21:05:02Z"
+      },
+      {
+        "name": "Check out the deployed source and selector",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-18T21:05:02Z",
+        "completed_at": "2026-10-18T21:05:28Z"
+      },
+      {
+        "name": "Set up the matching verification runtime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-18T21:05:28Z",
+        "completed_at": "2026-10-18T21:05:34Z"
+      },
+      {
+        "name": "Verify the public root identifies the exact main revision",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-18T21:05:34Z",
+        "completed_at": "2026-10-18T21:05:34Z"
+      },
+      {
+        "name": "Verify selected practice versions and every published dependency",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-10-18T21:05:34Z",
+        "completed_at": "2026-10-18T21:05:35Z"
+      },
+      {
+        "name": "Preserve the public practice verification receipt",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-10-18T21:05:35Z",
+        "completed_at": "2026-10-18T21:05:36Z"
+      },
+      {
+        "name": "Post Set up the matching verification runtime",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-10-18T21:05:36Z",
+        "completed_at": "2026-10-18T21:05:36Z"
+      },
+      {
+        "name": "Post Check out the deployed source and selector",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-10-18T21:05:36Z",
+        "completed_at": "2026-10-18T21:05:37Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-18T21:05:37Z",
+        "completed_at": "2026-10-18T21:05:37Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117781490697",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000042755,
+    "runner_name": "GitHub Actions 1000042755",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "artifact": {
+    "id": 12151120735,
+    "node_id": "MDg6QXJ0aWZhY3QxMjE1MTEyMDczNQ==",
+    "name": "practice-site-receipt-cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "size_in_bytes": 284,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12151120735",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12151120735/zip",
+    "expired": false,
+    "digest": "sha256:ef4bfaf2f8f3649e83172a346d1711f54cee03f9c33bf96f9f5a03064e60e26a",
+    "created_at": "2026-10-18T21:05:36Z",
+    "updated_at": "2026-10-18T21:05:36Z",
+    "expires_at": "2026-11-17T21:05:35Z",
+    "workflow_run": {
+      "id": 39158010225,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "main",
+      "head_sha": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465"
+    }
+  },
+  "zip": {
+    "bytes": 284,
+    "sha256": "ef4bfaf2f8f3649e83172a346d1711f54cee03f9c33bf96f9f5a03064e60e26a",
+    "crc": "pass"
+  },
+  "members": [
+    {
+      "path": "practice-site-receipt.json",
+      "bytes": 132,
+      "sha256": "a78f1a58d0a714f920cc9bb88b5bc930b936b0e6bf6cf1a1e9136b8d1c207e14",
+      "text": "{\n  \"indexURL\": \"https://mekhovov.github.io/revealline/practice/index.json\",\n  \"checked\": [],\n  \"missingCatalogueIsFailure\": true\n}\n"
+    }
+  ],
+  "publicAtReadback": {
+    "url": "https://mekhovov.github.io/revealline/main-deployment.json?status=cb8-final-20261018",
+    "bytes": 303,
+    "sha256": "181a97439b73513154c900a226d7f40125e9e3bf5f9438c12265eeb9ff191bac",
+    "identity": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "sourceCommittedAt": "2026-10-18T19:16:24Z",
+      "buildVersion": "main-cb8dddd3d3c1",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    }
+  },
+  "mainAtReadback": "237b405437def3c41b01165fe057af1ab06f618c",
+  "verificationLog": {
+    "bytes": 26844,
+    "sha256": "00f96844240831ca880c8ecc773cbcc1ab46095830a33eeb3551221461a31301",
+    "identityOutput": [
+      "2026-10-18T21:05:34.6205504Z {\"root\":\"https://mekhovov.github.io/revealline\",\"format\":\"revealline-main-deployment.v1\",\"channel\":\"main\",\"sourceRevision\":\"cb8dddd3d3c11d24c56b014fa48ac0e6417d6465\",\"buildVersion\":\"main-cb8dddd3d3c1\",\"play\":\"game/\"}"
+    ]
+  },
+  "priorReadback": {
+    "blob": "1e09b82ea4d17aa47c95869fb934940caeb8df40",
+    "sha256": "efc132f5ba187aa2f3199b1fde59893bea07f77f57c959b624e6289361497379"
+  }
+}

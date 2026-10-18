@@ -1,0 +1,347 @@
+{
+  "format": "revealline-read-only-release-review.v1",
+  "observedAt": "2026-10-18T21:12:32.380Z",
+  "scope": "PR1631 after external main advance; no mutation",
+  "base": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "main": {
+    "sha": "237b405437def3c41b01165fe057af1ab06f618c",
+    "tree": "4df53e4ad3993bbcfc881fddd7b24b090faff3cc"
+  },
+  "comparison": {
+    "status": "ahead",
+    "aheadBy": 11,
+    "commits": [
+      {
+        "sha": "7f256d13d63ed51d58a898f6cc2bdacaf1320d97",
+        "message": "feat(fpv): add sourced Cetus X and Protos practice presets"
+      },
+      {
+        "sha": "998b2da6da10df494dec6cdcdb23d1f1ac140029",
+        "message": "fix(fpv): recover archive access after unexpected database closure"
+      },
+      {
+        "sha": "9e3d8d417da2ae00dbb80387822c24a8405bd112",
+        "message": "test(fpv): qualify sustained airborne flight across the catalog"
+      },
+      {
+        "sha": "a0654e26399034e9aa5ccda4287460ca69de93c0",
+        "message": "fix(fpv): retain keyboard throttle across explicit pause and resume"
+      },
+      {
+        "sha": "d475e980d218431b3a89285d086979ea17c7dbb8",
+        "message": "docs(fpv): record flight qualification and open retention gates"
+      },
+      {
+        "sha": "cc093aba1f8c4e5d309229aeff61290b8fe18f98",
+        "message": "fix(fpv): distinguish archive deletion and inventory failures"
+      },
+      {
+        "sha": "c7cafc72330271ed99ebf8f7b50b758beb8e7aa9",
+        "message": "docs(fpv): record archive feedback acceptance and refreshed base"
+      },
+      {
+        "sha": "cf13bcad9a59a387be7c31c9af8d30d74e7c1860",
+        "message": "docs(fpv): retain final catalog browser flight observations"
+      },
+      {
+        "sha": "61ddf9aaf4a18d7c57210d67f5ba1bbc670a0ed9",
+        "message": "feat(capture): explain long-flight save and recording limits"
+      },
+      {
+        "sha": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "message": "Merge pull request #1626 from mekhovov/codex/fpv-sustained-flight-20261018\n\nFix FPV pause recovery and qualify sustained aircraft practice"
+      },
+      {
+        "sha": "237b405437def3c41b01165fe057af1ab06f618c",
+        "message": "Merge pull request #1630 from mekhovov/codex/f75-capture-flight-limits\n\nfeat(capture): explain long-flight save and recording limits"
+      }
+    ],
+    "paths": [
+      {
+        "path": "docs/fpv-aircraft-archives.md",
+        "status": "modified",
+        "sha": "2ccf988990048abeaa6c21e99a9b08756d873a0b"
+      },
+      {
+        "path": "docs/fpv-archive-retention-followup-20261018.md",
+        "status": "added",
+        "sha": "edb3c47f880b469999464a88c82b10d0e0d1c360"
+      },
+      {
+        "path": "docs/fpv-archive-retention-memory-20261018.json",
+        "status": "added",
+        "sha": "6955a7641d0eea6a171cd0961fe50e0c62a74dfa"
+      },
+      {
+        "path": "docs/fpv-civilian-candidate-implementation.md",
+        "status": "added",
+        "sha": "8c51715ca4caa46c9e85803bc935c5a88c07a194"
+      },
+      {
+        "path": "docs/fpv-civilian-candidate-review.md",
+        "status": "added",
+        "sha": "dac72a59df05f71c28d1255c2d75333fd767b8a0"
+      },
+      {
+        "path": "docs/fpv-civilian-source-inventory.md",
+        "status": "added",
+        "sha": "a4cd23ab15a0c0b09f3978e90c0691cf0d40dcdb"
+      },
+      {
+        "path": "docs/fpv-current-completion-plan.md",
+        "status": "modified",
+        "sha": "a751a8070cda9947ab4b5f761bdf4f950aeeea1b"
+      },
+      {
+        "path": "docs/fpv-flight-continuation-20261018.md",
+        "status": "added",
+        "sha": "ec563775654ce405b37c9830a1a133a16a0be0da"
+      },
+      {
+        "path": "docs/fpv-rendered-catalog-20261018.json",
+        "status": "added",
+        "sha": "bd5e9943bfedefc41f562e9b6f258f643669ac81"
+      },
+      {
+        "path": "docs/fpv-sustained-flight-qualification.json",
+        "status": "added",
+        "sha": "6c520823a02e1b681943c27dfab4c261e2be678d"
+      },
+      {
+        "path": "game/app.mjs",
+        "status": "modified",
+        "sha": "ec8c2d1179c42b603987cfd725d45f20f4af6251"
+      },
+      {
+        "path": "game/capture-flight-limits.mjs",
+        "status": "added",
+        "sha": "0e69d910692a9c9c235630fc31706f90344a1d79"
+      },
+      {
+        "path": "game/i18n/catalogs.mjs",
+        "status": "modified",
+        "sha": "da55b6ed67d125e7d86015fb3024f47bef8ddccb"
+      },
+      {
+        "path": "game/index.html",
+        "status": "modified",
+        "sha": "e52026e2c91901d09185d0e63734ab0d6f6ff475"
+      },
+      {
+        "path": "game/library.mjs",
+        "status": "modified",
+        "sha": "442ecc86d19f8286f1a62eb51776a1bdc46f0af2"
+      },
+      {
+        "path": "game/locales/en/interface.json",
+        "status": "modified",
+        "sha": "a9f2afab3a547c9f60ae20c6e6e1d62620c63c2a"
+      },
+      {
+        "path": "game/locales/uk/interface.json",
+        "status": "modified",
+        "sha": "06b881122b8fbec7e6f1423a56bc4ae1ae2af371"
+      },
+      {
+        "path": "game/test/capture-flight-limits-host.test.mjs",
+        "status": "added",
+        "sha": "eb59a23497d2d9c1650645a6ed339bf8683bc569"
+      },
+      {
+        "path": "game/test/capture-flight-limits.test.mjs",
+        "status": "added",
+        "sha": "bde1bd8e96d1e2c90950fc71c804da2b419aee8a"
+      },
+      {
+        "path": "game/test/fpv-aircraft-archive-controls.test.mjs",
+        "status": "modified",
+        "sha": "be5899cf20b0c2f2bd33f965bd8e3eb2cc9e7b34"
+      },
+      {
+        "path": "game/test/fpv-aircraft-archive.test.mjs",
+        "status": "modified",
+        "sha": "3a9786d69a40b386f637b262b6edce681418904d"
+      },
+      {
+        "path": "game/test/fpv-aircraft-presets.test.mjs",
+        "status": "modified",
+        "sha": "51f7893bb7b1a602df8edbfa975ddbe693d027c5"
+      },
+      {
+        "path": "game/test/fpv-aircraft-renderer.test.mjs",
+        "status": "modified",
+        "sha": "36c18e5551e1bdaf9396ea468793e8a993b14397"
+      },
+      {
+        "path": "game/test/fpv-flight-ui.test.mjs",
+        "status": "modified",
+        "sha": "e3c1957a5dd4bdef2452d607ad3c7e7770f6f090"
+      },
+      {
+        "path": "game/test/fpv-tuning-ui.test.mjs",
+        "status": "modified",
+        "sha": "05cae79b4d9f854d7d3af8efbd66f8da01388743"
+      },
+      {
+        "path": "game/test/fpv-world-appearance-ui.test.mjs",
+        "status": "modified",
+        "sha": "c9733181701d6b136632e855cd69280711d0acda"
+      },
+      {
+        "path": "game/test/helpers/fpv-aircraft-sustained-qualification.mjs",
+        "status": "added",
+        "sha": "7a3e9cca1fc37c1cb01f05e51e63f4556a6f39c5"
+      },
+      {
+        "path": "game/ui/capture-flight-limits.css",
+        "status": "added",
+        "sha": "1a0032622be2beb593fd4daedc74bc0d6579051b"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+        "status": "modified",
+        "sha": "62c5551fa41f8ab20b65b9cd7d736ce8dc4e97ab"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-archive-controls.mjs",
+        "status": "modified",
+        "sha": "dbe9658c5196ab75b52a545ea07fa43486165479"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-archive.mjs",
+        "status": "modified",
+        "sha": "7ef8bfd7c0463bc8c2ce74ea9fa5bf224f7e5a2b"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/aircraft-presets.mjs",
+        "status": "modified",
+        "sha": "bd733eb328732ff4960089d5f7b9a254d3b3af4f"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "status": "modified",
+        "sha": "27356d3639ed7c9b383da856bf4227f8d67eb5b1"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/input.mjs",
+        "status": "modified",
+        "sha": "1c91675f4d899c7b7c33562f7b7fa463855496b2"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/renderer.mjs",
+        "status": "modified",
+        "sha": "5826e0339a8e39e43aa003173b2ba43c9c6d580c"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+        "status": "modified",
+        "sha": "2c2e284d0cd7f75b0e8eab9567b2c2055f56a250"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "status": "modified",
+        "sha": "b3387635232b2eef43fd6c5e7869f51269022a36"
+      },
+      {
+        "path": "scripts/qualify-fpv-aircraft-sustained.mjs",
+        "status": "added",
+        "sha": "e7d15ad5a22e9a28f93a4c37d858c67d1065eb1d"
+      }
+    ]
+  },
+  "candidate": {
+    "number": 1631,
+    "url": "https://github.com/mekhovov/revealline/pull/1631",
+    "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+    "base": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "draft": false,
+    "state": "open",
+    "merged": false,
+    "mergeable": null,
+    "mergeableState": "unknown",
+    "paths": [
+      "game/official-downloads.mjs",
+      "game/test/official-downloads.test.mjs"
+    ]
+  },
+  "trustedPolicy": [
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "bytes": 19972,
+      "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+      "sameAsReviewedMain": true
+    },
+    {
+      "path": "publishing/admission-binding.mjs",
+      "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "bytes": 3561,
+      "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214",
+      "sameAsReviewedMain": true
+    },
+    {
+      "path": "publishing/admission-preflight.mjs",
+      "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+      "bytes": 2473,
+      "sha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf",
+      "sameAsReviewedMain": true
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "bytes": 33959,
+      "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+      "sameAsReviewedMain": true
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "bytes": 14501,
+      "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "sameAsReviewedMain": true
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+      "bytes": 578,
+      "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "sameAsReviewedMain": true
+    },
+    {
+      "path": "publishing/test-policy.mjs",
+      "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+      "bytes": 4134,
+      "sha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b",
+      "sameAsReviewedMain": true
+    }
+  ],
+  "admission": {
+    "artifactId": 12146393081,
+    "bytes": 423,
+    "sha256": "970801bb3b73eba17163d2054f6f7e5be4bf9eda76f362ab7b6d9bb39a99212e",
+    "receipt": {
+      "format": "revealline-admission.v1",
+      "headSha": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+      "baseSha": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "workflowRevision": "95f99a21179120eace0ecbd3fa0ac732737fd3cb",
+      "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+      "classification": "maintenance",
+      "dependencies": [],
+      "paths": [
+        "game/official-downloads.mjs",
+        "game/test/official-downloads.test.mjs"
+      ]
+    }
+  },
+  "sourceReview": {
+    "directPathOverlap": [],
+    "policyPathOverlap": [],
+    "appAndLibrary": "Capture/flight limit display and recorder limit constant; no recording lookup callers changed.",
+    "controller": "Current controller reads live main and PR identities twice; changing snapshot or checkout-main mismatch fails closed. checkedAdmission verifies current trusted policy; sameAdmission compares receipt against fresh REST PR head/base/dependencies.",
+    "conclusion": "No concrete unsafe overlap found. Do not change readiness or head. Release-ready and fresh controller checks remain necessary; unknown mergeability is not a green merge receipt."
+  },
+  "limitations": [
+    "Read-only source and receipt review; no new tests or native qualification.",
+    "No merge, settings, readiness, branch or workflow mutations."
+  ]
+}

@@ -1,0 +1,448 @@
+{
+  "format": "RevealLineMainMissionsSourceCompatibilityV1",
+  "projection": {
+    "main": "237b405437def3c41b01165fe057af1ab06f618c",
+    "previous": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "generator": {
+      "gitBlob": "3c16fe0e7f450cde67af9d241875afdf28414d56",
+      "bytes": 10768,
+      "sha256": "b52dae963bb8894824f06ced5be9808edeb4038a66b6810d0091df223ee00d8b"
+    },
+    "sharedJsProjectionExact": true,
+    "sharedCssProjectionExact": true,
+    "jsInputs": 35,
+    "cssInputs": 6,
+    "changedDependencyIntersection": [],
+    "generatedJs": {
+      "gitBlob": "9499ede569fb1e9b525bb7ca5b871ce2465361d5",
+      "bytes": 324774,
+      "sha256": "54d3db054b4c2d405df6b11f77e18f00b81880989293cd3a7d95a6788d948b27"
+    },
+    "generatedCss": {
+      "gitBlob": "170d97b0b5f339769e161de4def9d27e69bdfdab",
+      "bytes": 102873,
+      "sha256": "fecc477d878b0cd28c8d9be4f531556bea8bb11888d75d3003b2171bff90ab80"
+    },
+    "projectionInputs": {
+      ".prettierrc.json": {
+        "gitBlob": "ebb4af5f9a7d5c457d4c01d96f8a80d9e0285fd1",
+        "bytes": 73,
+        "sha256": "d7fa1c1dee12b930b45e1f8c465b07da95fa519cfd9e3e503c76dc762617b1fb"
+      },
+      "game/data-json.mjs": {
+        "gitBlob": "d2bcdc57882777f6bb09b1fe5868e31c4e848780",
+        "bytes": 5594,
+        "sha256": "9ce33d6173f3cba8587ed7a7f1924c66e9d9c86ffa59b37a743764ea0b01f7bd"
+      },
+      "game/display-preferences.mjs": {
+        "gitBlob": "e47f665938833e836836b19f4e8b95889b1f338d",
+        "bytes": 8517,
+        "sha256": "d4b224b541d45f9e2a276fc591869c7e1c7c72798432354daa97200537f637ae"
+      },
+      "game/edition-context.mjs": {
+        "gitBlob": "8fa22ac2f6f715e5c2c2a80d195d3e90f7f164cb",
+        "bytes": 5772,
+        "sha256": "4c7ada4dd368e5be53979299010482c0feaed63df9908411b38f3c826e0a2401"
+      },
+      "game/enemy-stats.mjs": {
+        "gitBlob": "bdf1a12ae9ab5ffa6b5921a97182dea15de61c19",
+        "bytes": 23051,
+        "sha256": "538a2a6a37ade82e68197795f654410865938e92358de05554243e621084990a"
+      },
+      "game/hunt/actor-art.mjs": {
+        "gitBlob": "354eb5e2d52f9e09a8df61dfe3ba0abfcbf9e658",
+        "bytes": 44270,
+        "sha256": "6e8bd02d8655be40e5e19d639f76ca2a2aa89eba11c5471bd4c37ef323498b4c"
+      },
+      "game/hunt/actor-catalog.mjs": {
+        "gitBlob": "e90a5ef7cb53810811eb8ec708cc93f5de413f2a",
+        "bytes": 17530,
+        "sha256": "c9acd0eea22d93cb210667797b8de81fc8995bdbfef2ae13e8d56c14b9972f8d"
+      },
+      "game/hunt/industrial-soldier-kit.mjs": {
+        "gitBlob": "602e574b20ca24887842d8764c74171961d0375d",
+        "bytes": 3713,
+        "sha256": "e3b42bc53333fd659499112df90f0e4c53899eb31d80b065c534b4e337ca9524"
+      },
+      "game/mission-library/goal-preferences.mjs": {
+        "gitBlob": "0f2b4f499076b6afb621b00e844fba886ad2e8a9",
+        "bytes": 4547,
+        "sha256": "0f2f8155237636bcc3c34058765639f64d121ed6921eaf7c75207de4e4bb15e2"
+      },
+      "game/mission-library/library.mjs": {
+        "gitBlob": "2084353eff4715d535f743757a3f3a0c17d7b809",
+        "bytes": 17628,
+        "sha256": "a45a47bc4cc6269c30ed1cbe616dfdc83b0cd7b8f1f10492f45b3ad8388d3bba"
+      },
+      "game/mission-library/opening-intent.mjs": {
+        "gitBlob": "9a366b890ef2dd15fbbfbd09615f85754c6a89ca",
+        "bytes": 1480,
+        "sha256": "d8deaedc91a7c8873e38e2f910d0029b0867cf9a7fb2ce78da96900ccfb4d9e7"
+      },
+      "game/presentation/actor-animation.mjs": {
+        "gitBlob": "1f17be235b932447f6250dab61516bf1a980c626",
+        "bytes": 6246,
+        "sha256": "53ddaf069ed5da7bae3ab8ef6bf1284f38957ceb91f06315a489814cb2c06234"
+      },
+      "game/profile-database.mjs": {
+        "gitBlob": "d3cdb2d16199bfa15073931e1756532d8656f6bc",
+        "bytes": 152,
+        "sha256": "6a843fc68c3d639ca6d3bac8c77228eccf21cd72a525872245bd5cbbd9d68a1c"
+      },
+      "game/profile-storage.mjs": {
+        "gitBlob": "428fb4936465b562fbf491ab9dabf34ba6b8a74a",
+        "bytes": 6205,
+        "sha256": "7f0e6cc3a957ddc00a032d41e8bea782907b901f714708de5385667fe5fbbaec"
+      },
+      "game/text-face.mjs": {
+        "gitBlob": "3ab6ce4929ab9aaf4928d2f8989818c6ac8c63c5",
+        "bytes": 1119,
+        "sha256": "0e572b57b1554a0d9d4efe1a388981b61e27e4c9476e178a394380d38a40efb8"
+      },
+      "game/text-size.mjs": {
+        "gitBlob": "3fc7897fac5166ecb2d7670bad28e6a8d1fedcca",
+        "bytes": 251,
+        "sha256": "a2517c4ae10a8283865594c5d04bdcc385733b6813c024ed1c635e05755c717a"
+      },
+      "game/ui/art-review-navigation.mjs": {
+        "gitBlob": "069af8bbcb6f301bc8ccf6bba83a8107693fd4c1",
+        "bytes": 2392,
+        "sha256": "04b81a0ab13dc2e2c6141a51597955d8ab80419466cd9e650104d1538048fec2"
+      },
+      "game/ui/celebration.mjs": {
+        "gitBlob": "8eef329371fb5cc9afec62c011eb9a8db123021a",
+        "bytes": 7556,
+        "sha256": "5411cc0c37530c6d78aaadc5fdd500050d6160c84c4f5760b06e52ecb6566652"
+      },
+      "game/ui/continuous-celebration.mjs": {
+        "gitBlob": "646b1b605f7f14346aee8101802c9139bcdff38b",
+        "bytes": 1806,
+        "sha256": "fbb629742f863df2aca04db9434acebe8b4eb3c3456fb93b00670434ff5414bb"
+      },
+      "game/ui/continuous-play.mjs": {
+        "gitBlob": "154c08de8c48e5f60ac200d7d7933956406f5353",
+        "bytes": 11553,
+        "sha256": "5e30b70c38d7067a564c53625bdbbdbb128d1c00a3c9e68bb21b5bc65f47c4db"
+      },
+      "game/ui/enemy-appearance-controls.mjs": {
+        "gitBlob": "7c4286bd7af575468c38b4446ef96352e5c4297e",
+        "bytes": 8141,
+        "sha256": "f34c869b039cfd23841a5c8886e7509d2e5f88bc4ecbe0ae56e5fc0f59e1d165"
+      },
+      "game/ui/enemy-stats.mjs": {
+        "gitBlob": "c7a8475b409de8d81d0f1c041ca08985c69186e1",
+        "bytes": 16365,
+        "sha256": "7e57bb16ec8e2fbcc85091219713dfbc4345d06adff245c1351f27fd70b9311f"
+      },
+      "game/ui/global-settings-view.css": {
+        "gitBlob": "574d3ec7dd0d7b6628ffe0463ac99208d7faae11",
+        "bytes": 1367,
+        "sha256": "1babd7e3417207058d71c6aee4c3b52b7724e8c39a1694bd7132235380680348"
+      },
+      "game/ui/global-settings-view.mjs": {
+        "gitBlob": "627db69019fae3aa834e928dce82043a9bd6d8be",
+        "bytes": 12168,
+        "sha256": "62aa00eb2c5b84030972f3ec3120fb030ee85ff89f295268238ab548d11867da"
+      },
+      "game/ui/journey.css": {
+        "gitBlob": "cc58c100a09592ab8644549bc4b110959ebc95e0",
+        "bytes": 45856,
+        "sha256": "4cbad1caafc772dff3a0997dd97d01badda82ffaa1ab74d7665923cb90cf1477"
+      },
+      "game/ui/level-card.mjs": {
+        "gitBlob": "96176de038a8b447d3175d5f2de45b07b00f51c6",
+        "bytes": 3839,
+        "sha256": "b2d262a39261840fdcc6a55c37da9324fe79fa0d5eb0cc96625cd7bb7ff43f4b"
+      },
+      "game/ui/menu-animation-preferences.mjs": {
+        "gitBlob": "04612960dff5198b92f9391b40ddd0c02ab2cc40",
+        "bytes": 1471,
+        "sha256": "8f75b2a28389bb75f74cb6c10929569d6129541757443c008bcb870064226b76"
+      },
+      "game/ui/menu-audio.mjs": {
+        "gitBlob": "5338a660bb5fcc2c7d786e49516bd104f38a8c24",
+        "bytes": 4844,
+        "sha256": "5f5a67b1cf52fc632bf7d06b6e2b9aba5372abf35a03ad973e4aca1c3c37ffd1"
+      },
+      "game/ui/mission-library-browser.mjs": {
+        "gitBlob": "e295f3202293e001716cb50a52bd3d95268af859",
+        "bytes": 50153,
+        "sha256": "952e3a1175a8fc730cb50320363a6ac9c36bce477a002a8356fefa572e95ff57"
+      },
+      "game/ui/mission-library-goal.mjs": {
+        "gitBlob": "e779d2a53942a34c4b2543646c87bec3f0b6f9cf",
+        "bytes": 3652,
+        "sha256": "c495cd74efd4bff902dd05b3761fbfa3961088ca5409a0a523d0747d0f3cefd6"
+      },
+      "game/ui/mode-choice-view.mjs": {
+        "gitBlob": "792b667d4695c572f126c9926cf753c872e0c096",
+        "bytes": 6353,
+        "sha256": "83ed33c92ee4fcaaad63211407a5ca659a20abfb09770995624c1d4115ad50e4"
+      },
+      "game/ui/mode-choice.css": {
+        "gitBlob": "3aa53c65dd9dc987e9144d832fe5d114674f03ac",
+        "bytes": 9323,
+        "sha256": "bdfa47a370c30ac0ea5775e29bd6e63e65432265302ccce023a990bf688487e4"
+      },
+      "game/ui/mode-play-shell.css": {
+        "gitBlob": "b51b673e5cfe707339c9958431bf0ff0e4ff9273",
+        "bytes": 12119,
+        "sha256": "0de38784cc592c06596b27c64fc1ea75fbf0458a09326cc8760b22dba795ef85"
+      },
+      "game/ui/mode-play-shell.mjs": {
+        "gitBlob": "6d1fe9d06d7303da86a87c080be62561e22f3620",
+        "bytes": 28145,
+        "sha256": "0f870158b292abd00acc063c078d246439cc985cbe25f274f0a58f45f7dd0276"
+      },
+      "game/ui/mode-settings-view.css": {
+        "gitBlob": "f32b5490a0886666e58ee5ef4829eebac4f42b54",
+        "bytes": 5647,
+        "sha256": "cc7854f20bbfff00c07888f5336a6666c42e15805a83f312a8bdc47be5bdf163"
+      },
+      "game/ui/mode-settings-view.mjs": {
+        "gitBlob": "c9e849894776adbd277c5f3172ddc4606a992e89",
+        "bytes": 5165,
+        "sha256": "d7e1b6d81ed96e30fcf812549d830d83ef0e561774dc11aad106160ab3a0f742"
+      },
+      "game/ui/movement-audio.mjs": {
+        "gitBlob": "ace37e8edafc6407c764f9617a71d49b90cc09f3",
+        "bytes": 531,
+        "sha256": "685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020"
+      },
+      "game/ui/pause-menu.css": {
+        "gitBlob": "879b09106398a817349adf6d5ff24978eca25c0b",
+        "bytes": 9247,
+        "sha256": "56a8d2867438b07144f3476101f60483b622b127ee362d047329ec0608b9c6a6"
+      },
+      "game/ui/radio-audio.mjs": {
+        "gitBlob": "156c04cb17a7bb699702cb199e702f783578e6d1",
+        "bytes": 521,
+        "sha256": "e7db98aa1b7bc52700c32fd18d68d8d6495cc2560b6400c8237c8a756799ac3d"
+      },
+      "game/ui/settings-panels.mjs": {
+        "gitBlob": "98e3cf3fa323d9ae41016f69bad21f0fa33fec9f",
+        "bytes": 8253,
+        "sha256": "870927e1385255b968ad4d295844da97ad2fb2ded556c7742a6646cd8e670e9d"
+      },
+      "game/ui/theme-family-controls.mjs": {
+        "gitBlob": "245bf3947aab85a76f138b35a1af46841f427da4",
+        "bytes": 9771,
+        "sha256": "5b6187087e04a661717738eb4360d7e898cc3b9a3383479dad1df091650e3ec1"
+      },
+      "game/ui/theme-material-preview.mjs": {
+        "gitBlob": "ede56e2a2c4948fb51311f90da4ef60a84194296",
+        "bytes": 3462,
+        "sha256": "fb38de2dbd69df3426b4eb4a9c41d1e2e9c08a25547adc646aa0f3eef1db8873"
+      }
+    },
+    "note": "RAM-only source AST/string projection; no generator filesystem effects, app execution, tests or local writes."
+  },
+  "appUnion": {
+    "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+    "main": "237b405437def3c41b01165fe057af1ab06f618c",
+    "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+    "identities": {
+      "c2930c544d7e1353cbc5aae10c0b77d121a32164": {
+        "gitBlob": "cdf5b96eebb02439c0fd35ea2786c1ec5d60838b",
+        "bytes": 617002,
+        "sha256": "3a8d65e5766ea85aee249594cb813bbd223587146c130d32b814f82b49f6c1af"
+      },
+      "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465": {
+        "gitBlob": "cdf5b96eebb02439c0fd35ea2786c1ec5d60838b",
+        "bytes": 617002,
+        "sha256": "3a8d65e5766ea85aee249594cb813bbd223587146c130d32b814f82b49f6c1af"
+      },
+      "237b405437def3c41b01165fe057af1ab06f618c": {
+        "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+        "bytes": 619315,
+        "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+      },
+      "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18": {
+        "gitBlob": "fa4c10c45ebcd21fb657e5485c8add82b0b541dc",
+        "bytes": 620177,
+        "sha256": "74ec3185d6cbcbb27b7a54387be747223da035c84106ecc85dad31de5e075500"
+      }
+    },
+    "mainEdits": [
+      {
+        "baseStart": 57,
+        "baseEnd": 56,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 2896,
+        "baseEnd": 2895,
+        "insertLines": 44
+      },
+      {
+        "baseStart": 8367,
+        "baseEnd": 8366,
+        "insertLines": 5
+      },
+      {
+        "baseStart": 11020,
+        "baseEnd": 11019,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 11304,
+        "baseEnd": 11304,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 11853,
+        "baseEnd": 11852,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 11950,
+        "baseEnd": 11949,
+        "insertLines": 1
+      }
+    ],
+    "missionsEdits": [
+      {
+        "baseStart": 13850,
+        "baseEnd": 13850,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 13853,
+        "baseEnd": 13853,
+        "insertLines": 4
+      },
+      {
+        "baseStart": 13874,
+        "baseEnd": 13874,
+        "insertLines": 5
+      },
+      {
+        "baseStart": 13897,
+        "baseEnd": 13896,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 13910,
+        "baseEnd": 13909,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 13911,
+        "baseEnd": 13910,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 13925,
+        "baseEnd": 13924,
+        "insertLines": 2
+      },
+      {
+        "baseStart": 14128,
+        "baseEnd": 14127,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14129,
+        "baseEnd": 14128,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14138,
+        "baseEnd": 14137,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14141,
+        "baseEnd": 14140,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14152,
+        "baseEnd": 14151,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14191,
+        "baseEnd": 14190,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14299,
+        "baseEnd": 14298,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14321,
+        "baseEnd": 14320,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14387,
+        "baseEnd": 14386,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14480,
+        "baseEnd": 14479,
+        "insertLines": 50
+      },
+      {
+        "baseStart": 14483,
+        "baseEnd": 14482,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14491,
+        "baseEnd": 14490,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14508,
+        "baseEnd": 14508,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14513,
+        "baseEnd": 14513,
+        "insertLines": 5
+      },
+      {
+        "baseStart": 14515,
+        "baseEnd": 14514,
+        "insertLines": 1
+      },
+      {
+        "baseStart": 14528,
+        "baseEnd": 14528,
+        "insertLines": 2
+      },
+      {
+        "baseStart": 14530,
+        "baseEnd": 14530,
+        "insertLines": 4
+      },
+      {
+        "baseStart": 14545,
+        "baseEnd": 14544,
+        "insertLines": 1
+      }
+    ],
+    "disjoint": true,
+    "fullChangedPathIntersection": [
+      "game/app.mjs"
+    ],
+    "union": {
+      "bytes": 622490,
+      "sha256": "6792d036827e881801d596690f9e78d408145f9a162701ddd674287ec529a39d",
+      "gitBlob": "53e94f240326fc9005fb0fb8a6c55590bb3c8cd9",
+      "parse": {
+        "parsed": true,
+        "statements": 244
+      }
+    },
+    "scope": "RAM-only deterministic source union and static parse. No application execution, tests, local writes, branch update or release acceptance. Actual merge requires current heads and complete applicable gates.",
+    "mainDiff": "--- cb8/game/app.mjs\n+++ 237b/game/app.mjs\n@@ -54,6 +54,7 @@\n } from './ui/gameplay-copy.mjs';\n import { contentText } from './i18n/content.mjs';\n import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';\n+import { captureFlightLimits, createFlightLimitNotices } from './capture-flight-limits.mjs';\n import {\n   createPreparationCadence,\n   PreparationCadenceTimeoutError,\n@@ -2894,6 +2895,50 @@\n   function warning(message, cue = null, role = 'host.unknown') {\n     return flightInformation.warning(message, cue, role);\n   }\n+  const flightLimitNotices = createFlightLimitNotices();\n+  let flightLimitViewKey = '';\n+  function refreshCaptureFlightLimits() {\n+    const eligible =\n+      started &&\n+      !practice &&\n+      !courseSession &&\n+      !courseEntry &&\n+      !['won', 'lost'].includes(run.status) &&\n+      !recoverGameplayTuning(run.level)?.adminOverride;\n+    const visible = eligible && paused && $('game-overlay').dataset.kind === 'pause';\n+    const panel = $('capture-flight-limits');\n+    const wasVisible = !panel.hidden;\n+    if (wasVisible !== visible) panel.hidden = !visible;\n+    if (!eligible) return;\n+    const view = captureFlightLimits({\n+      recordingTicks: recorder?.ticks,\n+      recordingStopped,\n+      elapsedSeconds: run.time,\n+      // Authored Journey clears/pictures do not pass through library time validation.\n+      collectionLimited: !candidateHost?.owns(activeEntry),\n+    });\n+    if (!paused)\n+      for (const key of flightLimitNotices(run, view))\n+        warning(localizedMessage(`interface:flightLimits.${key}`), null, 'host.flight-limits');\n+    if (visible && !wasVisible) panel.open = view.urgent;\n+    const busy = contentSwitchBusy || sessionBusy || backupBusy;\n+    const key = JSON.stringify([view, visible, busy, !!replayDownload]);\n+    if (key === flightLimitViewKey) return;\n+    flightLimitViewKey = key;\n+    localizedText($('capture-flight-limits-summary'), () =>\n+      t(`interface:flightLimits.${view.urgent ? 'attention' : 'title'}`),\n+    );\n+    localizedText($('capture-recording-limit'), () =>\n+      t(`interface:flightLimits.recording.${view.recording}`, {\n+        minutes: formatNumber(view.minutes ?? 0),\n+      }),\n+    );\n+    localizedText($('capture-collection-limit'), () =>\n+      t(`interface:flightLimits.collection.${view.collection}`),\n+    );\n+    $('capture-limit-saves').disabled = busy;\n+    $('capture-limit-replay').disabled = !recorder || !!replayDownload;\n+  }\n   function dialogOpen() {\n     return modalNavigation\n       ? modalNavigation.hasOpenDialog()\n@@ -8364,6 +8409,11 @@\n       warning(e.message);\n     }\n   };\n+  $('capture-limit-saves').onclick = () => {\n+    if (contentSwitchBusy || sessionBusy || backupBusy) return;\n+    return libraryPanel.open('saves');\n+  };\n+  $('capture-limit-replay').onclick = () => $('export-replay').click();\n   $('hangar-button').onclick = () => {\n     if (!craftSwitchAvailable()) return;\n     pause(true);\n@@ -11017,6 +11067,7 @@\n     if (pauseTrace?.complete) markPauseWork(pauseTrace, 'pause-end');\n   }\n   function refreshHUDClocks() {\n+    refreshCaptureFlightLimits();\n     localizedText($('time'), () =>\n       timeLabel(\n         run.rules.timeLimitSeconds ? Math.max(0, run.rules.timeLimitSeconds - run.time) : run.time,\n@@ -11301,7 +11352,7 @@\n       refreshInputPresentation();\n       $('pause-button').disabled = courseBlocked() || campaignOverview;\n       $('save-attempt-button').disabled =\n-        !started || practice || ['won', 'lost'].includes(run.status);\n+        !started || practice || !recorder || ['won', 'lost'].includes(run.status);\n       const near = run.hangars?.some(\n         (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,\n       );\n@@ -11850,6 +11901,7 @@\n         if (!recordingStopped && recorder.ticks >= MAX_REPLAY_TICKS) {\n           recordingStopped = true;\n           recorder = null;\n+          hudDirty = true;\n           $('export-replay').disabled = true;\n           warning(localizedMessage('interface:the30MinuteReplayBudgetIsFullRecordingWasDiscarded'));\n         }\n@@ -11947,6 +11999,7 @@\n           } catch {\n             recordingStopped = true;\n             recorder = null;\n+            hudDirty = true;\n             $('export-replay').disabled = true;\n             warning(localizedMessage('interface:replayRecordingStoppedYouCanKeepPlayingStartANew'));\n           }\n",
+    "missionsDiff": "--- base/game/app.mjs\n+++ eb2/game/app.mjs\n@@ -13847,10 +13847,13 @@\n     assertCurrent();\n     return host.refreshInstalled({ assertCurrent });\n   }\n-  async function getUnifiedMissionLibrary(isCurrent = () => true) {\n+  async function getUnifiedMissionLibrary(isCurrent = () => true, trace = null) {\n     const callerCurrent = unifiedLibraryGuard(isCurrent);\n     callerCurrent();\n-    if (unifiedLibrary) return unifiedLibrary;\n+    if (unifiedLibrary) {\n+      trace?.mark('missions-build-cached');\n+      return unifiedLibrary;\n+    }\n     let attempt = unifiedLibraryLoading;\n     if (attempt) {\n       // A new explicit owner may join a still-admitted request. A retired\n@@ -13871,7 +13874,11 @@\n         attempt = null;\n       }\n     }\n-    if (attempt) return attempt.promise;\n+    if (attempt) {\n+      // Its original observer retains ownership; a joining request does not inherit its stamps.\n+      trace?.mark('missions-build-joined');\n+      return attempt.promise;\n+    }\n     const callers = new Set([callerCurrent]);\n     const admitted = unifiedLibraryGuard();\n     const assertCurrent = () => {\n@@ -13894,6 +13901,7 @@\n         result = null,\n         committed = false;\n       try {\n+        trace?.mark('missions-imports-begin');\n         const [\n           { attachJourneyChooser },\n           { createInstalledMissionLibrary },\n@@ -13907,7 +13915,9 @@\n           import('./mission-library/cross-mode-journey.mjs'),\n           import('./multiplayer.mjs'),\n         ]);\n+        trace?.mark('missions-imports-end');\n         assertCurrent();\n+        trace?.mark('missions-data-begin');\n         const index =\n           runtimeContent?.missionIndex ??\n           (await getJSON('content/mission-library-index.json', assertCurrent));\n@@ -13922,6 +13932,8 @@\n           runtimeContent?.themes ??\n           (await getJSON('content-design/themes.json', assertCurrent)).themes;\n         assertCurrent();\n+        trace?.mark('missions-data-end');\n+        trace?.mark('missions-sources-begin');\n         const libraryThemes = authoredJourneyUsesActorMaterials(route.id)\n           ? journeyActorThemeCandidates(originalThemes, {\n               includeOriginals: route.preserveOriginalThemes === true,\n@@ -14125,7 +14137,9 @@\n             ...teamSources,\n           ];\n         }\n+        trace?.mark('missions-sources-end');\n         if (!runtimeContent) {\n+          trace?.mark('missions-supplemental-imports-begin');\n           const [\n             { duelExpeditionLibrarySources, teamExpeditionLibrarySource },\n             { TEAM_EXPANSION_ROUTE },\n@@ -14135,9 +14149,11 @@\n             import('./content-design/multiplayer-expansion.mjs'),\n             import('./mission-library/team-source.mjs'),\n           ]);\n+          trace?.mark('missions-supplemental-imports-end');\n           assertCurrent();\n           const expansionSources = [\n             ...duelExpeditionLibrarySources({\n+              onStage: trace?.mark,\n               themes: originalThemes,\n               activeRouteId: route.id,\n               launch: departLibraryMission,\n@@ -14149,6 +14165,7 @@\n               ? []\n               : [\n                   teamExpeditionLibrarySource({\n+                    onStage: trace?.mark,\n                     launch: departLibraryMission,\n                     difficulty: () => browsingJourneyPreferences.snapshot().difficulty,\n                   }),\n@@ -14188,6 +14205,7 @@\n         };\n         const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;\n         assertCurrent();\n+        trace?.mark('missions-installed-begin');\n         result = await createInstalledMissionLibrary({\n           assertCurrent,\n           getProjectSources: async ({ assertCurrent }) => {\n@@ -14296,6 +14314,7 @@\n               : { state: 'new', bestStars: null };\n           },\n         });\n+        trace?.mark('missions-installed-end');\n         assertCurrent();\n         const state = createMissionLibrarySessionState({ mode: 'solo' });\n         // Checked return restores the retained runtime independently of browsing.\n@@ -14318,6 +14337,7 @@\n               );\n             })\n           : null;\n+        trace?.mark('missions-chooser-build-begin');\n         unifiedChooser = attachJourneyChooser({\n           library: result.library,\n           profile,\n@@ -14384,6 +14404,7 @@\n             });\n           },\n         });\n+        trace?.mark('missions-chooser-build-end');\n         if (!journeyPreferences)\n           browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());\n         // Keep the native settings and their guarded handlers, but not the old\n@@ -14477,9 +14498,60 @@\n     const homeWasOpen = $('shell-home').open,\n       oldRun = run,\n       wasStarted = started;\n+    // No trace, closure, payload or extra clock read exists on the ordinary path.\n+    // Console delivery is supplementary, best effort evidence: a received begin\n+    // survives a later unresponsive page; an undelivered end stays unobserved.\n+    const trace = performanceSession\n+      ? {\n+          sequence: 0,\n+          closed: false,\n+          generation: performanceRunGeneration,\n+          tick: run?.tick ?? 0,\n+          build: unifiedBuildRevision,\n+          mark(kind) {\n+            if (trace.closed) return;\n+            if (++trace.sequence >= 64) {\n+              kind = 'missions-observer-overflow';\n+              trace.closed = true;\n+            }\n+            let atMs = null;\n+            try {\n+              atMs = performance.now();\n+              if (trace.generation > 0)\n+                performanceSession.markEvent(kind, trace.generation, trace.tick, atMs);\n+            } catch {\n+              // Diagnostics never cancel or admit a library operation.\n+            }\n+            try {\n+              console.debug(\n+                'RevealLineMissionsStageV1 ' +\n+                  JSON.stringify([\n+                    revision,\n+                    trace.build,\n+                    trace.sequence,\n+                    kind,\n+                    trace.generation,\n+                    trace.tick,\n+                    atMs,\n+                    performance.timeOrigin,\n+                  ]),\n+              );\n+            } catch {\n+              // The retained numeric ring remains independent of console delivery.\n+            }\n+          },\n+          finish(kind) {\n+            if (trace.closed) return;\n+            trace.mark(kind);\n+            trace.closed = true;\n+          },\n+        }\n+      : null;\n+    trace?.mark('missions-opening');\n     ++unifiedLaunchRevision;\n     pause(true);\n     clearInput();\n+    trace?.mark('missions-after-pause');\n     const feedback = document.createElement('span');\n     feedback.id = 'mission-library-opening-status';\n     feedback.className = 'micro-note';\n@@ -14488,6 +14560,7 @@\n     (opener?.isConnected ? opener : $('shell-play')).after(feedback);\n     let failed = false;\n     const cancel = () => {\n+      trace?.finish('missions-cancelled');\n       if (revision === unifiedOpenRevision) ++unifiedOpenRevision;\n       opening.dispose();\n       feedback.remove();\n@@ -14505,13 +14578,18 @@\n       run === oldRun &&\n       started === wasStarted;\n     try {\n-      const host = await getUnifiedMissionLibrary(isCurrent);\n+      const host = await getUnifiedMissionLibrary(isCurrent, trace);\n       // The installed-card refresh may move focus while it reconciles an owned\n       // catalogue. Claim the still-current opener before that internal work;\n       // newer input still retires the claim while the state/revision checks\n       // below also reject replaced navigation and game state.\n-      if (!opening.claim()) return;\n+      if (!opening.claim()) {\n+        trace?.finish('missions-cancelled');\n+        return;\n+      }\n+      trace?.mark('missions-refresh-begin');\n       await refreshUnifiedInstalled(host, isCurrent);\n+      trace?.mark('missions-refresh-end');\n       const openingCurrent = opening.current();\n       opening.dispose();\n       if (\n@@ -14525,9 +14603,13 @@\n         run !== oldRun ||\n         started !== wasStarted ||\n         !paused\n-      )\n+      ) {\n+        trace?.finish('missions-cancelled');\n         return;\n-      unifiedChooser.open(opener, options);\n+      }\n+      trace?.mark('missions-open-begin');\n+      unifiedChooser.open(opener, trace ? { ...options, onOpeningStage: trace.mark } : options);\n+      trace?.finish('missions-complete');\n       if (options?.random) {\n         unifiedChooser.playRandom({ resetFilters: true });\n         return;\n@@ -14542,6 +14624,7 @@\n         }\n       }\n     } catch (error) {\n+      trace?.finish(error?.name === 'AbortError' ? 'missions-cancelled' : 'missions-failed');\n       if (revision === unifiedOpenRevision) {\n         failed = true;\n         localizedText(feedback, () => t('interface:missionsCouldNotLoadChooseMissionsToRetry'));\n"
+  },
+  "scope": "Source-only read-only review, no application execution or tests. Current eb2 gates remain bound to their original source; no claim that eb2 previews equal main237b."
+}
