@@ -12,7 +12,12 @@ import {
   initAdvancedRuntime,
 } from '../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import { createAircraftCourseSession } from '../optional-practice/civilian-fpv/aircraft-course-session.mjs';
-import { createWorldFlight } from '../optional-practice/civilian-fpv/world-model.mjs';
+import {
+  createWorldFlight,
+  validateWorldCourse,
+} from '../optional-practice/civilian-fpv/world-model.mjs';
+import { verifyAircraftCourseArchive } from '../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
+import { validateAircraftCoursePresentation } from '../optional-practice/civilian-fpv/advanced-ghost-path.mjs';
 import { createFlight } from '../optional-practice/civilian-fpv/model.mjs';
 import { BEGINNER_CATALOGUE } from '../optional-practice/civilian-fpv/world-catalogue.mjs';
 import { FLIGHT_COURSES } from '../optional-practice/civilian-fpv/catalogue.mjs';
@@ -111,7 +116,12 @@ async function record({
     },
   );
   const segments = [],
-    transitions = [];
+    transitions = [],
+    poses = [];
+  const capture = () => {
+    const { missionTick: tick, position: p, orientation: q } = simulation.telemetry();
+    poses.push([tick, p.x, p.y, p.z, q.x, q.y, q.z, q.w]);
+  };
   const collect = () => {
     const row = simulation.readSealedSegment(segments.at(-1)?.index ?? -1);
     assert.equal(row.gap, false);
@@ -119,6 +129,7 @@ async function record({
   };
   try {
     await session.prepare();
+    capture();
     session.arm();
     const hover = aircraftPerformance(preset.aircraft).hoverThrottle;
     for (let tick = 0; tick < (ticks ?? 650); tick++) {
@@ -137,6 +148,7 @@ async function record({
               ),
             );
       const next = await session.step(input?.(tick, state) ?? { ...neutral, throttle });
+      capture();
       if (state.step !== next.step) transitions.push({ index: next.step - 1, endTick: next.ticks });
       collect();
     }
@@ -151,6 +163,7 @@ async function record({
       state,
       referenceIdentity: session.referenceIdentity(),
       transitions,
+      poses,
       sidecar: createStaticCourseSidecar(archive, course),
     };
   } finally {
@@ -170,6 +183,31 @@ test('every aircraft and both modes independently reconstruct static lesson comp
         assert.equal(result.physics.verified, true);
         assert.equal(result.physics.verificationScope, 'complete-session');
         assert.equal(result.course.verified, true, JSON.stringify(result.course));
+        assert.equal(
+          Object.hasOwn(result.course, 'presentation'),
+          false,
+          'CLI default stays unchanged',
+        );
+        const visual = await verifyAircraftCourseArchive(f.archive, f.course, {
+          collectReference: true,
+          courseAdapter: {
+            format: 'FlightCourse.v2',
+            validate: validateWorldCourse,
+            createMission: createWorldFlight,
+          },
+        });
+        const { presentation, ...courseWithoutVisual } = visual.course;
+        assert.deepEqual(courseWithoutVisual, result.course);
+        assert.deepEqual(visual.physics, result.physics);
+        assert.deepEqual(validateAircraftCoursePresentation(presentation), presentation);
+        assert.deepEqual(
+          presentation.path,
+          f.poses,
+          'raw accepted COM metres/quaternions, including exact reset and completion',
+        );
+        assert.deepEqual(presentation.aircraft, f.archive.manifest.config.aircraft);
+        assert.equal(presentation.sourceSampleCount, f.state.ticks + 1);
+        assert.equal(advancedComparisonEligibility(visual, visual).eligible, false);
         assert.equal(result.course.completedAtTick, f.state.ticks);
         assert.deepEqual(result.course.referenceIdentity, f.referenceIdentity);
         assert.deepEqual(
