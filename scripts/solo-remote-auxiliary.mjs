@@ -14,6 +14,11 @@ const SHARED_MODE_FIXTURE = Object.freeze({
   sha256: '805b2793d4613aa67fd8e6f373c9268dd919b6cf857222bdf143cbe8fcd6311d',
 });
 
+const SHARED_MODE_BOOT_FIXTURE = Object.freeze({
+  bytes: 2720,
+  sha256: 'fd53760e86158e8da498eea0201c1b19fa1d34b0aed524bc34e1b6a0e7c91f67',
+});
+
 const MiB = 1024 ** 2;
 const sharedReturn = (plan) => plan.release?.format === 'SoloSharedModePublicReturnReleaseV1';
 export const SHARED_RETURN_CANDIDATE = Object.freeze({
@@ -69,8 +74,21 @@ const sharedCandidate = (plan) => {
   assert.equal(plan.release?.sourceCohort, undefined);
   return SHARED_RETURN_CANDIDATE;
 };
+const sharedRecipe = (plan) => {
+  if (plan.release.bootReadiness === undefined)
+    return {
+      path: 'docs/performance/fixtures/solo-shared-mode/public-return.qualification.fixture',
+      ...SHARED_MODE_FIXTURE,
+    };
+  assert.equal(plan.release.bootReadiness, 'production-boot-screen-v1');
+  assert.equal(sharedCandidate(plan).revision, SHARED_MODE_RUNTIME797_SOURCE);
+  return {
+    path: 'docs/performance/fixtures/solo-shared-mode/public-return-boot-ready.qualification.fixture',
+    ...SHARED_MODE_BOOT_FIXTURE,
+  };
+};
 const sharedRecipeHash = (plan, spec) =>
-  sharedReturn(plan) ? SHARED_MODE_FIXTURE.sha256 : HASHES[spec.recipe];
+  sharedReturn(plan) ? sharedRecipe(plan).sha256 : HASHES[spec.recipe];
 const SOURCE = {
   baseline: 'b11745223861c3973ad4bf440cc536198b8e0371',
   candidate: '3adcd53792043ef02459e86168c6b33a66d6ef00',
@@ -421,11 +439,7 @@ export function validateAuxiliaryPlan(plan) {
     Object.keys(plan.recipes).sort(),
     sharedReturn(plan) ? ['recovery'] : ['music', 'recovery', 'speech'],
   );
-  if (sharedReturn(plan))
-    assert.deepEqual(plan.recipes.recovery, {
-      path: 'docs/performance/fixtures/solo-shared-mode/public-return.qualification.fixture',
-      ...SHARED_MODE_FIXTURE,
-    });
+  if (sharedReturn(plan)) assert.deepEqual(plan.recipes.recovery, sharedRecipe(plan));
   assert.equal(plan.uploads.length, sharedReturn(plan) ? 0 : 3);
   assert.equal(new Set(plan.uploads.map((ref) => ref.name)).size, plan.uploads.length);
   for (const ref of [

@@ -5725,6 +5725,11 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json
+            /docs/performance/fixtures/solo-shared-mode/public-return-boot-ready.qualification.fixture
+            /scripts/test-solo-shared-mode-boot-admission.mjs
+            /game/boot.mjs
+            /game/test/boot.test.mjs
             /scripts/test-solo-demo-797e03-tooling-admission.mjs
             /docs/performance/solo-demo-resources-797e03-tooling-plan.json
             /docs/performance/solo-demo-recovery-797e03-tooling-plan.json
@@ -6185,8 +6190,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-auxiliary.mjs scripts/test-solo-qualification.mjs scripts/test-solo-shared-mode-public-return.mjs scripts/test-solo-shared-mode-797e03-admission.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-auxiliary.mjs bind-plan docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json "$RUNNER_TEMP/shared-return-plan.json" "${{ matrix.job }}"
+          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-auxiliary.mjs scripts/test-solo-qualification.mjs scripts/test-solo-shared-mode-public-return.mjs scripts/test-solo-shared-mode-797e03-admission.mjs scripts/test-solo-shared-mode-boot-admission.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-auxiliary.mjs bind-plan docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json "$RUNNER_TEMP/shared-return-plan.json" "${{ matrix.job }}"
       - name: Run fixed public Team and Versus return observations
         timeout-minutes: 63
         working-directory: tools
@@ -6251,6 +6256,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json
             /scripts/test-solo-demo-797e03-tooling-admission.mjs
             /docs/performance/solo-demo-resources-797e03-tooling-plan.json
             /docs/performance/solo-demo-recovery-797e03-tooling-plan.json
@@ -6791,6 +6797,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json
             /scripts/test-solo-demo-797e03-tooling-admission.mjs
             /docs/performance/solo-demo-resources-797e03-tooling-plan.json
             /docs/performance/solo-demo-recovery-797e03-tooling-plan.json

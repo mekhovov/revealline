@@ -16,7 +16,7 @@ const source = '797e03f28743921842df6aa57520a72016ba3dfc';
 const tree = 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5';
 const lanes = {
   'shared-return': {
-    plan: 'solo-shared-mode-public-return-797e03-tooling-plan.json',
+    plan: 'solo-shared-mode-public-return-797e03-boot-plan.json',
     job: 105,
     step: 63,
     seconds: 3720,
@@ -34,6 +34,11 @@ const lanes = {
     seconds: 4620,
   },
 };
+const historicalPlans = new Set([
+  'solo-shared-mode-public-return-797e03-tooling-plan.json',
+  'solo-demo-recovery-797e03-plan.json',
+  'solo-demo-resources-797e03-plan.json',
+]);
 function job(text, lane) {
   const result = text.split(`\n  ${lane}:\n`);
   assert.equal(result.length, 2);
@@ -80,6 +85,7 @@ function check(text, lane) {
       ),
     );
     assert(body.includes('scripts/test-solo-shared-mode-797e03-admission.mjs '));
+    assert(body.includes('scripts/test-solo-shared-mode-boot-admission.mjs '));
     assert(body.includes('scripts/test-solo-shared-mode-public-return.mjs '));
   } else {
     assert(!body.includes('matrix.'));
@@ -192,10 +198,49 @@ test('each reviewed sparse set contains every exact adapter and frozen observer 
     const plan = JSON.parse(await read('docs/performance/' + spec.plan));
     for (const ref of [...plan.adapterInputs, ...plan.frozenTools]) {
       assert(inputs.includes(ref.path), ref.path);
-      if (await assertDeclaredReadinessTool('docs/performance/' + spec.plan, ref)) continue;
+      if (
+        historicalPlans.has(spec.plan) &&
+        (await assertDeclaredReadinessTool('docs/performance/' + spec.plan, ref))
+      )
+        continue;
       const bytes = await read(ref.path);
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
     }
   }
+});
+
+test('shared boot successor setup retains the actual source and complete regression entry', () => {
+  const required = [
+    'docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json',
+    'docs/performance/fixtures/solo-shared-mode/public-return-boot-ready.qualification.fixture',
+    'scripts/test-solo-shared-mode-boot-admission.mjs',
+    'game/boot.mjs',
+    'game/test/boot.test.mjs',
+    'game/test/helpers/couch-dom.mjs',
+  ];
+  const setup = (text) => {
+    const body = check(text, 'shared-return');
+    const sparse = body.split('          sparse-checkout: |\n')[1].split(/\n      - /)[0];
+    for (const path of required) assert(sparse.includes('            /' + path + '\n'), path);
+  };
+  setup(workflow);
+  for (const path of required) {
+    const body = job(workflow, 'shared-return');
+    assert.throws(() =>
+      setup(workflow.replace(body, body.replace('            /' + path + '\n', ''))),
+    );
+  }
+  const body = job(workflow, 'shared-return');
+  assert.throws(() =>
+    setup(
+      workflow.replace(
+        body,
+        body.replace(
+          'scripts/test-solo-shared-mode-boot-admission.mjs scripts/test-solo-native-consumer-shared-demo.mjs',
+          'scripts/test-solo-native-consumer-shared-demo.mjs',
+        ),
+      ),
+    ),
+  );
 });

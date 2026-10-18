@@ -11,6 +11,11 @@ export const SHARED_MODE_FIXTURE = Object.freeze({
   sha256: '805b2793d4613aa67fd8e6f373c9268dd919b6cf857222bdf143cbe8fcd6311d',
 });
 
+export const SHARED_MODE_BOOT_FIXTURE = Object.freeze({
+  bytes: 2720,
+  sha256: 'fd53760e86158e8da498eea0201c1b19fa1d34b0aed524bc34e1b6a0e7c91f67',
+});
+
 /** This is a held source-specific observer, not remote package admission. */
 export function qualificationSharedModeOptions(flags, scenario, bytes) {
   const selected = flags.filter((flag) => flag.startsWith('--shared-mode-public-return'));
@@ -37,8 +42,11 @@ export function qualificationSharedModeOptions(flags, scenario, bytes) {
   assert.equal(scenario.kind, 'recovery');
   assert.equal(scenario.timeoutMs, 180000);
   assert.deepEqual(scenario.query, { journey: 'legacy' });
-  assert.equal(bytes.length, SHARED_MODE_FIXTURE.bytes);
-  assert.equal(createHash('sha256').update(bytes).digest('hex'), SHARED_MODE_FIXTURE.sha256);
+  const productionBoot = scenario.id === 'legacy-team-versus-public-return-boot-v2';
+  if (productionBoot) assert.equal(sourceRevision, SHARED_MODE_RUNTIME797_SOURCE);
+  const fixture = productionBoot ? SHARED_MODE_BOOT_FIXTURE : SHARED_MODE_FIXTURE;
+  assert.equal(bytes.length, fixture.bytes);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), fixture.sha256);
   assert.deepEqual(scenario, JSON.parse(bytes));
   assert(
     !flags.some((flag) =>
