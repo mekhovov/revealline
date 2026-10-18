@@ -43,7 +43,7 @@ test('candidate CI keeps separate bounded budgets for edition and optional-pract
   const optional = workflow.split('\n  optional-practice:\n')[1]?.split('\n  candidate:\n')[0];
   assert.ok(candidate && optional);
   assert.match(candidate, /^    timeout-minutes: 60$/m);
-  assert.match(optional, /^    timeout-minutes: 12$/m);
+  assert.match(optional, /^    timeout-minutes: 30$/m);
   assert.doesNotMatch(candidate, /continue-on-error: true/);
   for (const command of [
     'npm run company:check',

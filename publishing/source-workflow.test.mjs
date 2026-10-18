@@ -134,7 +134,7 @@ test('optional practice integrates the event workflow source while company admis
   );
   assert.ok(optional.includes('npm run practice:test'));
   assert.doesNotMatch(optional, /continue-on-error: true|--if-present/u);
-  assert.match(optional, /^    timeout-minutes: 12$/mu);
+  assert.match(optional, /^    timeout-minutes: 30$/mu);
   assert.match(
     candidate,
     /^          ref: \$\{\{ github.event.pull_request.head.sha \|\| github.sha \}\}$/mu,
