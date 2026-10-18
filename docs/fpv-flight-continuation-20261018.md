@@ -148,6 +148,30 @@ follow-up; no successful one-click restore claim is made for this source.
 The FPV camera preference was restored, the flight remained paused, the temporary
 tab was closed and its source server stopped. No archives were deleted.
 
+## Backup-restore correction acceptance
+
+On the source committed as `ba1f6d065`, a new local test exported the initial
+`My drone` / `Legacy feel` library, saved a Meteor75 setup, and restored the
+original backup while that Meteor75 attempt was paused. Restore immediately
+selected the valid restored setup and reported **Library restored. The current
+attempt keeps its original configuration.** The header showed zero changes and
+**Saved for next flight**. No manual refresh was needed.
+
+A fresh backup matched the pre-test profiles, setup, camera, default and selected
+IDs exactly; only the expected library revision advanced from 2 to 4. Closing
+the workbench returned to the same paused Meteor75 attempt at **0:08.92**, with
+checkpoint **0:05.00** and FPV camera unchanged. The source's UI/library suites
+pass 179/179 with no skips; independent review passed. No archives were deleted.
+This rendered check is English/desktop; EN/UK outcome strings have automated
+coverage, not a second Ukrainian rendered acceptance.
+
+The setup preparation exposed a separate negative: **Apply & restart** advanced
+the newly configured flight without an explicit Arm action after scene loading,
+despite the pause explanation saying a new attempt waits for Arm. The elapsed
+8.92 seconds above came from that unintended start, not an intended flight test.
+The two hosts' restart lifecycle is being corrected separately; backup restore
+itself did not resume or replace the paused attempt.
+
 ## Open archive-retention incident
 
 The user authorized deleting exactly ten identified test archives while preserving six older records. The first attempted action reported a closing-database error; all sixteen entries remained in the cached list. After reload, a successful refresh exposed only a new test session. No successful ten-record cleanup or preservation of the six older archives is claimed. No further deletes were attempted. The [retention follow-up](fpv-archive-retention-followup-20261018.md) records the ownership audit and the earlier matching public negative. This remains P1.
