@@ -2151,6 +2151,139 @@ class RegionalWorker extends Events {
   }
 }
 
+test('World and Regional explicit keyboard resume keeps accepted aircraft throttle only', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const [{ createEnduranceFixture }, { regionalReviewEntry }, tuning] = await Promise.all([
+    import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+    import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+    import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+  ]);
+  const { terrain } = await createEnduranceFixture();
+  for (const [host, entry] of [
+    ['World', WORLD_CATALOGUE.find((item) => !item.legacy && item.activity !== 'hunt')],
+    ['Regional', regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source })],
+  ])
+    for (const action of ['button', 'shortcut', 'pending-button'])
+      await t.test(`${host} ${action}`, async (t) => {
+        const storage = new Map();
+        const store = tuning.createTuningLibraryStore({
+          storage: {
+            getItem: (key) => storage.get(key) ?? null,
+            setItem: (key, value) => storage.set(key, value),
+          },
+        });
+        await store.createPresetSetup({
+          presetId: 'meteor75-analog-2022',
+          setupId: 'resume-whoop',
+          profileId: 'resume-rates',
+          rates: 'defaults',
+        });
+        const h = fixture(t, {
+          storage,
+          rendererFactory: () => ({
+            available: true,
+            setPresentation() {},
+            setCourse() {},
+            setQuality() {},
+            setDrone() {},
+            setGhost() {},
+            setPath() {},
+            setRegional() {},
+            setAircraft() {},
+            draw() {},
+            dispose() {},
+            async prepareRegionalFrame() {},
+            async prepare() {
+              return true;
+            },
+          }),
+        });
+        h.win.Worker = RegionalWorker;
+        const tick = async (count) => {
+          for (let i = 0; i < count; i++) {
+            h.tick();
+            await new Promise((resolve) => setImmediate(resolve));
+          }
+        };
+        const key = (code, type = 'keydown', extra = {}) =>
+          h.win.emit(type, { code, target: h.$('world-viewport'), ...extra });
+        await h.app.ready;
+        await h.app.startFlight(entry, { mode: 'self-level', paused: true });
+        h.$('world-arm').click();
+        key('KeyW');
+        key('ArrowRight');
+        await tick(12);
+        assert.ok(h.app.snapshot().state.lastInput.throttle > 0);
+        let releaseStep, beforePending;
+        if (action === 'pending-button') {
+          beforePending = h.app.snapshot().state;
+          const worker = RegionalWorker.instances.at(-1),
+            send = worker.postMessage.bind(worker);
+          let pending;
+          worker.postMessage = (message) => {
+            if (['step', 'propose'].includes(message.type)) pending = message;
+            else send(message);
+          };
+          await tick(1);
+          assert.ok(pending, 'one worker interval is deliberately held');
+          releaseStep = () => {
+            worker.postMessage = send;
+            send(pending);
+          };
+        }
+        if (action !== 'shortcut') h.$('world-pause').click();
+        else key('KeyP');
+        if (releaseStep) {
+          h.$('world-flight-resume').click();
+          assert.equal(h.app.snapshot().state.status, 'paused');
+          assert.match(h.$('flight-status').textContent, /Finishing the current flight step/);
+          releaseStep();
+        }
+        await tick(2); // An already accepted worker interval may finish during pause.
+        const paused = h.app.snapshot().state;
+        assert.equal(paused.status, 'paused', 'worker completion cannot arm on its own');
+        if (releaseStep) {
+          if (paused.ticks > beforePending.ticks)
+            assert.ok(paused.lastInput.throttle > beforePending.lastInput.throttle);
+          else
+            assert.equal(
+              paused.lastInput.throttle,
+              beforePending.lastInput.throttle,
+              'a Regional proposal rejected during pause cannot change accepted input',
+            );
+        }
+        await tick(3);
+        assert.equal(h.app.snapshot().state.ticks, paused.ticks);
+        key('KeyW', 'keydown', { repeat: true });
+        if (h.$('worlds-shell-pause-dialog').open)
+          h.$('worlds-shell-pause-dialog').emit('cancel', { bubbles: false });
+        assert.equal(h.app.snapshot().state.status, 'paused');
+        if (action === 'shortcut') {
+          key('KeyP');
+          if (h.$('worlds-shell-pause-dialog').open)
+            h.$('worlds-shell-pause-dialog').emit('cancel', { bubbles: false });
+        }
+        h.$('world-flight-resume').click();
+        await tick(4);
+        const resumed = h.app.snapshot().state;
+        assert.ok(resumed.ticks > paused.ticks);
+        assert.equal(resumed.lastInput.throttle, paused.lastInput.throttle);
+        for (const axis of ['roll', 'pitch', 'yaw']) assert.equal(resumed.lastInput[axis], 0);
+        h.app.pause();
+        h.win.emit('blur');
+        h.win.emit('focus');
+        h.$('world-arm').click();
+        await tick(4);
+        assert.equal(h.app.snapshot().state.lastInput.throttle, 0);
+        await h.app.startFlight(entry, { mode: 'self-level', paused: true });
+        h.$('world-arm').click();
+        await tick(4);
+        assert.equal(h.app.snapshot().state.lastInput.throttle, 0, 'restart starts at zero');
+      });
+});
+
 for (const host of ['World', 'Regional'])
   for (const action of ['mode', 'retry'])
     test(`${host} ${action} preserves the tested draft aircraft until an explicit normal launch`, async (t) => {
