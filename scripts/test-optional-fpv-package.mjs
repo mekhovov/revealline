@@ -129,16 +129,36 @@ test('Academy and World explicitly ship the complete offline tuning and module-w
       assert.ok(serviceWorker.includes(pin.sha256), `${packageId}: cached ${name}`);
     }
     assert.ok(packaged.has('game/platform.mjs'));
+    // Building above resolves every eager import against this package's exact
+    // allowlist. Course verification must not pull the World model into Academy.
+    const worldModel = 'optional-practice/civilian-fpv/world-model.mjs';
+    assert.equal(packaged.has(worldModel), packageId === 'fpv-worlds');
+    const sharedWorker = packaged
+      .get('optional-practice/civilian-fpv/advanced-worker.mjs')
+      .toString();
+    assert.match(sharedWorker, /export function installAdvancedWorker\(/);
+    assert.match(
+      sharedWorker,
+      /if \(isAdvancedWorkerEntry\(import\.meta\.url\)\) installAdvancedWorker\(self\)/,
+    );
     const scopedWorker = 'optional-practice/fpv-worlds/advanced-worker.mjs';
     assert.equal(packaged.has(scopedWorker), packageId === 'fpv-worlds');
     if (packageId === 'fpv-worlds') {
+      const entry = packaged.get(scopedWorker).toString();
       assert.match(
-        packaged.get(scopedWorker).toString(),
-        /import '\.\.\/civilian-fpv\/advanced-worker\.mjs'/,
+        entry,
+        /import \{ installAdvancedWorker, isAdvancedWorkerEntry \} from '\.\.\/civilian-fpv\/advanced-worker\.mjs'/,
       );
-      const pin = built.manifest.files.find((entry) => entry.path === scopedWorker);
-      assert.ok(pin);
-      assert.ok(serviceWorker.includes(pin.sha256));
+      assert.match(
+        entry,
+        /import \{ validateWorldCourse, createWorldFlight \} from '\.\.\/civilian-fpv\/world-model\.mjs'/,
+      );
+      assert.match(entry, /if \(isAdvancedWorkerEntry\(import\.meta\.url\)\)/);
+      for (const name of [scopedWorker, worldModel]) {
+        const pin = built.manifest.files.find((row) => row.path === name);
+        assert.ok(pin);
+        assert.ok(serviceWorker.includes(pin.sha256));
+      }
     }
     const benchWorker = 'optional-practice/fpv-worlds/response-bench-worker.mjs';
     assert.ok(mainBuild.include.includes(benchWorker), 'Main Pages World response worker');
