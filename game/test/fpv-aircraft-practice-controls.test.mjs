@@ -118,7 +118,7 @@ test('unavailable and blocked IndexedDB reject without losing or creating a fals
   missing.close();
 });
 
-function fixture(t, { store, exportFile } = {}) {
+function fixture(t, { store, exportFile, onRestored } = {}) {
   const document = new Document(),
     window = new Events();
   let currentLocale = 'en',
@@ -167,6 +167,7 @@ function fixture(t, { store, exportFile } = {}) {
     store: memoryStore,
     locale: () => currentLocale,
     getSession: () => active,
+    onRestored,
     onPause: () => {
       pauses++;
     },
@@ -214,6 +215,45 @@ function fixture(t, { store, exportFile } = {}) {
     },
   };
 }
+
+test('restore observations reset only after current successful restores and cannot fail persistence', async (t) => {
+  const notices = [];
+  const f = fixture(t, {
+    onRestored(session, state) {
+      notices.push({ session, ticks: state.ticks });
+      throw new Error('optional display unavailable');
+    },
+  });
+  f.update(250);
+  await f.click('Restore last saved checkpoint');
+  assert.deepEqual(
+    notices,
+    [{ session: f.active, ticks: 250 }],
+    'same-clock successful restore still resets observations',
+  );
+  assert.match(f.ui.root.textContent, /Checkpoint restored/);
+  assert.doesNotMatch(f.ui.root.textContent, /optional display unavailable/);
+  f.file.files = [{ size: 100, text: async () => JSON.stringify(checkpoint(250, 'other-flight')) }];
+  f.file.emit('change');
+  await settle();
+  assert.equal(notices.length, 1, 'failed restore retains observations');
+  let release;
+  f.file.files = [
+    {
+      size: 100,
+      text: () =>
+        new Promise((resolve) => {
+          release = resolve;
+        }),
+    },
+  ];
+  f.file.emit('change');
+  await settle();
+  await f.click('Cancel recovery');
+  release(JSON.stringify(checkpoint(250)));
+  await settle();
+  assert.equal(notices.length, 1, 'cancelled restore retains observations');
+});
 
 test('live autosave keeps one pending write, records the captured tick, and never pauses flight', async (t) => {
   let resolveSave;
