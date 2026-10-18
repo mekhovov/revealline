@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import {
+  AIRCRAFT_CATALOG_REVISION,
   listAircraftPresets,
   getAircraftPreset,
   createPresetConfiguration,
@@ -35,10 +36,13 @@ test('the offline catalog contains distinct immutable aircraft, independently of
   }
 });
 
-test('catalog expansion preserves all twelve original complete default configurations byte for byte', () => {
-  // Captured before adding Mobula8. Covers physics, response, controller, camera,
+test('catalog expansion preserves all thirteen earlier complete default configurations byte for byte', () => {
+  // Original twelve captured before Mobula8; its hash captured before revision 3.
+  // Covers physics, response, controller, camera,
   // component baseline and pinned preset revision used by saved flight identities.
+  assert.equal(AIRCRAFT_CATALOG_REVISION, 3);
   const originalDefaults = {
+    'mobula8-analog-2023': 'bc4c49364de93e47ce91299188af56f8a89035d7d32f9d3e71868685056223c2',
     'air65-ii-racing-2026': 'bb0810c27292d9077c944fdf712c9e95ae841c9171ec4a04fe2eb0b4eb6733f4',
     'meteor75-analog-2022': 'f787e79d44ce7ed83843ac962f6ec6c7daf3268cc45c3a14c5ef8bbc081f94c7',
     'meteor75-pro-matrix': '35b1edd5860c1e93c61695baf311a526ca13630abdd72a6c34d0fb7415c569f0',
@@ -83,6 +87,78 @@ test('Mobula8 freezes the analog SPI ELRS components and explicit reference batt
   assert.equal(configuration.aircraft.mass, 0.0691);
   assert.equal(configuration.aircraft.geometry.propellerRadius, 0.026085);
   assert.doesNotMatch(JSON.stringify(configuration), /happymodel\.cn|X12 ELRS|Caddx/);
+});
+
+test('historical Cetus X keeps reviewer dry mass separate from a calculated series-cell inventory', () => {
+  const p = getAircraftPreset('cetus-x-betaflight-2022');
+  const c = createPresetConfiguration(p.id);
+  assert.equal(p.revision, 1);
+  assert.match(p.variant, /2022.*Betaflight SPI ELRS.*original 30C/);
+  assert.equal(p.components[0].massGrams, 56);
+  assert.equal(p.evidence.assembledMass.kind, 'reviewer-reported');
+  assert.match(p.sources[p.evidence.assembledMass.sources[0]].url, /oscarliang/);
+  assert.match(p.evidence.assembledMass.note, /Manufacturer lists 55 g/);
+  assert.match(p.evidence.assembledMass.note, /rounded 81 g/);
+  assert.equal(p.battery.massGrams, 2 * 12.7);
+  assert.deepEqual(p.battery.assembly, {
+    series: 2,
+    parallel: 1,
+    cellCapacityMah: 450,
+    cellMassGrams: 12.7,
+  });
+  assert.equal(p.evidence.batteryMass.kind, 'calculated');
+  assert.equal(p.evidence.flyingMass.kind, 'calculated');
+  assert.equal(p.flyingMassGrams, 81.4);
+  assert.equal(c.aircraft.mass, 0.0814);
+  assert.equal(c.aircraft.battery.capacityAh, 0.45, 'series capacity must not become 0.9 Ah');
+  assert.equal(c.aircraft.battery.nominalVoltage, 7.6);
+  assert.equal(c.aircraft.battery.fullVoltage, 8.7);
+  assert.equal(c.components.reference.batteryMassGrams, 25.4);
+  assert.equal(c.components.reference.capacityMah, 450);
+  assert.equal(p.propellerDiameterMm, 50.3);
+  assert.match(p.hardware.camera, /Caddx Nano Ant \/ Runcam Nano 4/);
+  assert.match(p.notice.en, /no proprietary Cetus hold modes/);
+  assert.doesNotMatch(JSON.stringify(c), /oscarliang|Caddx|reviewer/);
+});
+
+test('Protos explicitly marks inferred inclusive mass and uses its pack-specific voltage bounds', () => {
+  const p = getAircraftPreset('protos-16-aio-1-0');
+  const c = createPresetConfiguration(p.id);
+  assert.equal(p.revision, 1);
+  assert.equal(p.components[0].massGrams, 62.5);
+  assert.equal(p.battery.massGrams, 41.9);
+  assert.equal(p.flyingMassGrams, 104.4, 'the included pack must not be added to 104.4 g twice');
+  assert.equal(p.evidence.assembledMass.kind, 'calculated');
+  assert.equal(p.evidence.batteryMass.kind, 'manufacturer');
+  assert.equal(p.evidence.flyingMass.kind, 'inferred');
+  assert.match(p.evidence.assembledMass.note, /tolerance bound is 2.0 g/);
+  assert.match(p.evidence.flyingMass.note, /without battery-inclusion basis/);
+  assert.match(p.notice.en, /Stock Protos position\/height hold.*not reproduced/);
+  assert.match(
+    p.evidence.controller.note,
+    /factory curves, latency and PID behavior are unsupported/,
+  );
+  assert.equal(c.aircraft.mass, 0.1044);
+  assert.equal(c.aircraft.battery.chemistry, 'Li-ion');
+  assert.equal(c.aircraft.battery.capacityAh, 0.84);
+  assert.equal(c.aircraft.battery.nominalVoltage, 7.6);
+  assert.ok(
+    Math.abs(c.aircraft.battery.nominalVoltage * c.aircraft.battery.capacityAh - 6.384) < 1e-12,
+  );
+  assert.equal(
+    c.aircraft.battery.fullVoltage,
+    8.5,
+    'the 8.70 V operating limit is not full charge',
+  );
+  assert.equal(c.aircraft.battery.emptyVoltage, 6);
+  assert.equal(p.evidence.nominalVoltage.kind, 'calculated');
+  assert.equal(p.evidence.fullVoltage.kind, 'manufacturer');
+  assert.equal(p.evidence.batteryElectrical.kind, 'estimated');
+  assert.equal(p.starterMaximumRate, 500);
+  assert.equal(c.response.rates.algorithm, 'actual');
+  assert.equal(c.aircraft.battery.depletion, false);
+  assert.deepEqual(p.envelopeMm, { width: 110, height: 41, length: 102.8 });
+  assert.doesNotMatch(JSON.stringify(c), /shopify|WE are FPV|Ascent/);
 });
 
 test('documented assembled masses count installed cameras, motors and batteries once', () => {
