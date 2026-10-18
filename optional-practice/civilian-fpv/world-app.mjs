@@ -9046,7 +9046,7 @@ export function mountWorldApp({
       const entry =
         tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
       tuningReturnEntry = null;
-      if (entry) void startFlight(entry).catch(reportError);
+      if (entry) void startFlight(entry, { paused: true }).catch(reportError);
     },
     onTest(configuration) {
       if ($('sim-settings').open) closeSettings({ force: true });
