@@ -14,12 +14,11 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "F11a authored export blocker",
-    "F05 rebase and exact-head review",
-    "F82 retired diagnostic registration blocker",
-    "F01 Capture context",
-    "F15b audio warning ownership",
+    "Merge-ready exact-head gates",
+    "F82 rebase after CI predecessor",
+    "F01 remaining hosts",
     "F11b guided restore",
+    "F15b menu animation",
     "F12 Community readiness",
     "F06"
   ],
@@ -181,13 +180,15 @@
         },
         {
           "id": "audio-warning-ownership",
-          "status": "developing",
-          "evidence": "Clear a stale save warning only while the successful retry still owns it; verify adapter readback."
+          "status": "ready_for_checks",
+          "evidence": "119focused tests and all source/generator gates pass; two unrelated keyboard assertions reproduce clean base. Actual Solo host with modeled storage confirms own-warning clear, newer-notice preservation and localized silent-write failure. Artwork fallback obscured player footer; no full notice presentation or acoustic claim.",
+          "pr": "https://github.com/mekhovov/revealline/pull/1632",
+          "commit": "c665620564968e805afc875e2d2b76997b070854"
         },
         {
           "id": "menu-animation",
-          "status": "planned",
-          "dependency": "continuous-play shared feedback API merged"
+          "status": "developing",
+          "dependency": "Explicit draft stack on PR1629; rebase after merge"
         },
         {
           "id": "demo-settings",
@@ -204,7 +205,7 @@
       "impact": "H/H",
       "effort": "**0.5–1.5d**",
       "featureId": "F05",
-      "status": "draft_review",
+      "status": "ready_for_checks",
       "owner": "lane-a",
       "qualification": {
         "automated": "focused_passed_with_documented_baseline_failures",
@@ -213,12 +214,13 @@
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1622",
-      "commit": "039cc6fc6eea9d11801555b667aa6f13f94d583c",
-      "next": "Independent exact-head review and required CI; qualify remaining integration boundaries separately.",
+      "commit": "f25a2121d8026f357b4e495959c28d5972b0a4e9",
+      "next": "Exact-head CI and merge reconciliation; rebase source gates passed.",
       "evidence": [
         "90 title-entry/mode/operation checks and 68 menu/controller checks pass; lint, validation and changed-file formatting pass.",
         "Actual browser: saved Continue identifies Prologue / First return / Solo, verifies then resumes the flight; Pause → Home changes copy to paused-flight resume. Native window inspection only.",
-        "Nine companion suite failures reproduce on clean 20555cd (old Sound selectors, craft feedback, save timestamps, old FPV link and mission localization). No waiver or pass claimed."
+        "Nine companion suite failures reproduce on clean 20555cd (old Sound selectors, craft feedback, save timestamps, old FPV link and mission localization). No waiver or pass claimed.",
+        "Rebased onto461ace72; official locale build,90title,68menu/controller,full lint/validate and changed-format pass. Independent source review retained browser receipt."
       ]
     },
     {
@@ -382,6 +384,20 @@
       "next": "Capture-scoped family/mode context using existing Home and library owners; inventory other hosts before claiming full coverage.",
       "evidence": [
         "Mission library already owns focus-only selection, launch and Back; Overflight already groups Survival/Raid operations. Extend existing owners; do not introduce a second chooser or rename established game identities."
+      ],
+      "implementationSlices": [
+        {
+          "id": "capture-context",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1634",
+          "commit": "201f230729ea98b4bc9fca33e6eb5001182c426e",
+          "evidence": "161focused checks+full lint/validate;13broader legacy return assertions reproduce clean461ace. Browser review in progress."
+        },
+        {
+          "id": "remaining-hosts",
+          "status": "developing",
+          "evidence": "Snake, Team/Duel, Hunt and SIM qualification pending; preserve existing Overflight context and identities."
+        }
       ]
     },
     {
@@ -693,7 +709,7 @@
         "browser": "scoped_startup_recovery_passed",
         "physical": "not_tested"
       },
-      "blocker": "Expired PR1544 one-shot diagnostic workflows register skipped sustained checks; strict merge controller rejects them.",
+      "blocker": "Retired diagnostic registration fix PR1633 is ready; rebase F82 after predecessor merge and rerun all exact-head gates.",
       "pr": "https://github.com/mekhovov/revealline/pull/1616",
       "commit": "d706a1280248ffd61fadc1a05f92f58c91db1090",
       "next": "Resolve retired workflow registration separately, then rebase and rerun exact-head gates. Keep prepared deployment and physical acceptance separate.",
@@ -820,21 +836,22 @@
       "impact": "H/H",
       "effort": "**3–4d**",
       "featureId": "F11",
-      "status": "developing",
+      "status": "ready_for_checks",
       "owner": "lane-b",
       "qualification": {
-        "automated": "focused_passed_before_browser_blocker",
-        "browser": "blocker_found",
+        "automated": "focused_and_source_gates_passed",
+        "browser": "actual_authored_archive_download_passed",
         "physical": "not_tested"
       },
-      "blocker": "Default authored Journey rejects the legacy backup set. Explicit authored media-only archive owner fix in development.",
+      "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1627",
-      "commit": "f67d5fde12b6138b290932a4d50b5bce530e0d64",
-      "next": "Finish authored-owner fix, rerun actual default-Journey export review, then start F11b.",
+      "commit": "f2e25d78afee2f2e537a0602eafc569f8ff8c2be",
+      "next": "Exact-head CI and merge; F11b builds explicitly on this archive format.",
       "evidence": [
         "Start from current main including merged PR1608 Journey exportAsync. Existing four domain files plus coverage do not by themselves include Journey; inventory must declare actual coverage.",
         "80 initial archive/Journey/export tests and gates passed; actual default Whole Spatial Home → Settings → Progress → Saves exposed authored legacy-backup guard.",
-        "Fix omits incompatible legacy game-data JSON explicitly while retaining shared-media and Journey exports. Preserve legacy import guards; arbitrary storage failures must still fail."
+        "Fix omits incompatible legacy game-data JSON explicitly while retaining shared-media and Journey exports. Preserve legacy import guards; arbitrary storage failures must still fail.",
+        "Corrected authored owner:82focused checks+full source gates pass. Actual default Journey prepared and downloaded11,679-byte ZIP; system CRC clean and all5 manifest members match recorded sizes/SHA256. Explicit legacy/unfinished-flight exclusions and restore order inspected. No device claim."
       ]
     },
     {
@@ -845,18 +862,20 @@
       "impact": "H/H",
       "effort": "**3–6d**; F11a",
       "featureId": "F11",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": null,
+      "blocker": "Stacked on PR1627 until merge/rebase.",
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Bounded ZIP inspection, native component extraction and ordered existing import reviews; never claim automatic or completed restore from extraction.",
+      "evidence": [
+        "14 initial parser tests pass for bounded ZIP records/paths/counts, CRC and manifest hashes. UI/lifecycle review in progress."
+      ]
     },
     {
       "id": "F14",
@@ -2511,6 +2530,22 @@
       "date": "2026-10-18",
       "item": "Delivery review",
       "reason": "Seven feature PRs ready for checks; authored archive blocker found in actual browser; F15b split into explicit owner slices. Disk pressure resolved by sparse checkout and removal of this task’s retained generated package after checksum receipts."
+    },
+    {
+      "date": "2026-10-18",
+      "item": "F11a/F15b/F01/CI",
+      "reason": "Authored archive browser blocker fixed and ZIP integrity verified; audio owner ready; Capture context draft; retired diagnostic trigger prerequisite isolated without active workflow changes."
+    }
+  ],
+  "deliveryDependencies": [
+    {
+      "id": "CI-retired-diagnostics",
+      "status": "ready_for_checks",
+      "priority": "P1",
+      "pr": "https://github.com/mekhovov/revealline/pull/1633",
+      "commit": "c9e6f0f09",
+      "scope": "Retire13expiredPR1544automatic diagnostic triggers; preserve exact original jobs and historical evidence. Active workflows unchanged; merge-controller and check policy unchanged.",
+      "evidence": "136focused tests pass; independent review, changedlint/format,YAMLsyntax. Isolated nonretired helper calls work without new module/fixture. Remote final-head registration remains to qualify."
     }
   ]
 }
