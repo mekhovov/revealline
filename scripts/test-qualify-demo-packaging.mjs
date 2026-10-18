@@ -5,6 +5,8 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
   demoPackagingRequirements,
+  readEmittedOfflineConfig,
+  fullReleaseOriginalPolicy,
   demoPackagingEmissionSources,
   isOfflineDiagnosticArtifact,
   qualifyDemoPackaging,
@@ -104,4 +106,46 @@ test('emitted source comparison excludes coverage summaries without losing nativ
   ];
   const entries = names.map((name) => ({ name, bytes: Buffer.from(name) }));
   assert.deepEqual(demoPackagingEmissionSources(entries), entries.slice(0, 5));
+});
+
+const workerTransport = (config) => [
+  {
+    name: 'service-worker.js',
+    bytes: Buffer.from(`(() => { const CONFIG = ${JSON.stringify(config)}; })();`),
+  },
+  { name: 'offline-cache.json', bytes: Buffer.from(JSON.stringify(config) + '\n') },
+];
+test('worker metadata parsing is non-executing, unambiguous and bound to the separate emitted configuration', () => {
+  const config = { files: [], downloadFiles: [] };
+  const [worker, cache] = workerTransport(config);
+  assert.deepEqual(readEmittedOfflineConfig(worker.bytes, cache.bytes), config);
+  for (const source of [
+    'const CONFIG = {"files":sideEffect()};',
+    'const CONFIG = {"files":[],"files":[]};',
+    'const CONFIG = {"__proto__":{},"files":[]};',
+    'const CONFIG = {}; function unrelated(){const CONFIG = {};}',
+    'let CONFIG = {};',
+    'const CONFIG = choose();',
+  ])
+    assert.throws(() => readEmittedOfflineConfig(Buffer.from(source), cache.bytes));
+  assert.throws(
+    () => readEmittedOfflineConfig(worker.bytes, Buffer.from('{"files":[]}')),
+    /configuration must match/,
+  );
+  assert.throws(() => readEmittedOfflineConfig(Buffer.from([0xff]), cache.bytes));
+});
+
+test('full release admits only workers without any omitted-original policy field', () => {
+  assert.deepEqual(fullReleaseOriginalPolicy(workerTransport({ files: [], downloadFiles: [] })), {
+    workerConfigMatchesCache: true,
+    omittedFieldAbsent: true,
+  });
+  for (const omittedSourceOriginals of [[], ['authoring/original.png'], null])
+    assert.throws(
+      () =>
+        fullReleaseOriginalPolicy(
+          workerTransport({ files: [], downloadFiles: [], omittedSourceOriginals }),
+        ),
+      /must not publish/,
+    );
 });

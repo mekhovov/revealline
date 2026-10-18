@@ -6,6 +6,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import {
   defaultBaselines,
+  omittedOriginalWorkerProof,
   demoNativeDependencyBytes,
   gnuTarSize,
   mainPagesAuditArguments,
@@ -157,4 +158,92 @@ test('only the existing mission-index compaction is admitted and semantic change
       source,
       'Authored native bytes are never normalized.',
     );
+});
+
+function workerFixture(mutate = () => {}) {
+  const originals = [
+    {
+      path: 'authoring/original.png',
+      owners: [{ fallbackPaths: ['native.json', 'native.media'] }],
+    },
+    { path: 'authoring/retained.png', owners: [{ fallbackPaths: ['other.json'] }] },
+  ];
+  const config = {
+    files: [],
+    downloadFiles: [{ path: 'native.json' }, { path: 'native.media' }],
+    omittedSourceOriginals: ['authoring/original.png'],
+  };
+  const entries = [
+    ...['native.json', 'native.media', 'authoring/retained.png'].map((name) => ({
+      name,
+      bytes: Buffer.from('body'),
+    })),
+  ];
+  mutate({ config, entries, originals });
+  entries.push(
+    {
+      name: 'service-worker.js',
+      bytes: Buffer.from(`(() => { const CONFIG = ${JSON.stringify(config)}; })();`),
+    },
+    { name: 'offline-cache.json', bytes: Buffer.from(JSON.stringify(config)) },
+  );
+  return { entries, originals };
+}
+test('emitted omitted-original inventory exactly covers actual omissions and retained offline fallback bodies', () => {
+  const f = workerFixture();
+  const report = omittedOriginalWorkerProof(f.entries, f.originals);
+  assert.equal(report.count, 1);
+  assert.equal(report.fallbackCount, 2);
+  assert.deepEqual(report.paths, ['authoring/original.png']);
+  assert.deepEqual(report.fallbackPaths, ['native.json', 'native.media']);
+  for (const mutate of [
+    (f) => delete f.config.omittedSourceOriginals,
+    (f) => (f.config.omittedSourceOriginals = []),
+    (f) => (f.config.omittedSourceOriginals = ['authoring/wrong.png']),
+    (f) => f.config.omittedSourceOriginals.push('authoring/original.png'),
+    (f) =>
+      f.entries.push({
+        name: 'authoring/original.png',
+        bytes: Buffer.from('unexpected retained body'),
+      }),
+    (f) => f.config.files.push({ path: 'authoring/original.png' }),
+    (f) => f.config.downloadFiles.push({ path: 'authoring/original.png' }),
+    (f) =>
+      f.entries.splice(
+        f.entries.findIndex((r) => r.name === 'native.media'),
+        1,
+      ),
+    (f) => f.config.downloadFiles.pop(),
+    (f) => (f.originals[0].owners[0].fallbackPaths = []),
+  ]) {
+    const changed = workerFixture(mutate);
+    assert.throws(() => omittedOriginalWorkerProof(changed.entries, changed.originals));
+  }
+  assert.deepEqual(
+    mainPagesAuditFailures({
+      ...goodReport(),
+      omittedOriginalWorker: { error: 'wrong emitted list' },
+    }),
+    ['wrong emitted list'],
+  );
+});
+
+test('a profile with no original omissions requires the optional worker field to stay absent', () => {
+  const keepAll = (f) => {
+    delete f.config.omittedSourceOriginals;
+    f.entries.push({ name: 'authoring/original.png', bytes: Buffer.from('original') });
+  };
+  const f = workerFixture(keepAll);
+  const report = omittedOriginalWorkerProof(f.entries, f.originals);
+  assert.equal(report.count, 0);
+  assert.deepEqual(report.paths, []);
+  assert.deepEqual(report.fallbackPaths, []);
+  const invalid = workerFixture((f) => {
+    keepAll(f);
+    f.config.omittedSourceOriginals = [];
+  });
+  assert.throws(
+    () => omittedOriginalWorkerProof(invalid.entries, invalid.originals),
+    /when no originals are removed/,
+  );
 });

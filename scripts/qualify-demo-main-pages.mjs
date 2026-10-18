@@ -9,9 +9,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { classicDemoSourcePaths } from './demo-native-dependencies.mjs';
 import { projectDefaultRuntimeMetadata } from './default-runtime-metadata.mjs';
-import { prepareBuildProject } from './game-cli.mjs';
+import { prepareBuildProject, collectBuildFiles, readBuildConfig } from './game-cli.mjs';
 import { parse } from '../publishing/vendor/acorn-8.18.0.mjs';
-import { demoPackagingRequirements } from './qualify-demo-packaging.mjs';
+import { demoPackagingRequirements, readEmittedOfflineConfig } from './qualify-demo-packaging.mjs';
 import { SOLO_BUILTIN_DEMO_INDEX } from '../game/demo-modes/solo-builtins-index.mjs';
 import { loadAuthoredJourneyRoute } from '../game/content-design/route-loader.mjs';
 import { SURVIVAL_DEMO_RUNTIME_VARIANTS } from '../game/demo-modes/survival-runtime-variants.mjs';
@@ -58,8 +58,68 @@ export async function demoNativeDependencyBytes(name, bytes) {
   return entries[0].bytes;
 }
 
+/** Compare the actual worker policy against source originals present in build
+ * inputs but absent from the emitted profile, independently of its callback. */
+export function omittedOriginalWorkerProof(entries, originals) {
+  const byPath = new Map(entries.map((entry) => [entry.name, entry]));
+  const config = readEmittedOfflineConfig(
+    byPath.get('service-worker.js').bytes,
+    byPath.get('offline-cache.json').bytes,
+  );
+  const omitted = originals.filter((row) => !byPath.has(row.path));
+  const expected = omitted.map((row) => row.path).sort();
+  if (expected.length)
+    assert.deepEqual(
+      config.omittedSourceOriginals,
+      expected,
+      'Worker omitted-original inventory must exactly match emitted omissions.',
+    );
+  else
+    assert.equal(
+      Object.hasOwn(config, 'omittedSourceOriginals'),
+      false,
+      'Worker must omit its original-omission policy when no originals are removed.',
+    );
+  const registered = new Set(
+    [...(config.files ?? []), ...(config.downloadFiles ?? [])].map((row) => row.path),
+  );
+  for (const name of expected)
+    assert.ok(
+      !byPath.has(name) && !registered.has(name),
+      `Omitted original collides with retained/offline content: ${name}`,
+    );
+  const fallbackPaths = [
+    ...new Set(
+      omitted.flatMap((row) => {
+        assert.ok(
+          row.owners.length && row.owners.every((owner) => owner.fallbackPaths.length),
+          `Omitted original needs native fallback owners: ${row.path}`,
+        );
+        return row.owners.flatMap((owner) => owner.fallbackPaths);
+      }),
+    ),
+  ].sort();
+  for (const name of fallbackPaths) {
+    assert.ok(byPath.has(name), `Omitted-original fallback is not retained: ${name}`);
+    assert.ok(
+      registered.has(name),
+      `Omitted-original fallback is not registered for offline use: ${name}`,
+    );
+  }
+  return {
+    workerConfigMatchesCache: true,
+    inventoryMatchesRemovedOriginals: true,
+    count: expected.length,
+    paths: expected,
+    fallbackCount: fallbackPaths.length,
+    fallbackPaths,
+    collisions: [],
+  };
+}
+
 export function mainPagesAuditFailures(report) {
   const errors = [];
+  if (report.omittedOriginalWorker?.error) errors.push(report.omittedOriginalWorker.error);
   if (!report.headStable || !report.sourceStable)
     errors.push('Source or HEAD changed during qualification.');
   for (const [key, label] of [
@@ -391,12 +451,13 @@ export async function qualifyDemoMainPages({
   );
   const currentArt = (await import('../game/presentation/current-art-sources.mjs'))
     .CURRENT_ART_SOURCES;
+  const sourceInputPaths = new Set(await collectBuildFiles(root, await readBuildConfig(root)));
   const originals = [...new Set(currentArt.map((r) => r.sourceImagePath).filter(Boolean))]
-    .filter((p) => baselineByPath.has(p))
+    .filter((p) => sourceInputPaths.has(p))
     .map((p) => ({
       path: p,
-      bytes: baselineByPath.get(p).bytes,
-      sha256: baselineByPath.get(p).sha256,
+      bytes: currentArt.find((row) => row.sourceImagePath === p).image.bytes,
+      sha256: currentArt.find((row) => row.sourceImagePath === p).image.sha256,
       retained: finalEntries.has(p),
       sourcePresent: true,
       owners: currentArt
@@ -416,6 +477,12 @@ export async function qualifyDemoMainPages({
       for (const owner of original.owners)
         for (const p of owner.fallbackPaths)
           assert.ok(finalEntries.has(p), `Retained native source fallback ${p}`);
+  }
+  let omittedOriginalWorker;
+  try {
+    omittedOriginalWorker = omittedOriginalWorkerProof(project.entries, originals);
+  } catch (error) {
+    omittedOriginalWorker = { error: String(error.message) };
   }
   const after = await fingerprint(),
     buildAfter = await fingerprint(['scripts', 'authoring']);
@@ -495,6 +562,7 @@ export async function qualifyDemoMainPages({
       removed,
     },
     sourceOriginals: originals,
+    omittedOriginalWorker,
     limitations: [
       'This is a complete in-memory staged-file candidate with actual metadata producers, not upload or deployment admission. The archive figure is a baseline-calibrated GNU tar size model.',
       'Native dependency audit covers catalog-selected authored Classic source bodies and base artwork, exact Journey full-source snapshots and selected backgrounds, plus literal demo module imports; dynamic data-driven asset transport remains independently qualified.',

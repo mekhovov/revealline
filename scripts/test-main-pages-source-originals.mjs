@@ -190,3 +190,34 @@ test('an image pin cannot redirect the original identity or use the omitted orig
     );
   }
 });
+
+test('omitted-original callback reports only actual admitted removals and is absent for complete releases', () => {
+  const f = fixture(),
+    observed = [];
+  applyPublicationProfile(f.entries, f.catalogue, 'main-pages', null, {
+    onOmittedSourceOriginals(paths) {
+      observed.push(paths);
+    },
+  });
+  assert.deepEqual(observed, [[f.original.name]]);
+  for (const name of observed[0]) {
+    assert(!f.entries.some((entry) => entry.name === name));
+    assert(!f.catalogue.files.some((file) => file.path === name));
+  }
+  observed[0].push('authoring/observer-only.png');
+  const next = fixture(),
+    second = [];
+  applyPublicationProfile(next.entries, next.catalogue, 'main-pages', null, {
+    onOmittedSourceOriginals(paths) {
+      second.push(paths);
+    },
+  });
+  assert.deepEqual(second, [[next.original.name]], 'Invocation output is locally owned.');
+  const complete = fixture();
+  applyPublicationProfile(complete.entries, complete.catalogue, null, null, {
+    onOmittedSourceOriginals() {
+      assert.fail('Complete releases do not declare omissions.');
+    },
+  });
+  assert(complete.entries.some((entry) => entry.name === complete.original.name));
+});
