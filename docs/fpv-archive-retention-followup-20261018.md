@@ -28,6 +28,22 @@ The existing [16 October storage-owner audit](fpv-public-storage-owner-audit-202
 
 A separate [finite memory-only transaction experiment](fpv-archive-retention-memory-20261018.json) populated sixteen archives with thirty-two segments. An injected final-budget-write failure rolled back the selected deletion; reopening retained all original manifests and segments exactly. Ten later explicit successful deletions and reopening retained exactly the six other archives and twelve segments. This supports transaction isolation in the modeled implementation; it does not reproduce native disk, eviction, storage-context replacement or the public inventory loss.
 
+## Later non-destructive local observation
+
+A separate source-preview tab on `cf13bcad9a59a387be7c31c9af8d30d74e7c1860`
+saved a Cetus X archive labeled
+`World · 2026-10-18T18:50:32.960Z · 0:00–1:04 · finished` and verified it from
+reset. After an ordinary reload of that same tab, its manifest remained visible
+and complete verification passed again. Opening the recording controls in an
+unarmed draft created no additional archive. No deletion or tuning-library save
+was performed. [Flight receipt](fpv-flight-continuation-20261018.md).
+
+That newly opened tab initially required the password again and exposed a
+different inventory from a previously closed local test tab. Their native
+storage-context relationship is unknown. This positive same-tab result does not
+account for the six protected public records or establish durability across
+contexts, interruption, eviction or disk pressure.
+
 ## Remaining diagnostic gates
 
 The UI correction now removes only a confirmed deleted row from its cached list

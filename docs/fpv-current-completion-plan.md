@@ -1,6 +1,6 @@
 # SIM completion plan — current status and remaining work
 
-Reviewed **18 October 2026, 20:43 CEST (Europe/Berlin)**. This is the current
+Reviewed **18 October 2026, 21:00 CEST (Europe/Berlin)**. This is the current
 execution index for the accepted rates, aircraft and Setup Workbench plans.
 It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
@@ -35,8 +35,15 @@ cleanly onto main `461ace72e78f8cbd77c26549381d9e21d0a65e91`. The following work
 [PR #1626](https://github.com/mekhovov/revealline/pull/1626), final source
 `cf13bcad9a59a387be7c31c9af8d30d74e7c1860`.
 
-Candidate and optional-practice checks are running; remaining source/feature
-checks are receiving runners. An obsolete cancelled run's always-run aggregate
+The hosted candidate checks passed on the exact PR source, including **1,364/1,364**
+primary checks. The optional-practice integration run passed **1,221/1,221**
+practice and **10/10** pointer checks; observers reported **170 pass, zero fail,
+one skip** because their historical fixture bundle was absent. That optional run
+is bound to merge-integration source `8fc952b7a0beb70b3065663e4b5390feb209d490`,
+not the isolated PR head. Focused source and remaining feature checks still
+await runners. The PR is ready for ordinary protected reconciliation; no enqueue
+label or GitHub auto-merge request is required by this repository's controller.
+An obsolete cancelled run's always-run aggregate
 had blocked the source lane and was force-cancelled; the final source still must
 pass its own normal checks. No final-source gate was waived. Repository
 `REVEALLINE_FULL_CI=false` means the broader deferred lint/test gates must not be
@@ -71,6 +78,13 @@ presets launched and steered in both modes through the World workbench. The
 Meteor75 Pro ceiling contact and gentler retest. Archive-full status did not stop
 the remaining flights. These short checks advance R1; longer representative
 routes and acceptance on a frozen public release remain.
+
+Additional source-preview checks exercised X650 in Circuit stadium (25.54 s) and
+Cetus X in Open meadow (72.76 s). These were unscored draft flights, not completed
+course objectives. The Cetus archive finished through 64.50 s, verified from reset,
+survived a normal same-tab reload and verified again. No archive deletion or
+saved-library change was performed. [Detailed limits](fpv-flight-continuation-20261018.md).
+The older missing inventory remains unresolved.
 
 ## Delivered and retained
 
@@ -163,6 +177,17 @@ R6–R12 to improve released practice.
 
 ### R6 software and evidence follow-up
 
+A separate exact-component correction is committed as
+`48373316b65bf14e3731569e9de9296fcdb553d0` on
+`codex/fpv-nazgul-diameter-20261018`, not yet published. The Nazgul V1.1 aircraft
+specifies F5 props; the matched manufacturer SKU specifies **5.1 inches**, or
+**129.54 mm**, rather than the previous 127 mm class-based value. New preset
+revision 2 corrects the radius; the older saved configurations and both recording
+backends retain their dimensions and hashes. **32/32** targeted checks and
+independent review pass. The other fourteen aircraft are numerically unchanged.
+The correction deliberately preserves the existing estimated reaction torque;
+a dimensional specification does not supply a propulsion measurement.
+
 The exact Meteor75 reference remains **0802SE 19500KV, 40 mm two-blade props and
 BT2.0 1S 450 mAh**. The [manufacturer battery page](https://betafpv.com/products/bt2-0-450mah-1s-30c-battery-4pcs)
 provides an image of voltage versus time under a constant 11 A discharge. It is
@@ -185,6 +210,12 @@ This is a local numerical prerequisite with no UI/runtime integration, external
 measurement bundle or catalog change. It does not delay PR #1626, activate measured
 aircraft physics or close R6. Inspector integration, command/voltage surfaces,
 allocation, versioned runtime integration and real measurements still remain.
+
+Non-activating inspector integration is now in progress on that follow-up branch:
+manual circuit assumptions, an explicit DC-input-current declaration and a
+user-requested calculation against the imported eligible voltage sweep. It has
+no aircraft write path or measured-default claim. Targeted UI, packaging and
+independent review gates must pass before this is marked implemented or released.
 
 ## Blockers, concerns and scope boundaries
 
