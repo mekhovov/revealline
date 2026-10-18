@@ -45,6 +45,9 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] #settings-dial
   padding: 16px;
   overflow: auto;
 }
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #settings-dialog > h2 {
+  max-inline-size: 100%;
+}
 html[data-text-scaling='solo']
   body[data-text-size='extra-large']
   #settings-dialog
@@ -81,10 +84,127 @@ html[data-text-scaling='solo']
   :is(.home-content, .menu-copy) {
   width: min(900px, 100%);
 }
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #shell-home .game-mode-choice {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #shell-home
+  .native-menu-utilities {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  grid-auto-flow: row;
+}
 html[data-text-scaling='solo']
   body[data-text-size='extra-large']
   :is(.mission-current-actions, .reading-toolbar, .reading-actions) {
   flex-wrap: wrap;
+}
+
+/* The chooser retains its existing list scroll and focus owner. Its outer
+ * scroll reaches full-width controls; enlarged cards grow with their text. */
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #journey-chooser[open] {
+  display: block;
+  block-size: auto;
+  overflow: auto;
+  scroll-padding-block: 12px;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #journey-chooser .journey-cards {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  grid-auto-rows: auto;
+  min-block-size: min(18rem, 48dvh);
+  max-block-size: max(18rem, 48dvh);
+  overflow: auto;
+  margin-block: 12px;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #journey-chooser .journey-card {
+  grid-template-rows: auto auto auto auto 7rem;
+  block-size: auto;
+  min-block-size: 0;
+  max-block-size: none;
+  overflow: visible;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-card
+  > strong {
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  :is(.journey-card-campaign, .journey-card-progress, .journey-card-action) {
+  white-space: normal;
+  text-overflow: clip;
+  overflow: visible;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-card-action:not([hidden]) {
+  position: static;
+  grid-column: 1 / -1;
+  max-inline-size: 100%;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  :is(.journey-filters, .journey-search-controls) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  :is(.journey-search-field, .journey-filter-details, #journey-search-clear) {
+  grid-column: auto;
+  grid-row: auto;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-search-field
+  > .journey-filter-label {
+  position: static;
+  inline-size: auto;
+  block-size: auto;
+  clip-path: none;
+  overflow: visible;
+  white-space: normal;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  :is(.journey-filter-options, .mission-library-setup > .mission-picker-setup-fields) {
+  position: static;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: none;
+  overflow: visible;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #journey-chooser .journey-footer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  grid-auto-flow: row;
+  overflow: visible;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #journey-chooser .journey-goal {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr);
+  min-inline-size: 0;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #journey-chooser
+  .journey-goal-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  grid-auto-flow: row;
 }
 
 /* Enlarged live information occupies document flow instead of covering the
@@ -123,7 +243,7 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] .telemetry {
   inset: auto;
   transform: none;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   inline-size: 100%;
   block-size: auto;
   min-block-size: 0;
@@ -138,8 +258,8 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] .telemetry > d
   border: 0;
 }
 html[data-text-scaling='solo'] body[data-text-size='extra-large'] .telemetry :is(strong, #target) {
-  white-space: normal;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow-wrap: normal;
 }
 html[data-text-scaling='solo'] body[data-text-size='extra-large'] #arena-shell {
   position: relative;
@@ -187,6 +307,7 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] .reaction-live
 }
 /* The pause/result controls are independent of the board's visible size. */
 html[data-text-scaling='solo'] body[data-text-size='extra-large'] #game-overlay:not([hidden]) {
+  display: block;
   position: fixed;
   inset: max(8px, var(--safe-top, 0px)) max(8px, var(--safe-right, 0px))
     max(8px, var(--safe-bottom, 0px)) max(8px, var(--safe-left, 0px));
@@ -194,17 +315,40 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] #game-overlay:
   max-block-size: none;
   padding: 16px;
   overflow: auto;
-  align-items: safe center;
+  scroll-padding-block: 16px;
+  overscroll-behavior: contain;
   z-index: 20;
 }
 html[data-text-scaling='solo'] body[data-text-size='extra-large'] #game-overlay > .overlay-card {
+  box-sizing: border-box;
+  display: block;
+  inline-size: min(900px, 100%);
   max-inline-size: 900px;
+  block-size: auto;
+  min-block-size: 0;
   max-block-size: none;
+  margin-inline: auto;
+  overflow: visible;
   flex: 0 0 auto;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #overlay-reading {
+  block-size: auto;
+  min-block-size: 0;
+  max-block-size: none;
+  overflow: visible;
+  flex: none;
 }
 html[data-text-scaling='solo']
   body[data-text-size='extra-large']
-  :is(.pause-command-grid, [data-pause-group='missions'] .pause-command-grid) {
+  #game-overlay
+  :is(.overlay-actions, .pause-menu-section, .pause-secondary-groups) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #game-overlay
+  :is(.pause-action-grid, .pause-command-grid, [data-pause-group='missions'] .pause-command-grid) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
@@ -223,6 +367,12 @@ html[data-text-scaling='solo']
   }
   html[data-text-scaling='solo'] body[data-text-size='extra-large'] .dialog-actions > button {
     flex: 1 1 100%;
+  }
+  html[data-text-scaling='solo']
+    body[data-text-size='extra-large']
+    #game-overlay
+    :is(.pause-action-grid, .pause-command-grid) {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
