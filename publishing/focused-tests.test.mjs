@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
 import { readFile, writeFile, mkdtemp, mkdir, rm, rename } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { spawnSync } from 'node:child_process';
+import { spawn, spawnSync } from 'node:child_process';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -518,7 +518,8 @@ test('fallback validation receives its bounded thirty-minute budget without wide
       stdout: { write() {} },
       stderr: { write() {} },
       spawnChild(command, args, options) {
-        calls.push([command, args, options.timeout, options.killSignal]);
+        calls.push([command, args, options.killSignal]);
+        assert.equal(options.timeout, undefined, 'One runner-owned deadline, no second timer');
         const child = new EventEmitter();
         setImmediate(() => child.emit('close', args.includes('validate') ? 7 : 0, null));
         return child;
@@ -526,8 +527,8 @@ test('fallback validation receives its bounded thirty-minute budget without wide
     },
   );
   assert.deepEqual(calls, [
-    ['npm', ['run', 'validate'], 1800000, 'SIGTERM'],
-    ['node', ['ordinary'], 600000, 'SIGTERM'],
+    ['npm', ['run', 'validate'], 'SIGTERM'],
+    ['node', ['ordinary'], 'SIGTERM'],
   ]);
   assert.equal(summary.exitCode, 7);
   assert.deepEqual(
@@ -568,6 +569,144 @@ test('bounded parallel focused execution retains every command verdict', async (
   );
   assert.equal(summary.exitCode, 9);
   assert.equal(maximumActive, 2, 'independent commands use the bounded worker pool');
+});
+
+test('parallel focused deadlines remain explicit when a real child handles SIGTERM', async (t) => {
+  const root = await mkdtemp(path.join(os.tmpdir(), 'focused-deadline-'));
+  t.after(() => rm(root, { recursive: true, force: true }));
+  const unfinished = path.join(root, 'unfinished.test.mjs');
+  await writeFile(
+    unfinished,
+    "import test from 'node:test'; test('unfinished', async () => { console.log('focused-child-ready'); await new Promise(() => setInterval(() => {}, 1000)); });\n",
+  );
+  for (const [id, args] of [
+    ['node-test', ['--test', unfinished]],
+    [
+      'handled-one',
+      [
+        '-e',
+        "process.on('SIGTERM', () => process.exit(1)); console.log('focused-child-ready'); setInterval(() => {}, 1000)",
+      ],
+    ],
+    [
+      'handled-zero',
+      [
+        '-e',
+        "process.on('SIGTERM', () => process.exit(0)); console.log('focused-child-ready'); setInterval(() => {}, 1000)",
+      ],
+    ],
+  ]) {
+    // Test-only readiness avoids assigning a deadline to variable Node startup.
+    // The runner still owns the sole command timer after receiving the child.
+    const env = { ...process.env };
+    delete env.NODE_TEST_CONTEXT;
+    const child = spawn(process.execPath, args, { env, stdio: ['ignore', 'pipe', 'ignore'] });
+    t.after(() => {
+      if (child.exitCode === null && child.signalCode === null) child.kill('SIGTERM');
+    });
+    await new Promise((resolve, reject) => {
+      let output = '';
+      const finish = (error) => {
+        clearTimeout(timer);
+        child.stdout.off('data', ready);
+        child.off('error', failed);
+        child.off('close', closed);
+        if (error) {
+          child.kill('SIGTERM');
+          reject(error);
+        } else resolve();
+      };
+      const failed = (error) => finish(error),
+        closed = () => finish(new Error('Tiny child exited before readiness')),
+        ready = (bytes) => {
+          output += bytes.toString();
+          if (Buffer.byteLength(output) > 8192) finish(new Error('Tiny child output bound'));
+          else if (output.includes('focused-child-ready')) finish();
+        };
+      const timer = setTimeout(() => finish(new Error('Tiny child readiness bound')), 5000);
+      child.stdout.on('data', ready);
+      child.once('error', failed);
+      child.once('close', closed);
+    });
+    child.stdout.resume();
+    const result = await runFocusedCommandsParallel(
+      [{ id, command: process.execPath, args, timeoutMs: 50 }],
+      {
+        stdout: { write() {} },
+        stderr: { write() {} },
+        spawnChild(command, args, options) {
+          assert.equal(command, process.execPath);
+          assert.equal(options.timeout, undefined, 'The runner owns the only deadline');
+          return child;
+        },
+      },
+    );
+    assert.equal(result.exitCode, 124, id);
+    assert.equal(result.failures.length, 1);
+    const failure = result.failures[0];
+    assert.equal(failure.timedOut, true, id);
+    assert.equal(failure.timeoutMs, 50);
+    assert.equal(failure.timeoutReason, 'command-deadline');
+    assert.equal(failure.status, id === 'handled-zero' ? 0 : 1);
+    assert.equal(failure.signal, null);
+    assert.equal(failure.error, null);
+  }
+});
+
+test('parallel focused ordinary failure and independent abort are not deadline failures', async () => {
+  const result = await runFocusedCommandsParallel(
+    [
+      { id: 'ordinary', command: process.execPath, args: ['-e', 'process.exit(1)'] },
+      {
+        id: 'independent-abort',
+        command: process.execPath,
+        args: ['-e', "process.kill(process.pid, 'SIGTERM')"],
+      },
+    ],
+    { timeoutMs: 5000, stdout: { write() {} }, stderr: { write() {} } },
+  );
+  assert.equal(result.exitCode, 1);
+  assert.deepEqual(
+    result.failures.map(({ id, status, signal, error }) => ({ id, status, signal, error })),
+    [
+      { id: 'ordinary', status: 1, signal: null, error: null },
+      { id: 'independent-abort', status: null, signal: 'SIGTERM', error: null },
+    ],
+  );
+  for (const failure of result.failures)
+    for (const field of ['timedOut', 'timeoutMs', 'timeoutReason'])
+      assert.equal(Object.hasOwn(failure, field), false);
+});
+
+test('parallel focused invalid per-command deadlines fail before spawning', async () => {
+  const values = [-1, 0, 0.5, '50', NaN, Infinity, 2 ** 32, Number.MAX_SAFE_INTEGER + 1];
+  let spawns = 0;
+  const result = await runFocusedCommandsParallel(
+    values.map((timeoutMs, index) => ({
+      id: `invalid-${index}`,
+      command: 'node',
+      args: [],
+      timeoutMs,
+    })),
+    {
+      stdout: { write() {} },
+      stderr: { write() {} },
+      spawnChild() {
+        spawns++;
+        throw new Error('Invalid timeout reached spawn');
+      },
+    },
+  );
+  assert.equal(spawns, 0);
+  assert.equal(result.attempted, values.length);
+  assert.equal(result.exitCode, 1);
+  assert.equal(result.failures.length, values.length);
+  for (const failure of result.failures) {
+    assert.match(failure.error, /timeout must be a positive 32-bit integer/);
+    assert.equal(failure.status, null);
+    assert.equal(failure.signal, null);
+    assert.equal(Object.hasOwn(failure, 'timedOut'), false);
+  }
 });
 
 test('parallel focused execution rejects invalid worker limits', async () => {
