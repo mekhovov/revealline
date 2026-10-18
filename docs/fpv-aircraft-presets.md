@@ -9,6 +9,9 @@ replace historical simulation or recording identities.
 Later archive, optional challenge and propulsion-evidence increments are tracked in
 [the implementation and evidence-gate record](fpv-aircraft-completion.md). This
 document retains the scope and measurements of the first playable release.
+For the current thirteen-aircraft catalog, backend follow-ups and open priorities,
+use the [current completion plan](fpv-current-completion-plan.md) and
+[all-aircraft flight audit](fpv-all-aircraft-flight-audit.md).
 
 ## First-release behavior
 

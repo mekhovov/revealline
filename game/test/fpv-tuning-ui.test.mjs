@@ -2469,21 +2469,21 @@ test('inspected commanded rate refreshes for exact stick, axis, algorithm and ed
   const f = fixture(t);
   const readout = () => f.ui.root.querySelector('[aria-label="Inspected rate"]').textContent;
   f.edit('Preview stick position · exact (%)', '100');
-  assert.equal(readout(), '100% · Roll 240.0 °/s');
+  assert.equal(readout(), '100% · Roll · Saved 240.0 °/s · Draft 240.0 °/s');
   f.edit('Maximum rate (°/s)', '360');
-  assert.equal(readout(), '100% · Roll 360.0 °/s');
+  assert.equal(readout(), '100% · Roll · Saved 240.0 °/s · Draft 360.0 °/s');
   f.edit('Rotation preview axis', 'yaw', { tag: 'select', event: 'change' });
-  assert.equal(readout(), '100% · Yaw 360.0 °/s');
+  assert.equal(readout(), '100% · Yaw · Saved 240.0 °/s · Draft 360.0 °/s');
   f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
-  assert.equal(readout(), '100% · Yaw 670.0 °/s');
+  assert.equal(readout(), '100% · Yaw · Saved 240.0 °/s · Draft 670.0 °/s');
   f.edit('Maximum rate (°/s)', '900', { scope: f.axis('Yaw') });
-  assert.equal(readout(), '100% · Yaw 900.0 °/s');
+  assert.equal(readout(), '100% · Yaw · Saved 240.0 °/s · Draft 900.0 °/s');
   f.edit('Preview stick position · exact (%)', '-100');
-  assert.equal(readout(), '-100% · Yaw -900.0 °/s');
+  assert.equal(readout(), '-100% · Yaw · Saved -240.0 °/s · Draft -900.0 °/s');
   f.edit('Preview stick position · exact (%)', '');
   assert.equal(
     readout(),
-    '-100% · Yaw -900.0 °/s',
+    '-100% · Yaw · Saved -240.0 °/s · Draft -900.0 °/s',
     'incomplete exact text retains last evaluated position',
   );
 });

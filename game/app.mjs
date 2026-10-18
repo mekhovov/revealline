@@ -101,7 +101,6 @@ import { publishedRouteViews } from './content-design/published-journey.mjs';
 import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
-import { attachJourneyChooser } from './ui/journey-chooser.mjs';
 import {
   resolveInstalledMissionTarget,
   installedMissionExecutionIndex,
@@ -13806,11 +13805,13 @@ try {
         committed = false;
       try {
         const [
+          { attachJourneyChooser },
           { createInstalledMissionLibrary },
           { publishedJourneyLibrarySources },
           { combineJourneyLibrarySources },
           { createDuel },
         ] = await Promise.all([
+          import('./ui/journey-chooser.mjs'),
           import('./mission-library/installed-library.mjs'),
           import('./mission-library/published-routes.mjs'),
           import('./mission-library/cross-mode-journey.mjs'),
