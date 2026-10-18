@@ -199,7 +199,7 @@ function radioProfile(pad) {
   };
 }
 
-test('Academy prepares a saved aircraft with exact geometry, course advice and continuous practice controls', async (t) => {
+test('Academy prepares a saved aircraft and waits for a pending flight step before explicit resume', async (t) => {
   const [tuning, presets, workers] = await Promise.all([
     import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
     import('../../optional-practice/civilian-fpv/aircraft-presets.mjs'),
@@ -217,15 +217,21 @@ test('Academy prepares a saved aircraft with exact geometry, course advice and c
     profileId: 'whoop-rates',
     rates: 'defaults',
   });
+  let worker;
   class Worker extends Events {
     constructor() {
       super();
+      worker = this;
       this.closed = false;
       this.handler = workers.createAdvancedWorkerHandler((data) => {
         if (!this.closed) this.emit('message', { data });
       });
     }
     postMessage(value) {
+      if (this.holdStep && ['step', 'propose'].includes(value.type)) {
+        this.pendingStep = value;
+        return;
+      }
       void this.handler.receive(value).finally(() => {
         if (this.closed) this.handler.dispose();
       });
@@ -263,6 +269,29 @@ test('Academy prepares a saved aircraft with exact geometry, course advice and c
   }
   assert.ok(h.view.snapshot().ticks > 0);
   assert.equal(h.view.snapshot().advancedTelemetry.usedAh, 0);
+  h.key('KeyW');
+  h.key('ArrowRight');
+  worker.holdStep = true;
+  h.tick();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.ok(worker.pendingStep);
+  h.view.pause();
+  assert.equal(h.view.arm(), false);
+  assert.equal(h.view.snapshot().status, 'paused');
+  assert.match(h.$('status').textContent, /Finishing the current flight step/);
+  worker.holdStep = false;
+  worker.postMessage(worker.pendingStep);
+  await new Promise((resolve) => setImmediate(resolve));
+  const paused = h.view.snapshot();
+  assert.ok(paused.lastInput.throttle > 0);
+  assert.equal(paused.status, 'paused', 'worker completion cannot arm on its own');
+  assert.equal(h.view.arm(), true);
+  for (let tick = 0; tick < 3; tick++) {
+    h.tick();
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.equal(h.view.snapshot().lastInput.throttle, paused.lastInput.throttle);
+  for (const axis of ['roll', 'pitch', 'yaw']) assert.equal(h.view.snapshot().lastInput[axis], 0);
   const challengeKind = h.doc.querySelector('[data-aircraft-challenge="kind"]'),
     challengeDuration = h.doc.querySelector('[data-aircraft-challenge="duration"]'),
     challengeRestart = h.doc.querySelector('[data-aircraft-challenge="restart"]');
@@ -390,6 +419,54 @@ test('unavailable recorded appearance remains visible after graphics preparation
   assert.equal(h.view.appearance().accepted.revision, 'missing-r2');
   assert.equal(h.view.exportAttempt().frames.length, 0);
   assert.deepEqual(h.deliveries, []);
+});
+
+test('Academy explicit keyboard resume keeps consumed throttle and releases held keys', async (t) => {
+  for (const action of ['button', 'shortcut'])
+    await t.test(action, async (t) => {
+      const h = await fixture(t);
+      h.$('arm').click();
+      h.key('KeyW');
+      h.key('ArrowRight');
+      h.tick(12);
+      const before = h.view.snapshot();
+      assert.ok(before.lastInput.throttle > 0);
+      if (action === 'button') h.$('pause').click();
+      else h.key('KeyP');
+      h.tick(3);
+      assert.equal(h.view.snapshot().ticks, before.ticks, 'pause consumes no input or time');
+      h.win.emit('keydown', { code: 'KeyW', target: h.$('viewport'), repeat: true });
+      if (h.$('academy-shell-pause-dialog').open)
+        h.$('academy-shell-pause-dialog').emit('cancel', { bubbles: false });
+      assert.equal(h.view.snapshot().status, 'paused', 'closing a menu never resumes');
+      if (action === 'shortcut') {
+        h.key('KeyP');
+        if (h.$('academy-shell-pause-dialog').open)
+          h.$('academy-shell-pause-dialog').emit('cancel', { bubbles: false });
+      }
+      h.$('academy-flight-resume').click();
+      h.tick(3);
+      assert.deepEqual(h.view.snapshot().lastInput, {
+        roll: 0,
+        pitch: 0,
+        yaw: 0,
+        throttle: before.lastInput.throttle,
+      });
+      h.view.pause();
+      h.win.emit('blur');
+      h.win.emit('focus');
+      h.$('arm').click();
+      h.tick(3);
+      assert.equal(
+        h.view.snapshot().lastInput.throttle,
+        0,
+        'focus loss invalidates resume throttle',
+      );
+      h.$('reset').click();
+      h.$('arm').click();
+      h.tick(3);
+      assert.equal(h.view.snapshot().lastInput.throttle, 0, 'new attempts start at zero');
+    });
 });
 
 test('native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset', async (t) => {
@@ -2368,3 +2445,123 @@ for (const kind of ['legacy camera', 'saved drone camera', 'unreadable camera', 
     assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
   });
 }
+
+const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
+
+test('explicit keyboard resume restores only the accepted throttle for the same flight', () => {
+  const document = new Document(),
+    window = new Events(),
+    session = {};
+  const input = createFlightInput({ window, document });
+  try {
+    input.enable(true);
+    input.seedThrottle(0.53);
+    window.emit('keydown', { code: 'KeyW', target: document.body });
+    window.emit('keydown', { code: 'ArrowRight', target: document.body });
+    assert.ok(
+      input.sample(0.02).throttle > 0.53,
+      'a proposal can be newer than the accepted input',
+    );
+    input.pause({ session, retainKeyboardThrottle: true });
+    assert.deepEqual(input.sample(0.02), neutral, 'paused input remains neutral');
+    input.pause({ session }); // Nested menu opening must not discard eligibility.
+    input.resume(session, 0.53);
+    window.emit('keydown', { code: 'KeyW', target: document.body, repeat: true });
+    assert.deepEqual(input.sample(0.02), { ...neutral, throttle: 0.53 });
+    assert.deepEqual(
+      input.sample(0.02),
+      { ...neutral, throttle: 0.53 },
+      'released keys cannot ramp',
+    );
+  } finally {
+    input.dispose();
+  }
+});
+
+test('keyboard pause shortcut can retain explicit host eligibility after releasing its keys', () => {
+  const document = new Document(),
+    window = new Events(),
+    session = {};
+  let reason,
+    active = true;
+  const input = createFlightInput({
+    window,
+    document,
+    onPause(value) {
+      reason = value;
+      input.pause({ session, retainKeyboardThrottle: active && value === 'paused' });
+      active = false;
+    },
+  });
+  try {
+    input.enable(true);
+    input.seedThrottle(0.53);
+    window.emit('keydown', { code: 'KeyP', target: document.body });
+    assert.equal(reason, 'paused');
+    assert.deepEqual(input.sample(0.02), neutral);
+    window.emit('keydown', { code: 'KeyP', target: document.body });
+    assert.deepEqual(input.sample(0.02), neutral);
+    input.resume(session, 0.53);
+    assert.equal(input.sample(0.02).throttle, 0.53);
+  } finally {
+    input.dispose();
+  }
+});
+
+test('lost ownership, reset and a different flight invalidate keyboard resume eligibility', () => {
+  for (const invalidate of [
+    ({ window }) => window.emit('blur'),
+    ({ document }) => {
+      document.hidden = true;
+      document.emit('visibilitychange');
+    },
+    ({ input }) => {
+      input.select('touch');
+      input.select('keyboard');
+    },
+    ({ input }) => input.clear(),
+    ({ input }) => input.enable(false),
+    ({ input }) => input.ratesApplied(true),
+    ({ input }) => input.keyboardPreset('classic'),
+  ]) {
+    const document = new Document(),
+      window = new Events(),
+      session = {};
+    const input = createFlightInput({ window, document });
+    try {
+      input.enable(true);
+      input.pause({ session, retainKeyboardThrottle: true });
+      invalidate({ input, document, window });
+      input.pause({ session }); // Opening another menu cannot recreate eligibility.
+      input.resume(session, 0.53);
+      assert.deepEqual(input.sample(0.02), neutral);
+      input.pause({ session, retainKeyboardThrottle: true });
+      input.resume({}, 0.53);
+      assert.deepEqual(input.sample(0.02), neutral);
+    } finally {
+      input.dispose();
+    }
+  }
+});
+
+test('keyboard resume never grants another input owner throttle or changes checkpoint seeding', () => {
+  for (const owner of ['touch', 'radio', 'controller']) {
+    const document = new Document(),
+      window = new Events(),
+      session = {};
+    const input = createFlightInput({ window, document });
+    try {
+      input.select(owner);
+      input.enable(true);
+      input.pause({ session, retainKeyboardThrottle: true });
+      input.resume(session, 0.53);
+      assert.deepEqual(input.sample(0.02), neutral);
+      if (owner === 'touch') {
+        input.seedThrottle(0.4);
+        assert.equal(input.sample(0.02).throttle, 0.4, 'explicit checkpoint seeding is unchanged');
+      }
+    } finally {
+      input.dispose();
+    }
+  }
+});

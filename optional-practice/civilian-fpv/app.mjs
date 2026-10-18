@@ -506,7 +506,7 @@ export function mountFlightApp({
     onFreeze(reason) {
       flight?.pause();
       audio.pause();
-      input.enable(false);
+      if (input.owner() === 'radio') input.enable(false);
       accumulator = 0;
       lastTime = null;
       lastExecutionTime = null;
@@ -798,13 +798,16 @@ export function mountFlightApp({
     launchIntent = null;
     if (disposed) return;
     pauseGeneration++;
+    const active = flight?.snapshot().status === 'active';
     gamepad.reset();
     resetStickTraces();
     cancelReview();
     flight?.pause();
     audio.pause();
     if (replay) replay.paused = true;
-    input.enable(false);
+    if (reason === 'paused' && !replay)
+      input.pause({ session: flight, retainKeyboardThrottle: active });
+    else input.enable(false);
     radio.freeze(reason);
     accumulator = 0;
     lastTime = null;
@@ -812,6 +815,8 @@ export function mountFlightApp({
     message = reason === 'focus-lost' ? 'focusLost' : c()[reason] ? reason : 'paused';
     paint(true);
   }
+  // Background checkpoint reads must not consume a deliberate Arm click.
+  const pendingFlightSteps = new WeakSet();
   function arm() {
     $('academy-flight-options').open = false;
     if (
@@ -826,6 +831,14 @@ export function mountFlightApp({
       (replay && replay.at >= replay.proof.frames.length)
     )
       return false;
+    if (!replay && pendingFlightSteps.has(flight)) {
+      message =
+        locale === 'uk'
+          ? 'Завершується поточний крок польоту. Після цього натисніть «Продовжити» ще раз.'
+          : 'Finishing the current flight step. Press Resume again when ready.';
+      paint(true);
+      return false;
+    }
     immersive.closeControls();
     $('flight-app').dataset.flightMenuOpen = 'false';
     if (replay) {
@@ -857,8 +870,9 @@ export function mountFlightApp({
       paint(true);
       return false;
     }
-    input.enable(true);
     flight.arm();
+    if (flight.snapshot().status !== 'active') return false;
+    input.resume(flight, flight.snapshot().lastInput.throttle / 1000);
     void audio.resume();
     appearanceSession.arm(flight.snapshot().status);
     accumulator = 0;
@@ -1449,7 +1463,11 @@ export function mountFlightApp({
         radioInput = radio.poll();
         if (!radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status))
           message = radio.status().reason === 'ready' ? 'radioReady' : radio.status().reason;
-        if (radio.status().active && ['paused', 'disarmed'].includes(flight.snapshot().status)) {
+        if (
+          radio.status().active &&
+          !pendingFlightSteps.has(flight) &&
+          ['paused', 'disarmed'].includes(flight.snapshot().status)
+        ) {
           flight.arm();
           void audio.resume();
           appearanceSession.arm(flight.snapshot().status);
@@ -1497,6 +1515,7 @@ export function mountFlightApp({
           const selectedFlight = flight;
           const result = flight.step(command);
           if (result && typeof result.then === 'function') {
+            pendingFlightSteps.add(selectedFlight);
             const source = input.owner();
             const diagnostics =
               source === 'radio'
@@ -1509,15 +1528,17 @@ export function mountFlightApp({
                 if (disposed || flight !== selectedFlight) return;
                 if (state.ticks !== before)
                   inputDiagnostics.record(flight, source, command, diagnostics, state);
+                if (state.reason === 'worker-error') pause('worker-error');
                 audio.update(state, { active: state.status === 'active' });
                 paint(true);
               })
               .catch((error) => {
                 if (disposed || flight !== selectedFlight) return;
-                pause();
+                pause('error');
                 message = error.message;
                 paint(true);
-              });
+              })
+              .finally(() => pendingFlightSteps.delete(selectedFlight));
             break;
           }
           audio.update(flight.snapshot(), { active: flight.snapshot().status === 'active' });
