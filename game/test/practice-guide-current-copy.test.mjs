@@ -60,6 +60,10 @@ test('repository and shipped guides name the current rendered radio setup contro
 
 test('all player guides distinguish radio calibration from complete tuning-library backup and restoration', async () => {
   const tuning = await source('optional-practice/civilian-fpv/tuning-ui.mjs');
+  assert.match(
+    tuning,
+    /workbench\.add\('library', toolbar, libraryPreviews, affected, management, transfer\)/,
+  );
   const radio = await source('optional-practice/civilian-fpv/radio-setup.mjs');
   const calibrationLabels = [...radio.matchAll(/export: '([^']+)'/g)].map((match) => match[1]);
   assert.deepEqual(calibrationLabels, ['Export profiles', 'Експорт профілів']);
@@ -76,6 +80,13 @@ test('all player guides distinguish radio calibration from complete tuning-libra
   for (const [index, locale] of ['en', 'uk'].entries())
     for (const guide of await localizedGuides(locale)) {
       assert(guide.includes(calibrationLabels[index]));
+      assert(
+        guide.includes(
+          locale === 'en'
+            ? 'Rates &amp; throttle → Library → Import'
+            : 'Рейти й газ → Бібліотека → Імпорт',
+        ) || guide.includes('Rates & throttle → Library → Import'),
+      );
       for (const pair of labels)
         assert(guide.includes(pair[index]), `Missing ${locale} backup step`);
       assert.match(
