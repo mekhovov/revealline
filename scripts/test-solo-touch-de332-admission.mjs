@@ -1,3 +1,7 @@
+import {
+  readDeclaredPreparationRefs,
+  changedPreparationTools,
+} from './solo-de332-preparation-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -54,9 +58,19 @@ const rawTouch = new Function(
 const command = { status: 'closed', exitCode: 0, survivors: [], ambiguous: [] };
 
 test('prospective touch references match actual candidate tools and unchanged native fixture', async () => {
+  const historical = await readDeclaredPreparationRefs(
+    'docs/performance/solo-native-touch-de332-plan.json',
+  );
   const refs = [manifest.fixture, ...manifest.adapterInputs, ...manifest.frozenTools];
   assert.equal(new Set(refs.map((ref) => ref.path)).size, refs.length);
   for (const ref of refs) {
+    if (changedPreparationTools.includes(ref.path)) {
+      const old = historical.get(ref.path);
+      assert(old, ref.path);
+      assert.equal(ref.bytes, old.bytes, ref.path);
+      assert.equal(ref.sha256, old.sha256, ref.path);
+      continue;
+    }
     const bytes = await readFile(new URL('../' + ref.path, import.meta.url));
     assert.equal(bytes.length, ref.bytes, ref.path);
     assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);

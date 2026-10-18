@@ -190,14 +190,39 @@ export const DE332_READINESS_PILOTS = Object.freeze({
     scenarioSHA256: '2fe33ea0291018b09174338ac777a66ae62b22ccc9c911e02d4af1dcbe0ca1b7',
   }),
 });
+export const RUNTIME73_READINESS_REVISION = '73a345cec696d7789198cf295ca5c37b17ca0e71';
+export const RUNTIME73_READINESS_PILOTS = Object.freeze(
+  Object.fromEntries(
+    Object.entries(DE332_READINESS_PILOTS).map(([protocol, pilot]) => [
+      protocol,
+      Object.freeze({
+        ...pilot,
+        sourceRevision: RUNTIME73_READINESS_REVISION,
+        scenarioSHA256:
+          {
+            'selected-font-request-settlement-v4':
+              'cdc15760dde72ce57901001099129e6c25d6b8cce4e5c479d1dc2f687b3ea7a6',
+            'required-original-cancel-v1':
+              '2d5f47d74cad4000a41d781b62cb24a93f177b8215dcd9b83a5853707354dbb4',
+            'optional-icon-missing-v1':
+              'bdb592d359b92d0421ef272ec9b56211e2845ca8a65f33b73ce125afa2e85809',
+          }[protocol] ?? pilot.scenarioSHA256,
+      }),
+    ]),
+  ),
+);
 export function selectedFontSourceBinding(sourceRevision = SELECTED_FONT_SOURCE_BINDING.revision) {
   assert(
-    [SELECTED_FONT_SOURCE_BINDING.revision, DE332_READINESS_REVISION].includes(sourceRevision),
+    [
+      SELECTED_FONT_SOURCE_BINDING.revision,
+      DE332_READINESS_REVISION,
+      RUNTIME73_READINESS_REVISION,
+    ].includes(sourceRevision),
     'Undeclared font source binding',
   );
   return sourceRevision === SELECTED_FONT_SOURCE_BINDING.revision
     ? SELECTED_FONT_SOURCE_BINDING
-    : Object.freeze({ ...SELECTED_FONT_SOURCE_BINDING, revision: DE332_READINESS_REVISION });
+    : Object.freeze({ ...SELECTED_FONT_SOURCE_BINDING, revision: sourceRevision });
 }
 
 export function qualificationReadinessOptions(flags, scenario, bytes) {
@@ -249,35 +274,38 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
     protocol === 'saved-resume-v1' &&
     flags.includes('--source-revision=c696af41857840359ae473558b90682f3d71f2db');
   const de332 = flags.includes('--source-revision=' + DE332_READINESS_REVISION);
-  const pilot = de332
-    ? DE332_READINESS_PILOTS[protocol]
-    : protocol === 'optional-audio-start-missing-v1' &&
-        scenario.mediaReadinessFault?.route === 'settings-gameplay-v2'
-      ? OPTIONAL_AUDIO_SETTINGS_PILOT
-      : requiredStart.length
-        ? REQUIRED_ORIGINAL_START_PILOT
-        : geometry.length
-          ? protocol === 'warm-resume-v1' &&
-            flags.includes('--source-revision=' + COMPACT_WARM_READINESS_PILOT.sourceRevision)
-            ? COMPACT_WARM_READINESS_PILOT
-            : geometryReadinessPilot(protocol)
-          : successorSaved
-            ? COMPACT_SAVED_READINESS_PILOT
-            : protocol === READINESS_PILOT.protocol
-              ? READINESS_PILOT
-              : protocol === SELECTED_FONT_PILOT.protocol
-                ? SELECTED_FONT_PILOT
-                : protocol === SELECTED_FONT_JOINED_PILOT.protocol
-                  ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
-                    ? SELECTED_FONT_JOINED_C696_PILOT
-                    : SELECTED_FONT_JOINED_PILOT
-                  : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
-                    ? SELECTED_FONT_POST_COMMAND_PILOT
-                    : protocol === SELECTED_FONT_SETTLEMENT_PILOT.protocol
-                      ? SELECTED_FONT_SETTLEMENT_PILOT
-                      : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
+  const runtime73 = flags.includes('--source-revision=' + RUNTIME73_READINESS_REVISION);
+  const pilot = runtime73
+    ? RUNTIME73_READINESS_PILOTS[protocol]
+    : de332
+      ? DE332_READINESS_PILOTS[protocol]
+      : protocol === 'optional-audio-start-missing-v1' &&
+          scenario.mediaReadinessFault?.route === 'settings-gameplay-v2'
+        ? OPTIONAL_AUDIO_SETTINGS_PILOT
+        : requiredStart.length
+          ? REQUIRED_ORIGINAL_START_PILOT
+          : geometry.length
+            ? protocol === 'warm-resume-v1' &&
+              flags.includes('--source-revision=' + COMPACT_WARM_READINESS_PILOT.sourceRevision)
+              ? COMPACT_WARM_READINESS_PILOT
+              : geometryReadinessPilot(protocol)
+            : successorSaved
+              ? COMPACT_SAVED_READINESS_PILOT
+              : protocol === READINESS_PILOT.protocol
+                ? READINESS_PILOT
+                : protocol === SELECTED_FONT_PILOT.protocol
+                  ? SELECTED_FONT_PILOT
+                  : protocol === SELECTED_FONT_JOINED_PILOT.protocol
+                    ? flags.includes('--source-revision=' + SELECTED_FONT_PILOT.sourceRevision)
+                      ? SELECTED_FONT_JOINED_C696_PILOT
+                      : SELECTED_FONT_JOINED_PILOT
+                    : protocol === SELECTED_FONT_POST_COMMAND_PILOT.protocol
+                      ? SELECTED_FONT_POST_COMMAND_PILOT
+                      : protocol === SELECTED_FONT_SETTLEMENT_PILOT.protocol
+                        ? SELECTED_FONT_SETTLEMENT_PILOT
+                        : (MEDIA_FAULT_PILOTS[protocol] ?? RESUME_READINESS_PILOTS[protocol]);
   assert(pilot, 'Unknown readiness protocol');
-  if (de332) {
+  if (de332 || runtime73) {
     assert.equal(geometry.length, pilot.geometryObservation ? 1 : 0);
     assert.equal(requiredStart.length, pilot.requiredStartRetention ? 1 : 0);
   }
@@ -307,6 +335,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_POST_COMMAND_PILOT,
       SELECTED_FONT_SETTLEMENT_PILOT,
       DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME73_READINESS_PILOTS['selected-font-request-settlement-v4'],
     ].includes(pilot)
   )
     assert(
@@ -339,6 +368,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_POST_COMMAND_PILOT,
       SELECTED_FONT_SETTLEMENT_PILOT,
       DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME73_READINESS_PILOTS['selected-font-request-settlement-v4'],
     ].includes(pilot)
   ) {
     assert.equal(scenario.kind, 'lifecycle');
@@ -358,6 +388,7 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
       SELECTED_FONT_POST_COMMAND_PILOT,
       SELECTED_FONT_SETTLEMENT_PILOT,
       DE332_READINESS_PILOTS['selected-font-request-settlement-v4'],
+      RUNTIME73_READINESS_PILOTS['selected-font-request-settlement-v4'],
     ].includes(pilot)
   ) {
     assert.equal(scenario.selectedFontCancellation.protocol, pilot.protocol);

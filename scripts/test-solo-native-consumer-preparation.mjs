@@ -15,7 +15,7 @@ const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const workflow = (await read(workflowPath)).toString();
 const lanes = {
   readiness: {
-    path: 'docs/performance/solo-readiness-preparation-de332-plan.json',
+    path: 'docs/performance/solo-readiness-preparation-73a345-plan.json',
     status: 'reviewed-readiness-diagnostic-only',
     key: 'engine',
     values: ['chromium', 'webkit'],
@@ -24,7 +24,7 @@ const lanes = {
     prepare: prepareReadinessMode,
   },
   touch: {
-    path: 'docs/performance/solo-native-touch-de332-plan.json',
+    path: 'docs/performance/solo-native-touch-73a345-plan.json',
     status: 'reviewed-input-diagnostic-only',
     key: 'job',
     values: ['chromium-dpad', 'webkit-dpad', 'chromium-stick', 'chromium-swipe'],
@@ -33,7 +33,33 @@ const lanes = {
     prepare: prepareTouchMode,
   },
 };
-const manifest = async (lane) => JSON.parse(await read(lanes[lane].path));
+const manifest = async (lane) => {
+  const value = JSON.parse(await read(lanes[lane].path));
+  assert.equal(value.status, lanes[lane].status);
+  assert.equal(value.currentSourceCorrectness.status, 'passed-correctness-only');
+  const ref = value.currentSourceCorrectness.receipt;
+  assert.deepEqual(ref, {
+    path: 'docs/performance/fixtures/solo-73a345-consumer/first-eight-39105055762.json',
+    bytes: 1573,
+    sha256: 'f638ba0c409b198de44ab8d29d43415fce987b1d090d53a5d7eeb1343cb54636',
+  });
+  const bytes = await read(ref.path),
+    proof = JSON.parse(bytes);
+  assert.equal(bytes.length, ref.bytes);
+  assert.equal(sha(bytes), ref.sha256);
+  assert.equal(proof.candidate.revision, value.candidate.revision);
+  assert.equal(proof.correctnessRowsPassed, 8);
+  assert.equal(proof.strictNativeReplayPassed, 4);
+  assert.equal(proof.closedCommands, 14);
+  assert.equal(proof.performanceQualification, false);
+  assert.throws(() =>
+    lanes[lane].matrix({
+      ...structuredClone(value),
+      status: 'held-awaiting-source-and-dispatch-review',
+    }),
+  );
+  return value;
+};
 function job(text, lane) {
   const result = text.split(`\n  ${lane}:\n`)[1];
   assert(result, lane);
@@ -61,19 +87,24 @@ function checkJob(text, lane) {
       `node scripts/solo-remote-${lane}.mjs bind-plan ${spec.path} "$RUNNER_TEMP/${lane}-plan.json" "${'${{ matrix.' + spec.key + ' }}'}"`,
     ),
   );
+  const command = body.match(/^\s*node (--test .+?) 2>&1 \|/m)?.[1];
+  assert(command, 'Actual source-control command is present');
+  const argv = command.trim().split(/\s+/);
+  assert.deepEqual(argv.slice(0, 2), ['--test', '--test-concurrency=2']);
+  assert(argv.slice(2).every((arg) => /^scripts\/test-[a-z0-9-]+\.mjs$/.test(arg)));
   assert(body.includes('scripts/test-solo-native-consumer-preparation.mjs'));
   assert(
     body.includes(
       'scripts/test-solo-' +
         (lane === 'readiness' ? 'readiness' : 'touch') +
-        '-de332-admission.mjs',
+        '-73a345-admission.mjs',
     ),
   );
   assert.match(body, /SOLO_TOOLING_REVISION: \$\{\{ github.sha \}\}/);
   assert.match(body, /ref: \$\{\{ github.sha \}\}/);
   assert(
     body.includes(
-      'solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 de3324607c82787c1a1fec9c13d4f8b5cb74cee4 2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+      'solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e',
     ),
   );
   assert(body.includes("node-version: '22.13.1'"));
@@ -93,7 +124,7 @@ function checkJob(text, lane) {
 test('readiness and touch are exact main-only choices with their unchanged adapter matrices and native bounds', async () => {
   assert.match(
     workflow,
-    /options: \[first-eight, next, cocoa, raster, hud-cpu, readiness, touch\]/,
+    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,?\s*\]/,
   );
   assert.match(workflow, /cancel-in-progress: false/);
   for (const [lane, spec] of Object.entries(lanes)) {
@@ -121,6 +152,19 @@ test('readiness and touch are exact main-only choices with their unchanged adapt
       assert(body.includes(clause));
       assert.throws(() => checkJob(workflow.replace(body, body.replace(clause, '')), lane));
     }
+    const sourceTest = `scripts/test-solo-${lane === 'readiness' ? 'readiness' : 'touch'}-73a345-admission.mjs`;
+    assert.throws(() =>
+      checkJob(
+        workflow.replace(
+          body,
+          body.replace(
+            `node --test --test-concurrency=2 ${sourceTest}`,
+            `node --test ${sourceTest} --test-concurrency=2`,
+          ),
+        ),
+        lane,
+      ),
+    );
     for (const [before, after] of [
       ['timeout-minutes: 130', 'timeout-minutes: 131'],
       ['timeout-minutes: 78', 'timeout-minutes: 79'],
@@ -158,9 +202,9 @@ test('each new lane binds actual current tools and all declared reads in its own
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(sha(bytes), ref.sha256, ref.path);
     }
-    assert.equal(value.candidate.revision, 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4');
-    assert.equal(value.candidate.run, 39091745654);
-    assert.equal(value.candidate.artifact, 12123463810);
+    assert.equal(value.candidate.revision, '73a345cec696d7789198cf295ca5c37b17ca0e71');
+    assert.equal(value.candidate.run, 39099979283);
+    assert.equal(value.candidate.artifact, 12127570566);
     assert.equal(value.performanceExclusion, true);
     assert.equal(value.automaticRetries, 0);
     assert.equal(value.release.physicalQualification, 'unobserved');

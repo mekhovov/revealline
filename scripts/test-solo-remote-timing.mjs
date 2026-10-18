@@ -7,6 +7,7 @@ import { execFileSync } from 'node:child_process';
 import test from 'node:test';
 import {
   bindSustainedJob,
+  prepareSustainedMode,
   bindTimingJob,
   SUSTAINED_PHASES,
   TIMING_PHASES,
@@ -1312,14 +1313,16 @@ async function finalJournalManifest(phase) {
   });
   return m;
 }
-async function finalJournalFixture(t, phase) {
+async function finalJournalFixture(t, phase, prospective = null) {
   const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-final-hitch-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
   const output = join(dir, 'report.json'),
     url = 'http://127.0.0.1:4321/game/?journey=opening';
-  const heavy = ['sentry', 'long-rail'].includes(phase),
+  const heavy = prospective
+      ? !['cold-first30', 'warm-first30'].includes(phase)
+      : ['sentry', 'long-rail'].includes(phase),
     warm = phase === 'warm-first30';
-  const policy = heavy ? 'timing-heavy-v1' : undefined;
+  const policy = heavy ? (prospective ? 'representative-timing-v1' : 'timing-heavy-v1') : undefined;
   const store = createHitchJournalStore(output, () => 100, {
     soloURL: url,
     preparationPolicy: policy,
@@ -1369,7 +1372,7 @@ async function finalJournalFixture(t, phase) {
       spec.boundary,
     );
   }
-  const p = bindTimingJob(await finalJournalManifest(phase), 'chromium', 1);
+  const p = bindTimingJob(prospective ?? (await finalJournalManifest(phase)), 'chromium', 1);
   const raw = report(p);
   raw.hitchJournal = store.finish();
   return { p, raw, output, url };
@@ -1477,3 +1480,257 @@ test('heavy preparation policy cannot be applied to altered or unrelated recipe 
   );
   assert.throws(() => qualificationHitchJournalOptions(flags, JSON.parse(bytes), bytes));
 });
+
+for (const sourceLabel of ['de332', '73']) {
+  const sourceRevision =
+    sourceLabel === '73'
+      ? '73a345cec696d7789198cf295ca5c37b17ca0e71'
+      : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+  const representativePhases = [
+    'cold-first30',
+    'warm-first30',
+    'sentry-latency',
+    'long-rail-latency',
+    'large-capture-erosion',
+    'jammer-steering',
+  ];
+  async function representative(phase, reviewed = true) {
+    const m = JSON.parse(
+      await readFile(
+        new URL(
+          `../docs/performance/solo-${sourceLabel}-timing-${phase}-plan.json`,
+          import.meta.url,
+        ),
+      ),
+    );
+    if (reviewed && !(sourceLabel === '73' && phase === 'cold-first30')) {
+      // Synthetic model-only evidence for phases whose actual declarations remain held.
+      m.release.status = 'reviewed-and-released';
+      for (const key of [
+        'noUnclosedOwners',
+        'allPriorPlannedJobsClosed',
+        'priorProofInspected',
+        'firstEightAllCorrectnessPassed',
+      ])
+        m.release[key] = true;
+      m.release.evidence = [
+        {
+          runId: 1,
+          artifactId: 2,
+          artifactSHA256: '0'.repeat(64),
+          summarySHA256: '0'.repeat(64),
+          disposition: 'passed',
+        },
+      ];
+    }
+    return m;
+  }
+  test(`${sourceLabel}: prospective six-phase map retains all72 declared roles, three AB/BA/AB pairs, package and ordinary gates`, async () => {
+    let rows = 0;
+    for (const phase of representativePhases) {
+      const held = await representative(phase, false);
+      const actualReleased = sourceLabel === '73' && phase === 'cold-first30';
+      assert.equal(
+        held.release.status,
+        actualReleased ? 'reviewed-and-released' : 'held-for-review',
+      );
+      assert.equal(held.release.firstEightAllCorrectnessPassed, actualReleased);
+      if (actualReleased) {
+        assert.equal(held.release.evidence[0].runId, 39105055762);
+        assert.equal(held.release.evidence[0].scope, 'first-eight-correctness-only');
+        const unreleased = structuredClone(held);
+        unreleased.release.status = 'held-for-review';
+        assert.throws(() => timingMatrix(unreleased));
+      }
+      assert.deepEqual(held.phaseOrder, representativePhases);
+      assert.equal(held.cohort, `${sourceLabel}-${phase}-matched-timing-v1`);
+      assert.equal(held.performanceExclusion, false);
+      assert.deepEqual(
+        held.deadlines.scenarioTimeoutMs,
+        Object.fromEntries(
+          representativePhases.map((name) => [name, name === 'warm-first30' ? 360000 : 240000]),
+        ),
+      );
+      if (!actualReleased) assert.throws(() => timingMatrix(held));
+      const m = await representative(phase);
+      const matrix = timingMatrix(m);
+      assert.equal(matrix.include.length, 6);
+      for (const { engine, repetition, jobMinutes, stepMinutes, outerSeconds } of matrix.include) {
+        assert.equal(jobMinutes, 122);
+        assert.equal(stepMinutes, 78);
+        assert.equal(outerSeconds, 4620);
+        const p = bindTimingJob(m, engine, repetition);
+        assert.deepEqual(
+          p.rows.map((r) => r.source),
+          repetition === 2 ? ['candidate', 'baseline'] : ['baseline', 'candidate'],
+        );
+        assert.equal(p.helperTimeoutMs, 4500000);
+        assert.equal(p.calibrationPreset, 'mid');
+        assert.equal(p.performanceExclusion, false);
+        assert.equal(p.candidate.revision, sourceRevision);
+        assert.equal(p.baseline.reusableArtifact.artifact, 12088541389);
+        for (const row of p.rows) {
+          rows++;
+          assert.equal(row.timeoutMs, 480000);
+          const raw = report(p, row.source);
+          for (const gate of [
+            'pass-observed-window',
+            'fail-observed-window',
+            'inconclusive-observed-window',
+          ]) {
+            raw.performanceGateStatus = gate;
+            const result = timingAssessment(
+              p,
+              row,
+              raw,
+              { ...closed, exitCode: gate === 'pass-observed-window' ? 0 : 2 },
+              '123.4',
+              { status: 'complete' },
+            );
+            assert.equal(result.rawPerformanceGateStatus, gate);
+            assert.equal(result.status, gate === 'pass-observed-window' ? 'passed' : 'failed');
+          }
+          raw.performanceGateStatus = 'pass-observed-window';
+          raw.replay.nativeVerification.status = 'fail';
+          assert.equal(
+            timingAssessment(p, row, raw, closed, '123.4', { status: 'complete' }).status,
+            'failed',
+          );
+        }
+      }
+      const p = bindTimingJob(m, 'webkit', 1);
+      for (const mutate of [
+        (x) => x.candidate.artifact++,
+        (x) => (x.candidate.inner.sha256 = 'f'.repeat(64)),
+        (x) => x.baseline.reusableArtifact.artifact++,
+        (x) => (x.release.firstEightAllCorrectnessPassed = false),
+        (x) => (x.release.status = 'reviewed-diagnostic-only'),
+        (x) => (x.release.noUnclosedOwners = false),
+        (x) => (x.release.dispatch.phase = 'other'),
+        (x) => (x.release.dispatch.ref = 'refs/heads/other'),
+        (x) => x.recipes[phase].bytes++,
+        (x) => (x.recipes[phase].sha256 = 'f'.repeat(64)),
+        (x) => delete x.recipes['jammer-steering-level'],
+        (x) => x.rows.reverse(),
+        (x) => x.rows[0].timeoutMs++,
+        (x) => (x.calibrationPreset = 'low'),
+        (x) => (x.performanceExclusion = true),
+      ]) {
+        const q = structuredClone(p);
+        mutate(q);
+        assert.throws(() => validateTimingPlan(q));
+      }
+    }
+    assert.equal(rows, 72);
+    assert.deepEqual(Object.keys(TIMING_PHASES), [
+      'cold-first30',
+      'warm-first30',
+      'sentry',
+      'long-rail',
+    ]);
+  });
+  test(`${sourceLabel}: prospective actual preparation copies exact upload bytes and assembles unchanged native commands`, async (t) => {
+    const repository = await realpath(new URL('../', import.meta.url));
+    for (const phase of representativePhases) {
+      const p = bindTimingJob(await representative(phase), 'webkit', 1);
+      const work = await realpath(await mkdtemp(join(tmpdir(), 'solo-representative-prepare-')));
+      t.after(() => rm(work, { recursive: true, force: true }));
+      let baselineCalls = 0;
+      const ctx = {
+        plan: p,
+        repository,
+        work,
+        report: {},
+        admitted: { artifacts: { candidate: {} } },
+        ensureBaseline: async () => {
+          baselineCalls++;
+        },
+        digest: async (path) => {
+          const b = await readFile(path);
+          return { bytes: b.length, sha256: createHash('sha256').update(b).digest('hex') };
+        },
+      };
+      const mode = await prepareSustainedMode(ctx);
+      assert.equal(baselineCalls, 1);
+      const bytes = await readFile(mode.recipePath);
+      const recipe = JSON.parse(bytes);
+      assert.equal(createHash('sha256').update(bytes).digest('hex'), p.recipes[phase].sha256);
+      validateQualification(recipe);
+      assert(recipe.actions.filter((a) => a.type === 'key').length >= 20);
+      for (const action of recipe.actions.filter((a) => a.type === 'upload')) {
+        const retained = await readFile(join(work, 'sustained-inputs', action.file));
+        const ref = p.recipes[phase + '-level'];
+        assert.equal(retained.length, ref.bytes);
+        assert.equal(createHash('sha256').update(retained).digest('hex'), ref.sha256);
+      }
+      for (const row of p.rows) {
+        const args = sustainedArguments(
+          { ...ctx, here: '/tools', modeState: mode },
+          row,
+          'https://example.test/game/?journey=opening',
+          work,
+        );
+        assert(args.includes(`--source-revision=${p[row.source].revision}`));
+        assert.equal(args.includes('--baseline-runtime'), row.source === 'baseline');
+        for (const flag of [
+          '--work-probe',
+          '--hitch-journal',
+          '--cadence=settled120',
+          '--context=persistent',
+          '--viewport=400x850',
+          '--dpr=3',
+          '--mobile-context',
+        ])
+          assert(args.includes(flag));
+        assert(!args.some((a) => /--(cpu-profile|memory-profile|audio-proof)/.test(a)));
+        const options = qualificationHitchJournalOptions(args, recipe, bytes);
+        assert.equal(
+          options.preparationPolicy,
+          ['cold-first30', 'warm-first30'].includes(phase) ? undefined : 'representative-timing-v1',
+        );
+        if (options.preparationPolicy) {
+          for (const bad of [
+            args.filter((a) => !a.startsWith('--source-revision=')),
+            args.map((a) =>
+              a.startsWith('--source-revision=') ? '--source-revision=' + 'f'.repeat(40) : a,
+            ),
+            [...args, '--source-revision=' + p[row.source].revision],
+          ])
+            assert.throws(() => qualificationHitchJournalOptions(bad, recipe, bytes));
+          assert.throws(() =>
+            qualificationHitchJournalOptions(
+              args,
+              recipe,
+              Buffer.concat([bytes, Buffer.from(' ')]),
+            ),
+          );
+          assert.throws(() =>
+            qualificationHitchJournalOptions(args, { ...recipe, id: 'other' }, bytes),
+          );
+        }
+      }
+    }
+  });
+  test(`${sourceLabel}: prospective real binary store retains cold, warm and four public-upload document boundaries`, async (t) => {
+    for (const phase of representativePhases) {
+      const f = await finalJournalFixture(t, phase, await representative(phase));
+      const good = await verifyTimingHitchJournal(f.p, f.raw, f.output, f.url);
+      assert.equal(good.status, 'complete', good.failure);
+      assert.equal(good.documents, phase === 'cold-first30' ? 1 : 2);
+      assert(good.activeFrames > 0 && good.activeWorkWindows > 0);
+      for (const mutate of [
+        (raw) => (raw.hitchJournal.documents[0].identity.action = 'other'),
+        (raw) => (raw.hitchJournal.preparationPolicy = 'timing-heavy-v1'),
+        (raw) => raw.hitchJournal.documents.pop(),
+        (raw) => (raw.hitchJournal.documents[0].header.firstOverflowAt = 1),
+      ]) {
+        const raw = structuredClone(f.raw);
+        mutate(raw);
+        assert.equal(
+          (await verifyTimingHitchJournal(f.p, raw, f.output, f.url)).status,
+          'invalid-evidence',
+        );
+      }
+    }
+  });
+}

@@ -231,12 +231,30 @@ test('matched commands differ only byjournal flag and public output path, never 
   );
 });
 
-test('new cohort retains all20 owned reports and incomplete journal readback without a false pass', async (t) => {
+async function retainedCohort(t, prospective = false) {
   const repository = resolve(dirname(fileURLToPath(import.meta.url)), '..');
   const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-journal-cost-cohort-')));
   t.after(() => rm(dir, { recursive: true, force: true }));
-  const input = manifest();
-  input.candidate.inner = { bytes: 1, sha256: '0'.repeat(64) }; // Synthetic test-only package.
+  const input = prospective
+    ? JSON.parse(
+        await readFile(join(repository, 'docs/performance/solo-de332-journal-cost-plan.json')),
+      )
+    : manifest();
+  if (prospective) {
+    input.release.status = 'reviewed-diagnostic-only';
+    for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
+      input.release[key] = true;
+    input.release.evidence = [
+      {
+        runId: 1,
+        artifactId: 1,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        disposition: 'failed-reviewed',
+      },
+    ];
+  }
+  if (!prospective) input.candidate.inner = { bytes: 1, sha256: '0'.repeat(64) }; // Synthetic test-only package.
   const digest = async (path) => {
     const bytes = await readFile(path);
     return { bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex') };
@@ -323,4 +341,19 @@ test('new cohort retains all20 owned reports and incomplete journal readback wit
           call.argv.includes('--hitch-journal') === stored.executions[index].diagnostics,
       ),
   );
+  return { stored, analysis };
+}
+test('new cohort retains all20 owned reports and incomplete journal readback without a false pass', async (t) => {
+  const { stored, analysis } = await retainedCohort(t);
+  assert.equal(Object.hasOwn(stored, 'analysisMethod'), false);
+  assert.equal(Object.hasOwn(analysis, 'analysisMethod'), false);
+});
+test('prospective journal actual executor records the selected method and retains incomplete binary evidence', async (t) => {
+  const { stored, analysis } = await retainedCohort(t, true);
+  assert.equal(stored.analysisMethod, 'paired-p95-endpoint-box-v1');
+  assert.equal(analysis.analysisMethod, stored.analysisMethod);
+  assert.equal(analysis.status, 'unresolved');
+  assert.equal(analysis.limit, 0.05);
+  assert.equal(analysis.fullJournalOverheadQualification, false);
+  assert.equal(analysis.gameplayPerformanceQualification, false);
 });

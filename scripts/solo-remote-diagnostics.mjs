@@ -11,6 +11,7 @@ import {
   DIAGNOSTICS_FORMAT,
 } from './solo-diagnostics-analysis.mjs';
 import { diagnosticsArguments, observerArguments } from './qualify-solo-diagnostics.mjs';
+import { PROSPECTIVE_OVERHEAD_METHOD } from './solo-overhead-interval.mjs';
 
 const MiB = 1024 ** 2;
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -27,10 +28,61 @@ const finalSource = Object.freeze({
   runtime: '32abd322afd8243e4537ce4784e2f78ee45ecbec',
   journalCohort: 'cold-main8b-candidatea6e',
 });
+export const DE332_DIAGNOSTICS_COHORT = 'diagnostics-candidatede332-endpoint-box-v1';
+const de332Package = {
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+  run: 39091745654,
+  artifact: 12123463810,
+  outer: {
+    bytes: 1094606342,
+    sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+  },
+  inner: {
+    bytes: 1075789325,
+    sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+  },
+  manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+  producer:
+    'Exact successful Appearance39091745654, Node22.13.1; full remote package/source/CSP verification remains mandatory.',
+};
+const de332Source = Object.freeze({
+  revision: de332Package.revision,
+  tree: de332Package.tree,
+  runtime: de332Package.revision,
+  journalCohort: 'timing-main8b-candidatede332-v1',
+});
+export const RUNTIME73_DIAGNOSTICS_COHORT = 'diagnostics-candidate73-endpoint-box-v1';
+const runtime73Package = {
+  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
+  run: 39099979283,
+  artifact: 12127570566,
+  outer: {
+    bytes: 1094639407,
+    sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+  },
+  inner: {
+    bytes: 1075807617,
+    sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+  },
+  manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+  producer:
+    'Exact successful Appearance39099979283, Node22.13.1. Full hosted archive/member/source/CSP verification remains mandatory.',
+};
+const runtime73Source = Object.freeze({
+  revision: runtime73Package.revision,
+  tree: runtime73Package.tree,
+  runtime: runtime73Package.revision,
+  journalCohort: 'timing-main8b-candidate73-v1',
+});
+const prospectiveSource = (source) => source === de332Source || source === runtime73Source;
 // Admission is source-specific. Actual archive and producer identity still need
 // the common full readback; a pending producer never supplies those bytes.
 function diagnosticsSource(plan) {
   if (plan.sourceCohort === undefined) return legacySource;
+  if (plan.sourceCohort === DE332_DIAGNOSTICS_COHORT) return de332Source;
+  if (plan.sourceCohort === RUNTIME73_DIAGNOSTICS_COHORT) return runtime73Source;
   assert.equal(plan.sourceCohort, FINAL_DIAGNOSTICS_COHORT);
   return finalSource;
 }
@@ -76,6 +128,16 @@ export const DIAGNOSTICS_SETUP_SUCCESSORS = Object.freeze({
   },
 });
 function validateSetupSuccessor(plan, source, journal) {
+  if (prospectiveSource(source)) {
+    assert.equal(plan.setupSuccessor, undefined);
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      ref: 'refs/heads/main',
+      lane: journal ? 'journal-cost' : 'app-overhead',
+    });
+    return;
+  }
   if (plan.setupSuccessor === undefined) {
     assert.equal(plan.release.onceOnlyBefore, source.revision);
     return;
@@ -139,7 +201,39 @@ export function validateDiagnosticsPlan(plan) {
   const journal = journalCostMode(plan);
   const source = diagnosticsSource(plan);
   assert.equal(plan.release.sourceCohort, plan.sourceCohort);
-  if (source === finalSource) assert.equal(plan.runtimeRevision, source.runtime);
+  if (source === finalSource || prospectiveSource(source))
+    assert.equal(plan.runtimeRevision, source.runtime);
+  if (prospectiveSource(source)) {
+    assert.equal(plan.analysisMethod, PROSPECTIVE_OVERHEAD_METHOD);
+    assert.deepEqual(plan.candidate, source === runtime73Source ? runtime73Package : de332Package);
+    assert.equal(plan.release.status, 'reviewed-diagnostic-only');
+    assert.equal(plan.release.clockErrorAssumption, 'observed-minimum-step-bounds-duration-error');
+    assert.equal(plan.release.unconditionalClockGuarantee, false);
+    assert.equal(plan.release.firstEightRequired, false);
+    assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    assert(
+      Array.isArray(plan.release.evidence) &&
+        plan.release.evidence.length > 0 &&
+        plan.release.evidence.length <= 32,
+    );
+    for (const ref of plan.release.evidence) {
+      assert(Number.isSafeInteger(ref.runId) && ref.runId > 0);
+      assert(Number.isSafeInteger(ref.artifactId) && ref.artifactId > 0);
+      assert.match(ref.artifactSHA256, /^[a-f0-9]{64}$/);
+      assert.match(ref.summarySHA256, /^[a-f0-9]{64}$/);
+      assert(['passed', 'failed-reviewed'].includes(ref.disposition));
+    }
+    for (const path of ['scripts/solo-overhead-interval.mjs', ...DIAGNOSTICS_SETUP_DYNAMIC_ROOTS])
+      assert(
+        plan.frozenTools.some((ref) => ref.path === path),
+        `Missing prospective helper ${path}`,
+      );
+  } else {
+    assert(
+      !Object.hasOwn(plan, 'analysisMethod'),
+      'Historical native plans retain their original method',
+    );
+  }
   assert(journal || plan.probe === undefined, 'Unknown diagnostics subtype');
   assert.equal(
     plan.status,
@@ -192,7 +286,7 @@ export function validateDiagnosticsPlan(plan) {
   );
   assert.equal(plan.release.candidateRevision, source.revision);
   validateSetupSuccessor(plan, source, journal);
-  assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
+  if (!prospectiveSource(source)) assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.gameplayPerformanceQualification, false);
   assert.equal(plan.release.hitchJournalOverheadQualification, false);
   for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
@@ -324,7 +418,9 @@ export async function prepareDiagnosticsMode(ctx) {
       ? { synchronousJournalHookOverhead: 'unobserved', fullJournalOverheadQualification: false }
       : {}),
     gameplayPerformanceQualification: false,
-    firstEightAllCorrectnessPassed: false,
+    ...(prospectiveSource(diagnosticsSource(ctx.plan))
+      ? { firstEightRequired: false }
+      : { firstEightAllCorrectnessPassed: false }),
   });
   let recipePath = null;
   if (journalCostMode(ctx.plan)) {
@@ -408,6 +504,9 @@ export async function runDiagnosticsCohort(ctx, row, dir, tmp, url, now = () => 
     configuration,
     node: process.version,
     timerResolution: null,
+    ...(prospectiveSource(diagnosticsSource(ctx.plan))
+      ? { analysisMethod: ctx.plan.analysisMethod }
+      : {}),
     ...(journalCostMode(ctx.plan)
       ? {
           observerSha256: ctx.plan.frozenTools.find((ref) =>
