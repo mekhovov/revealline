@@ -1,3 +1,4 @@
+import { readExecutedDe332Source, assertExecutedDe332Ref } from './solo-de332-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile, mkdtemp, realpath, rm } from 'node:fs/promises';
@@ -35,7 +36,8 @@ const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const plan = await json(planPath);
 const prior = await json('docs/performance/solo-next-geometric-39774-plan.json');
 const first = await json('docs/performance/solo-remote-de332-correctness-plan.json');
-const workflow = (await read(workflowPath)).toString();
+const executed = await readExecutedDe332Source(planPath);
+const workflow = executed.workflow;
 const bytes = await read(plan.recipes.next.path);
 const recipe = JSON.parse(bytes);
 const source = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
@@ -308,7 +310,7 @@ test('current helper digest mismatch rejects before any package or native operat
   assert.equal(sideEffects, 0);
 });
 
-test('prospective current references and both sparse checkout closures contain every declared dependency', async () => {
+test('executed references and both original sparse checkout closures remain exact', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, ...Object.values(plan.recipes)];
   assert.deepEqual(
     plan.adapterInputs.map((x) => x.path),
@@ -316,9 +318,7 @@ test('prospective current references and both sparse checkout closures contain e
   );
   assert.equal(refs.length, new Set(refs.map((x) => x.path)).size);
   for (const ref of refs) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, ref.path);
+    assertExecutedDe332Ref(executed.refs, ref);
   }
   const lists = [
     ...workflow
