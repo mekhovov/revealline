@@ -1,0 +1,118 @@
+{
+  "started": "2026-10-18T23:05:47.070525+00:00",
+  "integrationBase": "dd337c812",
+  "runtimeFrozen": false,
+  "scope": "Six serial FPV integration suites after rebasing incoming lesson-mode clarity; no browser or full-catalog replay rerun. Exact runtime and six test files are bound before and after.",
+  "before": {
+    "head": "33290126287c8131ebe286b5b14dee1aaa72201a",
+    "runtime": {
+      "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "tests": [
+      {
+        "path": "game/test/fpv-aircraft-coach.test.mjs",
+        "bytes": 10428,
+        "sha256": "ad29360f3766e78d01f44ebb2446e78ddb6cdca8d9ebb9c6d675a3e1d6e4c9a3"
+      },
+      {
+        "path": "game/test/fpv-world-appearance-ui.test.mjs",
+        "bytes": 144475,
+        "sha256": "4a1feeb8b386ac8327398bd0ed0158187070f739c41612255e9af16b43320432"
+      },
+      {
+        "path": "game/test/demo-sim.test.mjs",
+        "bytes": 9523,
+        "sha256": "2ec66e1e729e5f30b85edaff82813bc631bbc6e62b80dc5fe2e1abd5716495a7"
+      },
+      {
+        "path": "game/test/demo-sim-input.test.mjs",
+        "bytes": 8547,
+        "sha256": "71d74fe139b4b526c9a114e7e8f0d82cb89dacccd64f14030a6ee6af84a48659"
+      },
+      {
+        "path": "game/test/fpv-controller-readiness.test.mjs",
+        "bytes": 3848,
+        "sha256": "d633686f1d4400dfcd6ec6f824cc9514c15656b16dd36c61e0def68602b365d9"
+      },
+      {
+        "path": "game/test/fpv-flight-ui.test.mjs",
+        "bytes": 97596,
+        "sha256": "27ae8e02d862acdc482a319baf84b3227f98549e4ac258b365cd9e2ce53925e1"
+      }
+    ]
+  },
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/fpv-aircraft-coach.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/demo-sim.test.mjs",
+    "game/test/demo-sim-input.test.mjs",
+    "game/test/fpv-controller-readiness.test.mjs",
+    "game/test/fpv-flight-ui.test.mjs"
+  ],
+  "environment": {
+    "NODE_PATH": "/Users/oleksandr.mekhovov/work/my_projects/go_test/authoring/fpv-worlds/node_modules"
+  },
+  "complete": true,
+  "exitCode": 0,
+  "elapsedSeconds": 80.40811300000132,
+  "after": {
+    "head": "33290126287c8131ebe286b5b14dee1aaa72201a",
+    "runtime": {
+      "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "tests": [
+      {
+        "path": "game/test/fpv-aircraft-coach.test.mjs",
+        "bytes": 10428,
+        "sha256": "ad29360f3766e78d01f44ebb2446e78ddb6cdca8d9ebb9c6d675a3e1d6e4c9a3"
+      },
+      {
+        "path": "game/test/fpv-world-appearance-ui.test.mjs",
+        "bytes": 144475,
+        "sha256": "4a1feeb8b386ac8327398bd0ed0158187070f739c41612255e9af16b43320432"
+      },
+      {
+        "path": "game/test/demo-sim.test.mjs",
+        "bytes": 9523,
+        "sha256": "2ec66e1e729e5f30b85edaff82813bc631bbc6e62b80dc5fe2e1abd5716495a7"
+      },
+      {
+        "path": "game/test/demo-sim-input.test.mjs",
+        "bytes": 8547,
+        "sha256": "71d74fe139b4b526c9a114e7e8f0d82cb89dacccd64f14030a6ee6af84a48659"
+      },
+      {
+        "path": "game/test/fpv-controller-readiness.test.mjs",
+        "bytes": 3848,
+        "sha256": "d633686f1d4400dfcd6ec6f824cc9514c15656b16dd36c61e0def68602b365d9"
+      },
+      {
+        "path": "game/test/fpv-flight-ui.test.mjs",
+        "bytes": 97596,
+        "sha256": "27ae8e02d862acdc482a319baf84b3227f98549e4ac258b365cd9e2ce53925e1"
+      }
+    ]
+  },
+  "sourceUnchanged": true,
+  "counts": {
+    "tests": 193,
+    "pass": 193,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "finished": "2026-10-18T23:07:10.983521+00:00",
+  "tap": {
+    "path": "docs/qualification/shared-demos/fpv-integration-dd337-3329012628.tap.txt",
+    "bytes": 42289,
+    "sha256": "b3299da1cb4d590ab04e6841595e2a6f6d0a6b3e76a569d45bbf177b0feb0006"
+  }
+}
