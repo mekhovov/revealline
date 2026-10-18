@@ -10,8 +10,7 @@ paths are identical between these commits. The 500 Hz default at this contact-on
 the expanded contact gate below. The explicit timing follow-up is now committed
 as `b965834dca2d31bdfd6da9d0642dabf6fd04b129`, followed by bench alignment
 `965962775858f7d21aa4f62265fba6fc1a2ad182`. Their integrated equivalents are
-`12b6655fa` and `5de3166e4`. Final numerical/sustained qualification, publication
-and rendered acceptance remain pending.
+`12b6655fa` and `5de3166e4`. Final numerical/sustained qualification and representative packaged acceptance now pass; normal publication and source-bound public acceptance remain. The [final qualification](fpv-current-contact-qualification.md) and [integrated acceptance](fpv-flight-integrated-acceptance-20261019.md) supersede pending statuses while preserving the historical measurements below.
 
 The original Academy Lift and land lesson could stop at its second objective
 after a centered Meteor75 landing. The drone rested at approximately −1 mm with
@@ -122,19 +121,12 @@ reviewed generator deduplication (`db42e5285`, integrated as `2eceaed37`) reuses
 two already-admitted stateless presentation modules and saves 5,106 bytes. All
 58 projection/menu checks pass. The [exact AST receipt](fpv-shell-source-dedup-20261019.json)
 confirms every other generated node is unchanged. No package cap, admission,
-physics identity or archive algorithm changes. Final integrated measurement
-remains required.
+physics identity or archive algorithm changes. Final integrated measurement now passes: Academy has 2,681 original-input and 36,463 emitted bundled bytes spare, with unchanged caps/admissions. See the [exact final receipt](fpv-flight-integrated-package-20261019.json).
 
-## Remaining acceptance
+## Final acceptance and remaining release gates
 
-- Finish final-source numerical, replay and sustained checks after the reviewed
-  v3 timing and bench changes; retain any failures rather than weakening gates.
-- Exact committed-source package measurements, followed by remeasurement after
-  rebasing onto current main. Main's larger translation inputs consume additional
-  Academy capacity; the earlier branch margins are not integration proof.
-- An actual packaged centered keyboard flight, checkpoint and course verification.
-- Normal hosted release checks, deployment and source-bound public acceptance.
+Final 1,000 Hz numerical/replay/sustained qualification is complete on the source bound in the [qualification report](fpv-current-contact-qualification.md). The latest-main integrated source `cfdf24d61` passes all 19 package checks and the 420-flight sample. The actual emitted Academy build completed the original Meteor75 lesson by keyboard in 8.58 seconds, verified course completion through the real worker, and restored paused at 10 seconds. The descent included a bounce before settling. World Nazgul Self-level/Acro checks also pass within their recorded short-flight scope. [Detailed packaged acceptance](fpv-flight-integrated-acceptance-20261019.md).
 
-These gates establish software/numerical behavior. Physical radios, measured
-aircraft data and pilot comparisons remain separately deferred. R13 missing
-archives remains unresolved and is unaffected by this contact correction.
+Normal final review/integration, hosted checks, deployment and source-bound public acceptance remain. After rebase, compare the qualified runtime and package inputs before carrying the receipts forward; rerun relevant checks for actual differences.
+
+These gates establish software/numerical behavior. Physical radios, measured aircraft data and pilot comparisons remain separately deferred. R13 missing archives remains unresolved and is unaffected by this contact correction.

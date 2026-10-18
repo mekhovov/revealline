@@ -94,12 +94,9 @@ positive completed Academy reference, offline-network or native-device acceptanc
 
 ## Remaining boundaries
 
-Hosted integration/publication and deployed acceptance remain. A geometry-correct
-visual ghost is the next separate increment; this slice is timing comparison only.
+Hosted integration/publication and deployed acceptance remain. At this original
+R11D boundary the slice covered timing comparison only; the subsequent
+[geometry-correct visual reference](fpv-practice-ghost-20261018.md) is now locally accepted.
 No physical radio/pilot/flight-log qualification is implied.
 
-One nonblocking presentation edge remains: if the optional observer alone fails
-or resets after a discontinuity, it clears its reference; the archive action may
-still say **Clear split reference** until the next selection/lifecycle action.
-This cannot show stale deltas or alter the flight; synchronize it with the later
-visual-reference lifecycle work.
+The previously observed nonblocking observer/control-label lifecycle edge is corrected in `f81dd8a004d911049efc1ff366b2166168e72506` (integrated as `3d528a190`). Controls query their own session's live split reference; proof clearing always removes that owned reference, including when the presence query throws. The visual reference remains independent. Independent review and 92 focused checks pass, including EN/UK, owner/disposal and failed-query cleanup. The final integrated package and actual Meteor75 proof/recovery acceptance also pass. [Final integrated scope](fpv-flight-integrated-acceptance-20261019.md). Publication remains a separate gate.
