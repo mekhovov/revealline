@@ -22,6 +22,8 @@ export function mountAircraftArchiveControls({
   getSession,
   onPause = () => {},
   onReference = () => false,
+  onVisualReference = () => false,
+  hasVisualReference = () => true,
   key = 'academy',
   platformOptions = {},
   workerURL,
@@ -95,9 +97,17 @@ export function mountAircraftArchiveControls({
       return false;
     }
   };
+  const applyVisual = (session, value) => {
+    try {
+      return onVisualReference(session, value) === true;
+    } catch {
+      return false;
+    }
+  };
   function clearCourse() {
     if (!courseView) return;
     if (courseView.referenceSelected) applyReference(courseView.session, null);
+    if (courseView.visualSelected) applyVisual(courseView.session, null);
     operation?.controller.abort();
     courseView = null;
     setResult('');
@@ -172,6 +182,14 @@ export function mountAircraftArchiveControls({
     select.value = rows.some((row) => row.id === selected) ? selected : (rows[0]?.id ?? '');
   }
   function paint() {
+    if (courseView?.visualSelected) {
+      try {
+        if (!hasVisualReference(courseView.session)) throw new Error();
+      } catch {
+        courseView.visualSelected = false;
+        courseView.visualError = true;
+      }
+    }
     if (rowsLocale !== locale()) renderRows();
     heading.textContent = t('Saved flight sessions', 'Збережені льотні сесії');
     explanation.textContent = t(
@@ -212,6 +230,10 @@ export function mountAircraftArchiveControls({
       ? t('Clear split reference', 'Прибрати орієнтир часу')
       : t('Use as split reference', 'Використати як орієнтир часу');
     referenceButton.hidden = !courseView?.report?.course?.verified;
+    visualButton.textContent = courseView?.visualSelected
+      ? t('Hide reference aircraft', 'Сховати еталонний дрон')
+      : t('Show reference aircraft', 'Показати еталонний дрон');
+    visualButton.hidden = !courseView?.report?.course?.presentation;
     courseHelp.textContent = activeCourse
       ? `${t('Check the selected archive against this frozen course', 'Перевірити вибраний архів за цією версією курсу')}: ${courseTitle(activeCourse)}. ${t('Uses the recorded aircraft, settings and mode. Static hold, gate and landing objectives only; unscored.', 'Використовує записані дрон, налаштування та режим. Лише статичні завдання утримання, воріт і посадки; без заліку.')}`
       : t(
@@ -228,9 +250,22 @@ export function mountAircraftArchiveControls({
     for (const node of [download, verifyButton, remove]) node.disabled ||= !select.value;
     courseButton.disabled ||= !select.value || !activeCourse;
     referenceButton.disabled ||= !courseView?.referenceSelected && !referenceMatches();
+    visualButton.disabled ||= !courseView?.visualSelected && !referenceMatches();
     select.disabled = Boolean(operation);
     file.disabled = Boolean(operation);
     renderCourse();
+    if (!visualButton.hidden)
+      courseHelp.textContent += ` ${
+        courseView?.visualError
+          ? t(
+              'Visual reference unavailable; split timing remains available.',
+              'Візуальний еталон недоступний; порівняння часу залишається доступним.',
+            )
+          : t(
+              'REF marks an unscored recorded aircraft, without collisions. It holds its final pose after finishing.',
+              'REF позначає записаний дрон без заліку й зіткнень. Після завершення він залишається у кінцевій позиції.',
+            )
+      }`;
     if (!referenceButton.hidden)
       courseHelp.textContent += ` ${
         referenceMatches()
@@ -519,6 +554,7 @@ export function mountAircraftArchiveControls({
       if (!view.valid()) throw cancelled();
       view.mode = packet.manifest.config?.response?.mode;
       const report = await verifyCourse(packet, view.course, {
+        collectReference: true,
         signal,
         Worker: win?.Worker,
         ...(workerURL ? { workerURL } : {}),
@@ -544,6 +580,18 @@ export function mountAircraftArchiveControls({
           rows: structuredClone(view.report.course.splits),
         };
     if (applyReference(owner, value)) view.referenceSelected = value !== null;
+    paint();
+  });
+  const visualButton = button(() => {
+    if (
+      !courseView?.visualSelected &&
+      (!referenceMatches() || !courseView.report.course.presentation)
+    )
+      return;
+    const view = courseView,
+      value = view.visualSelected ? null : view.report.course.presentation;
+    view.visualError = !applyVisual(owner, value);
+    if (!view.visualError) view.visualSelected = value !== null;
     paint();
   });
   const remove = button(() =>

@@ -24,6 +24,8 @@ function fixture(
     course,
     referenceIdentity,
     onReference,
+    onVisualReference,
+    hasVisualReference,
     begin,
     append,
     list,
@@ -136,6 +138,8 @@ function fixture(
     makeId: () => `archive-${++ids}`,
     onPause: () => pauses++,
     ...(onReference ? { onReference } : {}),
+    ...(onVisualReference ? { onVisualReference } : {}),
+    ...(hasVisualReference ? { hasVisualReference } : {}),
     verify: verify ?? (async () => ({ verificationScope: 'complete-session' })),
     ...(verifyCourse ? { verifyCourse } : {}),
     exportFile: async () => ({ status: 'requested' }),
@@ -1012,4 +1016,157 @@ test('reference presentation failures neither select nor escape into flight upda
   await settle();
   assert.doesNotThrow(() => f.button('Use as split reference').click());
   assert.ok(f.button('Use as split reference'));
+});
+
+const visualReport = () => ({
+  ...referenceReport(),
+  course: {
+    ...referenceReport().course,
+    presentation: { format: 'AircraftCoursePresentation.v1', marker: 'owned-worker-result' },
+  },
+});
+test('visual capture prepares bounded data but requires separate explicit Show/Hide and retains split choice', async (t) => {
+  const visual = [],
+    splits = [],
+    report = visualReport();
+  const f = fixture(t, {
+    course: verificationCourse(),
+    referenceIdentity,
+    verifyCourse: async (_archive, _course, options) => {
+      assert.equal(options.collectReference, true);
+      return report;
+    },
+    onReference: (_session, value) => {
+      splits.push(value);
+      return true;
+    },
+    onVisualReference: (_session, value) => {
+      visual.push(value);
+      return true;
+    },
+  });
+  await prepareCourseArchive(f);
+  f.button('Show reference aircraft').emit('click');
+  assert.equal(visual.length, 0);
+  f.button('Verify course completion').click();
+  await settle();
+  assert.equal(visual.length, 0);
+  f.button('Use as split reference').click();
+  assert.equal(splits.length, 1);
+  assert.equal(visual.length, 0);
+  f.button('Show reference aircraft').click();
+  assert.equal(visual[0], report.course.presentation);
+  assert.match(
+    f.ui.root.textContent,
+    /REF marks an unscored recorded aircraft, without collisions/,
+  );
+  f.update();
+  assert.equal(visual.length, 1);
+  f.setLocale('uk');
+  f.update();
+  assert.ok(f.button('Сховати еталонний дрон'));
+  f.button('Сховати еталонний дрон').click();
+  assert.equal(visual.at(-1), null);
+  assert.equal(splits.length, 1, 'hiding the ghost preserves independently selected splits');
+});
+for (const change of ['selection', 'recovery', 'owner', 'verification', 'disposal']) {
+  test(`visual reference clears on ${change}`, async (t) => {
+    const applied = [];
+    const f = fixture(t, {
+      course: verificationCourse(),
+      referenceIdentity,
+      verifyCourse: async () => visualReport(),
+      onVisualReference: (session, value) => {
+        applied.push({ session, value });
+        return true;
+      },
+    });
+    await prepareCourseArchive(f);
+    f.button('Verify course completion').click();
+    await settle();
+    f.button('Show reference aircraft').click();
+    if (change === 'selection') {
+      const select = f.ui.root.querySelector('select');
+      select.value = '';
+      select.emit('change');
+    }
+    if (change === 'recovery') {
+      f.setGeneration('1');
+      f.update();
+    }
+    if (change === 'owner') {
+      f.replaceSession();
+      f.update();
+    }
+    if (change === 'verification') f.button('Verify course completion').click();
+    if (change === 'disposal') f.ui.dispose();
+    await settle();
+    assert.equal(applied.length, 2);
+    assert.equal(applied[1].value, null);
+    assert.equal(applied[1].session, applied[0].session);
+  });
+}
+test('failed visual rendering remains optional and a mismatched archive cannot show it', async (t) => {
+  let calls = 0;
+  const f = fixture(t, {
+    course: verificationCourse(),
+    referenceIdentity,
+    verifyCourse: async () => visualReport(),
+    onVisualReference: () => {
+      calls++;
+      throw new Error('WebGL unavailable');
+    },
+    onReference: () => true,
+  });
+  await prepareCourseArchive(f);
+  f.button('Verify course completion').click();
+  await settle();
+  assert.doesNotThrow(() => f.button('Show reference aircraft').click());
+  assert.match(
+    f.ui.root.textContent,
+    /Visual reference unavailable; split timing remains available/,
+  );
+  f.button('Use as split reference').click();
+  assert.ok(f.button('Clear split reference'));
+  const wrong = fixture(t, {
+    course: verificationCourse(),
+    referenceIdentity: { ...referenceIdentity, terrainIdentity: 'ffffffffffffffff' },
+    verifyCourse: async () => visualReport(),
+    onVisualReference: () => {
+      calls++;
+      return true;
+    },
+  });
+  await prepareCourseArchive(wrong);
+  wrong.button('Verify course completion').click();
+  await settle();
+  assert.equal(wrong.button('Show reference aircraft').disabled, true);
+  wrong.button('Show reference aircraft').emit('click');
+  assert.equal(calls, 1);
+});
+
+test('a reference lost by the renderer restores Show and reports unavailable without changing splits', async (t) => {
+  let active = true;
+  const f = fixture(t, {
+    course: verificationCourse(),
+    referenceIdentity,
+    verifyCourse: async () => visualReport(),
+    onVisualReference: () => true,
+    onReference: () => true,
+    hasVisualReference: () => active,
+  });
+  await prepareCourseArchive(f);
+  f.button('Verify course completion').click();
+  await settle();
+  f.button('Use as split reference').click();
+  f.button('Show reference aircraft').click();
+  assert.ok(f.button('Hide reference aircraft'));
+  active = false;
+  f.update();
+  assert.ok(f.button('Show reference aircraft'));
+  assert.ok(f.button('Clear split reference'));
+  assert.match(
+    f.ui.root.textContent,
+    /Visual reference unavailable; split timing remains available/,
+  );
 });
