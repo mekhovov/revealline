@@ -3,8 +3,17 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
-import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';
 const root = new URL('../', import.meta.url);
+// Active sparse consumers retain their original input closure. Only the finite
+// retired declarations need the additional preserved source fixture.
+async function readSoloDiagnosticSource(path) {
+  const retired =
+    /^\.github\/workflows\/solo-remote-final-(?:lifecycle-(?:long29|next|retry)|soak(?:-v2)?|timing-(?:cold-first30|warm-first30|sentry|long-rail)(?:-v2)?)-temporary\.yml$/;
+  if (!retired.test(path)) return readFile(new URL(path, root));
+  const historical = await import('./solo-retired-diagnostic-source.mjs');
+  return historical.readSoloDiagnosticSource(path);
+}
+
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export const PAGE_ERROR_WITNESS_PATH =
   'docs/performance/fixtures/solo-error-witness/historical-source.json';
