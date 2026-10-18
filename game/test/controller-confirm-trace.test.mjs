@@ -47,11 +47,51 @@ function fixture() {
 
 test('disabled trace records nothing and creates no UI', () => {
   const { document, listeners } = fixture();
-  const trace = attachControllerConfirmTrace({ document, enabled: false });
+  let hostReads = 0;
+  const trace = attachControllerConfirmTrace({
+    document,
+    enabled: false,
+    getHost: () => {
+      hostReads++;
+      return document.body;
+    },
+  });
+  for (let i = 0; i < 120; i++) trace.syncHost();
   trace.record({ event: 'start', targetId: 'sound' });
   assert.deepEqual(trace.snapshot(), []);
   assert.equal(document.body.children.length, 0);
   assert.equal(listeners.size, 0);
+  assert.equal(hostReads, 0, 'Disabled diagnostics must not resolve the current modal host');
+  trace.destroy();
+  trace.syncHost();
+  assert.equal(hostReads, 0);
+});
+
+test('enabled trace resolves default hosts lazily and preserves explicit host arguments', () => {
+  const { document } = fixture();
+  const modal = document.createElement('dialog');
+  let hostReads = 0;
+  const trace = attachControllerConfirmTrace({
+    document,
+    getHost: () => {
+      hostReads++;
+      return modal;
+    },
+  });
+  trace.setEnabled(true);
+  const panel = modal.children[0];
+  assert.equal(hostReads, 1);
+  trace.syncHost(document.body);
+  assert.equal(panel.parentElement, document.body);
+  trace.syncHost(null);
+  assert.equal(panel.parentElement, document.body);
+  assert.equal(hostReads, 1, 'Explicit hosts must not call the default resolver');
+  trace.syncHost(undefined);
+  assert.equal(panel.parentElement, modal);
+  assert.equal(hostReads, 2);
+  trace.setEnabled(false);
+  trace.syncHost();
+  assert.equal(hostReads, 2);
   trace.destroy();
 });
 

@@ -1,0 +1,32 @@
+{
+  "format": "SoloOptionalAudio34d95ExecutionSourceV1",
+  "revision": "34d95cb9fe471ca56c243f05c4330826ba822fb9",
+  "tree": "de4ea7b4c23988eeee54f5d082dd3d9fa65eddbb",
+  "run": 39057302158,
+  "records": [
+    {
+      "path": "scripts/solo-remote-readiness.mjs",
+      "blob": "d6611911b8716407481e516b5163ed133969d59a",
+      "bytes": 75719,
+      "sha256": "47405b7648b5f545a34eea4adc5533c8882c79b1dd4fd69549cb5205ca2c314c"
+    },
+    {
+      "path": "scripts/solo-qualification-readiness.mjs",
+      "blob": "3489a86b3331323ae3953128e4035d94d341a122",
+      "bytes": 110630,
+      "sha256": "a67b20820e39152442e88fb53784fb64f828c09fa42a732d31754ec060560efe"
+    },
+    {
+      "path": "docs/performance/solo-optional-start-audio-e1cc-v3-plan.json",
+      "blob": "4e335ef3fe9c8f4c0e723000c3421b9ab4cb6d22",
+      "bytes": 14930,
+      "sha256": "144b720a599c5b17125730818a56eefbf300121677609fff84e4182e7e96ffcc"
+    },
+    {
+      "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v3-temporary.yml",
+      "blob": "0e05e069db17c5bced9d50307c3db3325581a3a9",
+      "bytes": 26949,
+      "sha256": "0a50990d3b6021d5e9894c25876742a1cb5d63952c893670dfa6520c27698274"
+    }
+  ]
+}

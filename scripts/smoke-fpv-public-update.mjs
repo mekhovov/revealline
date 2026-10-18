@@ -146,7 +146,8 @@ async function openTuning(page) {
     .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
     .filter({ visible: true })
     .click();
-  await page.getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true }).waitFor();
+  await page.getByRole('dialog', { name: 'Setup workbench', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Library', exact: true }).click();
 }
 async function launch(chromium, profile, offline = false) {
   const context = await chromium.launchPersistentContext(profile, {
@@ -420,6 +421,7 @@ export async function smokeFPVPublicUpdate({
         for (const [key, value] of Object.entries(saved.storage))
           assert.equal(currentStorage[key], value, `Legacy setting changed: ${key}`);
         await openTuning(page);
+        await page.getByRole('button', { name: 'Camera', exact: true }).click();
         assert.equal(
           await page.getByLabel('Camera tilt (degrees)', { exact: true }).inputValue(),
           '27',
@@ -428,9 +430,7 @@ export async function smokeFPVPublicUpdate({
           await page.getByLabel('Vertical FOV (degrees)', { exact: true }).inputValue(),
           '108',
         );
-        await page
-          .getByRole('button', { name: 'Save drone assignment & camera', exact: true })
-          .click();
+        await page.getByRole('button', { name: 'Save for next flight', exact: true }).click();
         await page.waitForFunction((key) => localStorage.getItem(key) !== null, libraryKey);
         const backupCheck = await page.evaluate(
           async ({ root, expectedLegacy }) => {
@@ -486,10 +486,11 @@ export async function smokeFPVPublicUpdate({
         await ready(page);
         await openTuning(page);
         await page.getByLabel('Rate profile', { exact: true }).selectOption('public-rates');
+        await page.getByRole('button', { name: 'Use rate profile in draft', exact: true }).click();
         await page
           .locator('.fpv-tuning details')
           .filter({ has: page.locator('textarea') })
-          .locator('summary')
+          .locator(':scope > summary')
           .click();
         await page
           .getByLabel('Source / export firmware version', { exact: true })
@@ -545,11 +546,13 @@ export async function smokeFPVPublicUpdate({
             }
           }, importedProfile.id);
         await page.getByLabel('Rate profile', { exact: true }).selectOption('public-rates');
+        await page.getByRole('button', { name: 'Use rate profile in draft', exact: true }).click();
+        await page.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
         const rollMaximum = page
           .getByRole('group', { name: 'Roll', exact: true })
           .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true });
-        // Import previews are retained per profile as drafts. Selecting the saved
-        // profile restores that draft; explicitly revert before testing its saved rates.
+        // Browsing does not apply a profile. Explicitly using it restores its
+        // retained import draft; revert the complete setup before testing saved rates.
         assert.equal(await rollMaximum.inputValue(), '880');
         await page.getByRole('button', { name: 'Revert draft', exact: true }).click();
         assert.equal(await rollMaximum.inputValue(), '900');
@@ -558,6 +561,7 @@ export async function smokeFPVPublicUpdate({
           libraryBeforeRevert,
           'Reverting the preview draft changed the saved library',
         );
+        await page.getByRole('button', { name: 'Camera', exact: true }).click();
         assert.equal(
           await page.getByLabel('Camera tilt (degrees)', { exact: true }).inputValue(),
           '27',
@@ -566,6 +570,7 @@ export async function smokeFPVPublicUpdate({
           await page.getByLabel('Vertical FOV (degrees)', { exact: true }).inputValue(),
           '108',
         );
+        await page.getByRole('button', { name: 'Flight response / PID', exact: true }).click();
         await page
           .getByRole('button', { name: 'Advanced reference quad · experimental', exact: true })
           .click();

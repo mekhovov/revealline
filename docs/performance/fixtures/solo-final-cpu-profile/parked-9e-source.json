@@ -1,0 +1,62 @@
+{
+  "format": "SoloHistoricalCpuParkedSourceWitnessV1",
+  "revision": "9e0111e066b5dac7749a33fd0e98e92702851dc6",
+  "tree": "780fdfcb84a1d5cc6009b697879a98fbe39d0487",
+  "scope": "Later parked declaration and its actual Git source, not original dispatched CPU-run authority. Existing declaration/workflow unchanged. Current new CPU phase must hash current execution files independently.",
+  "files": [
+    {
+      "path": "docs/performance/solo-remote-cpu-profile-plan.json",
+      "bytes": 9913,
+      "sha256": "23139ecdc03518fe3989a9f2344c13c6f66ea13b3d05bc9d9035333470f6cf9a",
+      "gitBlob": "3f3a55dba6a9961cf56b0eb292eb8b6a4f46be7c"
+    },
+    {
+      "path": ".github/workflows/solo-remote-cpu-profile-temporary.yml",
+      "bytes": 8180,
+      "sha256": "dd2d6ad15c025e8489257700103c009efa56f99410c3c7938942502c05f74b13",
+      "gitBlob": "3c1a3edbf220526ad1bd75c49d36ef9f3f234780"
+    },
+    {
+      "path": "scripts/solo-remote-cpu-profile.mjs",
+      "bytes": 13080,
+      "sha256": "25d73b592c3f581ec330b3a013e1f53b7a759e2d346173881010812737787ab3",
+      "gitBlob": "32216f9587cf9cd8efd85eace369596f289f106b"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 59605,
+      "sha256": "90db5e035dafe5538d347f3cc1b0c38e8e18ffef3c11db3e7b6f803f4619e01f",
+      "gitBlob": "dc1826bf10d200a5cc902bbd54064b6e3bae829d"
+    },
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "bytes": 17343,
+      "sha256": "3a631883304de44fbb6c54f088d5a79108495e297c5231e4bee76faf38f363d6",
+      "gitBlob": "8893216e9cb08eeed178786f486011fda75be565"
+    },
+    {
+      "path": "scripts/solo-diagnostics-analysis.mjs",
+      "bytes": 17343,
+      "sha256": "78e021e5751d90e65293d496b577104f2ed16cde685caaadc09d1becccb7fa9f",
+      "gitBlob": "40227e82e9f3362e87d60a546d39aaf80e40b3bb"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c",
+      "gitBlob": "1059a859eebcf16969d49eb3333c75306b29b9e3"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 52211,
+      "sha256": "42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235",
+      "gitBlob": "17a031404b5b10bf4c5823a5304cc7c8bdea3d95"
+    },
+    {
+      "path": "scripts/solo-remote-supplemental.mjs",
+      "bytes": 21973,
+      "sha256": "b4e37dd970cd161613b03d88aece23588048d1297f8a09a37e4cc997662e5549",
+      "gitBlob": "7ab6d190a0ba8151468b309f4f246033d5e2d015"
+    }
+  ]
+}

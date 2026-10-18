@@ -280,7 +280,8 @@ async function openTuning(page) {
     .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
     .filter({ visible: true })
     .click();
-  await page.getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true }).waitFor();
+  await page.getByRole('dialog', { name: 'Setup workbench', exact: true }).waitFor();
+  await page.getByRole('button', { name: 'Library', exact: true }).click();
 }
 
 async function installThroughUI(page, id) {
@@ -393,6 +394,7 @@ export async function smokeFPVPublicFreshInstall({
       );
       const profileName = 'Fresh public offline acceptance';
       await page.getByLabel('Profile name', { exact: true }).fill(profileName);
+      await page.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
       await page
         .getByRole('group', { name: 'Roll', exact: true })
         .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
@@ -463,6 +465,8 @@ export async function smokeFPVPublicFreshInstall({
       evidence.offlineNavigationFromServiceWorker = true;
       await openTuning(page);
       await page.getByLabel('Rate profile', { exact: true }).selectOption(saved.id);
+      await page.getByRole('button', { name: 'Use rate profile in draft', exact: true }).click();
+      await page.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
       assert.equal(
         await page
           .getByRole('group', { name: 'Roll', exact: true })
@@ -472,6 +476,7 @@ export async function smokeFPVPublicFreshInstall({
       );
       evidence.ratesPersisted = true;
       report.phase = `${id}:offline-advanced-practice`;
+      await page.getByRole('button', { name: 'Flight response / PID', exact: true }).click();
       await page
         .getByRole('button', { name: 'Advanced reference quad · experimental', exact: true })
         .click();

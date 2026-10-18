@@ -9,6 +9,7 @@ import RAPIER from './vendor/rapier/rapier.mjs';
 import {
   AIRCRAFT_BACKEND,
   AIRCRAFT_REGIONAL_BACKEND,
+  AIRCRAFT_BACKENDS,
   AIRCRAFT_SNAPSHOT_FORMAT,
   createAircraftSimulation,
   aircraftFlightIdentities,
@@ -206,7 +207,7 @@ export function validateAdvancedAircraft(source = 'freestyle') {
 /** Derive comparison policy from the actual frozen runtime configuration, never
  * independent UI defaults. Integrity identities keep their published meaning. */
 export function advancedFlightIdentities(source, { terrainIdentity = null } = {}) {
-  if ([AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND].includes(source?.backend))
+  if (AIRCRAFT_BACKENDS.includes(source?.backend))
     return aircraftFlightIdentities(source, { terrainIdentity });
   const config = boundedJSON(source, {
     maxBytes: 256 * 1024,
@@ -378,7 +379,7 @@ export const initAdvancedRuntime = initWorldRuntime;
 export function createAdvancedSimulation(options = {}) {
   if (
     options.aircraft?.format === 'AdvancedAircraft.v2' ||
-    [AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND].includes(options.backend)
+    AIRCRAFT_BACKENDS.includes(options.backend)
   )
     return createAircraftSimulation(options);
   const terrainEnabled = options.terrain !== undefined;

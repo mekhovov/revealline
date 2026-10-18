@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { soloPage, settle, memoryStorage } from './helpers/solo-dom.mjs';
+import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { JOURNEY_PREFERENCES_KEY } from '../journey/preferences.mjs';
@@ -20,6 +22,7 @@ import { createAuthoredJourneyRoute } from '../content-design/route.mjs';
 import { compileContentProject, resolveMission } from '../content-design/project.mjs';
 import { dataIdentity } from '../data-json.mjs';
 import { ACTOR_SESSION_FORMAT } from '../sessions.mjs';
+import { snapshotCaptureSession, nativeCaptureSession } from '../capture-presentation-session.mjs';
 import { expectedRouteEvidence, assertRouteEvidence } from './helpers/route-evidence.mjs';
 
 const authoredRoute = createAuthoredJourneyRoute('authored');
@@ -51,11 +54,32 @@ async function setup(t, { difficulty = 'standard', storage = memoryStorage(), ..
   });
   return { p, storage, backend: createJourneyBackend(memory) };
 }
-const running = (p, levelId) =>
-  settle(() => {
-    p.frame(0);
-    return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
-  });
+async function running(p, levelId) {
+  let submittedFrames = 0;
+  try {
+    await settle(() => {
+      p.frame(0);
+      submittedFrames++;
+      return p.doc.body.dataset.flightState === 'running' && p.rendered.run.levelId === levelId;
+    });
+  } catch (error) {
+    error.message += `\n${JSON.stringify({
+      expectedLevel: levelId,
+      actualLevel: p.rendered.run.levelId,
+      runStatus: p.rendered.run.status,
+      submittedFrames,
+      body: p.doc.body.dataset,
+      overlay: p.$('game-overlay').dataset,
+      preparation: p.$('flight-preparation-status').textContent,
+      preparationState: p.$('flight-preparation-status').dataset,
+      start: p.$('start-button').dataset,
+      next: p.$('next-button').dataset,
+      focus: p.doc.activeElement?.id,
+      errors: p.errors.map((value) => String(value?.stack ?? value)),
+    })}`;
+    throw error;
+  }
+}
 async function startPrepared(p, levelId) {
   await settle(() => {
     p.frame(0);
@@ -71,8 +95,8 @@ async function startPrepared(p, levelId) {
   assert.equal(p.rendered.run, accepted);
 }
 async function openMissions(p, opener = 'shell-play') {
-  p.$(opener).click();
-  await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
+  await openMissionLibrary(p, opener);
+  assert(p.$('journey-collection'));
   p.change('journey-collection', 'Journey');
 }
 function missionCard(p, route, levelId) {
@@ -139,7 +163,7 @@ function playRoute(p, [id, authoredIdentity, gameplayIdentity, , segments]) {
 test('the final authored core mission resolves the next unified-library owner without recording a skip', async (t) => {
   const { p, backend } = await setup(t);
   await openMissions(p);
-  missionCard(p, 'opening', 'long-way-home').click();
+  await activateMissionCard(missionCard(p, 'opening', 'long-way-home'));
   await startPrepared(p, 'long-way-home');
   const original = p.rendered.run;
   assert.equal(p.$('journey-skip').hidden, false);
@@ -163,7 +187,7 @@ for (const [missionId, expected] of [
   test(`Solo result for ${missionId} names its owned continuation`, async (t) => {
     const { p } = await setup(t);
     await openMissions(p);
-    missionCard(p, 'opening', missionId).click();
+    await activateMissionCard(missionCard(p, 'opening', missionId));
     await startPrepared(p, missionId);
     p.$('pause-button').click();
     p.rendered.run.status = 'won';
@@ -186,7 +210,7 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
   });
   await openMissions(p);
   assert.equal(p.$('journey-cards').children.length, 17);
-  missionCard(p, 'authored', 'long-way-home').click();
+  await activateMissionCard(missionCard(p, 'authored', 'long-way-home'));
   await startPrepared(p, 'long-way-home');
   const previous = p.rendered.run,
     picture = p.rendered.backdrop;
@@ -206,7 +230,9 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
   assert.equal(p.rendered.backdrop.assetRevision.id, 'border-behind-the-patrol');
   assert.equal(p.rendered.run.player.speed, 0, 'Transition does not reuse the activation input.');
   p.$('pause-button').click();
-  const saved = JSON.parse(storage.getItem('revealline.suspended.journey-authored.v1'));
+  const envelope = JSON.parse(storage.getItem('revealline.suspended.journey-authored.v1'));
+  assert.deepEqual(snapshotCaptureSession(envelope), envelope);
+  const saved = nativeCaptureSession(envelope);
   assert.equal(saved.themeId, 'border-bloom');
   assert.equal(storage.getItem('revealline.suspended.journey-opening.v1'), null);
   const profile = await backend.read();
@@ -216,7 +242,7 @@ test('cross-pack Skip failure keeps Horizon intact, then retries into Border wit
   const skipped = missionCard(p, 'authored', 'long-way-home');
   assert.match(skipped.textContent, /Skipped/);
   assert.doesNotMatch(skipped.textContent, /Cleared/);
-  skipped.click();
+  await activateMissionCard(skipped);
   await startPrepared(p, 'long-way-home');
   assert.equal(p.rendered.run.coverage, 0);
   assert.deepEqual(p.errors, []);
@@ -414,7 +440,7 @@ for (const route of ['opening', 'authored'])
       const [id] = row;
       playRoute(p, row);
       assert.equal(p.$('game-overlay').hidden, true, 'Every clear first keeps its full picture.');
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.equal(p.$('journey-chooser')?.open ?? false, false);
       if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
       p.$('show-result').click();
       assert.equal(p.$('game-overlay').dataset.kind, 'won');
@@ -429,7 +455,7 @@ for (const route of ['opening', 'authored'])
       picture = p.rendered.backdrop,
       checkpoint = authoritativeCheckpoint(completed);
     p.$('next-button').click();
-    await settle(() => p.$('journey-chooser').open && p.$('journey-collection'));
+    await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
     assert.equal(p.$('journey-chooser').open, true);
     p.change('journey-collection', 'Journey');
     assert.equal(p.rendered.run.levelId, rows.at(-1)[0]);
@@ -481,7 +507,7 @@ for (const row of optionalRoutes)
   test(`${row[0]} optional ending offers Browse missions and preserves its exact result`, async (t) => {
     const { p, backend } = await setup(t, { search: '?journey=authored' });
     await openMissions(p);
-    missionCard(p, 'authored', row[0]).click();
+    await activateMissionCard(missionCard(p, 'authored', row[0]));
     await startPrepared(p, row[0]);
     playRoute(p, row);
     if (!p.$('skip-celebration').hidden) p.$('skip-celebration').click();
@@ -521,7 +547,9 @@ test('candidate Skip takes two actions, uses next-attempt Expert intent, and res
   const checkpoint = authoritativeCheckpoint(retained);
   const savedRaw = storage.getItem('revealline.suspended.journey-opening.v1');
   assert(savedRaw);
-  const saved = JSON.parse(savedRaw);
+  const envelope = JSON.parse(savedRaw);
+  assert.deepEqual(snapshotCaptureSession(envelope), envelope);
+  const saved = nativeCaptureSession(envelope);
   assert.equal(saved.themeId, 'horizon');
   assert.equal(saved.format, ACTOR_SESSION_FORMAT);
   assert.equal(saved.presentationPins, null);
@@ -541,7 +569,7 @@ test('candidate Skip takes two actions, uses next-attempt Expert intent, and res
   assert.equal(Object.keys(profile.clears.solo).length, 0);
   assert(profile.skipped.solo.some((id) => id.endsWith('/first-return')));
   p.$('pause-button').click();
-  p.$('library-button').click();
+  await activateHostAction(p.$('library-button'));
   p.$('save-json').value = savedRaw;
   p.$('import-save').click();
   await settle(() => !p.$('library-dialog').open).catch((error) => {

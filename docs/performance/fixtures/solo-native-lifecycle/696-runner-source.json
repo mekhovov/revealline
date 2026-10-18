@@ -1,0 +1,10 @@
+{
+  "format": "SoloLifecycleHistoricalRunnerV1",
+  "sourceRevision": "69639b30d985ffa723a4d0c11756b632fc2da5c1",
+  "sourceTree": "d022c57efa75dbe7b7aeeca00a1950f61426595b",
+  "path": "scripts/run-solo-remote-correctness.mjs",
+  "gitBlob": "b3a8d041cdb70697183f1b3562a5f852f70c26fd",
+  "bytes": 57545,
+  "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7",
+  "scope": "Exact actual696 source runner for already executed a6 lifecycle and offline declarations; no authority for a new source release."
+}

@@ -1,0 +1,76 @@
+{
+  "format": "SoloHostedNormalBaselineProducerPlanV2",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "publishVerifiedNormal": true,
+    "publisher": {
+      "workflow": ".github/workflows/solo-remote-baseline-temporary.yml"
+    }
+  },
+  "release": {
+    "scope": "normal-baseline-producer-only",
+    "before": "1ccf8368a3dcd099e1608c8a9433e6f0c0518e8f",
+    "automaticRetries": 0,
+    "performanceQualification": "not-provided"
+  },
+  "helperTimeoutMs": 3000000,
+  "evidenceBytes": 33554432,
+  "finalizationReserveBytes": 4194304,
+  "initialDiskBytes": 8589934592,
+  "diskFloorBytes": 1077936128,
+  "minimumMemoryBytes": 12884901888,
+  "commandRssBytes": 6442450944,
+  "commandOutputBytes": 4194304,
+  "commandTimeouts": {
+    "build": 1200000,
+    "inner": 600000,
+    "source": 480000
+  },
+  "archiveBytes": 2147483648,
+  "proofFileBytes": 2097152,
+  "frozenTools": [
+    {
+      "path": "scripts/produce-solo-normal-baseline.mjs",
+      "bytes": 13702,
+      "sha256": "6a3f95fa0a84e988267d07dcd0d769787e8439c4a5b61e444859db9205f6beef"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 52211,
+      "sha256": "42750c0bb862b5ca28dfb8394b6381694418b0ed9240a70f006652fcfde28235"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    }
+  ]
+}

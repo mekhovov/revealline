@@ -2,6 +2,7 @@
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { parseTestPolicy, readTestPolicy } from './test-policy.mjs';
 
@@ -495,31 +496,52 @@ export async function runFocusedCommandsParallel(
     const commandTimeoutMs = command.timeoutMs ?? timeoutMs;
     stdout.write(`\n[focused:${command.id}] ${command.command} ${command.args.join(' ')}\n`);
     const result = await new Promise((resolve) => {
-      let settled = false;
+      let settled = false,
+        timedOut = false,
+        deadline;
       const finish = (value) => {
         if (!settled) {
           settled = true;
-          resolve(value);
+          clearTimeout(deadline);
+          resolve({ ...value, timedOut });
         }
       };
       try {
+        if (
+          !Number.isSafeInteger(commandTimeoutMs) ||
+          commandTimeoutMs < 1 ||
+          commandTimeoutMs > 0x7fffffff
+        )
+          throw new RangeError('Focused command timeout must be a positive signed 32-bit integer.');
         const child = spawnChild(command.command, command.args, {
           cwd: root,
           stdio: 'inherit',
           env: { ...process.env, CI: 'true' },
-          timeout: commandTimeoutMs,
           killSignal: 'SIGTERM',
         });
         child.once('error', (error) => finish({ error }));
         child.once('close', (status, signal) => finish({ status, signal }));
+        // Node's test runner can handle SIGTERM and close with exit 1 and no
+        // signal/error. Own the same deadline so that close cannot erase it.
+        deadline = setTimeout(() => {
+          if (settled) return;
+          timedOut = true;
+          try {
+            child.kill('SIGTERM');
+          } catch (error) {
+            finish({ error });
+          }
+        }, commandTimeoutMs);
+        deadline.unref();
       } catch (error) {
         finish({ error });
       }
     });
     const status = Number.isInteger(result?.status) ? result.status : null;
-    const signal = typeof result?.signal === 'string' && result.signal.length ? result.signal : null;
-    if (!result?.error && status === 0 && signal === null) return;
-    const timedOut = result?.error?.code === 'ETIMEDOUT';
+    const signal =
+      typeof result?.signal === 'string' && result.signal.length ? result.signal : null;
+    const timedOut = result?.timedOut || result?.error?.code === 'ETIMEDOUT';
+    if (!timedOut && !result?.error && status === 0 && signal === null) return;
     const failure = {
       id: command.id,
       command: command.command,
@@ -531,7 +553,9 @@ export async function runFocusedCommandsParallel(
           ? result.error.message
           : String(result.error)
         : null,
-      ...(timedOut ? { timedOut: true } : {}),
+      ...(timedOut
+        ? { timedOut: true, timeoutMs: commandTimeoutMs, timeoutReason: 'command-deadline' }
+        : {}),
     };
     failures.push(failure);
     stderr.write(`[focused:${command.id}] failed ${JSON.stringify(failure)}\n`);
@@ -546,12 +570,203 @@ export async function runFocusedCommandsParallel(
   return {
     attempted: commands.length,
     failures,
-    exitCode:
-      failures.some(({ timedOut }) => timedOut)
-        ? 124
-        : failures.find(({ status }) => Number.isInteger(status) && status !== 0)?.status ||
-          (failures.length ? 1 : 0),
+    exitCode: failures.some(({ timedOut }) => timedOut)
+      ? 124
+      : failures.find(({ status }) => Number.isInteger(status) && status !== 0)?.status ||
+        (failures.length ? 1 : 0),
   };
+}
+
+const FOCUSED_SHARDS = 4;
+const SHARD_RECEIPT_LIMIT = 8 * 1024 * 1024;
+const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const sourceRevision = (value) => typeof value === 'string' && /^[a-f0-9]{40}$/u.test(value);
+const digest = (value) => typeof value === 'string' && /^[a-f0-9]{64}$/u.test(value);
+
+function assertShardIdentity(identity) {
+  if (
+    !identity ||
+    !sourceRevision(identity.sourceRevision) ||
+    !sourceRevision(identity.workflowRevision) ||
+    !['policyDigest', 'testPolicySha256', 'manifestSha256', 'changedPathsSha256'].every((key) =>
+      digest(identity[key]),
+    ) ||
+    typeof identity.fallbackHandled !== 'boolean'
+  )
+    throw new Error('Invalid expected focused identity.');
+}
+
+export function parseFocusedShard(value) {
+  const match = typeof value === 'string' && /^([1-4])\/4$/u.exec(value);
+  if (!match) throw new Error('Focused shard must be one of 1/4, 2/4, 3/4 or 4/4.');
+  return { index: Number(match[1]), total: FOCUSED_SHARDS };
+}
+
+// Partition only the final execution plan: selection, waiver and exact package
+// coverage must already have run. Preserve command objects, order and deadlines.
+export function focusedCommandShard(commands, shard) {
+  if (
+    !Array.isArray(commands) ||
+    shard?.total !== FOCUSED_SHARDS ||
+    !Number.isInteger(shard.index) ||
+    shard.index < 1 ||
+    shard.index > FOCUSED_SHARDS
+  )
+    throw new Error('Invalid focused shard.');
+  const ids = new Set();
+  for (const command of commands) {
+    validateCommand(command);
+    if (!command.id || ids.has(command.id)) throw new Error('Focused command IDs must be unique.');
+    ids.add(command.id);
+  }
+  const indices = commands.flatMap((_, index) =>
+    index % FOCUSED_SHARDS === shard.index - 1 ? [index] : [],
+  );
+  return { commands: indices.map((index) => commands[index]), indices };
+}
+
+export function assertFocusedShardCoverage(receipts, expectedIdentity) {
+  assertShardIdentity(expectedIdentity);
+  if (!Array.isArray(receipts) || receipts.length !== FOCUSED_SHARDS)
+    throw new Error('All four focused shard receipts are required.');
+  const seen = new Set(),
+    covered = new Set();
+  let commonPlan = null,
+    commonTree = null;
+  for (const receipt of receipts) {
+    if (receipt?.format !== 'revealline-focused-shard.v1' || receipt.state !== 'complete')
+      throw new Error('Focused shard did not complete.');
+    const shard = receipt.shard;
+    if (seen.has(shard?.index)) throw new Error('Duplicate focused shard.');
+    const planned = focusedCommandShard(receipt.plan?.commands, shard);
+    seen.add(shard.index);
+    if (!sourceRevision(receipt.identity?.sourceTree))
+      throw new Error('Invalid focused source tree.');
+    for (const [key, value] of Object.entries(expectedIdentity))
+      if (receipt.identity[key] !== value)
+        throw new Error(`Focused shard identity mismatch: ${key}`);
+    const bytes = JSON.stringify(receipt.plan.commands),
+      hash = sha256(bytes);
+    if (receipt.plan.sha256 !== hash || (commonPlan !== null && commonPlan !== bytes))
+      throw new Error('Focused shards disagree on the complete execution plan.');
+    if (commonTree !== null && commonTree !== receipt.identity.sourceTree)
+      throw new Error('Focused shards disagree on the source tree.');
+    commonPlan = bytes;
+    commonTree = receipt.identity.sourceTree;
+    if (JSON.stringify(receipt.indices) !== JSON.stringify(planned.indices))
+      throw new Error('Focused shard assignment changed.');
+    for (const index of receipt.indices) {
+      if (covered.has(index)) throw new Error('Focused command executed in multiple shards.');
+      covered.add(index);
+    }
+    if (
+      receipt.result?.exitCode !== 0 ||
+      receipt.result.attempted !== planned.commands.length ||
+      !Array.isArray(receipt.result.failures) ||
+      receipt.result.failures.length !== 0
+    )
+      throw new Error('Focused shard has failed, cancelled or missing command results.');
+  }
+  if (seen.size !== FOCUSED_SHARDS || covered.size !== JSON.parse(commonPlan).length)
+    throw new Error('Focused shard command union is incomplete.');
+  return {
+    shards: FOCUSED_SHARDS,
+    commands: covered.size,
+    sourceTree: commonTree,
+    planSha256: sha256(commonPlan),
+  };
+}
+
+async function readBoundedJSON(file) {
+  const handle = await fs.open(file, 'r');
+  try {
+    const stat = await handle.stat();
+    if (!stat.isFile() || stat.size > SHARD_RECEIPT_LIMIT)
+      throw new Error('Focused receipt exceeds its bound.');
+    const bytes = Buffer.alloc(stat.size + 1);
+    let length = 0;
+    while (length < bytes.length) {
+      const result = await handle.read(bytes, length, bytes.length - length, null);
+      if (!result.bytesRead) break;
+      length += result.bytesRead;
+    }
+    if (length !== stat.size) throw new Error('Focused receipt changed during read.');
+    return JSON.parse(bytes.subarray(0, length).toString('utf8'));
+  } finally {
+    await handle.close();
+  }
+}
+
+async function shardIdentity({
+  admissionFile,
+  policyFile,
+  manifestFile,
+  paths = null,
+  root = null,
+}) {
+  const admission = await readBoundedJSON(admissionFile);
+  if (
+    admission.format !== 'revealline-admission.v1' ||
+    !sourceRevision(admission.headSha) ||
+    admission.headSha !== process.env.EXPECTED_SOURCE ||
+    !sourceRevision(admission.workflowRevision) ||
+    admission.workflowRevision !== process.env.EXPECTED_AUTOMATION ||
+    !digest(admission.policyDigest) ||
+    !['maintenance', 'scheduled', 'release', 'release-evidence'].includes(
+      admission.classification,
+    ) ||
+    !Array.isArray(admission.paths) ||
+    !admission.paths.length ||
+    admission.paths.some((x) => !safeChangedPath(x))
+  )
+    throw new Error('Invalid exact-head focused admission identity.');
+  if (paths !== null && JSON.stringify(paths) !== JSON.stringify(admission.paths))
+    throw new Error('Focused paths differ from the immutable admission.');
+  const policyBytes = await fs.readFile(policyFile);
+  parseTestPolicy(policyBytes.toString('utf8'));
+  const identity = {
+    sourceRevision: admission.headSha,
+    workflowRevision: admission.workflowRevision,
+    policyDigest: admission.policyDigest,
+    testPolicySha256: sha256(policyBytes),
+    manifestSha256: sha256(await fs.readFile(manifestFile)),
+    changedPathsSha256: sha256(JSON.stringify(admission.paths)),
+    fallbackHandled: ['release', 'release-evidence'].includes(admission.classification),
+  };
+  if (root !== null) {
+    const git = (revision) => {
+      const result = spawnSync('git', ['rev-parse', revision], { cwd: root, encoding: 'utf8' });
+      if (result.error || result.status !== 0 || result.signal)
+        throw new Error('Focused Git identity unavailable.');
+      return result.stdout.trim();
+    };
+    if (git('HEAD') !== identity.sourceRevision)
+      throw new Error('Focused checkout differs from admission.');
+    identity.sourceTree = git('HEAD^{tree}');
+    if (!sourceRevision(identity.sourceTree)) throw new Error('Invalid focused checkout tree.');
+  }
+  assertShardIdentity(identity);
+  return identity;
+}
+
+async function writeShardReceipt(file, receipt) {
+  const bytes = JSON.stringify(receipt) + '\n';
+  if (Buffer.byteLength(bytes) > SHARD_RECEIPT_LIMIT)
+    throw new Error('Focused receipt exceeds its bound.');
+  await fs.writeFile(file, bytes);
+}
+
+async function verifyShardFiles(directory, prefix, identity) {
+  if (!/^focused-shard-[0-9]+-[0-9]+-$/.test(prefix))
+    throw new Error('Invalid focused artifact prefix.');
+  const expected = Array.from({ length: FOCUSED_SHARDS }, (_, i) => prefix + (i + 1));
+  const entries = (await fs.readdir(directory)).sort();
+  if (JSON.stringify(entries) !== JSON.stringify(expected.slice().sort()))
+    throw new Error('Missing, duplicate or unexpected focused shard artifacts.');
+  const receipts = await Promise.all(
+    expected.map((name) => readBoundedJSON(path.join(directory, name, 'receipt.json'))),
+  );
+  return assertFocusedShardCoverage(receipts, identity);
 }
 
 async function readManifest(file) {
@@ -564,6 +779,46 @@ function argument(name, fallback = '') {
 }
 
 async function main() {
+  const newFlags = ['--verify-shards', '--artifact-prefix', '--shard', '--receipt', '--admission'];
+  for (const flag of newFlags) {
+    const positions = process.argv.flatMap((value, index) => (value === flag ? [index] : []));
+    if (
+      positions.length > 1 ||
+      (positions.length &&
+        (!process.argv[positions[0] + 1] || process.argv[positions[0] + 1].startsWith('--')))
+    )
+      throw new Error(`Invalid or repeated focused option: ${flag}`);
+  }
+  if (
+    process.argv.includes('--verify-shards') &&
+    ['--shard', '--receipt', '--paths', '--root', '--plan-only', '--fallback-handled'].some(
+      (flag) => process.argv.includes(flag),
+    )
+  )
+    throw new Error('Focused verification cannot execute or reselect commands.');
+  if (!process.argv.includes('--verify-shards') && process.argv.includes('--artifact-prefix'))
+    throw new Error('Artifact prefix requires shard verification.');
+  if (process.argv.includes('--verify-shards')) {
+    const identity = await shardIdentity({
+      admissionFile: argument('--admission'),
+      policyFile: argument('--test-policy'),
+      manifestFile: argument('--manifest', path.join(here, 'focused-test-map.json')),
+    });
+    const proof = await verifyShardFiles(
+      argument('--verify-shards'),
+      argument('--artifact-prefix'),
+      identity,
+    );
+    process.stdout.write(`All four focused shards passed: ${JSON.stringify(proof)}\n`);
+    return;
+  }
+  const shard = process.argv.includes('--shard') ? parseFocusedShard(argument('--shard')) : null;
+  if (shard && process.argv.includes('--plan-only'))
+    throw new Error('A shard must execute its final plan.');
+  if (shard && (!argument('--receipt') || !argument('--admission') || !argument('--test-policy')))
+    throw new Error('Sharded execution requires receipt, admission and pinned test policy paths.');
+  if (!shard && (process.argv.includes('--receipt') || process.argv.includes('--admission')))
+    throw new Error('A receipt requires an explicit focused shard.');
   const root = path.resolve(argument('--root', '.'));
   const pathsFile = argument('--paths');
   if (!pathsFile) throw new Error('Usage: focused-tests.mjs --paths FILE [--root DIRECTORY].');
@@ -632,7 +887,43 @@ async function main() {
     process.stdout.write(
       `Focused executions: ${execution.commands.length} (${execution.deduplicated.length} exact duplicate tests covered by selected package scripts)\n`,
     );
-  const result = await runFocusedCommandsParallel(execution.commands, { root, concurrency: 2 });
+  const partition = shard ? focusedCommandShard(execution.commands, shard) : null;
+  let receipt = null;
+  const receiptFile = argument('--receipt');
+  if (shard) {
+    const identity = await shardIdentity({
+      admissionFile: argument('--admission'),
+      policyFile,
+      manifestFile: argument('--manifest', path.join(here, 'focused-test-map.json')),
+      paths,
+      root,
+    });
+    if (identity.fallbackHandled !== fallbackHandled)
+      throw new Error('Focused fallback policy differs from admission.');
+    receipt = {
+      format: 'revealline-focused-shard.v1',
+      state: 'planned',
+      shard,
+      identity,
+      plan: { commands: execution.commands, sha256: sha256(JSON.stringify(execution.commands)) },
+      indices: partition.indices,
+      result: null,
+    };
+    await fs.mkdir(path.dirname(receiptFile), { recursive: true });
+    await writeShardReceipt(receiptFile, receipt);
+    process.stdout.write(
+      `Focused shard ${shard.index}/${shard.total}: ${partition.commands.length}/${execution.commands.length} commands; plan ${receipt.plan.sha256}\n`,
+    );
+  }
+  const result = await runFocusedCommandsParallel(partition?.commands ?? execution.commands, {
+    root,
+    concurrency: 2,
+  });
+  if (receipt) {
+    receipt.state = 'complete';
+    receipt.result = result;
+    await writeShardReceipt(receiptFile, receipt);
+  }
   if (result.exitCode !== 0) process.exitCode = result.exitCode;
 }
 

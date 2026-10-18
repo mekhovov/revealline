@@ -2151,6 +2151,167 @@ class RegionalWorker extends Events {
   }
 }
 
+for (const host of ['World', 'Regional'])
+  for (const action of ['mode', 'retry'])
+    test(`${host} ${action} preserves the tested draft aircraft until an explicit normal launch`, async (t) => {
+      const priorLocale = getLocale();
+      setLocale('en', { persist: false });
+      t.after(() => setLocale(priorLocale, { persist: false }));
+      const { createTuningLibraryStore } = await import(
+        '../../optional-practice/civilian-fpv/tuning-library.mjs'
+      );
+      const storage = new Map(),
+        store = createTuningLibraryStore({
+          storage: {
+            getItem: (key) => storage.get(key) ?? null,
+            setItem: (key, value) => storage.set(key, value),
+          },
+        });
+      await store.createPresetSetup({
+        presetId: 'helion-pro-o4',
+        setupId: 'saved-helion',
+        profileId: 'saved-rates',
+        rates: 'defaults',
+      });
+      const saved = storage.get('revealline.fpv.tuning.v1');
+      const comfortKey = 'revealline.fpv.flight-comfort.v1.worlds.camera',
+        savedComfort = JSON.stringify({ fov: 99, tilt: 17 });
+      storage.set(comfortKey, savedComfort);
+      storage.set(
+        'revealline.fpv.world-settings.v1',
+        JSON.stringify({ 'world-fov': '99', 'world-tilt': '17' }),
+      );
+      let entry = WORLD_CATALOGUE.find(
+        (item) => !item.legacy && !item.beginner && item.activity !== 'hunt',
+      );
+      if (host === 'Regional') {
+        const [{ createEnduranceFixture }, { regionalReviewEntry }] = await Promise.all([
+          import('../../authoring/fpv-worlds/regions/endurance-fixture.mjs'),
+          import('../../optional-practice/civilian-fpv/regional-session.mjs'),
+        ]);
+        const { terrain } = await createEnduranceFixture();
+        entry = regionalReviewEntry({ manifest: terrain.manifest, source: terrain.source });
+      }
+      const h = fixture(t, {
+        storage,
+        rendererFactory: () => ({
+          available: true,
+          setPresentation() {},
+          setCourse() {},
+          setQuality() {},
+          setDrone() {},
+          setGhost() {},
+          setPath() {},
+          setRegional() {},
+          setAircraft() {},
+          draw() {},
+          dispose() {},
+          async loadScene() {},
+          async prepareRegionalFrame() {},
+          async prepare() {
+            return true;
+          },
+        }),
+      });
+      h.win.Worker = RegionalWorker;
+      await h.app.ready;
+      await h.app.startFlight(entry, { mode: 'acro' });
+      await openWorldTuning(h);
+      const aircraft = worldTuningControl(h, 'Aircraft preset', 'select');
+      aircraft.value = 'meteor75-analog-2022';
+      aircraft.emit('change');
+      await worldTuningClick(h, 'Use in draft');
+      const fov = worldTuningControl(h, 'Vertical FOV (degrees)');
+      fov.value = '103';
+      fov.emit('input');
+      const previousWorker = RegionalWorker.instances.at(-1);
+      await worldTuningClick(h, 'Test draft · unscored');
+      await settleUntil(
+        () =>
+          RegionalWorker.instances.at(-1) !== previousWorker &&
+          h.app.snapshot().state?.reason === 'prepared',
+        'Draft aircraft should prepare',
+      );
+      const draftWorker = RegionalWorker.instances.at(-1),
+        draft = draftWorker.messages.find((message) => message.type === 'init').options;
+      assert.equal(draft.aircraft.id, 'meteor75-analog-2022');
+      h.$('world-fov').value = '106';
+      h.$('world-fov').emit('input');
+      h.$('world-fov').emit('change');
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(
+        storage.get('revealline.fpv.tuning.v1'),
+        saved,
+        'Trial camera must not edit saved Helion',
+      );
+      assert.equal(storage.get(comfortKey), savedComfort);
+      if (action === 'mode') {
+        h.$('flight-mode').value = 'self-level';
+        h.$('flight-mode').emit('change');
+      } else h.$('world-retry').click();
+      await settleUntil(
+        () =>
+          RegionalWorker.instances.at(-1) !== draftWorker &&
+          h.app.snapshot().state?.reason === 'prepared',
+        'Restart should prepare',
+      );
+      const restarted = RegionalWorker.instances
+        .at(-1)
+        .messages.find((message) => message.type === 'init').options;
+      assert.deepEqual(
+        restarted.aircraft,
+        draft.aircraft,
+        'Restart must not replace Meteor75 with saved Helion',
+      );
+      assert.deepEqual(restarted.controller, draft.controller);
+      assert.deepEqual(
+        restarted.response?.response ?? restarted.response,
+        draft.response?.response ?? draft.response,
+      );
+      assert.equal(h.$('world-fov').value, '103');
+      assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+      assert.equal(storage.get('revealline.fpv.tuning.v1'), saved);
+      const preferences = JSON.parse(storage.get('revealline.fpv.world-settings.v1'));
+      assert.equal(preferences['world-fov'], '99', 'Other preferences must not save trial FOV');
+      assert.equal(preferences['world-tilt'], '17');
+      assert.equal(
+        restarted.assist?.mode ?? restarted.response.mode,
+        action === 'mode' ? 'self-level' : 'acro',
+      );
+      if (action === 'retry') {
+        h.$('leave-flight').click();
+        await settleUntil(() => !h.$('flight-dialog').open, 'Leaving should end the trial');
+        assert.equal(h.doc.querySelector('.tuning-return').hidden, true);
+        assert.equal(Number(h.$('world-fov').value), store.effective().camera.verticalFov);
+        h.$('flight-quality').value = 'low';
+        h.$('flight-quality').emit('change');
+        const afterExit = JSON.parse(storage.get('revealline.fpv.world-settings.v1'));
+        assert.equal(Number(afterExit['world-fov']), store.effective().camera.verticalFov);
+        assert.equal(storage.get('revealline.fpv.tuning.v1'), saved);
+      }
+      await h.app.startFlight(entry);
+      const normal = RegionalWorker.instances
+        .at(-1)
+        .messages.find((message) => message.type === 'init').options;
+      assert.equal(normal.aircraft.id, 'helion-pro-o4');
+      assert.equal(h.doc.querySelector('.tuning-return').hidden, true);
+      h.$('world-fov').value = '109';
+      h.$('world-fov').emit('input');
+      h.$('world-fov').emit('change');
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(
+        JSON.parse(storage.get(comfortKey)).fov,
+        109,
+        'Normal camera edits still persist',
+      );
+      assert.equal(
+        JSON.parse(storage.get('revealline.fpv.tuning.v1')).setups.find(
+          (setup) => setup.id === 'saved-helion',
+        ).camera.verticalFov,
+        109,
+      );
+    });
+
 test('saved aircraft prepares World, Beginner and Regional hosts with physical geometry and continuous controls', async (t) => {
   const priorLocale = getLocale();
   setLocale('en', { persist: false });
@@ -2212,7 +2373,7 @@ test('saved aircraft prepares World, Beginner and Regional hosts with physical g
       const state = h.app.snapshot().state;
       assert.equal(state.reason, 'prepared', h.$('flight-status').textContent);
       assert.equal(state.unscored, true);
-      assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v1');
+      assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v2');
       assert.equal(state.advancedTelemetry.frequency, 500);
       assert.deepEqual(displayedAircraft.geometry, preset.aircraft.geometry);
       assert.equal(displayedAircraft.radius, preset.aircraft.radius);

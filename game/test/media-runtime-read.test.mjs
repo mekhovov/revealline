@@ -123,6 +123,36 @@ test('runtime metadata and selected image use one row plus two keyed gets, no in
   f.manager.close();
 });
 
+test('binary selected-original reads need no base64 conversion and keep authenticated decode', async (t) => {
+  const f = await setup(),
+    snapshot = await f.store.readMetadata();
+  t.after(() => f.manager.close());
+  for (const name of ['btoa', 'atob']) {
+    const descriptor = Object.getOwnPropertyDescriptor(globalThis, name);
+    Object.defineProperty(globalThis, name, {
+      configurable: true,
+      value: () => assert.fail('Owned selected bytes must not make a base64 round trip.'),
+    });
+    t.after(() => Object.defineProperty(globalThis, name, descriptor));
+  }
+  const original = await f.store.readAsset(snapshot, 'picture-a');
+  assert.equal(f.decodes.length, 1);
+  assert.deepEqual(original.asset, f.prepared.asset);
+  assert.deepEqual(Buffer.from(await original.blob.arrayBuffer()), pngBytes());
+  assert.deepEqual(f.memory.allPuts, []);
+  const damaged = pngBytes();
+  damaged[damaged.length - 1] ^= 1;
+  await mutate(f.memory, (tx) =>
+    tx.objectStore('mediaBlobs').put(new Blob([damaged]), f.prepared.asset.sha256),
+  );
+  await assert.rejects(f.store.readAsset(snapshot, 'picture-a'), /SHA-256/);
+  assert.equal(
+    f.decodes.length,
+    1,
+    'Corrupt bytes still reject before another decoder allocation.',
+  );
+});
+
 test('metadata snapshot is bound to its store, immutable asset history remains readable after assignment edit', async () => {
   const f = await setup(),
     snapshot = await f.store.readMetadata();

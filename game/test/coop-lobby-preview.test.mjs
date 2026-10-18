@@ -9,6 +9,22 @@ import {
   COOP_HISTORICAL_IMPORT_PICTURE_POLICY,
 } from '../couch/coop-picture-bindings.mjs';
 
+// Preserve strict object identity without formatting the cyclic fake DOM on failure.
+function assertSameReference(actual, expected, message = 'Expected the same owned object.') {
+  if (Object.is(actual, expected)) return;
+  const describe = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return (
+      [value.tagName, value.id, value.sha256]
+        .filter((part) => typeof part === 'string' && part.length > 0)
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.fail(`${message} Actual: ${describe(actual)}; expected: ${describe(expected)}.`);
+}
+
 // Actual Team markup, host, core and property handlers, exact prepared originals,
 // finite DOM/Image and independent inert Canvas recorders. Not native pixels,
 // CSS layout, physical input, offline or public-release acceptance.
@@ -89,7 +105,7 @@ function assertMysteryPreview(f) {
   );
   assert.match(
     f.$('coop-preview-caption').textContent,
-    /optional full preview; viewing earns no progress/i,
+    /teaser · preview only · scenery is not collision geometry\./,
   );
 }
 
@@ -107,15 +123,13 @@ function assertLobbyOwned(f) {
   assert.equal(f.$('coop-overlay').contains(preview), false);
   const actions = f.$('coop-start').parentNode;
   const launch = preview.parentNode;
-  assert.equal(actions.parentNode, launch, 'Preview and launch actions share the lobby group.');
-  assert.equal(launch.parentNode.classList.contains('menu-copy'), true);
   assert.equal(launch.classList.contains('coop-launch-grid'), true);
   assert.equal(actions.classList.contains('coop-launch-actions'), true);
-  const children = [...launch.children];
-  assert.ok(
-    children.indexOf(preview) < children.indexOf(actions),
-    'Authored DOM order places the preview before Start; this is not a native CSS/layout claim.',
-  );
+  assert.equal(actions.parentNode.classList.contains('landing-commands'), true);
+  assertSameReference(actions.closest('#coop-menu'), preview.closest('#coop-menu'));
+  assertSameReference(actions.closest('.landing-layout').parentNode, f.$('coop-menu'));
+  assert.equal(launch.parentNode.classList.contains('menu-copy'), true);
+  assert.equal(f.$('coop-menu').contains(actions), true);
 }
 function start(f) {
   f.$('coop-start').focus();
@@ -152,7 +166,7 @@ for (const [level, name, bindingIndex] of [
     const image = lastPreview(f);
     const drawIndex = f.previewOperations.findLastIndex(([name]) => name === 'drawImage');
     const draw = f.previewOperations[drawIndex];
-    assert.equal(draw[1], image);
+    assertSameReference(draw[1], image);
     assert.deepEqual(
       draw.slice(2),
       [0, 0, 576, 288],
@@ -173,7 +187,7 @@ for (const [level, name, bindingIndex] of [
     f.tick(30);
     assert.equal(f.drawImages.length, 0, 'Ready does not start a run.');
     start(f);
-    assert.equal(lastArena(f), image);
+    assertSameReference(lastArena(f), image);
     assert.equal(f.artwork.calls.reads.length, expectedPreparations);
     assert.equal(f.artwork.calls.decodes.length, expectedPreparations);
     assertLobbyOwned(f);
@@ -195,13 +209,13 @@ for (const [level, index] of [
     assertMysteryPreview(f);
     assert.equal(f.drawImages.length, 0);
     start(f);
-    assert.equal(lastArena(f), image);
+    assertSameReference(lastArena(f), image);
     f.$('coop-pause').click();
     f.$('coop-lobby').click();
     f.$('coop-discard-confirm').click();
     assert.equal(f.$('coop-menu').hidden, false);
     assertMysteryPreview(f);
-    assert.equal(lastPreview(f), image);
+    assertSameReference(lastPreview(f), image);
     assert.equal(f.artwork.calls.reads.length, reads);
   });
 
@@ -243,15 +257,16 @@ test('held artwork completes behind Settings without reclaiming its selector or 
   f.tap('Enter');
   assert.equal(f.$('coop-options').open, true);
   f.$('coop-settings-tab-accessibility').click();
+  f.$('coop-settings-tab-accessibility').click();
   const selector = f.$('coop-text-size');
   selector.focus();
   selector.value = 'large';
   selector.emit('change');
-  assert.equal(f.doc.activeElement, selector);
+  assertSameReference(f.doc.activeElement, selector);
   gate.resolve();
   await changing;
   assert.equal(f.$('coop-options').open, true);
-  assert.equal(f.doc.activeElement, selector);
+  assertSameReference(f.doc.activeElement, selector);
   assert.equal(selector.value, 'large');
   assertMysteryPreview(f);
   assert.equal(lastPreview(f).sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
@@ -294,7 +309,7 @@ test('late superseded read cannot draw or clear the newer arena preview or recla
   gate.resolve();
   await flush();
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f), image);
+  assertSameReference(lastPreview(f), image);
   assert.equal(image.sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   assert.equal(
     f.previewOperations.length,
@@ -326,12 +341,12 @@ test('cancelled decode clears preview; late completion cannot change a successfu
   gate.resolve();
   await flush();
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f), image);
+  assertSameReference(lastPreview(f), image);
   assert.equal(f.previewOperations.length, operations);
   assert.equal(f.artwork.calls.decodes.length, 2);
   assert.equal(f.artwork.calls.releases.length, 1);
   start(f);
-  assert.equal(lastArena(f), image);
+  assertSameReference(lastArena(f), image);
 });
 
 test('required original decode failure shows no lobby art and Retry prepares the same exact slot', async (t) => {
@@ -374,7 +389,7 @@ test('Pause and confirmed Change setup leave preview in the lobby and reuse the 
   f.$('coop-discard-confirm').click();
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f), image);
+  assertSameReference(lastPreview(f), image);
   assert.equal(f.$('coop-preview-canvas').hidden, false);
   assert.equal(f.artwork.calls.reads.length, 1);
   assert.equal(f.artwork.calls.decodes.length, 1);
@@ -435,7 +450,7 @@ test('persisted pagehide retains accepted preview; terminal cleanup clears it an
   assert.equal(f.artwork.calls.releases.length, 0);
   f.win.emit('pageshow', { persisted: true });
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f), image);
+  assertSameReference(lastPreview(f), image);
   assert.equal(f.artwork.calls.reads.length, 1);
   const clears = previewClears(f);
   f.win.emit('pagehide', { persisted: false });
@@ -466,14 +481,14 @@ test('lobby-only paint failure keeps Start ready and Retry preview repaints the 
   const attempts = f.focusAttempts.length;
   await f.$('coop-picture-retry').onclick();
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f), image);
+  assertSameReference(lastPreview(f), image);
   assert.equal(f.artwork.calls.reads.length, 1);
   assert.equal(f.artwork.calls.decodes.length, 1);
   assert.equal(f.focusAttempts.length, attempts);
   assert.equal(f.doc.activeElement.id, 'coop-versus');
   assert.equal(f.$('coop-picture-retry').hidden, true);
   start(f);
-  assert.equal(lastArena(f), image);
+  assertSameReference(lastArena(f), image);
 });
 
 test('missing preview Canvas context never blocks a fully prepared playable arena', async (t) => {
@@ -517,11 +532,11 @@ test('earned First Connection victory keeps preview in the hidden lobby and Chan
   assertMysteryPreview(f); // The hidden lobby never turns into an unearned full-image gallery.
   assertLobbyOwned(f);
   assert.equal(f.$('coop-menu').hidden, true);
-  assert.equal(lastArena(f), image);
+  assertSameReference(lastArena(f), image);
   f.$('coop-lobby').click();
   assert.equal(f.$('coop-menu').hidden, false);
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f), image);
+  assertSameReference(lastPreview(f), image);
   assert.equal(f.artwork.calls.reads.length, reads);
   assert.equal(f.doc.activeElement.id, 'coop-start');
 });
@@ -536,7 +551,7 @@ test('preview-only failure does not move Retry into play or Pause, and focused k
   assert.equal(f.$('coop-picture-retry').hidden, false);
   const image = f.artwork.calls.decodes[0];
   start(f);
-  assert.equal(lastArena(f), image);
+  assertSameReference(lastArena(f), image);
   assert.equal(
     f.$('coop-picture-retry').hidden,
     true,
@@ -555,11 +570,17 @@ test('preview-only failure does not move Retry into play or Pause, and focused k
   f.$('coop-discard-confirm').click();
   assertHiddenPreview(f, 'unavailable');
   assert.equal(f.$('coop-start').disabled, false);
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-extras').click();
+  assert.equal(!!f.$('coop-picture-retry').closest('[hidden],[inert]'), false);
   f.$('coop-picture-retry').focus();
   f.tap('Enter');
   assert.equal(previewState(f), 'ready');
-  assert.equal(lastPreview(f), image);
-  assert.equal(f.doc.activeElement.id, 'coop-start');
+  assertSameReference(lastPreview(f), image);
+  assert.equal(f.$('coop-options').contains(f.doc.activeElement), true);
+  f.$('coop-settings-close').click();
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+  f.$('coop-start').focus();
   assert.equal(f.$('coop-start').disabled, false);
   assert.equal(f.$('coop-menu').hidden, false, 'Retry preview cannot also start the arena.');
   assert.equal(f.$('coop-picture-retry').hidden, true);
@@ -568,7 +589,7 @@ test('preview-only failure does not move Retry into play or Pause, and focused k
   assert.equal(f.artwork.calls.releases.length, 0);
   f.tap('Enter');
   assert.equal(f.$('coop-menu').hidden, true);
-  assert.equal(lastArena(f), image);
+  assertSameReference(lastArena(f), image);
 });
 
 test('required read failure clears preview while a rejected starter import preserves the accepted arena', async (t) => {
@@ -606,6 +627,11 @@ test('required read failure clears preview while a rejected starter import prese
     acceptedLevel = f.$('coop-level').value;
   const changed = structuredClone(COOP_STARTER_PACK);
   changed.name += ' changed';
+  f.$('coop-settings-open').click();
+  f.$('coop-settings-tab-gameplay').click();
+  f.$('coop-pack-file').closest('details').open = true;
+  assert.equal(!!f.$('coop-pack-file').closest('[hidden],[inert]'), false);
+  f.$('coop-pack-file').focus();
   await f.selectFile(JSON.stringify(changed));
   // Import is transactional: rejected content reports its own error without replacing ready art.
   assert.equal(f.$('coop-pack-status').dataset.state, 'error');
@@ -615,7 +641,7 @@ test('required read failure clears preview while a rejected starter import prese
   );
   assert.equal(previewState(f), 'ready');
   assert.equal(f.$('coop-preview-canvas').hidden, false);
-  assert.equal(lastPreview(f), acceptedImage);
+  assertSameReference(lastPreview(f), acceptedImage);
   assert.equal(f.$('coop-level').value, acceptedLevel);
   assert.equal(f.$('coop-start').disabled, false);
   assert.equal(f.$('coop-pack-retry').hidden, false);
@@ -645,7 +671,11 @@ test('preview reset failure cannot block a newly prepared arena or interrupt ter
   assert.equal(f.$('coop-start').disabled, false);
   assert.equal(f.artwork.calls.reads.length, 2);
   assert.equal(f.artwork.calls.decodes.length, 2);
-  assert.equal(lastPreview(f), oldImage, 'A failed reset cannot publish another canvas draw.');
+  assertSameReference(
+    lastPreview(f),
+    oldImage,
+    'A failed reset cannot publish another canvas draw.',
+  );
   assert.ok(
     f.previewOperations.slice(operations).some(([name]) => name === 'resize'),
     'Record the attempted failing reset.',
@@ -654,7 +684,7 @@ test('preview reset failure cannot block a newly prepared arena or interrupt ter
   const image = f.artwork.calls.decodes[1];
   assert.equal(image.sha256, COOP_PICTURE_BINDINGS[1].picture.sha256);
   start(f);
-  assert.equal(
+  assertSameReference(
     lastArena(f),
     image,
     'The preview surface cannot invalidate the prepared gameplay original.',
@@ -693,16 +723,17 @@ test('Settings close and queued older close cannot enable Browse over pending ar
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   f.tap('Enter');
   assert.equal(f.$('coop-options').open, true);
+  f.$('coop-settings-tab-accessibility').click();
   const selector = f.$('coop-text-size');
   selector.focus();
   f.$('coop-options').emit('close'); // Queued native close belonging to the old visit.
   assert.equal(f.$('coop-options').open, true);
-  assert.equal(f.doc.activeElement, selector);
+  assertSameReference(f.doc.activeElement, selector);
   assert.equal(f.$('coop-discovery-open').disabled, true);
   assert.equal(f.artwork.calls.decodes.length, 1);
   gate.resolve();
   await changing;
-  assert.equal(f.doc.activeElement, selector);
+  assertSameReference(f.doc.activeElement, selector);
   assert.equal(
     f.$('coop-discovery-open').disabled,
     true,
