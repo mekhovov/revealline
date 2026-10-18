@@ -1,0 +1,188 @@
+{
+  "format": "xonix-playground.v6",
+  "masteryDefinition": null,
+  "level": {
+    "version": "xonix-level.v5",
+    "id": "sentry-detour",
+    "revision": "combat-greybox-1",
+    "name": "Sentry detour",
+    "width": 72,
+    "height": 36,
+    "spawn": {
+      "x": 13.5,
+      "y": 16.5
+    },
+    "walls": [
+      {
+        "x": 26,
+        "y": 4,
+        "w": 2,
+        "h": 18
+      },
+      {
+        "x": 45,
+        "y": 16,
+        "w": 2,
+        "h": 14
+      }
+    ],
+    "foundations": [
+      {
+        "x": 11,
+        "y": 15,
+        "w": 5,
+        "h": 3
+      },
+      {
+        "x": 32,
+        "y": 25,
+        "w": 8,
+        "h": 3
+      },
+      {
+        "x": 56,
+        "y": 8,
+        "w": 5,
+        "h": 3
+      }
+    ],
+    "goal": {
+      "coverage": 0.72
+    },
+    "encounter": null,
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": [],
+      "combatPatrols": {
+        "version": "combat-patrols.v1",
+        "enabled": true,
+        "actors": [
+          {
+            "id": "watch-sentry",
+            "role": "sentry",
+            "x": 35.5,
+            "y": 10.5,
+            "headingX": 1,
+            "headingY": 0,
+            "speed": 2.52,
+            "turnTicks": 120,
+            "senseRadius": 16,
+            "scanTicks": 30,
+            "openingTicks": 480,
+            "warningTicks": 180,
+            "recoveryTicks": 180,
+            "restTicks": 1020,
+            "shotSpeed": 8,
+            "shotLifeTicks": 360
+          }
+        ]
+      },
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "west-keeper",
+        "type": "bouncer",
+        "x": 8.5,
+        "y": 29.5,
+        "vx": 2.3758787847867993,
+        "vy": -2.3758787847867993
+      },
+      {
+        "id": "east-keeper",
+        "type": "bouncer",
+        "x": 63.5,
+        "y": 18.5,
+        "vx": -2.3758787847867993,
+        "vy": 2.3758787847867993
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.65,
+      "graceSeconds": 1,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [
+        90,
+        150
+      ],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 0,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0,
+      "stopOnCapture": true
+    },
+    "signalZones": [],
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 13.5,
+        "y": 16.5,
+        "radius": 2
+      }
+    ]
+  },
+  "theme": {
+    "id": "rover-yard",
+    "name": "Rover Yard",
+    "subtitle": "Make a landing. Keep a way out.",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "arcade",
+    "labels": {
+      "objective": "Relay",
+      "supply": "Supply",
+      "enemy": "Field keeper",
+      "boss": "Sentinel",
+      "currency": "Score",
+      "ability": "Ability"
+    },
+    "palette": {
+      "ink": "#2e2b26",
+      "paper": "#f4ede0",
+      "muted": "#c2b8a4",
+      "accent": "#ffd27b",
+      "safe": "#65dcc5",
+      "danger": "#ff7795",
+      "field": "#242c2c",
+      "grid": "#455150",
+      "sky": "#cad0be",
+      "land": "#887c65"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "visualOverrides": {},
+  "settings": {
+    "seed": 1,
+    "classId": "scout",
+    "turnPolicy": "grid-center"
+  },
+  "presentation": {
+    "style": "microtile",
+    "showGrid": true
+  },
+  "metadata": {
+    "title": "Qualification: sentry-detour",
+    "description": "Unchanged gameplay definition; public Playground import for bounded qualification. Decorative authored backdrop is absent from this explicit greybox fixture."
+  }
+}

@@ -1,16 +1,43 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { resolveObjectURL } from 'node:buffer';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
+import { JPEGImage } from './helpers/jpeg-image.mjs';
+import { nativeCaptureSession, snapshotCaptureSession } from '../capture-presentation-session.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { ACTOR_STYLE_PREFERENCES_KEY } from '../actor-style-preferences.mjs';
 import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '../packs.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
+
+// Retain the existing PNG boundary and fully decode actual JPEG pack originals.
+// Neither adapter grants appearance authority or substitutes source artwork.
+class PackImage extends PNGImage {
+  inspect(blob) {
+    return JPEGImage.prototype.inspect.call(this, blob);
+  }
+  set src(value) {
+    if (/^data:image\/jpeg;base64,/.test(value) || resolveObjectURL(value)?.type === 'image/jpeg')
+      Reflect.set(RasterImage.prototype, 'src', value, this);
+    else super.src = value;
+  }
+  get src() {
+    return super.src;
+  }
+}
+async function decodePackImage(source) {
+  const image = new PackImage();
+  image.src = source;
+  await image.decode();
+  return image;
+}
 
 const root = fileURLToPath(new URL('../../', import.meta.url));
 const journeyKey = 'revealline.suspended.journey-whole-spatial.v5';
@@ -51,7 +78,7 @@ async function setup(
     storage,
     search,
     journeyIndexedDB: managedIndexedDB().indexedDB,
-    pictures: { Image: PNGImage },
+    pictures: { Image: PackImage },
     fetchResponse: async (url, init) => {
       const value = String(url);
       requests.push(value);
@@ -83,6 +110,7 @@ function save(page, key = journeyKey) {
   if (!page.storage.getItem(key)) page.$('save-attempt-button').click();
   const saved = JSON.parse(page.storage.getItem(key));
   assert(saved, `${page.$('save-warning').textContent} ${page.$('run-message').textContent}`);
+  assert.deepEqual(snapshotCaptureSession(saved), saved);
   return saved;
 }
 
@@ -98,12 +126,15 @@ test('fresh Journey defaults to separately pinned FPV actors and saves the exact
   ticks(page, 12);
   page.key('ArrowDown', false);
   const saved = save(page);
-  assert.equal(saved.format, 'xonix-session.v6');
-  assert.equal(saved.actorAppearancePin.style, 'fpv');
-  assert.equal(saved.actorAppearancePin.content.owner.kind, 'journey');
-  assert.equal(saved.actorAppearancePin.content.editionId, 'whole-spatial-v5');
-  assert.equal(saved.actorAppearancePin.content.level.id, 'first-return');
-  assert.equal(saved.visualThemePin, null);
+  assert.equal(nativeCaptureSession(saved).format, 'xonix-session.v6');
+  assert.equal(nativeCaptureSession(saved).actorAppearancePin.style, 'fpv');
+  assert.equal(nativeCaptureSession(saved).actorAppearancePin.content.owner.kind, 'journey');
+  assert.equal(
+    nativeCaptureSession(saved).actorAppearancePin.content.editionId,
+    'whole-spatial-v5',
+  );
+  assert.equal(nativeCaptureSession(saved).actorAppearancePin.content.level.id, 'first-return');
+  assert.equal(nativeCaptureSession(saved).visualThemePin, null);
   assert.deepEqual(page.errors, []);
 });
 
@@ -118,8 +149,8 @@ test('new campaign choice is pinned without loading an actor lease or changing s
   assert.deepEqual(page.rendered.actorAppearance, { style: 'campaign', snapshot: null });
   const before = checkpoint(page),
     saved = save(page);
-  assert.equal(saved.actorAppearancePin.style, 'campaign');
-  assert.equal(saved.actorAppearancePin.presentation, null);
+  assert.equal(nativeCaptureSession(saved).actorAppearancePin.style, 'campaign');
+  assert.equal(nativeCaptureSession(saved).actorAppearancePin.presentation, null);
   assert.deepEqual(checkpoint(page), before);
 });
 
@@ -137,12 +168,15 @@ test('Classic Continue and confirmed Restart keep the accepted actor pin despite
       page.key('ArrowDown', false);
       before = checkpoint(page);
       original = save(page, legacyKey);
-      assert.equal(original.format, 'xonix-session.v6');
-      assert.equal(original.actorAppearancePin.content.owner.kind, 'campaign');
-      assert.equal(original.actorAppearancePin.style, 'fpv');
+      assert.equal(nativeCaptureSession(original).format, 'xonix-session.v6');
+      assert.equal(
+        nativeCaptureSession(original).actorAppearancePin.content.owner.kind,
+        'campaign',
+      );
+      assert.equal(nativeCaptureSession(original).actorAppearancePin.style, 'fpv');
       assert.notEqual(
-        original.actorAppearancePin.presentation.sha256,
-        original.visualThemePin.presentation.sha256,
+        nativeCaptureSession(original).actorAppearancePin.presentation.sha256,
+        nativeCaptureSession(original).visualThemePin.presentation.sha256,
       );
     },
   );
@@ -155,20 +189,26 @@ test('Classic Continue and confirmed Restart keep the accepted actor pin despite
     await settle(() => page.doc.body.dataset.flightState === 'running');
     assert.deepEqual(checkpoint(page), before);
     assert.equal(page.rendered.actorAppearance.style, 'fpv');
-    assert.deepEqual(save(page, legacyKey).actorAppearancePin, original.actorAppearancePin);
+    assert.deepEqual(
+      nativeCaptureSession(save(page, legacyKey)).actorAppearancePin,
+      nativeCaptureSession(original).actorAppearancePin,
+    );
     page.$('overlay-restart').click();
     assert.equal(page.$('restart-dialog').open, true);
     page.$('restart-confirm').click();
     await settle(() => page.doc.body.dataset.flightState === 'running');
     page.frame(0);
     assert.equal(page.rendered.run.tick, 0);
-    assert.deepEqual(save(page, legacyKey).actorAppearancePin, original.actorAppearancePin);
+    assert.deepEqual(
+      nativeCaptureSession(save(page, legacyKey)).actorAppearancePin,
+      nativeCaptureSession(original).actorAppearancePin,
+    );
     assert.deepEqual(page.errors, []);
   });
   await t.test(
     'historical v5 Continue remains pinless despite the default FPV preference',
     async (t) => {
-      const historical = structuredClone(original);
+      const historical = structuredClone(nativeCaptureSession(original));
       historical.format = 'xonix-session.v5';
       delete historical.actorAppearancePin;
       storage.setItem(legacyKey, JSON.stringify(historical));
@@ -179,8 +219,8 @@ test('Classic Continue and confirmed Restart keep the accepted actor pin despite
       assert.deepEqual(checkpoint(page), before);
       assert.equal(page.rendered.actorAppearance, null);
       const saved = save(page, legacyKey);
-      assert.equal(saved.format, 'xonix-session.v5');
-      assert.equal(saved.actorAppearancePin, undefined);
+      assert.equal(nativeCaptureSession(saved).format, 'xonix-session.v5');
+      assert.equal(nativeCaptureSession(saved).actorAppearancePin, undefined);
       assert.deepEqual(page.errors, []);
     },
   );
@@ -206,7 +246,7 @@ test('failed fresh Next keeps the result, Retry keeps FPV, and successful Next a
     },
   });
   await start(page);
-  const pin = save(page, legacyKey).actorAppearancePin;
+  const pin = nativeCaptureSession(save(page, legacyKey)).actorAppearancePin;
   actorHash = pin.presentation.sha256;
   // Preserve the initial failed fixture as an actor-free gp4 observation. The
   // old immediate cut is hit at tick 403; its failure is not appearance loading.
@@ -269,7 +309,7 @@ test('failed fresh Next keeps the result, Retry keeps FPV, and successful Next a
     page.frame(0);
     return page.doc.body.dataset.flightState === 'running' && page.rendered.run !== result;
   });
-  assert.deepEqual(save(page, legacyKey).actorAppearancePin, pin);
+  assert.deepEqual(nativeCaptureSession(save(page, legacyKey)).actorAppearancePin, pin);
   await win();
   page.$('next-button').click();
   await settle(() => {
@@ -279,9 +319,9 @@ test('failed fresh Next keeps the result, Retry keeps FPV, and successful Next a
     );
   });
   const next = save(page, legacyKey);
-  assert.equal(next.actorAppearancePin.style, 'campaign');
-  assert.equal(next.actorAppearancePin.content.level.id, 'signal-02');
-  assert.equal(next.actorAppearancePin.presentation, null);
+  assert.equal(nativeCaptureSession(next).actorAppearancePin.style, 'campaign');
+  assert.equal(nativeCaptureSession(next).actorAppearancePin.content.level.id, 'signal-02');
+  assert.equal(nativeCaptureSession(next).actorAppearancePin.presentation, null);
   assert.deepEqual(page.errors, []);
 });
 
@@ -297,7 +337,7 @@ test('Journey v6 Continue validates its exact source and retains FPV after the m
     before = checkpoint(page);
     original = save(page);
     assert.equal(
-      original.presentationPins,
+      nativeCaptureSession(original).presentationPins,
       null,
       'Journey does not invent managed-picture ownership.',
     );
@@ -310,13 +350,16 @@ test('Journey v6 Continue validates its exact source and retains FPV after the m
     await settle(() => page.doc.body.dataset.flightState === 'running');
     assert.deepEqual(checkpoint(page), before);
     assert.equal(page.rendered.actorAppearance.style, 'fpv');
-    assert.deepEqual(save(page).actorAppearancePin, original.actorAppearancePin);
+    assert.deepEqual(
+      nativeCaptureSession(save(page)).actorAppearancePin,
+      nativeCaptureSession(original).actorAppearancePin,
+    );
   });
   await t.test(
     'same-ID forged source hash does not replace the current flight or saved bytes',
     async (t) => {
       const forged = structuredClone(original);
-      forged.actorAppearancePin.content.owner.projectSha256 = 'f'.repeat(64);
+      nativeCaptureSession(forged).actorAppearancePin.content.owner.projectSha256 = 'f'.repeat(64);
       const raw = JSON.stringify(forged);
       storage.setItem(journeyKey, raw);
       const page = await setup(t, { storage });
@@ -344,7 +387,7 @@ test('Journey v6 Continue validates its exact source and retains FPV after the m
       page.$('overlay-brief').click();
       page.$('shell-gallery').click();
       page.$('collection-records').click();
-      page.doc.querySelector('button[data-library-panel="saves"]').click();
+      await activateHostAction(page.doc.querySelector('button[data-library-panel="saves"]'));
       page.$('save-file').files = [
         new Blob([JSON.stringify(original)], { type: 'application/json' }),
       ];
@@ -355,10 +398,10 @@ test('Journey v6 Continue validates its exact source and retains FPV after the m
       page.$('overlay-brief').click();
       page.$('shell-gallery').click();
       page.$('collection-records').click();
-      page.doc.querySelector('button[data-library-panel="saves"]').click();
+      await activateHostAction(page.doc.querySelector('button[data-library-panel="saves"]'));
       const raw = page.storage.getItem(journeyKey),
         forged = structuredClone(original);
-      forged.actorAppearancePin.presentation.sha256 = 'e'.repeat(64);
+      nativeCaptureSession(forged).actorAppearancePin.presentation.sha256 = 'e'.repeat(64);
       page.$('save-file').files = [
         new Blob([JSON.stringify(forged)], { type: 'application/json' }),
       ];
@@ -404,7 +447,7 @@ test('changing the preference cancels a pending fresh actor lease before flight 
   await settle(() => page.doc.body.dataset.flightState === 'running');
   page.frame(0);
   assert.equal(page.rendered.actorAppearance.style, 'campaign');
-  assert.equal(save(page).actorAppearancePin.style, 'campaign');
+  assert.equal(nativeCaptureSession(save(page)).actorAppearancePin.style, 'campaign');
   assert.deepEqual(page.errors, []);
 });
 
@@ -414,7 +457,7 @@ for (const entryPoint of ['selector', 'cold Classic setup'])
       await readFile(new URL('../content/packs/night-shift.json', import.meta.url)),
     );
     source.themes[0].palette.accent = '#ff11aa';
-    const { pack } = await preparePack(source),
+    const { pack } = await preparePack(source, { decodeImage: decodePackImage }),
       assets = managedIndexedDB();
     const db = await new Promise((resolve, reject) => {
       const request = assets.indexedDB.open('revealline-assets-v1', 1);
@@ -435,14 +478,18 @@ for (const entryPoint of ['selector', 'cold Classic setup'])
     } finally {
       db.close();
     }
-    let indexUnavailable = false;
+    // The cold route can discover and cache the index before Start. Deny it
+    // from boot so this case actually exercises unavailable authority.
+    let indexUnavailable = entryPoint === 'cold Classic setup';
+    let refusedIndexRequests = 0;
     const page = await setup(t, {
       search: '?journey=legacy',
       assetIndexedDB: assets.indexedDB,
-      changeResponse: (url) =>
-        indexUnavailable && url.includes('mission-library-index.json')
-          ? new Response('Unavailable', { status: 503 })
-          : undefined,
+      changeResponse: (url) => {
+        if (!indexUnavailable || !url.includes('mission-library-index.json')) return undefined;
+        refusedIndexRequests++;
+        return new Response('Unavailable', { status: 503 });
+      },
     });
     if (entryPoint === 'cold Classic setup') {
       indexUnavailable = true;
@@ -452,11 +499,12 @@ for (const entryPoint of ['selector', 'cold Classic setup'])
       assert.equal(page.rendered.run.levelId, source.campaigns[0].levels[0].id);
       await start(page);
       assert.equal(page.rendered.actorAppearance, null);
+      assert(refusedIndexRequests > 0, 'The cold route must encounter unavailable authority.');
       assert.match(
         page.$('menu-actor-note').textContent,
         /compatibility is unavailable.*authored actors/,
       );
-      assert.equal(save(page, legacyKey).actorAppearancePin, undefined);
+      assert.equal(nativeCaptureSession(save(page, legacyKey)).actorAppearancePin, undefined);
       assert.deepEqual(page.errors, []);
       return;
     }
@@ -475,8 +523,16 @@ for (const entryPoint of ['selector', 'cold Classic setup'])
     const indexRequests = page.requests.filter((url) =>
       url.includes('mission-library-index.json'),
     ).length;
-    card.click();
+    await activateHostAction(card);
+    page.frame(0);
+    assert.equal(page.$('journey-chooser').open, false);
+    assert.equal(page.rendered.run.levelId, levelId);
+    assert.equal(page.rendered.run.tick, 0);
+    assert.equal(page.rendered.paused, true);
+    assert.equal(page.doc.body.dataset.flightState, 'briefing');
+    // Mission selection prepares the named briefing; the visible Deploy action starts it.
     try {
+      await activateHostAction(page.$('start-button'));
       await settle(() => {
         page.frame(0);
         return (
@@ -489,7 +545,7 @@ for (const entryPoint of ['selector', 'cold Classic setup'])
     }
     assert.equal(page.$('menu-actor-style').value, 'fpv');
     assert.equal(page.rendered.actorAppearance, null);
-    assert.equal(save(page, legacyKey).actorAppearancePin, undefined);
+    assert.equal(nativeCaptureSession(save(page, legacyKey)).actorAppearancePin, undefined);
     assert.equal(
       page.requests.filter((url) => url.includes('mission-library-index.json')).length,
       indexRequests,
@@ -512,9 +568,10 @@ test('First Flight handoff retains the actual Journey actor pin before navigatio
   await settle(() => !!destination, 'The checked handoff must finish saving before navigation.');
   assert.equal(new URL(destination).searchParams.get('course'), 'first-flight');
   const saved = JSON.parse(page.storage.getItem(journeyKey));
-  assert.equal(saved.format, 'xonix-session.v6');
-  assert.equal(saved.actorAppearancePin.style, 'fpv');
-  assert.equal(saved.actorAppearancePin.content.owner.kind, 'journey');
+  assert.deepEqual(snapshotCaptureSession(saved), saved);
+  assert.equal(nativeCaptureSession(saved).format, 'xonix-session.v6');
+  assert.equal(nativeCaptureSession(saved).actorAppearancePin.style, 'fpv');
+  assert.equal(nativeCaptureSession(saved).actorAppearancePin.content.owner.kind, 'journey');
   assert.deepEqual(checkpoint(page), before);
   assert.deepEqual(page.errors, []);
 });

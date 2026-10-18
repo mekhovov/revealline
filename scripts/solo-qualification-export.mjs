@@ -1,0 +1,151 @@
+import assert from 'node:assert/strict';
+/* global document */
+
+// This public status belongs to preparation in the departing document. A hidden
+// ready indicator is valid; an absent indicator is not evidence of readiness.
+export async function waitQualificationPreparation(
+  page,
+  selector,
+  timeoutMs,
+  evidence,
+  now = () => performance.now(),
+) {
+  const started = now();
+  Object.assign(evidence, { selector, status: 'waiting', initial: null, final: null });
+  const read = () =>
+    page.evaluate((selector) => {
+      const target = document.querySelector(selector);
+      return {
+        url: document.URL.slice(0, 4096),
+        present: Boolean(target),
+        state: target?.getAttribute('data-state')?.slice(0, 64) ?? null,
+        message: target?.textContent?.slice(0, 512) ?? null,
+      };
+    }, selector);
+  try {
+    evidence.initial = await read();
+    if (!['ready', 'error'].includes(evidence.initial.state)) {
+      const timeout = timeoutMs - (now() - started);
+      assert(timeout > 0, 'Public preparation deadline exceeded');
+      await page.waitForFunction(
+        (selector) => {
+          const state = document.querySelector(selector)?.getAttribute('data-state');
+          return state === 'ready' || state === 'error';
+        },
+        selector,
+        { timeout },
+      );
+    }
+    evidence.final = await read();
+    assert.notEqual(
+      evidence.final.state,
+      'error',
+      `Public preparation failed: ${evidence.final.message ?? selector}`,
+    );
+    assert.equal(evidence.final.state, 'ready', 'Public preparation no longer ready');
+    evidence.status = 'ready';
+  } catch (error) {
+    evidence.status = 'failed';
+    evidence.failure = String(error.message ?? error);
+    if (!evidence.final) {
+      try {
+        evidence.final = await read();
+      } catch (readError) {
+        evidence.finalReadFailure = String(readError.message ?? readError);
+      }
+    }
+    throw error;
+  } finally {
+    evidence.elapsedMs = Math.max(0, now() - started);
+  }
+}
+
+// File upload APIs can bypass an inert page. Visibility alone is insufficient
+// when the tool has not yet installed its ordinary event handlers.
+export function qualificationControlReady(element) {
+  return Boolean(
+    element &&
+      !element.disabled &&
+      !element.closest('[inert], [hidden], [aria-busy="true"]') &&
+      element.getClientRects().length &&
+      element.getAttribute('aria-disabled') !== 'true',
+  );
+}
+
+export async function waitQualificationControl(page, selector, timeout) {
+  await page.waitForFunction(
+    `(selector) => (${qualificationControlReady.toString()})(document.querySelector(selector))`,
+    selector,
+    { timeout },
+  );
+}
+
+// Observe native upload events without replacing handlers or modifying the
+// control. This owner is retired before gameplay and retains at most eight events.
+export function installQualificationUploadWitness(element, now = () => performance.now()) {
+  const events = [];
+  let disposed = false;
+  const observe = (event) => {
+    if (disposed || events.length >= 8) return;
+    events.push({
+      type: event.type,
+      atMs: now(),
+      isTrusted: event.isTrusted,
+      selectedFiles: element.files?.length ?? null,
+      changeHandlerPresent: typeof element.onchange === 'function',
+    });
+  };
+  for (const type of ['input', 'change']) element.addEventListener(type, observe, true);
+  const snapshot = () => events.map((event) => ({ ...event }));
+  return {
+    snapshot,
+    dispose() {
+      if (!disposed) {
+        disposed = true;
+        for (const type of ['input', 'change']) element.removeEventListener(type, observe, true);
+      }
+      return snapshot();
+    },
+  };
+}
+
+export async function beginQualificationUploadWitness(page, selector) {
+  // Playwright evaluates string expressions without invoking returned functions.
+  // Invoke explicitly so this executes in the same world as the public control.
+  await page.evaluate(
+    `void (window.soloQualificationUploadWitness = (${installQualificationUploadWitness.toString()})(document.querySelector(${JSON.stringify(selector)})))`,
+  );
+}
+
+// Read an ordinary public export only after gameplay has stopped. Do not inspect
+// or mutate application state, and never make an unavailable control available.
+export async function readPublicQualificationReplay(page, timeoutMs = 10000) {
+  const deadline = Date.now() + timeoutMs;
+  const remaining = () => {
+    const timeout = deadline - Date.now();
+    assert(timeout > 0, 'Public replay export deadline exceeded');
+    return timeout;
+  };
+  assert.notEqual(
+    await page.locator('body').getAttribute('data-flight-state'),
+    'running',
+    'Export only after measured gameplay',
+  );
+  const click = async (selector) => {
+    const control = page.locator(selector);
+    await control.waitFor({ state: 'visible', timeout: remaining() });
+    assert(await control.isEnabled(), `Public replay control is disabled: ${selector}`);
+    await control.click({ timeout: remaining() });
+  };
+  await click('#shell-menu');
+  await click('#shell-options');
+  await click('#settings-tab-extras');
+  await click('#shell-workshop');
+  if (!(await page.locator('#export-replay').isVisible()))
+    await click('details:has(#export-replay) > summary');
+  await click('#export-replay');
+  await page.locator('#replay-dialog').waitFor({ state: 'visible', timeout: remaining() });
+  const text = await page.locator('#replay-json').inputValue();
+  assert(Buffer.byteLength(text) <= 32 * 1024 * 1024, 'Replay exceeds public byte bound');
+  return text;
+}

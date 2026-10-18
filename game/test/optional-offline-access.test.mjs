@@ -149,3 +149,90 @@ test('stalled optional storage work is bounded and cancellation remains authorit
     name: 'AbortError',
   });
 });
+
+for (const cancellation of ['abort', 'deadline']) {
+  for (const delayedStage of ['keys', 'open', 'match-hit', 'match-miss']) {
+    test(`optional retention stops after ${cancellation} during cache ${delayedStage} and can retry`, async () => {
+      const controller = new AbortController();
+      let release, entered;
+      const started = new Promise((resolve) => (entered = resolve));
+      const held = new Promise((resolve) => (release = resolve));
+      const calls = { keys: 0, open: 0, match: 0, parse: 0, inspect: 0, pin: 0 };
+      let delayed = true;
+      const pauseAt = (stage, value) => {
+        if (delayed && delayedStage.startsWith(stage)) {
+          delayed = false;
+          entered();
+          return held;
+        }
+        return Promise.resolve(value);
+      };
+      const response = {
+        ok: true,
+        json: async () => {
+          calls.parse++;
+          return catalogue;
+        },
+      };
+      const cache = {
+        match: () => {
+          calls.match++;
+          return pauseAt('match', response);
+        },
+      };
+      const names = ['first', 'second'];
+      const access = createOfflineDownloadAccess({
+        availability,
+        retentionTimeout: cancellation === 'deadline' ? 5 : 10000,
+        caches: {
+          keys: () => {
+            calls.keys++;
+            return pauseAt('keys', names);
+          },
+          open: () => {
+            calls.open++;
+            return pauseAt('open', cache);
+          },
+        },
+        store: {
+          inspect: async () => {
+            calls.inspect++;
+            return { ready: true };
+          },
+          pin: async () => {
+            calls.pin++;
+          },
+        },
+      });
+      const pending = access.ensure('chapter', { retain: true, signal: controller.signal });
+      await started;
+      if (cancellation === 'abort') {
+        controller.abort();
+        await assert.rejects(pending, { name: 'AbortError' });
+      } else await pending;
+      const atCancellation = { ...calls };
+      release(
+        delayedStage === 'keys'
+          ? names
+          : delayedStage === 'open'
+            ? cache
+            : delayedStage === 'match-hit'
+              ? response
+              : undefined,
+      );
+      await new Promise(setImmediate);
+      assert.deepEqual(
+        calls,
+        atCancellation,
+        'cancelled work starts no further cache or parse work',
+      );
+      assert.equal(calls.parse, 0);
+      assert.equal(calls.inspect, 0);
+      assert.equal(calls.pin, 0);
+      await access.ensure('chapter', { retain: true });
+      assert.equal(calls.parse, 1, 'fresh retention reads its own catalogue');
+      assert.equal(calls.inspect, 1);
+      assert.equal(calls.pin, 1, 'fresh verified retention remains available');
+    });
+  }
+}

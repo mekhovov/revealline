@@ -4,10 +4,11 @@ import { readFile } from 'node:fs/promises';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { PNGImage } from './helpers/png-image.mjs';
-import { waitFor } from './helpers/wait-for.mjs';
+import { openMissionLibrary, activateMissionCard } from './helpers/library-selection.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary } from '../library.mjs';
 import { recoverGameplayTuning } from '../gameplay-tuning.mjs';
 import { verifyReplay } from '../replay.mjs';
+import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 
 // Actual host, shipped mission data, preparation, input adapters and recorder.
 // Only browser DOM/PNG decoding/device samples are modeled. This is not native
@@ -56,15 +57,17 @@ async function setup(
   });
   if (owner === 'Journey' && missionId === 'first-return') page.$('shell-featured').click();
   else if (owner === 'Journey') {
-    page.$('shell-play').click();
+    await openMissionLibrary(page, 'shell-play');
     await settle(() => page.$('journey-chooser')?.open && page.$('journey-collection'));
     const card = [...page.$('journey-cards').children].find((entry) =>
       JSON.parse(entry.dataset.missionId)[3].endsWith(`/${missionId}`),
     );
     assert.ok(card, 'Choose the exact current Journey mission through the shared library.');
-    card.click();
+    await activateMissionCard(card);
+    assert.equal(page.$('start-button').hidden, false);
+    page.$('start-button').click();
   } else {
-    page.$('shell-play').click();
+    await openMissionLibrary(page, 'shell-play');
     await settle(() => page.$('journey-chooser')?.open && page.$('journey-collection'));
     page.$('journey-collection').value = 'Classic';
     page.$('journey-collection').emit('change');
@@ -75,16 +78,17 @@ async function setup(
     );
     assert.ok(card, 'Select the exact retained Pressure Lines edition.');
     assert.match(card.textContent, /Download/);
-    card.click();
-    await waitFor(() => card.textContent.endsWith('Play'), {
-      timeoutMs: 30000,
-      message: 'Pressure Lines original pack and picture become ready.',
-    });
-    card.click();
+    // One real activation owns download and adoption. Its old card can retire;
+    // the accepted mission still requires the visible briefing Start action.
+    await activateMissionCard(card);
+    assert.equal(page.$('start-button').hidden, false);
+    page.$('start-button').click();
   }
-  await settle(() => page.doc.body.dataset.flightState === 'running');
+  await page.waitUntilRunning(
+    `${owner}/${turnPolicy}/${pad ? 'controller' : 'other'} initial Start`,
+  );
   assert.equal(page.$('shell-home').open, false);
-  assert.equal(page.$('journey-chooser').open, false);
+  assert.equal(page.$('journey-chooser')?.open ?? false, false);
   frames(page, 3);
   const run = page.rendered.run;
   assert.equal(run.levelId, missionId);
@@ -202,7 +206,7 @@ for (const owner of ['Journey', 'Pressure Lines'])
           owner === 'Journey'
             ? 'revealline.suspended.journey-whole-spatial.v5'
             : 'revealline.suspended.dev.v1';
-        const saved = JSON.parse(page.storage.getItem(saveKey));
+        const saved = nativeSession(JSON.parse(page.storage.getItem(saveKey)));
         assert.ok(saved, 'The owning edition must persist the stopped attempt.');
         assert.equal(saved.continuation.direction, null);
         assert.equal(verifyReplay(saved.replay).match, true);

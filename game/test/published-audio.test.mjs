@@ -1,20 +1,22 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { setImmediate as tick } from 'node:timers/promises';
 import { createPresentationHost } from '../presentation/host.mjs';
 import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
 import { compilePresentation } from '../../scripts/compile-presentation.mjs';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
-import { attachPublishedAudio } from '../ui/published-audio.mjs';
+import { attachPublishedAudio, createPublishedCues } from '../ui/published-audio.mjs';
 import { emptySoundtrackLibrary, BUILTIN_SOUNDTRACK_TRACKS } from '../soundtrack.mjs';
 import { audioHarness, settleUntil } from './helpers/soundtrack-audio.mjs';
+import { pcmWave, pcmWaveBlob } from './helpers/pcm-wave.mjs';
 import { Events } from './helpers/couch-dom.mjs';
 import {
   validateCampaignFeedback,
   CAMPAIGN_FEEDBACK_FORMAT,
 } from '../journey/campaign-feedback.mjs';
 
-const bytes = new Uint8Array([82, 73, 70, 70, 0, 0, 0, 0, 87, 65, 86, 69]);
+const bytes = pcmWave();
 const blob = new Blob([bytes], { type: 'audio/wav' });
 const hash = await hashPresentationBytes(bytes);
 const published = (readBlob = async () => blob, allowed = () => true) => ({
@@ -36,6 +38,232 @@ function playerFixture() {
   });
   return { ...h, player };
 }
+
+function cueReadTimers(t) {
+  const timers = new Set(),
+    start = globalThis.setTimeout,
+    clear = globalThis.clearTimeout;
+  t.mock.method(globalThis, 'setTimeout', (callback, ms, ...args) => {
+    if (ms !== 10000) return start(callback, ms, ...args);
+    const timer = { callback: () => callback(...args) };
+    timers.add(timer);
+    return timer;
+  });
+  t.mock.method(globalThis, 'clearTimeout', (timer) => {
+    if (!timers.delete(timer)) clear(timer);
+  });
+  return {
+    size: () => timers.size,
+    expire() {
+      assert.ok(timers.size, 'An admitted optional read has a deadline.');
+      for (const timer of [...timers]) {
+        timers.delete(timer);
+        timer.callback();
+      }
+    },
+  };
+}
+
+test('published cue read deadlines abort real host fetches and release required music admission', async (t) => {
+  const timers = cueReadTimers(t),
+    h = playerFixture(),
+    compiled = await compilePresentation(createDefaultThemeBundle(), new Map()),
+    manifest = JSON.parse(new TextDecoder().decode(compiled.files.get('runtime.json'))),
+    reads = [];
+  for (const name of ['focus', 'confirm']) {
+    const asset = manifest.resolved.assets[`audio.${name}`];
+    Object.assign(asset, {
+      id: `published.test.${name}`,
+      kind: 'audio',
+      recipe: null,
+      file: { sha256: hash, bytes: bytes.length, mime: 'audio/wav', width: null, height: null },
+    });
+    manifest.resolved.bindings[`audio.${name}`] = { id: asset.id, revision: 1 };
+  }
+  manifest.urls[hash] = `./assets/${hash}.wav`;
+  const host = createPresentationHost({
+    baseURL: 'https://game.test/compiled/',
+    fetch: async (url, { signal }) => {
+      if (url.endsWith('runtime.json')) return new Response(JSON.stringify(manifest));
+      reads.push(signal);
+      return new Promise((resolve, reject) => {
+        signal.addEventListener('abort', () => reject(signal.reason), { once: true });
+      });
+    },
+  });
+  const cues = createPublishedCues({ sound: h.soundscape, readAudio: host.readAudio });
+  t.after(async () => {
+    cues.close();
+    host.close();
+    h.player.dispose();
+    await h.soundscape.dispose();
+  });
+  await host.load();
+  await h.soundscape.enable();
+  h.context.decodeAudioData = () => assert.fail('Stalled originals never reach PCM decoding.');
+  cues.play('focus', { ui: true });
+  cues.play('confirm', { ui: true });
+  await tick();
+  assert.equal(reads.length, 2);
+  let musicReads = 0;
+  h.player.setPublishedTrack(
+    published(async () => {
+      musicReads++;
+      return blob;
+    }),
+  );
+  const playing = h.player.play();
+  await tick();
+  assert.equal(musicReads, 0);
+  assert.equal(h.soundscape.mediaPreparation.snapshot().active.fetch, 2);
+  assert.equal(h.soundscape.mediaPreparation.snapshot().queued, 1);
+  timers.expire();
+  assert(reads.every((signal) => signal.aborted));
+  assert.equal(await playing, true);
+  assert.equal(musicReads, 1);
+  await tick();
+  assert.equal(cues.resourceSnapshot().loading, 0);
+  assert.equal(timers.size(), 0);
+  for (let i = 0; i < 20; i++) {
+    assert.equal(cues.play('focus', { ui: true }), false);
+    await cues.prepare(['focus', 'confirm']);
+  }
+  assert.equal(reads.length, 2, 'Timed-out optional cues retain their procedural fallback.');
+});
+
+test('cue timeout discards late bytes but retains a noncooperative fetch until actual settlement', async (t) => {
+  const timers = cueReadTimers(t),
+    h = audioHarness(),
+    reads = [];
+  await h.soundscape.enable();
+  h.context.decodeAudioData = () => assert.fail('Timed-out bytes cannot decode.');
+  const cues = createPublishedCues({
+    sound: h.soundscape,
+    readAudio: (name, { signal }) =>
+      new Promise((resolve) => reads.push({ name, signal, resolve })),
+  });
+  t.after(async () => {
+    cues.close();
+    reads.forEach((read) => read.resolve({ blob }));
+    await h.soundscape.dispose();
+  });
+  cues.play('focus', { ui: true });
+  cues.play('confirm', { ui: true });
+  await tick();
+  let requiredStarted = false;
+  const required = h.soundscape.mediaPreparation.run(
+    'fetch',
+    () => {
+      requiredStarted = true;
+    },
+    { priority: 'required' },
+  );
+  timers.expire();
+  await tick();
+  assert.equal(requiredStarted, false);
+  assert.equal(h.soundscape.mediaPreparation.snapshot().active.fetch, 2);
+  assert.equal(cues.resourceSnapshot().loading, 2, 'Actual reads still have physical ownership.');
+  await cues.prepare(['focus', 'confirm']);
+  assert.equal(reads.length, 2, 'Unavailable sentinels do not join or restart expired reads.');
+  reads[0].resolve({ blob });
+  await required;
+  reads[1].resolve({ blob });
+  await tick();
+  assert.equal(cues.resourceSnapshot().loading, 0);
+  assert.equal(h.soundscape.mediaPreparation.snapshot().active.fetch, 0);
+  assert.equal(cues.has('focus'), false);
+  assert.equal(cues.has('confirm'), false);
+});
+
+test('cue read deadline starts after admission and cancellation cannot delete a newer same-name load', async (t) => {
+  const timers = cueReadTimers(t),
+    h = audioHarness(),
+    blockers = [],
+    reads = [];
+  await h.soundscape.enable();
+  h.context.decodeAudioData = async () => ({ duration: 0.1, length: 800, numberOfChannels: 1 });
+  const held = [0, 1].map(() =>
+    h.soundscape.mediaPreparation.run(
+      'fetch',
+      () => new Promise((resolve) => blockers.push(resolve)),
+    ),
+  );
+  await tick();
+  const cues = createPublishedCues({
+    sound: h.soundscape,
+    readAudio: (name, { signal }) =>
+      new Promise((resolve) => reads.push({ name, signal, resolve })),
+  });
+  t.after(async () => {
+    cues.close();
+    blockers.forEach((done) => done());
+    reads.forEach((read) => read.resolve({ blob }));
+    await h.soundscape.dispose();
+  });
+  const old = cues.prepare(['focus']);
+  await tick();
+  assert.equal(reads.length, 0);
+  assert.equal(timers.size(), 0, 'Queue wait consumes no network-read deadline.');
+  blockers.forEach((done) => done());
+  await Promise.all(held);
+  await tick();
+  assert.equal(reads.length, 1);
+  assert.equal(timers.size(), 1);
+  cues.cancelPending();
+  assert.equal(timers.size(), 0, 'Owner cancellation clears its deadline immediately.');
+  const current = cues.prepare(['focus']);
+  await tick();
+  assert.equal(reads.length, 2);
+  reads[0].resolve({ blob });
+  await old;
+  assert.equal(cues.resourceSnapshot().loading, 1);
+  assert.equal(timers.size(), 1, 'Old completion cannot clear the replacement timer.');
+  reads[1].resolve({ blob });
+  await current;
+  assert.equal(cues.has('focus'), true);
+  assert.equal(cues.resourceSnapshot().loading, 0);
+  assert.equal(timers.size(), 0);
+});
+
+test('a completed cue read has no decode deadline and abandoned PCM retains its reservation', async (t) => {
+  const timers = cueReadTimers(t),
+    h = audioHarness();
+  await h.soundscape.enable();
+  let finish;
+  h.context.decodeAudioData = () =>
+    new Promise((resolve) => {
+      finish = resolve;
+    });
+  const cues = createPublishedCues({ sound: h.soundscape, readAudio: async () => ({ blob }) });
+  t.after(async () => {
+    cues.close();
+    finish?.({ duration: 0.1, length: 800, numberOfChannels: 1 });
+    await h.soundscape.dispose();
+  });
+  const pending = cues.prepare(['focus']);
+  await tick();
+  assert.equal(typeof finish, 'function');
+  assert.equal(timers.size(), 0);
+  const reserved = h.soundscape.mediaPreparation.snapshot().reservedDecodeBytes;
+  assert(reserved > 0);
+  cues.close();
+  let nextStarted = false;
+  const next = h.soundscape.mediaPreparation.run(
+    'decode',
+    () => {
+      nextStarted = true;
+    },
+    { bytes: 4 },
+  );
+  await tick();
+  assert.equal(nextStarted, false);
+  assert.equal(h.soundscape.mediaPreparation.snapshot().reservedDecodeBytes, reserved);
+  finish({ duration: 0.1, length: 800, numberOfChannels: 1 });
+  await Promise.all([pending, next]);
+  await tick();
+  assert.equal(cues.resourceSnapshot().decodedBytes, 0);
+  assert.equal(h.soundscape.mediaPreparation.snapshot().reservedDecodeBytes, 0);
+});
 
 test('published theme music is lazy and wins over automatic FPV recipes without overriding manual assignments', async () => {
   const h = playerFixture();
@@ -565,7 +793,7 @@ test('switching presentation during cue decoding discards the old cache and uses
     host = {
       async readAudio(slot, options) {
         reads.push({ slot, options, owner: current });
-        return { blob };
+        return { blob: pcmWaveBlob({ seconds: 0.2 }) };
       },
     };
     owner.setPresentation(current);

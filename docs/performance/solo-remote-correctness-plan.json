@@ -1,0 +1,212 @@
+{
+  "format": "SoloHostedCorrectnessPlan.v1",
+  "cohort": "linux-correctness-3ad-v4-reused-normal-baseline",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "runner": "ubuntu-24.04 x64 GitHub-hosted; actual image, CPU, memory, browser version and binary hashes recorded",
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "evidenceBytes": 268435456,
+  "rows": [
+    {
+      "id": "candidate-worker-chromium",
+      "kind": "worker",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-worker-webkit",
+      "kind": "worker",
+      "engine": "webkit",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-paused-chromium",
+      "kind": "paused",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-paused-webkit",
+      "kind": "paused",
+      "engine": "webkit",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "baseline-first30-chromium",
+      "kind": "first30",
+      "engine": "chromium",
+      "source": "baseline",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-first30-chromium",
+      "kind": "first30",
+      "engine": "chromium",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "baseline-first30-webkit",
+      "kind": "first30",
+      "engine": "webkit",
+      "source": "baseline",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    },
+    {
+      "id": "candidate-first30-webkit",
+      "kind": "first30",
+      "engine": "webkit",
+      "source": "candidate",
+      "timeoutMs": 240000,
+      "performanceExclusion": true
+    }
+  ],
+  "fixture": {
+    "path": "docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture",
+    "bytes": 6387,
+    "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5",
+    "authority": "Exact byte copy of qualification-first30-prospective-03/cold-first30.qualification.json; independent test recipe, not production identity."
+  },
+  "candidate": {
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Exact normal b117 package from successful Linux Node22.13.1 producer38978329593; prospectively pinned API outer + producer-ready digest. Consumer must read back the complete bundle/ready and independently verify full inner/source/CSP against its fresh exact b117 checkout. No rebuild/fallback or republishing as fresh.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    },
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV1",
+      "run": 38978329593,
+      "artifact": 12080662080,
+      "name": "solo-normal-baseline-b1174522-38978329593-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-correctness-temporary.yml",
+        "run": 38978329593,
+        "attempt": 1,
+        "toolingRevision": "d569ce092db47d14f974da24063f82f4a280a19a",
+        "toolingTree": "ee4d756b04fd512849cb19ceb613edfbb04c7c68"
+      },
+      "outer": {
+        "bytes": 1073744615,
+        "sha256": "abf5d8ae1f277cc2b640f103a3ab3471ebf13fe78eba518cc7630c7c316b9e62"
+      },
+      "inner": {
+        "bytes": 1073181451,
+        "sha256": "1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290"
+      },
+      "manifestSHA256": "2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8",
+      "ready": {
+        "bytes": 1602,
+        "sha256": "4e90b38ad8e3d871f122798643c87173dde7d2a006c1e282485c124fcaa2132a"
+      }
+    }
+  },
+  "acceptance": {
+    "core": "Unchanged worker/paused assertions pass with exit0, exact source/CSP proof and clean owned closure. Worker report additionally records bounded public warning/focus/visibility/flight state only after an unexpected paused inspection result; it cannot turn that failure into a pass.",
+    "first30": "Unchanged scenario pass and strict same-engine/version artifact replay pass, exact recipe/source and clean closure. Raw numerical performance status/exit2 retained separately; this cohort provides no timing pass.",
+    "failures": "No retries. Retain failed, partial, setup-failed and not-run rows. Continue to next declared row only after clean owned closure; forced cleanup makes that row fail. Ambiguous/surviving processes stop the cohort.",
+    "scope": "Linux Chromium/WebKit correctness only. Persistent WebKit observation uses the existing owner; replay uses unchanged ephemeral verifier. No macOS/Safari/iPhone/SteamDeck, GPU, thermal, installed-PWA, authentication or sustained-performance claim.",
+    "access": "Existing localhost access fixture only: server fixture for first30; unchanged route fixture for core. Original artifact HTML and CSP bytes remain independently verified.",
+    "unchangedGates": "No mutation to scenario actions, replay requirements, source build budgets, observed phase counters, numerical thresholds or240s row deadlines. CPU1; no calibration or performance inference.",
+    "setupOrdering": "Candidate archive/source verification precedes the first four core rows. Only then fetch and fully reverify the exact normal b117 reusable bundle and positive ready, followed by the unchanged inner/member and fresh source/CSP checks. A baseline admission failure is retained and paired rows remain not-run. No alternate build/profile/source or fallback."
+  },
+  "resources": {
+    "serial": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "perRowEvidenceBytes": 33554432,
+    "aggregateEvidenceBytes": 268435456,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "setupBounds": "300s artifact transfer;600s each outer/inner verification;480s each source proof;75min helper inside145min job with127min disjoint step caps. Baseline uses pinned normal artifact full readback/fresh source verification, no baseline build and no package republishing. Evidence upload retained.",
+    "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824,
+    "scratch": "Fresh RUNNER_TEMP/sc-<random>/rNN owner, <=52 UTF-8 bytes per row; exact root/row device+inode recorded. Separate from descriptive output paths. No shared temporary profile.",
+    "baselineBuildObservation": "Setup-only15s scalar lstat witnesses, <=100records and <=2 direct .xonix-build-* staging roots; only manifest.json/distribution.zip/.xonix-build.json existence,size,mtime. No recursive payload scan, content read or stage-cause inference.",
+    "workflowBudgetMinutes": {
+      "initialize": 1,
+      "threeCheckouts": 9,
+      "node": 3,
+      "sourceDependencies": 10,
+      "browserDependencies": 10,
+      "ownerTests": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "evidenceUpload": 10,
+      "sum": 127,
+      "job": 145
+    }
+  },
+  "guidance": [
+    {
+      "url": "https://playwright.dev/docs/ci",
+      "application": "One serial worker and helper deadline below job deadline so partial reports can upload. Version1.62.1 is explicitly pinned instead of following current documentation examples."
+    },
+    {
+      "url": "https://playwright.dev/docs/browsers",
+      "application": "Record exact pinned browser builds; Linux WebKit is a separate platform stratum, not Safari/iOS."
+    },
+    {
+      "url": "https://developer.chrome.com/blog/devtools-grounded-real-world",
+      "application": "CPU stress does not reproduce device GPU, memory or thermal conditions; this CPU1 correctness cohort is not physical-device qualification."
+    }
+  ],
+  "predecessor": {
+    "run": 38972430908,
+    "head": "1467394b3c8555a65560b127a7b2dc0bf4335eb5",
+    "retainedFailure": "Both Chromium launches failed on122-byte socket paths; WebKit worker ended paused; WebKit paused passed; baseline normal build reached600s and paired rows were not run. No prior result is replaced.",
+    "changes": "Fresh short owned scratch and a prospective1200s baseline build setup limit. The worker report adds a bounded public-state snapshot only after an unexpected paused inspection result. Browser240s deadlines, buildflags/sourcebudgets and all scenarios/pass assertions remain unchanged; original failures retained.",
+    "buildDurationContext": "Historical b117 main-pages run38817575550 build591s; different publication profile, not proof of normal-build duration or timeout cause."
+  },
+  "latestPredecessor": {
+    "run": 38978329593,
+    "head": "d569ce092db47d14f974da24063f82f4a280a19a",
+    "candidateRevision": "2ec605eb76e38f9c9a3e21b7fa82dd80c580c457",
+    "retainedResult": "All eight excluded correctness rows and clean owners passed; raw first30 numerical failures/inconclusive remain retained. Earlier failed cohorts remain separate and unchanged. Baseline normal build/source/archive proof and package publication passed.",
+    "prospectiveChange": "Latest 3ad candidate package and exact previously produced normal b117 reuse only. Same eight rows, recipe, CPU1, context modes, source/CSP/native replay/owner gates and deadlines. No timing pass or physical-device qualification. Initial title/startup calibration remains reported exactly; no baseline gate widening."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 13941,
+      "sha256": "b7bd4c75ce4ff04e26545aee7d488d8d674173379d372bb815b47a7935567887"
+    }
+  ],
+  "prospectiveHold": "Released for the eight fixed correctness rows against exact3ad and verified normal original-main reuse. Later tooling HEAD is recorded separately. Full remote package/ready/source/CSP readback remains required; all timing remains excluded."
+}

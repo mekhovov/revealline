@@ -1,6 +1,6 @@
 import { boundedJSON } from '../../game/data-json.mjs';
 import { AIRCRAFT_RECORDING_FORMAT, AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
-import { AIRCRAFT_BACKEND } from './advanced-aircraft-runtime.mjs';
+import { AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND } from './advanced-aircraft-runtime.mjs';
 import { verifyAircraftArchive } from './aircraft-archive-verifier.mjs';
 import { createGhostPathCollector } from './advanced-ghost-path.mjs';
 import {
@@ -126,7 +126,9 @@ export function createAdvancedWorkerHandler(postMessage) {
             });
             if (
               !['AdvancedRecording.v1', AIRCRAFT_RECORDING_FORMAT].includes(record.format) ||
-              ![ADVANCED_BACKEND, AIRCRAFT_BACKEND].includes(simulation.configuration().backend)
+              ![ADVANCED_BACKEND, AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND].includes(
+                simulation.configuration().backend,
+              )
             )
               throw new Error('Comparison ghosts require an Advanced reference arena recording.');
             if (!(record.missionTicks > 0))
