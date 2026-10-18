@@ -11,6 +11,7 @@ import {
   redactPagesText,
   pagesDiagnosticScope,
   assertPagesMissionsEvidence,
+  assertPagesBackupEvidence,
 } from './solo-pages-smoke.mjs';
 
 const repository = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -73,14 +74,25 @@ export function assessOwnedPagesSmoke(report, owner, expected, engine, diagnosti
   assert.deepEqual(report.cleanup, { context: 'closed', browser: 'closed' });
   assert.equal(report.bindingBefore.sourceRevision, expected);
   assert.deepEqual(report.bindingBefore, report.bindingAfter);
-  assert.deepEqual(report.stages, [
-    'ordinary-password-accepted',
-    'solo-direct-start-pause-resume',
-    'missions-current-selection',
-    'settings-demo-return',
-    'team-versus-public-return',
-  ]);
-  assert.equal(report.pages.length, 2);
+  if (diagnostic === 'backup') {
+    assert.deepEqual(report.stages, [
+      'ordinary-password-accepted',
+      'fresh-profile-progress-backup',
+    ]);
+    assert.equal(report.pages.length, 1);
+    assert.equal(report.solo, undefined);
+    assert.equal(report.shared, undefined);
+    assert.deepEqual(report.backupAssessment, assertPagesBackupEvidence(report.backup));
+  } else {
+    assert.deepEqual(report.stages, [
+      'ordinary-password-accepted',
+      'solo-direct-start-pause-resume',
+      'missions-current-selection',
+      'settings-demo-return',
+      'team-versus-public-return',
+    ]);
+    assert.equal(report.pages.length, 2);
+  }
   for (const page of report.pages) {
     assert.equal(page.total, 0);
     assert.equal(page.overflow, false);
@@ -98,7 +110,9 @@ export function assessOwnedPagesSmoke(report, owner, expected, engine, diagnosti
     diagnosticScope,
     performanceExcluded: true,
     scope:
-      'Fixed public high-use flows on one stable deployed revision. Not whole-app or performance qualification.',
+      diagnostic === 'backup'
+        ? 'One fresh-profile ordinary progress download. Not historical-backup, restore or durable-save qualification.'
+        : 'Fixed public high-use flows on one stable deployed revision. Not whole-app or performance qualification.',
   };
 }
 export async function runOwnedPagesSmoke({
