@@ -250,7 +250,24 @@ try {
     });
   }
   if (args.practice === 'true') {
+    const beforeResize = await snapshot();
     await page.setViewportSize({ width: 390, height: 844 });
+    // Canvas resizing clears its bitmap. Capture after the common scheduler
+    // has advanced and the browser has had a paint opportunity at the new size.
+    await page.waitForFunction(
+      (tick) => {
+        const dialog = globalThis.document.querySelector('#demo-dialog');
+        return dialog?.dataset.demoTick !== tick || dialog?.dataset.demoPhase === 'complete';
+      },
+      beforeResize.tick,
+      { timeout: 3000 },
+    );
+    await page.evaluate(
+      () =>
+        new Promise((resolve) =>
+          globalThis.requestAnimationFrame(() => globalThis.requestAnimationFrame(resolve)),
+        ),
+    );
     assert.equal(await page.locator('#demo-back').isVisible(), true);
     assert.equal(await page.locator('#demo-watch-pause').isVisible(), true);
     await page.screenshot({ path: reportPath.replace(/\.json$/, '-narrow.png') });

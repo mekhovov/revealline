@@ -1,0 +1,455 @@
+{
+  "format": "SharedDemoMainCoverageImpactV1",
+  "recordedAt": "2026-10-18T18:08:39.260Z",
+  "method": "Read-only Git-object diff and source inspection; no code, simulation, test or browser execution. Git trees and blobs are immutable comparison evidence.",
+  "comparedMain": {
+    "before": "e3a20a2a342757444775c0c261131da168280b58",
+    "after": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "changedPathCount": 28
+  },
+  "priorFeatureHead": "66ef7cb1216ac18f8ad982b22aa2d3a78362f7ca",
+  "priorNativeReceiptCommit": "88b7bf224de4b3951297c76b53f35396f6ab3bc4",
+  "priorNativeReceipt": "docs/qualification/shared-demos/runtime-native-regressions-20261018.json",
+  "conclusion": {
+    "incomingCatalogChange": false,
+    "incomingPhysicsOrReplayIdentityChange": false,
+    "incomingDemoSourceVerificationChange": false,
+    "nativeCoverageInvalidatedByThisDelta": false,
+    "threeBrowserNativeCoverageInvalidatedByThisDelta": false,
+    "requiredNativeEntries": 890,
+    "requalificationOfAllRecordingsRequiredByThisDelta": false,
+    "ordinaryAppIntegrationRecheckRequired": true,
+    "finalRebaseSourcePreservationCheckPending": true
+  },
+  "identicalNativeTrees": [
+    {
+      "path": "game/content-design",
+      "gitTree": "b648eddd27edb61fec4a2f9e6c14671df23d2e2c",
+      "sameAtBothMainRevisions": true
+    },
+    {
+      "path": "game/content",
+      "gitTree": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764",
+      "sameAtBothMainRevisions": true
+    },
+    {
+      "path": "game/core",
+      "gitTree": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+      "sameAtBothMainRevisions": true
+    },
+    {
+      "path": "game/overflight",
+      "gitTree": "524d5ec4f5cd4927f20627cedee71f7a18c872c4",
+      "sameAtBothMainRevisions": true
+    },
+    {
+      "path": "game/snake",
+      "gitTree": "590f4d2668fdae10b409cf56bf456a52374452d8",
+      "sameAtBothMainRevisions": true
+    },
+    {
+      "path": "optional-practice",
+      "gitTree": "8f4d96dc3358ec1b4ce0d073ac83ca4ecbf04e23",
+      "sameAtBothMainRevisions": true
+    }
+  ],
+  "unchangedAdditionalPaths": [
+    "game/replay.mjs",
+    "game/mission-library/",
+    "game/campaign-contexts.mjs",
+    "game/packs.mjs",
+    "game/library.mjs",
+    "game/data-json.mjs",
+    "game/gameplay-tuning.mjs",
+    "game/demo*",
+    "game/ui/demo*"
+  ],
+  "modeEvidence": [
+    {
+      "mode": "solo",
+      "required": 240,
+      "inventoryInputs": [
+        "game/content/campaign.json",
+        "game/content/classes.json",
+        "game/content/packs/catalog.json",
+        "game/content/packs/archive-catalog.json",
+        "game/content-design/default-entry.mjs",
+        "game/content-design/route-loader.mjs",
+        "game/content-design/solo-route-host.mjs",
+        "game/mission-library/spatial-next-editions.mjs"
+      ],
+      "verificationInputs": [
+        "game/core/",
+        "game/replay.mjs",
+        "game/demo-catalog.mjs",
+        "game/demo-sources.mjs",
+        "game/gameplay-tuning.mjs"
+      ],
+      "assessment": "No changed authored route, level, standard class/setup, input transcript, content binding, replay state or strict candidate-admission code."
+    },
+    {
+      "mode": "snake",
+      "required": 240,
+      "inventoryInputs": [
+        "game/snake/classic-catalogue.mjs",
+        "game/snake/classic-setup.mjs"
+      ],
+      "verificationInputs": [
+        "game/snake/classic-core.mjs",
+        "game/snake/classic-match.mjs",
+        "game/demo-modes/snake-recording.mjs"
+      ],
+      "assessment": "Entire Snake tree unchanged; current catalog, native match schedule, turn acceptance and terminal checkpoint inputs unchanged."
+    },
+    {
+      "mode": "sim",
+      "required": 392,
+      "inventoryInputs": [
+        "optional-practice/civilian-fpv/world-catalogue.mjs",
+        "optional-practice/civilian-fpv/demo-inventory.mjs"
+      ],
+      "verificationInputs": [
+        "optional-practice/civilian-fpv/model.mjs",
+        "optional-practice/civilian-fpv/world-model.mjs",
+        "optional-practice/civilian-fpv/demo-player.mjs",
+        "optional-practice/civilian-fpv/demonstration-resolver.mjs"
+      ],
+      "assessment": "Entire optional-practice tree unchanged; course/mode/response identities and native replay authority unchanged."
+    },
+    {
+      "mode": "survival",
+      "required": 18,
+      "inventoryInputs": [
+        "game/overflight/battlefields.mjs",
+        "game/overflight/project.mjs",
+        "game/demo-modes/survival-catalog.mjs"
+      ],
+      "verificationInputs": [
+        "game/overflight/core.mjs",
+        "game/overflight/host-loop.mjs",
+        "game/demo-modes/survival-replay.mjs",
+        "game/demo-modes/survival-simulation-identity.mjs"
+      ],
+      "assessment": "Entire Overflight tree unchanged in incoming main; generated transitive core/project simulation identity, standard seed/options and native upgrade/reroll order unchanged. Localization messages are already explicitly excluded from the generated simulation binding."
+    }
+  ],
+  "nativeBrowserReceipts": [
+    {
+      "file": "docs/qualification/shared-demos/solo-browser-summary.json",
+      "complete": true,
+      "coveredLevelsPerEngine": [
+        {
+          "engine": "chromium",
+          "coveredLevels": 240,
+          "strictNewPerformances": 232,
+          "preservedReviewedPerformances": 10
+        },
+        {
+          "engine": "firefox",
+          "coveredLevels": 240,
+          "strictNewPerformances": 232,
+          "preservedReviewedPerformances": 10
+        },
+        {
+          "engine": "webkit",
+          "coveredLevels": 240,
+          "strictNewPerformances": 232,
+          "preservedReviewedPerformances": 10
+        }
+      ]
+    },
+    {
+      "file": "docs/qualification/shared-demos/sim-browser-chromium.json",
+      "complete": true,
+      "engine": "chromium",
+      "verified": 392,
+      "failures": 0
+    },
+    {
+      "file": "docs/qualification/shared-demos/native-browser-chromium.json",
+      "complete": true,
+      "engine": "chromium",
+      "verified": 258,
+      "failures": 0,
+      "byMode": {
+        "snake": 240,
+        "survival": 18
+      }
+    },
+    {
+      "file": "docs/qualification/shared-demos/sim-browser-firefox.json",
+      "complete": true,
+      "engine": "firefox",
+      "verified": 392,
+      "failures": 0
+    },
+    {
+      "file": "docs/qualification/shared-demos/native-browser-firefox.json",
+      "complete": true,
+      "engine": "firefox",
+      "verified": 258,
+      "failures": 0,
+      "byMode": {
+        "snake": 240,
+        "survival": 18
+      }
+    },
+    {
+      "file": "docs/qualification/shared-demos/sim-browser-webkit.json",
+      "complete": true,
+      "engine": "webkit",
+      "verified": 392,
+      "failures": 0
+    },
+    {
+      "file": "docs/qualification/shared-demos/native-browser-webkit.json",
+      "complete": true,
+      "engine": "webkit",
+      "verified": 258,
+      "failures": 0,
+      "byMode": {
+        "snake": 240,
+        "survival": 18
+      }
+    }
+  ],
+  "changedProductionFindings": [
+    {
+      "paths": [
+        "game/app.mjs",
+        "game/ui/performance-session.mjs"
+      ],
+      "change": "Attributes completed callback work to the phase at update entry; adds bounded diagnostic work-phase data. Native simulation step, input, timestep and replay state logic are not modified.",
+      "requiredChecks": [
+        "performance-session.test.mjs",
+        "solo-performance-host.test.mjs",
+        "shared host integration and post-rebase browser lifecycle"
+      ]
+    },
+    {
+      "paths": [
+        "game/journey/profile.mjs",
+        "game/journey/performance-store.mjs",
+        "game/ui/journey-backup.mjs",
+        "game/app.mjs"
+      ],
+      "change": "Adds asynchronous read-only backup evidence collection, session recovery export and cancellation guards. Explicit export actions can now produce a truthful partial recovery backup. No changes to native replay verification or level compilation.",
+      "demoDependencyBoundary": "The existing Journey demo picture adapter imports validateJourneyProfile from profile.mjs; that validator is unchanged. The changed functions are backup serialization/export and optional evidence-read handling. Profile module byte identity changes, so picture/persistence integration is not claimed as newly executed by this audit.",
+      "requiredChecks": [
+        "journey-performance-observation-admission.test.mjs",
+        "Journey backup/export integration",
+        "demo Journey picture and persistence-isolation integration"
+      ]
+    },
+    {
+      "paths": [
+        "game/couch/relay-rescue.mjs"
+      ],
+      "change": "Avoids calling pause during non-playing Team picture loading gaps. Team is explicitly outside the shared-demo authored-mode scope.",
+      "requiredChecks": [
+        "coop-picture-host.test.mjs"
+      ]
+    },
+    {
+      "paths": [
+        "game/locales/en/interface.json",
+        "game/locales/uk/interface.json",
+        "game/i18n/catalogs.mjs"
+      ],
+      "change": "Adds the Journey partial-backup explanation and updates the generated locale catalog; no authored mission or simulation data.",
+      "requiredChecks": [
+        "Resolve/regenerate generated locale catalog after rebase",
+        "localization validation"
+      ]
+    },
+    {
+      "paths": [
+        "scripts/observe-solo-demo-recovery.mjs",
+        "scripts/solo-demo-close-declared-source.mjs",
+        "scripts/solo-demo-recovery-probe.mjs",
+        "scripts/solo-remote-demo.mjs",
+        ".github/workflows/solo-native-package-consumer.yml"
+      ],
+      "change": "Updates remote diagnostic capture to the actual trusted Demo Back activation boundary, plus immutable witnesses, plans and associated tests. This modifies qualification tooling, not shipped demo source selection or native replay admission.",
+      "requiredChecks": [
+        "Incoming trusted-activation and source-admission tooling tests"
+      ]
+    }
+  ],
+  "changedPaths": [
+    {
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "status": "M",
+      "beforeBlob": "4b9c8b4430b230991acf909fa1b2e3c7bd313597",
+      "afterBlob": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-demo-797e03/fd787-activation-source.json",
+      "status": "A",
+      "beforeBlob": "0000000000000000000000000000000000000000",
+      "afterBlob": "de60d5491c088dbd861c57c6c8eed88c691c1d71"
+    },
+    {
+      "path": "docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json",
+      "status": "M",
+      "beforeBlob": "b448b567a0b9d405f8d0ce350ace6c29573ead26",
+      "afterBlob": "2e866923514bde6dd93596c728d65bf1fc3cd0f0"
+    },
+    {
+      "path": "docs/performance/solo-demo-resources-797e03-activation-boundary-plan.json",
+      "status": "A",
+      "beforeBlob": "0000000000000000000000000000000000000000",
+      "afterBlob": "4fa919ee055c69763e943fc6d84b09dbacdefdb2"
+    },
+    {
+      "path": "game/app.mjs",
+      "status": "M",
+      "beforeBlob": "a94e250efe7f90925191bcceb8bfc2314c0a31c5",
+      "afterBlob": "cdf5b96eebb02439c0fd35ea2786c1ec5d60838b"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "status": "M",
+      "beforeBlob": "407705c541363de0419fc8a8fc3d8136b54a4a73",
+      "afterBlob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "status": "M",
+      "beforeBlob": "e8c91f7eefb112ac7f16fa5a05ce4a8a00676407",
+      "afterBlob": "2a3d7b7492a97efb677eb22880bbda2e62f09be0"
+    },
+    {
+      "path": "game/journey/performance-store.mjs",
+      "status": "M",
+      "beforeBlob": "77df82d1764d80152f36feb6d9bf3f1592ce4d42",
+      "afterBlob": "0d1783e7780c0513e89f08fcc96d0b5912d86f49"
+    },
+    {
+      "path": "game/journey/profile.mjs",
+      "status": "M",
+      "beforeBlob": "0dd13498da3e955d117b9529586a5e76999663bf",
+      "afterBlob": "ef26e16fecdb0f0135d719d2e3319cc36425e39f"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "status": "M",
+      "beforeBlob": "112f2636ce90b234f38e35351d69cfc580d64f4c",
+      "afterBlob": "ff5fad8d3cf9737595bcf728eab5713b94eeebcb"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "status": "M",
+      "beforeBlob": "e467f84b63e8cd6dac97e595531c797e2866fc1d",
+      "afterBlob": "57e690150a15a0ca71ce716ac40e85603619d8bf"
+    },
+    {
+      "path": "game/test/coop-picture-host.test.mjs",
+      "status": "M",
+      "beforeBlob": "238b369cd0cefa10e4d3a63d2fbb019f881c63eb",
+      "afterBlob": "d2ce1b1b233f57666afcd6a3b19417d77dafb4e8"
+    },
+    {
+      "path": "game/test/journey-performance-observation-admission.test.mjs",
+      "status": "M",
+      "beforeBlob": "1c71523be1b73c88579cedc38e9dd4e4905b89b9",
+      "afterBlob": "fc2c4a04b271413380b024db7058843cc0476345"
+    },
+    {
+      "path": "game/test/performance-session.test.mjs",
+      "status": "M",
+      "beforeBlob": "7c6dfd955a68c6fdf59009acf68623d2a2affc55",
+      "afterBlob": "7b765978c8469d39191301301ff66320c06e62a0"
+    },
+    {
+      "path": "game/test/solo-performance-host.test.mjs",
+      "status": "M",
+      "beforeBlob": "dcb8febeff85ca72533d399cdbd4cb72261736d8",
+      "afterBlob": "eb536af63b77f3dc3cb1cb5b4c376d0f49441b00"
+    },
+    {
+      "path": "game/test/steamdeck-menu-confirm-host.test.mjs",
+      "status": "M",
+      "beforeBlob": "89f97365d9246e1b1a82dbea986daae36eece5ef",
+      "afterBlob": "6686e9893ab1944e0f38173b8b5c76d9408c885d"
+    },
+    {
+      "path": "game/test/steamdeck-menu-confirm-race-host.test.mjs",
+      "status": "M",
+      "beforeBlob": "cd24be91e756cc50986de2a5018f240f09ef183d",
+      "afterBlob": "6f1c8ebf18fdff55d8dc0737392ac09c1fb466fa"
+    },
+    {
+      "path": "game/ui/journey-backup.mjs",
+      "status": "M",
+      "beforeBlob": "431aa50f76732c3a76676dd265dd7eec13756922",
+      "afterBlob": "41b3304062c2b5f574f58bbaa0c1c65f579673e7"
+    },
+    {
+      "path": "game/ui/performance-session.mjs",
+      "status": "M",
+      "beforeBlob": "7a4cad046a683448ae9f46c010f27bf3b47da51d",
+      "afterBlob": "2d961b3d04d7754b41193ab3ded7930c72a3cacb"
+    },
+    {
+      "path": "scripts/observe-solo-demo-recovery.mjs",
+      "status": "M",
+      "beforeBlob": "7ce413af0b8c134bd06b8ca7209f75a61b50803b",
+      "afterBlob": "a5a9ff295daec5079a6e7a3ab8a8cc66f87fd725"
+    },
+    {
+      "path": "scripts/solo-demo-close-declared-source.mjs",
+      "status": "M",
+      "beforeBlob": "6e5c866f46214ef48a1565baa18fbfe7f7c755aa",
+      "afterBlob": "d8c26666ec6d1e1fc4ef4e6c50d0720545c3dc87"
+    },
+    {
+      "path": "scripts/solo-demo-recovery-probe.mjs",
+      "status": "M",
+      "beforeBlob": "2b5730540b179b65d19d6d68633ebcfe977f1725",
+      "afterBlob": "4da6dc8e2c4b65f69e156874bbfb5a1c4b6027a4"
+    },
+    {
+      "path": "scripts/solo-remote-demo.mjs",
+      "status": "M",
+      "beforeBlob": "c906e82e0da7ab6a12446ad3bf58144e8ed0670e",
+      "afterBlob": "0539ffbe4ad353efb0328ea0e54112dc0a036336"
+    },
+    {
+      "path": "scripts/solo-runtime73-measurement.test.mjs",
+      "status": "M",
+      "beforeBlob": "8e2d4791858b8041e1eb370e65a0e9d1bd5c2719",
+      "afterBlob": "6765b28da00d745808eab8b5310bb1f7ea81a0cd"
+    },
+    {
+      "path": "scripts/test-solo-demo-activation-admission.mjs",
+      "status": "A",
+      "beforeBlob": "0000000000000000000000000000000000000000",
+      "afterBlob": "3646bb9bb56ea2c793ca4b942269b5f655f89d11"
+    },
+    {
+      "path": "scripts/test-solo-demo-trusted-close-admission.mjs",
+      "status": "M",
+      "beforeBlob": "f5c5b7052af8d2e58d7f13225f679d58e9cd397f",
+      "afterBlob": "c2a4657c0f3649b14b418200fbd3891f6cec808d"
+    },
+    {
+      "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+      "status": "M",
+      "beforeBlob": "5e201e5090f8e128345201a1a897dbe25ecd57a4",
+      "afterBlob": "d0b4b0c495f5f3c67a7ec0b662872759a4145cc2"
+    },
+    {
+      "path": "scripts/test-solo-remote-demo.mjs",
+      "status": "M",
+      "beforeBlob": "bcfd6ff8092091cbf9a1ae478e7d1649f6566dd5",
+      "afterBlob": "3b95faf554e75cf9b92cf37668f68f37f92805ee"
+    }
+  ],
+  "limitations": [
+    "This is an impact assessment of exactly the stated main delta, not a new browser replay or end-to-end run.",
+    "The pre-existing native receipts verify 240 Solo + 240 Snake + 392 SIM + 18 Survival entries. Pre-existing browser receipts remain historical results on their recorded browser/runtime versions; this delta does not change their native inputs.",
+    "The rebase was still in progress during this read-only audit. Final feature-source preservation, regenerated localization, focused ordinary-app integration and post-rebase Fresh/mixed/lifecycle checks must complete on the frozen integrated source.",
+    "No wall-clock endurance or human/device acceptance claim is made."
+  ]
+}

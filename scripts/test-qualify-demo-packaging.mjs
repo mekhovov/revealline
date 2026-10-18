@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import {
   demoPackagingRequirements,
+  demoPackagingEmissionSources,
   isOfflineDiagnosticArtifact,
   qualifyDemoPackaging,
 } from './qualify-demo-packaging.mjs';
@@ -87,4 +88,20 @@ test('existing packaging evidence is preserved before any expensive build starts
   await writeFile(reportPath, 'retained prior qualification');
   await assert.rejects(qualifyDemoPackaging({ reportPath }), /Refusing to overwrite/);
   assert.equal(await readFile(reportPath, 'utf8'), 'retained prior qualification');
+});
+
+test('emitted source comparison excludes coverage summaries without losing native replay bodies', () => {
+  const names = [
+    'game/ui/owned-phaser-game.mjs',
+    'game/demo-data/snake/loop.replay.json',
+    'game/demo-data/example.diagnostics.json',
+    'optional-practice/civilian-fpv/demo-data/course-acro.json',
+    'optional-practice/civilian-fpv/demo-data/index.json',
+    'optional-practice/civilian-fpv/demo-data/coverage.json',
+    'game/demo-data/snake/coverage.json',
+    'game/test/demo-host.test.mjs',
+    'scripts/demo-tick-trace.mjs',
+  ];
+  const entries = names.map((name) => ({ name, bytes: Buffer.from(name) }));
+  assert.deepEqual(demoPackagingEmissionSources(entries), entries.slice(0, 5));
 });

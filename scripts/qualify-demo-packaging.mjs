@@ -110,6 +110,9 @@ const productionSource = (name) =>
   !name.includes('/test/') &&
   !name.endsWith('.test.mjs') &&
   !name.endsWith('/coverage.json');
+export const demoPackagingEmissionSources = (entries) =>
+  entries.filter((entry) => relevant(entry.name) && productionSource(entry.name));
+
 const snapshotSummary = ({ sha256, files, bytes }) => ({ sha256, files, bytes });
 
 export async function qualifyDemoPackaging({
@@ -235,7 +238,7 @@ export async function qualifyDemoPackaging({
         .map((entry) => entry.name),
     },
   };
-  const emitted = project.entries.filter((entry) => relevant(entry.name));
+  const emitted = demoPackagingEmissionSources(project.entries);
   const expected = [];
   report.sourceDigests = [];
   for (const entry of emitted) {

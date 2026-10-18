@@ -1,0 +1,19 @@
+{
+  "engine": "webkit",
+  "started": "2026-10-18T18:12:26.151Z",
+  "checks": [],
+  "errors": [],
+  "events": [
+    {
+      "type": "navigation",
+      "at": "2026-10-18T18:12:27.553Z",
+      "url": "http://127.0.0.1:8769/game/overflight/play.html?layout=field-crossing-broken-crossroads&seed=42"
+    }
+  ],
+  "complete": false,
+  "failure": "page.evaluate: TypeError: undefined is not an object (evaluating 'globalThis.RevealLineOverflight.snapshot')\n    at snapshot (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-survival-fresh-browser.mjs:99:31)\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-survival-fresh-browser.mjs:125:24",
+  "visibleText": "FPV Survivals\nPause\nHull 80 / 80\nSpare airframes 0\nSORTIE\n00:00\nLevel 1\n0 Cleared\n12 salvage to upgrade\nOverflight payload 1\nBoost Ready\nFPV Survivals · Survival · Single Drone\n\nFPV Survivals · Survival · Single Drone\n\nSolo\n1P\nTeam\n2P\nDuel\n2P\nSnake\nFPV Survivals\nbeta\nSIM\nbeta\nLess\nSurvival\nSingle Drone\nFly through the swarm. Grow your arsenal. Survive the final surge.\nSelected · use Start to fly\nRiy · Drone Squad\nLead Sweeper and Breaker escorts; focus their attacks on priority targets.\nRaid\nSingle Raid\nRead the formation. Strike through targets. Chain your next approach.\nTime Attack\nRace the same route. Clean attacks earn a better medal time.\nContract Marathon\nBank your score or risk another contract. Hull and upgrades carry forward.\n\nBroken Crossroads\n\nVeteran · 1 airframes · Interceptor\n\nStart\nSelect Mission\nSettings\nWatch demo\nWatch all modes\nSound: off\nFull screen",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T18:12:29.636Z"
+}

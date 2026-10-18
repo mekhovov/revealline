@@ -1,0 +1,17 @@
+{"phase":"source-snapshot","sha256":"02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611","files":9991,"bytes":404318042,"sourceRevision":"65d77958724693538db5c55d421aacdfc2490ce5","started":"2026-10-18T18:11:43.942Z"}
+{"phase":"hosted-build-validated","files":6063}
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Source snapshot omitted optional-practice/civilian-fpv/demo-data/coverage.json
+    at qualifyDemoPackaging (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-packaging.mjs:243:12)
+    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-packaging.mjs:302:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '=='
+}
+
+Node.js v20.19.5
