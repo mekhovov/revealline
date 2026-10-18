@@ -581,23 +581,34 @@
   }
 }
 @media (max-height: 520px) {
+  /* Zoom and landscape keyboards leave too little height for fixed regions.
+     Keep every focused field and action in the dialog's single scroll surface. */
+  .fpv-tuning[open] {
+    display: block;
+    overflow-y: auto;
+    scroll-padding-block: 12px;
+  }
   .workbench-header {
     padding: 8px 12px;
   }
-  .fpv-tuning .workbench-header {
-    max-height: 34dvh;
-    overflow: auto;
+  .fpv-tuning .workbench-header,
+  .fpv-tuning .workbench-main,
+  .fpv-tuning .workbench-actions {
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+  }
+  .workbench-nav {
+    flex-wrap: wrap;
+    overflow: visible;
   }
   .workbench-search-results {
     position: static;
-    max-height: 24dvh;
+    max-height: none;
+    overflow: visible;
   }
   .workbench-summary {
     margin: 3px 0;
-  }
-  .workbench-actions {
-    max-height: 100px;
-    overflow: auto;
   }
 }
 @media (prefers-reduced-motion: reduce) {
