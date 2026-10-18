@@ -14,6 +14,10 @@ import { createAdvancedSimulation } from './advanced-simulation.mjs';
 import { createPracticeSectorObserver } from './flight-sectors.mjs';
 import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
 import {
+  createGhostPathCollector,
+  validateAircraftCoursePresentation,
+} from './advanced-ghost-path.mjs';
+import {
   createAircraftChallengeProgress,
   validateAircraftChallengeRules,
 } from './aircraft-challenge.mjs';
@@ -25,11 +29,13 @@ export async function verifyAircraftArchiveInWorker(source, options) {
 }
 async function verifyArchiveWithWorker(
   source,
-  { signal, onProgress, Worker, workerURL, verificationWatchdogMs } = {},
+  { signal, onProgress, Worker, workerURL, verificationWatchdogMs, collectReference = false } = {},
   courseRequest = null,
 ) {
   const cancelled = () => new DOMException('Aircraft archive verification cancelled', 'AbortError');
   if (signal?.aborted) throw cancelled();
+  if (courseRequest)
+    required(typeof collectReference === 'boolean', 'Invalid reference capture option');
   const checked = validateAircraftArchivePackage(source);
   const course =
     !courseRequest || courseRequest.source == null ? null : boundedCourse(courseRequest.source);
@@ -48,7 +54,7 @@ async function verifyArchiveWithWorker(
       recording: false,
     });
     return await (courseRequest
-      ? client.verifyCourseArchive(checked, course, { onProgress })
+      ? client.verifyCourseArchive(checked, course, { onProgress, collectReference })
       : client.verifyArchive(checked, { onProgress }));
   } finally {
     signal?.removeEventListener('abort', abort);
@@ -310,9 +316,10 @@ export function createStaticCourseInputCursor(segments, frequency = 500) {
 export async function verifyAircraftCourseArchive(
   archiveSource,
   courseSource,
-  { signal, onProgress = () => {}, courseAdapter } = {},
+  { signal, onProgress = () => {}, courseAdapter, collectReference = false } = {},
 ) {
   cancelled(signal);
+  required(typeof collectReference === 'boolean', 'Invalid reference capture option');
   const archive = validateAircraftArchivePackage(archiveSource);
   const physics = await verifyAircraftArchive(archive, {
     signal,
@@ -402,6 +409,17 @@ export async function verifyAircraftCourseArchive(
     );
     await session.prepare();
     cancelled(signal);
+    let poses = collectReference ? createGhostPathCollector() : null;
+    const capture = (state) => {
+      if (!poses) return;
+      try {
+        const { position: p, orientation: q } = state.advancedTelemetry;
+        poses.add([state.ticks, p.x, p.y, p.z, q.x, q.y, q.z, q.w]);
+      } catch {
+        poses = null;
+      }
+    };
+    capture(session.snapshot());
     const observer = createPracticeSectorObserver();
     observer.reset(session.snapshot());
     session.arm();
@@ -423,7 +441,10 @@ export async function verifyAircraftCourseArchive(
           'course-periodic-hash-mismatch',
         );
       }
-      if (completedAtTick === null && state.step === state.total) completedAtTick = state.ticks;
+      if (completedAtTick === null) {
+        capture(state);
+        if (state.step === state.total) completedAtTick = state.ticks;
+      }
       if (item.boundary) {
         requireValue(
           hashIndex === segment.hashes.length && simulation.stateHash() === segment.finalHash,
@@ -464,6 +485,18 @@ export async function verifyAircraftCourseArchive(
       verifiedThroughMission: archive.manifest.endTick,
       splits: observer.snapshot().rows,
     };
+    if (poses && completedAtTick !== null) {
+      try {
+        report.course.presentation = validateAircraftCoursePresentation({
+          format: 'AircraftCoursePresentation.v1',
+          aircraft: config.aircraft,
+          completedAtTick,
+          ...poses.snapshot(),
+        });
+      } catch {
+        // Optional presentation cannot invalidate independently reconstructed splits.
+      }
+    }
   } catch (error) {
     cancelled(signal);
     if (!error.code) throw error;

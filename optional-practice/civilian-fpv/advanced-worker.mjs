@@ -120,6 +120,7 @@ export function createAdvancedWorkerHandler(postMessage, { courseAdapter } = {})
                   ? await verifyAircraftCourseArchive(message.archive, message.course, {
                       ...options,
                       courseAdapter,
+                      collectReference: message.collectReference,
                     })
                   : await verifyAircraftArchive(message.archive, options);
             } finally {

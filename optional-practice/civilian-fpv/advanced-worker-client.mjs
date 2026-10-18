@@ -116,8 +116,11 @@ export function createAdvancedWorkerClient({
     verifyRecording: (recording) => request('verify-recording', { recording }),
     verifyArchive: (archive, { onProgress = () => {} } = {}) =>
       request('verify-archive', { archive }, { onProgress }),
-    verifyCourseArchive: (archive, course, { onProgress = () => {} } = {}) =>
-      request('verify-course-archive', { archive, course }, { onProgress }),
+    verifyCourseArchive: (
+      archive,
+      course,
+      { onProgress = () => {}, collectReference = false } = {},
+    ) => request('verify-course-archive', { archive, course, collectReference }, { onProgress }),
     reset: () => request('reset'),
     dispose,
   };
