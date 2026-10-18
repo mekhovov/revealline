@@ -1,3 +1,7 @@
+import {
+  assertDeclaredReadinessTool,
+  modelCurrentReadinessTools,
+} from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -17,7 +21,7 @@ const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const workflow = (await read(workflowPath)).toString();
 const plans = {
-  correctness: 'docs/performance/solo-remote-797e03-correctness-plan.json',
+  correctness: 'docs/performance/solo-remote-9d5139b-correctness-plan.json',
   sustained: 'docs/performance/solo-next-geometric-797e03-plan.json',
   raster: 'docs/performance/solo-remote-797e03-earned-raster-plan.json',
   'hud-cpu': 'docs/performance/solo-first-victory-cpu-797e03-plan.json',
@@ -69,7 +73,8 @@ function job(text, name) {
 function sparse(text) {
   return [...text.matchAll(/^            \/(.+)$/gm)].map((match) => match[1]);
 }
-async function current(ref) {
+async function current(ref, declarationPath = null) {
+  if (declarationPath && (await assertDeclaredReadinessTool(declarationPath, ref))) return;
   const bytes = await read(ref.path);
   assert.equal(bytes.length, ref.bytes, ref.path);
   assert.equal(sha(bytes), ref.sha256, ref.path);
@@ -131,12 +136,12 @@ test('tooling successors retain exact packages, every scenario, limits and origi
   );
 });
 
-test('all prospective execution refs are current bytes and present in their actual sparse job', async () => {
+test('fixed declarations retain current or exact historical refs and their actual sparse reads', async () => {
   for (const [name, path] of Object.entries(plans)) {
     const plan = await json(path);
     const inputRefs = refs(plan);
     assert.equal(new Set(inputRefs.map((ref) => ref.path)).size, inputRefs.length);
-    for (const ref of inputRefs) await current(ref);
+    for (const ref of inputRefs) await current(ref, name === 'correctness' ? null : path);
     const selected = sparse(job(workflow, name));
     assert.equal(selected.length, new Set(selected).size);
     for (const input of [
@@ -154,7 +159,9 @@ test('all prospective execution refs are current bytes and present in their actu
 });
 
 test('current Next admission still refuses changed tooling before package or native operations', async () => {
-  const plan = bindSustainedJob(reviewedParserControl(await json(plans.sustained)), 'webkit', 1);
+  // The modeled clone isolates the deliberately corrupt runner; the executed plan stays immutable.
+  const current = await modelCurrentReadinessTools(plans.sustained, await json(plans.sustained));
+  const plan = bindSustainedJob(reviewedParserControl(current), 'webkit', 1);
   let effects = 0;
   await assert.rejects(
     () =>
@@ -219,7 +226,7 @@ test('current first-eight stays manual while historical Next retains its guard a
 
 function manualAdmission(text, name, jobMinutes, stepMinutes) {
   const body = job(text, name);
-  const guard = `github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == '${name}'`;
+  const guard = `github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && ${name === 'hud-cpu' ? "(inputs.lane == 'hud-cpu' || inputs.lane == 'frame-trace')" : "inputs.lane == '" + name + "'"}`;
   assert.equal(body.match(/^    if: (.+)$/m)?.[1], guard);
   assert.match(body, new RegExp(`^    timeout-minutes: ${jobMinutes}$`, 'm'));
   assert.match(
@@ -250,7 +257,7 @@ function manualAdmission(text, name, jobMinutes, stepMinutes) {
 test('new fixed lanes require deliberate main dispatch and preserve native, retention and setup bounds', () => {
   assert.match(
     workflow,
-    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,\s*replay-portability,?\s*\]/,
+    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,\s*replay-portability,\s*frame-trace,?\s*\]/,
   );
   assert.match(workflow, /cancel-in-progress: false/);
   for (const [name, jobMinutes, stepMinutes] of [

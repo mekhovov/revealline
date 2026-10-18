@@ -35,3 +35,16 @@ import './test-solo-native-consumer-shared-demo.mjs';
 import './test-solo-remote-auxiliary.mjs';
 import './test-solo-remote-demo.mjs';
 import './test-solo-shared-mode-public-return.mjs';
+
+import './test-solo-frame-trace-admission.mjs';
+// Complete observer, immutable-history and successor admission controls.
+import './test-solo-required-media-transport.mjs';
+import './test-solo-readiness-rejoin-797e03.mjs';
+
+import './test-solo-9d5139b-correctness.mjs';
+import './solo-frame-trace.test.mjs';
+import './test-solo-73a345-correctness-tooling.mjs';
+import './test-solo-797e03-correctness.mjs';
+import './test-solo-final-lifecycle-admission.mjs';
+import './test-solo-final-soak-admission.mjs';
+import './test-solo-remote-timing.mjs';

@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -100,8 +101,9 @@ test('three reviewed fixed source797 lanes retain actual proof with unchanged en
     .split(',')
     .map((value) => value.trim())
     .filter(Boolean);
-  assert.deepEqual(choices.slice(-4, -1), ['shared-return', 'demo-recovery', 'demo-resources']);
-  assert.equal(choices.at(-1), 'replay-portability');
+  assert.deepEqual(choices.slice(-5, -2), ['shared-return', 'demo-recovery', 'demo-resources']);
+  assert.equal(choices.at(-2), 'replay-portability');
+  assert.equal(choices.at(-1), 'frame-trace');
   assert(workflow.includes('cancel-in-progress: false'));
   for (const [lane, spec] of Object.entries(lanes)) {
     check(workflow, lane);
@@ -190,6 +192,7 @@ test('each reviewed sparse set contains every exact adapter and frozen observer 
     const plan = JSON.parse(await read('docs/performance/' + spec.plan));
     for (const ref of [...plan.adapterInputs, ...plan.frozenTools]) {
       assert(inputs.includes(ref.path), ref.path);
+      if (await assertDeclaredReadinessTool('docs/performance/' + spec.plan, ref)) continue;
       const bytes = await read(ref.path);
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);

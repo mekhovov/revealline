@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import {
   declaredPreparationRefs,
   DE332_PREPARATION_WITNESS,
@@ -54,6 +55,13 @@ test('prospective readiness references match candidate tools without refreshing 
   ];
   assert.equal(new Set(refs.map((ref) => ref.path)).size, refs.length);
   for (const ref of refs) {
+    if (
+      await assertDeclaredReadinessTool(
+        'docs/performance/solo-readiness-preparation-73a345-plan.json',
+        ref,
+      )
+    )
+      continue;
     const bytes = await read(ref.path);
     assert.equal(bytes.length, ref.bytes, ref.path);
     assert.equal(hash(bytes), ref.sha256, ref.path);

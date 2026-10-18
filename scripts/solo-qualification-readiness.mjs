@@ -250,6 +250,13 @@ export function selectedFontSourceBinding(sourceRevision = SELECTED_FONT_SOURCE_
 export function qualificationReadinessOptions(flags, scenario, bytes) {
   const selected = flags.filter((flag) => flag.startsWith('--readiness-probe'));
   const requiredStart = flags.filter((flag) => flag.startsWith('--readiness-required-start'));
+  const requiredRejoin = flags.filter((flag) => flag.startsWith('--readiness-required-rejoin'));
+  if (requiredRejoin.length) {
+    assert.deepEqual(requiredRejoin, ['--readiness-required-rejoin=retained-reference-rejoin-v1']);
+    assert.deepEqual(requiredStart, ['--readiness-required-start=trusted-initial-start-v1']);
+    assert.deepEqual(selected, ['--readiness-probe=required-original-cancel-v1']);
+    assert(flags.includes('--source-revision=' + RUNTIME797_READINESS_REVISION));
+  }
   if (requiredStart.length) {
     assert.deepEqual(requiredStart, ['--readiness-required-start=trusted-initial-start-v1']);
     assert.deepEqual(selected, ['--readiness-probe=required-original-cancel-v1']);
@@ -422,7 +429,96 @@ export function qualificationReadinessOptions(flags, scenario, bytes) {
     assert.equal(scenario.selectedFontCancellation.protocol, pilot.protocol);
     assert.equal(scenario.selectedFontCancellation.sourceRevision, pilot.sourceRevision);
   }
-  return pilot;
+  return requiredRejoin.length
+    ? { ...pilot, requiredClickIdentityObservation: 'retained-reference-rejoin-v1' }
+    : pilot;
+}
+
+// Serialized only for the named required-original successor. This retains a
+// reference, not an observation of private current run or a current painted board.
+// All reads occur at the existing four click/phase boundaries.
+export function createRequiredRejoinObservation(getScenes, checkpoint, getSceneClass) {
+  if (
+    typeof getScenes !== 'function' ||
+    typeof checkpoint !== 'function' ||
+    typeof getSceneClass !== 'function'
+  )
+    throw Error('Required rejoin needs the existing scene inventory and checkpoint');
+  const kinds = ['start-click', 'start-click', 'first-running', 'after-running'];
+  let scene = null,
+    run = null,
+    initialCheckpoint = null,
+    index = 0,
+    disposed = false;
+  return {
+    observe(kind) {
+      if (disposed || kinds[index] !== kind) throw Error('Invalid required rejoin boundary');
+      const inventory = getScenes();
+      if (!Array.isArray(inventory) || inventory.length > 64)
+        throw Error('Invalid required rejoin scene inventory');
+      // Exact797 app constructs one Phaser.Game with scene: FieldScene and no
+      // scene additions. Capture that public constructor, not any object that
+      // happens to expose prepared(). Future/multiple scene inventories fail.
+      const expectedClass = getSceneClass(),
+        current = inventory[0];
+      if (
+        inventory.length !== 1 ||
+        typeof expectedClass !== 'function' ||
+        !current ||
+        current.constructor !== expectedClass ||
+        typeof current.prepared !== 'function'
+      )
+        throw Error('Missing, foreign or ambiguous required rejoin scene');
+      if (scene && current !== scene) throw Error('Required rejoin scene removed or replaced');
+      if (!scene) {
+        if (!current.lastPaint?.run || current.submittedRun !== current.lastPaint.run)
+          throw Error('Initial required rejoin needs the submitted run');
+        scene = current;
+        run = current.lastPaint.run;
+      }
+      if (current.lastPaint?.run && current.lastPaint.run !== run)
+        throw Error('Required rejoin painted run replaced');
+      if (current.submittedRun !== run) throw Error('Required rejoin submitted identity replaced');
+      if (run.level?.id !== 'first-return' || !Number.isSafeInteger(run.tick) || run.tick < 0)
+        throw Error('Invalid required rejoin retained identity');
+      const value = checkpoint(run),
+        text = JSON.stringify(value);
+      if (
+        !value ||
+        typeof value !== 'object' ||
+        Array.isArray(value) ||
+        !text ||
+        new TextEncoder().encode(text).byteLength > 2048
+      )
+        throw Error('Invalid required rejoin checkpoint');
+      if (index === 0) initialCheckpoint = text;
+      if (index < 3 && (run.tick !== 0 || text !== initialCheckpoint))
+        throw Error('Required rejoin retained run advanced or changed');
+      if (index !== 1 && current.lastPaint?.run !== run)
+        throw Error('Required rejoin needs an actual current painted run at this boundary');
+      const result = {
+        scene: current,
+        retainedRun: run,
+        evidence: {
+          format: 'SoloRequiredRejoinReferenceV1',
+          sceneAttached: true,
+          identityEvidence: 'retained-reference-only',
+          currentPaintObserved: current.lastPaint?.run === run,
+          tick: run.tick,
+          levelId: run.level.id,
+          checkpoint: JSON.parse(text),
+        },
+      };
+      index++;
+      return result;
+    },
+    dispose() {
+      disposed = true;
+      scene = null;
+      run = null;
+      initialCheckpoint = null;
+    },
+  };
 }
 
 // Serialized unchanged into the top document. Called only on actual trusted
@@ -434,6 +530,7 @@ export function createBrowserReadinessProbe(
   geometryObservation = false,
   cancelBoundaryObservation = false,
   initialRequiredStart = null,
+  requiredRejoin = null,
 ) {
   if (
     ![
@@ -461,6 +558,14 @@ export function createBrowserReadinessProbe(
     (protocol !== 'required-original-cancel-v1' || typeof initialRequiredStart !== 'function')
   )
     throw new Error('Required-original Start callback requires its explicit protocol');
+  if (
+    requiredRejoin !== null &&
+    (protocol !== 'required-original-cancel-v1' ||
+      !initialRequiredStart ||
+      typeof requiredRejoin.observe !== 'function' ||
+      typeof requiredRejoin.dispose !== 'function')
+  )
+    throw Error('Required rejoin needs its explicit initial Start observer');
   let initialRequiredStartSeen = false;
   const resume = protocol.endsWith('-resume-v1'),
     postCommand = [
@@ -653,7 +758,8 @@ export function createBrowserReadinessProbe(
       return;
     }
     try {
-      const scene = getScene(),
+      const retained = requiredRejoin?.observe(kind),
+        scene = retained ? retained.scene : getScene(),
         run = scene?.lastPaint?.run,
         c = scene?.cadence?.snapshot(),
         phase = documentRef.body?.dataset.flightState;
@@ -689,6 +795,13 @@ export function createBrowserReadinessProbe(
             }
           : null,
       };
+      if (retained) {
+        if (!runs.has(retained.retainedRun)) runs.set(retained.retainedRun, ++runSequence);
+        row.requiredRejoin = {
+          ...retained.evidence,
+          run: runs.get(retained.retainedRun),
+        };
+      }
       if (protocol === 'optional-audio-start-missing-v1') {
         // MainScene retains the exact submitted lease; painter options are derived separately.
         const style = scene?.lastPaint?.actors?.pin?.()?.style;
@@ -809,6 +922,7 @@ export function createBrowserReadinessProbe(
   function dispose() {
     if (disposed) return;
     disposed = true;
+    requiredRejoin?.dispose();
     cancelEvent = null;
     cancelPath = null;
     documentRef.removeEventListener('click', click, true);
@@ -863,10 +977,14 @@ export function createBrowserReadinessProbe(
         errors,
         disposed,
         ...(geometryObservation ? { geometryObservation: 'phase-boundary-v1' } : {}),
+        ...(requiredRejoin
+          ? { requiredClickIdentityObservation: 'retained-reference-rejoin-v1' }
+          : {}),
         records: records.map((row) => ({
           ...row,
           cadence: row.cadence && { ...row.cadence },
           ...(row.geometry ? { geometry: { ...row.geometry } } : {}),
+          ...(row.requiredRejoin ? { requiredRejoin: structuredClone(row.requiredRejoin) } : {}),
           ...(row.cancelBoundary ? { cancelBoundary: structuredClone(row.cancelBoundary) } : {}),
           ...(postCommand && row.font ? { font: structuredClone(row.font) } : {}),
         })),
@@ -2863,6 +2981,7 @@ export function assessReadinessMediaFault({
   cleanupFailure,
   audioCheck,
   startRetention = null,
+  requiredClickIdentityObservation = null,
 }) {
   const failures = [];
   let projected;
@@ -2873,6 +2992,14 @@ export function assessReadinessMediaFault({
     assertReadinessMediaTransport(transport, protocol);
     const required = protocol === 'required-original-cancel-v1';
     if (startRetention !== null) assert(required && startRetention === 'trusted-initial-start-v1');
+    if (requiredClickIdentityObservation !== null) {
+      assert(required && startRetention === 'trusted-initial-start-v1');
+      assert.equal(requiredClickIdentityObservation, 'retained-reference-rejoin-v1');
+      assert.equal(observation.requiredClickIdentityObservation, requiredClickIdentityObservation);
+    } else {
+      assert.equal(observation.requiredClickIdentityObservation, undefined);
+      assert(observation.records.every((row) => row.requiredRejoin === undefined));
+    }
     if (required)
       assert.equal(
         witness?.format,
@@ -2904,9 +3031,40 @@ export function assessReadinessMediaFault({
         assert(
           witness.initialStart.atMs >= first.atMs && witness.initialStart.atMs - first.atMs <= 1000,
         );
-        for (const row of records.slice(1)) {
-          assert.equal(row.run, first.run, 'Fresh Start must rejoin the initially submitted run');
-          assert.equal(row.submittedRunMatches, true, 'Rejoin requires current submitted board');
+        if (requiredClickIdentityObservation) {
+          assert(Number.isSafeInteger(first.run) && first.run > 0);
+          for (const [index, row] of records.entries()) {
+            const reference = row.requiredRejoin;
+            assert.equal(reference?.format, 'SoloRequiredRejoinReferenceV1');
+            assert.equal(reference.sceneAttached, true);
+            assert.equal(reference.identityEvidence, 'retained-reference-only');
+            assert.equal(reference.run, first.run);
+            assert.equal(reference.levelId, 'first-return');
+            if (index < 3) {
+              assert.equal(reference.tick, 0);
+              assert.deepEqual(reference.checkpoint, witness.initialStart.checkpoint);
+            }
+            assert.equal(reference.currentPaintObserved, row.run !== null);
+            if (row.run === null) {
+              assert.equal(index, 1, 'Only fresh click may have invalidated painted state');
+              assert.equal(row.tick, null);
+              assert.equal(row.levelId, null);
+              assert.equal(row.prepared, false);
+              assert.equal(row.displayedBoardValid, false);
+              assert.equal(row.preparedRunMatches, null);
+              assert.equal(row.submittedRunMatches, null);
+            } else {
+              assert.equal(row.run, first.run);
+              assert.equal(row.submittedRunMatches, true);
+              assert.equal(reference.tick, row.tick);
+              assert.equal(reference.levelId, row.levelId);
+            }
+          }
+        } else {
+          for (const row of records.slice(1)) {
+            assert.equal(row.run, first.run, 'Fresh Start must rejoin the initially submitted run');
+            assert.equal(row.submittedRunMatches, true, 'Rejoin requires current submitted board');
+          }
         }
       }
     } else if (protocol === 'optional-audio-start-missing-v1') {

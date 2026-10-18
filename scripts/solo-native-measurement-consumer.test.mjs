@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -219,6 +220,7 @@ test('all three manual measurement jobs retain exact guards, source checkout, bu
     'demo-recovery',
     'demo-resources',
     'replay-portability',
+    'frame-trace',
   ]);
   assert.deepEqual(choices('phase'), ['none', ...timing, ...lifecycle]);
   boundedMatch(workflow, /cancel-in-progress: false/);
@@ -393,7 +395,7 @@ test('real lifecycle binders match actual job/outer expressions for36 independen
   assert.equal(count, 36);
 });
 
-test('every plan reference is current and retained in each exact sparse measurement job', async () => {
+test('every plan reference is current or exactly witnessed and retained in each sparse measurement job', async () => {
   for (const [lane, phases] of [
     ['journal-cost', [undefined]],
     ['timing', timing],
@@ -418,6 +420,7 @@ test('every plan reference is current and retained in each exact sparse measurem
       ];
       for (const ref of refs) {
         assert(paths.includes(ref.path), lane + ': ' + ref.path);
+        if (await assertDeclaredReadinessTool(pathFor(lane, phase), ref)) continue;
         const bytes = await read(ref.path);
         assert.equal(bytes.length, ref.bytes, ref.path);
         assert.equal(sha(bytes), ref.sha256, ref.path);
