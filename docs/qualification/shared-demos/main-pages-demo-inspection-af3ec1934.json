@@ -1,0 +1,487 @@
+{
+  "format": "revealline-demo-main-pages-inspection.v1",
+  "started": "2026-10-18T19:05:19.066Z",
+  "finished": "2026-10-18T19:12:44.403Z",
+  "sourceRevision": "af3ec193426dda82aebdde016d82bbd51b2938e1",
+  "sourceFingerprint": {
+    "sha256": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+    "files": 9991,
+    "bytes": 404326765
+  },
+  "finalSourceFingerprint": {
+    "sha256": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+    "files": 9991,
+    "bytes": 404326765
+  },
+  "headStable": true,
+  "sourceStable": true,
+  "publicationProfile": "main-pages",
+  "materializedBuild": false,
+  "files": 5967,
+  "payloadBytesIncludingManifest": 1003415622,
+  "manifestDescriptor": {
+    "bytes": 944488,
+    "sha256": "068a1bb787a54a029514551eafe8e8b83e7e92005d2098c47b99e221889d2ca8"
+  },
+  "rollingMainPagesLimitBytes": 980000000,
+  "rollingCoreHeadroomBeforeOtherHostedComponents": -23415622,
+  "releasePlanningBudgetBytes": 950000000,
+  "wholeSiteCapacityAccepted": false,
+  "publicEligible": false,
+  "publicationAssessment": "not-performed",
+  "missingHostedComponents": [
+    "Separately staged optional packages and practice directory",
+    "Rolling root routes and publication metadata",
+    "Actual upload artifact/tar overhead"
+  ],
+  "requiredPayloadsAndDiagnostics": 2478,
+  "missingPayloads": [],
+  "literalDemoModuleClosure": {
+    "roots": [
+      "game/demo-modes/solo.mjs",
+      "game/demo-modes/solo-catalog.mjs",
+      "game/demo-modes/snake.mjs",
+      "game/demo-modes/sim.mjs",
+      "game/demo-modes/survival.mjs"
+    ],
+    "files": 383,
+    "missingModules": []
+  },
+  "requiredNativePaths": 127,
+  "missingNative": [
+    {
+      "path": "game/content/packs/fpv-arcade-r4.json",
+      "owner": "fpv-arcade-r4"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r3.json",
+      "owner": "fpv-arcade-r3"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "owner": "fpv-arcade-r2"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade.json",
+      "owner": "fpv-arcade"
+    }
+  ],
+  "classic": [
+    {
+      "id": "fpv-arcade-r5",
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "levels": 3,
+      "present": true
+    },
+    {
+      "id": "fpv-pressure-frontier",
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "levels": 3,
+      "present": true
+    },
+    {
+      "id": "night-shift",
+      "path": "game/content/packs/night-shift.json",
+      "levels": 3,
+      "present": true
+    },
+    {
+      "id": "living-threads",
+      "path": "game/content/packs/living-threads.json",
+      "levels": 3,
+      "present": true
+    },
+    {
+      "id": "fieldcraft",
+      "path": "game/content/packs/fieldcraft.json",
+      "levels": 4,
+      "present": true
+    },
+    {
+      "id": "homeward-skies",
+      "path": "game/content/packs/homeward-skies.json",
+      "levels": 3,
+      "present": true
+    },
+    {
+      "id": "equipment-workshop",
+      "path": "game/content/packs/equipment-workshop.json",
+      "levels": 3,
+      "present": true
+    },
+    {
+      "id": "sentinel-relay",
+      "path": "game/content/packs/sentinel-relay.json",
+      "levels": 1,
+      "present": true
+    },
+    {
+      "id": "neon-reference-pack",
+      "path": "game/content/packs/neon-reference-pack.json",
+      "levels": 16,
+      "present": true
+    },
+    {
+      "id": "neon-mosaic-pack",
+      "path": "game/content/packs/neon-mosaic-pack.json",
+      "levels": 38,
+      "present": true
+    },
+    {
+      "id": "fpv-arcade-r4",
+      "path": "game/content/packs/fpv-arcade-r4.json",
+      "levels": 3,
+      "present": false
+    },
+    {
+      "id": "fpv-arcade-r3",
+      "path": "game/content/packs/fpv-arcade-r3.json",
+      "levels": 3,
+      "present": false
+    },
+    {
+      "id": "fpv-arcade-r2",
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "levels": 3,
+      "present": false
+    },
+    {
+      "id": "fpv-arcade",
+      "path": "game/content/packs/fpv-arcade.json",
+      "levels": 3,
+      "present": false
+    }
+  ],
+  "journeys": [
+    {
+      "routeId": "whole-spatial-v25",
+      "levels": 91,
+      "snapshot": "game/content-design/runtime/whole-spatial-v25.json",
+      "present": true,
+      "snapshotBytes": 277154,
+      "snapshotSha256": "26cafd633827012c3c8729329bb2fad0c3feedd2637c2e257bf50d8e123585e7",
+      "selectedAssetPaths": [
+        "game/content-design/assets/apex-polar-r1/apex-remix.png",
+        "game/content-design/assets/apex-polar-r1/crossing-complete.png",
+        "game/content-design/assets/apex-polar-r1/final-broadcast.png",
+        "game/content-design/assets/apex-polar-r1/home-signal.png",
+        "game/content-design/assets/apex-polar-r1/returning-light.png",
+        "game/content-design/assets/border-r1/behind-the-patrol.png",
+        "game/content-design/assets/border-r1/border-remix.png",
+        "game/content-design/assets/border-r1/long-rail.png",
+        "game/content-design/assets/border-r1/new-frontier.png",
+        "game/content-design/assets/border-r1/return-pocket.png",
+        "game/content-design/assets/border-r1/second-landing.png",
+        "game/content-design/assets/border-r1/turn-the-corner.png",
+        "game/content-design/assets/crosswind-highlands-r1/compass-array.png",
+        "game/content-design/assets/crosswind-highlands-r1/crosswind-remix.png",
+        "game/content-design/assets/crosswind-highlands-r1/long-wave.png",
+        "game/content-design/assets/crosswind-highlands-r1/outer-loop.png",
+        "game/content-design/assets/crosswind-highlands-r1/read-the-arrows.png",
+        "game/content-design/assets/crosswind-highlands-r1/survey-markers.png",
+        "game/content-design/assets/crosswind-highlands-r1/windbreak-weave.png",
+        "game/content-design/assets/fracture-coastal-r1/bank-the-crossing.png",
+        "game/content-design/assets/fracture-coastal-r1/first-fracture.png",
+        "game/content-design/assets/fracture-coastal-r1/five-anchors.png",
+        "game/content-design/assets/fracture-coastal-r1/fracture-remix.png",
+        "game/content-design/assets/fracture-coastal-r1/island-reserve.png",
+        "game/content-design/assets/fracture-coastal-r1/staggered-reserve.png",
+        "game/content-design/assets/fracture-coastal-r1/two-districts.png",
+        "game/content-design/assets/horizon-r1/choose-your-share.png",
+        "game/content-design/assets/horizon-r1/courtyard-return.png",
+        "game/content-design/assets/horizon-r1/first-return.png",
+        "game/content-design/assets/horizon-r1/horizon-remix.png",
+        "game/content-design/assets/horizon-r1/island-outpost.png",
+        "game/content-design/assets/horizon-r1/long-way-home.png",
+        "game/content-design/assets/horizon-r1/nearby-shore.png",
+        "game/content-design/assets/horizon-r1/stepping-stones.png",
+        "game/content-design/assets/horizon-r1/two-bays.png",
+        "game/content-design/assets/horizon-r1/two-keepers.png",
+        "game/content-design/assets/livewire-foundry-r1/cooling-loop.png",
+        "game/content-design/assets/livewire-foundry-r1/cross-the-afterglow.png",
+        "game/content-design/assets/livewire-foundry-r1/crossbar-depot.png",
+        "game/content-design/assets/livewire-foundry-r1/livewire-remix.png",
+        "game/content-design/assets/livewire-foundry-r1/read-the-lock.png",
+        "game/content-design/assets/livewire-foundry-r1/split-junction.png",
+        "game/content-design/assets/livewire-foundry-r1/switchyard.png",
+        "game/content-design/assets/neon-pixel-r1/dogleg-return.png",
+        "game/content-design/assets/neon-pixel-r1/folded-corner.png",
+        "game/content-design/assets/neon-pixel-r1/four-quarters.png",
+        "game/content-design/assets/neon-pixel-r1/inside-out.png",
+        "game/content-design/assets/neon-pixel-r1/neon-remix.png",
+        "game/content-design/assets/neon-pixel-r1/side-door-bays.png",
+        "game/content-design/assets/neon-pixel-r1/staggered-circuit.png",
+        "game/content-design/assets/ornament-study-r1/cross-stitch-crossings.png",
+        "game/content-design/assets/ornament-study-r1/dnipro-crossings.png",
+        "game/content-design/assets/ornament-study-r1/pysanka-sections.png",
+        "game/content-design/assets/ornament-study-r1/rushnyk-bands.png",
+        "game/content-design/assets/phase-observatory-r1/crossed-bands.png",
+        "game/content-design/assets/phase-observatory-r1/dogleg-transfer.png",
+        "game/content-design/assets/phase-observatory-r1/phase-remix.png",
+        "game/content-design/assets/phase-observatory-r1/pressure-ladder.png",
+        "game/content-design/assets/phase-observatory-r1/return-in-reserve.png",
+        "game/content-design/assets/phase-observatory-r1/signal-channels.png",
+        "game/content-design/assets/phase-observatory-r1/two-ways-home.png",
+        "game/content-design/assets/relay-archive-r1/first-link.png",
+        "game/content-design/assets/relay-archive-r1/nested-relays.png",
+        "game/content-design/assets/relay-archive-r1/relay-remix.png",
+        "game/content-design/assets/relay-archive-r1/second-approach.png",
+        "game/content-design/assets/relay-archive-r1/spiral-stores.png",
+        "game/content-design/assets/relay-archive-r1/three-compounds.png",
+        "game/content-design/assets/relay-archive-r1/watchpost-exchange.png",
+        "game/content-design/assets/rover-pixel-r1/between-the-rows.png",
+        "game/content-design/assets/rover-pixel-r1/broken-yard.png",
+        "game/content-design/assets/rover-pixel-r1/rover-remix.png",
+        "game/content-design/assets/rover-pixel-r1/sorting-yard.png",
+        "game/content-design/assets/rover-pixel-r1/split-berths.png",
+        "game/content-design/assets/rover-pixel-r1/stepped-return.png",
+        "game/content-design/assets/rover-pixel-r1/wake-the-yard.png",
+        "game/content-design/assets/sentinel-citadel-r1/crown-audience.png",
+        "game/content-design/assets/sentinel-citadel-r1/first-relay.png",
+        "game/content-design/assets/sentinel-citadel-r1/relay-perimeter.png",
+        "game/content-design/assets/sentinel-citadel-r1/sentinel-remix.png",
+        "game/content-design/assets/sentinel-citadel-r1/twin-receivers.png",
+        "game/content-design/assets/signal-pixel-r1/cool-the-crossing.png",
+        "game/content-design/assets/signal-pixel-r1/dry-spine.png",
+        "game/content-design/assets/signal-pixel-r1/garden-refuges.png",
+        "game/content-design/assets/signal-pixel-r1/neutral-ground.png",
+        "game/content-design/assets/signal-pixel-r1/signal-remix.png",
+        "game/content-design/assets/signal-pixel-r1/soft-crossing.png",
+        "game/content-design/assets/signal-pixel-r1/wide-approach.png",
+        "game/content-design/assets/workshop-study-r1/circuit-lanes.png",
+        "game/content-design/assets/workshop-study-r1/four-motor-landings.png",
+        "game/content-design/assets/workshop-study-r1/toolbench-weave.png",
+        "game/content-design/assets/workshop-study-r1/twin-lens-chambers.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v24",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v24.json",
+      "present": true,
+      "snapshotBytes": 276540,
+      "snapshotSha256": "54af78a72743cfb23ae5c9d091aec92e9f4a63a588aacd81953949c2ad4d5385",
+      "selectedAssetPaths": [
+        "game/content-design/assets/apex-polar-r1/crossing-complete.png",
+        "game/content-design/assets/apex-polar-r1/home-signal.png",
+        "game/content-design/assets/apex-polar-r1/returning-light.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v23",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v23.json",
+      "present": true,
+      "snapshotBytes": 275331,
+      "snapshotSha256": "3b006b71af58209831aa9973dad88d47405188d0c8f28bad74d0ec03bd52a660",
+      "selectedAssetPaths": [
+        "game/content-design/assets/sentinel-citadel-r1/crown-audience.png",
+        "game/content-design/assets/sentinel-citadel-r1/first-relay.png",
+        "game/content-design/assets/sentinel-citadel-r1/relay-perimeter.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v22",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v22.json",
+      "present": true,
+      "snapshotBytes": 273373,
+      "snapshotSha256": "4268a186d8565460ee8efc5566f0571d8150ec4d665380fbe329fdbd214b4072",
+      "selectedAssetPaths": [
+        "game/content-design/assets/crosswind-highlands-r1/long-wave.png",
+        "game/content-design/assets/crosswind-highlands-r1/read-the-arrows.png",
+        "game/content-design/assets/crosswind-highlands-r1/windbreak-weave.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v21",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v21.json",
+      "present": true,
+      "snapshotBytes": 271337,
+      "snapshotSha256": "45eff01ef344cb77700977c7135a265e9e0c7c2c7ff1e7f3366644c8517473b8",
+      "selectedAssetPaths": [
+        "game/content-design/assets/relay-archive-r1/first-link.png",
+        "game/content-design/assets/relay-archive-r1/second-approach.png",
+        "game/content-design/assets/relay-archive-r1/three-compounds.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v20",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v20.json",
+      "present": true,
+      "snapshotBytes": 270352,
+      "snapshotSha256": "505b52ec7be45d06c71ccbfdaa6ab23a962dc6777d147c619cd0d0e6b33abe1d",
+      "selectedAssetPaths": [
+        "game/content-design/assets/livewire-foundry-r1/read-the-lock.png",
+        "game/content-design/assets/livewire-foundry-r1/split-junction.png",
+        "game/content-design/assets/livewire-foundry-r1/switchyard.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v19",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v19.json",
+      "present": true,
+      "snapshotBytes": 269126,
+      "snapshotSha256": "d0e631a5b8551d422ee6b3d5a2476aa25bdf38b824bdd86def06312f0c10658e",
+      "selectedAssetPaths": [
+        "game/content-design/assets/phase-observatory-r1/dogleg-transfer.png",
+        "game/content-design/assets/phase-observatory-r1/return-in-reserve.png",
+        "game/content-design/assets/phase-observatory-r1/two-ways-home.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v18",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v18.json",
+      "present": true,
+      "snapshotBytes": 267605,
+      "snapshotSha256": "2eef985ba79babbac1a1b761f039dd6678bd447fbd02c18eb28367d20a5fdedb",
+      "selectedAssetPaths": [
+        "game/content-design/assets/fracture-coastal-r1/first-fracture.png",
+        "game/content-design/assets/fracture-coastal-r1/fracture-remix.png",
+        "game/content-design/assets/fracture-coastal-r1/two-districts.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v17",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v17.json",
+      "present": true,
+      "snapshotBytes": 265782,
+      "snapshotSha256": "615510f0643bc972817bdf0d285a00bc6986a3bfb04667754393dc509929b0ea",
+      "selectedAssetPaths": [
+        "game/content-design/assets/rover-pixel-r1/between-the-rows.png",
+        "game/content-design/assets/rover-pixel-r1/rover-remix.png",
+        "game/content-design/assets/rover-pixel-r1/wake-the-yard.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v16",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v16.json",
+      "present": true,
+      "snapshotBytes": 264185,
+      "snapshotSha256": "cb4761bfb1b528c0264de5b44ab9bb1e05b7d1b9bff752ba50828fbd1b650b8e",
+      "selectedAssetPaths": [
+        "game/content-design/assets/neon-pixel-r1/dogleg-return.png",
+        "game/content-design/assets/neon-pixel-r1/neon-remix.png",
+        "game/content-design/assets/neon-pixel-r1/staggered-circuit.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v15",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v15.json",
+      "present": true,
+      "snapshotBytes": 263597,
+      "snapshotSha256": "bd832d139178a8e82dbb8eea68aca94ee2e1b395897bcf6818af1cbb7966c6c9",
+      "selectedAssetPaths": [
+        "game/content-design/assets/neon-pixel-r1/folded-corner.png",
+        "game/content-design/assets/neon-pixel-r1/inside-out.png",
+        "game/content-design/assets/neon-pixel-r1/side-door-bays.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v14",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v14.json",
+      "present": true,
+      "snapshotBytes": 262645,
+      "snapshotSha256": "a5fa79c0174104525174559a7701c6241c747b2df3d8fc1f99484cfbca8312ef",
+      "selectedAssetPaths": [
+        "game/content-design/assets/signal-pixel-r1/cool-the-crossing.png",
+        "game/content-design/assets/signal-pixel-r1/signal-remix.png",
+        "game/content-design/assets/signal-pixel-r1/soft-crossing.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v13",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v13.json",
+      "present": true,
+      "snapshotBytes": 261539,
+      "snapshotSha256": "dbad0867d7642b78fe46d8eb1b1bf13d367d433248b673b0f00933fdc79491c2",
+      "selectedAssetPaths": [
+        "game/content-design/assets/border-r1/behind-the-patrol.png",
+        "game/content-design/assets/horizon-r1/nearby-shore.png",
+        "game/content-design/assets/horizon-r1/two-bays.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v12",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v12.json",
+      "present": true,
+      "snapshotBytes": 260606,
+      "snapshotSha256": "93ff983369b33f0b0cf005ddd3e3112475c8af6ac5d3d43ef1bdbe49e9df2325",
+      "selectedAssetPaths": [
+        "game/content-design/assets/border-r1/border-remix.png",
+        "game/content-design/assets/signal-pixel-r1/dry-spine.png",
+        "game/content-design/assets/signal-pixel-r1/wide-approach.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v11",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v11.json",
+      "present": true,
+      "snapshotBytes": 259575,
+      "snapshotSha256": "3d7b5b67d5d78a3f25a8108468385f9a6f1b2520fc12b275bcc3bf952ae0d978",
+      "selectedAssetPaths": [
+        "game/content-design/assets/border-r1/long-rail.png",
+        "game/content-design/assets/border-r1/new-frontier.png",
+        "game/content-design/assets/border-r1/second-landing.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v10",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v10.json",
+      "present": true,
+      "snapshotBytes": 258783,
+      "snapshotSha256": "04b2c25e1e6bbbf8890b89a6661ec80fadac53f280ae2ae2caf77fd3de3ed4fc",
+      "selectedAssetPaths": [
+        "game/content-design/assets/horizon-r1/horizon-remix.png",
+        "game/content-design/assets/horizon-r1/island-outpost.png",
+        "game/content-design/assets/horizon-r1/long-way-home.png"
+      ],
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v9",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v9.json",
+      "present": true,
+      "snapshotBytes": 257778,
+      "snapshotSha256": "80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a",
+      "selectedAssetPaths": [
+        "game/content-design/assets/border-r1/return-pocket.png",
+        "game/content-design/assets/horizon-r1/stepping-stones.png",
+        "game/content-design/assets/signal-pixel-r1/neutral-ground.png"
+      ],
+      "missingAssets": []
+    }
+  ],
+  "limitations": [
+    "This is one candidate profile preparation, not complete staged-site or upload admission.",
+    "Native dependency audit covers authored classic pack bodies, exact Journey full-source snapshots and selected backgrounds, plus literal demo module imports; dynamic data-driven asset transport remains independently qualified."
+  ]
+}
