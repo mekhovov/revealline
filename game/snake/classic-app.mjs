@@ -2100,6 +2100,7 @@ $('language').addEventListener('change', () => {
 });
 onLocaleChange(() => {
   locale = getLocale() === 'uk' ? 'uk' : 'en';
+  statsViews.forEach((view) => view.refresh());
   buildBoards();
   updateURL();
   renderCopy();

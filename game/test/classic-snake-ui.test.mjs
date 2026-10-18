@@ -128,6 +128,7 @@ async function harness({
   mode = 'solo',
   activity = 'campaign',
   sharedTools = false,
+  liveLocale = false,
   directEntry = true,
   focused = true,
   artReview = null,
@@ -140,6 +141,7 @@ async function harness({
 } = {}) {
   const document = new Document();
   let harnessLocale = 'en';
+  const localeListeners = new Set();
   document.hasFocus = () => focused;
   const writerClaims = [];
   document.createElement = (tag) => {
@@ -419,8 +421,12 @@ async function harness({
     t,
     setLocale(value) {
       harnessLocale = value;
+      if (liveLocale) for (const listener of localeListeners) listener(value);
     },
-    onLocaleChange() {},
+    onLocaleChange(listener) {
+      if (liveLocale) localeListeners.add(listener);
+      return () => localeListeners.delete(listener);
+    },
     createDestructionPreferences: () =>
       createDestructionPreferences({
         window,
@@ -2599,4 +2605,94 @@ test('transient status wrapping never inherits the operation-only rule that hide
     ),
     'only staged operation objectives replace the ordinary quota',
   );
+});
+
+test('Snake live language refresh translates every stats view without changing the paused attempt', async (t) => {
+  const state = await harness({ liveLocale: true });
+  t.after(() => state.disposeTools());
+  const run = state.created[0];
+  state.frame(0);
+  let cursor = 0;
+  let now = 0;
+  for (let tick = 0; tick < clearedReplay.steps && run.catches === 0; tick++) {
+    while (clearedReplay.turns[cursor]?.tick === tick) {
+      const command = clearedReplay.turns[cursor++];
+      const key = { up: 'w', right: 'd', down: 's', left: 'a' }[command.direction];
+      state.document.emit('keydown', {
+        target: state.document.querySelector('canvas'),
+        key,
+        code: `Key${key.toUpperCase()}`,
+        repeat: false,
+      });
+    }
+    now += core.classicSnakeSummary(run).stepMs;
+    state.frame(now);
+  }
+  await flush();
+  assert.equal(run.status, 'running');
+  assert.equal(run.catches, 1, 'legal host input catches one enemy before the locale change');
+  state.shell.elements.buttons.pause.click();
+  const views = [...state.document.querySelectorAll('.enemy-stats')];
+  assert.equal(views.length, 3, 'HUD, Pause and Results share the current locale');
+  const pauseView = state.shell.elements.content.pause.querySelector('.enemy-stats');
+  const disclosure = pauseView.querySelector('details');
+  const summary = disclosure.querySelector('summary');
+  disclosure.open = true;
+  disclosure.emit('toggle');
+  summary.focus();
+  const counts = () =>
+    views.map((view) => [...view.querySelectorAll('strong')].map((node) => node.textContent));
+  const expectedCounts = counts();
+  assert.deepEqual(expectedCounts, [
+    ['1', '1'],
+    ['1', '1'],
+    ['1', '1'],
+  ]);
+  state.shell.elements.buttons.settings.click();
+  state.$('snake-menu-settings-tab-accessibility').click();
+  const language = state.$('language');
+  const paused = state.created.map((value) => core.exportClassicSnakeReplay(value));
+  const saved = [...state.storage];
+  for (const [locale, copy] of [
+    ['uk', ['Ця спроба', 'За весь час', 'Види ворогів', 'Переможені вороги']],
+    ['en', ['This run', 'Lifetime', 'Enemy details', 'Enemies defeated']],
+  ]) {
+    language.focus();
+    language.value = locale;
+    language.emit('change');
+    assert.equal(state.document.activeElement, language, 'locale refresh never steals focus');
+    assert.equal(disclosure.open, true);
+    assert.equal(
+      disclosure.querySelector('summary'),
+      summary,
+      'the open disclosure retains its summary',
+    );
+    for (const view of views) {
+      assert.equal(view.getAttribute('aria-label'), copy[3]);
+      assert.equal(view.querySelector('.enemy-stats-run span').textContent, copy[0]);
+      assert.equal(view.querySelector('.enemy-stats-caption').textContent, copy[1]);
+      if (view.dataset.variant === 'panel') {
+        assert.equal(view.querySelector('.enemy-stats-disclosure-label').textContent, copy[2]);
+        assert.equal(view.querySelector('.enemy-stats-grid').getAttribute('aria-label'), copy[2]);
+      }
+    }
+    assert.match(
+      pauseView.querySelector('.enemy-stats-row-count').getAttribute('aria-label'),
+      new RegExp(`^${copy[0]}: 1`),
+    );
+    assert.deepEqual(counts(), expectedCounts);
+    state.frame((now += 1000));
+    assert.deepEqual(
+      state.created.map((value) => core.exportClassicSnakeReplay(value)),
+      paused,
+    );
+    assert.deepEqual(
+      [...state.storage],
+      saved,
+      'stats refresh does not write gameplay or stats records',
+    );
+    assert.equal(state.document.body.dataset.playing, 'false');
+    assert.equal(state.shell.elements.root.dataset.phase, 'paused');
+    assert.equal(state.shell.topDialog(), state.shell.elements.dialogs.settings);
+  }
 });
