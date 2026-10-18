@@ -229,9 +229,10 @@ test('muted Solo boot and Direct Start defer public music until the actual Audio
   page.frame(0);
   const checkpoint = authoritativeCheckpoint(page.rendered.run);
   await microtasks();
-  assert.equal(page.win.RevealLineSoloPerformance.export().audio.muted, true);
   assert.deepEqual(requests, [], 'A muted public Start does not demand an external feed');
   page.$('settings-button').click();
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.equal(page.win.RevealLineSoloPerformance.export().audio.muted, true);
   page.$('settings-tab-audio').click();
   page.$('settings-tab-display').click();
   await microtasks();
