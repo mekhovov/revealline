@@ -1,0 +1,125 @@
+{
+  "format": "revealline-main-pages-independent-review.v1",
+  "reviewedAt": "2026-10-18T19:58:20.229Z",
+  "reviewedCommit": "05c795fdca2a179b78d016c2a0dfc5b1991a498d",
+  "method": "Read-only source and existing evidence review; no build, browser, or tests executed for this review.",
+  "reviewed": [
+    {
+      "path": "scripts/main-pages-source-originals.mjs",
+      "bytes": 9168,
+      "sha256": "c1392805cac2cd13b4c34ad463eae7e748b6eaeabd2e09036aca11e8af0b95be"
+    },
+    {
+      "path": "scripts/qualify-demo-main-pages.mjs",
+      "bytes": 23622,
+      "sha256": "0d205661b00f0ce1ef1d8e3850013c2126a3f635cbfcac6929212204a06cad7a"
+    },
+    {
+      "path": "game/presentation/current-art.mjs",
+      "bytes": 15518,
+      "sha256": "a687bfd589db1bdb1375c5b940ae719ef33d7fe785471224f9628b482e96beab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 95035,
+      "sha256": "f2cd50cdc44c6a39ecdfa803e79c88ccfb048040d74776ce0f17045a02b48519"
+    },
+    {
+      "path": "publishing/optional-package-promotion.mjs",
+      "bytes": 8674,
+      "sha256": "bc327b6206521fe5cb44ac1ffdfafc987da7ab33956e1de488d556b44514573a"
+    },
+    {
+      "path": "scripts/write-main-pages-metadata.mjs",
+      "bytes": 1156,
+      "sha256": "1de1b72f8abc44fc0cfca95211a4af95d376d42cd1e402d7c7a0965e30129926"
+    },
+    {
+      "path": ".github/workflows/publish-main-pages.yml",
+      "bytes": 9967,
+      "sha256": "d503592aad75dda3d1bc01afef00a33ef44b2ed2880f673975cab14920679f54"
+    },
+    {
+      "path": "scripts/test-main-pages-source-originals.mjs",
+      "bytes": 7287,
+      "sha256": "30808d6f952cc774182a2b11fab3df66f9a7cc30aaf5b45d9e7688168a91d197"
+    },
+    {
+      "path": "scripts/test-qualify-demo-main-pages.mjs",
+      "bytes": 4233,
+      "sha256": "3bc9b0d92f2bb11401c4a80bf47b5af63cc3419e4f3939664bb620e4480a1ef6"
+    }
+  ],
+  "findings": [],
+  "reviewedInvariants": [
+    "Main-pages-only omission requires an exact registered original pin and retained exact native fallback for every descriptor owner. Full releases preserve original source paths.",
+    "Omitted originals have only the workshop owner; retained native fallback files are added to that offline download group.",
+    "Retained production and Reveal Audit readers must keep the explicit shared-resolver import edges; unmatched published references retain the original.",
+    "The audit uses the same configured game version as the real workflow and includes the build manifest, actual frozen optional-package overlay, build marker, and metadata from the real producer.",
+    "Required demo payloads and selected native dependencies are checked against emitted bytes; the complete staged inventory is checked against the unchanged rolling capacity bound.",
+    "The GNU-tar model reproduces the pinned baseline archive measurement exactly, and staged/model size breaches fail the audit."
+  ],
+  "limitations": [
+    "This review is not an emitted build, browser qualification, upload, or deployment admission.",
+    "The modeled archive is a baseline-calibrated GNU-tar estimate, not the actual uploaded Pages artifact; final artifact capacity and public eligibility remain separate gates.",
+    "Static reader/import and exact-path reference guards do not prove arbitrary dynamically constructed asset requests. Existing source-bound native extraction and representative authoring browser evidence supply the scoped consumer behavior checks.",
+    "The audit source fingerprints cover its declared text/module inputs, not every binary source asset. Required payload/native hashes and selected source-original pins are checked separately."
+  ],
+  "followUps": [
+    {
+      "recordedAt": "2026-10-18T20:02:40.130Z",
+      "kind": "emitted-audit-discovered-false-rejection",
+      "evidence": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-05c795fdc.json",
+        "sha256": "9361a9bdde102ba4ccdfb316b35ef4d7654f4eb8489e801e84474d6fe7cb0d52",
+        "complete": false,
+        "errors": [
+          "Missing or invalid changed native dependency: game/content/mission-library-index.json"
+        ],
+        "finalStaged": {
+          "files": 5950,
+          "bytes": 959659105,
+          "headroomBytes": 20340895,
+          "overlayFiles": 4,
+          "metadataFiles": 4
+        },
+        "archiveSizeModelBytes": 964638720
+      },
+      "finding": "The emitted audit compared game/content/mission-library-index.json against its raw source bytes, although the existing builder deliberately emits its JSON compaction. This audit expectation incorrectly rejects the builder output.",
+      "impact": "The earlier read-only findings:[] records that review only; it did not detect this qualifier bug and is not an acceptance result. The first emitted receipt remains failed and must not be promoted to complete.",
+      "status": "A narrow expected-byte projection and semantic-change rejection regression are being prepared by the audit owner. Independent review and a new emitted qualification are still required."
+    },
+    {
+      "recordedAt": "2026-10-18T20:03:37.924Z",
+      "kind": "independent-correction-review",
+      "reviewed": [
+        {
+          "path": "scripts/qualify-demo-main-pages.mjs",
+          "bytes": 24483,
+          "sha256": "1367c2c59007acb1b2761b1aa1311df33293f16147d16abffcc0f6a9875d02e3"
+        },
+        {
+          "path": "scripts/test-qualify-demo-main-pages.mjs",
+          "bytes": 5745,
+          "sha256": "a3fe2c19c93aa205466dc001e5a810df1bdcc1837becebb80440b22cb8690fad"
+        },
+        {
+          "path": "scripts/default-runtime-metadata.mjs",
+          "bytes": 10256,
+          "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+        }
+      ],
+      "findings": [],
+      "method": "Read-only source review plus direct invocation of the exact metadata expectation helper; no full build, browser, or test suite executed by this reviewer.",
+      "result": "The correction applies the existing builder producer only to game/content/mission-library-index.json. Other native dependencies retain raw byte identity. The new regression covers source preservation, exact JSON compaction, changed semantic pin bytes, invalid index format, and unchanged authored-source paths.",
+      "projection": {
+        "path": "game/content/mission-library-index.json",
+        "sourceSHA256": "7ce7ab10b1a135489e0f80b35495701cd7e2e9daf64edc1a28b9b144d872570d",
+        "expectedEmittedSHA256": "148537593f974acfce264d95d1be3d8b6a429b0199661d064bf788cf36ddd9a4",
+        "previousActualEmittedSHA256": "148537593f974acfce264d95d1be3d8b6a429b0199661d064bf788cf36ddd9a4",
+        "exactMatch": true
+      },
+      "acceptance": "The narrow audit correction is sound on inspection. The prior failed receipt remains failed; a fresh complete emitted run is still required and no upload or deployment admission is implied."
+    }
+  ]
+}

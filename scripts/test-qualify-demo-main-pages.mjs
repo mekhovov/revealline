@@ -6,6 +6,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import {
   defaultBaselines,
+  demoNativeDependencyBytes,
   gnuTarSize,
   mainPagesAuditArguments,
   mainPagesAuditFailures,
@@ -119,4 +120,41 @@ test('existing evidence is rejected before any costly build or source snapshot',
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
+});
+
+test('only the existing mission-index compaction is admitted and semantic changes remain detectable', async () => {
+  const name = 'game/content/mission-library-index.json';
+  const value = {
+    format: 'revealline-mission-library-index.v1',
+    missions: [
+      { levelId: 'exact', sourceFile: { path: 'pack.json', bytes: 99, sha256: 'a'.repeat(64) } },
+    ],
+  };
+  const source = Buffer.from(JSON.stringify(value, null, 2) + '\n');
+  const original = Buffer.from(source);
+  const expected = await demoNativeDependencyBytes(name, source);
+  assert.deepEqual(source, original, 'Projection owns the emitted copy, preserving source bytes.');
+  assert.deepEqual(expected, Buffer.from(JSON.stringify(value) + '\n'));
+  assert.deepEqual(JSON.parse(expected), value);
+  const changed = structuredClone(value);
+  changed.missions[0].sourceFile.sha256 = 'b'.repeat(64);
+  assert.notDeepEqual(
+    await demoNativeDependencyBytes(name, Buffer.from(JSON.stringify(changed))),
+    expected,
+  );
+  await assert.rejects(
+    demoNativeDependencyBytes(name, Buffer.from('{"format":"unknown","missions":[]}')),
+    /Unknown mission-library/,
+  );
+  for (const path of [
+    'game/content/packs/authored.json',
+    'game/content/base-artwork.json',
+    'game/demo-data/recording.replay.json',
+    'game/content-design/runtime/exact.json',
+  ])
+    assert.equal(
+      await demoNativeDependencyBytes(path, source),
+      source,
+      'Authored native bytes are never normalized.',
+    );
 });

@@ -1,0 +1,288 @@
+{
+  "format": "WebKitContextStoppedSourceAuditV1",
+  "created": "2026-10-18T19:55:19.377121+00:00",
+  "status": "Source-level cache diagnostic path identified; original Context is stopped events remain UNCLASSIFIED. Existing strict failed receipts remain failed.",
+  "scope": {
+    "readOnly": true,
+    "browserRuns": 0,
+    "productionEdits": 0,
+    "head": "05c795fdca2a179b78d016c2a0dfc5b1991a498d",
+    "runtimeFiles": [
+      {
+        "path": "game/app.mjs",
+        "sha256": "f204c43a9cb83845c01cff516d82312f4befa6c11f2bd8e73a77a5e7b674736e"
+      },
+      {
+        "path": "game/presentation/host.mjs",
+        "sha256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2"
+      },
+      {
+        "path": "game/official-downloads.mjs",
+        "sha256": "777563cccc42e7f41f36d3848012f93d6fdf48687e672fc30191624f5a42927e"
+      },
+      {
+        "path": "game/soundtrack-source.mjs",
+        "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83"
+      },
+      {
+        "path": "scripts/demo-restoration-observation.mjs",
+        "sha256": "4be562178071ae0da7bbf38ebc382d86ad0d86ddafae44e49e5a53ce41708bca"
+      }
+    ],
+    "noFullTreeFreezeClaim": true
+  },
+  "inputs": [
+    {
+      "path": "docs/qualification/shared-demos/webkit-navigation-ownership-review-ownership-ci.json",
+      "sha256": "44306b97dbe7949bd8e4ff605d592c3ef3b9a2103d5a9580236d7ffd1968c0db"
+    },
+    {
+      "path": "docs/qualification/shared-demos/webkit-protocol-diagnostic-review-ownership-ci.json",
+      "sha256": "22b016faa3e763be4a74adeecdec2912d2b2e48be069d9a5517f11f74578ea2a"
+    },
+    {
+      "path": "docs/qualification/shared-demos/webkit-ordinary-reload-owner-diagnostic-ownership-ci.json",
+      "sha256": "eb5662bc0c26eb227498271a90cdc2190bf9b2d3077bf83c099c1b1880d68875"
+    }
+  ],
+  "nativePaths": [
+    {
+      "path": "Modules/cache/DOMCacheEngine.cpp",
+      "sha256": "b056ff8431016e729280a6c4b03a340116307746060941d6af24a7020dbe95ac",
+      "url": "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/Modules/cache/DOMCacheEngine.cpp#L42",
+      "lines": [
+        42,
+        55,
+        56,
+        64,
+        69
+      ],
+      "finding": "Stopped cache operations become a TypeError. The logging helper independently emits a JavaScript/error console message with a Cache API operation failed prefix; handling the returned exception does not remove that native console event."
+    },
+    {
+      "path": "Modules/cache/DOMCache.cpp",
+      "sha256": "7a5447dbfcefcfaff843e5735aa494c2e7f1d684edc88e72a9db96a47f24ddda",
+      "url": "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/Modules/cache/DOMCache.cpp#L492",
+      "lines": [
+        492,
+        505,
+        510,
+        519,
+        525,
+        534,
+        577,
+        589
+      ],
+      "finding": "An asynchronous cache query/put/delete settlement can take the stopped-context logging branch. QueryCache underlies Cache.match. This is reachable independently of Response.clone."
+    },
+    {
+      "path": "Modules/cache/DOMCacheStorage.cpp",
+      "sha256": "cd7655ec0d20733168360089c396b40b6b9c0934247132cb221e09d95954ed99",
+      "url": "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/Modules/cache/DOMCacheStorage.cpp#L188",
+      "lines": [
+        188,
+        193,
+        198,
+        203,
+        247,
+        265
+      ],
+      "finding": "CacheStorage enumeration/open also has stopped-context rejection/logging paths. Some stopped paths do not log, so a rejected operation is not sufficient to infer the console event."
+    },
+    {
+      "path": "Modules/fetch/FetchResponse.cpp",
+      "sha256": "aed13b819ffc85c109651af31cd9cd0f45057fa3bdd426c487d47f06bba03f56",
+      "url": "https://github.com/WebKit/WebKit/blob/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/Modules/fetch/FetchResponse.cpp#L180",
+      "lines": [
+        180,
+        184,
+        200,
+        210
+      ],
+      "finding": "Two separate exact-string InvalidStateError paths remain: static Response.json construction without a global object, and Response.clone on a loading response whose context global is unavailable. These are not instance response.json consumption."
+    }
+  ],
+  "playwrightTransport": {
+    "version": "1.62.1",
+    "webkitRevision": "2336",
+    "upstreamRevision": "343e13bf22dca9d0ec227801419aab0f9001a32f",
+    "sources": [
+      {
+        "path": "packages/utils/stackTrace.ts",
+        "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/utils/stackTrace.ts",
+        "sha256": "fd74bd690ad37498ad3b676025129b38c08c5bffb190c8d96f228a2be7b5210b",
+        "bytes": 7996,
+        "relevantLines": [
+          {
+            "line": 134,
+            "text": "export function splitErrorMessage(message: string): { name: string, message: string } {"
+          }
+        ]
+      },
+      {
+        "path": "packages/playwright-core/src/server/webkit/wkPage.ts",
+        "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/webkit/wkPage.ts",
+        "sha256": "31a1492936ecb34cea00628827ed830763f8f7a58fd761d0c4ecf4db6f6a4c9c",
+        "bytes": 61995,
+        "relevantLines": [
+          {
+            "line": 21,
+            "text": "import { splitErrorMessage } from '@utils/stackTrace';"
+          },
+          {
+            "line": 390,
+            "text": "eventsHelper.addEventListener(this._session, 'Console.messageAdded', event => this._onConsoleMessage(event)),"
+          },
+          {
+            "line": 535,
+            "text": "_onConsoleMessage(event: Protocol.Console.messageAddedPayload) {"
+          },
+          {
+            "line": 540,
+            "text": "const { name, message } = splitErrorMessage(text);"
+          },
+          {
+            "line": 548,
+            "text": "stack = '';"
+          },
+          {
+            "line": 554,
+            "text": "error.name = name;"
+          },
+          {
+            "line": 556,
+            "text": "this._page.addPageError(error, {"
+          },
+          {
+            "line": 1286,
+            "text": "eventsHelper.addEventListener(this._session, 'Console.messageAdded', event => this._page._onConsoleMessage(event)),"
+          }
+        ]
+      },
+      {
+        "path": "browser_patches/webkit/UPSTREAM_CONFIG.sh",
+        "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/browser_patches/webkit/UPSTREAM_CONFIG.sh",
+        "sha256": "3554c5b666ed87032fb22e78956f8a2fffe1faede63ae8dcae60a26961f6419c",
+        "bytes": 126,
+        "relevantLines": [
+          {
+            "line": 3,
+            "text": "BASE_REVISION=\"343e13bf22dca9d0ec227801419aab0f9001a32f\""
+          }
+        ]
+      }
+    ],
+    "installedBundle": {
+      "path": "/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright-core/lib/coreBundle.js",
+      "sha256": "9393fa79e1c67c74edc26b610d65a4f7ed73d345a762465cc88340a33a2454ac",
+      "lines": [
+        9758,
+        49556,
+        49572,
+        49583,
+        49585
+      ]
+    },
+    "finding": "JavaScript/error Console.messageAdded becomes pageerror. splitErrorMessage puts text before the first colon into Error.name and the remainder into Error.message. Missing native callFrames yields empty Error.stack. The current browserErrorDescription chooses stack or message, omitting name."
+  },
+  "descriptionCollisionCheck": {
+    "type": "Executed Node check using splitErrorMessage extracted from installed bundle and actual current browserErrorDescription; no browser or native event generated.",
+    "passed": true,
+    "cases": [
+      {
+        "nativeText": "Cache API operation failed: Context is stopped",
+        "errorName": "Cache API operation failed",
+        "reportedDescription": "Context is stopped"
+      },
+      {
+        "nativeText": "InvalidStateError: Context is stopped",
+        "errorName": "InvalidStateError",
+        "reportedDescription": "Context is stopped"
+      },
+      {
+        "nativeText": "Context is stopped",
+        "errorName": "",
+        "reportedDescription": "Context is stopped"
+      }
+    ],
+    "implication": "The old receipt cannot distinguish these causes after the lost name; do not reconstruct native text as fact."
+  },
+  "ordinaryCallsites": [
+    {
+      "path": "game/app.mjs",
+      "lines": [
+        2219,
+        2235,
+        3728,
+        3730,
+        15365
+      ],
+      "finding": "Ordinary startup initializes soundtrack and awaits localOfficialRecordingIds. Teardown marks soundtrackDisposed and aborts soundtrackLoad. The catalogue cache scan does not receive this signal."
+    },
+    {
+      "path": "game/official-downloads.mjs",
+      "lines": [
+        83,
+        85,
+        86,
+        127,
+        128,
+        134,
+        366,
+        425,
+        429,
+        432
+      ],
+      "finding": "Official reads/inspection use CacheStorage.open and Cache.match. localOfficialRecordingIds loops tracks and has an existing catch returning an empty list; readOfficialRecording similarly owns errors. This is a plausible cache operation owner during ordinary reload, not an observed match to the original diagnostic."
+    },
+    {
+      "path": "game/app.mjs",
+      "lines": [
+        434
+      ],
+      "finding": "getJSON calls instance Response.json; that is not the static jsonForBindings path."
+    },
+    {
+      "path": "game/offline/service-worker.template.js",
+      "lines": [
+        193,
+        195
+      ],
+      "finding": "A Response.clone call exists in offline verification, but no evidence links a service worker to the observed ephemeral ordinary-page event."
+    }
+  ],
+  "baselineProvenance": [
+    {
+      "path": "game/official-downloads.mjs",
+      "base": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "sha256": "777563cccc42e7f41f36d3848012f93d6fdf48687e672fc30191624f5a42927e",
+      "byteIdenticalToBase": true
+    },
+    {
+      "path": "game/soundtrack-source.mjs",
+      "base": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "sha256": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83",
+      "byteIdenticalToBase": true
+    }
+  ],
+  "searchBounds": {
+    "sourceFilesCached": 123,
+    "totalSourceBytes": 2707989,
+    "focusedAreas": "Fetch, streams, promise/global/context/exception bindings, native cache, image/audio lifetime candidates and the entire Playwright WebKit bootstrap patch. This is not an exhaustive WebKit source search.",
+    "bootstrapPatchHasExactString": false,
+    "cacheDirectory": ".cache/webkit-context-source"
+  },
+  "nextProbe": {
+    "purpose": "Disambiguate native Cache API logging from Response InvalidStateError and observe the existing ordinary operation owner.",
+    "bound": "Four ordinary Solo reloads, no Demo entry; one browser/one owned fixture server; strict error gate remains enabled.",
+    "observations": [
+      "Retain pageerror.name, message and stack independently.",
+      "Retain raw Console.messageAdded text/category/callFrames/target identifiers and lifecycle messages with an explicit event cap.",
+      "Capture diagnostic sink and document identity once per document, not by resolving globalThis after navigation.",
+      "Observe ordinary cache inspection before/after native open/match and its pre-existing catch; preserve arguments/results and the same error object. Do not attach new rejection handlers to native Cache promises merely to observe them.",
+      "Record exact served diagnostic module hash and before/after affected live file hashes."
+    ],
+    "successCriterion": "A reproduced native full-text event with operation/lifecycle/owner evidence. No recurrence remains inconclusive; absence of DOM error events does not prove safety.",
+    "noWaiver": "Do not filter Context is stopped, allow native error categories generally, alter deadlines, or promote any failed receipt."
+  }
+}
