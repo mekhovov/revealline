@@ -394,3 +394,89 @@ test('unavailable, blocked and closed storage do not report a false archive comm
   await assert.rejects(blocked.list(), { name: 'AbortError' });
   missing.close();
 });
+
+function closingFixture(t) {
+  const memory = managedIndexedDB(),
+    connections = [],
+    store = createAircraftArchiveStore({
+      indexedDB: {
+        open(...args) {
+          const request = memory.indexedDB.open(...args);
+          return new Proxy(request, {
+            set(target, name, value) {
+              target[name] =
+                name === 'onsuccess'
+                  ? (...event) => {
+                      connections.push(target.result);
+                      value(...event);
+                    }
+                  : value;
+              return true;
+            },
+          });
+        },
+      },
+    });
+  t.after(() => store.close());
+  return {
+    memory,
+    connections,
+    store,
+    forceClose() {
+      const connection = connections.at(-1);
+      connection.close();
+      // A browser-forced close emits this event; ordinary explicit close does not.
+      connection.onclose?.({ target: connection });
+      return connection;
+    },
+  };
+}
+
+test('unexpected archive database close permits a later operation to reopen without replaying writes', async (t) => {
+  const { memory, connections, store, forceClose } = closingFixture(t);
+  const manifest = await store.begin(spec()),
+    committedWrites = memory.allPuts.length,
+    oldConnection = forceClose();
+  assert.deepEqual(await store.list(), [manifest]);
+  assert.equal(memory.openCount, 2);
+  assert.equal(memory.allPuts.length, committedWrites);
+  const appended = await store.append(manifest.id, segment(0), { expectedRevision: 0 });
+  assert.equal(appended.segmentCount, 1);
+  oldConnection.onclose?.({ target: oldConnection });
+  assert.equal((await store.load(manifest.id)).manifest.segmentCount, 1);
+  assert.equal(
+    memory.openCount,
+    2,
+    'a late old-connection event cannot invalidate its replacement',
+  );
+  store.close();
+  connections.at(-1).onclose?.({ target: connections.at(-1) });
+  await assert.rejects(store.list(), { name: 'AbortError' });
+  assert.equal(memory.openCount, 2, 'explicit disposal remains permanently closed');
+});
+
+test('unexpected archive close during a failed write preserves its durable prefix and requires an explicit retry', async (t) => {
+  const { memory, store, forceClose } = closingFixture(t);
+  const manifest = await populate(store, 'flight-1', 1),
+    before = memory.contents(),
+    first = (await store.load(manifest.id)).segments[0],
+    next = segment(1, first);
+  memory.onAnyPut = ({ name, tx }) => {
+    if (name !== 'segments') return;
+    forceClose();
+    tx.abort();
+  };
+  await assert.rejects(
+    store.append(manifest.id, next, { expectedRevision: manifest.revision }),
+    /transaction failed/,
+  );
+  memory.onAnyPut = null;
+  assert.equal(memory.openCount, 1, 'the failed write does not reopen or retry itself');
+  assert.deepEqual(memory.contents(), before);
+  assert.equal((await store.load(manifest.id)).manifest.revision, manifest.revision);
+  assert.equal(memory.openCount, 2);
+  const appended = await store.append(manifest.id, next, {
+    expectedRevision: manifest.revision,
+  });
+  assert.equal(appended.segmentCount, 2);
+});
