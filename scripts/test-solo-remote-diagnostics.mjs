@@ -632,13 +632,20 @@ test('explicit final diagnostics setup successors retain prior failed declaratio
   }
 });
 
-for (const sourceLabel of ['de332', '73']) {
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
+for (const sourceLabel of ['de332', '797']) {
   const sourceRevision =
-    sourceLabel === '73'
-      ? '73a345cec696d7789198cf295ca5c37b17ca0e71'
+    sourceLabel === '797'
+      ? '797e03f28743921842df6aa57520a72016ba3dfc'
       : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
-  // Source73 uses the actual reviewed correctness receipt. The older de332
-  // declarations remain held; their modeled release never grants execution.
+  // Legacy held controls remain modeled;797 exercises its actual reviewed declaration.
   async function prospectiveManifest(journal = false) {
     const f = JSON.parse(
       await readFile(
@@ -648,7 +655,11 @@ for (const sourceLabel of ['de332', '73']) {
         ),
       ),
     );
-    if (sourceLabel === '73') return f;
+    if (sourceLabel === '797') {
+      assert.deepEqual(f.release.firstEightEvidence, actualFirstEightProof);
+      assert.equal(f.release.status, 'reviewed-diagnostic-only');
+      return f;
+    }
     f.release.status = 'reviewed-diagnostic-only';
     for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
       f.release[key] = true;
@@ -661,24 +672,31 @@ for (const sourceLabel of ['de332', '73']) {
         disposition: 'failed-reviewed',
       },
     ];
+    if (sourceLabel === '797') {
+      f.release.firstEightAllCorrectnessPassed = true;
+      f.release.firstEightEvidence = {
+        format: 'SoloFirstEightCorrectnessEvidenceV1',
+        sourceRevision,
+        runId: 1,
+        artifactId: 2,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        correctness: 'passed',
+        ownersClosed: true,
+      };
+    }
     return f;
   }
-  test(`${sourceLabel}: exact package/method/bounds retain reviewed73 receipt and held predecessor refusal`, async () => {
+  test(`${sourceLabel}: exact package/method/bounds retain source-specific first-eight admission and refusal`, async () => {
     for (const journal of [false, true]) {
       const name = journal ? 'journal-cost' : 'app-diagnostics';
       const held = JSON.parse(
         await readFile(join(repository, `docs/performance/solo-${sourceLabel}-${name}-plan.json`)),
       );
-      if (sourceLabel === '73') {
+      if (sourceLabel === '797') {
         assert.equal(held.release.status, 'reviewed-diagnostic-only');
-        assert.equal(held.release.noUnclosedOwners, true);
-        assert.equal(held.release.evidence[0].runId, 39105055762);
-        assert.equal(held.release.evidence[0].scope, 'first-eight-correctness-only');
-        assert.equal(held.release.evidence[0].numericalFailures.length, 3);
-        assert.equal(bindDiagnosticsJob(held, 'chromium').candidate.revision, sourceRevision);
-        const unreleased = structuredClone(held);
-        unreleased.release.status = 'held-for-review';
-        assert.throws(() => bindDiagnosticsJob(unreleased, 'chromium'));
+        assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
+        assert.equal(bindDiagnosticsJob(held, 'chromium').rows.length, 1);
       } else {
         assert.equal(held.release.status, 'held-for-review');
         assert.equal(held.release.noUnclosedOwners, false);
@@ -697,6 +715,20 @@ for (const sourceLabel of ['de332', '73']) {
         assert.deepEqual(plan.rows, bindDiagnosticsJob(old, engine).rows);
         assert.equal(plan.analysisMethod, 'paired-p95-endpoint-box-v1');
         for (const mutate of [
+          ...(sourceLabel === '797'
+            ? [
+                (p) => (p.release.firstEightRequired = false),
+                (p) => (p.release.firstEightEvidence = null),
+                (p) =>
+                  (p.release.firstEightEvidence.sourceRevision =
+                    '73a345cec696d7789198cf295ca5c37b17ca0e71'),
+                (p) => (p.release.firstEightEvidence.correctness = 'failed'),
+                (p) => (p.release.firstEightEvidence.ownersClosed = false),
+                (p) => (p.release.firstEightEvidence.artifactSHA256 = 'invalid'),
+                (p) => (p.release.firstEightEvidence.runId = 0),
+                (p) => (p.release.firstEightEvidence.unreviewed = true),
+              ]
+            : []),
           (p) => delete p.analysisMethod,
           (p) => (p.analysisMethod = 'other'),
           (p) => (p.candidate.inner.sha256 = 'f'.repeat(64)),
@@ -709,7 +741,7 @@ for (const sourceLabel of ['de332', '73']) {
           (p) => (p.release.noUnclosedOwners = false),
           (p) => (p.release.evidence = []),
           (p) => (p.release.unconditionalClockGuarantee = true),
-          (p) => (p.release.firstEightAllCorrectnessPassed = true),
+          (p) => (p.release.firstEightAllCorrectnessPassed = sourceLabel !== '797'),
           (p) => (p.observation.pairs = 9),
           (p) => (p.observation.overheadLimit = 0.06),
           (p) => (p.observation.crossOriginIsolationOverride = true),

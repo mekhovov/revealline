@@ -52,37 +52,63 @@ const de332Source = Object.freeze({
   runtime: de332Package.revision,
   journalCohort: 'timing-main8b-candidatede332-v1',
 });
-export const RUNTIME73_DIAGNOSTICS_COHORT = 'diagnostics-candidate73-endpoint-box-v1';
-const runtime73Package = {
-  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
-  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
-  run: 39099979283,
-  artifact: 12127570566,
+export const RUNTIME797_DIAGNOSTICS_COHORT = 'diagnostics-candidate797-endpoint-box-v1';
+const runtime797Package = {
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  run: 39104551453,
+  artifact: 12128990483,
   outer: {
-    bytes: 1094639407,
-    sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+    bytes: 1094639112,
+    sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
   },
   inner: {
-    bytes: 1075807617,
-    sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+    bytes: 1075807530,
+    sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
   },
-  manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+  manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
   producer:
-    'Exact successful Appearance39099979283, Node22.13.1. Full hosted archive/member/source/CSP verification remains mandatory.',
+    'Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer.',
 };
-const runtime73Source = Object.freeze({
-  revision: runtime73Package.revision,
-  tree: runtime73Package.tree,
-  runtime: runtime73Package.revision,
-  journalCohort: 'timing-main8b-candidate73-v1',
+const runtime797Source = Object.freeze({
+  revision: runtime797Package.revision,
+  tree: runtime797Package.tree,
+  runtime: runtime797Package.revision,
+  journalCohort: 'timing-main8b-candidate797-v1',
 });
-const prospectiveSource = (source) => source === de332Source || source === runtime73Source;
+function validate797FirstEight(release) {
+  assert.equal(release.firstEightRequired, true);
+  assert.equal(release.firstEightAllCorrectnessPassed, true);
+  const proof = release.firstEightEvidence;
+  assert(proof && typeof proof === 'object' && !Array.isArray(proof));
+  assert.deepEqual(
+    Object.keys(proof).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(proof.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(proof.sourceRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  for (const key of ['runId', 'artifactId'])
+    assert(Number.isSafeInteger(proof[key]) && proof[key] > 0);
+  for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(proof[key], /^[a-f0-9]{64}$/);
+  assert.equal(proof.correctness, 'passed');
+  assert.equal(proof.ownersClosed, true);
+}
+const prospectiveSource = (source) => source === de332Source || source === runtime797Source;
 // Admission is source-specific. Actual archive and producer identity still need
 // the common full readback; a pending producer never supplies those bytes.
 function diagnosticsSource(plan) {
   if (plan.sourceCohort === undefined) return legacySource;
   if (plan.sourceCohort === DE332_DIAGNOSTICS_COHORT) return de332Source;
-  if (plan.sourceCohort === RUNTIME73_DIAGNOSTICS_COHORT) return runtime73Source;
+  if (plan.sourceCohort === RUNTIME797_DIAGNOSTICS_COHORT) return runtime797Source;
   assert.equal(plan.sourceCohort, FINAL_DIAGNOSTICS_COHORT);
   return finalSource;
 }
@@ -205,12 +231,18 @@ export function validateDiagnosticsPlan(plan) {
     assert.equal(plan.runtimeRevision, source.runtime);
   if (prospectiveSource(source)) {
     assert.equal(plan.analysisMethod, PROSPECTIVE_OVERHEAD_METHOD);
-    assert.deepEqual(plan.candidate, source === runtime73Source ? runtime73Package : de332Package);
+    assert.deepEqual(
+      plan.candidate,
+      source === runtime797Source ? runtime797Package : de332Package,
+    );
     assert.equal(plan.release.status, 'reviewed-diagnostic-only');
     assert.equal(plan.release.clockErrorAssumption, 'observed-minimum-step-bounds-duration-error');
     assert.equal(plan.release.unconditionalClockGuarantee, false);
-    assert.equal(plan.release.firstEightRequired, false);
-    assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    if (source === runtime797Source) validate797FirstEight(plan.release);
+    else {
+      assert.equal(plan.release.firstEightRequired, false);
+      assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    }
     assert(
       Array.isArray(plan.release.evidence) &&
         plan.release.evidence.length > 0 &&
@@ -418,9 +450,11 @@ export async function prepareDiagnosticsMode(ctx) {
       ? { synchronousJournalHookOverhead: 'unobserved', fullJournalOverheadQualification: false }
       : {}),
     gameplayPerformanceQualification: false,
-    ...(prospectiveSource(diagnosticsSource(ctx.plan))
-      ? { firstEightRequired: false }
-      : { firstEightAllCorrectnessPassed: false }),
+    ...(diagnosticsSource(ctx.plan) === runtime797Source
+      ? { firstEightRequired: true, firstEightAllCorrectnessPassed: true }
+      : prospectiveSource(diagnosticsSource(ctx.plan))
+        ? { firstEightRequired: false }
+        : { firstEightAllCorrectnessPassed: false }),
   });
   let recipePath = null;
   if (journalCostMode(ctx.plan)) {

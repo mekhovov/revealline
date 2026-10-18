@@ -184,9 +184,38 @@ export const RUNTIME73_READINESS_PROTOCOL = Object.freeze({
   ...DE332_READINESS_PROTOCOL,
   name: 'geometry-and-source-bound-preparation-73-v1',
 });
+export const RUNTIME797_READINESS_SOURCE = Object.freeze({
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+});
+export const RUNTIME797_READINESS_COHORT = 'readiness-preparation-candidate797';
+export const RUNTIME797_READINESS_ROW = 'readiness-preparation-row-candidate797';
+export const RUNTIME797_READINESS_FAULT_FIXTURES = Object.freeze({
+  'required-original-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-797e03/required-original-cancel-start-v2.qualification.fixture',
+    bytes: 4546,
+    sha256: '9d29ade54065dffc23c8f33942edeb32cda2e930cda625e843d0780922043716',
+  },
+  'optional-icon-missing': {
+    path: 'docs/performance/fixtures/solo-readiness-797e03/optional-icon-missing-v1.qualification.fixture',
+    bytes: 3233,
+    sha256: 'ae9b01b4d9ff5a59aed103edf60983cfa4466f6d962098a4ac56b79945983be7',
+  },
+  'selected-font-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-797e03/selected-font-request-settlement-v4.qualification.fixture',
+    bytes: 5773,
+    sha256: 'b116ec74c2687c11ebb8e9ef3ebce3a529788e39fa038e131f88fc884a586eae',
+  },
+});
+export const RUNTIME797_READINESS_PROTOCOL = Object.freeze({
+  ...DE332_READINESS_PROTOCOL,
+  name: 'geometry-and-source-bound-preparation-797-v1',
+});
+const runtime797Plan = (plan) => plan?.sourceCohort === RUNTIME797_READINESS_COHORT;
 const runtime73Plan = (plan) => plan?.sourceCohort === RUNTIME73_READINESS_COHORT;
-const sourceBoundPlan = (plan) => de332Plan(plan) || runtime73Plan(plan);
-const sourceBoundSelection = (selected) => selected.de332 || selected.runtime73;
+const sourceBoundPlan = (plan) => de332Plan(plan) || runtime73Plan(plan) || runtime797Plan(plan);
+const sourceBoundSelection = (selected) =>
+  selected.de332 || selected.runtime73 || selected.runtime797;
 
 export function de332ReadinessSelection(plan) {
   assert.equal(plan.sourceCohort, DE332_READINESS_ROW);
@@ -196,14 +225,29 @@ export function runtime73ReadinessSelection(plan) {
   assert.equal(plan.sourceCohort, RUNTIME73_READINESS_ROW);
   return sourceReadinessSelection(plan);
 }
+export function runtime797ReadinessSelection(plan) {
+  assert.equal(plan.sourceCohort, RUNTIME797_READINESS_ROW);
+  return sourceReadinessSelection(plan);
+}
 function sourceReadinessSelection(plan) {
-  assert([DE332_READINESS_ROW, RUNTIME73_READINESS_ROW].includes(plan.sourceCohort));
+  assert(
+    [DE332_READINESS_ROW, RUNTIME73_READINESS_ROW, RUNTIME797_READINESS_ROW].includes(
+      plan.sourceCohort,
+    ),
+  );
   assert(PREPARATION_READINESS_PHASES.includes(plan.phase));
+  const latest = plan.sourceCohort === RUNTIME797_READINESS_ROW;
   const current = plan.sourceCohort === RUNTIME73_READINESS_ROW;
-  const common = current
-    ? { source: RUNTIME73_READINESS_SOURCE, runtime73: true, documents: 1 }
-    : { source: DE332_READINESS_SOURCE, de332: true, documents: 1 };
-  const faults = current ? RUNTIME73_READINESS_FAULT_FIXTURES : DE332_READINESS_FAULT_FIXTURES;
+  const common = latest
+    ? { source: RUNTIME797_READINESS_SOURCE, runtime797: true, documents: 1 }
+    : current
+      ? { source: RUNTIME73_READINESS_SOURCE, runtime73: true, documents: 1 }
+      : { source: DE332_READINESS_SOURCE, de332: true, documents: 1 };
+  const faults = latest
+    ? RUNTIME797_READINESS_FAULT_FIXTURES
+    : current
+      ? RUNTIME73_READINESS_FAULT_FIXTURES
+      : DE332_READINESS_FAULT_FIXTURES;
   if (['cold-first30', 'warm-resume', 'saved-resume'].includes(plan.phase))
     return {
       ...common,
@@ -238,6 +282,54 @@ function sourceReadinessSelection(plan) {
       ? { requiredStartRetention: 'trusted-initial-start-v1' }
       : {}),
   };
+}
+function validate797FirstEight(release) {
+  assert.equal(release.firstEightRequired, true);
+  assert.equal(release.firstEightAllCorrectnessPassed, true);
+  const proof = release.firstEightEvidence;
+  assert(proof && typeof proof === 'object' && !Array.isArray(proof));
+  assert.deepEqual(
+    Object.keys(proof).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(proof.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(proof.sourceRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  for (const key of ['runId', 'artifactId'])
+    assert(Number.isSafeInteger(proof[key]) && proof[key] > 0);
+  for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(proof[key], /^[a-f0-9]{64}$/);
+  assert.equal(proof.correctness, 'passed');
+  assert.equal(proof.ownersClosed, true);
+}
+
+function assertRuntime797ReadinessCandidate(candidate) {
+  const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
+  assert.deepEqual(
+    { revision, tree, run, artifact, outer, inner, manifestSHA256 },
+    {
+      revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+      tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+      run: 39104551453,
+      artifact: 12128990483,
+      outer: {
+        bytes: 1094639112,
+        sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+      },
+      inner: {
+        bytes: 1075807530,
+        sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+      },
+      manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+    },
+  );
 }
 function assertRuntime73ReadinessCandidate(candidate) {
   const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
@@ -302,6 +394,7 @@ export function preparationReadinessRows(engine) {
   return PREPARATION_READINESS_PHASES.map((phase) => ({ ...readinessRow(engine, phase), phase }));
 }
 export function preparationReadinessSelection(plan) {
+  if (plan.sourceCohort === RUNTIME797_READINESS_ROW) return runtime797ReadinessSelection(plan);
   if (plan.sourceCohort === RUNTIME73_READINESS_ROW) return runtime73ReadinessSelection(plan);
   if (plan.sourceCohort === DE332_READINESS_ROW) return de332ReadinessSelection(plan);
   if (plan.sourceCohort === 'readiness-diagnosed-row-candidate239') {
@@ -365,13 +458,15 @@ function preparationRowPlan(plan, row) {
   for (const [key, value] of Object.entries(expected)) assert.deepEqual(row[key], value, key);
   const scoped = {
     ...plan,
-    sourceCohort: runtime73Plan(plan)
-      ? RUNTIME73_READINESS_ROW
-      : de332Plan(plan)
-        ? DE332_READINESS_ROW
-        : diagnosedPlan(plan)
-          ? 'readiness-diagnosed-row-candidate239'
-          : 'readiness-preparation-row-candidatee1cc',
+    sourceCohort: runtime797Plan(plan)
+      ? RUNTIME797_READINESS_ROW
+      : runtime73Plan(plan)
+        ? RUNTIME73_READINESS_ROW
+        : de332Plan(plan)
+          ? DE332_READINESS_ROW
+          : diagnosedPlan(plan)
+            ? 'readiness-diagnosed-row-candidate239'
+            : 'readiness-preparation-row-candidatee1cc',
     phase: expected.phase,
   };
   const selected = preparationReadinessSelection(scoped);
@@ -651,18 +746,21 @@ function selection(plan) {
   if (preparationPlan(plan))
     return preparationReadinessSelection({
       ...plan,
-      sourceCohort: runtime73Plan(plan)
-        ? RUNTIME73_READINESS_ROW
-        : de332Plan(plan)
-          ? DE332_READINESS_ROW
-          : diagnosedPlan(plan)
-            ? 'readiness-diagnosed-row-candidate239'
-            : 'readiness-preparation-row-candidatee1cc',
+      sourceCohort: runtime797Plan(plan)
+        ? RUNTIME797_READINESS_ROW
+        : runtime73Plan(plan)
+          ? RUNTIME73_READINESS_ROW
+          : de332Plan(plan)
+            ? DE332_READINESS_ROW
+            : diagnosedPlan(plan)
+              ? 'readiness-diagnosed-row-candidate239'
+              : 'readiness-preparation-row-candidatee1cc',
       phase: diagnosedPlan(plan) ? 'warm-resume' : 'cold-first30',
     });
   if (
     [
       RUNTIME73_READINESS_ROW,
+      RUNTIME797_READINESS_ROW,
       DE332_READINESS_ROW,
       'readiness-preparation-row-candidatee1cc',
       'readiness-diagnosed-row-candidate239',
@@ -919,13 +1017,22 @@ export function readinessRow(engine, phase = 'cold-first30') {
 }
 export function validateReadinessPlan(plan) {
   if (sourceBoundPlan(plan)) {
+    const latest = runtime797Plan(plan);
     const current = runtime73Plan(plan);
-    const faults = current ? RUNTIME73_READINESS_FAULT_FIXTURES : DE332_READINESS_FAULT_FIXTURES;
+    const faults = latest
+      ? RUNTIME797_READINESS_FAULT_FIXTURES
+      : current
+        ? RUNTIME73_READINESS_FAULT_FIXTURES
+        : DE332_READINESS_FAULT_FIXTURES;
     assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
     assert.equal(plan.phase, 'geometry-and-preparation-faults');
     assert.deepEqual(
       plan.protocol,
-      current ? RUNTIME73_READINESS_PROTOCOL : DE332_READINESS_PROTOCOL,
+      latest
+        ? RUNTIME797_READINESS_PROTOCOL
+        : current
+          ? RUNTIME73_READINESS_PROTOCOL
+          : DE332_READINESS_PROTOCOL,
     );
     assert.deepEqual(plan.rows, preparationReadinessRows(plan.engine));
     assert.deepEqual(plan.fixture, READINESS_FIXTURE);
@@ -1085,7 +1192,8 @@ export function validateReadinessPlan(plan) {
   assert.equal(plan.candidate.tree, selected.source.tree);
   assert.equal(plan.runtimeRevision, selected.source.revision);
   if (sourceBoundSelection(selected)) {
-    if (selected.runtime73) assertRuntime73ReadinessCandidate(plan.candidate);
+    if (selected.runtime797) assertRuntime797ReadinessCandidate(plan.candidate);
+    else if (selected.runtime73) assertRuntime73ReadinessCandidate(plan.candidate);
     else assertDe332ReadinessCandidate(plan.candidate);
     assert.deepEqual(plan.release.dispatch, {
       workflow: '.github/workflows/solo-native-package-consumer.yml',
@@ -1211,8 +1319,11 @@ export function validateReadinessPlan(plan) {
     selected.diagnosed ||
     selected.settlement
   ) {
-    assert.equal(plan.release.firstEightRequired, false);
-    assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    if (selected.runtime797) validate797FirstEight(plan.release);
+    else {
+      assert.equal(plan.release.firstEightRequired, false);
+      assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    }
   } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.performanceQualification, 'excluded');
   assert.equal(plan.release.physicalQualification, 'unobserved');
@@ -1340,7 +1451,10 @@ export async function prepareReadinessMode(ctx) {
     selected.diagnosed ||
     selected.settlement
   )
-    ctx.report.firstEightRequired = false;
+    if (selected.runtime797) {
+      ctx.report.firstEightRequired = true;
+      ctx.report.firstEightAllCorrectnessPassed = true;
+    } else ctx.report.firstEightRequired = false;
   else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
     scope: selected.diagnosed
@@ -1645,7 +1759,9 @@ export async function readinessAssessment(
     selected.audioFault ||
     selected.diagnosed ||
     selected.settlement
-      ? { firstEightRequired: false }
+      ? selected.runtime797
+        ? { firstEightRequired: true, firstEightAllCorrectnessPassed: true }
+        : { firstEightRequired: false }
       : { firstEightAllCorrectnessPassed: false }),
     performanceQualification: 'excluded',
     scope:

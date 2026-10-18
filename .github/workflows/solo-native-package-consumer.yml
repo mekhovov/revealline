@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       lane:
-        description: 'Fixed73 first-eight and held measurements, de332 diagnostics or separate Cocoa codec control. Review exact source before expansion; no automatic retries.'
+        description: 'Fixed797 qualification lanes; later phases require reviewed predecessors or separate Cocoa codec control. Review exact source before expansion; no automatic retries.'
         type: choice
         required: true
         default: first-eight
@@ -391,6 +391,11 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
+            /docs/performance/solo-next-geometric-797e03-plan.json
+            /docs/performance/solo-first-victory-cpu-797e03-plan.json
+            /docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-797e03.qualification.fixture
+            /docs/performance/fixtures/solo-first-victory-cpu/de332-prior-declared-source.json
             /.github/workflows/solo-remote-39774-correctness-temporary.yml
             /docs/performance/fixtures/solo-73a345-consumer/570-executed-source.json
             /docs/performance/fixtures/solo-73a345-consumer/570-workflow.yml
@@ -412,6 +417,7 @@ jobs:
             /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
             /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-73a345-earned-raster-plan.json
+            /docs/performance/solo-remote-797e03-earned-raster-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
             /docs/performance/solo-remote-de332-earned-raster-plan.json
@@ -722,6 +728,10 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/solo-next-geometric-797e03-plan.json
+            /docs/performance/solo-first-victory-cpu-797e03-plan.json
+            /docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-797e03.qualification.fixture
+            /docs/performance/fixtures/solo-first-victory-cpu/de332-prior-declared-source.json
             /.github/workflows/solo-remote-39774-correctness-temporary.yml
             /.github/workflows/solo-remote-next-geometric-c696-temporary.yml
             /.github/workflows/solo-remote-next-geometric-e1cc-temporary.yml
@@ -967,7 +977,7 @@ jobs:
       - name: Admit exactly one reviewed phase; no automatic continuation
         id: phase
         timeout-minutes: 1
-        run: node scripts/solo-remote-sustained.mjs matrix-plan docs/performance/solo-next-geometric-de332-tooling-plan.json >> "$GITHUB_OUTPUT"
+        run: node scripts/solo-remote-sustained.mjs matrix-plan docs/performance/solo-next-geometric-797e03-plan.json >> "$GITHUB_OUTPUT"
   sustained:
     needs: declare
     runs-on: ubuntu-24.04
@@ -992,6 +1002,12 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
+            /docs/performance/solo-next-geometric-797e03-plan.json
+            /docs/performance/solo-first-victory-cpu-797e03-plan.json
+            /docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-797e03.qualification.fixture
+            /docs/performance/fixtures/solo-first-victory-cpu/de332-prior-declared-source.json
+            /scripts/test-solo-next-797e03-admission.mjs
             /.github/workflows/solo-remote-39774-correctness-temporary.yml
             /.github/workflows/solo-remote-next-geometric-c696-temporary.yml
             /.github/workflows/solo-remote-next-geometric-e1cc-temporary.yml
@@ -1017,8 +1033,8 @@ jobs:
             /docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture
             /docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture
             /docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture
-            /docs/performance/solo-73-lifecycle-long29-plan.json
-            /docs/performance/solo-73-lifecycle-retry-plan.json
+            /docs/performance/solo-797-lifecycle-long29-plan.json
+            /docs/performance/solo-797-lifecycle-retry-plan.json
             /docs/performance/solo-de332-lifecycle-long29-plan.json
             /docs/performance/solo-de332-lifecycle-retry-plan.json
             /docs/performance/solo-final-long29-plan.json
@@ -1036,6 +1052,7 @@ jobs:
             /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
             /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-73a345-earned-raster-plan.json
+            /docs/performance/solo-remote-797e03-earned-raster-plan.json
             /docs/performance/solo-remote-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
@@ -1259,7 +1276,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 de3324607c82787c1a1fec9c13d4f8b5cb74cee4 2954fef5b0f1293ff2e6a97ce978a673dddaa7db > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -1273,7 +1290,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-de332-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797e03-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -1292,8 +1309,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-native-consumer-current.mjs scripts/test-solo-next-de332-admission.mjs scripts/test-solo-next-geometric-admission.mjs scripts/test-solo-next-e1cc-admission.mjs scripts/test-solo-next-baseline-dispatch.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-final-lifecycle-admission.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-qualification-hitch-journal.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-sustained.mjs bind-plan docs/performance/solo-next-geometric-de332-tooling-plan.json "$RUNNER_TEMP/solo-sustained-job.json" '${{ matrix.engine }}' '${{ matrix.repetition }}'
+          node --test --test-concurrency=2 scripts/test-solo-next-797e03-admission.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-next-de332-admission.mjs scripts/test-solo-next-geometric-admission.mjs scripts/test-solo-next-e1cc-admission.mjs scripts/test-solo-next-baseline-dispatch.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-final-lifecycle-admission.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-qualification-hitch-journal.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-sustained.mjs bind-plan docs/performance/solo-next-geometric-797e03-plan.json "$RUNNER_TEMP/solo-sustained-job.json" '${{ matrix.engine }}' '${{ matrix.repetition }}'
       - name: Collect six independent candidate-only transition observations with unchanged gates
         timeout-minutes: ${{ matrix.stepMinutes }}
         working-directory: tools
@@ -1329,9 +1346,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-de332-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-r${{ matrix.repetition }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797e03-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-r${{ matrix.repetition }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-de332-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}/evidence/
+            ${{ runner.temp }}/solo-linux-797e03-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
@@ -1361,6 +1378,11 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
+            /docs/performance/solo-next-geometric-797e03-plan.json
+            /docs/performance/solo-first-victory-cpu-797e03-plan.json
+            /docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-797e03.qualification.fixture
+            /docs/performance/fixtures/solo-first-victory-cpu/de332-prior-declared-source.json
             /.github/workflows/solo-remote-39774-correctness-temporary.yml
             /.github/workflows/solo-remote-final-earned-raster-v2-temporary.yml
             /.github/workflows/solo-remote-raster-temporary.yml
@@ -1389,6 +1411,7 @@ jobs:
             /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
             /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-73a345-earned-raster-plan.json
+            /docs/performance/solo-remote-797e03-earned-raster-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
             /docs/performance/solo-remote-de332-earned-raster-plan.json
@@ -1604,6 +1627,8 @@ jobs:
             /game/vendor/lz-string-1.5.0.min.js
             /game/victory-story.mjs
             /game/video-poster.mjs
+            /docs/performance/fixtures/solo-readiness-797e03/source-compatibility.json
+            /scripts/test-solo-797e03-earned-raster.mjs
             /package-lock.json
             /package.json
             /publishing/vendor/acorn-8.18.0.mjs
@@ -1692,7 +1717,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -1706,7 +1731,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-73a345-earned-raster-${{ matrix.job }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797e03-earned-raster-${{ matrix.job }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -1725,8 +1750,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-73a345-earned-raster.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-de332-earned-raster.mjs scripts/test-solo-earned-raster.mjs scripts/test-solo-remote-raster.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-final-earned-raster-v2.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-raster.mjs bind-plan docs/performance/solo-remote-73a345-earned-raster-plan.json "$RUNNER_TEMP/raster-plan.json" "${{ matrix.job }}"
+          node --test --test-concurrency=2 scripts/test-solo-797e03-earned-raster.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-de332-earned-raster.mjs scripts/test-solo-earned-raster.mjs scripts/test-solo-remote-raster.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-final-earned-raster-v2.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-raster.mjs bind-plan docs/performance/solo-remote-797e03-earned-raster-plan.json "$RUNNER_TEMP/raster-plan.json" "${{ matrix.job }}"
       - name: Run fixed21 earned capture/erosion raster cases
         timeout-minutes: 79
         working-directory: tools
@@ -1762,9 +1787,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-73a345-earned-raster-${{ matrix.job }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797e03-earned-raster-${{ matrix.job }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-73a345-earned-raster-${{ matrix.job }}/evidence/
+            ${{ runner.temp }}/solo-linux-797e03-earned-raster-${{ matrix.job }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
@@ -1794,6 +1819,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /.github/workflows/solo-remote-auxiliary-temporary.yml
             /.github/workflows/solo-remote-final-audio-temporary.yml
             /.github/workflows/solo-remote-final-audio-v2-temporary.yml
@@ -1891,6 +1917,7 @@ jobs:
             /docs/performance/solo-native-lifecycle-plan.json
             /docs/performance/solo-native-lifecycle-v2-plan.json
             /docs/performance/solo-native-touch-73a345-plan.json
+            /docs/performance/solo-native-touch-797e03-plan.json
             /docs/performance/solo-native-touch-de332-plan.json
             /docs/performance/solo-next-geometric-c696-plan.json
             /docs/performance/solo-next-geometric-e1cc-plan.json
@@ -1903,6 +1930,7 @@ jobs:
             /docs/performance/solo-readiness-font-dpr-0feb-plan.json
             /docs/performance/solo-readiness-font-dpr-c696-plan.json
             /docs/performance/solo-readiness-preparation-73a345-plan.json
+            /docs/performance/solo-readiness-preparation-797e03-plan.json
             /docs/performance/solo-readiness-preparation-de332-plan.json
             /docs/performance/solo-readiness-preparation-e1cc-plan.json
             /docs/performance/solo-readiness-preparation-e1cc-v2-plan.json
@@ -2073,6 +2101,11 @@ jobs:
             /game/vendor/LZ-STRING-LICENSE.txt
             /game/victory-story.mjs
             /game/video-poster.mjs
+            /docs/performance/fixtures/solo-readiness-797e03/source-compatibility.json
+            /scripts/test-solo-readiness-797e03-admission.mjs
+            /docs/performance/fixtures/solo-readiness-797e03/required-original-cancel-start-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-797e03/optional-icon-missing-v1.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-797e03/selected-font-request-settlement-v4.qualification.fixture
             /package-lock.json
             /package.json
             /publishing/vendor/acorn-8.18.0.mjs
@@ -2206,7 +2239,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -2220,7 +2253,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-de332-readiness-${{ matrix.engine }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797e03-readiness-${{ matrix.engine }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -2239,9 +2272,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-readiness-73a345-admission.mjs scripts/test-solo-native-consumer-preparation.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-readiness-de332-admission.mjs scripts/test-solo-remote-readiness.mjs scripts/test-solo-preparation-readiness.mjs scripts/test-solo-readiness-cancel-boundary.mjs scripts/test-solo-required-media-transport.mjs scripts/test-solo-selected-font-settlement.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-readiness.mjs bind-plan docs/performance/solo-readiness-preparation-73a345-plan.json "$RUNNER_TEMP/readiness-plan.json" "${{ matrix.engine }}"
-      - name: Run fixed source73 readiness observations
+          node --test --test-concurrency=2 scripts/test-solo-readiness-797e03-admission.mjs scripts/test-solo-native-consumer-preparation.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-readiness-de332-admission.mjs scripts/test-solo-remote-readiness.mjs scripts/test-solo-preparation-readiness.mjs scripts/test-solo-readiness-cancel-boundary.mjs scripts/test-solo-required-media-transport.mjs scripts/test-solo-selected-font-settlement.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-readiness.mjs bind-plan docs/performance/solo-readiness-preparation-797e03-plan.json "$RUNNER_TEMP/readiness-plan.json" "${{ matrix.engine }}"
+      - name: Run fixed source797 readiness observations
         timeout-minutes: 78
         working-directory: tools
         env:
@@ -2276,9 +2309,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-de332-readiness-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797e03-readiness-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-de332-readiness-${{ matrix.engine }}/evidence/
+            ${{ runner.temp }}/solo-linux-797e03-readiness-${{ matrix.engine }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
@@ -2308,6 +2341,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /.github/workflows/solo-remote-native-touch-temporary.yml
             /.github/workflows/solo-remote-native-touch-v2-temporary.yml
             /docs/performance/fixtures/solo-error-witness/historical-source.json
@@ -2324,10 +2358,12 @@ jobs:
             /docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture
             /docs/performance/fixtures/solo-representative/prior-qualification-tools.json
             /docs/performance/solo-native-touch-73a345-plan.json
+            /docs/performance/solo-native-touch-797e03-plan.json
             /docs/performance/solo-native-touch-de332-plan.json
             /docs/performance/solo-native-touch-plan.json
             /docs/performance/solo-native-touch-v2-plan.json
             /docs/performance/solo-readiness-preparation-73a345-plan.json
+            /docs/performance/solo-readiness-preparation-797e03-plan.json
             /docs/performance/solo-remote-final-earned-raster-plan.json
             /game/build-config.json
             /game/campaign-contexts.mjs
@@ -2460,6 +2496,8 @@ jobs:
             /game/vendor/LZ-STRING-LICENSE.txt
             /game/victory-story.mjs
             /game/video-poster.mjs
+            /docs/performance/fixtures/solo-readiness-797e03/source-compatibility.json
+            /scripts/test-solo-touch-797e03-admission.mjs
             /package-lock.json
             /package.json
             /publishing/vendor/acorn-8.18.0.mjs
@@ -2550,7 +2588,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -2564,7 +2602,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-de332-touch-${{ matrix.job }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797e03-touch-${{ matrix.job }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -2583,9 +2621,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-touch-73a345-admission.mjs scripts/test-solo-native-consumer-preparation.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-touch-de332-admission.mjs scripts/test-solo-remote-touch.mjs scripts/test-solo-native-touch-release.mjs scripts/test-solo-native-touch-v2-release.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-touch.mjs bind-plan docs/performance/solo-native-touch-73a345-plan.json "$RUNNER_TEMP/touch-plan.json" "${{ matrix.job }}"
-      - name: Run fixed source73 touch observations
+          node --test --test-concurrency=2 scripts/test-solo-touch-797e03-admission.mjs scripts/test-solo-native-consumer-preparation.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-touch-de332-admission.mjs scripts/test-solo-remote-touch.mjs scripts/test-solo-native-touch-release.mjs scripts/test-solo-native-touch-v2-release.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-touch.mjs bind-plan docs/performance/solo-native-touch-797e03-plan.json "$RUNNER_TEMP/touch-plan.json" "${{ matrix.job }}"
+      - name: Run fixed source797 touch observations
         timeout-minutes: 78
         working-directory: tools
         env:
@@ -2620,9 +2658,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-de332-touch-${{ matrix.job }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797e03-touch-${{ matrix.job }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-de332-touch-${{ matrix.job }}/evidence/
+            ${{ runner.temp }}/solo-linux-797e03-touch-${{ matrix.job }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
@@ -2647,6 +2685,12 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
+            /docs/performance/solo-next-geometric-797e03-plan.json
+            /docs/performance/solo-first-victory-cpu-797e03-plan.json
+            /docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-797e03.qualification.fixture
+            /docs/performance/fixtures/solo-first-victory-cpu/de332-prior-declared-source.json
+            /scripts/test-solo-first-victory-cpu-797e03.mjs
             /.github/workflows/solo-remote-39774-correctness-temporary.yml
             /.github/workflows/solo-remote-cpu-profile-temporary.yml
             /.github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml
@@ -2689,6 +2733,7 @@ jobs:
             /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
             /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-73a345-earned-raster-plan.json
+            /docs/performance/solo-remote-797e03-earned-raster-plan.json
             /docs/performance/solo-remote-cpu-profile-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
@@ -2916,7 +2961,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 de3324607c82787c1a1fec9c13d4f8b5cb74cee4 2954fef5b0f1293ff2e6a97ce978a673dddaa7db > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -2930,7 +2975,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-de332-hud-cpu" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797e03-hud-cpu" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -2949,8 +2994,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-native-consumer-current.mjs scripts/test-solo-first-victory-cpu-de332.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-remote-cpu-profile.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-first-victory-cpu-profile.mjs scripts/test-solo-first-victory-cpu-239.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-first-victory-cpu-de332-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
+          node --test --test-concurrency=2 scripts/test-solo-first-victory-cpu-797e03.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-first-victory-cpu-de332.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-remote-cpu-profile.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-first-victory-cpu-profile.mjs scripts/test-solo-first-victory-cpu-239.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-first-victory-cpu-797e03-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
       - name: Run only this reviewed phase and fixed source pair
         timeout-minutes: 78
         working-directory: tools
@@ -2986,16 +3031,16 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-de332-hud-cpu-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797e03-hud-cpu-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-de332-hud-cpu/evidence/
+            ${{ runner.temp }}/solo-linux-797e03-hud-cpu/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
           retention-days: 14
 
   app-overhead:
-    # Held declaration rejects execution until separately reviewed; no automatic launch.
+    # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.
     if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'app-overhead'
     name: ${{ matrix.engine }}
     runs-on: ubuntu-24.04
@@ -3021,13 +3066,14 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /.github/workflows/solo-remote-baseline-temporary.yml
             /.github/workflows/solo-remote-final-app-diagnostics-temporary.yml
             /.github/workflows/solo-remote-final-app-diagnostics-v2-temporary.yml
             /authoring/motion-lab/animation.mjs
-            /docs/performance/solo-73-app-diagnostics-plan.json
+            /docs/performance/solo-797-app-diagnostics-plan.json
             /docs/performance/solo-de332-app-diagnostics-plan.json
-            /docs/performance/solo-73-journal-cost-plan.json
+            /docs/performance/solo-797-journal-cost-plan.json
             /docs/performance/solo-de332-journal-cost-plan.json
             /docs/performance/solo-final-app-diagnostics-plan.json
             /docs/performance/solo-final-app-diagnostics-v2-plan.json
@@ -3422,7 +3468,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -3436,7 +3482,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-73-app-overhead-${{ matrix.engine }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797-app-overhead-${{ matrix.engine }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -3456,7 +3502,7 @@ jobs:
         run: |
           set -euo pipefail
           node --test --test-concurrency=2 scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-remote-diagnostics.mjs scripts/solo-overhead-interval.test.mjs scripts/test-solo-shared-source-checkout.mjs scripts/test-solo-native-consumer-overhead.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-diagnostics.mjs bind-plan docs/performance/solo-73-app-diagnostics-plan.json "$RUNNER_TEMP/solo-diagnostics-job.json" '${{ matrix.engine }}'
+          node scripts/solo-remote-diagnostics.mjs bind-plan docs/performance/solo-797-app-diagnostics-plan.json "$RUNNER_TEMP/solo-diagnostics-job.json" '${{ matrix.engine }}'
       - name: Run ten fixed matched pairs for app diagnostics overhead
         timeout-minutes: 88
         working-directory: tools
@@ -3495,16 +3541,16 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-73-app-overhead-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797-app-overhead-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-73-app-overhead-${{ matrix.engine }}/evidence/
+            ${{ runner.temp }}/solo-linux-797-app-overhead-${{ matrix.engine }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
           retention-days: 14
 
   journal-cost:
-    # Held declaration rejects execution until separately reviewed; no automatic launch.
+    # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.
     if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'journal-cost'
     name: ${{ matrix.engine }}
     runs-on: ubuntu-24.04
@@ -3530,6 +3576,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /.github/workflows/solo-remote-baseline-temporary.yml
             /.github/workflows/solo-remote-offline-temporary.yml
             /.github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml
@@ -3581,17 +3628,17 @@ jobs:
             /docs/performance/fixtures/solo-representative/first-fracture.xonix.fixture
             /docs/performance/fixtures/solo-representative/signal-07-steering.qualification.fixture
             /docs/performance/fixtures/solo-resource-assessment/retained-3ad-soak.fixture
-            /docs/performance/solo-73-app-diagnostics-plan.json
-            /docs/performance/solo-73-journal-cost-plan.json
-            /docs/performance/solo-73-lifecycle-long29-plan.json
-            /docs/performance/solo-73-lifecycle-retry-plan.json
-            /docs/performance/solo-73-lifecycle-soak-plan.json
-            /docs/performance/solo-73-timing-cold-first30-plan.json
-            /docs/performance/solo-73-timing-jammer-steering-plan.json
-            /docs/performance/solo-73-timing-large-capture-erosion-plan.json
-            /docs/performance/solo-73-timing-long-rail-latency-plan.json
-            /docs/performance/solo-73-timing-sentry-latency-plan.json
-            /docs/performance/solo-73-timing-warm-first30-plan.json
+            /docs/performance/solo-797-app-diagnostics-plan.json
+            /docs/performance/solo-797-journal-cost-plan.json
+            /docs/performance/solo-797-lifecycle-long29-plan.json
+            /docs/performance/solo-797-lifecycle-retry-plan.json
+            /docs/performance/solo-797-lifecycle-soak-plan.json
+            /docs/performance/solo-797-timing-cold-first30-plan.json
+            /docs/performance/solo-797-timing-jammer-steering-plan.json
+            /docs/performance/solo-797-timing-large-capture-erosion-plan.json
+            /docs/performance/solo-797-timing-long-rail-latency-plan.json
+            /docs/performance/solo-797-timing-sentry-latency-plan.json
+            /docs/performance/solo-797-timing-warm-first30-plan.json
             /docs/performance/solo-de332-app-diagnostics-plan.json
             /docs/performance/solo-de332-journal-cost-plan.json
             /docs/performance/solo-de332-lifecycle-long29-plan.json
@@ -4099,7 +4146,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -4113,7 +4160,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-73-journal-cost-${{ matrix.engine }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797-journal-cost-${{ matrix.engine }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -4132,8 +4179,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/solo-runtime73-measurement.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-diagnostics.mjs bind-plan docs/performance/solo-73-journal-cost-plan.json "$RUNNER_TEMP/solo-diagnostics-job.json" '${{ matrix.engine }}'
+          node --test --test-concurrency=2 scripts/solo-de332-diagnostics.test.mjs scripts/solo-de332-timing.test.mjs scripts/solo-de332-lifecycle.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-diagnostics.mjs bind-plan docs/performance/solo-797-journal-cost-plan.json "$RUNNER_TEMP/solo-diagnostics-job.json" '${{ matrix.engine }}'
       - name: Run ten fixed matched pairs for the synchronous journal-hook envelope
         timeout-minutes: 88
         working-directory: tools
@@ -4172,16 +4219,16 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-73-journal-cost-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797-journal-cost-${{ matrix.engine }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-73-journal-cost-${{ matrix.engine }}/evidence/
+            ${{ runner.temp }}/solo-linux-797-journal-cost-${{ matrix.engine }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
           retention-days: 14
 
   timing:
-    # Held declaration rejects execution until separately reviewed; no automatic launch.
+    # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.
     if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'timing' && contains(fromJSON('["cold-first30","warm-first30","sentry-latency","long-rail-latency","large-capture-erosion","jammer-steering"]'), inputs.phase)
     name: ${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}
     runs-on: ubuntu-24.04
@@ -4209,6 +4256,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /.github/workflows/solo-remote-baseline-temporary.yml
             /.github/workflows/solo-remote-offline-temporary.yml
             /.github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml
@@ -4260,17 +4308,17 @@ jobs:
             /docs/performance/fixtures/solo-representative/first-fracture.xonix.fixture
             /docs/performance/fixtures/solo-representative/signal-07-steering.qualification.fixture
             /docs/performance/fixtures/solo-resource-assessment/retained-3ad-soak.fixture
-            /docs/performance/solo-73-app-diagnostics-plan.json
-            /docs/performance/solo-73-journal-cost-plan.json
-            /docs/performance/solo-73-lifecycle-long29-plan.json
-            /docs/performance/solo-73-lifecycle-retry-plan.json
-            /docs/performance/solo-73-lifecycle-soak-plan.json
-            /docs/performance/solo-73-timing-cold-first30-plan.json
-            /docs/performance/solo-73-timing-jammer-steering-plan.json
-            /docs/performance/solo-73-timing-large-capture-erosion-plan.json
-            /docs/performance/solo-73-timing-long-rail-latency-plan.json
-            /docs/performance/solo-73-timing-sentry-latency-plan.json
-            /docs/performance/solo-73-timing-warm-first30-plan.json
+            /docs/performance/solo-797-app-diagnostics-plan.json
+            /docs/performance/solo-797-journal-cost-plan.json
+            /docs/performance/solo-797-lifecycle-long29-plan.json
+            /docs/performance/solo-797-lifecycle-retry-plan.json
+            /docs/performance/solo-797-lifecycle-soak-plan.json
+            /docs/performance/solo-797-timing-cold-first30-plan.json
+            /docs/performance/solo-797-timing-jammer-steering-plan.json
+            /docs/performance/solo-797-timing-large-capture-erosion-plan.json
+            /docs/performance/solo-797-timing-long-rail-latency-plan.json
+            /docs/performance/solo-797-timing-sentry-latency-plan.json
+            /docs/performance/solo-797-timing-warm-first30-plan.json
             /docs/performance/solo-de332-app-diagnostics-plan.json
             /docs/performance/solo-de332-journal-cost-plan.json
             /docs/performance/solo-de332-lifecycle-long29-plan.json
@@ -4778,7 +4826,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -4792,7 +4840,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-73-timing-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797-timing-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -4811,14 +4859,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/solo-runtime73-measurement.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test --test-concurrency=2 scripts/solo-de332-diagnostics.test.mjs scripts/solo-de332-timing.test.mjs scripts/solo-de332-lifecycle.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
           case "$SOLO_MEASUREMENT_PHASE" in
-            cold-first30) PLAN=docs/performance/solo-73-timing-cold-first30-plan.json ;;
-            warm-first30) PLAN=docs/performance/solo-73-timing-warm-first30-plan.json ;;
-            sentry-latency) PLAN=docs/performance/solo-73-timing-sentry-latency-plan.json ;;
-            long-rail-latency) PLAN=docs/performance/solo-73-timing-long-rail-latency-plan.json ;;
-            large-capture-erosion) PLAN=docs/performance/solo-73-timing-large-capture-erosion-plan.json ;;
-            jammer-steering) PLAN=docs/performance/solo-73-timing-jammer-steering-plan.json ;;
+            cold-first30) PLAN=docs/performance/solo-797-timing-cold-first30-plan.json ;;
+            warm-first30) PLAN=docs/performance/solo-797-timing-warm-first30-plan.json ;;
+            sentry-latency) PLAN=docs/performance/solo-797-timing-sentry-latency-plan.json ;;
+            long-rail-latency) PLAN=docs/performance/solo-797-timing-long-rail-latency-plan.json ;;
+            large-capture-erosion) PLAN=docs/performance/solo-797-timing-large-capture-erosion-plan.json ;;
+            jammer-steering) PLAN=docs/performance/solo-797-timing-jammer-steering-plan.json ;;
             *) echo "Unsupported fixed measurement phase" >&2; exit 2 ;;
           esac
           node scripts/solo-remote-sustained.mjs bind-timing-plan "$PLAN" "$RUNNER_TEMP/solo-diagnostics-job.json" '${{ matrix.engine }}' '${{ matrix.repetition }}'
@@ -4860,16 +4908,16 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-73-timing-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797-timing-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-73-timing-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}/evidence/
+            ${{ runner.temp }}/solo-linux-797-timing-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
           retention-days: 14
 
   lifecycle:
-    # Held declaration rejects execution until separately reviewed; no automatic launch.
+    # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.
     if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'lifecycle' && contains(fromJSON('["retry","soak","long29"]'), inputs.phase)
     name: ${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}
     runs-on: ubuntu-24.04
@@ -4898,6 +4946,7 @@ jobs:
           sparse-checkout-cone-mode: false
           sparse-checkout: |
             /.github/workflows/solo-native-package-consumer.yml
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /.github/workflows/solo-remote-baseline-temporary.yml
             /.github/workflows/solo-remote-offline-temporary.yml
             /.github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml
@@ -4949,17 +4998,17 @@ jobs:
             /docs/performance/fixtures/solo-representative/first-fracture.xonix.fixture
             /docs/performance/fixtures/solo-representative/signal-07-steering.qualification.fixture
             /docs/performance/fixtures/solo-resource-assessment/retained-3ad-soak.fixture
-            /docs/performance/solo-73-app-diagnostics-plan.json
-            /docs/performance/solo-73-journal-cost-plan.json
-            /docs/performance/solo-73-lifecycle-long29-plan.json
-            /docs/performance/solo-73-lifecycle-retry-plan.json
-            /docs/performance/solo-73-lifecycle-soak-plan.json
-            /docs/performance/solo-73-timing-cold-first30-plan.json
-            /docs/performance/solo-73-timing-jammer-steering-plan.json
-            /docs/performance/solo-73-timing-large-capture-erosion-plan.json
-            /docs/performance/solo-73-timing-long-rail-latency-plan.json
-            /docs/performance/solo-73-timing-sentry-latency-plan.json
-            /docs/performance/solo-73-timing-warm-first30-plan.json
+            /docs/performance/solo-797-app-diagnostics-plan.json
+            /docs/performance/solo-797-journal-cost-plan.json
+            /docs/performance/solo-797-lifecycle-long29-plan.json
+            /docs/performance/solo-797-lifecycle-retry-plan.json
+            /docs/performance/solo-797-lifecycle-soak-plan.json
+            /docs/performance/solo-797-timing-cold-first30-plan.json
+            /docs/performance/solo-797-timing-jammer-steering-plan.json
+            /docs/performance/solo-797-timing-large-capture-erosion-plan.json
+            /docs/performance/solo-797-timing-long-rail-latency-plan.json
+            /docs/performance/solo-797-timing-sentry-latency-plan.json
+            /docs/performance/solo-797-timing-warm-first30-plan.json
             /docs/performance/solo-de332-app-diagnostics-plan.json
             /docs/performance/solo-de332-journal-cost-plan.json
             /docs/performance/solo-de332-lifecycle-long29-plan.json
@@ -5467,7 +5516,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - timeout-minutes: 1
         uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
@@ -5481,7 +5530,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-73-lifecycle-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797-lifecycle-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}" >> "$GITHUB_ENV"
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
           test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
           npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
@@ -5500,11 +5549,11 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/solo-runtime73-measurement.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test --test-concurrency=2 scripts/solo-de332-diagnostics.test.mjs scripts/solo-de332-timing.test.mjs scripts/solo-de332-lifecycle.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
           case "$SOLO_MEASUREMENT_PHASE" in
-            retry) PLAN=docs/performance/solo-73-lifecycle-retry-plan.json ;;
-            soak) PLAN=docs/performance/solo-73-lifecycle-soak-plan.json ;;
-            long29) PLAN=docs/performance/solo-73-lifecycle-long29-plan.json ;;
+            retry) PLAN=docs/performance/solo-797-lifecycle-retry-plan.json ;;
+            soak) PLAN=docs/performance/solo-797-lifecycle-soak-plan.json ;;
+            long29) PLAN=docs/performance/solo-797-lifecycle-long29-plan.json ;;
             *) echo "Unsupported fixed measurement phase" >&2; exit 2 ;;
           esac
           node scripts/solo-remote-sustained.mjs bind-plan "$PLAN" "$RUNNER_TEMP/solo-diagnostics-job.json" '${{ matrix.engine }}' '${{ matrix.repetition }}'
@@ -5546,9 +5595,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-73-lifecycle-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797-lifecycle-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-73-lifecycle-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}/evidence/
+            ${{ runner.temp }}/solo-linux-797-lifecycle-${{ inputs.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6

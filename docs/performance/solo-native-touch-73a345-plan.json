@@ -75,8 +75,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-touch.mjs",
-      "bytes": 25537,
-      "sha256": "ea12be01d42d29001a3e1773e2e03ccb8b5ee017ed7411090cdfd97870d90093"
+      "bytes": 27993,
+      "sha256": "455fc3b6a963037970215dc679d6336ba2a8b8b10e9313bce096223378ed9ae3"
     }
   ],
   "frozenTools": [
