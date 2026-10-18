@@ -1,0 +1,286 @@
+{
+  "format": "SoloPages461ReadbackAuditV1",
+  "observedAt": "2026-10-18T18:29:44.143Z",
+  "sourceRevision": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+  "run": {
+    "id": 39151144640,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39151144640",
+    "build": {
+      "name": "build",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:04:45Z",
+      "completedAt": "2026-10-18T18:17:07Z"
+    },
+    "deploy": {
+      "name": "deploy",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:20:14Z",
+      "completedAt": "2026-10-18T18:22:27Z"
+    },
+    "verify": {
+      "state": "queued-at-readback",
+      "runtimeExecutionNotClaimed": true
+    }
+  },
+  "artifactEvidence": {
+    "inventoryReceipt": {
+      "id": 12145433514,
+      "bytes": 519469,
+      "sha256": "919dea1ebf5533047380d27bc5511ed833bffff46710b58c732a7de7ceede0b9"
+    },
+    "inventorySha256": "decdb760892aaba8f2dd9743bc2216b153601daa966b140b909fd0f1d059c75c",
+    "archiveReceipt": {
+      "id": 12146290596,
+      "bytes": 545,
+      "sha256": "4085a3a03cd2ce28328feeed445f777f97fae7e254abe116126a0e141450ceaf"
+    },
+    "archive": {
+      "accepted": true,
+      "fileCount": 3469,
+      "archiveBytes": 965601280,
+      "maximumBytes": 980000000,
+      "remainingBytes": 14398720,
+      "fullArchiveDownloaded": false
+    }
+  },
+  "selectedReadback": [
+    {
+      "path": "main-deployment.json",
+      "status": 200,
+      "bytes": 303,
+      "sha256": "afc042d0ae1782799440aeb4c30e6365eec7c6a41e4369c3fed38b14f5cdca87",
+      "observedAt": "2026-10-18T18:29:11.858Z",
+      "expected": {
+        "path": "main-deployment.json",
+        "bytes": 303,
+        "sha256": "afc042d0ae1782799440aeb4c30e6365eec7c6a41e4369c3fed38b14f5cdca87"
+      },
+      "match": true
+    },
+    {
+      "path": "release.json",
+      "status": 200,
+      "bytes": 303,
+      "sha256": "afc042d0ae1782799440aeb4c30e6365eec7c6a41e4369c3fed38b14f5cdca87",
+      "observedAt": "2026-10-18T18:29:11.758Z",
+      "expected": {
+        "path": "release.json",
+        "bytes": 303,
+        "sha256": "afc042d0ae1782799440aeb4c30e6365eec7c6a41e4369c3fed38b14f5cdca87"
+      },
+      "match": true
+    },
+    {
+      "path": "game/build-info.json",
+      "status": 200,
+      "bytes": 143,
+      "sha256": "8d67511e5eb2ec001e538016aeadb656e30b0173c5868107e1ff9f9aea1bf008",
+      "observedAt": "2026-10-18T18:29:11.767Z",
+      "expected": {
+        "path": "game/build-info.json",
+        "bytes": 143,
+        "sha256": "8d67511e5eb2ec001e538016aeadb656e30b0173c5868107e1ff9f9aea1bf008"
+      },
+      "match": true
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "bytes": 6691,
+      "sha256": "657410e4d2ca0f71f84c6ae143ca3bc23753c89c3b96e0f919486e3e0f6f3aea",
+      "observedAt": "2026-10-18T18:29:16.612Z",
+      "expected": {
+        "path": "index.html",
+        "bytes": 6691,
+        "sha256": "657410e4d2ca0f71f84c6ae143ca3bc23753c89c3b96e0f919486e3e0f6f3aea"
+      },
+      "match": true
+    },
+    {
+      "path": "game/index.html",
+      "status": 200,
+      "bytes": 145952,
+      "sha256": "7aeabb268e0cca0c3b08494ac60f734c4e7ce12432378149eccde24ef70d3462",
+      "observedAt": "2026-10-18T18:29:16.726Z",
+      "expected": {
+        "path": "game/index.html",
+        "bytes": 145952,
+        "sha256": "7aeabb268e0cca0c3b08494ac60f734c4e7ce12432378149eccde24ef70d3462"
+      },
+      "match": true
+    },
+    {
+      "path": "game/app.mjs",
+      "status": 200,
+      "bytes": 486864,
+      "sha256": "31e6f53e830c53c4e702bcc507332fdb636e57f4a9709b0c43d0f6dc596881f5",
+      "observedAt": "2026-10-18T18:29:16.861Z",
+      "expected": {
+        "path": "game/app.mjs",
+        "bytes": 486864,
+        "sha256": "31e6f53e830c53c4e702bcc507332fdb636e57f4a9709b0c43d0f6dc596881f5"
+      },
+      "match": true
+    },
+    {
+      "path": "game/backup-set.mjs",
+      "status": 200,
+      "bytes": 10656,
+      "sha256": "d588afc589656c3385a07df9b7bae0611a622f0a92f951d5ed5a940234a07450",
+      "observedAt": "2026-10-18T18:29:16.709Z",
+      "expected": {
+        "path": "game/backup-set.mjs",
+        "bytes": 10656,
+        "sha256": "d588afc589656c3385a07df9b7bae0611a622f0a92f951d5ed5a940234a07450"
+      },
+      "match": true
+    },
+    {
+      "path": "game/backup-storage.mjs",
+      "status": 200,
+      "bytes": 17265,
+      "sha256": "0089491ea5fb24cd78d9f4a8836d0f141ccdd54ca1f04e5d837e399e8f93303f",
+      "observedAt": "2026-10-18T18:29:16.612Z",
+      "expected": {
+        "path": "game/backup-storage.mjs",
+        "bytes": 17265,
+        "sha256": "0089491ea5fb24cd78d9f4a8836d0f141ccdd54ca1f04e5d837e399e8f93303f"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/backup-set-panel.mjs",
+      "status": 200,
+      "bytes": 8931,
+      "sha256": "eabef8c8432cef52175fdde4a04b2201c904ffcad2ca6b496b5139a9e611ef0d",
+      "observedAt": "2026-10-18T18:29:16.710Z",
+      "expected": {
+        "path": "game/ui/backup-set-panel.mjs",
+        "bytes": 8931,
+        "sha256": "eabef8c8432cef52175fdde4a04b2201c904ffcad2ca6b496b5139a9e611ef0d"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "status": 200,
+      "bytes": 50263,
+      "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e",
+      "observedAt": "2026-10-18T18:29:16.725Z",
+      "expected": {
+        "path": "game/ui/render.mjs",
+        "bytes": 50263,
+        "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/performance-session.mjs",
+      "status": 200,
+      "bytes": 20211,
+      "sha256": "d72edbd4de5ee96b3f7e892b54e7d0fb416f2a231a950379081fa8e4b1b9d810",
+      "observedAt": "2026-10-18T18:29:16.623Z",
+      "expected": {
+        "path": "game/ui/performance-session.mjs",
+        "bytes": 20211,
+        "sha256": "d72edbd4de5ee96b3f7e892b54e7d0fb416f2a231a950379081fa8e4b1b9d810"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/scene-clock.mjs",
+      "status": 200,
+      "bytes": 1190,
+      "sha256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be",
+      "observedAt": "2026-10-18T18:29:16.709Z",
+      "expected": {
+        "path": "game/ui/scene-clock.mjs",
+        "bytes": 1190,
+        "sha256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "status": 200,
+      "bytes": 39006,
+      "sha256": "ace07e601893ec1435649056769de62285fed3fa9ac5ab467d97b984ae5a049a",
+      "observedAt": "2026-10-18T18:29:16.710Z",
+      "expected": {
+        "path": "game/ui/demo-host.mjs",
+        "bytes": 39006,
+        "sha256": "ace07e601893ec1435649056769de62285fed3fa9ac5ab467d97b984ae5a049a"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/music-credit.mjs",
+      "status": 200,
+      "bytes": 3892,
+      "sha256": "9b68bcc6cd3651d2ccde7e784b1d035d8c0d8471a049973b26519e4085d15d32",
+      "observedAt": "2026-10-18T18:29:16.871Z",
+      "expected": {
+        "path": "game/ui/music-credit.mjs",
+        "bytes": 3892,
+        "sha256": "9b68bcc6cd3651d2ccde7e784b1d035d8c0d8471a049973b26519e4085d15d32"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/music-credits.mjs",
+      "status": 200,
+      "bytes": 3885,
+      "sha256": "db855f1ba66fff0ad0f1e17ce0285f0c68949b86f5b8fcfc208a57b9f6d63249",
+      "observedAt": "2026-10-18T18:29:16.709Z",
+      "expected": {
+        "path": "game/ui/music-credits.mjs",
+        "bytes": 3885,
+        "sha256": "db855f1ba66fff0ad0f1e17ce0285f0c68949b86f5b8fcfc208a57b9f6d63249"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/mission-library-browser.mjs",
+      "status": 200,
+      "bytes": 50153,
+      "sha256": "952e3a1175a8fc730cb50320363a6ac9c36bce477a002a8356fefa572e95ff57",
+      "observedAt": "2026-10-18T18:29:16.725Z",
+      "expected": {
+        "path": "game/ui/mission-library-browser.mjs",
+        "bytes": 50153,
+        "sha256": "952e3a1175a8fc730cb50320363a6ac9c36bce477a002a8356fefa572e95ff57"
+      },
+      "match": true
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "status": 200,
+      "bytes": 48598,
+      "sha256": "09f3f651e71052fdea4352e7e1d1dd418c6b89e10eef47f5de7fb53774cfd70c",
+      "observedAt": "2026-10-18T18:29:16.731Z",
+      "expected": {
+        "path": "game/ui/soundtrack-player.mjs",
+        "bytes": 48598,
+        "sha256": "09f3f651e71052fdea4352e7e1d1dd418c6b89e10eef47f5de7fb53774cfd70c"
+      },
+      "match": true
+    },
+    {
+      "path": "game/mp3-inspection-worker.mjs",
+      "status": 200,
+      "bytes": 540,
+      "sha256": "ef71ab1a354d36928de1ecb4f8ace3d432be084cdfe7209d2a3ecc2a98cee1fc",
+      "observedAt": "2026-10-18T18:29:16.709Z",
+      "expected": {
+        "path": "game/mp3-inspection-worker.mjs",
+        "bytes": 540,
+        "sha256": "ef71ab1a354d36928de1ecb4f8ace3d432be084cdfe7209d2a3ecc2a98cee1fc"
+      },
+      "match": true
+    }
+  ],
+  "limitations": [
+    "Selected public inventory hashes and identity only; no browser gameplay or whole-site scan.",
+    "No duplicate native workflow dispatched."
+  ]
+}

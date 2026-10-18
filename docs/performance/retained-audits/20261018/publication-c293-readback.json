@@ -1,0 +1,283 @@
+{
+  "format": "SoloMainPagesPublicReadbackAuditV1",
+  "createdAt": "2026-10-18T18:06:43.618Z",
+  "sourceRevision": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+  "run": {
+    "id": 39149579684,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39149579684",
+    "status": "completed",
+    "conclusion": "success",
+    "completedAt": "2026-10-18T18:04:11Z",
+    "jobs": [
+      {
+        "id": 117742253665,
+        "name": "build",
+        "conclusion": "success",
+        "startedAt": "2026-10-18T17:41:02Z",
+        "completedAt": "2026-10-18T17:53:24Z"
+      },
+      {
+        "id": 117746319919,
+        "name": "deploy",
+        "conclusion": "success",
+        "startedAt": "2026-10-18T17:58:43Z",
+        "completedAt": "2026-10-18T17:59:13Z"
+      },
+      {
+        "id": 117747558077,
+        "name": "verify",
+        "conclusion": "success",
+        "startedAt": "2026-10-18T18:03:33Z",
+        "completedAt": "2026-10-18T18:04:11Z"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "id": 12144499392,
+      "bytes": 519469,
+      "sha256": "e6ab27ecf062ea7e584b43070896c05a8066b70632355715ef4227ce058a319c",
+      "zipCRCVerified": true,
+      "files": [
+        {
+          "path": "main-pages-receipt.json",
+          "bytes": 4429,
+          "sha256": "d64a5ad5fec9bed2bef5872a2e6f2bda359e445fc6640988968ad600007c786d"
+        },
+        {
+          "path": "main-pages-inventory.json",
+          "bytes": 514738,
+          "sha256": "97151ea7fcf48895eb1c968644259cc20129587a53a363f61be53e639c07674e"
+        }
+      ]
+    },
+    {
+      "id": 12144454512,
+      "bytes": 544,
+      "sha256": "729e4461d2d0cea81fd1e68a25a8258458dbcffd5e8fb8bb5ae091e5786a3985",
+      "zipCRCVerified": true,
+      "files": [
+        {
+          "path": "main-pages-archive-receipt.json",
+          "bytes": 599,
+          "sha256": "261418a5aa7dab104d368b3926373f15d12fccf5038751c4c5a96b32208d91c3"
+        }
+      ]
+    },
+    {
+      "id": 12145523236,
+      "bytes": 284,
+      "sha256": "ee38a3d94ebf8c5a33bc424b1c7e391f75b62917030f282b0b9734a962bf73c2",
+      "zipCRCVerified": true,
+      "files": [
+        {
+          "path": "practice-site-receipt.json",
+          "bytes": 132,
+          "sha256": "a78f1a58d0a714f920cc9bb88b5bc930b936b0e6bf6cf1a1e9136b8d1c207e14"
+        }
+      ]
+    }
+  ],
+  "inventory": {
+    "format": "revealline-main-pages-receipt.v1",
+    "sourceRevision": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+    "files": 3469,
+    "bytes": 962584362,
+    "maximumBytes": 980000000,
+    "measurement": "raw-final-staged-file-bytes; not tar archive size",
+    "completeInventory": true,
+    "withinCapacity": true,
+    "capacityAccepted": true,
+    "inventorySha256": "97151ea7fcf48895eb1c968644259cc20129587a53a363f61be53e639c07674e",
+    "errors": []
+  },
+  "archiveAcceptance": {
+    "format": "revealline-main-pages-archive-receipt.v1",
+    "sourceRevision": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+    "artifactId": "12145157272",
+    "measurement": "actual uncompressed artifact.tar emitted by the pinned Pages action",
+    "maximumArchiveBytes": 980000000,
+    "archiveAccepted": true,
+    "errors": [],
+    "archiveBytes": 965601280,
+    "stagedBytes": 962584362,
+    "inventorySha256": "97151ea7fcf48895eb1c968644259cc20129587a53a363f61be53e639c07674e",
+    "archiveSha256": "bcc2e62a18c073aa88f849f01a39e8714804b95478d50c121a16aa6695e2305f",
+    "files": 3469,
+    "overheadBytes": 3016918
+  },
+  "publicReadback": {
+    "format": "SoloSelectedPublicInventoryAuditV1",
+    "sourceRevision": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+    "run": 39149579684,
+    "receiptArtifact": 12144499392,
+    "inventorySHA256": "97151ea7fcf48895eb1c968644259cc20129587a53a363f61be53e639c07674e",
+    "observedAt": "2026-10-18T18:05:57.750Z",
+    "entries": [
+      {
+        "path": "main-deployment.json",
+        "status": 200,
+        "bytes": 308,
+        "sha256": "4436ed43ca3e785ebe3918e1b12b55b4f371cc7b4da414e3d57397c0fdac24c1",
+        "expectedBytes": 308,
+        "expectedSHA256": "4436ed43ca3e785ebe3918e1b12b55b4f371cc7b4da414e3d57397c0fdac24c1",
+        "match": true
+      },
+      {
+        "path": "release.json",
+        "status": 200,
+        "bytes": 308,
+        "sha256": "4436ed43ca3e785ebe3918e1b12b55b4f371cc7b4da414e3d57397c0fdac24c1",
+        "expectedBytes": 308,
+        "expectedSHA256": "4436ed43ca3e785ebe3918e1b12b55b4f371cc7b4da414e3d57397c0fdac24c1",
+        "match": true
+      },
+      {
+        "path": "game/build-info.json",
+        "status": 200,
+        "bytes": 143,
+        "sha256": "bc4a36ac5cebaf89b6b376511bcf4576e44a93dca0cb28ab698e26ea6c1eebbb",
+        "expectedBytes": 143,
+        "expectedSHA256": "bc4a36ac5cebaf89b6b376511bcf4576e44a93dca0cb28ab698e26ea6c1eebbb",
+        "match": true
+      },
+      {
+        "path": "index.html",
+        "status": 200,
+        "bytes": 6691,
+        "sha256": "657410e4d2ca0f71f84c6ae143ca3bc23753c89c3b96e0f919486e3e0f6f3aea",
+        "expectedBytes": 6691,
+        "expectedSHA256": "657410e4d2ca0f71f84c6ae143ca3bc23753c89c3b96e0f919486e3e0f6f3aea",
+        "match": true
+      },
+      {
+        "path": "game/index.html",
+        "status": 200,
+        "bytes": 145952,
+        "sha256": "b438a3b137ebe9b51cc49182128ce177973cb99b591bd2e1ba0c70f619f06464",
+        "expectedBytes": 145952,
+        "expectedSHA256": "b438a3b137ebe9b51cc49182128ce177973cb99b591bd2e1ba0c70f619f06464",
+        "match": true
+      },
+      {
+        "path": "game/app.mjs",
+        "status": 200,
+        "bytes": 486864,
+        "sha256": "31e6f53e830c53c4e702bcc507332fdb636e57f4a9709b0c43d0f6dc596881f5",
+        "expectedBytes": 486864,
+        "expectedSHA256": "31e6f53e830c53c4e702bcc507332fdb636e57f4a9709b0c43d0f6dc596881f5",
+        "match": true
+      },
+      {
+        "path": "game/backup-set.mjs",
+        "status": 200,
+        "bytes": 10656,
+        "sha256": "d588afc589656c3385a07df9b7bae0611a622f0a92f951d5ed5a940234a07450",
+        "expectedBytes": 10656,
+        "expectedSHA256": "d588afc589656c3385a07df9b7bae0611a622f0a92f951d5ed5a940234a07450",
+        "match": true
+      },
+      {
+        "path": "game/backup-storage.mjs",
+        "status": 200,
+        "bytes": 17265,
+        "sha256": "0089491ea5fb24cd78d9f4a8836d0f141ccdd54ca1f04e5d837e399e8f93303f",
+        "expectedBytes": 17265,
+        "expectedSHA256": "0089491ea5fb24cd78d9f4a8836d0f141ccdd54ca1f04e5d837e399e8f93303f",
+        "match": true
+      },
+      {
+        "path": "game/ui/backup-set-panel.mjs",
+        "status": 200,
+        "bytes": 8931,
+        "sha256": "eabef8c8432cef52175fdde4a04b2201c904ffcad2ca6b496b5139a9e611ef0d",
+        "expectedBytes": 8931,
+        "expectedSHA256": "eabef8c8432cef52175fdde4a04b2201c904ffcad2ca6b496b5139a9e611ef0d",
+        "match": true
+      },
+      {
+        "path": "game/ui/render.mjs",
+        "status": 200,
+        "bytes": 50263,
+        "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e",
+        "expectedBytes": 50263,
+        "expectedSHA256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e",
+        "match": true
+      },
+      {
+        "path": "game/ui/performance-session.mjs",
+        "status": 200,
+        "bytes": 20211,
+        "sha256": "d72edbd4de5ee96b3f7e892b54e7d0fb416f2a231a950379081fa8e4b1b9d810",
+        "expectedBytes": 20211,
+        "expectedSHA256": "d72edbd4de5ee96b3f7e892b54e7d0fb416f2a231a950379081fa8e4b1b9d810",
+        "match": true
+      },
+      {
+        "path": "game/ui/scene-clock.mjs",
+        "status": 200,
+        "bytes": 1190,
+        "sha256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be",
+        "expectedBytes": 1190,
+        "expectedSHA256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be",
+        "match": true
+      },
+      {
+        "path": "game/ui/demo-host.mjs",
+        "status": 200,
+        "bytes": 39006,
+        "sha256": "ace07e601893ec1435649056769de62285fed3fa9ac5ab467d97b984ae5a049a",
+        "expectedBytes": 39006,
+        "expectedSHA256": "ace07e601893ec1435649056769de62285fed3fa9ac5ab467d97b984ae5a049a",
+        "match": true
+      },
+      {
+        "path": "game/ui/music-credit.mjs",
+        "status": 200,
+        "bytes": 3892,
+        "sha256": "9b68bcc6cd3651d2ccde7e784b1d035d8c0d8471a049973b26519e4085d15d32",
+        "expectedBytes": 3892,
+        "expectedSHA256": "9b68bcc6cd3651d2ccde7e784b1d035d8c0d8471a049973b26519e4085d15d32",
+        "match": true
+      },
+      {
+        "path": "game/ui/music-credits.mjs",
+        "status": 200,
+        "bytes": 3885,
+        "sha256": "db855f1ba66fff0ad0f1e17ce0285f0c68949b86f5b8fcfc208a57b9f6d63249",
+        "expectedBytes": 3885,
+        "expectedSHA256": "db855f1ba66fff0ad0f1e17ce0285f0c68949b86f5b8fcfc208a57b9f6d63249",
+        "match": true
+      },
+      {
+        "path": "game/ui/mission-library-browser.mjs",
+        "status": 200,
+        "bytes": 50153,
+        "sha256": "952e3a1175a8fc730cb50320363a6ac9c36bce477a002a8356fefa572e95ff57",
+        "expectedBytes": 50153,
+        "expectedSHA256": "952e3a1175a8fc730cb50320363a6ac9c36bce477a002a8356fefa572e95ff57",
+        "match": true
+      },
+      {
+        "path": "game/ui/soundtrack-player.mjs",
+        "status": 200,
+        "bytes": 48598,
+        "sha256": "09f3f651e71052fdea4352e7e1d1dd418c6b89e10eef47f5de7fb53774cfd70c",
+        "expectedBytes": 48598,
+        "expectedSHA256": "09f3f651e71052fdea4352e7e1d1dd418c6b89e10eef47f5de7fb53774cfd70c",
+        "match": true
+      },
+      {
+        "path": "game/mp3-inspection-worker.mjs",
+        "status": 200,
+        "bytes": 540,
+        "sha256": "ef71ab1a354d36928de1ecb4f8ace3d432be084cdfe7209d2a3ecc2a98cee1fc",
+        "expectedBytes": 540,
+        "expectedSHA256": "ef71ab1a354d36928de1ecb4f8ace3d432be084cdfe7209d2a3ecc2a98cee1fc",
+        "match": true
+      }
+    ],
+    "limitations": "Selected public bytes only; not browser/gameplay qualification. Full uploaded archive independently accepted by the publication job."
+  },
+  "scope": "Read-only HTTPS identity and selected inventory integrity audit. No browser gameplay, full local archive download, local writes or build. Publication job independently accepted the entire uploaded Pages archive. Does not establish physical-device or full-app qualification."
+}

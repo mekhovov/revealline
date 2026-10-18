@@ -1,0 +1,171 @@
+{
+  "format": "SoloDemoGeometrySourceControlsAuditV1",
+  "observedAt": "2026-10-18T18:30:10.305Z",
+  "pullRequest": 1628,
+  "head": "2a377f2b9fb7a30e4e5f21ffc393e573e6c5b8ef",
+  "tree": "e648b24312730d7347ebb9dd81ea2ab172948555",
+  "run": 39153038418,
+  "job": 117751058666,
+  "artifact": {
+    "id": 12146530172,
+    "bytes": 24684,
+    "sha256": "fbaa846f7f080bd8a4b89512f517340082a68ace526810201b060c895ae53bc8",
+    "digestAndZipCRCVerified": true
+  },
+  "receipt": {
+    "format": "revealline-focused-shard.v1",
+    "state": "complete",
+    "shard": {
+      "index": 3,
+      "total": 4
+    },
+    "identity": {
+      "sourceRevision": "2a377f2b9fb7a30e4e5f21ffc393e573e6c5b8ef",
+      "workflowRevision": "c9fbe53890e8f7b651028e6efa973a09f00d4b4e",
+      "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+      "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "changedPathsSha256": "e9381533453a42ceacfec0389e2215ca91e7f49ddbfb8c6f94485f3a5d9782e3",
+      "fallbackHandled": false,
+      "sourceTree": "e648b24312730d7347ebb9dd81ea2ab172948555"
+    },
+    "plan": {
+      "commands": [
+        {
+          "id": "publishing-controller",
+          "command": "node",
+          "args": [
+            "--test",
+            "publishing/focused-tests.test.mjs",
+            "publishing/fastline-merge-controller.test.mjs",
+            "publishing/fastline-release-inputs.test.mjs",
+            "publishing/fastline-release-objects.test.mjs",
+            "publishing/fastline-release-publisher.test.mjs",
+            "publishing/source-workflow.test.mjs",
+            "scripts/test-pages-capacity-evidence.mjs",
+            "scripts/test-pages-archive-evidence.mjs",
+            "scripts/test-pages-recovery.mjs",
+            "scripts/test-pages-capacity-report.mjs",
+            "scripts/test-main-pages-metadata.mjs",
+            "scripts/test-pages-candidate-contract.mjs",
+            "scripts/test-pages-candidate-overlay.mjs",
+            "scripts/test-pages-candidate-archive.mjs",
+            "scripts/test-pages-candidate-measurement.mjs",
+            "scripts/test-pages-candidate-stack.mjs",
+            "scripts/test-pages-stack-contract.mjs",
+            "scripts/test-pages-stack-source.mjs",
+            "scripts/test-pages-stack-packet.mjs",
+            "scripts/test-pages-stack-measurement.mjs",
+            "scripts/test-pages-stack-artifacts.mjs",
+            "scripts/test-pages-stack-e2e.mjs",
+            "publishing/test-policy.test.mjs"
+          ]
+        },
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": [
+            "run",
+            "validate"
+          ],
+          "timeoutMs": 1800000
+        },
+        {
+          "id": "changed-test:scripts/solo-runtime73-measurement.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/solo-runtime73-measurement.test.mjs"
+          ]
+        }
+      ],
+      "sha256": "7acebb788dd7c0636513ee3f383b5d6dedb510b8c0409d6773d00c4e9dbbeb84"
+    },
+    "indices": [
+      2
+    ],
+    "result": {
+      "attempted": 1,
+      "failures": [],
+      "exitCode": 0
+    }
+  },
+  "tap": {
+    "tests": 535,
+    "passed": 535,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "todo": 0,
+    "durationMs": 88497.75463,
+    "complete": true,
+    "outputSha256": "178a1f6a95fff8ffa6a68989a76fb9a6dc0af263b99bb4de9805449d0e9563ea"
+  },
+  "geometryControls": [
+    {
+      "title": "actual probe waits for asynchronous size invalidation and two distinct native callbacks",
+      "line": "ok 482 - actual probe waits for asynchronous size invalidation and two distinct native callbacks"
+    },
+    {
+      "title": "one matching frame or repeated host reads cannot satisfy two native frame opportunities",
+      "line": "ok 483 - one matching frame or repeated host reads cannot satisfy two native frame opportunities"
+    },
+    {
+      "title": "geometry and painter-generation changes reset the consecutive frame pair",
+      "line": "ok 484 - geometry and painter-generation changes reset the consecutive frame pair"
+    },
+    {
+      "title": "missing repaint reaches the unchanged deadline and releases only its owned scheduling handles",
+      "line": "ok 485 - missing repaint reaches the unchanged deadline and releases only its owned scheduling handles"
+    },
+    {
+      "title": "duplicate native timestamps and changed owners fail closed with complete readiness cleanup",
+      "line": "ok 486 - duplicate native timestamps and changed owners fail closed with complete readiness cleanup"
+    },
+    {
+      "title": "readiness refuses concurrent ownership, invalid policy and stale pre-pause draw boundaries",
+      "line": "ok 487 - readiness refuses concurrent ownership, invalid policy and stale pre-pause draw boundaries"
+    },
+    {
+      "title": "assessment rejects relabeled host polls, stale paint, resized bounds, missing receipts and altered timing",
+      "line": "ok 488 - assessment rejects relabeled host polls, stale paint, resized bounds, missing receipts and altered timing"
+    },
+    {
+      "title": "actual twenty-cycle driver settles every paused resize and keeps exactly64 snapshots and strict Close draws",
+      "line": "ok 489 - actual twenty-cycle driver settles every paused resize and keeps exactly64 snapshots and strict Close draws"
+    },
+    {
+      "title": "new declarations preserve the failed width receipt, exact workload and original limits",
+      "line": "ok 490 - new declarations preserve the failed width receipt, exact workload and original limits"
+    },
+    {
+      "title": "current successor pins are exact; old executed inputs have no production admission fallback",
+      "line": "ok 491 - current successor pins are exact; old executed inputs have no production admission fallback"
+    },
+    {
+      "title": "unknown geometry policies, expanded workload and missing trusted activation remain refused",
+      "line": "ok 492 - unknown geometry policies, expanded workload and missing trusted activation remain refused"
+    },
+    {
+      "title": "both actual commands include complete current and historical closure with fixed source and original bounds",
+      "line": "ok 512 - both actual commands include complete current and historical closure with fixed source and original bounds"
+    },
+    {
+      "title": "native callback cap retains bounded failed samples and closes readiness handles",
+      "line": "ok 513 - native callback cap retains bounded failed samples and closes readiness handles"
+    },
+    {
+      "title": "initial geometry read failure releases pending owner so a fresh boundary can recover",
+      "line": "ok 514 - initial geometry read failure releases pending owner so a fresh boundary can recover"
+    },
+    {
+      "title": "readiness declaration refuses expanded limits, one-frame admission and lost failure receipt",
+      "line": "ok 515 - readiness declaration refuses expanded limits, one-frame admission and lost failure receipt"
+    }
+  ],
+  "limits": [
+    "Source controls only; no native resize or twenty-cycle qualification claimed.",
+    "Inherited replay portability source failure39153038465 retained; no gate relaxation or duplicate mirror patch.",
+    "Focused shard1 and final source admission pending when observed."
+  ]
+}

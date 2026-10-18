@@ -1,0 +1,116 @@
+{
+  "format": "SoloWebKitCacheErrorAttributionReviewV1",
+  "observedAt": "2026-10-18T18:10:30.256908+00:00",
+  "runtimeSource": "797e03f28743921842df6aa57520a72016ba3dfc",
+  "artifact": {
+    "id": 12142839985,
+    "bytes": 1317889,
+    "sha256": "fe35927a7d6d473566dd5e450651cd4b4828731e9234b81723eef3ed2edca1d4",
+    "crc": "verified"
+  },
+  "report": {
+    "member": "solo-linux-797-lifecycle-retry-webkit-1/evidence/retry-webkit-r1-candidate/report.json",
+    "bytes": 8716137,
+    "sha256": "e7cb70145e7fc1062385364d70f55bd9e246368ffbafd5ace74c31e1a115209a"
+  },
+  "witnesses": [
+    {
+      "errorIndex": 0,
+      "observedAt": "2026-10-18T16:35:04.706Z",
+      "observedTopLevelURL": "http://127.0.0.1:43073/game/playground/",
+      "action": {
+        "path": "4",
+        "type": "follow"
+      },
+      "details": {
+        "format": "SoloQualificationPageErrorDetailsV1",
+        "thrownType": "object",
+        "fields": {
+          "name": {
+            "value": "Cache API operation failed",
+            "type": "string",
+            "readFailed": false,
+            "truncated": false,
+            "originalCodeUnits": 26
+          },
+          "message": {
+            "value": "Context is stopped",
+            "type": "string",
+            "readFailed": false,
+            "truncated": false,
+            "originalCodeUnits": 18
+          },
+          "stack": {
+            "value": "",
+            "type": "string",
+            "readFailed": false,
+            "truncated": false,
+            "originalCodeUnits": 0
+          }
+        },
+        "scope": "Error-event fields only; top-level page URL is not the exception frame identity."
+      }
+    }
+  ],
+  "transition": {
+    "path": "4",
+    "type": "follow",
+    "label": null,
+    "startedAt": "2026-10-18T16:35:04.244Z",
+    "status": "pass",
+    "navigation": {
+      "mode": "same-page-prepared-url; does not activate the link or its popup target",
+      "from": "http://127.0.0.1:43073/game/playground/",
+      "destination": "http://127.0.0.1:43073/game/?practice=1&revision=2&performance=1"
+    },
+    "preparation": {
+      "selector": "[data-presentation-status=\"auxiliary\"]",
+      "status": "ready",
+      "initial": {
+        "url": "http://127.0.0.1:43073/game/playground/",
+        "present": true,
+        "state": "ready",
+        "message": ""
+      },
+      "final": {
+        "url": "http://127.0.0.1:43073/game/playground/",
+        "present": true,
+        "state": "ready",
+        "message": ""
+      },
+      "elapsedMs": 12.73728100000153
+    },
+    "completedAt": "2026-10-18T16:35:09.671Z"
+  },
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/webkit/wkPage.ts",
+      "bytes": 61995,
+      "sha256": "31a1492936ecb34cea00628827ed830763f8f7a58fd761d0c4ecf4db6f6a4c9c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/browser_patches/webkit/UPSTREAM_CONFIG.sh",
+      "bytes": 126,
+      "sha256": "3554c5b666ed87032fb22e78956f8a2fffe1faede63ae8dcae60a26961f6419c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/Modules/cache/DOMCacheEngine.cpp",
+      "bytes": 7320,
+      "sha256": "b056ff8431016e729280a6c4b03a340116307746060941d6af24a7020dbe95ac"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/Modules/cache/DOMCache.cpp",
+      "bytes": 26108,
+      "sha256": "7a5447dbfcefcfaff843e5735aa494c2e7f1d684edc88e72a9db96a47f24ddda"
+    }
+  ],
+  "findings": [
+    "Exact Playwright v1.62.1 WebKit adapter maps JavaScript-source error-level protocol console messages into pageerror events, including messages with no stack.",
+    "The exact WebKit upstream revision declared by Playwright v1.62.1 emits the retained Cache API wording through its native console logger before returning an exception. Cache completion after a stopped context has such a path.",
+    "The retained error name, message and empty stack are consistent with that mapping during the Playground-to-Solo follow navigation; the report has no exception-frame identity or independent DOM error/unhandledrejection witness.",
+    "Therefore the observation does not establish an uncaught application exception. The exact initiating cache operation, frame and browser-path attribution remain unproven."
+  ],
+  "disposition": "Keep failed report and all original gates unchanged. No suppression, retroactive pass or runtime patch is authorized by this source review.",
+  "next": "If this remains after the public-flow fixes, capture bounded frame/lifecycle and DOM error/unhandledrejection evidence in a separate declared diagnostic, after the pending trace v2 observation; distinguish browser console diagnostics from uncaught application exceptions without discarding either.",
+  "localExecution": "Read-only source and in-memory archive audit only; no tests or browser execution"
+}

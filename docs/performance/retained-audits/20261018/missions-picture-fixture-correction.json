@@ -1,0 +1,18 @@
+{
+  "format": "SoloMissionsHostFixturePublicationV1",
+  "pullRequest": 1620,
+  "url": "https://github.com/mekhovov/revealline/pull/1620",
+  "branch": "codex/solo-missions-stage-observation",
+  "parent": "6dbbde23b961b076c17f39cb4606c10e678c1c63",
+  "head": "2c551cf9ea075966a9ab2005a065d5fc75842bfe",
+  "tree": "4fffac40fc7472be4d7bf33ea971774f1299b4e3",
+  "path": "game/test/mission-library-stage-observation.test.mjs",
+  "blob": "3b57b142d87e47fce45de9e469169d2db4b7b0b2",
+  "bytes": 6813,
+  "sha256": "31309c394568b362a08f1c5cddd071119c229b0fa5ec1198482cb5d08f79b1b8",
+  "mode": "guarded-normal-fast-forward",
+  "peerReview": "status_checks clean source review; no local tests",
+  "retainedFailureAudit": "7ba425fff69f9b43ef4190922d5608a5170df6c3",
+  "remoteValidation": "pending-new-head-CI",
+  "readback": "Immediate PR endpoint was briefly stale; independent subsequent ref/PR/parent/tree/file readback confirmed exact successful update."
+}

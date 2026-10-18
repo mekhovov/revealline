@@ -56,6 +56,54 @@
       "blob": "8e999f638e696af2063141d346b33fcf4f660144",
       "bytes": 44766,
       "sha256": "2426b6d8a992e33f196e49506dc66fb0fd85781619cadf1280040a725338e29d"
+    },
+    {
+      "path": "publication-c293-readback.json",
+      "blob": "649661e1af2adc29107d85aa7871c1888d99e0c1",
+      "bytes": 10352,
+      "sha256": "d44577852ebf984015725e12b8b1b8f37092ce943ba2d9c29ffc69cbb4850c90"
+    },
+    {
+      "path": "publication-461-readback.json",
+      "blob": "ef9bbe25d1f089c8e80220b139e67aab8fd0166a",
+      "bytes": 9229,
+      "sha256": "9a5998517fb3168f127604ac3d692a0dd94e39da71a5eb261a0944074ac38bb7"
+    },
+    {
+      "path": "webkit-cache-reporting-attribution.json",
+      "blob": "2628a8f88acc6d90c35054b1473a6617e7472f45",
+      "bytes": 5046,
+      "sha256": "cfb2b265a1e60e31140f46e092dbfdc50553b7817e54d622d1fd4a17a68c22b7"
+    },
+    {
+      "path": "trace-source-format-failure-32e0.json",
+      "blob": "4e188aeb993051932c54ea6377aa70b4d22ab121",
+      "bytes": 4164,
+      "sha256": "599bc5c411f72ebf4cedcf68e245e4d2a558b0f599b18c2d956bcaf6b746220d"
+    },
+    {
+      "path": "trace-replay-source-pass-85a1.json",
+      "blob": "3c1cce69374a8c7a8a29868a78ed11cc337f048c",
+      "bytes": 13425,
+      "sha256": "c8fa1ab8c118338ea36f364ff74f77c19e0ce94509cd7c80cffefeb80580b24b"
+    },
+    {
+      "path": "demo-geometry-source-pass-2a37.json",
+      "blob": "4073db97e057c00db5642db419512c4c0fab027d",
+      "bytes": 7485,
+      "sha256": "0c6efa6ec275e5a7e4ebccabf584fc09ef705c7509519d5726f37dc7a3a0c3be"
+    },
+    {
+      "path": "missions-host-failures-2c55.json",
+      "blob": "dd3dc76b312b3d1df736d874275fec9ee6c4b8b0",
+      "bytes": 51238,
+      "sha256": "0b4e7ea8d57cf632f7cdcecb2fecefb3b792b6975b722afaefccf33e2f58d8e1"
+    },
+    {
+      "path": "missions-picture-fixture-correction.json",
+      "blob": "da430509f8592920a62ec52875aae99169c7561e",
+      "bytes": 947,
+      "sha256": "5594e0193ee53ca8c81695e25384e2918167c8f82bdec7f8a92f863b5599c37f"
     }
   ]
 }
