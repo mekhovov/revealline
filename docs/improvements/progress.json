@@ -16,11 +16,12 @@
   "nextPriority": [
     "Merge-ready exact-head gates",
     "F82 rebase after CI predecessor",
-    "F01 remaining hosts",
-    "F11b guided restore",
-    "F15b menu animation",
-    "F12 Community readiness",
-    "F06"
+    "F01 Team and remaining hosts",
+    "F11b guided apply and recovery",
+    "F78 query/pagination ownership",
+    "F06 remaining family presets",
+    "F79 local installed inventory",
+    "F02a first-flight entry"
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -167,7 +168,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Finish audio save-warning ownership; integrate menu-animation dirty preference handling after shared feedback API merges. Demo owner remains D-dependent.",
+      "next": "Menu-animation slice reviewed in draft stack; continue Demo owner only after reviewed D predecessor.",
       "evidence": [
         "Injected failed write silently leaves an auto-next preference only in memory; unrelated other-tab preference write currently resets it. Core slice preserves dirty keys and verifies retry readback. Display and input owners already handle some persistence failures; avoid duplicating them."
       ],
@@ -188,8 +189,10 @@
         },
         {
           "id": "menu-animation",
-          "status": "developing",
-          "dependency": "Explicit draft stack on PR1629; rebase after merge"
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1636",
+          "commit": "190f41cfa3842b2c9f68deb0a9b9d4222824e97b",
+          "evidence": "Independent source and actual Solo modeled-storage browser review passed: failed writes, other-tab intent preservation, verified retry/focus, Ukrainian320px warning. Stack on1629; complete parent still includes Demo."
         },
         {
           "id": "demo-settings",
@@ -232,19 +235,22 @@
       "impact": "H/H",
       "effort": "**3–5d**",
       "featureId": "F12",
-      "status": "planned",
-      "owner": null,
+      "status": "ready_for_checks",
+      "owner": "integration",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "focused_and_source_gates_passed",
+        "browser": "scoped_modeled_service_passed",
         "physical": "not_tested"
       },
-      "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
+      "blocker": "Required exact-head CI and merge reconciliation.",
+      "pr": "https://github.com/mekhovov/revealline/pull/1638",
+      "commit": "b0e6daefebae18e6a6efbdcf3daafb795b7d204f",
+      "next": "Observe required checks; continue F78/F79 as explicit dependent slices.",
       "evidence": [
-        "Read-only assessment: Rooms already preflights protocol/catalogue with a bounded timeout and local fallback. Community has /ready but current setup has no equivalent bounded preflight. Readiness must remain distinct from sign-in and publish permissions."
+        "Read-only assessment: Rooms already preflights protocol/catalogue with a bounded timeout and local fallback. Community has /ready but current setup has no equivalent bounded preflight. Readiness must remain distinct from sign-in and publish permissions.",
+        "39 distinct focused tests pass; full lint and every repository validation stage pass. Eight full-format findings are byte-unchanged from base461ace; changed formatting passes.",
+        "Independent review fixed and verified persisted-page store lifetime and sign-out/readiness races.",
+        "Actual Community page with read-only modeled HTTP service: unavailable/Retry/ready, retained drafts, EN/UK, timeout and keyboard focus passed. No real account/upload/publish or offline inventory claim."
       ]
     },
     {
@@ -382,22 +388,41 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Correct Capture-only label on shared authored Hunt hosts before F01a promotion; continue Snake and remaining host contexts.",
+      "next": "Review Snake and Duel candidates; finish Team, then remaining Hunt/SIM gaps using existing accepted owners. Capture is ready.",
       "evidence": [
         "Mission library already owns focus-only selection, launch and Back; Overflight already groups Survival/Raid operations. Extend existing owners; do not introduce a second chooser or rename established game identities."
       ],
       "implementationSlices": [
         {
           "id": "capture-context",
-          "status": "draft_review",
+          "status": "ready_for_checks",
           "pr": "https://github.com/mekhovov/revealline/pull/1634",
-          "commit": "201f230729ea98b4bc9fca33e6eb5001182c426e",
-          "evidence": "161focused checks+full lint/validate;13broader legacy return assertions reproduce clean461ace. Browser review in progress."
+          "commit": "c9dbbe0a9c41ad5f6a8e17e37a16702639e430d8",
+          "evidence": "Corrected shared Hunt labels; 54 context/title tests and full source gates. Earlier201f230 actual Capture EN/UK browsing/Back receipt retained; final Hunt correction source-tested. Independent review passed."
+        },
+        {
+          "id": "snake-context",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1637",
+          "commit": "043b6ea9c4a22c9ac79ff12cf60730ab27ed77bf",
+          "evidence": "182 focused checks and source gates; independent browser review in progress. Explicit stack on1634."
+        },
+        {
+          "id": "duel-context",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1640",
+          "commit": "ae844211a0b35070eddd8cc342b74d4d55de0358",
+          "evidence": "68 focused checks and source gates; accepted family/mode/format/mission and Hunt ownership. Independent browser review pending. Explicit stack on1634."
+        },
+        {
+          "id": "team-context",
+          "status": "developing",
+          "evidence": "Actual accepted attempt/pack identity and paused Back tests in progress; explicit stack on Duel."
         },
         {
           "id": "remaining-hosts",
-          "status": "developing",
-          "evidence": "Snake, Team/Duel, Hunt and SIM qualification pending; preserve existing Overflight context and identities."
+          "status": "planned",
+          "evidence": "Preserve existing Overflight context; qualify remaining Hunt/SIM gaps before closing F01."
         }
       ]
     },
@@ -732,18 +757,20 @@
       "impact": "H/H",
       "effort": "**2–4d**",
       "featureId": "F78",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "integration",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": null,
+      "blocker": "Explicit stack on F12; full query/pagination behavior not completed by readiness guards.",
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Bind rows/cursor/loading/errors to latest captured query; reject concurrent/obsolete pagination and verify actual page transitions.",
+      "evidence": [
+        "F12 source review found Load more can supersede a pending search and append its first page to prior results. Add focused actual-page regression and complete ownership fix."
+      ]
     },
     {
       "id": "F79",
@@ -795,18 +822,22 @@
       "impact": "H/H",
       "effort": "**2–3d**, assessment",
       "featureId": "F04",
-      "status": "planned",
-      "owner": null,
+      "status": "ready_for_checks",
+      "owner": "lane-b",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "focused_and_source_gates_passed",
+        "browser": "not_applicable_assessment",
         "physical": "not_tested"
       },
-      "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "blocker": "Required exact-head CI and merge reconciliation.",
+      "pr": "https://github.com/mekhovov/revealline/pull/1639",
+      "commit": "938502233be19051f2e5dc196e73166a51eea586",
+      "next": "Merge assessment after gates; F04b remains a separate production suspend/resume feature.",
+      "evidence": [
+        "98 focused tests including17 assessment cases, full lint/validate and changed formatting pass; eight full-format baseline findings unchanged. Independent source review passed.",
+        "Trusted graph oracle preserves aliases, Sets/Maps and numeric state; fresh process and full earned19,856-tick win match uninterrupted play. Largest sampled checkpoint2,361,379bytes, not a capacity guarantee.",
+        "No runtime save feature, hostile-file importer, package compatibility or device durability claim. F04b must supply durable result ownership; reopened mastery dedupe is currently in-memory."
+      ]
     },
     {
       "id": "F04b",
@@ -863,20 +894,35 @@
       "impact": "H/H",
       "effort": "**3–6d**; F11a",
       "featureId": "F11",
-      "status": "draft_review",
+      "status": "developing",
       "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
-        "browser": "not_run",
+        "browser": "review_extraction_scoped_passed",
         "physical": "not_tested"
       },
-      "blocker": "Stacked on F11a #1627; independent browser review and main rebase/checks pending.",
+      "blocker": "Review/extraction draft stacks on F11a; guided application is a further complete slice.",
       "pr": "https://github.com/mekhovov/revealline/pull/1635",
       "commit": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5",
-      "next": "Review ZIP selection, bounded rejection, component-download guidance and dialog lifecycle; no automatic imports or completed-restore claim.",
+      "next": "Finish ordered per-owner review/explicit apply, verified completion, partial outcomes and recovery. Rebase stacks after predecessor merges.",
       "evidence": [
         "14 initial parser tests pass for bounded ZIP records/paths/counts, CRC and manifest hashes. UI/lifecycle review in progress.",
-        "64 focused tests, full lint/validate and changed formatting pass; reader accepts the real 11679-byte F11a browser export with all five member hashes. Eight full-format baseline failures unchanged."
+        "64 focused tests, full lint/validate and changed formatting pass; reader accepts the real 11679-byte F11a browser export with all five member hashes. Eight full-format baseline failures unchanged.",
+        "Actual browser inspected real F11a ZIP, showed five checked files/exclusions/ordered guidance; downloaded287-byte originals component matches exact ZIP bytes. No import occurred; extraction is not complete restore."
+      ],
+      "implementationSlices": [
+        {
+          "id": "review-extraction",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1635",
+          "commit": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5",
+          "evidence": "64 focused checks and source gates; independent source and actual browser extraction review passed; stack on1627."
+        },
+        {
+          "id": "guided-apply",
+          "status": "developing",
+          "evidence": "Use existing picture/story/music/Journey/legacy review and commit owners; preserve generation guards and explicit per-component confirmation."
+        }
       ]
     },
     {
@@ -976,18 +1022,32 @@
       "impact": "H/H",
       "effort": "**4–7d**; F15b",
       "featureId": "F06",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-c",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": null,
+      "blocker": "Native slice stacks on F15b menu1636; remaining hosts still open.",
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Keep reviewed native preset slice as draft stack; extend remaining family hosts with their own preference owners.",
+      "evidence": [],
+      "implementationSlices": [
+        {
+          "id": "native-presets",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1641",
+          "commit": "54be4c670fa2001940834b523ae04038d39bf483",
+          "evidence": "92 focused owner/native/policy tests,93 navigation/offline tests and3 new actual-host cases pass; source gates pass. Independent source review passed. Actual Solo browser atd239: preview0writes, Apply/Undo, partial failure/Retry preserving original Undo, newer display choices preserved, Ukrainian320px. Final persisted-page Undo expiry model-tested; unrelated five legacy host failures reproduce predecessor."
+        },
+        {
+          "id": "remaining-family-presets",
+          "status": "developing",
+          "evidence": "Integrate existing Snake/Survival/SIM owners separately; do not infer full F06 completion from native menus."
+        }
+      ]
     },
     {
       "id": "F07a",
@@ -2537,6 +2597,11 @@
       "date": "2026-10-18",
       "item": "F11a/F15b/F01/CI",
       "reason": "Authored archive browser blocker fixed and ZIP integrity verified; audio owner ready; Capture context draft; retired diagnostic trigger prerequisite isolated without active workflow changes."
+    },
+    {
+      "date": "2026-10-18",
+      "item": "F01/F04a/F06/F11b/F12/F15b/F78",
+      "reason": "13 feature PRs ready,5 feature drafts; Capture corrected and ready; Community readiness and Survival assessment independently reviewed. Archive extraction and native preferences browser-reviewed; guided apply/Team/remaining presets/F78 developing. Hardware and live deployment remain unqualified."
     }
   ],
   "deliveryDependencies": [

@@ -2,7 +2,7 @@
 
 Updated **18 October 2026** (Europe/Berlin). Continuous implementation of the [approved staged plan](plan.md) is underway. This board covers this workstream; release integration and publication remain separate gates.
 
-**83 feature groups · 113 deliverables · 10 feature PRs ready for checks · 2 draft feature PRs · 3 implementation lanes active · 1 merged · 0 verified live.**
+**83 feature groups · 113 deliverables · 13 feature PRs ready for checks · 5 draft feature PRs · 3 implementation lanes active · 1 merged · 0 verified live.**
 
 ## Merged
 
@@ -23,31 +23,37 @@ Updated **18 October 2026** (Europe/Berlin). Continuous implementation of the [a
 | P1       | **F11a — portable archive** · [#1627](https://github.com/mekhovov/revealline/pull/1627)           | Authored-owner blocker fixed; 82 focused checks and source gates. Actual default-Journey ZIP download passes CRC and every listed member hash/size. | Exact-head CI; device export/return acceptance separate.                                                                                                                                       |
 | P1       | **F15b / audio warning ownership** · [#1632](https://github.com/mekhovov/revealline/pull/1632)    | 119 focused checks; modeled full-host failure/recovery, newer-notice preservation and Ukrainian silent-write feedback inspected.                    | Exact-head CI; player-footer presentation was obscured by artwork fallback, and acoustic/hardware evidence remains separate.                                                                   |
 
+| P1 | **F01 / Capture context** · [#1634](https://github.com/mekhovov/revealline/pull/1634) | Shared Hunt naming corrected; context/Back browser receipt and final source checks reviewed. | Exact-head CI; remaining F01 hosts separate. |
+| P1 | **F12 — Community readiness** · [#1638](https://github.com/mekhovov/revealline/pull/1638) | 39 distinct tests; full lint/validation; actual page with modeled service verifies outage/retry, retained draft and focus. Independent review fixes verified. | Exact-head CI; F78 pagination and F79 local inventory separate. |
+| P1 | **F04a — Survival assessment** · [#1639](https://github.com/mekhovov/revealline/pull/1639) | 98 focused tests; complete-state/fresh-process continuation and earned full-run equality; independent review passed. | Exact-head CI. F04b is still the production suspend feature. |
+
 ## Drafts and active development
 
-| Priority | Item / owner                                                                                          | Current status and next result                                                                                                                                                                                             |
-| -------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P1       | **F01 / Capture context** · [#1634](https://github.com/mekhovov/revealline/pull/1634) · lane A        | 161 focused checks and source gates; EN/UK browser context/Back review passed. Draft retained for shared-host Hunt label correction before merge.                                                                          |
-| P1       | **F01 / remaining hosts** · lane A                                                                    | Qualify Snake, Team/Duel, Hunt and SIM; preserve existing Overflight operation context. Implement only demonstrated gaps.                                                                                                  |
-| P1       | **F11b — guided archive review** · [#1635](https://github.com/mekhovov/revealline/pull/1635) · lane B | Draft: 64 focused checks, full lint/validate; actual exported archive accepted. Independent browser review pending; stack on #1627. Extraction does not claim completed restore.                                           |
-| P1       | **F15b / menu animation** · lane C                                                                    | Preserve failed local writes, show verified save/retry and retain native checkbox focus; explicit draft stack on #1629. Includes Creator owner.                                                                            |
-| P1       | **Delivery prerequisite** · [#1633](https://github.com/mekhovov/revealline/pull/1633) · integration   | Ready: retire 13 expired one-shot diagnostic triggers. Original source/jobs preserved; active workflows and merge policy unchanged. 136 checks pass, including isolated existing consumers without the new archive helper. |
+| Priority | Item / owner                                                                                          | Current status and next result                                                                                                                                                         |
+| -------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P1       | **F01 / Snake** · [#1637](https://github.com/mekhovov/revealline/pull/1637) · lane A                  | Draft stack on Capture: 182 focused checks/source gates; source review passed, browser review in progress.                                                                             |
+| P1       | **F01 / Duel** · [#1640](https://github.com/mekhovov/revealline/pull/1640) · lane A                   | Draft stack on Capture: 68 checks/source gates; independent browser review pending. Team is developing next.                                                                           |
+| P1       | **F11b / review and extraction** · [#1635](https://github.com/mekhovov/revealline/pull/1635) · lane B | Source and actual browser review passed; downloaded original component matches ZIP bytes. Draft stack on1627. Ordered review/apply with partial recovery is developing separately.     |
+| P1       | **F15b / menu animation** · [#1636](https://github.com/mekhovov/revealline/pull/1636) · lane C        | Actual Solo modeled-storage failure/retry, other-tab intent, focus and Ukrainian320px review passed. Draft stack on1629. Demo owner remains dependent on D.                            |
+| P1       | **F06 / native comfort presets** · [#1641](https://github.com/mekhovov/revealline/pull/1641) · lane C | Preview/Apply/Undo, partial-save Retry and newer-choice preservation reviewed in actual Solo; final page-cache expiry tested. Draft stack on1636. Remaining family presets developing. |
+| P1       | **F78 / current query and pagination** · integration                                                  | Develop complete ownership after F12; pending search must prevent old Load more from mixing result sets.                                                                               |
+| P1       | **Delivery prerequisite** · [#1633](https://github.com/mekhovov/revealline/pull/1633)                 | Ready;136 checks and two independent reviews.13 expired diagnostic triggers retired; active gates and merge policy unchanged. Exact-head CI queued/running.                            |
 
-Next: **F12** Community readiness (Rooms already preflights); **F06** preset preview/Undo; **F02a** existing first-flight entry after F01. Demo-dependent work follows reviewed predecessor D. Existing PRs proceed through review and merge while the next slices develop.
+Next: **F79** local Installed inventory, **F80** removal consequences, **F02a** existing first-flight entry after F01, and **F04b** production suspend after its assessment. Priority remains P1. Estimates remain the plan's working-day ranges, excluding CI/review queues and unavailable hardware.
 
 ## Phase status
 
-| Phase                        | Progress                                      | Main remaining work                                                     |
-| ---------------------------- | --------------------------------------------- | ----------------------------------------------------------------------- |
-| 0 — Baseline                 | Setup complete                                | Maintain exact candidate identities and shared-file ownership.          |
-| 1 — Reliability              | 1 merged; 7 ready slices; F15b partial        | Remaining clarity, service readiness, long-flight and Demo slices.      |
-| 2 — Learn and start          | F01 Capture draft; remaining hosts developing | Selection hierarchy, onboarding, readability and contextual guidance.   |
-| 3 — Progress and offline     | F82/F14/F11a ready; F11b developing           | Archive/restore, Survival suspend assessment, community reliability.    |
-| 4 — Comfort, input and audio | Planned                                       | Presets, cues, remapping, readable UI and accessibility/audio evidence. |
-| 5 — Practice and social      | Planned                                       | Playlists, practice, replays, rooms and device calibration.             |
-| 6 — Creation and community   | Planned                                       | Creator entry, validation, playtest, publishing and discovery.          |
-| 7 — Progression and content  | Planned                                       | Albums, goals, cosmetics and bounded balance experiments.               |
-| 8 — Services and platforms   | Planned                                       | Service readiness, cloud, native packages and platform evidence.        |
+| Phase                        | Progress                                          | Main remaining work                                                     |
+| ---------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------- |
+| 0 — Baseline                 | Setup complete                                    | Maintain exact candidate identities and shared-file ownership.          |
+| 1 — Reliability              | 1 merged; 8 ready slices; F15b partial            | Remaining clarity, service readiness, long-flight and Demo slices.      |
+| 2 — Learn and start          | Capture ready; Snake/Duel drafts; Team developing | Selection hierarchy, onboarding, readability and contextual guidance.   |
+| 3 — Progress and offline     | F82/F14/F11a/F04a ready; F11b/F78 developing      | Archive/restore, Survival suspend assessment, community reliability.    |
+| 4 — Comfort, input and audio | Native presets draft; remaining hosts developing  | Presets, cues, remapping, readable UI and accessibility/audio evidence. |
+| 5 — Practice and social      | Planned                                           | Playlists, practice, replays, rooms and device calibration.             |
+| 6 — Creation and community   | Planned                                           | Creator entry, validation, playtest, publishing and discovery.          |
+| 7 — Progression and content  | Planned                                           | Albums, goals, cosmetics and bounded balance experiments.               |
+| 8 — Services and platforms   | Planned                                           | Service readiness, cloud, native packages and platform evidence.        |
 
 ## Open limits and findings
 
@@ -61,3 +67,10 @@ Next: **F12** Community readiness (Rooms already preflights); **F06** preset pre
 - **Disk:** task-owned checkout sparsity and removal of retained generated output after checksum receipts recovered space (6.4 GiB at the latest check). No original WIP or unrelated files removed; large builds remain serialized.
 
 The [structured tracker](progress.json) retains all 113 deliverables, priorities, estimates, owners, dependencies and evidence. “Assessment complete,” “browser checked,” “merged” and “verified live” remain distinct. Every substantial milestone updates both records.
+
+## Latest review decisions
+
+- **F12:** independent review fixed back/forward-cache store lifetime and readiness/sign-out races before promotion. All source validation stages pass; unchanged baseline formatting findings remain documented.
+- **F04a:** the serializer is a trusted test oracle. It establishes feasibility, not a production import format or mobile memory guarantee. F04b must add recoverable storage, exact package admission and durable result ownership.
+- **F06:** Undo keeps newer settings. A restored page now expires the old Undo because missed cross-tab events cannot establish ownership. Width320 browser evidence is not physical iPhone qualification.
+- **CI:** no additional PR has merged at this snapshot. Ready means reviewed and eligible for required checks; it does not mean deployed.
