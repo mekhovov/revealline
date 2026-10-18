@@ -5,6 +5,7 @@ import { runInNewContext } from 'node:vm';
 import { createStarterProject } from '../content-design/starter.mjs';
 import { freezeDesign } from '../content-design/catalogs.mjs';
 import { compileContentProject } from '../content-design/project.mjs';
+import { createContentDraftSession } from '../content-design/session.mjs';
 import { createTeamOpeningCandidates } from '../content-design/team-candidates.mjs';
 import {
   inspectMissionAcceptance,
@@ -14,6 +15,7 @@ import {
 } from '../content-design/acceptance-evidence.mjs';
 import { createAcceptanceInspector } from '../studio/acceptance-inspector.mjs';
 import { syncStudioDifficulty } from '../studio/difficulty-view.mjs';
+import { createStudioDraftSnapshot } from '../studio/draft-snapshot.mjs';
 
 const sourceCommit = 'a'.repeat(40);
 function element() {
@@ -232,9 +234,11 @@ test('Studio owns the inspector and synchronizes it when the applied board selec
         boardNodes = { difficulty: selector, mission: { value: state.missionId } },
         stopAtPreview = new Error('Preview boundary');
       nodes.report.textContent = 'Stale report';
+      const session = createContentDraftSession(source);
       const context = {
         currentMission: () => mission,
-        session: { current: () => source },
+        session,
+        currentDraftSnapshot: createStudioDraftSnapshot(() => session),
         $: (id) => (boardNodes[id] ??= {}),
         syncStudioDifficulty,
         freezeDesign,
@@ -250,11 +254,13 @@ test('Studio owns the inspector and synchronizes it when the applied board selec
           [
             'actorEditor',
             'combatEditor',
+            'huntEditor',
             'geometryEditor',
             'bonusEditor',
             'timedBonusEditor',
             'objectiveEditor',
             'relayEditor',
+            'teamEnvironmentEditor',
             'directionalEditor',
             'encounterEditor',
             'discoveryEditor',

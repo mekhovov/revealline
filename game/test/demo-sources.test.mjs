@@ -564,3 +564,38 @@ test('a never-settling catalogue falls through to local sources and cancellation
   assert.equal(signal.aborted, true);
   assert.equal(clock.pending, 0);
 });
+
+test('resource diagnostic reaches live source rehearsal before its player can be returned', async () => {
+  class PendingWorker {
+    addEventListener() {}
+    removeEventListener() {}
+    postMessage() {}
+    terminate() {}
+  }
+  const sources = await loadDemoSources({
+    entries,
+    library: emptyLibrary,
+    fetch: assetFetch,
+    WorkerClass: PendingWorker,
+  });
+  const source = sources.find((item) => item.kind === 'bot');
+  assert(source);
+  const controller = new AbortController();
+  let owned = 0;
+  const pending = source.create({
+    signal: controller.signal,
+    onWorker() {
+      owned++;
+      return () => owned--;
+    },
+  });
+  try {
+    assert.equal(owned, 1);
+    controller.abort();
+    await assert.rejects(pending, { name: 'AbortError' });
+    assert.equal(owned, 0);
+  } finally {
+    controller.abort();
+    await pending.catch(() => {});
+  }
+});

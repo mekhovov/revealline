@@ -119,6 +119,9 @@ export async function demoPage(t, { clipId = 'first-signal-left', ...options } =
     get padReads() {
       return page.padReads;
     },
+    get displayRender() {
+      return page.displayRender;
+    },
     get demoFrame() {
       return demoFrame;
     },

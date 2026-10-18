@@ -1,5 +1,7 @@
+import { observeAudioViewWrites } from './helpers/audio-view-writes.mjs';
 import { albumFixture, albumCatalog, responseFor } from './helpers/soundtrack-albums.mjs';
 import test from 'node:test';
+import { createMediaPreparation } from '../ui/media-preparation.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { setLocale } from '../i18n/index.mjs';
@@ -4990,4 +4992,169 @@ test('audition creator follows the playing original rather than a different edit
   await app.click('stop-audition');
   assert.equal(links().length, 0);
   assert.equal(app.node('audition-sources').hidden, true);
+});
+
+for (const retire of [false, true])
+  test(`admitted soundtrack settings defer late local and source adoption${retire ? ' and cancel on disposal' : ''}`, async (t) => {
+    const preparation = createMediaPreparation();
+    t.after(() => preparation.close());
+    let releaseLibrary,
+      releaseSources,
+      fetches = 0;
+    const app = await setup(t, {
+      open: false,
+      settings: true,
+      store: {
+        read: () =>
+          new Promise((resolve) => {
+            releaseLibrary = resolve;
+          }),
+        commit: async () => {
+          throw new Error('No save expected');
+        },
+      },
+      sourceStore: {
+        read: () =>
+          new Promise((resolve) => {
+            releaseSources = resolve;
+          }),
+        commit: async () => {
+          throw new Error('No source save expected');
+        },
+      },
+      callbacks: {
+        catalogue: emptyCatalogue,
+        onlineCatalogueDownload: {
+          preparation,
+          fetch: async (url) => {
+            fetches++;
+            return onlineCatalogueResponse(sourceCatalogueFixture(), url);
+          },
+        },
+      },
+    });
+    assert.equal(typeof releaseLibrary, 'function');
+    assert.equal(typeof releaseSources, 'function');
+    let created = 0;
+    const createElement = app.doc.createElement;
+    app.doc.createElement = (...args) => {
+      created++;
+      return createElement(...args);
+    };
+    preparation.setPhase('playing');
+    releaseLibrary({
+      generation: 0,
+      library: upgradeSoundtrackLibrary(emptySoundtrackLibrary()),
+      assets: [],
+    });
+    releaseSources({
+      generation: 0,
+      sources: [{ url: ONLINE_SOUNDTRACK_CATALOGUE_URL, enabled: true }],
+    });
+    await settleOnlineCatalogue(
+      () => preparation.snapshot().queued >= 2,
+      'late IDB adoption queued',
+    );
+    assert.equal(created, 0, 'Late startup reads cannot rebuild music controls during gameplay');
+    assert.equal(fetches, 0, 'Undelivered source preferences cannot launch catalogue discovery');
+    if (retire) {
+      app.panel.dispose();
+      preparation.setPhase('paused');
+      await settleOnlineCatalogue(
+        () => preparation.snapshot().queued === 0,
+        'disposed publications cancelled',
+      );
+      assert.equal(created, 0);
+      assert.equal(fetches, 0);
+    } else {
+      preparation.setPhase('paused');
+      await settleOnlineCatalogue(
+        () => app.node('online-results').children.length === 2,
+        'safe phase catalogue publication',
+      );
+      assert.ok(created > 0);
+      assert.equal(fetches, 1);
+      assert.equal(app.node('source-add').disabled, false);
+    }
+  });
+
+test('closed soundtrack dialog defers transport progress and public open uses the latest snapshot', async (t) => {
+  const app = await setup(t, { open: false });
+  const watched = observeAudioViewWrites(app.panel.element);
+  t.after(() => watched.stop());
+  const calls = app.calls.length;
+  for (let position = 20; position < 40; position++) {
+    app.state.positionSeconds = position;
+    app.panel.update({ ...app.state });
+  }
+  assert.equal(watched.count(), 0);
+  assert.equal(app.calls.length, calls, 'Transport progress remains independent of presentation.');
+  await app.panel.open();
+  assert.equal(app.node('seek').value, '39');
+  assert.match(app.node('now').textContent, /0:39/);
+});
+
+test('open soundtrack progress remains live and hidden visibility returns to current state', async (t) => {
+  const app = await setup(t);
+  app.state.positionSeconds = 21;
+  app.panel.update();
+  assert.equal(app.node('seek').value, '21');
+  app.doc.hidden = true;
+  app.doc.emit('visibilitychange');
+  await Promise.resolve();
+  await Promise.resolve();
+  const watched = observeAudioViewWrites(app.panel.element);
+  t.after(() => watched.stop());
+  app.state.positionSeconds = 35;
+  app.state.preparation = { stage: 'reading', message: 'Latest current preparation' };
+  app.panel.update();
+  assert.equal(watched.count(), 0);
+  app.doc.hidden = false;
+  app.doc.emit('visibilitychange');
+  assert.equal(app.node('seek').value, '35');
+  assert.equal(app.node('loading').textContent, 'Latest current preparation');
+  app.panel.close();
+  await Promise.resolve();
+  await Promise.resolve();
+  watched.reset();
+  app.state.positionSeconds = 36;
+  app.state.preparation = null;
+  app.panel.update();
+  assert.equal(watched.count(), 0);
+  await app.panel.open();
+  assert.equal(app.node('seek').value, '36');
+  assert.equal(app.node('loading').hidden, true);
+});
+
+test('closing or hiding clears only the transport status view and restores current preparation on return', async (t) => {
+  const app = await setup(t);
+  app.state.preparation = { stage: 'reading', message: 'Still preparing the actual track' };
+  app.panel.update();
+  assert.equal(app.node('loading').dataset.state, 'busy');
+  app.panel.close();
+  assert.equal(app.node('loading').hidden, true);
+  assert.equal(
+    app.node('loading').dataset.state,
+    undefined,
+    'Closing does not report a fictional ready outcome.',
+  );
+  assert.equal(app.state.preparation.stage, 'reading');
+  const watched = observeAudioViewWrites(app.panel.element);
+  t.after(() => watched.stop());
+  app.node('audition').emit('timeupdate');
+  assert.equal(watched.count(), 0, 'Direct audition progress also defers its closed view.');
+  await app.panel.open();
+  assert.equal(app.node('loading').dataset.state, 'busy');
+  assert.equal(app.node('loading').textContent, 'Still preparing the actual track');
+  app.doc.hidden = true;
+  app.doc.emit('visibilitychange');
+  assert.equal(app.node('loading').hidden, true);
+  assert.equal(app.node('loading').dataset.state, undefined);
+  assert.equal(app.state.preparation.stage, 'reading');
+  app.doc.hidden = false;
+  app.doc.emit('visibilitychange');
+  assert.equal(app.node('loading').dataset.state, 'busy');
+  app.state.preparation = null;
+  app.panel.update();
+  assert.equal(app.node('loading').hidden, true);
 });

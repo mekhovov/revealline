@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { couchPage } from './helpers/couch-host.mjs';
-import { couchEquipment } from '../couch/couch-shell.mjs';
+import { couchPage, mountCouch } from './helpers/couch-host.mjs';
+import { createCouchShell, couchEquipment } from '../couch/couch-shell.mjs';
 import { createRun } from '../core/index.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
@@ -863,4 +863,82 @@ test('Couch timed clock retains accessible meaning in its compact display', asyn
   f.$('race-pause').click();
   assert.deepEqual(f.checkpoint(), before);
   assert.equal(f.$('race-clock').textContent, '0:30');
+});
+
+test('Setup preparation nodes restore exact authored parents through destroy and remount', async (t) => {
+  const { Document } = await import('./helpers/couch-dom.mjs');
+  const { createDuel } = await import('../multiplayer.mjs');
+  const doc = new Document();
+  mountCouch(doc, await readFile(new URL('../couch/index.html', import.meta.url), 'utf8'));
+  // This presentation-only fixture mounts the app container after its boot veil.
+  doc.getElementById('couch-app').hidden = false;
+  doc.getElementById('couch-app').inert = false;
+  const originals = ['race-preparation', 'race-picture-cancel'].map((id) => {
+    const element = doc.getElementById(id);
+    return { element, parent: element.parentNode, next: element.nextSibling };
+  });
+  for (const leave of ['destroy-in-setup', 'return-before-destroy']) {
+    const shell = createCouchShell({ document: doc });
+    let disposed = false;
+    const dispose = () => {
+      if (!disposed) {
+        disposed = true;
+        shell.destroy();
+      }
+    };
+    t.after(dispose);
+    shell.update({
+      match: createDuel(retryFixture('enemy-player').level),
+      summary: 'Preparation lifecycle',
+      won: [0, 0],
+    });
+    const homes = originals.map(({ element }) => ({
+      element,
+      parent: element.parentNode,
+      next: element.nextSibling,
+    }));
+    doc.getElementById('race-options').click();
+    doc.getElementById('race-settings-tab-gameplay').click();
+    assert.equal(
+      doc.getElementById('race-focus').closest('[hidden],[inert]')?.id ?? null,
+      null,
+      'Visible Advanced setup in ' + shell.scope(),
+    );
+    doc.getElementById('race-focus').click();
+    assert.equal(shell.scope(), 'setup');
+    for (const { element } of originals) {
+      assert.equal(element.parentNode === doc.getElementById('race-setup'), true);
+      assert.equal(doc.querySelectorAll('#' + element.id).length, 1);
+    }
+    if (leave === 'return-before-destroy') {
+      doc.getElementById('race-setup-back').click();
+      for (const { element, parent, next } of homes) {
+        assert.equal(element.parentNode === parent, true);
+        assert.equal(element.nextSibling === next, true);
+      }
+    }
+    dispose();
+    for (const { element, parent, next } of originals) {
+      assert.equal(
+        element.parentNode === parent,
+        true,
+        element.id + ' returns to its authored parent.',
+      );
+      assert.equal(
+        element.nextSibling === next,
+        true,
+        element.id + ' retains its authored sibling anchor.',
+      );
+      assert.equal(doc.querySelectorAll('#' + element.id).length, 1);
+    }
+    shell.destroy();
+    for (const { element, parent, next } of originals) {
+      assert.equal(
+        element.parentNode === parent,
+        true,
+        'Repeated destroy keeps the authored owner.',
+      );
+      assert.equal(element.nextSibling === next, true);
+    }
+  }
 });

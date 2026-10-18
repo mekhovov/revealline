@@ -64,6 +64,10 @@ export function attachFieldKitSurfaces({
     });
   }
   return {
+    get qualityObservationOwner() {
+      return nativeMenu?.qualityObservationOwner ?? null;
+    },
+    setQuality: (tier) => nativeMenu?.setQuality(tier),
     refreshGlobalSettings: (options) => nativeMenu?.refreshGlobalSettings(options),
     destroy: () => removers.forEach((remove) => remove()),
   };

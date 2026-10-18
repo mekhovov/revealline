@@ -1,0 +1,20 @@
+# Native touch and raster setup continuation
+
+These two independently owned diagnostics use the successful exact `a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4` production package from Appearance `39008793814`, artifact `12092903788`. Both retain the original source-only `8b019` checkout and require full archive, source-tree, module and served-CSP verification. They do not build a substitute package. Each workflow admits only PR 1544, the same repository, a synchronize event whose previous head is `a7e0219818842f02399317ca6d2a14bdd506da3d`, with no automatic retry.
+
+The [touch declaration](solo-native-touch-plan.json) schedules the unchanged twelve observations described in the [native touch protocol](solo-native-touch-hosted-20261017.md): three each for Chromium D-pad, WebKit D-pad, Chromium stick and Chromium swipe. Trusted native events must produce all 24 meaningful movements, retain the fixed preparation cadence and pass strict same-engine/full-version native replay. A failed application touch-to-render gate fails the row; insufficient or straddling timing evidence remains inconclusive even when native input correctness passes. Physical-device latency and WebKit continuous gestures remain unobserved.
+
+The [raster successor](solo-remote-final-earned-raster-v2-plan.json) preserves the same 21 earned-state cases, legal route, cache/presentation-history controls, exact pixels, zero tolerance, deadlines and resource limits. Its predecessor `39012635555` produced **zero native observations**: both engines failed source verification before a browser ran because sparse tooling omitted the dynamic `soundtrack-distribution.mjs` import. This is a setup failure, not a pixel failure. The original declaration and workflow remain byte-identical; no old result becomes passed.
+
+The retained raster archives are:
+
+| Engine   | Artifact      |  Bytes | SHA256                                                             |
+| -------- | ------------- | -----: | ------------------------------------------------------------------ |
+| Chromium | `12092814087` | 65,467 | `fe3c40a9e7a2c300ef896254414bedee5626510ade89c43afa996397ae22e060` |
+| WebKit   | `12093333132` | 65,404 | `36c3d5179df1711148c634c55dfb3ece58189c385687cb48ba8d844666a96805` |
+
+Both new sparse tool lists include the four audited dynamic source-verifier roots and their dependencies. An actual synthetic artifact/source-verifier smoke, including omitted-import negative controls, runs before either native diagnostic. Game-source checkouts remain full and pinned, each with the reviewed three-minute bound; tools alone use sparse checkout. The raster workflow retains its 125-minute job and 79-minute execution step. Touch retains its 130-minute job and 78-minute execution step, including owned headed Xvfb startup and cleanup. Failed, partial and capped evidence remain explicit.
+
+The predecessor correctness run `39012635540` remains **7/8**, with a candidate WebKit long-interruption pause despite successful MP3 integrity checks. Its default worker probe has no detailed application timeline, so neither worker CPU nor browser scheduling is established as the cause. Both declarations keep `firstEightAllCorrectnessPassed: false` and exclude general performance qualification. The touch declaration records that all eight predecessor command owners closed cleanly; this does not erase the failed row or imply closure of unrelated workflows.
+
+Concrete release controls passed all four tests, including changed source, input/case, historical evidence, gate, one-shot and missing-verifier mutations. Source-confined copies passed **64 controls with four Linux-only skips for touch**, and **56 with four Linux-only skips for raster**, including the actual verifier smoke. All six job bindings also ran successfully through their real CLI from those copies. The receipt is `.cache/solo-followup/native-touch-hosted-a6/release-receipt.json`, 2,551 bytes, SHA256 `ee76c6148dce4c92af067643050a49173dadbe2cc5686f75e205d6eccab37f3b`. These are tool/admission checks, not new native observations. No local browser, preview server or full production archive download was used.
