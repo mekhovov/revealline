@@ -98,10 +98,16 @@ export const DEMO_RESOURCE_SOURCE_PATHS = Object.freeze([
 ]);
 export const DEMO_RESOURCE_MODE = 'close-reopen-resources-v1';
 export const DEMO_CLOSE_BOUNDARY_POLICY = 'trusted-click-capture-v1';
+export const DEMO_CLOSE_ACTIVATION_POLICY = 'trusted-activation-capture-v2';
 export function validateDemoResourceContract(contract, source) {
   assert.match(source, /^[a-f0-9]{40}$/);
   const closeBoundary = contract?.closeBoundaryPolicy !== undefined;
-  if (closeBoundary) assert.equal(contract.closeBoundaryPolicy, DEMO_CLOSE_BOUNDARY_POLICY);
+  if (closeBoundary)
+    assert(
+      [DEMO_CLOSE_BOUNDARY_POLICY, DEMO_CLOSE_ACTIVATION_POLICY].includes(
+        contract.closeBoundaryPolicy,
+      ),
+    );
   assert.deepEqual(contract, {
     mode: DEMO_RESOURCE_MODE,
     sourceRevision: source,
@@ -109,7 +115,7 @@ export function validateDemoResourceContract(contract, source) {
     cyclesPerMode: 10,
     modes: ['spectator', 'practice'],
     snapshotLimit: 64,
-    ...(closeBoundary ? { closeBoundaryPolicy: DEMO_CLOSE_BOUNDARY_POLICY } : {}),
+    ...(closeBoundary ? { closeBoundaryPolicy: contract.closeBoundaryPolicy } : {}),
   });
 }
 
@@ -493,16 +499,21 @@ export function assessDemoResourceCycles(raw, source, contract) {
         undefined,
         'Close capture cleanup failure remains authoritative',
       );
-      const index = row.closeClick;
+      const activation = contract.closeBoundaryPolicy === DEMO_CLOSE_ACTIVATION_POLICY;
+      const index = activation ? row.closeActivation : row.closeClick;
       assert(Number.isSafeInteger(index) && index > row.paused && index < row.closed);
       assert(!used.has(index), 'Close boundary may not be reused');
       used.add(index);
       const click = raw.snapshots[index];
-      assert.equal(click.label, `${mode}-${row.cycle}-close-click`);
-      assert.deepEqual(click.closeClick, {
-        format: 'DemoTrustedCloseBoundaryV1',
+      assert.equal(
+        click.label,
+        `${mode}-${row.cycle}-${activation ? 'close-activation' : 'close-click'}`,
+      );
+      assert.deepEqual(activation ? click.closeActivation : click.closeClick, {
+        format: activation ? 'DemoTrustedCloseActivationV2' : 'DemoTrustedCloseBoundaryV1',
         isTrusted: true,
         target: 'demo-back',
+        ...(activation ? { eventType: mode === 'spectator' ? 'pointerdown' : 'click' } : {}),
       });
       assert.equal(click.diagnosticsSource, 'not-requested');
       assert.equal(click.resources, undefined);
@@ -524,7 +535,11 @@ export function assessDemoResourceCycles(raw, source, contract) {
       assert(click.drawCount >= paused.drawCount, 'Draw counter moved backwards before Close');
       unchanged(paused, click);
       unchanged(paused, click, 'ordinary');
-      assert.equal(click.drawCount, closed.drawCount, 'Demo painted after the trusted Close click');
+      assert.equal(
+        click.drawCount,
+        closed.drawCount,
+        'Demo painted after the trusted Close activation',
+      );
     } else {
       assert.equal(paused.drawCount, closed.drawCount);
     }

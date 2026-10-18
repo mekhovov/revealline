@@ -7,6 +7,7 @@ import {
   DEMO_ARMS,
   DEMO_RESOURCE_MODE,
   DEMO_CLOSE_BOUNDARY_POLICY,
+  DEMO_CLOSE_ACTIVATION_POLICY,
   DEMO_RESOURCE_SOURCE_PATHS,
   validateDemoResourceContract,
   assessDemoResourceCycles,
@@ -739,6 +740,7 @@ test('probe adds owned resources only under explicit contract and successful pau
 function publicCycleFixture({
   failAfterClose = 0,
   closeBoundary = false,
+  activationBoundary = false,
   resizeBeforeClose = false,
   paintAfterClose = false,
   failCloseClick = false,
@@ -756,7 +758,17 @@ function publicCycleFixture({
   const actions = [],
     stored = new Map();
   const doc = f.env.document;
-  const closeEvents = closeBoundary ? closeEventFixture(f) : null;
+  const performClose = () => {
+    active = false;
+    practice = false;
+    doc.getElementById('demo-dialog').open = false;
+    if (++closes === failAfterClose) stored.set('unexpected', 'change');
+  };
+  const closeEvents = activationBoundary
+    ? actualInputCloseEvents(f, { practice: () => practice, close: performClose })
+    : closeBoundary
+      ? closeEventFixture(f)
+      : null;
   if (failDisarm) {
     const disarm = probe.disarmCloseBoundary;
     probe.disarmCloseBoundary = () => {
@@ -814,10 +826,8 @@ function publicCycleFixture({
         closeEvents.fire();
         if (paintAfterClose) draw(true, 565);
       }
-      active = false;
-      practice = false;
-      doc.getElementById('demo-dialog').open = false;
-      if (++closes === failAfterClose) stored.set('unexpected', 'change');
+      if (!activationBoundary) performClose();
+      else if (!closeEvents.activated()) closeEvents.fire();
     } else if (selector === '#demo-takeover') {
       assert(active && !running && !practice);
       practice = true;
@@ -860,7 +870,14 @@ function publicCycleFixture({
   });
   const cycles = actualDriverFunction('resourceCycles', {
     ...common,
-    plan: { resourceCycles: closeBoundary ? closeCycleContract() : cycleContract() },
+    DEMO_CLOSE_ACTIVATION_POLICY,
+    plan: {
+      resourceCycles: activationBoundary
+        ? activationCycleContract()
+        : closeBoundary
+          ? closeCycleContract()
+          : cycleContract(),
+    },
     snap,
     click,
     openDemo,
@@ -879,7 +896,15 @@ function publicCycleFixture({
     ordinaryBefore,
     save: async () => {},
   });
-  return { cycles, report, actions, snap, closeEvents, exports: () => exports };
+  return {
+    cycles,
+    report,
+    actions,
+    snap,
+    closeEvents,
+    exports: () => exports,
+    dispose: () => closeEvents?.destroy?.(),
+  };
 }
 test('actual repeat driver performs all twenty public cycles and exports only after Pause or Close', async () => {
   const f = publicCycleFixture();
@@ -1655,4 +1680,333 @@ test('actual resource driver still fails when only capture cleanup rejects', asy
   assert.equal(f.report.cycles[0].closeCaptureFailure, undefined);
   assert.equal(f.report.cycles[0].closeCaptureCleanupFailure, 'modeled disarm transport failure');
   assert.equal(f.report.cycles[0].status, 'pending');
+});
+
+const activationCycleContract = () => ({
+  ...cycleContract(),
+  closeBoundaryPolicy: DEMO_CLOSE_ACTIVATION_POLICY,
+});
+const demoInputSource = await readFile(
+  new URL('../game/ui/demo-input.mjs', import.meta.url),
+  'utf8',
+);
+const demoInputHostSource = await readFile(
+  new URL('../game/test/demo-input.test.mjs', import.meta.url),
+  'utf8',
+);
+const inputAST = parse(demoInputSource, { ecmaVersion: 'latest', sourceType: 'module' });
+const inputDeclaration = inputAST.body.filter(
+  (node) =>
+    node.type === 'ExportNamedDeclaration' && node.declaration?.id?.name === 'attachDemoInput',
+);
+assert.equal(inputDeclaration.length, 1);
+const inputConstants = inputAST.body.filter((node) => node.type === 'VariableDeclaration');
+assert.deepEqual(
+  inputConstants.flatMap((node) => node.declarations.map((d) => d.id.name)),
+  ['DIRECTIONS', 'PLAY_ACTIONS', 'UI_CONTROL'],
+);
+const eventTargetClass = parse(demoInputHostSource, {
+  ecmaVersion: 'latest',
+  sourceType: 'module',
+}).body.filter((node) => node.type === 'ClassDeclaration' && node.id.name === 'Target');
+assert.equal(eventTargetClass.length, 1);
+const RoutingTarget = Function(
+  demoInputHostSource.slice(eventTargetClass[0].start, eventTargetClass[0].end) +
+    '; return Target;',
+)();
+const unsupportedInput = () => {
+  throw Error('Unexpected keyboard/steering operation in Back routing control');
+};
+const attachActualDemoInput = Function(
+  'actionForKey',
+  'keyCodeForEvent',
+  'resolveKeyBindings',
+  'attachTouchSteering',
+  inputConstants.map((node) => demoInputSource.slice(node.start, node.end)).join('\n') +
+    '\n' +
+    demoInputSource.slice(
+      inputDeclaration[0].declaration.start,
+      inputDeclaration[0].declaration.end,
+    ) +
+    '\nreturn attachDemoInput;',
+)(unsupportedInput, unsupportedInput, unsupportedInput, () => ({ clear() {}, destroy() {} }));
+
+// Reuse the existing bounded capture/target/bubble host and execute the actual
+// input owner. Only keyboard/steering dependencies are inert: these controls
+// exercise the public Back pointer sequence, not native event qualification.
+function actualInputCloseEvents(f, { practice, close }) {
+  const win = new RoutingTarget(),
+    doc = f.env.document,
+    root = doc.getElementById('demo-dialog'),
+    oldLookup = doc.getElementById;
+  for (const [target, parent] of [
+    [doc, win],
+    [root, doc],
+  ]) {
+    Object.setPrototypeOf(target, RoutingTarget.prototype);
+    target.parent = parent;
+    target.listeners = new Map();
+    target.captures = new Set();
+    target.dataset ??= {};
+    target.tagName = target === root ? 'DIALOG' : 'DOCUMENT';
+  }
+  doc.defaultView = win;
+  root.ownerDocument = doc;
+  const button = new RoutingTarget(root, { demoExit: '' }, 'BUTTON');
+  button.id = 'demo-back';
+  button.contains = (target) => target?.parent === button;
+  doc.getElementById = (id) => (id === 'demo-back' ? button : oldLookup(id));
+  let closes = 0;
+  const closeOwner = () => {
+    closes++;
+    close();
+    input.clear();
+  };
+  const input = attachActualDemoInput({
+    root,
+    canvas: f.display,
+    active: () => root.open,
+    watching: () => false,
+    takeoverAvailable: () => root.open && !practice(),
+    practice: () => false,
+    busy: () => false,
+    back: closeOwner,
+    takeover: unsupportedInput,
+    interrupt: unsupportedInput,
+    steer: unsupportedInput,
+    pause: unsupportedInput,
+    menu: unsupportedInput,
+    getBindings: unsupportedInput,
+  });
+  const hostClick = () => {
+    if (root.open) closeOwner();
+  };
+  button.addEventListener('click', hostClick);
+  const pointer = { isTrusted: true, button: 0, isPrimary: true, pointerId: 1, detail: 1 };
+  return {
+    button,
+    doc,
+    win,
+    root,
+    get listeners() {
+      return new Set(
+        ['pointerdown', 'click'].flatMap((type) =>
+          (doc.listeners.get(type) ?? []).map((x) => x.fn),
+        ),
+      );
+    },
+    activated: () => !root.open,
+    closes: () => closes,
+    emit: (type, props = {}) => button.emit(type, { ...pointer, ...props }),
+    fire() {
+      button.emit('pointerdown', pointer);
+      button.emit('pointerup', pointer);
+      button.emit('click', pointer);
+    },
+    destroy() {
+      input.destroy();
+      button.removeEventListener('click', hostClick);
+      assert.equal(
+        [
+          ...win.listeners.values(),
+          ...doc.listeners.values(),
+          ...root.listeners.values(),
+          ...button.listeners.values(),
+        ].flat().length,
+        0,
+      );
+    },
+  };
+}
+function routedCloseProbe(mode = 'spectator', legacy = false) {
+  const f = pausedExportFixture(),
+    probe = f.env.demoRecoveryProbe;
+  probe.configureResources(cycleContract().resources);
+  const root = f.env.document.getElementById('demo-dialog');
+  root.classList.contains = () => mode === 'practice';
+  const events = actualInputCloseEvents(f, {
+    practice: () => mode === 'practice',
+    close: () => {
+      root.open = false;
+    },
+  });
+  const before = probe.state('before');
+  return {
+    ...f,
+    probe,
+    events,
+    before,
+    arm: () =>
+      probe.armCloseBoundary({
+        label: mode + '-1-close-' + (legacy ? 'click' : 'activation'),
+        runId: before.demo.id,
+        painterId: before.painterId,
+        ...(legacy ? {} : { eventType: mode === 'spectator' ? 'pointerdown' : 'click' }),
+      }),
+    destroy() {
+      probe.disarmCloseBoundary();
+      events.destroy();
+    },
+  };
+}
+
+test('actual spectator input closes on pointerdown and suppresses the legacy document click boundary', () => {
+  const f = routedCloseProbe('spectator', true);
+  try {
+    f.arm();
+    f.events.fire();
+    assert.equal(f.events.closes(), 1);
+    assert.equal(f.events.root.open, false);
+    assert.throws(() => f.probe.takeCloseBoundary(), /missing/);
+  } finally {
+    f.destroy();
+  }
+});
+test('actual paused spectator and practice input capture their distinct trusted Back activation before disposal', () => {
+  for (const mode of ['spectator', 'practice']) {
+    const f = routedCloseProbe(mode);
+    try {
+      f.arm();
+      f.events.fire();
+      const value = f.probe.takeCloseBoundary();
+      assert.deepEqual(value.closeActivation, {
+        format: 'DemoTrustedCloseActivationV2',
+        isTrusted: true,
+        target: 'demo-back',
+        eventType: mode === 'spectator' ? 'pointerdown' : 'click',
+      });
+      assert.equal(value.open, true);
+      assert.equal(value.practice, mode === 'practice');
+      assert.equal(value.drawCount, f.before.drawCount);
+      assert.equal(value.resources, undefined);
+      assert.equal(f.events.closes(), 1);
+      assert.equal(f.events.root.open, false);
+    } finally {
+      f.destroy();
+    }
+  }
+});
+test('activation capture refuses synthetic, secondary, nonprimary, duplicate, wrong-mode and stale-owner events', () => {
+  for (const mutate of [
+    (f) => f.events.emit('pointerdown', { isTrusted: false }),
+    (f) => f.events.emit('pointerdown', { button: 2 }),
+    (f) => f.events.emit('pointerdown', { isPrimary: false }),
+    (f) => {
+      f.events.emit('pointerdown');
+      f.events.emit('pointerdown');
+    },
+    (f) => {
+      f.events.root.classList.contains = () => true;
+      f.events.emit('pointerdown');
+    },
+    (f) => {
+      f.painter.draw({ canvas: f.display }, { ...f.run }, 0, {
+        quality: 'full',
+        paused: true,
+        displayCSSWidth: 640,
+      });
+      f.events.emit('pointerdown');
+    },
+    (f) => f.events.emit('click', { detail: 0 }),
+  ]) {
+    const f = routedCloseProbe();
+    try {
+      f.arm();
+      mutate(f);
+      assert.throws(() => f.probe.takeCloseBoundary());
+    } finally {
+      f.destroy();
+    }
+  }
+  const f = routedCloseProbe();
+  try {
+    for (const eventType of ['click', 'pointerup', 'keydown', null])
+      assert.throws(() =>
+        f.probe.armCloseBoundary({
+          label: 'spectator-1-close-activation',
+          runId: f.before.demo.id,
+          painterId: f.before.painterId,
+          eventType,
+        }),
+      );
+  } finally {
+    f.destroy();
+  }
+});
+test('actual twenty-cycle driver uses input-owner activation, retains paused resize, and remains within 64 snapshots', async () => {
+  const f = publicCycleFixture({ activationBoundary: true, resizeBeforeClose: true });
+  try {
+    await f.snap('prepared-first-source');
+    await f.cycles();
+    await f.snap('ordinary-after');
+    assert.equal(f.report.snapshots.length, 64);
+    assert.equal(f.exports(), 44);
+    assert.equal(f.report.cycles.length, 20);
+    assert.equal(f.closeEvents.closes(), 21);
+    assert.equal(f.closeEvents.listeners.size, 0);
+    for (const row of f.report.cycles) {
+      const paused = f.report.snapshots[row.paused],
+        value = f.report.snapshots[row.closeActivation],
+        closed = f.report.snapshots[row.closed];
+      assert.equal(row.closeClick, undefined);
+      assert.equal(
+        value.closeActivation.eventType,
+        row.mode === 'spectator' ? 'pointerdown' : 'click',
+      );
+      assert.equal(value.drawCount, paused.drawCount + 1);
+      assert.equal(closed.drawCount, value.drawCount);
+    }
+    assessDemoResourceCycles(
+      { ...f.report, sourceRevision: source },
+      source,
+      activationCycleContract(),
+    );
+    await assert.rejects(f.snap('overflow'));
+  } finally {
+    f.dispose();
+  }
+});
+test('activation assessment rejects post-close paint and missing, reused or mismatched trusted records', async () => {
+  const f = publicCycleFixture({ activationBoundary: true, resizeBeforeClose: true });
+  try {
+    await f.cycles();
+    const raw = { ...f.report, sourceRevision: source };
+    for (const mutate of [
+      (r) => delete r.cycles[0].closeActivation,
+      (r) => (r.cycles[1].closeActivation = r.cycles[0].closeActivation),
+      (r, v) => (v.closeActivation.eventType = 'click'),
+      (r, v) => (v.closeActivation.isTrusted = false),
+      (r, v) => (v.closeActivation.target = 'demo-resume'),
+      (r, v) => v.demo.id++,
+      (r, v) => v.painterId++,
+      (r, v) => (v.demo.checkpoint.hash = 'different'),
+      (r, v) => (v.resources = {}),
+      (r) => r.snapshots[r.cycles[0].closed].drawCount++,
+    ]) {
+      const changed = structuredClone(raw),
+        value = changed.snapshots[changed.cycles[0].closeActivation];
+      mutate(changed, value);
+      assert.throws(() => assessDemoResourceCycles(changed, source, activationCycleContract()));
+    }
+  } finally {
+    f.dispose();
+  }
+});
+test('actual activation driver disarms after primary/cleanup failure and leaves no event owner', async () => {
+  for (const failDisarm of [false, true]) {
+    const f = publicCycleFixture({ activationBoundary: true, failCloseClick: true, failDisarm });
+    try {
+      await assert.rejects(f.cycles(), /modeled public click timeout/);
+      assert.equal(f.report.cycles[0].closeActivation, undefined);
+      assert.equal(f.report.cycles[0].closeCaptureFailure, 'modeled public click timeout');
+      if (failDisarm)
+        assert.equal(
+          f.report.cycles[0].closeCaptureCleanupFailure,
+          'modeled disarm transport failure',
+        );
+      assert.equal(f.closeEvents.listeners.size, 0);
+    } finally {
+      f.dispose();
+    }
+  }
 });

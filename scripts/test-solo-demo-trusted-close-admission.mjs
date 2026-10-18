@@ -83,13 +83,15 @@ test('actual separately named Demo declarations preserve every workload and hist
   assert.equal(plans[1].demo.resourceCycles.cyclesPerMode, 10);
   assert.equal(plans[1].demo.resourceCycles.snapshotLimit, 64);
 });
-test('new successor inputs are checked against current bytes without a historical fallback', async () => {
+test('prospective recovery inputs stay current while executed resource inputs use exact historical bytes', async () => {
   for (const [index, plan] of plans.entries()) {
     for (const ref of [...plan.adapterInputs, ...plan.frozenTools]) {
-      const bytes = await read(ref.path);
+      const historical =
+        index === 1 ? await readDeclaredDemoCloseTool(planPaths[index], ref) : null;
+      const bytes = historical ?? (await read(ref.path));
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(sha(bytes), ref.sha256, ref.path);
-      if (changedTools.has(ref.path))
+      if (index === 0 && changedTools.has(ref.path))
         await assert.rejects(
           () => readDeclaredDemoCloseTool(planPaths[index], ref),
           /No historical fallback/,

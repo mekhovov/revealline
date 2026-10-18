@@ -105,13 +105,13 @@
     "retries": 0,
     "driver": {
       "path": "scripts/observe-solo-demo-recovery.mjs",
-      "bytes": 39054,
-      "sha256": "c1d2591a3fa88e151e969726416b80156144fb594ed1252689d053595198e3fa"
+      "bytes": 39360,
+      "sha256": "f62eb027f6878918b83ec56fbd5976fd38e0b88ddf3019cef67b75a89c190c79"
     },
     "probe": {
       "path": "scripts/solo-demo-recovery-probe.mjs",
-      "bytes": 8182,
-      "sha256": "22b0db06b33ce5f363c33997169520456b4b3b0b633d581680bfc680d2ec12d7"
+      "bytes": 8971,
+      "sha256": "196aa6817eab026a530cf1e0bb39be5750808bc64d79baa95a791ad7469b511e"
     },
     "sourcePaths": [
       "game/build-info.json",
@@ -168,18 +168,18 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-demo.mjs",
-      "bytes": 31037,
-      "sha256": "7aba9fde9f37b7b938615425aa4d066b464813751a308d221ed8c0b24ae020e1"
+      "bytes": 31587,
+      "sha256": "09b66e78eb2535e5765f1c8c5865f4bf8e771ac42e912bf49af39997767077d6"
     },
     {
       "path": "scripts/observe-solo-demo-recovery.mjs",
-      "bytes": 39054,
-      "sha256": "c1d2591a3fa88e151e969726416b80156144fb594ed1252689d053595198e3fa"
+      "bytes": 39360,
+      "sha256": "f62eb027f6878918b83ec56fbd5976fd38e0b88ddf3019cef67b75a89c190c79"
     },
     {
       "path": "scripts/solo-demo-recovery-probe.mjs",
-      "bytes": 8182,
-      "sha256": "22b0db06b33ce5f363c33997169520456b4b3b0b633d581680bfc680d2ec12d7"
+      "bytes": 8971,
+      "sha256": "196aa6817eab026a530cf1e0bb39be5750808bc64d79baa95a791ad7469b511e"
     }
   ],
   "retention": "Common bounded evidence contains plans, exact served source/replay hashes, checkpoint snapshots, full strict replay results and owned command closure. Fresh Chrome profiles remain in exact short scratch until hosted job teardown and are not advertised as preserved archives.",
