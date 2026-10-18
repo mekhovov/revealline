@@ -1,5 +1,41 @@
 export const OVERFLIGHT_COPY = Object.freeze({
   en: {
+    suspendRetryHelp:
+      'Retry when device storage is available. Restore requires the same complete game package and appearance settings.',
+    suspendOpen: 'Saved flight',
+    suspendTitle: 'Keep this Survival flight',
+    suspendHelp:
+      'Single Drone only. Save while paused, then return to the same game package and appearance. One flight is kept on this device. This is a manual save; progress after your last save is not kept.',
+    suspendChecking: 'Checking saved flight…',
+    suspendWorking: 'Please wait. Keep this page open until the operation finishes.',
+    suspendAvailable: 'A paused flight is saved on this device.',
+    suspendPendingResult:
+      'A completed flight needs result recovery. Recover its records before replacing this save.',
+    suspendEmpty: 'No resumable flight is saved on this device.',
+    suspendFailed: 'Could not complete this operation. Your previous save is kept.',
+    suspendSaved:
+      'Flight saved. You can close the game or continue playing; save again to keep later progress.',
+    suspendRestored:
+      'Flight restored and paused. Close this window, then choose Continue when ready.',
+    suspendRecovered: 'The completed flight’s records and mastery are saved. It cannot be resumed.',
+    suspendReplaceHelp:
+      'Replace the saved flight with the current paused flight? The previous saved position will be lost.',
+    suspendRestoreHelp:
+      'Restore the saved flight? This replaces the current flight and any progress since your last save. The restored flight stays paused.',
+    suspendCheck: 'Check again',
+    suspendSave: 'Save paused flight',
+    suspendRestore: 'Restore saved flight',
+    suspendRecover: 'Recover completed result',
+    suspendConfirm: 'Confirm',
+    suspendCancel: 'Cancel · keep current flight',
+    suspendClose: 'Close',
+    suspendUnavailable:
+      'Saving needs the complete release package and available device storage. This development preview cannot keep a verified flight.',
+    suspendAppearance: 'Use the same appearance settings as the saved flight before restoring it.',
+    suspendWriter:
+      'Another tab owns saved flights, or this browser cannot reserve saving. Close the other tab and reload to try again.',
+    suspendResultPending:
+      'Your result needs recovery. Open Saved flight to retry; the saved flight has not been consumed.',
     chooseOperation: 'Choose your operation',
     survivalGroup: 'Survival',
     raidGroup: 'Raid',
@@ -219,6 +255,44 @@ export const OVERFLIGHT_COPY = Object.freeze({
     runtimeError: 'The sortie stopped after an error. Retry to prepare a new attempt.',
   },
   uk: {
+    suspendRetryHelp:
+      'Повторіть спробу, коли сховище пристрою стане доступним. Відновлення потребує того самого повного пакета гри й оформлення.',
+    suspendOpen: 'Збережений політ',
+    suspendTitle: 'Зберегти цей політ на виживання',
+    suspendHelp:
+      'Лише «Один дрон». Збережіть політ на паузі й поверніться в тому самому пакеті гри з тим самим оформленням. На пристрої зберігається один політ. Це ручне збереження: подальший поступ не зберігається автоматично.',
+    suspendChecking: 'Перевіряємо збережений політ…',
+    suspendWorking: 'Зачекайте. Не закривайте сторінку до завершення операції.',
+    suspendAvailable: 'На цьому пристрої збережено політ на паузі.',
+    suspendPendingResult:
+      'Завершений політ потребує відновлення результатів. Відновіть рекорди, перш ніж замінювати збереження.',
+    suspendEmpty: 'На цьому пристрої немає збереженого польоту для продовження.',
+    suspendFailed: 'Не вдалося завершити операцію. Попереднє збереження залишилося.',
+    suspendSaved:
+      'Політ збережено. Можна закрити гру або продовжити. Збережіть ще раз, щоб утримати подальший поступ.',
+    suspendRestored:
+      'Політ відновлено на паузі. Закрийте це вікно й виберіть «Продовжити», коли будете готові.',
+    suspendRecovered:
+      'Рекорди й майстерність завершеного польоту збережено. Цей політ уже не можна продовжити.',
+    suspendReplaceHelp:
+      'Замінити збережений політ поточним польотом на паузі? Попереднє збережене положення буде втрачено.',
+    suspendRestoreHelp:
+      'Відновити збережений політ? Це замінить поточний політ і поступ після останнього збереження. Відновлений політ залишиться на паузі.',
+    suspendCheck: 'Перевірити знову',
+    suspendSave: 'Зберегти політ на паузі',
+    suspendRestore: 'Відновити збережений політ',
+    suspendRecover: 'Відновити завершений результат',
+    suspendConfirm: 'Підтвердити',
+    suspendCancel: 'Скасувати · залишити поточний політ',
+    suspendClose: 'Закрити',
+    suspendUnavailable:
+      'Збереження потребує повного пакета випуску гри й доступного сховища пристрою. У цьому попередньому перегляді для розробки немає перевіреного пакета для збереження польоту.',
+    suspendAppearance:
+      'Перед відновленням виберіть те саме оформлення, що було в збереженому польоті.',
+    suspendWriter:
+      'Інша вкладка керує збереженнями або браузер не може зарезервувати сховище. Закрийте іншу вкладку й перезавантажте цю сторінку.',
+    suspendResultPending:
+      'Результат потребує відновлення. Відкрийте «Збережений політ» і повторіть спробу. Збережений політ ще не використано.',
     chooseOperation: 'Оберіть операцію',
     survivalGroup: 'Виживання',
     raidGroup: 'Наліт',

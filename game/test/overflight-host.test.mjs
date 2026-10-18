@@ -820,6 +820,7 @@ test('native Marathon continuation retains its run when next-sortie settings cha
       run: original,
       renderer: {},
       preparing: false,
+      suspendBusy: false,
       runtimeFailed: false,
       retired: false,
       contextGuard: { blocked: () => false },
