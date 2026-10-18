@@ -1,5 +1,22 @@
 # Flight practice: non-hosting release checklist — 15 October 2026
 
+## Current planning checkpoint — 18 October 2026
+
+Use the [current status and estimates](flight-practice-status-2026-10-18.md)
+and the 18 October order at the top of the completion plan. PR #1554 is still
+draft/conflicting; its local-UX suite timed out without complete totals. The
+exhausted-disk blocker has eased to a resource concern (about 13 GiB local free
+at inspection), but integration/build recovery has not been rerun. No new
+qualification or approval is granted by this documentation review.
+
+Next: integrate preserved remote/main changes and diagnose that timeout, freeze
+an exact candidate, complete Gym/Worlds active-flight continuity, actual app
+eviction/backup restoration and native outstanding-verification cancellation,
+then rebuild/recheck affected production journeys. Performance, visual/spoken,
+learning and all 24 real package-gate decisions keep their stated dependencies.
+Hardware and hosting remain owner-deferred with no scheduled ETA. Historical
+case narratives below do not override this current status or their own sources.
+
 ## Decision boundary and current baseline
 
 **Newest source-bound receipts:** onboarding candidate `1b339bfe6`/`f559fdd7…`

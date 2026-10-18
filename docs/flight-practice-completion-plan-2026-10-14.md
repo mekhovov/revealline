@@ -1,6 +1,47 @@
 # Flight practice: completion plan and priority review
 
+## Current status and execution order — 18 October 2026
+
+The [current status, completed work, detailed remaining items, estimates and
+blockers](flight-practice-status-2026-10-18.md) supersedes historical “next” and
+priority statements below. Implementation is substantially complete, but
+non-hosting qualification and release approval are not. No completion percentage
+or public-release ETA is claimed.
+
+Fresh review: PR #1554 remains draft at `4768988fb…`, conflicts with main, and
+its local-UX lane hit the unchanged ten-minute suite deadline without a final
+TAP summary. Twelve checks succeeded and two were skipped; neither skipped
+full-test/build jobs nor the green `release-ready` job closes that gap. The
+original failed receipt is retained in the linked status report. Local checkout
+is still `b012f2a9da`; newer remote work must be preserved before integration.
+Live main was `20555cda6…` at the read-only check (620 main-only / 18 PR-only
+commits), so integration is a material task, not an assumed clean rebase.
+
+The exhausted-disk blocker has eased: approximately 13 GiB local and 58 GiB
+external space were available at inspection. No fetch/build was retried; large
+writes still require a fresh space check. The concurrent dirty primary checkout
+remains untouched. This review updates documentation only.
+
+| Order              | Remaining work                                                                                                                    | Focused effort estimate / dependency                                                                |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| R1 / P0            | Preserve remote changes, integrate main, resolve conflicts and diagnose/rerun the local-UX timeout                                | 1–2 days initially; re-estimate after triage                                                        |
+| R2 / P0            | Gym and Worlds active-flight distinct-package update continuity                                                                   | 6–12 hours after integration/candidate freeze                                                       |
+| R3 / P0            | Actual app browser-managed eviction and public exported-backup restoration                                                        | 1–2 days after integration; controlled disposable profile, safe disk                                |
+| R4 / P0            | Native cancellation while verification is outstanding                                                                             | 4–8 hours; real timing witness or explicit inconclusive result                                      |
+| R5 / P1            | Current integrated production rebuild/admission and affected journeys                                                             | 4–8 hours after relevant fixes; no relabelling old build evidence                                   |
+| R6–R9 / acceptance | Agreed performance workloads/budgets, visual/spoken review, real guide/learning walkthroughs and 24 actual package-gate decisions | Detailed estimates in the status report; calendar ETA depends on setups, participants and reviewers |
+| D1–D2 / deferred   | Physical controller/radio/touch checks and all hosting/capacity/publication/selection work                                        | No scheduled ETA; owner-deferred, not passed                                                        |
+
+Software planning range: **5–9 focused working days**, excluding human/owner
+waiting and major new defects. It is not a calendar commitment or full Phase 1
+ETA. Re-estimate after R1. Existing completed directory, guide, fourth-app,
+offline-flight, migration/rollback and source-specific production evidence must
+not be reopened as absent or claimed for later bytes without comparison.
+
 ## 16 October research and execution update
+
+Historical checkpoint; the 18 October order above is authoritative. Its original
+evidence and limitations remain unchanged.
 
 Current checkpoint: original `1b339bfe6` packages pass all six restarted-offline
 flight routes and historical Academy installed-PWA update continuity; the older
