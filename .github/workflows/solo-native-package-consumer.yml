@@ -2164,6 +2164,7 @@ jobs:
             /scripts/solo-remote-readiness.mjs
             /scripts/solo-remote-sustained.mjs
             /scripts/solo-remote-touch.mjs
+            /scripts/solo-shared-source-checkout.sh
             /scripts/solo-source-verifier-smoke.mjs
             /scripts/soundtrack-archive-admissions.mjs
             /scripts/soundtrack-distribution.mjs
@@ -2555,6 +2556,7 @@ jobs:
             /scripts/solo-remote-readiness.mjs
             /scripts/solo-remote-sustained.mjs
             /scripts/solo-remote-touch.mjs
+            /scripts/solo-shared-source-checkout.sh
             /scripts/solo-source-verifier-smoke.mjs
             /scripts/soundtrack-archive-admissions.mjs
             /scripts/soundtrack-distribution.mjs
