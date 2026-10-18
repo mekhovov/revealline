@@ -138,7 +138,7 @@ test('actual cancelled first-open cannot stamp a newer overlapping open when its
     reads = 0;
   const { page, records } = await host(t, {
     fetchResponse: async (path) => {
-      if (hold && String(path).endsWith('/content/mission-library-index.json')) {
+      if (hold && /(?:^|\/)content\/mission-library-index\.json$/.test(String(path))) {
         reads++;
         await gate.promise;
       }
@@ -150,7 +150,8 @@ test('actual cancelled first-open cannot stamp a newer overlapping open when its
   const first = records[0][0];
   // A second real click retires the first opener while its metadata read is pending.
   const secondTask = activate(page);
-  await until(() => reads === 2);
+  await until(() => kinds(records).includes('missions-build-joined'));
+  assert.equal(reads, 1, 'The newer opener joins the admitted metadata request');
   const cancelled = records.filter((row) => row[0] === first);
   assert.equal(cancelled.at(-1)[3], 'missions-cancelled');
   const before = JSON.stringify(cancelled);
@@ -159,21 +160,28 @@ test('actual cancelled first-open cannot stamp a newer overlapping open when its
   assert.equal(JSON.stringify(records.filter((row) => row[0] === first)), before);
   const second = records.filter((row) => row[0] !== first);
   assert.equal(second[0][2], 1);
+  assert(kinds(second).includes('missions-build-joined'));
+  assert(!kinds(second).includes('missions-data-begin'));
+  assert.equal(reads, 1);
   assert.equal(second.at(-1)[3], 'missions-complete');
   assert.equal(page.$('journey-chooser').open, true);
   assert.deepEqual(page.errors, []);
 });
 
 test('actual metadata failure retains a failed prefix and the existing public Retry path', async (t) => {
-  let fail = false;
+  let fail = false,
+    failures = 0;
   const { page, records } = await host(t, {
     fetchResponse: async (path) => {
-      if (fail && String(path).endsWith('/content/mission-library-index.json'))
+      if (fail && /(?:^|\/)content\/mission-library-index\.json$/.test(String(path))) {
+        failures++;
         throw new Error('modeled metadata failure');
+      }
     },
   });
   fail = true;
   await activate(page);
+  assert.equal(failures, 1, 'The metadata rejection hook must run');
   assert(kinds(records).includes('missions-data-begin'));
   assert(!kinds(records).includes('missions-data-end'));
   assert.equal(records.at(-1)[3], 'missions-failed');
