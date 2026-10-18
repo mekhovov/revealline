@@ -1,0 +1,59 @@
+{
+  "format": "SharedDemoCacheIntegrationV1",
+  "started": "2026-10-18T23:05:18.196577+00:00",
+  "headBefore": "33290126287c8131ebe286b5b14dee1aaa72201a",
+  "hashesBefore": {
+    "game/official-downloads.mjs": "11b7010c75f52ebc03504017aed4bc5f896cbb4cdeec01cbada17c1d0c96c607",
+    "game/app.mjs": "aa410bb50dbd494e7e1dc2821f1e0e70c32702b0eeca9a59a1fa9b6fd870016b",
+    "game/ui/install-offline-panel.mjs": "fe4e4b4e7f9b047b601764bc6af38ee420b564a290498a09d792ebabda2c8429",
+    "game/ui/soundtrack-panel.mjs": "4ac8ecbcb4a92cde91a2809da93880e0b541bdf6d7368958f9b2a7b0baaa2ef3",
+    "game/couch/couch-music-host.mjs": "afad333a342660c1611346f73b77329b6901a546680072323b03d57517538ec3",
+    "game/test/official-downloads.test.mjs": "8e6332efdc83d8e9ee8bdc5befe4657ae456d02428ebdb0b3f5ab0328a152a19",
+    "game/test/install-offline-panel.test.mjs": "4f8c3bd80fdf8aec6ecb46661e3bb874f8fc73424485b08292d0b4c13afe6f54",
+    "game/test/soundtrack-host.test.mjs": "407207fc27ff4683662ffacc64404961f5ed57528ee0d193c7ec7dc3ebb700a1",
+    "game/test/couch-menu-music.test.mjs": "f9d2d3a2fff71082ba63ac6a792949164f1acd000bb5b98b9943f1bf6ae3ebe5",
+    "game/test/soundtrack-panel.test.mjs": "86096e466457a2542de33ad3e9e8fd2e08ca5037123ac1fd0021f36f5b8afef0"
+  },
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/official-downloads.test.mjs",
+    "game/test/install-offline-panel.test.mjs",
+    "game/test/soundtrack-host.test.mjs",
+    "game/test/couch-menu-music.test.mjs",
+    "game/test/soundtrack-panel.test.mjs"
+  ],
+  "complete": true,
+  "scope": "Whole affected cache/scan/host regression files after combining upstream one-open batching with owner cancellation. Sources are scoped hashes, not a canonical runtime freeze.",
+  "exitCode": 0,
+  "finished": "2026-10-18T23:06:43.433260+00:00",
+  "elapsedSeconds": 85.173,
+  "headAfter": "33290126287c8131ebe286b5b14dee1aaa72201a",
+  "hashesAfter": {
+    "game/official-downloads.mjs": "11b7010c75f52ebc03504017aed4bc5f896cbb4cdeec01cbada17c1d0c96c607",
+    "game/app.mjs": "aa410bb50dbd494e7e1dc2821f1e0e70c32702b0eeca9a59a1fa9b6fd870016b",
+    "game/ui/install-offline-panel.mjs": "fe4e4b4e7f9b047b601764bc6af38ee420b564a290498a09d792ebabda2c8429",
+    "game/ui/soundtrack-panel.mjs": "4ac8ecbcb4a92cde91a2809da93880e0b541bdf6d7368958f9b2a7b0baaa2ef3",
+    "game/couch/couch-music-host.mjs": "afad333a342660c1611346f73b77329b6901a546680072323b03d57517538ec3",
+    "game/test/official-downloads.test.mjs": "8e6332efdc83d8e9ee8bdc5befe4657ae456d02428ebdb0b3f5ab0328a152a19",
+    "game/test/install-offline-panel.test.mjs": "4f8c3bd80fdf8aec6ecb46661e3bb874f8fc73424485b08292d0b4c13afe6f54",
+    "game/test/soundtrack-host.test.mjs": "407207fc27ff4683662ffacc64404961f5ed57528ee0d193c7ec7dc3ebb700a1",
+    "game/test/couch-menu-music.test.mjs": "f9d2d3a2fff71082ba63ac6a792949164f1acd000bb5b98b9943f1bf6ae3ebe5",
+    "game/test/soundtrack-panel.test.mjs": "86096e466457a2542de33ad3e9e8fd2e08ca5037123ac1fd0021f36f5b8afef0"
+  },
+  "tap": {
+    "path": "docs/qualification/shared-demos/cache-integration-dd337c8.tap.txt",
+    "bytes": 56706,
+    "sha256": "d277ca3868c1540affbbc9eeb14b9f6612f0cfe97f0986c6c7e6f4fbb8f93213"
+  },
+  "stats": {
+    "tests": 248,
+    "pass": 248,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "sourceStable": true
+}

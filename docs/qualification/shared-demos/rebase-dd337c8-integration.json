@@ -1,0 +1,115 @@
+{
+  "format": "SharedDemoMainIntegrationV1",
+  "created": "2026-10-18T23:05:57.551757+00:00",
+  "headBeforeRebase": "8de087b37309c7e0f85bff00626893cfab2c71be",
+  "headAfterRebase": "33290126287c8131ebe286b5b14dee1aaa72201a",
+  "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "originalHeadPreservedAt": "codex/shared-demos-pre-dd337c8-20261019",
+  "conflicts": [
+    "game/official-downloads.mjs"
+  ],
+  "resolution": "Preserve incoming batched inspection and conflicting-size fallback; forward owner AbortSignal to every inspect and check cancellation before/after discovery and within the fallback catch. Existing upstream and retirement tests are retained.",
+  "changedPaths": [
+    ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+    ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+    ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+    ".github/workflows/solo-remote-final-soak-temporary.yml",
+    ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+    "docs/performance/fixtures/solo-retired-diagnostics/source.json",
+    "game/official-downloads.mjs",
+    "game/test/fpv-aircraft-coach.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/official-downloads.test.mjs",
+    "optional-practice/civilian-fpv/beginner-coach.mjs",
+    "optional-practice/civilian-fpv/world-app.mjs",
+    "scripts/solo-final-wave-witness.mjs",
+    "scripts/solo-page-error-source-witness.mjs",
+    "scripts/solo-retired-diagnostic-source.mjs",
+    "scripts/test-solo-final-timing-v2-release.mjs",
+    "scripts/test-solo-readiness-source-witness.mjs",
+    "scripts/test-solo-retired-diagnostic-source.mjs"
+  ],
+  "incomingExpectedPaths": [
+    ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+    ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+    ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+    ".github/workflows/solo-remote-final-soak-temporary.yml",
+    ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+    ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+    "docs/performance/fixtures/solo-retired-diagnostics/source.json",
+    "game/official-downloads.mjs",
+    "game/test/fpv-aircraft-coach.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/official-downloads.test.mjs",
+    "optional-practice/civilian-fpv/beginner-coach.mjs",
+    "optional-practice/civilian-fpv/world-app.mjs",
+    "scripts/solo-final-wave-witness.mjs",
+    "scripts/solo-page-error-source-witness.mjs",
+    "scripts/solo-retired-diagnostic-source.mjs",
+    "scripts/test-solo-final-timing-v2-release.mjs",
+    "scripts/test-solo-readiness-source-witness.mjs",
+    "scripts/test-solo-retired-diagnostic-source.mjs"
+  ],
+  "nativeIdentityScopes": [
+    "game/core",
+    "game/snake",
+    "game/overflight",
+    "game/demo-data",
+    "game/demo-modes",
+    "game/replay.mjs",
+    "optional-practice/civilian-fpv/demo-data",
+    "optional-practice/civilian-fpv/model.mjs",
+    "optional-practice/civilian-fpv/world-model.mjs",
+    "optional-practice/civilian-fpv/flight-response.mjs",
+    "optional-practice/civilian-fpv/world-catalogue.mjs",
+    "optional-practice/civilian-fpv/catalogue.mjs",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs"
+  ],
+  "nativeIdentityChanges": [],
+  "sourceDeltaMatchesIncomingPaths": true,
+  "verificationState": "All focused integration suites complete; emitted/browser/endurance gates remain pending.",
+  "formatCheck": {
+    "command": "node node_modules/prettier/bin/prettier.cjs --check game/official-downloads.mjs game/test/official-downloads.test.mjs",
+    "exitCode": 0
+  },
+  "limits": [
+    "No new corpus replay claim; native content/simulation/replay scope is unchanged.",
+    "Previous failed broad Start precondition and restoration receipts retain their recorded status."
+  ],
+  "focusedChecks": [
+    {
+      "path": "docs/qualification/shared-demos/cache-integration-dd337c8.json",
+      "sha256": "7deb8eddb1258aa730c54f15b9baf2be3b62cddd4f43ecba441d31cb0555cea2",
+      "passedAssertions": 248,
+      "complete": true
+    },
+    {
+      "path": "docs/qualification/shared-demos/fpv-integration-dd337-3329012628.json",
+      "sha256": "ec6f0cbc61a01f5c136d77573b3cc23d172989eca4f519d8d0b200eee9282abd",
+      "passedAssertions": 193,
+      "complete": true
+    },
+    {
+      "path": "docs/qualification/shared-demos/retired-diagnostic-integration-dd337c812.json",
+      "sha256": "c81280ce56257a48b7c454f6f5329b80cbd5d514b975783fe466bccaf916cb37",
+      "passedAssertions": 21,
+      "complete": true
+    }
+  ],
+  "verificationUpdated": "2026-10-18T23:08:48.264254+00:00"
+}
