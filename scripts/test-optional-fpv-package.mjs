@@ -263,11 +263,37 @@ test('bundled FPV pins final default bytes and has its own bounded cache outside
     rebuilt.files.reduce((total, file) => total + file.bytes, worker.bytes.length) <=
       policy.limits.bytes,
   );
-  for (const name of [policy.entry, manifestName, 'game/i18n/catalogs.mjs']) {
+  for (const name of [
+    policy.entry,
+    manifestName,
+    'game/i18n/catalogs.mjs',
+    policy.root + 'sim-presentation.mjs',
+  ]) {
     const bytes = first.find((entry) => entry.name === name).bytes,
       pin = rebuilt.files.find((file) => file.path === name);
     assert.equal(pin.sha256, createHash('sha256').update(bytes).digest('hex'));
     assert.ok(worker.bytes.includes(Buffer.from(pin.sha256)));
+  }
+  const presentationName = policy.root + 'sim-presentation.mjs',
+    presentationSource = source.find((entry) => entry.name === presentationName).bytes,
+    presentationOutput = first.find((entry) => entry.name === presentationName).bytes;
+  assert.ok(presentationOutput.length < presentationSource.length);
+  assert.deepEqual(await readFile(path.join(root, presentationName)), presentationSource);
+  for (const name of [
+    'advanced-simulation.mjs',
+    'advanced-aircraft-runtime.mjs',
+    'advanced-controller.mjs',
+    'aircraft-course-session.mjs',
+    'aircraft-presets.mjs',
+    'aircraft-recording.mjs',
+    'demonstrations.mjs',
+  ]) {
+    const fullName = policy.root + name;
+    assert.deepEqual(
+      first.find((entry) => entry.name === fullName).bytes,
+      source.find((entry) => entry.name === fullName).bytes,
+      fullName,
+    );
   }
   assert.match(
     first.find((entry) => entry.name === policy.entry).bytes.toString(),
