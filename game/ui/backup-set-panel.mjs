@@ -130,6 +130,9 @@ export function attachBackupSetPanel({
     t('interface:backupArchive.scope', {
       journey: t(`interface:backupArchive.journey.${result.archiveReport.journey}`),
     }) +
+    (result.archiveReport.gameData === 'excluded-authored'
+      ? ' ' + t('interface:backupArchive.authoredExclusions')
+      : '') +
     (result.coverage.detachedStories.length || result.coverage.referenceOnlyMusic?.length
       ? ' ' + t('interface:backupArchive.incompleteOriginals')
       : '');

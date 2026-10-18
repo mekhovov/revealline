@@ -101,6 +101,41 @@ test('archive awaits the existing Journey async owner and preserves its exact by
   assert.ok(report.exclusions.some((value) => /could not be read/.test(value)));
 });
 
+test('authored owner explicitly exports shared media and Journey without entering legacy game-data export', async () => {
+  const f = await backupSetFixture(),
+    identity = f.source.gameIdentity,
+    readStill = f.source.readStill;
+  f.source.archiveProfile = { kind: 'authored-journey', identity };
+  f.source.gameIdentity = () => {
+    throw new Error('Legacy authored session guard');
+  };
+  f.source.readGame = () => {
+    throw new Error('Legacy game data must not be read');
+  };
+  f.source.journey = { identity: () => 1, read: async () => ({ raw: '{}', partial: false }) };
+  await assert.rejects(prepareBackupSet(f.source), /Legacy authored session guard/);
+  const archive = await prepareBackupArchive(f.source),
+    report = archive.archiveReport;
+  assert.equal(report.gameData, 'excluded-authored');
+  assert.deepEqual(
+    report.files.map((file) => file.id),
+    ['media', 'story', 'audio', 'coverage', 'journey'],
+  );
+  assert.ok(report.exclusions.some((value) => /unfinished authored flight/.test(value)));
+  assert.ok(archive.coverage.exclusions.some((value) => /Legacy game-data/.test(value)));
+  assert.ok(report.restoreOrder.every((value) => !/game-data/.test(value)));
+  assert.equal(report.journey, 'included');
+  f.changeGame();
+  assert.throws(archive.assertGameCurrent, /Game data changed/);
+  f.source.readStill = async () => {
+    throw new Error('Shared media storage unavailable');
+  };
+  await assert.rejects(prepareBackupArchive(f.source), /Shared media storage unavailable/);
+  f.source.readStill = readStill;
+  f.source.archiveProfile = { kind: 'unknown', identity };
+  await assert.rejects(prepareBackupArchive(f.source), /Unsupported archive profile/);
+});
+
 test('merged Journey exportAsync is borrowed read-only rather than replaced by the synchronous serializer', async (t) => {
   const f = await backupSetFixture();
   let reads = 0,
