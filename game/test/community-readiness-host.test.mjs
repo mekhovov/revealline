@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import { parse } from 'parse5';
 import * as i18n from '../i18n/index.mjs';
 import { attachCommunityReadiness, communityRequest } from '../community/readiness.mjs';
+import { confirmCommunityRemoval } from '../community/removal-review.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 const source = (await readFile(new URL('../community/page.mjs', import.meta.url), 'utf8')).replace(
@@ -26,7 +27,16 @@ const settle = async () => {
 };
 function host(
   t,
-  { probe = async () => true, catalog, injected = false, publish, select, session, signOut } = {},
+  {
+    probe = async () => true,
+    catalog,
+    injected = false,
+    publish,
+    select,
+    session,
+    signOut,
+    removal = {},
+  } = {},
 ) {
   const document = new Document();
   const append = (parent, node) => {
@@ -65,6 +75,7 @@ function host(
     history: { replaceState() {} },
     RevealLineCommunityAuth: injected ? { headers: async () => ({}) } : undefined,
     attachCommunityReadiness,
+    confirmCommunityRemoval,
     communityRequest,
     probeCommunityService: probe,
     createCommunityAccountClient: () => ({
@@ -85,6 +96,7 @@ function host(
     createCommunityDownloadStore: () => ({}),
     createTusBrowserUpload: () => ({}),
     createCommunityLibrary: () => ({
+      ...removal,
       catalog: async (args) => {
         calls.catalog++;
         if (closed) throw new Error('Store closed permanently');
@@ -130,6 +142,74 @@ test('actual page makes no setup requests until preflight succeeds; retry preser
   assert.equal(h.$('publish-title').value, 'Retained local title');
   assert.equal(h.$('publish').disabled, true, 'a ready service does not sign the player in');
 });
+
+for (const kind of ['offload', 'download'])
+  test(`actual page ${kind} removal requires visible confirmation and a fresh reviewed capability`, async (t) => {
+    const reviewed = [],
+      commits = [],
+      prepare = async () => {
+        const value = { detachableBytes: 42 };
+        reviewed.push(value);
+        return value;
+      },
+      commit = async (edition, review) => {
+        commits.push({ edition, review });
+        return { journalComplete: true };
+      },
+      h = host(t, {
+        catalog: async () => ({
+          editions: [
+            {
+              editionId: 'local',
+              title: 'Local',
+              version: 1,
+              installed: true,
+              packageRetained: true,
+              playHref: './play',
+              publishedAt: '2026-10-18T12:00:00Z',
+              packageSize: 42,
+            },
+          ],
+          nextCursor: null,
+        }),
+        removal: {
+          reviewInstalledOffload: prepare,
+          offloadInstalled: commit,
+          reviewDownloadRemoval: prepare,
+          removeDownload: commit,
+        },
+      });
+    await settle();
+    const find = () =>
+      h
+        .$('catalog')
+        .querySelectorAll('button')
+        .find(
+          (node) =>
+            node.textContent ===
+            (kind === 'offload' ? 'Offload installed media' : 'Remove recovery download'),
+        );
+    const first = find().onclick();
+    await settle();
+    assert.equal(commits.length, 0);
+    assert.equal(h.$('community-removal-dialog').open, true);
+    assert.equal(
+      h.$('community-removal-keep').ownerDocument.activeElement,
+      h.$('community-removal-keep'),
+    );
+    h.$('community-removal-keep').click();
+    await first;
+    assert.equal(commits.length, 0);
+    const second = find().onclick();
+    await settle();
+    h.$('community-removal-confirm').click();
+    await second;
+    assert.equal(reviewed.length, 2);
+    assert.equal(commits.length, 1);
+    assert.equal(commits[0].review, reviewed[1]);
+    assert.equal(commits[0].edition.editionId, 'local');
+    assert.equal(h.$('community-removal-dialog'), null);
+  });
 
 test('actual page ignores obsolete catalog errors and late results after leaving', async (t) => {
   const requests = [];
@@ -249,6 +329,130 @@ const catalogEdition = (id) => ({
   version: 1,
   packageSize: 1024,
   publishedAt: '2026-10-18T12:00:00Z',
+});
+test('obsolete removal preparation cannot open a confirmation or overwrite a newer query error', async (t) => {
+  const held = deferred();
+  let rejectQuery = false;
+  const h = host(t, {
+    catalog: async () => {
+      if (rejectQuery) throw new Error('new query error');
+      return {
+        editions: [
+          {
+            ...catalogEdition('local'),
+            installed: true,
+            packageRetained: true,
+            playHref: './play',
+          },
+        ],
+        nextCursor: null,
+      };
+    },
+    removal: { reviewInstalledOffload: () => held.promise },
+  });
+  await settle();
+  const opener = h
+    .$('catalog')
+    .querySelectorAll('button')
+    .find((node) => node.textContent === 'Offload installed media');
+  const pending = opener.onclick();
+  rejectQuery = true;
+  h.$('search').value = 'new';
+  await h.$('search').oninput();
+  held.reject(new Error('obsolete removal error'));
+  await pending;
+  assert.equal(h.$('community-removal-dialog'), null);
+  assert.match(h.$('status').textContent, /new query error/);
+  assert.doesNotMatch(h.$('status').textContent, /obsolete removal error/);
+});
+
+for (const kind of ['offload', 'download'])
+  for (const outcome of ['saved', 'unconfirmed'])
+    test(`late ${kind} ${outcome} cannot replace a newer query or its status`, async (t) => {
+      const held = deferred();
+      const h = host(t, {
+        catalog: async ({ query }) => {
+          if (query) throw new Error('new query error');
+          return {
+            editions: [
+              {
+                ...catalogEdition('local'),
+                installed: true,
+                packageRetained: true,
+                playHref: './play',
+              },
+            ],
+            nextCursor: null,
+          };
+        },
+        removal: {
+          reviewInstalledOffload: async () => ({ detachableBytes: 80 }),
+          reviewDownloadRemoval: async () => ({}),
+          offloadInstalled: () => held.promise,
+          removeDownload: () => held.promise,
+        },
+      });
+      await settle();
+      const opener = h
+        .$('catalog')
+        .querySelectorAll('button')
+        .find(
+          (node) =>
+            node.textContent ===
+            (kind === 'offload' ? 'Offload installed media' : 'Remove recovery download'),
+        );
+      const pending = opener.onclick();
+      await settle();
+      h.$('community-removal-confirm').click();
+      await settle();
+      h.$('search').value = 'new';
+      h.$('search').focus();
+      await h.$('search').oninput();
+      if (outcome === 'saved') held.resolve({ journalComplete: true });
+      else held.reject(new Error('obsolete removal error'));
+      await pending;
+      assert.equal(h.calls.catalog, 2, 'a finished old removal must not replace the newer query');
+      assert.match(h.$('status').textContent, /new query error/);
+      assert.equal(h.$('search').ownerDocument.activeElement, h.$('search'));
+    });
+
+test('offload reports an unconfirmed commit and a partial journal without claiming content was kept', async (t) => {
+  let attempt = 0;
+  const h = host(t, {
+    catalog: async () => ({
+      editions: [
+        { ...catalogEdition('local'), installed: true, packageRetained: true, playHref: './play' },
+      ],
+      nextCursor: null,
+    }),
+    removal: {
+      reviewInstalledOffload: async () => ({ detachableBytes: 80 }),
+      offloadInstalled: async () => {
+        if (++attempt === 1) throw new Error('storage changed');
+        return { journalComplete: false };
+      },
+    },
+  });
+  await settle();
+  const run = async () => {
+    const opener = h
+        .$('catalog')
+        .querySelectorAll('button')
+        .find((node) => node.textContent === 'Offload installed media'),
+      pending = opener.onclick();
+    await settle();
+    h.$('community-removal-confirm').click();
+    await pending;
+  };
+  await run();
+  assert.match(h.$('status').textContent, /did not confirm a final result/);
+  assert.match(h.$('status').textContent, /storage changed/);
+  await run();
+  assert.match(
+    h.$('status').textContent,
+    /media was offloaded.*local record update did not finish/,
+  );
+  assert.equal(attempt, 2);
 });
 const shownTitles = (h) =>
   h
