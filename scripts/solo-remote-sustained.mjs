@@ -135,6 +135,13 @@ export const GEOMETRIC_NEXT_39774_SOURCE = Object.freeze({
   candidateTree: 'cac2369a26cac5282e4260c638b934540d17ced6',
   runtime: '39774cce8697d412d138ef4da11ac547a5f8e535',
 });
+export const GEOMETRIC_NEXT_DE332_SOURCE = Object.freeze({
+  ...GEOMETRIC_NEXT_SOURCE,
+  name: 'next-candidatede332-geometric-v1',
+  candidate: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  candidateTree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+  runtime: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+});
 const geometricNextSource = (plan) =>
   plan.sourceCohort === GEOMETRIC_NEXT_SOURCE.name
     ? GEOMETRIC_NEXT_SOURCE
@@ -142,7 +149,9 @@ const geometricNextSource = (plan) =>
       ? GEOMETRIC_NEXT_FINAL_SOURCE
       : plan.sourceCohort === GEOMETRIC_NEXT_39774_SOURCE.name
         ? GEOMETRIC_NEXT_39774_SOURCE
-        : null;
+        : plan.sourceCohort === GEOMETRIC_NEXT_DE332_SOURCE.name
+          ? GEOMETRIC_NEXT_DE332_SOURCE
+          : null;
 const geometricNextPlan = (plan) => geometricNextSource(plan) !== null;
 const finalSoakCohort = 'soak-main8b-candidatea6e';
 const anchoredSoakHash = '079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff';
@@ -261,8 +270,14 @@ function validateDiagnosticComparison(release, candidate = source.candidate) {
       ? 'independent-candidate-transition-diagnostics'
       : 'independent-comparison-diagnostics',
   );
-  assert.equal(release.predecessorRun, 38985941469);
-  assert.equal(release.firstEightAllCorrectnessPassed, false);
+  if (candidate === GEOMETRIC_NEXT_DE332_SOURCE.candidate) {
+    assert.equal(release.predecessorRun, 39073210040);
+    assert.equal(release.firstEightRequired, false);
+    assert.equal(release.firstEightAllCorrectnessPassed, undefined);
+  } else {
+    assert.equal(release.predecessorRun, 38985941469);
+    assert.equal(release.firstEightAllCorrectnessPassed, false);
+  }
   assert.equal(release.performanceQualification, 'not-qualified-diagnostic-only');
   assert.equal(release.automaticRetries, 0);
   assert.equal(release.automaticPhaseContinuation, false);
@@ -273,7 +288,9 @@ function comparisonLabels(plan) {
     ? {
         comparisonAdmission: 'independent-diagnostic',
         performanceQualification: 'not-qualified-diagnostic-only',
-        firstEightAllCorrectnessPassed: false,
+        ...(geometricNextSource(plan) === GEOMETRIC_NEXT_DE332_SOURCE
+          ? { firstEightRequired: false }
+          : { firstEightAllCorrectnessPassed: false }),
         ...(plan.sourceCohort ? { sourceCohort: plan.sourceCohort } : {}),
       }
     : {};
@@ -302,14 +319,41 @@ function validateSourceCohort(plan, selected) {
     assert.equal(plan.baseline.scope, 'source-only-no-observation');
     assert.equal(plan.candidateOnly, true);
     assert.equal(plan.release.scope, 'independent-candidate-transition-diagnostics');
-    assert.equal(
-      plan.release.onceOnlyBefore,
-      geometricNextSource(plan) === GEOMETRIC_NEXT_SOURCE
-        ? '0febd334619731adc26dfa3df78aab02991563af'
-        : geometricNextSource(plan) === GEOMETRIC_NEXT_39774_SOURCE
-          ? '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'
-          : geometricNextSource(plan).candidate,
-    );
+    if (selected === GEOMETRIC_NEXT_DE332_SOURCE) {
+      assert.equal(plan.release.onceOnlyBefore, undefined);
+      assert.deepEqual(plan.release.dispatch, {
+        workflow: '.github/workflows/solo-native-package-consumer.yml',
+        lane: 'next',
+        source: GEOMETRIC_NEXT_DE332_SOURCE.candidate,
+        reviewOrder: 'manual-only-after-first-eight-result-review',
+      });
+      assert.deepEqual(plan.candidate, {
+        revision: GEOMETRIC_NEXT_DE332_SOURCE.candidate,
+        tree: GEOMETRIC_NEXT_DE332_SOURCE.candidateTree,
+        run: 39091745654,
+        artifact: 12123463810,
+        outer: {
+          bytes: 1094606342,
+          sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+        },
+        inner: {
+          bytes: 1075789325,
+          sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+        },
+        manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+        producer:
+          'Exact successful Appearance39091745654, Node22.13.1; full remote package/source/CSP verification remains mandatory.',
+      });
+    } else {
+      assert.equal(
+        plan.release.onceOnlyBefore,
+        geometricNextSource(plan) === GEOMETRIC_NEXT_SOURCE
+          ? '0febd334619731adc26dfa3df78aab02991563af'
+          : geometricNextSource(plan) === GEOMETRIC_NEXT_39774_SOURCE
+            ? '5e9e16fd48f4b96b4a7fe30c72aa835ce9f536f0'
+            : geometricNextSource(plan).candidate,
+      );
+    }
     assert.equal(plan.nativeRouteProtocol, 'authored-next-geometric-v1');
     const identity = plan.candidate;
     assert(Number.isSafeInteger(identity.run) && identity.run > 0);
@@ -1027,7 +1071,10 @@ export function validateRelease(release, phase, selected = null) {
     assert.match(ref.summarySHA256, /^[a-f0-9]{64}$/);
     assert(['passed', 'failed-reviewed'].includes(ref.disposition));
   }
-  if (diagnostic || ['soak', 'long29'].includes(phase))
+  if (
+    (diagnostic || ['soak', 'long29'].includes(phase)) &&
+    selected !== GEOMETRIC_NEXT_DE332_SOURCE
+  )
     assert.equal(release.firstEightAllCorrectnessPassed, !diagnostic);
   return release;
 }
@@ -1860,11 +1907,13 @@ export async function geometricNextAssessment(plan, row, raw, command, browserVe
     status: !protocolFailure && complete ? inherited.status : 'failed',
     candidateOnly: true,
     scope:
-      geometricNextSource(plan) === GEOMETRIC_NEXT_39774_SOURCE
-        ? 'Exactly eleven authored missions and ten manual Next transitions on 39774. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
-        : geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
-          ? 'Exactly eleven authored missions and ten manual Next transitions on e1cc. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
-          : 'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
+      geometricNextSource(plan) === GEOMETRIC_NEXT_DE332_SOURCE
+        ? 'Exactly eleven authored missions and ten manual Next transitions on de332. Existing HUD markers and bounded journal retain attribution evidence; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+        : geometricNextSource(plan) === GEOMETRIC_NEXT_39774_SOURCE
+          ? 'Exactly eleven authored missions and ten manual Next transitions on 39774. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+          : geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
+            ? 'Exactly eleven authored missions and ten manual Next transitions on e1cc. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+            : 'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
   };
 }
 

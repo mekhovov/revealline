@@ -1,0 +1,901 @@
+name: Solo verified package consumer
+
+on:
+  pull_request:
+    types: [synchronize]
+    paths:
+      - '.github/workflows/solo-native-package-consumer.yml'
+      - 'docs/performance/solo-remote-de332-correctness-plan.json'
+      - 'docs/performance/solo-next-geometric-de332-plan.json'
+      - 'scripts/test-solo-de332-correctness.mjs'
+      - 'scripts/test-solo-next-de332-admission.mjs'
+      - 'scripts/solo-qualification-next-route.mjs'
+      - 'scripts/solo-remote-sustained.mjs'
+  workflow_dispatch:
+    inputs:
+      lane:
+        description: 'Exact de332 package. Select Next only after reviewing its fresh first-eight result.'
+        type: choice
+        required: true
+        default: first-eight
+        options: [first-eight, next]
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: solo-native-de332-${{ inputs.lane || 'first-eight' }}
+  cancel-in-progress: false
+
+jobs:
+  correctness:
+    # Only the reviewed PR edge or explicit fixed-source manual selection; fresh owners remain mandatory.
+    if: github.repository == 'mekhovov/revealline' && ((github.event_name == 'pull_request' && github.event.pull_request.number == 1578 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c82d0825999f014c7a5c17386542f3219f4f04e5') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'first-eight'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 145
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+      SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
+      SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
+      PYTHONDONTWRITEBYTECODE: 1
+    steps:
+      - name: Initialize paths after the runner is assigned
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          printf '%s\n' \
+            "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
+            "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
+            "OUTPUT=$RUNNER_TEMP/solo-linux-de332-correctness" >> "$GITHUB_ENV"
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: tools
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/solo-native-package-consumer.yml
+            /.github/workflows/solo-remote-39774-correctness-temporary.yml
+            /docs/performance/fixtures/solo-remote-correctness/first30.qualification.fixture
+            /docs/performance/solo-remote-39774-correctness-plan.json
+            /docs/performance/solo-remote-de332-correctness-plan.json
+            /game/build-config.json
+            /game/campaign-contexts.mjs
+            /game/campaign-difficulty.mjs
+            /game/content-design/assets.mjs
+            /game/content-design/catalogs.mjs
+            /game/content-design/limits.mjs
+            /game/content-design/map.mjs
+            /game/content-launch.mjs
+            /game/content.mjs
+            /game/content/soundtrack-catalogue.mjs
+            /game/controller-bindings.mjs
+            /game/controller-boost.mjs
+            /game/coop/bonus-opportunity.mjs
+            /game/coop/combat-patrols.mjs
+            /game/coop/core.mjs
+            /game/coop/expedition-environment.mjs
+            /game/coop/expedition-version.mjs
+            /game/coop/first-connection.mjs
+            /game/coop/foundations.mjs
+            /game/coop/geometry.mjs
+            /game/coop/library.mjs
+            /game/coop/recipes.mjs
+            /game/coop/relay-yard.mjs
+            /game/coop/roamers.mjs
+            /game/coop/running-enemies.mjs
+            /game/coop/terrain.mjs
+            /game/coop/threats.mjs
+            /game/coop/timed-bonuses.mjs
+            /game/core/abilities.mjs
+            /game/core/arcade-actions.mjs
+            /game/core/bonus-opportunity.mjs
+            /game/core/capture-regions.mjs
+            /game/core/capture.mjs
+            /game/core/classic-contour.mjs
+            /game/core/classic-definition.mjs
+            /game/core/classic-motion.mjs
+            /game/core/classic-state.mjs
+            /game/core/classic-step.mjs
+            /game/core/classic-topology.mjs
+            /game/core/combat-definition.mjs
+            /game/core/combat-motion.mjs
+            /game/core/combat-patrols.mjs
+            /game/core/contacts.mjs
+            /game/core/coverage.mjs
+            /game/core/directional-fields.mjs
+            /game/core/encounter.mjs
+            /game/core/enemy-pressure.mjs
+            /game/core/field-course.mjs
+            /game/core/foundations.mjs
+            /game/core/geometry.mjs
+            /game/core/index.mjs
+            /game/core/level.mjs
+            /game/core/line-impact.mjs
+            /game/core/movement.mjs
+            /game/core/registry.mjs
+            /game/core/relay-gates.mjs
+            /game/core/systems.mjs
+            /game/core/timed-bonuses.mjs
+            /game/core/versions.mjs
+            /game/data-json.mjs
+            /game/download-catalogue.mjs
+            /game/enemy-catalog.mjs
+            /game/external-chapter-source.mjs
+            /game/external-chapter.mjs
+            /game/first-flight.mjs
+            /game/flight-media-pins.mjs
+            /game/hunt/actor-facing.mjs
+            /game/hunt/pursuit-goals-v2.mjs
+            /game/hunt/pursuit-goals.mjs
+            /game/hunt/pursuit-specialists.mjs
+            /game/hunt/rules.mjs
+            /game/hunt/running-enemy-definition.mjs
+            /game/hunt/running-enemy-placement.mjs
+            /game/i18n/bootstrap.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/index.mjs
+            /game/imports.mjs
+            /game/input-presentation.mjs
+            /game/key-bindings.mjs
+            /game/library.mjs
+            /game/managed-media-store.mjs
+            /game/mastery-catalog.mjs
+            /game/mastery-equipment.mjs
+            /game/mastery-records.mjs
+            /game/mastery.mjs
+            /game/media-bundle.mjs
+            /game/media-library.mjs
+            /game/media-presentation.mjs
+            /game/media-still.mjs
+            /game/media-storage-record.mjs
+            /game/mission-library/included-bundled-pack.mjs
+            /game/mp3-inspection.mjs
+            /game/mp3.mjs
+            /game/official-downloads.mjs
+            /game/online-soundtrack-catalogue.mjs
+            /game/online-soundtrack-sources.mjs
+            /game/optional-chapters.mjs
+            /game/packs.mjs
+            /game/picture-receipts.mjs
+            /game/platform.mjs
+            /game/presentation-pins.mjs
+            /game/progress.mjs
+            /game/replay.mjs
+            /game/snake/rules.mjs
+            /game/soundtrack-album-download.mjs
+            /game/soundtrack-albums.mjs
+            /game/soundtrack-archive.mjs
+            /game/soundtrack-bundle.mjs
+            /game/soundtrack-portable.mjs
+            /game/soundtrack-rights.mjs
+            /game/soundtrack-style-selection.mjs
+            /game/soundtrack-style-taxonomy.mjs
+            /game/soundtrack.mjs
+            /game/story-bindings.mjs
+            /game/story-receipts.mjs
+            /game/story-storage-record.mjs
+            /game/test/fixtures/audio/silence-mpeg1-layer3.mp3
+            /game/text-face.mjs
+            /game/text-size.mjs
+            /game/touch-controls.mjs
+            /game/ui/actor-recipes.mjs
+            /game/ui/analog-signal.mjs
+            /game/ui/combat-view.mjs
+            /game/ui/fpv-body-recipes.mjs
+            /game/ui/jammer-picture.mjs
+            /game/ui/music.mjs
+            /game/vendor/i18next-26.4.2.min.js
+            /game/vendor/lz-string-1.5.0.min.js
+            /game/vendor/LZ-STRING-LICENSE.txt
+            /game/victory-story.mjs
+            /game/video-poster.mjs
+            /package-lock.json
+            /package.json
+            /publishing/vendor/acorn-8.18.0.mjs
+            /scripts/brand-icons.mjs
+            /scripts/build-entry-writer.mjs
+            /scripts/core-soundtrack-publication.mjs
+            /scripts/default-runtime-metadata.mjs
+            /scripts/edition-code-indentation.mjs
+            /scripts/external-distribution.mjs
+            /scripts/game-cli.mjs
+            /scripts/hosted-soundtrack-publication.mjs
+            /scripts/localization-audit.mjs
+            /scripts/localization-content.mjs
+            /scripts/localization.mjs
+            /scripts/offline-core-closure.mjs
+            /scripts/optional-artwork.mjs
+            /scripts/optional-distribution.mjs
+            /scripts/pack-indexes.mjs
+            /scripts/qualify-solo-runtime.mjs
+            /scripts/reviewed-soundtrack-batches.mjs
+            /scripts/run-solo-remote-correctness.mjs
+            /scripts/serve-production-preview.mjs
+            /scripts/solo-build-archive.mjs
+            /scripts/solo-build-worker-closure.mjs
+            /scripts/solo-qualification-audio.mjs
+            /scripts/solo-qualification-browser-context.mjs
+            /scripts/solo-qualification-cadence.mjs
+            /scripts/solo-qualification-cpu-profile.mjs
+            /scripts/solo-qualification-export.mjs
+            /scripts/solo-qualification-native-replay.mjs
+            /scripts/solo-qualification-observation.mjs
+            /scripts/solo-qualification-replay-core.mjs
+            /scripts/solo-qualification-replay-identity.mjs
+            /scripts/solo-qualification-replay.mjs
+            /scripts/solo-qualification.mjs
+            /scripts/solo-remote-archive.py
+            /scripts/solo-remote-baseline.mjs
+            /scripts/solo-shared-source-checkout.sh
+            /scripts/solo-source-verifier-smoke.mjs
+            /scripts/solo-worker-diagnostics.mjs
+            /scripts/soundtrack-archive-admissions.mjs
+            /scripts/soundtrack-distribution.mjs
+            /scripts/test-solo-build-worker-closure.mjs
+            /scripts/test-solo-de332-correctness.mjs
+            /scripts/test-solo-remote-baseline.mjs
+            /scripts/test-solo-remote-correctness.mjs
+            /scripts/test-solo-source-verifier-smoke.mjs
+            /scripts/verify-solo-build.mjs
+            /scripts/verify-solo-mp3-worker.mjs
+            /scripts/verify-solo-paused-render.mjs
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 3
+        with:
+          ref: 8b01991942dc764b8aa4726851699ce1985e53ae
+          path: baseline
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Materialize the exact candidate from the shared source object store
+        timeout-minutes: 3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/solo-linux-setup"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 de3324607c82787c1a1fec9c13d4f8b5cb74cee4 2954fef5b0f1293ff2e6a97ce978a673dddaa7db > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 3
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Record setup and install exact source dependencies
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/solo-linux-setup"
+          test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
+          npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
+          npm ci --prefix baseline --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/baseline-npm.log"
+      - name: Install the separately pinned browser cohort
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/solo-browser-tools"
+          npm install --prefix "$RUNNER_TEMP/solo-browser-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-install.log"
+          "$RUNNER_TEMP/solo-browser-tools/node_modules/.bin/playwright" install --with-deps chromium webkit 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-dependencies.log"
+          cp "$RUNNER_TEMP/solo-browser-tools/package-lock.json" "$RUNNER_TEMP/solo-linux-setup/browser-package-lock.json"
+      - name: Exercise archive rejection and owned timeout cleanup
+        timeout-minutes: 3
+        working-directory: tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test scripts/test-solo-de332-correctness.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+      - name: Run the eight fixed serial correctness rows
+        timeout-minutes: 79
+        working-directory: tools
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-de332-correctness-plan.json "$OUTPUT"
+      - name: Describe bounded setup evidence without claiming truncated output complete
+        if: ${{ always() }}
+        timeout-minutes: 2
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'solo-linux-setup'
+          root.mkdir(exist_ok=True)
+          rows=[]
+          failed=False
+          for name in ['source-checkout.json','tools-npm.log','baseline-npm.log','browser-install.log','browser-dependencies.log','wrapper-tests.tap','browser-package-lock.json']:
+              path=root/name
+              if not path.exists():
+                  rows.append({'path':name,'status':'not-retained-setup-incomplete'})
+                  continue
+              size=path.stat().st_size
+              assert size <= 4*1024*1024, 'Setup file exceeded fixed bound'
+              capped=size == 4*1024*1024
+              failed |= capped
+              rows.append({'path':name,'bytes':size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'status':'cap-reached-completeness-unconfirmed' if capped else 'retained'})
+          (root/'retention.json').write_text(json.dumps({'status':'failed-output-cap' if failed else 'retained','files':rows,'maximumTotalBytes':24*1024*1024},indent=2)+'\n')
+          if failed: raise SystemExit(1)
+          PYCODE
+      - name: Retain all complete, failed and partial evidence
+        if: ${{ always() }}
+        timeout-minutes: 10
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-linux-de332-correctness-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-linux-de332-correctness/evidence/
+            ${{ runner.temp }}/solo-linux-setup/
+          if-no-files-found: warn
+          compression-level: 6
+          retention-days: 14
+  declare:
+    # Manual Next only after review of the fresh first-eight result; never automatic continuation.
+    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'next'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      matrix: ${{ steps.phase.outputs.matrix }}
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/solo-native-package-consumer.yml
+            /.github/workflows/solo-remote-next-geometric-c696-temporary.yml
+            /.github/workflows/solo-remote-next-geometric-e1cc-temporary.yml
+            /docs/performance/fixtures/solo-native-lifecycle/696-execution-source.json
+            /docs/performance/fixtures/solo-native-lifecycle/696-runner-source.json
+            /docs/performance/fixtures/solo-next-geometric/e1cc-execution-source.json
+            /docs/performance/fixtures/solo-readiness-geometry/7c7-execution-source.json
+            /docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture
+            /docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-first-return-anchored.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-geometric-model.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-geometric.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/retry-first-return-anchored.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture
+            /docs/performance/solo-final-long29-plan.json
+            /docs/performance/solo-final-next-plan.json
+            /docs/performance/solo-final-retry-plan.json
+            /docs/performance/solo-final-soak-plan.json
+            /docs/performance/solo-next-geometric-39774-plan.json
+            /docs/performance/solo-next-geometric-c696-plan.json
+            /docs/performance/solo-next-geometric-de332-plan.json
+            /docs/performance/solo-next-geometric-e1cc-plan.json
+            /docs/performance/solo-remote-correctness-plan.json
+            /docs/performance/solo-remote-de332-correctness-plan.json
+            /game/build-config.json
+            /game/campaign-contexts.mjs
+            /game/campaign-difficulty.mjs
+            /game/content-design/assets.mjs
+            /game/content-design/catalogs.mjs
+            /game/content-design/limits.mjs
+            /game/content-design/map.mjs
+            /game/content-launch.mjs
+            /game/content.mjs
+            /game/content/soundtrack-catalogue.mjs
+            /game/controller-bindings.mjs
+            /game/controller-boost.mjs
+            /game/coop/bonus-opportunity.mjs
+            /game/coop/combat-patrols.mjs
+            /game/coop/core.mjs
+            /game/coop/expedition-environment.mjs
+            /game/coop/expedition-version.mjs
+            /game/coop/first-connection.mjs
+            /game/coop/foundations.mjs
+            /game/coop/geometry.mjs
+            /game/coop/library.mjs
+            /game/coop/recipes.mjs
+            /game/coop/relay-yard.mjs
+            /game/coop/roamers.mjs
+            /game/coop/running-enemies.mjs
+            /game/coop/terrain.mjs
+            /game/coop/threats.mjs
+            /game/coop/timed-bonuses.mjs
+            /game/core/abilities.mjs
+            /game/core/arcade-actions.mjs
+            /game/core/bonus-opportunity.mjs
+            /game/core/capture-regions.mjs
+            /game/core/capture.mjs
+            /game/core/classic-contour.mjs
+            /game/core/classic-definition.mjs
+            /game/core/classic-motion.mjs
+            /game/core/classic-state.mjs
+            /game/core/classic-step.mjs
+            /game/core/classic-topology.mjs
+            /game/core/combat-definition.mjs
+            /game/core/combat-motion.mjs
+            /game/core/combat-patrols.mjs
+            /game/core/contacts.mjs
+            /game/core/coverage.mjs
+            /game/core/directional-fields.mjs
+            /game/core/encounter.mjs
+            /game/core/enemy-pressure.mjs
+            /game/core/field-course.mjs
+            /game/core/foundations.mjs
+            /game/core/geometry.mjs
+            /game/core/index.mjs
+            /game/core/level.mjs
+            /game/core/line-impact.mjs
+            /game/core/movement.mjs
+            /game/core/registry.mjs
+            /game/core/relay-gates.mjs
+            /game/core/systems.mjs
+            /game/core/timed-bonuses.mjs
+            /game/core/versions.mjs
+            /game/data-json.mjs
+            /game/download-catalogue.mjs
+            /game/enemy-catalog.mjs
+            /game/external-chapter-source.mjs
+            /game/external-chapter.mjs
+            /game/first-flight.mjs
+            /game/flight-media-pins.mjs
+            /game/hunt/actor-facing.mjs
+            /game/hunt/pursuit-goals-v2.mjs
+            /game/hunt/pursuit-goals.mjs
+            /game/hunt/pursuit-specialists.mjs
+            /game/hunt/rules.mjs
+            /game/hunt/running-enemy-definition.mjs
+            /game/hunt/running-enemy-placement.mjs
+            /game/i18n/bootstrap.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/index.mjs
+            /game/imports.mjs
+            /game/input-presentation.mjs
+            /game/key-bindings.mjs
+            /game/library.mjs
+            /game/managed-media-store.mjs
+            /game/mastery-catalog.mjs
+            /game/mastery-equipment.mjs
+            /game/mastery-records.mjs
+            /game/mastery.mjs
+            /game/media-bundle.mjs
+            /game/media-library.mjs
+            /game/media-presentation.mjs
+            /game/media-still.mjs
+            /game/media-storage-record.mjs
+            /game/mission-library/included-bundled-pack.mjs
+            /game/mp3-inspection.mjs
+            /game/mp3.mjs
+            /game/official-downloads.mjs
+            /game/online-soundtrack-catalogue.mjs
+            /game/online-soundtrack-sources.mjs
+            /game/optional-chapters.mjs
+            /game/packs.mjs
+            /game/picture-receipts.mjs
+            /game/platform.mjs
+            /game/presentation-pins.mjs
+            /game/progress.mjs
+            /game/replay.mjs
+            /game/snake/rules.mjs
+            /game/soundtrack-album-download.mjs
+            /game/soundtrack-albums.mjs
+            /game/soundtrack-archive.mjs
+            /game/soundtrack-bundle.mjs
+            /game/soundtrack-portable.mjs
+            /game/soundtrack-rights.mjs
+            /game/soundtrack-style-selection.mjs
+            /game/soundtrack-style-taxonomy.mjs
+            /game/soundtrack.mjs
+            /game/story-bindings.mjs
+            /game/story-receipts.mjs
+            /game/story-storage-record.mjs
+            /game/text-face.mjs
+            /game/text-size.mjs
+            /game/touch-controls.mjs
+            /game/ui/actor-recipes.mjs
+            /game/ui/analog-signal.mjs
+            /game/ui/combat-view.mjs
+            /game/ui/fpv-body-recipes.mjs
+            /game/ui/jammer-picture.mjs
+            /game/ui/music.mjs
+            /game/vendor/i18next-26.4.2.min.js
+            /game/vendor/lz-string-1.5.0.min.js
+            /game/vendor/LZ-STRING-LICENSE.txt
+            /game/victory-story.mjs
+            /game/video-poster.mjs
+            /package-lock.json
+            /package.json
+            /publishing/vendor/acorn-8.18.0.mjs
+            /scripts/brand-icons.mjs
+            /scripts/build-entry-writer.mjs
+            /scripts/calibrate-solo-performance.mjs
+            /scripts/core-soundtrack-publication.mjs
+            /scripts/default-runtime-metadata.mjs
+            /scripts/edition-code-indentation.mjs
+            /scripts/external-distribution.mjs
+            /scripts/game-cli.mjs
+            /scripts/hosted-soundtrack-publication.mjs
+            /scripts/localization-audit.mjs
+            /scripts/localization-content.mjs
+            /scripts/localization.mjs
+            /scripts/offline-core-closure.mjs
+            /scripts/optional-artwork.mjs
+            /scripts/optional-distribution.mjs
+            /scripts/pack-indexes.mjs
+            /scripts/qualify-solo-runtime.mjs
+            /scripts/reviewed-soundtrack-batches.mjs
+            /scripts/run-solo-remote-correctness.mjs
+            /scripts/serve-production-preview.mjs
+            /scripts/solo-build-archive.mjs
+            /scripts/solo-build-worker-closure.mjs
+            /scripts/solo-owned-resource-assessment.mjs
+            /scripts/solo-qualification-audio.mjs
+            /scripts/solo-qualification-browser-context.mjs
+            /scripts/solo-qualification-cadence.mjs
+            /scripts/solo-qualification-cpu-profile.mjs
+            /scripts/solo-qualification-export.mjs
+            /scripts/solo-qualification-hitch-journal.mjs
+            /scripts/solo-qualification-native-replay.mjs
+            /scripts/solo-qualification-next-route.mjs
+            /scripts/solo-qualification-observation.mjs
+            /scripts/solo-qualification-replay-core.mjs
+            /scripts/solo-qualification-replay-identity.mjs
+            /scripts/solo-qualification-replay.mjs
+            /scripts/solo-qualification-snapshot-store.mjs
+            /scripts/solo-qualification.mjs
+            /scripts/solo-remote-archive.py
+            /scripts/solo-remote-baseline.mjs
+            /scripts/solo-remote-sustained.mjs
+            /scripts/solo-shared-source-checkout.sh
+            /scripts/solo-source-verifier-smoke.mjs
+            /scripts/soundtrack-archive-admissions.mjs
+            /scripts/soundtrack-distribution.mjs
+            /scripts/test-solo-final-lifecycle-admission.mjs
+            /scripts/test-solo-next-baseline-dispatch.mjs
+            /scripts/test-solo-next-de332-admission.mjs
+            /scripts/test-solo-next-e1cc-admission.mjs
+            /scripts/test-solo-next-geometric-admission.mjs
+            /scripts/test-solo-qualification-hitch-journal.mjs
+            /scripts/test-solo-qualification-next-route.mjs
+            /scripts/test-solo-remote-correctness.mjs
+            /scripts/test-solo-source-verifier-smoke.mjs
+            /scripts/vendor/devtools-benchmark.mjs
+            /scripts/verify-solo-build.mjs
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Admit exactly one reviewed phase; no automatic continuation
+        id: phase
+        timeout-minutes: 1
+        run: node scripts/solo-remote-sustained.mjs matrix-plan docs/performance/solo-next-geometric-de332-plan.json >> "$GITHUB_OUTPUT"
+  sustained:
+    needs: declare
+    runs-on: ubuntu-24.04
+    timeout-minutes: ${{ matrix.jobMinutes }}
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: ${{ fromJSON(needs.declare.outputs.matrix) }}
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+      SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
+      SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
+      PYTHONDONTWRITEBYTECODE: 1
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: tools
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /.github/workflows/solo-native-package-consumer.yml
+            /.github/workflows/solo-remote-next-geometric-c696-temporary.yml
+            /.github/workflows/solo-remote-next-geometric-e1cc-temporary.yml
+            /docs/performance/fixtures/solo-native-lifecycle/696-execution-source.json
+            /docs/performance/fixtures/solo-native-lifecycle/696-runner-source.json
+            /docs/performance/fixtures/solo-next-geometric/e1cc-execution-source.json
+            /docs/performance/fixtures/solo-readiness-geometry/7c7-execution-source.json
+            /docs/performance/fixtures/solo-remote-sustained/first-return.xonix.fixture
+            /docs/performance/fixtures/solo-remote-sustained/long29.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-first-return-anchored.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-geometric-model.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next-geometric.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/next.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/retry-first-return-anchored.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/retry.qualification.fixture
+            /docs/performance/fixtures/solo-remote-sustained/soak-first-return-anchored.qualification.fixture
+            /docs/performance/solo-final-long29-plan.json
+            /docs/performance/solo-final-next-plan.json
+            /docs/performance/solo-final-retry-plan.json
+            /docs/performance/solo-final-soak-plan.json
+            /docs/performance/solo-next-geometric-39774-plan.json
+            /docs/performance/solo-next-geometric-c696-plan.json
+            /docs/performance/solo-next-geometric-de332-plan.json
+            /docs/performance/solo-next-geometric-e1cc-plan.json
+            /docs/performance/solo-remote-correctness-plan.json
+            /docs/performance/solo-remote-de332-correctness-plan.json
+            /game/build-config.json
+            /game/campaign-contexts.mjs
+            /game/campaign-difficulty.mjs
+            /game/content-design/assets.mjs
+            /game/content-design/catalogs.mjs
+            /game/content-design/limits.mjs
+            /game/content-design/map.mjs
+            /game/content-launch.mjs
+            /game/content.mjs
+            /game/content/soundtrack-catalogue.mjs
+            /game/controller-bindings.mjs
+            /game/controller-boost.mjs
+            /game/coop/bonus-opportunity.mjs
+            /game/coop/combat-patrols.mjs
+            /game/coop/core.mjs
+            /game/coop/expedition-environment.mjs
+            /game/coop/expedition-version.mjs
+            /game/coop/first-connection.mjs
+            /game/coop/foundations.mjs
+            /game/coop/geometry.mjs
+            /game/coop/library.mjs
+            /game/coop/recipes.mjs
+            /game/coop/relay-yard.mjs
+            /game/coop/roamers.mjs
+            /game/coop/running-enemies.mjs
+            /game/coop/terrain.mjs
+            /game/coop/threats.mjs
+            /game/coop/timed-bonuses.mjs
+            /game/core/abilities.mjs
+            /game/core/arcade-actions.mjs
+            /game/core/bonus-opportunity.mjs
+            /game/core/capture-regions.mjs
+            /game/core/capture.mjs
+            /game/core/classic-contour.mjs
+            /game/core/classic-definition.mjs
+            /game/core/classic-motion.mjs
+            /game/core/classic-state.mjs
+            /game/core/classic-step.mjs
+            /game/core/classic-topology.mjs
+            /game/core/combat-definition.mjs
+            /game/core/combat-motion.mjs
+            /game/core/combat-patrols.mjs
+            /game/core/contacts.mjs
+            /game/core/coverage.mjs
+            /game/core/directional-fields.mjs
+            /game/core/encounter.mjs
+            /game/core/enemy-pressure.mjs
+            /game/core/field-course.mjs
+            /game/core/foundations.mjs
+            /game/core/geometry.mjs
+            /game/core/index.mjs
+            /game/core/level.mjs
+            /game/core/line-impact.mjs
+            /game/core/movement.mjs
+            /game/core/registry.mjs
+            /game/core/relay-gates.mjs
+            /game/core/systems.mjs
+            /game/core/timed-bonuses.mjs
+            /game/core/versions.mjs
+            /game/data-json.mjs
+            /game/download-catalogue.mjs
+            /game/enemy-catalog.mjs
+            /game/external-chapter-source.mjs
+            /game/external-chapter.mjs
+            /game/first-flight.mjs
+            /game/flight-media-pins.mjs
+            /game/hunt/actor-facing.mjs
+            /game/hunt/pursuit-goals-v2.mjs
+            /game/hunt/pursuit-goals.mjs
+            /game/hunt/pursuit-specialists.mjs
+            /game/hunt/rules.mjs
+            /game/hunt/running-enemy-definition.mjs
+            /game/hunt/running-enemy-placement.mjs
+            /game/i18n/bootstrap.mjs
+            /game/i18n/catalogs.mjs
+            /game/i18n/index.mjs
+            /game/imports.mjs
+            /game/input-presentation.mjs
+            /game/key-bindings.mjs
+            /game/library.mjs
+            /game/managed-media-store.mjs
+            /game/mastery-catalog.mjs
+            /game/mastery-equipment.mjs
+            /game/mastery-records.mjs
+            /game/mastery.mjs
+            /game/media-bundle.mjs
+            /game/media-library.mjs
+            /game/media-presentation.mjs
+            /game/media-still.mjs
+            /game/media-storage-record.mjs
+            /game/mission-library/included-bundled-pack.mjs
+            /game/mp3-inspection.mjs
+            /game/mp3.mjs
+            /game/official-downloads.mjs
+            /game/online-soundtrack-catalogue.mjs
+            /game/online-soundtrack-sources.mjs
+            /game/optional-chapters.mjs
+            /game/packs.mjs
+            /game/picture-receipts.mjs
+            /game/platform.mjs
+            /game/presentation-pins.mjs
+            /game/progress.mjs
+            /game/replay.mjs
+            /game/snake/rules.mjs
+            /game/soundtrack-album-download.mjs
+            /game/soundtrack-albums.mjs
+            /game/soundtrack-archive.mjs
+            /game/soundtrack-bundle.mjs
+            /game/soundtrack-portable.mjs
+            /game/soundtrack-rights.mjs
+            /game/soundtrack-style-selection.mjs
+            /game/soundtrack-style-taxonomy.mjs
+            /game/soundtrack.mjs
+            /game/story-bindings.mjs
+            /game/story-receipts.mjs
+            /game/story-storage-record.mjs
+            /game/text-face.mjs
+            /game/text-size.mjs
+            /game/touch-controls.mjs
+            /game/ui/actor-recipes.mjs
+            /game/ui/analog-signal.mjs
+            /game/ui/combat-view.mjs
+            /game/ui/fpv-body-recipes.mjs
+            /game/ui/jammer-picture.mjs
+            /game/ui/music.mjs
+            /game/vendor/i18next-26.4.2.min.js
+            /game/vendor/lz-string-1.5.0.min.js
+            /game/vendor/LZ-STRING-LICENSE.txt
+            /game/victory-story.mjs
+            /game/video-poster.mjs
+            /package-lock.json
+            /package.json
+            /publishing/vendor/acorn-8.18.0.mjs
+            /scripts/brand-icons.mjs
+            /scripts/build-entry-writer.mjs
+            /scripts/calibrate-solo-performance.mjs
+            /scripts/core-soundtrack-publication.mjs
+            /scripts/default-runtime-metadata.mjs
+            /scripts/edition-code-indentation.mjs
+            /scripts/external-distribution.mjs
+            /scripts/game-cli.mjs
+            /scripts/hosted-soundtrack-publication.mjs
+            /scripts/localization-audit.mjs
+            /scripts/localization-content.mjs
+            /scripts/localization.mjs
+            /scripts/offline-core-closure.mjs
+            /scripts/optional-artwork.mjs
+            /scripts/optional-distribution.mjs
+            /scripts/pack-indexes.mjs
+            /scripts/qualify-solo-runtime.mjs
+            /scripts/reviewed-soundtrack-batches.mjs
+            /scripts/run-solo-remote-correctness.mjs
+            /scripts/serve-production-preview.mjs
+            /scripts/solo-build-archive.mjs
+            /scripts/solo-build-worker-closure.mjs
+            /scripts/solo-owned-resource-assessment.mjs
+            /scripts/solo-qualification-audio.mjs
+            /scripts/solo-qualification-browser-context.mjs
+            /scripts/solo-qualification-cadence.mjs
+            /scripts/solo-qualification-cpu-profile.mjs
+            /scripts/solo-qualification-export.mjs
+            /scripts/solo-qualification-hitch-journal.mjs
+            /scripts/solo-qualification-native-replay.mjs
+            /scripts/solo-qualification-next-route.mjs
+            /scripts/solo-qualification-observation.mjs
+            /scripts/solo-qualification-replay-core.mjs
+            /scripts/solo-qualification-replay-identity.mjs
+            /scripts/solo-qualification-replay.mjs
+            /scripts/solo-qualification-snapshot-store.mjs
+            /scripts/solo-qualification.mjs
+            /scripts/solo-remote-archive.py
+            /scripts/solo-remote-baseline.mjs
+            /scripts/solo-remote-sustained.mjs
+            /scripts/solo-shared-source-checkout.sh
+            /scripts/solo-source-verifier-smoke.mjs
+            /scripts/soundtrack-archive-admissions.mjs
+            /scripts/soundtrack-distribution.mjs
+            /scripts/test-solo-final-lifecycle-admission.mjs
+            /scripts/test-solo-next-baseline-dispatch.mjs
+            /scripts/test-solo-next-de332-admission.mjs
+            /scripts/test-solo-next-e1cc-admission.mjs
+            /scripts/test-solo-next-geometric-admission.mjs
+            /scripts/test-solo-qualification-hitch-journal.mjs
+            /scripts/test-solo-qualification-next-route.mjs
+            /scripts/test-solo-remote-correctness.mjs
+            /scripts/test-solo-source-verifier-smoke.mjs
+            /scripts/vendor/devtools-benchmark.mjs
+            /scripts/verify-solo-build.mjs
+      - timeout-minutes: 3
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: 8b01991942dc764b8aa4726851699ce1985e53ae
+          path: baseline
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Materialize the exact candidate from the shared source object store
+        timeout-minutes: 3
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/solo-linux-setup"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 de3324607c82787c1a1fec9c13d4f8b5cb74cee4 2954fef5b0f1293ff2e6a97ce978a673dddaa7db > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Record setup and install exact source dependencies
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' \
+            "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
+            "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
+            "OUTPUT=$RUNNER_TEMP/solo-linux-de332-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/solo-linux-setup"
+          test "$(git -C tools rev-parse HEAD)" = "$SOLO_TOOLING_REVISION"
+          npm ci --prefix tools --no-audit --no-fund 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/tools-npm.log"
+      - name: Install the separately pinned browser cohort
+        timeout-minutes: 10
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/solo-browser-tools"
+          npm install --prefix "$RUNNER_TEMP/solo-browser-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-install.log"
+          "$RUNNER_TEMP/solo-browser-tools/node_modules/.bin/playwright" install --with-deps chromium webkit 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/browser-dependencies.log"
+          cp "$RUNNER_TEMP/solo-browser-tools/package-lock.json" "$RUNNER_TEMP/solo-linux-setup/browser-package-lock.json"
+      - name: Exercise archive rejection and owned timeout cleanup
+        timeout-minutes: 3
+        working-directory: tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --test --test-concurrency=2 scripts/test-solo-next-de332-admission.mjs scripts/test-solo-next-geometric-admission.mjs scripts/test-solo-next-e1cc-admission.mjs scripts/test-solo-next-baseline-dispatch.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-final-lifecycle-admission.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-qualification-hitch-journal.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node scripts/solo-remote-sustained.mjs bind-plan docs/performance/solo-next-geometric-de332-plan.json "$RUNNER_TEMP/solo-sustained-job.json" '${{ matrix.engine }}' '${{ matrix.repetition }}'
+      - name: Collect six independent candidate-only transition observations with unchanged gates
+        timeout-minutes: ${{ matrix.stepMinutes }}
+        working-directory: tools
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: timeout --signal=TERM --kill-after=30s ${{ matrix.outerSeconds }}s node scripts/run-solo-remote-correctness.mjs "$RUNNER_TEMP/solo-sustained-job.json" "$OUTPUT"
+      - name: Describe bounded setup evidence without claiming truncated output complete
+        if: ${{ always() }}
+        timeout-minutes: 2
+        shell: bash
+        run: |
+          python3 -B - <<'PYCODE'
+          import hashlib,json,os,pathlib
+          root=pathlib.Path(os.environ['RUNNER_TEMP'])/'solo-linux-setup'
+          root.mkdir(exist_ok=True)
+          rows=[]
+          failed=False
+          for name in ['source-checkout.json','tools-npm.log','browser-install.log','browser-dependencies.log','wrapper-tests.tap','browser-package-lock.json']:
+              path=root/name
+              if not path.exists():
+                  rows.append({'path':name,'status':'not-retained-setup-incomplete'})
+                  continue
+              size=path.stat().st_size
+              assert size <= 4*1024*1024, 'Setup file exceeded fixed bound'
+              capped=size == 4*1024*1024
+              failed |= capped
+              rows.append({'path':name,'bytes':size,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'status':'cap-reached-completeness-unconfirmed' if capped else 'retained'})
+          (root/'retention.json').write_text(json.dumps({'status':'failed-output-cap' if failed else 'retained','files':rows,'maximumTotalBytes':24*1024*1024},indent=2)+'\n')
+          if failed: raise SystemExit(1)
+          PYCODE
+      - name: Retain all complete, failed and partial evidence
+        if: ${{ always() }}
+        timeout-minutes: 10
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-linux-de332-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-r${{ matrix.repetition }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-linux-de332-geometric-next-${{ matrix.phase }}-${{ matrix.engine }}-${{ matrix.repetition }}/evidence/
+            ${{ runner.temp }}/solo-linux-setup/
+          if-no-files-found: warn
+          compression-level: 6
+          retention-days: 14
