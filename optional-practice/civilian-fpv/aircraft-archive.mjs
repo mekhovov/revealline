@@ -317,13 +317,21 @@ export function createAircraftArchiveStore({ indexedDB = globalThis.indexedDB } 
             reject(abortError());
             return;
           }
-          database = request.result;
-          database.onversionchange = () => {
-            database?.close();
+          const connection = request.result;
+          database = connection;
+          const forgetConnection = () => {
+            if (database !== connection) return;
             database = null;
             opening = null;
           };
-          resolve(database);
+          connection.onversionchange = () => {
+            connection.close();
+            forgetConnection();
+          };
+          // A browser may close a connection unexpectedly. Let the next operation
+          // reopen it; never replay an in-flight write whose outcome is uncertain.
+          connection.onclose = forgetConnection;
+          resolve(connection);
         };
       }).catch((error) => {
         opening = null;
