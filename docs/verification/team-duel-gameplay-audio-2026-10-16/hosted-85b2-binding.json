@@ -1,0 +1,25 @@
+{
+  "format": "revealline-team-duel-hosted-source-checks.v1",
+  "sourceCommit": "85b2fd4f4b11e828947317400528d1e9bbd48f45",
+  "observedAt": "2026-10-16T05:37:52.523832+00:00",
+  "checks": {
+    "success": 14,
+    "skipped": 3,
+    "failed": 0,
+    "pending": 0
+  },
+  "focusedRun": "https://github.com/mekhovov/revealline/actions/runs/38853427696",
+  "focusedJob": "https://github.com/mekhovov/revealline/actions/runs/38853427696/job/116819593410",
+  "realSourceBuildDurationMs": 743535.402778,
+  "finalCombinedCohort": {
+    "tests": 1354,
+    "pass": 1354,
+    "fail": 0,
+    "skipped": 0
+  },
+  "logOriginal": {
+    "bytes": 1508013,
+    "sha256": "ee70fcd9cb06a586ff6b456417801cdf0ea6a910aa1ddf55e27ed866b1526789"
+  },
+  "scope": "Selected focused/industrial/utility/candidate/appearance checks on exact source. Explicit fast-release policy skips broad test/build and full-evidence assembly. No required full release evidence, frozen artifact, native-capacity or public acceptance follows."
+}

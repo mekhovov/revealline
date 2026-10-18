@@ -2,6 +2,172 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "pinned-game-review",
+      "pathPatterns": [
+        "^scripts/(serve-pinned-game-review|test_pinned_game_review)\\.py$",
+        "^scripts/test-pinned-game-review\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "pinned-game-review",
+          "command": "node",
+          "args": ["--test", "scripts/test-pinned-game-review.mjs"]
+        }
+      ]
+    },
+    {
+      "id": "release-utility-checkout",
+      "pathPatterns": [
+        "^publishing/utility-sparse-checkout\\.test\\.mjs$",
+        "^scripts/distribution-zip\\.mjs$",
+        "^publishing/utility/test_release_artifact\\.py$",
+        "^\\.github/workflows/(assemble-full-release-evidence|qualify-release-source|upload-release-originals)\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "release-utility-checkout",
+          "command": "node",
+          "args": [
+            "--test",
+            "publishing/utility-sparse-checkout.test.mjs",
+            "publishing/source-workflow.test.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
+      "id": "release-evidence-compatibility",
+      "pathPatterns": [
+        "^publishing/release-evidence-compatibility\\.test\\.mjs$",
+        "^publishing/utility/(assemble_full_qualification|release_artifact|test_assemble_full_qualification|test_waived_qualification)\\.py$"
+      ],
+      "commands": [
+        {
+          "id": "release-evidence-compatibility",
+          "command": "node",
+          "args": [
+            "--test",
+            "publishing/release-evidence-compatibility.test.mjs",
+            "publishing/distribution-archive.test.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
+      "id": "distribution-archive-format",
+      "pathPatterns": [
+        "^scripts/(game-cli|distribution-zip|test-game-cli|test-inspect-default-build|test-soundtrack-distribution|controller-confirm-browser-fixture|test-distribution-archive|test-equipment-offline-ownership|test-external-distribution|test-optional-distribution)\\.mjs$",
+        "^publishing/distribution-archive\\.test\\.mjs$",
+        "^publishing/utility/(inspect_qualified_artifact|test_distribution_archive|test_release_artifact)\\.py$",
+        "^publishing/pages-controller/metadata(?:\\.test)?\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "distribution-archive-format",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-distribution-archive.mjs",
+            "scripts/test-equipment-offline-ownership.mjs",
+            "scripts/test-game-cli.mjs",
+            "scripts/test-inspect-default-build.mjs",
+            "scripts/test-soundtrack-distribution.mjs",
+            "publishing/distribution-archive.test.mjs",
+            "publishing/pages-controller/metadata.test.mjs",
+            "publishing/pages-controller/sync-release-metadata.test.mjs",
+            "publishing/pages-controller/assemble.test.mjs",
+            "scripts/test-external-distribution.mjs",
+            "scripts/test-optional-distribution.mjs",
+            "scripts/test-optional-practice.mjs"
+          ],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
+      "id": "release-zip-capacity-analysis",
+      "pathPatterns": ["^scripts/(?:test-)?measure-release-zip-capacity\\.mjs$"],
+      "commands": [
+        {
+          "id": "release-zip-capacity-analysis",
+          "command": "node",
+          "args": ["--test", "scripts/test-measure-release-zip-capacity.mjs"]
+        }
+      ]
+    },
+    {
+      "id": "multiplayer-performance-observer",
+      "pathPatterns": [
+        "^docs/verification/journey-performance\\.(?:mjs|html)$",
+        "^scripts/test-journey-performance-observer\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "multiplayer-performance-observer",
+          "command": "node",
+          "args": ["--test", "scripts/test-journey-performance-observer.mjs"]
+        }
+      ]
+    },
+    {
+      "id": "native-gameplay-audio-observer",
+      "pathPatterns": ["^docs/verification/team-duel-desktop-audio/gameplay.*\\.(?:mjs|html)$"],
+      "commands": [
+        {
+          "id": "native-gameplay-audio-observer",
+          "command": "node",
+          "args": ["--test", "docs/verification/team-duel-desktop-audio/gameplay-observer.test.mjs"]
+        }
+      ]
+    },
+    {
+      "id": "restored-studio-audio-observer",
+      "pathPatterns": ["^docs/verification/team-duel-desktop-audio/studio.*\\.(?:mjs|html)$"],
+      "commands": [
+        {
+          "id": "restored-studio-audio-observer",
+          "command": "node",
+          "args": [
+            "--test",
+            "docs/verification/team-duel-desktop-audio/studio-probe-model.test.mjs",
+            "docs/verification/team-duel-desktop-audio/studio-codecs-model.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "multiplayer-delivery-acceptance",
+      "pathPatterns": [
+        "^game/(installed-app|downloads)\\.mjs$",
+        "^game/ui/(install-offline-panel|feedback-director|published-audio)\\.mjs$",
+        "^game/test/(multiplayer-offline-upgrade|team-duel-studio-audio|team-duel-studio-gameplay-host|coop-presentation-bootstrap-retry|coop-picture-host|asset-studio-sound-transfer|content-studio-host)\\.test\\.mjs$",
+        "^game/test/helpers/coop-presentation-fixture\\.mjs$",
+        "^game/couch/index\\.html$",
+        "^game/test/duel-result-continuation-host\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "multiplayer-delivery-acceptance",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/multiplayer-offline-upgrade.test.mjs",
+            "game/test/installed-app.test.mjs",
+            "game/test/install-offline-panel.test.mjs",
+            "game/test/team-duel-studio-audio.test.mjs",
+            "game/test/team-duel-studio-gameplay-host.test.mjs",
+            "game/test/coop-presentation-bootstrap-retry.test.mjs",
+            "game/test/coop-picture-host.test.mjs",
+            "game/test/asset-studio-sound-transfer.test.mjs",
+            "game/test/content-studio-host.test.mjs",
+            "game/test/duel-result-continuation-host.test.mjs"
+          ]
+        }
+      ]
+    },
+    {
       "id": "official-download-retention",
       "pathPatterns": [
         "^game/official-downloads\\.mjs$",
@@ -246,6 +412,7 @@
             "publishing/focused-tests.test.mjs",
             "publishing/fastline-merge-controller.test.mjs",
             "publishing/fastline-release-inputs.test.mjs",
+            "publishing/fastline-release-evidence.test.mjs",
             "publishing/fastline-release-objects.test.mjs",
             "publishing/fastline-release-publisher.test.mjs",
             "publishing/source-workflow.test.mjs",

@@ -8,6 +8,14 @@ const sampleButton = document.querySelector('#sample');
 const editionSelect = document.querySelector('#edition');
 const multiplayerTarget = document.querySelector('#multiplayer-target');
 const sampleScope = document.querySelector('#sample-scope');
+const sampleDuration = document.querySelector('#sample-duration');
+const requestedDuration = () =>
+  [30, 120, 300].includes(Number(sampleDuration?.value)) ? Number(sampleDuration.value) : 30;
+const updateSampleLabel = () => {
+  if (sampleButton) sampleButton.textContent = `Observe ${requestedDuration()} seconds`;
+};
+sampleDuration?.addEventListener('change', updateSampleLabel);
+updateSampleLabel();
 const finales = {
   team: {
     aurora: 'expedition-homecoming',
@@ -203,12 +211,26 @@ document.querySelector('#load').addEventListener('click', () => {
     const focused = (event) => recordFocus('focus', event?.isTrusted ?? null);
     doc.addEventListener('focusin', focusin);
     win.addEventListener('focus', focused);
+    const heapSnapshot = () => {
+      try {
+        const memory = win.performance.memory;
+        return memory && Number.isFinite(memory.usedJSHeapSize) && memory.usedJSHeapSize >= 0
+          ? {
+              supported: true,
+              usedBytes: memory.usedJSHeapSize,
+              totalBytes: finite(memory.totalJSHeapSize),
+              limitBytes: finite(memory.jsHeapSizeLimit),
+            }
+          : { supported: false };
+      } catch {
+        return { supported: false };
+      }
+    };
     const browserSnapshot = () => {
       const nav = win.performance.getEntriesByType('navigation')[0];
       const paints = Object.fromEntries(
         win.performance.getEntriesByType('paint').map((entry) => [entry.name, entry.startTime]),
       );
-      const memory = win.performance.memory;
       return {
         navigation: nav
           ? {
@@ -222,14 +244,7 @@ document.querySelector('#load').addEventListener('click', () => {
           firstPaintMs: finite(paints['first-paint']),
           firstContentfulPaintMs: finite(paints['first-contentful-paint']),
         },
-        jsHeap: memory
-          ? {
-              supported: true,
-              usedBytes: finite(memory.usedJSHeapSize),
-              totalBytes: finite(memory.totalJSHeapSize),
-              limitBytes: finite(memory.jsHeapSizeLimit),
-            }
-          : { supported: false },
+        jsHeap: heapSnapshot(),
       };
     };
     const mediaSnapshot = () => {
@@ -287,10 +302,40 @@ document.querySelector('#load').addEventListener('click', () => {
             ]
         ).map((id) => [id, doc.getElementById(id)?.textContent ?? null]),
       );
+    const encounterSnapshot = () => {
+      if (mode !== 'versus')
+        return {
+          supported: false,
+          reason: 'Independent encounter cards are observed only in Duel.',
+        };
+      const text = (node) => {
+        if (!shown(node)) return null;
+        const original = String(node.textContent ?? '');
+        return { text: original.slice(0, 512), truncated: original.length > 512 };
+      };
+      const players = [0, 1].map((seat) => {
+        const group = doc.getElementById(`racer-encounter-${seat}`),
+          title = doc.getElementById(`racer-encounter-title-${seat}`),
+          instruction = doc.getElementById(`racer-encounter-instruction-${seat}`),
+          visible = shown(group),
+          phase = visible && typeof group.dataset?.phase === 'string' ? group.dataset.phase : '';
+        return {
+          player: seat + 1,
+          available: Boolean(group && title && instruction),
+          shown: visible,
+          phase: phase.slice(0, 80) || null,
+          phaseTruncated: phase.length > 80,
+          title: visible ? text(title) : null,
+          instruction: visible ? text(instruction) : null,
+        };
+      });
+      return { supported: players.every((player) => player.available), players };
+    };
     let stopSample = () => {};
     const sample = () => {
       stopSample();
       const activeOnly = sampleScope?.value === 'active';
+      const requestedDurationMs = requestedDuration() * 1000;
       const focusAtArm = focusSnapshot();
       if (activeOnly && !requestedMissionMatches()) {
         report({
@@ -298,6 +343,7 @@ document.querySelector('#load').addEventListener('click', () => {
           mode,
           edition,
           scope: 'active',
+          requestedDurationMs,
           mission: mission(),
           requestedMission,
           requestedMissionName,
@@ -314,6 +360,7 @@ document.querySelector('#load').addEventListener('click', () => {
           action: 'Frame sample',
           mode,
           edition,
+          requestedDurationMs,
           outcome: 'hidden page; sample discarded',
           focusAtArm,
           focusAtFinish: focusSnapshot(),
@@ -324,6 +371,7 @@ document.querySelector('#load').addEventListener('click', () => {
         before,
         mediaBefore,
         hudBefore,
+        encounterBefore,
         sampledMission,
         beforeResources,
         previous = null,
@@ -334,8 +382,32 @@ document.querySelector('#load').addEventListener('click', () => {
         taskSupported = false;
       const intervals = [],
         tasks = [],
-        activity = [];
-      let lastActivityAt = -Infinity;
+        activity = [],
+        heapSamples = [];
+      const heapIntervalMs = 5000,
+        heapMaxSnapshots = 62,
+        activityIntervalMs = Math.max(500, requestedDurationMs / 120);
+      let lastActivityAt = -Infinity,
+        lastHeapAt = -Infinity,
+        omittedTasks = 0;
+      const collectHeap = (now, final = false) => {
+        if (
+          beganAt === null ||
+          heapSamples.length >= heapMaxSnapshots - (final ? 0 : 1) ||
+          now === lastHeapAt ||
+          (!final && now - lastHeapAt < heapIntervalMs)
+        )
+          return;
+        lastHeapAt = now;
+        const reading = heapSnapshot();
+        if (reading.supported)
+          heapSamples.push({
+            atMs: now - beganAt,
+            usedBytes: reading.usedBytes,
+            totalBytes: reading.totalBytes,
+            limitBytes: reading.limitBytes,
+          });
+      };
       const inputs = {
         player1Keydowns: 0,
         player2Keydowns: 0,
@@ -372,13 +444,10 @@ document.querySelector('#load').addEventListener('click', () => {
       };
       const collectTasks = (entries) => {
         for (const entry of entries)
-          if (
-            beganAt !== null &&
-            entry.startTime >= beganAt &&
-            Number.isFinite(entry.duration) &&
-            tasks.length < 2000
-          )
-            tasks.push(entry.duration);
+          if (beganAt !== null && entry.startTime >= beganAt && Number.isFinite(entry.duration)) {
+            if (tasks.length < 2000) tasks.push(entry.duration);
+            else omittedTasks++;
+          }
       };
       const finish = (reason) => {
         if (stopped) return;
@@ -403,6 +472,8 @@ document.querySelector('#load').addEventListener('click', () => {
             mode,
             edition,
             scope: activeOnly ? 'active' : 'visible',
+            requestedDurationMs,
+            observedDurationMs: beganAt === null ? 0 : win.performance.now() - beganAt,
             outcome: reason || 'too few frames; sample discarded',
             observedFrames: intervals.length,
             mission: mission(),
@@ -415,6 +486,7 @@ document.querySelector('#load').addEventListener('click', () => {
         }
         const sorted = [...intervals].sort((a, b) => a - b);
         const percentile = (fraction) => sorted[Math.ceil(sorted.length * fraction) - 1];
+        collectHeap(win.performance.now(), true);
         report({
           action: 'Frame sample',
           mode,
@@ -422,6 +494,7 @@ document.querySelector('#load').addEventListener('click', () => {
           mission: sampledMission,
           requestedMission,
           scope: activeOnly ? 'active' : 'visible',
+          requestedDurationMs,
           outcome: 'passive desktop sample; compare equivalent baseline before qualification',
           durationMs: win.performance.now() - beganAt,
           frameIntervals: {
@@ -439,6 +512,7 @@ document.querySelector('#load').addEventListener('click', () => {
                 count: tasks.length,
                 over50Ms: tasks.filter((t) => t > 50).length,
                 maxMs: tasks.length ? Math.max(...tasks) : 0,
+                omittedCount: omittedTasks,
               }
             : { supported: false },
           viewport: { width: win.innerWidth, height: win.innerHeight, dpr: win.devicePixelRatio },
@@ -454,8 +528,22 @@ document.querySelector('#load').addEventListener('click', () => {
           activity,
           hudBefore,
           hudAfter: hudSnapshot(),
+          encounterObservationVersion: 1,
+          encounterBefore,
+          encounterAfter: encounterSnapshot(),
           browserBefore: before,
           browserAfter: browserSnapshot(),
+          jsHeapTimeline: heapSamples.length
+            ? {
+                supported: true,
+                intervalMs: heapIntervalMs,
+                maxSnapshots: heapMaxSnapshots,
+                samples: heapSamples,
+                peakObservedUsedBytes: Math.max(...heapSamples.map((entry) => entry.usedBytes)),
+                limits:
+                  'Sampled non-standard JS heap counters can miss peaks and include shared heaps. No forced GC, retention attribution, complete media/GPU memory, or leak conclusion.',
+              }
+            : { supported: false },
           mediaBefore,
           mediaAfter: mediaSnapshot(),
           newResourceEntries: win.performance.getEntriesByType('resource').length - beforeResources,
@@ -465,8 +553,10 @@ document.querySelector('#load').addEventListener('click', () => {
         clearTimeout(sampleTimer);
         beganAt = win.performance.now();
         before = browserSnapshot();
+        collectHeap(beganAt);
         mediaBefore = mediaSnapshot();
         hudBefore = hudSnapshot();
+        encounterBefore = encounterSnapshot();
         sampledMission = mission();
         beforeResources = win.performance.getEntriesByType('resource').length;
         try {
@@ -479,7 +569,7 @@ document.querySelector('#load').addEventListener('click', () => {
           observer?.disconnect();
           observer = null;
         }
-        sampleTimer = setTimeout(() => finish(), 30000);
+        sampleTimer = setTimeout(() => finish(), requestedDurationMs);
       };
       const foreground = () => !document.hidden && !doc.hidden && doc.hasFocus?.() !== false;
       const sampleVisibility = () => {
@@ -500,13 +590,24 @@ document.querySelector('#load').addEventListener('click', () => {
         }
         if (beganAt !== null) {
           const now = win.performance.now();
+          collectHeap(now);
           // Bounded DOM observations preserve real cutting/support/score labels
           // without exposing or mutating the engine. They are included overhead.
-          if (now - lastActivityAt >= 500 && activity.length < 120) {
-            activity.push({ atMs: now - beganAt, hud: hudSnapshot() });
+          if (now - lastActivityAt >= activityIntervalMs && activity.length < 120) {
+            activity.push({
+              atMs: now - beganAt,
+              hud: hudSnapshot(),
+              encounter: encounterSnapshot(),
+            });
             lastActivityAt = now;
           }
-          if (previous !== null && intervals.length < 10000) intervals.push(now - previous);
+          if (previous !== null) {
+            if (intervals.length >= 120000) {
+              finish('frame limit exceeded; sample discarded');
+              return;
+            }
+            intervals.push(now - previous);
+          }
           previous = now;
         }
         sampleRaf = win.requestAnimationFrame(sampleTick);
@@ -516,8 +617,7 @@ document.querySelector('#load').addEventListener('click', () => {
       doc.addEventListener('keydown', input, true);
       if (sampleButton) sampleButton.disabled = true;
       if (activeOnly) {
-        status.textContent =
-          'Armed. Start or resume in the game; remain focused and play for 30 seconds. Pause/results discard the sample.';
+        status.textContent = `Armed. Start or resume in the game; remain focused and play for ${requestedDurationMs / 1000} seconds. Pause/results discard the sample.`;
         sampleTimer = setTimeout(
           () => finish('no foreground play within 60 seconds; sample discarded'),
           60000,
@@ -661,7 +761,10 @@ document.querySelector('#load').addEventListener('click', () => {
     doc.addEventListener('click', click, true);
     doc.addEventListener('visibilitychange', visibility);
     document.addEventListener('visibilitychange', visibility);
-    const pagehide = () => fail('page left; sample discarded');
+    const pagehide = () => {
+      fail('page left; sample discarded');
+      stopSample();
+    };
     const blur = (event) => {
       recordFocus('blur', event?.isTrusted ?? null);
       fail('game focus left; sample discarded');

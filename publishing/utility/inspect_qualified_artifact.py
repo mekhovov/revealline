@@ -20,10 +20,12 @@ from pathlib import Path
 import re
 import shutil
 import stat
+import struct
 import subprocess
 import sys
 import tarfile
 import zipfile
+import zlib
 
 from release_limits import DEFAULT_MAX_DISTRIBUTION_MIB, MAX_DISTRIBUTION_MIB, distribution_within_limit
 from source_manifest import verify_manifest, MAX_MANIFEST
@@ -32,6 +34,129 @@ CHUNK = 1024 * 1024
 SMALL_LIMITS = {'release.json': 64 * 1024, 'site/manifest.json': 4 * CHUNK,
                 'distribution.zip.sha256': 1024}
 HEX256 = re.compile(r'[0-9a-f]{64}\Z')
+ARCHIVE_FORMAT = 'revealline-distribution-zip.v2'
+
+
+def validate_archive_contract(value):
+    require(isinstance(value, dict) and set(value) == {'format', 'maxExpandedBytes'} and
+            value['format'] == ARCHIVE_FORMAT and type(value['maxExpandedBytes']) is int and
+            0 < value['maxExpandedBytes'] <= DEFAULT_MAX_DISTRIBUTION_MIB * CHUNK,
+            'Invalid source-admitted distribution archive contract')
+    return value
+
+
+def source_archive_contract(repo, commit, release):
+    names = git(repo, 'ls-tree', '--name-only', commit, '--', 'game/build-config.json').decode().splitlines()
+    config = json_read(git(repo, 'show', commit + ':game/build-config.json'), 'source build config') if names else {}
+    contract = validate_archive_contract(config['distributionArchive']) if 'distributionArchive' in config else None
+    require(('distributionArchive' in release) == (contract is not None) and
+            release.get('distributionArchive') == contract,
+            'Release archive marker differs from exact source config')
+    return contract
+
+
+def distribution_zip_end(file):
+    """Bound directory allocation before Python's eager ZipFile parser runs."""
+    owned = isinstance(file, Path)
+    stream = file.open('rb') if owned else file
+    try:
+        size = file.stat().st_size
+        require(size >= 22, 'Truncated ZIP end record')
+        stream.seek(size - 22)
+        end = stream.read(22)
+        require(len(end) == 22, 'Truncated ZIP end record')
+        signature, disk, directory_disk, disk_count, count, directory_size, directory_offset, comment = struct.unpack('<I4H2IH', end)
+        require(signature == 0x06054b50 and disk == directory_disk == comment == 0 and
+                0 < count <= 20001 and disk_count == count and
+                directory_size <= 32 * CHUNK and directory_offset + directory_size == size - 22,
+                'Unsupported ZIP64, directory bound, trailing bytes or ZIP end record')
+        return count, directory_size, directory_offset
+    finally:
+        if owned:
+            stream.close()
+
+
+def strict_distribution_members(file, actual, expanded_limit):
+    """Independently parse the admitted ZIP32 layout and stream raw deflate.
+
+    zipfile supplies names/CRC metadata, but its size-clipping behavior cannot
+    prove there are no extra deflate bytes/output beyond the declared member.
+    All output chunks are capped; no member or expanded site is materialized.
+    """
+    owned = isinstance(file, Path)
+    stream = file.open('rb') if owned else file
+    try:
+        size = file.stat().st_size
+        def read_at(offset, length):
+            require(0 <= offset <= size and 0 <= length <= size - offset, 'ZIP range outside original')
+            stream.seek(offset)
+            body = stream.read(length)
+            require(len(body) == length, 'Truncated ZIP record')
+            return body
+        count, directory_size, directory_offset = distribution_zip_end(file)
+        require(count == len(actual), 'ZIP member count differs from inventory')
+        # Read the bounded directory once, then stream local records forward.
+        # Alternating end/start seeks would repeatedly inflate the outer artifact.
+        directory = read_at(directory_offset, directory_size)
+        cursor, offset, expanded = 0, 0, 0
+        digests = {}
+        for _ in range(count):
+            central = directory[cursor:cursor + 46]
+            require(len(central) == 46, 'Truncated ZIP central header')
+            values = struct.unpack('<I6H3I5H2I', central)
+            sig, made, needed, flags, method, time, date, crc, compressed, length, name_length, extra, comment, disk, internal, external, local = values
+            require(sig == 0x02014b50 and made == needed == 20 and flags == 0x800 and
+                    method in (0, 8) and time == 0 and date == 33 and
+                    extra == comment == disk == internal == external == 0 and
+                    compressed < 0xffffffff and length < 0xffffffff and local == offset and
+                    cursor + 46 + name_length <= directory_size,
+                    'Unsupported or overlapping ZIP central record')
+            name_bytes = directory[cursor + 46:cursor + 46 + name_length]
+            name = name_bytes.decode('utf-8', errors='strict')
+            safe_path(name)
+            info = actual.get(name)
+            require(info is not None and name not in digests and not info.is_dir() and
+                    info.header_offset == offset and info.compress_type == method and
+                    info.compress_size == compressed and info.file_size == length and info.CRC == crc,
+                    'ZIP central member disagrees with inventory')
+            require(compressed == length if method == 0 else compressed < length,
+                    'ZIP member does not use the admitted smaller representation')
+            expanded += length
+            require(expanded <= expanded_limit, 'ZIP expanded-byte bound exceeded')
+            local_header = read_at(offset, 30)
+            require(struct.unpack('<I5H3I2H', local_header) ==
+                    (0x04034b50, 20, flags, method, time, date, crc, compressed, length, name_length, 0),
+                    'ZIP local and central headers differ')
+            require(read_at(offset + 30, name_length) == name_bytes, 'ZIP local name differs')
+            data_offset = offset + 30 + name_length
+            require(data_offset + compressed <= directory_offset, 'ZIP data overlaps directory')
+            digest, checksum, produced = hashlib.sha256(), 0, 0
+            decoder = zlib.decompressobj(-15) if method == 8 else None
+            position, remaining = data_offset, compressed
+            while remaining:
+                block = read_at(position, min(CHUNK, remaining))
+                position += len(block); remaining -= len(block)
+                while block:
+                    output = decoder.decompress(block, min(CHUNK, length - produced + 1)) if decoder else block
+                    produced += len(output)
+                    require(produced <= length, 'Deflate output exceeds declared size')
+                    digest.update(output); checksum = zlib.crc32(output, checksum)
+                    if decoder:
+                        require(not decoder.unused_data, 'Trailing data inside deflate member')
+                        block = decoder.unconsumed_tail
+                    else:
+                        block = b''
+            require(decoder is None or decoder.eof and not decoder.unused_data and not decoder.unconsumed_tail,
+                    'Truncated or trailing deflate stream')
+            require(produced == length and checksum == crc, 'ZIP expanded length or CRC differs')
+            digests[name] = digest.hexdigest()
+            cursor += 46 + name_length
+            offset = data_offset + compressed
+        require(cursor == directory_size and offset == directory_offset, 'Hidden or missing ZIP bytes')
+        return digests
+    finally:
+        if owned:
+            stream.close()
 
 
 def require(ok, message):
@@ -266,10 +391,15 @@ def ancestors(names):
             ['/'.join(name.split('/')[:i]) for i in range(1, len(name.split('/')))]}
 
 
-def verify_distribution(file, manifest_data, manifest, commit, version):
+def verify_distribution(file, manifest_data, manifest, commit, version, archive_contract=None):
+    if archive_contract is not None:
+        validate_archive_contract(archive_contract)
     require(isinstance(manifest, dict) and type(manifest.get('formatVersion')) is int and
             manifest.get('formatVersion') == 1 and manifest.get('version') == version and
             manifest.get('sourceRevision') == commit, 'Manifest release identity mismatch')
+    require(('distributionArchive' in manifest) == (archive_contract is not None) and
+            manifest.get('distributionArchive') == archive_contract,
+            'Manifest archive marker differs from exact source config')
     entry = safe_path(manifest.get('entry'))
     rows = manifest.get('files')
     require(isinstance(rows, list) and 0 < len(rows) <= 20000, 'Manifest file count invalid')
@@ -286,34 +416,45 @@ def verify_distribution(file, manifest_data, manifest, commit, version):
         folded.add(name.casefold())
         total += row['bytes']
     require(type(manifest.get('totalBytes')) is int and manifest['totalBytes'] == total and
-            total <= file.stat().st_size,
+            (total + len(manifest_data) <= archive_contract['maxExpandedBytes'] if archive_contract else
+             total <= file.stat().st_size),
             'Manifest totalBytes differs from file sum')
     require(entry in expected and 'game/build-info.json' in expected, 'Manifest missing entry/build identity')
+    if archive_contract is not None:
+        distribution_zip_end(file)
     with zipfile.ZipFile(file) as z:
         actual = zip_inventory(z, 40000)
-        require(all(info.compress_type == zipfile.ZIP_STORED for info in actual.values()),
+        require(archive_contract is not None or all(info.compress_type == zipfile.ZIP_STORED for info in actual.values()),
                 'Inner ZIP must use the existing uncompressed deterministic build format')
         files = {name for name, info in actual.items() if not info.is_dir()}
         require(files == set(expected) | {'manifest.json'}, 'Inner ZIP files do not exactly match manifest')
         require({name for name, info in actual.items() if info.is_dir()} <= ancestors(files),
                 'Unexpected inner ZIP directory')
+        strict_hashes = strict_distribution_members(file, actual, archive_contract['maxExpandedBytes']) if archive_contract else None
         require(small_read(z, actual['manifest.json'], SMALL_LIMITS['site/manifest.json']) == manifest_data,
                 'Inner and outer manifest bytes differ')
         for i, (name, row) in enumerate(expected.items(), 1):
             info = actual[name]
             require(info.file_size == row['bytes'], f'Inner ZIP size differs: {name}')
-            with z.open(info) as stream:
-                digest = stream_hash(stream, row['bytes'])
+            if strict_hashes is not None:
+                digest = strict_hashes[name]
+            else:
+                with z.open(info) as stream:
+                    digest = stream_hash(stream, row['bytes'])
             require(digest == row['sha256'], f'Inner ZIP SHA256 differs: {name}')
             if i % 200 == 0:
                 progress('checking_distribution', files=i)
         build = json_read(small_read(z, actual['game/build-info.json'], 64 * 1024), 'build-info.json')
         require(isinstance(build, dict) and type(build.get('formatVersion')) is int and
                 build.get('formatVersion') == 1 and build.get('version') == version and
-                build.get('sourceRevision') == commit and build.get('entry') == entry,
+                build.get('sourceRevision') == commit and build.get('entry') == entry and
+                ('distributionArchive' in build) == (archive_contract is not None) and
+                build.get('distributionArchive') == archive_contract,
                 'Inner build-info release identity differs')
     return {'files': len(expected), 'manifestTotalBytes': total, 'entry': entry,
-            'allManifestBytesVerified': True, 'innerManifestIdentical': True}
+            'allManifestBytesVerified': True, 'innerManifestIdentical': True,
+            **({'distributionArchive': archive_contract, 'strictZip32LayoutVerified': True,
+                'expandedBytesVerified': total + len(manifest_data)} if archive_contract else {})}
 
 
 class VerifiedMemberView:
@@ -398,6 +539,9 @@ def main():
                     release.get('sourceRevision') == commit, 'Release identity does not match expected Git HEAD/version')
             common_keys = {'formatVersion', 'version', 'sourceRevision', 'distributionSha256',
                            'manifestSha256', 'play', 'download'}
+            archive_contract = source_archive_contract(repo, commit, release)
+            if archive_contract is not None:
+                common_keys.add('distributionArchive')
             source_keys = {'sourceTree', 'sourceUrl', 'sourceManifestSha256'} if manifest_source else {'sourceArchiveSha256'}
             require(set(release) == common_keys | source_keys, 'Unexpected or mixed release contract fields')
             source_digest_key = 'sourceManifestSha256' if manifest_source else 'sourceArchiveSha256'
@@ -442,7 +586,7 @@ def main():
             manifest = json_read(small['site/manifest.json'], 'manifest.json')
             with z.open(distribution) as stream:
                 result = verify_distribution(VerifiedMemberView(stream, distribution.file_size),
-                                             small['site/manifest.json'], manifest, commit, args.expected_version)
+                                             small['site/manifest.json'], manifest, commit, args.expected_version, archive_contract)
             require(git(repo, 'rev-parse', 'HEAD').decode().strip() == commit, 'Git HEAD changed during inspection')
             after = artifact.stat()
             require((before.st_dev, before.st_ino, before.st_size, before.st_mtime_ns, before.st_ctime_ns) ==
@@ -491,6 +635,6 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except (ValueError, OSError, EOFError, tarfile.TarError, zipfile.BadZipFile, subprocess.CalledProcessError) as error:
+    except (ValueError, OSError, EOFError, zlib.error, struct.error, tarfile.TarError, zipfile.BadZipFile, subprocess.CalledProcessError) as error:
         print(f'Inspection refused: {error}', file=sys.stderr)
         sys.exit(1)
