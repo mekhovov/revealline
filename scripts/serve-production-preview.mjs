@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 import { createReadStream } from 'node:fs';
-import { pbkdf2Sync } from 'node:crypto';
+import { createHash, pbkdf2Sync } from 'node:crypto';
 import { lstat, readFile, realpath } from 'node:fs/promises';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { PROJECT_ROOT, PUBLIC_SECURITY_HEADERS, readBuildConfig } from './game-cli.mjs';
+import { openEmittedPreview } from './emitted-preview.mjs';
 
 // Source previews validate runtime behavior under public production CSP. They
 // are not generated-build or offline-install qualification. For those checks,
@@ -87,6 +88,8 @@ export async function startProductionPreview({
   port = 8773,
   fixtureAccess = false,
   cache = 'policy',
+  emittedPreview = null,
+  verifyEmittedSource = false,
 } = {}) {
   if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('Invalid preview port.');
   if (typeof fixtureAccess !== 'boolean' || !['policy', 'no-store', 'revalidate'].includes(cache))
@@ -97,12 +100,24 @@ export async function startProductionPreview({
       )
     : null;
   root = await realpath(root);
-  const marker = await readOptional(path.join(root, '.xonix-build.json'));
+  if (typeof verifyEmittedSource !== 'boolean' || (verifyEmittedSource && !emittedPreview))
+    throw new Error('Source verification requires an emitted preview.');
+  const emitted = emittedPreview
+    ? await openEmittedPreview(emittedPreview, { root, verifySource: verifyEmittedSource })
+    : null;
+  const readMetadata = async (relative) =>
+    emitted
+      ? emitted.has(relative)
+        ? (await emitted.read(relative)).toString('utf8')
+        : null
+      : readOptional(path.join(root, relative));
+  const marker = await readMetadata('.xonix-build.json');
   const ownership = marker === null ? null : JSON.parse(marker);
   if (ownership && (ownership.tool !== 'xonix-game-cli' || ownership.formatVersion !== 1))
     throw new Error('Unrecognized generated build ownership.');
   const build = ownership !== null;
-  const sourceHeaders = await readOptional(path.join(root, '_headers'));
+  if (emitted && !build) throw new Error('Emitted preview requires generated build ownership.');
+  const sourceHeaders = await readMetadata('_headers');
   if (build && sourceHeaders === null) throw new Error('Generated builds require their _headers.');
   const headers = Object.fromEntries(
     Object.entries(
@@ -112,6 +127,7 @@ export async function startProductionPreview({
   const config = build ? null : await readBuildConfig(root);
   const admitted = (relative) =>
     build || config.include.some((entry) => relative === entry || relative.startsWith(`${entry}/`));
+  const fixtureResponses = new Map();
   const server = createServer(async (request, response) => {
     const send = (status, body, extra = {}) => {
       response.writeHead(status, {
@@ -138,24 +154,43 @@ export async function startProductionPreview({
         return send(403, 'Private or unsafe path');
       let relative = parts.join('/');
       if (!relative && !build) return send(308, '', { Location: `/${config.entry}` });
-      let file = await regularPath(root, relative);
-      let stat = await lstat(file);
-      if (stat.isDirectory()) {
-        if (!decoded.endsWith('/'))
-          return send(308, '', {
-            Location: `/${parts.map(encodeURIComponent).join('/')}/${query === undefined ? '' : `?${query}`}`,
-          });
-        relative = `${relative ? `${relative}/` : ''}index.html`;
+      let file,
+        stat,
+        body = null;
+      if (emitted) {
+        const index = `${relative ? `${relative}/` : ''}index.html`;
+        if (!emitted.has(relative) && emitted.has(index)) {
+          if (!decoded.endsWith('/'))
+            return send(308, '', {
+              Location: `/${parts.map(encodeURIComponent).join('/')}/${query === undefined ? '' : `?${query}`}`,
+            });
+          relative = index;
+        }
+        if (!emitted.has(relative)) return send(404, 'Not found');
+        // Verify the original emitted pin before the explicit HTML access fixture.
+        // Source files omitted from publication cannot leak through this path.
+        body = await emitted.read(relative);
+        file = path.join(root, relative);
+      } else {
         file = await regularPath(root, relative);
         stat = await lstat(file);
+        if (stat.isDirectory()) {
+          if (!decoded.endsWith('/'))
+            return send(308, '', {
+              Location: `/${parts.map(encodeURIComponent).join('/')}/${query === undefined ? '' : `?${query}`}`,
+            });
+          relative = `${relative ? `${relative}/` : ''}index.html`;
+          file = await regularPath(root, relative);
+          stat = await lstat(file);
+        }
+        if (!admitted(relative)) return send(403, 'Outside admitted public paths');
+        if (!stat.isFile()) return send(404, 'Not found');
       }
-      if (!admitted(relative)) return send(403, 'Outside admitted public paths');
-      if (!stat.isFile()) return send(404, 'Not found');
-      let body = null;
       if (fixtureAccess && path.extname(file) === '.html') {
         // Explicit local-only access metadata fixture. Runtime bytes and public
         // CSP stay unchanged; no browser request interception disables caching.
-        const source = await readFile(file, 'utf8');
+        const original = body ?? (await readFile(file));
+        const source = original.toString('utf8');
         body = Buffer.from(
           source
             .replace(
@@ -168,8 +203,19 @@ export async function startProductionPreview({
             ),
         );
       }
+      if (emitted && fixtureAccess && path.extname(file) === '.html') {
+        const original = emitted.manifest.files.find((entry) => entry.path === relative);
+        fixtureResponses.set(relative, {
+          path: relative,
+          original: { bytes: original.bytes, sha256: original.sha256 },
+          served: { bytes: body.length, sha256: createHash('sha256').update(body).digest('hex') },
+          change: 'Local access salt and verifier only; not an offline HTML integrity proof.',
+        });
+      }
       const size = body?.length ?? stat.size;
-      const etag = `W/"${stat.size.toString(16)}-${stat.mtimeMs.toString(16)}-${fixtureAccess ? 'fixture-v1' : 'original'}"`;
+      const etag = emitted
+        ? `"${createHash('sha256').update(body).digest('hex')}"`
+        : `W/"${stat.size.toString(16)}-${stat.mtimeMs.toString(16)}-${fixtureAccess ? 'fixture-v1' : 'original'}"`;
       const fileHeaders = {
         ...headers,
         'Content-Type': MIME[path.extname(file)] ?? 'application/octet-stream',
@@ -220,6 +266,24 @@ export async function startProductionPreview({
     headers: sourceHeaders === null ? 'PUBLIC_SECURITY_HEADERS' : 'generated _headers (verified)',
     fixtureAccess,
     cache,
+    ...(emitted
+      ? {
+          emittedPreview: {
+            directory: path.resolve(root, emittedPreview),
+            manifestSHA256: emitted.manifestSHA256,
+            inventorySHA256: emitted.manifest.inventorySHA256,
+            files: emitted.manifest.files.length,
+            sourceRevision: emitted.manifest.sourceRevision,
+            sourceFingerprint: emitted.manifest.sourceFingerprint,
+            buildInputFingerprint: emitted.manifest.buildInputFingerprint,
+            sourceVerified: !!emitted.sourceVerification,
+            sourceVerification: emitted.sourceVerification,
+          },
+        }
+      : {}),
+    get fixtureResponses() {
+      return [...fixtureResponses.values()];
+    },
     url: `http://127.0.0.1:${server.address().port}/`,
   };
 }
@@ -230,9 +294,12 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
     else if (/^--port=\d+$/.test(argument)) options.port = Number(argument.slice(7));
     else if (argument === '--fixture-access') options.fixtureAccess = true;
     else if (argument.startsWith('--cache=')) options.cache = argument.slice(8);
+    else if (argument === '--verify-emitted-source') options.verifyEmittedSource = true;
+    else if (argument.startsWith('--emitted-preview='))
+      options.emittedPreview = path.resolve(argument.slice('--emitted-preview='.length));
     else
       throw new Error(
-        'Usage: node scripts/serve-production-preview.mjs [--root=<path>] [--port=8773] [--fixture-access] [--cache=policy|no-store|revalidate]',
+        'Usage: node scripts/serve-production-preview.mjs [--root=<path>] [--port=8773] [--fixture-access] [--cache=policy|no-store|revalidate] [--emitted-preview=<capture-directory>] [--verify-emitted-source]',
       );
   }
   const { server, ...preview } = await startProductionPreview(options);

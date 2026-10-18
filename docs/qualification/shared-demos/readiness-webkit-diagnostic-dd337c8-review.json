@@ -1,0 +1,199 @@
+{
+  "format": "SharedDemoReadinessDiagnosticReviewV1",
+  "created": "2026-10-18T23:20:51.145625+00:00",
+  "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+  "runtime": {
+    "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+    "files": 9996,
+    "bytes": 404389002
+  },
+  "sourceAndHarnessUnchanged": true,
+  "report": {
+    "path": "docs/qualification/shared-demos/readiness-webkit-diagnostic-dd337c8.json",
+    "sha256": "10699151d53f353da597a8c009c483bc2a1817ef1337c402be47a63647355c44"
+  },
+  "binding": {
+    "path": "docs/qualification/shared-demos/readiness-webkit-diagnostic-dd337c8-binding.json",
+    "sha256": "59f76699be73009fc8408ae47258d390db251082d3bb35b2129939fced2a1d6a"
+  },
+  "observerSources": [
+    {
+      "path": "docs/qualification/shared-demos/readiness-webkit-diagnostic-dd337c8-observer.mjs.txt",
+      "sha256": "ac6a3396d6ebdcd7923cbc394f331c7bc83707daf5a7582df15c127f90f0fd54"
+    },
+    {
+      "path": "docs/qualification/shared-demos/readiness-webkit-diagnostic-dd337c8-wrapper.py.txt",
+      "sha256": "05d3aab1e95cc8819c370fa1ef8249af0b4e84c24eb7c527524a517607b96802"
+    }
+  ],
+  "result": {
+    "exitCode": 1,
+    "checks": 0,
+    "pageErrors": 0,
+    "failure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-webkit-dd337c8.mjs:183:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-webkit-dd337c8.mjs:405:23",
+    "activeStage": {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1"
+    },
+    "browserCloseCompleted": true,
+    "previewClosed": true,
+    "cleanupObservation": "After runner exit, no qualifier/wrapper/pinned-WebKit process matched and port8771 had no listening socket."
+  },
+  "finding": {
+    "classification": "Readiness is pending; this sample does not reproduce a menu-selector mismatch.",
+    "bootState": "interactive",
+    "accessState": "unlocked",
+    "documentReadyState": "complete",
+    "documentHidden": false,
+    "documentFocused": true,
+    "flightState": "briefing",
+    "visibleOwnedMenus": [
+      "#shell-menu",
+      "#overlay-menu"
+    ],
+    "bootTransitions": [
+      {
+        "kind": "init",
+        "at": 1792365513170,
+        "monotonicAt": 49,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": null,
+        "attribute": null,
+        "previous": null,
+        "value": null
+      },
+      {
+        "kind": "DOMContentLoaded",
+        "at": 1792365513177,
+        "monotonicAt": 56,
+        "bootState": "loading",
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      },
+      {
+        "kind": "attribute",
+        "at": 1792365514536,
+        "monotonicAt": 1415,
+        "bootState": "interactive",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": "data-flight-state",
+        "previous": null,
+        "value": "briefing"
+      },
+      {
+        "kind": "attribute",
+        "at": 1792365514536,
+        "monotonicAt": 1415,
+        "bootState": "interactive",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": "data-boot-state",
+        "previous": "loading",
+        "value": "interactive"
+      }
+    ],
+    "preparation": [
+      {
+        "id": "boot-status",
+        "present": true,
+        "hidden": false,
+        "state": null,
+        "stage": null,
+        "text": "Reading your saved flight and installed chapters\u2026"
+      },
+      {
+        "id": "boot-detail",
+        "present": true,
+        "hidden": true,
+        "state": null,
+        "stage": null,
+        "text": ""
+      },
+      {
+        "id": "overlay-title",
+        "present": true,
+        "hidden": false,
+        "state": null,
+        "stage": null,
+        "text": "Clear a path. Reveal a world."
+      },
+      {
+        "id": "overlay-copy",
+        "present": true,
+        "hidden": false,
+        "state": null,
+        "stage": null,
+        "text": "Leave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy."
+      },
+      {
+        "id": "run-message",
+        "present": true,
+        "hidden": false,
+        "state": null,
+        "stage": null,
+        "text": "Your first route: fly down from the marked start to the opposite border."
+      },
+      {
+        "id": "flight-preparation-status",
+        "present": true,
+        "hidden": true,
+        "state": null,
+        "stage": null,
+        "text": ""
+      },
+      {
+        "id": "presentation-preparation-status",
+        "present": true,
+        "hidden": false,
+        "state": "busy",
+        "stage": "verifying",
+        "text": "Verifying release artwork and fonts\u2026"
+      },
+      {
+        "id": "theme-preparation-status",
+        "present": true,
+        "hidden": true,
+        "state": null,
+        "stage": null,
+        "text": ""
+      },
+      {
+        "id": "craft-preparation-status",
+        "present": true,
+        "hidden": true,
+        "state": "ready",
+        "stage": "decoding",
+        "text": ""
+      }
+    ],
+    "inferenceBoundary": "The DOM status is not an async ownership trace. The exact blocking await among getUnifiedMissionLibrary, incomingPrewarm, or native launch is not established."
+  },
+  "originalFailurePreserved": "docs/qualification/shared-demos/restoration-webkit-final-dd337c8-restoration.json",
+  "screenshot": {
+    "attempted": true,
+    "timeoutMs": 1000,
+    "fileProduced": false,
+    "limitation": "Secondary screenshot rejection was not retained in this ignored clone, so its exact failure reason is unknown. No extra attempt was made."
+  },
+  "nextNarrowEvidence": "If further diagnosis is authorized, observe enter/settle/cancel at the three existing incoming-handoff awaits plus the shared media-preparation snapshot, without adding waits, changing deadlines, or treating cosmetic feedback as proof of the blocking owner.",
+  "limits": [
+    "One first-result diagnostic sample; not a replacement qualification pass.",
+    "Unchanged original readiness predicate,30s gate,3s menu-click deadline and strict error policy.",
+    "Read-only observer can perturb timing.",
+    "No production, durable qualifier, manifest or Git changes.",
+    "No additional browser/replay run was performed."
+  ]
+}

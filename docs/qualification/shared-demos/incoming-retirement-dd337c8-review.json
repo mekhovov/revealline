@@ -1,0 +1,58 @@
+{
+  "format": "IncomingMissionRetirementQualificationV1",
+  "recordedAt": "2026-10-18T23:31:10.805842+00:00",
+  "baselineRevision": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+  "sourceScope": "Locally modified incoming handoff ownership and its tests; hashes identify the tested candidate. Unrelated preview tooling work ran concurrently outside these paths.",
+  "sourceSHA256": {
+    "game/app.mjs": "acc03c152d61e7c908b86df1b637bd5ffda6dff985189a14de8f563e410d4c23",
+    "game/test/mission-library-return-intent-host.test.mjs": "dadf16e90ad65e636c377541e78c1d643e470dfea0b1ccfbeb327540186f8c7f",
+    "game/mission-library/opening-intent.mjs": "d8deaedc91a7c8873e38e2f910d0029b0867cf9a7fb2ce78da96900ccfb4d9e7",
+    "game/test/mission-library-opening-intent.test.mjs": "25b9e949c656632a41771593524b42c54d107e9679678e2d7a3e5f0cf635f5cc"
+  },
+  "checks": {
+    "focusedIncomingHost": {
+      "tests": 18,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 13
+    },
+    "openingIntent": {
+      "tests": 3,
+      "pass": 3,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "scopedESLint": true,
+    "scopedPrettier": true,
+    "scopedDiffWhitespace": true
+  },
+  "commands": [
+    "NODE_PATH=/Users/oleksandr.mekhovov/work/my_projects/go_test/authoring/fpv-worlds/node_modules node --test --test-concurrency=1 --test-name-pattern='native boot completes|native incoming Solo handoff|incoming Solo (retires|awaits)' game/test/mission-library-return-intent-host.test.mjs",
+    "node --test game/test/mission-library-opening-intent.test.mjs",
+    "node_modules/.bin/eslint game/app.mjs game/test/mission-library-return-intent-host.test.mjs --max-warnings 0",
+    "node_modules/.bin/prettier --check game/app.mjs game/test/mission-library-return-intent-host.test.mjs",
+    "git diff --check -- game/app.mjs game/test/mission-library-return-intent-host.test.mjs"
+  ],
+  "evidence": {
+    "regressions.tap.txt": "incoming-retirement-dd337c8-regressions.tap.txt",
+    "opening-intent.tap.txt": "incoming-retirement-dd337c8-opening-intent.tap.txt",
+    "lint.log.txt": "incoming-retirement-dd337c8-lint.log.txt",
+    "format.log.txt": "incoming-retirement-dd337c8-format.log.txt"
+  },
+  "behaviorVerified": [
+    "Focus and hidden retirement finish public boot readiness before the held mission metadata request settles.",
+    "Late metadata success and rejection cannot launch, reopen the chooser, replace the run message, steal focus, or change saved player settings.",
+    "Focus retirement finishes readiness while the real presentation response and boot picture remain pending.",
+    "Late shared picture completion retains the exact paused run checkpoint and newer focus; a later explicit Missions opening still works.",
+    "Without retirement, the held picture keeps boot interactive; completing it reaches the exact requested mission at tick zero and paused briefing.",
+    "Existing successful exact Team-to-Solo handoff still requires explicit Start."
+  ],
+  "limitations": [
+    "Five selected host cases passed; thirteen other cases in that file were not selected and are not claimed as rerun.",
+    "No browser, build, global lint, or replay qualification was run for this narrow change.",
+    "This fixes ownership retirement, not the separately observed WebKit source-preview synchronous Team catalogue compilation delay.",
+    "Shared metadata/picture work remains owned by its original producer; this change neither cancels native in-flight work nor suppresses current cosmetic failure reporting."
+  ]
+}

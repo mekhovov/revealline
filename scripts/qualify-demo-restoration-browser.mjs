@@ -32,6 +32,8 @@ assert.ok(Number.isSafeInteger(port) && port > 1024 && port <= 65535);
 const ordinaryReloads = Number(args['ordinary-reloads'] ?? 1);
 assert.ok(Number.isSafeInteger(ordinaryReloads) && ordinaryReloads >= 1 && ordinaryReloads <= 8);
 assert.ok(!args.mode || ['solo', 'snake', 'sim', 'survival'].includes(args.mode));
+if (Object.hasOwn(args, 'emitted-preview'))
+  assert.ok(args['emitted-preview'], 'Supply a nonempty emitted-preview directory.');
 const base = `http://127.0.0.1:${port}`;
 const reportPath = args.report;
 try {
@@ -68,8 +70,15 @@ const report = {
   errors: [],
   bfcache: [],
   instrumentation:
-    'Ephemeral init observers wrap Storage mutations and IndexedDB object-store writes without changing arguments/results. A context binding retains bounded mutation/lifecycle metadata across reload. A separate task-owned preview serves unchanged frozen runtime with fixture credentials and public,max-age=0,must-revalidate headers. No Playwright routing is installed; a minimal away page is served by this test-only server.',
+    'Ephemeral init observers wrap Storage mutations and IndexedDB object-store writes without changing arguments/results. A context binding retains bounded mutation/lifecycle metadata across reload. A separate task-owned preview serves ' +
+    (args['emitted-preview'] ? 'the verified emitted inventory' : 'unchanged frozen runtime') +
+    ' with fixture credentials and public,max-age=0,must-revalidate headers. No Playwright routing is installed; a minimal away page is served by this test-only server.',
   limitations: [
+    ...(args['emitted-preview']
+      ? [
+          'The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity; service workers are observed, never blocked or unregistered.',
+        ]
+      : []),
     'Reload is not browser discard; no actual discard is claimed.',
     'BFCache is proved only by pageshow.persisted=true and the original document identity; failed admission is reported separately.',
     'Solo explicitly suspends Demo on pagehide, including persisted history navigation, in inherited upstream app.mjs behavior. A paused watching return documents that policy; it does not prove preservation of playing intent through freeze/resume.',
@@ -109,6 +118,19 @@ const snapshot = () =>
       bodyState: document.body.dataset.flightState ?? null,
       dialogs: [...document.querySelectorAll('dialog[open]')].map((n) => n.id).sort(),
       nativeSurfaces: document.querySelectorAll('.demo-native-surface').length,
+      ...(window.demoRestorationServiceWorkers
+        ? {
+            serviceWorkers: {
+              ...window.demoRestorationServiceWorkers,
+              controller: window.navigator.serviceWorker?.controller
+                ? {
+                    scriptURL: window.navigator.serviceWorker.controller.scriptURL,
+                    state: window.navigator.serviceWorker.controller.state,
+                  }
+                : null,
+            },
+          }
+        : {}),
       lifecycle: window.demoRestorationObservation.lifecycle,
       navigation: performance.getEntriesByType('navigation').map((n) => ({
         type: n.type,
@@ -220,6 +242,8 @@ try {
     port,
     fixtureAccess: true,
     cache: 'revalidate',
+    emittedPreview: args['emitted-preview'],
+    verifyEmittedSource: !!args['emitted-preview'],
   });
   const originalHandlers = preview.server.listeners('request');
   preview.server.removeAllListeners('request');
@@ -240,7 +264,12 @@ try {
     mode: preview.mode,
     headers: preview.headers,
     fixtureAccess: preview.fixtureAccess,
+    ...(preview.emittedPreview ? { emittedPreview: preview.emittedPreview } : {}),
   };
+  if (args['emitted-preview']) {
+    assert.ok(preview.emittedPreview, 'The requested emitted preview must be admitted.');
+    assert.equal(preview.emittedPreview.sourceVerified, true, 'Emitted source must be verified.');
+  }
   const response = await fetch(base + '/game/');
   assert.equal(response.headers.get('cache-control'), 'public, max-age=0, must-revalidate');
   report.preview.observedCacheControl = response.headers.get('cache-control');
@@ -268,6 +297,43 @@ try {
       if (events.length < 3000) events.push({ mode: currentMode, stage, ...event });
       else report.eventOverflow = (report.eventOverflow ?? 0) + 1;
     });
+    if (args['emitted-preview'])
+      await context.addInitScript(() => {
+        const serviceWorker = window.navigator.serviceWorker;
+        const observation = {
+          supported: !!serviceWorker,
+          pending: false,
+          observedAt: null,
+          registrations: null,
+          error: null,
+        };
+        window.demoRestorationServiceWorkers = observation;
+        const observe = () => {
+          if (!serviceWorker || observation.pending) return;
+          observation.pending = true;
+          void serviceWorker.getRegistrations().then(
+            (registrations) => {
+              observation.pending = false;
+              observation.observedAt = Date.now();
+              observation.registrations = registrations.map((registration) => ({
+                scope: registration.scope,
+                installing: registration.installing?.scriptURL ?? null,
+                waiting: registration.waiting?.scriptURL ?? null,
+                active: registration.active?.scriptURL ?? null,
+              }));
+              observation.error = null;
+            },
+            (error) => {
+              observation.pending = false;
+              observation.observedAt = Date.now();
+              observation.error = `${error.name}: ${error.message}`.slice(0, 1000);
+            },
+          );
+        };
+        observe();
+        window.addEventListener('pageshow', observe);
+        serviceWorker?.addEventListener('controllerchange', observe);
+      });
     await context.addInitScript(() => {
       const id = `${Date.now()}-${Math.random()}`;
       const lifecycle = [];
@@ -502,6 +568,7 @@ try {
     browser,
     writeReport: async (...writeArgs) => {
       if (preview) {
+        if (preview.emittedPreview) report.preview.fixtureResponses = preview.fixtureResponses;
         try {
           preview.server.closeAllConnections();
           await new Promise((resolve, reject) => {

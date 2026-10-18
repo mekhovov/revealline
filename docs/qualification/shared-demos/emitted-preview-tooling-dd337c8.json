@@ -1,0 +1,83 @@
+{
+  "format": "SharedDemoEmittedPreviewToolingV1",
+  "started": "2026-10-18T23:35:48.142465+00:00",
+  "baselineRevision": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+  "before": {
+    "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+    "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+    "scripts/test-emitted-preview.mjs": "ee8ab1214d0b6e512f95cc161a4765d6bd74183ac70243ceec3e796a532d48f4",
+    "scripts/qualify-demo-main-pages.mjs": "fa190f627045ff69c0c1034097842a9b1ae83c84e3a3b426ccb3c6adedf1fa8d",
+    "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+    "scripts/test-production-preview.mjs": "404195a258de43601df654d441c0c0a6451348ef4d816bc4dfe390fe04116b83",
+    "scripts/qualify-demo-restoration-browser.mjs": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+    "scripts/qualify-shared-demo-browser.mjs": "2059e16979a261009a31393f3d7a4878abcd2bd3b3a4b78d130112d88dbd38ec"
+  },
+  "checks": [
+    {
+      "name": "tests",
+      "command": [
+        "node",
+        "--test",
+        "scripts/test-emitted-preview.mjs",
+        "scripts/test-qualify-demo-main-pages.mjs",
+        "scripts/test-production-preview.mjs"
+      ],
+      "exitCode": 0,
+      "log": "emitted-preview-tooling-dd337c8-tests.log.txt",
+      "sha256": "9396c31823d2a7dc4551bf5365b51cf165f42afe34d4e8a3d8b58f725e492a48"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "node",
+        "node_modules/eslint/bin/eslint.js",
+        "scripts/demo-source-fingerprint.mjs",
+        "scripts/emitted-preview.mjs",
+        "scripts/test-emitted-preview.mjs",
+        "scripts/qualify-demo-main-pages.mjs",
+        "scripts/serve-production-preview.mjs",
+        "scripts/test-production-preview.mjs",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "log": "emitted-preview-tooling-dd337c8-lint.log.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "format",
+      "command": [
+        "node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "scripts/demo-source-fingerprint.mjs",
+        "scripts/emitted-preview.mjs",
+        "scripts/test-emitted-preview.mjs",
+        "scripts/qualify-demo-main-pages.mjs",
+        "scripts/serve-production-preview.mjs",
+        "scripts/test-production-preview.mjs",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "scripts/qualify-shared-demo-browser.mjs"
+      ],
+      "exitCode": 0,
+      "log": "emitted-preview-tooling-dd337c8-format.log.txt",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  ],
+  "complete": true,
+  "scope": "Uncommitted tooling candidate; actual emitted capture and browser execution remain separate required gates.",
+  "after": {
+    "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+    "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+    "scripts/test-emitted-preview.mjs": "ee8ab1214d0b6e512f95cc161a4765d6bd74183ac70243ceec3e796a532d48f4",
+    "scripts/qualify-demo-main-pages.mjs": "fa190f627045ff69c0c1034097842a9b1ae83c84e3a3b426ccb3c6adedf1fa8d",
+    "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+    "scripts/test-production-preview.mjs": "404195a258de43601df654d441c0c0a6451348ef4d816bc4dfe390fe04116b83",
+    "scripts/qualify-demo-restoration-browser.mjs": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+    "scripts/qualify-shared-demo-browser.mjs": "2059e16979a261009a31393f3d7a4878abcd2bd3b3a4b78d130112d88dbd38ec"
+  },
+  "sourceStable": true,
+  "finished": "2026-10-18T23:35:49.374348+00:00"
+}

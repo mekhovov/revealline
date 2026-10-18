@@ -1,0 +1,217 @@
+{
+  "format": "SharedDemoReadinessOwnerReviewV1",
+  "created": "2026-10-18T23:26:09.971922+00:00",
+  "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+  "runtime": {
+    "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+    "files": 9996,
+    "bytes": 404389002
+  },
+  "sourceAndHarnessUnchanged": true,
+  "report": {
+    "path": "docs/qualification/shared-demos/readiness-owner-webkit-diagnostic-dd337c8.json",
+    "sha256": "b7846c8b1db4767d09bd575da3d350d2950788471e79e0f4ab39934aba9e4334"
+  },
+  "binding": {
+    "path": "docs/qualification/shared-demos/readiness-owner-webkit-diagnostic-dd337c8-binding.json",
+    "sha256": "90bd4ec1f3925d7ac981867f82d57934916693bd9dc6beab33f5daac992e35e8"
+  },
+  "observerSources": [
+    {
+      "path": "docs/qualification/shared-demos/readiness-owner-webkit-diagnostic-dd337c8-observer.mjs.txt",
+      "sha256": "9d466743d3b0c05e7e5f9dc20ce5017d0d5d242539f3f7b854b59635dcc4ebef"
+    },
+    {
+      "path": "docs/qualification/shared-demos/readiness-owner-webkit-diagnostic-dd337c8-wrapper.py.txt",
+      "sha256": "4853bbf6744431cc0bbe09ac0e48cdd7855d37778955e6d84cb7d6704d1ac82c"
+    },
+    {
+      "path": "docs/qualification/shared-demos/readiness-owner-webkit-diagnostic-dd337c8-app.diff.txt",
+      "sha256": "f8a9c1ef4945801d7622b00b5c1dc4f6f4227b08a1fdca9ddad82a2bf62799c0",
+      "original": "game/app.mjs",
+      "originalSHA256": "aa410bb50dbd494e7e1dc2821f1e0e70c32702b0eeca9a59a1fa9b6fd870016b",
+      "servedProjectionSHA256": "b2e6e3f13345ec2b177015dd820050add3b4549c8d62819603ab9a19e9d022a0"
+    },
+    {
+      "path": "docs/qualification/shared-demos/readiness-owner-webkit-diagnostic-dd337c8-presentation.diff.txt",
+      "sha256": "f1b9aa244609907d0c09ea9e96fa58e82a0af91fad26a12c01cca61fafffaa71",
+      "original": "game/presentation/host.mjs",
+      "originalSHA256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+      "servedProjectionSHA256": "31b461cf9721c727c721dc587cd95097a69714f0067d1e59b5b7166680b62f7d"
+    }
+  ],
+  "result": {
+    "exitCode": 1,
+    "checks": 0,
+    "pageErrors": 0,
+    "activeStage": {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1"
+    },
+    "failure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-owner-webkit-dd337c8.mjs:192:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-owner-webkit-dd337c8.mjs:438:23",
+    "browserCloseCompleted": true,
+    "previewClosed": true
+  },
+  "confirmedOwner": {
+    "stage": "getUnifiedMissionLibrary",
+    "entry": {
+      "stage": "catalog:enter",
+      "at": 1792365836180,
+      "monotonicAt": 3264,
+      "media": {
+        "phase": "menu",
+        "queued": 0,
+        "active": {
+          "fetch": 1,
+          "decode": 0,
+          "inspect": 0,
+          "main": 0
+        },
+        "reservedDecodeBytes": 0
+      },
+      "prewarmExists": true,
+      "prewarmLatest": null,
+      "pictureResume": false,
+      "preparationOperation": false
+    },
+    "observations": [
+      {
+        "stage": "catalog:enter",
+        "at": 1792365836180,
+        "monotonicAt": 3264,
+        "media": {
+          "phase": "menu",
+          "queued": 0,
+          "active": {
+            "fetch": 1,
+            "decode": 0,
+            "inspect": 0,
+            "main": 0
+          },
+          "reservedDecodeBytes": 0
+        },
+        "prewarmExists": true,
+        "prewarmLatest": null,
+        "pictureResume": false,
+        "preparationOperation": false
+      }
+    ],
+    "notEntered": [
+      "incomingPrewarm await",
+      "native host.library.launch"
+    ],
+    "finalSnapshot": {
+      "media": {
+        "phase": "menu",
+        "queued": 0,
+        "active": {
+          "fetch": 0,
+          "decode": 0,
+          "inspect": 0,
+          "main": 0
+        },
+        "reservedDecodeBytes": 0
+      },
+      "prewarmExists": true,
+      "prewarmLatest": {
+        "status": "preparing",
+        "progress": null,
+        "stage": "preparing",
+        "message": "Preparing the published picture choices\u2026"
+      },
+      "pictureResume": false,
+      "preparationOperation": false
+    },
+    "meaning": "The incoming boot continuation was still awaiting the library during the first diagnostic failure. This proves the immediate pending owner, not an indefinitely stuck operation or its slowest inner function."
+  },
+  "requestEvidence": {
+    "total": 1520,
+    "overflow": 0,
+    "presentationObservations": 599,
+    "boundedPresentationLimit": 600,
+    "pendingAtFailure": [
+      {
+        "id": 1520,
+        "url": "http://127.0.0.1:8771/game/mission-library/spatial-next-editions.mjs",
+        "method": "GET",
+        "resourceType": "script",
+        "navigation": false,
+        "frameURL": "http://127.0.0.1:8771/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+        "stage": "ordinary-control-reload-1",
+        "startedAt": 1792365880414,
+        "state": "pending"
+      }
+    ],
+    "laterNativeRequestState": [
+      {
+        "id": 1520,
+        "url": "http://127.0.0.1:8771/game/mission-library/spatial-next-editions.mjs",
+        "method": "GET",
+        "resourceType": "script",
+        "navigation": false,
+        "frameURL": "http://127.0.0.1:8771/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+        "stage": "ordinary-control-reload-1",
+        "startedAt": 1792365880414,
+        "state": "finished",
+        "responseAt": 1792365880528,
+        "status": 200,
+        "finishedAt": 1792365880528,
+        "timing": {
+          "startTime": 1792365880412.4849,
+          "domainLookupStart": 1.616,
+          "domainLookupEnd": 1.616,
+          "connectStart": 1.616,
+          "secureConnectionStart": -1,
+          "connectEnd": 1.616,
+          "requestStart": 1.946,
+          "responseStart": 20.482,
+          "responseEnd": 22.538
+        }
+      }
+    ],
+    "assetWithDelayedDelivery": {
+      "id": 1519,
+      "url": "http://127.0.0.1:8771/game/presentation/compiled/assets/a3ad1f5a90f71164d77039f7052ce3403e684f1e9acecb0d3c86a7d456e9d509.png",
+      "method": "GET",
+      "resourceType": "fetch",
+      "navigation": false,
+      "frameURL": "http://127.0.0.1:8771/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+      "stage": "ordinary-control-reload-1",
+      "startedAt": 1792365846628,
+      "state": "finished",
+      "responseAt": 1792365880415,
+      "status": 200,
+      "finishedAt": 1792365880415,
+      "timing": {
+        "startTime": 1792365846614.1309,
+        "domainLookupStart": -1,
+        "domainLookupEnd": -1,
+        "connectStart": -1,
+        "secureConnectionStart": -1,
+        "connectEnd": -1,
+        "requestStart": 0.795,
+        "responseStart": 15.472,
+        "responseEnd": 18.895
+      }
+    },
+    "nativeResponseEndAfterStartMs": 18.895,
+    "finishDeliveryAfterNativeResponseEndMs": 33781.974,
+    "inference": "The18.895ms native response timing rules out interpreting the33.8s response-event/JS delivery interval as that asset network transfer. A long JS/catalog interval is consistent with these observations, but no CPU stack was recorded."
+  },
+  "staticCandidate": {
+    "caller": "game/app.mjs:createRemoteTeamLibrarySources before dynamic spatial-next-editions import",
+    "factory": "game/mission-library/remote-team.mjs:createRemoteTeamLibrarySources creates authored Team candidates, createCandidateTeamHost and additional Team sources synchronously",
+    "status": "Candidate interval only. Not a measured per-function CPU attribution."
+  },
+  "screenshot": {
+    "produced": false,
+    "failure": "page.screenshot: Timeout 1000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-owner-webkit-dd337c8.mjs:575:21"
+  },
+  "limits": [
+    "One bounded first-result diagnostic, unchanged30-second gate and3-second menu-click deadline.",
+    "Served app and presentation host were explicitly hashed observation-only projections; all tracked runtime, durable scripts, manifest and HEAD remained frozen.",
+    "Side observers add bounded work and may perturb timings; this is not replacement qualification evidence.",
+    "No rejection or pageerror filter and no deadline/admission changes.",
+    "Existing ordinary and diagnostic failures remain preserved."
+  ]
+}

@@ -15492,37 +15492,42 @@ try {
     const incomingRun = run,
       incomingStarted = started,
       incomingPrewarm = picturePrewarm?.promise;
-    const opening = trackMissionLibraryOpening({
-      onRetire: () => {
-        if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
-      },
+    let resolveRetirement;
+    const retirement = new Promise((resolve) => {
+      resolveRetirement = resolve;
     });
-    // Finish this owned incoming selection before normal boot focus runs. The
-    // opening lease still retires on genuinely newer input or lost foreground.
-    await (async () => {
+    const releaseOpening = () => {
+      opening.dispose();
+      if (cancelUnifiedOpening === cancel) cancelUnifiedOpening = null;
+    };
+    const cancel = () => {
+      if (revision === unifiedOpenRevision) ++unifiedOpenRevision;
+      releaseOpening();
+      resolveRetirement();
+    };
+    const opening = trackMissionLibraryOpening({ onRetire: cancel });
+    cancelUnifiedOpening = cancel;
+    const incomingCurrent = () =>
+      revision === unifiedOpenRevision &&
+      opening.current() &&
+      run === incomingRun &&
+      started === incomingStarted &&
+      paused &&
+      !document.hidden &&
+      document.hasFocus?.() !== false;
+    // Finish this owned incoming selection before normal boot focus runs. A
+    // retired waiter must not hold boot behind shared metadata or picture work.
+    const incoming = (async () => {
       try {
-        const host = await getUnifiedMissionLibrary(
-          () =>
-            revision === unifiedOpenRevision &&
-            opening.current() &&
-            run === incomingRun &&
-            started === incomingStarted,
-        );
+        const host = await getUnifiedMissionLibrary(incomingCurrent);
+        if (!incomingCurrent()) return;
         // The boot picture may still own a media-generation write. Finish it
         // before the requested mission prepares its distinct exact original.
         // Its failure is not authority to replace or reject the requested art.
         await incomingPrewarm?.catch(() => {});
-        opening.dispose();
-        if (
-          revision !== unifiedOpenRevision ||
-          !opening.current() ||
-          run !== incomingRun ||
-          started !== incomingStarted ||
-          !paused ||
-          document.hidden ||
-          document.hasFocus?.() === false
-        )
-          return;
+        if (!incomingCurrent()) return;
+        // The accepted launch below owns its own checked activation context.
+        releaseOpening();
         const row = host.library.find(libraryHandoff);
         if (!row || !row.modes.includes('solo'))
           throw new Error(t('interface:thisExactMissionEditionIsNotAvailableInSoloNo'));
@@ -15551,9 +15556,12 @@ try {
             }),
           );
       } finally {
-        opening.dispose();
+        releaseOpening();
       }
     })();
+    // Keep late completion and failure observed without cancelling a shared
+    // producer or granting it authority after its incoming intent retires.
+    await Promise.race([incoming, retirement]);
   }
   if (
     exactReturn &&

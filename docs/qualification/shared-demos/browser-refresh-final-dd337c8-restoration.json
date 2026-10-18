@@ -1,0 +1,167 @@
+{
+  "format": "SharedDemoFinalBrowserRefreshV1",
+  "started": "2026-10-18T23:09:52.098Z",
+  "complete": false,
+  "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "fe13322c9fb02b37215af9015be666615cad433e9894991fdede9c37e1bb0924",
+    "created": "2026-10-18T23:07:40.544951+00:00",
+    "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+    "files": 9996,
+    "bytes": 404389002
+  },
+  "authoritative": {
+    "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+    "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "fingerprint": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+    "files": 9996,
+    "bytes": 404389002
+  },
+  "wrapper": {
+    "path": ".cache/run-final-demo-refresh-current.mjs",
+    "sha256": "054f792140c4b2d18472fd213793b2160c132973a95e051026b5396cd0266620"
+  },
+  "hashScope": {
+    "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+  },
+  "selected": [
+    "restoration-chromium",
+    "restoration-firefox",
+    "restoration-webkit"
+  ],
+  "jobs": [
+    {
+      "id": "restoration-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-chromium-final-dd337c8-restoration.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-chromium-final-dd337c8-restoration.json",
+      "started": "2026-10-18T23:09:54.490Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-chromium-final-dd337c8-restoration.json\",\"complete\":true,\"checks\":12,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T23:11:11.918Z",
+      "reportSHA256": "554e373e3bdd4c302d61740e88e5e3549d270ae8cb7a6120362867ec9b8c4df5",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "restoration-firefox",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-firefox-final-dd337c8-restoration.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-firefox-final-dd337c8-restoration.json",
+      "started": "2026-10-18T23:11:11.920Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-firefox-final-dd337c8-restoration.json\",\"complete\":true,\"checks\":12,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T23:13:06.482Z",
+      "reportSHA256": "ded08a363dc411c510fc49a27d20e15683a35fdd01d09268b2e4e8589745f80a",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "restoration-webkit",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-webkit-final-dd337c8-restoration.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-webkit-final-dd337c8-restoration.json",
+      "started": "2026-10-18T23:13:06.485Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-webkit-final-dd337c8-restoration.json\",\"complete\":false,\"checks\":0,\"failure\":\"page.waitForFunction: Timeout 30000ms exceeded.\\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:155:14)\\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:361:23\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "finished": "2026-10-18T23:13:55.495Z",
+      "reportSHA256": "fddc90b22adcee6f08bd6b317c2d30f4e51323e6397aab412965abd771ecb355",
+      "complete": false,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 0,
+      "errorCount": 1,
+      "failure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:155:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:361:23"
+    }
+  ],
+  "failedJobs": [
+    "restoration-webkit"
+  ],
+  "limitations": [
+    "Existing durable qualifiers only, sequential isolated browsers. No production or harness changes are made by this wrapper. Each selected job runs once; a strict failure remains failed while later independent jobs may proceed only after confirmed browser/server cleanup.",
+    "Some durable qualifiers retain empty-stack pageerrors as empty strings; any pageerror still fails their strict count. Raw/name diagnostics require a separate bounded probe after preserving such a failed receipt.",
+    "This refresh covers shared controls, Solo readiness/cache ownership and incoming SIM guidance. Full native corpus retains unchanged-content evidence. Representative emitted-offline, control-remap and native discard checks run separately.",
+    "The two-hour actual-wall-time rotation and outstanding physical-device/human review checks remain separate."
+  ],
+  "before": {
+    "runtime": {
+      "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "harness": {
+      "sha256": "66f5bf742b5b0875402f00a634ea01230bbbe4752e6a58a468ea944a192ac5ae",
+      "files": 928,
+      "bytes": 11106150
+    }
+  },
+  "failure": "Strict qualification failed for: restoration-webkit. Every failed receipt is preserved; no retry or exemption applied.",
+  "after": {
+    "runtime": {
+      "sha256": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+      "files": 9996,
+      "bytes": 404389002
+    },
+    "harness": {
+      "sha256": "66f5bf742b5b0875402f00a634ea01230bbbe4752e6a58a468ea944a192ac5ae",
+      "files": 928,
+      "bytes": 11106150
+    }
+  },
+  "changedFiles": {
+    "runtime": [],
+    "harness": []
+  },
+  "finished": "2026-10-18T23:13:59.544Z"
+}

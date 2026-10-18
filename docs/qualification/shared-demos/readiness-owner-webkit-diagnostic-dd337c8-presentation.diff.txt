@@ -1,0 +1,69 @@
+--- game/presentation/host.mjs
++++ .cache/presentation-readiness-owner-dd337c8.mjs
+@@ -570,7 +570,13 @@
+       // Native work may finish after play begins; it still belongs to this load
+       // and is released before another optional stage can start. Do not hold the
+       // shared main-work slot while a non-cancellable native codec is pending.
++      let observationSequence = 0;
++      const observePreparation = (stage, details = {}) => {
++        try { globalThis.__readinessPresentationObservation?.({stage, ...details, at:Date.now(), monotonicAt:performance.now(), profile, manifestPath, admission:preparation?.snapshot?.() ?? null}); } catch {}
++      };
+       const main = (work) => {
++        const observationId = ++observationSequence;
++        observePreparation('main:queued', {observationId, work:String(work).slice(0,140)});
+         if (!preparation) return work();
+         let result,
+           submitted = false;
+@@ -578,7 +584,12 @@
+           .run(
+             'main',
+             () => {
++              observePreparation('main:submitted', {observationId});
+               result = Promise.resolve(work());
++              void result.then(
++                () => observePreparation('main:native-settled', {observationId}),
++                error => observePreparation('main:native-rejected', {observationId,errorName:error?.name,errorMessage:String(error?.message??error).slice(0,1000)}),
++              );
+               // Own native rejection while admission settles; the same promise
+               // still delivers its result or error to the load's existing owner.
+               void result.catch(() => {});
+@@ -587,8 +598,9 @@
+             admission,
+           )
+           .then(
+-            () => result,
++            () => { observePreparation('main:admission-settled', {observationId}); return result; },
+             (error) => {
++              observePreparation('main:admission-rejected', {observationId,errorName:error?.name,errorMessage:String(error?.message??error).slice(0,1000)});
+               // Once submitted, return the native result to its existing owner
+               // even when cancellation races this admission's completion. The
+               // owner then releases it before its cancellation check propagates.
+@@ -597,14 +609,20 @@
+             },
+           );
+       };
+-      const fetchBytes = (relative, max, signal, expected = null) =>
+-        preparation
+-          ? preparation.run(
+-              'fetch',
+-              () => bytesAt(relative, max, signal, expected, main),
+-              admission,
+-            )
+-          : bytesAt(relative, max, signal, expected);
++      const fetchBytes = (relative, max, signal, expected = null) => {
++        const observationId = ++observationSequence;
++        observePreparation('fetch:queued', {observationId,relative});
++        const work = () => {
++          observePreparation('fetch:submitted', {observationId,relative});
++          const result = bytesAt(relative, max, signal, expected, preparation ? main : null);
++          void result.then(
++            () => observePreparation('fetch:native-settled', {observationId,relative}),
++            error => observePreparation('fetch:native-rejected', {observationId,relative,errorName:error?.name,errorMessage:String(error?.message??error).slice(0,1000)}),
++          );
++          return result;
++        };
++        return preparation ? preparation.run('fetch',work,admission) : work();
++      };
+       const releases = [],
+         images = {},
+         cssImages = {},

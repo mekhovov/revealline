@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: actual emitted deltas and verified source bodies cover exactly the admitted inventory
+ok 1 - actual emitted deltas and verified source bodies cover exactly the admitted inventory
+  ---
+  duration_ms: 32.388666
+  ...
+# Subtest: every read rechecks exact bytes, including source changes after successful admission
+ok 2 - every read rechecks exact bytes, including source changes after successful admission
+  ---
+  duration_ms: 24.099125
+  ...
+# Subtest: unadmitted, modified, incomplete, or foreign-source captures cannot open
+ok 3 - unadmitted, modified, incomplete, or foreign-source captures cannot open
+  ---
+  duration_ms: 20.7185
+  ...
+# Subtest: failed capture removes only its own partial directory and cannot overwrite existing data
+ok 4 - failed capture removes only its own partial directory and cannot overwrite existing data
+  ---
+  duration_ms: 6.598875
+  ...
+# Subtest: capture byte bounds, duplicate paths and unsafe paths fail closed
+ok 5 - capture byte bounds, duplicate paths and unsafe paths fail closed
+  ---
+  duration_ms: 12.982375
+  ...
+# Subtest: symlink source and captured blob substitution are rejected
+ok 6 - symlink source and captured blob substitution are rejected
+  ---
+  duration_ms: 8.72875
+  ...
+# Subtest: manifest content is pinned by the completed audit and exact inventory
+ok 7 - manifest content is pinned by the completed audit and exact inventory
+  ---
+  duration_ms: 8.746042
+  ...
+# Subtest: optional preview CLI keeps defaults and rejects duplicate or empty paths
+ok 8 - optional preview CLI keeps defaults and rejects duplicate or empty paths
+  ---
+  duration_ms: 0.419708
+  ...
+# Subtest: strict qualification rejects stale runtime, build inputs and HEAD while historical opening stays explicit
+ok 9 - strict qualification rejects stale runtime, build inputs and HEAD while historical opening stays explicit
+  ---
+  duration_ms: 279.227
+  ...
+# Subtest: canonical fingerprint hashes sorted path plus raw digest and excludes test/coverage inputs
+ok 10 - canonical fingerprint hashes sorted path plus raw digest and excludes test/coverage inputs
+  ---
+  duration_ms: 12.901542
+  ...
+# Subtest: local fixture changes only access metadata and keeps exact production policy
+ok 11 - local fixture changes only access metadata and keeps exact production policy
+  ---
+  duration_ms: 81.85275
+  ...
+# Subtest: streamed media supports bounded byte ranges and rejects malformed ranges
+ok 12 - streamed media supports bounded byte ranges and rejects malformed ranges
+  ---
+  duration_ms: 14.203292
+  ...
+# Subtest: preview remains loopback-only and refuses private files or policy drift
+ok 13 - preview remains loopback-only and refuses private files or policy drift
+  ---
+  duration_ms: 7.860792
+  ...
+# Subtest: captured preview serves exact emitted bytes, preserves HTTP behavior and rejects source drift
+ok 14 - captured preview serves exact emitted bytes, preserves HTTP behavior and rejects source drift
+  ---
+  duration_ms: 52.497083
+  ...
+# Subtest: the tar model reproduces the actual pinned baseline without building or materializing payloads
+ok 15 - the tar model reproduces the actual pinned baseline without building or materializing payloads
+  ---
+  duration_ms: 11.261041
+  ...
+# Subtest: tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+ok 16 - tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+  ---
+  duration_ms: 0.695625
+  ...
+# Subtest: every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+ok 17 - every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+  ---
+  duration_ms: 0.476625
+  ...
+# Subtest: CLI requires explicit fresh report path and rejects unknown or duplicated options
+ok 18 - CLI requires explicit fresh report path and rejects unknown or duplicated options
+  ---
+  duration_ms: 0.243542
+  ...
+# Subtest: existing evidence is rejected before any costly build or source snapshot
+ok 19 - existing evidence is rejected before any costly build or source snapshot
+  ---
+  duration_ms: 5.829541
+  ...
+# Subtest: only the existing mission-index compaction is admitted and semantic changes remain detectable
+ok 20 - only the existing mission-index compaction is admitted and semantic changes remain detectable
+  ---
+  duration_ms: 0.502916
+  ...
+# Subtest: emitted omitted-original inventory exactly covers actual omissions and retained offline fallback bodies
+ok 21 - emitted omitted-original inventory exactly covers actual omissions and retained offline fallback bodies
+  ---
+  duration_ms: 6.896
+  ...
+# Subtest: a profile with no original omissions requires the optional worker field to stay absent
+ok 22 - a profile with no original omissions requires the optional worker field to stay absent
+  ---
+  duration_ms: 1.069792
+  ...
+# Subtest: emitted demo ownership proves real selected bodies, native imports and worker pins, retaining finite group metadata
+ok 23 - emitted demo ownership proves real selected bodies, native imports and worker pins, retaining finite group metadata
+  ---
+  duration_ms: 2.174584
+  ...
+# Subtest: emitted demo gate rejects hosted-but-unselected native/body dependencies, bad pins and missing worker registration
+ok 24 - emitted demo gate rejects hosted-but-unselected native/body dependencies, bad pins and missing worker registration
+  ---
+  duration_ms: 7.8915
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 694.09
