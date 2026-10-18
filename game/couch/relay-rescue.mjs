@@ -263,6 +263,7 @@ export function bootCoop({
   candidateDifficulty = 'standard',
   candidateNotice = '',
   candidateEditionLabel = '',
+  candidateNavigationLabel = '',
 } = {}) {
   // Consume native setup intent before applying saved defaults. Only an actual
   // difficulty edit changes the global preference; opening its selector does not.
@@ -6522,7 +6523,7 @@ export function bootCoop({
     const level = run ? attemptLevel : selectedLevel();
     const row = run ? acceptedPicture?.journeyRow : selectedCandidateRow();
     const owned = candidateJourney?.owns(row);
-    const edition = owned ? renderMessage(candidateEditionLabel) : '';
+    const edition = owned && !defaultJourney ? renderMessage(candidateNavigationLabel) : '';
     const mode = t('interface:team');
     const context = edition
       ? `${edition} · ${mode}`
