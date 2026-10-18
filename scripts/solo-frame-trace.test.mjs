@@ -102,6 +102,7 @@ async function setup(t, options = {}) {
   };
   const file = join(root, 'trace.json');
   const owner = createQualificationFrameTrace(cdp, {
+    protocol: options.protocol,
     file,
     remainingMs: options.remainingMs ?? (() => 360000),
     onLimit: async (reason) => {
@@ -537,3 +538,12 @@ test('actual pre-Start hook subtracts trace setup from the original public click
     } else await assert.rejects(pending, /original public Start deadline/);
   }
 });
+
+// Shared modeled CDP fixtures; importing this module still runs every original owner control.
+export {
+  setup as setupFrameTraceFixture,
+  end as finishFrameTraceFixture,
+  trace as frameTraceBytes,
+  names as frameTraceNames,
+  anchor as frameTraceAnchor,
+};
