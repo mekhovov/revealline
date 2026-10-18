@@ -102,6 +102,7 @@ import { publishedRouteViews } from './content-design/published-journey.mjs';
 import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
+import { acquireCandidatePicture } from './content-design/picture.mjs';
 import {
   resolveInstalledMissionTarget,
   installedMissionExecutionIndex,
@@ -729,6 +730,8 @@ try {
   const authoredJourney = !!authoredRoute;
   const candidateHost = authoredJourney
     ? await createSoloRouteHost(authoredRoute, {
+        // Main adopts the owned decoded picture, not a portable Studio scenario.
+        serializeArtwork: false,
         getEncounterVariant: () => encounterChoices.snapshot().variant,
         themes:
           runtimeContent?.themes ??
@@ -1913,6 +1916,7 @@ try {
           },
           asset: manifest.background,
           picture: candidatePicture,
+          acquire: (asset, options) => acquireCandidatePicture(asset, { ...options, binary: true }),
         }),
       );
     }
