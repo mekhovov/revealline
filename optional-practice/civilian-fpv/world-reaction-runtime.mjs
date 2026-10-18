@@ -6,7 +6,7 @@ const sourceHashes={
 'game/audio/dialogue-mix.mjs':'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
 'game/ui/audio-output.mjs':'dc1b2776407d0b6649b0d15c5c721bd59384d7e38a2e61087961ff7a37bd86c1',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
-'game/audio-preferences.mjs':'9212831a3524c9e1ebe8c595783f9f53a112e02e3d51280d775ac103b94a9239',
+'game/audio-preferences.mjs':'8baa3a25c6a80981f44e833ba8cb2e10d297f90b51684994d4e8328a7e846a71',
 'game/ui/encounter-audio.mjs':'ad58592952c55444713911a27df525b2c2d1f2a47c8a909a96597fda85e46dbd',
 'game/ui/world-ambience.mjs':'95b506a5cd1c34323a2bed5be3444be55ea38ddfc6036903757cccd3c301b260',
 'game/ui/movement-audio.mjs':'685d8e458401354028a2cacda0c7b1009b3c1e480a08d4cafce46d8f98b69020',
@@ -406,11 +406,13 @@ let disposed=false,
 explicit=false,
 stored=false,
 unsaved=false,
-warning='';
-const notify=(message)=>{
+warning='',
+warningKey='';
+const notify=(message,key='')=>{
 warning=message;
+warningKey=key;
 try{
-onWarning(message);
+onWarning(message,key);
 }catch{
 // A notice cannot prevent the synchronous sound change.
 }
@@ -448,27 +450,38 @@ apply(first.value);
 seedRevision=audioMaster.snapshot().revision;
 }
 const persist=()=>{
+const{muted,volume,revision}=audioMaster.snapshot();
+const current=()=> !disposed&&audioMaster.snapshot().revision===revision;
 try{
 const allowed=writable();
-if(disposed)return;
+if(!current())return;
 if(!allowed){
 unsaved=true;
-notify('Sound changes apply only to this session; saving is disabled here.');
+notify(
+'Sound changes apply only to this session; saving is disabled here.',
+'common:preferences.audioSessionOnly',
+);
 return;
 }
-const{muted,volume}=audioMaster.snapshot(),
-storage=getStorage();
-if(disposed)return;
+const storage=getStorage();
+if(!current())return;
 if(!storage)throw new Error('Storage unavailable.');
 storage.setItem(AUDIO_PREFERENCES_KEY,JSON.stringify(values({muted,volume})));
-if(disposed)return;
+if(!current())return;
+const saved=decode(storage.getItem(AUDIO_PREFERENCES_KEY));
+if(!current())return;
+if(!saved||saved.muted!==muted||saved.volume!==volume)
+throw new Error('Saved audio preferences could not be confirmed.');
 stored=true;
 unsaved=false;
 notify('');
 }catch{
-if(disposed)return;
+if(!current())return;
 unsaved=true;
-notify('Sound changed for this session, but could not be saved for another page.');
+notify(
+'Sound changed for this session, but could not be saved for another page.',
+'common:preferences.audioSaveFailed',
+);
 }
 };
 const change=(key,value)=>{
@@ -530,6 +543,7 @@ seedRevision=audioMaster.snapshot().revision;
 return true;
 },
 getWarning:()=>warning,
+getWarningKey:()=>warningKey,
 dispose(){
 if(disposed)return;
 disposed=true;
