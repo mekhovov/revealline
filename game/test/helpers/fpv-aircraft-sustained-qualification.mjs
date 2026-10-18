@@ -1,3 +1,4 @@
+import { AIRCRAFT_FREQUENCY } from '../../../optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs';
 import assert from 'node:assert/strict';
 import { dataIdentity } from '../../data-json.mjs';
 import { FLIGHT_COURSES } from '../../../optional-practice/civilian-fpv/catalogue.mjs';
@@ -156,7 +157,7 @@ function verifyConfiguration(simulation, selected, mode) {
   assert.deepEqual(config.controller, selected.controller, 'Solver must use selected controller');
   assert.deepEqual(config.response.response, selected.response, 'Solver must use selected rates');
   assert.equal(config.response.mode, mode);
-  assert.equal(config.frequency, 500);
+  assert.equal(config.frequency, AIRCRAFT_FREQUENCY);
   assert.equal(config.backend, 'civilian-quad-aircraft-regional.v3');
   return dataIdentity({
     aircraft: config.aircraft,

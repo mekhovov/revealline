@@ -9,6 +9,7 @@ import {
 import { createRateEvaluator } from '../../../optional-practice/civilian-fpv/rates.mjs';
 import { aircraftCourseTerrain } from '../../../optional-practice/civilian-fpv/aircraft-course-session.mjs';
 import { FLIGHT_COURSES } from '../../../optional-practice/civilian-fpv/catalogue.mjs';
+import { AIRCRAFT_FREQUENCY } from '../../../optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs';
 const axes = ['roll', 'pitch', 'yaw'];
 const candidates = [250, 500, 1000];
 const check = (condition, message) => {
@@ -231,7 +232,11 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
   const results = [];
   for (const preset of listAircraftPresets())
     for (const mode of ['acro', 'self-level']) {
-      const config = { ...createPresetConfiguration(preset.id), mode, frequency: 500 };
+      const config = {
+        ...createPresetConfiguration(preset.id),
+        mode,
+        frequency: AIRCRAFT_FREQUENCY,
+      };
       const sample = (tick) => ({
         sequence: tick,
         timestampUs: tick * 20000,
@@ -287,5 +292,5 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
         sim.dispose();
       }
     }
-  return { frequency: 500, worker, cases: results };
+  return { frequency: AIRCRAFT_FREQUENCY, worker, cases: results };
 }

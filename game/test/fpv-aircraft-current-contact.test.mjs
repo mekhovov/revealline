@@ -12,7 +12,7 @@ import { FLIGHT_COURSES } from '../../optional-practice/civilian-fpv/catalogue.m
 
 await initAdvancedRuntime();
 const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
-function flight({ id = 'meteor75-analog-2022', mode = 'self-level', backend } = {}) {
+function flight({ id = 'meteor75-analog-2022', mode = 'self-level', backend, frequency } = {}) {
   const preset = createPresetConfiguration(id);
   let simulation;
   const session = createAircraftCourseSession(
@@ -33,6 +33,7 @@ function flight({ id = 'meteor75-analog-2022', mode = 'self-level', backend } = 
             simulation = owned = createAdvancedSimulation({
               ...options,
               ...(backend ? { backend } : {}),
+              ...(frequency === undefined ? {} : { frequency }),
             });
             return { telemetry: owned.telemetry(), comparison: owned.comparison() };
           },
@@ -691,4 +692,89 @@ test('a new course session uses v3, restored v2 stays immutable, and a later fre
   } finally {
     await fresh.session.dispose();
   }
+});
+
+test('v3 defaults to qualified 1000 Hz while v1/v2 defaults and explicit timing remain frozen', () => {
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  for (const version of [1, 2, 3])
+    for (const frequency of [undefined, 250, 500, 1000]) {
+      const sim = createAdvancedSimulation({
+        ...preset,
+        backend: `civilian-quad-aircraft.v${version}`,
+        ...(frequency === undefined ? {} : { frequency }),
+      });
+      try {
+        const expected = frequency ?? (version === 3 ? 1000 : 500);
+        assert.equal(sim.telemetry().frequency, expected);
+        assert.equal(sim.telemetry().missionHz, 50);
+        sim.enqueueInput({ sequence: 0, timestampUs: 0, controls: neutral });
+        const result = sim.stepMission();
+        assert.equal(result.telemetry.substep, expected / 50);
+        assert.equal(result.telemetry.seconds, 0.02);
+      } finally {
+        sim.dispose();
+      }
+    }
+});
+
+test('a fresh 1000 Hz course restores an explicitly recorded v3 500 Hz session unchanged', async () => {
+  const source = flight({ frequency: 500 }),
+    target = flight();
+  try {
+    await source.session.prepare();
+    await target.session.prepare();
+    source.session.arm();
+    for (let tick = 0; tick < 12; tick++)
+      await source.session.step(source.command(source.session.snapshot()));
+    source.session.pause();
+    const saved = await source.session.exportRecovery();
+    assert.equal(target.simulation().configuration().frequency, 1000);
+    await target.session.restoreRecovery(saved);
+    assert.equal(target.simulation().configuration().frequency, 500);
+    assert.deepEqual((await target.session.exportRecovery()).physical, saved.physical);
+    source.session.arm();
+    target.session.arm();
+    for (let tick = 0; tick < 10; tick++) {
+      const command = source.command(source.session.snapshot());
+      await source.session.step(command);
+      await target.session.step(command);
+      assert.equal(target.simulation().stateHash(), source.simulation().stateHash());
+    }
+  } finally {
+    await source.session.dispose();
+    await target.session.dispose();
+  }
+});
+
+test('static course input cursors bind both supported physics schedules to the unchanged 50 Hz clock', async () => {
+  const { createStaticCourseInputCursor } = await import(
+    '../../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs'
+  );
+  const segment = (frequency) => [
+    {
+      startTick: 0,
+      endTick: 2,
+      events: [
+        ['terrain', 0, {}],
+        ['input', 0, 0, 0, 0, 0, 0, 0],
+        ['input', frequency / 50, 1, 20000, 0, 0, 0, 0],
+      ],
+    },
+  ];
+  for (const frequency of [500, 1000]) {
+    const cursor = createStaticCourseInputCursor(segment(frequency), frequency);
+    assert.equal(cursor.next().tick, 1);
+    assert.equal(cursor.next().tick, 2);
+    assert.equal(cursor.next(), null);
+    const wrong = createStaticCourseInputCursor(segment(frequency === 500 ? 1000 : 500), frequency);
+    wrong.next();
+    assert.throws(() => wrong.next(), /unsupported-input-schedule/);
+  }
+  const old = createStaticCourseInputCursor(segment(500));
+  old.next();
+  assert.equal(old.next().tick, 2);
+  assert.throws(
+    () => createStaticCourseInputCursor(segment(250), 250),
+    /unsupported-input-schedule/,
+  );
 });

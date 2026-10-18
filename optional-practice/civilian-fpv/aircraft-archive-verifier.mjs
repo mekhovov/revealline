@@ -245,7 +245,7 @@ function supportedCourse(archive, dep) {
   );
   requireValue(config.configuration.challenge === undefined, 'unsupported-challenge-wrapper');
   requireValue(
-    config.frequency === 500 && AIRCRAFT_TERRAIN_BACKENDS.includes(config.backend),
+    [500, 1000].includes(config.frequency) && AIRCRAFT_TERRAIN_BACKENDS.includes(config.backend),
     'unsupported-session-backend',
   );
   if (dep.missionModel === models[1])
@@ -258,7 +258,10 @@ function supportedCourse(archive, dep) {
 /** Traverse one segment at a time without expanding a clock into an input array. */
 export function createStaticCourseInputCursor(segments, frequency = 500) {
   requireValue(
-    Array.isArray(segments) && segments.length > 0 && segments.length <= 256 && frequency === 500,
+    Array.isArray(segments) &&
+      segments.length > 0 &&
+      segments.length <= 256 &&
+      [500, 1000].includes(frequency),
     'unsupported-input-schedule',
   );
   let segmentIndex = 0,
@@ -354,14 +357,15 @@ export async function verifyAircraftCourseArchive(
     );
     supportedCourse(archive, dep);
     const { config } = archive.manifest,
-      cursor = createStaticCourseInputCursor(archive.segments);
+      cursor = createStaticCourseInputCursor(archive.segments, config.frequency);
     const client = {
       async initialize(options) {
-        // Backend is the one explicit historical numerical selector. Other
+        // Backend and fixed frequency are explicit historical numerical selectors. Other
         // configuration must be reproduced by the ordinary course session.
         simulation = createAdvancedSimulation({
           ...options,
           backend: config.backend,
+          frequency: config.frequency,
           recording: false,
         });
         requireValue(

@@ -58,6 +58,7 @@ async function sessionFixture(
     coverage,
     challenge,
     backend,
+    frequency,
     customize,
     manifest = fixture.terrain.manifest,
     prepareFrame,
@@ -82,7 +83,11 @@ async function sessionFixture(
         let owner;
         return {
           async initialize(next) {
-            options = { ...next, ...(backend ? { backend } : {}) };
+            options = {
+              ...next,
+              ...(backend ? { backend } : {}),
+              ...(frequency === undefined ? {} : { frequency }),
+            };
             owner = simulation = createAdvancedSimulation(options);
             return { telemetry: owner.telemetry() };
           },
@@ -487,5 +492,25 @@ test('pausing speculative Regional prefetch preserves immediate checkpoint saves
       assert.equal(h.session.snapshot().status, 'paused');
     }
     await h.session.dispose();
+  }
+});
+
+test('fresh Regional 1000 Hz sessions preserve explicit v3 500 Hz recovery timing', async (t) => {
+  const source = await sessionFixture(t, 'meteor75-analog-2022', { frequency: 500 });
+  const target = await sessionFixture(t, 'meteor75-analog-2022');
+  source.session.arm();
+  for (let tick = 0; tick < 8; tick++) await source.session.step({ ...neutral, throttle: 0.4 });
+  source.session.pause();
+  const saved = await source.session.exportRecovery();
+  assert.equal(target.simulation().configuration().frequency, 1000);
+  await target.session.restoreRecovery(saved);
+  assert.equal(target.simulation().configuration().frequency, 500);
+  assert.deepEqual(target.simulation().configuration(), source.simulation().configuration());
+  source.session.arm();
+  target.session.arm();
+  for (let tick = 0; tick < 8; tick++) {
+    await source.session.step(neutral);
+    await target.session.step(neutral);
+    assert.equal(target.simulation().stateHash(), source.simulation().stateHash());
   }
 });

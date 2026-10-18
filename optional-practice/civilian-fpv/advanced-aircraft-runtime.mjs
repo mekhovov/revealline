@@ -34,6 +34,7 @@ import {
 export const LEGACY_AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v1';
 export const LEGACY_AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v1';
 export const AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v3';
+export const AIRCRAFT_FREQUENCY = 1000;
 export const AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v3';
 export const AIRCRAFT_ARENA_BACKENDS = Object.freeze([
   LEGACY_AIRCRAFT_BACKEND,
@@ -192,7 +193,7 @@ export function createAircraftSimulation(options = {}) {
       options.terrain?.format === 'AdvancedRegionalTerrain.v1' && options.floor === false,
       'Terrain-backed aircraft require an explicit terrain mode and no synthetic floor',
     );
-  const hz = options.frequency ?? 500;
+  const hz = options.frequency ?? (currentContact ? AIRCRAFT_FREQUENCY : 500);
   required(
     [250, 500, 1000].includes(hz) || (options.numericalReference === true && hz === 2000),
     'Unsupported fixed aircraft frequency',

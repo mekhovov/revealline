@@ -491,6 +491,7 @@ export function createAircraftCourseSession(
         const initialized = await candidate.initialize({
           ...optionsFor(restoredModel),
           backend: saved.physical?.config?.backend,
+          frequency: saved.physical?.config?.frequency,
         });
         await candidate.restore(saved.physical);
         const restored = await candidate.telemetry();

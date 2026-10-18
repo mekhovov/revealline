@@ -863,7 +863,12 @@ export function createAdvancedRegionalSession(
           recoveryClient = candidate;
           await candidate.initialize({
             ...clone(options),
-            ...(aircraftPhysics ? { backend: saved.simulation?.config?.backend } : {}),
+            ...(aircraftPhysics
+              ? {
+                  backend: saved.simulation?.config?.backend,
+                  frequency: saved.simulation?.config?.frequency,
+                }
+              : {}),
           });
           current();
           const restored = await candidate.restore(saved.simulation);
