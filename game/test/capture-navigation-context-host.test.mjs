@@ -99,3 +99,41 @@ test('isolated lessons retain their own title context without exposing Capture n
   assert.equal(p.$('shell-family-context').hidden, true);
   assert.equal(p.$('shell-title-modes').hidden, true);
 });
+
+for (const route of ['humanoid-hunt-v1', 'snake-hunt-v1']) {
+  test(`authored ${route} retains its own identity without a Capture label`, async (t) => {
+    const locale = getLocale();
+    t.after(() => setLocale(locale, { persist: false }));
+    setLocale('en', { persist: false });
+    const p = await soloPage(t, {
+      titleScreen: true,
+      search: `?journey=${route}${route === 'snake-hunt-v1' ? '&snake-style=capture' : ''}`,
+      // Menu context must be accurate even when original artwork is unavailable.
+      // This navigation case does not start or qualify a playable flight.
+      waitForPictures: false,
+    });
+    assert.equal(
+      p.$('pack-select').value,
+      route === 'snake-hunt-v1' ? 'journey-snake-hunt' : 'journey-humanoid-hunt',
+    );
+    assert.equal(p.$('shell-family-context').hidden, true);
+    assert.equal(p.$('shell-family-context').textContent, '');
+    assert.equal(p.$('shell-title-modes').getAttribute('aria-describedby'), null);
+    await openMissionLibrary(p, 'shell-play');
+    const status = p.$('journey-chooser-status');
+    assert.doesNotMatch(status.textContent, /Capture/);
+    p.change('journey-mode', 'versus');
+    assert.match(status.textContent, /Duel/);
+    assert.doesNotMatch(status.textContent, /Capture/);
+    const focus = p.doc.activeElement;
+    setLocale('uk', { persist: false });
+    assert.equal(p.doc.activeElement, focus);
+    assert.equal(p.$('shell-family-context').hidden, true);
+    assert.equal(p.$('shell-family-context').textContent, '');
+    assert.doesNotMatch(status.textContent, /Захоплення/);
+    p.$('journey-back').click();
+    assert.equal(p.$('shell-home').open, true);
+    assert.equal(p.doc.activeElement, p.$('shell-play'));
+    assert.deepEqual(p.errors, []);
+  });
+}

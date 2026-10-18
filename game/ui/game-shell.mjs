@@ -29,6 +29,8 @@ export function attachGameShell({
   separateTeam = false,
   titleDestination,
   titleContinueDestination,
+  navigationContext = () =>
+    t('interface:captureNavigation.context', { mode: t('interface:solo2') }),
   onWorlds,
   onMissions,
   getTopDialog,
@@ -238,10 +240,12 @@ export function attachGameShell({
   const refreshHomeCopy = () => {
     const continued = !isolated && canContinue();
     if ($('shell-family-context')) {
-      $('shell-family-context').hidden = isolated;
-      localizedText($('shell-family-context'), () =>
-        t('interface:captureNavigation.context', { mode: t('interface:solo2') }),
-      );
+      const context = () => (isolated ? '' : navigationContext());
+      $('shell-family-context').hidden = !context();
+      localizedText($('shell-family-context'), context);
+      if ($('shell-family-context').hidden)
+        $('shell-title-modes')?.removeAttribute('aria-describedby');
+      else $('shell-title-modes')?.setAttribute('aria-describedby', 'shell-family-context');
     }
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
