@@ -30,6 +30,7 @@ import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import { menuAnimationBinding } from '../ui/menu-animation-preferences.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import {
   attachSettingsPanels,
@@ -242,6 +243,7 @@ let playShell = null,
   libraryToolsRefresh = null,
   snakeSettingsView = null,
   snakeGlobalSettings = null,
+  snakeComfortPresets = null,
   snakeOfflinePanel = null,
   touchPresentationControls = null,
   menuController = null,
@@ -2364,6 +2366,7 @@ globalThis.addEventListener('pagehide', (event) => {
     touch.destroy();
     snakeDefeatSoundControls.dispose();
     snakeOfflinePanel?.dispose();
+    snakeComfortPresets?.destroy();
     sound.dispose?.();
     audioPreferences.dispose?.();
     audioMaster.dispose?.();
@@ -2751,6 +2754,12 @@ snakeGlobalSettings = mountGlobalSettings({
   },
 });
 const snakeTouchSettings = el('section');
+snakeComfortPresets = mountComfortPresets({
+  document: doc,
+  window: globalThis,
+  root: snakeSettingsView.panels.accessibility,
+  display,
+});
 touchPresentationControls = mountTouchPresentationSettings({
   document: doc,
   mount: snakeTouchSettings,
