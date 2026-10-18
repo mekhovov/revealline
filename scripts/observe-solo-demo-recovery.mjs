@@ -15,6 +15,7 @@ import { verifyNativeQualificationReplay } from './solo-qualification-native-rep
 import { installDemoRecoveryProbe } from './solo-demo-recovery-probe.mjs';
 import {
   DEMO_ARMS,
+  DEMO_CLOSE_ACTIVATION_POLICY,
   unchanged,
   validQuality,
   validateDemoResourceContract,
@@ -408,17 +409,19 @@ const resourceCycles = async () => {
       unchanged(ordinaryBefore, paused, 'ordinary');
       validQuality(paused);
       if (plan.resourceCycles.closeBoundaryPolicy) {
+        const activation = plan.resourceCycles.closeBoundaryPolicy === DEMO_CLOSE_ACTIVATION_POLICY;
         let closeFailed = false;
         try {
           await page.evaluate((owner) => window.demoRecoveryProbe.armCloseBoundary(owner), {
-            label: `${mode}-${cycle}-close-click`,
+            label: `${mode}-${cycle}-${activation ? 'close-activation' : 'close-click'}`,
             runId: paused.demo.id,
             painterId: paused.painterId,
+            ...(activation ? { eventType: mode === 'spectator' ? 'pointerdown' : 'click' } : {}),
           });
           await click('#demo-back');
           const boundary = await page.evaluate(() => window.demoRecoveryProbe.takeCloseBoundary());
           retain(report.snapshots, boundary, 64);
-          row.closeClick = report.snapshots.length - 1;
+          row[activation ? 'closeActivation' : 'closeClick'] = report.snapshots.length - 1;
         } catch (error) {
           closeFailed = true;
           row.closeCaptureFailure = String(error?.message ?? error).slice(0, 1024);

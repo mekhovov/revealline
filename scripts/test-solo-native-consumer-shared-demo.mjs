@@ -28,7 +28,7 @@ const lanes = {
     seconds: 4620,
   },
   'demo-resources': {
-    plan: 'solo-demo-resources-797e03-close-boundary-plan.json',
+    plan: 'solo-demo-resources-797e03-activation-boundary-plan.json',
     job: 125,
     step: 79,
     seconds: 4620,
