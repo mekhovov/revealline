@@ -92,9 +92,12 @@ Recovery controls use a different one-slot host database. A separately reviewed
 fix invalidates its closed handle and permits one reopen only when transaction
 creation fails before requests can be issued. It never retries an admitted write
 or creates a substitute for a missing record. Five new regressions fail before
-that fix and the complete focused controls suite passes 77/77 afterward. Pending
-rendered acceptance and publication, this is R19 resilience work; R13 remains
-open and the six protected public records remain unaccounted for.
+that fix and the complete focused controls suite passes 77/77 afterward. Its
+19 package checks and ordinary packaged-browser checkpoint save/paused restore
+now also pass. [R19 acceptance](fpv-recovery-handle-20261019.md) remains resilience
+work, with publication pending; it does not reproduce the native close event or
+explain retention. R13 remains open and the six protected public records remain
+unaccounted for.
 
 ## Remaining diagnostic gates
 
