@@ -2733,7 +2733,7 @@ test('Flight School explicit practice uses the selected aircraft and exact custo
         assert.ok(h.app.snapshot().state.ticks > 0);
         assert.equal(
           h.app.snapshot().state.advancedTelemetry.backend,
-          'civilian-quad-aircraft-regional.v2',
+          'civilian-quad-aircraft-regional.v3',
         );
         assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), saved);
         h.app.pause();
@@ -2803,7 +2803,7 @@ test('saved aircraft prepares World, Beginner and Regional hosts with physical g
       const state = h.app.snapshot().state;
       assert.equal(state.reason, 'prepared', h.$('flight-status').textContent);
       assert.equal(state.unscored, true);
-      assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v2');
+      assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v3');
       assert.equal(state.advancedTelemetry.frequency, 500);
       assert.deepEqual(displayedAircraft.geometry, preset.aircraft.geometry);
       assert.equal(displayedAircraft.radius, preset.aircraft.radius);

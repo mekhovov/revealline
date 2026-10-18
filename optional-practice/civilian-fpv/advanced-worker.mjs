@@ -1,6 +1,6 @@
 import { boundedJSON } from '../../game/data-json.mjs';
 import { AIRCRAFT_RECORDING_FORMAT, AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
-import { AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND } from './advanced-aircraft-runtime.mjs';
+import { AIRCRAFT_ARENA_BACKENDS } from './advanced-aircraft-runtime.mjs';
 import {
   verifyAircraftArchive,
   verifyAircraftCourseArchive,
@@ -138,7 +138,7 @@ export function createAdvancedWorkerHandler(postMessage, { courseAdapter } = {})
             });
             if (
               !['AdvancedRecording.v1', AIRCRAFT_RECORDING_FORMAT].includes(record.format) ||
-              ![ADVANCED_BACKEND, AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND].includes(
+              ![ADVANCED_BACKEND, ...AIRCRAFT_ARENA_BACKENDS].includes(
                 simulation.configuration().backend,
               )
             )

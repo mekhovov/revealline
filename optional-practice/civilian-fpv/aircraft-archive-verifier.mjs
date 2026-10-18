@@ -6,7 +6,11 @@ import {
   required,
 } from '../../game/data-json.mjs';
 import { validateAircraftArchivePackage } from './aircraft-archive.mjs';
-import { createAircraftSimulation, replayAircraftSegment } from './advanced-aircraft-runtime.mjs';
+import {
+  AIRCRAFT_TERRAIN_BACKENDS,
+  createAircraftSimulation,
+  replayAircraftSegment,
+} from './advanced-aircraft-runtime.mjs';
 import { initWorldRuntime } from './world-collision.mjs';
 import { validateFlightCourse, createFlight } from './model.mjs';
 import { createAircraftCourseSession } from './aircraft-course-session.mjs';
@@ -241,10 +245,7 @@ function supportedCourse(archive, dep) {
   );
   requireValue(config.configuration.challenge === undefined, 'unsupported-challenge-wrapper');
   requireValue(
-    config.frequency === 500 &&
-      ['civilian-quad-aircraft-regional.v1', 'civilian-quad-aircraft-regional.v2'].includes(
-        config.backend,
-      ),
+    config.frequency === 500 && AIRCRAFT_TERRAIN_BACKENDS.includes(config.backend),
     'unsupported-session-backend',
   );
   if (dep.missionModel === models[1])

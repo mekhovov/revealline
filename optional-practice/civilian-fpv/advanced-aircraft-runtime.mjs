@@ -33,13 +33,21 @@ import {
 
 export const LEGACY_AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v1';
 export const LEGACY_AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v1';
-export const AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v2';
-export const AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v2';
-export const AIRCRAFT_BACKENDS = Object.freeze([
+export const AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v3';
+export const AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v3';
+export const AIRCRAFT_ARENA_BACKENDS = Object.freeze([
   LEGACY_AIRCRAFT_BACKEND,
-  LEGACY_AIRCRAFT_REGIONAL_BACKEND,
+  'civilian-quad-aircraft.v2',
   AIRCRAFT_BACKEND,
+]);
+export const AIRCRAFT_TERRAIN_BACKENDS = Object.freeze([
+  LEGACY_AIRCRAFT_REGIONAL_BACKEND,
+  'civilian-quad-aircraft-regional.v2',
   AIRCRAFT_REGIONAL_BACKEND,
+]);
+export const AIRCRAFT_BACKENDS = Object.freeze([
+  ...AIRCRAFT_ARENA_BACKENDS,
+  ...AIRCRAFT_TERRAIN_BACKENDS,
 ]);
 export const AIRCRAFT_SNAPSHOT_FORMAT = 'AdvancedAircraftSnapshot.v1';
 const AXES = ['x', 'y', 'z'];
@@ -172,13 +180,13 @@ export function createAircraftSimulation(options = {}) {
   const regional = options.terrain !== undefined;
   const backend = options.backend ?? (regional ? AIRCRAFT_REGIONAL_BACKEND : AIRCRAFT_BACKEND);
   required(
-    (regional
-      ? [AIRCRAFT_REGIONAL_BACKEND, LEGACY_AIRCRAFT_REGIONAL_BACKEND]
-      : [AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND]
-    ).includes(backend),
+    (regional ? AIRCRAFT_TERRAIN_BACKENDS : AIRCRAFT_ARENA_BACKENDS).includes(backend),
     'Unsupported aircraft backend or terrain mode',
   );
-  const supportedIntegral = [AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND].includes(backend);
+  const supportedIntegral = ![LEGACY_AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_REGIONAL_BACKEND].includes(
+    backend,
+  );
+  const currentContact = [AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND].includes(backend);
   if (regional)
     required(
       options.terrain?.format === 'AdvancedRegionalTerrain.v1' && options.floor === false,
@@ -520,12 +528,17 @@ export function createAircraftSimulation(options = {}) {
       const collider = world.getCollider(obstacle.handle);
       if (!collider) continue;
       let chosen = null;
-      for (let index = 0; index < body.numColliders(); index++)
+      const missingParts = [];
+      for (let index = 0; index < body.numColliders(); index++) {
+        let tracked = false,
+          closePart = false;
         world.contactPair(collider, body.collider(index), (manifold, flipped) => {
+          tracked = true;
           let close = false;
           for (let contact = 0; contact < manifold.numContacts(); contact++)
             close ||= manifold.contactDist(contact) <= 0.003;
           if (!close) return;
+          closePart = true;
           const normal = manifold.normal(),
             sign = flipped ? -1 : 1;
           const direction = { x: normal.x * sign, y: normal.y * sign, z: normal.z * sign };
@@ -535,6 +548,30 @@ export function createAircraftSimulation(options = {}) {
             -AXES.reduce((sum, axis) => sum + previousVelocity[axis] * direction[axis], 0),
           );
         });
+        if (currentContact && tracked && !closePart) missingParts.push(index);
+      }
+      // Preserve an existing obstacle-level contact. Only v3 confirms an
+      // otherwise missing aggregate against those same registered shapes.
+      // A positive query distance is only proximity, not supporting contact.
+      // Do not reset the controller integral for an approaching/rebounding gap.
+      if (currentContact && !chosen)
+        for (const index of missingParts) {
+          const contact = collider.contactCollider(body.collider(index), 0.003);
+          if (
+            contact &&
+            Number.isFinite(contact.distance) &&
+            contact.distance <= 0 &&
+            AXES.every((axis) => finite(contact.normal1[axis], -1.001, 1.001)) &&
+            Math.hypot(...AXES.map((axis) => contact.normal1[axis])) > 0
+          ) {
+            const direction = { ...contact.normal1 };
+            if (!chosen || direction.y > chosen.y) chosen = direction;
+            result.impactSpeed = Math.max(
+              result.impactSpeed,
+              -AXES.reduce((sum, axis) => sum + previousVelocity[axis] * direction[axis], 0),
+            );
+          }
+        }
       if (chosen) {
         result.touching = true;
         result.ids.push(obstacle.id);

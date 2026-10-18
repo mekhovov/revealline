@@ -157,7 +157,7 @@ function verifyConfiguration(simulation, selected, mode) {
   assert.deepEqual(config.response.response, selected.response, 'Solver must use selected rates');
   assert.equal(config.response.mode, mode);
   assert.equal(config.frequency, 500);
-  assert.equal(config.backend, 'civilian-quad-aircraft-regional.v2');
+  assert.equal(config.backend, 'civilian-quad-aircraft-regional.v3');
   return dataIdentity({
     aircraft: config.aircraft,
     controller: config.controller,

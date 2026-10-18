@@ -441,7 +441,7 @@ test('current course host resumes historical v1 recovery with its original solve
   await current.prepare();
   const freshReference = current.referenceIdentity();
   assert.notDeepEqual(freshReference, historical.referenceIdentity());
-  assert.equal(current.snapshot().advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v2');
+  assert.equal(current.snapshot().advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v3');
   historical.arm();
   for (let tick = 0; tick < 30; tick++) await historical.step(controls);
   historical.pause();

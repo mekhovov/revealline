@@ -57,11 +57,11 @@ const telemetryAt = (height, { grounded = true, id = 'course-boundary-y-min' } =
   },
 });
 
-function createClient() {
+function createClient({ backend } = {}) {
   let simulation;
   return {
     async initialize(options) {
-      simulation = createAdvancedSimulation(options);
+      simulation = createAdvancedSimulation({ ...options, ...(backend ? { backend } : {}) });
       return { telemetry: simulation.telemetry() };
     },
     async stageTerrainFrame(frame) {
@@ -369,7 +369,10 @@ test('pre-change v1 fixture retains exact raw floor behavior and worker-verified
   const fixture = JSON.parse(
     await readFile(new URL('./fixtures/fpv-aircraft-mission-v1.json', import.meta.url), 'utf8'),
   );
-  const old = build(LEGACY);
+  // The pre-change fixture predates v3; retain its frozen physical backend.
+  const old = build(LEGACY, {}, () =>
+    createClient({ backend: 'civilian-quad-aircraft-regional.v2' }),
+  );
   const current = build(CURRENT, {}, createVerifiedClient);
   t.after(() => Promise.all([old.dispose(), current.dispose()]));
   await old.prepare();

@@ -7,6 +7,8 @@ import {
   listAircraftPresets,
 } from '../../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 import { createRateEvaluator } from '../../../optional-practice/civilian-fpv/rates.mjs';
+import { aircraftCourseTerrain } from '../../../optional-practice/civilian-fpv/aircraft-course-session.mjs';
+import { FLIGHT_COURSES } from '../../../optional-practice/civilian-fpv/catalogue.mjs';
 const axes = ['roll', 'pitch', 'yaw'];
 const candidates = [250, 500, 1000];
 const check = (condition, message) => {
@@ -93,6 +95,37 @@ function contact(id, frequency) {
     sim.dispose();
   }
 }
+function landing(id, frequency) {
+  const sim = createAdvancedSimulation({
+    ...createPresetConfiguration(id),
+    frequency,
+    numericalReference: frequency === 2000,
+    floor: false,
+    terrain: { format: 'AdvancedRegionalTerrain.v1' },
+    spawn: { x: 0, y: 1, z: 0 },
+  });
+  try {
+    const frame = sim.stageTerrainFrame(aircraftCourseTerrain(FLIGHT_COURSES[0]));
+    sim.commitTerrainFrame({ transaction: frame.transaction, accepted: true });
+    let minimumSupportY = Infinity;
+    const started = performance.now();
+    for (let tick = 0; tick < 75; tick++)
+      for (const p of sim.stepMission().trace)
+        minimumSupportY = Math.min(minimumSupportY, p.y - p.supportHeight);
+    const elapsedMs = performance.now() - started,
+      final = sim.telemetry();
+    return {
+      grounded: final.contact.grounded,
+      support: final.contact.support?.id ?? null,
+      minimumSupportY,
+      finalSupportY: final.position.y - final.supportHeight,
+      capacity: 1500 / elapsedMs,
+      finalHash: sim.stateHash(),
+    };
+  } finally {
+    sim.dispose();
+  }
+}
 /** Numerical and local runtime capacity checks, not hardware/flight validation.
  * Includes production Rapier controller, motors, bodies, recording and contacts.
  * Keep this browser-importable for subsequent architecture/device qualification. */
@@ -109,6 +142,7 @@ export async function runAircraftTimingQualification({ repetitions = 2, onPreset
       frequency: 2000,
       axes: Object.fromEntries(axes.map((a) => [a, response(preset.id, 2000, a)])),
       contact: contact(preset.id, 2000),
+      landing: landing(preset.id, 2000),
     };
     const results = candidates.map((frequency) => {
       const axisResults = Object.fromEntries(
@@ -134,16 +168,31 @@ export async function runAircraftTimingQualification({ repetitions = 2, onPreset
         }),
       );
       const collision = contact(preset.id, frequency);
+      const landings = Array.from({ length: repetitions }, () => landing(preset.id, frequency));
+      const supported = (result) =>
+        result.grounded &&
+        result.support === 'course-boundary-y-min' &&
+        result.minimumSupportY >= -0.003;
       return {
         frequency,
         axes: axisResults,
         contact: collision,
+        landing: landings[0],
+        minimumLandingCapacity: Math.min(...landings.map((result) => result.capacity)),
         accuracyPass: Object.values(axisResults).every((a) =>
           Object.values(a.relativeErrors).every((error) => error <= 0.02),
         ),
-        capacityPass: Object.values(axisResults).every((a) => a.minimumCapacity >= 2),
-        contactsPass: collision.blocked && reference.contact.blocked,
-        repetitionPass: Object.values(axisResults).every((a) => a.repeatHashesAgree),
+        capacityPass:
+          Object.values(axisResults).every((a) => a.minimumCapacity >= 2) &&
+          landings.every((result) => result.capacity >= 2),
+        contactsPass:
+          collision.blocked &&
+          reference.contact.blocked &&
+          supported(reference.landing) &&
+          landings.every(supported),
+        repetitionPass:
+          Object.values(axisResults).every((a) => a.repeatHashesAgree) &&
+          landings.every((result) => result.finalHash === landings[0].finalHash),
       };
     });
     const result = { preset: preset.id, reference, candidates: results };

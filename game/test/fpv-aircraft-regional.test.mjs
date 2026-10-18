@@ -147,7 +147,7 @@ test('current Regional host resumes historical v1 recovery and continues with th
     backend: 'civilian-quad-aircraft-regional.v1',
   });
   const current = await sessionFixture(t, 'meteor75-analog-2022');
-  assert.equal(current.simulation().configuration().backend, 'civilian-quad-aircraft-regional.v2');
+  assert.equal(current.simulation().configuration().backend, 'civilian-quad-aircraft-regional.v3');
   historical.session.arm();
   const controls = { ...neutral, throttle: 0.5 };
   for (let tick = 0; tick < 30; tick++) await historical.session.step(controls);
