@@ -1,17 +1,23 @@
 import { t, onLocaleChange } from '../i18n/index.mjs';
 import { KEY_ACTION_LABELS, keyCodeForEvent, keyLabel } from '../key-bindings.mjs';
-import { COUCH_KEYBOARD_ACTIONS } from './keyboard-bindings.mjs';
+import { couchKeyboardActions } from './keyboard-bindings.mjs';
 
 const tr = (key, values = {}) => t(`interface:couchKeyboard.${key}`, values);
-const actionLabel = (action) => KEY_ACTION_LABELS[action === 'action' ? 'ability' : action];
 /** Settings owns capture; the host owns accepted input and the preference store. */
 export function mountCouchKeyboardSettings({
   root,
+  mode = 'duel',
+  prefix = mode === 'team' ? 'coop' : 'race',
   preferences,
   isOpen,
   document: doc = globalThis.document,
   window: win = globalThis.window,
 }) {
+  const actionsForMode = couchKeyboardActions(mode),
+    actionLabel = (action) =>
+      action === 'action' && mode === 'team'
+        ? tr('support')
+        : KEY_ACTION_LABELS[action === 'action' ? 'ability' : action];
   const area = doc.createElement('section');
   area.className = 'multiplayer-keyboard';
   root.append(area);
@@ -38,14 +44,14 @@ export function mountCouchKeyboardSettings({
     const group = node('fieldset'),
       legend = node('legend', group);
     seats.push(legend);
-    for (const action of COUCH_KEYBOARD_ACTIONS) {
+    for (const action of actionsForMode) {
       const row = node('div', group),
         label = node('span', row),
         button = node('button', row);
       row.className = 'couch-keyboard-row';
       button.type = 'button';
       button.className = 'button secondary';
-      button.id = `race-key-${player}-${action}`;
+      button.id = `${prefix}-key-${player}-${action}`;
       const entry = { player, action, label, button };
       rows.push(entry);
       listen(button, 'click', () => {
@@ -63,8 +69,8 @@ export function mountCouchKeyboardSettings({
     reset = node('button', actions),
     retry = node('button', actions);
   actions.className = 'couch-keyboard-actions';
-  status.id = 'race-key-capture-status';
-  persistence.id = 'race-key-save-status';
+  status.id = `${prefix}-key-capture-status`;
+  persistence.id = `${prefix}-key-save-status`;
   for (const element of [status, persistence]) {
     element.setAttribute('role', 'status');
     element.setAttribute('aria-live', 'polite');
@@ -77,13 +83,13 @@ export function mountCouchKeyboardSettings({
   ]) {
     button.type = 'button';
     button.className = 'button secondary';
-    button.id = `race-key-${id}`;
+    button.id = `${prefix}-key-${id}`;
   }
   function render() {
     if (disposed) return;
     const state = preferences.snapshot();
-    heading.textContent = tr('title');
-    intro.textContent = tr('intro');
+    heading.textContent = tr(mode === 'team' ? 'teamTitle' : 'title');
+    intro.textContent = tr(mode === 'team' ? 'teamIntro' : 'intro');
     seats.forEach((seat, player) => {
       seat.textContent = tr('player', { player: player + 1 });
     });
