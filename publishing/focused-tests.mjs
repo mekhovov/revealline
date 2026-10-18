@@ -496,23 +496,43 @@ export async function runFocusedCommandsParallel(
     const commandTimeoutMs = command.timeoutMs ?? timeoutMs;
     stdout.write(`\n[focused:${command.id}] ${command.command} ${command.args.join(' ')}\n`);
     const result = await new Promise((resolve) => {
-      let settled = false;
+      let settled = false,
+        timedOut = false,
+        deadline;
       const finish = (value) => {
         if (!settled) {
           settled = true;
-          resolve(value);
+          clearTimeout(deadline);
+          resolve({ ...value, timedOut });
         }
       };
       try {
+        if (
+          !Number.isSafeInteger(commandTimeoutMs) ||
+          commandTimeoutMs < 1 ||
+          commandTimeoutMs > 0xffffffff
+        )
+          throw new RangeError('Focused command timeout must be a positive 32-bit integer.');
         const child = spawnChild(command.command, command.args, {
           cwd: root,
           stdio: 'inherit',
           env: { ...process.env, CI: 'true' },
-          timeout: commandTimeoutMs,
           killSignal: 'SIGTERM',
         });
         child.once('error', (error) => finish({ error }));
         child.once('close', (status, signal) => finish({ status, signal }));
+        // Node's test runner can handle SIGTERM and close with exit 1 and no
+        // signal/error. Own the same deadline so that close cannot erase it.
+        deadline = setTimeout(() => {
+          if (settled) return;
+          timedOut = true;
+          try {
+            child.kill('SIGTERM');
+          } catch (error) {
+            finish({ error });
+          }
+        }, commandTimeoutMs);
+        deadline.unref();
       } catch (error) {
         finish({ error });
       }
@@ -520,8 +540,8 @@ export async function runFocusedCommandsParallel(
     const status = Number.isInteger(result?.status) ? result.status : null;
     const signal =
       typeof result?.signal === 'string' && result.signal.length ? result.signal : null;
-    if (!result?.error && status === 0 && signal === null) return;
-    const timedOut = result?.error?.code === 'ETIMEDOUT';
+    const timedOut = result?.timedOut || result?.error?.code === 'ETIMEDOUT';
+    if (!timedOut && !result?.error && status === 0 && signal === null) return;
     const failure = {
       id: command.id,
       command: command.command,
@@ -533,7 +553,9 @@ export async function runFocusedCommandsParallel(
           ? result.error.message
           : String(result.error)
         : null,
-      ...(timedOut ? { timedOut: true } : {}),
+      ...(timedOut
+        ? { timedOut: true, timeoutMs: commandTimeoutMs, timeoutReason: 'command-deadline' }
+        : {}),
     };
     failures.push(failure);
     stderr.write(`[focused:${command.id}] failed ${JSON.stringify(failure)}\n`);
