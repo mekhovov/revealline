@@ -5,7 +5,110 @@ import os from 'node:os';
 import path from 'node:path';
 import { constants } from 'node:fs';
 import { runInNewContext } from 'node:vm';
-import { canCloneBuildEntry, writeBuildEntry } from './build-entry-writer.mjs';
+import { canCloneBuildEntry, writeBuildEntry, writeBuildEntries } from './build-entry-writer.mjs';
+
+test('expanded builds bound concurrent writes to four and create each parent only once', async () => {
+  const entries = Array.from({ length: 11 }, (_, index) => ({
+    name: `game/group-${index % 2}/${index}.mjs`,
+    bytes: Buffer.from(`accepted ${index}`),
+  }));
+  const directories = [],
+    written = [],
+    releases = [];
+  let active = 0,
+    maximum = 0;
+  const pending = writeBuildEntries('/source', '/staging', entries, {
+    mkdir: async (directory, options) => {
+      assert.deepEqual(options, { recursive: true });
+      directories.push(directory);
+    },
+    writeEntry: async (source, target, bytes) => {
+      active++;
+      maximum = Math.max(maximum, active);
+      await new Promise((resolve) => releases.push(resolve));
+      written.push({ source, target, bytes });
+      active--;
+    },
+  });
+  for (let i = 0; i < 3; i++) {
+    await new Promise(setImmediate);
+    assert.equal(releases.length, Math.min(4, entries.length - i * 4));
+    releases.splice(0).forEach((release) => release());
+  }
+  await pending;
+  assert.equal(maximum, 4);
+  assert.equal(active, 0);
+  assert.deepEqual(directories.sort(), ['/staging/game/group-0', '/staging/game/group-1']);
+  assert.deepEqual(
+    written.sort((a, b) => a.source.localeCompare(b.source)),
+    entries
+      .map((entry) => ({
+        source: path.join('/source', entry.name),
+        target: path.join('/staging', entry.name),
+        bytes: entry.bytes,
+      }))
+      .sort((a, b) => a.source.localeCompare(b.source)),
+  );
+});
+
+test('expanded build failure stops scheduling and settles owned writes before staging cleanup', async () => {
+  const entries = Array.from({ length: 12 }, (_, index) => ({
+    name: `game/${index}`,
+    bytes: Buffer.from('accepted'),
+  }));
+  const operations = [];
+  const failure = new Error('Share disconnected');
+  let settled = false;
+  const pending = writeBuildEntries('/source', '/staging', entries, {
+    mkdir: async () => {},
+    writeEntry: async (_source, target) =>
+      new Promise((resolve, reject) => operations.push({ target, resolve, reject })),
+  });
+  const outcome = pending.then(
+    () => {
+      settled = true;
+      return null;
+    },
+    (error) => {
+      settled = true;
+      return error;
+    },
+  );
+  await new Promise(setImmediate);
+  assert.equal(operations.length, 4);
+  operations[0].reject(failure);
+  await new Promise(setImmediate);
+  assert.equal(settled, false, 'other writes still own the staging directory');
+  assert.equal(operations.length, 4, 'no new writes start after failure');
+  operations.slice(1).forEach((operation) => operation.resolve());
+  assert.equal(await outcome, failure);
+  assert.equal(operations.length, 4);
+});
+
+test('parent creation failure settles peers and empty builds schedule nothing', async () => {
+  let writes = 0;
+  const failure = new Error('Cannot create parent');
+  await assert.rejects(
+    writeBuildEntries('/source', '/staging', [{ name: 'game/a', bytes: Buffer.from('a') }], {
+      mkdir: async () => {
+        throw failure;
+      },
+      writeEntry: async () => {
+        writes++;
+      },
+    }),
+    (error) => error === failure,
+  );
+  await writeBuildEntries('/source', '/staging', [], {
+    mkdir: async () => {
+      throw new Error('Unexpected directory');
+    },
+    writeEntry: async () => {
+      writes++;
+    },
+  });
+  assert.equal(writes, 0);
+});
 
 test('cloning is eligible only for known matching filesystem devices', () => {
   assert.equal(canCloneBuildEntry({ dev: 16777235 }, { dev: 16777235 }), true);

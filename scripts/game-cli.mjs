@@ -17,7 +17,7 @@ import {
 } from './pack-indexes.mjs';
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
-import { writeBuildEntry } from './build-entry-writer.mjs';
+import { writeBuildEntries } from './build-entry-writer.mjs';
 import {
   isOptionalSpatialAudioBody,
   isOptionalReactionVoiceBody,
@@ -1247,11 +1247,7 @@ export async function buildProject({
   let old;
   try {
     const zip = createZip(entries);
-    for (const entry of entries) {
-      const target = path.join(staging, entry.name);
-      await fs.mkdir(path.dirname(target), { recursive: true });
-      await writeBuildEntry(path.join(root, entry.name), target, entry.bytes);
-    }
+    await writeBuildEntries(root, staging, entries);
     await fs.writeFile(path.join(staging, 'distribution.zip'), zip);
     await fs.writeFile(
       path.join(staging, 'distribution.zip.sha256'),
