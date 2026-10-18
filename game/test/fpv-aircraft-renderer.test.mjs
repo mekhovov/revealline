@@ -55,7 +55,7 @@ test('all catalog aircraft render their physical rotor positions and dimensions 
     assert.ok(body && battery);
     const bodyBounds = new THREE.Box3().setFromObject(body),
       batteryBounds = new THREE.Box3().setFromObject(battery);
-    const underslung = preset.id === 'mobula8-analog-2023';
+    const underslung = ['mobula8-analog-2023', 'cetus-x-betaflight-2022'].includes(preset.id);
     close(
       (underslung ? batteryBounds : bodyBounds).min.y,
       -aircraft.geometry.bodyHalfExtents.y,
@@ -185,4 +185,34 @@ test('physical rotor animation honors each motor direction and does not advance 
     frame.rotors.map((rotor) => rotor.rotation.y),
     angles,
   );
+});
+
+test('new civilian whoops use original guarded geometry, distinct canopies and correct blade counts', () => {
+  const colors = new Set();
+  for (const [id, blades] of [
+    ['cetus-x-betaflight-2022', 4],
+    ['protos-16-aio-1-0', 3],
+  ]) {
+    const aircraft = createPresetConfiguration(id).aircraft;
+    const before = structuredClone(aircraft);
+    const { parent, result } = visual(aircraft);
+    colors.add(result.tint.color.getHex());
+    assert.deepEqual(aircraft, before);
+    assert.ok(parent.getObjectByName('aircraft-canopy'));
+    for (const [index, rotor] of result.rotors.entries()) {
+      assert.ok(parent.getObjectByName(`aircraft-duct-${index}`));
+      assert.equal(rotor.children.filter((part) => part.name === 'propeller-blade').length, blades);
+    }
+    const canopy = new THREE.Box3().setFromObject(parent.getObjectByName('aircraft-canopy'));
+    const battery = new THREE.Box3().setFromObject(parent.getObjectByName('aircraft-battery'));
+    if (id === 'cetus-x-betaflight-2022') assert.ok(canopy.min.y > battery.max.y);
+    else {
+      assert.ok(battery.min.y > 0, 'Protos battery stays in the upper/integrated bay');
+      assert.ok(
+        battery.getCenter(new THREE.Vector3()).z > canopy.getCenter(new THREE.Vector3()).z,
+        'Protos battery is behind the front camera canopy',
+      );
+    }
+  }
+  assert.equal(colors.size, 2);
 });
