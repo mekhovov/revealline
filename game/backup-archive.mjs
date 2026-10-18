@@ -108,8 +108,10 @@ Journey evidence and excluded profiles cannot be recovered from this archive.
 1. Keep this ZIP somewhere separate from the game's browser storage. A requested
    download does not confirm that the browser saved a file. Check its size and
    that it opens. This archive is unencrypted; share it only intentionally.
-2. Extract the ZIP using your device's archive tool. On iPhone or iPad, find it in
-   Files and tap it to create a folder. Keep all the extracted filenames intact.
+2. In Saves & loads, choose Inspect an archive and extract files, then download
+   the checked component files. Or extract the ZIP using your device's archive
+   tool. On iPhone or iPad, find it in Files and tap it to create a folder. Keep
+   all the extracted filenames intact.
 3. Restore pictures (.rlmedia), stories (.rlstory) and music (.rlsound) through
    their existing import reviews. If listed, review game-data JSON in Saves & loads.
    Authored Journey archives exclude Legacy game data and the unfinished flight;
@@ -119,8 +121,9 @@ Journey evidence and excluded profiles cannot be recovered from this archive.
 5. Each restore has its own review. This is not an automatic, atomic multi-store
    replacement. Keep a backup of the destination's current data before restoring.
 
-The game cannot directly import this ZIP yet. Extract it first. The SHA-256 and
-byte lengths in the manifest identify the original component bytes; ZIP CRC32
+The game does not restore the ZIP automatically. Its inspector checks and offers
+the original component files; each still needs its separate import review.
+The SHA-256 and byte lengths in the manifest identify the original bytes; ZIP CRC32
 checks accidental transport damage and is not proof of a trusted source.
 
 Переносний архів FPV / LINE
@@ -132,7 +135,8 @@ checks accidental transport damage and is not proof of a trusted source.
 
 1. Зберігайте ZIP окремо від сховища гри. Запит завантаження не підтверджує, що
    файл збережено. Перевірте розмір і відкриття. Архів не зашифровано.
-2. Розпакуйте ZIP засобами пристрою. На iPhone або iPad знайдіть його у «Файлах»
+2. На екрані збережень перевірте архів і завантажте перевірені компоненти. Або
+   розпакуйте ZIP засобами пристрою. На iPhone або iPad знайдіть його у «Файлах»
    і торкніться, щоб створити папку. Не змінюйте назви розпакованих файлів.
 3. Через наявні екрани перевірки імпорту відновіть зображення (.rlmedia), історії
    (.rlstory) та музику (.rlsound). Якщо є JSON даних гри, перевірте його у
@@ -143,8 +147,9 @@ checks accidental transport damage and is not proof of a trusted source.
 5. Кожне відновлення перевіряється окремо. Це не автоматична спільна транзакція.
    Перед відновленням збережіть резервну копію поточних даних на іншому пристрої.
 
-Гра поки не імпортує ZIP безпосередньо: спочатку розпакуйте його. SHA-256 та розміри
-у маніфесті визначають початкові байти; CRC32 ZIP виявляє випадкове пошкодження,
+Гра не відновлює ZIP автоматично: перевірка надає початкові файли компонентів,
+кожен з яких потребує окремої перевірки імпорту. SHA-256 та розміри у маніфесті
+визначають початкові байти; CRC32 ZIP виявляє випадкове пошкодження,
 але не доводить надійність джерела.
 `;
 

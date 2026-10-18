@@ -2,6 +2,7 @@ import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { prepareBackupSet } from '../backup-set.mjs';
 import { prepareBackupArchive } from '../backup-archive.mjs';
+import { attachBackupArchiveReview } from './backup-archive-review.mjs';
 
 const PURPOSES = {
   game: 'game data',
@@ -138,6 +139,7 @@ export function attachBackupSetPanel({
       : '');
   async function prepareFiles(archive) {
     if (busy() || !dialog.open || !root.getClientRects().length) return false;
+    archiveReview.invalidate({ quiet: true });
     release();
     const op = {
       opener: archive ? prepareArchive : prepare,
@@ -267,7 +269,22 @@ export function attachBackupSetPanel({
   }
   prepare.onclick = () => prepareFiles(false);
   prepareArchive.onclick = () => prepareFiles(true);
-  cancelButton.onclick = () => cancel();
+  const archiveReview = attachBackupArchiveReview({
+    document,
+    dialog,
+    root,
+    edition: source.edition,
+    busy,
+    setBusy,
+    refresh,
+    presenter,
+    showStatus,
+    cancelButton,
+    presentFeedback,
+    onStart: release,
+    URLImpl,
+  });
+  cancelButton.onclick = () => archiveReview.cancelPending() || cancel();
   dialog.addEventListener('close', () => {
     if (!dialog.open) cancel({ focus: false });
   });
@@ -281,6 +298,7 @@ export function attachBackupSetPanel({
   });
   return {
     cancel: () => {
+      if (archiveReview.cancelPending()) return true;
       if (operation) return cancel();
       if (!dialog.open || filenames.hidden || !filenames.open || !root.getClientRects().length)
         return false;
@@ -290,7 +308,10 @@ export function attachBackupSetPanel({
       if (!document.hidden) filenameSummary.focus({ preventScroll: true });
       return true;
     },
-    invalidate: () => cancel({ focus: false }),
+    invalidate: () => {
+      const cancelled = cancel({ focus: false });
+      return archiveReview.invalidate() || cancelled;
+    },
     checkCurrent,
   };
 }
