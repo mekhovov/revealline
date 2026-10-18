@@ -3362,9 +3362,16 @@ if(retune&& !dialog.open)commitMenuRetune(dialog,retuneOrigin);
 }
 function open(
 origin=doc.activeElement,
-{returnLabel=t('common:navigation.backToGame'),retune=true}={},
+{returnLabel=t('common:navigation.backToGame'),retune=true,onOpeningStage}={},
 ){
 if(destroyed)return;
+const observe=onOpeningStage
+?(kind)=>{
+try{
+onOpeningStage(kind);
+}catch{}
+}
+:null;
 const changed= !dialog.open;
 const landing=retune&&changed?menuRetuneOrigin(origin):null;
 retirePendingSelection();
@@ -3377,10 +3384,16 @@ initialOpen=false;
 localizedText(back,()=>returnLabel);
 onPause?.();
 invalidateDiagrams();
+observe?.('missions-campaigns-begin');
 rebuildCampaigns();
+observe?.('missions-campaigns-end');
+observe?.('missions-render-begin');
 render();
+observe?.('missions-render-end');
 if(!dialog.open)nativeReturnFocus=doc.activeElement;
+observe?.('missions-modal-begin');
 dialog.showModal();
+observe?.('missions-modal-end');
 observeDiagrams();
 restoreSelection();
 if(landing){
