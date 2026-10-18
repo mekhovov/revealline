@@ -1,3 +1,4 @@
+import { aircraftTuningFields } from './aircraft-tuning-fields.mjs';
 import * as THREE from './vendor/three.module.js';
 import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
 import { createRateProfile, validateRateProfile } from './rates.mjs';
@@ -7,7 +8,24 @@ import {
   validateAdvancedAircraft,
 } from './advanced-simulation.mjs';
 import { validateAdvancedTune } from './advanced-controller.mjs';
+import {
+  validateAircraftControllerTune,
+  aircraftPerformance,
+  aircraftCollisionRadius,
+} from './aircraft-physics.mjs';
+import { createAircraftResponseDescriptor } from './aircraft-response.mjs';
+import { createTunedResponse } from './flight-response.mjs';
+import { validateFlightResponse } from './radio-profile.mjs';
+import {
+  listAircraftPresets,
+  createPresetConfiguration,
+  validateAircraftComponents,
+} from './aircraft-presets.mjs';
+import { AIRCRAFT_RECORDING_BYTES } from './aircraft-recording.mjs';
 import { exportJSONFile, onNativeInactive } from '../../game/platform.mjs';
+import { mountAircraftArchiveControls } from './aircraft-archive-controls.mjs';
+import { sampleGhostPath } from './advanced-ghost-path.mjs';
+import { mountPropulsionEvidencePanel } from './propulsion-evidence-ui.mjs';
 
 const COPY = {
   en: {
@@ -87,6 +105,7 @@ const COPY = {
     comparisonMismatch:
       'This aircraft setup uses a different comparison class. Restore the setup or choose another reference.',
     positionGap: 'Position gap at the same flight time',
+    sampledGhost: 'Approximate ghost display; sample interval',
     maneuver: 'Repeatable practice',
     maneuverHelp:
       'Choose a short exercise, then restart from the same launch point. Follow the cues manually; no controls or scores are automated. Keep a reference or export it before returning to edit rates.',
@@ -99,6 +118,18 @@ const COPY = {
     revertConfiguration: 'Revert aircraft draft',
     revertedConfiguration:
       'Aircraft draft restored to its last saved values. Restart to test them.',
+    aircraftDefaults: 'Use aircraft defaults',
+    keepRates: 'Keep my current rates',
+    ratesChoice: 'Rates when choosing an aircraft',
+    estimated: 'Specification-based estimate',
+    actualThrustRatio: 'Full-pack available thrust / weight',
+    hoverThrottle: 'Estimated hover throttle',
+    insufficientThrust: 'Insufficient thrust for hover',
+    retained: 'Retained recording',
+    recordingUnavailable: 'Recording unavailable; flying continues',
+    batteryDepletion: 'Battery depletion (optional)',
+    clipComparisonHelp:
+      'Recent clips are verified from their starting checkpoint and remain unscored. Older flight segments may no longer be retained. The cyan ghost uses the original flight time; it appears only during the saved range.',
   },
   uk: {
     title: 'Практика з розширеною моделлю',
@@ -177,6 +208,7 @@ const COPY = {
     comparisonMismatch:
       'Ці налаштування дрона належать до іншого класу порівняння. Відновіть налаштування або виберіть інший орієнтир.',
     positionGap: 'Відстань між позиціями в той самий час польоту',
+    sampledGhost: 'Приблизне відображення примари; інтервал вибірки',
     maneuver: 'Повторювана практика',
     maneuverHelp:
       'Виберіть коротку вправу й перезапустіть із тієї самої точки. Виконуйте підказки самостійно; автоматичного керування чи оцінки немає. Залиште орієнтир або експортуйте його перед поверненням до зміни рейтів.',
@@ -189,6 +221,18 @@ const COPY = {
     revertConfiguration: 'Скасувати чернетку дрона',
     revertedConfiguration:
       'Чернетку дрона відновлено до останніх збережених значень. Перезапустіть для перевірки.',
+    aircraftDefaults: 'Використати налаштування дрона',
+    keepRates: 'Залишити мої рейти',
+    ratesChoice: 'Рейти під час вибору дрона',
+    estimated: 'Оцінка за характеристиками',
+    actualThrustRatio: 'Доступна тяга зарядженої батареї / вага',
+    hoverThrottle: 'Орієнтовний газ зависання',
+    insufficientThrust: 'Недостатньо тяги для зависання',
+    retained: 'Збережений відрізок запису',
+    recordingUnavailable: 'Запис недоступний; політ триває',
+    batteryDepletion: 'Розряджання батареї (необов’язково)',
+    clipComparisonHelp:
+      'Нещодавні відрізки перевіряються від початкової контрольної точки й не мають заліку. Старіші частини польоту можуть бути відсутні. Блакитна примара використовує початковий час польоту та з’являється лише в межах збереженого відрізка.',
   },
 };
 
@@ -199,7 +243,10 @@ export function mountAdvancedPractice({
   window: win = container.ownerDocument.defaultView,
   locale = 'en',
   profile = createRateProfile(),
+  response: sourceResponse,
+  mode = 'acro',
   camera = {},
+  components,
   configuration,
   onSaveConfiguration,
   getControls = () => null,
@@ -209,18 +256,33 @@ export function mountAdvancedPractice({
   workerURL,
   rendererFactory = (options) => new THREE.WebGLRenderer(options),
   platformOptions = {},
+  archiveStore,
 }) {
   const copy = COPY[locale] ?? COPY.en,
     doc = container.ownerDocument;
   const frozenProfile = validateRateProfile(profile);
+  let draftResponse = validateFlightResponse(sourceResponse ?? createTunedResponse(frozenProfile));
+  let draftCamera = structuredClone(camera),
+    savedCamera = structuredClone(camera),
+    draftPreset,
+    savedPreset,
+    draftComponents = components == null ? components : validateAircraftComponents(components),
+    savedComponents = structuredClone(draftComponents);
+  const tuneValidator = (value) =>
+    value?.format === 'AdvancedControllerTune.v3'
+      ? validateAircraftControllerTune(value)
+      : validateAdvancedTune(value);
   let draftConfiguration = {
     aircraft: validateAdvancedAircraft(configuration?.aircraft ?? 'freestyle'),
-    controller: validateAdvancedTune(
+    controller: tuneValidator(
       configuration?.controller ??
         createAdvancedAircraftTune(configuration?.aircraft ?? 'freestyle'),
     ),
   };
+  if (draftComponents && draftComponents.presetId !== draftConfiguration.aircraft.id)
+    throw new Error('Component inventory belongs to a different aircraft');
   let savedConfiguration = structuredClone(draftConfiguration),
+    savedResponse = structuredClone(draftResponse),
     activeOptions = null,
     activeComparison = null,
     comparison = null,
@@ -229,6 +291,7 @@ export function mountAdvancedPractice({
     verificationGeneration = 0;
   let disposed = false,
     client,
+    archiveSession = null,
     renderer,
     frame,
     timer,
@@ -306,9 +369,21 @@ export function mountAdvancedPractice({
     const option = el('option', copy[id], aircraft);
     option.value = id;
   }
-  aircraft.value = ['freestyle', 'whoop', 'racing'].includes(draftConfiguration.aircraft.id)
-    ? draftConfiguration.aircraft.id
-    : 'freestyle';
+  for (const preset of listAircraftPresets()) {
+    const option = el('option', preset.name, aircraft);
+    option.value = preset.id;
+  }
+  aircraft.value = draftConfiguration.aircraft.id;
+  const ratesChoiceLabel = el('label', `${copy.ratesChoice} `, settings),
+    ratesChoice = el('select', '', ratesChoiceLabel);
+  for (const [value, label] of [
+    ['defaults', copy.aircraftDefaults],
+    ['keep', copy.keepRates],
+  ]) {
+    const option = el('option', label, ratesChoice);
+    option.value = value;
+  }
+  ratesChoice.value = 'defaults';
   const inputLabel = el('label', `${copy.input} `, settings),
     input = el('select', '', inputLabel);
   for (const [id, label] of [
@@ -330,7 +405,7 @@ export function mountAdvancedPractice({
   maneuverCue.setAttribute('aria-label', copy.maneuver);
   const comparisonPanel = el('details');
   el('summary', copy.comparison, comparisonPanel);
-  el('p', copy.comparisonHelp, comparisonPanel);
+  const comparisonExplanation = el('p', copy.comparisonHelp, comparisonPanel);
   const comparisonFileLabel = el('label', `${copy.importComparison} `, comparisonPanel),
     comparisonFile = el('input', '', comparisonFileLabel);
   comparisonFile.type = 'file';
@@ -387,154 +462,16 @@ export function mountAdvancedPractice({
   tuneFields.style.cssText =
     'display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px';
   const fieldInputs = [];
-  const numericFields = [
-    ['aircraft.mass', 'Mass (kg)', 'Маса (кг)', 0.01, 10],
-    [
-      'aircraft.armLength',
-      'Motor distance from centre (m)',
-      'Відстань мотора від центра (м)',
-      0.01,
-      1,
-    ],
-    ['aircraft.radius', 'Collision radius (m)', 'Радіус зіткнення (м)', 0.01, 1],
-    [
-      'aircraft.maxThrust',
-      'Thrust per motor at nominal voltage (N)',
-      'Тяга мотора за номінальної напруги (Н)',
-      0.01,
-      100,
-    ],
-    [
-      'aircraft.reactionTorque',
-      'Reaction torque / thrust (m)',
-      'Реактивний момент / тяга (м)',
-      0.001,
-      1,
-    ],
-    ['aircraft.motorTimeConstant', 'Motor response time (s)', 'Час реакції мотора (с)', 0.001, 1],
-    [
-      'aircraft.motorOutputLimit',
-      'Motor output limit (0–1)',
-      'Обмеження потужності моторів (0–1)',
-      0.1,
-      1,
-    ],
-    ['aircraft.linearDrag', 'Linear drag (N·s/m)', 'Лінійний опір (Н·с/м)', 0, 10],
-    ['aircraft.quadraticDrag', 'Quadratic drag (N·s²/m²)', 'Квадратичний опір (Н·с²/м²)', 0, 10],
-    ['aircraft.angularDrag', 'Angular drag (N·m·s/rad)', 'Кутовий опір (Н·м·с/рад)', 0, 10],
-    [
-      'aircraft.sensorNoise',
-      'Gyro noise amplitude (rad/s)',
-      'Амплітуда шуму гіроскопа (рад/с)',
-      0,
-      5,
-    ],
-    [
-      'aircraft.vibration',
-      'Gyro vibration amplitude (rad/s)',
-      'Амплітуда вібрації гіроскопа (рад/с)',
-      0,
-      5,
-    ],
-    [
-      'aircraft.battery.nominalVoltage',
-      'Nominal battery voltage (V)',
-      'Номінальна напруга батареї (В)',
-      1,
-      100,
-    ],
-    [
-      'aircraft.battery.fullVoltage',
-      'Full battery voltage (V)',
-      'Напруга зарядженої батареї (В)',
-      1,
-      100,
-    ],
-    [
-      'aircraft.battery.emptyVoltage',
-      'Empty battery voltage (V)',
-      'Напруга розрядженої батареї (В)',
-      1,
-      100,
-    ],
-    ['aircraft.battery.resistance', 'Battery resistance (Ω)', 'Опір батареї (Ω)', 0, 10],
-    [
-      'aircraft.battery.fullCurrent',
-      'Full motor current (A)',
-      'Струм моторів на повній потужності (А)',
-      0,
-      1000,
-    ],
-    ['aircraft.battery.capacityAh', 'Battery capacity (Ah)', 'Ємність батареї (А·год)', 0.01, 100],
-    [
-      'controller.gyroFilterHz',
-      'Gyro low-pass cutoff (Hz; 0 off)',
-      'Частота фільтра гіроскопа (Гц; 0 вимк.)',
-      0,
-      1000,
-    ],
-    [
-      'controller.dTermFilterHz',
-      'D-term low-pass cutoff (Hz; 0 off)',
-      'Частота фільтра D (Гц; 0 вимк.)',
-      0,
-      1000,
-    ],
-    [
-      'controller.inputSmoothingHz',
-      'Input smoothing cutoff (Hz; 0 off)',
-      'Частота згладжування входу (Гц; 0 вимк.)',
-      0,
-      1000,
-    ],
-    [
-      'controller.feedforwardFilterHz',
-      'Feedforward low-pass cutoff (Hz; 0 off)',
-      'Частота фільтра випередження (Гц; 0 вимк.)',
-      0,
-      1000,
-    ],
-    [
-      'controller.integralLimit',
-      'Integral torque limit (N·m)',
-      'Обмеження інтегрального моменту (Н·м)',
-      0,
-      1,
-    ],
-    [
-      'controller.antiWindup',
-      'Anti-windup recovery (1/s)',
-      'Відновлення інтегратора (1/с)',
-      0,
-      100,
-    ],
-  ];
-  for (const [axis, labelEn, labelUk] of [
-    ['x', 'Pitch', 'Тангаж'],
-    ['y', 'Yaw', 'Рискання'],
-    ['z', 'Roll', 'Крен'],
-  ])
-    numericFields.push([
-      `aircraft.inertia.${axis}`,
-      `${labelEn} inertia (kg·m²)`,
-      `Інерція: ${labelUk} (кг·м²)`,
-      0.000001,
-      10,
-    ]);
-  for (const axis of ['roll', 'pitch', 'yaw'])
-    for (const [key, unit] of [
-      ['p', 'N·m/(rad/s)'],
-      ['i', 'N·m/rad'],
-      ['d', 'N·m/(rad/s²)'],
-      ['feedforward', 'N·m/(rad/s²)'],
-    ])
-      numericFields.push([
-        `controller.gains.${axis}.${key}`,
-        `${COPY.en[axis]} ${key.toUpperCase()} (${unit})`,
-        `${COPY.uk[axis]} ${key.toUpperCase()} (${unit})`,
-        0,
-        1,
-      ]);
+  let evidencePanel = null;
+  const batteryLabel = el('label', copy.batteryDepletion, settings),
+    batteryDepletion = el('input', '', batteryLabel);
+  batteryDepletion.type = 'checkbox';
+  batteryDepletion.setAttribute('aria-label', copy.batteryDepletion);
+  listen(batteryDepletion, 'change', () => {
+    tunePreview.textContent = copy.draftConfiguration;
+    evidencePanel?.refresh();
+  });
+  const numericFields = aircraftTuningFields();
   for (const [path, en, uk, min, max] of numericFields) {
     const label = el('label', locale === 'uk' ? uk : en, tuneFields),
       field = el('input', '', label);
@@ -543,25 +480,63 @@ export function mountAdvancedPractice({
     field.max = String(max);
     field.step = 'any';
     field.style.cssText = 'display:block;width:100%;box-sizing:border-box';
-    fieldInputs.push({ path: path.split('.'), field });
+    fieldInputs.push({ path: path.split('.'), field, label, min, max });
     listen(field, 'input', () => {
       tunePreview.textContent = copy.draftConfiguration;
+      evidencePanel?.refresh();
     });
   }
   function fillTuning() {
-    for (const { path, field } of fieldInputs)
-      field.value = String(path.reduce((value, part) => value[part], draftConfiguration));
-    tunePreview.textContent = `${copy.thrustRatio}: ${((draftConfiguration.aircraft.maxThrust * 4) / (draftConfiguration.aircraft.mass * 9.81)).toFixed(2)} · ${copy.draftConfiguration}`;
+    const physical = draftConfiguration.aircraft.format === 'AdvancedAircraft.v2';
+    const legacyOnly = [
+      'aircraft.armLength',
+      'aircraft.radius',
+      'aircraft.linearDrag',
+      'aircraft.quadraticDrag',
+      'aircraft.angularDrag',
+    ];
+    for (const { path, field, label, min, max } of fieldInputs) {
+      const value = path.reduce((entry, part) => entry?.[part], draftConfiguration);
+      label.hidden = value === undefined || (physical && legacyOnly.includes(path.join('.')));
+      field.disabled = label.hidden;
+      field.value = value === undefined ? '' : String(value);
+      field.min = String(
+        physical && path.join('.').startsWith('aircraft.inertia.') ? 0.0000001 : min,
+      );
+      field.max = String(
+        physical && (path[1] === 'gains' || path[1] === 'integralLimit') ? 1000 : max,
+      );
+    }
+    batteryLabel.hidden = !physical;
+    batteryDepletion.type = physical ? 'checkbox' : 'hidden';
+    batteryDepletion.checked = physical && draftConfiguration.aircraft.battery.depletion;
+    comparisonExplanation.textContent = physical ? copy.clipComparisonHelp : copy.comparisonHelp;
+    evidencePanel?.refresh();
+    const performance = physical ? aircraftPerformance(draftConfiguration.aircraft) : null;
+    const hover =
+      performance?.hoverThrottle == null
+        ? copy.insufficientThrust
+        : `${(performance.hoverThrottle * 100).toFixed(1)}%`;
+    tunePreview.textContent = performance
+      ? `${copy.estimated} · ${copy.actualThrustRatio}: ${performance.thrustToWeight.toFixed(2)} · ${copy.hoverThrottle}: ${hover} · ${copy.draftConfiguration}`
+      : `${copy.thrustRatio}: ${((draftConfiguration.aircraft.maxThrust * 4) / (draftConfiguration.aircraft.mass * 9.81)).toFixed(2)} · ${copy.draftConfiguration}`;
   }
   function readTuning() {
     const next = structuredClone(draftConfiguration);
     for (const { path, field } of fieldInputs) {
+      if (field.disabled) continue;
       const parent = path.slice(0, -1).reduce((value, part) => value[part], next);
       parent[path.at(-1)] = field.value.trim() ? Number(field.value) : Number.NaN;
     }
+    if (next.aircraft.format === 'AdvancedAircraft.v2') {
+      next.aircraft.battery.depletion = batteryDepletion.checked;
+      // Radius is an admission/visibility envelope, not the physical collider.
+      // Enlarging the editable body must also enlarge that coverage envelope.
+      next.aircraft.radius = Math.max(next.aircraft.radius, aircraftCollisionRadius(next.aircraft));
+    }
     return {
       aircraft: validateAdvancedAircraft(next.aircraft),
-      controller: validateAdvancedTune(next.controller),
+      controller: tuneValidator(next.controller),
     };
   }
   const tuneButtons = el('div', '', tuning);
@@ -580,12 +555,30 @@ export function mountAdvancedPractice({
       const next = readTuning();
       savingConfiguration = true;
       saveTuning.disabled = true;
-      await onSaveConfiguration?.(structuredClone(next));
+      const capturedResponse = structuredClone(draftResponse);
+      const capturedCamera = structuredClone(draftCamera);
+      const capturedPreset = structuredClone(draftPreset);
+      const capturedComponents = structuredClone(draftComponents);
+      await onSaveConfiguration?.(structuredClone(next), {
+        response: capturedResponse,
+        camera: capturedCamera,
+        ...(capturedPreset === undefined ? {} : { preset: capturedPreset }),
+        ...(capturedComponents === undefined ? {} : { components: capturedComponents }),
+      });
       if (!disposed) {
         savedConfiguration = structuredClone(next);
+        savedResponse = capturedResponse;
+        savedCamera = capturedCamera;
+        savedPreset = capturedPreset;
+        savedComponents = capturedComponents;
         let unchanged = false;
         try {
-          unchanged = JSON.stringify(readTuning()) === JSON.stringify(next);
+          unchanged =
+            JSON.stringify(readTuning()) === JSON.stringify(next) &&
+            JSON.stringify(draftResponse) === JSON.stringify(capturedResponse) &&
+            JSON.stringify(draftCamera) === JSON.stringify(capturedCamera) &&
+            JSON.stringify(draftPreset) === JSON.stringify(capturedPreset) &&
+            JSON.stringify(draftComponents) === JSON.stringify(capturedComponents);
         } catch {
           // Incomplete edits remain a draft while the captured save completes.
         }
@@ -601,6 +594,10 @@ export function mountAdvancedPractice({
   });
   listen(revertTuning, 'click', () => {
     draftConfiguration = structuredClone(savedConfiguration);
+    draftResponse = structuredClone(savedResponse);
+    draftCamera = structuredClone(savedCamera);
+    draftPreset = structuredClone(savedPreset);
+    draftComponents = structuredClone(savedComponents);
     aircraft.value = draftConfiguration.aircraft.id;
     fillTuning();
     tunePreview.textContent = copy.revertedConfiguration;
@@ -644,6 +641,12 @@ export function mountAdvancedPractice({
     }
   });
   fillTuning();
+  evidencePanel = mountPropulsionEvidencePanel({
+    parent: tuning,
+    locale: () => locale,
+    // Read the validated editable fields, not the saved or running configuration.
+    getAircraft: () => readTuning().aircraft,
+  });
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x93bed2);
   scene.fog = new THREE.Fog(0x93bed2, 35, 130);
@@ -689,6 +692,42 @@ export function mountAdvancedPractice({
     ghost.add(new THREE.Mesh(shape, ghostMaterial));
   }
   scene.add(ghost);
+  function rebuildGhost(airframe) {
+    for (const object of [...ghost.children]) {
+      const index = geometry.indexOf(object.geometry);
+      if (index >= 0) geometry.splice(index, 1);
+      object.geometry.dispose();
+      ghost.remove(object);
+    }
+    const add = (shape, position) => {
+      geometry.push(shape);
+      const object = new THREE.Mesh(shape, ghostMaterial);
+      object.position.set(position.x, position.y, position.z);
+      ghost.add(object);
+    };
+    if (airframe.format === 'AdvancedAircraft.v2') {
+      const g = airframe.geometry,
+        h = g.bodyHalfExtents;
+      add(new THREE.BoxGeometry(h.x * 2, h.y * 2, h.z * 2), {
+        x: -g.centerOfMass.x,
+        y: -g.centerOfMass.y,
+        z: -g.centerOfMass.z,
+      });
+      for (const rotor of g.rotors)
+        add(
+          new THREE.CylinderGeometry(
+            g.propellerRadius,
+            g.propellerRadius,
+            g.ducted ? Math.max(h.y, 0.006) * 2 : 0.006,
+            16,
+          ),
+          rotor.position,
+        );
+    } else {
+      add(new THREE.BoxGeometry(airframe.radius * 2, 0.04, 0.04), { x: 0, y: 0, z: 0 });
+      add(new THREE.BoxGeometry(0.04, 0.04, airframe.radius * 2), { x: 0, y: 0, z: 0 });
+    }
+  }
   for (let index = 0; index < 5; index++) {
     const z = -8 - index * 10;
     obstacles.push(
@@ -789,13 +828,22 @@ export function mountAdvancedPractice({
       comparisonInfo.textContent = copy.comparisonMismatch;
       return;
     }
-    const point = comparison.path[Math.min(telemetry?.missionTick ?? 0, comparison.missionTicks)];
+    const tick = telemetry?.missionTick ?? 0,
+      startTick = comparison.startMissionTick ?? 0;
+    ghost.visible = ghost.visible && tick >= startTick;
+    const point = sampleGhostPath(comparison.path, tick);
+    if (!point) {
+      ghost.visible = false;
+      return;
+    }
     ghost.position.set(point[1], point[2], point[3]);
     ghost.quaternion.set(point[4], point[5], point[6], point[7]);
     comparisonInfo.textContent =
       (telemetry?.missionTick ?? 0) > comparison.missionTicks
         ? copy.comparisonEnded
         : `${copy.positionGap}: ${Math.hypot((telemetry?.position.x ?? point[1]) - point[1], (telemetry?.position.y ?? point[2]) - point[2], (telemetry?.position.z ?? point[3]) - point[3]).toFixed(2)} m · ${((telemetry?.missionTick ?? 0) / 50).toFixed(2)} s`;
+    if (comparison.pathStride > 1)
+      comparisonInfo.textContent += ` · ${copy.sampledGhost}: ${(comparison.pathStride / 50).toFixed(2)} s`;
   }
   function cancelVerification() {
     verificationGeneration++;
@@ -843,11 +891,15 @@ export function mountAdvancedPractice({
     const file = comparisonFile.files?.[0];
     if (!file) return;
     void verifyReference(async () => {
-      if (!Number.isFinite(file.size) || file.size <= 0 || file.size > ADVANCED_RECORDING_BYTES)
-        throw new Error('Recording exceeds the 8 MiB import limit.');
+      const maxBytes =
+        activeOptions.aircraft.format === 'AdvancedAircraft.v2'
+          ? AIRCRAFT_RECORDING_BYTES
+          : ADVANCED_RECORDING_BYTES;
+      if (!Number.isFinite(file.size) || file.size <= 0 || file.size > maxBytes)
+        throw new Error(`Recording exceeds the ${maxBytes / 1024 / 1024} MiB import limit.`);
       const text = await file.text();
-      if (new TextEncoder().encode(text).byteLength > ADVANCED_RECORDING_BYTES)
-        throw new Error('Recording exceeds the 8 MiB import limit.');
+      if (new TextEncoder().encode(text).byteLength > maxBytes)
+        throw new Error(`Recording exceeds the ${maxBytes / 1024 / 1024} MiB import limit.`);
       return text;
     });
     comparisonFile.value = '';
@@ -966,6 +1018,7 @@ export function mountAdvancedPractice({
       const result = await client.step(sample);
       if (disposed || owner !== generation) return;
       telemetry = result.telemetry;
+      publishArchive();
       keepComparison.disabled = verifying || !telemetry.missionTick;
       if (telemetry.consumedSequence === sample.sequence) lastConsumedPollAt = started;
       const elapsed = win.performance.now() - started;
@@ -1000,6 +1053,8 @@ export function mountAdvancedPractice({
     keepComparison.disabled = true;
     comparisonFile.disabled = true;
     generation++;
+    archiveSession = null;
+    publishArchive();
     const owner = generation;
     client?.dispose();
     sequence = 0;
@@ -1015,7 +1070,9 @@ export function mountAdvancedPractice({
       const options = {
         aircraft: draftConfiguration.aircraft,
         controller: draftConfiguration.controller,
-        rateProfile: frozenProfile,
+        ...(draftConfiguration.aircraft.format === 'AdvancedAircraft.v2'
+          ? { response: createAircraftResponseDescriptor(draftResponse, { mode }) }
+          : { rateProfile: frozenProfile }),
         spawn: { x: 0, y: 1.5, z: 3 },
         obstacles,
       };
@@ -1023,8 +1080,39 @@ export function mountAdvancedPractice({
       if (disposed || owner !== generation) return;
       telemetry = result.telemetry;
       activeOptions = structuredClone(options);
+      if (options.aircraft.format === 'AdvancedAircraft.v2') {
+        const ownedClient = client;
+        const liveArchive = () => {
+          if (disposed || owner !== generation || ownedClient !== client)
+            throw new Error('This aircraft archive belongs to an earlier practice flight');
+        };
+        const envelope = (value) => ({ ...value, generation: `${owner}:${value.generation}` });
+        archiveSession = {
+          async readSealedSegment(afterIndex) {
+            liveArchive();
+            const value = await ownedClient.readSealedSegment(afterIndex);
+            liveArchive();
+            return envelope(value);
+          },
+          async finalizeArchive(afterIndex) {
+            liveArchive();
+            if (running) throw new Error('Pause before ending the session archive');
+            const value = await ownedClient.finalizeArchive(afterIndex);
+            liveArchive();
+            return envelope(value);
+          },
+        };
+      }
+      rebuildGhost(draftConfiguration.aircraft);
+      view.fov = Math.max(30, Math.min(150, Number(draftCamera.fov) || 82));
+      view.updateProjectionMatrix();
+      tilt.setFromAxisAngle(
+        new THREE.Vector3(1, 0, 0),
+        (Math.max(-45, Math.min(85, Number(draftCamera.tilt) || 0)) * Math.PI) / 180,
+      );
       activeComparison = result.comparison;
       initialized = true;
+      publishArchive();
       flightStopCode = null;
       status.textContent = copy.ready;
       start.disabled = graphicsLost;
@@ -1062,6 +1150,12 @@ export function mountAdvancedPractice({
             ' / ',
           )} °/s\n${copy.age}: ${telemetry.sampleAgeUs === null ? '—' : `${(telemetry.sampleAgeUs / 1000).toFixed(0)} ms`} · ${copy.browserAge}: ${lastConsumedPollAt === null ? '—' : `${Math.max(0, now - lastConsumedPollAt).toFixed(0)} ms`}\n${copy.polling}: ${observedPollHz === null ? '—' : `${observedPollHz.toFixed(1)} Hz`} · ${copy.unknown}`;
         lastRender = now;
+        const recording = telemetry.recordingStatus;
+        if (recording)
+          readouts.textContent +=
+            recording.retainedFromSeconds === null
+              ? `\n${copy.recordingUnavailable}`
+              : `\n${copy.retained}: ${recording.retainedFromSeconds.toFixed(1)}–${recording.retainedThroughSeconds.toFixed(1)} s`;
       }
     }
     paintManeuver();
@@ -1095,10 +1189,21 @@ export function mountAdvancedPractice({
     void initialize();
   });
   listen(aircraft, 'change', () => {
-    draftConfiguration = {
-      aircraft: validateAdvancedAircraft(aircraft.value),
-      controller: createAdvancedAircraftTune(aircraft.value),
-    };
+    if (listAircraftPresets().some((preset) => preset.id === aircraft.value)) {
+      const preset = createPresetConfiguration(aircraft.value);
+      draftConfiguration = { aircraft: preset.aircraft, controller: preset.controller };
+      draftCamera = { tilt: preset.camera.tilt, fov: preset.camera.verticalFov };
+      draftPreset = structuredClone(preset.preset);
+      draftComponents = structuredClone(preset.components);
+      if (ratesChoice.value === 'defaults') draftResponse = preset.response;
+    } else {
+      draftConfiguration = {
+        aircraft: validateAdvancedAircraft(aircraft.value),
+        controller: createAdvancedAircraftTune(aircraft.value),
+      };
+      draftPreset = null;
+      draftComponents = null;
+    }
     fillTuning();
   });
   listen(input, 'change', () => pause());
@@ -1149,6 +1254,8 @@ export function mountAdvancedPractice({
     win.clearTimeout(timer);
     win.cancelAnimationFrame(frame);
     client?.dispose();
+    archiveControls.dispose();
+    evidencePanel.dispose();
     verificationClient?.dispose();
     verificationClient = null;
     verificationGeneration++;
@@ -1161,6 +1268,33 @@ export function mountAdvancedPractice({
     else grid.material.dispose();
     renderer?.dispose();
     root.remove();
+  }
+  const archiveControls = mountAircraftArchiveControls({
+    parent: root,
+    window: win,
+    locale: () => locale,
+    getSession: () => archiveSession,
+    onPause: () => pause(),
+    key: 'arena',
+    workerURL,
+    platformOptions,
+    store: archiveStore,
+  });
+  function publishArchive() {
+    archiveControls.update({
+      ticks: telemetry?.missionTick ?? 0,
+      advancedTelemetry: telemetry && {
+        ...telemetry,
+        ...(telemetry.archiveStatus
+          ? {
+              archiveStatus: {
+                ...telemetry.archiveStatus,
+                generation: `${generation}:${telemetry.archiveStatus.generation}`,
+              },
+            }
+          : {}),
+      },
+    });
   }
   try {
     renderer = rendererFactory({ canvas, antialias: true });

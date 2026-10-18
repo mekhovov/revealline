@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { activateHostAction } from './helpers/host-action.mjs';
+import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
 import { soloPage, SoloElement, settle, memoryStorage } from './helpers/solo-dom.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
 import {
@@ -190,10 +192,22 @@ async function winningFlight(t) {
   const earned = importLibrary(h.storage.getItem(PROFILE));
   assert.equal(earned.masteries.length, 0);
   assert.equal(earned.gallery.length, 1);
-  h.$('skip-celebration').click();
-  h.$('library-button').click();
+  assert.equal(h.$('skip-celebration').hidden, true);
+  const completed = authoritativeCheckpoint(h.rendered.run);
+  // Keep the verifier held while the actual earned-picture flow exposes its action.
+  for (
+    let frame = 0;
+    frame < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && h.$('show-result').hidden;
+    frame++
+  )
+    h.frame(100);
+  assert.equal(h.$('show-result').hidden, false);
+  h.$('show-result').click();
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), completed);
+  assert.equal(importLibrary(h.storage.getItem(PROFILE)).masteries.length, 0);
+  await activateHostAction(h.$('library-button'));
   t.diagnostic('Opened Library from won result.');
-  h.doc.querySelector('[data-library-panel="packs"]').click();
+  await activateHostAction(h.doc.querySelector('[data-library-panel="packs"]'));
   return {
     h,
     memory,
@@ -238,7 +252,7 @@ for (const choice of [
   test(`backup pending optional seal: ${choice} respects completed flight ownership`, async (t) => {
     const f = await winningFlight(t),
       { h } = f;
-    h.doc.querySelector('[data-library-panel="saves"]').click();
+    await activateHostAction(h.doc.querySelector('[data-library-panel="saves"]'));
     h.$('save-json').value = JSON.stringify({
       format: 'xonix-backup.v1',
       library: emptyLibrary(),
@@ -280,7 +294,7 @@ for (const choice of [
 test('a seal earned during backup review invalidates the Undo snapshot without replacing data', async (t) => {
   const f = await winningFlight(t),
     { h } = f;
-  h.doc.querySelector('[data-library-panel="saves"]').click();
+  await activateHostAction(h.doc.querySelector('[data-library-panel="saves"]'));
   h.$('save-json').value = JSON.stringify({
     format: 'xonix-backup.v1',
     library: emptyLibrary(),
@@ -307,7 +321,7 @@ for (const outcome of ['successful', 'refused', 'rolled back'])
   test(`a verified seal waits through ${outcome} accepted backup storage`, async (t) => {
     const f = await winningFlight(t),
       { h } = f;
-    h.doc.querySelector('[data-library-panel="saves"]').click();
+    await activateHostAction(h.doc.querySelector('[data-library-panel="saves"]'));
     h.$('save-json').value = JSON.stringify({
       format: 'xonix-backup.v1',
       library: emptyLibrary(),

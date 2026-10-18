@@ -1,7 +1,10 @@
 (async () => {
   const host = globalThis;
   const doc = host.document;
-  if (!doc || host.RevealLineAccess) return;
+  // Community entries replace the document with the shared game host. The
+  // Window and Document survive document.write(), but their root is new.
+  if (!doc || host.RevealLineAccess?.documentElement === doc.documentElement) return;
+  const documentElement = doc.documentElement;
 
   const meta = (name) => doc.querySelector(`meta[name="${name}"]`)?.content || '';
   const config = Object.freeze({
@@ -20,7 +23,14 @@
   const scriptsReady = new Promise((resolve) => {
     resolveScriptsReady = resolve;
   });
-  host.RevealLineAccess = Object.freeze({ ready, scriptsReady, storageKey });
+  const access = Object.freeze({
+    ready,
+    scriptsReady,
+    storageKey,
+    documentElement,
+  });
+  host.RevealLineAccess = access;
+  const current = () => doc.documentElement === documentElement && host.RevealLineAccess === access;
 
   const storage = {
     read() {
@@ -41,11 +51,23 @@
   // Protected HTML keeps executable scripts inert until the shared unlock succeeds.
   // Restore attributes (including currentScript data) and parser order; modules and
   // deferred classics run after the ordinary classics, once the document is ready.
+  const scriptLabel = (script) => {
+    if (!script.src) return 'inline module';
+    try {
+      const url = new URL(script.src, doc.baseURI);
+      // Keep credentials, query strings, fragments and inline data out of diagnostics.
+      if (['https:', 'http:', 'file:'].includes(url.protocol)) return url.pathname.slice(0, 200);
+    } catch {
+      // A malformed URL must still leave a usable recovery action.
+    }
+    return 'external script';
+  };
   const startPage = async () => {
     const scripts = [...doc.querySelectorAll('script[data-access-type]')];
     const deferred = (node) => node.dataset.accessType === 'module' || node.hasAttribute('defer');
     const ordered = [...scripts.filter((node) => !deferred(node)), ...scripts.filter(deferred)];
-    for (const original of ordered) {
+    for (const [index, original] of ordered.entries()) {
+      if (!current()) return;
       const script = doc.createElement('script');
       for (const { name, value } of original.attributes) {
         if (!['type', 'data-access-type'].includes(name)) script.setAttribute(name, value);
@@ -58,26 +80,49 @@
           ? new Promise((resolve, reject) => {
               script.onload = resolve;
               script.onerror = () =>
-                reject(new Error('The page could not load. Reload to try again.'));
+                reject(
+                  new Error(
+                    `Could not load script ${index + 1} of ${ordered.length}: ${scriptLabel(script)}. Reload the page to try again.`,
+                  ),
+                );
             })
           : Promise.resolve();
       original.replaceWith(script);
       await loaded;
     }
-    resolveScriptsReady(true);
+    if (current()) resolveScriptsReady(true);
   };
   const unlock = () => {
-    doc.documentElement.dataset.accessState = 'unlocked';
+    if (!current()) return;
+    documentElement.dataset.accessState = 'unlocked';
     resolveReady(true);
     doc.dispatchEvent(new CustomEvent('revealline-access-unlocked', { detail: { id: config.id } }));
     startPage().catch((error) => {
-      doc.documentElement.dataset.accessState = 'failed';
+      if (!current()) return;
+      documentElement.dataset.accessState = 'failed';
+      const recovery = doc.createElement('section');
+      recovery.id = 'access-gate';
+      recovery.className = 'access-gate';
+      recovery.setAttribute('role', 'alert');
+      const card = doc.createElement('div');
+      card.className = 'access-gate-card';
+      const title = doc.createElement('h1');
+      title.textContent = 'The page could not load';
       const message = doc.createElement('p');
-      message.id = 'access-gate';
-      message.className = 'access-gate';
-      message.setAttribute('role', 'alert');
-      message.textContent = error.message;
-      doc.body.prepend(message);
+      message.textContent = String(error?.message || 'Reload the page to try again.').slice(0, 400);
+      const reload = doc.createElement('button');
+      reload.type = 'button';
+      reload.textContent = 'Reload page';
+      reload.addEventListener('click', () => {
+        if (!current() || reload.disabled) return;
+        reload.disabled = true;
+        // Earlier scripts may have executed. Restart the document, never the script list.
+        host.location.reload();
+      });
+      card.append(title, message, reload);
+      recovery.append(card);
+      doc.body.prepend(recovery);
+      reload.focus();
     });
   };
 
@@ -85,6 +130,7 @@
     await new Promise((resolve) =>
       doc.addEventListener('DOMContentLoaded', resolve, { once: true }),
     );
+  if (!current()) return;
 
   if (config.id && config.salt && config.verifier && storage.read() === config.verifier) {
     unlock();
@@ -172,7 +218,9 @@
     try {
       if (!config.id || !config.salt || !config.verifier || !host.crypto?.subtle)
         throw new Error('Password protection is unavailable in this browser.');
-      if (!matches(await derive(input.value), decode(config.verifier))) {
+      const actual = await derive(input.value);
+      if (!current()) return;
+      if (!matches(actual, decode(config.verifier))) {
         input.value = '';
         status.textContent = 'That password is not correct.';
         input.disabled = false;

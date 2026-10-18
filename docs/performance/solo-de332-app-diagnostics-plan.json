@@ -1,0 +1,231 @@
+{
+  "format": "SoloHostedDiagnosticsManifestV1",
+  "status": "reviewed-app-diagnostics-only",
+  "repository": "mekhovov/revealline",
+  "sourceCohort": "diagnostics-candidatede332-endpoint-box-v1",
+  "runtimeRevision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+  "candidate": {
+    "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+    "tree": "2954fef5b0f1293ff2e6a97ce978a673dddaa7db",
+    "run": 39091745654,
+    "artifact": 12123463810,
+    "outer": {
+      "bytes": 1094606342,
+      "sha256": "47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27"
+    },
+    "inner": {
+      "bytes": 1075789325,
+      "sha256": "d4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa"
+    },
+    "manifestSHA256": "74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d",
+    "producer": "Exact successful Appearance39091745654, Node22.13.1; full remote package/source/CSP verification remains mandatory."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609"
+  },
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "performanceExclusion": true,
+  "automaticRetries": 0,
+  "automaticPhaseContinuation": false,
+  "maxParallel": 1,
+  "setupTimeoutMs": 2400000,
+  "helperTimeoutMs": 5100000,
+  "evidenceBytes": 536870912,
+  "rowEvidenceBytes": 134217728,
+  "observation": {
+    "pairs": 10,
+    "seed": 1544,
+    "activeMs": 30000,
+    "armTimeoutMs": 360000,
+    "timerTimeoutMs": 180000,
+    "cpuRate": 1,
+    "reportBytes": 4194304,
+    "timerBytes": 1048576,
+    "analysisBytes": 16777216,
+    "overheadLimit": 0.05,
+    "profile": "fresh profile",
+    "fixtureAccess": "server",
+    "hitchJournal": false,
+    "cpuProfile": false,
+    "heap": false,
+    "screenshots": false,
+    "crossOriginIsolationOverride": false
+  },
+  "release": {
+    "scope": "app-diagnostics-overhead-only",
+    "sourceCohort": "diagnostics-candidatede332-endpoint-box-v1",
+    "candidateRevision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+    "gameplayPerformanceQualification": false,
+    "hitchJournalOverheadQualification": false,
+    "priorProofInspected": false,
+    "noUnclosedOwners": false,
+    "allPriorPlannedJobsClosed": false,
+    "status": "held-for-review",
+    "dispatch": {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "ref": "refs/heads/main",
+      "lane": "app-overhead"
+    },
+    "firstEightRequired": false,
+    "clockErrorAssumption": "observed-minimum-step-bounds-duration-error",
+    "unconditionalClockGuarantee": false,
+    "evidence": []
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-diagnostics.mjs",
+      "bytes": 30902,
+      "sha256": "41320b2fc499f91186712539b415a7e4dca49a66ea32b1afdbace85386464d8a"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "bytes": 19115,
+      "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "bytes": 18407,
+      "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 74932,
+      "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-diagnostics-analysis.mjs",
+      "bytes": 19029,
+      "sha256": "0c0a9686868ee58febf27c47f207aa1d99c37513c2a9d5cefa4a5392a31387ae"
+    },
+    {
+      "path": "scripts/solo-observation-lifecycle.mjs",
+      "bytes": 1313,
+      "sha256": "3b94fa9c52f4356a0fcaded21863bb47c1e26c031e4a59efb38a3216aea14554"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    },
+    {
+      "path": "scripts/solo-overhead-interval.mjs",
+      "bytes": 4062,
+      "sha256": "bd9a53ab4b52169289b3d31b9217690e7cc41b07cff3966b4619c84328508f34"
+    }
+  ],
+  "analysisMethod": "paired-p95-endpoint-box-v1"
+}

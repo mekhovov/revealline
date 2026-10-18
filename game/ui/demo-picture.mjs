@@ -298,6 +298,8 @@ export function concealDemoPixels(data, width, height) {
  * Read/decode failures return null, never the raw original. */
 export function createDemoPictureFilter({
   canvasFactory = () => document.createElement('canvas'),
+  onContextLoss = () => {},
+  onContextRestored = () => {},
 } = {}) {
   let source = null,
     signature = '',
@@ -306,8 +308,24 @@ export function createDemoPictureFilter({
     base = null,
     noiseSeed = 0,
     pixels = null,
-    lastFrame = -1;
+    lastFrame = -1,
+    lost = false;
+  const contextLost = () => {
+    lost = true;
+    onContextLoss({ source: 'demo-picture', owner: blurred });
+  };
+  const contextRestored = () => {
+    const owner = blurred;
+    lost = false;
+    clear();
+    onContextRestored({ source: 'demo-picture', owner });
+  };
   function clear() {
+    const owner = blurred,
+      wasLost = lost;
+    lost = false;
+    blurred?.removeEventListener?.('contextlost', contextLost);
+    blurred?.removeEventListener?.('contextrestored', contextRestored);
     if (blurred) {
       blurred.width = 0;
       blurred.height = 0;
@@ -317,6 +335,7 @@ export function createDemoPictureFilter({
     blurred = context = base = pixels = null;
     noiseSeed = 0;
     lastFrame = -1;
+    if (wasLost) onContextRestored({ source: 'demo-picture', owner, retired: true });
   }
   function fail() {
     const failedSource = source,
@@ -327,6 +346,7 @@ export function createDemoPictureFilter({
     return null;
   }
   function update(frame) {
+    if (lost) return null;
     if (!blurred || frame === lastFrame) return blurred;
     try {
       applyAnalogSignalNoise(base, blurred.width, blurred.height, frame, pixels.data, {
@@ -341,6 +361,18 @@ export function createDemoPictureFilter({
     }
   }
   return Object.freeze({
+    resourceSnapshot() {
+      const count = (blurred?.width ?? 0) * (blurred?.height ?? 0);
+      // Deduplicate backing buffers without allocating during drawing.
+      const buffers = new Set([base?.buffer, pixels?.data?.buffer].filter(Boolean));
+      return {
+        canvases: Number(count > 0),
+        pixels: count,
+        rgbaBytesEstimate: count * 4,
+        lost,
+        pixelBufferBytes: [...buffers].reduce((total, buffer) => total + buffer.byteLength, 0),
+      };
+    },
     clear,
     select(image, policy = 'clear', { time = 0, animate = false } = {}) {
       if (!['clear', 'blurred'].includes(policy))
@@ -359,8 +391,11 @@ export function createDemoPictureFilter({
         const ratio = Math.min(1, 512 / Math.max(image.width, image.height));
         canvas.width = Math.max(1, Math.round(image.width * ratio));
         canvas.height = Math.max(1, Math.round(image.height * ratio));
+        blurred = canvas;
         const ctx = canvas.getContext('2d', { willReadFrequently: true });
-        if (!ctx) return null;
+        if (!ctx) return fail();
+        canvas.addEventListener?.('contextlost', contextLost);
+        canvas.addEventListener?.('contextrestored', contextRestored);
         ctx.imageSmoothingEnabled = true;
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);

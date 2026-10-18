@@ -6,6 +6,23 @@ import {
   required,
 } from '../../game/data-json.mjs';
 import RAPIER from './vendor/rapier/rapier.mjs';
+import {
+  AIRCRAFT_BACKEND,
+  AIRCRAFT_REGIONAL_BACKEND,
+  AIRCRAFT_BACKENDS,
+  AIRCRAFT_SNAPSHOT_FORMAT,
+  createAircraftSimulation,
+  aircraftFlightIdentities,
+  replayAircraftRecording,
+  verifyAircraftRecovery,
+} from './advanced-aircraft-runtime.mjs';
+import {
+  AIRCRAFT_RECORDING_FORMAT,
+  AIRCRAFT_RECORDING_BYTES,
+  AIRCRAFT_SNAPSHOT_BYTES,
+} from './aircraft-recording.mjs';
+import { validateAircraftPhysics, createAircraftControllerTune } from './aircraft-physics.mjs';
+export { AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND } from './advanced-aircraft-runtime.mjs';
 import { initWorldRuntime, WORLD_COLLISION_BACKEND } from './world-collision.mjs';
 import {
   ADVANCED_AXES,
@@ -122,6 +139,7 @@ export const ADVANCED_AIRCRAFT_TEMPLATES = deepFreeze({
 });
 
 export function createAdvancedAircraftTune(source = 'freestyle') {
+  if (source?.format === 'AdvancedAircraft.v2') return createAircraftControllerTune(source);
   const airframe = validateAdvancedAircraft(source),
     tune = clone(DEFAULT_ADVANCED_TUNE);
   const inertiaAxis = { roll: 'z', pitch: 'x', yaw: 'y' };
@@ -140,6 +158,7 @@ export function createAdvancedAircraftTune(source = 'freestyle') {
 }
 
 export function validateAdvancedAircraft(source = 'freestyle') {
+  if (source?.format === 'AdvancedAircraft.v2') return validateAircraftPhysics(source);
   if (typeof source === 'string') source = ADVANCED_AIRCRAFT_TEMPLATES[source];
   const value = boundedJSON(source, { maxBytes: 8192, maxNodes: 100, maxDepth: 5 });
   exactKeys(value, Object.keys(ADVANCED_AIRCRAFT_TEMPLATES.freestyle), 'Advanced aircraft');
@@ -188,6 +207,8 @@ export function validateAdvancedAircraft(source = 'freestyle') {
 /** Derive comparison policy from the actual frozen runtime configuration, never
  * independent UI defaults. Integrity identities keep their published meaning. */
 export function advancedFlightIdentities(source, { terrainIdentity = null } = {}) {
+  if (AIRCRAFT_BACKENDS.includes(source?.backend))
+    return aircraftFlightIdentities(source, { terrainIdentity });
   const config = boundedJSON(source, {
     maxBytes: 256 * 1024,
     maxNodes: 20000,
@@ -356,6 +377,11 @@ export const initAdvancedRuntime = initWorldRuntime;
  * is always 50 Hz. A nominal high physics frequency does not imply new USB
  * samples: the consumed sequence is exposed and recorded explicitly. */
 export function createAdvancedSimulation(options = {}) {
+  if (
+    options.aircraft?.format === 'AdvancedAircraft.v2' ||
+    AIRCRAFT_BACKENDS.includes(options.backend)
+  )
+    return createAircraftSimulation(options);
   const terrainEnabled = options.terrain !== undefined;
   if (terrainEnabled) {
     exactKeys(options.terrain, ['format'], 'Advanced terrain mode');
@@ -1518,6 +1544,16 @@ export function createAdvancedSimulation(options = {}) {
  * checked by restore, while all consumed dynamics must match an exact replay.
  * Run this in a disposable worker so cancellation terminates the replay. */
 export async function verifyAdvancedRecovery(source, { expectedIdentity } = {}) {
+  if (typeof source === 'string')
+    source = boundedJSON(source, {
+      maxBytes: AIRCRAFT_SNAPSHOT_BYTES,
+      maxNodes: 4000000,
+      maxArray: 500000,
+      maxString: 12 * 1024 * 1024,
+      maxDepth: 40,
+    });
+  if (source?.format === AIRCRAFT_SNAPSHOT_FORMAT)
+    return verifyAircraftRecovery(source, { expectedIdentity });
   const saved = boundedJSON(source, {
     maxBytes: ADVANCED_REGIONAL_SNAPSHOT_BYTES,
     maxNodes: 2000000,
@@ -1569,6 +1605,20 @@ export async function replayAdvancedRecording(
   source,
   { rateEvaluator, throughMission, includeTelemetry = false, onMissionTelemetry } = {},
 ) {
+  if (typeof source === 'string')
+    source = boundedJSON(source, {
+      maxBytes: AIRCRAFT_RECORDING_BYTES,
+      maxNodes: 3000000,
+      maxArray: 500000,
+      maxString: 12 * 1024 * 1024,
+      maxDepth: 40,
+    });
+  if (source?.format === AIRCRAFT_RECORDING_FORMAT)
+    return replayAircraftRecording(source, {
+      throughMission,
+      includeTelemetry,
+      onMissionTelemetry,
+    });
   required(typeof includeTelemetry === 'boolean', 'Invalid replay telemetry option');
   required(
     onMissionTelemetry === undefined || typeof onMissionTelemetry === 'function',

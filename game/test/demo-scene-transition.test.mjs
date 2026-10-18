@@ -72,3 +72,53 @@ test('Next during arrival preserves its dimming and accepts the displayed reward
   f.transition.paint(0.1);
   assert.ok(Number(f.canvas.style.opacity) < 1);
 });
+
+test('settled arrival and loading hold do not keep rewriting opacity', () => {
+  const f = fixture();
+  let writes = 0;
+  for (const surface of [f.canvas, f.veil])
+    surface.style = new Proxy(surface.style, {
+      set(target, key, value) {
+        writes++;
+        target[key] = value;
+        return true;
+      },
+    });
+  f.transition.begin();
+  for (let index = 0; index < 6; index++) f.transition.paint(0.1);
+  const loadingWrites = writes;
+  for (let index = 0; index < 60; index++) f.transition.paint(1 / 60);
+  assert.equal(writes, loadingWrites, 'A settled loading veil needs no opacity mutations.');
+  assert.equal(f.canvas.style.opacity, '0');
+  f.transition.ready();
+  for (let index = 0; index < 6; index++) f.transition.paint(0.1);
+  assert.equal(f.canvas.style.opacity, '1');
+  const arrivedWrites = writes;
+  for (let index = 0; index < 60; index++) f.transition.paint(1 / 60);
+  assert.equal(writes, arrivedWrites, 'A completed arrival needs no opacity mutations.');
+  f.transition.begin();
+  f.transition.paint(0.1);
+  assert.ok(writes > arrivedWrites, 'A new departure still starts its real transition.');
+  assert.equal(f.canvas.style.opacity, '0');
+});
+
+test('resource diagnostic retains only the currently allocated transition surface', () => {
+  const f = fixture();
+  assert.equal(f.transition.resourceSnapshot().pixels, 0);
+  f.transition.begin();
+  const held = f.transition.resourceSnapshot();
+  assert.deepEqual(held, {
+    canvases: 1,
+    pixels: 768 * 576,
+    rgbaBytesEstimate: 768 * 576 * 4,
+    loading: true,
+  });
+  for (let i = 0; i < 20; i++) assert.deepEqual(f.transition.resourceSnapshot(), held);
+  assert.equal(f.sampled(), f.canvas);
+  f.transition.clear();
+  assert.equal(f.transition.resourceSnapshot().pixels, 0);
+  f.transition.begin();
+  assert.equal(f.transition.resourceSnapshot().canvases, 1);
+  f.transition.dispose();
+  assert.equal(f.transition.resourceSnapshot().canvases, 0);
+});

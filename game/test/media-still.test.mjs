@@ -17,6 +17,34 @@ const pngHeader = (width, height) => {
   return b;
 };
 
+test('binary still imports need no base64 conversion and keep exact bytes, hash and decode', async (t) => {
+  const originals = rasterFixtures();
+  for (const name of ['btoa', 'atob']) {
+    const descriptor = Object.getOwnPropertyDescriptor(globalThis, name);
+    Object.defineProperty(globalThis, name, {
+      configurable: true,
+      value: () => assert.fail('Owned original bytes must not make a base64 round trip.'),
+    });
+    t.after(() => Object.defineProperty(globalThis, name, descriptor));
+  }
+  for (const { mime, bytes } of originals) {
+    let decodes = 0;
+    const prepared = await prepareStillAsset(new Blob([bytes]), metadata(), {
+      decodeImage: async (blob) => {
+        decodes++;
+        assert.equal(blob.type, mime);
+        assert.deepEqual(Buffer.from(await blob.arrayBuffer()), bytes);
+        return dimensions();
+      },
+    });
+    assert.equal(decodes, 1);
+    assert.equal(prepared.asset.sha256, hash(bytes));
+    assert.equal(prepared.asset.mime, mime);
+    assert.equal(prepared.asset.bytes, bytes.length);
+    assert.deepEqual(Buffer.from(await prepared.blob.arrayBuffer()), bytes);
+  }
+});
+
 test('static WebP keeps exact bytes and still requires complete matching decode', async () => {
   const { bytes } = rasterFixtures().find((row) => row.extension === 'webp');
   const result = await prepareStillAsset(new Blob([bytes], { type: 'image/png' }), metadata(), {
