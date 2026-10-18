@@ -14,13 +14,13 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "F16 rebase",
-    "F81/F05/F17/F82/F14 exact-head review",
-    "F75",
-    "F11a",
-    "F15b",
-    "F01",
-    "F12",
+    "F11a authored export blocker",
+    "F05 rebase and exact-head review",
+    "F82 retired diagnostic registration blocker",
+    "F01 Capture context",
+    "F15b audio warning ownership",
+    "F11b guided restore",
+    "F12 Community readiness",
     "F06"
   ],
   "release": {
@@ -87,17 +87,17 @@
       "impact": "H/H",
       "effort": "**1–2d**",
       "featureId": "F81",
-      "status": "draft_review",
+      "status": "ready_for_checks",
       "owner": "lane-a",
       "qualification": {
         "automated": "focused_passed_with_documented_baseline_failure",
         "browser": "scoped_passed",
         "physical": "not_tested"
       },
-      "blocker": null,
+      "blocker": "Merge observation saw changing check inventory; no check bypass.",
       "pr": "https://github.com/mekhovov/revealline/pull/1618",
       "commit": "de0cecf192c6c6a2844a8f29776082cc5bc728a0",
-      "next": "Complete independent CI review; baseline recovery-display assertion failure is recorded separately.",
+      "next": "Required checks are passing; wait for a stable exact-head inventory and release-ready queue reconciliation.",
       "evidence": [
         "Red/green reproduction on clean20555cd; child close refreshes existing restrictions without changing saved flight.",
         "Expanded focused suites159/160: unchanged recovery-display storage-listener assertion also fails on clean20555cd. Changed tests, lint, validation and changed formatting pass.",
@@ -167,9 +167,33 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Add durable-save feedback/retry for continuous-play preferences and preserve dirty local choices across unrelated storage events; track wider/D-dependent work separately.",
+      "next": "Finish audio save-warning ownership; integrate menu-animation dirty preference handling after shared feedback API merges. Demo owner remains D-dependent.",
       "evidence": [
         "Injected failed write silently leaves an auto-next preference only in memory; unrelated other-tab preference write currently resets it. Core slice preserves dirty keys and verifies retry readback. Display and input owners already handle some persistence failures; avoid duplicating them."
+      ],
+      "implementationSlices": [
+        {
+          "id": "continuous-play",
+          "status": "ready_for_checks",
+          "pr": "https://github.com/mekhovov/revealline/pull/1629",
+          "commit": "9b8aade8b877d9efe72aa4fb7acdfe3930c5fac1",
+          "evidence": "83 focused checks and 9 regressions; real owner/view with modeled full/blocked storage and cross-tab changes, retry verification, focus and EN/UK 320px component layout inspected."
+        },
+        {
+          "id": "audio-warning-ownership",
+          "status": "developing",
+          "evidence": "Clear a stale save warning only while the successful retry still owns it; verify adapter readback."
+        },
+        {
+          "id": "menu-animation",
+          "status": "planned",
+          "dependency": "continuous-play shared feedback API merged"
+        },
+        {
+          "id": "demo-settings",
+          "status": "planned",
+          "dependency": "D reviewed shared Demo predecessor"
+        }
       ]
     },
     {
@@ -216,7 +240,9 @@
       "pr": null,
       "commit": null,
       "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "evidence": [
+        "Read-only assessment: Rooms already preflights protocol/catalogue with a bounded timeout and local fallback. Community has /ready but current setup has no equivalent bounded preflight. Readiness must remain distinct from sign-in and publish permissions."
+      ]
     },
     {
       "id": "F16",
@@ -226,17 +252,17 @@
       "impact": "M/M",
       "effort": "**1–2d**",
       "featureId": "F16",
-      "status": "draft_review",
+      "status": "ready_for_checks",
       "owner": "lane-c",
       "qualification": {
         "automated": "focused_passed",
         "browser": "component_fixture_passed",
         "physical": "not_tested"
       },
-      "blocker": "Shared locale catalog conflicts with newer main; owner is rebasing.",
+      "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1617",
-      "commit": "a24dcf7b86ce45a34bc7fd5d237390a9f1d51d12",
-      "next": "Resolve current-main catalog conflict without dropping predecessor keys; rerun focused gates and exact-head CI. Real playback-failure/listening remains separate.",
+      "commit": "1daf5b0c2e4cfac1f61c79e1202bc5c10358c9b4",
+      "next": "Rebase complete on 461ace72; exact-head CI and merge reconciliation. Real playback/listening remains separate.",
       "evidence": [
         "259 audio/player/policy tests and57 localization checks pass; full i18n,lint,changed formatting,diff checks pass.",
         "Real browser with actual panel and modeled transport: Retry remains focused while loading, then returns to Play after success; music-only pause preserves master mute/volume and library generation.",
@@ -251,7 +277,7 @@
       "impact": "H/M",
       "effort": "**2–3d**",
       "featureId": "F17",
-      "status": "draft_review",
+      "status": "ready_for_checks",
       "owner": "lane-c",
       "qualification": {
         "automated": "focused_passed",
@@ -276,19 +302,21 @@
       "impact": "H/M",
       "effort": "**2–4d**",
       "featureId": "F75",
-      "status": "developing",
+      "status": "ready_for_checks",
       "owner": "lane-a",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "focused_passed",
+        "browser": "scoped_passed",
         "physical": "not_tested"
       },
       "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Implement paused Flight saves and advance limits warnings using existing owner-specific rules and export routes.",
+      "pr": "https://github.com/mekhovov/revealline/pull/1630",
+      "commit": "61ddf9aaf4a18d7c57210d67f5ba1bbc670a0ed9",
+      "next": "Required CI and merge reconciliation; no 30-minute real-device acceptance claimed.",
       "evidence": [
-        "Recording cap is 30 minutes. The two-hour validator belongs to legacy collection statistics, not all authored Journey progress. Do not imply broader expiration."
+        "Recording cap is 30 minutes. The two-hour validator belongs to legacy collection statistics, not all authored Journey progress. Do not imply broader expiration.",
+        "8 new limit tests include legal simulated 30-minute run, one advance warning, pause budget preservation, cap behavior and byte-identical earlier checkpoint; 96 regressions plus lint/validate/format pass.",
+        "Real paused First return at 1:14: Flight saves → Saves → Export attempt → Close preserves time/lives/score and returns focus. Final Capture-only stylesheet extraction independently reviewed."
       ]
     },
     {
@@ -341,8 +369,8 @@
       "impact": "H/H",
       "effort": "**4–7d**",
       "featureId": "F01",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-a",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -351,8 +379,10 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Capture-scoped family/mode context using existing Home and library owners; inventory other hosts before claiming full coverage.",
+      "evidence": [
+        "Mission library already owns focus-only selection, launch and Back; Overflight already groups Survival/Raid operations. Extend existing owners; do not introduce a second chooser or rename established game identities."
+      ]
     },
     {
       "id": "F02a",
@@ -656,17 +686,17 @@
       "impact": "H/H",
       "effort": "**3–5d**; independent of F14",
       "featureId": "F82",
-      "status": "draft_review",
+      "status": "ready_for_checks",
       "owner": "lane-b",
       "qualification": {
         "automated": "focused_and_committed_build_passed",
         "browser": "scoped_startup_recovery_passed",
         "physical": "not_tested"
       },
-      "blocker": null,
+      "blocker": "Expired PR1544 one-shot diagnostic workflows register skipped sustained checks; strict merge controller rejects them.",
       "pr": "https://github.com/mekhovov/revealline/pull/1616",
       "commit": "d706a1280248ffd61fadc1a05f92f58c91db1090",
-      "next": "Review required exact-head CI and prepared deployment capacity. Offline selected-content and physical qualification stay separate.",
+      "next": "Resolve retired workflow registration separately, then rebase and rerun exact-head gates. Keep prepared deployment and physical acceptance separate.",
       "evidence": [
         "103 focused recovery/update tests and54 build/closure tests pass; lint and full content validation pass.",
         "Exact committed build succeeds:3556files; ZIP SHA25658bc16d5d1c4fdcdf258bd3fc3fe51e7fa29bd1357b0d14ba93dafcd59ce0a50. Core1707files/73432886bytes;23startup documents.",
@@ -793,16 +823,18 @@
       "status": "developing",
       "owner": "lane-b",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "focused_passed_before_browser_blocker",
+        "browser": "blocker_found",
         "physical": "not_tested"
       },
-      "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Archive existing exact backup bytes plus current Journey owner export, inventory and exclusions; preserve separate review/import routes.",
+      "blocker": "Default authored Journey rejects the legacy backup set. Explicit authored media-only archive owner fix in development.",
+      "pr": "https://github.com/mekhovov/revealline/pull/1627",
+      "commit": "f67d5fde12b6138b290932a4d50b5bce530e0d64",
+      "next": "Finish authored-owner fix, rerun actual default-Journey export review, then start F11b.",
       "evidence": [
-        "Start from current main including merged PR1608 Journey exportAsync. Existing four domain files plus coverage do not by themselves include Journey; inventory must declare actual coverage."
+        "Start from current main including merged PR1608 Journey exportAsync. Existing four domain files plus coverage do not by themselves include Journey; inventory must declare actual coverage.",
+        "80 initial archive/Journey/export tests and gates passed; actual default Whole Spatial Home → Settings → Progress → Saves exposed authored legacy-backup guard.",
+        "Fix omits incompatible legacy game-data JSON explicitly while retaining shared-media and Journey exports. Preserve legacy import guards; arbitrary storage failures must still fail."
       ]
     },
     {
@@ -834,21 +866,22 @@
       "impact": "H/H",
       "effort": "**4–6d**",
       "featureId": "F14",
-      "status": "draft_review",
+      "status": "ready_for_checks",
       "owner": "lane-b",
       "qualification": {
         "automated": "focused_passed",
-        "browser": "pending_component_review",
+        "browser": "component_fixture_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1624",
-      "commit": "33d2d747595e3d590984cd38c9d7ad2635729e9a",
-      "next": "Independent exact-head review and required CI; qualify remaining integration boundaries separately.",
+      "commit": "b7bf4bb4e7549a10cd05fce0d98bd93d75491e90",
+      "next": "Required exact-head CI and merge reconciliation; installed-package and physical acceptance remain separate.",
       "evidence": [
         "51 focused readiness/state/host tests pass; verified health calls use verify=true. Generations discard stale/cross-tab results.",
         "Lint, full content validation and changed-file formatting pass. Full format has eight unchanged baseline failures.",
-        "No full committed build or physical iPhone qualification claimed."
+        "No full committed build or physical iPhone qualification claimed.",
+        "Actual component with modeled states: EN/UK verified core, different selected edition, missing-files repair, waiting update and unavailable storage inspected. Rebase preserves component/CSS; exact industrial assets hydrated for validation."
       ]
     },
     {
@@ -2473,6 +2506,11 @@
       "date": "2026-10-18",
       "item": "F75",
       "reason": "Scope two-hour collection warning only to its actual legacy owner; Journey event semantics differ."
+    },
+    {
+      "date": "2026-10-18",
+      "item": "Delivery review",
+      "reason": "Seven feature PRs ready for checks; authored archive blocker found in actual browser; F15b split into explicit owner slices. Disk pressure resolved by sparse checkout and removal of this task’s retained generated package after checksum receipts."
     }
   ]
 }
