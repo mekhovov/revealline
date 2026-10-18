@@ -17,7 +17,9 @@ const sourcePin = '9393fa79e1c67c74edc26b610d65a4f7ed73d345a762465cc88340a33a245
 const A =
   'http://127.0.0.1:12345/revealline/practice/civilian-fpv/releases/v0.142.4/site/optional-practice/civilian-fpv/index.html?lang=en';
 const B = A.split('?')[0];
-function fixture() {
+function fixture(packageId = 'civilian-fpv') {
+  const aURL = A.replaceAll('civilian-fpv', packageId),
+    bURL = B.replaceAll('civilian-fpv', packageId);
   const f = {
     commands: [],
     receipt: {},
@@ -52,8 +54,8 @@ function fixture() {
     evaluate: async (fn) => (fn.toString().includes('matchMedia') ? f.standalone : f.focused),
     evaluateHandle: async () => f.handle,
   });
-  f.a = page(A);
-  f.b = page(B);
+  f.a = page(aURL);
+  f.b = page(bURL);
   f.sessions = ['A', 'B'].map((id, index) => ({
     send: async (method, params) => {
       f.commands.push({ id, method, params });
@@ -62,7 +64,7 @@ function fixture() {
           targetInfo: {
             targetId: id,
             type: 'page',
-            url: index ? B : A,
+            url: index ? bURL : aURL,
             browserContextId: 'owned-context',
           },
         };
@@ -96,8 +98,8 @@ function fixture() {
     context: f.context,
     previousPage: f.a,
     updatePage: f.b,
-    expectedPreviousURL: A,
-    expectedUpdateURL: B,
+    expectedPreviousURL: aURL,
+    expectedUpdateURL: bURL,
     mode: PWA_ACTIVATION_MODE,
     playwrightSourceSha256: sourcePin,
     receipt: f.receipt,
@@ -112,6 +114,17 @@ function fixture() {
     });
   return f;
 }
+test('Gym and Worlds activation requires the explicitly matching finite package identity', async () => {
+  for (const id of ['civilian-flight', 'fpv-worlds']) {
+    const f = fixture(id);
+    await assert.rejects(configureHistoricalPWAActivation(f.options));
+    const guard = await configureHistoricalPWAActivation({ ...f.options, packageId: id });
+    assert.equal(f.receipt.packageId, id);
+    assert(f.receipt.scope.includes(id));
+    assert.equal((await disposeHistoricalPWAActivation(guard)).completed, true);
+    await assert.rejects(configureHistoricalPWAActivation({ ...f.options, packageId: 'unknown' }));
+  }
+});
 test('exact new opt-in, pinned localhost URLs, owned pages, standalone A are mandatory', async () => {
   for (const kind of [
     'mode',
@@ -434,15 +447,25 @@ test('integration keeps old dispatch intact; new headed-only branch has no minim
     source.indexOf('const pwaActivationEnabled ='),
     source.indexOf('const ordinaryWindowEnabled ='),
   );
-  const select = (mode, env) =>
+  const select = (mode, env, extra = {}) =>
     runInNewContext(selection, {
       assert,
       PWA_ACTIVATION_MODE,
       activeWindowMode: mode,
+      migrationEnabled: false,
+      migrationSessionPackage: null,
+      ...extra,
       process: { env },
       selectHistoricalWindowMode: () => false,
     });
   assert.doesNotThrow(() => select(PWA_ACTIVATION_MODE, {}));
+  assert.doesNotThrow(() =>
+    select(
+      PWA_ACTIVATION_MODE,
+      { OPTIONAL_INSTALLATION_MIGRATION: 'all-three-98ad851' },
+      { migrationEnabled: true, migrationSessionPackage: 'civilian-flight' },
+    ),
+  );
   for (const flag of [
     'OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS',
     'OPTIONAL_INSTALLATION_QUOTA_PROBE',

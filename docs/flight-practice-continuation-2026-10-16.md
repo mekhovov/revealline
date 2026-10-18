@@ -1,5 +1,10 @@
 # Flight practice: integrated-main continuation
 
+**Latest execution:** [18 October integrated results and remaining work](flight-practice-execution-2026-10-18.md)
+supersedes the read-only status and historical next steps below. It records the
+rebase, current 3,558-member build, 1,232 Practice passes, actual offline/guide/
+backup journeys, retained failures and unresolved native/human acceptance.
+
 Hosting and real hardware remain owner-deferred. This report advances local
 qualification without selecting a public release or approving human review gates.
 

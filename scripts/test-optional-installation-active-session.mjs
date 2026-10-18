@@ -134,7 +134,7 @@ test('cleanup returning after its unchanged one-second budget cannot report veri
 test('strict opt-in and historical URL reject current versions, foreign hosts and locales', () => {
   assert.equal(selectHistoricalActiveSession(undefined), false);
   assert.equal(selectHistoricalActiveSession(mode), true);
-  for (const value of ['', true, 'all', 'academy'])
+  for (const value of ['', true, 'all', 'academy', { toString: () => mode }])
     assert.throws(() => selectHistoricalActiveSession(value));
   assert.equal(validateHistoricalSessionURL(expectedURL), expectedURL);
   for (const value of [
@@ -175,6 +175,60 @@ test('motion requires positive height gain and rejects gravity falls or reset to
   assert(!historicalHeightIncreased(0.3, 0.2));
   assert(!historicalHeightIncreased(0.3, 0.3));
   assert.throws(() => historicalHeightIncreased(0, Infinity));
+});
+
+test('extra historical sessions require finite per-package opt-ins and matching immutable URLs', () => {
+  for (const [id, prefix] of [
+    ['civilian-flight', 'gym'],
+    ['fpv-worlds', 'worlds'],
+  ]) {
+    const url = expectedURL.replaceAll('civilian-fpv', id);
+    assert.equal(selectHistoricalActiveSession(`${prefix}-v0.142.4-98ad851`), true);
+    assert.equal(validateHistoricalSessionURL(url, id), url);
+    assert.throws(() => validateHistoricalSessionURL(url));
+    assert.throws(() => validateHistoricalSessionURL(expectedURL, id));
+  }
+  for (const id of ['', 'unknown', null, '../civilian-fpv'])
+    assert.throws(() => validateHistoricalSessionURL(expectedURL, id));
+});
+
+test('Gym witnesses require the visible exact assisted drill readout, not a hidden legacy FPV metric', () => {
+  const value = {
+    ...raw(),
+    courseIdentity: 'lift-and-land',
+    modeIdentity: 'assisted',
+    details: 'Position 10.0, 16.0 m · Height 0.20 m · Heading 0°',
+    homeVisible: false,
+  };
+  const options = { packageId: 'civilian-flight' };
+  assert.equal(parseVisibleHistoricalHUD(value, 'active', options).height, 0.2);
+  for (const patch of [
+    { homeVisible: true },
+    { detailsVisible: false },
+    { modeIdentity: 'self-level' },
+    { courseIdentity: 'other-drill' },
+    { details: 'Height 0.20 m' },
+    { details: 'Position 11.0, 16.0 m · Height 0.20 m · Heading 0°' },
+    { details: 'Position 10.0, 16.0 m · Height 0.20 m · Heading 90°' },
+    { details: 'Position 10.0, 16.0 m · Height 1.20 m · Heading 0°' },
+  ])
+    assert.throws(() => parseVisibleHistoricalHUD({ ...value, ...patch }, 'active', options));
+});
+
+test('Worlds uses the same real visible first-lesson gauge but rejects an overlaid menu', () => {
+  const value = { ...raw(), homeVisible: false, blockingDialogs: [] };
+  assert.equal(parseVisibleHistoricalHUD(value, 'active', { packageId: 'fpv-worlds' }).height, 0.2);
+  assert.throws(() =>
+    parseVisibleHistoricalHUD({ ...value, homeVisible: true }, 'active', {
+      packageId: 'fpv-worlds',
+    }),
+  );
+  assert.throws(() => parseVisibleHistoricalHUD(value, 'active', { packageId: 'unknown' }));
+  assert.throws(() =>
+    parseVisibleHistoricalHUD({ ...value, blockingDialogs: ['sim-settings'] }, 'active', {
+      packageId: 'fpv-worlds',
+    }),
+  );
 });
 
 /** Synthetic public-DOM unit fixture. Not simulated flight or browser evidence. */

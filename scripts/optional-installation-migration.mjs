@@ -1,6 +1,8 @@
 /** Strict, migration-only protocol. Admission and owned resource cleanup stay in the caller. */
 import assert from 'node:assert/strict';
 import { setTimeout as pause } from 'node:timers/promises';
+import { historicalSessionPackage } from './optional-installation-active-session.mjs';
+import { PWA_ACTIVATION_MODE } from './optional-installation-pwa-activation.mjs';
 import {
   INSTALLATION_WORLD_TITLE,
   assertInstallationWorldSeed,
@@ -13,8 +15,20 @@ export function selectHistoricalMigration(value, options) {
   assert.equal(value, MIGRATION_MODE, 'Unsupported historical migration protocol.');
   assert.equal(options.historical, true, 'Migration requires exact historical admission.');
   assert.equal(options.worldSeed, true, 'Migration requires the public saved-world seed.');
-  for (const key of ['download', 'quota', 'quotaPackages', 'activeSession', 'activeWindow'])
+  for (const key of ['download', 'quota', 'quotaPackages'])
     assert.equal(options[key], undefined, `Migration must run separately from ${key}.`);
+  if (options.activeSession !== undefined || options.activeWindow !== undefined) {
+    assert.notEqual(
+      historicalSessionPackage(options.activeSession),
+      'civilian-fpv',
+      'Academy retains its separate established session lane.',
+    );
+    assert.equal(
+      options.activeWindow,
+      PWA_ACTIVATION_MODE,
+      'Extra migration sessions require the finite native PWA activation lane.',
+    );
+  }
   return true;
 }
 

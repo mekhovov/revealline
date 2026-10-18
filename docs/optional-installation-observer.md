@@ -1,5 +1,28 @@
 # Optional practice installation observation
 
+## 18 October experimental extra-app session probes
+
+The finite `gym-v0.142.4-98ad851` and `worlds-v0.142.4-98ad851`
+`OPTIONAL_INSTALLATION_ACTIVE_SESSION` modes join only the existing fault-free
+`all-three-98ad851` migration lane, pinned historical input, saved-world seed and
+`owned-pwa-target-activation-98ad851` window mode. Academy's separate mode and
+all original deadlines remain unchanged. These opt-ins are diagnostic, not a
+new publishing authority or a completed all-app safety claim.
+
+Both probes require actual visible lesson HUD values, one public Arm/Start,
+trusted focus loss, the same document, explicit return/resume and further lift.
+Gym/Worlds menu pause is recorded separately without reading numbers covered by
+the menu. Pointer navigation is not general keyboard/controller qualification.
+Overlaid dialogs, unknown IDs, hidden HUD values and automatic Arm retries reject.
+
+Gym's native preparation (lift, menu pause, Continue, further lift) passes.
+Worlds' manual pointer route passes, but the bounded automated preparation still
+remains **disarmed after its first Arm**. Pointer-route and two-native-paint-frame
+experiments did not resolve it; the unproven paint workaround was removed.
+Investigation is paused pending review of that test approach. No full joined
+Gym/Worlds update run has passed, and none is inferred from unit tests. See the
+[execution checkpoint](flight-practice-execution-2026-10-18.md).
+
 This check validates frozen optional-package envelopes, hashes, selected source and
 complete dependency inventories before staging those exact bytes. It accepts local
 frozen candidates or original candidate CI downloads. It does not rebuild or publish
