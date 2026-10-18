@@ -340,6 +340,12 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
     assert.equal(settings.open, false, `${action} must leave Settings before flight`);
     assert.equal(h.view.snapshot().reason, 'prepared', action);
     assert.equal(h.view.snapshot().ticks, 0, action);
+    for (let tick = 0; tick < 12; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.notEqual(h.view.snapshot().status, 'active', `${action} must wait for explicit Arm`);
+    assert.equal(h.view.snapshot().ticks, 0, `${action} must not advance while ready`);
     h.$('arm').click();
     for (let tick = 0; tick < 8; tick++) {
       h.tick();
@@ -2051,6 +2057,74 @@ async function openAcademyTuning(h) {
   await new Promise((resolve) => setImmediate(resolve));
   assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
 }
+
+for (const configuration of ['Legacy', 'Actual'])
+  test(`Academy Apply & restart retains ${configuration} settings and waits for explicit Arm`, async (t) => {
+    const data = new Map();
+    let holdPreparation = false,
+      releasePreparation;
+    const h = await fixture(t, {
+      storage: {
+        getItem: (key) => data.get(key) ?? null,
+        setItem: (key, value) => data.set(key, value),
+      },
+      rendererFactory: () => ({
+        available: true,
+        setCourse() {},
+        setPath() {},
+        draw() {},
+        dispose() {},
+        async prepare() {
+          if (holdPreparation)
+            await new Promise((resolve) => {
+              releasePreparation = resolve;
+            });
+          return true;
+        },
+      }),
+    });
+    h.$('arm').click();
+    h.tick(6);
+    assert.ok(h.view.snapshot().ticks > 0);
+    h.view.pause();
+    await openAcademyTuning(h);
+    if (configuration === 'Actual') {
+      const algorithm = academyTuningControl(h, 'Rate algorithm', 'select');
+      algorithm.value = 'actual';
+      algorithm.emit('change');
+    }
+    const camera = academyTuningControl(h, 'Vertical FOV (degrees)');
+    camera.value = '103';
+    camera.emit('input');
+    holdPreparation = true;
+    await academyTuningClick(h, 'Apply & restart');
+    await waitFor(() => Boolean(releasePreparation), {
+      message: 'Academy replacement preparation',
+    });
+    assert.equal(h.$('arm').disabled, true);
+    assert.notEqual(h.view.snapshot().status, 'active');
+    holdPreparation = false;
+    releasePreparation();
+    await h.view.settled();
+    h.tick(12);
+    assert.notEqual(h.view.snapshot().status, 'active');
+    assert.equal(h.view.snapshot().ticks, 0);
+    assert.equal(h.$('camera-fov').value, '103');
+    const saved = JSON.parse(data.get('revealline.fpv.tuning.v1'));
+    const setup = saved.setups.find((item) => item.id === saved.selectedSetupId);
+    const profile = saved.profiles.find(
+      (item) => item.id === (setup.profileId ?? saved.defaultProfileId),
+    );
+    assert.deepEqual(h.view.exportAttempt().response, profile.response);
+    assert.equal(
+      profile.response.format,
+      configuration === 'Legacy' ? 'FlightResponseProfile.v1' : 'FlightResponseProfile.v2',
+    );
+    h.$('arm').click();
+    h.tick(8);
+    assert.equal(h.view.snapshot().status, 'active');
+    assert.ok(h.view.snapshot().ticks > 0);
+  });
 
 test('Academy mode, reset and input changes preserve the tested draft until a normal course launch', async (t) => {
   const [tuning, workers] = await Promise.all([
