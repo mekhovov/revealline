@@ -472,7 +472,7 @@ test('every job retains its invoked shared source checkout script in sparse tool
   };
   const jobsStart = workflow.indexOf('\njobs:\n');
   assert(jobsStart >= 0);
-  const lanes = [...workflow.slice(jobsStart).matchAll(/^  ([a-z][a-z0-9-]*):$/gm)].map(
+  const lanes = [...workflow.slice(jobsStart).matchAll(/^  ([A-Za-z_][A-Za-z0-9_-]*):$/gm)].map(
     (match) => match[1],
   );
   assert(lanes.length > 0);
