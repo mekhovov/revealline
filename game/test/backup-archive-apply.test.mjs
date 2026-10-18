@@ -74,6 +74,52 @@ test('failed or partial steps retain earlier success, block later steps and can 
   assert.match(h.$('summary').textContent, /Saved 2 of 4/);
 });
 
+test('consecutive Keep choices focus the next unfinished component and finish on the summary', () => {
+  const h = setup(() => {
+    assert.fail('Keeping current data must not invoke an import owner.');
+  });
+  const ids = ['media', 'story', 'audio', 'journey'];
+  for (const [index, id] of ids.entries()) {
+    h.$(`keep-${id}`).focus();
+    assert.equal(h.$(`keep-${id}`).onclick(), true);
+    assert.equal(
+      h.doc.activeElement,
+      index < ids.length - 1 ? h.$(`review-${ids[index + 1]}`) : h.$('summary'),
+    );
+    assert.equal(h.$(`review-${id}`).disabled, false, 'Deliberate re-review remains available.');
+  }
+  assert.match(h.$('summary').textContent, /Saved 0 of 4.*kept unchanged: 4/);
+});
+
+test('successful reviews continue past kept components without removing their deliberate retry', async () => {
+  const h = setup(async () => ({ state: 'saved' }));
+  h.$('keep-media').onclick();
+  h.$('review-story').focus();
+  await h.$('review-story').onclick();
+  assert.equal(h.doc.activeElement, h.$('review-audio'));
+  h.$('keep-audio').focus();
+  h.$('keep-audio').onclick();
+  assert.equal(h.doc.activeElement, h.$('review-journey'));
+  await h.$('review-journey').onclick();
+  assert.equal(h.doc.activeElement, h.$('summary'));
+  h.$('review-media').focus();
+  await h.$('review-media').onclick();
+  assert.equal(h.doc.activeElement, h.$('summary'));
+  assert.equal(h.$('review-audio').disabled, false);
+  assert.match(h.$('summary').textContent, /Saved 3 of 4.*kept unchanged: 1/);
+});
+
+test('Keep does not move focus from another current control', () => {
+  const h = setup(async () => ({ state: 'saved' })),
+    other = h.doc.createElement('button');
+  h.root.append(other);
+  other.focus();
+  h.$('keep-media').onclick();
+  assert.equal(h.doc.activeElement, other);
+  h.$('keep-story').onclick();
+  assert.equal(h.doc.activeElement, other);
+});
+
 test('a pending owner commit blocks other steps, then records actual completion without stealing newer focus', async () => {
   const wait = deferred(),
     h = setup(() => wait.promise),
