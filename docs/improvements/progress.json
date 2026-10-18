@@ -912,16 +912,17 @@
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": "Successor capacity/controller corrections implemented; independent review, exact validation/package/browser pending.",
+      "blocker": "Exact expanded package/build browser qualification pending; required CI queued.",
       "pr": "https://github.com/mekhovov/revealline/pull/1663",
       "commit": "c1f56c90529613c95376a92aa74e758cdff4de87",
-      "next": "Independently review bounded retention correction; final full validation, one expanded-package build and actual saved-flight browser review.",
+      "next": "Finish single expanded package and inspect actual Save→reopen→paused Restore→Continue, writer contention and failure boundaries.",
       "evidence": [
         "Assessment replay feasibility: legal earned run 19,856 ticks yields about1MiB command tuples; legitimate runs have no total duration cap. Favor bounded typed state over unbounded replay; keep trusted graph oracle test-only. Initial production codec/round-trip work underway.",
         "Typed bounded production decoder, exact package closure, atomic slot, paused adoption and durable records/mastery receipts implemented;113 focused+98 shared tests pass on initial candidate.",
         "Independent28 storage/process/records/mastery tests pass. A valid full256-context record profile rejects context257 and leaves recovery permanently finishing; preserve journal and fix bounded retention. Existing controller Home action must include Saved flight.",
         "Full validation found a real generated SIM dependency closure omission; regenerate and validate successor before package admission. No actual package or hardware claim.",
-        "Successorc1f56c fixes bounded records retention and shared Home controller action.116 focused and198 shared/generated-SIM tests pass, full lint/changed format pass; final full validate and independent retention review pending."
+        "Successorc1f56c fixes bounded records retention and shared Home controller action.116 focused and198 shared/generated-SIM tests pass, full lint/changed format pass; final full validate and independent retention review pending.",
+        "Independent18 retention/receipt/suspend checks pass on c1f56c; full-capacity terminal result recovery and next-save path resolved. Full validate passes. First package attempt stopped on missing sparse soundtrack evidence; unchanged21files/97,994bytes hydrated, no source change or assertion bypass; same exact production preparation restarted."
       ]
     },
     {
@@ -1056,7 +1057,7 @@
       "effort": "**3–5d**, including the controller addition",
       "featureId": "F58",
       "status": "developing",
-      "owner": "lane-b",
+      "owner": "integration",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -1065,9 +1066,10 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Primary shell slice ready; implement separate Snake adapter using its existing sampled two-seat state, then review remaining host adapters.",
+      "next": "Admit primary1661 then reconcile reviewed Snake1664. Plan remaining Capture Duel/Team, Survival, SIM, Rooms and optional host adapters with their own existing controller owners.",
       "evidence": [
-        "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified."
+        "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified.",
+        "Snake751 actual931-byte JSON SHA256df0a935c5beab237a9f95961453c10c67457915b30e4f934648741af13c676a2 equals inspected preview; no URL/input/save contents. Back keeps paused Home/Continue and Settings focus; reopen clears summary. Normal hub direct entry auto-started; wall defeat/auto-retry occurred before pausing, so no earned win/checkpoint-byte claim."
       ],
       "implementationSlices": [
         {
@@ -1079,9 +1081,11 @@
         },
         {
           "id": "snake-host",
-          "status": "developing",
+          "status": "draft_review",
           "dependency": "PR1661 exact47c8693a",
-          "evidence": "Reuse shared preview/export; aggregate only latest controller fields observed by Snake polling. Unobserved neutral/Confirm states stay unavailable; no extra polling."
+          "evidence": "139 focused/full source gates and13 independently rerun summary/host checks pass. Actual Team host paused report, EN/UK refresh, Close/reopen clearing and931-byte download-preview equality pass. Hardware/native/controller readiness and other Snake variants remain modeled separately.",
+          "pr": "https://github.com/mekhovov/revealline/pull/1664",
+          "commit": "751468ec94eaa898029242d567f7d4f86ac15f2c"
         }
       ]
     },
@@ -1240,13 +1244,14 @@
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": "Final async save-lock/Retry browser review and exact-head CI pending.",
+      "blocker": "Exactfff full repository validation still running; final browser review passed.",
       "pr": null,
       "commit": null,
-      "next": "Finish Duel concurrent-owner Web Lock fix and async departure/Retry review; then Team six-action policy with its own preference record. Snake separate.",
+      "next": "Finish exact full validate before promotion; Team six-action separate-owner slice developing; Snake keyboard mapping remains planned.",
       "evidence": [
         "Actual3143 desktop UI: independent capture, conflict names other seat, Escape cancellation, modeled silent write Session only and Retry Saved/focus; Ukrainian316px wrapping inspected. This does not close cross-owner persistence or actual flight/device evidence.",
-        "Independent concurrent writers both report Saved while one change is lost. Dedicated short Web Lock lease fix includes delayed Settings departure protection;95 focused checks pass on localfffcc404 successor, full localization and publication pending."
+        "Independent concurrent writers both report Saved while one change is lost. Dedicated short Web Lock lease fix includes delayed Settings departure protection;95 focused checks pass on localfffcc404 successor, full localization and publication pending.",
+        "Exactfff independent39 binding/host/input checks plus13 root binding/host checks pass (overlapping, not additive). Real dedicated browser Web Lock contention→Session only→Release→Retry→Saved/focus passes. Actual normal Duel starts with I A S D legend, legal input then Pause/Resume retains1:26 and3lives each; no earned capture/per-tick/device proof. Full repository validate was missing from initial gate list and is now running on exact lightweight snapshot; draft retained."
       ],
       "implementationSlices": [
         {
@@ -1276,8 +1281,8 @@
       "impact": "H/H",
       "effort": "**3–5d**",
       "featureId": "F09",
-      "status": "assessing",
-      "owner": "integration",
+      "status": "developing",
+      "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
         "browser": "baseline_measurement_only",
@@ -1286,10 +1291,11 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement reader compatibility and one desired text-size owner before exposing extra-large in qualified Solo surfaces. Unsupported hosts retain desired setting and show explicit effective-Large fallback; no silent reset.",
+      "next": "Implement complete shared-reader compatibility prerequisite on fresh main, then dependent Solo200% layouts/option after actual width qualification.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
-        "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim."
+        "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
+        "Reviewed compatibility scope: fixed extra-large desired enum in existing record/library, derived effective Large on all unsupported hosts, disabled incoming option plus explicit localized fallback, no new selectable size yet. All DOM/canvas/bootstrap/SIM projections preserve intent; Standard/Large and F06 unchanged. Source implementation starts after Snake support review."
       ]
     },
     {
@@ -2781,6 +2787,11 @@
       "date": "2026-10-18",
       "item": "F04/F07/F08/F09/F58 and merge queue",
       "reason": "F07 inventory and primary support summary promoted ready. Independent review found keyboard lost update and full-record-capacity suspend dead-end; both corrections precede promotion. Readability baseline measured. All113 deliverables retained;2 merged,15 ready feature PRs,23 draft feature PRs,0 verified live."
+    },
+    {
+      "date": "2026-10-18",
+      "item": "Review corrections and F09 handoff",
+      "reason": "F04 capacity correction and F08 save ownership pass independent checks; F08 final browser passes but missing full validate retained as gate. Snake support1664 passes source/browser/download equality. F09 compatibility implementation begins.2merged/15ready/24draft/0live."
     }
   ],
   "deliveryDependencies": [
@@ -2796,7 +2807,7 @@
   ],
   "deliverySnapshot": {
     "featurePRsReady": 15,
-    "featurePRsDraft": 23,
+    "featurePRsDraft": 24,
     "deliverablesMerged": 2,
     "verifiedLive": 0,
     "hardware": "unavailable"

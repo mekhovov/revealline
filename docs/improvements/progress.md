@@ -2,20 +2,20 @@
 
 Updated **18 October 2026** (Europe/Berlin). The [approved plan](plan.md) covers **83 feature groups / 113 deliverables**. Implementation is continuing in three lanes, with independent review and browser qualification in parallel.
 
-**2 merged · 15 feature PRs ready for required checks · 23 draft feature PRs · 0 verified live.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
+**2 merged · 15 feature PRs ready for required checks · 24 draft feature PRs · 0 verified live.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
 
 ## Current priorities
 
 | Priority | Work | Status / next result |
 | --- | --- | --- |
 | P1 | Delivery checks and merge admission | Prerequisite [#1633](https://github.com/mekhovov/revealline/pull/1633) passed all four focused shards; aggregate admission remains queued. Rebase dependent offline work after merge. No gates waived. |
-| P1 | **F04b — Survival suspend** · lane A | Draft1663 implements typed checkpoints, paused restore and durable result receipts. Review found full-record-capacity recovery dead-end; correction, exact source/package checks and actual browser remain. |
+| P1 | **F04b — Survival suspend** · lane A | Draft1663 implements typed checkpoints, paused restore and durable result receipts. Full-capacity recovery and controller-entry corrections pass independent/source gates. Exact expanded package and actual browser review remain. |
 | P1 | **F11b — archive restore** · lane B → review | Nonempty round trip passed. Browser found backward focus after consecutive Keep choices; narrow correction passes source review and focused tests. Exact final browser check passes; reconcile the stack and required checks. |
 | P1 | **F07a/b — critical cues** · review | Inventory1656 ready. Active compact muted self-contact cause and sentry aim warning are visibly confirmed. Sentry-hit, cross-host and listening evidence remain separate. |
-| P1 | **F08 — two-seat keyboard bindings** · lane C | Duel1662 is draft. Cross-owner lost update reproduced; dedicated short lock, truthful Session only and delayed-departure correction in validation. Team/Snake remain separate. |
-| P1 | **F58a — local support summary** · lane B | Primary shell1661 ready: EN/UK preview and actual downloaded JSON equality pass. Snake adapter developing; other hosts remain separate. |
+| P1 | **F08 — two-seat keyboard bindings** · lane C | Duel1662 is draft. Cross-owner fix and final lock/Retry browser review pass. Missing full repository validate is now running before promotion. Team/Snake remain separate. |
+| P1 | **F58a — local support summary** · lane B | Primary shell1661 ready: EN/UK preview and actual downloaded JSON equality pass. Snake1664 source/browser/export review passes; remaining host adapters stay open. |
 | P1 | **F01/F06/F79** reviewed stacks | Reconcile predecessors and exact-head checks. Simulator chooser and assisted gym browser reviews now pass. |
-| P1 | **F09** text/HUD scaling | Baseline measured: existing Large is roughly115–125% on checked text. Shared-reader compatibility precedes qualified200% presentation. |
+| P1 | **F09** text/HUD scaling | Baseline measured: existing Large is roughly115–125% on checked text. Shared-reader compatibility implementation starts in lane B before qualified200% presentation. |
 
 Estimates remain the plan’s developer-day ranges, excluding review/CI queues and unavailable hardware. No iPhone or Steam Deck is available; hardware-only gates stay **Not tested** while independent work continues.
 
@@ -77,8 +77,10 @@ All rows are **P1**. The structured tracker pins every reviewed revision and dis
 | **F01** SIM chooser · [#1659](https://github.com/mekhovov/revealline/pull/1659) |150 checks/full source gates, independent review; actual Academy EN/World UK context and Back passed at65594. |
 | **F06** assisted2D gym · [#1660](https://github.com/mekhovov/revealline/pull/1660) |37+14 checks/i18n/projection; actual started practice→Pause→preview0→partialApply2→Retry3→Undo5→Back preserves Pause. Browser focus returns Settings opener; model returns Resume. No new UK320/device claim. |
 
-| **F08** Duel keyboard controls · [#1662](https://github.com/mekhovov/revealline/pull/1662) | Actual conflicts/cancel/Session-only Retry/UK316px pass on3143. Cross-owner lost update blocks readiness; successor95 focused checks pass, final gates/browser pending. |
-| **F04b** Survival suspend · [#1663](https://github.com/mekhovov/revealline/pull/1663) |113 focused+98 shared;28 independent receipt tests. Full256-context records can block terminal recovery; correction and Home controller entry in progress. Exact successor/package/browser pending. |
+| **F08** Duel keyboard controls · [#1662](https://github.com/mekhovov/revealline/pull/1662) | Actual conflicts/cancel/Session-only Retry/UK316px pass on3143. Successorfff passes95 focused and independent reviews; actual lock contention/Retry/focus passes. Full repository validate running before promotion. |
+| **F04b** Survival suspend · [#1663](https://github.com/mekhovov/revealline/pull/1663) |113 focused+98 shared;28 independent receipt tests. Capacity and Home controller correctionsc1f56c pass116focused/198shared, independent18 and full validation. Exact package/browser pending. |
+
+| **F58a** Snake support · [#1664](https://github.com/mekhovov/revealline/pull/1664) |139 focused/full source gates;13 independent checks; actual paused Team EN/UK, close/reopen,931-byte export equality pass. Stack on1661; other variants/controller readiness are separately modeled. |
 
 ## Phase picture
 
