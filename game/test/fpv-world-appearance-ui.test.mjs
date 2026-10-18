@@ -3484,3 +3484,98 @@ test('actual World settings keep an unsaved menu animation choice and Retry the 
   assert.equal(status.textContent, 'Saved');
   assert.equal(retry.hidden, true);
 });
+
+for (const locale of ['en', 'uk'])
+  test(`World ${locale} comfort presets preserve the paused flight through preview, Retry and Undo`, async (t) => {
+    const priorLocale = getLocale();
+    setLocale(locale, { persist: false });
+    t.after(() => setLocale(priorLocale, { persist: false }));
+    const displayKey = 'revealline.display.v1',
+      menuKey = 'revealline.menu-animation.v1',
+      data = new Map(),
+      writes = [];
+    let working = true;
+    const h = fixture(t, {
+      url: `https://example.test/optional-practice/fpv-worlds/index.html?lang=${locale}`,
+      storage: {
+        get: (key) => data.get(key),
+        set(key, value) {
+          if ([displayKey, menuKey].includes(key)) {
+            writes.push([key, value]);
+            if (!working) throw new DOMException('Modeled full storage', 'QuotaExceededError');
+          }
+          data.set(key, value);
+        },
+      },
+    });
+    await h.app.ready;
+    await h.app.startFlight(
+      WORLD_CATALOGUE.find((item) => !item.legacy && !item.beginner && item.activity !== 'hunt'),
+    );
+    h.$('world-arm').click();
+    h.tick(4);
+    h.$('world-flight-menu').click();
+    h.$('worlds-shell-action-pause-settings').click();
+    h.$('worlds-settings-tab-accessibility').click();
+    const prefix = 'worlds-settings-panel-accessibility-comfort-',
+      preset = (suffix) => h.$(`${prefix}${suffix}`),
+      paused = h.app.snapshot(),
+      controls = ['flight-mode', 'flight-source', 'flight-camera', 'world-fov', 'world-tilt'],
+      configuration = controls.map((id) => h.$(id).value);
+    assert.equal(paused.state.status, 'paused');
+    assert.equal(preset('apply').closest('[hidden],[inert]'), null);
+    preset('choice').value = 'clear';
+    preset('choice').emit('change');
+    preset('choice').value = 'comfort';
+    preset('choice').emit('change');
+    assert.equal(
+      writes.length,
+      0,
+      'Opening and changing the preview must not persist preferences.',
+    );
+    working = false;
+    preset('apply').focus();
+    preset('apply').click();
+    assert.equal(h.$('worlds-global-textSize').value, 'large');
+    assert.equal(h.$('worlds-global-menuAnimation').checked, false);
+    assert.match(
+      preset('status').textContent,
+      locale === 'en' ? /Session only/ : /Лише в цьому сеансі/,
+    );
+    assert.equal(h.doc.activeElement, preset('apply'));
+    working = true;
+    preset('apply').click();
+    assert.deepEqual(JSON.parse(data.get(displayKey)), {
+      textFace: 'plain',
+      textSize: 'large',
+      reducedEffects: true,
+    });
+    assert.equal(data.get(menuKey), 'off');
+    assert.doesNotMatch(preset('status').textContent, /Session only|Лише в цьому сеансі/);
+    h.tick(4);
+    assert.deepEqual(h.app.snapshot().state, paused.state);
+    preset('undo').focus();
+    preset('undo').click();
+    assert.deepEqual(JSON.parse(data.get(displayKey)), {
+      textFace: 'pixel',
+      textSize: 'standard',
+      reducedEffects: false,
+    });
+    assert.equal(data.get(menuKey), 'on');
+    assert.equal(h.doc.activeElement, preset('apply'));
+    assert.deepEqual(
+      controls.map((id) => h.$(id).value),
+      configuration,
+    );
+    const after = h.app.snapshot();
+    for (const key of ['course', 'state', 'appearance', 'modePractice', 'records', 'inputDisplay'])
+      assert.deepEqual(after[key], paused[key], `${key} stays owned by the paused flight.`);
+    assert.equal(h.$('sim-settings').open, true);
+    const retainedApply = preset('apply');
+    await h.app.dispose();
+    const finalWrites = writes.length;
+    retainedApply.click();
+    h.win.emit('pageshow', { persisted: true });
+    assert.equal(writes.length, finalWrites);
+    assert.equal(h.doc.querySelector('.comfort-presets'), null);
+  });

@@ -47,6 +47,7 @@ import {
   mountSimPlayShell,
   mountSimModeSettings,
   mountSimGlobalSettings,
+  mountSimComfortPresets,
   attachSimMenuAudioSettings,
   readSimRadioAudio,
   SIM_RADIO_AUDIO_KEY,
@@ -2543,6 +2544,12 @@ export function mountFlightApp({
     },
     duplicates: { masterMuted: [$('academy-sound')] },
   });
+  const comfortPresets = mountSimComfortPresets({
+    document: doc,
+    window: win,
+    root: modeSettingsView.panels.accessibility,
+    display: displayPreferences,
+  });
   const sharedAudioCues = doc.createElement('section');
   let radioCueStorage;
   try {
@@ -2774,6 +2781,7 @@ export function mountFlightApp({
       void notebook?.dispose();
       studio?.dispose();
       globalTools?.dispose();
+      comfortPresets.destroy();
       globalSettingsView?.destroy();
       globalThemeControls?.dispose();
       displayPreferences.dispose();
