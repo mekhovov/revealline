@@ -16,12 +16,12 @@
   "nextPriority": [
     "Exact-head checks and merge admission",
     "F04b production Survival suspend/resume",
-    "F11b Keep-focus fix final review",
-    "F07a visible critical-cue review; only demonstrated F07b repairs",
+    "Reconcile reviewed archive restore stack",
+    "F07a scoped visible evidence and remaining demonstrated gaps",
     "F08 Versus keyboard bindings",
     "F58a local support summary",
     "Reconcile reviewed F01/F06/F11/F79 stacks",
-    "F09 measured text/HUD scaling gaps",
+    "F09 measured text/HUD scaling assessment",
     "Demo-dependent work after D; physical checks remain unavailable"
   ],
   "release": {
@@ -965,12 +965,13 @@
       "blocker": "Review/extraction draft stacks on F11a; guided application is a further complete slice.",
       "pr": "https://github.com/mekhovov/revealline/pull/1635",
       "commit": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5",
-      "next": "Finish narrow Keep-focus correction and exact browser rerun, then reconcile archive stacks; device acceptance separate.",
+      "next": "Reconcile reviewed archive stack and required exact-head checks. Keep mobile export/return, large media and physical evidence separate.",
       "evidence": [
         "14 initial parser tests pass for bounded ZIP records/paths/counts, CRC and manifest hashes. UI/lifecycle review in progress.",
         "64 focused tests, full lint/validate and changed formatting pass; reader accepts the real 11679-byte F11a browser export with all five member hashes. Eight full-format baseline failures unchanged.",
         "Actual browser inspected real F11a ZIP, showed five checked files/exclusions/ordered guidance; downloaded287-byte originals component matches exact ZIP bytes. No import occurred; extraction is not complete restore.",
-        "Next bounded qualification uses real existing PNG/MP4/MP3 fixture payloads plus explicitly synthetic Journey receipt; verify import/decoder/reload and re-export original payload hashes. Generated README/manifest still describe extraction-only restore; narrow copy correction developing."
+        "Next bounded qualification uses real existing PNG/MP4/MP3 fixture payloads plus explicitly synthetic Journey receipt; verify import/decoder/reload and re-export original payload hashes. Generated README/manifest still describe extraction-only restore; narrow copy correction developing.",
+        "1658 final4f87 exact browser: consecutive Keep choices advance focus pictures→stories→music→Journey→summary, all4 kept unchanged. Independent source review and8apply tests pass; author47focused/full source gates pass. Earlier b33 nonempty4/4 restore→reload→downloaded export retains exact PNG/MP4/MP3 payloads and synthetic receipt. No repetition of content import needed for focus-only correction."
       ],
       "implementationSlices": [
         {
@@ -1175,10 +1176,11 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1656",
       "commit": "e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1",
-      "next": "Finish scoped actual muted-play review and distinguish visible, DOM/AX and acoustic evidence before deciding F07b gaps.",
+      "next": "Record scoped visible C01/C02 cause and C03 warning evidence in the inventory; remaining impact/cross-host/listening/device checks stay explicit.",
       "evidence": [
         "Source audit on cb8dddd3 includes Capture, Team, Snake, Survival, SIM and optional 2D gym. Source/model/browser/listening evidence remains distinct.",
-        "Revision-bound inventory: 22 cue categories / 51 source anchors independently checked. 105 model/policy checks plus 3 filtered SIM cases pass. Capture mute/reactions-off legal self-contact yields life loss and explicit cause in AX/DOM, including reduced/UK/320. Visible compact cause remains under review; invalid guard fixture admission was excluded and corrected, not counted as a product defect."
+        "Revision-bound inventory: 22 cue categories / 51 source anchors independently checked. 105 model/policy checks plus 3 filtered SIM cases pass. Capture mute/reactions-off legal self-contact yields life loss and explicit cause in AX/DOM, including reduced/UK/320. Visible compact cause remains under review; invalid guard fixture admission was excluded and corrected, not counted as a product defect.",
+        "Exact e64 source/runtime cb8 browser: active muted reactions-off Reduced UK inner316×776 self-contact shows visible recovery/cause text inside viewport; valid optional sentry pack normal import/Play→Start→Right2s exposes a visible dashed aiming ray and completes at0:07/50%/11900 with3lives. No sentry-hit cause, listening, assistive-technology or physical claim. Earlier invalid fixture/staging-helper errors excluded."
       ]
     },
     {
@@ -1199,7 +1201,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Investigate whether critical cause text has a visible compact alternative; do not infer a sensory gap from AX or an outer-frame crop alone.",
+      "next": "Fill only demonstrated gaps after inventory; compact self-contact cause and sentry aim warning are visible in scoped actual play, so these paths do not justify a repair.",
       "evidence": []
     },
     {
@@ -1231,8 +1233,8 @@
       "impact": "H/H",
       "effort": "**3–5d**",
       "featureId": "F09",
-      "status": "planned",
-      "owner": null,
+      "status": "assessing",
+      "owner": "integration",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -1241,8 +1243,10 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Measure existing Standard/Large typography and 200% coverage before choosing bounded shared/Solo changes; retain caption/reduced-motion controls and avoid incompatible profile changes.",
+      "evidence": [
+        "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed."
+      ]
     },
     {
       "id": "F09b",
