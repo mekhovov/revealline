@@ -2014,6 +2014,7 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     assert.ok(committed.ticks > 0);
     radioPad.axes[0] = -0.9;
     await openAcademyTuning(h);
+    if (source === 'controller') controllerPad.axes[2] = 0.78;
     h.tick(40);
     const text = h.doc.querySelector('[aria-label="Input diagnostics"]').textContent;
     assert.match(
@@ -2024,7 +2025,7 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     );
     assert.match(
       text,
-      source === 'radio'
+      source === 'radio' || source === 'controller'
         ? /Live input preview; flight is paused/
         : /Last committed flight input; flight is paused/,
     );
@@ -2033,7 +2034,17 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     if (source === 'keyboard') assert.match(text, /Raw input: \{"keys":\["ArrowRight"\]\}/);
     if (source === 'touch')
       assert.match(text, /Calibrated: \{"roll":0,"pitch":0,"yaw":0,"throttle":0.6\}/);
-    if (source === 'controller') assert.match(text, /Raw input: \{"axes":\[0,0,0.56,0\]/);
+    if (source === 'controller') {
+      assert.match(text, /Raw input: \{"axes":\[0,0,0.78,0\]/);
+      assert.match(text, /Mapping: standard-mode-2/);
+      assert.match(text, /flight throttle unavailable/);
+      assert.match(text, /"throttle":null/);
+      assert.equal(
+        h.view.snapshot().ticks,
+        committed.ticks,
+        'Preview must not advance the paused flight',
+      );
+    }
     if (source !== 'radio') assert.doesNotMatch(text, /"roll":-0.9/);
     else assert.match(text, /"roll":-0.9/);
     assert.match(text, /Browser sample age \(ms\): unavailable/);
