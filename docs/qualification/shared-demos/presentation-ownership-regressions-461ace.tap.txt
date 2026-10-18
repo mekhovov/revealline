@@ -1,0 +1,596 @@
+TAP version 13
+# Subtest: paired boards share a decode; final release disposes its memory
+ok 1 - paired boards share a decode; final release disposes its memory
+  ---
+  duration_ms: 1.089708
+  ...
+# Subtest: pending decodes reserve capacity and late cancelled images are closed
+ok 2 - pending decodes reserve capacity and late cancelled images are closed
+  ---
+  duration_ms: 1.295916
+  ...
+# Subtest: one cancelled board does not abort the other owner
+ok 3 - one cancelled board does not abort the other owner
+  ---
+  duration_ms: 0.368209
+  ...
+# Subtest: replacement owners wait for a retired decode and then share one fresh generation
+ok 4 - replacement owners wait for a retired decode and then share one fresh generation
+  ---
+  duration_ms: 0.67475
+  ...
+# Subtest: cancelling a replacement wait is immediate and never starts another decoder
+ok 5 - cancelling a replacement wait is immediate and never starts another decoder
+  ---
+  duration_ms: 0.8065
+  ...
+# Subtest: cancelled callers settle immediately while an uninterruptible codec remains accounted
+ok 6 - cancelled callers settle immediately while an uninterruptible codec remains accounted
+  ---
+  duration_ms: 0.48075
+  ...
+# Subtest: one board can leave a pending shared codec immediately without cancelling the remaining board
+ok 7 - one board can leave a pending shared codec immediately without cancelling the remaining board
+  ---
+  duration_ms: 0.264333
+  ...
+# Subtest: page budget selection preserves exact 64/32 MiB limits and shares only within its document
+ok 8 - page budget selection preserves exact 64/32 MiB limits and shares only within its document
+  ---
+  duration_ms: 0.366375
+  ...
+# Subtest: animation round-trips data, freezes effects and rejects gameplay fields
+ok 9 - animation round-trips data, freezes effects and rejects gameplay fields
+  ---
+  duration_ms: 4.672041
+  ...
+# Subtest: many live artwork leases share one abort listener and release independently
+ok 10 - many live artwork leases share one abort listener and release independently
+  ---
+  duration_ms: 1.735542
+  ...
+# Subtest: shared abort listener survives one decoder failure and releases every pending caller
+ok 11 - shared abort listener survives one decoder failure and releases every pending caller
+  ---
+  duration_ms: 8.512125
+  ...
+# Subtest: many replacement waits share cancellation without resurrecting a retired decode
+ok 12 - many replacement waits share cancellation without resurrecting a retired decode
+  ---
+  duration_ms: 8.023583
+  ...
+# Subtest: practice advances between throttled diagnostic readout updates
+ok 13 - practice advances between throttled diagnostic readout updates
+  ---
+  duration_ms: 2754.529584
+  ...
+# Subtest: paused Demo retains its board and controls, invalidates on visible changes, and resumes normally
+ok 14 - paused Demo retains its board and controls, invalidates on visible changes, and resumes normally
+  ---
+  duration_ms: 2973.980959
+  ...
+# Subtest: Demo takeover has one native paint owner and preserves the recorded spectator state
+ok 15 - Demo takeover has one native paint owner and preserves the recorded spectator state
+  ---
+  duration_ms: 2639.870167
+  ...
+# Subtest: unchanged installed music and absent published music do not notify or disturb transport
+ok 16 - unchanged installed music and absent published music do not notify or disturb transport
+  ---
+  duration_ms: 3.926583
+  ...
+# Subtest: published cue buffers stay bounded without stopping an already playing voice
+ok 17 - published cue buffers stay bounded without stopping an already playing voice
+  ---
+  duration_ms: 7.204375
+  ...
+# Subtest: PCM snapshots read owned counters without initializing audio or accessing sample data
+ok 18 - PCM snapshots read owned counters without initializing audio or accessing sample data
+  ---
+  duration_ms: 0.569792
+  ...
+# Subtest: effect PCM counters follow decoded retention, eviction and disposal
+ok 19 - effect PCM counters follow decoded retention, eviction and disposal
+  ---
+  duration_ms: 1.838792
+  ...
+# Subtest: PCM reservations use actual sample rate without rejecting ordinary WAVs on high-rate devices
+ok 20 - PCM reservations use actual sample rate without rejecting ordinary WAVs on high-rate devices
+  ---
+  duration_ms: 26.910208
+  ...
+# Subtest: suspended pages start no queued work and foreground preparation resumes it
+ok 21 - suspended pages start no queued work and foreground preparation resumes it
+  ---
+  duration_ms: 0.67475
+  ...
+# Subtest: a prepared MP3 starts media playback directly before awaiting context activation
+ok 22 - a prepared MP3 starts media playback directly before awaiting context activation
+  ---
+  duration_ms: 6.124083
+  ...
+# Subtest: fetch admission is bounded and demand runs before queued prewarming
+ok 23 - fetch admission is bounded and demand runs before queued prewarming
+  ---
+  duration_ms: 1.073167
+  ...
+# Subtest: abandoned native decode retains its slot and bytes until native completion
+ok 24 - abandoned native decode retains its slot and bytes until native completion
+  ---
+  duration_ms: 0.83775
+  ...
+# Subtest: main-thread fallback waits through active play and cancels without running
+ok 25 - main-thread fallback waits through active play and cancels without running
+  ---
+  duration_ms: 0.4325
+  ...
+# Subtest: main-thread work admitted just before play stays pending until a safe phase
+ok 26 - main-thread work admitted just before play stays pending until a safe phase
+  ---
+  duration_ms: 0.629042
+  ...
+# Subtest: audio activation stays in the gesture and muted preparation starts no downloads
+ok 27 - audio activation stays in the gesture and muted preparation starts no downloads
+  ---
+  duration_ms: 1.124166
+  ...
+# Subtest: an oversized streamed effect is cancelled before native decoding
+ok 28 - an oversized streamed effect is cancelled before native decoding
+  ---
+  duration_ms: 2.601958
+  ...
+# Subtest: effects and reactions share one native decoder; active play rejects bulk warmup
+ok 29 - effects and reactions share one native decoder; active play rejects bulk warmup
+  ---
+  duration_ms: 2.549583
+  ...
+# Subtest: published PCM distinguishes never-created, retired and disposed without initializing audio
+ok 30 - published PCM distinguishes never-created, retired and disposed without initializing audio
+  ---
+  duration_ms: 0.35225
+  ...
+# Subtest: published construction failure is observed before assignment and retains the original error
+ok 31 - published construction failure is observed before assignment and retains the original error
+  ---
+  duration_ms: 0.189625
+  ...
+# Subtest: missing published reference and unsettled shared decode cannot become never-created zeros
+ok 32 - missing published reference and unsettled shared decode cannot become never-created zeros
+  ---
+  duration_ms: 0.855292
+  ...
+# Subtest: a failed replacement retains its actual closed owner without claiming it was never created
+ok 33 - a failed replacement retains its actual closed owner without claiming it was never created
+  ---
+  duration_ms: 0.457542
+  ...
+# Subtest: demand promotes an active effects fetch without restarting its source or changing pending Promise identity
+ok 34 - demand promotes an active effects fetch without restarting its source or changing pending Promise identity
+  ---
+  duration_ms: 1.597625
+  ...
+# Subtest: demand promotes an effects fetch still queued behind required owners
+ok 35 - demand promotes an effects fetch still queued behind required owners
+  ---
+  duration_ms: 1.698167
+  ...
+# Subtest: promotion covers an admitted effects fetch before its work microtask
+ok 36 - promotion covers an admitted effects fetch before its work microtask
+  ---
+  duration_ms: 2.277542
+  ...
+# Subtest: demand promotion retains an already-running effects decode and its exact reservation
+ok 37 - demand promotion retains an already-running effects decode and its exact reservation
+  ---
+  duration_ms: 0.960917
+  ...
+# Subtest: demand joining synchronously cancelled effects preparation preserves cancellation without a retry
+ok 38 - demand joining synchronously cancelled effects preparation preserves cancellation without a retry
+  ---
+  duration_ms: 0.465083
+  ...
+# Subtest: promoting a live request cannot bypass muted, replaced-context or disposed effects eligibility
+ok 39 - promoting a live request cannot bypass muted, replaced-context or disposed effects eligibility
+  ---
+  duration_ms: 2.5995
+  ...
+# Subtest: promotion is signal-scoped, idempotent and preserves required ordering and original FIFO within a priority
+ok 40 - promotion is signal-scoped, idempotent and preserves required ordering and original FIFO within a priority
+  ---
+  duration_ms: 0.907208
+  ...
+# Subtest: promotion cannot revive removed, aborted or closed tasks and never runs main work during play
+ok 41 - promotion cannot revive removed, aborted or closed tasks and never runs main work during play
+  ---
+  duration_ms: 0.418833
+  ...
+# Subtest: reaction demand promotes an active library read and later decode without repeat reads or old speech
+ok 42 - reaction demand promotes an active library read and later decode without repeat reads or old speech
+  ---
+  duration_ms: 0.989625
+  ...
+# Subtest: reaction demand preserves a running native decode, but mute and cancellation still discard its result
+ok 43 - reaction demand preserves a running native decode, but mute and cancellation still discard its result
+  ---
+  duration_ms: 1.322292
+  ...
+# Subtest: demand promotion retains the original single deadline for effects and reactions
+ok 44 - demand promotion retains the original single deadline for effects and reactions
+  ---
+  duration_ms: 1.652417
+  ...
+# Subtest: a reaction demand joining after queued phase cancellation does not resurrect or retry the removed request
+ok 45 - a reaction demand joining after queued phase cancellation does not resurrect or retry the removed request
+  ---
+  duration_ms: 0.735458
+  ...
+# Subtest: equal styles and attributes retain the live owner through either release order
+ok 46 - equal styles and attributes retain the live owner through either release order
+  ---
+  duration_ms: 1.317417
+  ...
+# Subtest: different overlapping values restore only still-live layers, never retired themes
+ok 47 - different overlapping values restore only still-live layers, never retired themes
+  ---
+  duration_ms: 0.282792
+  ...
+# Subtest: external overrides survive cleanup and become the baseline of a later application
+ok 48 - external overrides survive cleanup and become the baseline of a later application
+  ---
+  duration_ms: 0.165666
+  ...
+# Subtest: old observer updates cannot steal a current layer or create repeated ownership
+ok 49 - old observer updates cannot steal a current layer or create repeated ownership
+  ---
+  duration_ms: 0.080625
+  ...
+# Subtest: real host replacement preserves all tokens and equal icon attributes when the old host closes
+ok 50 - real host replacement preserves all tokens and equal icon attributes when the old host closes
+  ---
+  duration_ms: 489.117667
+  ...
+# Subtest: failed new token or attribute application rolls back without retiring the live host
+ok 51 - failed new token or attribute application rolls back without retiring the live host
+  ---
+  duration_ms: 166.889667
+  ...
+# Subtest: actual Solo and Versus selections resolve immutable raw owners through the guarded bridge
+ok 52 - actual Solo and Versus selections resolve immutable raw owners through the guarded bridge
+  ---
+  duration_ms: 896.088792
+  ...
+# Subtest: bridges reject foreign/cloned selections, wrong row levels and wrong-mode adapters
+ok 53 - bridges reject foreign/cloned selections, wrong row levels and wrong-mode adapters
+  ---
+  duration_ms: 1676.675167
+  ...
+# Subtest: shared campaigns preserve source-pack ownership when selected through real hosts
+ok 54 - shared campaigns preserve source-pack ownership when selected through real hosts
+  ---
+  duration_ms: 504.611084
+  ...
+# Subtest: partially different real host themes keep shared values and new colors when old resources retire
+ok 55 - partially different real host themes keep shared values and new colors when old resources retire
+  ---
+  duration_ms: 104.655667
+  ...
+# Subtest: accepted snapshots expose the hash of exact compiler manifest bytes
+ok 56 - accepted snapshots expose the hash of exact compiler manifest bytes
+  ---
+  duration_ms: 691.841708
+  ...
+# Subtest: legacy callers still load without a pin and receive the measured identity
+ok 57 - legacy callers still load without a pin and receive the measured identity
+  ---
+  duration_ms: 41.328667
+  ...
+# Subtest: verified image headers do not reread an asynchronous Blob before decoding
+ok 58 - verified image headers do not reread an asynchronous Blob before decoding
+  ---
+  duration_ms: 42.382417
+  ...
+# Subtest: wrong manifest pin rejects before asset fetch, image decode or adoption
+ok 59 - wrong manifest pin rejects before asset fetch, image decode or adoption
+  ---
+  duration_ms: 1.987416
+  ...
+# Subtest: byte changes including equivalent JSON whitespace cannot impersonate a retained manifest
+ok 60 - byte changes including equivalent JSON whitespace cannot impersonate a retained manifest
+  ---
+  duration_ms: 40.952583
+  ...
+# Subtest: a failed pin check preserves the accepted snapshot and its decoded resources
+ok 61 - a failed pin check preserves the accepted snapshot and its decoded resources
+  ---
+  duration_ms: 33.75775
+  ...
+# Subtest: malformed expectations fail before retiring an in-flight valid load
+ok 62 - malformed expectations fail before retiring an in-flight valid load
+  ---
+  duration_ms: 35.831459
+  ...
+# Subtest: cancelled pinned reads and superseded requests never replace the current snapshot
+ok 63 - cancelled pinned reads and superseded requests never replace the current snapshot
+  ---
+  duration_ms: 74.464292
+  ...
+# Subtest: independent hosts share pinned page artwork while the old attempt remains usable
+ok 64 - independent hosts share pinned page artwork while the old attempt remains usable
+  ---
+  duration_ms: 67.76625
+  ...
+# Subtest: optional page stages use the existing admission owner and preserve an accepted release during play
+ok 65 - optional page stages use the existing admission owner and preserve an accepted release during play
+  ---
+  duration_ms: 533.306875
+  ...
+# Subtest: an optional manifest arriving during play cannot proceed to asset decoding or URL construction
+ok 66 - an optional manifest arriving during play cannot proceed to asset decoding or URL construction
+  ---
+  duration_ms: 1.519917
+  ...
+# Subtest: late optional bitmap completion keeps its reservation and releases without active-play follow-up work
+ok 67 - late optional bitmap completion keeps its reservation and releases without active-play follow-up work
+  ---
+  duration_ms: 36.291375
+  ...
+# Subtest: cancellation racing native submission cannot orphan the late optional bitmap
+ok 68 - cancellation racing native submission cannot orphan the late optional bitmap
+  ---
+  duration_ms: 37.071584
+  ...
+# Subtest: a rejected optional codec is owned before delayed admission settles
+ok 69 - a rejected optional codec is owned before delayed admission settles
+  ---
+  duration_ms: 36.254666
+  ...
+# Subtest: a rejected optional codec is owned before delayed admission settles after cancellation
+ok 70 - a rejected optional codec is owned before delayed admission settles after cancellation
+  ---
+  duration_ms: 58.520125
+  ...
+# Subtest: optional codec thenables are assimilated once and retain their bitmap owner
+ok 71 - optional codec thenables are assimilated once and retain their bitmap owner
+  ---
+  duration_ms: 37.995292
+  ...
+# Subtest: optional crop completion cannot submit a canvas encoding after play begins
+ok 72 - optional crop completion cannot submit a canvas encoding after play begins
+  ---
+  duration_ms: 42.290375
+  ...
+# Subtest: native landing skips only the two legacy title backdrops while other screens still load
+ok 73 - native landing skips only the two legacy title backdrops while other screens still load
+  ---
+  duration_ms: 370.045708
+  ...
+# Subtest: the host accepts actual deterministic compiler output and no authoring history or arbitrary URLs
+ok 74 - the host accepts actual deterministic compiler output and no authoring history or arbitrary URLs
+  ---
+  duration_ms: 282.561167
+  ...
+# Subtest: loading is lazy, hash-pinned, and owns decoded assets until close without storage access
+ok 75 - loading is lazy, hash-pinned, and owns decoded assets until close without storage access
+  ---
+  duration_ms: 38.108791
+  ...
+# Subtest: DOM-isolated actor owners share the actual page budget and independently offload and reinstall
+ok 76 - DOM-isolated actor owners share the actual page budget and independently offload and reinstall
+  ---
+  duration_ms: 111.616584
+  ...
+# Subtest: registered native origins retain the same closed hash-derived path boundary
+ok 77 - registered native origins retain the same closed hash-derived path boundary
+  ---
+  duration_ms: 126.967958
+  ...
+# Subtest: CSS cleanup restores only owned values and preserves later user or screen changes
+ok 78 - CSS cleanup restores only owned values and preserves later user or screen changes
+  ---
+  duration_ms: 46.6185
+  ...
+# Subtest: a failed replacement leaves the previous accepted snapshot and its assets alive atomically
+ok 79 - a failed replacement leaves the previous accepted snapshot and its assets alive atomically
+  ---
+  duration_ms: 95.7475
+  ...
+# Subtest: bad hashes, oversized bodies, redirects, dimensions and unavailable files cannot be adopted
+ok 80 - bad hashes, oversized bodies, redirects, dimensions and unavailable files cannot be adopted
+  ---
+  duration_ms: 238.160041
+  ...
+# Subtest: a small compressed manifest cannot allocate an unbounded decoded image set
+ok 81 - a small compressed manifest cannot allocate an unbounded decoded image set
+  ---
+  duration_ms: 45.610792
+  ...
+# Subtest: superseded late image decoding is disposed and cannot release the newer accepted snapshot
+ok 82 - superseded late image decoding is disposed and cannot release the newer accepted snapshot
+  ---
+  duration_ms: 118.8875
+  ...
+# Subtest: close cancels a stalled byte stream; a previous external signal cannot abort a later load
+ok 83 - close cancels a stalled byte stream; a previous external signal cannot abort a later load
+  ---
+  duration_ms: 88.381708
+  ...
+# Subtest: atlas frames are cropped once and the original and cropped bitmap have independent owned lifetimes
+ok 84 - atlas frames are cropped once and the original and cropped bitmap have independent owned lifetimes
+  ---
+  duration_ms: 51.711958
+  ...
+# Subtest: a cancelled actor CSS export retains its accounted scratch pixels until encoding settles
+ok 85 - a cancelled actor CSS export retains its accounted scratch pixels until encoding settles
+  ---
+  duration_ms: 48.171584
+  ...
+# Subtest: cancelling a host settles immediately but retains an asynchronous crop input until codec retirement
+ok 86 - cancelling a host settles immediately but retains an asynchronous crop input until codec retirement
+  ---
+  duration_ms: 44.325
+  ...
+# Subtest: actor CSS crop export refuses capacity before allocating a scratch canvas
+ok 87 - actor CSS crop export refuses capacity before allocating a scratch canvas
+  ---
+  duration_ms: 50.773333
+  ...
+# Subtest: font bytes are pinned and decoded before atomic registration, with owned CSS family and disposal
+ok 88 - font bytes are pinned and decoded before atomic registration, with owned CSS family and disposal
+  ---
+  duration_ms: 129.7785
+  ...
+# Subtest: optional late font completion cannot register fonts or continue page artwork during play
+ok 89 - optional late font completion cannot register fonts or continue page artwork during play
+  ---
+  duration_ms: 54.118292
+  ...
+# Subtest: picture originals remain lazy exact bytes and host close cancels a late original response
+ok 90 - picture originals remain lazy exact bytes and host close cancels a late original response
+  ---
+  duration_ms: 102.450166
+  ...
+# Subtest: full-frame WebP picture reads keep exact lazy bytes and still require downstream complete decode
+ok 91 - full-frame WebP picture reads keep exact lazy bytes and still require downstream complete decode
+  ---
+  duration_ms: 46.390709
+  ...
+# Subtest: WebP picture admission rejects cropped, malformed, mismatched and oversized originals without replacing its snapshot
+ok 92 - WebP picture admission rejects cropped, malformed, mismatched and oversized originals without replacing its snapshot
+  ---
+  duration_ms: 304.755666
+  ...
+# Subtest: aborted WebP original reads cancel late bodies and cannot retire the accepted snapshot
+ok 93 - aborted WebP original reads cancel late bodies and cannot retire the accepted snapshot
+  ---
+  duration_ms: 50.652583
+  ...
+# Subtest: retained hosts load exact historical bytes beside shared assets without selecting the current manifest
+ok 94 - retained hosts load exact historical bytes beside shared assets without selecting the current manifest
+  ---
+  duration_ms: 59.733667
+  ...
+# Subtest: retained host requires a matching explicit pin before fetching and rejects path-like authorities
+ok 95 - retained host requires a matching explicit pin before fetching and rejects path-like authorities
+  ---
+  duration_ms: 5.657167
+  ...
+# Subtest: missing or altered retained manifests fail visibly without current-release fallback or bitmap allocation
+ok 96 - missing or altered retained manifests fail visibly without current-release fallback or bitmap allocation
+  ---
+  duration_ms: 8.479166
+  ...
+# Subtest: failed retained reload and aborted preparation preserve the accepted owner until explicit close
+ok 97 - failed retained reload and aborted preparation preserve the accepted owner until explicit close
+  ---
+  duration_ms: 47.213208
+  ...
+# Subtest: board scene filtering decodes selected world art only and preserves full-host behavior
+ok 98 - board scene filtering decodes selected world art only and preserves full-host behavior
+  ---
+  duration_ms: 119.712584
+  ...
+# Subtest: canonical main56 remains exact while the alternate unpublished Journey ledger stays authenticated and inert
+ok 99 - canonical main56 remains exact while the alternate unpublished Journey ledger stays authenticated and inert
+  ---
+  duration_ms: 4681.928666
+  ...
+# Subtest: readiness accepts declared required revisions and retains optional historical source slots
+not ok 100 - readiness accepts declared required revisions and retains optional historical source slots
+  ---
+  duration_ms: 775.046959
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/presentation-readiness.test.mjs:31:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    511 !== 335
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 335
+  actual: 511
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/presentation-readiness.test.mjs:37:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: readiness lists every required source and produced slot by exact identity
+ok 101 - readiness lists every required source and produced slot by exact identity
+  ---
+  duration_ms: 1120.296625
+  ...
+# Subtest: readiness verifies bundle integrity and evidence validity before accepting declarations
+ok 102 - readiness verifies bundle integrity and evidence validity before accepting declarations
+  ---
+  duration_ms: 979.94575
+  ...
+# Subtest: a reviewed historical revision cannot qualify a selected unreviewed successor
+ok 103 - a reviewed historical revision cannot qualify a selected unreviewed successor
+  ---
+  duration_ms: 978.751667
+  ...
+# Subtest: committed readiness binds the source tree and ledger and rejects an unstaged declaration
+ok 104 - committed readiness binds the source tree and ledger and rejects an unstaged declaration
+  ---
+  duration_ms: 1010.480042
+  ...
+# Subtest: explicit compiler retention preserves exact prior runtime and only its selected dependencies
+ok 105 - explicit compiler retention preserves exact prior runtime and only its selected dependencies
+  ---
+  duration_ms: 1234.864292
+  ...
+# Subtest: ordinary directory adoption retains two generations and repeat builds are byte-identical
+ok 106 - ordinary directory adoption retains two generations and repeat builds are byte-identical
+  ---
+  duration_ms: 1443.88075
+  ...
+# Subtest: writer refuses a rebuild that drops admitted history before changing any current bytes
+ok 107 - writer refuses a rebuild that drops admitted history before changing any current bytes
+  ---
+  duration_ms: 204.508541
+  ...
+# Subtest: wrong retained pin, missing old image, corrupt dependency and unsafe URL fail before replacement
+ok 108 - wrong retained pin, missing old image, corrupt dependency and unsafe URL fail before replacement
+  ---
+  duration_ms: 256.232708
+  ...
+# Subtest: invalid previous ownership and missing prior runtime never mutate compiler inputs
+ok 109 - invalid previous ownership and missing prior runtime never mutate compiler inputs
+  ---
+  duration_ms: 98.723041
+  ...
+# Subtest: retained manifest capacity fails before parsing an oversized history set
+ok 110 - retained manifest capacity fails before parsing an oversized history set
+  ---
+  duration_ms: 3.511959
+  ...
+# Subtest: retained aggregate byte capacity includes original manifest bytes without normalizing them
+ok 111 - retained aggregate byte capacity includes original manifest bytes without normalizing them
+  ---
+  duration_ms: 463.948208
+  ...
+# Subtest: manual resource export requires real Demo Pause and retains closed display across reopen
+ok 112 - manual resource export requires real Demo Pause and retains closed display across reopen
+  ---
+  duration_ms: 3381.383125
+  ...
+# Subtest: closed Demo retains unsettled scene reservation until ignored decode actually completes
+ok 113 - closed Demo retains unsettled scene reservation until ignored decode actually completes
+  ---
+  duration_ms: 1917.45225
+  ...
+# Subtest: manual resource export rejects advancing practice despite the retained interrupted spectator flag
+ok 114 - manual resource export rejects advancing practice despite the retained interrupted spectator flag
+  ---
+  duration_ms: 2093.969833
+  ...
+1..114
+# tests 114
+# suites 0
+# pass 113
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23099.489

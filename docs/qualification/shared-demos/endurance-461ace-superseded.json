@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-18T18:54:08.412581+00:00",
+  "status": "superseded; incomplete, not a passing endurance run",
+  "reason": "Stop before applying confirmed asynchronous image-result ownership correction and complete CI inventory repair. A new uninterrupted120-minute run is required on corrected sources. The separate WebKit navigation error cause remains unconfirmed.",
+  "report": "rotation-chromium-461ace-two-hour.json",
+  "enduranceStarted": "2026-10-18T18:27:57.185Z",
+  "lastSavedSample": "2026-10-18T18:54:02.452Z",
+  "savedSamples": 156,
+  "pageErrorsBeforeStop": 0,
+  "action": "SIGTERM only the verified task-owned Chrome parent (PID9111, harness9077); allow harness finally block to write failure and browser closure",
+  "creditedSeconds": 0,
+  "complete": false
+}

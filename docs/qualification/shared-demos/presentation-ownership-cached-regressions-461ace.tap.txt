@@ -1,0 +1,180 @@
+TAP version 13
+# Subtest: optional page stages use the existing admission owner and preserve an accepted release during play
+ok 1 - optional page stages use the existing admission owner and preserve an accepted release during play
+  ---
+  duration_ms: 504.448292
+  ...
+# Subtest: an optional manifest arriving during play cannot proceed to asset decoding or URL construction
+ok 2 - an optional manifest arriving during play cannot proceed to asset decoding or URL construction
+  ---
+  duration_ms: 2.042333
+  ...
+# Subtest: late optional bitmap completion keeps its reservation and releases without active-play follow-up work
+ok 3 - late optional bitmap completion keeps its reservation and releases without active-play follow-up work
+  ---
+  duration_ms: 33.410875
+  ...
+# Subtest: cancellation racing native submission cannot orphan the late optional bitmap
+ok 4 - cancellation racing native submission cannot orphan the late optional bitmap
+  ---
+  duration_ms: 30.99325
+  ...
+# Subtest: a rejected optional codec is owned before delayed admission settles
+ok 5 - a rejected optional codec is owned before delayed admission settles
+  ---
+  duration_ms: 32.263834
+  ...
+# Subtest: a rejected optional codec is owned before delayed admission settles after cancellation
+ok 6 - a rejected optional codec is owned before delayed admission settles after cancellation
+  ---
+  duration_ms: 38.814958
+  ...
+# Subtest: optional codec thenables are assimilated once and retain their bitmap owner
+ok 7 - optional codec thenables are assimilated once and retain their bitmap owner
+  ---
+  duration_ms: 33.155959
+  ...
+# Subtest: optional crop completion cannot submit a canvas encoding after play begins
+ok 8 - optional crop completion cannot submit a canvas encoding after play begins
+  ---
+  duration_ms: 46.749334
+  ...
+# Subtest: native landing skips only the two legacy title backdrops while other screens still load
+ok 9 - native landing skips only the two legacy title backdrops while other screens still load # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.139792
+  ...
+# Subtest: the host accepts actual deterministic compiler output and no authoring history or arbitrary URLs
+ok 10 - the host accepts actual deterministic compiler output and no authoring history or arbitrary URLs # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.225917
+  ...
+# Subtest: loading is lazy, hash-pinned, and owns decoded assets until close without storage access
+ok 11 - loading is lazy, hash-pinned, and owns decoded assets until close without storage access # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.162667
+  ...
+# Subtest: DOM-isolated actor owners share the actual page budget and independently offload and reinstall
+ok 12 - DOM-isolated actor owners share the actual page budget and independently offload and reinstall # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0445
+  ...
+# Subtest: registered native origins retain the same closed hash-derived path boundary
+ok 13 - registered native origins retain the same closed hash-derived path boundary # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.142125
+  ...
+# Subtest: CSS cleanup restores only owned values and preserves later user or screen changes
+ok 14 - CSS cleanup restores only owned values and preserves later user or screen changes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.058167
+  ...
+# Subtest: a failed replacement leaves the previous accepted snapshot and its assets alive atomically
+ok 15 - a failed replacement leaves the previous accepted snapshot and its assets alive atomically # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.081417
+  ...
+# Subtest: bad hashes, oversized bodies, redirects, dimensions and unavailable files cannot be adopted
+ok 16 - bad hashes, oversized bodies, redirects, dimensions and unavailable files cannot be adopted # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024292
+  ...
+# Subtest: a small compressed manifest cannot allocate an unbounded decoded image set
+ok 17 - a small compressed manifest cannot allocate an unbounded decoded image set # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021542
+  ...
+# Subtest: superseded late image decoding is disposed and cannot release the newer accepted snapshot
+ok 18 - superseded late image decoding is disposed and cannot release the newer accepted snapshot # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020541
+  ...
+# Subtest: close cancels a stalled byte stream; a previous external signal cannot abort a later load
+ok 19 - close cancels a stalled byte stream; a previous external signal cannot abort a later load # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028333
+  ...
+# Subtest: atlas frames are cropped once and the original and cropped bitmap have independent owned lifetimes
+ok 20 - atlas frames are cropped once and the original and cropped bitmap have independent owned lifetimes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016667
+  ...
+# Subtest: a cancelled actor CSS export retains its accounted scratch pixels until encoding settles
+ok 21 - a cancelled actor CSS export retains its accounted scratch pixels until encoding settles # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043167
+  ...
+# Subtest: cancelling a host settles immediately but retains an asynchronous crop input until codec retirement
+ok 22 - cancelling a host settles immediately but retains an asynchronous crop input until codec retirement # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018666
+  ...
+# Subtest: actor CSS crop export refuses capacity before allocating a scratch canvas
+ok 23 - actor CSS crop export refuses capacity before allocating a scratch canvas # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016333
+  ...
+# Subtest: font bytes are pinned and decoded before atomic registration, with owned CSS family and disposal
+ok 24 - font bytes are pinned and decoded before atomic registration, with owned CSS family and disposal # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014667
+  ...
+# Subtest: optional late font completion cannot register fonts or continue page artwork during play
+ok 25 - optional late font completion cannot register fonts or continue page artwork during play
+  ---
+  duration_ms: 62.565208
+  ...
+# Subtest: picture originals remain lazy exact bytes and host close cancels a late original response
+ok 26 - picture originals remain lazy exact bytes and host close cancels a late original response # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.286708
+  ...
+# Subtest: full-frame WebP picture reads keep exact lazy bytes and still require downstream complete decode
+ok 27 - full-frame WebP picture reads keep exact lazy bytes and still require downstream complete decode # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.041292
+  ...
+# Subtest: WebP picture admission rejects cropped, malformed, mismatched and oversized originals without replacing its snapshot
+ok 28 - WebP picture admission rejects cropped, malformed, mismatched and oversized originals without replacing its snapshot # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026792
+  ...
+# Subtest: aborted WebP original reads cancel late bodies and cannot retire the accepted snapshot
+ok 29 - aborted WebP original reads cancel late bodies and cannot retire the accepted snapshot # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021375
+  ...
+# Subtest: retained hosts load exact historical bytes beside shared assets without selecting the current manifest
+ok 30 - retained hosts load exact historical bytes beside shared assets without selecting the current manifest # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017791
+  ...
+# Subtest: retained host requires a matching explicit pin before fetching and rejects path-like authorities
+ok 31 - retained host requires a matching explicit pin before fetching and rejects path-like authorities # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.085333
+  ...
+# Subtest: missing or altered retained manifests fail visibly without current-release fallback or bitmap allocation
+ok 32 - missing or altered retained manifests fail visibly without current-release fallback or bitmap allocation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.052208
+  ...
+# Subtest: failed retained reload and aborted preparation preserve the accepted owner until explicit close
+ok 33 - failed retained reload and aborted preparation preserve the accepted owner until explicit close # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.292541
+  ...
+# Subtest: board scene filtering decodes selected world art only and preserves full-host behavior
+ok 34 - board scene filtering decodes selected world art only and preserves full-host behavior # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050584
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 25
+# todo 0
+# duration_ms 1247.503958
