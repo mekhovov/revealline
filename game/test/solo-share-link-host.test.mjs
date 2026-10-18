@@ -169,11 +169,17 @@ test('an incoming Journey briefing retains its exact share link through a fresh 
   for (const visit of ['incoming share', 'reload accepted share']) {
     await t.test(visit, async (t) => {
       const replacements = [];
+      const copies = [];
       const page = await soloPage(t, {
         search,
         titleScreen: true,
         journeyIndexedDB: managedIndexedDB().indexedDB,
         browserSetup({ globals, window }) {
+          globals.navigator.clipboard = {
+            async writeText(value) {
+              copies.push(value);
+            },
+          };
           const history = {
             state: null,
             replaceState(state, _title, href) {
@@ -216,6 +222,7 @@ test('an incoming Journey briefing retains its exact share link through a fresh 
       );
       const checkpoint = authoritativeCheckpoint(page.rendered.run);
       await activateHostAction(page.$('copy-level-link'));
+      assert.deepEqual(copies, [href.href]);
       assert.equal(page.$('level-link-status').hidden, false);
       assert.equal(page.$('played-level-link').value, href.href);
       assert.equal(globalThis.location.href, href.href);
@@ -223,7 +230,7 @@ test('an incoming Journey briefing retains its exact share link through a fresh 
       assert.equal(page.doc.body.dataset.flightState, 'briefing');
       assert.equal(page.rendered.paused, true);
       assert.deepEqual(page.errors, []);
-      search = href.search;
+      search = new URL(copies[0]).search;
     });
   }
 });

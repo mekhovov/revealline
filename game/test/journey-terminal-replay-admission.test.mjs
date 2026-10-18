@@ -88,6 +88,7 @@ function fixture(t, options = {}) {
   const owner = createMediaPreparation(),
     tasks = new Map(),
     captures = [],
+    captureResults = [],
     publications = [],
     exports = [];
   let taskId = 0,
@@ -159,11 +160,18 @@ function fixture(t, options = {}) {
       performance: {
         capture(input) {
           captures.push(input);
-          return options.capture
+          const result = options.capture
             ? options.capture(input, env)
             : options.realStore
               ? store.capture(input)
               : Promise.resolve({ durable: true });
+          captureResults.push(
+            Promise.resolve(result).then(
+              (value) => ({ value }),
+              (error) => ({ error }),
+            ),
+          );
+          return result;
         },
       },
     },
@@ -186,6 +194,7 @@ function fixture(t, options = {}) {
     owner,
     tasks,
     captures,
+    captureResults,
     publications,
     exports,
     invoke,
@@ -242,34 +251,45 @@ test('actual WIN optional snapshot waits for safe admission and then a real task
   assert.equal(f.owner.snapshot().active.main, 0);
   assert.equal(f.owner.snapshot().queued, 0);
 });
-test('Next preserves the old accepted durable best while a new active flight holds work', async (t) => {
-  const f = fixture(t, { realStore: true });
-  f.invoke();
-  await f.ready();
-  const next = createRun(level),
-    nextRecorder = createOwnedRecorder(level);
-  f.env.run = next;
-  f.env.recorder = nextRecorder;
-  f.env.runId = 'next';
-  f.owner.setPhase('playing');
-  f.task();
-  await microtasks();
-  assert.equal(f.exports.length, 0);
-  assert.equal(f.owner.snapshot().queued, 1);
-  assert.equal(f.writes, 0);
-  assert.deepEqual(
-    exportReplay(nextRecorder, next),
-    exportReplay(createOwnedRecorder(level), createRun(level)),
-    'Required public export remains synchronous and independent.',
-  );
-  f.owner.setPhase('paused');
-  await settleWork(() => f.writes === 1 && f.owner.snapshot().active.main === 0);
-  assert.equal(f.captures.length, 1);
-  assert.deepEqual(f.captures[0].replay, expected);
-  assert.equal(f.store.snapshot().records[0].durable, true);
-  assert.deepEqual(f.store.backup().records[0].replay, expected);
-  assert.equal(f.publications.length, 0, 'Old best must not paint the new attempt.');
-});
+test(
+  'Next preserves the old accepted durable best while a new active flight holds work',
+  { timeout: 5000 },
+  async (t) => {
+    const f = fixture(t, { realStore: true });
+    f.invoke();
+    await f.ready();
+    const next = createRun(level),
+      nextRecorder = createOwnedRecorder(level);
+    f.env.run = next;
+    f.env.recorder = nextRecorder;
+    f.env.runId = 'next';
+    f.owner.setPhase('playing');
+    f.task();
+    await microtasks();
+    assert.equal(f.exports.length, 0);
+    assert.equal(f.owner.snapshot().queued, 1);
+    assert.equal(f.writes, 0);
+    assert.deepEqual(
+      exportReplay(nextRecorder, next),
+      exportReplay(createOwnedRecorder(level), createRun(level)),
+      'Required public export remains synchronous and independent.',
+    );
+    f.owner.setPhase('paused');
+    await settleWork(() => f.captures.length === 1);
+    const outcome = await f.captureResults[0];
+    assert.equal(outcome.error, undefined);
+    assert.equal(outcome.value.durable, true);
+    await microtasks();
+    assert.equal(f.writes, 1);
+    assert.equal(f.owner.snapshot().active.main, 0);
+    assert.equal(f.owner.snapshot().queued, 0);
+    assert.equal(f.captures.length, 1);
+    assert.deepEqual(f.captures[0].replay, expected);
+    assert.equal(f.store.snapshot().records[0].durable, true);
+    assert.deepEqual(f.store.backup().records[0].replay, expected);
+    assert.equal(f.publications.length, 0, 'Old best must not paint the new attempt.');
+  },
+);
 for (const when of ['queued', 'after-admission', 'task'])
   test('page disposal ' + when + ' prevents deferred export without new work', async (t) => {
     const f = fixture(t);
