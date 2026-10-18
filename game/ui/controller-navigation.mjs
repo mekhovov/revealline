@@ -114,6 +114,13 @@ export function attachControllerNavigation({
     return element.getClientRects().length > 0 && accept(element);
   }
   const controls = () => [...(root?.querySelectorAll(CONTROLS) || [])].filter(visible);
+  // querySelectorAll includes matching descendants, never the scope root itself.
+  const isCurrentControl = (element) =>
+    element !== root &&
+    element?.matches(CONTROLS) &&
+    visible(element) &&
+    // Acceptance may synchronously replace focus; do not validate its former owner.
+    element === doc.activeElement;
   function mark(element) {
     if (focused !== element) focused?.classList.remove('controller-focus');
     focused = element;
@@ -644,7 +651,7 @@ export function attachControllerNavigation({
       engaged &&
       !surfaceEditor &&
       !reading &&
-      (!visible(doc.activeElement) || !controls().includes(doc.activeElement))
+      (!visible(doc.activeElement) || !isCurrentControl(doc.activeElement))
     ) {
       invalidated = true;
       ensureFocus();

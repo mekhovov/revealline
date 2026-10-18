@@ -1,3 +1,4 @@
+import { dataIdentity } from '../../game/data-json.mjs';
 import { fpvReturnURL } from '../../game/fpv-entry.mjs';
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
 import { attachDefeatSoundControls } from '../../game/ui/defeat-sound-controls.mjs';
@@ -160,6 +161,8 @@ export function mountFlightApp({
     aircraftControls = null,
     aircraftChallengeControls = null,
     aircraftAttemptConfiguration = null,
+    workbenchAttemptConfiguration = null,
+    activeTuningDraft = null,
     aircraftAdvice = null,
     aircraftAdviceText = null,
     courseClassFilter = null,
@@ -488,7 +491,7 @@ export function mountFlightApp({
         arm();
       } else if (action === 'reset') {
         setFlightMenu(false);
-        reset();
+        resetCurrentFlight();
       } else if (action === 'camera') cameraControls?.cycle();
       else if (action === 'pause' || action === 'back') setFlightMenu(true);
     }
@@ -510,7 +513,7 @@ export function mountFlightApp({
       message = reason;
     },
     onReset() {
-      reset();
+      resetCurrentFlight();
     },
   });
   const restoreRadio = () => {
@@ -716,6 +719,7 @@ export function mountFlightApp({
     const configuration = physicalAircraft
       ? prepareAircraftChallenge(baselineConfiguration, challenge)
       : baselineConfiguration;
+    activeTuningDraft = tuningDraft ? structuredClone(configuration) : null;
     tuningPractice ||= physicalAircraft;
     response = structuredClone(configuration.response);
     $('camera-fov').value = String(configuration.camera.verticalFov);
@@ -743,6 +747,7 @@ export function mountFlightApp({
         capacityAh: configuration.advanced.aircraft.battery.capacityAh,
       });
     aircraftAttemptConfiguration = physicalAircraft ? structuredClone(baselineConfiguration) : null;
+    workbenchAttemptConfiguration = structuredClone(baselineConfiguration);
     cancelReview();
     epoch++;
     gamepad.reset();
@@ -782,6 +787,11 @@ export function mountFlightApp({
     renderer.setPath?.([]);
     void prepareScene();
     paint(true);
+  }
+  // Same-session changes retain the frozen trial; choosing a course or applying
+  // saved settings still calls reset directly and ends the temporary trial.
+  function resetCurrentFlight(nextMode = mode, previewCourse = authoringCourse) {
+    reset(selected, nextMode, previewCourse, activeTuningDraft);
   }
   function pause(reason = 'paused') {
     continuousPlay.cancel('paused');
@@ -859,6 +869,7 @@ export function mountFlightApp({
     paint(true);
     return true;
   }
+  let tuningCalibrationReturn = null;
   const dialogOpeners = new Map();
   function closeDialog(id) {
     cancelReview();
@@ -870,6 +881,7 @@ export function mountFlightApp({
     if (id === 'setup-dialog') {
       setup?.dispose();
       setup = null;
+      if (tuningCalibrationReturn) { const done=tuningCalibrationReturn; tuningCalibrationReturn=null; done(); return; }
     }
     const opener = dialogOpeners.get(id);
     (opener?.isConnected && !opener.closest('[hidden],[inert]')
@@ -907,7 +919,7 @@ export function mountFlightApp({
         onResponse(value) {
           void tuningStore
             .saveProfile(tuningStore.snapshot().defaultProfileId, { response: value })
-            .then(() => reset())
+            .then(() => resetCurrentFlight())
             .catch((error) => {
               message = error.message;
             });
@@ -966,6 +978,8 @@ export function mountFlightApp({
     return operation;
   }
   async function showReview(proof, kind, index, checked, savedPresentation = null) {
+    activeTuningDraft = null;
+    tuning?.endDraftTest();
     playShell?.enterPlay();
     selected = index;
     mode = proof.mode;
@@ -1624,7 +1638,7 @@ export function mountFlightApp({
         replay.at = 0;
         message = 'paused';
         paint(true);
-      } else reset();
+      } else resetCurrentFlight();
       $('viewport').focus();
     }
   });
@@ -1667,24 +1681,24 @@ export function mountFlightApp({
     lastExecutionTime = null;
     paint(true);
   });
-  listen($('reset'), 'click', () => reset());
+  listen($('reset'), 'click', () => resetCurrentFlight());
   listen($('retry'), 'click', () => {
-    reset(selected, mode, null);
+    resetCurrentFlight(mode, null);
     void startPrepared();
   });
-  listen($('try'), 'click', () => reset(selected, mode, null));
+  listen($('try'), 'click', () => resetCurrentFlight(mode, null));
   listen($('next'), 'click', () => {
     reset(Math.min(courses.length - 1, selected + 1), mode, null);
     void startPrepared();
   });
   listen($('mode'), 'change', () => {
-    reset(selected, $('mode').value);
+    resetCurrentFlight($('mode').value);
     missionChooser.refresh();
   });
   listen($('input-source'), 'change', () => {
     input.select($('input-source').value);
     restoreRadio();
-    reset();
+    resetCurrentFlight();
     $('touch-controls').hidden = input.owner() !== 'touch';
     doc.body.classList.toggle('touch-mode', input.owner() === 'touch');
   });
@@ -1727,7 +1741,12 @@ export function mountFlightApp({
   for (const button of doc.querySelectorAll('[data-close]'))
     listen(button, 'click', () => closeDialog(button.dataset.close));
   for (const id of dialogIds)
-    listen($(id), 'cancel', () => {
+    listen($(id), 'cancel', (event) => {
+      if (id === 'setup-dialog' && tuningCalibrationReturn) {
+        event.preventDefault();
+        closeDialog(id);
+        return;
+      }
       setup?.dispose();
       setup = null;
       pause();
@@ -1745,7 +1764,7 @@ export function mountFlightApp({
   const menuContext = () => {
     // The reference arena owns its flight keys and raw controller preview.
     if (advancedPractice) return null;
-    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: true };
+    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: tuning.captureActive(), blockDevices: tuning.captureActive(), captureControllerIndex: gamepad.status().index, onCaptureBack: () => tuning.releaseCapture() };
     const globalToolRoot = globalTools?.root();
     if (globalToolRoot)
       return {
@@ -2247,7 +2266,7 @@ export function mountFlightApp({
         void startPrepared();
       },
       retry: () => {
-        reset();
+        resetCurrentFlight();
         void startPrepared();
       },
       canResume: () =>
@@ -2291,6 +2310,14 @@ export function mountFlightApp({
     store: tuningStore,
     locale: () => locale,
     onOpen: () => pause(),
+    getFlightConfiguration: () => workbenchAttemptConfiguration,
+    getPracticeConditions: () => ({
+      host: 'Academy', courseId: authoringCourse?.id ?? courses[selected]?.id ?? null, mode,
+      courseIdentity: dataIdentity(authoringCourse ?? courses[selected]),
+      label: `Academy · ${authoringCourse?.id ?? courses[selected]?.id ?? ''} · ${mode}`,
+      input: { source: input.owner(), keyboard: $('keyboard-preset').value, touch: $('touch-response').value, radio: radio.status().profile, radioDevice: radio.status().selected?.key ?? null, controller: { id: gamepad.status().id, index: gamepad.status().index } },
+    }),
+    onCalibration(done) { tuningCalibrationReturn = done; openDialog('setup-dialog'); },
     onApply() {
       playShell?.enterPlay();
       reset();
@@ -2303,7 +2330,7 @@ export function mountFlightApp({
       inputDiagnostics.read(
         flight,
         replay ? 'recording' : input.owner(),
-        !replay && input.owner() === 'radio' ? radio.diagnostics() : null,
+        !replay && input.owner() === 'radio' ? radio.diagnostics() : !replay && input.owner() === 'controller' ? gamepad.previewDiagnostics() : null,
       ),
     onAdvanced(configuration) {
       pause();
@@ -2326,23 +2353,7 @@ export function mountFlightApp({
         },
         onPause: () => pause(),
         async onSaveConfiguration(advanced, metadata = {}) {
-          const library = tuningStore.snapshot(),
-            setup = library.setups.find((item) => item.id === library.selectedSetupId);
-          await tuningStore.saveAircraftConfiguration(
-            {
-              setupId: setup.id,
-              newProfileId: `aircraft-${win.crypto?.randomUUID?.() ?? Date.now()}`,
-              advanced,
-              response: metadata.response,
-              ...(metadata.camera
-                ? { camera: { tilt: metadata.camera.tilt, verticalFov: metadata.camera.fov } }
-                : {}),
-              ...(metadata.preset ? { preset: metadata.preset } : {}),
-              ...(metadata.components !== undefined ? { components: metadata.components } : {}),
-            },
-            library.revision,
-          );
-          tuning.acceptOwnSave(library.revision, { reloadAircraft: true });
+          await tuning.savePracticeDraft(advanced, metadata);
         },
         onClose() {
           advancedPractice?.dispose();
@@ -2396,6 +2407,7 @@ export function mountFlightApp({
   $('viewport').append(tuning.returnButton);
   for (const cameraId of ['camera-fov', 'camera-tilt'])
     listen($(cameraId), 'change', () => {
+      if (activeTuningDraft) return;
       tuningStore.refresh();
       const library = tuningStore.snapshot(),
         setup = library.setups.find((item) => item.id === library.selectedSetupId);
@@ -2470,6 +2482,7 @@ export function mountFlightApp({
     host: 'academy',
     locale: () => locale,
     canChange: () => !flight || flight.snapshot().status !== 'active' || playShell.blocksPlay(),
+    canPersistCamera: () => !activeTuningDraft,
   });
   const globalThemeControls = attachSimThemeFamilyControls({
     document: doc,
@@ -2669,7 +2682,7 @@ export function mountFlightApp({
       );
       if (proof) void review(proof, 'demonstration').catch(() => {});
     } else if (action === 'repeat' && recording) void review(recording, kind).catch(() => {});
-    else reset(selected, mode, action === 'try' ? null : authoringCourse);
+    else resetCurrentFlight(mode, action === 'try' ? null : authoringCourse);
   }
   const practiceOptions = {
     document: doc,

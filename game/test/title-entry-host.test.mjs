@@ -239,6 +239,8 @@ for (const action of [
       h.doc.hidden = false;
       h.win.emit('focus');
     }
+    // Title feedback settles before the owned field preparation accepts Resume.
+    if (action === 'complete') await settle(() => h.doc.body.dataset.flightState === 'running');
     h.frame(0);
     assert.equal(h.rendered.paused, action !== 'complete');
     assert.deepEqual(snapshot(h), before);
@@ -360,6 +362,8 @@ for (const action of ['complete', 'cancel', 'escape', 'new-save', 'missions', 'b
       await settle(() => !h.$('continue-saved').disabled);
       h.frame(0);
       if (action === 'complete') {
+        await settle(() => h.doc.body.dataset.flightState === 'running');
+        h.frame(0);
         assert.notEqual(h.rendered.run, old);
         assert.equal(h.rendered.paused, false);
         assert.deepEqual(snapshot(h), expected);
@@ -582,7 +586,7 @@ test('an unavailable visual pin preserves flight and recovery without current-th
   assert.notEqual(h.doc.body.dataset.flightState, 'running');
   h.$('shell-gallery').click();
   h.$('collection-records').click();
-  h.doc.querySelector('button[data-library-panel="saves"]').click();
+  await activateHostAction(h.doc.querySelector('button[data-library-panel="saves"]'));
   h.$('save-file').files = [
     new Blob(
       [

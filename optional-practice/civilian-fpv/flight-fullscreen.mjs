@@ -552,6 +552,7 @@ export function mountFlightComfort({
   host,
   locale = () => 'en',
   canChange = () => true,
+  canPersistCamera = () => true,
   comparison,
 }) {
   const putText = (node, value) => {
@@ -641,7 +642,8 @@ export function mountFlightComfort({
   function cameraChanged() {
     if (updatingCamera) return;
     // Manual values remain authoritative; presets never silently re-apply.
-    save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
+    if (canPersistCamera())
+      save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
     refresh();
   }
   listen(fov, 'input', cameraChanged);

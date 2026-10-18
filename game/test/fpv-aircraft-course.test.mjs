@@ -42,11 +42,11 @@ const configuration = (id = listAircraftPresets()[0].id) => {
     advanced: { aircraft: row.aircraft, controller: row.controller },
   };
 };
-function createClient() {
+function createClient({ backend } = {}) {
   let simulation;
   return {
     async initialize(options) {
-      simulation = createAdvancedSimulation(options);
+      simulation = createAdvancedSimulation({ ...options, ...(backend ? { backend } : {}) });
       return { telemetry: simulation.telemetry() };
     },
     async stageTerrainFrame(frame) {
@@ -270,6 +270,55 @@ test('course checkpoint recovers exact physical and mission state, remains pause
     assert.equal(flight.snapshot().ticks, 40);
   } finally {
     await flight.dispose();
+  }
+});
+
+test('current course host resumes historical v1 recovery with its original solver and rejects unknown backends', async (t) => {
+  await initAdvancedRuntime();
+  const options = {
+    course: FLIGHT_COURSES[0],
+    mode: 'acro',
+    legacy: true,
+    configuration: configuration('meteor75-analog-2022'),
+  };
+  const historical = createAircraftCourseSession(options, {
+    createClient: () => createClient({ backend: 'civilian-quad-aircraft-regional.v1' }),
+  });
+  const current = createAircraftCourseSession(options, { createClient });
+  t.after(() => Promise.all([historical.dispose(), current.dispose()]));
+  await historical.prepare();
+  await current.prepare();
+  assert.equal(current.snapshot().advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v2');
+  historical.arm();
+  for (let tick = 0; tick < 30; tick++) await historical.step(controls);
+  historical.pause();
+  const saved = await historical.exportRecovery();
+  await current.restoreRecovery(saved);
+  assert.equal(current.snapshot().status, 'paused');
+  assert.equal(current.snapshot().advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v1');
+  assert.deepEqual(current.snapshot().position, historical.snapshot().position);
+  historical.arm();
+  current.arm();
+  for (let tick = 0; tick < 20; tick++) {
+    await historical.step(controls);
+    await current.step(controls);
+  }
+  historical.pause();
+  current.pause();
+  const expected = await historical.exportRecovery();
+  const actual = await current.exportRecovery();
+  assert.equal(
+    actual.physical.hash,
+    expected.physical.hash,
+    'Continuation uses the original solver',
+  );
+  assert.deepEqual(actual.mission, expected.mission);
+  for (const backend of ['civilian-quad-aircraft-regional.v99', 'civilian-quad-aircraft.v1']) {
+    const invalid = structuredClone(saved);
+    invalid.physical.config.backend = backend;
+    reseal(invalid);
+    await assert.rejects(current.restoreRecovery(invalid), /backend/);
+    assert.equal((await current.exportRecovery()).physical.hash, actual.physical.hash);
   }
 });
 

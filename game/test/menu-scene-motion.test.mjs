@@ -190,10 +190,14 @@ function fixture({ loaded = true, width = 2048, height = 1152, unavailable = fal
 test('a decoded bitmap renders once before readiness, with bounded opaque single-texture output', () => {
   const f = fixture(),
     owner = f.attach();
+  assert.deepEqual(f.readiness, [false]);
+  assert.equal(f.calls.length, 0, 'A newly attached owner waits for visible running admission.');
+  owner.setRunning(true);
+  owner.setRunning(false);
   assert.deepEqual(f.readiness, [false, true]);
   assert.equal(f.canvas.hidden, false);
   assert.equal(f.draws.length, 1);
-  assert.equal(f.rafs.size, 0, 'An attached owner starts paused.');
+  assert.equal(f.rafs.size, 0, 'Stopping the admitted owner cancels its callback.');
   assert.equal(f.uploads.length, 1);
   assert.deepEqual([f.canvas.width, f.canvas.height], [1600, 900]);
   assert.deepEqual([f.uploads[0].width, f.uploads[0].height], [1600, 900]);
@@ -327,8 +331,8 @@ test('art without qualified regions stays at source scale and never owns an anim
     profile = { environment: [], portraitEnvironment: [] },
     owner = f.attach(profile);
   assert.equal(artworkMotionMode(profile), 'static');
-  assert.deepEqual(f.draws[0].uniforms.u_camera, [1, 0, 0]);
   owner.setRunning(true);
+  assert.deepEqual(f.draws[0].uniforms.u_camera, [1, 0, 0]);
   assert.equal(f.rafs.size, 0);
   for (let stamp = 0; stamp <= 120000; stamp += 100) f.frame(stamp);
   assert.equal(f.draws.length, 1);
@@ -447,6 +451,7 @@ test('only validated source-coordinate environment anchors move, with portrait s
   };
   const original = structuredClone(profile),
     owner = f.attach(profile);
+  owner.setRunning(true);
   assert.equal(artworkMotionMode(profile), 'regions');
   assert.equal(artworkMotionMode({ environment: profile.environment.slice(0, 2) }), 'static');
   assert.equal(artworkMotionMode(profile, true), 'regions');
@@ -509,6 +514,7 @@ test('unavailable, failed shader and rejected upload all leave the untouched ima
     if (failure === 'uploadError') f.state.uploadError = true;
     if (failure === 'error') f.state.error = 1282;
     const owner = f.attach();
+    owner.setRunning(true);
     assert.deepEqual(f.readiness, [false]);
     assert.equal(f.canvas.hidden, true);
     assert.equal(f.resources.size, 0);
@@ -535,4 +541,89 @@ test('a subsequent successful image load recovers a failed source without duplic
   assert.equal(f.rafs.size, 1);
   assert.ok(f.scratch.every((canvas) => canvas.width === 0 && canvas.height === 0));
   owner.dispose();
+});
+
+test('stopped image loads retain pending upload without GL work until visible admission', () => {
+  const f = fixture({ width: 1000, height: 600 }),
+    owner = f.attach();
+  owner.setRunning(true);
+  owner.setRunning(false);
+  const calls = f.calls.length,
+    uploads = f.uploads.length,
+    draws = f.draws.length;
+  f.image.emit('load');
+  owner.update();
+  assert.equal(f.calls.length, calls);
+  assert.equal(f.uploads.length, uploads);
+  assert.equal(f.draws.length, draws);
+  assert.equal(f.rafs.size, 0);
+  owner.setRunning(true);
+  assert.equal(f.uploads.length, uploads + 1, 'Even a same-URL new bitmap is uploaded on resume.');
+  assert.equal(f.draws.length, draws + 1);
+  assert.equal(f.rafs.size, 1);
+  owner.dispose();
+});
+
+test('stopped profile replacement draws only the latest uniforms on resume without texture reupload', () => {
+  const f = fixture({ width: 1000, height: 600 }),
+    owner = f.attach();
+  owner.setRunning(true);
+  owner.setRunning(false);
+  const calls = f.calls.length,
+    uploads = f.uploads.length,
+    draws = f.draws.length;
+  owner.update({ profile: { environment: [] } });
+  owner.update({ profile: { environment: [{ kind: 'lamp', x: 0, y: 0, width: 20, height: 20 }] } });
+  assert.equal(f.calls.length, calls);
+  assert.equal(f.uploads.length, uploads);
+  assert.equal(f.draws.length, draws);
+  assert.equal(f.rafs.size, 0);
+  owner.setRunning(true);
+  assert.equal(f.uploads.length, uploads);
+  assert.equal(f.draws.length, draws + 1);
+  assert.equal(f.draws.at(-1).uniforms.u_count, 1);
+  assert.equal(f.draws.at(-1).uniforms['u_motion[0]'][0], 3);
+  owner.dispose();
+});
+
+test('stopped context restoration defers handles and replaced image until resume', () => {
+  const f = fixture({ width: 1000, height: 600 }),
+    owner = f.attach();
+  owner.setRunning(true);
+  f.frame(0);
+  f.frame(100);
+  f.canvas.emit('webglcontextlost', { preventDefault() {} });
+  f.resources.clear();
+  owner.setRunning(false);
+  const calls = f.calls.length,
+    uploads = f.uploads.length,
+    draws = f.draws.length;
+  f.canvas.emit('webglcontextrestored');
+  f.image.src = 'https://game.example/replaced.webp';
+  f.image.complete = false;
+  owner.update({ profile: MENU_SCENES.retro });
+  f.image.emit('load');
+  assert.equal(f.calls.length, calls);
+  assert.equal(f.resources.size, 0);
+  assert.equal(f.uploads.length, uploads);
+  assert.equal(f.draws.length, draws);
+  assert.equal(f.canvas.hidden, true);
+  assert.equal(f.rafs.size, 0);
+  owner.setRunning(true);
+  assert.equal(f.resources.size, 0, 'A still-pending replacement keeps the source fallback.');
+  f.image.complete = true;
+  f.image.emit('load');
+  assert.equal(f.uploads.length, uploads + 1);
+  assert.equal(f.draws.length, draws + 1);
+  assert.equal(f.canvas.hidden, false);
+  owner.setRunning(false);
+  f.image.emit('load');
+  owner.dispose();
+  const disposedCalls = f.calls.length;
+  f.canvas.emit('webglcontextrestored');
+  f.image.emit('load');
+  owner.setRunning(true);
+  assert.equal(f.calls.length, disposedCalls);
+  assert.equal(f.resources.size, 0);
+  assert.equal(f.rafs.size, 0);
 });

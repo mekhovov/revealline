@@ -415,7 +415,10 @@ export function createAircraftCourseSession(
       signal?.addEventListener('abort', abort, { once: true });
       try {
         if (signal?.aborted || disposed) throw new Error('Aircraft recovery cancelled');
-        await candidate.initialize(options);
+        // A recovery resumes its published solver, while every other option
+        // still comes from this session. Worker identity checks reject any
+        // unrelated aircraft, rates, terrain mode or controller configuration.
+        await candidate.initialize({ ...options, backend: saved.physical?.config?.backend });
         await candidate.restore(saved.physical);
         const restored = await candidate.telemetry();
         if (signal?.aborted || disposed) throw new Error('Aircraft recovery cancelled');

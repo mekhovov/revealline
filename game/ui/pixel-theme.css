@@ -757,10 +757,10 @@
       );
     }
   }
-  .game-shell[data-flight-state='running'] .shell-edition {
+  .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .shell-edition {
     visibility: hidden;
   }
-  .game-shell[data-flight-state='running'] .run-message {
+  .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .run-message {
     min-height: 1.5em;
   }
 

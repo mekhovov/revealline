@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { readFile } from 'node:fs/promises';
 import {
   recoverGameplayTuning,
@@ -37,7 +61,9 @@ test('Versus lobby difficulty uses one fresh pressure recipe for both boards and
         : undefined,
   });
   const difficulty = p.$('race-journey-difficulty');
-  assert(p.$('race-main').contains(difficulty));
+  p.$('race-options').click();
+  p.$('race-settings-tab-gameplay').click();
+  assert(p.$('race-settings-panel-gameplay').contains(difficulty));
   assert.equal(difficulty.closest('[hidden]'), null);
   assert.equal(difficulty.value, 'standard');
   const preview = p.renders[0];
@@ -51,6 +77,7 @@ test('Versus lobby difficulty uses one fresh pressure recipe for both boards and
   difficulty.value = 'expert';
   difficulty.onchange();
   assert.strictEqual(p.renders[0], preview, 'The existing ready board is not mutated.');
+  p.$('race-options-back').click();
   p.$('race-start').focus();
   p.$('race-start').click();
   await settle(() => {
@@ -70,7 +97,10 @@ test('Versus lobby difficulty uses one fresh pressure recipe for both boards and
   p.$('race-pause').click();
   p.frame(0);
   const checkpoint = p.checkpoint();
+  p.$('race-options').click();
+  p.$('race-settings-tab-gameplay').click();
   apply(p.$('race-gameplay-tuning'), { enemySpeed: 1.25, playerSpeed: 1.1 });
+  p.$('race-options-back').click();
   p.frame(0);
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.equal(recoverGameplayTuning(active.level).adminOverride, false);
@@ -158,7 +188,9 @@ test('Team fresh tuning preserves its exact authored picture, pause state and ex
     retainInitialDifficulty: true,
     beforeImport: ({ install }) => install('localStorage', { value: storage }),
   });
-  assert.equal(p.$('coop-difficulty').closest('[hidden]'), null);
+  p.$('coop-settings-open').click();
+  p.$('coop-settings-tab-gameplay').click();
+  boundedIdentity(p.$('coop-difficulty').closest('[hidden]'), null);
   assert.equal(p.$('coop-difficulty').value, 'standard');
   await p.choose('coop-difficulty', 'expert');
   assert(
@@ -167,13 +199,17 @@ test('Team fresh tuning preserves its exact authored picture, pause state and ex
       .textContent.includes(gameplayTuningDescription(resolveGameplayTuning('expert'))),
   );
   const picture = p.previewDrawImages.at(-1);
+  p.$('coop-settings-close').click();
   p.$('coop-start').click();
   p.tick();
   assert.equal(p.$('coop-overlay').hidden, true, 'The tuned attempt paints successfully.');
   assert(p.drawImages.includes(picture), 'The original prepared picture remains in use.');
   p.$('coop-pause').click();
   p.tick();
-  const pausedPaint = p.lastPaint;
+  const pausedPaint = p.lastPaint,
+    acceptedStage = p.$('coop-stage').textContent;
+  p.$('coop-settings-open').click();
+  p.$('coop-settings-tab-gameplay').click();
   apply(p.$('coop-gameplay-tuning'), { enemySpeed: 1.25, playerSpeed: 1.1 });
   p.tick();
   assert.equal(p.lastPaint, pausedPaint, 'Settings never alter a paused simulation.');
@@ -186,6 +222,7 @@ test('Team fresh tuning preserves its exact authored picture, pause state and ex
   );
   assert(p.$('coop-level-note').textContent.includes(adminDescription));
   assert(p.$('coop-gameplay-tuning').textContent.includes(adminDescription));
+  p.$('coop-settings-close').click();
   p.$('coop-retry').click();
   assert.equal(p.$('coop-discard-dialog').open, true);
   p.$('coop-discard-stay').click();
@@ -195,7 +232,12 @@ test('Team fresh tuning preserves its exact authored picture, pause state and ex
   p.$('coop-discard-confirm').click();
   p.tick();
   assert.equal(p.$('coop-overlay').hidden, true);
-  assert.match(p.$('coop-stage').textContent, /ADMIN PLAYTEST/);
+  assert.equal(
+    p.$('coop-stage').textContent,
+    acceptedStage,
+    'Retry preserves the accepted recipe rather than adopting changed setup tuning.',
+  );
+  assert.doesNotMatch(p.$('coop-stage').textContent, /ADMIN PLAYTEST/);
   assert.notEqual(p.lastPaint, pausedPaint);
   assert(p.drawImages.includes(picture));
 });

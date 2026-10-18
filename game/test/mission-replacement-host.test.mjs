@@ -71,6 +71,9 @@ function openRetainedSetup(h) {
   h.$('overlay-brief').click();
   h.$('shell-briefing').click();
   h.$('shell-missions').showModal();
+  // The finite dialog sets `open` without delivering the browser's toggle
+  // event. Complete that public opening before callers retain a card opener.
+  h.$('shell-missions').emit('toggle');
 }
 async function flight(h, paused = true) {
   await action(h.$('start-button'));

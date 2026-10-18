@@ -1,0 +1,190 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "continuous-twenty-nine-minute-public-saved-reload",
+  "kind": "performance",
+  "timeoutMs": 2400000,
+  "query": {
+    "journey": "opening"
+  },
+  "coverage": [
+    "At least 29 real minutes of one unfinished public First Return attempt, without Retry, reload, navigation or state injection during the uninterrupted play window; leaves approximately one minute below the existing216000tick recording budget",
+    "Alternating safe top-border steering grows the real input recording",
+    "Public Pause and exact export, then public reload and ordinary Load saved flight while paused; exact second public export must match the first byte-for-byte.",
+    "The pre-reload paused snapshot alone supplies29minute timing gates; the new document probe remains separately labeled and is never substituted.",
+    "Same-context page reload durability only; does not prove which save call succeeded, an OS flush, browser restart or offline persistence."
+  ],
+  "replayRequirements": {
+    "movingTicks": 200000,
+    "directionChangesWithMovement": 1500
+  },
+  "actions": [
+    {
+      "type": "snapshot",
+      "group": "original-art-ready"
+    },
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "repeat",
+      "count": 870,
+      "atLeastMs": 1740000,
+      "actions": [
+        {
+          "type": "key",
+          "key": "ArrowLeft",
+          "ms": 1000
+        },
+        {
+          "type": "key",
+          "key": "ArrowRight",
+          "ms": 1000
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button",
+      "label": "long-recording-public-pause"
+    },
+    {
+      "type": "wait",
+      "phase": "paused",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "snapshot",
+      "group": "continuous-recording-paused"
+    },
+    {
+      "type": "exportReplay",
+      "label": "before-saved-flight-reload"
+    },
+    {
+      "type": "reload",
+      "timeoutMs": 120000,
+      "label": "public-saved-flight-reload"
+    },
+    {
+      "type": "expect",
+      "selector": "#shell-home[open]",
+      "timeoutMs": 30000
+    },
+    {
+      "type": "key",
+      "key": "Escape",
+      "ms": 1
+    },
+    {
+      "type": "expect",
+      "selector": "body:not(:has(#shell-home[open])) #continue-saved:not(:disabled)",
+      "timeoutMs": 30000
+    },
+    {
+      "type": "click",
+      "selector": "#continue-saved",
+      "timeoutMs": 30000,
+      "label": "public-load-saved-flight"
+    },
+    {
+      "type": "expect",
+      "selector": "#game-overlay[data-kind=\"pause\"]",
+      "timeoutMs": 120000,
+      "label": "public-restored-pause-owner"
+    },
+    {
+      "type": "wait",
+      "phase": "paused",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "snapshot",
+      "group": "restored-continuous-recording-paused"
+    },
+    {
+      "type": "exportReplay",
+      "label": "after-saved-flight-reload"
+    }
+  ],
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  },
+  "replayIdentity": "exact-public-bytes-pair"
+}
