@@ -722,6 +722,10 @@ test('actual frame entry distinguishes asynchronous Start, external Pause and in
     fetchResponse,
     search: '?journey=opening&performance=1',
     journeyIndexedDB: managedIndexedDB().indexedDB,
+    browserSetup: ({ globals }) => {
+      globals.innerWidth = 1280;
+      globals.innerHeight = 720;
+    },
   });
   await start(page);
   page.$('pause-button').click();
@@ -760,6 +764,10 @@ test('actual POST_RENDER keeps its entry phase and does not publish an abandoned
     fetchResponse,
     search: '?journey=opening&performance=1',
     journeyIndexedDB: managedIndexedDB().indexedDB,
+    browserSetup: ({ globals }) => {
+      globals.innerWidth = 1280;
+      globals.innerHeight = 720;
+    },
   });
   await start(page);
   page.frame(16, { beforeRender: () => page.$('pause-button').click() });
@@ -796,6 +804,10 @@ test(
         }),
       }),
       journeyIndexedDB: managedIndexedDB().indexedDB,
+      browserSetup: ({ globals }) => {
+        globals.innerWidth = 1280;
+        globals.innerHeight = 720;
+      },
     });
     await start(page);
     const run = page.rendered.run;
