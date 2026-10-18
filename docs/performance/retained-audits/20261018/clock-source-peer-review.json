@@ -1,0 +1,132 @@
+{
+  "format": "SoloNativeClockAlternativePeerReviewV1",
+  "observedAt": "2026-10-18T22:28:30.990Z",
+  "sourceAudit": {
+    "gitBlob": "7c7989aaabdb628961da5336990696975520b5c9",
+    "bytes": 36808,
+    "sha256": "6b664ff32f8e0f65cfd8db874e1ebcb2c18f8f82772996ad9a749ecbe9212962"
+  },
+  "status": "source-review-clean-with-explicit-observer-cost-caveat",
+  "independentFullSourceReadback": [
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/inspector/thread_debugger_common_impl.cc",
+      "bytes": 43440,
+      "sha256": "8ebed039ad45630e4af2fd1b18dc6bedf4bd4408000bb137adfbb1deb2faed34",
+      "gitBlob": "e7a57b712b4765a639939e76c5a780b22610257c",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/inspector/inspector_trace_events.h",
+      "bytes": 21402,
+      "sha256": "0092f87eb16666b307f3aec65b0ad9fc9ac238fee24a823e05f040a60da822a1",
+      "gitBlob": "e0c15c0058e86e83142fdb76b453ec0a29545023",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/inspector/inspector_trace_events.cc",
+      "bytes": 74193,
+      "sha256": "0c66bed1a9f27845fe19ba8fd9537611c6689fadca55fc0996d5b8676206ebf6",
+      "gitBlob": "8ba9e2a2d647a2eac7f9fceaa7158c93b438b10e",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/timing/performance_mark.cc",
+      "bytes": 7480,
+      "sha256": "0cc6a745a26b8b9dba536fffed2b13006448eb71f13e3b2e7fb2bc8a8e84112c",
+      "gitBlob": "1591bfdbff1bbcf97354bcf1c5471900b15d1428",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/timing/performance_user_timing.cc",
+      "bytes": 15495,
+      "sha256": "5d122d10b6c5a538e8e8b1892d270628175adaeadd48442542bb0ce0e2b875d4",
+      "gitBlob": "e294601507d67854750c142d2a9b63bf18108c68",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/inspector/agents/InspectorTimelineAgent.cpp",
+      "bytes": 25729,
+      "sha256": "c07bdd88bedc3f61acff2dfb4a1143c28e0fdfaefba4c3231f81b16fe7141306",
+      "gitBlob": "6861538fc9f3e23649565f7976894b871758e442",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/inspector/TimelineRecordFactory.cpp",
+      "bytes": 6562,
+      "sha256": "668dca928060d0e705223f35ce61c23ed76f47f0f6c01da0d136b48a5fa12168",
+      "gitBlob": "4fd764090959bd2c04aa3483d070edd76847e4d3",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/page/PerformanceUserTiming.cpp",
+      "bytes": 12086,
+      "sha256": "18b7706f31e25d2a52a0b8e0442a1f4a596204f961dcc8e985dd10573e9861d8",
+      "gitBlob": "90198059d7d10d95bcea56e50be3312bcbfa0b49",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/page/PerformanceMark.cpp",
+      "bytes": 4073,
+      "sha256": "277f5542fd520c3035a860a9bc1affb6ce33c7b6d55201447f8ef4b88fb2f6e5",
+      "gitBlob": "cc59880ddd6ee5ae9160cf8b1afcd2d68bedd516",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/dispatchers/browserContextDispatcher.ts",
+      "bytes": 24844,
+      "sha256": "e1abd807e908df0ddef06c20a465d8816fda27ddc4093092b04611225178ad92",
+      "gitBlob": "3616c35cd75ffa06a413b2bb519f1b717d7d2114",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/dispatchers/browserDispatcher.ts",
+      "bytes": 7215,
+      "sha256": "ae4e4a51e2449f1679f0c5af75ba84250f76dfbf7e14feb46985cf116d661bf0",
+      "gitBlob": "f558a14aefbf722aaf170b07262309c29611a59f",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/docs/src/api/class-browsercontext.md",
+      "bytes": 59020,
+      "sha256": "faae593e6dca456c73653ae8e5fecadeff5d2856f010ca81539b8e14b23cb0c7",
+      "gitBlob": "f5c2cbc95ef12fbbe7912887e31b8de376826b3a",
+      "matches": true,
+      "excerptsMatch": true
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/docs/src/api/class-tracing.md",
+      "bytes": 15572,
+      "sha256": "1ff614b5aa76f35f0762d5761a2ed9e487aabb22b9992dd11e19f8886f96d7dc",
+      "gitBlob": "256ae513a5327522d417a1b2304d19eec11f8ca8",
+      "matches": true,
+      "excerptsMatch": true
+    }
+  ],
+  "additionalEvidence": {
+    "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/inspector/inspector_trace_events.cc",
+    "firstLine": 1511,
+    "lastLine": 1545,
+    "content": "void inspector_time_stamp_event::Data(perfetto::TracedValue trace_context,\n                                      ExecutionContext* context,\n                                      const String& message,\n                                      const v8::LocalVector<v8::Value>& args) {\n  auto dict = std::move(trace_context).WriteDictionary();\n  dict.Add(\"message\", message);\n\n  v8::Isolate* isolate = nullptr;\n  Performance* performance = nullptr;\n  if (auto* window = DynamicTo<LocalDOMWindow>(context)) {\n    LocalFrame* frame = window->GetFrame();\n    dict.Add(\"frame\", IdentifiersFactory::FrameId(frame));\n    isolate = frame->DomWindow()->GetIsolate();\n    performance = DOMWindowPerformance::performance(*window);\n  } else if (auto* worker_global_scope =\n                 DynamicTo<WorkerGlobalScope>(context)) {\n    dict.Add(\"worker\", ToHexString(worker_global_scope));\n    isolate = worker_global_scope->GetIsolate();\n    performance =\n        WorkerGlobalScopePerformance::performance(*worker_global_scope);\n  }\n\n  if (!isolate || !performance) {\n    return;\n  }\n\n  uint64_t sample_trace_id = InspectorTraceEvents::GetNextSampleTraceId();\n  v8::CpuProfiler::CpuProfiler::CollectSample(isolate, sample_trace_id);\n  dict.Add(\"sampleTraceId\", sample_trace_id);\n  static constexpr std::array<const char*, 7> kNames = {\n      \"name\", \"start\", \"end\", \"track\", \"trackGroup\", \"color\", \"devtools\"};\n  for (size_t i = 0; i < args.size() && i < std::size(kNames); ++i) {\n    auto name = kNames[i];\n    auto value = args[i];\n    if (value->IsNumber()) {"
+  },
+  "findings": [
+    "The native source markers avoid reusing clamped performance.now results when no explicit start/end timestamp is supplied. This is not proof of negligible measurement error or observer cost.",
+    "Chromium inspector_time_stamp_event::Data unconditionally calls V8 CpuProfiler::CollectSample on the selected trace path; disabling the optional devtools.timeline.stack category does not remove this call. No claim is made about its measured CPU cost.",
+    "The conditional inequality d >= 41 epsilon is correct for equal observed p95, symmetric duration errors and no sampling uncertainty. Favorable unequal comparisons need their own bound.",
+    "The reviewed proposal preserves per-frame application work, matched run-level statistics, all evidence and the original 5% target; it explicitly treats native tracing as diagnostic until transfer/observer uncertainty is defensible.",
+    "Pinned Playwright public CDP/native tracing dispatcher rejects WebKit. No supported WebKit native Timeline collection path was demonstrated. Context tracing is not a substitute."
+  ],
+  "noImplementation": true,
+  "noFunctionalExecution": true,
+  "noQualificationPass": true
+}

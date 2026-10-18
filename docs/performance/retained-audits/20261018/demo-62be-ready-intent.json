@@ -1,0 +1,822 @@
+{
+  "format": "SoloGuardedReadyIntentV1",
+  "createdAt": "2026-10-18T22:28:25.256402+00:00",
+  "pr": 1628,
+  "head": "62be652ce70b11f840b491c218609d5225374be4",
+  "mainRead": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "dependency": 1621,
+  "compatibilityAudit": "25a57186706cefd97e03db978711aaffb054c3dc",
+  "sourceAudit": "22fdcef8c6c9207c39a0808b686f87f4215f79fc",
+  "industrialAudits": [
+    "962db048a4b5da553a7746311fb0aad7ccd7ac28",
+    "478113707d3c6f5563031f0b76ae96c97af5c15b"
+  ],
+  "companyAudit": "e56d22eb471a7b88ad94aa0dd181281217b0d839",
+  "checkSnapshot": [
+    {
+      "id": 117805366170,
+      "name": "focused",
+      "status": "queued",
+      "conclusion": null,
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117796846062,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117792215084,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117792214675,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117792214101,
+      "name": "focused_shards (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117792213882,
+      "name": "focused_shards (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117792213880,
+      "name": "focused_shards (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117792213840,
+      "name": "focused_shards (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117784496782,
+      "name": "replay-portability",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781982210,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781981919,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781981147,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781980912,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781980842,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781980733,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781980199,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781977631,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781977022,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781976829,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781976421,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781975201,
+      "name": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781973919,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781973450,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781972176,
+      "name": "matrix.engine",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781971607,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781970330,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781969325,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781966412,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781966056,
+      "name": "shared-return",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781965393,
+      "name": "demo-recovery",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781962457,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781944237,
+      "name": "matrix.engine",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781944105,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781944025,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943789,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943709,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943676,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943658,
+      "name": "demo",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943617,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943600,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943511,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943404,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943347,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943327,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943291,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943251,
+      "name": "matrix.engine",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943246,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943244,
+      "name": "auxiliary",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943218,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943181,
+      "name": "touch",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943179,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943169,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943138,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943100,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943075,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943057,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943040,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781943014,
+      "name": "hud-cpu",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942971,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942961,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942934,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942930,
+      "name": "correctness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942880,
+      "name": "cocoa",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942858,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942831,
+      "name": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942822,
+      "name": "matrix.engine",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942821,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942779,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942700,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942667,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942657,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942656,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942628,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942622,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942554,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942538,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942528,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942511,
+      "name": "raster",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942499,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942494,
+      "name": "demo-resources",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942463,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942433,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942428,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942418,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942389,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942381,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942361,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942326,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942309,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942290,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942269,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942223,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942166,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942124,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942031,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781942016,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941914,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941889,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941788,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941781,
+      "name": "demo",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941754,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941679,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941485,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941484,
+      "name": "candidate",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941439,
+      "name": "replay-portability-source",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941310,
+      "name": "feature (local-ux)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941281,
+      "name": "optional-practice",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941278,
+      "name": "feature (gameplay)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941277,
+      "name": "feature (creator)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941257,
+      "name": "feature (rooms)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941252,
+      "name": "feature (presentation)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    },
+    {
+      "id": 117781941086,
+      "name": "feature (recordings)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "62be652ce70b11f840b491c218609d5225374be4"
+    }
+  ],
+  "mutation": {
+    "data": {
+      "markPullRequestReadyForReview": {
+        "pullRequest": {
+          "number": 1628,
+          "isDraft": false,
+          "headRefOid": "62be652ce70b11f840b491c218609d5225374be4",
+          "url": "https://github.com/mekhovov/revealline/pull/1628"
+        }
+      }
+    }
+  },
+  "reason": "Unchanged reviewed head and complete actual execution evidence; controller must still enforce dependency and all remaining aggregate/final gates.",
+  "after": {
+    "draft": false,
+    "head": "62be652ce70b11f840b491c218609d5225374be4",
+    "state": "open",
+    "auto_merge": null
+  },
+  "directMerge": false,
+  "nativeDispatch": false
+}

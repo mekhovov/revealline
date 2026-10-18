@@ -1,0 +1,13 @@
+{
+  "format": "SoloDraftSourceAdmissionV1",
+  "at": "2026-10-18T22:37:06.463347+00:00",
+  "pr": 1674,
+  "url": "https://github.com/mekhovov/revealline/pull/1674",
+  "head": "e379c2749e0815538f23500ef5a3b2117569c0c6",
+  "baseAtCreation": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "draft": true,
+  "title": "Defer Worlds loading and avoid repeated Missions setup",
+  "body": "Depends on #1620\n\nOpening Solo currently evaluates the Worlds menu code before it is needed, and Missions repeats catalogue initialization and current-mission identity work. Load Worlds on demand, initialize the Missions index once, and compute the current mission identity once per render while retaining stale-owner and validation checks. Update the generated FPV shell with the same canonical UI changes.\n\nThis draft is for source qualification. Keep it unmerged until the published Missions observation for #1620 has completed.\n\nValidation:\n- Independent source and admission review is complete. Latest main was merged normally; the complete resulting blob tree matches the reviewed union, including the independent Capture changes.\n- Adds 14 Worlds-loading, two current-identity, and six constructor controls. These new controls have not executed yet; exact-head Source, Appearance, Industrial and Company checks are required.\n- Production build, generated-shell, offline/CSP and shared-mode checks remain required. Removing three eager modules (51,265 source bytes) is a source-graph reduction, not a measured startup-time improvement.\n\nProgress and remaining qualification are tracked in #1623. Physical iPhone/Steam Deck results remain outstanding.\n",
+  "noNativeDispatch": true,
+  "noMergeIntent": true
+}

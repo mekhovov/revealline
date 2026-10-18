@@ -1,0 +1,22 @@
+{
+  "format": "SoloDraftBranchMainReconciliationV1",
+  "at": "2026-10-18T22:36:24.742921+00:00",
+  "branch": "codex/solo-menu-preparation-split",
+  "before": "14c732a022c1ebd68e4487e744c4b6c0fd0fe422",
+  "main": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "after": "e379c2749e0815538f23500ef5a3b2117569c0c6",
+  "tree": "07198861aeeedd5c36b9317f2418577c02478b5c",
+  "parents": [
+    "14c732a022c1ebd68e4487e744c4b6c0fd0fe422",
+    "dd337c8120fd6f875544c1479713d3aa4299c323"
+  ],
+  "overlap": [
+    "game/app.mjs"
+  ],
+  "wholeBlobTreeUnionVerified": true,
+  "blobCount": 44794,
+  "expectedApp": "1e7119e73be898d5bf713cc18b34c1ed3537d27a",
+  "functionalExecution": false,
+  "prCreated": false,
+  "nativeRun": false
+}

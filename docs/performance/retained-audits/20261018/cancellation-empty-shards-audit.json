@@ -1,0 +1,228 @@
+{
+  "format": "revealline-exact-source-milestone-audit.v1",
+  "observedAt": "2026-10-18T22:17:28.605716+00:00",
+  "source": {
+    "revision": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+    "tree": "eb1f7d7a0083e61ab9543516fe4caee7d608b91a"
+  },
+  "scope": {
+    "completed": "Both remaining metadata shards complete successfully with zero scheduled commands; they add no tests to the earlier396/396 source controls.",
+    "pending": [
+      "Required release-ready117803949673",
+      "Fresh-main reconciliation and policy review before merge"
+    ],
+    "releaseOrder": "Keep policy-file change after the current1631/1619/1620/1621/1628 cohort; no policy exception or settings change.",
+    "noClaims": [
+      "No hosted cancellation behavior verified",
+      "No automatic policy admission or final merge-ready claim"
+    ]
+  },
+  "integrity": {
+    "allApiSizesAndDigestsMatched": true,
+    "allZipMemberCRCsVerified": true,
+    "exactHeadTreeAndPolicyManifestReceiptsVerified": true
+  },
+  "priorRetainedAudits": [
+    "0ccf4a3c5ff9db5ccc37c10df94668db19ea9e50"
+  ],
+  "records": [
+    {
+      "run": 39160878387,
+      "job": {
+        "id": 117782722813,
+        "name": "focused_shards (4)",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T21:34:55Z",
+        "completed_at": "2026-10-18T21:37:45Z"
+      },
+      "artifact": {
+        "id": 12151557121,
+        "name": "focused-shard-39160878387-1-4",
+        "size_in_bytes": 1157,
+        "digest": "sha256:c39e598215c29d408e59c579fe54efac6d102ecfd9b41d6a19a790076c95f74a",
+        "expired": false,
+        "expires_at": "2026-10-25T21:37:40Z"
+      },
+      "members": [
+        {
+          "name": "output.log",
+          "bytes": 164,
+          "sha256": "d7bef3fe2162ceb24a3aae381907f667741dd108fbeec038f62c569e8dd5412d"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 1824,
+          "sha256": "2df54860254a34b05cd1ad040864921ff615e54e6625d3c05b44a04a5860e39d"
+        }
+      ],
+      "receipt": {
+        "format": "revealline-focused-shard.v1",
+        "state": "complete",
+        "shard": {
+          "index": 4,
+          "total": 4
+        },
+        "identity": {
+          "sourceRevision": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+          "workflowRevision": "a38b49c101adeeed1416822445292e6b2db1e0de",
+          "policyDigest": "f5242c6e186216f9c3a6a8f806a2fe6583afefaf24ec99f590af80f98e0cb0b5",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "4bc0c7c1c8bc356c08f8c2e89e44d0fd6eda825ab5620e4dec54a3ec6759ee34",
+          "fallbackHandled": false,
+          "sourceTree": "eb1f7d7a0083e61ab9543516fe4caee7d608b91a"
+        },
+        "plan": {
+          "commands": [
+            {
+              "id": "publishing-controller",
+              "command": "node",
+              "args": [
+                "--test",
+                "publishing/focused-tests.test.mjs",
+                "publishing/fastline-merge-controller.test.mjs",
+                "publishing/fastline-release-inputs.test.mjs",
+                "publishing/fastline-release-objects.test.mjs",
+                "publishing/fastline-release-publisher.test.mjs",
+                "publishing/source-workflow.test.mjs",
+                "scripts/test-pages-capacity-evidence.mjs",
+                "scripts/test-pages-archive-evidence.mjs",
+                "scripts/test-pages-recovery.mjs",
+                "scripts/test-pages-capacity-report.mjs",
+                "scripts/test-main-pages-metadata.mjs",
+                "scripts/test-pages-candidate-contract.mjs",
+                "scripts/test-pages-candidate-overlay.mjs",
+                "scripts/test-pages-candidate-archive.mjs",
+                "scripts/test-pages-candidate-measurement.mjs",
+                "scripts/test-pages-candidate-stack.mjs",
+                "scripts/test-pages-stack-contract.mjs",
+                "scripts/test-pages-stack-source.mjs",
+                "scripts/test-pages-stack-packet.mjs",
+                "scripts/test-pages-stack-measurement.mjs",
+                "scripts/test-pages-stack-artifacts.mjs",
+                "scripts/test-pages-stack-e2e.mjs",
+                "publishing/test-policy.test.mjs"
+              ]
+            }
+          ],
+          "sha256": "6b396319964a329d11f55dd78c038463b9c29994b18c3455027b38dbf760f2b2"
+        },
+        "indices": [],
+        "result": {
+          "attempted": 0,
+          "failures": [],
+          "exitCode": 0
+        }
+      },
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "cancelled": [],
+        "skipped": [],
+        "todo": []
+      },
+      "fullOutput": "### Focused release gate\n\nCategories: publishing\nCommands: 1\nFocused shard 4/4: 0/1 commands; plan 6b396319964a329d11f55dd78c038463b9c29994b18c3455027b38dbf760f2b2\n"
+    },
+    {
+      "run": 39160878387,
+      "job": {
+        "id": 117782722998,
+        "name": "focused_shards (3)",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T21:35:59Z",
+        "completed_at": "2026-10-18T21:38:53Z"
+      },
+      "artifact": {
+        "id": 12151498853,
+        "name": "focused-shard-39160878387-1-3",
+        "size_in_bytes": 1156,
+        "digest": "sha256:78ec092b11287813d9e25d54b9e13e2d34747e86e6576d0da4e0d9c52cea5e58",
+        "expired": false,
+        "expires_at": "2026-10-25T21:38:50Z"
+      },
+      "members": [
+        {
+          "name": "output.log",
+          "bytes": 164,
+          "sha256": "d968b8e50bc3a319ee2da23cfbe1a9961d6bf5087e60b1c3813c61ddc472f904"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 1824,
+          "sha256": "98cb44c57bd0a8f685aff85b64dc91b5469d8f087c0d10957e1cc4c461e4ee0e"
+        }
+      ],
+      "receipt": {
+        "format": "revealline-focused-shard.v1",
+        "state": "complete",
+        "shard": {
+          "index": 3,
+          "total": 4
+        },
+        "identity": {
+          "sourceRevision": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+          "workflowRevision": "a38b49c101adeeed1416822445292e6b2db1e0de",
+          "policyDigest": "f5242c6e186216f9c3a6a8f806a2fe6583afefaf24ec99f590af80f98e0cb0b5",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "4bc0c7c1c8bc356c08f8c2e89e44d0fd6eda825ab5620e4dec54a3ec6759ee34",
+          "fallbackHandled": false,
+          "sourceTree": "eb1f7d7a0083e61ab9543516fe4caee7d608b91a"
+        },
+        "plan": {
+          "commands": [
+            {
+              "id": "publishing-controller",
+              "command": "node",
+              "args": [
+                "--test",
+                "publishing/focused-tests.test.mjs",
+                "publishing/fastline-merge-controller.test.mjs",
+                "publishing/fastline-release-inputs.test.mjs",
+                "publishing/fastline-release-objects.test.mjs",
+                "publishing/fastline-release-publisher.test.mjs",
+                "publishing/source-workflow.test.mjs",
+                "scripts/test-pages-capacity-evidence.mjs",
+                "scripts/test-pages-archive-evidence.mjs",
+                "scripts/test-pages-recovery.mjs",
+                "scripts/test-pages-capacity-report.mjs",
+                "scripts/test-main-pages-metadata.mjs",
+                "scripts/test-pages-candidate-contract.mjs",
+                "scripts/test-pages-candidate-overlay.mjs",
+                "scripts/test-pages-candidate-archive.mjs",
+                "scripts/test-pages-candidate-measurement.mjs",
+                "scripts/test-pages-candidate-stack.mjs",
+                "scripts/test-pages-stack-contract.mjs",
+                "scripts/test-pages-stack-source.mjs",
+                "scripts/test-pages-stack-packet.mjs",
+                "scripts/test-pages-stack-measurement.mjs",
+                "scripts/test-pages-stack-artifacts.mjs",
+                "scripts/test-pages-stack-e2e.mjs",
+                "publishing/test-policy.test.mjs"
+              ]
+            }
+          ],
+          "sha256": "6b396319964a329d11f55dd78c038463b9c29994b18c3455027b38dbf760f2b2"
+        },
+        "indices": [],
+        "result": {
+          "attempted": 0,
+          "failures": [],
+          "exitCode": 0
+        }
+      },
+      "counts": {
+        "tests": [],
+        "pass": [],
+        "fail": [],
+        "cancelled": [],
+        "skipped": [],
+        "todo": []
+      },
+      "fullOutput": "### Focused release gate\n\nCategories: publishing\nCommands: 1\nFocused shard 3/4: 0/1 commands; plan 6b396319964a329d11f55dd78c038463b9c29994b18c3455027b38dbf760f2b2\n"
+    }
+  ]
+}

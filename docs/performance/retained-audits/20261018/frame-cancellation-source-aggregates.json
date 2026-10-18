@@ -1,0 +1,1301 @@
+{
+  "format": "revealline-source-focused-aggregation-audit.v1",
+  "observedAt": "2026-10-18T22:17:37.848810+00:00",
+  "scope": {
+    "completed": "Focused aggregations at exact reviewed source heads, after separately retained command receipts.",
+    "limitations": [
+      "Metadata aggregation does not add test executions",
+      "Required release-ready and controller/manual sequencing still apply",
+      "No native or performance qualification or hosted cancellation behavior claim"
+    ]
+  },
+  "metadataOnlyShardAudit": {
+    "blob": "e914f494d4897ead08acbae094b5b7d3050f01b9",
+    "bytes": 8961,
+    "sha256": "8cd72afc9d4685b9074406fbd1ca2cd90d1f892bb49ee7846bbcfdb3ff6fa586",
+    "source": "f157f0cc2195fa6c747c4e407d22db51f5ccca64"
+  },
+  "records": [
+    {
+      "source": {
+        "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+        "tree": "4bd51f0d0b846063e030372d6873ca029852e697"
+      },
+      "run": {
+        "id": 39156220119,
+        "name": "Validate source for continuous main",
+        "event": "pull_request",
+        "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+        "run_attempt": 1,
+        "status": "queued",
+        "conclusion": null
+      },
+      "focusedJob": {
+        "id": 117794314851,
+        "name": "focused",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T21:49:47Z",
+        "completed_at": "2026-10-18T21:49:59Z",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T21:49:48Z",
+            "completed_at": "2026-10-18T21:49:49Z"
+          },
+          {
+            "name": "Require every shard job to succeed",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T21:49:49Z",
+            "completed_at": "2026-10-18T21:49:49Z"
+          },
+          {
+            "name": "Check out trusted focused receipt verifier",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T21:49:49Z",
+            "completed_at": "2026-10-18T21:49:50Z"
+          },
+          {
+            "name": "Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T21:49:50Z",
+            "completed_at": "2026-10-18T21:49:55Z"
+          },
+          {
+            "name": "Download immutable preflight admission",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T21:49:55Z",
+            "completed_at": "2026-10-18T21:49:56Z"
+          },
+          {
+            "name": "Download all four focused shard receipts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T21:49:56Z",
+            "completed_at": "2026-10-18T21:49:56Z"
+          },
+          {
+            "name": "Require exact complete command coverage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T21:49:56Z",
+            "completed_at": "2026-10-18T21:49:56Z"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-18T21:49:56Z",
+            "completed_at": "2026-10-18T21:49:57Z"
+          },
+          {
+            "name": "Post Check out trusted focused receipt verifier",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-18T21:49:57Z",
+            "completed_at": "2026-10-18T21:49:57Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T21:49:57Z",
+            "completed_at": "2026-10-18T21:49:57Z"
+          }
+        ]
+      },
+      "log": {
+        "bytes": 23099,
+        "sha256": "4b05bcb12d7caa6297f59d46abfaf2519207cc72e9d3209a5d6b989449c48570",
+        "content": "﻿2026-10-18T21:49:48.2663087Z Current runner version: '2.337.0'\n2026-10-18T21:49:48.2687614Z ##[group]Runner Image Provisioner\n2026-10-18T21:49:48.2688535Z Hosted Compute Agent\n2026-10-18T21:49:48.2689185Z Version: 20261012.601\n2026-10-18T21:49:48.2689869Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-18T21:49:48.2690611Z Build Date: 2026-10-12T17:48:21Z\n2026-10-18T21:49:48.2691339Z Worker ID: {528be984-758e-40d7-8573-798d5ac70ea9}\n2026-10-18T21:49:48.2692108Z Region: northcentralus\n2026-10-18T21:49:48.2692712Z Cloud: Azure\n2026-10-18T21:49:48.2693591Z ##[endgroup]\n2026-10-18T21:49:48.2695490Z ##[group]Operating System\n2026-10-18T21:49:48.2696134Z Ubuntu\n2026-10-18T21:49:48.2696773Z 24.04.5\n2026-10-18T21:49:48.2697309Z LTS\n2026-10-18T21:49:48.2697844Z ##[endgroup]\n2026-10-18T21:49:48.2698410Z ##[group]Runner Image\n2026-10-18T21:49:48.2699037Z Image: ubuntu-24.04\n2026-10-18T21:49:48.2699638Z Version: 20261012.334.1\n2026-10-18T21:49:48.2700916Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-18T21:49:48.2702800Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-18T21:49:48.2704097Z ##[endgroup]\n2026-10-18T21:49:48.2705334Z ##[group]GITHUB_TOKEN Permissions\n2026-10-18T21:49:48.2707425Z Contents: read\n2026-10-18T21:49:48.2708118Z Metadata: read\n2026-10-18T21:49:48.2708666Z ##[endgroup]\n2026-10-18T21:49:48.2710647Z Secret source: Actions\n2026-10-18T21:49:48.2711954Z Cache mode: write\n2026-10-18T21:49:48.2712844Z Prepare workflow directory\n2026-10-18T21:49:48.3244354Z Prepare all required actions\n2026-10-18T21:49:48.3291128Z Getting action download info\n2026-10-18T21:49:48.5838141Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)\n2026-10-18T21:49:48.7006020Z Download action repository 'actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)\n2026-10-18T21:49:48.8597030Z Download action repository 'actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131' (SHA:37930b1c2abaa49bbe596cd826c3c89aef350131)\n2026-10-18T21:49:49.2814205Z Complete job name: focused\n2026-10-18T21:49:49.3467726Z ##[group]Run test \"$SHARDS_RESULT\" = success\n2026-10-18T21:49:49.3468518Z \u001b[36;1mtest \"$SHARDS_RESULT\" = success\u001b[0m\n2026-10-18T21:49:49.3764077Z shell: /usr/bin/bash -e {0}\n2026-10-18T21:49:49.3765169Z env:\n2026-10-18T21:49:49.3765946Z   EXPECTED_SOURCE: 4d28eb409e45a3db3b26ce4ec7a64437e5929a95\n2026-10-18T21:49:49.3767121Z   EXPECTED_AUTOMATION: 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:49.3768141Z   SHARDS_RESULT: success\n2026-10-18T21:49:49.3768869Z ##[endgroup]\n2026-10-18T21:49:49.4139728Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09\n2026-10-18T21:49:49.4140584Z with:\n2026-10-18T21:49:49.4141116Z   ref: 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:49.4141770Z   path: automation\n2026-10-18T21:49:49.4142261Z   fetch-depth: 1\n2026-10-18T21:49:49.4142817Z   persist-credentials: false\n2026-10-18T21:49:49.4144229Z   sparse-checkout: publishing/focused-test-map.json\npublishing/focused-tests.mjs\npublishing/test-policy.json\npublishing/test-policy.mjs\n\n2026-10-18T21:49:49.4145510Z   sparse-checkout-cone-mode: false\n2026-10-18T21:49:49.4146135Z   repository: mekhovov/revealline\n2026-10-18T21:49:49.4150242Z   token: ***\n2026-10-18T21:49:49.4150735Z   ssh-strict: true\n2026-10-18T21:49:49.4151228Z   ssh-user: git\n2026-10-18T21:49:49.4151698Z   clean: true\n2026-10-18T21:49:49.4152174Z   fetch-tags: false\n2026-10-18T21:49:49.4152679Z   show-progress: true\n2026-10-18T21:49:49.4153179Z   lfs: false\n2026-10-18T21:49:49.4153824Z   submodules: false\n2026-10-18T21:49:49.4154343Z   set-safe-directory: true\n2026-10-18T21:49:49.4154912Z   allow-unsafe-pr-checkout: false\n2026-10-18T21:49:49.4155479Z env:\n2026-10-18T21:49:49.4156072Z   EXPECTED_SOURCE: 4d28eb409e45a3db3b26ce4ec7a64437e5929a95\n2026-10-18T21:49:49.4156933Z   EXPECTED_AUTOMATION: 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:49.4157907Z ##[endgroup]\n2026-10-18T21:49:49.5137189Z Syncing repository: mekhovov/revealline\n2026-10-18T21:49:49.5139922Z ##[group]Getting Git version info\n2026-10-18T21:49:49.5141503Z Working directory is '/home/runner/work/revealline/revealline/automation'\n2026-10-18T21:49:49.5143739Z [command]/usr/bin/git version\n2026-10-18T21:49:49.5228695Z git version 2.55.0\n2026-10-18T21:49:49.5250979Z ##[endgroup]\n2026-10-18T21:49:49.5268609Z Temporarily overriding HOME='/home/runner/work/_temp/b80073ec-7f5e-4d32-8469-aeaf2d7641d0' before making global git config changes\n2026-10-18T21:49:49.5271431Z Adding repository directory to the temporary git global config as a safe directory\n2026-10-18T21:49:49.5274598Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline/automation\n2026-10-18T21:49:49.5328736Z ##[group]Initializing the repository\n2026-10-18T21:49:49.5333931Z [command]/usr/bin/git init /home/runner/work/revealline/revealline/automation\n2026-10-18T21:49:49.5477425Z hint: Using 'master' as the name for the initial branch. This default branch name\n2026-10-18T21:49:49.5480138Z hint: will change to \"main\" in Git 3.0. To configure the initial branch name\n2026-10-18T21:49:49.5561621Z hint: to use in all of your new repositories, which will suppress this warning,\n2026-10-18T21:49:49.5563202Z hint: call:\n2026-10-18T21:49:49.5564332Z hint:\n2026-10-18T21:49:49.5565193Z hint: \tgit config --global init.defaultBranch <name>\n2026-10-18T21:49:49.5566256Z hint:\n2026-10-18T21:49:49.5566936Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\n2026-10-18T21:49:49.5567990Z hint: 'development'. The just-created branch can be renamed via this command:\n2026-10-18T21:49:49.5568786Z hint:\n2026-10-18T21:49:49.5569250Z hint: \tgit branch -m <name>\n2026-10-18T21:49:49.5569775Z hint:\n2026-10-18T21:49:49.5570459Z hint: Disable this message with \"git config set advice.defaultBranchName false\"\n2026-10-18T21:49:49.5571654Z Initialized empty Git repository in /home/runner/work/revealline/revealline/automation/.git/\n2026-10-18T21:49:49.5575952Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline\n2026-10-18T21:49:49.5578983Z ##[endgroup]\n2026-10-18T21:49:49.5580476Z ##[group]Disabling automatic garbage collection\n2026-10-18T21:49:49.5581929Z [command]/usr/bin/git config --local gc.auto 0\n2026-10-18T21:49:49.5600761Z ##[endgroup]\n2026-10-18T21:49:49.5609373Z ##[group]Setting up auth\n2026-10-18T21:49:49.5610205Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T21:49:49.5650323Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T21:49:49.6082710Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T21:49:49.6119448Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T21:49:49.6345812Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T21:49:49.6382360Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T21:49:49.6607387Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***\n2026-10-18T21:49:49.6647867Z ##[endgroup]\n2026-10-18T21:49:49.6649838Z ##[group]Fetching the repository\n2026-10-18T21:49:49.6660949Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:50.1465288Z From https://github.com/mekhovov/revealline\n2026-10-18T21:49:50.1467460Z  * branch            46c917d2f52cf59140f3eaee327ba9238709b0a6 -> FETCH_HEAD\n2026-10-18T21:49:50.1472306Z ##[endgroup]\n2026-10-18T21:49:50.1474632Z ##[group]Determining the checkout info\n2026-10-18T21:49:50.1476736Z ##[endgroup]\n2026-10-18T21:49:50.1478019Z ##[group]Setting up sparse checkout\n2026-10-18T21:49:50.1479914Z [command]/usr/bin/git config core.sparseCheckout true\n2026-10-18T21:49:50.1517719Z [command]/usr/bin/git rev-parse --git-path info/sparse-checkout\n2026-10-18T21:49:50.1550468Z .git/info/sparse-checkout\n2026-10-18T21:49:50.1559026Z ##[endgroup]\n2026-10-18T21:49:50.1560360Z ##[group]Checking out the ref\n2026-10-18T21:49:50.1563608Z [command]/usr/bin/git checkout --progress --force 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:50.7468690Z Note: switching to '46c917d2f52cf59140f3eaee327ba9238709b0a6'.\n2026-10-18T21:49:50.7470244Z \n2026-10-18T21:49:50.7471249Z You are in 'detached HEAD' state. You can look around, make experimental\n2026-10-18T21:49:50.7474047Z changes and commit them, and you can discard any commits you make in this\n2026-10-18T21:49:50.7476592Z state without impacting any branches by switching back to a branch.\n2026-10-18T21:49:50.7478038Z \n2026-10-18T21:49:50.7478976Z If you want to create a new branch to retain commits you create, you may\n2026-10-18T21:49:50.7481218Z do so (now or later) by using -c with the switch command. Example:\n2026-10-18T21:49:50.7482524Z \n2026-10-18T21:49:50.7483098Z   git switch -c <new-branch-name>\n2026-10-18T21:49:50.7484454Z \n2026-10-18T21:49:50.7485031Z Or undo this operation with:\n2026-10-18T21:49:50.7485874Z \n2026-10-18T21:49:50.7486369Z   git switch -\n2026-10-18T21:49:50.7486984Z \n2026-10-18T21:49:50.7487977Z Turn off this advice by setting config variable advice.detachedHead to false\n2026-10-18T21:49:50.7489599Z \n2026-10-18T21:49:50.7491407Z HEAD is now at 46c917d Merge 4d28eb409e45a3db3b26ce4ec7a64437e5929a95 into 461ace72e78f8cbd77c26549381d9e21d0a65e91\n2026-10-18T21:49:50.7496587Z ##[endgroup]\n2026-10-18T21:49:50.7533417Z [command]/usr/bin/git log -1 --format=%H\n2026-10-18T21:49:50.7560555Z 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:50.7572106Z ##[group]Removing auth\n2026-10-18T21:49:50.7576869Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T21:49:50.7612878Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T21:49:50.7887626Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T21:49:50.7920292Z http.https://github.com/.extraheader\n2026-10-18T21:49:50.7931371Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader\n2026-10-18T21:49:50.7972575Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T21:49:50.8223083Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T21:49:50.8257577Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T21:49:50.8505678Z ##[endgroup]\n2026-10-18T21:49:50.8821243Z ##[group]Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444\n2026-10-18T21:49:50.8822880Z with:\n2026-10-18T21:49:50.8824096Z   package-manager-cache: false\n2026-10-18T21:49:50.8825204Z   node-version: 20.19.x\n2026-10-18T21:49:50.8826176Z   always-auth: false\n2026-10-18T21:49:50.8827115Z   check-latest: false\n2026-10-18T21:49:50.8837261Z   token: ***\n2026-10-18T21:49:50.8838123Z env:\n2026-10-18T21:49:50.8839199Z   EXPECTED_SOURCE: 4d28eb409e45a3db3b26ce4ec7a64437e5929a95\n2026-10-18T21:49:50.8840933Z   EXPECTED_AUTOMATION: 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:50.8842393Z ##[endgroup]\n2026-10-18T21:49:51.0320103Z Attempting to download 20.19.x...\n2026-10-18T21:49:51.0425898Z (node:2391) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n2026-10-18T21:49:51.0430093Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T21:49:51.8380969Z Acquiring 20.19.6 - x64 from https://github.com/actions/node-versions/releases/download/20.19.6-19690675733/node-20.19.6-linux-x64.tar.gz\n2026-10-18T21:49:52.3637233Z Extracting ...\n2026-10-18T21:49:52.3760199Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/bc1f4a54-6ffe-4e98-9295-73e8a9bfd620 -f /home/runner/work/_temp/c7dd2199-f950-437a-aeec-bc9132a00965\n2026-10-18T21:49:53.4087315Z Adding to the cache ...\n2026-10-18T21:49:55.3221547Z ##[group]Environment details\n2026-10-18T21:49:55.5480649Z node: v20.19.6\n2026-10-18T21:49:55.5481165Z npm: 10.8.2\n2026-10-18T21:49:55.5481516Z yarn: 1.22.22\n2026-10-18T21:49:55.5482277Z ##[endgroup]\n2026-10-18T21:49:55.5715393Z ##[group]Run actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131\n2026-10-18T21:49:55.5715869Z with:\n2026-10-18T21:49:55.5716101Z   name: admission-39156220119-1\n2026-10-18T21:49:55.5716415Z   path: /home/runner/work/_temp/preflight-admission\n2026-10-18T21:49:55.5716738Z   merge-multiple: false\n2026-10-18T21:49:55.5716998Z   repository: mekhovov/revealline\n2026-10-18T21:49:55.5717277Z   run-id: 39156220119\n2026-10-18T21:49:55.5717484Z env:\n2026-10-18T21:49:55.5717742Z   EXPECTED_SOURCE: 4d28eb409e45a3db3b26ce4ec7a64437e5929a95\n2026-10-18T21:49:55.5718153Z   EXPECTED_AUTOMATION: 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:55.5718494Z ##[endgroup]\n2026-10-18T21:49:55.7207816Z Downloading single artifact\n2026-10-18T21:49:55.8669220Z Preparing to download the following artifacts:\n2026-10-18T21:49:55.8671123Z - admission-39156220119-1 (ID: 12148837541, Size: 711, Expected Digest: sha256:d63bf17eb3ba00eef127c0dfac04f6cf28357959f476e5d6cb53bcd8b81a0a28)\n2026-10-18T21:49:56.0969762Z Redirecting to blob download url: https://productionresultssa1.blob.core.windows.net/actions-results/98f3feb3-35c6-83a2-8379-39b65a22c1a6/workflow-job-run-35b4f2ca-a33f-5f0e-8bdc-b09c858b57dc/artifacts/52ed7e92c306d4c25963e6fac9429fee8d0c6e2db63c4b031294d8106e055f49.zip\n2026-10-18T21:49:56.0971589Z Starting download of artifact to: /home/runner/work/_temp/preflight-admission\n2026-10-18T21:49:56.2160193Z (node:2428) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\n2026-10-18T21:49:56.2161756Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T21:49:56.2200069Z SHA256 digest of downloaded artifact is d63bf17eb3ba00eef127c0dfac04f6cf28357959f476e5d6cb53bcd8b81a0a28\n2026-10-18T21:49:56.2201306Z Artifact download completed successfully.\n2026-10-18T21:49:56.2202113Z Total of 1 artifact(s) downloaded\n2026-10-18T21:49:56.2206695Z Download artifact has finished successfully\n2026-10-18T21:49:56.2396823Z ##[group]Run actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131\n2026-10-18T21:49:56.2397636Z with:\n2026-10-18T21:49:56.2398036Z   pattern: focused-shard-39156220119-1-*\n2026-10-18T21:49:56.2398626Z   path: /home/runner/work/_temp/focused-shards\n2026-10-18T21:49:56.2399168Z   merge-multiple: false\n2026-10-18T21:49:56.2399609Z   repository: mekhovov/revealline\n2026-10-18T21:49:56.2400065Z   run-id: 39156220119\n2026-10-18T21:49:56.2400447Z env:\n2026-10-18T21:49:56.2400905Z   EXPECTED_SOURCE: 4d28eb409e45a3db3b26ce4ec7a64437e5929a95\n2026-10-18T21:49:56.2401645Z   EXPECTED_AUTOMATION: 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:56.2402254Z ##[endgroup]\n2026-10-18T21:49:56.5288281Z Found 5 artifact(s)\n2026-10-18T21:49:56.5289576Z Filtering artifacts by pattern 'focused-shard-39156220119-1-*'\n2026-10-18T21:49:56.5321764Z Preparing to download the following artifacts:\n2026-10-18T21:49:56.5323827Z - focused-shard-39156220119-1-4 (ID: 12151380515, Size: 4753, Expected Digest: sha256:0a6506ad7289650a3f450efb2155e0755dc503f97508a8343e6676377c5e8977)\n2026-10-18T21:49:56.5326474Z - focused-shard-39156220119-1-2 (ID: 12151187007, Size: 4602, Expected Digest: sha256:1e096984865ed679e890447ffcd35a7da753aacf06ad1543959cca453864bcf7)\n2026-10-18T21:49:56.5352981Z - focused-shard-39156220119-1-3 (ID: 12151116181, Size: 27110, Expected Digest: sha256:feef13d410f0adbd0cb84c26dc679e6e8e80447c722b180aaa694e2e2891e5d4)\n2026-10-18T21:49:56.5356547Z - focused-shard-39156220119-1-1 (ID: 12149749486, Size: 17235, Expected Digest: sha256:0c14b33b34c2f0b47a8e6d2899098998e3a7a97a357b45f06ffda11dfd1753f4)\n2026-10-18T21:49:56.7809537Z Redirecting to blob download url: https://productionresultssa1.blob.core.windows.net/actions-results/98f3feb3-35c6-83a2-8379-39b65a22c1a6/workflow-job-run-a05c9bac-66dd-50de-8da6-8c8b9c0b7ac4/artifacts/cbbc59722e6f09627bb5f751b775c4f41d683c832c5b2a57a28a644c6df69028.zip\n2026-10-18T21:49:56.7811653Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39156220119-1-2\n2026-10-18T21:49:56.7881395Z Redirecting to blob download url: https://productionresultssa1.blob.core.windows.net/actions-results/98f3feb3-35c6-83a2-8379-39b65a22c1a6/workflow-job-run-a81665f9-aeac-5746-bcf2-32565488ed77/artifacts/26b04047faba466156c986feb8a28f8b8fedcd2a13f978f2074b938abe449995.zip\n2026-10-18T21:49:56.7884717Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39156220119-1-3\n2026-10-18T21:49:56.7927317Z Redirecting to blob download url: https://productionresultssa1.blob.core.windows.net/actions-results/98f3feb3-35c6-83a2-8379-39b65a22c1a6/workflow-job-run-f162d0d5-2336-5fc6-bf83-4f62aace2e3a/artifacts/91e25aa6b847220bbe9300cf8ffaaf4f358bd7e97cc05e150c8600399b12048c.zip\n2026-10-18T21:49:56.7929196Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39156220119-1-4\n2026-10-18T21:49:56.8006874Z Redirecting to blob download url: https://productionresultssa1.blob.core.windows.net/actions-results/98f3feb3-35c6-83a2-8379-39b65a22c1a6/workflow-job-run-be34678d-1a0f-5823-ae3c-c4574c1b2863/artifacts/8f10257b50aaeb3ec5ae820556a34d8254ac7a14982722b1c29413213d4a4a02.zip\n2026-10-18T21:49:56.8009994Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39156220119-1-1\n2026-10-18T21:49:56.8829505Z (node:2440) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\n2026-10-18T21:49:56.8831607Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T21:49:56.8928432Z SHA256 digest of downloaded artifact is 1e096984865ed679e890447ffcd35a7da753aacf06ad1543959cca453864bcf7\n2026-10-18T21:49:56.8929734Z Artifact download completed successfully.\n2026-10-18T21:49:56.8933427Z SHA256 digest of downloaded artifact is 0a6506ad7289650a3f450efb2155e0755dc503f97508a8343e6676377c5e8977\n2026-10-18T21:49:56.8935030Z Artifact download completed successfully.\n2026-10-18T21:49:56.9086002Z SHA256 digest of downloaded artifact is feef13d410f0adbd0cb84c26dc679e6e8e80447c722b180aaa694e2e2891e5d4\n2026-10-18T21:49:56.9087221Z Artifact download completed successfully.\n2026-10-18T21:49:56.9207854Z SHA256 digest of downloaded artifact is 0c14b33b34c2f0b47a8e6d2899098998e3a7a97a357b45f06ffda11dfd1753f4\n2026-10-18T21:49:56.9209392Z Artifact download completed successfully.\n2026-10-18T21:49:56.9210641Z Total of 4 artifact(s) downloaded\n2026-10-18T21:49:56.9214898Z Download artifact has finished successfully\n2026-10-18T21:49:56.9330865Z ##[group]Run node automation/publishing/focused-tests.mjs \\\n2026-10-18T21:49:56.9331386Z \u001b[36;1mnode automation/publishing/focused-tests.mjs \\\u001b[0m\n2026-10-18T21:49:56.9331845Z \u001b[36;1m  --verify-shards \"$RUNNER_TEMP/focused-shards\" \\\u001b[0m\n2026-10-18T21:49:56.9332283Z \u001b[36;1m  --artifact-prefix \"focused-shard-39156220119-1-\" \\\u001b[0m\n2026-10-18T21:49:56.9332778Z \u001b[36;1m  --admission \"$RUNNER_TEMP/preflight-admission/admission.json\" \\\u001b[0m\n2026-10-18T21:49:56.9334003Z \u001b[36;1m  --manifest automation/publishing/focused-test-map.json \\\u001b[0m\n2026-10-18T21:49:56.9334739Z \u001b[36;1m  --test-policy automation/publishing/test-policy.json\u001b[0m\n2026-10-18T21:49:56.9401436Z shell: /usr/bin/bash -e {0}\n2026-10-18T21:49:56.9401712Z env:\n2026-10-18T21:49:56.9402008Z   EXPECTED_SOURCE: 4d28eb409e45a3db3b26ce4ec7a64437e5929a95\n2026-10-18T21:49:56.9402467Z   EXPECTED_AUTOMATION: 46c917d2f52cf59140f3eaee327ba9238709b0a6\n2026-10-18T21:49:56.9402843Z ##[endgroup]\n2026-10-18T21:49:56.9833987Z All four focused shards passed: {\"shards\":4,\"commands\":7,\"sourceTree\":\"4bd51f0d0b846063e030372d6873ca029852e697\",\"planSha256\":\"b00f73a83b65bc480d6d92449e5a8b4af4653c6f497c9e0641cb4258a45516be\"}\n2026-10-18T21:49:56.9944019Z Post job cleanup.\n2026-10-18T21:49:57.1190014Z (node:2464) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n2026-10-18T21:49:57.1191140Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T21:49:57.1399959Z Post job cleanup.\n2026-10-18T21:49:57.2290132Z [command]/usr/bin/git version\n2026-10-18T21:49:57.2333540Z git version 2.55.0\n2026-10-18T21:49:57.2372906Z Temporarily overriding HOME='/home/runner/work/_temp/b6b800a2-af7b-4dd8-9650-d9e1a503a691' before making global git config changes\n2026-10-18T21:49:57.2374797Z Adding repository directory to the temporary git global config as a safe directory\n2026-10-18T21:49:57.2378051Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline/automation\n2026-10-18T21:49:57.2418234Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T21:49:57.2454090Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T21:49:57.2738369Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T21:49:57.2775030Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T21:49:57.3077866Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T21:49:57.3122146Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T21:49:57.3555807Z Cleaning up orphan processes\n"
+      },
+      "priorCommandAudits": [
+        "3306985fba57853eed04f2e49cb5c1d78c32b457",
+        "3cbce96bdd860e3ea35a6deb58741fcc260c844f",
+        "0cc408be97cff801102619cd3406d2ff65f2b317"
+      ],
+      "completeChecks": [
+        {
+          "id": 117799599161,
+          "name": "release-ready",
+          "status": "queued",
+          "conclusion": null,
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117799599161"
+        },
+        {
+          "id": 117794314851,
+          "name": "focused",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:49:59Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117794314851"
+        },
+        {
+          "id": 117775090693,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T20:00:39Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117775090693"
+        },
+        {
+          "id": 117775090108,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T20:00:39Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117775090108"
+        },
+        {
+          "id": 117775089354,
+          "name": "focused_shards (2)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:25:49Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117775089354"
+        },
+        {
+          "id": 117775089290,
+          "name": "focused_shards (4)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:09:25Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117775089290"
+        },
+        {
+          "id": 117775089280,
+          "name": "focused_shards (3)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:08:09Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117775089280"
+        },
+        {
+          "id": 117775089247,
+          "name": "focused_shards (1)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:45:10Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117775089247"
+        },
+        {
+          "id": 117767875414,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:00:39Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220119/job/117767875414"
+        },
+        {
+          "id": 117759947499,
+          "name": "replay-portability",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:36Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759947499"
+        },
+        {
+          "id": 117759910538,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220227/job/117759910538"
+        },
+        {
+          "id": 117759909840,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220269/job/117759909840"
+        },
+        {
+          "id": 117759909644,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220203/job/117759909644"
+        },
+        {
+          "id": 117759908966,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220121/job/117759908966"
+        },
+        {
+          "id": 117759908662,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219995/job/117759908662"
+        },
+        {
+          "id": 117759908561,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220056/job/117759908561"
+        },
+        {
+          "id": 117759904728,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220151/job/117759904728"
+        },
+        {
+          "id": 117759904206,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220171/job/117759904206"
+        },
+        {
+          "id": 117759902797,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220200/job/117759902797"
+        },
+        {
+          "id": 117759902435,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220070/job/117759902435"
+        },
+        {
+          "id": 117759902054,
+          "name": "matrix.observation",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220117/job/117759902054"
+        },
+        {
+          "id": 117759902049,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220152/job/117759902049"
+        },
+        {
+          "id": 117759901923,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219952/job/117759901923"
+        },
+        {
+          "id": 117759901867,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220269/job/117759901867"
+        },
+        {
+          "id": 117759900864,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220187/job/117759900864"
+        },
+        {
+          "id": 117759900003,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219965/job/117759900003"
+        },
+        {
+          "id": 117759899247,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219930/job/117759899247"
+        },
+        {
+          "id": 117759899085,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220081/job/117759899085"
+        },
+        {
+          "id": 117759898766,
+          "name": "cocoa",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759898766"
+        },
+        {
+          "id": 117759898357,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219931/job/117759898357"
+        },
+        {
+          "id": 117759898285,
+          "name": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759898285"
+        },
+        {
+          "id": 117759897033,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220262/job/117759897033"
+        },
+        {
+          "id": 117759896214,
+          "name": "matrix.observation",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220242/job/117759896214"
+        },
+        {
+          "id": 117759895975,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219947/job/117759895975"
+        },
+        {
+          "id": 117759895593,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759895593"
+        },
+        {
+          "id": 117759895301,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220017/job/117759895301"
+        },
+        {
+          "id": 117759893679,
+          "name": "matrix.engine",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220102/job/117759893679"
+        },
+        {
+          "id": 117759892933,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220028/job/117759892933"
+        },
+        {
+          "id": 117759892820,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220093/job/117759892820"
+        },
+        {
+          "id": 117759892810,
+          "name": "touch",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759892810"
+        },
+        {
+          "id": 117759873734,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220134/job/117759873734"
+        },
+        {
+          "id": 117759873636,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759873636"
+        },
+        {
+          "id": 117759873558,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220203/job/117759873558"
+        },
+        {
+          "id": 117759873553,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220155/job/117759873553"
+        },
+        {
+          "id": 117759873422,
+          "name": "matrix.observation",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220160/job/117759873422"
+        },
+        {
+          "id": 117759873366,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220153/job/117759873366"
+        },
+        {
+          "id": 117759873274,
+          "name": "matrix.observation",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220200/job/117759873274"
+        },
+        {
+          "id": 117759873241,
+          "name": "feature (gameplay)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T19:36:59Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220118/job/117759873241"
+        },
+        {
+          "id": 117759873229,
+          "name": "feature (recordings)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:09:02Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220118/job/117759873229"
+        },
+        {
+          "id": 117759873210,
+          "name": "feature (local-ux)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:28:42Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220118/job/117759873210"
+        },
+        {
+          "id": 117759873194,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220149/job/117759873194"
+        },
+        {
+          "id": 117759873177,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220159/job/117759873177"
+        },
+        {
+          "id": 117759873175,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220171/job/117759873175"
+        },
+        {
+          "id": 117759873163,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220242/job/117759873163"
+        },
+        {
+          "id": 117759873149,
+          "name": "feature (presentation)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T19:30:45Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220118/job/117759873149"
+        },
+        {
+          "id": 117759873126,
+          "name": "feature (rooms)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:18:19Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220118/job/117759873126"
+        },
+        {
+          "id": 117759873109,
+          "name": "auxiliary",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220205/job/117759873109"
+        },
+        {
+          "id": 117759873108,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220117/job/117759873108"
+        },
+        {
+          "id": 117759873076,
+          "name": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759873076"
+        },
+        {
+          "id": 117759873070,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220139/job/117759873070"
+        },
+        {
+          "id": 117759873066,
+          "name": "matrix.engine",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759873066"
+        },
+        {
+          "id": 117759873045,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220187/job/117759873045"
+        },
+        {
+          "id": 117759873042,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220081/job/117759873042"
+        },
+        {
+          "id": 117759873012,
+          "name": "demo-resources",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759873012"
+        },
+        {
+          "id": 117759873003,
+          "name": "hud-cpu",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759873003"
+        },
+        {
+          "id": 117759873001,
+          "name": "demo-recovery",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759873001"
+        },
+        {
+          "id": 117759872969,
+          "name": "correctness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759872969"
+        },
+        {
+          "id": 117759872938,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220121/job/117759872938"
+        },
+        {
+          "id": 117759872923,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220207/job/117759872923"
+        },
+        {
+          "id": 117759872920,
+          "name": "feature (creator)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T19:23:53Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220118/job/117759872920"
+        },
+        {
+          "id": 117759872919,
+          "name": "shared-return",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759872919"
+        },
+        {
+          "id": 117759872915,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759872915"
+        },
+        {
+          "id": 117759872889,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220167/job/117759872889"
+        },
+        {
+          "id": 117759872884,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220211/job/117759872884"
+        },
+        {
+          "id": 117759872882,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220134/job/117759872882"
+        },
+        {
+          "id": 117759872875,
+          "name": "raster",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759872875"
+        },
+        {
+          "id": 117759872874,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220093/job/117759872874"
+        },
+        {
+          "id": 117759872872,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220138/job/117759872872"
+        },
+        {
+          "id": 117759872864,
+          "name": "matrix.engine",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759872864"
+        },
+        {
+          "id": 117759872829,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220058/job/117759872829"
+        },
+        {
+          "id": 117759872800,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220031/job/117759872800"
+        },
+        {
+          "id": 117759872747,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220205/job/117759872747"
+        },
+        {
+          "id": 117759872738,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220167/job/117759872738"
+        },
+        {
+          "id": 117759872659,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220152/job/117759872659"
+        },
+        {
+          "id": 117759872639,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220160/job/117759872639"
+        },
+        {
+          "id": 117759872637,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220155/job/117759872637"
+        },
+        {
+          "id": 117759872635,
+          "name": "matrix.engine",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220070/job/117759872635"
+        },
+        {
+          "id": 117759872604,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220159/job/117759872604"
+        },
+        {
+          "id": 117759872599,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220207/job/117759872599"
+        },
+        {
+          "id": 117759872566,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220056/job/117759872566"
+        },
+        {
+          "id": 117759872563,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220153/job/117759872563"
+        },
+        {
+          "id": 117759872539,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220127/job/117759872539"
+        },
+        {
+          "id": 117759872459,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220151/job/117759872459"
+        },
+        {
+          "id": 117759872421,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219995/job/117759872421"
+        },
+        {
+          "id": 117759872398,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220139/job/117759872398"
+        },
+        {
+          "id": 117759872358,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220102/job/117759872358"
+        },
+        {
+          "id": 117759872353,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219970/job/117759872353"
+        },
+        {
+          "id": 117759872297,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219930/job/117759872297"
+        },
+        {
+          "id": 117759872292,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220058/job/117759872292"
+        },
+        {
+          "id": 117759872259,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220031/job/117759872259"
+        },
+        {
+          "id": 117759872082,
+          "name": "readiness",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219963/job/117759872082"
+        },
+        {
+          "id": 117759872056,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219952/job/117759872056"
+        },
+        {
+          "id": 117759872018,
+          "name": "matrix.observation",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219903/job/117759872018"
+        },
+        {
+          "id": 117759871906,
+          "name": "replay-portability-source",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T18:53:36Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220174/job/117759871906"
+        },
+        {
+          "id": 117759871810,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220017/job/117759871810"
+        },
+        {
+          "id": 117759871668,
+          "name": "candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T19:44:40Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220146/job/117759871668"
+        },
+        {
+          "id": 117759871664,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219970/job/117759871664"
+        },
+        {
+          "id": 117759871653,
+          "name": "sustained",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219931/job/117759871653"
+        },
+        {
+          "id": 117759871465,
+          "name": "declare",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T18:53:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156219903/job/117759871465"
+        },
+        {
+          "id": 117759871451,
+          "name": "optional-practice",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T19:30:56Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220146/job/117759871451"
+        },
+        {
+          "id": 117759871119,
+          "name": "reconcile",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T19:37:17Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39156220004/job/117759871119"
+        }
+      ]
+    },
+    {
+      "source": {
+        "head": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+        "tree": "eb1f7d7a0083e61ab9543516fe4caee7d608b91a"
+      },
+      "run": {
+        "id": 39160878387,
+        "name": "Validate source for continuous main",
+        "event": "pull_request",
+        "head_sha": "f157f0cc2195fa6c747c4e407d22db51f5ccca64",
+        "run_attempt": 1,
+        "status": "queued",
+        "conclusion": null
+      },
+      "focusedJob": {
+        "id": 117797234262,
+        "name": "focused",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T22:09:51Z",
+        "completed_at": "2026-10-18T22:10:06Z",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T22:09:52Z",
+            "completed_at": "2026-10-18T22:09:54Z"
+          },
+          {
+            "name": "Require every shard job to succeed",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T22:09:54Z",
+            "completed_at": "2026-10-18T22:09:54Z"
+          },
+          {
+            "name": "Check out trusted focused receipt verifier",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T22:09:54Z",
+            "completed_at": "2026-10-18T22:09:56Z"
+          },
+          {
+            "name": "Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T22:09:56Z",
+            "completed_at": "2026-10-18T22:10:01Z"
+          },
+          {
+            "name": "Download immutable preflight admission",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T22:10:01Z",
+            "completed_at": "2026-10-18T22:10:02Z"
+          },
+          {
+            "name": "Download all four focused shard receipts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T22:10:02Z",
+            "completed_at": "2026-10-18T22:10:03Z"
+          },
+          {
+            "name": "Require exact complete command coverage",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T22:10:03Z",
+            "completed_at": "2026-10-18T22:10:03Z"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-18T22:10:03Z",
+            "completed_at": "2026-10-18T22:10:03Z"
+          },
+          {
+            "name": "Post Check out trusted focused receipt verifier",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-18T22:10:03Z",
+            "completed_at": "2026-10-18T22:10:03Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T22:10:03Z",
+            "completed_at": "2026-10-18T22:10:03Z"
+          }
+        ]
+      },
+      "log": {
+        "bytes": 23096,
+        "sha256": "755a809f42a438fb7435eb102be98101ee70aab7ed99dcb77f7d6c0a522eed21",
+        "content": "﻿2026-10-18T22:09:52.5940856Z Current runner version: '2.337.0'\n2026-10-18T22:09:52.5964092Z ##[group]Runner Image Provisioner\n2026-10-18T22:09:52.5965058Z Hosted Compute Agent\n2026-10-18T22:09:52.5965658Z Version: 20261012.601\n2026-10-18T22:09:52.5966283Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-18T22:09:52.5967090Z Build Date: 2026-10-12T17:48:21Z\n2026-10-18T22:09:52.5967829Z Worker ID: {b4fb1a60-d6bf-422f-ace7-e82bdf395f29}\n2026-10-18T22:09:52.5968582Z Region: westus3\n2026-10-18T22:09:52.5969502Z Cloud: Azure\n2026-10-18T22:09:52.5970118Z ##[endgroup]\n2026-10-18T22:09:52.5971686Z ##[group]Operating System\n2026-10-18T22:09:52.5972428Z Ubuntu\n2026-10-18T22:09:52.5973015Z 24.04.5\n2026-10-18T22:09:52.5973560Z LTS\n2026-10-18T22:09:52.5974081Z ##[endgroup]\n2026-10-18T22:09:52.5974686Z ##[group]Runner Image\n2026-10-18T22:09:52.5975324Z Image: ubuntu-24.04\n2026-10-18T22:09:52.5975894Z Version: 20261012.334.1\n2026-10-18T22:09:52.5977210Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-18T22:09:52.5978864Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-18T22:09:52.5980330Z ##[endgroup]\n2026-10-18T22:09:52.5981522Z ##[group]GITHUB_TOKEN Permissions\n2026-10-18T22:09:52.5983391Z Contents: read\n2026-10-18T22:09:52.5983998Z Metadata: read\n2026-10-18T22:09:52.5984664Z ##[endgroup]\n2026-10-18T22:09:52.5986742Z Secret source: Actions\n2026-10-18T22:09:52.5987795Z Cache mode: write\n2026-10-18T22:09:52.5988480Z Prepare workflow directory\n2026-10-18T22:09:52.6556853Z Prepare all required actions\n2026-10-18T22:09:52.6604032Z Getting action download info\n2026-10-18T22:09:52.9550077Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)\n2026-10-18T22:09:53.0795309Z Download action repository 'actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)\n2026-10-18T22:09:53.1747208Z Download action repository 'actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131' (SHA:37930b1c2abaa49bbe596cd826c3c89aef350131)\n2026-10-18T22:09:53.9924839Z Complete job name: focused\n2026-10-18T22:09:54.0570531Z ##[group]Run test \"$SHARDS_RESULT\" = success\n2026-10-18T22:09:54.0571326Z \u001b[36;1mtest \"$SHARDS_RESULT\" = success\u001b[0m\n2026-10-18T22:09:54.0820354Z shell: /usr/bin/bash -e {0}\n2026-10-18T22:09:54.0821320Z env:\n2026-10-18T22:09:54.0822067Z   EXPECTED_SOURCE: f157f0cc2195fa6c747c4e407d22db51f5ccca64\n2026-10-18T22:09:54.0823058Z   EXPECTED_AUTOMATION: a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:09:54.0823907Z   SHARDS_RESULT: success\n2026-10-18T22:09:54.0824480Z ##[endgroup]\n2026-10-18T22:09:54.1192915Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09\n2026-10-18T22:09:54.1193760Z with:\n2026-10-18T22:09:54.1194262Z   ref: a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:09:54.1194907Z   path: automation\n2026-10-18T22:09:54.1195397Z   fetch-depth: 1\n2026-10-18T22:09:54.1195930Z   persist-credentials: false\n2026-10-18T22:09:54.1197132Z   sparse-checkout: publishing/focused-test-map.json\npublishing/focused-tests.mjs\npublishing/test-policy.json\npublishing/test-policy.mjs\n\n2026-10-18T22:09:54.1198375Z   sparse-checkout-cone-mode: false\n2026-10-18T22:09:54.1198984Z   repository: mekhovov/revealline\n2026-10-18T22:09:54.1203548Z   token: ***\n2026-10-18T22:09:54.1204037Z   ssh-strict: true\n2026-10-18T22:09:54.1204534Z   ssh-user: git\n2026-10-18T22:09:54.1205006Z   clean: true\n2026-10-18T22:09:54.1205469Z   fetch-tags: false\n2026-10-18T22:09:54.1205953Z   show-progress: true\n2026-10-18T22:09:54.1206454Z   lfs: false\n2026-10-18T22:09:54.1206949Z   submodules: false\n2026-10-18T22:09:54.1207445Z   set-safe-directory: true\n2026-10-18T22:09:54.1207997Z   allow-unsafe-pr-checkout: false\n2026-10-18T22:09:54.1208552Z env:\n2026-10-18T22:09:54.1209267Z   EXPECTED_SOURCE: f157f0cc2195fa6c747c4e407d22db51f5ccca64\n2026-10-18T22:09:54.1210146Z   EXPECTED_AUTOMATION: a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:09:54.1211106Z ##[endgroup]\n2026-10-18T22:09:54.2160284Z Syncing repository: mekhovov/revealline\n2026-10-18T22:09:54.2163356Z ##[group]Getting Git version info\n2026-10-18T22:09:54.2164358Z Working directory is '/home/runner/work/revealline/revealline/automation'\n2026-10-18T22:09:54.2165615Z [command]/usr/bin/git version\n2026-10-18T22:09:54.2237701Z git version 2.55.0\n2026-10-18T22:09:54.2262269Z ##[endgroup]\n2026-10-18T22:09:54.2276434Z Temporarily overriding HOME='/home/runner/work/_temp/379d954b-7852-47b7-a204-eb2a42cc4032' before making global git config changes\n2026-10-18T22:09:54.2278253Z Adding repository directory to the temporary git global config as a safe directory\n2026-10-18T22:09:54.2283167Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline/automation\n2026-10-18T22:09:54.2341540Z ##[group]Initializing the repository\n2026-10-18T22:09:54.2346907Z [command]/usr/bin/git init /home/runner/work/revealline/revealline/automation\n2026-10-18T22:09:54.2452631Z hint: Using 'master' as the name for the initial branch. This default branch name\n2026-10-18T22:09:54.2454893Z hint: will change to \"main\" in Git 3.0. To configure the initial branch name\n2026-10-18T22:09:54.2456859Z hint: to use in all of your new repositories, which will suppress this warning,\n2026-10-18T22:09:54.2458390Z hint: call:\n2026-10-18T22:09:54.2459436Z hint:\n2026-10-18T22:09:54.2461288Z hint: \tgit config --global init.defaultBranch <name>\n2026-10-18T22:09:54.2462033Z hint:\n2026-10-18T22:09:54.2463257Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\n2026-10-18T22:09:54.2464864Z hint: 'development'. The just-created branch can be renamed via this command:\n2026-10-18T22:09:54.2466343Z hint:\n2026-10-18T22:09:54.2544385Z hint: \tgit branch -m <name>\n2026-10-18T22:09:54.2545562Z hint:\n2026-10-18T22:09:54.2546887Z hint: Disable this message with \"git config set advice.defaultBranchName false\"\n2026-10-18T22:09:54.2553387Z Initialized empty Git repository in /home/runner/work/revealline/revealline/automation/.git/\n2026-10-18T22:09:54.2555576Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline\n2026-10-18T22:09:54.2557318Z ##[endgroup]\n2026-10-18T22:09:54.2558133Z ##[group]Disabling automatic garbage collection\n2026-10-18T22:09:54.2559565Z [command]/usr/bin/git config --local gc.auto 0\n2026-10-18T22:09:54.2568852Z ##[endgroup]\n2026-10-18T22:09:54.2570732Z ##[group]Setting up auth\n2026-10-18T22:09:54.2576834Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T22:09:54.2614868Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T22:09:54.2988627Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T22:09:54.3032969Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T22:09:54.3261339Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T22:09:54.3297346Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T22:09:54.3521643Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***\n2026-10-18T22:09:54.3562587Z ##[endgroup]\n2026-10-18T22:09:54.3563487Z ##[group]Fetching the repository\n2026-10-18T22:09:54.3572463Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:09:55.2016910Z From https://github.com/mekhovov/revealline\n2026-10-18T22:09:55.2019929Z  * branch            a38b49c101adeeed1416822445292e6b2db1e0de -> FETCH_HEAD\n2026-10-18T22:09:55.2026062Z ##[endgroup]\n2026-10-18T22:09:55.2028667Z ##[group]Determining the checkout info\n2026-10-18T22:09:55.2031833Z ##[endgroup]\n2026-10-18T22:09:55.2034498Z ##[group]Setting up sparse checkout\n2026-10-18T22:09:55.2036944Z [command]/usr/bin/git config core.sparseCheckout true\n2026-10-18T22:09:55.2075900Z [command]/usr/bin/git rev-parse --git-path info/sparse-checkout\n2026-10-18T22:09:55.2108091Z .git/info/sparse-checkout\n2026-10-18T22:09:55.2116757Z ##[endgroup]\n2026-10-18T22:09:55.2118167Z ##[group]Checking out the ref\n2026-10-18T22:09:55.2121167Z [command]/usr/bin/git checkout --progress --force a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:09:56.0059611Z Note: switching to 'a38b49c101adeeed1416822445292e6b2db1e0de'.\n2026-10-18T22:09:56.0062284Z \n2026-10-18T22:09:56.0063576Z You are in 'detached HEAD' state. You can look around, make experimental\n2026-10-18T22:09:56.0066865Z changes and commit them, and you can discard any commits you make in this\n2026-10-18T22:09:56.0070308Z state without impacting any branches by switching back to a branch.\n2026-10-18T22:09:56.0072113Z \n2026-10-18T22:09:56.0073330Z If you want to create a new branch to retain commits you create, you may\n2026-10-18T22:09:56.0076192Z do so (now or later) by using -c with the switch command. Example:\n2026-10-18T22:09:56.0077972Z \n2026-10-18T22:09:56.0078698Z   git switch -c <new-branch-name>\n2026-10-18T22:09:56.0080172Z \n2026-10-18T22:09:56.0080908Z Or undo this operation with:\n2026-10-18T22:09:56.0082103Z \n2026-10-18T22:09:56.0089374Z   git switch -\n2026-10-18T22:09:56.0090680Z \n2026-10-18T22:09:56.0092452Z Turn off this advice by setting config variable advice.detachedHead to false\n2026-10-18T22:09:56.0094424Z \n2026-10-18T22:09:56.0096625Z HEAD is now at a38b49c Merge f157f0cc2195fa6c747c4e407d22db51f5ccca64 into cb8dddd3d3c11d24c56b014fa48ac0e6417d6465\n2026-10-18T22:09:56.0103785Z ##[endgroup]\n2026-10-18T22:09:56.0130188Z [command]/usr/bin/git log -1 --format=%H\n2026-10-18T22:09:56.0162131Z a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:09:56.0174262Z ##[group]Removing auth\n2026-10-18T22:09:56.0179009Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T22:09:56.0217251Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T22:09:56.0494380Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T22:09:56.0527092Z http.https://github.com/.extraheader\n2026-10-18T22:09:56.0536608Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader\n2026-10-18T22:09:56.0572142Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T22:09:56.0826060Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T22:09:56.0859446Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T22:09:56.1105614Z ##[endgroup]\n2026-10-18T22:09:56.1322552Z ##[group]Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444\n2026-10-18T22:09:56.1323048Z with:\n2026-10-18T22:09:56.1323319Z   package-manager-cache: false\n2026-10-18T22:09:56.1323641Z   node-version: 20.19.x\n2026-10-18T22:09:56.1323922Z   always-auth: false\n2026-10-18T22:09:56.1324190Z   check-latest: false\n2026-10-18T22:09:56.1326850Z   token: ***\n2026-10-18T22:09:56.1327109Z env:\n2026-10-18T22:09:56.1327427Z   EXPECTED_SOURCE: f157f0cc2195fa6c747c4e407d22db51f5ccca64\n2026-10-18T22:09:56.1327895Z   EXPECTED_AUTOMATION: a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:09:56.1328289Z ##[endgroup]\n2026-10-18T22:09:56.2892803Z Attempting to download 20.19.x...\n2026-10-18T22:09:56.3041266Z (node:2466) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n2026-10-18T22:09:56.3042966Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T22:09:57.3131490Z Acquiring 20.19.6 - x64 from https://github.com/actions/node-versions/releases/download/20.19.6-19690675733/node-20.19.6-linux-x64.tar.gz\n2026-10-18T22:09:57.8840833Z Extracting ...\n2026-10-18T22:09:57.8982209Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/b1fe1669-bddf-4310-8eb0-15403dab0d94 -f /home/runner/work/_temp/ffb8144e-ab08-4c87-87ad-eddd57f35538\n2026-10-18T22:09:58.9228233Z Adding to the cache ...\n2026-10-18T22:10:00.7900331Z ##[group]Environment details\n2026-10-18T22:10:01.0102144Z node: v20.19.6\n2026-10-18T22:10:01.0102608Z npm: 10.8.2\n2026-10-18T22:10:01.0102984Z yarn: 1.22.22\n2026-10-18T22:10:01.0103715Z ##[endgroup]\n2026-10-18T22:10:01.0326477Z ##[group]Run actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131\n2026-10-18T22:10:01.0326934Z with:\n2026-10-18T22:10:01.0327141Z   name: admission-39160878387-1\n2026-10-18T22:10:01.0327443Z   path: /home/runner/work/_temp/preflight-admission\n2026-10-18T22:10:01.0327757Z   merge-multiple: false\n2026-10-18T22:10:01.0327988Z   repository: mekhovov/revealline\n2026-10-18T22:10:01.0328231Z   run-id: 39160878387\n2026-10-18T22:10:01.0328434Z env:\n2026-10-18T22:10:01.0328674Z   EXPECTED_SOURCE: f157f0cc2195fa6c747c4e407d22db51f5ccca64\n2026-10-18T22:10:01.0329344Z   EXPECTED_AUTOMATION: a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:10:01.0329930Z ##[endgroup]\n2026-10-18T22:10:01.1806619Z Downloading single artifact\n2026-10-18T22:10:01.4015236Z Preparing to download the following artifacts:\n2026-10-18T22:10:01.4017018Z - admission-39160878387-1 (ID: 12150011197, Size: 462, Expected Digest: sha256:4647a2ceabc4467a805a1b50f20a0b0a82bab0565cf24d560c2687cee46c7da1)\n2026-10-18T22:10:01.8434301Z Redirecting to blob download url: https://productionresultssa10.blob.core.windows.net/actions-results/54e0b86a-64eb-8ae8-a6a7-1cd5c6889fa5/workflow-job-run-b58eeab3-ffd7-50f6-b102-79fbe4ecebcb/artifacts/ed6c5450eb404d39f86da7ba5b8563be2a057db18a51f2ed48cbee7810a39b50.zip\n2026-10-18T22:10:01.8436319Z Starting download of artifact to: /home/runner/work/_temp/preflight-admission\n2026-10-18T22:10:02.0619409Z (node:2500) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\n2026-10-18T22:10:02.0620912Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T22:10:02.0656891Z SHA256 digest of downloaded artifact is 4647a2ceabc4467a805a1b50f20a0b0a82bab0565cf24d560c2687cee46c7da1\n2026-10-18T22:10:02.0658026Z Artifact download completed successfully.\n2026-10-18T22:10:02.0658737Z Total of 1 artifact(s) downloaded\n2026-10-18T22:10:02.0662662Z Download artifact has finished successfully\n2026-10-18T22:10:02.0784208Z ##[group]Run actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131\n2026-10-18T22:10:02.0784667Z with:\n2026-10-18T22:10:02.0784908Z   pattern: focused-shard-39160878387-1-*\n2026-10-18T22:10:02.0785230Z   path: /home/runner/work/_temp/focused-shards\n2026-10-18T22:10:02.0785534Z   merge-multiple: false\n2026-10-18T22:10:02.0785790Z   repository: mekhovov/revealline\n2026-10-18T22:10:02.0786040Z   run-id: 39160878387\n2026-10-18T22:10:02.0786243Z env:\n2026-10-18T22:10:02.0786490Z   EXPECTED_SOURCE: f157f0cc2195fa6c747c4e407d22db51f5ccca64\n2026-10-18T22:10:02.0786889Z   EXPECTED_AUTOMATION: a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:10:02.0787228Z ##[endgroup]\n2026-10-18T22:10:02.4681695Z Found 5 artifact(s)\n2026-10-18T22:10:02.4683114Z Filtering artifacts by pattern 'focused-shard-39160878387-1-*'\n2026-10-18T22:10:02.4704378Z Preparing to download the following artifacts:\n2026-10-18T22:10:02.4707692Z - focused-shard-39160878387-1-4 (ID: 12151557121, Size: 1157, Expected Digest: sha256:c39e598215c29d408e59c579fe54efac6d102ecfd9b41d6a19a790076c95f74a)\n2026-10-18T22:10:02.4711142Z - focused-shard-39160878387-1-3 (ID: 12151498853, Size: 1156, Expected Digest: sha256:78ec092b11287813d9e25d54b9e13e2d34747e86e6576d0da4e0d9c52cea5e58)\n2026-10-18T22:10:02.4713806Z - focused-shard-39160878387-1-1 (ID: 12151475965, Size: 15705, Expected Digest: sha256:871f9d992bac13d02e22cdae0382d7412a981cee14cec6f6dbcbd5369d95d2ac)\n2026-10-18T22:10:02.4717837Z - focused-shard-39160878387-1-2 (ID: 12151311740, Size: 1156, Expected Digest: sha256:41d4b72a8b9ba63f1b7617979b8c2e2a5d4ab8904d16aa6ce3bb12ff697600db)\n2026-10-18T22:10:02.9143919Z Redirecting to blob download url: https://productionresultssa10.blob.core.windows.net/actions-results/54e0b86a-64eb-8ae8-a6a7-1cd5c6889fa5/workflow-job-run-a897b4f2-78a2-5a0d-8122-cf6811429146/artifacts/ee9812e013bda7ce4bc2176cd93364b80c035519d791f41011cc4bac13a5f195.zip\n2026-10-18T22:10:02.9146154Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39160878387-1-4\n2026-10-18T22:10:02.9251763Z Redirecting to blob download url: https://productionresultssa10.blob.core.windows.net/actions-results/54e0b86a-64eb-8ae8-a6a7-1cd5c6889fa5/workflow-job-run-e5793be1-f5cb-54de-9b17-29004f107b5e/artifacts/bef3bc5d7f7e7fc99cd3f0ef7f31dc56daa15e6375c50dc89d216f7fff2ad524.zip\n2026-10-18T22:10:02.9254554Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39160878387-1-3\n2026-10-18T22:10:02.9268837Z Redirecting to blob download url: https://productionresultssa10.blob.core.windows.net/actions-results/54e0b86a-64eb-8ae8-a6a7-1cd5c6889fa5/workflow-job-run-5ffbff59-b31d-55d2-9c3f-dc853faaf5bc/artifacts/fb6ff39cc87880dd576afc5a4eff64ccaa03965acb3311f54d094a07d6ed0eac.zip\n2026-10-18T22:10:02.9271682Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39160878387-1-1\n2026-10-18T22:10:02.9395362Z Redirecting to blob download url: https://productionresultssa10.blob.core.windows.net/actions-results/54e0b86a-64eb-8ae8-a6a7-1cd5c6889fa5/workflow-job-run-2485f911-6762-5903-99a0-1ef0ab4c0c5f/artifacts/f083bda8ea62b97a846729f8a828d2d2908ac27272c27b75b8360ea9d4489b05.zip\n2026-10-18T22:10:02.9396926Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39160878387-1-2\n2026-10-18T22:10:03.1351198Z (node:2512) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\n2026-10-18T22:10:03.1352533Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T22:10:03.1428001Z SHA256 digest of downloaded artifact is c39e598215c29d408e59c579fe54efac6d102ecfd9b41d6a19a790076c95f74a\n2026-10-18T22:10:03.1429358Z Artifact download completed successfully.\n2026-10-18T22:10:03.1446760Z SHA256 digest of downloaded artifact is 78ec092b11287813d9e25d54b9e13e2d34747e86e6576d0da4e0d9c52cea5e58\n2026-10-18T22:10:03.1447810Z Artifact download completed successfully.\n2026-10-18T22:10:03.1448945Z SHA256 digest of downloaded artifact is 871f9d992bac13d02e22cdae0382d7412a981cee14cec6f6dbcbd5369d95d2ac\n2026-10-18T22:10:03.1449935Z Artifact download completed successfully.\n2026-10-18T22:10:03.1521416Z SHA256 digest of downloaded artifact is 41d4b72a8b9ba63f1b7617979b8c2e2a5d4ab8904d16aa6ce3bb12ff697600db\n2026-10-18T22:10:03.1522205Z Artifact download completed successfully.\n2026-10-18T22:10:03.1522671Z Total of 4 artifact(s) downloaded\n2026-10-18T22:10:03.1526072Z Download artifact has finished successfully\n2026-10-18T22:10:03.1638695Z ##[group]Run node automation/publishing/focused-tests.mjs \\\n2026-10-18T22:10:03.1639806Z \u001b[36;1mnode automation/publishing/focused-tests.mjs \\\u001b[0m\n2026-10-18T22:10:03.1640268Z \u001b[36;1m  --verify-shards \"$RUNNER_TEMP/focused-shards\" \\\u001b[0m\n2026-10-18T22:10:03.1640717Z \u001b[36;1m  --artifact-prefix \"focused-shard-39160878387-1-\" \\\u001b[0m\n2026-10-18T22:10:03.1641215Z \u001b[36;1m  --admission \"$RUNNER_TEMP/preflight-admission/admission.json\" \\\u001b[0m\n2026-10-18T22:10:03.1641725Z \u001b[36;1m  --manifest automation/publishing/focused-test-map.json \\\u001b[0m\n2026-10-18T22:10:03.1642400Z \u001b[36;1m  --test-policy automation/publishing/test-policy.json\u001b[0m\n2026-10-18T22:10:03.1709280Z shell: /usr/bin/bash -e {0}\n2026-10-18T22:10:03.1709596Z env:\n2026-10-18T22:10:03.1709898Z   EXPECTED_SOURCE: f157f0cc2195fa6c747c4e407d22db51f5ccca64\n2026-10-18T22:10:03.1710400Z   EXPECTED_AUTOMATION: a38b49c101adeeed1416822445292e6b2db1e0de\n2026-10-18T22:10:03.1710782Z ##[endgroup]\n2026-10-18T22:10:03.2148349Z All four focused shards passed: {\"shards\":4,\"commands\":1,\"sourceTree\":\"eb1f7d7a0083e61ab9543516fe4caee7d608b91a\",\"planSha256\":\"6b396319964a329d11f55dd78c038463b9c29994b18c3455027b38dbf760f2b2\"}\n2026-10-18T22:10:03.2254288Z Post job cleanup.\n2026-10-18T22:10:03.3477577Z (node:2536) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n2026-10-18T22:10:03.3479347Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T22:10:03.3633594Z Post job cleanup.\n2026-10-18T22:10:03.4512092Z [command]/usr/bin/git version\n2026-10-18T22:10:03.4556438Z git version 2.55.0\n2026-10-18T22:10:03.4629543Z Temporarily overriding HOME='/home/runner/work/_temp/bca99fd5-f69f-4960-80d8-80eef3c3b461' before making global git config changes\n2026-10-18T22:10:03.4631501Z Adding repository directory to the temporary git global config as a safe directory\n2026-10-18T22:10:03.4635451Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline/automation\n2026-10-18T22:10:03.4711446Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T22:10:03.4752650Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T22:10:03.5044130Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T22:10:03.5086834Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T22:10:03.5409817Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T22:10:03.5452318Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T22:10:03.5914371Z Cleaning up orphan processes\n"
+      },
+      "priorCommandAudits": [
+        "0ccf4a3c5ff9db5ccc37c10df94668db19ea9e50",
+        "e914f494d4897ead08acbae094b5b7d3050f01b9"
+      ],
+      "completeChecks": [
+        {
+          "id": 117803949673,
+          "name": "release-ready",
+          "status": "queued",
+          "conclusion": null,
+          "completed_at": null,
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117803949673"
+        },
+        {
+          "id": 117797234262,
+          "name": "focused",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T22:10:06Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117797234262"
+        },
+        {
+          "id": 117782724275,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T20:34:09Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117782724275"
+        },
+        {
+          "id": 117782723945,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped",
+          "completed_at": "2026-10-18T20:34:09Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117782723945"
+        },
+        {
+          "id": 117782722998,
+          "name": "focused_shards (3)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:38:53Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117782722998"
+        },
+        {
+          "id": 117782722813,
+          "name": "focused_shards (4)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:37:45Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117782722813"
+        },
+        {
+          "id": 117782722766,
+          "name": "focused_shards (1)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:15:40Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117782722766"
+        },
+        {
+          "id": 117782722747,
+          "name": "focused_shards (2)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:26:22Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117782722747"
+        },
+        {
+          "id": 117781378655,
+          "name": "reconcile",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:09:25Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39161079900/job/117781378655"
+        },
+        {
+          "id": 117773734558,
+          "name": "feature (rooms)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:43:47Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878448/job/117773734558"
+        },
+        {
+          "id": 117773734503,
+          "name": "feature (local-ux)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:49:45Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878448/job/117773734503"
+        },
+        {
+          "id": 117773734496,
+          "name": "feature (gameplay)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:59:13Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878448/job/117773734496"
+        },
+        {
+          "id": 117773734483,
+          "name": "feature (creator)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:58:19Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878448/job/117773734483"
+        },
+        {
+          "id": 117773734476,
+          "name": "feature (presentation)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:41:38Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878448/job/117773734476"
+        },
+        {
+          "id": 117773734367,
+          "name": "record",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:49:31Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878262/job/117773734367"
+        },
+        {
+          "id": 117773734338,
+          "name": "feature (recordings)",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T21:29:22Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878448/job/117773734338"
+        },
+        {
+          "id": 117773733784,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:34:09Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878387/job/117773733784"
+        },
+        {
+          "id": 117773733774,
+          "name": "candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:49:19Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878261/job/117773733774"
+        },
+        {
+          "id": 117773733747,
+          "name": "reconcile",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:28:16Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878282/job/117773733747"
+        },
+        {
+          "id": 117773733615,
+          "name": "optional-practice",
+          "status": "completed",
+          "conclusion": "success",
+          "completed_at": "2026-10-18T20:40:43Z",
+          "details_url": "https://github.com/mekhovov/revealline/actions/runs/39160878261/job/117773733615"
+        }
+      ]
+    }
+  ]
+}

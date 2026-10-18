@@ -1,0 +1,317 @@
+{
+  "format": "SoloBackupSourceAdmissionDraftV1",
+  "sourceReview": {
+    "format": "SoloBackupPreparedBranchDd337ReadOnlyReviewV1",
+    "head": "67cbed99b162362001f36b11aadf03e497ffa4cf",
+    "base": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+    "main": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "backupPaths": [
+      {
+        "path": ".github/workflows/published-pages-smoke.yml",
+        "after": {
+          "blob": "25ee46819c6c0c6d7c95e025332f980b0a194f21",
+          "bytes": 19853,
+          "sha256": "241f2e122246d3644769e5d2cb1d91d4a031cad9632597051fc83c94ca292da0"
+        },
+        "before": {
+          "blob": "48e48f436374f807d27692844e3c290038fd581e",
+          "bytes": 19496,
+          "sha256": "94596b1a8b9d5cfc29a6953aa7086f4b660986189e3329afd683a42b76caa57a"
+        }
+      },
+      {
+        "path": "docs/performance/solo-published-pages-smoke-plan.json",
+        "after": {
+          "blob": "d2ce0815b4e3b090831487852c1728bfb19183d0",
+          "bytes": 2996,
+          "sha256": "ecff95d850663dabb218c3346d3bfde20cb7b0fd2f2e67a591d5e8186bf67080"
+        },
+        "before": {
+          "blob": "21262dad73602f5c5d241b2802561692cea6d5ee",
+          "bytes": 2257,
+          "sha256": "c74655d844a5a2d07cd1e9a4940d9f772ae3a3d31baf9d96846f3597a96128a4"
+        }
+      },
+      {
+        "path": "scripts/run-solo-pages-smoke.mjs",
+        "after": {
+          "blob": "6865537afe903b8773a9ebe6d7ce65ecd969d9c9",
+          "bytes": 11710,
+          "sha256": "93dcb6331c223f45451abf6c88870bb0571f85d34ad393f05ed0fb9e510958a1"
+        },
+        "before": {
+          "blob": "26270269537b882c18968caf96469a6c51f9229a",
+          "bytes": 11125,
+          "sha256": "e5a82ea1d2a9538dbfa82c8f2c9b5ff902e5da878f1643658e4d2922eb70c12d"
+        }
+      },
+      {
+        "path": "scripts/solo-pages-backup.mjs",
+        "after": {
+          "blob": "83c3f25b4618d88622dbc47b92270f16e80f7c66",
+          "bytes": 13571,
+          "sha256": "3a60a826e1c8f82689e51d96e226015e44eb1b7a7b0faad16a70cdbb4f08804e"
+        }
+      },
+      {
+        "path": "scripts/solo-pages-backup.test.mjs",
+        "after": {
+          "blob": "fcb7a70da7cbe6ad61790dfaffa4288fd677d3cb",
+          "bytes": 13009,
+          "sha256": "578e9e237fe4eb8837c45bda93e05ca6ce54ad2ebd123842f20755be3ebda69b"
+        }
+      },
+      {
+        "path": "scripts/solo-pages-smoke.mjs",
+        "after": {
+          "blob": "0ecaaff2fcb6197d951d32ae3281b1bf02f04252",
+          "bytes": 42990,
+          "sha256": "1ea89d998b4a2183926f1f098b3ae246cacd7e0978671eede583426db9a2db6c"
+        },
+        "before": {
+          "blob": "245fff28219a338af20cc3ed83ebdc8e641e749c",
+          "bytes": 42014,
+          "sha256": "34de76935e2b6118178819422dd0592e5994d7484ef4ad9975669d29abf263b6"
+        }
+      },
+      {
+        "path": "scripts/solo-pages-smoke.test.mjs",
+        "after": {
+          "blob": "ba40ab64c1222cfe57938efdb89d04cd19fd9840",
+          "bytes": 60343,
+          "sha256": "b1fd74589b4aad629073cbc8f7daab5acffa26d9df2a8b649be3ba84b45ab194"
+        },
+        "before": {
+          "blob": "eeb2981be24048105c4e6395ecbc06b8ee086af6",
+          "bytes": 57178,
+          "sha256": "6c892c8631f42b6a032f6c8e182c202a4750126e08a14f01735231b21a6a8445"
+        }
+      }
+    ],
+    "backupMainOverlap": [],
+    "combinedMainOverlap": [
+      "game/app.mjs"
+    ],
+    "appComposition": {
+      "reviewedBy": "09dc7d7479b6bf0e89b98c5164752814d799abc4",
+      "unionBlob": "53e94f240326fc9005fb0fb8a6c55590bb3c8cd9",
+      "bytes": 622490,
+      "sha256": "6792d036827e881801d596690f9e78d408145f9a162701ddd674287ec529a39d"
+    },
+    "sparse": {
+      "sourceAndBrowserIdentical": true,
+      "declaredFiles": 144,
+      "parsedSourceFiles": 135,
+      "reachableStaticFiles": 133,
+      "missing": [],
+      "directReadsCovered": [
+        "package.json",
+        "package-lock.json",
+        ".prettierrc.json",
+        ".prettierignore",
+        "eslint.config.mjs",
+        "scripts/eslint-localization.mjs",
+        ".github/workflows/published-pages-smoke.yml",
+        "docs/performance/solo-published-pages-smoke-plan.json",
+        "game/vendor/lz-string-1.5.0.min.js",
+        "game/vendor/LZ-STRING-LICENSE.txt"
+      ]
+    },
+    "controls": {
+      "existingNoneMissionsFlowByteIdenticalAfterIndent": true,
+      "sourceAndPublicBindingAndCredentialBodyByteIdentical": true,
+      "ownerFunctionByteIdentical": true,
+      "missionsEvidenceFunctionByteIdentical": true,
+      "flowMs": 570000,
+      "ownerMs": 600000,
+      "outerSeconds": 720,
+      "backupMaximumRetainedReadBytes": 1048576,
+      "backupAcquisitionBound": "existing-browser-context-and-owner-limits",
+      "default": "none",
+      "modes": [
+        "none",
+        "missions",
+        "backup"
+      ]
+    },
+    "newTestCases": 17,
+    "limitations": [
+      "Static source/closure review only; no tests, app code, browsers or builds executed.",
+      "Draft PR must retain Depends on #1620; backup commit has actual parent eb2 and cannot independently bypass #1620 release.",
+      "Only inherited app.mjs intersection with dd337 needs the already reviewed Capture/Missions union. Seven backup changes are disjoint.",
+      "One MiB is retained/read/parse scope, not browser download acquisition; output proves fresh basic envelope only, not complete historical backup/restore/durable-save.",
+      "Do not merge new draft during P0 published Missions observation window."
+    ]
+  },
+  "normalMerge": {
+    "format": "SoloBackupDraftMainReconciliationV1",
+    "observedAt": "2026-10-18T22:36:50.532905+00:00",
+    "branch": "codex/solo-pages-backup-observation",
+    "beforeHead": "67cbed99b162362001f36b11aadf03e497ffa4cf",
+    "mergedMain": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "afterHead": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+    "tree": "56e1268dff01fb21056ab57f6a563da7483145ad",
+    "parents": [
+      "67cbed99b162362001f36b11aadf03e497ffa4cf",
+      "dd337c8120fd6f875544c1479713d3aa4299c323"
+    ],
+    "fullExpectedTreeMatched": true,
+    "backupOnlyPaths": 7,
+    "stackedChangedPaths": [
+      ".github/workflows/appearance-preview.yml",
+      ".github/workflows/published-pages-smoke.yml",
+      "docs/performance/solo-published-pages-smoke-plan.json",
+      "game/app.mjs",
+      "game/mission-library/multiplayer-expeditions.mjs",
+      "game/test/mission-library-stage-observation.test.mjs",
+      "game/test/performance-session.test.mjs",
+      "game/ui/mission-library-browser.mjs",
+      "game/ui/performance-session.mjs",
+      "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "scripts/run-solo-pages-smoke.mjs",
+      "scripts/solo-pages-backup.mjs",
+      "scripts/solo-pages-backup.test.mjs",
+      "scripts/solo-pages-smoke.mjs",
+      "scripts/solo-pages-smoke.test.mjs",
+      "scripts/test-appearance-preview-policy.mjs"
+    ],
+    "onlyIntersection": [
+      "game/app.mjs"
+    ],
+    "mainAfter": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "nativeDispatched": false,
+    "testsExecuted": false,
+    "pullRequestCreated": false
+  },
+  "pullRequest": {
+    "number": 1676,
+    "html_url": "https://github.com/mekhovov/revealline/pull/1676",
+    "draft": true,
+    "state": "open",
+    "node_id": "PR_kwDOUYDvKM8AAAABJN0Ytw",
+    "head": "73eb20a2d32edf194cdc7915d6fb055753df8925",
+    "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "body": "Depends on #1620\n\nAdds an opt-in `backup` observation to the existing published Pages workflow. A fresh profile enters through the ordinary password form, starts and pauses Solo, exports progress through Missions, discards the owned download, and returns Home with the same paused public state.\n\nThe default and Missions flows, two-opening Missions requirement, source/public identity checks, and 570/600/720-second limits are unchanged. The 1 MiB limit applies to retained/read/parsed bytes; this verifies a fresh basic backup envelope and ordinary filename, not download acquisition, historical backups, restore, or durable-save completeness.\n\nValidation: independent source and lifecycle review completed; the prospective source/browser sparse closure covers all 133 reachable static-import files. Seventeen new source controls await hosted CI. No local tests, builds, or native observations were run.\n\nThis draft preserves the reviewed #1620 dependency and includes a normal merge of current main. Keep it unmerged through #1620\u2019s publication and its retained Missions observation. This PR does not dispatch a native browser run."
+  },
+  "attached": true,
+  "limitations": [
+    "Draft source admission only; new controls are unexecuted until complete exact-head hosted evidence is retained.",
+    "No native browser dispatch, main merge, force-push, or modifications of an existing ready PR.",
+    "Maintain Depends on #1620 and the P0 published Missions observation hold."
+  ],
+  "retainedAt": "2026-10-18T22:37:40.893520+00:00",
+  "initialChecks": [
+    {
+      "id": 117809882892,
+      "name": "record",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029956/job/117809882892"
+    },
+    {
+      "id": 117809881869,
+      "name": "team_admission",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029622/job/117809881869"
+    },
+    {
+      "id": 117809881200,
+      "name": "feature (rooms)",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029692/job/117809881200"
+    },
+    {
+      "id": 117809881193,
+      "name": "feature (local-ux)",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029692/job/117809881193"
+    },
+    {
+      "id": 117809881191,
+      "name": "feature (recordings)",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029692/job/117809881191"
+    },
+    {
+      "id": 117809881162,
+      "name": "feature (gameplay)",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029692/job/117809881162"
+    },
+    {
+      "id": 117809881077,
+      "name": "feature (presentation)",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029692/job/117809881077"
+    },
+    {
+      "id": 117809880974,
+      "name": "installed_admission",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029622/job/117809880974"
+    },
+    {
+      "id": 117809880952,
+      "name": "feature (creator)",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029692/job/117809880952"
+    },
+    {
+      "id": 117809880940,
+      "name": "demo_admission",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029622/job/117809880940"
+    },
+    {
+      "id": 117809880912,
+      "name": "source",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029663/job/117809880912"
+    },
+    {
+      "id": 117809880877,
+      "name": "optional-practice",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029621/job/117809880877"
+    },
+    {
+      "id": 117809880848,
+      "name": "reconcile",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029689/job/117809880848"
+    },
+    {
+      "id": 117809880712,
+      "name": "admission",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029622/job/117809880712"
+    },
+    {
+      "id": 117809880666,
+      "name": "candidate",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029621/job/117809880666"
+    },
+    {
+      "id": 117809880606,
+      "name": "preflight",
+      "status": "queued",
+      "conclusion": null,
+      "details_url": "https://github.com/mekhovov/revealline/actions/runs/39173029629/job/117809880606"
+    }
+  ]
+}

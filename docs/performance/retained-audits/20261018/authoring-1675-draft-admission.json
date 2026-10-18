@@ -1,0 +1,13 @@
+{
+  "format": "SoloDraftSourceAdmissionV1",
+  "at": "2026-10-18T22:37:11.130621+00:00",
+  "pr": 1675,
+  "url": "https://github.com/mekhovov/revealline/pull/1675",
+  "head": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+  "baseAtCreation": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "draft": true,
+  "title": "Load soundtrack editing controls when the editor opens",
+  "body": "Depends on #1619\n\nOpening the soundtrack panel constructs editing controls even when the player only wants playback settings. Move the authoring view into a fixed, lazy-loaded module, and retain the existing panel, playback controls and transaction owners. Guard close/reopen races so an obsolete load cannot attach controls to a closed or newer dialog.\n\nThis draft is for source qualification. Keep it unmerged until the P0 published Missions observation has completed.\n\nValidation:\n- Independent source, ownership and test-admission review is complete. Latest main was merged normally and the complete resulting blob tree matches the reviewed union.\n- Eleven new loader, close/reopen and authoring controls await exact-head execution. Source, full Appearance, Industrial and Company checks remain required.\n- Production build and offline/CSP closure remain required. The deferred view is 14,219 source bytes; this does not remove the whole soundtrack module graph or establish a measured browser speedup.\n\nProgress and remaining qualification are tracked in #1623. Physical iPhone/Steam Deck results remain outstanding.\n",
+  "noNativeDispatch": true,
+  "noMergeIntent": true
+}

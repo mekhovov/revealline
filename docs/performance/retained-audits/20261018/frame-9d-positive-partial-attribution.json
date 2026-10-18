@@ -1,0 +1,4578 @@
+{
+  "format": "SoloPartialFrameTracePositiveAttributionReadbackV1",
+  "createdAt": "2026-10-18T22:34:52.471348+00:00",
+  "originalRunId": 39142189874,
+  "previousAudit": "801ecd268dde667f38add2d9ccb70103f05ea5b2",
+  "artifact": {
+    "id": 12141982962,
+    "name": "solo-linux-9d5139-frame-failure-39142189874-1",
+    "size_in_bytes": 4780169,
+    "digest": "sha256:4db3792a97693d2ab4b600efc36d3c6e8a109bc1e6d3ec80151d1f0e4463c716",
+    "expired": false,
+    "expires_at": "2026-11-01T15:53:58Z"
+  },
+  "archiveVerification": {
+    "sha256": "4db3792a97693d2ab4b600efc36d3c6e8a109bc1e6d3ec80151d1f0e4463c716",
+    "allMembersCRCValid": true,
+    "memberCount": 38,
+    "uncompressedTotal": 23153205,
+    "members": [
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-archive.json",
+        "bytes": 511,
+        "crc32": "1dfbe55b",
+        "sha256": "c1fbe11123c3a8ca636c10796d6e1c173705d7755fe1d1da2282f4026cd5af4b"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-inner.command.json",
+        "bytes": 1508,
+        "crc32": "74a2de1a",
+        "sha256": "aeb97bee02357180ed446930411abea6686d1b7c2cb57e0dd03cf100cb1d1cd6"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-artifact.json",
+        "bytes": 851,
+        "crc32": "6bfbba79",
+        "sha256": "089d190009b16a6ed8d6e908ca6e27a08f41f1d2af7020397b48ce28a9c592e3"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-inner.log",
+        "bytes": 0,
+        "crc32": "00000000",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-outer.command.json",
+        "bytes": 1474,
+        "crc32": "b1c8c639",
+        "sha256": "bc368a695d031f0b1b7681c3aeb530e90d7ad5d8f1241fc65a1e99bb06784020"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-outer.json",
+        "bytes": 19561,
+        "crc32": "2aaa367a",
+        "sha256": "0779ec3c19d5b66c9ebf7f76741ca968290c05ad2e15057c90f39be2219f84e8"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-outer.log",
+        "bytes": 0,
+        "crc32": "00000000",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-payload-metadata/_headers",
+        "bytes": 528,
+        "crc32": "58260b85",
+        "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-payload-metadata/game/build-info.json",
+        "bytes": 143,
+        "crc32": "c6bf995a",
+        "sha256": "4b9ae57cf5b560902134c7e4c7d4f18ea3d684c2e837415049acad10efed6e31"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-payload-metadata/manifest.json",
+        "bytes": 529292,
+        "crc32": "f2c2c6f6",
+        "sha256": "8d4bc6d5d25e92e4743afa9d241180735b16cd446e333ab7b0dab0bca45641c2"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-run.json",
+        "bytes": 13484,
+        "crc32": "8b086256",
+        "sha256": "8923fef63fca80036dd87711e2757933c19748906901854d299e0351ee8d119a"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-source.command.json",
+        "bytes": 1932,
+        "crc32": "79169eca",
+        "sha256": "6624333212b7734f0d27e56d38c64dfdaebeafe06498f1fbd8befcd2b9d8dbff"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-source.json",
+        "bytes": 31483,
+        "crc32": "d925b948",
+        "sha256": "29901cc253e194021cfc04e2dd627579ac69cef6bc6ffb22251169328589f037"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/candidate-source.log",
+        "bytes": 131,
+        "crc32": "ee1eff29",
+        "sha256": "6a4f01ce00706b9455880c2858a1aa24d871873db1bc52bd50878037f23fd2e2"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/fresh-mid-calibration.command.json",
+        "bytes": 12900,
+        "crc32": "9102d9ee",
+        "sha256": "24ec91d46fed33f2d455a3e81d0aba104a2f46163e67bfa4e82075a179ceb7cc"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/fresh-mid-calibration.json",
+        "bytes": 3722,
+        "crc32": "18dab725",
+        "sha256": "996fe18683dfffe14686eaedc60fedcc48b8a0c7c21aca12a611fc0beb18bdd2"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/fresh-mid-calibration.log",
+        "bytes": 0,
+        "crc32": "00000000",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/plan.json",
+        "bytes": 15917,
+        "crc32": "00bd7fcc",
+        "sha256": "52bc7a104730f54298b0b0810476145366b5f79188fc494592fc621f987e5676"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/inventory.json",
+        "bytes": 4690,
+        "crc32": "98f3c9b1",
+        "sha256": "c7cf941278f072282656136b11608689a36f39d2d50bc2e59c22d5c3789532c6"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/run-solo-remote-correctness.mjs",
+        "bytes": 74932,
+        "crc32": "8162ce38",
+        "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/scenario.qualification.json",
+        "bytes": 6570,
+        "crc32": "6c563c87",
+        "sha256": "6da01ca449068ca6705012f3d6604362c581fe52c4583407797c0961acf3156d"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/solo-remote-baseline.mjs",
+        "bytes": 15700,
+        "crc32": "d0361323",
+        "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/solo-remote-archive.py",
+        "bytes": 22756,
+        "crc32": "18cd76dd",
+        "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/solo-remote-cpu-profile.mjs",
+        "bytes": 49377,
+        "crc32": "b73ea87e",
+        "sha256": "1cf42d12ee10c35f151e85fa47cf965ac819dca79dea4b460f330cb85e15a8c2"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/summary.json",
+        "bytes": 39037,
+        "crc32": "d812de76",
+        "sha256": "553db0e17d649758c385fe633e562dff4b90c114220e6502583619f281e6746d"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/verified-artifacts.json",
+        "bytes": 1277,
+        "crc32": "45c10524",
+        "sha256": "f63d05d4ed3a526c880b87ff73e9acd391dc157d0b500ce3eb8931b5921a3da3"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/warm-browser-frame-trace-chromium-candidate/command.json",
+        "bytes": 26757,
+        "crc32": "25c0bd26",
+        "sha256": "daa7f1479d74c9f66dc150f593140d676a29eb3251fd1c30e85e00ca58f670ce"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/warm-browser-frame-trace-chromium-candidate/command.log",
+        "bytes": 0,
+        "crc32": "00000000",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/warm-browser-frame-trace-chromium-candidate/report.json",
+        "bytes": 1045019,
+        "crc32": "7fe810b5",
+        "sha256": "f06658bf633a0d43f863d1816d6f1d1339c314ef7e56d19a6e94d678ce1ccd35"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/warm-browser-frame-trace-chromium-candidate/report.json.frame-trace.json",
+        "bytes": 21173242,
+        "crc32": "8772a560",
+        "sha256": "d4e4f6d638d10763ff94c468c34d8356ab849e9a50c552f662cd8b9bc8abafaa"
+      },
+      {
+        "path": "solo-linux-9d5139-frame-failure/evidence/warm-browser-frame-trace-chromium-candidate/report.json.replay.json",
+        "bytes": 9023,
+        "crc32": "5ee714af",
+        "sha256": "9c1a843288def64baf6e2ef236d97bb7feb7fe4d88c259a8ab0e341f6ed9b8a0"
+      },
+      {
+        "path": "solo-linux-setup/browser-dependencies.log",
+        "bytes": 16335,
+        "crc32": "ce3e699d",
+        "sha256": "4d21219b88197c2b09a6e13213e124aafaf873375befcb3cd9cd7251ede6789b"
+      },
+      {
+        "path": "solo-linux-setup/browser-install.log",
+        "bytes": 24,
+        "crc32": "b6f34736",
+        "sha256": "4aaef3acc3c4b16766abf61c4f4aa2d3bd413e2fe822d3edd6cfa9d7e7334efa"
+      },
+      {
+        "path": "solo-linux-setup/browser-package-lock.json",
+        "bytes": 1601,
+        "crc32": "3f8837bd",
+        "sha256": "2cea5324052ffbb9e1a67ef75209306dd4d51cabfdcd98bac87413bdeda715d4"
+      },
+      {
+        "path": "solo-linux-setup/source-checkout.json",
+        "bytes": 387,
+        "crc32": "35912a54",
+        "sha256": "e1b1442cb8bd36fe421b402d070c25b3f8ea2f1b3f389137416077bbf019dc2a"
+      },
+      {
+        "path": "solo-linux-setup/retention.json",
+        "bytes": 1265,
+        "crc32": "548f70d0",
+        "sha256": "8ed9184780d41ce271c1dcfe8862dd9d53deafb7e25bdfa13abc8738f0e28024"
+      },
+      {
+        "path": "solo-linux-setup/tools-npm.log",
+        "bytes": 25,
+        "crc32": "5945ed28",
+        "sha256": "5bcdb310b831841ba2895cbedb0eb7a78ca10c89bfb08b732f665cbae34d9a55"
+      },
+      {
+        "path": "solo-linux-setup/wrapper-tests.tap",
+        "bytes": 31751,
+        "crc32": "ae7a2b39",
+        "sha256": "d2a8a29660e1947e1530bb85031e83df170c4595ea78e1dbb077a009767d7b46"
+      }
+    ]
+  },
+  "trace": {
+    "path": "solo-linux-9d5139-frame-failure/evidence/warm-browser-frame-trace-chromium-candidate/report.json.frame-trace.json",
+    "bytes": 21173242,
+    "sha256": "d4e4f6d638d10763ff94c468c34d8356ab849e9a50c552f662cd8b9bc8abafaa",
+    "events": 84807,
+    "mainThreadIds": [
+      [
+        4129,
+        4129
+      ]
+    ],
+    "mainThreadEvents": 17071,
+    "completeSlicesAtLeast50Ms": 89,
+    "distinctRunTaskSlicesAtLeast50Ms": 14,
+    "retainedAnchors": [
+      {
+        "args": {
+          "data": {
+            "callTime": 376170285,
+            "navigationId": "9B120E0D81D145FF535877A053E69827",
+            "sampleTraceId": 6881431429607102,
+            "startTime": 14079.90000000002
+          }
+        },
+        "cat": "blink.user_timing",
+        "name": "solo-frame-trace-before-public-start-v1",
+        "ph": "I",
+        "pid": 4129,
+        "s": "t",
+        "tid": 4129,
+        "ts": 376170269,
+        "tts": 27785869
+      }
+    ],
+    "samplingOrScriptNames": {
+      "EvaluateScript": 1,
+      "AnimationFrame::Script::Execute": 76
+    },
+    "maximumRetainedSourceFunctionCall": {
+      "args": {
+        "data": {
+          "columnNumber": 147165,
+          "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+          "functionName": "e",
+          "isolate": "13377590218590354790",
+          "lineNumber": 1,
+          "sampleTraceId": 6881431429606959,
+          "scriptId": "72",
+          "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+        }
+      },
+      "cat": "devtools.timeline",
+      "dur": 17406,
+      "name": "FunctionCall",
+      "ph": "X",
+      "pid": 4129,
+      "tdur": 17400,
+      "tid": 4129,
+      "ts": 376329345,
+      "tts": 27909050
+    },
+    "allLongTasks": [
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 108128,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 77522,
+          "tid": 4129,
+          "ts": 376059953,
+          "tts": 27706247
+        },
+        "fromRetainedBeforeStartMarkerMs": -110.316,
+        "allChildCount": 102,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "cc/trees/proxy_impl.cc",
+              "src_func": "ScheduledActionSendBeginMainFrame",
+              "src_line": 802
+            },
+            "cat": "toplevel",
+            "dur": 107873,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 77337,
+            "tid": 4129,
+            "ts": 376059954,
+            "tts": 27706247
+          },
+          {
+            "args": {
+              "begin_frame_id": 1940,
+              "main_frame_pipeline": {
+                "main_frame_id": 14571522626345791226,
+                "step": "BEGIN_MAIN_FRAME"
+              }
+            },
+            "cat": "cc,benchmark",
+            "dur": 107867,
+            "name": "ProxyMain::BeginMainFrame",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 77331,
+            "tid": 4129,
+            "ts": 376059958,
+            "tts": 27706251
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429607045,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 53,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 50,
+            "tid": 4129,
+            "ts": 376060616,
+            "tts": 27706907
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 147165,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "e",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1,
+                "sampleTraceId": 6881431429607044,
+                "scriptId": "72",
+                "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 4486,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 4468,
+            "tid": 4129,
+            "ts": 376060704,
+            "tts": 27706991
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 14,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 279,
+                "sampleTraceId": 6881431429607043,
+                "scriptId": "635",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 545,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 542,
+            "tid": 4129,
+            "ts": 376065214,
+            "tts": 27711481
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429607042,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 349,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 347,
+            "tid": 4129,
+            "ts": 376065782,
+            "tts": 27712045
+          },
+          {
+            "args": {
+              "frameSeqId": 1940,
+              "layerTreeId": 3
+            },
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 78041,
+            "name": "Commit",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 48783,
+            "tid": 4129,
+            "ts": 376089783,
+            "tts": 27734798
+          },
+          {
+            "args": {
+              "source_frame_number": 103
+            },
+            "cat": "cc,benchmark",
+            "dur": 77264,
+            "name": "LayerTreeHost::DoUpdateLayers",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 48010,
+            "tid": 4129,
+            "ts": 376089788,
+            "tts": 27734802
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 71953,
+            "name": "GLES2::ReadPixels",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42759,
+            "tid": 4129,
+            "ts": 376090741,
+            "tts": 27735749
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 71851,
+            "name": "ImplementationBase::WaitForCmd",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42658,
+            "tid": 4129,
+            "ts": 376090773,
+            "tts": 27735780
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 71848,
+            "name": "CommandBufferHelper::Finish",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42657,
+            "tid": 4129,
+            "ts": 376090775,
+            "tts": 27735781
+          },
+          {
+            "args": {
+              "end": 4102,
+              "start": 4102
+            },
+            "cat": "gpu",
+            "dur": 71405,
+            "name": "CommandBufferProxyImpl::WaitForGetOffset",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42222,
+            "tid": 4129,
+            "ts": 376091216,
+            "tts": 27736215
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 96315,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 63319,
+          "tid": 4129,
+          "ts": 376206092,
+          "tts": 27819207
+        },
+        "fromRetainedBeforeStartMarkerMs": 35.823,
+        "allChildCount": 120,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "cc/trees/proxy_impl.cc",
+              "src_func": "ScheduledActionSendBeginMainFrame",
+              "src_line": 802
+            },
+            "cat": "toplevel",
+            "dur": 96260,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 63267,
+            "tid": 4129,
+            "ts": 376206093,
+            "tts": 27819207
+          },
+          {
+            "args": {
+              "begin_frame_id": 1949,
+              "main_frame_pipeline": {
+                "main_frame_id": 14571522626345791049,
+                "step": "BEGIN_MAIN_FRAME"
+              }
+            },
+            "cat": "cc,benchmark",
+            "dur": 96254,
+            "name": "ProxyMain::BeginMainFrame",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 63262,
+            "tid": 4129,
+            "ts": 376206096,
+            "tts": 27819210
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429607005,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 404,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 402,
+            "tid": 4129,
+            "ts": 376206364,
+            "tts": 27819447
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 147165,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "e",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1,
+                "sampleTraceId": 6881431429607004,
+                "scriptId": "72",
+                "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 3973,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 3970,
+            "tid": 4129,
+            "ts": 376206788,
+            "tts": 27819866
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 14,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 279,
+                "sampleTraceId": 6881431429607003,
+                "scriptId": "635",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 53,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 51,
+            "tid": 4129,
+            "ts": 376210781,
+            "tts": 27823854
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429607002,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 18,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 15,
+            "tid": 4129,
+            "ts": 376211573,
+            "tts": 27824641
+          },
+          {
+            "args": {
+              "frameSeqId": 1949,
+              "layerTreeId": 3
+            },
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 73012,
+            "name": "Commit",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 40099,
+            "tid": 4129,
+            "ts": 376229337,
+            "tts": 27842372
+          },
+          {
+            "args": {
+              "source_frame_number": 104
+            },
+            "cat": "cc,benchmark",
+            "dur": 69562,
+            "name": "LayerTreeHost::DoUpdateLayers",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 37358,
+            "tid": 4129,
+            "ts": 376229340,
+            "tts": 27842375
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 63474,
+            "name": "GLES2::ReadPixels",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 31297,
+            "tid": 4129,
+            "ts": 376230161,
+            "tts": 27843191
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 63399,
+            "name": "ImplementationBase::WaitForCmd",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 31223,
+            "tid": 4129,
+            "ts": 376230169,
+            "tts": 27843198
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 63397,
+            "name": "CommandBufferHelper::Finish",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 31223,
+            "tid": 4129,
+            "ts": 376230170,
+            "tts": 27843198
+          },
+          {
+            "args": {
+              "end": 4203,
+              "start": 4203
+            },
+            "cat": "gpu",
+            "dur": 63367,
+            "name": "CommandBufferProxyImpl::WaitForGetOffset",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 31199,
+            "tid": 4129,
+            "ts": 376230197,
+            "tts": 27843221
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 106178,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 73198,
+          "tid": 4129,
+          "ts": 376327778,
+          "tts": 27907520
+        },
+        "fromRetainedBeforeStartMarkerMs": 157.509,
+        "allChildCount": 110,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "cc/trees/proxy_impl.cc",
+              "src_func": "ScheduledActionSendBeginMainFrame",
+              "src_line": 802
+            },
+            "cat": "toplevel",
+            "dur": 105747,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 72832,
+            "tid": 4129,
+            "ts": 376327779,
+            "tts": 27907520
+          },
+          {
+            "args": {
+              "begin_frame_id": 1954,
+              "main_frame_pipeline": {
+                "main_frame_id": 14571522626345791077,
+                "step": "BEGIN_MAIN_FRAME"
+              }
+            },
+            "cat": "cc,benchmark",
+            "dur": 105740,
+            "name": "ProxyMain::BeginMainFrame",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 72827,
+            "tid": 4129,
+            "ts": 376327782,
+            "tts": 27907522
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429606928,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 283,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 280,
+            "tid": 4129,
+            "ts": 376328928,
+            "tts": 27908639
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 147165,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "e",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1,
+                "sampleTraceId": 6881431429606959,
+                "scriptId": "72",
+                "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 17406,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 17400,
+            "tid": 4129,
+            "ts": 376329345,
+            "tts": 27909050
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 14,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 279,
+                "sampleTraceId": 6881431429606954,
+                "scriptId": "635",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 55,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 53,
+            "tid": 4129,
+            "ts": 376347336,
+            "tts": 27927033
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429606953,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 17,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 15,
+            "tid": 4129,
+            "ts": 376347403,
+            "tts": 27927095
+          },
+          {
+            "args": {
+              "frameSeqId": 1954,
+              "layerTreeId": 3
+            },
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 80064,
+            "name": "Commit",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 47226,
+            "tid": 4129,
+            "ts": 376353457,
+            "tts": 27933122
+          },
+          {
+            "args": {
+              "source_frame_number": 105
+            },
+            "cat": "cc,benchmark",
+            "dur": 76566,
+            "name": "LayerTreeHost::DoUpdateLayers",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 44699,
+            "tid": 4129,
+            "ts": 376353461,
+            "tts": 27933125
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 71644,
+            "name": "GLES2::ReadPixels",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 39796,
+            "tid": 4129,
+            "ts": 376353635,
+            "tts": 27933293
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 71561,
+            "name": "ImplementationBase::WaitForCmd",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 39715,
+            "tid": 4129,
+            "ts": 376353643,
+            "tts": 27933300
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 71559,
+            "name": "CommandBufferHelper::Finish",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 39714,
+            "tid": 4129,
+            "ts": 376353644,
+            "tts": 27933300
+          },
+          {
+            "args": {
+              "end": 4304,
+              "start": 4304
+            },
+            "cat": "gpu",
+            "dur": 71524,
+            "name": "CommandBufferProxyImpl::WaitForGetOffset",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 39687,
+            "tid": 4129,
+            "ts": 376353675,
+            "tts": 27933325
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 125891,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 65897,
+          "tid": 4129,
+          "ts": 376443702,
+          "tts": 27989735
+        },
+        "fromRetainedBeforeStartMarkerMs": 273.433,
+        "allChildCount": 117,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "cc/trees/proxy_impl.cc",
+              "src_func": "ScheduledActionSendBeginMainFrame",
+              "src_line": 802
+            },
+            "cat": "toplevel",
+            "dur": 125842,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 65851,
+            "tid": 4129,
+            "ts": 376443703,
+            "tts": 27989735
+          },
+          {
+            "args": {
+              "begin_frame_id": 1962,
+              "main_frame_pipeline": {
+                "main_frame_id": 14571522626345791025,
+                "step": "BEGIN_MAIN_FRAME"
+              }
+            },
+            "cat": "cc,benchmark",
+            "dur": 125836,
+            "name": "ProxyMain::BeginMainFrame",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 65846,
+            "tid": 4129,
+            "ts": 376443707,
+            "tts": 27989738
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599685,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 44,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 41,
+            "tid": 4129,
+            "ts": 376444641,
+            "tts": 27990667
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 147165,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "e",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1,
+                "sampleTraceId": 6881431429599684,
+                "scriptId": "72",
+                "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 4745,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 4742,
+            "tid": 4129,
+            "ts": 376444705,
+            "tts": 27990726
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 14,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 279,
+                "sampleTraceId": 6881431429599683,
+                "scriptId": "635",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 656,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 654,
+            "tid": 4129,
+            "ts": 376449515,
+            "tts": 27995530
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 17,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "raf",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7247,
+                "sampleTraceId": 6881431429599682,
+                "scriptId": "662",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 6756,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 6752,
+            "tid": 4129,
+            "ts": 376450182,
+            "tts": 27996193
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599680,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 29,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 28,
+            "tid": 4129,
+            "ts": 376456963,
+            "tts": 28002967
+          },
+          {
+            "args": {
+              "frameSeqId": 1962,
+              "layerTreeId": 3
+            },
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 110660,
+            "name": "Commit",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 50723,
+            "tid": 4129,
+            "ts": 376458830,
+            "tts": 28004809
+          },
+          {
+            "args": {
+              "source_frame_number": 106
+            },
+            "cat": "cc,benchmark",
+            "dur": 109694,
+            "name": "LayerTreeHost::DoUpdateLayers",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 49771,
+            "tid": 4129,
+            "ts": 376458834,
+            "tts": 28004812
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 100595,
+            "name": "GLES2::ReadPixels",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 43437,
+            "tid": 4129,
+            "ts": 376459042,
+            "tts": 28005016
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 100464,
+            "name": "ImplementationBase::WaitForCmd",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 43307,
+            "tid": 4129,
+            "ts": 376459049,
+            "tts": 28005023
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 100462,
+            "name": "CommandBufferHelper::Finish",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 43305,
+            "tid": 4129,
+            "ts": 376459050,
+            "tts": 28005024
+          },
+          {
+            "args": {
+              "end": 4405,
+              "start": 4405
+            },
+            "cat": "gpu",
+            "dur": 99997,
+            "name": "CommandBufferProxyImpl::WaitForGetOffset",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 43273,
+            "tid": 4129,
+            "ts": 376459084,
+            "tts": 28005054
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 112638,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 74153,
+          "tid": 4129,
+          "ts": 376597155,
+          "tts": 28080318
+        },
+        "fromRetainedBeforeStartMarkerMs": 426.886,
+        "allChildCount": 111,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "cc/trees/proxy_impl.cc",
+              "src_func": "ScheduledActionSendBeginMainFrame",
+              "src_line": 802
+            },
+            "cat": "toplevel",
+            "dur": 112597,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 74113,
+            "tid": 4129,
+            "ts": 376597156,
+            "tts": 28080319
+          },
+          {
+            "args": {
+              "begin_frame_id": 1972,
+              "main_frame_pipeline": {
+                "main_frame_id": 14571522626345783711,
+                "step": "BEGIN_MAIN_FRAME"
+              }
+            },
+            "cat": "cc,benchmark",
+            "dur": 112591,
+            "name": "ProxyMain::BeginMainFrame",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 74108,
+            "tid": 4129,
+            "ts": 376597159,
+            "tts": 28080322
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599632,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 543,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 506,
+            "tid": 4129,
+            "ts": 376597938,
+            "tts": 28081097
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 147165,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "e",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1,
+                "sampleTraceId": 6881431429599663,
+                "scriptId": "72",
+                "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 3875,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 3872,
+            "tid": 4129,
+            "ts": 376598503,
+            "tts": 28081624
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 14,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 279,
+                "sampleTraceId": 6881431429599662,
+                "scriptId": "635",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 51,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 49,
+            "tid": 4129,
+            "ts": 376602394,
+            "tts": 28085510
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 17,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "raf",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7247,
+                "sampleTraceId": 6881431429599661,
+                "scriptId": "662",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 17242,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 17228,
+            "tid": 4129,
+            "ts": 376602452,
+            "tts": 28085563
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599655,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 756,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 755,
+            "tid": 4129,
+            "ts": 376622909,
+            "tts": 28106002
+          },
+          {
+            "args": {
+              "frameSeqId": 1972,
+              "layerTreeId": 3
+            },
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 81833,
+            "name": "Commit",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 43448,
+            "tid": 4129,
+            "ts": 376627916,
+            "tts": 28110981
+          },
+          {
+            "args": {
+              "source_frame_number": 107
+            },
+            "cat": "cc,benchmark",
+            "dur": 75363,
+            "name": "LayerTreeHost::DoUpdateLayers",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 39093,
+            "tid": 4129,
+            "ts": 376627920,
+            "tts": 28110985
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 71104,
+            "name": "GLES2::ReadPixels",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 34861,
+            "tid": 4129,
+            "ts": 376628684,
+            "tts": 28111742
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 70818,
+            "name": "ImplementationBase::WaitForCmd",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 34575,
+            "tid": 4129,
+            "ts": 376628692,
+            "tts": 28111750
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 70816,
+            "name": "CommandBufferHelper::Finish",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 34573,
+            "tid": 4129,
+            "ts": 376628693,
+            "tts": 28111751
+          },
+          {
+            "args": {
+              "end": 4506,
+              "start": 4506
+            },
+            "cat": "gpu",
+            "dur": 70778,
+            "name": "CommandBufferProxyImpl::WaitForGetOffset",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 34545,
+            "tid": 4129,
+            "ts": 376628725,
+            "tts": 28111776
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 80411,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 46674,
+          "tid": 4129,
+          "ts": 376714391,
+          "tts": 28158976
+        },
+        "fromRetainedBeforeStartMarkerMs": 544.122,
+        "allChildCount": 105,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "cc/trees/proxy_impl.cc",
+              "src_func": "ScheduledActionSendBeginMainFrame",
+              "src_line": 802
+            },
+            "cat": "toplevel",
+            "dur": 80324,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 46589,
+            "tid": 4129,
+            "ts": 376714392,
+            "tts": 28158976
+          },
+          {
+            "args": {
+              "begin_frame_id": 1979,
+              "main_frame_pipeline": {
+                "main_frame_id": 14571522626345783633,
+                "step": "BEGIN_MAIN_FRAME"
+              }
+            },
+            "cat": "cc,benchmark",
+            "dur": 80320,
+            "name": "ProxyMain::BeginMainFrame",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 46585,
+            "tid": 4129,
+            "ts": 376714394,
+            "tts": 28158978
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599593,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 57,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 54,
+            "tid": 4129,
+            "ts": 376714503,
+            "tts": 28159082
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 147165,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "e",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1,
+                "sampleTraceId": 6881431429599592,
+                "scriptId": "72",
+                "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 4902,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 4899,
+            "tid": 4129,
+            "ts": 376714579,
+            "tts": 28159153
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 14,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 279,
+                "sampleTraceId": 6881431429599591,
+                "scriptId": "635",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 61,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 60,
+            "tid": 4129,
+            "ts": 376719502,
+            "tts": 28164071
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599590,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 20,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 19,
+            "tid": 4129,
+            "ts": 376719579,
+            "tts": 28164143
+          },
+          {
+            "args": {
+              "frameSeqId": 1979,
+              "layerTreeId": 3
+            },
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 68491,
+            "name": "Commit",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 34799,
+            "tid": 4129,
+            "ts": 376726222,
+            "tts": 28170763
+          },
+          {
+            "args": {
+              "source_frame_number": 108
+            },
+            "cat": "cc,benchmark",
+            "dur": 67652,
+            "name": "LayerTreeHost::DoUpdateLayers",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 33963,
+            "tid": 4129,
+            "ts": 376726225,
+            "tts": 28170766
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 63497,
+            "name": "GLES2::ReadPixels",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 29826,
+            "tid": 4129,
+            "ts": 376726954,
+            "tts": 28171490
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 63394,
+            "name": "ImplementationBase::WaitForCmd",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 29724,
+            "tid": 4129,
+            "ts": 376726962,
+            "tts": 28171497
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 63393,
+            "name": "CommandBufferHelper::Finish",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 29723,
+            "tid": 4129,
+            "ts": 376726963,
+            "tts": 28171498
+          },
+          {
+            "args": {
+              "end": 4607,
+              "start": 4607
+            },
+            "cat": "gpu",
+            "dur": 63355,
+            "name": "CommandBufferProxyImpl::WaitForGetOffset",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 29692,
+            "tid": 4129,
+            "ts": 376726998,
+            "tts": 28171528
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 108495,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 69697,
+          "tid": 4129,
+          "ts": 376823096,
+          "tts": 28233205
+        },
+        "fromRetainedBeforeStartMarkerMs": 652.827,
+        "allChildCount": 104,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "cc/trees/proxy_impl.cc",
+              "src_func": "ScheduledActionSendBeginMainFrame",
+              "src_line": 802
+            },
+            "cat": "toplevel",
+            "dur": 107631,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 68836,
+            "tid": 4129,
+            "ts": 376823097,
+            "tts": 28233205
+          },
+          {
+            "args": {
+              "begin_frame_id": 1984,
+              "main_frame_pipeline": {
+                "main_frame_id": 14571522626345783667,
+                "step": "BEGIN_MAIN_FRAME"
+              }
+            },
+            "cat": "cc,benchmark",
+            "dur": 107627,
+            "name": "ProxyMain::BeginMainFrame",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 68832,
+            "tid": 4129,
+            "ts": 376823099,
+            "tts": 28233207
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599512,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 53,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 49,
+            "tid": 4129,
+            "ts": 376823191,
+            "tts": 28233296
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 147165,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "e",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1,
+                "sampleTraceId": 6881431429599511,
+                "scriptId": "72",
+                "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 4266,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 4265,
+            "tid": 4129,
+            "ts": 376823264,
+            "tts": 28233362
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 14,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 279,
+                "sampleTraceId": 6881431429599510,
+                "scriptId": "635",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 54,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 52,
+            "tid": 4129,
+            "ts": 376827550,
+            "tts": 28237646
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599509,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 35,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 34,
+            "tid": 4129,
+            "ts": 376828270,
+            "tts": 28238361
+          },
+          {
+            "args": {
+              "frameSeqId": 1984,
+              "layerTreeId": 3
+            },
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 91293,
+            "name": "Commit",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 52544,
+            "tid": 4129,
+            "ts": 376839431,
+            "tts": 28249494
+          },
+          {
+            "args": {
+              "source_frame_number": 109
+            },
+            "cat": "cc,benchmark",
+            "dur": 91186,
+            "name": "LayerTreeHost::DoUpdateLayers",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 52441,
+            "tid": 4129,
+            "ts": 376839434,
+            "tts": 28249497
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 85624,
+            "name": "GLES2::ReadPixels",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 46878,
+            "tid": 4129,
+            "ts": 376839644,
+            "tts": 28249723
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 84821,
+            "name": "ImplementationBase::WaitForCmd",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 46096,
+            "tid": 4129,
+            "ts": 376839674,
+            "tts": 28249731
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 84818,
+            "name": "CommandBufferHelper::Finish",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 46095,
+            "tid": 4129,
+            "ts": 376839676,
+            "tts": 28249732
+          },
+          {
+            "args": {
+              "end": 4708,
+              "start": 4708
+            },
+            "cat": "gpu",
+            "dur": 84782,
+            "name": "CommandBufferProxyImpl::WaitForGetOffset",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 46065,
+            "tid": 4129,
+            "ts": 376839708,
+            "tts": 28249760
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 91523,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 60890,
+          "tid": 4129,
+          "ts": 376945974,
+          "tts": 28315675
+        },
+        "fromRetainedBeforeStartMarkerMs": 775.705,
+        "allChildCount": 122,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "cc/trees/proxy_impl.cc",
+              "src_func": "ScheduledActionSendBeginMainFrame",
+              "src_line": 802
+            },
+            "cat": "toplevel",
+            "dur": 91483,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 60853,
+            "tid": 4129,
+            "ts": 376945975,
+            "tts": 28315675
+          },
+          {
+            "args": {
+              "begin_frame_id": 1992,
+              "main_frame_pipeline": {
+                "main_frame_id": 14571522626345783586,
+                "step": "BEGIN_MAIN_FRAME"
+              }
+            },
+            "cat": "cc,benchmark",
+            "dur": 91478,
+            "name": "ProxyMain::BeginMainFrame",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 60849,
+            "tid": 4129,
+            "ts": 376945978,
+            "tts": 28315678
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599538,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 49,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 46,
+            "tid": 4129,
+            "ts": 376946656,
+            "tts": 28316350
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 147165,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "e",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1,
+                "sampleTraceId": 6881431429599537,
+                "scriptId": "72",
+                "url": "http://127.0.0.1:36721/game/vendor/phaser-4.2.1.min.js"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 7245,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 6148,
+            "tid": 4129,
+            "ts": 376946728,
+            "tts": 28316416
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 14,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 279,
+                "sampleTraceId": 6881431429599436,
+                "scriptId": "635",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scene-motion.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 1773,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 1529,
+            "tid": 4129,
+            "ts": 376954038,
+            "tts": 28322628
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "546488756ACAAA69B1C19E6429E4D9AF",
+                "functionName": "frame",
+                "isolate": "13377590218590354790",
+                "lineNumber": 187,
+                "sampleTraceId": 6881431429599434,
+                "scriptId": "29",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 23,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 21,
+            "tid": 4129,
+            "ts": 376955828,
+            "tts": 28324172
+          },
+          {
+            "args": {
+              "frameSeqId": 1992,
+              "layerTreeId": 3
+            },
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 77264,
+            "name": "Commit",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 48016,
+            "tid": 4129,
+            "ts": 376960191,
+            "tts": 28328510
+          },
+          {
+            "args": {
+              "source_frame_number": 110
+            },
+            "cat": "cc,benchmark",
+            "dur": 77173,
+            "name": "LayerTreeHost::DoUpdateLayers",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 47929,
+            "tid": 4129,
+            "ts": 376960196,
+            "tts": 28328515
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 72146,
+            "name": "GLES2::ReadPixels",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42940,
+            "tid": 4129,
+            "ts": 376960538,
+            "tts": 28328852
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 72037,
+            "name": "ImplementationBase::WaitForCmd",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42830,
+            "tid": 4129,
+            "ts": 376960550,
+            "tts": 28328865
+          },
+          {
+            "args": {},
+            "cat": "gpu",
+            "dur": 72033,
+            "name": "CommandBufferHelper::Finish",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42829,
+            "tid": 4129,
+            "ts": 376960553,
+            "tts": 28328866
+          },
+          {
+            "args": {
+              "end": 4809,
+              "start": 4809
+            },
+            "cat": "gpu",
+            "dur": 71196,
+            "name": "CommandBufferProxyImpl::WaitForGetOffset",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42786,
+            "tid": 4129,
+            "ts": 376961340,
+            "tts": 28328906
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 101334,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 101110,
+          "tid": 4129,
+          "ts": 377037555,
+          "tts": 28376620
+        },
+        "fromRetainedBeforeStartMarkerMs": 867.286,
+        "allChildCount": 199,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "third_party/blink/renderer/platform/widget/input/main_thread_event_queue.cc",
+              "src_func": "PostTaskToMainThread",
+              "src_line": 763
+            },
+            "cat": "toplevel",
+            "dur": 100410,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 100188,
+            "tid": 4129,
+            "ts": 377037556,
+            "tts": 28376621
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 1,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 271,
+                "sampleTraceId": 6881431429599480,
+                "scriptId": "443",
+                "url": "http://127.0.0.1:36721/game/ui/demo-input.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 3574,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 3573,
+            "tid": 4129,
+            "ts": 377040639,
+            "tts": 28379694
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 20,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "touchLatency",
+                "isolate": "13377590218590354790",
+                "lineNumber": 3238,
+                "sampleTraceId": 6881431429599479,
+                "scriptId": "73",
+                "url": "http://127.0.0.1:36721/game/app.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 55,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 55,
+            "tid": 4129,
+            "ts": 377044239,
+            "tts": 28383291
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599478,
+                "scriptId": "662",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 878,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 878,
+            "tid": 4129,
+            "ts": 377044339,
+            "tts": 28383388
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599477,
+                "scriptId": "665",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 1101,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 1100,
+            "tid": 4129,
+            "ts": 377045228,
+            "tts": 28384276
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599472,
+                "scriptId": "662",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 7171,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 7160,
+            "tid": 4129,
+            "ts": 377047998,
+            "tts": 28387037
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599373,
+                "scriptId": "665",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 523,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 522,
+            "tid": 4129,
+            "ts": 377055198,
+            "tts": 28394225
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 1,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 95,
+                "sampleTraceId": 6881431429599372,
+                "scriptId": "182",
+                "url": "http://127.0.0.1:36721/game/ui/input.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 191,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 191,
+            "tid": 4129,
+            "ts": 377055730,
+            "tts": 28394754
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 1,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 178,
+                "sampleTraceId": 6881431429599371,
+                "scriptId": "443",
+                "url": "http://127.0.0.1:36721/game/ui/demo-input.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 22,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 21,
+            "tid": 4129,
+            "ts": 377055927,
+            "tts": 28394950
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 118,
+                "sampleTraceId": 6881431429599370,
+                "scriptId": "202",
+                "url": "http://127.0.0.1:36721/game/ui/controller-confirm-guard.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 1819,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 1819,
+            "tid": 4129,
+            "ts": 377055956,
+            "tts": 28394976
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 424,
+                "sampleTraceId": 6881431429599369,
+                "scriptId": "206",
+                "url": "http://127.0.0.1:36721/game/ui/controller-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 2943,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 2943,
+            "tid": 4129,
+            "ts": 377057787,
+            "tts": 28396806
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429599367,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 479,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 479,
+            "tid": 4129,
+            "ts": 377060748,
+            "tts": 28399765
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 29,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "restoreAudioOnGesture",
+                "isolate": "13377590218590354790",
+                "lineNumber": 12887,
+                "sampleTraceId": 6881431429599366,
+                "scriptId": "73",
+                "url": "http://127.0.0.1:36721/game/app.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 402,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 402,
+            "tid": 4129,
+            "ts": 377061238,
+            "tts": 28400253
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 17,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 1065,
+                "sampleTraceId": 6881431429599365,
+                "scriptId": "188",
+                "url": "http://127.0.0.1:36721/game/ui/demo-host.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 10,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 9,
+            "tid": 4129,
+            "ts": 377061645,
+            "tts": 28400659
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 34,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "startRememberedMenuMusic",
+                "isolate": "13377590218590354790",
+                "lineNumber": 2451,
+                "sampleTraceId": 6881431429599364,
+                "scriptId": "73",
+                "url": "http://127.0.0.1:36721/game/app.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 76,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 75,
+            "tid": 4129,
+            "ts": 377061662,
+            "tts": 28400674
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "onPointer",
+                "isolate": "13377590218590354790",
+                "lineNumber": 360,
+                "sampleTraceId": 6881431429599363,
+                "scriptId": "236",
+                "url": "http://127.0.0.1:36721/game/ui/published-audio.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 9,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 9,
+            "tid": 4129,
+            "ts": 377061744,
+            "tts": 28400754
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 20,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "touchLatency",
+                "isolate": "13377590218590354790",
+                "lineNumber": 3238,
+                "sampleTraceId": 6881431429599362,
+                "scriptId": "73",
+                "url": "http://127.0.0.1:36721/game/app.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 13,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 12,
+            "tid": 4129,
+            "ts": 377061757,
+            "tts": 28400766
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599361,
+                "scriptId": "662",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 20,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 20,
+            "tid": 4129,
+            "ts": 377061796,
+            "tts": 28400801
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599360,
+                "scriptId": "665",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 738,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 736,
+            "tid": 4129,
+            "ts": 377061821,
+            "tts": 28400826
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 13,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 133,
+                "sampleTraceId": 6881431429599391,
+                "scriptId": "202",
+                "url": "http://127.0.0.1:36721/game/ui/controller-confirm-guard.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 287,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 286,
+            "tid": 4129,
+            "ts": 377062563,
+            "tts": 28401565
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599389,
+                "scriptId": "662",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 20,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 20,
+            "tid": 4129,
+            "ts": 377064912,
+            "tts": 28403903
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599388,
+                "scriptId": "665",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 4,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 4,
+            "tid": 4129,
+            "ts": 377064939,
+            "tts": 28403928
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "releasePointer",
+                "isolate": "13377590218590354790",
+                "lineNumber": 102,
+                "sampleTraceId": 6881431429599387,
+                "scriptId": "182",
+                "url": "http://127.0.0.1:36721/game/ui/input.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 39,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 39,
+            "tid": 4129,
+            "ts": 377064948,
+            "tts": 28403936
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 15,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "end",
+                "isolate": "13377590218590354790",
+                "lineNumber": 100,
+                "sampleTraceId": 6881431429599386,
+                "scriptId": "426",
+                "url": "http://127.0.0.1:36721/game/ui/touch-steering.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 16,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 16,
+            "tid": 4129,
+            "ts": 377065652,
+            "tts": 28404639
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 15,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "end",
+                "isolate": "13377590218590354790",
+                "lineNumber": 100,
+                "sampleTraceId": 6881431429599385,
+                "scriptId": "426",
+                "url": "http://127.0.0.1:36721/game/ui/touch-steering.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 3,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 2,
+            "tid": 4129,
+            "ts": 377065671,
+            "tts": 28404657
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 1,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 304,
+                "sampleTraceId": 6881431429599384,
+                "scriptId": "443",
+                "url": "http://127.0.0.1:36721/game/ui/demo-input.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 42,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 42,
+            "tid": 4129,
+            "ts": 377065678,
+            "tts": 28404662
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 20,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429599383,
+                "scriptId": "202",
+                "url": "http://127.0.0.1:36721/game/ui/controller-confirm-guard.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 549,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 548,
+            "tid": 4129,
+            "ts": 377065724,
+            "tts": 28404707
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599382,
+                "scriptId": "662",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 17,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 16,
+            "tid": 4129,
+            "ts": 377066291,
+            "tts": 28405271
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599381,
+                "scriptId": "665",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 4,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 3,
+            "tid": 4129,
+            "ts": 377066555,
+            "tts": 28405533
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 13,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 133,
+                "sampleTraceId": 6881431429599380,
+                "scriptId": "202",
+                "url": "http://127.0.0.1:36721/game/ui/controller-confirm-guard.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 107,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 107,
+            "tid": 4129,
+            "ts": 377066564,
+            "tts": 28405540
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599379,
+                "scriptId": "662",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 4,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 4,
+            "tid": 4129,
+            "ts": 377066685,
+            "tts": 28405658
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 22,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "listener",
+                "isolate": "13377590218590354790",
+                "lineNumber": 7895,
+                "sampleTraceId": 6881431429599378,
+                "scriptId": "665",
+                "url": ""
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 2,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 2,
+            "tid": 4129,
+            "ts": 377066692,
+            "tts": 28405664
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 1,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 336,
+                "sampleTraceId": 6881431429599377,
+                "scriptId": "443",
+                "url": "http://127.0.0.1:36721/game/ui/demo-input.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 20,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 20,
+            "tid": 4129,
+            "ts": 377066698,
+            "tts": 28405668
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 16,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 139,
+                "sampleTraceId": 6881431429599376,
+                "scriptId": "202",
+                "url": "http://127.0.0.1:36721/game/ui/controller-confirm-guard.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 812,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 811,
+            "tid": 4129,
+            "ts": 377066721,
+            "tts": 28405690
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "onOtherAction",
+                "isolate": "13377590218590354790",
+                "lineNumber": 435,
+                "sampleTraceId": 6881431429599403,
+                "scriptId": "435",
+                "url": "http://127.0.0.1:36721/game/ui/optional-practice-panel.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 15,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 15,
+            "tid": 4129,
+            "ts": 377067541,
+            "tts": 28406508
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "onOtherAction",
+                "isolate": "13377590218590354790",
+                "lineNumber": 435,
+                "sampleTraceId": 6881431429599402,
+                "scriptId": "435",
+                "url": "http://127.0.0.1:36721/game/ui/optional-practice-panel.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 2,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 2,
+            "tid": 4129,
+            "ts": 377067559,
+            "tts": 28406525
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 21,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "leaveFeatured",
+                "isolate": "13377590218590354790",
+                "lineNumber": 579,
+                "sampleTraceId": 6881431429599401,
+                "scriptId": "187",
+                "url": "http://127.0.0.1:36721/game/ui/game-shell.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 29,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 28,
+            "tid": 4129,
+            "ts": 377067566,
+            "tts": 28406531
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 44,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "featured.onclick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 661,
+                "sampleTraceId": 6881431429599400,
+                "scriptId": "187",
+                "url": "http://127.0.0.1:36721/game/ui/game-shell.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 8975,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 8974,
+            "tid": 4129,
+            "ts": 377067602,
+            "tts": 28406565
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429599399,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 18,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 17,
+            "tid": 4129,
+            "ts": 377076603,
+            "tts": 28415562
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 16,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "update",
+                "isolate": "13377590218590354790",
+                "lineNumber": 157,
+                "sampleTraceId": 6881431429599398,
+                "scriptId": "595",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scenes.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 1058,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 1057,
+            "tid": 4129,
+            "ts": 377076626,
+            "tts": 28415582
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 16,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "update",
+                "isolate": "13377590218590354790",
+                "lineNumber": 157,
+                "sampleTraceId": 6881431429599397,
+                "scriptId": "595",
+                "url": "http://127.0.0.1:36721/game/ui/menu-scenes.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 34,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 34,
+            "tid": 4129,
+            "ts": 377077689,
+            "tts": 28416642
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429599395,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 17,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 40,
+            "tid": 4129,
+            "ts": 377080761,
+            "tts": 28419712
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "onClick",
+                "isolate": "13377590218590354790",
+                "lineNumber": 368,
+                "sampleTraceId": 6881431429599394,
+                "scriptId": "236",
+                "url": "http://127.0.0.1:36721/game/ui/published-audio.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 2031,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 1969,
+            "tid": 4129,
+            "ts": 377080835,
+            "tts": 28419784
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 17,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "click",
+                "isolate": "13377590218590354790",
+                "lineNumber": 30,
+                "sampleTraceId": 6881431429599393,
+                "scriptId": "292",
+                "url": "http://127.0.0.1:36721/game/ui/offline-tool-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 96,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 95,
+            "tid": 4129,
+            "ts": 377082880,
+            "tts": 28421766
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 17,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "click",
+                "isolate": "13377590218590354790",
+                "lineNumber": 30,
+                "sampleTraceId": 6881431429599392,
+                "scriptId": "292",
+                "url": "http://127.0.0.1:36721/game/ui/offline-tool-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 4,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 3,
+            "tid": 4129,
+            "ts": 377082980,
+            "tts": 28421864
+          },
+          {
+            "args": {
+              "beginData": {
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198"
+              },
+              "elementCount": 234
+            },
+            "cat": "blink,devtools.timeline",
+            "dur": 51011,
+            "name": "UpdateLayoutTree",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 50989,
+            "tid": 4129,
+            "ts": 377083866,
+            "tts": 28422747
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 193467,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 195302,
+          "tid": 4129,
+          "ts": 377434734,
+          "tts": 28766602
+        },
+        "fromRetainedBeforeStartMarkerMs": 1264.465,
+        "allChildCount": 22,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "mojo/public/cpp/system/simple_watcher.cc",
+              "src_func": "Notify",
+              "src_line": 103
+            },
+            "cat": "toplevel",
+            "dur": 117327,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 119165,
+            "tid": 4129,
+            "ts": 377434735,
+            "tts": 28766602
+          },
+          {
+            "args": {
+              "chrome_mojo_event_info": {
+                "watcher_notify_interface_tag": "blink.mojom.BlobReaderClient"
+              }
+            },
+            "cat": "toplevel",
+            "dur": 117325,
+            "name": "SimpleWatcher::OnHandleReady",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 119163,
+            "tid": 4129,
+            "ts": 377434736,
+            "tts": 28766603
+          },
+          {
+            "args": {
+              "chrome_mojo_event_info": {
+                "data_num_bytes": 80,
+                "ipc_hash": 1710421507,
+                "mojo_interface_method": {
+                  "native_symbol": {
+                    "mapping_id": 2,
+                    "rel_pc": 118356384
+                  }
+                },
+                "mojo_interface_tag": "blink.mojom.BlobReaderClient",
+                "payload_size": 24
+              }
+            },
+            "cat": "toplevel,mojom",
+            "dur": 117316,
+            "name": "Receive mojo message",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 119154,
+            "tid": 4129,
+            "ts": 377434739,
+            "tts": 28766606
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 23,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "reader.onload",
+                "isolate": "13377590218590354790",
+                "lineNumber": 24,
+                "sampleTraceId": 6881431429600047,
+                "scriptId": "350",
+                "url": "http://127.0.0.1:36721/game/content-design/assets.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 1216,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 1214,
+            "tid": 4129,
+            "ts": 377457838,
+            "tts": 28789542
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429600046,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 27,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 25,
+            "tid": 4129,
+            "ts": 377462284,
+            "tts": 28793984
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429600045,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 910,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 909,
+            "tid": 4129,
+            "ts": 377462319,
+            "tts": 28794017
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 758934,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 758125,
+          "tid": 4129,
+          "ts": 377833994,
+          "tts": 29154562
+        },
+        "fromRetainedBeforeStartMarkerMs": 1663.725,
+        "allChildCount": 221,
+        "selectedChildren": [
+          {
+            "args": {},
+            "cat": "toplevel",
+            "dur": 757218,
+            "name": "BlinkScheduler_PerformMicrotaskCheckpoint",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 756417,
+            "tid": 4129,
+            "ts": 377835018,
+            "tts": 29155578
+          },
+          {
+            "args": {
+              "type": "allocation failure",
+              "usedHeapSizeAfter": 39195860,
+              "usedHeapSizeBefore": 71880104
+            },
+            "cat": "devtools.timeline,v8",
+            "dur": 19181,
+            "name": "MinorGC",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 19135,
+            "tid": 4129,
+            "ts": 377865359,
+            "tts": 29185911
+          },
+          {
+            "args": {
+              "type": "allocation failure",
+              "usedHeapSizeAfter": 39751156,
+              "usedHeapSizeBefore": 69625584
+            },
+            "cat": "devtools.timeline,v8",
+            "dur": 17194,
+            "name": "MinorGC",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 17960,
+            "tid": 4129,
+            "ts": 377993946,
+            "tts": 29314448
+          },
+          {
+            "args": {
+              "type": "allocation failure",
+              "usedHeapSizeAfter": 40169152,
+              "usedHeapSizeBefore": 72647136
+            },
+            "cat": "devtools.timeline,v8",
+            "dur": 5846,
+            "name": "MinorGC",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 5794,
+            "tid": 4129,
+            "ts": 378142062,
+            "tts": 29463313
+          },
+          {
+            "args": {
+              "type": "allocation failure",
+              "usedHeapSizeAfter": 40641620,
+              "usedHeapSizeBefore": 73234804
+            },
+            "cat": "devtools.timeline,v8",
+            "dur": 5412,
+            "name": "MinorGC",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 5344,
+            "tid": 4129,
+            "ts": 378272836,
+            "tts": 29593905
+          },
+          {
+            "args": {
+              "type": "allocation failure",
+              "usedHeapSizeAfter": 41276900,
+              "usedHeapSizeBefore": 73792912
+            },
+            "cat": "devtools.timeline,v8",
+            "dur": 6331,
+            "name": "MinorGC",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 6210,
+            "tid": 4129,
+            "ts": 378396543,
+            "tts": 29717411
+          },
+          {
+            "args": {
+              "type": "allocation failure",
+              "usedHeapSizeAfter": 41927676,
+              "usedHeapSizeBefore": 74304292
+            },
+            "cat": "devtools.timeline,v8",
+            "dur": 5868,
+            "name": "MinorGC",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 5808,
+            "tid": 4129,
+            "ts": 378533873,
+            "tts": 29853704
+          },
+          {
+            "args": {},
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 21,
+            "name": "DoDigest",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 19,
+            "tid": 4129,
+            "ts": 378578436,
+            "tts": 29898206
+          },
+          {
+            "args": {},
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 6,
+            "name": "DoDigest",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 4,
+            "tid": 4129,
+            "ts": 378583142,
+            "tts": 29902909
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429600671,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 24,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 24,
+            "tid": 4129,
+            "ts": 378592182,
+            "tts": 29911944
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429600670,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 11,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 10,
+            "tid": 4129,
+            "ts": 378592219,
+            "tts": 29911980
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 220911,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 220716,
+          "tid": 4129,
+          "ts": 378700567,
+          "tts": 30018938
+        },
+        "fromRetainedBeforeStartMarkerMs": 2530.298,
+        "allChildCount": 20,
+        "selectedChildren": [
+          {
+            "args": {},
+            "cat": "toplevel",
+            "dur": 202638,
+            "name": "BlinkScheduler_PerformMicrotaskCheckpoint",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 202587,
+            "tid": 4129,
+            "ts": 378718702,
+            "tts": 30036929
+          },
+          {
+            "args": {},
+            "cat": "disabled-by-default-devtools.timeline",
+            "dur": 2314,
+            "name": "DoDigest",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 2312,
+            "tid": 4129,
+            "ts": 378729145,
+            "tts": 30047372
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429600534,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 49,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 48,
+            "tid": 4129,
+            "ts": 378732585,
+            "tts": 30050809
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429600533,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 15,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 15,
+            "tid": 4129,
+            "ts": 378732653,
+            "tts": 30050874
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429600565,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 853,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 853,
+            "tid": 4129,
+            "ts": 378920448,
+            "tts": 30238627
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429600564,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 14,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 13,
+            "tid": 4129,
+            "ts": 378921319,
+            "tts": 30239497
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 291051,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 292288,
+          "tid": 4129,
+          "ts": 379833755,
+          "tts": 31091691
+        },
+        "fromRetainedBeforeStartMarkerMs": 3663.486,
+        "allChildCount": 367,
+        "selectedChildren": [
+          {
+            "args": {},
+            "cat": "toplevel",
+            "dur": 290304,
+            "name": "BlinkScheduler_PerformMicrotaskCheckpoint",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 291545,
+            "tid": 4129,
+            "ts": 379833775,
+            "tts": 31091707
+          },
+          {
+            "args": {
+              "type": "allocation failure",
+              "usedHeapSizeAfter": 46969372,
+              "usedHeapSizeBefore": 77581920
+            },
+            "cat": "devtools.timeline,v8",
+            "dur": 27347,
+            "name": "MinorGC",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 29094,
+            "tid": 4129,
+            "ts": 379980809,
+            "tts": 31238736
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429601338,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 815,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 813,
+            "tid": 4129,
+            "ts": 380120153,
+            "tts": 31379784
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429601337,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 585,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 585,
+            "tid": 4129,
+            "ts": 380120984,
+            "tts": 31380612
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429601336,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 12,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 12,
+            "tid": 4129,
+            "ts": 380124027,
+            "tts": 31383201
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      },
+      {
+        "task": {
+          "args": {},
+          "cat": "disabled-by-default-devtools.timeline",
+          "dur": 532597,
+          "name": "RunTask",
+          "ph": "X",
+          "pid": 4129,
+          "tdur": 535178,
+          "tid": 4129,
+          "ts": 380495809,
+          "tts": 31745975
+        },
+        "fromRetainedBeforeStartMarkerMs": 4325.54,
+        "allChildCount": 327,
+        "selectedChildren": [
+          {
+            "args": {
+              "src_file": "mojo/public/cpp/bindings/lib/multiplex_router.cc",
+              "src_func": "MaybePostToProcessTasks",
+              "src_line": 1242
+            },
+            "cat": "toplevel",
+            "dur": 531895,
+            "name": "ThreadControllerImpl::RunTask",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 534479,
+            "tid": 4129,
+            "ts": 380495810,
+            "tts": 31745975
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 15,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tx.oncomplete",
+                "isolate": "13377590218590354790",
+                "lineNumber": 436,
+                "sampleTraceId": 6881431429601849,
+                "scriptId": "243",
+                "url": "http://127.0.0.1:36721/game/managed-media-store.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 975,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 974,
+            "tid": 4129,
+            "ts": 380495832,
+            "tts": 31745997
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429601848,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 19,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 17,
+            "tid": 4129,
+            "ts": 380500478,
+            "tts": 31750641
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429601847,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 15,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 15,
+            "tid": 4129,
+            "ts": 380500503,
+            "tts": 31750663
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429601846,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 48,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 17,
+            "tid": 4129,
+            "ts": 380503354,
+            "tts": 31756541
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429601845,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 9,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 8,
+            "tid": 4129,
+            "ts": 380503408,
+            "tts": 31756564
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429601840,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 22,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 21,
+            "tid": 4129,
+            "ts": 380509640,
+            "tts": 31762794
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429602767,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 7,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 7,
+            "tid": 4129,
+            "ts": 380509669,
+            "tts": 31762821
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429602766,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 15,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 14,
+            "tid": 4129,
+            "ts": 380510511,
+            "tts": 31763662
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429602765,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 9,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 8,
+            "tid": 4129,
+            "ts": 380510532,
+            "tts": 31763681
+          },
+          {
+            "args": {
+              "chrome_mojo_event_info": {
+                "data_num_bytes": 72,
+                "ipc_hash": 3006394297,
+                "mojo_interface_method": {
+                  "native_symbol": {
+                    "mapping_id": 2,
+                    "rel_pc": 118358976
+                  }
+                },
+                "mojo_interface_tag": "blink.mojom.IDBDatabaseCallbacks",
+                "payload_size": 16
+              }
+            },
+            "cat": "toplevel,mojom",
+            "dur": 151037,
+            "name": "Receive mojo message",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 150610,
+            "tid": 4129,
+            "ts": 380510573,
+            "tts": 31763719
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 15,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tx.oncomplete",
+                "isolate": "13377590218590354790",
+                "lineNumber": 436,
+                "sampleTraceId": 6881431429602764,
+                "scriptId": "243",
+                "url": "http://127.0.0.1:36721/game/managed-media-store.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 8,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 8,
+            "tid": 4129,
+            "ts": 380511333,
+            "tts": 31764479
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429602768,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 986,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 985,
+            "tid": 4129,
+            "ts": 380657754,
+            "tts": 31910846
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429602799,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 707,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 707,
+            "tid": 4129,
+            "ts": 380658770,
+            "tts": 31911860
+          },
+          {
+            "args": {
+              "chrome_mojo_event_info": {
+                "data_num_bytes": 72,
+                "ipc_hash": 3006394297,
+                "mojo_interface_method": {
+                  "native_symbol": {
+                    "mapping_id": 2,
+                    "rel_pc": 118358976
+                  }
+                },
+                "mojo_interface_tag": "blink.mojom.IDBDatabaseCallbacks",
+                "payload_size": 16
+              }
+            },
+            "cat": "toplevel,mojom",
+            "dur": 366067,
+            "name": "Receive mojo message",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 366100,
+            "tid": 4129,
+            "ts": 380661622,
+            "tts": 31914340
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 15,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "tx.oncomplete",
+                "isolate": "13377590218590354790",
+                "lineNumber": 436,
+                "sampleTraceId": 6881431429602798,
+                "scriptId": "243",
+                "url": "http://127.0.0.1:36721/game/managed-media-store.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 13,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 13,
+            "tid": 4129,
+            "ts": 380661639,
+            "tts": 31914356
+          },
+          {
+            "args": {
+              "type": "allocation failure",
+              "usedHeapSizeAfter": 55066224,
+              "usedHeapSizeBefore": 77258340
+            },
+            "cat": "devtools.timeline,v8",
+            "dur": 46045,
+            "name": "MinorGC",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 45933,
+            "tid": 4129,
+            "ts": 380879887,
+            "tts": 32132420
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429602716,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 30,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 29,
+            "tid": 4129,
+            "ts": 381017670,
+            "tts": 32270427
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429602715,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 12,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 11,
+            "tid": 4129,
+            "ts": 381017715,
+            "tts": 32270470
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 31,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "",
+                "isolate": "13377590218590354790",
+                "lineNumber": 125,
+                "sampleTraceId": 6881431429602713,
+                "scriptId": "484",
+                "url": "http://127.0.0.1:36721/game/ui/menu-appearance.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 715,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 713,
+            "tid": 4129,
+            "ts": 381025572,
+            "tts": 32278326
+          },
+          {
+            "args": {
+              "data": {
+                "columnNumber": 19,
+                "frame": "BF348988AFAB0DE61E172D5B11E9A198",
+                "functionName": "records",
+                "isolate": "13377590218590354790",
+                "lineNumber": 34,
+                "sampleTraceId": 6881431429602712,
+                "scriptId": "197",
+                "url": "http://127.0.0.1:36721/game/ui/modal-navigation.mjs"
+              }
+            },
+            "cat": "devtools.timeline",
+            "dur": 19,
+            "name": "FunctionCall",
+            "ph": "X",
+            "pid": 4129,
+            "tdur": 19,
+            "tid": 4129,
+            "ts": 381026298,
+            "tts": 32279049
+          }
+        ],
+        "selection": "All contained events with duration >=50ms, and every FunctionCall/EvaluateScript/DoDigest/MinorGC event. Containment is timestamp-based, not a reconstructed complete stack."
+      }
+    ]
+  },
+  "reportIdentity": {
+    "sourceRevision": "9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+    "scenario": "original-art-opening-warm-first30-border-v3",
+    "scenarioStatus": "fail",
+    "performanceGateStatus": "excluded-browser-frame-tracing",
+    "environment": {
+      "engine": "chromium",
+      "contextMode": "ephemeral",
+      "cpuThrottle": 4.44,
+      "headless": true,
+      "architecture": "x64",
+      "osRelease": "6.17.0-1022-azure",
+      "initialLoad": [
+        1.96,
+        0.9,
+        0.35
+      ],
+      "requestedDisplay": {
+        "viewport": {
+          "width": 1280,
+          "height": 800
+        },
+        "deviceScaleFactor": 1,
+        "isMobile": false,
+        "hasTouch": false
+      },
+      "inputMethod": "public keyboard and UI controls; no touch gestures",
+      "url": "http://127.0.0.1:36721/game/?journey=opening&performance=1",
+      "localTransport": null,
+      "browserVersion": "151.0.7922.34",
+      "documentCacheControl": "no-cache",
+      "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36",
+      "initialDisplay": {
+        "width": 1280,
+        "height": 800,
+        "devicePixelRatio": 1,
+        "maxTouchPoints": 0
+      },
+      "finalLoad": [
+        2.8,
+        1.39,
+        0.57
+      ]
+    },
+    "frameTrace": {
+      "status": "incomplete",
+      "protocol": "warm-first3-v1",
+      "file": "/home/runner/work/_temp/solo-linux-9d5139-frame-failure/evidence/warm-browser-frame-trace-chromium-candidate/report.json.frame-trace.json",
+      "maximumMs": 30000,
+      "bufferKiB": 8192,
+      "maximumBytes": 67108864,
+      "chunkBytes": 65536,
+      "maximumReads": 1025,
+      "categories": [
+        "toplevel",
+        "devtools.timeline",
+        "disabled-by-default-devtools.timeline",
+        "disabled-by-default-devtools.timeline.frame",
+        "blink.user_timing",
+        "cc",
+        "viz",
+        "gpu"
+      ],
+      "anchors": {
+        "start": {
+          "name": "solo-frame-trace-before-public-start-v1",
+          "before": 14079.900000000023,
+          "after": 14080.100000000035,
+          "startTime": 14079.900000000023,
+          "timeOrigin": 1792338771603.6,
+          "phase": "briefing",
+          "cdpRequestElapsedMs": 113.91920000000391
+        },
+        "end": {
+          "name": "solo-frame-trace-after-safe-border-direction-3-v1",
+          "before": 23622.900000000023,
+          "after": 23623.20000000001,
+          "startTime": 23623.100000000035,
+          "timeOrigin": 1792338771603.6,
+          "phase": "running",
+          "cdpRequestElapsedMs": 41.7582739999998
+        }
+      },
+      "backend": {
+        "applicationRenderer": "unobserved",
+        "hardwareGraphics": "unobserved",
+        "reason": "The existing fixed warm observer emits no renderer or GL identity. No graphics context is created or queried for this diagnostic. CDP categories and the browser name do not establish hardware acceleration."
+      },
+      "launchScope": "Existing qualifier launch options are unchanged. The parent report retains browser version, requested headless/display settings, CPU and cadence; Playwright default flags and physical GPU backend are not independently enumerated.",
+      "scope": "Separate perturbed Chromium browser-frame diagnostic; all timing gates excluded. Browser trace categories do not prove physical display/GPU completion or OS scheduling causes.",
+      "traceRequestStartedMs": 33038.717471,
+      "startAcknowledged": true,
+      "preStartSetupMs": 149,
+      "maximumBufferUsage": 0.9853219985961914,
+      "stopReason": "safe-border-direction-3",
+      "stopRequestedElapsedMs": 9688.457744,
+      "completionObserved": true,
+      "dataLossOccurred": true,
+      "failure": "AssertionError [ERR_ASSERTION]: Trace data loss or missing loss flag\n\ntrue !== false\n\n    at file:///home/runner/work/revealline/revealline/tools/scripts/solo-qualification-cpu-profile.mjs:324:16",
+      "streamEOF": true,
+      "streamClosed": true,
+      "cdpDetached": true,
+      "bytes": 21173242,
+      "sha256": "d4e4f6d638d10763ff94c468c34d8356ab849e9a50c552f662cd8b9bc8abafaa"
+    },
+    "frameTraceFailure": "Complete bounded frame trace unavailable; partial evidence retained.",
+    "failureCleanup": {
+      "beforeStop": "paused",
+      "inducedPause": false,
+      "afterStop": "paused"
+    }
+  },
+  "sourceOwners": [
+    {
+      "path": "game/content-design/assets.mjs",
+      "original": {
+        "revision": "9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+        "bytes": 7600,
+        "gitBlob": "90e8760b31da083025d05a8375ddc76781c143cf",
+        "sha256": "44cbab6786a27ba954665e40e2354de9b55b9c6e6b10fe24f1f8c9ecf2472ad1"
+      },
+      "current": {
+        "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "bytes": 7600,
+        "gitBlob": "90e8760b31da083025d05a8375ddc76781c143cf",
+        "sha256": "44cbab6786a27ba954665e40e2354de9b55b9c6e6b10fe24f1f8c9ecf2472ad1"
+      },
+      "byteIdentical": true,
+      "excerpt": {
+        "firstLine": 1,
+        "lastLine": 39,
+        "source": "import { boundedJSON, exactKeys, required, stableId, dataIdentity } from '../data-json.mjs';\nimport { inspectImageBytes } from '../content.mjs';\nimport { freezeDesign } from './catalogs.mjs';\nimport { CONTENT_ARTWORK_LOAD_TIMEOUT_MS, CONTENT_ASSET_MAX_BYTES } from './limits.mjs';\n\nconst verified = new WeakMap();\nfunction imageDataURL(bytes, mime, signal) {\n  if (typeof FileReader === 'function')\n    return new Promise((resolve, reject) => {\n      const reader = new FileReader();\n      let settled = false;\n      const finish = (error) => {\n        if (settled) return;\n        settled = true;\n        signal.removeEventListener('abort', cancel);\n        reader.onload = reader.onerror = reader.onabort = null;\n        if (error) reject(error);\n        else resolve(reader.result);\n      };\n      const cancel = () => {\n        finish(new DOMException('Artwork preview cancelled.', 'AbortError'));\n        reader.abort();\n      };\n      reader.onload = () => finish();\n      reader.onerror = () => finish(reader.error ?? new Error('Artwork encoding failed.'));\n      reader.onabort = cancel;\n      signal.addEventListener('abort', cancel, { once: true });\n      if (signal.aborted) return cancel();\n      try {\n        reader.readAsDataURL(new Blob([bytes], { type: mime }));\n      } catch (error) {\n        finish(error);\n      }\n    });\n  let binary = '';\n  for (let start = 0; start < bytes.length; start += 16384)\n    binary += String.fromCharCode(...bytes.subarray(start, start + 16384));\n  return Promise.resolve(`data:${mime};base64,${btoa(binary)}`);\n}"
+      }
+    },
+    {
+      "path": "game/managed-media-store.mjs",
+      "original": {
+        "revision": "9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+        "bytes": 54466,
+        "gitBlob": "07ee39b8c47b689c1399d17005c00d120bc55772",
+        "sha256": "3a06f17393d0442001a3b4b48abba34c59b7af24a53085634252214f66c0150b"
+      },
+      "current": {
+        "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "bytes": 54466,
+        "gitBlob": "07ee39b8c47b689c1399d17005c00d120bc55772",
+        "sha256": "3a06f17393d0442001a3b4b48abba34c59b7af24a53085634252214f66c0150b"
+      },
+      "byteIdentical": true,
+      "excerpt": {
+        "firstLine": 400,
+        "lastLine": 440,
+        "source": "  async function transact(mode, body, signal) {\n    abort(signal);\n    const db = await open(signal);\n    abort(signal);\n    required(!closed, 'Managed media store is closed.');\n    return new Promise((resolve, reject) => {\n      const tx = createTransaction(db, storesInUse, mode),\n        stores = Object.fromEntries(storesInUse.map((name) => [name, tx.objectStore(name)]));\n      let result,\n        failure = null,\n        settled = false;\n      const finish = (error) => {\n        if (settled) return;\n        settled = true;\n        signal?.removeEventListener('abort', cancel);\n        if (error) reject(error);\n        else resolve(result);\n      };\n      const fail = (error) => {\n        failure = error;\n        try {\n          tx.abort();\n        } catch {\n          finish(error);\n        }\n      };\n      const cancel = () => {\n        const previous = failure;\n        failure = new DOMException('Media operation cancelled.', 'AbortError');\n        try {\n          tx.abort();\n        } catch (e) {\n          if (e?.name === 'InvalidStateError') failure = previous;\n          else finish(e);\n        }\n      };\n      tx.oncomplete = () => finish(failure);\n      tx.onerror = () => {\n        failure ??= tx.error;\n      };\n      tx.onabort = () => finish(failure || tx.error || new Error('Media transaction failed.'));"
+      }
+    },
+    {
+      "path": "game/ui/menu-appearance.mjs",
+      "original": {
+        "revision": "9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+        "bytes": 5298,
+        "gitBlob": "43048d67d14379882b6aeb74be903dacd3afcc1b",
+        "sha256": "c54f3548f81f58689bab5366a2015edc7faa34a013adeaa332abff6604ca97d7"
+      },
+      "current": {
+        "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "bytes": 5298,
+        "gitBlob": "43048d67d14379882b6aeb74be903dacd3afcc1b",
+        "sha256": "c54f3548f81f58689bab5366a2015edc7faa34a013adeaa332abff6604ca97d7"
+      },
+      "byteIdentical": true,
+      "excerpt": {
+        "firstLine": 120,
+        "lastLine": 141,
+        "source": "    // Player panels such as Music Library create their own dialog after boot.\n    // Observe dialog attachment/replacement only; never decorate general content,\n    // canvas, HUD, input descendants or separate authoring documents.\n    const Observer = doc.defaultView?.MutationObserver ?? globalThis.MutationObserver;\n    if (typeof Observer === 'function') {\n      observer = new Observer((records) => {\n        if (disposed) return;\n        for (const [root, decoration] of decorations) {\n          if (root.isConnected) continue;\n          decoration.remove();\n          decorations.delete(root);\n        }\n        for (const record of records) {\n          if (record.target?.tagName === 'DIALOG') decorate(record.target);\n          for (const node of record.addedNodes ?? []) {\n            if (node.tagName === 'DIALOG') decorate(node);\n            for (const dialog of node.querySelectorAll?.('dialog') ?? []) decorate(dialog);\n          }\n        }\n      });\n      observer.observe(body, { childList: true, subtree: true });\n    }"
+      }
+    },
+    {
+      "path": "game/ui/modal-navigation.mjs",
+      "original": {
+        "revision": "9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+        "bytes": 6871,
+        "gitBlob": "72b48273089e51979ba87369c1a95b78970cc8b5",
+        "sha256": "c92dd889157305078ed7a9a3e28e67262bf1195f591b3bfc0df44917c3a9bc8a"
+      },
+      "current": {
+        "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "bytes": 6871,
+        "gitBlob": "72b48273089e51979ba87369c1a95b78970cc8b5",
+        "sha256": "c92dd889157305078ed7a9a3e28e67262bf1195f591b3bfc0df44917c3a9bc8a"
+      },
+      "byteIdentical": true,
+      "excerpt": {
+        "firstLine": 34,
+        "lastLine": 64,
+        "source": "  const records = (changes) => {\n    if (destroyed) return;\n    for (const change of changes) {\n      if (change.type === 'childList') {\n        // An already-open dialog can arrive inside an inserted subtree without\n        // an observed open attribute change. Removal can also leave one of\n        // several pre-existing dialogs as the only unambiguous fallback.\n        if (\n          emptyKnown &&\n          (containsDialog(change.addedNodes) || containsDialog(change.removedNodes))\n        )\n          emptyKnown = false;\n        continue;\n      }\n      if (!isDialog(change.target) || change.attributeName !== 'open') continue;\n      emptyKnown = false;\n      // takeRecords preserves mutation order even if several dialogs opened in one task.\n      if (change.oldValue === null && isOpen(change.target)) {\n        opened(change.target, previousFocus, true);\n      }\n    }\n  };\n  const Observer = doc.defaultView?.MutationObserver ?? globalThis.MutationObserver;\n  const observer = typeof Observer === 'function' ? new Observer(records) : null;\n  observer?.observe(doc, {\n    subtree: true,\n    childList: true,\n    attributes: true,\n    attributeFilter: ['open'],\n    attributeOldValue: true,\n  });"
+      }
+    },
+    {
+      "path": "game/ui/game-shell.mjs",
+      "original": {
+        "revision": "9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+        "bytes": 32897,
+        "gitBlob": "6f27527b63bf33cac9ed84afd52cc197d0afa72f",
+        "sha256": "37c667a50de294c07a14031e095231475f5d794d3c595c62a5a8ca5ffc37cd63"
+      },
+      "current": {
+        "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "bytes": 32897,
+        "gitBlob": "6f27527b63bf33cac9ed84afd52cc197d0afa72f",
+        "sha256": "37c667a50de294c07a14031e095231475f5d794d3c595c62a5a8ca5ffc37cd63"
+      },
+      "byteIdentical": true,
+      "excerpt": {
+        "firstLine": 641,
+        "lastLine": 661,
+        "source": "  if (featured && onFeatured)\n    featured.onclick = async () => {\n      if (featured.disabled || destroyed) return;\n      const visit = homeVisit;\n      const labelNode = featured.querySelector('[data-field-kit-copy]') ?? featured;\n      const label = liveLabel(labelNode);\n      pause(true);\n      featured.disabled = true;\n      localizedText(labelNode, () => copy('title.preparing'));\n      try {\n        if ((await onFeatured()) && !destroyed && homeVisit === visit && topDialog() === home) {\n          openMissions();\n        }\n      } finally {\n        if (!destroyed) {\n          featured.disabled = false;\n          localizedText(labelNode, label);\n        }\n      }\n    };\n  if (featured && onTitleStart) featured.onclick = () => launchTitle(featured, onTitleStart);"
+      }
+    },
+    {
+      "path": "game/ui/menu-scene-motion.mjs",
+      "original": {
+        "revision": "9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+        "bytes": 15815,
+        "gitBlob": "b2bf928fcfcf707f039ae7a55bd3a6b6c35299b5",
+        "sha256": "fa69dd9446a61ee6ac1945d033172993038e057cb1361be64e1f7c96a5ab0c9b"
+      },
+      "current": {
+        "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "bytes": 15815,
+        "gitBlob": "b2bf928fcfcf707f039ae7a55bd3a6b6c35299b5",
+        "sha256": "fa69dd9446a61ee6ac1945d033172993038e057cb1361be64e1f7c96a5ab0c9b"
+      },
+      "byteIdentical": true,
+      "excerpt": {
+        "firstLine": 271,
+        "lastLine": 305,
+        "source": "  function queue() {\n    if (!regionData.count) {\n      stop();\n      return;\n    }\n    if (!disposed && wanted && ready && !lost && frame === null && win?.requestAnimationFrame)\n      frame = win.requestAnimationFrame(tick);\n  }\n  function tick(stamp) {\n    frame = null;\n    if (disposed || !wanted || !ready || lost) return;\n    if (source() !== current || image.complete === false) {\n      prepare();\n      return;\n    }\n    if (lastStamp === null) lastDraw = stamp;\n    else {\n      const delta = stamp - lastStamp;\n      // Suspended browsers never fast-forward the picture when callbacks return.\n      if (delta >= 0 && delta <= 250) {\n        seconds += delta / 1000;\n      }\n    }\n    lastStamp = stamp;\n    if (stamp - lastDraw >= FRAME_MS - 0.01) {\n      try {\n        draw();\n      } catch {\n        unavailable(current);\n        return;\n      }\n      lastDraw = stamp;\n    }\n    queue();\n  }"
+      }
+    }
+  ],
+  "findings": [
+    {
+      "priority": "positive diagnostic",
+      "finding": "The largest 758.934ms RunTask contains a757.218ms microtask checkpoint. Its retained source calls are only24/11 microsecond menu-appearance/modal-navigation observer tails. No retained sampled JS stack identifies the long microtask body."
+    },
+    {
+      "priority": "positive diagnostic",
+      "finding": "The532.597ms RunTask contains366.067/151.037ms IDBDatabaseCallbacks receive-message slices. managed-media-store.mjs:436 tx.oncomplete is present but at most975microseconds within that task. The transaction owner/caller is not established."
+    },
+    {
+      "priority": "source improvement candidate",
+      "finding": "The193.467ms RunTask contains117.316ms BlobReaderClient message processing and assets.mjs:24 reader.onload at1.216ms. That unchanged source uses FileReader.readAsDataURL atline30 and returns a verified dataUrl after byte/hash/header checks. This identifies a real remaining conversion path for caller/ownership review, not its contribution to the enclosing native duration."
+    },
+    {
+      "priority": "positive diagnostic",
+      "finding": "Eight80.411–125.891ms compositor RunTasks contain63.474–100.595ms GLES2::ReadPixels under LayerTreeHost::DoUpdateLayers/Commit. All eight precede the retained featured.onclick Start handler. No direct JS getImageData/readback caller is established; graphics backend/physical-device attribution is not independently qualified."
+    },
+    {
+      "priority": "positive diagnostic",
+      "finding": "The101.334ms Start input RunTask contains51.011ms UpdateLayoutTree; game-shell.mjs:661 featured.onclick lasts8.975ms. Adjacent layout work is not a complete JS call attribution."
+    }
+  ],
+  "limits": [
+    "Historical9d runtime, calibrated CPU stress and separately perturbed headless Chromium trace; not current native acceptance or physical-device evidence.",
+    "Trace reports dataLossOccurred=true and status=incomplete. Its end marker is absent from retained events. Presence is usable; absence, complete coverage, cadence and final qualification are not.",
+    "89 overlapping long slices are14 distinct RunTasks, not89 independent stalls. Nested durations must not be summed blindly.",
+    "Source callback position identifies executed code, not ownership of its enclosing native or microtask duration. No speculative cleanup/performance fix is justified solely by these labels.",
+    "Read-only bounded archive/log/source parsing inRAM; no game, fixture, functional tests, local files, browser launch or new native run. No source/ref/PR mutation."
+  ]
+}

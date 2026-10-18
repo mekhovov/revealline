@@ -1,0 +1,271 @@
+{
+  "format": "SoloHeldMenuSoundtrackAdmissionReviewV1",
+  "observedAt": "2026-10-18T22:32:34.102Z",
+  "main": {
+    "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "tree": "b1214330108fe62c8a89e45902be4f84c628ed99"
+  },
+  "sourceReviewOnly": true,
+  "noLocalWritesOrFunctionalExecution": true,
+  "branches": [
+    {
+      "name": "codex/solo-menu-preparation-split",
+      "head": "14c732a022c1ebd68e4487e744c4b6c0fd0fe422",
+      "tree": "7885a61974bc50b69cbcd050a5b61ce114524113",
+      "dependsOn": {
+        "pr": 1620,
+        "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+      },
+      "paths": [
+        {
+          "path": ".github/workflows/appearance-preview.yml",
+          "gitBlob": "d2653e30a169e8f384794b5a29f92a6eb35beeb7",
+          "bytes": 59855,
+          "sha256": "0b4947fd08d3413c91013ab3f5f442046968ea585822027c9dbe6bb562880a50"
+        },
+        {
+          "path": "game/app.mjs",
+          "gitBlob": "4eddf45a593edfccf9340f6c447b8c2c9c23c3c0",
+          "bytes": 622978,
+          "sha256": "122321814bbc98beefa08ec088cf0858a599656eabfb9087fb8a5238e01d7f7c"
+        },
+        {
+          "path": "game/mission-library/library.mjs",
+          "gitBlob": "d4efe4eefd5c520895b8d9bff48efc2892baf2d3",
+          "bytes": 18131,
+          "sha256": "6224787df85abba7a57b4d33707aa9bee0fa1565f90a0a7643a4593b5809a075"
+        },
+        {
+          "path": "game/test/helpers/optional-worlds-loader.mjs",
+          "gitBlob": "449c1e5e326dd18e0eea5954e33e42a239ba8edc",
+          "bytes": 1563,
+          "sha256": "9460e492d796c06e42e2035951f649c56cb48f36d699465729b04ed14d0e1f09"
+        },
+        {
+          "path": "game/test/mission-library-browser.test.mjs",
+          "gitBlob": "83b633e909c81d296c5e2f2e6b8ef79daced2584",
+          "bytes": 8460,
+          "sha256": "a6c81c555308ee176f2055ba55eec5b0dfdea6adb2b93af8709ab993bdf9230d"
+        },
+        {
+          "path": "game/test/mission-library.test.mjs",
+          "gitBlob": "6aca8c971f4126f0745b8502f731bbf68014cf7e",
+          "bytes": 19481,
+          "sha256": "8c79dcfbf96ff78b00bc604a18a2caf9b6df74d2e2a00f890135bcd420b637ef"
+        },
+        {
+          "path": "game/test/optional-chapters-scenarios.mjs",
+          "gitBlob": "df791ff7157dc852966ae6bd7a8a981b79d52f82",
+          "bytes": 34776,
+          "sha256": "550a3565465c839308090eb75bf574f1a8a03f6a780b99b0f8cd7ebec9338adb"
+        },
+        {
+          "path": "game/test/solo-lazy-library-host.test.mjs",
+          "gitBlob": "a83fd8aeb35f7d90d26836a08c7aec4b8d451e6e",
+          "bytes": 14432,
+          "sha256": "c2637ac2eaee2b9fb96f8c35559d13ad54343c1c432ae6cdaffb903be44f7dff"
+        },
+        {
+          "path": "game/test/solo-performance-host.test.mjs",
+          "gitBlob": "f35c553b991d69177bee159302044fd9a071b23f",
+          "bytes": 33279,
+          "sha256": "19ce54bbbf4d6f5d9fdc2181c40377d5fa9300383ed1a511f64f829c9b5af7fe"
+        },
+        {
+          "path": "game/ui/game-shell.mjs",
+          "gitBlob": "df6d48d3c6ea0fa250a8abe54a5c9c2b7abb7e34",
+          "bytes": 33998,
+          "sha256": "324258bfe0184cd406ce81f5008d8994fdcc0d4f7ddb1f6e3b9b0d4b93d709a5"
+        },
+        {
+          "path": "game/ui/mission-library-browser.mjs",
+          "gitBlob": "6a7ea93c31935fb0859e08b887e35a02ed85f92d",
+          "bytes": 50707,
+          "sha256": "d234500c22087cd869b798acf9ba9f98728035e280ef5c2ebba435197dfe75d5"
+        },
+        {
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+          "gitBlob": "2515f406c9d03243d80b625c70fbd836e6e29a69",
+          "bytes": 325653,
+          "sha256": "1b5af49d9d5a234d518e6b7d3c8baa154246ab552fc9007cff1013ac843fd784"
+        }
+      ],
+      "mainOverlap": [
+        "game/app.mjs"
+      ],
+      "mainAppAdditiveHunks": [
+        {
+          "header": "@@ -54,6 +54,7 @@ import {",
+          "unique": true,
+          "matches": 1
+        },
+        {
+          "header": "@@ -2894,6 +2895,50 @@ try {",
+          "unique": true,
+          "matches": 1
+        },
+        {
+          "header": "@@ -8364,6 +8409,11 @@ try {",
+          "unique": true,
+          "matches": 1
+        },
+        {
+          "header": "@@ -11017,6 +11067,7 @@ try {",
+          "unique": true,
+          "matches": 1
+        },
+        {
+          "header": "@@ -11301,7 +11352,7 @@ try {",
+          "unique": true,
+          "matches": 1
+        },
+        {
+          "header": "@@ -11850,6 +11901,7 @@ try {",
+          "unique": true,
+          "matches": 1
+        },
+        {
+          "header": "@@ -11947,6 +11999,7 @@ try {",
+          "unique": true,
+          "matches": 1
+        }
+      ],
+      "expectedAppAfterMainHunks": {
+        "bytes": 625291,
+        "gitBlob": "1e7119e73be898d5bf713cc18b34c1ed3537d27a",
+        "sha256": "0f288d5f956933805356435bb41806afc287cd72e81466319904fbe15d04ec65",
+        "scope": "Static unique-context composition only; not executed."
+      },
+      "changedTests": [
+        "game/test/mission-library-browser.test.mjs",
+        "game/test/mission-library.test.mjs",
+        "game/test/solo-lazy-library-host.test.mjs",
+        "game/test/solo-performance-host.test.mjs"
+      ]
+    },
+    {
+      "name": "codex/solo-lazy-soundtrack-authoring",
+      "head": "b461f41ed2d689c8d7059cc868f54dc3d74839ac",
+      "tree": "82fb2c348c74c54040f3d9082fc28dc325ef9035",
+      "dependsOn": {
+        "pr": 1619,
+        "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+      },
+      "paths": [
+        {
+          "path": ".github/workflows/appearance-preview.yml",
+          "gitBlob": "e6f522d036c74cbbc0e8fe4011ce6d659327d793",
+          "bytes": 59654,
+          "sha256": "30170f928aa21acb85a260b4ee20be80a270ce6c8f08e4a377fa9a9bb92a320e"
+        },
+        {
+          "path": "game/test/helpers/soundtrack-authoring-loader.mjs",
+          "gitBlob": "d4675908a823ad3c45defbdb364985f1b7de40bf",
+          "bytes": 1596,
+          "sha256": "5adfcaaaeb9dfebce562e838a3e2db053a11dd0af22284879c9d3d4e0ab8ec8b"
+        },
+        {
+          "path": "game/test/soundtrack-host.test.mjs",
+          "gitBlob": "2045b6f6babf476fa567bd6c5ab4b66261095b18",
+          "bytes": 61492,
+          "sha256": "be2dc8359a2b530df10b529dd0bd0a9ec0566a5687b3d3c0a70dda15460b24c4"
+        },
+        {
+          "path": "game/test/soundtrack-panel.test.mjs",
+          "gitBlob": "acdb6fa9c2b5d3ad3463e14bcb27a2dd45dc481a",
+          "bytes": 208100,
+          "sha256": "8091222276f493f374ad4fcfcfb969bb4c3d5d8c8e21f244f243739c302789df"
+        },
+        {
+          "path": "game/ui/soundtrack-authoring-view.mjs",
+          "gitBlob": "ffa796251fce11736a195232431607740883220b",
+          "bytes": 14219,
+          "sha256": "b33ec2c9c5bd6f27b9f38dfe7b8920acb31812ef01a7902f968a43d2d95f1ef0"
+        },
+        {
+          "path": "game/ui/soundtrack-panel.mjs",
+          "gitBlob": "1ee9a23035bf11ea89157589577a76a423a369b4",
+          "bytes": 150152,
+          "sha256": "bd0cc68c7caa90897062a50b4b0e3404c0b4a32f2fa95da2453550b51cf9c46b"
+        }
+      ],
+      "mainOverlap": [],
+      "changedTests": [
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/soundtrack-panel.test.mjs"
+      ]
+    }
+  ],
+  "composition": [
+    "Merge fresh main into each held branch without changing the currently ready predecessor heads. Verify exact branch/base identities again before mutation.",
+    "Keep explicit predecessor PR dependencies. New exact-head results must be collected; predecessor passes do not pass these added changes.",
+    "The two held branches only share appearance-preview.yml, with disjoint additive trigger entries. Preserve predecessor1620 additions, the Worlds loader entry and both authoring entries when combining.",
+    "No main source change since c293 touches the admitted canonical projection module set in refresh-fpv-play-shell.mjs. Menu flight-fullscreen.mjs already contains the reviewed constructor batching/current-ID projection atop1620. The soundtrack view is outside this generator input set.",
+    "The new optional imports are fixed local module strings; production build and offline inventory closure must still be verified on exact composed heads. No new bare import, worker or CSP exception is introduced."
+  ],
+  "testClosure": {
+    "selector": {
+      "path": "publishing/focused-tests.mjs",
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "lines": [
+        97,
+        124
+      ],
+      "behavior": "Every changed .test.mjs in game/test is directly admitted unless already selected or explicitly deferred. No relevant category has deferredChangedTestPatterns."
+    },
+    "mainAppearance": {
+      "gitBlob": "3eba59c40de952d8353ee0ac487cf2382b88abde",
+      "checkout": "Full checkout, exact PR head, no sparse checkout.",
+      "menuAdmission": [
+        "game/test/solo-lazy-library-host.test.mjs"
+      ],
+      "fullPreview": [
+        "game/test/solo-performance-host.test.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/soundtrack-panel.test.mjs"
+      ],
+      "newTriggerLines": [
+        "game/test/helpers/optional-worlds-loader.mjs",
+        "game/ui/soundtrack-authoring-view.mjs",
+        "game/test/helpers/soundtrack-authoring-loader.mjs"
+      ]
+    },
+    "menuSelectedCategories": [
+      "offline",
+      "publishing",
+      "company-editions"
+    ],
+    "soundtrackSelectedCategories": [
+      "publishing"
+    ],
+    "fallback": "Unknown runtime paths select npm run validate; this includes exact generated FPV shell projection check."
+  },
+  "requiredEvidence": [
+    "All exact-head Source checks including changed mission library/browser/host tests and soundtrack host/panel files.",
+    "Complete Appearance admission and full preview; neither isolated unit success nor older parent TAP replaces the new eleven soundtrack controls or the menu host cases.",
+    "Full validate including refresh-fpv-play-shell --check plus localization, lint/format and publication policy checks required by the actual exact-head plan.",
+    "Production/Company package builds and offline/CSP closure on the exact composed source; broad Industrial/shared Team/Couch/Versus regressions remain required by existing registered gates.",
+    "After source gates, retain draft/unmerged status through the P0 published Missions observation. Later public/native observations remain separate from source pass."
+  ],
+  "supportingSources": [
+    {
+      "path": "scripts/refresh-fpv-play-shell.mjs",
+      "gitBlob": "3c16fe0e7f450cde67af9d241875afdf28414d56",
+      "bytes": 10768,
+      "sha256": "b52dae963bb8894824f06ced5be9808edeb4038a66b6810d0091df223ee00d8b"
+    },
+    {
+      "path": "scripts/verify-industrial-features.mjs",
+      "gitBlob": "a2fe4c842ac247eeafe2eb804c68d870da5ad70c",
+      "bytes": 13328,
+      "sha256": "e0b818f468f9a7614ce82a7c98711e7db72eed00918d593732fc5e0b29e80b81"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "gitBlob": "099d15b351c504da7e4f1de641d0d5aeadb339a7",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    }
+  ],
+  "conclusion": "No source compatibility or test admission blocker found for opening guarded DRAFT dependency PRs after fresh main composition. This does not authorize merge or claim tests have run."
+}

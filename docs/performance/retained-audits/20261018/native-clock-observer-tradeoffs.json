@@ -1,0 +1,294 @@
+{
+  "format": "revealline-overhead-alternative-feasibility-review.v1",
+  "observedAt": "2026-10-18T22:26:47.288488+00:00",
+  "status": "Research-only held design notes; no implementation, protocol admission, test, browser execution or dispatch.",
+  "predecessorAudit": "03000de941ce4c8c95e12ae35187acf03ee92f61",
+  "primarySourceReads": [
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/inspector/thread_debugger_common_impl.cc",
+      "bytes": 43440,
+      "sha256": "8ebed039ad45630e4af2fd1b18dc6bedf4bd4408000bb137adfbb1deb2faed34",
+      "gitBlob": "e7a57b712b4765a639939e76c5a780b22610257c",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 1017,
+          "lastLine": 1047,
+          "content": "void ThreadDebuggerCommonImpl::consoleTime(v8::Isolate* isolate,\n                                           v8::Local<v8::String> label) {\n  TRACE_EVENT_BEGIN(\n      \"blink.console\",\n      perfetto::DynamicString(ToCoreString(isolate, label).Utf8()),\n      perfetto::NamedTrack(\"console.time\", GetTraceId(this, label)));\n}\n\nvoid ThreadDebuggerCommonImpl::consoleTimeEnd(v8::Isolate* isolate,\n                                              v8::Local<v8::String> label) {\n  TRACE_EVENT_END(\n      \"blink.console\",\n      perfetto::NamedTrack(\"console.time\", GetTraceId(this, label)));\n}\n\nvoid ThreadDebuggerCommonImpl::consoleTimeStamp(v8::Isolate* isolate,\n                                                v8::Local<v8::String> label) {\n  v8::LocalVector<v8::Value> empty_args(isolate);\n  consoleTimeStampWithArgs(isolate, label, empty_args);\n}\n\nvoid ThreadDebuggerCommonImpl::consoleTimeStampWithArgs(\n    v8::Isolate* isolate,\n    v8::Local<v8::String> label,\n    const v8::LocalVector<v8::Value>& args) {\n  DEVTOOLS_TIMELINE_TRACE_EVENT_INSTANT(\n      \"TimeStamp\", inspector_time_stamp_event::Data,\n      CurrentExecutionContext(isolate_), ToCoreString(isolate, label), args);\n  probe::ConsoleTimeStamp(isolate_, label);\n}\n"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/inspector/inspector_trace_events.h",
+      "bytes": 21402,
+      "sha256": "0092f87eb16666b307f3aec65b0ad9fc9ac238fee24a823e05f040a60da822a1",
+      "gitBlob": "e0c15c0058e86e83142fdb76b453ec0a29545023",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 145,
+          "lastLine": 168,
+          "content": "// event (e.g. \"MyEvent\"), function name for writing event metadata (usually\n// my_event::Data) and the parameters to pass to the function (except the first\n// perfetto::TracedValue param, which will be appended by this macro.\n#define DEVTOOLS_TIMELINE_TRACE_EVENT_INSTANT_WITH_CATEGORIES(      \\\n    categories, event_name, function_name, ...)                     \\\n  TRACE_EVENT_INSTANT(categories, event_name, \"data\",               \\\n                      [&](perfetto::TracedValue ctx) {              \\\n                        function_name(std::move(ctx), __VA_ARGS__); \\\n                      })\n\n#define DEVTOOLS_TIMELINE_TRACE_EVENT_WITH_CATEGORIES(categories, event_name, \\\n                                                      function_name, ...)     \\\n  TRACE_EVENT1(categories, event_name, \"data\",                                \\\n               [&](perfetto::TracedValue ctx) {                               \\\n                 function_name(std::move(ctx), __VA_ARGS__);                  \\\n               })\n\n#define DEVTOOLS_TIMELINE_TRACE_EVENT_INSTANT(...)                           \\\n  DEVTOOLS_TIMELINE_TRACE_EVENT_INSTANT_WITH_CATEGORIES(\"devtools.timeline\", \\\n                                                        __VA_ARGS__)\n\n#define DEVTOOLS_TIMELINE_TRACE_EVENT(...)                           \\\n  DEVTOOLS_TIMELINE_TRACE_EVENT_WITH_CATEGORIES(\"devtools.timeline\", \\\n                                                __VA_ARGS__)"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/inspector/inspector_trace_events.cc",
+      "bytes": 74193,
+      "sha256": "0c66bed1a9f27845fe19ba8fd9537611c6689fadca55fc0996d5b8676206ebf6",
+      "gitBlob": "8ba9e2a2d647a2eac7f9fceaa7158c93b438b10e",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 128,
+          "lastLine": 148,
+          "content": "\nvoid SetCallStack(v8::Isolate* isolate, perfetto::TracedDictionary& dict) {\n  static const unsigned char* trace_category_enabled = nullptr;\n  WTF_ANNOTATE_BENIGN_RACE(&trace_category_enabled, \"trace_event category\");\n  if (!trace_category_enabled) {\n    trace_category_enabled = TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(\n        TRACE_DISABLED_BY_DEFAULT(\"devtools.timeline.stack\"));\n  }\n  if (!*trace_category_enabled)\n    return;\n  // The CPU profiler stack trace does not include call site line numbers.\n  // So we collect the top frame with  CaptureSourceLocation() to\n  // get the binding call site info.\n  auto* source_location = CaptureSourceLocation();\n  uint64_t sample_trace_id = InspectorTraceEvents::GetNextSampleTraceId();\n  dict.Add(\"sampleTraceId\", sample_trace_id);\n  if (source_location->HasStackTrace())\n    dict.Add(\"stackTrace\", source_location);\n  v8::CpuProfiler::CollectSample(isolate, sample_trace_id);\n}\n"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/timing/performance_mark.cc",
+      "bytes": 7480,
+      "sha256": "0cc6a745a26b8b9dba536fffed2b13006448eb71f13e3b2e7fb2bc8a8e84112c",
+      "gitBlob": "1591bfdbff1bbcf97354bcf1c5471900b15d1428",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 22,
+          "lastLine": 36,
+          "content": "PerformanceMark::PerformanceMark(\n    const AtomicString& name,\n    double start_time,\n    base::TimeTicks unsafe_time_for_traces,\n    scoped_refptr<SerializedScriptValue> serialized_detail,\n    ExceptionState& exception_state,\n    DOMWindow* source,\n    uint64_t navigation_id)\n    : PerformanceEntry(/*duration=*/0.0,\n                       name,\n                       start_time,\n                       source,\n                       navigation_id),\n      serialized_detail_(std::move(serialized_detail)),\n      unsafe_time_for_traces_(unsafe_time_for_traces) {}"
+        },
+        {
+          "firstLine": 53,
+          "lastLine": 81,
+          "content": "\n  DOMHighResTimeStamp start = 0.0;\n  base::TimeTicks unsafe_start_for_traces;\n  std::optional<ScriptValue> detail;\n  if (mark_options) {\n    if (mark_options->hasStartTime()) {\n      start = mark_options->startTime();\n      if (start < 0.0) {\n        exception_state.ThrowTypeError(\n            StrCat({\"'\", mark_name, \"' cannot have a negative start time.\"}));\n        return nullptr;\n      }\n      // |start| is in milliseconds from the start of navigation.\n      // GetTimeOrigin() returns seconds from the monotonic clock's origin..\n      // Trace events timestamps accept seconds (as a double) based on\n      // CurrentTime::monotonicallyIncreasingTime().\n      unsafe_start_for_traces =\n          performance->GetTimeOriginInternal() + base::Milliseconds(start);\n    } else {\n      start = performance->now();\n      unsafe_start_for_traces = base::TimeTicks::Now();\n    }\n\n    if (mark_options->hasDetail())\n      detail = mark_options->detail();\n  } else {\n    start = performance->now();\n    unsafe_start_for_traces = base::TimeTicks::Now();\n  }"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/chromium/chromium/151.0.7922.34/third_party/blink/renderer/core/timing/performance_user_timing.cc",
+      "bytes": 15495,
+      "sha256": "5d122d10b6c5a538e8e8b1892d270628175adaeadd48442542bb0ce0e2b875d4",
+      "gitBlob": "e294601507d67854750c142d2a9b63bf18108c68",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 69,
+          "lastLine": 121,
+          "content": "        serialized_detail = ToCoreString(isolate, v8_string);\n      }\n    }\n  }\n  return serialized_detail;\n}\nvoid UserTiming::AddMarkToPerformanceTimeline(\n    PerformanceMark& mark,\n    PerformanceMarkOptions* mark_options) {\n  InsertPerformanceEntry(marks_map_, marks_buffer_, mark);\n  if (!IsTracingEnabled()) {\n    return;\n  }\n  ScriptValue detail = mark_options && mark_options->hasDetail()\n                           ? mark_options->detail()\n                           : ScriptValue();\n\n  String serialized_detail = GetSerializedDetail(detail);\n  const base::TimeTicks callTime = base::TimeTicks::Now();\n  uint64_t sample_trace_id = InspectorTraceEvents::GetNextSampleTraceId();\n\n  if (ExecutionContext* execution_context =\n          performance_->GetExecutionContext()) {\n    v8::Isolate* isolate = execution_context->GetIsolate();\n    v8::CpuProfiler::CollectSample(isolate, sample_trace_id);\n  }\n  const auto trace_event_details = [&](perfetto::EventContext ctx) {\n    if (ctx.ShouldFilterDynamicEventNames()) {\n      ctx.event()->set_name(\"performance.mark\");\n      // Emit the dynamic name as debug annotation instead.\n      ctx.AddDebugAnnotation(\"markName\", mark.name().Utf8());\n    } else {\n      ctx.event()->set_name(mark.name().Utf8());\n    }\n    ctx.AddDebugAnnotation(\"data\", [&](perfetto::TracedValue trace_context) {\n      auto dict = std::move(trace_context).WriteDictionary();\n      dict.Add(\"startTime\", mark.startTime());\n      dict.Add(\"callTime\", callTime);\n      dict.Add(\"sampleTraceId\", sample_trace_id);\n      // Only set when performance_ is a WindowPerformance.\n      // performance_->timing() returns null when performance_ is a\n      // WorkerPerformance.\n      if (serialized_detail.length()) {\n        dict.Add(\"detail\", serialized_detail);\n      }\n      if (performance_->timing()) {\n        performance_->timing()->WriteInto(dict);\n      }\n    });\n  };\n  TRACE_EVENT_INSTANT(\"blink.user_timing\", nullptr, mark.UnsafeTimeForTraces(),\n                      trace_event_details);\n}"
+        },
+        {
+          "firstLine": 254,
+          "lastLine": 297,
+          "content": "  }\n\n  if (IsTracingEnabled()) {\n    bool end_time_is_now_time = !end && !duration.has_value();\n    base::TimeTicks unsafe_start_time =\n        GetPerformanceMarkUnsafeTimeForTraces(start_time, start);\n    base::TimeTicks unsafe_end_time =\n        end_time_is_now_time\n            ? base::TimeTicks::Now()\n            : GetPerformanceMarkUnsafeTimeForTraces(end_time, end);\n    unsigned hash = GetHash(measure_name);\n    AddFloatToHash(hash, start_time);\n    AddFloatToHash(hash, end_time);\n    String serialized_detail = GetSerializedDetail(detail);\n    v8::Isolate* isolate = script_state->GetIsolate();\n    const base::TimeTicks callTime = base::TimeTicks::Now();\n\n    v8::CpuProfiler::CollectSample(isolate, hash);\n    // One event is dispatched for the performance.measure call itself\n    // and another to represent the measured timing in the tracing\n    // clock (note that the timestamps of begin / end events are\n    // overridden to use the params passed to the performance.measure\n    // call).\n    TRACE_EVENT(\"devtools.timeline\", \"UserTiming::Measure\", \"sampleTraceId\",\n                hash, \"traceId\", hash);\n    auto track =\n        perfetto::NamedTrack::ThreadScoped(\"performance.measure\", hash);\n    TRACE_EVENT_BEGIN(\"blink.user_timing\", nullptr, track, unsafe_start_time,\n                      \"startTime\", start_time, \"callTime\", callTime, \"traceId\",\n                      hash, [&](perfetto::EventContext ctx) {\n                        if (ctx.ShouldFilterDynamicEventNames()) {\n                          ctx.event()->set_name(\"performance.measure\");\n                          // Emit the dynamic name as debug annotation instead.\n                          ctx.AddDebugAnnotation(\"measureName\",\n                                                 measure_name.Utf8());\n                        } else {\n                          ctx.event()->set_name(measure_name.Utf8());\n                        }\n                        if (serialized_detail.length()) {\n                          ctx.AddDebugAnnotation(\"detail\", serialized_detail);\n                        }\n                      });\n    TRACE_EVENT_END(\"blink.user_timing\", track, unsafe_end_time);\n  }"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/inspector/agents/InspectorTimelineAgent.cpp",
+      "bytes": 25729,
+      "sha256": "c07bdd88bedc3f61acff2dfb4a1143c28e0fdfaefba4c3231f81b16fe7141306",
+      "gitBlob": "6861538fc9f3e23649565f7976894b871758e442",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 169,
+          "lastLine": 209,
+          "content": "\nvoid InspectorTimelineAgent::internalStart(std::optional<int>&& maxCallStackDepth)\n{\n    ASSERT(!tracking());\n\n    if (maxCallStackDepth && *maxCallStackDepth > 0)\n        m_maxCallStackDepth = *maxCallStackDepth;\n    else\n        m_maxCallStackDepth = 5;\n\n    Ref { m_instrumentingAgents.get() }->setTrackingTimelineAgent(this);\n\n    protect(environment())->debugger()->addObserver(*this);\n\n    m_frontendDispatcher->recordingStarted(timestamp());\n}\n\nvoid InspectorTimelineAgent::internalStop()\n{\n    Ref { m_instrumentingAgents.get() }->setTrackingTimelineAgent(nullptr);\n\n    protect(environment())->debugger()->removeObserver(*this, true);\n\n    // Complete all pending records to prevent discarding events that are currently in progress.\n    while (!m_recordStack.isEmpty())\n        didCompleteCurrentRecord(m_recordStack.last().type);\n\n    m_recordStack.clear();\n\n    m_frontendDispatcher->recordingStopped(timestamp());\n}\n\nvoid InspectorTimelineAgent::autoCaptureStarted() const\n{\n    m_frontendDispatcher->autoCaptureStarted();\n}\n\ndouble InspectorTimelineAgent::timestamp()\n{\n    return protect(environment())->executionStopwatch().elapsedTime().seconds();\n}"
+        },
+        {
+          "firstLine": 268,
+          "lastLine": 277,
+          "content": "void InspectorTimelineAgent::willCallFunction(const String& scriptName, int scriptLine, int scriptColumn)\n{\n    pushCurrentRecord(TimelineRecordFactory::createFunctionCallData(scriptName, scriptLine, scriptColumn), TimelineRecordType::FunctionCall, true);\n}\n\nvoid InspectorTimelineAgent::didCallFunction()\n{\n    didCompleteCurrentRecord(TimelineRecordType::FunctionCall);\n}\n"
+        },
+        {
+          "firstLine": 325,
+          "lastLine": 349,
+          "content": "void InspectorTimelineAgent::didTimeStamp(const String& message)\n{\n    appendRecord(TimelineRecordFactory::createTimeStampData(message), TimelineRecordType::TimeStamp, true);\n}\n\nvoid InspectorTimelineAgent::time(const String& label)\n{\n    appendRecord(TimelineRecordFactory::createTimeStampData(label), TimelineRecordType::Time, true);\n}\n\nvoid InspectorTimelineAgent::timeEnd(const String& label)\n{\n    appendRecord(TimelineRecordFactory::createTimeStampData(label), TimelineRecordType::TimeEnd, true);\n}\n\nvoid InspectorTimelineAgent::didPerformanceMark(const String& label, std::optional<MonotonicTime> timeInMonotonicTime)\n{\n    std::optional<double> timestamp;\n    if (timeInMonotonicTime) {\n        timestamp = timestampFromMonotonicTime(*timeInMonotonicTime);\n        if (!timestamp)\n            return; // Stopwatch wasn't running at the time of timeInMonotonicTime.\n    }\n    appendRecord(TimelineRecordFactory::createTimeStampData(label), TimelineRecordType::TimeStamp, true, timestamp);\n}"
+        },
+        {
+          "firstLine": 621,
+          "lastLine": 675,
+          "content": "{\n    entry.record->setObject(\"data\"_s, entry.data.copyRef());\n    if (entry.children)\n        entry.record->setArray(\"children\"_s, *entry.children);\n    entry.record->setDouble(\"endTime\"_s, timestamp());\n    addRecordToTimeline(entry.record.copyRef(), entry.type);\n}\n\nvoid InspectorTimelineAgent::didCompleteCurrentRecord(TimelineRecordType type)\n{\n    // An empty stack could merely mean that the timeline agent was turned on in the middle of\n    // an event.  Don't treat as an error.\n    if (!m_recordStack.isEmpty()) {\n        TimelineRecordEntry entry = m_recordStack.last();\n        m_recordStack.removeLast();\n        ASSERT_UNUSED(type, entry.type == type);\n\n        // Don't send RenderingFrame records that have no children to reduce noise.\n        if (entry.type == TimelineRecordType::RenderingFrame && !entry.children->length())\n            return;\n\n        didCompleteRecordEntry(entry);\n    }\n}\n\nInspectorTimelineAgent::TimelineRecordEntry* InspectorTimelineAgent::lastRecordEntry()\n{\n    if (m_recordStack.isEmpty())\n        return nullptr;\n    return &m_recordStack.last();\n}\n\nvoid InspectorTimelineAgent::appendRecord(Ref<JSON::Object>&& data, TimelineRecordType type, bool captureCallStack, std::optional<double> startTime)\n{\n    Ref<JSON::Object> record = TimelineRecordFactory::createGenericRecord(startTime.value_or(timestamp()), captureCallStack ? m_maxCallStackDepth : 0);\n    record->setObject(\"data\"_s, WTF::move(data));\n    addRecordToTimeline(WTF::move(record), type);\n}\n\nvoid InspectorTimelineAgent::sendEvent(Ref<JSON::Object>&& event)\n{\n    // FIXME: runtimeCast is a hack. We do it because we can't build TimelineEvent directly now.\n    auto recordChecked = Inspector::Protocol::BindingTraits<Inspector::Protocol::Timeline::TimelineEvent>::runtimeCast(WTF::move(event));\n    m_frontendDispatcher->eventRecorded(WTF::move(recordChecked));\n}\n\nInspectorTimelineAgent::TimelineRecordEntry InspectorTimelineAgent::createRecordEntry(Ref<JSON::Object>&& data, TimelineRecordType type, bool captureCallStack, std::optional<double> startTime)\n{\n    Ref<JSON::Object> record = TimelineRecordFactory::createGenericRecord(startTime.value_or(timestamp()), captureCallStack ? m_maxCallStackDepth : 0);\n    return TimelineRecordEntry(WTF::move(record), WTF::move(data), JSON::Array::create(), type);\n}\n\nvoid InspectorTimelineAgent::pushCurrentRecord(Ref<JSON::Object>&& data, TimelineRecordType type, bool captureCallStack, std::optional<double> startTime)\n{\n    pushCurrentRecord(createRecordEntry(WTF::move(data), type, captureCallStack, startTime));"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/inspector/TimelineRecordFactory.cpp",
+      "bytes": 6562,
+      "sha256": "668dca928060d0e705223f35ce61c23ed76f47f0f6c01da0d136b48a5fa12168",
+      "gitBlob": "4fd764090959bd2c04aa3483d070edd76847e4d3",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 46,
+          "lastLine": 58,
+          "content": "Ref<JSON::Object> TimelineRecordFactory::createGenericRecord(double startTime, int maxCallStackDepth)\n{\n    Ref<JSON::Object> record = JSON::Object::create();\n    record->setDouble(\"startTime\"_s, startTime);\n\n    if (maxCallStackDepth) {\n        Ref<ScriptCallStack> stackTrace = createScriptCallStack(JSExecState::currentState(), maxCallStackDepth);\n        if (stackTrace->size())\n            record->setValue(\"stackTrace\"_s, stackTrace->buildInspectorObject());\n    }\n    return record;\n}\n"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/page/PerformanceUserTiming.cpp",
+      "bytes": 12086,
+      "sha256": "18b7706f31e25d2a52a0b8e0442a1f4a596204f961dcc8e985dd10573e9861d8",
+      "gitBlob": "90198059d7d10d95bcea56e50be3312bcbfa0b49",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 98,
+          "lastLine": 117,
+          "content": "\nExceptionOr<Ref<PerformanceMark>> PerformanceUserTiming::mark(JSC::JSGlobalObject& globalObject, const String& markName, std::optional<PerformanceMarkOptions>&& markOptions)\n{\n    Ref context = *m_performance->scriptExecutionContext();\n\n    std::optional<MonotonicTime> timestamp;\n    if (markOptions && markOptions->startTime)\n        timestamp = m_performance->monotonicTimeFromRelativeTime(*markOptions->startTime);\n\n    InspectorInstrumentation::performanceMark(context.get(), markName, timestamp);\n\n    auto mark = PerformanceMark::create(globalObject, context, markName, WTF::move(markOptions));\n    if (mark.hasException())\n        return mark.releaseException();\n\n    addPerformanceEntry(m_marksMap, markName, mark.returnValue().get());\n    return mark.releaseReturnValue();\n}\n\nvoid PerformanceUserTiming::clearMarks(const String& markName)"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/WebKit/WebKit/343e13bf22dca9d0ec227801419aab0f9001a32f/Source/WebCore/page/PerformanceMark.cpp",
+      "bytes": 4073,
+      "sha256": "277f5542fd520c3035a860a9bc1affb6ce33c7b6d55201447f8ef4b88fb2f6e5",
+      "gitBlob": "cc59880ddd6ee5ae9160cf8b1afcd2d68bedd516",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 42,
+          "lastLine": 86,
+          "content": "\nstatic double performanceNow(ScriptExecutionContext& scriptExecutionContext)\n{\n    // FIXME: We should consider moving the Performance object to be owned by the\n    // the ScriptExecutionContext to avoid this.\n\n    if (RefPtr document = dynamicDowncast<Document>(scriptExecutionContext)) {\n        if (RefPtr window = document->window())\n            return window->performance().now();\n    } else if (RefPtr workerGlobal = dynamicDowncast<WorkerGlobalScope>(scriptExecutionContext))\n        return workerGlobal->performance().now();\n\n    return 0;\n}\n\nExceptionOr<Ref<PerformanceMark>> PerformanceMark::create(JSC::JSGlobalObject& globalObject, ScriptExecutionContext& scriptExecutionContext, const String& name, std::optional<PerformanceMarkOptions>&& markOptions)\n{\n    if (is<Document>(scriptExecutionContext) && PerformanceUserTiming::isRestrictedMarkName(name))\n        return Exception { ExceptionCode::SyntaxError };\n\n    double startTime;\n    JSC::JSValue detail;\n    if (markOptions) {\n        if (markOptions->startTime) {\n            if (*markOptions->startTime < 0)\n                return Exception { ExceptionCode::TypeError };\n            startTime = *markOptions->startTime;\n        } else\n            startTime = performanceNow(scriptExecutionContext);\n        \n        if (markOptions->detail.isUndefined())\n            detail = JSC::jsNull();\n        else\n            detail = markOptions->detail;\n    } else {\n        startTime = performanceNow(scriptExecutionContext);\n        detail = JSC::jsNull();\n    }\n\n    Vector<Ref<MessagePort>> ignoredMessagePorts;\n    auto serializedDetail = SerializedScriptValue::create(globalObject, detail, { }, ignoredMessagePorts);\n    if (serializedDetail.hasException())\n        return serializedDetail.releaseException();\n\n    return adoptRef(*new PerformanceMark(name, startTime, serializedDetail.releaseReturnValue()));"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/dispatchers/browserContextDispatcher.ts",
+      "bytes": 24844,
+      "sha256": "e1abd807e908df0ddef06c20a465d8816fda27ddc4093092b04611225178ad92",
+      "gitBlob": "3616c35cd75ffa06a413b2bb519f1b717d7d2114",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 368,
+          "lastLine": 376,
+          "content": "  async newCDPSession(params: channels.BrowserContextNewCDPSessionParams, progress: Progress): Promise<channels.BrowserContextNewCDPSessionResult> {\n    if (this._object._browser.options.browserType !== 'chromium')\n      throw new Error(`CDP session is only available in Chromium`);\n    if (!params.page && !params.frame || params.page && params.frame)\n      throw new Error(`CDP session must be initiated with either Page or Frame, not none or both`);\n    const crBrowserContext = this._object as CRBrowserContext;\n    return { session: new CDPSessionDispatcher(this, await progress.race(crBrowserContext.newCDPSession((params.page ? params.page as PageDispatcher : params.frame as FrameDispatcher)._object))) };\n  }\n"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/packages/playwright-core/src/server/dispatchers/browserDispatcher.ts",
+      "bytes": 7215,
+      "sha256": "ae4e4a51e2449f1679f0c5af75ba84250f76dfbf7e14feb46985cf116d661bf0",
+      "gitBlob": "f558a14aefbf722aaf170b07262309c29611a59f",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 114,
+          "lastLine": 135,
+          "content": "    if (this._object.options.browserType !== 'chromium')\n      throw new Error(`CDP session is only available in Chromium`);\n    const crBrowser = this._object as CRBrowser;\n    return { session: new CDPSessionDispatcher(this, await progress.race(crBrowser.newBrowserCDPSession())) };\n  }\n\n  async startTracing(params: channels.BrowserStartTracingParams, progress: Progress): Promise<void> {\n    // Note: progress is ignored because this operation is not cancellable and should not block in the browser anyway.\n    if (this._object.options.browserType !== 'chromium')\n      throw new Error(`Tracing is only available in Chromium`);\n    const crBrowser = this._object as CRBrowser;\n    await progress.race(crBrowser.startTracing(params.page ? (params.page as PageDispatcher)._object : undefined, params));\n  }\n\n  async stopTracing(params: channels.BrowserStopTracingParams, progress: Progress): Promise<channels.BrowserStopTracingResult> {\n    // Note: progress is ignored because this operation is not cancellable and should not block in the browser anyway.\n    if (this._object.options.browserType !== 'chromium')\n      throw new Error(`Tracing is only available in Chromium`);\n    const crBrowser = this._object as CRBrowser;\n    return { artifact: ArtifactDispatcher.from(this, await progress.race(crBrowser.stopTracing())) };\n  }\n"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/docs/src/api/class-browsercontext.md",
+      "bytes": 59020,
+      "sha256": "faae593e6dca456c73653ae8e5fecadeff5d2856f010ca81539b8e14b23cb0c7",
+      "gitBlob": "f5c2cbc95ef12fbbe7912887e31b8de376826b3a",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 1026,
+          "lastLine": 1035,
+          "content": "## async method: BrowserContext.newCDPSession\n* since: v1.11\n- returns: <[CDPSession]>\n\n:::note\nCDP sessions are only supported on Chromium-based browsers.\n:::\n\nReturns the newly created session.\n"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/docs/src/api/class-tracing.md",
+      "bytes": 15572,
+      "sha256": "1ff614b5aa76f35f0762d5761a2ed9e487aabb22b9992dd11e19f8886f96d7dc",
+      "gitBlob": "256ae513a5327522d417a1b2304d19eec11f8ca8",
+      "completeBytesRead": true,
+      "excerpts": [
+        {
+          "firstLine": 1,
+          "lastLine": 11,
+          "content": "# class: Tracing\n* since: v1.12\n\nAPI for collecting and saving Playwright traces. Playwright traces can be opened in [Trace Viewer](../trace-viewer.md) after Playwright script runs.\n\n:::note\nYou probably want to [enable tracing in your config file](https://playwright.dev/docs/api/class-testoptions#test-options-trace) instead of using `context.tracing`.\n\nThe `context.tracing` API captures browser operations and network activity, but it doesn't record test assertions (like `expect` calls). We recommend [enabling tracing through Playwright Test configuration](https://playwright.dev/docs/api/class-testoptions#test-options-trace), which includes those assertions and provides a more complete trace for debugging test failures.\n:::\n"
+        }
+      ]
+    }
+  ],
+  "webkitPatch": {
+    "url": "https://raw.githubusercontent.com/microsoft/playwright/v1.62.1/browser_patches/webkit/patches/bootstrap.diff",
+    "bytes": 926295,
+    "sha256": "1945532bbf1af8c91fafd580b0b5c0f33b14f4060f3891141f8fbc4805ab866a",
+    "specificNativeTimingFilesUnmodified": [
+      "Source/WebCore/inspector/agents/InspectorTimelineAgent.cpp",
+      "Source/WebCore/inspector/TimelineRecordFactory.cpp",
+      "Source/WebCore/page/PerformanceUserTiming.cpp",
+      "Source/WebCore/page/PerformanceMark.cpp"
+    ]
+  },
+  "practicalLimit": {
+    "derivation": "For equal observed p95 d, symmetric duration error epsilon and no sampling uncertainty, the upper box ratio is (d+epsilon)/(d-epsilon). Requiring this <=1.05 needs d>=41epsilon with positive denominator.",
+    "implication": "WebKit epsilon about1ms needs about41ms, incompatible with the <=10ms application-work target. Chromium epsilon about0.2ms needs about8.2ms, already above the0.6*B budget at90Hz and faster. Numerical allowance and sampling uncertainty make these limits stricter. This is an idealized sensitivity illustration, not a measured result or claim that every faster/favorable comparison is undecidable.",
+    "decision": "Do not promise that a correctly bound endpoint box will close practical overhead gates. The current empirical-only fence remains appropriate."
+  },
+  "alternatives": [
+    {
+      "name": "Model-based reconstruction from rounded/grouped data",
+      "assessment": "Not recommended as a qualification shortcut. Grouped-data quantile estimators can interpolate or fit an underlying density, but that adds assumptions about sub-bucket distribution and censoring. Ordinary frames include mixed mechanisms and correlated timing. More rounded samples alone do not identify an unrestricted latent per-frame p95 tightly enough; smoothness or dither assumptions need external validation, not a favorable fitted curve."
+    },
+    {
+      "name": "Exact native-clock boundary records",
+      "assessment": "Most plausible Chromium feasibility path. At the existing PRE_STEP and POST_RENDER work boundaries, fixed-label console.timeStamp records native trace timestamps rather than recycling performance.now values. Preserve the exact per-frame work interval and compute the same per-run p95 from complete retained pairs. Default performance.mark also has a separate raw Chromium trace timestamp, but creates buffered entries and tracing work, so it is not a free high-resolution replacement."
+    },
+    {
+      "name": "WebKit native Timeline",
+      "assessment": "The native inspector uses an execution stopwatch, but TimeStamp records capture call stacks and create JSON. Passing stack depth0 falls back to5 in the pinned source. Public pinned Playwright CDP and browser-native tracing dispatchers reject non-Chromium browsers; context.tracing is an automation trace. A supported collection path and its observer behavior are still unresolved. Do not imply a simple existing WebKit adapter or introduce a private driver/browser patch silently."
+    },
+    {
+      "name": "Totals, amplification, isolation or different conditions",
+      "assessment": "Block averages, repeated synthetic work, CPU slowdown, process CPU totals, raised clock precision or altered cross-origin isolation do not silently replace normal per-frame p95. They may diagnose or calibrate but change the estimand or conditions. No such substitution is proposed."
+    }
+  ],
+  "candidateFeasibilityPilot": {
+    "scope": "Only after the original trace-v2 outcome and explicit protocol review. This is a bounded validation experiment, not prospective acceptance, and has not been implemented or dispatched.",
+    "fixedFactors": [
+      "Same final-source package and browser binaries, viewport, cadence setting, input/replay recipe, phases, audio/profile data and CPU conditions as the declared overhead comparison.",
+      "Same diagnostics on/off matched arms and original5% target. No favorable frame deletion, no screenshots, allocation sampling or CPU profiler in the native boundary cohort.",
+      "Two fixed-label boundary events, monotonic sequence matching and complete event pairing; bounded bytes/records and confirmed process closure before parsing. Overflow, missing pairs, lost trace data, ambiguous frame ownership or incomplete workloads remain failed/unresolved."
+    ],
+    "observerValidation": [
+      "First establish that native boundaries correspond to the exact existing work envelope; a whole RAF or task duration cannot replace it merely because it is easier to capture.",
+      "Use A/A controls with identical diagnostic modes and the same balanced order to detect an analyst/probe-induced apparent effect.",
+      "Measure empty probe pairs for direct recording cost, then test probe-density and trace-category sensitivity on the actual workload. Empty probes alone cannot capture GC, cache, allocation or buffer saturation effects.",
+      "Compare ordinary untraced cadence/work distributions with trace-only and trace-plus-boundary runs; use native whole-callback timings and process totals only as supplementary observer checks. No detected difference at a coarse resolution is not proof of zero effect.",
+      "Retain observer effects separately for diagnostics off and on; do not assume equal recording cost cancels or subtract one probe p95 from an application p95. Material interactions, nonlinearity or an observer uncertainty large enough to change the5% decision make the result unresolved."
+    ],
+    "estimator": "Use the same matched run-level statistic based on complete per-frame work durations. Retain all pairs and order information. Carry native clock/conversion uncertainty and a separately justified observer-effect uncertainty through the upper confidence/sensitivity result. A new model or resampling method must state its dependence and tail assumptions; individual frames are not independent experimental replications.",
+    "acceptanceBoundary": "A traced result is initially evidence for the declared traced measurement setup. It cannot clear the ordinary diagnostics-overhead gate until the reviewed calibration supports transfer to that target with quantified limitations. If that transfer is not defensible, retain a scoped estimate and unresolved gate rather than changing the5% target.",
+    "stopRule": "If a supported collection path, correct endpoint identity or sufficiently small observer uncertainty cannot be demonstrated in a bounded pilot, stop expanding tooling and report the overhead exit unresolved. Continue unrelated gameplay/release qualification."
+  },
+  "primaryMethodReferences": [
+    {
+      "url": "https://arxiv.org/html/1712.02476",
+      "application": "Grouped quantile confidence intervals use density approximation/interpolation assumptions; they are not automatic recovery of arbitrary sub-bin timing."
+    },
+    {
+      "url": "https://arxiv.org/pdf/1710.07575",
+      "application": "Interval-valued observations can partially identify quantiles; identification uncertainty is distinct from finite-sample confidence."
+    },
+    {
+      "url": "https://nvlpubs.nist.gov/nistpubs/TechnicalNotes/NIST.TN.1830.pdf",
+      "application": "Measurement overhead can vary with event volume, cache effects and saturation, so null calibration alone need not predict actual workload effects; stateful runs require care with independence."
+    },
+    {
+      "url": "https://developer.chrome.com/docs/devtools/performance/extension",
+      "application": "Chrome distinguishes console.timeStamp from buffered User Timing entries and describes the former as a low-overhead tracing mechanism; this is not a measured cost bound for this app."
+    },
+    {
+      "url": "https://perfetto.dev/docs/instrumentation/track-events",
+      "application": "Native trace timestamp domains and event categories can be controlled, while record production and argument work remain part of the observer."
+    }
+  ],
+  "limits": [
+    "No binary execution was performed. Native event collection/support, practical cost, completeness and quantitative acceptance have not been established.",
+    "Current trace-v2 remains an excluded diagnostic and does not acquire acceptance by this research.",
+    "No general guarantee about iPhone Safari, browser scheduling, device thermal behavior or all uninstrumented executions is claimed."
+  ]
+}

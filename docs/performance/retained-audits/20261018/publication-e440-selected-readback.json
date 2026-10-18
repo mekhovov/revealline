@@ -1,0 +1,481 @@
+{
+  "format": "SoloPagesE440PublicationReadbackAuditV1",
+  "observedAt": "2026-10-18T22:24:38.060855+00:00",
+  "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+  "run": {
+    "id": 39166266155,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39166266155",
+    "head": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+    "beforeStatus": "queued",
+    "afterStatus": "queued",
+    "afterConclusion": null,
+    "jobs": [
+      {
+        "id": 117789791613,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T21:33:16Z",
+        "completed_at": "2026-10-18T21:43:22Z"
+      },
+      {
+        "id": 117798198305,
+        "name": "deploy",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T22:19:19Z",
+        "completed_at": "2026-10-18T22:19:47Z"
+      },
+      {
+        "id": 117806055366,
+        "name": "verify",
+        "status": "queued",
+        "conclusion": null,
+        "started_at": "2026-10-18T22:19:48Z",
+        "completed_at": null
+      }
+    ]
+  },
+  "artifactEvidence": [
+    {
+      "id": 12151742014,
+      "bytes": 519469,
+      "sha256": "e6def76aa741bfff29216455e22a4232b18c23fcbee0d13d4a8b1f722f74f996",
+      "crcVerified": true,
+      "members": [
+        {
+          "path": "main-pages-receipt.json",
+          "bytes": 4429,
+          "sha256": "080cc83f3f2358c23d664de866cd608cd77405e4d8ba2c7e065805fa6aace49a"
+        },
+        {
+          "path": "main-pages-inventory.json",
+          "bytes": 514738,
+          "sha256": "d5d0fd16b60c7514cf9ff16f19ea514e3ef9a9dc3886b9b76236bb763fe931f1"
+        }
+      ]
+    },
+    {
+      "id": 12151866714,
+      "bytes": 544,
+      "sha256": "166c35b3d35a1cd1bea09e619adbb6474df0e8d72b49cdc30b4aa123d13f8246",
+      "crcVerified": true,
+      "members": [
+        {
+          "path": "main-pages-archive-receipt.json",
+          "bytes": 599,
+          "sha256": "7f9a876368b6a09a688bfe4abd2b39813525d83daadaa785b488942fb41ca9cb"
+        }
+      ]
+    }
+  ],
+  "inventorySummary": {
+    "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+    "files": 3469,
+    "bytes": 962602016,
+    "maximumBytes": 980000000,
+    "completeInventory": true,
+    "capacityAccepted": true,
+    "inventorySha256": "d5d0fd16b60c7514cf9ff16f19ea514e3ef9a9dc3886b9b76236bb763fe931f1",
+    "errors": []
+  },
+  "archiveReceipt": {
+    "format": "revealline-main-pages-archive-receipt.v1",
+    "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+    "artifactId": "12152026091",
+    "measurement": "actual uncompressed artifact.tar emitted by the pinned Pages action",
+    "maximumArchiveBytes": 980000000,
+    "archiveAccepted": true,
+    "errors": [],
+    "archiveBytes": 965611520,
+    "stagedBytes": 962602016,
+    "inventorySha256": "d5d0fd16b60c7514cf9ff16f19ea514e3ef9a9dc3886b9b76236bb763fe931f1",
+    "archiveSha256": "5e93089dcf63cd9dc81069f2f0ef272960e93135415c297f3d0b7b219bb8c931",
+    "files": 3469,
+    "overheadBytes": 3009504
+  },
+  "fullArchiveDownloaded": false,
+  "publicIdentityBefore": {
+    "path": "main-deployment.json",
+    "expected": {
+      "path": "main-deployment.json",
+      "bytes": 303,
+      "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4"
+    },
+    "startedAt": "2026-10-18T22:24:31.385028+00:00",
+    "status": 200,
+    "bytes": 303,
+    "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+    "url": "https://mekhovov.github.io/revealline/main-deployment.json",
+    "match": true,
+    "identity": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+      "sourceCommittedAt": "2026-10-18T21:05:19Z",
+      "buildVersion": "main-e4400303952d",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    },
+    "completedAt": "2026-10-18T22:24:31.614409+00:00"
+  },
+  "selectedReadback": [
+    {
+      "path": "main-deployment.json",
+      "expected": {
+        "path": "main-deployment.json",
+        "bytes": 303,
+        "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4"
+      },
+      "startedAt": "2026-10-18T22:24:31.619023+00:00",
+      "status": 200,
+      "bytes": 303,
+      "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+      "url": "https://mekhovov.github.io/revealline/main-deployment.json",
+      "match": true,
+      "identity": {
+        "format": "revealline-main-deployment.v1",
+        "channel": "main",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "sourceCommittedAt": "2026-10-18T21:05:19Z",
+        "buildVersion": "main-e4400303952d",
+        "play": "game/",
+        "releases": "https://github.com/mekhovov/revealline/releases"
+      },
+      "completedAt": "2026-10-18T22:24:31.720712+00:00"
+    },
+    {
+      "path": "release.json",
+      "expected": {
+        "path": "release.json",
+        "bytes": 303,
+        "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4"
+      },
+      "startedAt": "2026-10-18T22:24:31.619805+00:00",
+      "status": 200,
+      "bytes": 303,
+      "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+      "url": "https://mekhovov.github.io/revealline/release.json",
+      "match": true,
+      "identity": {
+        "format": "revealline-main-deployment.v1",
+        "channel": "main",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "sourceCommittedAt": "2026-10-18T21:05:19Z",
+        "buildVersion": "main-e4400303952d",
+        "play": "game/",
+        "releases": "https://github.com/mekhovov/revealline/releases"
+      },
+      "completedAt": "2026-10-18T22:24:31.874771+00:00"
+    },
+    {
+      "path": "game/build-info.json",
+      "expected": {
+        "path": "game/build-info.json",
+        "bytes": 143,
+        "sha256": "f4993b007304ab787c4431932a6f8037c1d75ab58fdff755807382f0060ce05a"
+      },
+      "startedAt": "2026-10-18T22:24:31.620330+00:00",
+      "status": 200,
+      "bytes": 143,
+      "sha256": "f4993b007304ab787c4431932a6f8037c1d75ab58fdff755807382f0060ce05a",
+      "url": "https://mekhovov.github.io/revealline/game/build-info.json",
+      "match": true,
+      "identity": {
+        "formatVersion": 1,
+        "version": "0.151.1",
+        "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+        "entry": "game/index.html"
+      },
+      "completedAt": "2026-10-18T22:24:31.859604+00:00"
+    },
+    {
+      "path": "index.html",
+      "expected": {
+        "path": "index.html",
+        "bytes": 6691,
+        "sha256": "657410e4d2ca0f71f84c6ae143ca3bc23753c89c3b96e0f919486e3e0f6f3aea"
+      },
+      "startedAt": "2026-10-18T22:24:31.624268+00:00",
+      "status": 200,
+      "bytes": 6691,
+      "sha256": "657410e4d2ca0f71f84c6ae143ca3bc23753c89c3b96e0f919486e3e0f6f3aea",
+      "url": "https://mekhovov.github.io/revealline/index.html",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:31.825673+00:00"
+    },
+    {
+      "path": "game/index.html",
+      "expected": {
+        "path": "game/index.html",
+        "bytes": 145952,
+        "sha256": "8cd0951f0771d7685f96c114c9ca161de957752912dc8fbc07062a1956600a92"
+      },
+      "startedAt": "2026-10-18T22:24:31.720742+00:00",
+      "status": 200,
+      "bytes": 145952,
+      "sha256": "8cd0951f0771d7685f96c114c9ca161de957752912dc8fbc07062a1956600a92",
+      "url": "https://mekhovov.github.io/revealline/game/index.html",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.173603+00:00"
+    },
+    {
+      "path": "game/app.mjs",
+      "expected": {
+        "path": "game/app.mjs",
+        "bytes": 486864,
+        "sha256": "31e6f53e830c53c4e702bcc507332fdb636e57f4a9709b0c43d0f6dc596881f5"
+      },
+      "startedAt": "2026-10-18T22:24:31.825710+00:00",
+      "status": 200,
+      "bytes": 486864,
+      "sha256": "31e6f53e830c53c4e702bcc507332fdb636e57f4a9709b0c43d0f6dc596881f5",
+      "url": "https://mekhovov.github.io/revealline/game/app.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.707520+00:00"
+    },
+    {
+      "path": "game/backup-set.mjs",
+      "expected": {
+        "path": "game/backup-set.mjs",
+        "bytes": 10656,
+        "sha256": "d588afc589656c3385a07df9b7bae0611a622f0a92f951d5ed5a940234a07450"
+      },
+      "startedAt": "2026-10-18T22:24:31.859635+00:00",
+      "status": 200,
+      "bytes": 10656,
+      "sha256": "d588afc589656c3385a07df9b7bae0611a622f0a92f951d5ed5a940234a07450",
+      "url": "https://mekhovov.github.io/revealline/game/backup-set.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.123559+00:00"
+    },
+    {
+      "path": "game/backup-storage.mjs",
+      "expected": {
+        "path": "game/backup-storage.mjs",
+        "bytes": 17265,
+        "sha256": "0089491ea5fb24cd78d9f4a8836d0f141ccdd54ca1f04e5d837e399e8f93303f"
+      },
+      "startedAt": "2026-10-18T22:24:31.874802+00:00",
+      "status": 200,
+      "bytes": 17265,
+      "sha256": "0089491ea5fb24cd78d9f4a8836d0f141ccdd54ca1f04e5d837e399e8f93303f",
+      "url": "https://mekhovov.github.io/revealline/game/backup-storage.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.137203+00:00"
+    },
+    {
+      "path": "game/ui/backup-set-panel.mjs",
+      "expected": {
+        "path": "game/ui/backup-set-panel.mjs",
+        "bytes": 8931,
+        "sha256": "eabef8c8432cef52175fdde4a04b2201c904ffcad2ca6b496b5139a9e611ef0d"
+      },
+      "startedAt": "2026-10-18T22:24:32.123620+00:00",
+      "status": 200,
+      "bytes": 8931,
+      "sha256": "eabef8c8432cef52175fdde4a04b2201c904ffcad2ca6b496b5139a9e611ef0d",
+      "url": "https://mekhovov.github.io/revealline/game/ui/backup-set-panel.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.315528+00:00"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "expected": {
+        "path": "game/ui/render.mjs",
+        "bytes": 50263,
+        "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e"
+      },
+      "startedAt": "2026-10-18T22:24:32.137242+00:00",
+      "status": 200,
+      "bytes": 50263,
+      "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e",
+      "url": "https://mekhovov.github.io/revealline/game/ui/render.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.409594+00:00"
+    },
+    {
+      "path": "game/ui/performance-session.mjs",
+      "expected": {
+        "path": "game/ui/performance-session.mjs",
+        "bytes": 20211,
+        "sha256": "d72edbd4de5ee96b3f7e892b54e7d0fb416f2a231a950379081fa8e4b1b9d810"
+      },
+      "startedAt": "2026-10-18T22:24:32.179270+00:00",
+      "status": 200,
+      "bytes": 20211,
+      "sha256": "d72edbd4de5ee96b3f7e892b54e7d0fb416f2a231a950379081fa8e4b1b9d810",
+      "url": "https://mekhovov.github.io/revealline/game/ui/performance-session.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.384182+00:00"
+    },
+    {
+      "path": "game/ui/scene-clock.mjs",
+      "expected": {
+        "path": "game/ui/scene-clock.mjs",
+        "bytes": 1190,
+        "sha256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be"
+      },
+      "startedAt": "2026-10-18T22:24:32.315638+00:00",
+      "status": 200,
+      "bytes": 1190,
+      "sha256": "7b7169b39ec3c56dc366aacf4837393c216384dfcd247a025f021452c70bb0be",
+      "url": "https://mekhovov.github.io/revealline/game/ui/scene-clock.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.495613+00:00"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "expected": {
+        "path": "game/ui/demo-host.mjs",
+        "bytes": 39006,
+        "sha256": "ace07e601893ec1435649056769de62285fed3fa9ac5ab467d97b984ae5a049a"
+      },
+      "startedAt": "2026-10-18T22:24:32.384287+00:00",
+      "status": 200,
+      "bytes": 39006,
+      "sha256": "ace07e601893ec1435649056769de62285fed3fa9ac5ab467d97b984ae5a049a",
+      "url": "https://mekhovov.github.io/revealline/game/ui/demo-host.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:35.168559+00:00"
+    },
+    {
+      "path": "game/ui/music-credit.mjs",
+      "expected": {
+        "path": "game/ui/music-credit.mjs",
+        "bytes": 3892,
+        "sha256": "9b68bcc6cd3651d2ccde7e784b1d035d8c0d8471a049973b26519e4085d15d32"
+      },
+      "startedAt": "2026-10-18T22:24:32.409628+00:00",
+      "status": 200,
+      "bytes": 3892,
+      "sha256": "9b68bcc6cd3651d2ccde7e784b1d035d8c0d8471a049973b26519e4085d15d32",
+      "url": "https://mekhovov.github.io/revealline/game/ui/music-credit.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.661907+00:00"
+    },
+    {
+      "path": "game/ui/music-credits.mjs",
+      "expected": {
+        "path": "game/ui/music-credits.mjs",
+        "bytes": 3885,
+        "sha256": "db855f1ba66fff0ad0f1e17ce0285f0c68949b86f5b8fcfc208a57b9f6d63249"
+      },
+      "startedAt": "2026-10-18T22:24:32.495659+00:00",
+      "status": 200,
+      "bytes": 3885,
+      "sha256": "db855f1ba66fff0ad0f1e17ce0285f0c68949b86f5b8fcfc208a57b9f6d63249",
+      "url": "https://mekhovov.github.io/revealline/game/ui/music-credits.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.794281+00:00"
+    },
+    {
+      "path": "game/ui/mission-library-browser.mjs",
+      "expected": {
+        "path": "game/ui/mission-library-browser.mjs",
+        "bytes": 50153,
+        "sha256": "952e3a1175a8fc730cb50320363a6ac9c36bce477a002a8356fefa572e95ff57"
+      },
+      "startedAt": "2026-10-18T22:24:32.661952+00:00",
+      "status": 200,
+      "bytes": 50153,
+      "sha256": "952e3a1175a8fc730cb50320363a6ac9c36bce477a002a8356fefa572e95ff57",
+      "url": "https://mekhovov.github.io/revealline/game/ui/mission-library-browser.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:33.002037+00:00"
+    },
+    {
+      "path": "game/ui/soundtrack-player.mjs",
+      "expected": {
+        "path": "game/ui/soundtrack-player.mjs",
+        "bytes": 48598,
+        "sha256": "09f3f651e71052fdea4352e7e1d1dd418c6b89e10eef47f5de7fb53774cfd70c"
+      },
+      "startedAt": "2026-10-18T22:24:32.707663+00:00",
+      "status": 200,
+      "bytes": 48598,
+      "sha256": "09f3f651e71052fdea4352e7e1d1dd418c6b89e10eef47f5de7fb53774cfd70c",
+      "url": "https://mekhovov.github.io/revealline/game/ui/soundtrack-player.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:32.985283+00:00"
+    },
+    {
+      "path": "game/mp3-inspection-worker.mjs",
+      "expected": {
+        "path": "game/mp3-inspection-worker.mjs",
+        "bytes": 540,
+        "sha256": "ef71ab1a354d36928de1ecb4f8ace3d432be084cdfe7209d2a3ecc2a98cee1fc"
+      },
+      "startedAt": "2026-10-18T22:24:32.794308+00:00",
+      "status": 200,
+      "bytes": 540,
+      "sha256": "ef71ab1a354d36928de1ecb4f8ace3d432be084cdfe7209d2a3ecc2a98cee1fc",
+      "url": "https://mekhovov.github.io/revealline/game/mp3-inspection-worker.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:33.084666+00:00"
+    },
+    {
+      "path": "game/ui/profile-recovery-dialog.mjs",
+      "expected": {
+        "path": "game/ui/profile-recovery-dialog.mjs",
+        "bytes": 8729,
+        "sha256": "c14495e4084f3284529fa6af4f396a0d969f6667a6ded426e879061895c40c3d"
+      },
+      "startedAt": "2026-10-18T22:24:32.985337+00:00",
+      "status": 200,
+      "bytes": 8729,
+      "sha256": "c14495e4084f3284529fa6af4f396a0d969f6667a6ded426e879061895c40c3d",
+      "url": "https://mekhovov.github.io/revealline/game/ui/profile-recovery-dialog.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:33.201151+00:00"
+    },
+    {
+      "path": "game/presentation/manifest-path.mjs",
+      "expected": {
+        "path": "game/presentation/manifest-path.mjs",
+        "bytes": 609,
+        "sha256": "759bac83965a5ad8decfda59e4b10d68b240ef20234df06e21fb2dfcc4ae0a14"
+      },
+      "startedAt": "2026-10-18T22:24:33.002121+00:00",
+      "status": 200,
+      "bytes": 609,
+      "sha256": "759bac83965a5ad8decfda59e4b10d68b240ef20234df06e21fb2dfcc4ae0a14",
+      "url": "https://mekhovov.github.io/revealline/game/presentation/manifest-path.mjs",
+      "match": true,
+      "completedAt": "2026-10-18T22:24:33.201441+00:00"
+    }
+  ],
+  "publicIdentityAfter": {
+    "path": "main-deployment.json",
+    "expected": {
+      "path": "main-deployment.json",
+      "bytes": 303,
+      "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4"
+    },
+    "startedAt": "2026-10-18T22:24:35.169784+00:00",
+    "status": 200,
+    "bytes": 303,
+    "sha256": "1a339c0fe04d4a4e02025a77906d8058631447e7410e697370c0326fc4636cf4",
+    "url": "https://mekhovov.github.io/revealline/main-deployment.json",
+    "match": true,
+    "identity": {
+      "format": "revealline-main-deployment.v1",
+      "channel": "main",
+      "sourceRevision": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+      "sourceCommittedAt": "2026-10-18T21:05:19Z",
+      "buildVersion": "main-e4400303952d",
+      "play": "game/",
+      "releases": "https://github.com/mekhovov/revealline/releases"
+    },
+    "completedAt": "2026-10-18T22:24:35.591788+00:00"
+  },
+  "mainAfter": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "allSelectedMatches": true,
+  "stableSelectedIdentity": true,
+  "limitations": [
+    "Twenty selected public payload files and identity only; no native-browser gameplay or whole-site acceptance.",
+    "Current main dd337 and the merged #1631 change are not claimed published by this e440 readback.",
+    "The previous normal browser failures remain failed; Missions native observation still requires checked diagnostics publication.",
+    "The full Pages archive remains remote; compact receipts and selected public bytes were read in RAM."
+  ]
+}

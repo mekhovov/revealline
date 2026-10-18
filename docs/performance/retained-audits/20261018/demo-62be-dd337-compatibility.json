@@ -1,0 +1,569 @@
+{
+  "format": "SoloDemo1628FreshMainCompatibilityV1",
+  "createdAt": "2026-10-18T22:27:22.004Z",
+  "repository": "mekhovov/revealline",
+  "head": {
+    "revision": "62be652ce70b11f840b491c218609d5225374be4",
+    "tree": "208381cc212a9a8c405ae8661e6df225c8c88d52"
+  },
+  "dependency": {
+    "pr": 1621,
+    "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+    "bodyExplicit": true
+  },
+  "main": {
+    "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "tree": "b1214330108fe62c8a89e45902be4f84c628ed99"
+  },
+  "sourceReviewOnly": true,
+  "noFunctionalExecution": true,
+  "ownDemoPaths": [
+    {
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "gitBlob": "f267efe7f6b771a25065072229e715f825278a3a",
+      "bytes": 439526,
+      "sha256": "55bff4bc7f2e2563efcf1e8366a4b8b6d90fb5c155c9bfa4e09f39273acaf740"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-demo-797e03/c293-paused-geometry-source.json",
+      "gitBlob": "d14249d934a101dad41afc5ee2668e8c4686a24b",
+      "bytes": 150438,
+      "sha256": "e86ea1f6e8f06e57d75c21058bbd6cffe2fc151129afa2b684a82d9acdd1567a"
+    },
+    {
+      "path": "docs/performance/solo-demo-recovery-797e03-geometry-tooling-plan.json",
+      "gitBlob": "cdad47b102d4b67429bfb9cf49f8df33eb3c09ca",
+      "bytes": 18595,
+      "sha256": "eac17c433461e3ed64b60a62cdcff4d8c9354bf720ee995ee25b3fe8401a9663"
+    },
+    {
+      "path": "docs/performance/solo-demo-resources-797e03-paused-geometry-plan.json",
+      "gitBlob": "37fdab7077b222c11999c53a790efa2bcf7629c9",
+      "bytes": 21581,
+      "sha256": "064b5227bad29d9ce18dc5eeaac5eb4856812e34f6b0a2b218c2783f639d49cc"
+    },
+    {
+      "path": "scripts/observe-solo-demo-recovery.mjs",
+      "gitBlob": "347a30023ad1ca53e86810b1663e9f878e176dd3",
+      "bytes": 40811,
+      "sha256": "15e63cf090353db99c07fa41ce8556984886f189711ed61cc362915c1d4541f7"
+    },
+    {
+      "path": "scripts/solo-demo-geometry-historical-source.mjs",
+      "gitBlob": "ba47858135993254ad878c59a725e623998e77a4",
+      "bytes": 1748,
+      "sha256": "e78619c9563c251749960355df1d766d094efcf9119f34ceec3b6272fb2c3dc5"
+    },
+    {
+      "path": "scripts/solo-demo-recovery-probe.mjs",
+      "gitBlob": "83d4cd14298d2471728e2ec03bee0aeacceac27b",
+      "bytes": 16309,
+      "sha256": "95a36472fa0796b8a48fb4a23ac5eb6eed07883e3bfca54d6307efb2cb9db6c9"
+    },
+    {
+      "path": "scripts/solo-remote-demo.mjs",
+      "gitBlob": "d9d90b034e0645f679b8102e347c4616eaae6fc7",
+      "bytes": 36568,
+      "sha256": "dee2e60addfa3aa296a9a2718bbc4703ed0b84bf6324e5f168381b8aa2280533"
+    },
+    {
+      "path": "scripts/solo-runtime73-measurement.test.mjs",
+      "gitBlob": "4e2c246a866ce7c52a5c72f40bec46a76bd253ec",
+      "bytes": 3316,
+      "sha256": "77926ecd60ef32b65ec63868e10199de23b3ea2e445333d1e66d9bf1c05d261b"
+    },
+    {
+      "path": "scripts/test-solo-demo-activation-admission.mjs",
+      "gitBlob": "3880ffa54178314c4f7fa81a75cbe00dd88032a8",
+      "bytes": 9419,
+      "sha256": "313503bc770256e4236f7c87efcbd6b6c16b59acf7e0027680b19e10cf9a0034"
+    },
+    {
+      "path": "scripts/test-solo-demo-geometry-admission.mjs",
+      "gitBlob": "d02d5b4cffd6f06c8476efe50b719efea5833957",
+      "bytes": 17716,
+      "sha256": "6a61b1055f8290ed7a14feb8851557be26dd9f0286884480e50f2fbb5e762206"
+    },
+    {
+      "path": "scripts/test-solo-demo-trusted-close-admission.mjs",
+      "gitBlob": "62b683b04b7ac7e66dc851eb13f55041c1e25371",
+      "bytes": 12116,
+      "sha256": "3f09173f1ab2869da713b1dc2e3c56613de2f19546d753019f442697e5b78954"
+    },
+    {
+      "path": "scripts/test-solo-native-consumer-shared-demo.mjs",
+      "gitBlob": "09c20501c8efb2238c976cb2dcdfca3127191eef",
+      "bytes": 11923,
+      "sha256": "5a2d4a0ad43012dec9e53b9624ddf4f235c77ed1013b3ba3fa25c03441395321"
+    },
+    {
+      "path": "scripts/test-solo-remote-demo.mjs",
+      "gitBlob": "e69f3e0fcf2b586cba3f6bc5c208d2cad38c3f3b",
+      "bytes": 75940,
+      "sha256": "3927201dfaca1a938ce104a71d4e1714e624151a32c7f2006d881302ec3b4cf4"
+    }
+  ],
+  "mainChangedPathsSinceCb8": [
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+      "sha": "7595cd77f0354b641085f868d23770bcc86f488f",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+      "sha": "8bc5b364bbb67057a2388d1463ef749e7edcab5f",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+      "sha": "6514ee76451f927c6896c162192629c9361d2677",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-soak-temporary.yml",
+      "sha": "ce6e6c909602e5fe18d992ca0ea059a418b30930",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+      "sha": "08c832d9287b404fdbcdf738209173f02269a92f",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+      "sha": "47a045d919f0408aae95061cd8714d1b59f479fb",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+      "sha": "71a3dec125928e81a52f2227db17ca37ea8babf5",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+      "sha": "aad4a4b3364629ef2e3abd9f8253cf0a69d6903d",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+      "sha": "ec1488da3990162c20401c882a2505d95de9ef41",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+      "sha": "eda340627ac8cbe36bd02d9400be7c32c2639fcd",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+      "sha": "ad5a6f46a2741bde6551a8e1d89cb7b476b3438a",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+      "sha": "194e9ce7e67e9dc204252d63680cf1c38294d314",
+      "status": "modified"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+      "sha": "b9ea62c9d6cd86f83eb94c78a07b71f42a402425",
+      "status": "modified"
+    },
+    {
+      "path": "docs/fpv-aircraft-archives.md",
+      "sha": "2ccf988990048abeaa6c21e99a9b08756d873a0b",
+      "status": "modified"
+    },
+    {
+      "path": "docs/fpv-archive-retention-followup-20261018.md",
+      "sha": "edb3c47f880b469999464a88c82b10d0e0d1c360",
+      "status": "added"
+    },
+    {
+      "path": "docs/fpv-archive-retention-memory-20261018.json",
+      "sha": "6955a7641d0eea6a171cd0961fe50e0c62a74dfa",
+      "status": "added"
+    },
+    {
+      "path": "docs/fpv-civilian-candidate-implementation.md",
+      "sha": "8c51715ca4caa46c9e85803bc935c5a88c07a194",
+      "status": "added"
+    },
+    {
+      "path": "docs/fpv-civilian-candidate-review.md",
+      "sha": "dac72a59df05f71c28d1255c2d75333fd767b8a0",
+      "status": "added"
+    },
+    {
+      "path": "docs/fpv-civilian-source-inventory.md",
+      "sha": "a4cd23ab15a0c0b09f3978e90c0691cf0d40dcdb",
+      "status": "added"
+    },
+    {
+      "path": "docs/fpv-current-completion-plan.md",
+      "sha": "a751a8070cda9947ab4b5f761bdf4f950aeeea1b",
+      "status": "modified"
+    },
+    {
+      "path": "docs/fpv-flight-continuation-20261018.md",
+      "sha": "ec563775654ce405b37c9830a1a133a16a0be0da",
+      "status": "added"
+    },
+    {
+      "path": "docs/fpv-rendered-catalog-20261018.json",
+      "sha": "bd5e9943bfedefc41f562e9b6f258f643669ac81",
+      "status": "added"
+    },
+    {
+      "path": "docs/fpv-sustained-flight-qualification.json",
+      "sha": "6c520823a02e1b681943c27dfab4c261e2be678d",
+      "status": "added"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-retired-diagnostics/source.json",
+      "sha": "54e60bfba366581d9fee6fd6d6de138b495026b5",
+      "status": "added"
+    },
+    {
+      "path": "game/app.mjs",
+      "sha": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "status": "modified"
+    },
+    {
+      "path": "game/capture-flight-limits.mjs",
+      "sha": "0e69d910692a9c9c235630fc31706f90344a1d79",
+      "status": "added"
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "sha": "da55b6ed67d125e7d86015fb3024f47bef8ddccb",
+      "status": "modified"
+    },
+    {
+      "path": "game/index.html",
+      "sha": "e52026e2c91901d09185d0e63734ab0d6f6ff475",
+      "status": "modified"
+    },
+    {
+      "path": "game/library.mjs",
+      "sha": "442ecc86d19f8286f1a62eb51776a1bdc46f0af2",
+      "status": "modified"
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "sha": "a9f2afab3a547c9f60ae20c6e6e1d62620c63c2a",
+      "status": "modified"
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "sha": "06b881122b8fbec7e6f1423a56bc4ae1ae2af371",
+      "status": "modified"
+    },
+    {
+      "path": "game/official-downloads.mjs",
+      "sha": "66c30dce706e797f90852955daee448a05685e6d",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/capture-flight-limits-host.test.mjs",
+      "sha": "eb59a23497d2d9c1650645a6ed339bf8683bc569",
+      "status": "added"
+    },
+    {
+      "path": "game/test/capture-flight-limits.test.mjs",
+      "sha": "bde1bd8e96d1e2c90950fc71c804da2b419aee8a",
+      "status": "added"
+    },
+    {
+      "path": "game/test/fpv-aircraft-archive-controls.test.mjs",
+      "sha": "be5899cf20b0c2f2bd33f965bd8e3eb2cc9e7b34",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-aircraft-archive.test.mjs",
+      "sha": "3a9786d69a40b386f637b262b6edce681418904d",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-aircraft-coach.test.mjs",
+      "sha": "fb15f89be39e6454bc32d44b1c00551cf5d5a978",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-aircraft-presets.test.mjs",
+      "sha": "51f7893bb7b1a602df8edbfa975ddbe693d027c5",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-aircraft-renderer.test.mjs",
+      "sha": "36c18e5551e1bdaf9396ea468793e8a993b14397",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "sha": "e3c1957a5dd4bdef2452d607ad3c7e7770f6f090",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "sha": "05cae79b4d9f854d7d3af8efbd66f8da01388743",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "sha": "834bcb46deb4c05a368bc885e28f215467eed48c",
+      "status": "modified"
+    },
+    {
+      "path": "game/test/helpers/fpv-aircraft-sustained-qualification.mjs",
+      "sha": "7a3e9cca1fc37c1cb01f05e51e63f4556a6f39c5",
+      "status": "added"
+    },
+    {
+      "path": "game/test/official-downloads.test.mjs",
+      "sha": "c34bb11422823c8ad6d38c632da0b0b40d8bd792",
+      "status": "modified"
+    },
+    {
+      "path": "game/ui/capture-flight-limits.css",
+      "sha": "1a0032622be2beb593fd4daedc74bc0d6579051b",
+      "status": "added"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "sha": "62c5551fa41f8ab20b65b9cd7d736ce8dc4e97ab",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-archive-controls.mjs",
+      "sha": "dbe9658c5196ab75b52a545ea07fa43486165479",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-archive.mjs",
+      "sha": "7ef8bfd7c0463bc8c2ce74ea9fa5bf224f7e5a2b",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-presets.mjs",
+      "sha": "bd733eb328732ff4960089d5f7b9a254d3b3af4f",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "sha": "27356d3639ed7c9b383da856bf4227f8d67eb5b1",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/beginner-coach.mjs",
+      "sha": "39b859a780d8778c165b42963a17142b23b5e4f1",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "sha": "1c91675f4d899c7b7c33562f7b7fa463855496b2",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "sha": "5826e0339a8e39e43aa003173b2ba43c9c6d580c",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "sha": "2c2e284d0cd7f75b0e8eab9567b2c2055f56a250",
+      "status": "modified"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha": "f33bf1d79022d539b2994eae25c51a25d7cde6c9",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/qualify-fpv-aircraft-sustained.mjs",
+      "sha": "e7d15ad5a22e9a28f93a4c37d858c67d1065eb1d",
+      "status": "added"
+    },
+    {
+      "path": "scripts/solo-final-wave-witness.mjs",
+      "sha": "17bf6e8fd2ac870d277e2e601360a20e5d445a40",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/solo-page-error-source-witness.mjs",
+      "sha": "370a2e57ad42d7c2d586a17ffae514263a67b2b6",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/solo-retired-diagnostic-source.mjs",
+      "sha": "ee0a5ebd601df5b7241190954569e117fd0cd0b8",
+      "status": "added"
+    },
+    {
+      "path": "scripts/test-solo-final-timing-v2-release.mjs",
+      "sha": "ea7a6e1642d8d51397b266be1f7ac3e095fcc3b8",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/test-solo-readiness-source-witness.mjs",
+      "sha": "a3f290c52211da46e881ffdedb30defac932e7cd",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/test-solo-retired-diagnostic-source.mjs",
+      "sha": "a2add45dd7774b1b1686ba3e6aded711ca032e1b",
+      "status": "added"
+    }
+  ],
+  "ownPathOverlap": [],
+  "fullPrPathOverlap": [],
+  "policy": [
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "headBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "mainBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "identical": true
+    },
+    {
+      "path": "publishing/admission-binding.mjs",
+      "headBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "mainBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "identical": true
+    },
+    {
+      "path": "publishing/admission-preflight.mjs",
+      "headBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+      "mainBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+      "identical": true
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "headBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "mainBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "identical": true
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "headBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "mainBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "identical": true
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "headBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+      "mainBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+      "identical": true
+    },
+    {
+      "path": "publishing/test-policy.mjs",
+      "headBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+      "mainBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+      "identical": true
+    }
+  ],
+  "retiredReaders": [
+    {
+      "path": "scripts/solo-retired-diagnostic-source.mjs",
+      "gitBlob": "ee0a5ebd601df5b7241190954569e117fd0cd0b8",
+      "bytes": 1781,
+      "sha256": "fd3d50399f36a73d19bea10e9b433a685ad59c9d3682c4b9676692bccab88336"
+    },
+    {
+      "path": "scripts/solo-final-wave-witness.mjs",
+      "gitBlob": "17bf6e8fd2ac870d277e2e601360a20e5d445a40",
+      "bytes": 3005,
+      "sha256": "7532bc6e30766ca6d94b39ddd9a498e4ed43d6799551a68053f5696962eec326"
+    },
+    {
+      "path": "scripts/solo-page-error-source-witness.mjs",
+      "gitBlob": "370a2e57ad42d7c2d586a17ffae514263a67b2b6",
+      "bytes": 7578,
+      "sha256": "ac66d9ba34f279cf6ddd2fe9ee0838ebb6fe6c915b0848227281150b88fce221"
+    }
+  ],
+  "findings": [
+    "The 14 incremental Demo paths beyond the reviewed trace dependency do not overlap any current-main change since cb8. The full PR diff likewise has no path overlap.",
+    "New geometry historical helper imports only node built-ins and its exact local witness; the probe adds no module imports. Runtime observer/assessor dependency sets are unchanged.",
+    "Main retirement reader dynamic import is restricted to the finite retired solo-remote-final lifecycle/soak/timing workflow names. Added Demo plans, geometry witness and native workflow do not match this guard, so the new Demo increment introduces no new retired-helper sparse requirement. Existing broader trace closure was separately reviewed by root.",
+    "Native workflow only adds the named geometry plans to shared-return coverage, and the geometry helper/witness/test to both Demo jobs. Both Demo test commands execute the added geometry controls. Existing deadlines, cleanup and gates are preserved.",
+    "All seven release/admission policy source identities match head and current main.",
+    "Safe for guarded ready intent on the unchanged head, conditional on Depends on #1621, all final release/controller gates and fresh base checks. This is not a native observation, public deployment or performance pass."
+  ],
+  "evidence": {
+    "source": "22fdcef8c6c9207c39a0808b686f87f4215f79fc",
+    "industrialFirstThree": "962db048a4b5da553a7746311fb0aad7ccd7ac28",
+    "industrialLastThree": "478113707d3c6f5563031f0b76ae96c97af5c15b",
+    "company": "e56d22eb471a7b88ad94aa0dd181281217b0d839"
+  },
+  "sourceJobs": [
+    {
+      "id": 117781942554,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T21:16:18Z",
+      "completedAt": "2026-10-18T21:16:29Z"
+    },
+    {
+      "id": 117792213840,
+      "name": "focused_shards (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T21:50:35Z",
+      "completedAt": "2026-10-18T21:53:22Z"
+    },
+    {
+      "id": 117792213880,
+      "name": "focused_shards (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T22:01:14Z",
+      "completedAt": "2026-10-18T22:03:39Z"
+    },
+    {
+      "id": 117792213882,
+      "name": "focused_shards (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T22:03:41Z",
+      "completedAt": "2026-10-18T22:09:29Z"
+    },
+    {
+      "id": 117792214101,
+      "name": "focused_shards (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T22:06:09Z",
+      "completedAt": "2026-10-18T22:16:33Z"
+    },
+    {
+      "id": 117792214675,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "startedAt": "2026-10-18T21:16:29Z",
+      "completedAt": "2026-10-18T21:16:29Z"
+    },
+    {
+      "id": 117792215084,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "skipped",
+      "startedAt": "2026-10-18T21:16:29Z",
+      "completedAt": "2026-10-18T21:16:29Z"
+    },
+    {
+      "id": 117805366170,
+      "name": "focused",
+      "status": "queued",
+      "conclusion": null,
+      "startedAt": "2026-10-18T22:16:33Z",
+      "completedAt": null
+    }
+  ],
+  "pr": {
+    "state": "open",
+    "draft": true,
+    "mergeable": true
+  }
+}

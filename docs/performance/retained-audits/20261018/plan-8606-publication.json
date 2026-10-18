@@ -1,0 +1,16 @@
+{
+  "format": "SoloReviewedPlanUpdateV1",
+  "createdAt": "2026-10-18T22:19:23.208485+00:00",
+  "head": "86067c7cf265c2917335b20501ca99bc91beac4f",
+  "tree": "f20610caa20b61d150b0d537eb93740cd271b2a2",
+  "path": "docs/performance/solo-performance-followup-plan.md",
+  "blob": "594054b22b4a66de5d9a450328349cfb785f665e",
+  "bytes": 141782,
+  "sha256": "4c6258ce1ab811b066db7db5eebd83c5ec93dcb4c580260ac94616950b33480f",
+  "before": "b6b56b86d36041fe1362e5ab0a12c6b5af462528",
+  "proposal": "b695df4df44471e86b65046f4b6404cc54273340",
+  "independentReview": "status_qualification verified all facts, digests and exact historical tail; root applied suggested explicit policy scope",
+  "historicalTailUnchanged": true,
+  "evidenceIndex": "d68b8eed63d64310803deb881e91af9578f642a1",
+  "runtimeChanges": false
+}
