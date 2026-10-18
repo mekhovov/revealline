@@ -11964,6 +11964,8 @@ try {
           controls,
         });
         if (beforeStatus === 'respawning' || run.status === 'respawning') {
+          pendingAction = false;
+          pendingPickup = false;
           input.clear();
           controller.clear();
           controls = { direction: null, boost: false, action: false, pickup: false };
@@ -11974,6 +11976,8 @@ try {
           controller.clear();
           controllerFrame = null;
           controls = { direction: null, boost: false, action: false, pickup: false };
+          pendingAction = false;
+          pendingPickup = false;
           pendingSwitch = null;
         }
         refreshControllerBoostCue();
@@ -11989,9 +11993,13 @@ try {
               message: t('interface:liveGoalTrackingIsUnavailableYourPictureProgressIsKept'),
             };
           }
-        pendingAction = false;
-        pendingPickup = false;
-        if (!resuming) pendingSwitch = null;
+        // A fresh request after accepted Resume waits behind its neutral tick.
+        // Recovery and capture-stop above still retire these pending actions.
+        if (!resuming) {
+          pendingAction = false;
+          pendingPickup = false;
+          pendingSwitch = null;
+        }
         accumulator -= FIXED_DT;
         if (!recordingStopped)
           try {
