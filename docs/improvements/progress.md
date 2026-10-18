@@ -2,7 +2,7 @@
 
 Updated **18 October 2026** (Europe/Berlin). Continuous implementation of the [approved staged plan](plan.md) is underway. This board covers this workstream; release integration and publication remain separate gates.
 
-**83 feature groups · 113 deliverables · 12 feature PRs ready for checks · 13 draft feature PRs · 3 implementation lanes active · 2 merged · 0 verified live.**
+**83 feature groups · 113 deliverables · 12 feature PRs ready for checks · 18 draft feature PRs · 3 implementation lanes active · 2 merged · 0 verified live.**
 
 ## Merged
 
@@ -30,42 +30,46 @@ Updated **18 October 2026** (Europe/Berlin). Continuous implementation of the [a
 
 ## Drafts and active development
 
-| Priority | Item / owner                                                                                          | Current status and next result                                                                                                                                                                         |
-| -------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| P1       | **F01 / Snake** · [#1637](https://github.com/mekhovov/revealline/pull/1637) · lane A                  | Draft stack on Capture: 194 checks/source gates; browser found a Duel/Versus wording mismatch, corrected at63ef. Final correction browser review remains.                                              |
-| P1       | **F01 / Duel** · [#1640](https://github.com/mekhovov/revealline/pull/1640) · lane A                   | Draft stack on Capture: 68 checks/source gates; independent source and actual unlaunched menu/Back review passed. Team is a separate draft.                                                            |
-| P1       | **F11b / review and extraction** · [#1635](https://github.com/mekhovov/revealline/pull/1635) · lane B | Source and actual browser review passed; downloaded original component matches ZIP bytes. Draft stack on1627. Guided apply is draft1646 with independent source review passed; browser review is next. |
-| P1       | **F15b / menu animation** · [#1636](https://github.com/mekhovov/revealline/pull/1636) · lane C        | Actual Solo modeled-storage failure/retry, other-tab intent, focus and Ukrainian320px review passed. Draft stack on1629. Demo owner remains dependent on D.                                            |
-| P1       | **F06 / native comfort presets** · [#1641](https://github.com/mekhovov/revealline/pull/1641) · lane C | Preview/Apply/Undo, partial-save Retry and newer-choice preservation reviewed in actual Solo; final page-cache expiry tested. Draft stack on1636. Remaining family presets developing.                 |
-| P1       | **F78 / query and pagination** · [#1644](https://github.com/mekhovov/revealline/pull/1644)            | 45 tests and source gates; independent source and actual modeled-service browser review passed. Draft stack on F12.                                                                                    |
-| P1       | **Delivery prerequisite** · [#1633](https://github.com/mekhovov/revealline/pull/1633)                 | Ready;136 checks and two independent reviews.13 expired diagnostic triggers retired; active gates and merge policy unchanged. Exact-head CI queued/running.                                            |
+| Priority | Item / owner                                                                                          | Current status and next result                                                                                                                                                                            |
+| -------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| P1       | **F01 / Snake** · [#1637](https://github.com/mekhovov/revealline/pull/1637) · lane A                  | Draft stack on Capture: 194 checks/source gates; browser found a Duel/Versus wording mismatch, corrected at63ef. Final correction browser review remains.                                                 |
+| P1       | **F01 / Duel** · [#1640](https://github.com/mekhovov/revealline/pull/1640) · lane A                   | Draft stack on Capture: 68 checks/source gates; independent source and actual unlaunched menu/Back review passed. Team is a separate draft.                                                               |
+| P1       | **F11b / review and extraction** · [#1635](https://github.com/mekhovov/revealline/pull/1635) · lane B | Source and actual browser review passed; downloaded original component matches ZIP bytes. Draft stack on1627. Guided apply1646 passed source and scoped browser review; narrow wording follow-up remains. |
+| P1       | **F15b / menu animation** · [#1636](https://github.com/mekhovov/revealline/pull/1636) · lane C        | Actual Solo modeled-storage failure/retry, other-tab intent, focus and Ukrainian320px review passed. Draft stack on1629. Demo owner remains dependent on D.                                               |
+| P1       | **F06 / native comfort presets** · [#1641](https://github.com/mekhovov/revealline/pull/1641) · lane C | Preview/Apply/Undo, partial-save Retry and newer-choice preservation reviewed in actual Solo; final page-cache expiry tested. Draft stack on1636. Remaining family presets developing.                    |
+| P1       | **F78 / query and pagination** · [#1644](https://github.com/mekhovov/revealline/pull/1644)            | 45 tests and source gates; independent source and actual modeled-service browser review passed. Draft stack on F12.                                                                                       |
+| P1       | **Delivery prerequisite** · [#1633](https://github.com/mekhovov/revealline/pull/1633)                 | Ready;136 checks and two independent reviews.13 expired diagnostic triggers retired; active gates and merge policy unchanged. Exact-head CI queued/running.                                               |
 
 | P1 | **F01 / Team** · [#1643](https://github.com/mekhovov/revealline/pull/1643) | Independent source review passed; browser review pending. Draft stack on Duel. |
-| P1 | **F01 / Hunt** · [#1648](https://github.com/mekhovov/revealline/pull/1648) | 125 checks/source gates; authoritative EN/UK identity and Classic handoff. Review pending. |
+| P1 | **F01 / Hunt** · [#1648](https://github.com/mekhovov/revealline/pull/1648) | 125 checks/source gates; authoritative EN/UK identity and Classic handoff. Independent source review passed; browser pending. |
 | P1 | **F06 / Snake and Survival** · [#1642](https://github.com/mekhovov/revealline/pull/1642) | Source review and actual Snake Team Apply/Undo plus paused Survival return passed. Draft stack on native presets. |
 | P1 | **F06 / SIM** · [#1645](https://github.com/mekhovov/revealline/pull/1645) | Source review and actual Academy/World preview, partial-save Retry and Undo passed; flight controls unchanged. Draft stack on arcade. |
-| P1 | **F06 / Creator** · [#1647](https://github.com/mekhovov/revealline/pull/1647) | 49 focused and15 offline checks; review pending. Draft stack on SIM. |
-| P1 | **F11b / guided restore** · [#1646](https://github.com/mekhovov/revealline/pull/1646) | 140 focused checks/source gates; independent source review passed. Actual browser review pending. |
-| P1 | **F79 / local Installed** · integration | Source review and actual catalog-outage install/reopen/play passed. One unavailable entry no longer hides healthy games. Final gates/PR pending; offline recovery entry remains next. |
-| P1 | **F80 / removal review** · lane B | Complete confirmation/default Keep implementation developing; integrate on F79, then source/browser review. |
+| P1 | **F06 / Creator** · [#1647](https://github.com/mekhovov/revealline/pull/1647) | 49 focused and15 offline checks; source and actual paused-player Apply/Undo/Back review passed at integrated4ff. Draft stack on SIM. |
+| P1 | **F11b / guided restore** · [#1646](https://github.com/mekhovov/revealline/pull/1646) | 140 focused checks/source gates; source and actual guided restore passed at2c9. Cancel/order/4-of-4/close receipts verified with empty-profile archive. Copy follow-up1e69df passes24 tests/full source gates and independent review. |
+| P1 | **F79 / local Installed** · [#1651](https://github.com/mekhovov/revealline/pull/1651) | 47 focused checks/full source gates, independent source and actual catalog-outage install/reopen/play passed. Offline Recovery copies is the next dependent slice. |
+| P1 | **F80 / removal review** · [#1653](https://github.com/mekhovov/revealline/pull/1653) | 69 focused checks/full source gates and independent source review passed. Explicit F79 stack; browser review pending. |
+| P1 | **F01 / SIM** · [#1652](https://github.com/mekhovov/revealline/pull/1652) | 195 focused checks/full source gates and independent source review passed. Browser pending; corrected Snake stack. |
+| P1 | **F06 / Rooms** · [#1650](https://github.com/mekhovov/revealline/pull/1650) | 37 checks/source gates; source and actual UI Apply/Undo/UK320 review passed. Modeled paused transport received no gameplay calls. |
+| P1 | **F02a / First Flight Home** · [#1655](https://github.com/mekhovov/revealline/pull/1655) | 15 focused checks/source gates; actual first-lesson completion, Next, Skip, replay and Return passed. Wider13 baseline failures retained; final ready promotion next. |
+| P1 | **F07a / critical cues** · lane C | Revision-bound inventory developing; existing alternatives credited before proposing F07b changes. |
 
-Next: **F79** local Installed inventory, **F80** removal consequences, **F02a** existing first-flight entry after F01, and **F04b** production suspend after its assessment. Priority remains P1. Estimates remain the plan's working-day ranges, excluding CI/review queues and unavailable hardware.
+Next: **F79** retained recovery access, **F80** browser review, **F02a** first-flight qualification, **F07a** critical-cue inventory, **F06** optional 2D gym, and **F04b** production suspend after its assessment. Priority remains P1. Estimates remain the plan's working-day ranges, excluding CI/review queues and unavailable hardware.
 
 **Shared preset copy:** [#1649](https://github.com/mekhovov/revealline/pull/1649) removes the inaccurate “below” instruction across hosts. It is a separate reviewed-stack follow-up;18 focused checks and localization pass; independent source review passed.
 
 ## Phase status
 
-| Phase                        | Progress                                                     | Main remaining work                                                     |
-| ---------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| 0 — Baseline                 | Setup complete                                               | Maintain exact candidate identities and shared-file ownership.          |
-| 1 — Reliability              | 2 merged; reliability slices reviewed; F15b partial          | Remaining clarity, service readiness, long-flight and Demo slices.      |
-| 2 — Learn and start          | Capture ready; Snake/Duel/Team/Hunt drafts; SIM developing   | Selection hierarchy, onboarding, readability and contextual guidance.   |
-| 3 — Progress and offline     | F82/F14/F11a/F04a ready; F11b/F78 drafts; F79/F80 developing | Archive/restore, Survival suspend assessment, community reliability.    |
-| 4 — Comfort, input and audio | Native/arcade/SIM reviewed drafts; Creator draft; Rooms next | Presets, cues, remapping, readable UI and accessibility/audio evidence. |
-| 5 — Practice and social      | Planned                                                      | Playlists, practice, replays, rooms and device calibration.             |
-| 6 — Creation and community   | Planned                                                      | Creator entry, validation, playtest, publishing and discovery.          |
-| 7 — Progression and content  | Planned                                                      | Albums, goals, cosmetics and bounded balance experiments.               |
-| 8 — Services and platforms   | Planned                                                      | Service readiness, cloud, native packages and platform evidence.        |
+| Phase                        | Progress                                                          | Main remaining work                                                     |
+| ---------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| 0 — Baseline                 | Setup complete                                                    | Maintain exact candidate identities and shared-file ownership.          |
+| 1 — Reliability              | 2 merged; reliability slices reviewed; F15b partial               | Remaining clarity, service readiness, long-flight and Demo slices.      |
+| 2 — Learn and start          | Capture ready; other context hosts draft; First Flight developing | Selection hierarchy, onboarding, readability and contextual guidance.   |
+| 3 — Progress and offline     | F82/F14/F11a/F04a ready; F11b/F78/F79/F80 drafts                  | Archive/restore, Survival suspend assessment, community reliability.    |
+| 4 — Comfort, input and audio | Native/arcade/SIM/Creator/Rooms reviewed drafts; gym remains      | Presets, cues, remapping, readable UI and accessibility/audio evidence. |
+| 5 — Practice and social      | Planned                                                           | Playlists, practice, replays, rooms and device calibration.             |
+| 6 — Creation and community   | Planned                                                           | Creator entry, validation, playtest, publishing and discovery.          |
+| 7 — Progression and content  | Planned                                                           | Albums, goals, cosmetics and bounded balance experiments.               |
+| 8 — Services and platforms   | Planned                                                           | Service readiness, cloud, native packages and platform evidence.        |
 
 ## Open limits and findings
 
@@ -74,7 +78,7 @@ Next: **F79** local Installed inventory, **F80** removal consequences, **F02a** 
 - **Hosting capacity:** F82's default package contains **1,074,925,070 bytes**, above the **950,000,000-byte** main Pages budget. Its offline core is **73,432,886 bytes**, within the existing 80 MiB limit. Default output and the prepared deployment inventory are different measurements; release capacity is not qualified. Do not raise limits or remove historical assets to make this pass.
 - **Existing source checks:** F82's full formatting check has eight unchanged baseline failures. F81's unrelated recovery-display listener-count assertion also fails on clean main. Changed-file checks pass; the failures are not waived or counted as passes.
 - **F15a:** current Solo Help shows no localization placeholder. About's version token appears only in source preview and is replaced in the built package. The broader localization finding remains scoped and unreproduced; existing Studio work stays with PR #1525.
-- **D:** substantial original-checkout Demo work is preserved. Reconcile it into an explicit reviewed predecessor before dependent changes.
+- **D:** original-checkout Demo work remains preserved. The separate [Demo predecessor #1615](https://github.com/mekhovov/revealline/pull/1615) is draft at05c795fdc; its final packaging, long rotation and browser/service/device gates remain open. Its evidence and delivery are not counted as completed by this workstream.
 - **Merge admission:** F82 awaits #1633, which removes automatic registration from expired PR #1544 diagnostics. Active diagnostic workflows, required validation and strict merge policy stay unchanged. F81 merged after exact-head checks.
 - **Disk:** task-owned checkout sparsity and removal of retained generated output after checksum receipts recovered space (4.0 GiB at the latest check). No original WIP or unrelated files removed; large builds remain serialized.
 
@@ -88,3 +92,5 @@ The [structured tracker](progress.json) retains all 113 deliverables, priorities
 - **CI:** F81 is now merged. Ready means reviewed and eligible for required checks; it does not mean deployed.
 
 - **F79:** Installed is based on local runtime ownership. Corrupt/unavailable entries stay visible without a Play action and cannot hide healthy entries. The catalog-outage browser receipt is not a full offline PWA or whole-media integrity claim. Retained-package recovery access stays an explicit P1 follow-up.
+
+- **F06 coverage correction:** optional 2D practice (`optional-practice/civilian-flight`) is a separate reachable host. It remains an explicit P1 slice; the reviewed Academy/World hosts do not cover it.

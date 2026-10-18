@@ -26,7 +26,7 @@
   ],
   "release": {
     "status": "source_delivery_in_progress",
-    "note": "F83a merged after required gates. Product publication and physical acceptance remain distinct; no arbitrary version allocation."
+    "note": "F83a and F81 merged after required gates. Product publication and physical acceptance remain distinct; no arbitrary version allocation."
   },
   "tasks": [
     {
@@ -392,7 +392,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Review Team/Hunt and final Snake wording; complete SIM context. Preserve existing Overflight behavior. Then F02a.",
+      "next": "Browser-review Team, Hunt, corrected Snake and SIM; reconcile reviewed stacks after their predecessors.",
       "evidence": [
         "Mission library already owns focus-only selection, launch and Back; Overflight already groups Survival/Raid operations. Extend existing owners; do not introduce a second chooser or rename established game identities."
       ],
@@ -430,12 +430,14 @@
           "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1648",
           "commit": "e1c610a627850907fd3e0560bd8c422a9cd1f88c",
-          "evidence": "125 broader checks, full lint/validate/changed formatting pass. Explicit Solo/Duel Hunt identity and localized six-mission label; exact Classic handoff model covered. Independent review pending. Stack on Duel."
+          "evidence": "125 broader checks, full lint/validate/changed formatting pass. Explicit Solo/Duel Hunt identity and localized six-mission label; exact Classic handoff model covered. Independent review pending. Stack on Duel. Independent root source review passed; browser still pending."
         },
         {
           "id": "sim-context",
-          "status": "developing",
-          "evidence": "Academy/World existing mode labels exposed through the native Home owner. No comfort/projection edits; explicit corrected Snake dependency."
+          "status": "draft_review",
+          "evidence": "195 focused SIM/shell tests and full source gates pass; independent source review passed. Browser review pending. Explicit corrected Snake stack; existing Academy/World identity owners retained.",
+          "pr": "https://github.com/mekhovov/revealline/pull/1652",
+          "commit": "768db57646d00a8972f3fcb9bf0e9976bd8dc652"
         },
         {
           "id": "overflight-existing-context",
@@ -452,18 +454,21 @@
       "impact": "H/H",
       "effort": "**6–10d total**; b/c require D",
       "featureId": "F02",
-      "status": "planned",
-      "owner": null,
+      "status": "draft_review",
+      "owner": "lane-a",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "focused_and_source_gates_passed",
+        "browser": "actual_lesson_scoped_passed",
         "physical": "not_tested"
       },
       "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "pr": "https://github.com/mekhovov/revealline/pull/1655",
+      "commit": "aad2f48a0cc45e07777fa240d4fba661291c6382",
+      "next": "Ready for promotion after independent source/browser review; exact-head checks next.",
+      "evidence": [
+        "Existing First Flight owner now has optional Home entry, normal Start retained. Independent source review passed; full lint/validate and focused retention/EN/UK cases pass.13 broader failures reproduce exact clean cb8dddd3; assertions not weakened.",
+        "15 final focused tests pass; actual product c6dcc227 browser: optionalHomeentry→Ready→Start→legalcut→completed52.2%/3lives/6seconds→NextReady→Skip→replayReady→ReturnnormalHome. Finalaad onlytestaddition; no paused-save/browser/hardware claim."
+      ]
     },
     {
       "id": "F02b",
@@ -800,21 +805,36 @@
       "effort": "**3–5d**",
       "featureId": "F79",
       "status": "developing",
-      "owner": "integration",
+      "owner": "lane-b",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "focused_and_source_gates_passed",
+        "browser": "local_catalog_outage_scoped_passed",
         "physical": "not_tested"
       },
-      "blocker": "Explicit F78 stack; final source gates/browser receipt and PR publication pending.",
-      "pr": null,
-      "commit": null,
-      "next": "Finish reviewed local inventory candidate; separately complete access to retained recovery packages offline.",
+      "blocker": "Explicit F78/F80 stacks; retained-package recovery entry still developing.",
+      "pr": "https://github.com/mekhovov/revealline/pull/1651",
+      "commit": "00d077bd278eb3eadbe632584ac4cfc4e51e206f",
+      "next": "Complete Recovery copies view and exact offline reinstall; review before admitting dependent stacks.",
       "evidence": [
         "Local Installed uses runtime-owned storage status without catalog calls. Cached metadata is optional and exact identity pinned; historical names/version stay truthful.",
         "Independent review fixed single failed runtime hiding healthy installed games; failed entries have no Play/install/delete actions. Two new cases independently rerun.",
         "Actual generated30,790-byte package: install→catalog503→reload→Installed→Play→Start→Pause passed, EN/UK local listing checked. Existing runtime-owner checks do not claim every media blob integrity or full PWA cold launch.",
-        "Retained recovery packages are not yet a separate offline reinstallation entry. Preserve this as an explicit remaining item."
+        "Retained recovery packages are not yet a separate offline reinstallation entry. Preserve this as an explicit remaining item.",
+        "Local Installed draft1651 has47 distinct focused checks, full lint/validate and changed format passing; final per-entry failure fix independently reviewed. Eight full-format baseline files unchanged."
+      ],
+      "implementationSlices": [
+        {
+          "id": "local-installed",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1651",
+          "commit": "00d077bd278eb3eadbe632584ac4cfc4e51e206f",
+          "evidence": "Source review,47 focused tests/source gates and actual catalog-outage browser passed."
+        },
+        {
+          "id": "retained-recovery-entry",
+          "status": "developing",
+          "evidence": "Explicit F80 dependency. List retained packages offline; verify bytes/hash/family/runtime identity then reuse exact installation owner. Do not fabricate publication metadata or promise whole-media integrity from listing."
+        }
       ]
     },
     {
@@ -825,20 +845,21 @@
       "impact": "H/H",
       "effort": "**2–3d**",
       "featureId": "F80",
-      "status": "developing",
+      "status": "draft_review",
       "owner": "lane-b",
       "qualification": {
-        "automated": "not_run",
+        "automated": "focused_and_source_gates_passed",
         "browser": "not_run",
         "physical": "not_tested"
       },
       "blocker": "Explicit F79 integration dependency.",
-      "pr": null,
-      "commit": null,
-      "next": "Integrate complete Keep/default removal review on F79; review exact consequences, stale capabilities, focus and incomplete journal outcomes.",
+      "pr": "https://github.com/mekhovov/revealline/pull/1653",
+      "commit": "dfe5fcf45b1f7a05764855ef6b7817295b3cabc2",
+      "next": "Actual browser review of Keep/default and exact removal consequences; F79 follow-up will add offline retained recovery access.",
       "evidence": [
         "Draft implementation uses existing review capabilities; no new deletion primitive. Media/progress/recovery/local-copy consequences distinguished.",
-        "Offloaded edition disappears from current Installed filter; review must not promise offline reinstallation access before F79 recovery entry is delivered."
+        "Offloaded edition disappears from current Installed filter; review must not promise offline reinstallation access before F79 recovery entry is delivered.",
+        "69 focused checks, full lint/validate, changed format/diff passed. Independent source review passed. Browser and built/hardware checks pending."
       ]
     },
     {
@@ -925,13 +946,13 @@
       "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
-        "browser": "review_extraction_scoped_passed",
+        "browser": "guided_restore_and_extraction_scoped_passed",
         "physical": "not_tested"
       },
       "blocker": "Review/extraction draft stacks on F11a; guided application is a further complete slice.",
       "pr": "https://github.com/mekhovov/revealline/pull/1635",
       "commit": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5",
-      "next": "Actual browser review of guided apply, then dependent-stack admission after F11a/review predecessors.",
+      "next": "Admit reviewed stacks after F11a; nonempty asset/codec and physical restore remain separate.",
       "evidence": [
         "14 initial parser tests pass for bounded ZIP records/paths/counts, CRC and manifest hashes. UI/lifecycle review in progress.",
         "64 focused tests, full lint/validate and changed formatting pass; reader accepts the real 11679-byte F11a browser export with all five member hashes. Eight full-format baseline failures unchanged.",
@@ -949,8 +970,8 @@
           "id": "guided-apply",
           "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1646",
-          "commit": "2c9e4a9449420f78dc89023e720c7eb26632eece",
-          "evidence": "140 focused tests, full lint/validate and changed formatting passed. Independent source review verifies explicit per-component confirmation, order, partial/unconfirmed outcomes, generation ownership and actual commit reporting. Browser review pending; stack on1635."
+          "commit": "1e69df126b6de66dc756287b4ad34b882ea43b26",
+          "evidence": "140 focused tests, full lint/validate and changed formatting passed. Independent source review verifies explicit per-component confirmation, order, partial/unconfirmed outcomes, generation ownership and actual commit reporting. Browser review pending; stack on1635. Actual browser at2c9e4a: real11679-byte archive, cancel kept later steps locked, explicit pictures/stories/music/Journey reviews reached4/4 saved; closing clears temporary receipt and restores focus. Archive has zero originals/music/clears; no nonempty asset or device claim. Three surrounding copy issues found; narrow follow-up developing. Copy follow-up1e69df corrected guided help/selection/order/download receipt, preserving extraction-only wording.24 focused checks/full source gates and independent review passed."
         }
       ]
     },
@@ -1061,7 +1082,7 @@
       "blocker": "Native slice stacks on F15b menu1636; remaining hosts still open.",
       "pr": null,
       "commit": null,
-      "next": "Review Creator; correct shared Settings wording; add bounded Rooms owner. Do not mark the parent complete from partial host coverage.",
+      "next": "Complete optional 2D practice gym coverage; reconcile reviewed native/arcade/SIM/Creator/Rooms stacks. Hardware remains separate.",
       "evidence": [],
       "implementationSlices": [
         {
@@ -1090,19 +1111,26 @@
           "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1647",
           "commit": "d1911c737ca68344b50abd0feaeefc18a129e8a4",
-          "evidence": "49 menu/runtime/preset/policy and15 offline tests pass; actual installed-player model preserves paused checkpoint. Independent browser/source review pending; explicit SIM stack."
+          "evidence": "49 focused and15 offline tests; source review passed. Actual installed generated1px-fixture player at integrated4ff: Start→Pause→Settings preview0writes, Apply2, Undo4 restores original display/menu, Back preserves paused mission and Settings focus. Model also checks checkpoint equality; browser does not inspect hidden bytes."
         },
         {
           "id": "shared-preset-copy",
           "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1649",
           "commit": "0e269d7fe9a2085205ece25776f5417399a6617d",
-          "evidence": "18 shared/policy tests and full i18n passed. Accurate EN/UK success wording uses neutral individual-settings guidance; generated SIM projection checked. Independent review pending."
+          "evidence": "18 shared/policy tests and full i18n passed. Accurate EN/UK success wording uses neutral individual-settings guidance; generated SIM projection checked. Independent source review passed; actual Creator/Rooms show corrected text."
         },
         {
-          "id": "remaining-presets",
-          "status": "developing",
-          "evidence": "Assess Private Rooms and standalone company artifact owner; public company route inherits Solo. Shared success-copy correction follows reviewed hosts."
+          "id": "rooms-presets",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1650",
+          "commit": "4ff083b438d798a96f4daf7bbf82e7f10e00179e",
+          "evidence": "37 scoped tests/full source gates; independent source review passed. Actual UI with modeled paused transport: preview0 Apply2 Undo4; zero transport calls, original preferences restored. New Ukrainian preset controls fit320px. Older static English fixture labels are not a full-host translation qualification. No room joined."
+        },
+        {
+          "id": "optional-2d-gym-presets",
+          "status": "planned",
+          "evidence": "Broader reachability review found optional-practice/civilian-flight/app.mjs is a separate playable host with its own display owner. Explicit pending F06 slice; earlier all-host claim corrected."
         }
       ]
     },
@@ -1114,8 +1142,8 @@
       "impact": "H/H",
       "effort": "a **2–3d**; b **2–5d**, after a",
       "featureId": "F07",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-c",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -1124,8 +1152,10 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "Deliver revision-bound critical cue inventory, credit existing alternatives, then identify only demonstrated F07b gaps.",
+      "evidence": [
+        "Source audit on cb8dddd3 includes Capture, Team, Snake, Survival, SIM and optional 2D gym. Source/model/browser/listening evidence remains distinct."
+      ]
     },
     {
       "id": "F07b",
@@ -2664,6 +2694,11 @@
       "date": "2026-10-18",
       "item": "Delivery and local inventory review",
       "reason": "F81 merged;12 feature PRs ready,13 draft feature PRs. F78,arcade/SIM presets reviewed. Guided archive apply and Team have independent source reviews. F79 outage browser passed; isolated unavailable entries and retained-recovery access remain explicit."
+    },
+    {
+      "date": "2026-10-18",
+      "item": "F06/F11b/F79/F80",
+      "reason": "Guided restore and Creator/Rooms browser reviews complete within explicit fixture limits. Local inventory1651/removal1653 source gates passed. Added missed optional2D gym to remaining coverage; retained recovery continues."
     }
   ],
   "deliveryDependencies": [
@@ -2679,7 +2714,7 @@
   ],
   "deliverySnapshot": {
     "featurePRsReady": 12,
-    "featurePRsDraft": 13,
+    "featurePRsDraft": 18,
     "deliverablesMerged": 2,
     "verifiedLive": 0,
     "hardware": "unavailable"
