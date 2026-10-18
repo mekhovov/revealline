@@ -269,12 +269,12 @@
           "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L2288"
         },
         {
-          "path": "game/couch/coop-pilot-cues.mjs",
-          "line": 6,
-          "anchor": "drawPreparedPilotContact",
-          "blob": "ec346d9b746b58ba4078c68196683bfe7599ac90",
-          "sha256": "80835d801b96941728f449a84f52c6be36ccf27523bfa9d4437d50a42b26fe9a",
-          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/coop-pilot-cues.mjs#L6"
+          "path": "game/couch/coop-support-presentation.mjs",
+          "line": 81,
+          "anchor": "ctx.fillText(role === 'interceptor' ? 'I' : 'D', effect.x, effect.y);",
+          "blob": "b21509a9867e454ff1eaa60a15397a62369db931",
+          "sha256": "fa15bcfc3ad0268815f30c93521af8c165997f94eef271f53ac8555c08004335",
+          "url": "https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/coop-support-presentation.mjs#L81"
         }
       ],
       "evidence": {
