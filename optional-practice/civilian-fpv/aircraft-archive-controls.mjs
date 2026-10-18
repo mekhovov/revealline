@@ -89,9 +89,13 @@ export function mountAircraftArchiveControls({
       'Sessions save locally after flight begins, up to 32 MiB each, 128 MiB total and 16 sessions. Nothing is deleted automatically. Finish an archive to save its final segment; flying can continue. All aircraft archives are unscored.',
       'Сесії зберігаються на пристрої після початку польоту: до 32 МіБ кожна, 128 МіБ загалом і 16 сесій. Автоматичного видалення немає. Завершіть архів, щоб зберегти останній сегмент; політ можна продовжити. Усі архіви дронів без заліку.',
     );
-    const saved = context?.manifest;
+    const saved = context?.manifest,
+      reason =
+        context?.error === 'Aircraft archive storage is full; delete an archive to make space'
+          ? t(context.error, 'Сховище архівів заповнене; видаліть архів, щоб звільнити місце')
+          : context?.error;
     status.textContent = context?.error
-      ? `${t('Archive stopped; flying continues', 'Архівування зупинено; політ триває')}. ${t('Saved through', 'Збережено до')} ${clock(saved?.endTick)}. ${context.error}`
+      ? `${t('Archive stopped; flying continues', 'Архівування зупинено; політ триває')}. ${t('Saved through', 'Збережено до')} ${clock(saved?.endTick)}. ${reason}`
       : context?.stopped
         ? `${t('Archive finished through', 'Архів завершено до')} ${clock(saved?.endTick)}.`
         : saved
