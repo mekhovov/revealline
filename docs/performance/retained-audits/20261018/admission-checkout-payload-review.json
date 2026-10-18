@@ -1,0 +1,351 @@
+{
+  "format": "AppearanceCheckoutObservationV1",
+  "observedAt": "2026-10-18T20:08:42.682Z",
+  "repository": "mekhovov/revealline",
+  "pullRequest": 1619,
+  "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+  "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+  "originalFailureAudit": {
+    "gitBlob": "6c6465ec4c4ae46eee910c5dd956339d6ceee2b0",
+    "sha256": "1a116e0cd15c035759ee53ade6e3f56257e11b96e440119dc9cf9c3bd0d2a5d1"
+  },
+  "configuration": {
+    "workflowGitBlob": "3eba59c40de952d8353ee0ac487cf2382b88abde",
+    "checkoutAction": "actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+    "stepTimeoutMinutes": 3,
+    "fetchDepth": 1,
+    "fetchTags": false,
+    "submodules": false,
+    "lfs": false,
+    "filter": null,
+    "sparseCheckout": null,
+    "actualFetchCommand": "2026-10-18T19:15:10.4543731Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 0eef99dfa3fef571281b32d260c1b4d00efb625d"
+  },
+  "inventory": {
+    "endpoint": "git/trees/bcc6145844d909668cf09fc4e1da3fc7ca76893f?recursive=1",
+    "truncated": false,
+    "entries": 48131,
+    "logicalBlobBytes": 3407699451,
+    "uniqueBlobCount": 35734,
+    "uniqueBlobLogicalBytes": 3067097730,
+    "largestGroups": [
+      [
+        "authoring/library",
+        704025803
+      ],
+      [
+        "authoring/fpv-worlds",
+        549973750
+      ],
+      [
+        "publishing/pages-controller",
+        444996893
+      ],
+      [
+        "docs/verification",
+        349305508
+      ],
+      [
+        "game/content-design",
+        275300803
+      ],
+      [
+        "docs/qualification",
+        262342949
+      ],
+      [
+        "game/editions",
+        164867145
+      ],
+      [
+        "game/content",
+        127078569
+      ],
+      [
+        "docs/content-offline",
+        51048667
+      ],
+      [
+        "game/test",
+        46029511
+      ],
+      [
+        "docs/research",
+        45981286
+      ],
+      [
+        "docs/evidence",
+        40137582
+      ],
+      [
+        "game/ui",
+        33676532
+      ],
+      [
+        "game/presentation",
+        27824138
+      ],
+      [
+        "docs/concepts",
+        24609344
+      ],
+      [
+        "recovery/local-worktrees-20261009",
+        19563405
+      ],
+      [
+        "docs/flight-practice-repair-20261015",
+        16737646
+      ],
+      [
+        "authoring/industrial-art-review",
+        16323215
+      ],
+      [
+        "optional-practice/civilian-fpv",
+        16208730
+      ],
+      [
+        "game/audio",
+        15570798
+      ]
+    ],
+    "limitations": "Logical source bytes are not compressed pack or measured network transfer bytes; no wire byte count or root-cause proof is available."
+  },
+  "closureCounterexamples": [
+    {
+      "test": "game/test/journey-performance-admission.test.mjs",
+      "path": "authoring/library/sentinel-relay/proposedpack-source.json",
+      "use": "readFile for actual compilation fixture"
+    },
+    {
+      "test": "game/test/edition-mastery-host.test.mjs",
+      "path": "authoring/company-studio/reward-editor.mjs",
+      "use": "createStudioReward imported from actual authoring module"
+    }
+  ],
+  "selectedTestSourceReceipts": [
+    {
+      "path": "game/test/journey-performance-admission.test.mjs",
+      "gitBlob": "3e7cc14f83ca92318b15939a778cb09c15c99d3f",
+      "bytes": 41730,
+      "sha256": "13a53ec6d97ca25b09836fcfabc9fe4666725927f395d3c7682fd05ed8ebd970"
+    },
+    {
+      "path": "game/test/journey-performance-observation-admission.test.mjs",
+      "gitBlob": "fc2c4a04b271413380b024db7058843cc0476345",
+      "bytes": 44545,
+      "sha256": "ab86e1736637fa6342dac74ba01508d8dee0217134db6c21805ea750354926a5"
+    },
+    {
+      "path": "game/test/journey-profile-owned-transition.test.mjs",
+      "gitBlob": "1577f3916361de2bebf875202c65041b01e123ad",
+      "bytes": 8345,
+      "sha256": "72f079237ed6f0553317823bd42933084ccfd2402c7992fd4191aa60d22ef73b"
+    },
+    {
+      "path": "game/test/journey-required-progress-admission.test.mjs",
+      "gitBlob": "5a54beae655c1947b81d42c93ce9205c2a1871d8",
+      "bytes": 9242,
+      "sha256": "58712b291c588fa00989b7dcba2506a1455681fbb0fefda21432fa4346bd9e09"
+    },
+    {
+      "path": "game/test/solo-required-progress-preparation-host.test.mjs",
+      "gitBlob": "94235d1cc4f48e9d40afcca49d2eae7d92e71db6",
+      "bytes": 7391,
+      "sha256": "f8a25c1dc4fe7ca12fbcefbb7e3d1d5b5a2d49a7dde2ed2b0d232c42af958a81"
+    },
+    {
+      "path": "game/test/owned-recorder.test.mjs",
+      "gitBlob": "8879e1048ace4fce80577647d762e2830e36a711",
+      "bytes": 8585,
+      "sha256": "f194ab87f2cf619ca6a75aad656cf739d1c9058e1a685d794ff32f899ff62391"
+    },
+    {
+      "path": "game/test/demo-library-indexeddb.test.mjs",
+      "gitBlob": "8132409f950ba987ddf076dcdbf27864d2f83032",
+      "bytes": 17339,
+      "sha256": "b0b72b4b8235b17806d7b090cf222ca8f1b7c51d334a4a0648510d9c96304fa1"
+    },
+    {
+      "path": "game/test/optional-learning-admission.test.mjs",
+      "gitBlob": "aad8ef815811853c2d873eb7094e90cae5b035ad",
+      "bytes": 7806,
+      "sha256": "0bce0bd0d5883c314a7410c82fb7d11d1bef06b3c13c8d9b112d16400f121698"
+    },
+    {
+      "path": "game/test/optional-replay-admission.test.mjs",
+      "gitBlob": "70f41fb8a26ba7b1620c74799b1d066d909c1e38",
+      "bytes": 17475,
+      "sha256": "073a29464049ffa87bc9faf7cc9ba28b74e2eeebdebe07892be8a6226e8bd1b4"
+    },
+    {
+      "path": "game/test/solo-pending-verification-gameplay-host.test.mjs",
+      "gitBlob": "674134b4b2d520f02b5ac0b4711da5505fcac434",
+      "bytes": 12631,
+      "sha256": "1bb8ef80e31771875dc56c4d094338b9da8de99ee9896131289b2e6d4de5839e"
+    },
+    {
+      "path": "game/test/edition-mastery-host.test.mjs",
+      "gitBlob": "324f62653ba7663fbaccf8d4777bf93039342386",
+      "bytes": 6098,
+      "sha256": "4ac8f3d1e208963d5d1e1052ea49e22dda3fdcc1b2049b22a86d48edb1f2f28d"
+    },
+    {
+      "path": "game/test/edition-lessons.test.mjs",
+      "gitBlob": "2b81f02dea5f53b941dfe4add5c6ba8fa22f1c8b",
+      "bytes": 32091,
+      "sha256": "6fdd4ec48bc278e9430bae05fd5caa1101309ab9901510d24efc09ffef315ecc"
+    },
+    {
+      "path": "game/test/capture-presentation-session.test.mjs",
+      "gitBlob": "d2dee760de8de324837f2702a8feccde881ab5fe",
+      "bytes": 7505,
+      "sha256": "9ee4dcec64e1a3452882aa56ad5973e8d58aa74786e1ce358f12eeee5aff596f"
+    },
+    {
+      "path": "game/test/solo-dense-replay-persistence.test.mjs",
+      "gitBlob": "d3534b22e81b91c15f6d25b270900ce8decd3da7",
+      "bytes": 11648,
+      "sha256": "1e87debf991961ad07bbdf2673ace2617b87f49dab6fd10f6a06e18e573f3c8d"
+    },
+    {
+      "path": "game/test/library-entry.test.mjs",
+      "gitBlob": "2825ef497ddfa820a28d2295aa3b182f219a73a7",
+      "bytes": 8110,
+      "sha256": "948fd91b2d41e7b331296ee95863bc8673d96b4912a016c2829ab6c10f3ce9fa"
+    },
+    {
+      "path": "game/test/solo-lazy-library-host.test.mjs",
+      "gitBlob": "6720ff7d54489686d11a364dcc8c1a00eb541a0c",
+      "bytes": 2875,
+      "sha256": "94cbbb0bcc5c5b1914f6c2afb0ec4a18732a39399cf8728813ebe8de386fbcfe"
+    },
+    {
+      "path": "game/test/solo-transition-performance-host.test.mjs",
+      "gitBlob": "75e600d867639671301c5b0a6647992c8768cfe4",
+      "bytes": 8202,
+      "sha256": "65cd42e55ca8ff38e8c22d6baff661aa0aec4e8e08710c5ade1b7dd34c66daf5"
+    }
+  ],
+  "retry": {
+    "runId": 39155641633,
+    "attempt": 2,
+    "jobId": 117768841425,
+    "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "observedJob": {
+      "id": 117768841425,
+      "run_id": 39155641633,
+      "workflow_name": "Appearance preview",
+      "head_branch": "codex/solo-demanded-soundtrack-catalogue",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39155641633",
+      "run_attempt": 2,
+      "node_id": "CR_kwDOUYDvKM8AAAAba5Ho0Q",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117768841425",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/job/117768841425",
+      "status": "in_progress",
+      "conclusion": null,
+      "created_at": "2026-10-18T19:32:35Z",
+      "started_at": "2026-10-18T20:05:40Z",
+      "completed_at": null,
+      "name": "admission",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-18T20:05:41Z",
+          "completed_at": "2026-10-18T20:05:42Z"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-18T20:05:42Z",
+          "completed_at": "2026-10-18T20:06:40Z"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-18T20:06:40Z",
+          "completed_at": "2026-10-18T20:06:46Z"
+        },
+        {
+          "name": "Read exact-source admission policy",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-18T20:06:46Z",
+          "completed_at": "2026-10-18T20:06:46Z"
+        },
+        {
+          "name": "Install admission test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-18T20:06:46Z",
+          "completed_at": "2026-10-18T20:06:50Z"
+        },
+        {
+          "name": "Run complete optional-proof and saved-flight regressions",
+          "status": "in_progress",
+          "conclusion": null,
+          "number": 6,
+          "started_at": "2026-10-18T20:06:50Z",
+          "completed_at": null
+        },
+        {
+          "name": "Bind exact-source admission proof",
+          "status": "pending",
+          "conclusion": null,
+          "number": 7,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Retain admission proof and partial diagnostics",
+          "status": "pending",
+          "conclusion": null,
+          "number": 8,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "pending",
+          "conclusion": null,
+          "number": 15,
+          "started_at": null,
+          "completed_at": null
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "pending",
+          "conclusion": null,
+          "number": 16,
+          "started_at": null,
+          "completed_at": null
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117768841425",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000042544,
+      "runner_name": "GitHub Actions 1000042544",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    "status": "Checkout passed; real admission tests running at observation, no test-pass conclusion yet."
+  },
+  "conclusion": "First fetch timed out without a specific network error. Same-head single authorized retry passed checkout in 58 seconds. Full payload is a plausible contributor but not a proven sole cause. No changed checkout, deadline, source closure or retry was introduced.",
+  "references": [
+    "https://github.com/actions/checkout/blob/fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09/README.md"
+  ],
+  "verification": "Read-only API/source review; no local tests or game execution."
+}

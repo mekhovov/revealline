@@ -236,6 +236,66 @@
       "blob": "7f7677036b0d68fc47c96abef2a3e306b9b8fbc9",
       "bytes": 15228,
       "sha256": "d81a02bb57e481c7628808d07222e00c2d69f28bbfc8d2bd9183a7ef47a2866e"
+    },
+    {
+      "path": "trace4d28-company.json",
+      "blob": "19e294959e2245dfb52038f25fc2c6cf4cb154f2",
+      "bytes": 27281,
+      "sha256": "feaa04e9e827f1f8825514b1c6f74f7635dd345979415806d56e1df515dcc6d7"
+    },
+    {
+      "path": "source-policy-release-order.json",
+      "blob": "a03eddd69d5972465f06df1b071ec8726818952d",
+      "bytes": 7348,
+      "sha256": "91bb8a05192099466fbb0b4ce69508a7cf7f4a06fbcbe77ca0b703f9d85645e1"
+    },
+    {
+      "path": "catalogue0eef-recordings81.json",
+      "blob": "44e3ae1e25fd64e4d9374f34796682f621e3c092",
+      "bytes": 29810,
+      "sha256": "f29fe286f0f3e3a40680a99f15e232d27c7c74b3b80311e52bbbee2775215dd0"
+    },
+    {
+      "path": "admission-checkout-payload-review.json",
+      "blob": "004ddedc3373a441a4c2c40f430f7da2a0a917d9",
+      "bytes": 11821,
+      "sha256": "7f0072d230cd3635858a89112ea6bacc33123582a8f9368aeccb69009c30fd0d"
+    },
+    {
+      "path": "catalogue0eef-admission-retry170.json",
+      "blob": "d09e97b8246476f2d47b6696bcce84990a7728fa",
+      "bytes": 83552,
+      "sha256": "6f06a93a215c3c9523e2357faff68f81c1db40f2082b4443e8c06643a2d8cb64"
+    },
+    {
+      "path": "missionseb2-pages44.json",
+      "blob": "e851cbaba49ad4ef9228d5bcd18c4a7d8f94c269",
+      "bytes": 32724,
+      "sha256": "93fbe0ae737df672f5627b9a420e14ed30990b6679035ac572639ec88d11be00"
+    },
+    {
+      "path": "missionseb2-admission-team.json",
+      "blob": "ba1636b1a43cd00f55df1a761cf7c00d3ba89a20",
+      "bytes": 146223,
+      "sha256": "f6f391f4fbad3a5f4e357db16c02d5fcdcddfba1ede10431939e5a13a7ac39fb"
+    },
+    {
+      "path": "missionseb2-creator-presentation.json",
+      "blob": "ffe30d80a33432ca26c853d265eaeb8bdf20941b",
+      "bytes": 203244,
+      "sha256": "968cbf115e40be1b6d39ecccee72ad31ec1fc7959d0e991b994dec6d93495bb8"
+    },
+    {
+      "path": "missionseb2-gameplay.json",
+      "blob": "5a4f2aa416bb374a1bde1ca064cf073b14ee4938",
+      "bytes": 103488,
+      "sha256": "1db03102d0b799ebf2f8f24905d1e70198f443f2719e58220cbacf992e63e844"
+    },
+    {
+      "path": "trace4d28-four-industrial-cohorts.json",
+      "blob": "6b6ca10edffa09824a5bb45fbafc2e64223c041c",
+      "bytes": 322641,
+      "sha256": "1d81bc25b4c98c55879743055ef9708885820529f8b0323c92eb9af6077be613"
     }
   ]
 }

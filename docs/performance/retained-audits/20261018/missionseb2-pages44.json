@@ -1,0 +1,470 @@
+{
+  "format": "RevealLineRemoteSourceAuditV1",
+  "observedAt": "2026-10-18T19:56:43.789423+00:00",
+  "scope": "Complete hosted source controls only. Browser job is skipped on PR. This is not native Pages or performance acceptance.",
+  "run": {
+    "id": 39159253001,
+    "name": "Published Pages critical-flow smoke",
+    "node_id": "WFR_kwLOUYDvKM8AAAAJHhLICQ",
+    "head_branch": "codex/solo-missions-stage-observation",
+    "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+    "path": ".github/workflows/published-pages-smoke.yml",
+    "display_title": "Observe bounded Missions stages in published browser checks",
+    "run_number": 11,
+    "event": "pull_request",
+    "status": "completed",
+    "conclusion": "success",
+    "workflow_id": 388476216,
+    "check_suite_id": 106115660712,
+    "check_suite_node_id": "CS_kwDOUYDvKM8AAAAYtPx7qA",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253001",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159253001",
+    "pull_requests": [
+      {
+        "url": "https://api.github.com/repos/mekhovov/revealline/pulls/1620",
+        "id": 4911219448,
+        "number": 1620,
+        "head": {
+          "ref": "codex/solo-missions-stage-observation",
+          "sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "repo": {
+            "id": 1367404328,
+            "url": "https://api.github.com/repos/mekhovov/revealline",
+            "name": "revealline"
+          }
+        },
+        "base": {
+          "ref": "main",
+          "sha": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+          "repo": {
+            "id": 1367404328,
+            "url": "https://api.github.com/repos/mekhovov/revealline",
+            "name": "revealline"
+          }
+        }
+      }
+    ],
+    "created_at": "2026-10-18T19:32:44Z",
+    "updated_at": "2026-10-18T19:53:41Z",
+    "actor": {
+      "login": "mekhovov",
+      "id": 194539,
+      "node_id": "MDQ6VXNlcjE5NDUzOQ==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/194539?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mekhovov",
+      "html_url": "https://github.com/mekhovov",
+      "followers_url": "https://api.github.com/users/mekhovov/followers",
+      "following_url": "https://api.github.com/users/mekhovov/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mekhovov/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mekhovov/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mekhovov/subscriptions",
+      "organizations_url": "https://api.github.com/users/mekhovov/orgs",
+      "repos_url": "https://api.github.com/users/mekhovov/repos",
+      "events_url": "https://api.github.com/users/mekhovov/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mekhovov/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "run_attempt": 1,
+    "referenced_workflows": [],
+    "run_started_at": "2026-10-18T19:32:44Z",
+    "triggering_actor": {
+      "login": "mekhovov",
+      "id": 194539,
+      "node_id": "MDQ6VXNlcjE5NDUzOQ==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/194539?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/mekhovov",
+      "html_url": "https://github.com/mekhovov",
+      "followers_url": "https://api.github.com/users/mekhovov/followers",
+      "following_url": "https://api.github.com/users/mekhovov/following{/other_user}",
+      "gists_url": "https://api.github.com/users/mekhovov/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/mekhovov/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/mekhovov/subscriptions",
+      "organizations_url": "https://api.github.com/users/mekhovov/orgs",
+      "repos_url": "https://api.github.com/users/mekhovov/repos",
+      "events_url": "https://api.github.com/users/mekhovov/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/mekhovov/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "jobs_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253001/jobs",
+    "logs_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253001/logs",
+    "check_suite_url": "https://api.github.com/repos/mekhovov/revealline/check-suites/106115660712",
+    "artifacts_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253001/artifacts",
+    "cancel_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253001/cancel",
+    "rerun_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253001/rerun",
+    "previous_attempt_url": null,
+    "workflow_url": "https://api.github.com/repos/mekhovov/revealline/actions/workflows/388476216",
+    "head_commit": {
+      "id": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "tree_id": "759392eaf439256adeb19e521cac5c3585a1cc48",
+      "message": "fix(perf): refresh shared chooser projection for stage observations",
+      "timestamp": "2026-10-18T19:32:38Z",
+      "author": {
+        "name": "Oleksandr Mekhovov",
+        "email": "oleksandr.mekhovov@coupa.com"
+      },
+      "committer": {
+        "name": "Oleksandr Mekhovov",
+        "email": "oleksandr.mekhovov@coupa.com"
+      }
+    },
+    "repository": {
+      "id": 1367404328,
+      "node_id": "R_kgDOUYDvKA",
+      "name": "revealline",
+      "full_name": "mekhovov/revealline",
+      "private": false,
+      "owner": {
+        "login": "mekhovov",
+        "id": 194539,
+        "node_id": "MDQ6VXNlcjE5NDUzOQ==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/194539?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/mekhovov",
+        "html_url": "https://github.com/mekhovov",
+        "followers_url": "https://api.github.com/users/mekhovov/followers",
+        "following_url": "https://api.github.com/users/mekhovov/following{/other_user}",
+        "gists_url": "https://api.github.com/users/mekhovov/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/mekhovov/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/mekhovov/subscriptions",
+        "organizations_url": "https://api.github.com/users/mekhovov/orgs",
+        "repos_url": "https://api.github.com/users/mekhovov/repos",
+        "events_url": "https://api.github.com/users/mekhovov/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/mekhovov/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/mekhovov/revealline",
+      "description": "Reveal Line \u2014 a territory-capture arcade game",
+      "fork": false,
+      "url": "https://api.github.com/repos/mekhovov/revealline",
+      "forks_url": "https://api.github.com/repos/mekhovov/revealline/forks",
+      "keys_url": "https://api.github.com/repos/mekhovov/revealline/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/mekhovov/revealline/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/mekhovov/revealline/teams",
+      "hooks_url": "https://api.github.com/repos/mekhovov/revealline/hooks",
+      "issue_events_url": "https://api.github.com/repos/mekhovov/revealline/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/mekhovov/revealline/events",
+      "assignees_url": "https://api.github.com/repos/mekhovov/revealline/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/mekhovov/revealline/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/mekhovov/revealline/tags",
+      "blobs_url": "https://api.github.com/repos/mekhovov/revealline/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/mekhovov/revealline/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/mekhovov/revealline/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/mekhovov/revealline/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/mekhovov/revealline/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/mekhovov/revealline/languages",
+      "stargazers_url": "https://api.github.com/repos/mekhovov/revealline/stargazers",
+      "contributors_url": "https://api.github.com/repos/mekhovov/revealline/contributors",
+      "subscribers_url": "https://api.github.com/repos/mekhovov/revealline/subscribers",
+      "subscription_url": "https://api.github.com/repos/mekhovov/revealline/subscription",
+      "commits_url": "https://api.github.com/repos/mekhovov/revealline/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/mekhovov/revealline/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/mekhovov/revealline/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/mekhovov/revealline/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/mekhovov/revealline/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/mekhovov/revealline/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/mekhovov/revealline/merges",
+      "archive_url": "https://api.github.com/repos/mekhovov/revealline/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/mekhovov/revealline/downloads",
+      "issues_url": "https://api.github.com/repos/mekhovov/revealline/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/mekhovov/revealline/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/mekhovov/revealline/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/mekhovov/revealline/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/mekhovov/revealline/labels{/name}",
+      "releases_url": "https://api.github.com/repos/mekhovov/revealline/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/mekhovov/revealline/deployments"
+    },
+    "head_repository": {
+      "id": 1367404328,
+      "node_id": "R_kgDOUYDvKA",
+      "name": "revealline",
+      "full_name": "mekhovov/revealline",
+      "private": false,
+      "owner": {
+        "login": "mekhovov",
+        "id": 194539,
+        "node_id": "MDQ6VXNlcjE5NDUzOQ==",
+        "avatar_url": "https://avatars.githubusercontent.com/u/194539?v=4",
+        "gravatar_id": "",
+        "url": "https://api.github.com/users/mekhovov",
+        "html_url": "https://github.com/mekhovov",
+        "followers_url": "https://api.github.com/users/mekhovov/followers",
+        "following_url": "https://api.github.com/users/mekhovov/following{/other_user}",
+        "gists_url": "https://api.github.com/users/mekhovov/gists{/gist_id}",
+        "starred_url": "https://api.github.com/users/mekhovov/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/mekhovov/subscriptions",
+        "organizations_url": "https://api.github.com/users/mekhovov/orgs",
+        "repos_url": "https://api.github.com/users/mekhovov/repos",
+        "events_url": "https://api.github.com/users/mekhovov/events{/privacy}",
+        "received_events_url": "https://api.github.com/users/mekhovov/received_events",
+        "type": "User",
+        "user_view_type": "public",
+        "site_admin": false
+      },
+      "html_url": "https://github.com/mekhovov/revealline",
+      "description": "Reveal Line \u2014 a territory-capture arcade game",
+      "fork": false,
+      "url": "https://api.github.com/repos/mekhovov/revealline",
+      "forks_url": "https://api.github.com/repos/mekhovov/revealline/forks",
+      "keys_url": "https://api.github.com/repos/mekhovov/revealline/keys{/key_id}",
+      "collaborators_url": "https://api.github.com/repos/mekhovov/revealline/collaborators{/collaborator}",
+      "teams_url": "https://api.github.com/repos/mekhovov/revealline/teams",
+      "hooks_url": "https://api.github.com/repos/mekhovov/revealline/hooks",
+      "issue_events_url": "https://api.github.com/repos/mekhovov/revealline/issues/events{/number}",
+      "events_url": "https://api.github.com/repos/mekhovov/revealline/events",
+      "assignees_url": "https://api.github.com/repos/mekhovov/revealline/assignees{/user}",
+      "branches_url": "https://api.github.com/repos/mekhovov/revealline/branches{/branch}",
+      "tags_url": "https://api.github.com/repos/mekhovov/revealline/tags",
+      "blobs_url": "https://api.github.com/repos/mekhovov/revealline/git/blobs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/mekhovov/revealline/git/tags{/sha}",
+      "git_refs_url": "https://api.github.com/repos/mekhovov/revealline/git/refs{/sha}",
+      "trees_url": "https://api.github.com/repos/mekhovov/revealline/git/trees{/sha}",
+      "statuses_url": "https://api.github.com/repos/mekhovov/revealline/statuses/{sha}",
+      "languages_url": "https://api.github.com/repos/mekhovov/revealline/languages",
+      "stargazers_url": "https://api.github.com/repos/mekhovov/revealline/stargazers",
+      "contributors_url": "https://api.github.com/repos/mekhovov/revealline/contributors",
+      "subscribers_url": "https://api.github.com/repos/mekhovov/revealline/subscribers",
+      "subscription_url": "https://api.github.com/repos/mekhovov/revealline/subscription",
+      "commits_url": "https://api.github.com/repos/mekhovov/revealline/commits{/sha}",
+      "git_commits_url": "https://api.github.com/repos/mekhovov/revealline/git/commits{/sha}",
+      "comments_url": "https://api.github.com/repos/mekhovov/revealline/comments{/number}",
+      "issue_comment_url": "https://api.github.com/repos/mekhovov/revealline/issues/comments{/number}",
+      "contents_url": "https://api.github.com/repos/mekhovov/revealline/contents/{+path}",
+      "compare_url": "https://api.github.com/repos/mekhovov/revealline/compare/{base}...{head}",
+      "merges_url": "https://api.github.com/repos/mekhovov/revealline/merges",
+      "archive_url": "https://api.github.com/repos/mekhovov/revealline/{archive_format}{/ref}",
+      "downloads_url": "https://api.github.com/repos/mekhovov/revealline/downloads",
+      "issues_url": "https://api.github.com/repos/mekhovov/revealline/issues{/number}",
+      "pulls_url": "https://api.github.com/repos/mekhovov/revealline/pulls{/number}",
+      "milestones_url": "https://api.github.com/repos/mekhovov/revealline/milestones{/number}",
+      "notifications_url": "https://api.github.com/repos/mekhovov/revealline/notifications{?since,all,participating}",
+      "labels_url": "https://api.github.com/repos/mekhovov/revealline/labels{/name}",
+      "releases_url": "https://api.github.com/repos/mekhovov/revealline/releases{/id}",
+      "deployments_url": "https://api.github.com/repos/mekhovov/revealline/deployments"
+    }
+  },
+  "jobs": [
+    {
+      "id": 117768879817,
+      "run_id": 39159253001,
+      "workflow_name": "Published Pages critical-flow smoke",
+      "head_branch": "codex/solo-missions-stage-observation",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253001",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAba5J-yQ",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117768879817",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159253001/job/117768879817",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-18T19:32:45Z",
+      "started_at": "2026-10-18T19:53:20Z",
+      "completed_at": "2026-10-18T19:53:40Z",
+      "name": "source",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-18T19:53:21Z",
+          "completed_at": "2026-10-18T19:53:22Z"
+        },
+        {
+          "name": "Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-18T19:53:22Z",
+          "completed_at": "2026-10-18T19:53:24Z"
+        },
+        {
+          "name": "Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-18T19:53:24Z",
+          "completed_at": "2026-10-18T19:53:29Z"
+        },
+        {
+          "name": "Install source-control dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-18T19:53:29Z",
+          "completed_at": "2026-10-18T19:53:32Z"
+        },
+        {
+          "name": "Retain exact source identity",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-18T19:53:32Z",
+          "completed_at": "2026-10-18T19:53:32Z"
+        },
+        {
+          "name": "Complete source controls",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-18T19:53:32Z",
+          "completed_at": "2026-10-18T19:53:35Z"
+        },
+        {
+          "name": "Check only the new source and declaration style",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-18T19:53:35Z",
+          "completed_at": "2026-10-18T19:53:37Z"
+        },
+        {
+          "name": "Bound source evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-18T19:53:37Z",
+          "completed_at": "2026-10-18T19:53:37Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-18T19:53:37Z",
+          "completed_at": "2026-10-18T19:53:38Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-18T19:53:38Z",
+          "completed_at": "2026-10-18T19:53:38Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v4",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-18T19:53:38Z",
+          "completed_at": "2026-10-18T19:53:38Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-18T19:53:38Z",
+          "completed_at": "2026-10-18T19:53:38Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117768879817",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000042504,
+      "runner_name": "GitHub Actions 1000042504",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 117773566664,
+      "run_id": 39159253001,
+      "workflow_name": "Published Pages critical-flow smoke",
+      "head_branch": "codex/solo-missions-stage-observation",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253001",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAba9oCyA",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117773566664",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159253001/job/117773566664",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-10-18T19:53:40Z",
+      "started_at": "2026-10-18T19:53:40Z",
+      "completed_at": "2026-10-18T19:53:40Z",
+      "name": "browser",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117773566664",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ],
+  "artifact": {
+    "id": 12148821746,
+    "bytes": 3029,
+    "sha256": "ed24b09de18c709f98fa2fd69107c935eedd77934a3d12c9d6ed1db88e9f0da0",
+    "crcVerified": true
+  },
+  "source": {
+    "format": "RevealLinePagesSmokeSourceIdentityV1",
+    "revision": "513669732b51e55eafe734a431156057a4e6c5a9",
+    "tree": "2014f9d89c5e1627bf2fb9d3e10736fc58378b3b",
+    "node": "22.13.1",
+    "event": "pull_request",
+    "pullRequestHead": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+    "pullRequestBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+    "runId": "39159253001",
+    "attempt": "1",
+    "scope": "Identity only. Complete TAP and job conclusion establish the source-control result."
+  },
+  "sourceReceiptSha256": "df29a5a8664e9cbe07aca6f62d96b08e12dbd5d27c49ef6e70d4db2a203a9947",
+  "controls": {
+    "bytes": 9990,
+    "sha256": "847d24e50aa5dab87884e5b4087a4968485d12fd6730628b90b07e70a99f1d66",
+    "tap": "TAP version 13\n# Subtest: fixed policy and dispatch refuse widened limits, remote inputs and missing credentials\nok 1 - fixed policy and dispatch refuse widened limits, remote inputs and missing credentials\n  ---\n  duration_ms: 16.912617\n  ...\n# Subtest: known credential is removed from nested errors, encoded call logs, keys and URLs\nok 2 - known credential is removed from nested errors, encoded call logs, keys and URLs\n  ---\n  duration_ms: 0.939216\n  ...\n# Subtest: diagnostics retain bounded redacted failures and never serialize console arguments\nok 3 - diagnostics retain bounded redacted failures and never serialize console arguments\n  ---\n  duration_ms: 0.775722\n  ...\n# Subtest: public binding checks exact deployed source and all five critical bytes\nok 4 - public binding checks exact deployed source and all five critical bytes\n  ---\n  duration_ms: 7.885463\n  ...\n# Subtest: wrong source, changed payload, duplicate inventory and oversized metadata fail before browser admission\nok 5 - wrong source, changed payload, duplicate inventory and oversized metadata fail before browser admission\n  ---\n  duration_ms: 6.600044\n  ...\n# Subtest: global operation deadline cannot renew or authorize later work\nok 6 - global operation deadline cannot renew or authorize later work\n  ---\n  duration_ms: 9.150223\n  ...\n# Subtest: fresh observer admits ordinary authentication and closes context before browser\nok 7 - fresh observer admits ordinary authentication and closes context before browser\n  ---\n  duration_ms: 6.944504\n  ...\n# Subtest: both fixed desktop engines are labelled and unknown/mismatched engines are refused\nok 8 - both fixed desktop engines are labelled and unknown/mismatched engines are refused\n  ---\n  duration_ms: 12.073044\n  ...\n# Subtest: redirected or changed credential document cannot receive a fill or submission\nok 9 - redirected or changed credential document cannot receive a fill or submission\n  ---\n  duration_ms: 4.24092\n  ...\n# Subtest: authentication failure retains safe evidence and never enters public flows\nok 10 - authentication failure retains safe evidence and never enters public flows\n  ---\n  duration_ms: 10.323503\n  ...\n# Subtest: unexpected initial page or unclosed Solo page cannot be accepted\nok 11 - unexpected initial page or unclosed Solo page cannot be accepted\n  ---\n  duration_ms: 6.476475\n  ...\n# Subtest: initial context failure still closes the launched browser\nok 12 - initial context failure still closes the launched browser\n  ---\n  duration_ms: 3.71874\n  ...\n# Subtest: partial public failure cannot advance to shared navigation\nok 13 - partial public failure cannot advance to shared navigation\n  ---\n  duration_ms: 3.768663\n  ...\n# Subtest: late diagnostics, deployment changes and either cleanup failure cannot become a pass\nok 14 - late diagnostics, deployment changes and either cleanup failure cannot become a pass\n  ---\n  duration_ms: 18.99026\n  ...\n# Subtest: missing credential fails before browser launch\nok 15 - missing credential fails before browser launch\n  ---\n  duration_ms: 0.352545\n  ...\n# Subtest: actual Solo driver starts directly before Missions, then uses Resume and restored Settings\nok 16 - actual Solo driver starts directly before Missions, then uses Resume and restored Settings\n  ---\n  duration_ms: 4.068079\n  ...\n# Subtest: actual Solo driver refuses ambiguous selection and a clock moving during Pause\nok 17 - actual Solo driver refuses ambiguous selection and a clock moving during Pause\n  ---\n  duration_ms: 3.044316\n  ...\n# Subtest: phase waiter rejects a late successful Home read before taking any public action\nok 18 - phase waiter rejects a late successful Home read before taking any public action\n  ---\n  duration_ms: 0.352025\n  ...\n# Subtest: owner assessment rejects closed-looking reports with every failed closure boundary\nok 19 - owner assessment rejects closed-looking reports with every failed closure boundary\n  ---\n  duration_ms: 6.773787\n  ...\n# Subtest: actual owner launcher redacts private child output and does not forward unrelated secrets\nok 20 - actual owner launcher redacts private child output and does not forward unrelated secrets\n  ---\n  duration_ms: 12.686834\n  ...\n# Subtest: actual owner launcher retains failures, partial reports and changed-source refusal\nok 21 - actual owner launcher retains failures, partial reports and changed-source refusal\n  ---\n  duration_ms: 19.729617\n  ...\n# Subtest: real owned child deadline is failed cleanup authority, never a successful smoke\nok 22 - real owned child deadline is failed cleanup authority, never a successful smoke\n  ---\n  duration_ms: 1720.76034\n  ...\n# Subtest: actual child import failure produces only a redacted bounded failure envelope\nok 23 - actual child import failure produces only a redacted bounded failure envelope\n  ---\n  duration_ms: 35.603847\n  ...\n# Subtest: fixed workflow separates PR source checks from secret-bearing main-only browser execution\nok 24 - fixed workflow separates PR source checks from secret-bearing main-only browser execution\n  ---\n  duration_ms: 3.409054\n  ...\n# Subtest: both exact jobs contain the actual Linux owner import and direct-read closure\nok 25 - both exact jobs contain the actual Linux owner import and direct-read closure\n  ---\n  duration_ms: 451.921714\n  ...\n# Subtest: serialized passive observer retains coalesced Start and Pause plus real window lifecycle\nok 26 - serialized passive observer retains coalesced Start and Pause plus real window lifecycle\n  ---\n  duration_ms: 2.072358\n  ...\n# Subtest: passive ring preserves initial Start/Pause and latest events with explicit bounded omission\nok 27 - passive ring preserves initial Start/Pause and latest events with explicit bounded omission\n  ---\n  duration_ms: 1.118221\n  ...\n# Subtest: observer ignores unchanged labels and records invalid clock without inventing timing\nok 28 - observer ignores unchanged labels and records invalid clock without inventing timing\n  ---\n  duration_ms: 0.868749\n  ...\n# Subtest: actual public diagnostic getter reads warning/preparation only and never keeps a truncated secret prefix\nok 29 - actual public diagnostic getter reads warning/preparation only and never keeps a truncated secret prefix\n  ---\n  duration_ms: 1.160079\n  ...\n# Subtest: console diagnostic text is redacted before truncation and inaccessible text does not throw\nok 30 - console diagnostic text is redacted before truncation and inaccessible text does not throw\n  ---\n  duration_ms: 0.436197\n  ...\n# Subtest: failed Solo flow retains final public warning before cleanup without replacing its primary failure\nok 31 - failed Solo flow retains final public warning before cleanup without replacing its primary failure\n  ---\n  duration_ms: 8.577485\n  ...\n# Subtest: missing, overflowed or clock-invalid public evidence cannot pass otherwise complete controls\nok 32 - missing, overflowed or clock-invalid public evidence cannot pass otherwise complete controls\n  ---\n  duration_ms: 6.529743\n  ...\n# Subtest: final evidence deadline stops later reads and rejects late result retention\nok 33 - final evidence deadline stops later reads and rejects late result retention\n  ---\n  duration_ms: 1.957686\n  ...\n# Subtest: a Direct Start returning to paused remains failure without automatic Resume or extra public actions\nok 34 - a Direct Start returning to paused remains failure without automatic Resume or extra public actions\n  ---\n  duration_ms: 25.526714\n  ...\n# Subtest: late first Start and Pause retain reserved slots after earlier lifecycle overflow\nok 35 - late first Start and Pause retain reserved slots after earlier lifecycle overflow\n  ---\n  duration_ms: 1.332979\n  ...\n# Subtest: actual early-success evidence timeout cannot overwrite the final failed-flow observation\nok 36 - actual early-success evidence timeout cannot overwrite the final failed-flow observation\n  ---\n  duration_ms: 5.317618\n  ...\n# Subtest: Missions pending stage is retained in the host before a failed final page read\nok 37 - Missions pending stage is retained in the host before a failed final page read\n  ---\n  duration_ms: 0.875411\n  ...\n# Subtest: Missions transport keeps cancelled and overlapping opening sequences separate\nok 38 - Missions transport keeps cancelled and overlapping opening sequences separate\n  ---\n  duration_ms: 0.940793\n  ...\n# Subtest: Missions transport rejects truncation, spoofed source, wrong document and scalar identity mutations without retaining raw text\nok 39 - Missions transport rejects truncation, spoofed source, wrong document and scalar identity mutations without retaining raw text\n  ---\n  duration_ms: 1.091111\n  ...\n# Subtest: Missions host retention keeps first and tail within64 and refuses missing/order/clock evidence\nok 40 - Missions host retention keeps first and tail within64 and refuses missing/order/clock evidence\n  ---\n  duration_ms: 2.782634\n  ...\n# Subtest: fixed diagnostic mode changes only the initial Solo URL and labels both browser and owner evidence\nok 41 - fixed diagnostic mode changes only the initial Solo URL and labels both browser and owner evidence\n  ---\n  duration_ms: 20.45047\n  ...\n# Subtest: Missions mode refuses absent, invalid, pending, failed and cancelled outcomes before shared actions\nok 42 - Missions mode refuses absent, invalid, pending, failed and cancelled outcomes before shared actions\n  ---\n  duration_ms: 14.857029\n  ...\n# Subtest: actual owner launcher binds its fixed diagnostic argument and independently refuses incomplete or relabelled reports\nok 43 - actual owner launcher binds its fixed diagnostic argument and independently refuses incomplete or relabelled reports\n  ---\n  duration_ms: 14.721625\n  ...\n# Subtest: diagnostic URL retains exact document checks at both credential boundaries\nok 44 - diagnostic URL retains exact document checks at both credential boundaries\n  ---\n  duration_ms: 4.97859\n  ...\n1..44\n# tests 44\n# suites 0\n# pass 44\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 2564.7182\n"
+  },
+  "mergeIdentity": {
+    "sha": "513669732b51e55eafe734a431156057a4e6c5a9",
+    "tree": "2014f9d89c5e1627bf2fb9d3e10736fc58378b3b",
+    "parents": [
+      "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    ]
+  },
+  "headToExecution": {
+    "status": "ahead",
+    "aheadBy": 5,
+    "behindBy": 0,
+    "files": [
+      {
+        "filename": "game/test/profile-recovery-dialog.test.mjs",
+        "status": "modified",
+        "sha": "a1a0fb1e4ecd436e6769a0cc8cb59eef6503b058"
+      },
+      {
+        "filename": "game/test/profile-recovery-settings-host.test.mjs",
+        "status": "modified",
+        "sha": "065a3d8d49fa27799bcd337f4d369e7fe98ff71a"
+      },
+      {
+        "filename": "game/test/steamdeck-menu-confirm-host.test.mjs",
+        "status": "modified",
+        "sha": "6686e9893ab1944e0f38173b8b5c76d9408c885d"
+      },
+      {
+        "filename": "game/test/steamdeck-menu-confirm-race-host.test.mjs",
+        "status": "modified",
+        "sha": "6f1c8ebf18fdff55d8dc0737392ac09c1fb466fa"
+      },
+      {
+        "filename": "game/ui/profile-recovery-dialog.mjs",
+        "status": "modified",
+        "sha": "d365bbfea3eca77a1fa6371be3158d1b37e725cd"
+      }
+    ]
+  }
+}

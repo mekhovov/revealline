@@ -1,0 +1,849 @@
+{
+  "at": "2026-10-18T20:06:16.933726+00:00",
+  "runId": 39159252989,
+  "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+  "scope": "Completed exact-head software regressions only; remaining cohorts and all native/performance gates are separate.",
+  "cohorts": [
+    {
+      "phase": "creator",
+      "artifact": {
+        "id": 12148767932,
+        "node_id": "MDg6QXJ0aWZhY3QxMjE0ODc2NzkzMg==",
+        "name": "industrial-creator-eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "size_in_bytes": 16129,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12148767932",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12148767932/zip",
+        "expired": false,
+        "digest": "sha256:4f9ce9e253a3649e09b08c869bd93efd2e4a47c7e8f9b205c6b71167092cd80c",
+        "created_at": "2026-10-18T20:00:47Z",
+        "updated_at": "2026-10-18T20:00:47Z",
+        "expires_at": "2026-11-01T20:00:46Z",
+        "workflow_run": {
+          "id": 39159252989,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/solo-missions-stage-observation",
+          "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+        }
+      },
+      "job": {
+        "id": 117768882300,
+        "run_id": 39159252989,
+        "workflow_name": "Industrial feature verification",
+        "head_branch": "codex/solo-missions-stage-observation",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159252989",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAba5KIfA",
+        "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117768882300",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882300",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-18T19:32:46Z",
+        "started_at": "2026-10-18T19:56:55Z",
+        "completed_at": "2026-10-18T20:00:49Z",
+        "name": "feature (creator)",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T19:56:56Z",
+            "completed_at": "2026-10-18T19:56:56Z"
+          },
+          {
+            "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T19:56:56Z",
+            "completed_at": "2026-10-18T19:57:44Z"
+          },
+          {
+            "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T19:57:44Z",
+            "completed_at": "2026-10-18T19:57:49Z"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T19:57:49Z",
+            "completed_at": "2026-10-18T19:57:53Z"
+          },
+          {
+            "name": "Install pinned SIM host-test dependencies",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 5,
+            "started_at": "2026-10-18T19:57:53Z",
+            "completed_at": "2026-10-18T19:57:53Z"
+          },
+          {
+            "name": "Verify the phase runner and restored policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T19:57:53Z",
+            "completed_at": "2026-10-18T19:57:56Z"
+          },
+          {
+            "name": "Verify multiplayer delivery and observation tools",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 7,
+            "started_at": "2026-10-18T19:57:56Z",
+            "completed_at": "2026-10-18T19:57:56Z"
+          },
+          {
+            "name": "Execute the feature phase on the exact PR head",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T19:57:56Z",
+            "completed_at": "2026-10-18T20:00:46Z"
+          },
+          {
+            "name": "Retain TAP and source-bound receipts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-18T20:00:46Z",
+            "completed_at": "2026-10-18T20:00:47Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T20:00:47Z",
+            "completed_at": "2026-10-18T20:00:47Z"
+          },
+          {
+            "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-18T20:00:47Z",
+            "completed_at": "2026-10-18T20:00:47Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-18T20:00:47Z",
+            "completed_at": "2026-10-18T20:00:47Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117768882300",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000042512,
+        "runner_name": "GitHub Actions 1000042512",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      "crcVerified": true,
+      "runReceipt": {
+        "format": "revealline-industrial-test-run.v1",
+        "source": {
+          "revision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "tree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+            "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+            "files": 44776,
+            "bytes": 3407721337,
+            "aggregateSha256": "70138943a3aa182f9a64a7db31ef06ac6e6b73339c5c560c144b27d878e1c106",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "selected": "creator",
+        "phases": [
+          "creator"
+        ],
+        "startedAt": "2026-10-18T19:58:31.080Z",
+        "finishedAt": "2026-10-18T20:00:46.691Z",
+        "status": "passed"
+      },
+      "phaseReceipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "creator",
+        "startedAt": "2026-10-18T19:58:31.081Z",
+        "finishedAt": "2026-10-18T20:00:46.690Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "tree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+            "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+            "files": 44776,
+            "bytes": 3407721337,
+            "aggregateSha256": "70138943a3aa182f9a64a7db31ef06ac6e6b73339c5c560c144b27d878e1c106",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/company-studio-build.test.mjs",
+          "game/test/solo-database.test.mjs",
+          "game/test/motion-lab-shared-actor.test.mjs",
+          "game/test/motion-lab-display-host.test.mjs",
+          "game/test/studio-pursuit-editor.test.mjs",
+          "game/test/studio-pursuit-preview.test.mjs",
+          "game/test/fpv-native-pursuit-editor.test.mjs",
+          "game/test/fpv-world-contact-hunt-editor.test.mjs",
+          "game/test/snake-studio-preview.test.mjs",
+          "game/test/snake-studio-launch.test.mjs",
+          "game/test/team-installed-host.test.mjs",
+          "game/test/team-installed-media-results-host.test.mjs",
+          "game/test/asset-studio-return.test.mjs",
+          "game/test/asset-studio-actor-animation.test.mjs",
+          "game/test/asset-studio-preview-motion.test.mjs",
+          "game/test/classic-community-package.test.mjs",
+          "game/test/installed-team-presentation.test.mjs",
+          "game/test/fpv-world-editor-appearance.test.mjs",
+          "game/test/creator-player-navigation.test.mjs",
+          "game/test/creator-storage-retention.test.mjs",
+          "game/test/overflight-project.test.mjs",
+          "game/test/overflight-content.test.mjs",
+          "game/test/overflight-reuse.test.mjs",
+          "game/test/overflight-community.test.mjs",
+          "game/test/overflight-studio.test.mjs",
+          "game/test/overflight-riy-project.test.mjs",
+          "game/test/overflight-riy-community.test.mjs",
+          "game/test/overflight-balance-integration.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/company-studio-build.test.mjs",
+            "sha256": "0bf1fb0c7fbfe2b95fe50db0ac832a8411663b504fd1b2f317f480c4f33f5a72"
+          },
+          {
+            "file": "game/test/solo-database.test.mjs",
+            "sha256": "a7226b30dfd38996098dc00f11c79d0b49411dbc70dcd998b01b693b3c717919"
+          },
+          {
+            "file": "game/test/motion-lab-shared-actor.test.mjs",
+            "sha256": "559cd945cdb848e000e78e9092588ed8da230d2f379c6d4a8e69c4413cbac827"
+          },
+          {
+            "file": "game/test/motion-lab-display-host.test.mjs",
+            "sha256": "f8600a35fca4cbbe365bd0b442b12c277706948719f1a771e39a3bc7ff33f3ee"
+          },
+          {
+            "file": "game/test/studio-pursuit-editor.test.mjs",
+            "sha256": "1d01ede61d47b748e33ad0dfe28be546cedadabe3e1f401d2e554c9ba0c9df64"
+          },
+          {
+            "file": "game/test/studio-pursuit-preview.test.mjs",
+            "sha256": "99e58e4a97af014aabca00d1581f7548adcb2e52db4d226cfbb1f130ae32640f"
+          },
+          {
+            "file": "game/test/fpv-native-pursuit-editor.test.mjs",
+            "sha256": "7b0c0785800d7c0a350d73efe93827f2e8a72649376cd955f01df8e887dbf61e"
+          },
+          {
+            "file": "game/test/fpv-world-contact-hunt-editor.test.mjs",
+            "sha256": "beb358a17f40b6d4b74c5527b7740d6893d2a76d9d3a62d8874c827f3d8a5a57"
+          },
+          {
+            "file": "game/test/snake-studio-preview.test.mjs",
+            "sha256": "24a17b0e4862445a88851988915e7b7f8cbc6acf988a6eef38c147074ecaf685"
+          },
+          {
+            "file": "game/test/snake-studio-launch.test.mjs",
+            "sha256": "32dfa0d8207e74644deb39086ebe6926e025ba8338ff6b420efd9fd9f3025edd"
+          },
+          {
+            "file": "game/test/team-installed-host.test.mjs",
+            "sha256": "aaa063026692a7fff1d1d0e7427af26422acdb0beeb7692dbe9e8bd32d68a222"
+          },
+          {
+            "file": "game/test/team-installed-media-results-host.test.mjs",
+            "sha256": "eb0d9aa2f2e563e81acc65ba1e475dfee1109ae28c46b4d3c93706c53cb091c2"
+          },
+          {
+            "file": "game/test/asset-studio-return.test.mjs",
+            "sha256": "d3ccd3eb84389f43e23dca5fa76e3b9a35c157def704884964a42f9b26c5f5e8"
+          },
+          {
+            "file": "game/test/asset-studio-actor-animation.test.mjs",
+            "sha256": "c14e7f91050cccd4f40d9334e6bc6077485532c808df472ed519faa3e04aa05e"
+          },
+          {
+            "file": "game/test/asset-studio-preview-motion.test.mjs",
+            "sha256": "e1d147d7655adffe0375f286403506437df675ae29f0efd6d9a1b58dffbd5a65"
+          },
+          {
+            "file": "game/test/classic-community-package.test.mjs",
+            "sha256": "587f26bd06305ad8d672310aa59a5a3580f75ef701de85b5f6681eec2a71bd91"
+          },
+          {
+            "file": "game/test/installed-team-presentation.test.mjs",
+            "sha256": "84e4fd5e0d4524c0bca51d608731913ea097694259f5b8c5f1f4b66776a19e10"
+          },
+          {
+            "file": "game/test/fpv-world-editor-appearance.test.mjs",
+            "sha256": "4453747b40122a14a673658ec45b710efb564d641a1154afe50fe755148f4298"
+          },
+          {
+            "file": "game/test/creator-player-navigation.test.mjs",
+            "sha256": "8c8c43f0d27f23c01f8c2982e63ec9e829f02b96686ef5479d51dbd148417781"
+          },
+          {
+            "file": "game/test/creator-storage-retention.test.mjs",
+            "sha256": "80d1bda14f04fc184c1d3908ecb768fd847633bef63567165643154e74064c7a"
+          },
+          {
+            "file": "game/test/overflight-project.test.mjs",
+            "sha256": "2aaa3d5b21a68839429b3bf4b2de00a516c5459c81d4e0d929dcda83d3970697"
+          },
+          {
+            "file": "game/test/overflight-content.test.mjs",
+            "sha256": "607f425ef29fd299a4e064b9229de01b82dd43b9444f607935e8edfe1feaf077"
+          },
+          {
+            "file": "game/test/overflight-reuse.test.mjs",
+            "sha256": "903c32060a406a9238c7e0c20abbae01e85416353e989accbfe18d5a9915e119"
+          },
+          {
+            "file": "game/test/overflight-community.test.mjs",
+            "sha256": "486a5241d87b5797358a9a654381946075d931f97734af6e1702b0ebcacc2df9"
+          },
+          {
+            "file": "game/test/overflight-studio.test.mjs",
+            "sha256": "c23bd48d961291f560574a5c7862deee5efe67f584032595baef94b708c399d2"
+          },
+          {
+            "file": "game/test/overflight-riy-project.test.mjs",
+            "sha256": "46165a51c78d42911a3852ca7ca1379de01a8fe1c87705b121f5376a937832b7"
+          },
+          {
+            "file": "game/test/overflight-riy-community.test.mjs",
+            "sha256": "8f9f272f8a2a086ed063b39d49cd74adc210c52942aaac17ed8376e0ea64bf27"
+          },
+          {
+            "file": "game/test/overflight-balance-integration.test.mjs",
+            "sha256": "896080ff2c02d7370b53d531df99ca3a5c022c938588492fea2a5fa51e4670b4"
+          }
+        ],
+        "logSha256": "85f5c915d81896931743c4338f84075c32716636312ab21c71237966285d4d49",
+        "logReadError": null,
+        "summary": {
+          "tests": 259,
+          "pass": 259,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": "TAP version 13\n# Subtest: animation edits cannot cross immutable collection ownership even when slot/revision names match\nok 1 - animation edits cannot cross immutable collection ownership even when slot/revision names match\n  ---\n  duration_ms: 1.395293\n  type: 'test'\n  ...\n# Subtest: Studio refresh and disposal release preview leases and refuse a stale Stage\nok 2 - Studio refresh and disposal release preview leases and refuse a stale Stage\n  ---\n  duration_ms: 9.268904\n  type: 'test'\n  ...\n# Subtest: closing a pending animation preview retires its reservation when decoding finishes\nok 3 - closing a pending animation preview retires its reservation when decoding finishes\n  ---\n  duration_ms: 2.770981\n  type: 'test'\n  ...\n# Subtest: animation preview backing storage is accounted, released on collapse and recreated on explicit preview\nok 4 - animation preview backing storage is accounted, released on collapse and recreated on explicit preview\n  ---\n  duration_ms: 3.793629\n  type: 'test'\n  ...\n# Subtest: narrow Studio panels wrap pooled specimens without shrinking labelled native actor sizes\nok 5 - narrow Studio panels wrap pooled specimens without shrinking labelled native actor sizes\n  ---\n  duration_ms: 2.918986\n  type: 'test'\n  ...\n# Subtest: a nearly full page refuses the animation canvas before decoding an atlas and recovers after offload\nok 6 - a nearly full page refuses the animation canvas before decoding an atlas and recovers after offload\n  ---\n  duration_ms: 5.721825\n  type: 'test'\n  ...\n# Subtest: rapid animation owner replacement waits for the old codec without losing the new preview\nok 7 - rapid animation owner replacement waits for the old codec without losing the new preview\n  ---\n  duration_ms: 4.411641\n  type: 'test'\n  ...\n# Subtest: a retired animation decoder failure cannot replace the new owner with an error\nok 8 - a retired animation decoder failure cannot replace the new owner with an error\n  ---\n  duration_ms: 4.642402\n  type: 'test'\n  ...\n# Subtest: paired animated context previews share the page atlas and release both owners exactly once\nok 9 - paired animated context previews share the page atlas and release both owners exactly once\n  ---\n  duration_ms: 1.679213\n  type: 'test'\n  ...\n# Subtest: closing a Studio crop rejects immediately but preserves the source until its codec settles\nok 10 - closing a Studio crop rejects immediately but preserves the source until its codec settles\n  ---\n  duration_ms: 2.592907\n  type: 'test'\n  ...\n# Subtest: one preview can close before a shared crop starts without rejecting the surviving preview\nok 11 - one preview can close before a shared crop starts without rejecting the surviving preview\n  ---\n  duration_ms: 1.267305\n  type: 'test'\n  ...\n# Subtest: Studio clip selection reaches the procedural sampler with stationary warning/recovery pose vocabulary\nok 12 - Studio clip selection reaches the procedural sampler with stationary warning/recovery pose vocabulary\n  ---\n  duration_ms: 4.06768\n  type: 'test'\n  ...\n# Subtest: Studio follows an explicit overhead review link while preserving its historical default\nok 13 - Studio follows an explicit overhead review link while preserving its historical default\n  ---\n  duration_ms: 5.143336\n  type: 'test'\n  ...\n# Subtest: Studio can scrub to the last frame of a maximum-duration admitted atlas clip\nok 14 - Studio can scrub to the last frame of a maximum-duration admitted atlas clip\n  ---\n  duration_ms: 4.150224\n  type: 'test'\n  ...\n# Subtest: Studio offers only admitted clips and replaces a removed optional selection with labelled Idle\nok 15 - Studio offers only admitted clips and replaces a removed optional selection with labelled Idle\n  ---\n  duration_ms: 3.602291\n  type: 'test'\n  ...\n# Subtest: live reduction pauses preview frames and resumes a retained Playing choice without a time jump\nok 16 - live reduction pauses preview frames and resumes a retained Playing choice without a time jump\n  ---\n  duration_ms: 2.994537\n  type: 'test'\n  ...\n# Subtest: Paused inspection remains paused through both cap transitions and redraws essential state\nok 17 - Paused inspection remains paused through both cap transitions and redraws essential state\n  ---\n  duration_ms: 0.312483\n  type: 'test'\n  ...\n# Subtest: local Reduced inspection keeps its own cap when shared reduction is released\nok 18 - local Reduced inspection keeps its own cap when shared reduction is released\n  ---\n  duration_ms: 0.247712\n  type: 'test'\n  ...\n# Subtest: text-only preference updates preserve the pending frame and animation clock\nok 19 - text-only preference updates preserve the pending frame and animation clock\n  ---\n  duration_ms: 0.31077\n  type: 'test'\n  ...\n# Subtest: retiring a preview cancels its frame, removes its observer and fences an already queued callback\nok 20 - retiring a preview cancels its frame, removes its observer and fences an already queued callback\n  ---\n  duration_ms: 0.184544\n  type: 'test'\n  ...\n# Subtest: an already retired owner never subscribes or paints\nok 21 - an already retired owner never subscribes or paints\n  ---\n  duration_ms: 0.17713\n  type: 'test'\n  ...\n# Subtest: standalone callers observe live system reduction and release the media listener on cleanup\nok 22 - standalone callers observe live system reduction and release the media listener on cleanup\n  ---\n  duration_ms: 0.356095\n  type: 'test'\n  ...\n# Subtest: a synchronous initial draw can retire its owner without leaving the just-created subscription\nok 23 - a synchronous initial draw can retire its owner without leaving the just-created subscription\n  ---\n  duration_ms: 0.210753\n  type: 'test'\n  ...\n# Subtest: a cap change during drawing cannot queue an obsolete frame alongside its replacement\nok 24 - a cap change during drawing cannot queue an obsolete frame alongside its replacement\n  ---\n  duration_ms: 0.506425\n  type: 'test'\n  ...\n# Subtest: unavailable system-query capability retains local playback and its cleanup\nok 25 - unavailable system-query capability retains local playback and its cleanup\n  ---\n  duration_ms: 0.478753\n  type: 'test'\n  ...\n# Subtest: a queued callback from before a cap transition cannot replace or consume the resumed frame\nok 26 - a queued callback from before a cap transition cannot replace or consume the resumed frame\n  ---\n  duration_ms: 0.240349\n  type: 'test'\n  ...\n# Subtest: a preview starting under an effective cap never queues animation until that cap is released\nok 27 - a preview starting under an effective cap never queues animation until that cap is released\n  ---\n  duration_ms: 0.20917\n  type: 'test'\n  ...\n# Subtest: Studio links keep the exact release route under http://localhost/\nok 28 - Studio links keep the exact release route under http://localhost/\n  ---\n  duration_ms: 3.407207\n  type: 'test'\n  ...\n# Subtest: Studio links keep the exact release route under https://mekhovov.github.io/revealline/releases/v0.69.1/site/\nok 29 - Studio links keep the exact release route under https://mekhovov.github.io/revealline/releases/v0.69.1/site/\n  ---\n  duration_ms: 0.690548\n  type: 'test'\n  ...\n# Subtest: Studio links keep the exact release route under https://mekhovov.github.io/revealline-archive-36/releases/v0.68.2/site/\nok 30 - Studio links keep the exact release route under https://mekhovov.github.io/revealline-archive-36/releases/v0.68.2/site/\n  ---\n  duration_ms: 0.594028\n  type: 'test'\n  ...\n# Subtest: navigation hints cannot supply arbitrary destinations, launch commands or duplicate context\nok 31 - navigation hints cannot supply arbitrary destinations, launch commands or duplicate context\n  ---\n  duration_ms: 0.924635\n  type: 'test'\n  ...\n# Subtest: Studio round trips keep a single supported language and reject ambiguous locale hints\nok 32 - Studio round trips keep a single supported language and reject ambiguous locale hints\n  ---\n  duration_ms: 0.40724\n  type: 'test'\n  ...\n# Subtest: consuming the UI hint preserves history state and the Journey route, without storage\nok 33 - consuming the UI hint preserves history state and the Journey route, without storage\n  ---\n  duration_ms: 0.555957\n  type: 'test'\n  ...\n# Subtest: actual Solo boot returns to the Studio opener and Back restores Workshop on Home without starting\nok 34 - actual Solo boot returns to the Studio opener and Back restores Workshop on Home without starting\n  ---\n  duration_ms: 3416.847362\n  type: 'test'\n  ...\n# Subtest: actual Solo outgoing Studio link preserves its authored Journey route\nok 35 - actual Solo outgoing Studio link preserves its authored Journey route\n  ---\n  duration_ms: 1920.606163\n  type: 'test'\n  ...\n# Subtest: Workshop restoration does not cover a newer dialog owner\nok 36 - Workshop restoration does not cover a newer dialog owner\n  ---\n  duration_ms: 2550.501229\n  type: 'test'\n  ...\n# Subtest: Workshop restoration does not cover a newer dispose owner\nok 37 - Workshop restoration does not cover a newer dispose owner\n  ---\n  duration_ms: 2748.901921\n  type: 'test'\n  ...\n# Subtest: Workshop restoration does not cover a newer hidden owner\nok 38 - Workshop restoration does not cover a newer hidden owner\n  ---\n  duration_ms: 2803.076733\n  type: 'test'\n  ...\n# Subtest: Workshop restoration does not cover a newer blurred owner\nok 39 - Workshop restoration does not cover a newer blurred owner\n  ---\n  duration_ms: 2331.238009\n  type: 'test'\n  ...\n# Subtest: Workshop restoration does not cover a newer focus owner\nok 40 - Workshop restoration does not cover a newer focus owner\n  ---\n  duration_ms: 2357.119178\n  type: 'test'\n  ...\n# Subtest: early Studio entry enables links only after assigning their complete fixed destinations\nok 41 - early Studio entry enables links only after assigning their complete fixed destinations\n  ---\n  duration_ms: 0.446573\n  type: 'test'\n  ...\n# Subtest: portable content cannot impersonate official recipes or introduce executable actor policies\nok 42 - portable content cannot impersonate official recipes or introduce executable actor policies\n  ---\n  duration_ms: 16.370625\n  type: 'test'\n  ...\n# Subtest: family dispatch preserves exact valid UTF-8 bytes and rejects unknown formats\nok 43 - family dispatch preserves exact valid UTF-8 bytes and rejects unknown formats\n  ---\n  duration_ms: 10.015157\n  type: 'test'\n  ...\n# Subtest: Classic community install, recovery removal, offload and reinstall retain exact recipe identity\nok 44 - Classic community install, recovery removal, offload and reinstall retain exact recipe identity\n  ---\n  duration_ms: 88.316804\n  type: 'test'\n  ...\n# Subtest: community Classic records persist under their owner and cannot enter official chapter records\nok 45 - community Classic records persist under their owner and cannot enter official chapter records\n  ---\n  duration_ms: 211.250037\n  type: 'test'\n  ...\n# Subtest: the default distribution includes Company Studio, transfer practice and their live local links\nok 46 - the default distribution includes Company Studio, transfer practice and their live local links\n  ---\n  duration_ms: 7399.016366\n  type: 'test'\n  ...\n# Subtest: Company Studio registered source and artwork choices are present in the default package\nok 47 - Company Studio registered source and artwork choices are present in the default package\n  ---\n  duration_ms: 1496.798197\n  type: 'test'\n  ...\n# Subtest: custom menu owns controls and recovery dialogs, then yields all pad reads and arrows to flight\nok 48 - custom menu owns controls and recovery dialogs, then yields all pad reads and arrows to flight\n  ---\n  duration_ms: 44.529871\n  type: 'test'\n  ...\n# Subtest: creator menu captures a native Confirm tap between frames without a duplicate release action\nok 49 - creator menu captures a native Confirm tap between frames without a duplicate release action\n  ---\n  duration_ms: 4.88758\n  type: 'test'\n  ...\n# Subtest: installed custom player starts, pauses, saves and resumes through one controller menu owner\nok 50 - installed custom player starts, pauses, saves and resumes through one controller menu owner\n  ---\n  duration_ms: 1978.47898\n  type: 'test'\n  ...\n# Subtest: installation errors retain a keyboard/controller exit menu without a running simulation\nok 51 - installation errors retain a keyboard/controller exit menu without a running simulation\n  ---\n  duration_ms: 600.459382\n  type: 'test'\n  ...\n# Subtest: a legally completed custom mission exposes result actions and keeps earned progress on menu traversal\nok 52 - a legally completed custom mission exposes result actions and keeps earned progress on menu traversal\n  ---\n  duration_ms: 1180.37548\n  type: 'test'\n  ...\n# Subtest: the actual Custom mission picker starts an explicitly confirmed replacement without changing edition identity\nok 53 - the actual Custom mission picker starts an explicitly confirmed replacement without changing edition identity\n  ---\n  duration_ms: 1113.194852\n  type: 'test'\n  ...\n# Subtest: saved Custom attempts remain importable from Settings and malformed replacements keep the current run\nok 54 - saved Custom attempts remain importable from Settings and malformed replacements keep the current run\n  ---\n  duration_ms: 1037.786532\n  type: 'test'\n  ...\n# Subtest: fresh Custom home Continue verifies and resumes the exact saved attempt in one gesture\nok 55 - fresh Custom home Continue verifies and resumes the exact saved attempt in one gesture\n  ---\n  duration_ms: 1660.968709\n  type: 'test'\n  ...\n# Subtest: Custom Settings keyboard categories select the matching panel without a competing navigation owner\nok 56 - Custom Settings keyboard categories select the matching panel without a competing navigation owner\n  ---\n  duration_ms: 1092.463141\n  type: 'test'\n  ...\n# Subtest: Custom reduced effects preference reaches the original flight renderer\nok 57 - Custom reduced effects preference reaches the original flight renderer\n  ---\n  duration_ms: 1032.101118\n  type: 'test'\n  ...\n# Subtest: async saved Continue retains the verified attempt paused after its initiating owner changes\n    # Subtest: blur-and-return\n    ok 1 - blur-and-return\n      ---\n      duration_ms: 658.686933\n      type: 'test'\n      ...\n    # Subtest: hidden-and-return\n    ok 2 - hidden-and-return\n      ---\n      duration_ms: 604.867014\n      type: 'test'\n      ...\n    # Subtest: settings\n    ok 3 - settings\n      ---\n      duration_ms: 618.722033\n      type: 'test'\n      ...\n    1..3\nok 58 - async saved Continue retains the verified attempt paused after its initiating owner changes\n  ---\n  duration_ms: 3283.697392\n  type: 'test'\n  ...\n# Subtest: async mission selection also stays paused if the player opens Settings while it loads\nok 59 - async mission selection also stays paused if the player opens Settings while it loads\n  ---\n  duration_ms: 1070.366219\n  type: 'test'\n  ...\n# Subtest: index.html: retention is explicit and independent of editable campaign controls\nok 60 - index.html: retention is explicit and independent of editable campaign controls\n  ---\n  duration_ms: 37.049261\n  type: 'test'\n  ...\n# Subtest: index.html: page departure and hidden views retire requests; reopening refreshes truthfully\nok 61 - index.html: page departure and hidden views retire requests; reopening refreshes truthfully\n  ---\n  duration_ms: 17.957111\n  type: 'test'\n  ...\n# Subtest: team.html: retention is explicit and independent of editable campaign controls\nok 62 - team.html: retention is explicit and independent of editable campaign controls\n  ---\n  duration_ms: 4.753529\n  type: 'test'\n  ...\n# Subtest: team.html: page departure and hidden views retire requests; reopening refreshes truthfully\nok 63 - team.html: page departure and hidden views retire requests; reopening refreshes truthfully\n  ---\n  duration_ms: 4.838087\n  type: 'test'\n  ...\n# Subtest: graph edits survive refresh, explicitly synchronize Hunt quotas and Undo restores source\nok 64 - graph edits survive refresh, explicitly synchronize Hunt quotas and Undo restores source\n  ---\n  duration_ms: 7.916902\n  type: 'test'\n  ...\n# Subtest: invalid numeric nodes cannot replace accepted source; explicit discard recovers the editor\nok 65 - invalid numeric nodes cannot replace accepted source; explicit discard recovers the editor\n  ---\n  duration_ms: 2.664743\n  type: 'test'\n  ...\n# Subtest: external return to a legacy source removes an unrelated pending pursuit draft\nok 66 - external return to a legacy source removes an unrelated pending pursuit draft\n  ---\n  duration_ms: 1.624591\n  type: 'test'\n  ...\n# Subtest: existing v1 graphs upgrade only through an explicit, undoable action without discarding text edits\nok 67 - existing v1 graphs upgrade only through an explicit, undoable action without discarding text edits\n  ---\n  duration_ms: 2.49726\n  type: 'test'\n  ...\n# Subtest: the unarmed Hunt preset creates an immediately eligible native target without editing a weapon field\nok 68 - the unarmed Hunt preset creates an immediately eligible native target without editing a weapon field\n  ---\n  duration_ms: 22.555317\n  type: 'test'\n  ...\n# Subtest: Contact Hunt authoring admits ordered finite targets and native tail settings in both modes\nok 69 - Contact Hunt authoring admits ordered finite targets and native tail settings in both modes\n  ---\n  duration_ms: 14.845209\n  type: 'test'\n  ...\n# Subtest: Contact Hunt edits and objective movement preserve the other mode and binding positions\nok 70 - Contact Hunt edits and objective movement preserve the other mode and binding positions\n  ---\n  duration_ms: 14.497491\n  type: 'test'\n  ...\n# Subtest: Contact Hunt refuses conflicts, invalid tail bounds and duplicate-mode creation atomically\nok 71 - Contact Hunt refuses conflicts, invalid tail bounds and duplicate-mode creation atomically\n  ---\n  duration_ms: 14.809205\n  type: 'test'\n  ...\n# Subtest: deleting Hunt targets cleans both modes, preserves surviving order, and keeps last-objective fallback undoable\nok 72 - deleting Hunt targets cleans both modes, preserves surviving order, and keeps last-objective fallback undoable\n  ---\n  duration_ms: 10.66518\n  type: 'test'\n  ...\n# Subtest: changing a Hunt target to Rival removes only its catch references and cannot enable its weapon\nok 73 - changing a Hunt target to Rival removes only its catch references and cannot enable its weapon\n  ---\n  duration_ms: 12.925949\n  type: 'test'\n  ...\n# Subtest: a stale Contact Hunt panel cannot overwrite a newer objective and Ukrainian controls stay localized\nok 74 - a stale Contact Hunt panel cannot overwrite a newer objective and Ukrainian controls stay localized\n  ---\n  duration_ms: 5.574843\n  type: 'test'\n  ...\n# Subtest: adding an unarmed actor preserves a new Hunt draft without silently adding it to the quota\nok 75 - adding an unarmed actor preserves a new Hunt draft without silently adding it to the quota\n  ---\n  duration_ms: 7.022855\n  type: 'test'\n  ...\n# Subtest: mode-specific Hunt drafts survive actor addition and moving applies the draft atomically\nok 76 - mode-specific Hunt drafts survive actor addition and moving applies the draft atomically\n  ---\n  duration_ms: 16.059746\n  type: 'test'\n  ...\n# Subtest: unapplied Hunt target order participates in project challenge switching without marking untouched panels dirty\nok 77 - unapplied Hunt target order participates in project challenge switching without marking untouched panels dirty\n  ---\n  duration_ms: 7.741365\n  type: 'test'\n  ...\n# Subtest: applying one Hunt preserves another hidden pending draft until explicit discard resets both\nok 78 - applying one Hunt preserves another hidden pending draft until explicit discard resets both\n  ---\n  duration_ms: 11.698117\n  type: 'test'\n  ...\n# Subtest: new Hunt target drafts remain pending through actor addition and clear after native admission\nok 79 - new Hunt target drafts remain pending through actor addition and clear after native admission\n  ---\n  duration_ms: 4.912216\n  type: 'test'\n  ...\n# Subtest: obsolete hidden Hunt drafts cannot block a newer accepted objective after refresh\nok 80 - obsolete hidden Hunt drafts cannot block a newer accepted objective after refresh\n  ---\n  duration_ms: 5.689857\n  type: 'test'\n  ...\n# Subtest: retained pursuit graph edits remain pending after host refresh and explicit reset restores admitted source\nok 81 - retained pursuit graph edits remain pending after host refresh and explicit reset restores admitted source\n  ---\n  duration_ms: 10.58605\n  type: 'test'\n  ...\n# Subtest: spatial editor applies current presentation before every course build without changing authored source or scene bytes\nok 82 - spatial editor applies current presentation before every course build without changing authored source or scene bytes\n  ---\n  duration_ms: 3.057335\n  type: 'test'\n  ...\n# Subtest: spatial editor preserves an authenticated retained binding when a proposed drag is rejected\nok 83 - spatial editor preserves an authenticated retained binding when a proposed drag is rejected\n  ---\n  duration_ms: 57.274099\n  type: 'test'\n  ...\n# Subtest: installed Team retains its selected artwork beside the unchanged native checkpoint\nok 84 - installed Team retains its selected artwork beside the unchanged native checkpoint\n  ---\n  duration_ms: 1067.216805\n  type: 'test'\n  ...\n# Subtest: installed Team rejects malformed selection and never adopts built-in chapter authority\nok 85 - installed Team rejects malformed selection and never adopts built-in chapter authority\n  ---\n  duration_ms: 5127.563714\n  type: 'test'\n  ...\n# Subtest: installed Team historical saves and exact empty selection remain native\nok 86 - installed Team historical saves and exact empty selection remain native\n  ---\n  duration_ms: 681.491712\n  type: 'test'\n  ...\n# Subtest: Overflight effect inspection uploads exact shared pixels, preserves native study state and releases its canvases\nok 87 - Overflight effect inspection uploads exact shared pixels, preserves native study state and releases its canvases\n  ---\n  duration_ms: 267.242103\n  type: 'test'\n  ...\n# Subtest: Motion shared actor controls use the actual host with one playback owner and unchanged player sandbox state\nok 88 - Motion shared actor controls use the actual host with one playback owner and unchanged player sandbox state\n  ---\n  duration_ms: 88.59075\n  type: 'test'\n  ...\n# Subtest: Inspection responses change real wing paint without changing paired arena traces or recipe exports\n    # Subtest: follow\n    ok 1 - follow\n      ---\n      duration_ms: 72.165234\n      type: 'test'\n      ...\n    # Subtest: idle\n    ok 2 - idle\n      ---\n      duration_ms: 96.021953\n      type: 'test'\n      ...\n    # Subtest: cruise\n    ok 3 - cruise\n      ---\n      duration_ms: 77.477344\n      type: 'test'\n      ...\n    # Subtest: boost\n    ok 4 - boost\n      ---\n      duration_ms: 69.435118\n      type: 'test'\n      ...\n    # Subtest: slow\n    ok 5 - slow\n      ---\n      duration_ms: 71.981619\n      type: 'test'\n      ...\n    1..5\nok 89 - Inspection responses change real wing paint without changing paired arena traces or recipe exports\n  ---\n  duration_ms: 388.905332\n  type: 'test'\n  ...\n# Subtest: Inspection response retains paused phase, drafts and lifetime ownership with reduced=false\nok 90 - Inspection response retains paused phase, drafts and lifetime ownership with reduced=false\n  ---\n  duration_ms: 86.165836\n  type: 'test'\n  ...\n# Subtest: Inspection response retains paused phase, drafts and lifetime ownership with reduced=true\nok 91 - Inspection response retains paused phase, drafts and lifetime ownership with reduced=true\n  ---\n  duration_ms: 78.192198\n  type: 'test'\n  ...\n# Subtest: Inspection exhaust responds to selected speed at a frozen time with reduced=false\nok 92 - Inspection exhaust responds to selected speed at a frozen time with reduced=false\n  ---\n  duration_ms: 53.498241\n  type: 'test'\n  ...\n# Subtest: Inspection exhaust responds to selected speed at a frozen time with reduced=true\nok 93 - Inspection exhaust responds to selected speed at a frozen time with reduced=true\n  ---\n  duration_ms: 102.354925\n  type: 'test'\n  ...\n# Subtest: Inspection response native select retains EN/UK labels, focus and paused intent\nok 94 - Inspection response native select retains EN/UK labels, focus and paused intent\n  ---\n  duration_ms: 128.519582\n  type: 'test'\n  ...\n# Subtest: Motion attachments edit actual wing paint while retaining paused clocks and reduced=false\nok 95 - Motion attachments edit actual wing paint while retaining paused clocks and reduced=false\n  ---\n  duration_ms: 72.609403\n  type: 'test'\n  ...\n# Subtest: Motion attachments edit actual wing paint while retaining paused clocks and reduced=true\nok 96 - Motion attachments edit actual wing paint while retaining paused clocks and reduced=true\n  ---\n  duration_ms: 65.755111\n  type: 'test'\n  ...\n# Subtest: Motion attachment controls offer fractional keyboard steps and commit completed edits without advancing paused playback\nok 97 - Motion attachment controls offer fractional keyboard steps and commit completed edits without advancing paused playback\n  ---\n  duration_ms: 51.699596\n  type: 'test'\n  ...\n# Subtest: Motion attachment drafts are per character and live edits keep the existing single frame owner\nok 98 - Motion attachment drafts are per character and live edits keep the existing single frame owner\n  ---\n  duration_ms: 111.331369\n  type: 'test'\n  ...\n# Subtest: Motion HTML adopts reading policy before held app startup with one explicit size writer\nok 99 - Motion HTML adopts reading policy before held app startup with one explicit size writer\n  ---\n  duration_ms: 52.55434\n  type: 'test'\n  ...\n# Subtest: Motion failed app startup retains independent size controls and failed-save intent\nok 100 - Motion failed app startup retains independent size controls and failed-save intent\n  ---\n  duration_ms: 15.480906\n  type: 'test'\n  ...\n# Subtest: Motion saved and system reduction cap local choice without changing live run or authored values\nok 101 - Motion saved and system reduction cap local choice without changing live run or authored values\n  ---\n  duration_ms: 83.907232\n  type: 'test'\n  ...\n# Subtest: Motion local reduced choice survives shared caps and paused preference edits do not resume\nok 102 - Motion local reduced choice survives shared caps and paused preference edits do not resume\n  ---\n  duration_ms: 51.861818\n  type: 'test'\n  ...\n# Subtest: Motion loaded body and local background survive reading changes and cached return\nok 103 - Motion loaded body and local background survive reading changes and cached return\n  ---\n  duration_ms: 63.240309\n  type: 'test'\n  ...\n# Subtest: Motion interruption before pending startup prevents automatic start and stale frames cannot return\nok 104 - Motion interruption before pending startup prevents automatic start and stale frames cannot return\n  ---\n  duration_ms: 46.697262\n  type: 'test'\n  ...\n# Subtest: Motion terminal departure fences held initialization and leaves no authority or app listeners\nok 105 - Motion terminal departure fences held initialization and leaves no authority or app listeners\n  ---\n  duration_ms: 18.370667\n  type: 'test'\n  ...\n# Subtest: Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer\nok 106 - Motion hidden and terminal loaded lifecycle cancels images, releases input and disconnects observer\n  ---\n  duration_ms: 53.078438\n  type: 'test'\n  ...\n# Subtest: Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only\nok 107 - Motion unavailable inspection image is described in ordinary DOM and storage denial remains session-only\n  ---\n  duration_ms: 43.6737\n  type: 'test'\n  ...\n# Subtest: Motion application graph completing after terminal departure cannot remount or fetch\nok 108 - Motion application graph completing after terminal departure cannot remount or fetch\n  ---\n  duration_ms: 8.933469\n  type: 'test'\n  ...\n# Subtest: Motion graph first arriving in an unfocused document starts paused until explicit Play\nok 109 - Motion graph first arriving in an unfocused document starts paused until explicit Play\n  ---\n  duration_ms: 33.371297\n  type: 'test'\n  ...\n# Subtest: Motion cached interruption before first application delivery cannot autoplay before or after return\nok 110 - Motion cached interruption before first application delivery cannot autoplay before or after return\n  ---\n  duration_ms: 40.616456\n  type: 'test'\n  ...\n# (node:2835) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)\nok 111 - Motion real launcher retires Reload into independent reading controls while presets stay locked (anchor focus model)\n  ---\n  duration_ms: 52.911958\n  type: 'test'\n  ...\n# Subtest: Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)\nok 112 - Motion real launcher retires Reload into independent reading controls while presets stay locked (body focus model)\n  ---\n  duration_ms: 53.456524\n  type: 'test'\n  ...\n# Subtest: Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer\nok 113 - Motion real launcher graph failure retains locked study, Reload, navigation and the independent size writer\n  ---\n  duration_ms: 32.946652\n  type: 'test'\n  ...\n# Subtest: Motion network failure after actual delivery provides retry without taking current focus\nok 114 - Motion network failure after actual delivery provides retry without taking current focus\n  ---\n  duration_ms: 23.324871\n  type: 'test'\n  ...\n# Subtest: Motion validation failure after actual delivery provides retry without taking current focus\nok 115 - Motion validation failure after actual delivery provides retry without taking current focus\n  ---\n  duration_ms: 33.826809\n  type: 'test'\n  ...\n# Subtest: Motion terminal departure ignores a late failed preset read without exposing retry\nok 116 - Motion terminal departure ignores a late failed preset read without exposing retry\n  ---\n  duration_ms: 20.250826\n  type: 'test'\n  ...\n# Subtest: Motion real launcher does not take Reload focus in an hidden document or defer it until return\nok 117 - Motion real launcher does not take Reload focus in an hidden document or defer it until return\n  ---\n  duration_ms: 51.356665\n  type: 'test'\n  ...\n# Subtest: Motion real launcher does not take Reload focus in an unfocused document or defer it until return\nok 118 - Motion real launcher does not take Reload focus in an unfocused document or defer it until return\n  ---\n  duration_ms: 52.039107\n  type: 'test'\n  ...\n# Subtest: Motion actual Reload retirement preserves navigation focus acquired before attachment\nok 119 - Motion actual Reload retirement preserves navigation focus acquired before attachment\n  ---\n  duration_ms: 50.807123\n  type: 'test'\n  ...\n# Subtest: Motion actual Reload retirement preserves navigation focus acquired during attachment\nok 120 - Motion actual Reload retirement preserves navigation focus acquired during attachment\n  ---\n  duration_ms: 48.88777\n  type: 'test'\n  ...\n# Subtest: Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership\nok 121 - Motion successful startup gate preserves Clear, locked Equip and disabled ability ownership\n  ---\n  duration_ms: 57.580689\n  type: 'test'\n  ...\n# Subtest: Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study\nok 122 - Motion real launcher late application delivery after terminal departure cannot unlock or focus the departed study\n  ---\n  duration_ms: 19.16494\n  type: 'test'\n  ...\n# Subtest: Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows\nok 123 - Motion full stage labels survive shortened canvas captions and reading changes without moving focus or replacing rows\n  ---\n  duration_ms: 50.371735\n  type: 'test'\n  ...\n# Subtest: Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh\nok 124 - Motion real scan reveals and expires DOM note text on the rendering frame before the general readout refresh\n  ---\n  duration_ms: 55.674708\n  type: 'test'\n  ...\n# Subtest: Motion APNG upload derives exact static PNG bytes while retaining the original File\nok 125 - Motion APNG upload derives exact static PNG bytes while retaining the original File\n  ---\n  duration_ms: 53.269766\n  type: 'test'\n  ...\n# Subtest: Motion GIF and WebP keep the original File source and native-image path\nok 126 - Motion GIF and WebP keep the original File source and native-image path\n  ---\n  duration_ms: 39.998069\n  type: 'test'\n  ...\n# Subtest: Motion superseded PNG byte read cannot allocate a URL or replace the newer preview\nok 127 - Motion superseded PNG byte read cannot allocate a URL or replace the newer preview\n  ---\n  duration_ms: 40.623116\n  type: 'test'\n  ...\n# Subtest: Motion rejected replacement retires pending byte read: unsupported type\nok 128 - Motion rejected replacement retires pending byte read: unsupported type\n  ---\n  duration_ms: 41.531222\n  type: 'test'\n  ...\n# Subtest: Motion rejected replacement retires pending byte read: oversized file\nok 129 - Motion rejected replacement retires pending byte read: oversized file\n  ---\n  duration_ms: 43.820386\n  type: 'test'\n  ...\n# Subtest: Motion rejected replacement retires pending native decode: unsupported type\nok 130 - Motion rejected replacement retires pending native decode: unsupported type\n  ---\n  duration_ms: 49.133577\n  type: 'test'\n  ...\n# Subtest: Motion rejected replacement retires pending native decode: oversized file\nok 131 - Motion rejected replacement retires pending native decode: oversized file\n  ---\n  duration_ms: 52.467589\n  type: 'test'\n  ...\n# Subtest: Motion cancelled file picker preserves the pending background intent\nok 132 - Motion cancelled file picker preserves the pending background intent\n  ---\n  duration_ms: 41.955333\n  type: 'test'\n  ...\n# Subtest: Motion Clear while reading PNG bytes prevents late URL, image and status resurrection\nok 133 - Motion Clear while reading PNG bytes prevents late URL, image and status resurrection\n  ---\n  duration_ms: 38.441247\n  type: 'test'\n  ...\n# Subtest: Motion cached departure invalidates the pending PNG byte read\nok 134 - Motion cached departure invalidates the pending PNG byte read\n  ---\n  duration_ms: 47.263669\n  type: 'test'\n  ...\n# Subtest: Motion terminal departure invalidates the pending PNG byte read\nok 135 - Motion terminal departure invalidates the pending PNG byte read\n  ---\n  duration_ms: 48.883591\n  type: 'test'\n  ...\n# Subtest: Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear\nok 136 - Motion rejected or malformed PNG preparation retains accepted art, current focus and Clear\n  ---\n  duration_ms: 45.775242\n  type: 'test'\n  ...\n# Subtest: Motion prepared replacement native decode failure preserves prior image and retires derivative URL\nok 137 - Motion prepared replacement native decode failure preserves prior image and retires derivative URL\n  ---\n  duration_ms: 45.835406\n  type: 'test'\n  ...\n# Subtest: Motion late PNG preparation rejection after a new image cannot overwrite current success\nok 138 - Motion late PNG preparation rejection after a new image cannot overwrite current success\n  ---\n  duration_ms: 41.10691\n  type: 'test'\n  ...\n# Subtest: Motion sliders keep stable visible labels while the actual study startup is held\nok 139 - Motion sliders keep stable visible labels while the actual study startup is held\n  ---\n  duration_ms: 33.57114\n  type: 'test'\n  ...\n# Subtest: Motion slider input updates current units without changing its name, focus or paused intent\nok 140 - Motion slider input updates current units without changing its name, focus or paused intent\n  ---\n  duration_ms: 44.813917\n  type: 'test'\n  ...\n# Subtest: Motion recipe replacement refreshes the rotor value text after a manual radius override\nok 141 - Motion recipe replacement refreshes the rotor value text after a manual radius override\n  ---\n  duration_ms: 37.538292\n  type: 'test'\n  ...\n# Subtest: Motion hub edits and JSON round trip preserve paused clocks and reduced=false\nok 142 - Motion hub edits and JSON round trip preserve paused clocks and reduced=false\n  ---\n  duration_ms: 64.888023\n  type: 'test'\n  ...\n# Subtest: Motion hub edits and JSON round trip preserve paused clocks and reduced=true\nok 143 - Motion hub edits and JSON round trip preserve paused clocks and reduced=true\n  ---\n  duration_ms: 72.8157\n  type: 'test'\n  ...\n# Subtest: Motion hub envelope edits preserve actual paint, guides, paused state and reduced=false\nok 144 - Motion hub envelope edits preserve actual paint, guides, paused state and reduced=false\n  ---\n  duration_ms: 82.201611\n  type: 'test'\n  ...\n# Subtest: Motion hub envelope edits preserve actual paint, guides, paused state and reduced=true\nok 145 - Motion hub envelope edits preserve actual paint, guides, paused state and reduced=true\n  ---\n  duration_ms: 81.382153\n  type: 'test'\n  ...\n# Subtest: Motion envelope validation and guide use the decoded non-square source aspect, not its body fit box\nok 146 - Motion envelope validation and guide use the decoded non-square source aspect, not its body fit box\n  ---\n  duration_ms: 59.002232\n  type: 'test'\n  ...\n# Subtest: Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated\nok 147 - Motion rotor editor preserves a running frame and per-character drafts while non-rotor recipes stay gated\n  ---\n  duration_ms: 63.255449\n  type: 'test'\n  ...\n# Subtest: Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host\nok 148 - Motion rotor labels resolve in EN and UK through the HTML-selected catalog/bootstrap and actual host\n  ---\n  duration_ms: 911.443298\n  type: 'test'\n  ...\n# Subtest: Motion rotation reveals the currently focused rotor field without changing its paused study\nok 149 - Motion rotation reveals the currently focused rotor field without changing its paused study\n  ---\n  duration_ms: 37.038056\n  type: 'test'\n  ...\n# Subtest: Motion rotation accounts for the settings clip even while a focused slider is inside the viewport\nok 150 - Motion rotation accounts for the settings clip even while a focused slider is inside the viewport\n  ---\n  duration_ms: 37.122804\n  type: 'test'\n  ...\n# Subtest: Motion rotation reveals the rotor when its entire settings panel moves above the viewport\nok 151 - Motion rotation reveals the rotor when its entire settings panel moves above the viewport\n  ---\n  duration_ms: 50.685512\n  type: 'test'\n  ...\n# Subtest: Motion rotation cannot reveal an hidden current control\nok 152 - Motion rotation cannot reveal an hidden current control\n  ---\n  duration_ms: 34.855173\n  type: 'test'\n  ...\n# Subtest: Motion rotation cannot reveal an inert current control\nok 153 - Motion rotation cannot reveal an inert current control\n  ---\n  duration_ms: 62.298203\n  type: 'test'\n  ...\n# Subtest: Motion rotation cannot reveal an disabled current control\nok 154 - Motion rotation cannot reveal an disabled current control\n  ---\n  duration_ms: 39.348305\n  type: 'test'\n  ...\n# Subtest: Motion rotation cannot reveal an fieldset current control\nok 155 - Motion rotation cannot reveal an fieldset current control\n  ---\n  duration_ms: 31.76074\n  type: 'test'\n  ...\n# Subtest: Motion rotation cannot reveal an background current control\nok 156 - Motion rotation cannot reveal an background current control\n  ---\n  duration_ms: 32.515106\n  type: 'test'\n  ...\n# Subtest: Motion rotation cannot reveal an away current control\nok 157 - Motion rotation cannot reveal an away current control\n  ---\n  duration_ms: 40.470351\n  type: 'test'\n  ...\n# Subtest: Motion rotation cannot reveal an disposed current control\nok 158 - Motion rotation cannot reveal an disposed current control\n  ---\n  duration_ms: 38.510824\n  type: 'test'\n  ...\n# Subtest: Motion resize cannot scroll after measurement changes the focused owner or loses foreground\nok 159 - Motion resize cannot scroll after measurement changes the focused owner or loses foreground\n  ---\n  duration_ms: 34.053566\n  type: 'test'\n  ...\n# Subtest: Motion resize reveals the control when its labeled field is taller than the visible settings area\nok 160 - Motion resize reveals the control when its labeled field is taller than the visible settings area\n  ---\n  duration_ms: 51.571096\n  type: 'test'\n  ...\n# Subtest: Motion locale changes preserve paused movement, live controls and image ownership\nok 161 - Motion locale changes preserve paused movement, live controls and image ownership\n  ---\n  duration_ms: 705.010239\n  type: 'test'\n  ...\n# Subtest: Motion locked collection groups preserve authored alternatives and focused selection across locales\nok 162 - Motion locked collection groups preserve authored alternatives and focused selection across locales\n  ---\n  duration_ms: 636.418081\n  type: 'test'\n  ...\n# Subtest: Motion accepted collection notices translate without repeating mutations or saving game progress\nok 163 - Motion accepted collection notices translate without repeating mutations or saving game progress\n  ---\n  duration_ms: 3110.633775\n  type: 'test'\n  ...\n# Subtest: Motion menu arrow navigation and consumed keys never steer, act or pause the arena\nok 164 - Motion menu arrow navigation and consumed keys never steer, act or pause the arena\n  ---\n  duration_ms: 56.659992\n  type: 'test'\n  ...\n# Subtest: Motion native shortcuts require foreground arena focus, retain ability controls and release held modifiers outside it\nok 165 - Motion native shortcuts require foreground arena focus, retain ability controls and release held modifiers outside it\n  ---\n  duration_ms: 50.887119\n  type: 'test'\n  ...\n# Subtest: Motion four direction buttons accept real guarded controller activation and a paused click never resumes or latches\nok 166 - Motion four direction buttons accept real guarded controller activation and a paused click never resumes or latches\n  ---\n  duration_ms: 102.87667\n  type: 'test'\n  ...\n# Subtest: Motion native Clear returns its foreground focus before disabling itself\nok 167 - Motion native Clear returns its foreground focus before disabling itself\n  ---\n  duration_ms: 57.791325\n  type: 'test'\n  ...\n# Subtest: Motion controller Clear returns its foreground focus before disabling itself\nok 168 - Motion controller Clear returns its foreground focus before disabling itself\n  ---\n  duration_ms: 46.510922\n  type: 'test'\n  ...\n# Subtest: Motion Clear does not replace focus owned by another control\nok 169 - Motion Clear does not replace focus owned by another control\n  ---\n  duration_ms: 45.847825\n  type: 'test'\n  ...\n# Subtest: Motion Clear does not replace focus owned by hidden document\nok 170 - Motion Clear does not replace focus owned by hidden document\n  ---\n  duration_ms: 50.698429\n  type: 'test'\n  ...\n# Subtest: Motion Clear does not replace focus owned by unfocused document\nok 171 - Motion Clear does not replace focus owned by unfocused document\n  ---\n  duration_ms: 46.631909\n  type: 'test'\n  ...\n# Subtest: shared drafts use admitted immutable descriptors and bounded edits retain their selected frame\nok 172 - shared drafts use admitted immutable descriptors and bounded edits retain their selected frame\n  ---\n  duration_ms: 2.900252\n  type: 'test'\n  ...\n# Subtest: unknown motion fields and every out-of-bounds value are rejected before replacing the accepted draft\nok 173 - unknown motion fields and every out-of-bounds value are rejected before replacing the accepted draft\n  ---\n  duration_ms: 7.923595\n  type: 'test'\n  ...\n# Subtest: clip occurrences, repeated frame references and non-looping end poses use the production sampler\nok 174 - clip occurrences, repeated frame references and non-looping end poses use the production sampler\n  ---\n  duration_ms: 2.686393\n  type: 'test'\n  ...\n# Subtest: exact descriptor import/export retains identity, immutable dependencies and frame bounds without a new pack format\nok 175 - exact descriptor import/export retains identity, immutable dependencies and frame bounds without a new pack format\n  ---\n  duration_ms: 4.204345\n  type: 'test'\n  ...\n# Subtest: explicit Courier accessory offsets affect only the satchel and retain native heading and historical bounce\nok 176 - explicit Courier accessory offsets affect only the satchel and retain native heading and historical bounce\n  ---\n  duration_ms: 5.093854\n  type: 'test'\n  ...\n# Subtest: the actual panel edits and exports valid frames, rejects invalid input and selects only admitted clips\nok 177 - the actual panel edits and exports valid frames, rejects invalid input and selects only admitted clips\n  ---\n  duration_ms: 44.348229\n  type: 'test'\n  ...\n# Subtest: the actual panel renders all headings at the same center, steps frames and freezes visible poses with Reduced effects\nok 178 - the actual panel renders all headings at the same center, steps frames and freezes visible poses with Reduced effects\n  ---\n  duration_ms: 13.251463\n  type: 'test'\n  ...\n# Subtest: playback pauses on blur, close and cached departure; return retains the draft without replay or leaked backing\nok 179 - playback pauses on blur, close and cached departure; return retains the draft without replay or leaked backing\n  ---\n  duration_ms: 25.513585\n  type: 'test'\n  ...\n# Subtest: close and terminal disposal during acquisition retire all leases and cannot resurrect a preview\nok 180 - close and terminal disposal during acquisition retire all leases and cannot resurrect a preview\n  ---\n  duration_ms: 11.832598\n  type: 'test'\n  ...\n# Subtest: EN/UK controls preserve valid drafts, and Asset Studio remains the existing staging destination\nok 181 - EN/UK controls preserve valid drafts, and Asset Studio remains the existing staging destination\n  ---\n  duration_ms: 35.089102\n  type: 'test'\n  ...\n# Subtest: production roster exposes non-Courier accessory edits in the actual Motion Lab panel\nok 182 - production roster exposes non-Courier accessory edits in the actual Motion Lab panel\n  ---\n  duration_ms: 15.708911\n  type: 'test'\n  ...\n# Subtest: late-mounted shared actor panel keeps its exact review in the fixed Asset Studio handoff\nok 183 - late-mounted shared actor panel keeps its exact review in the fixed Asset Studio handoff\n  ---\n  duration_ms: 5.350012\n  type: 'test'\n  ...\n# Subtest: overflight V3 authoring reaches global admission, fresh-profile import and native rules without replacing legacy content\nok 184 - overflight V3 authoring reaches global admission, fresh-profile import and native rules without replacing legacy content\n  ---\n  duration_ms: 133.149542\n  type: 'test'\n  ...\n# Subtest: overflight-hunt V3 authoring reaches global admission, fresh-profile import and native rules without replacing legacy content\nok 185 - overflight-hunt V3 authoring reaches global admission, fresh-profile import and native rules without replacing legacy content\n  ---\n  duration_ms: 185.584399\n  type: 'test'\n  ...\n# Subtest: overflight-riy V3 authoring reaches global admission, fresh-profile import and native rules without replacing legacy content\nok 186 - overflight-riy V3 authoring reaches global admission, fresh-profile import and native rules without replacing legacy content\n  ---\n  duration_ms: 135.290168\n  type: 'test'\n  ...\n# Subtest: Creator exposes bounded V3 controls and keeps legacy projects free of unsupported controls\nok 187 - Creator exposes bounded V3 controls and keeps legacy projects free of unsupported controls\n  ---\n  duration_ms: 3.268739\n  type: 'test'\n  ...\n# Subtest: active ground danger retains a filled geometric distinction from its warning without motion\nok 188 - active ground danger retains a filled geometric distinction from its warning without motion\n  ---\n  duration_ms: 0.448587\n  type: 'test'\n  ...\n# Subtest: explicit updated copies preserve both legacy revisions and their authored layouts\nok 189 - explicit updated copies preserve both legacy revisions and their authored layouts\n  ---\n  duration_ms: 125.089083\n  type: 'test'\n  ...\n# Subtest: global family and publisher admission preserve Overflight bytes and reject resource closure changes\nok 190 - global family and publisher admission preserve Overflight bytes and reject resource closure changes\n  ---\n  duration_ms: 63.928605\n  type: 'test'\n  ...\n# Subtest: global install, exact recovery, offload and reinstall use the native Overflight library\nok 191 - global install, exact recovery, offload and reinstall use the native Overflight library\n  ---\n  duration_ms: 312.380297\n  type: 'test'\n  ...\n# Subtest: atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions\nok 192 - atomic shared ownership keeps Studio copies, rejects stale offload and retains differently formatted editions\n  ---\n  duration_ms: 299.269869\n  type: 'test'\n  ...\n# Subtest: existing Studio v1 installations migrate as local owners without altering their content\nok 193 - existing Studio v1 installations migrate as local owners without altering their content\n  ---\n  duration_ms: 47.835011\n  type: 'test'\n  ...\n# Subtest: failed profile transactions roll back edition installation and offload without losing a local owner\nok 194 - failed profile transactions roll back edition installation and offload without losing a local owner\n  ---\n  duration_ms: 178.537476\n  type: 'test'\n  ...\n# Subtest: new reusable source sprites keep exact optional Asset Studio contracts and generated bytes\nok 195 - new reusable source sprites keep exact optional Asset Studio contracts and generated bytes\n  ---\n  duration_ms: 22.16954\n  type: 'test'\n  ...\n# Subtest: older Studio workspaces admit only exact registered new slots without rewriting history\nok 196 - older Studio workspaces admit only exact registered new slots without rewriting history\n  ---\n  duration_ms: 1380.67247\n  type: 'test'\n  ...\n# Subtest: reduced effects preserve full hostile warning visibility while simplifying cosmetics\nok 197 - reduced effects preserve full hostile warning visibility while simplifying cosmetics\n  ---\n  duration_ms: 0.374409\n  type: 'test'\n  ...\n# Subtest: native and Studio compilation are identical, immutable and isolated from draft edits\nok 198 - native and Studio compilation are identical, immutable and isolated from draft edits\n  ---\n  duration_ms: 9.685825\n  type: 'test'\n  ...\n# Subtest: three encounter sets cover every admitted soldier and machinery family\nok 199 - three encounter sets cover every admitted soldier and machinery family\n  ---\n  duration_ms: 7.323876\n  type: 'test'\n  ...\n# Subtest: reject ambiguous schedules, unsupported resources, malformed thresholds and executable data\nok 200 - reject ambiguous schedules, unsupported resources, malformed thresholds and executable data\n  ---\n  duration_ms: 12.688688\n  type: 'test'\n  ...\n# Subtest: export → fresh-profile import → native compile preserves exact content and dependency closure\nok 201 - export → fresh-profile import → native compile preserves exact content and dependency closure\n  ---\n  duration_ms: 43.878961\n  type: 'test'\n  ...\n# Subtest: native launch retains same-build scope and removes arbitrary caller state\nok 202 - native launch retains same-build scope and removes arbitrary caller state\n  ---\n  duration_ms: 1.26463\n  type: 'test'\n  ...\n# Subtest: one generated Overflight PNG is hash-pinned once and drawn through Solo runtime and Studio context\nok 203 - one generated Overflight PNG is hash-pinned once and drawn through Solo runtime and Studio context\n  ---\n  duration_ms: 964.999916\n  type: 'test'\n  ...\n# Subtest: cross-mode reuse still rejects a 16-pixel asset bound to an incompatible 24-pixel slot\nok 204 - cross-mode reuse still rejects a 16-pixel asset bound to an incompatible 24-pixel slot\n  ---\n  duration_ms: 831.564779\n  type: 'test'\n  ...\n# Subtest: global family and publisher admission preserve Riy bytes and reject resource closure changes\nok 205 - global family and publisher admission preserve Riy bytes and reject resource closure changes\n  ---\n  duration_ms: 82.855244\n  type: 'test'\n  ...\n# Subtest: global install, exact recovery, offload and reinstall use the native Riy library\nok 206 - global install, exact recovery, offload and reinstall use the native Riy library\n  ---\n  duration_ms: 490.990094\n  type: 'test'\n  ...\n# Subtest: Riy compiles shared Survivor rules and resources with distinct authored identity\nok 207 - Riy compiles shared Survivor rules and resources with distinct authored identity\n  ---\n  duration_ms: 35.774328\n  type: 'test'\n  ...\n# Subtest: Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters\nok 208 - Riy rejects unsafe settings, unsupported capabilities and malformed shared encounters\n  ---\n  duration_ms: 20.385721\n  type: 'test'\n  ...\n# Subtest: Riy package fresh-library round trip preserves source and native compiled identity\nok 209 - Riy package fresh-library round trip preserves source and native compiled identity\n  ---\n  duration_ms: 55.404038\n  type: 'test'\n  ...\n# Subtest: updating a legacy Riy copy preserves escort authoring without rewriting source\nok 210 - updating a legacy Riy copy preserves escort authoring without rewriting source\n  ---\n  duration_ms: 3.977863\n  type: 'test'\n  ...\n# Subtest: shared Studio escort controls edit the same validated config used by native play\nok 211 - shared Studio escort controls edit the same validated config used by native play\n  ---\n  duration_ms: 5.625758\n  type: 'test'\n  ...\n# Subtest: Riy rules 3 exposes current escort ranges, arcs and introduction controls\nok 212 - Riy rules 3 exposes current escort ranges, arcs and introduction controls\n  ---\n  duration_ms: 3.319935\n  type: 'test'\n  ...\n# Subtest: Riy rules 4 exposes current escort ranges, arcs and introduction controls\nok 213 - Riy rules 4 exposes current escort ranges, arcs and introduction controls\n  ---\n  duration_ms: 11.03929\n  type: 'test'\n  ...\n# Subtest: legacy Riy editor retains shared ranges without adding modern fields\nok 214 - legacy Riy editor retains shared ranges without adding modern fields\n  ---\n  duration_ms: 4.49099\n  type: 'test'\n  ...\n# Subtest: Creator enemy names cover the accepted closure and reuse the shared actor catalogue in both languages\nok 215 - Creator enemy names cover the accepted closure and reuse the shared actor catalogue in both languages\n  ---\n  duration_ms: 1.987128\n  type: 'test'\n  ...\n# Subtest: Creator module names are identical to native rank-one upgrade names\nok 216 - Creator module names are identical to native rank-one upgrade names\n  ---\n  duration_ms: 0.667295\n  type: 'test'\n  ...\n# Subtest: family selection preserves authored ordering and remains compiler checked\nok 217 - family selection preserves authored ordering and remains compiler checked\n  ---\n  duration_ms: 2.728061\n  type: 'test'\n  ...\n# Subtest: Studio Play pins the exact portable package and selected mission before installation yields\nok 218 - Studio Play pins the exact portable package and selected mission before installation yields\n  ---\n  duration_ms: 88.073303\n  type: 'test'\n  ...\n# Subtest: invalid or retired selections never start a Studio installation\nok 219 - invalid or retired selections never start a Studio installation\n  ---\n  duration_ms: 10.446283\n  type: 'test'\n  ...\n# Subtest: newer Play or draft ownership retires earlier success and failure without undoing installation\nok 220 - newer Play or draft ownership retires earlier success and failure without undoing installation\n  ---\n  duration_ms: 11.578126\n  type: 'test'\n  ...\n# Subtest: the shared Studio foreground lease prevents late navigation after input, blur or pagehide\nok 221 - the shared Studio foreground lease prevents late navigation after input, blur or pagehide\n  ---\n  duration_ms: 76.676323\n  type: 'test'\n  ...\n# Subtest: Studio closes live database connections and reopens once after a cached Back or freeze\nok 222 - Studio closes live database connections and reopens once after a cached Back or freeze\n  ---\n  duration_ms: 18.588858\n  type: 'test'\n  ...\n# Subtest: an old installation cannot launch the restored Studio owner\nok 223 - an old installation cannot launch the restored Studio owner\n  ---\n  duration_ms: 4.264026\n  type: 'test'\n  ...\n# Subtest: freezing first-use library migration closes every primary and temporary owner\nok 224 - freezing first-use library migration closes every primary and temporary owner\n  ---\n  duration_ms: 49.109943\n  type: 'test'\n  ...\n# Subtest: preview native commands preserve the draft and match Solo, paired Versus and shared Team\nok 225 - preview native commands preserve the draft and match Solo, paired Versus and shared Team\n  ---\n  duration_ms: 65.852224\n  type: 'test'\n  ...\n# Subtest: stepping and cosmetic changes use actual prey movement, drone corners and wrap seams\nok 226 - stepping and cosmetic changes use actual prey movement, drone corners and wrap seams\n  ---\n  duration_ms: 28.153176\n  type: 'test'\n  ...\n# Subtest: paused and late preview frames cannot advance gameplay; reduced effects only freeze decoration\nok 227 - paused and late preview frames cannot advance gameplay; reduced effects only freeze decoration\n  ---\n  duration_ms: 3.701147\n  type: 'test'\n  ...\n# Subtest: invalid replacement retires the previous accepted board and restart retains the fixed seed\nok 228 - invalid replacement retires the previous accepted board and restart retains the fixed seed\n  ---\n  duration_ms: 13.023773\n  type: 'test'\n  ...\n# Subtest: Solo default databases preserve profile and asset data when profile opens first\nok 229 - Solo default databases preserve profile and asset data when profile opens first\n  ---\n  duration_ms: 12.232325\n  type: 'test'\n  ...\n# Subtest: Solo default databases preserve profile and asset data when assets opens first\nok 230 - Solo default databases preserve profile and asset data when assets opens first\n  ---\n  duration_ms: 3.065771\n  type: 'test'\n  ...\n# Subtest: Solo default names isolate schema upgrades and close every retained connection\nok 231 - Solo default names isolate schema upgrades and close every retained connection\n  ---\n  duration_ms: 1.166527\n  type: 'test'\n  ...\n# Subtest: Solo explicit database injection retains its routing and failure instrumentation\nok 232 - Solo explicit database injection retains its routing and failure instrumentation\n  ---\n  duration_ms: 0.499141\n  type: 'test'\n  ...\n# Subtest: route text accepts cell centres and rejects incomplete, executable or non-finite entries\nok 233 - route text accepts cell centres and rejects incomplete, executable or non-finite entries\n  ---\n  duration_ms: 2.62057\n  type: 'test'\n  ...\n# Subtest: Studio pursuit applies through the runtime compiler and preserves unrelated mission source\nok 234 - Studio pursuit applies through the runtime compiler and preserves unrelated mission source\n  ---\n  duration_ms: 876.899371\n  type: 'test'\n  ...\n# Subtest: Studio requires a compiler-admitted non-empty population and cannot apply a broken reciprocal pair\nok 235 - Studio requires a compiler-admitted non-empty population and cannot apply a broken reciprocal pair\n  ---\n  duration_ms: 334.197268\n  type: 'test'\n  ...\n# Subtest: pursuit editor creation does not read an unadopted Studio draft\nok 236 - pursuit editor creation does not read an unadopted Studio draft\n  ---\n  duration_ms: 2.259046\n  type: 'test'\n  ...\n# Subtest: Studio previews announced direction independently of the body without changing authored routes\nok 237 - Studio previews announced direction independently of the body without changing authored routes\n  ---\n  duration_ms: 80.012534\n  type: 'test'\n  ...\n# Subtest: the actual Solo preview admits the pilot pursuit envelope and retains the exact authored policy\nok 238 - the actual Solo preview admits the pilot pursuit envelope and retains the exact authored policy\n  ---\n  duration_ms: 400.117636\n  type: 'test'\n  ...\n# Subtest: Capture Snake and its authored pursuit successor preview preserve their separate transports\nok 239 - Capture Snake and its authored pursuit successor preview preserve their separate transports\n  ---\n  duration_ms: 11689.596688\n  type: 'test'\n  ...\n# Subtest: Team preview remains native and cannot be passed off as a playable Solo scenario\nok 240 - Team preview remains native and cannot be passed off as a playable Solo scenario\n  ---\n  duration_ms: 559.051702\n  type: 'test'\n  ...\n# Subtest: standalone scenario picture ownership never searches an unrelated installed campaign\nok 241 - standalone scenario picture ownership never searches an unrelated installed campaign\n  ---\n  duration_ms: 247.525736\n  type: 'test'\n  ...\n# Subtest: production Team import installs the exact creator edition while keeping Start deliberate\nok 242 - production Team import installs the exact creator edition while keeping Start deliberate\n  ---\n  duration_ms: 11044.704019\n  type: 'test'\n  ...\n# Subtest: a fresh Team host discovers and launches one exact installed edition\nok 243 - a fresh Team host discovers and launches one exact installed edition\n  ---\n  duration_ms: 8216.04912\n  type: 'test'\n  ...\n# Subtest: installed Team cards show historical clears without inventing a star grade\nok 244 - installed Team cards show historical clears without inventing a star grade\n  ---\n  duration_ms: 6731.051166\n  type: 'test'\n  ...\n# Subtest: a fresh Team host labels and resumes an exactly replayed installed checkpoint\nok 245 - a fresh Team host labels and resumes an exactly replayed installed checkpoint\n  ---\n  duration_ms: 7690.195588\n  type: 'test'\n  ...\n# Subtest: a fresh installed Hunt starts directly and saves the released state in both native journals\nok 246 - a fresh installed Hunt starts directly and saves the released state in both native journals\n  ---\n  duration_ms: 6422.495413\n  type: 'test'\n  ...\n# Subtest: an installed Hunt resumes directly and retains replayable release journals\nok 247 - an installed Hunt resumes directly and retains replayable release journals\n  ---\n  duration_ms: 6516.431317\n  type: 'test'\n  ...\n# Subtest: storage denial keeps a verified Team campaign playable for the current visit\nok 248 - storage denial keeps a verified Team campaign playable for the current visit\n  ---\n  duration_ms: 7275.807054\n  type: 'test'\n  ...\n# Subtest: installed Team media: legal host wins retain exact rewards, Next and fresh-host progress\n    # Subtest: first win and deliberate Next\n    ok 1 - first win and deliberate Next\n      ---\n      duration_ms: 30278.95427\n      type: 'test'\n      ...\n    # Subtest: fresh host restores second mission and earns only its own reward\n    ok 2 - fresh host restores second mission and earns only its own reward\n      ---\n      duration_ms: 18582.149153\n      type: 'test'\n      ...\n    1..2\nok 249 - installed Team media: legal host wins retain exact rewards, Next and fresh-host progress\n  ---\n  duration_ms: 49789.865891\n  type: 'test'\n  ...\n# Actual installed store, replay and keyboard host; finite DOM, IndexedDB and image decoding do not certify a native browser win.\n1..249\n# tests 259\n# suites 0\n# pass 259\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 102282.228967\n",
+      "memberReceipts": [
+        {
+          "name": "creator.json",
+          "bytes": 7504,
+          "sha256": "cae470b81ec07128093e35c4db185c12509689a8e5f4638f5dd8c23fe717f401"
+        },
+        {
+          "name": "creator.tap",
+          "bytes": 63559,
+          "sha256": "85f5c915d81896931743c4338f84075c32716636312ab21c71237966285d4d49"
+        },
+        {
+          "name": "run.json",
+          "bytes": 983,
+          "sha256": "8a18edb55d3c8abd4cc16c46a9a78bff5bf71dd349aed1e6d632358fd0512ab3"
+        }
+      ]
+    },
+    {
+      "phase": "presentation",
+      "artifact": {
+        "id": 12148477842,
+        "node_id": "MDg6QXJ0aWZhY3QxMjE0ODQ3Nzg0Mg==",
+        "name": "industrial-presentation-eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "size_in_bytes": 24316,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12148477842",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12148477842/zip",
+        "expired": false,
+        "digest": "sha256:21b2c5ba2fe7d4ebf9e46d80cad70d6790a24821dec09b83bed6345b463db468",
+        "created_at": "2026-10-18T20:00:22Z",
+        "updated_at": "2026-10-18T20:00:22Z",
+        "expires_at": "2026-11-01T20:00:22Z",
+        "workflow_run": {
+          "id": 39159252989,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/solo-missions-stage-observation",
+          "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+        }
+      },
+      "job": {
+        "id": 117768882328,
+        "run_id": 39159252989,
+        "workflow_name": "Industrial feature verification",
+        "head_branch": "codex/solo-missions-stage-observation",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159252989",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAba5KImA",
+        "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117768882328",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882328",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-18T19:32:46Z",
+        "started_at": "2026-10-18T19:58:03Z",
+        "completed_at": "2026-10-18T20:00:24Z",
+        "name": "feature (presentation)",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T19:58:04Z",
+            "completed_at": "2026-10-18T19:58:04Z"
+          },
+          {
+            "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T19:58:04Z",
+            "completed_at": "2026-10-18T19:58:49Z"
+          },
+          {
+            "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T19:58:49Z",
+            "completed_at": "2026-10-18T19:59:01Z"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T19:59:01Z",
+            "completed_at": "2026-10-18T19:59:03Z"
+          },
+          {
+            "name": "Install pinned SIM host-test dependencies",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 5,
+            "started_at": "2026-10-18T19:59:03Z",
+            "completed_at": "2026-10-18T19:59:03Z"
+          },
+          {
+            "name": "Verify the phase runner and restored policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T19:59:03Z",
+            "completed_at": "2026-10-18T19:59:06Z"
+          },
+          {
+            "name": "Verify multiplayer delivery and observation tools",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 7,
+            "started_at": "2026-10-18T19:59:06Z",
+            "completed_at": "2026-10-18T19:59:06Z"
+          },
+          {
+            "name": "Execute the feature phase on the exact PR head",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T19:59:06Z",
+            "completed_at": "2026-10-18T20:00:21Z"
+          },
+          {
+            "name": "Retain TAP and source-bound receipts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-18T20:00:21Z",
+            "completed_at": "2026-10-18T20:00:22Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T20:00:22Z",
+            "completed_at": "2026-10-18T20:00:22Z"
+          },
+          {
+            "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-18T20:00:22Z",
+            "completed_at": "2026-10-18T20:00:23Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-18T20:00:23Z",
+            "completed_at": "2026-10-18T20:00:23Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117768882328",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000042514,
+        "runner_name": "GitHub Actions 1000042514",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      "crcVerified": true,
+      "runReceipt": {
+        "format": "revealline-industrial-test-run.v1",
+        "source": {
+          "revision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "tree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+            "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+            "files": 44776,
+            "bytes": 3407721337,
+            "aggregateSha256": "70138943a3aa182f9a64a7db31ef06ac6e6b73339c5c560c144b27d878e1c106",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "selected": "presentation",
+        "phases": [
+          "presentation"
+        ],
+        "startedAt": "2026-10-18T19:59:25.435Z",
+        "finishedAt": "2026-10-18T20:00:21.964Z",
+        "status": "passed"
+      },
+      "phaseReceipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "presentation",
+        "startedAt": "2026-10-18T19:59:25.436Z",
+        "finishedAt": "2026-10-18T20:00:21.963Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "tree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+            "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+            "files": 44776,
+            "bytes": 3407721337,
+            "aggregateSha256": "70138943a3aa182f9a64a7db31ef06ac6e6b73339c5c560c144b27d878e1c106",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/actor-animation-budget.test.mjs",
+          "game/test/industrial-arcade.test.mjs",
+          "game/test/industrial-material-sample.test.mjs",
+          "game/test/industrial-review-motion.test.mjs",
+          "game/test/industrial-encounter-audio.test.mjs",
+          "game/test/shared-encounter-audio.test.mjs",
+          "game/test/hunt-overhead-art.test.mjs",
+          "game/test/classic-snake-presentation.test.mjs",
+          "game/test/defeat-presentation-host.test.mjs",
+          "game/test/field-kit-adoption.test.mjs",
+          "game/test/presentation-host.test.mjs",
+          "game/test/actor-atlas-runtime.test.mjs",
+          "game/test/actor-appearance-lease.test.mjs",
+          "game/test/industrial-soldier-roster.test.mjs",
+          "game/test/industrial-machinery.test.mjs",
+          "game/test/industrial-native-vehicles.test.mjs",
+          "game/test/industrial-environment-production.test.mjs",
+          "game/test/industrial-native-soldiers.test.mjs",
+          "game/test/industrial-soldier-debris.test.mjs",
+          "game/test/classic-catch-audio.test.mjs",
+          "game/test/enemy-artwork-preferences.test.mjs",
+          "game/test/classic-presentation.test.mjs",
+          "game/test/combat-presentation.test.mjs",
+          "game/test/audio.test.mjs",
+          "game/test/published-audio.test.mjs",
+          "game/test/coop-view-presentation.test.mjs",
+          "game/test/fpv-world-textures.test.mjs",
+          "game/test/fpv-objective-labels.test.mjs",
+          "game/test/fpv-regional-library-labels.test.mjs",
+          "game/test/industrial-environments.test.mjs",
+          "game/test/attempt-appearance.test.mjs",
+          "game/test/capture-presentation-session.test.mjs",
+          "game/test/team-presentation-attempt.test.mjs",
+          "game/test/classic-environment-renderer.test.mjs",
+          "game/test/fpv-industrial-environments.test.mjs",
+          "game/test/capture-environment-painter.test.mjs",
+          "game/test/actor-defeat-presentation.test.mjs",
+          "game/test/overflight-renderer.test.mjs",
+          "game/test/overflight-trial-report.test.mjs",
+          "game/test/team-duel-audio-qualification.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/actor-animation-budget.test.mjs",
+            "sha256": "3f50c0741bf1ace0f527ee2dd78fdbfbb848ba227c16ec6abc597515a028e10c"
+          },
+          {
+            "file": "game/test/industrial-arcade.test.mjs",
+            "sha256": "28a0de60076066c81938cfcacc63d2ae3f07ff6667cafecce137daae2bc49e0f"
+          },
+          {
+            "file": "game/test/industrial-material-sample.test.mjs",
+            "sha256": "abf6527296e13abe51794fe94f4c22639d220e44b0aab82db93c2cacd8496c65"
+          },
+          {
+            "file": "game/test/industrial-review-motion.test.mjs",
+            "sha256": "b08bcba06164389dbe3fbababf029e8addcdf6f36faa250b287e3e2e70943e87"
+          },
+          {
+            "file": "game/test/industrial-encounter-audio.test.mjs",
+            "sha256": "15f740da3e69e823234004e43fdf4eabfd2f46b4df7134c9debde5d2f0039a5f"
+          },
+          {
+            "file": "game/test/shared-encounter-audio.test.mjs",
+            "sha256": "d199f8cd98ff0b9bc2778850b6a5bb04fd88fa1c63ee3e42e158951fef817fc5"
+          },
+          {
+            "file": "game/test/hunt-overhead-art.test.mjs",
+            "sha256": "c692ac5e42a86ee263d3c8cc47b0db1c0f65e9547f3906be463f0b6d9b39c0b0"
+          },
+          {
+            "file": "game/test/classic-snake-presentation.test.mjs",
+            "sha256": "66eadfbe2b6041899e8427ec5d117a5e8c8483439943b2671926505623264505"
+          },
+          {
+            "file": "game/test/defeat-presentation-host.test.mjs",
+            "sha256": "c14df7b5a50958eeef7fc461aedbc01b22f0179a96897cf5f6c2b08157148b2e"
+          },
+          {
+            "file": "game/test/field-kit-adoption.test.mjs",
+            "sha256": "0bc9fdbc254d42b5c7a7cb18622e3f06e77e28953b7d709221e4c696195dc2bc"
+          },
+          {
+            "file": "game/test/presentation-host.test.mjs",
+            "sha256": "84d839f76117711b346277d6359f6f9cbbd78018d800e3ec9cff9239b2cecd6e"
+          },
+          {
+            "file": "game/test/actor-atlas-runtime.test.mjs",
+            "sha256": "58a928727573fab4c8d654dafa3c0750b776cdaa4610a5907e35ddd3eb454677"
+          },
+          {
+            "file": "game/test/actor-appearance-lease.test.mjs",
+            "sha256": "eaecf2f911c71a2eb6149e26a22a107be65ece016f4efb013123b4fe5cea2a32"
+          },
+          {
+            "file": "game/test/industrial-soldier-roster.test.mjs",
+            "sha256": "ec45627627843b71ab7e11b2fcaaadf40355131c7c0754ad305f774c66d4441f"
+          },
+          {
+            "file": "game/test/industrial-machinery.test.mjs",
+            "sha256": "a0267e21afff1bf990caa8aa448bfdd0f21b9f569c124be176c257327ab796bc"
+          },
+          {
+            "file": "game/test/industrial-native-vehicles.test.mjs",
+            "sha256": "ab25b735f27e2f8da8707419569d826e73c9a1a1b7a241473be8c3902f34deb6"
+          },
+          {
+            "file": "game/test/industrial-environment-production.test.mjs",
+            "sha256": "aa2d8f0e96d9d9bc14990a33acc34f3ef07b43f1194acce788b490bd2ed2bd47"
+          },
+          {
+            "file": "game/test/industrial-native-soldiers.test.mjs",
+            "sha256": "b0fdadd6f7d596bc1351de7ad9994acb8be6e49bff1c4a8edd571ef581ea62d5"
+          },
+          {
+            "file": "game/test/industrial-soldier-debris.test.mjs",
+            "sha256": "338157f0796864631877f86265481335787d81885644c7c80b13142994dbbe68"
+          },
+          {
+            "file": "game/test/classic-catch-audio.test.mjs",
+            "sha256": "8e68f9559a6d0e002b3fed0eab643632c4950ae6cc2aa0cda09299c56454ae99"
+          },
+          {
+            "file": "game/test/enemy-artwork-preferences.test.mjs",
+            "sha256": "212ad8b5a419cce8d32602f1ea56c41cc32a12c9018ece02002d9c62fcb86a94"
+          },
+          {
+            "file": "game/test/classic-presentation.test.mjs",
+            "sha256": "09be6567dcf9f7c2b1317032f5fa7f294b3ac8eeae5de4d00a17cce9aa5e0ef0"
+          },
+          {
+            "file": "game/test/combat-presentation.test.mjs",
+            "sha256": "95f4acbc7564b9e31d667e8bc42a564fd59157678c2026f4be142be18f720d95"
+          },
+          {
+            "file": "game/test/audio.test.mjs",
+            "sha256": "11aa9d355eda746fe0505e48c19d18b6af31002ae89c0c51880e6a180528852e"
+          },
+          {
+            "file": "game/test/published-audio.test.mjs",
+            "sha256": "d7b8101f4823e2bb91b5ec1f28ec743ac541b9921db5c33bb31f272992d8a677"
+          },
+          {
+            "file": "game/test/coop-view-presentation.test.mjs",
+            "sha256": "fa210593f20f280d0fa70e99fb8e29abb895b06c114eee21ed41fab4ff47eec8"
+          },
+          {
+            "file": "game/test/fpv-world-textures.test.mjs",
+            "sha256": "53a9c43ea86e02bac74ae297d40d410293946ff2e598732e92d2eeed373425a9"
+          },
+          {
+            "file": "game/test/fpv-objective-labels.test.mjs",
+            "sha256": "28f553bfcc7e19f98c741d982caf968ded673ab89bac09cd4bc331bfc1f417a5"
+          },
+          {
+            "file": "game/test/fpv-regional-library-labels.test.mjs",
+            "sha256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272"
+          },
+          {
+            "file": "game/test/industrial-environments.test.mjs",
+            "sha256": "0b52bc492b1ea6d104935143587a33b79dc558ab3659d03dde873e1fb206917e"
+          },
+          {
+            "file": "game/test/attempt-appearance.test.mjs",
+            "sha256": "6b049409d61e87190199018f83839ebd2b783f3424a635b5e2c4ef9b1dc12206"
+          },
+          {
+            "file": "game/test/capture-presentation-session.test.mjs",
+            "sha256": "9ee4dcec64e1a3452882aa56ad5973e8d58aa74786e1ce358f12eeee5aff596f"
+          },
+          {
+            "file": "game/test/team-presentation-attempt.test.mjs",
+            "sha256": "7f398ece644d396ea302b44396935e57c79141c2ca0da06635422b61ced5b8c2"
+          },
+          {
+            "file": "game/test/classic-environment-renderer.test.mjs",
+            "sha256": "c7c85a751876afb28a8eaa09e98936a81895cfe88b595566aaf9f15626570229"
+          },
+          {
+            "file": "game/test/fpv-industrial-environments.test.mjs",
+            "sha256": "dd5686cc12cf8c30e8fa5a1cc956015cb90766df8bf00994f85702d4a330c495"
+          },
+          {
+            "file": "game/test/capture-environment-painter.test.mjs",
+            "sha256": "95c220d6bbafe0873708d9a930e137b06f84b5c8dda7936d5c3d401912b81427"
+          },
+          {
+            "file": "game/test/actor-defeat-presentation.test.mjs",
+            "sha256": "e94a7acb426689dedf78523e99d24066b120bb6723a8cb5cce6111cb741543f5"
+          },
+          {
+            "file": "game/test/overflight-renderer.test.mjs",
+            "sha256": "280fd06eda5bb1525c1c860496cb238714312d5764bcd3c6dbe2b934ea18ad49"
+          },
+          {
+            "file": "game/test/overflight-trial-report.test.mjs",
+            "sha256": "88b39b0be4b0587e45d3fa82d5dc38896393dceab235c25ddfe40e6943c2b673"
+          },
+          {
+            "file": "game/test/team-duel-audio-qualification.test.mjs",
+            "sha256": "44dc0184c5f98e50ca8cf6ac492e2af2721ffc7e4bdfa5618e1615366840e4e6"
+          }
+        ],
+        "logSha256": "eece38b9eba7b1e1664c865e77f49c24616f6f98966b954b398fc567b1db7dc6",
+        "logReadError": null,
+        "summary": {
+          "tests": 402,
+          "pass": 402,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "memberReceipts": [
+        {
+          "name": "presentation.tap",
+          "bytes": 100225,
+          "sha256": "eece38b9eba7b1e1664c865e77f49c24616f6f98966b954b398fc567b1db7dc6"
+        },
+        {
+          "name": "run.json",
+          "bytes": 993,
+          "sha256": "d7d7248388fb26c8dd8f36b053547d8b506c89cdff86b7694b91583fc45f6ddf"
+        },
+        {
+          "name": "presentation.json",
+          "bytes": 9953,
+          "sha256": "99df4dc344e65690f686e7d8f965b09c3137840b5d705787bba288fb2740e592"
+        }
+      ]
+    }
+  ]
+}

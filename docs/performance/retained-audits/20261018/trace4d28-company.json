@@ -1,0 +1,440 @@
+{
+  "format": "SoloCurrentTraceCompanyCandidateAuditV1",
+  "observedAt": "2026-10-18T19:54:23.800525+00:00",
+  "repository": "mekhovov/revealline",
+  "pullRequest": 1621,
+  "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+  "tree": "4bd51f0d0b846063e030372d6873ca029852e697",
+  "run": {
+    "id": 39156220146,
+    "name": "Company edition candidates",
+    "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+    "status": "completed",
+    "conclusion": "success",
+    "run_attempt": 1,
+    "created_at": "2026-10-18T18:53:16Z",
+    "updated_at": "2026-10-18T19:44:41Z",
+    "path": ".github/workflows/company-edition-candidate.yml",
+    "event": "pull_request"
+  },
+  "jobs": [
+    {
+      "id": 117759871451,
+      "run_id": 39156220146,
+      "workflow_name": "Company edition candidates",
+      "head_branch": "codex/solo-bounded-task-frame-trace",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39156220146",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAbawkJ2w",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117759871451",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39156220146/job/117759871451",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-18T18:53:16Z",
+      "started_at": "2026-10-18T19:16:31Z",
+      "completed_at": "2026-10-18T19:30:56Z",
+      "name": "optional-practice",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-18T19:16:32Z",
+          "completed_at": "2026-10-18T19:16:33Z"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-18T19:16:33Z",
+          "completed_at": "2026-10-18T19:17:24Z"
+        },
+        {
+          "name": "Record optional integration source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-18T19:17:24Z",
+          "completed_at": "2026-10-18T19:17:24Z"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-18T19:17:24Z",
+          "completed_at": "2026-10-18T19:17:32Z"
+        },
+        {
+          "name": "Read explicit automated-suite policy",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-18T19:17:32Z",
+          "completed_at": "2026-10-18T19:17:32Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-18T19:17:32Z",
+          "completed_at": "2026-10-18T19:17:34Z"
+        },
+        {
+          "name": "Install pinned FPV persistence test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-18T19:17:34Z",
+          "completed_at": "2026-10-18T19:17:36Z"
+        },
+        {
+          "name": "Verify optional routes, replay, input and installation isolation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-18T19:17:36Z",
+          "completed_at": "2026-10-18T19:30:36Z"
+        },
+        {
+          "name": "Freeze twice and verify optional package artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-18T19:30:36Z",
+          "completed_at": "2026-10-18T19:30:49Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-18T19:30:49Z",
+          "completed_at": "2026-10-18T19:30:52Z"
+        },
+        {
+          "name": "Report optional-package boundary",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-18T19:30:52Z",
+          "completed_at": "2026-10-18T19:30:52Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-10-18T19:30:52Z",
+          "completed_at": "2026-10-18T19:30:52Z"
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-10-18T19:30:52Z",
+          "completed_at": "2026-10-18T19:30:53Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-10-18T19:30:53Z",
+          "completed_at": "2026-10-18T19:30:53Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117759871451",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000042371,
+      "runner_name": "GitHub Actions 1000042371",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 117759871668,
+      "run_id": 39156220146,
+      "workflow_name": "Company edition candidates",
+      "head_branch": "codex/solo-bounded-task-frame-trace",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39156220146",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAbawkKtA",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117759871668",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39156220146/job/117759871668",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-18T18:53:16Z",
+      "started_at": "2026-10-18T19:18:13Z",
+      "completed_at": "2026-10-18T19:44:40Z",
+      "name": "candidate",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-18T19:18:14Z",
+          "completed_at": "2026-10-18T19:18:15Z"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-18T19:18:15Z",
+          "completed_at": "2026-10-18T19:19:02Z"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-18T19:19:02Z",
+          "completed_at": "2026-10-18T19:19:08Z"
+        },
+        {
+          "name": "Read explicit automated-suite policy",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-18T19:19:08Z",
+          "completed_at": "2026-10-18T19:19:08Z"
+        },
+        {
+          "name": "Run npm ci",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-18T19:19:08Z",
+          "completed_at": "2026-10-18T19:19:11Z"
+        },
+        {
+          "name": "Verify generated source and public media eligibility",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-18T19:19:11Z",
+          "completed_at": "2026-10-18T19:19:22Z"
+        },
+        {
+          "name": "Run focused company, persistence, offline and artifact tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-18T19:19:22Z",
+          "completed_at": "2026-10-18T19:29:54Z"
+        },
+        {
+          "name": "Verify both source release formats and edition admission",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-18T19:29:54Z",
+          "completed_at": "2026-10-18T19:30:06Z"
+        },
+        {
+          "name": "Compile twice and inspect original candidate ZIP members",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-18T19:30:06Z",
+          "completed_at": "2026-10-18T19:44:37Z"
+        },
+        {
+          "name": "Save small capacity metadata for review",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-18T19:44:37Z",
+          "completed_at": "2026-10-18T19:44:38Z"
+        },
+        {
+          "name": "Save immutable candidates for review",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 11,
+          "started_at": "2026-10-18T19:44:38Z",
+          "completed_at": "2026-10-18T19:44:38Z"
+        },
+        {
+          "name": "Report qualification boundary",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-18T19:44:38Z",
+          "completed_at": "2026-10-18T19:44:38Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-10-18T19:44:38Z",
+          "completed_at": "2026-10-18T19:44:38Z"
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-10-18T19:44:38Z",
+          "completed_at": "2026-10-18T19:44:39Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-10-18T19:44:39Z",
+          "completed_at": "2026-10-18T19:44:39Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117759871668",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000042380,
+      "runner_name": "GitHub Actions 1000042380",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ],
+  "artifact": {
+    "id": 12148621575,
+    "node_id": "MDg6QXJ0aWZhY3QxMjE0ODYyMTU3NQ==",
+    "name": "company-capacity-4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+    "size_in_bytes": 1008093,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12148621575",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12148621575/zip",
+    "expired": false,
+    "digest": "sha256:83caeaf09b8607f720bab5c1b8360bb1b269e5236704ec4a82d2578592a5e44e",
+    "created_at": "2026-10-18T19:44:38Z",
+    "updated_at": "2026-10-18T19:44:38Z",
+    "expires_at": "2026-11-01T19:44:38Z",
+    "workflow_run": {
+      "id": 39156220146,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "codex/solo-bounded-task-frame-trace",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    }
+  },
+  "archive": {
+    "bytes": 1008093,
+    "sha256": "83caeaf09b8607f720bab5c1b8360bb1b269e5236704ec4a82d2578592a5e44e",
+    "zipCRC": "all-members-valid",
+    "members": [
+      {
+        "path": "candidate-verification.json",
+        "bytes": 13906,
+        "sha256": "8f284e98df70280e9105e20bff7dcc10e7a769a1d30cd4ea2e851497b8a000b6"
+      },
+      {
+        "path": "capacity-inventory.json",
+        "bytes": 11159,
+        "sha256": "ba8694abe64cdd3fad4f2ca66652c9481c7f54329a14cd6b95261a613a6905d4"
+      },
+      {
+        "path": "checksums.json",
+        "bytes": 10444,
+        "sha256": "5f2ad2c90e7acf3fc650d966a4c8501d125ba5b1f434d1a4cd637531eaa9946c"
+      },
+      {
+        "path": "editions.json",
+        "bytes": 18723,
+        "sha256": "60fb9f777eb2b00b708b69ce239cfcc6031baafa9363c9400a186c1505e06e9c"
+      },
+      {
+        "path": "manifest-droneaid-community.json",
+        "bytes": 144771,
+        "sha256": "2ac844f708e177ba3dfc25b86218b45abbdfeda18b6e3a3d81bfb19eedf62343"
+      },
+      {
+        "path": "manifest-droneaid-nl-careful-handoff.json",
+        "bytes": 146847,
+        "sha256": "9a3caa24aeeeb6d735f271ef675034d3f7a591d0d85eeb10828aafe79670a50a"
+      },
+      {
+        "path": "manifest-droneaid-nl-community.json",
+        "bytes": 159168,
+        "sha256": "5449949b9d38efb9bf4be141bbb1f42d76390b935fbd62aa62c0f53723f155f3"
+      },
+      {
+        "path": "manifest-droneaid-nl-makers-together.json",
+        "bytes": 146841,
+        "sha256": "38f10a3be128e85d136de6e47bc355defd40445acb759a25ecef98af941759c9"
+      },
+      {
+        "path": "manifest-droneaid-nl-parts-in-motion.json",
+        "bytes": 147189,
+        "sha256": "0f3388c9e1e9a07e0fd16948d723951421cf786f35ab2a4a20e4e0aa81fc860e"
+      },
+      {
+        "path": "manifest-droneaid-nl-shared-horizon.json",
+        "bytes": 146824,
+        "sha256": "fb3879edfd4624c33b06989a6707313b5bb9bd325224d7c02146cb2ec09f39d1"
+      },
+      {
+        "path": "manifest-droneaid-nl-signals-of-support.json",
+        "bytes": 146916,
+        "sha256": "ae55a3be601b71a619833e1640395f1665749969f8af6af7539fc721118eefa0"
+      },
+      {
+        "path": "manifest-droneaid-nl-workshop-lights.json",
+        "bytes": 146828,
+        "sha256": "32a559d3f83d0c9dc2c96c68b4099781728c0b18c2828e5c2b85e6e8cf17555c"
+      },
+      {
+        "path": "manifest-fpv-learning.json",
+        "bytes": 159900,
+        "sha256": "57bd3500c00a7fd30682fbcfd71fc65da44a29d0c746060970b179acb9bafcec"
+      },
+      {
+        "path": "manifest-social-drone-ua.json",
+        "bytes": 151071,
+        "sha256": "6798b92cf77f3de0a989b66ef38d4d3b82f53b3f616fec103ba9826e37e17592"
+      },
+      {
+        "path": "manifest-ukraine-culture.json",
+        "bytes": 156124,
+        "sha256": "e5f93e8a5e27d716c51d5e4b8ff4c6481d40e1fa10c91e9c970b721301ed1400"
+      },
+      {
+        "path": "manifest-victory-drones.json",
+        "bytes": 147888,
+        "sha256": "bd5f52d2b8de29faf7f714cf2937a3a61c6b7314eb8ea027836433f2b974e137"
+      }
+    ]
+  },
+  "receipt": {
+    "path": "candidate-verification.json",
+    "bytes": 13906,
+    "sha256": "8f284e98df70280e9105e20bff7dcc10e7a769a1d30cd4ea2e851497b8a000b6",
+    "text": "{\"admission\": {\"editions\": [{\"distributionSha256\": \"52cb18dec96349e27149308767a3a50e97d049284b97f074bff4d2b9bde8125e\", \"files\": 1060, \"id\": \"droneaid-community\", \"sourceArchiveSha256\": \"3b5617cf9efdab0dc08ec07c756ba9f086c4ca797eb42322bf510400f8793029\", \"totalBytes\": 32596267}, {\"distributionSha256\": \"88ae087bed5c04d3ecf62c1af4d3f7ccbd9c2f4f2a482a29a5d68f5fa1294b92\", \"files\": 1070, \"id\": \"droneaid-nl-careful-handoff\", \"sourceArchiveSha256\": \"4153980cf44192c2f79cd410d6666597120d9464dc97d0d888b39f13c1eec7bc\", \"totalBytes\": 34819584}, {\"distributionSha256\": \"a0319fd8a217695f4d5610ae780e3b84836be416aba4a37ffb7b3ef2fd60f5e9\", \"files\": 1138, \"id\": \"droneaid-nl-community\", \"sourceArchiveSha256\": \"5edd89baef37f920c54e8b6df632a0f08c21ff4b14f6d5c50b79df10f12fd59f\", \"totalBytes\": 72205695}, {\"distributionSha256\": \"f106143e48df3d39e60dc35356dc0547d453b86bf2bec7cbad1c38ae7fc6f7ac\", \"files\": 1070, \"id\": \"droneaid-nl-makers-together\", \"sourceArchiveSha256\": \"5aa45b61dc543bd8b583a6eb525a78490811a5dce4c67c91b96bfcc908d3bd00\", \"totalBytes\": 34695008}, {\"distributionSha256\": \"29b19a0c98ef038fe6573a92cdc0eafdc70081b80999da69c78cd0aab721c123\", \"files\": 1072, \"id\": \"droneaid-nl-parts-in-motion\", \"sourceArchiveSha256\": \"826ef0804b389c8b5c6305a378df018e7d4fd1ba588a1bceb9f9128dafa90d0a\", \"totalBytes\": 35213170}, {\"distributionSha256\": \"539d5fcbb19cc5e4fa332485fd566957bf5928b76cde7cd25d01d7b544f458ff\", \"files\": 1070, \"id\": \"droneaid-nl-shared-horizon\", \"sourceArchiveSha256\": \"b36c97c57b6a500cc4d3522f4fed45fcd64d55b533a27db841da4f15908a3334\", \"totalBytes\": 35005990}, {\"distributionSha256\": \"ba01e6563f617815e80c0218d822dde498914c7b35f470de0f5c9dc0d604099d\", \"files\": 1070, \"id\": \"droneaid-nl-signals-of-support\", \"sourceArchiveSha256\": \"9ad887352fc7377c69739e6222a2dfcbc356a822e9b660c031293320158d5d5d\", \"totalBytes\": 34806401}, {\"distributionSha256\": \"3f8a12a8ba458bfed34f50789d876775d19d787e042aab3efa2516ccbfce4307\", \"files\": 1070, \"id\": \"droneaid-nl-workshop-lights\", \"sourceArchiveSha256\": \"832b0c06f6cd1c09f6a6911862c4f8c1dd4ec356e38c607deeee9ce194606c35\", \"totalBytes\": 33504474}, {\"distributionSha256\": \"900d495e793439f649f60f13ae14840edc75b98219ca05b64fbd5320d91c759a\", \"files\": 1152, \"id\": \"fpv-learning\", \"sourceArchiveSha256\": \"03997ca6efb529d4e574f3be349a2b41badfbdb30ea10228b393eaaf774ff3b3\", \"totalBytes\": 41319390}, {\"distributionSha256\": \"60a234cd30074c0ba90e4b8ae91e48637a9ae872383f527ef41f2fab457956a2\", \"files\": 1096, \"id\": \"social-drone-ua\", \"sourceArchiveSha256\": \"f622f27b65ca32f6359e899f26b99ed353b8f44e2390f49c08cc9f4e7d1199c3\", \"totalBytes\": 40117283}, {\"distributionSha256\": \"5929f085f3067ff02fdc1bdb4daf73109c438a88e4965f3568b3d42eae77fe9b\", \"files\": 1127, \"id\": \"ukraine-culture\", \"sourceArchiveSha256\": \"6a36220016672e3d2dd7417a0cd09c859a4183ccda5e2c55645f8848abea5980\", \"totalBytes\": 50206702}, {\"distributionSha256\": \"f6670c8bda0277106f10bbcede03d7715b95cca3b1b0f8db996809cc61363329\", \"files\": 1076, \"id\": \"victory-drones\", \"sourceArchiveSha256\": \"dfee7020de436c93f11d6c9fa5532d3145615948f11272d70fcfd9bda4f221ab\", \"totalBytes\": 29799795}], \"format\": \"revealline-editions-admission.v1\", \"publicEligible\": false, \"sourceRevision\": \"4d28eb409e45a3db3b26ce4ec7a64437e5929a95\", \"sourceTree\": \"4bd51f0d0b846063e030372d6873ca029852e697\", \"status\": \"verified-candidate-members\", \"version\": \"v0.151.1\", \"zipMembersVerified\": true}, \"envelopeSha256\": \"60fb9f777eb2b00b708b69ce239cfcc6031baafa9363c9400a186c1505e06e9c\", \"format\": \"revealline-edition-candidate-verification.v1\", \"presentationReceipts\": [{\"authoredPresentationSha256\": \"37badc3a8660b647430f7611aa215cbb5789b05cbeaf2ca46ef0f283e59e3df4\", \"editionId\": \"droneaid-community\"}, {\"authoredPresentationSha256\": \"eb0891a6a26235ede2a5fa078cfa619f6f41d97064e04a13d8630c19cc9a4226\", \"editionId\": \"droneaid-nl-careful-handoff\", \"retained\": [{\"authoredPresentationSha256\": \"fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913\"}, {\"authoredPresentationSha256\": \"2cb54a68ee115af048b210d130af7418d44307adbeb69ab54dbc4fc0418cacd7\"}]}, {\"authoredPresentationSha256\": \"d141c4a6b967be2089c08efb94c01e4560b51224a64d4ff076c039e2b8621a22\", \"editionId\": \"droneaid-nl-community\", \"retained\": [{\"authoredPresentationSha256\": \"13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679\"}, {\"authoredPresentationSha256\": \"3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67\"}, {\"authoredPresentationSha256\": \"389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85\"}, {\"authoredPresentationSha256\": \"8b53a415ac9b76ebd25aca2ac7b67464f026e43e39185970c59501e6f918e3cb\"}]}, {\"authoredPresentationSha256\": \"4bd4f5e45704594aba28f8e2f10d95189d5deb3d93b3f7e2cfa64c38e73ba384\", \"editionId\": \"droneaid-nl-makers-together\", \"retained\": [{\"authoredPresentationSha256\": \"609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478\"}, {\"authoredPresentationSha256\": \"8c7d12be0f28ca874e88bbb453ab06fc947245681e8a4fc851b0c70a88314488\"}]}, {\"authoredPresentationSha256\": \"c90ee45a84f94ff7bff7ceeda4876ffda8a4eb286f86f26dda04adb81241d58f\", \"editionId\": \"droneaid-nl-parts-in-motion\", \"retained\": [{\"authoredPresentationSha256\": \"0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40\"}, {\"authoredPresentationSha256\": \"e8c32e78d0ef5bf6f09a08cbe2ccaf244ec4917c877bce69c2fdf9cb3f38673b\"}, {\"authoredPresentationSha256\": \"375300b9464b5a567c7cc8888e9a46f6f3e00cb01de0a25bf5cf2eff3c3b5f01\"}]}, {\"authoredPresentationSha256\": \"5862e6c5d31ddfba52ea647b5ed75a162ae37b0b768159e70ae201bcdb93c193\", \"editionId\": \"droneaid-nl-shared-horizon\", \"retained\": [{\"authoredPresentationSha256\": \"1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6\"}, {\"authoredPresentationSha256\": \"fb225362d153cdd9af4d0421e7e7905521bb0d926cab7557985d40982924e429\"}]}, {\"authoredPresentationSha256\": \"9f83cc366d579118503b20bf2ebc7ce9267e6b7533b6293ab44866584b6d9090\", \"editionId\": \"droneaid-nl-signals-of-support\", \"retained\": [{\"authoredPresentationSha256\": \"013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863\"}, {\"authoredPresentationSha256\": \"048f59ae3ab8452c1e2f387a15dc10baad8d88c921663e2c576e7ad2fffa2b44\"}]}, {\"authoredPresentationSha256\": \"8793606f36cf35c064304b63362d018b79b8d99a482361e6b6be2f70195a45dc\", \"editionId\": \"droneaid-nl-workshop-lights\", \"retained\": [{\"authoredPresentationSha256\": \"4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14\"}, {\"authoredPresentationSha256\": \"115d034320ff3efb161abd00b5886485bd92c7a161d405e5f8cb384263480b70\"}, {\"authoredPresentationSha256\": \"f4882beacf8fc6bb07aaee36b818541df42b08c0e64ffcc461a2744f6503d302\"}]}, {\"authoredPresentationSha256\": \"5fe07f863586800fcd47eadcc815871dc200939ec6d4f7a5f915108749a569f2\", \"editionId\": \"fpv-learning\", \"retained\": [{\"authoredPresentationSha256\": \"2b0c8781faf178c7e7952018a07ad290af67cf32217eedcbeeacf9a42c732ace\"}, {\"authoredPresentationSha256\": \"a34183de94677f3e2d20a88062a3643778723a34b53a57c606eb667740e9d70c\"}, {\"authoredPresentationSha256\": \"2ccf3e4f9b9066359219e3fdcd2dad32366f9ea3e2cf12d1b16c0de09d36c604\"}, {\"authoredPresentationSha256\": \"089b0801b048970f1920e76b03ceda92f389e256c5e38e45c5e25abeebe04f0d\"}, {\"authoredPresentationSha256\": \"5c23ab5e0b883f17e9de0df3a5b8b41010a86da1c495969c6e0efcc96658bdea\"}, {\"authoredPresentationSha256\": \"108c4348f0a40c6e6b48387a9fa81d95161f006f842d1239e3048986c29696b2\"}, {\"authoredPresentationSha256\": \"ace3662d4631d798e58b5eeea22d4f0d2c3fc8bf538f6a7a47bcb54ae6938fd0\"}, {\"authoredPresentationSha256\": \"d5188109991148940036debb16fabe91d600104b3e82d4670efa5aed5dabfa16\"}]}, {\"authoredPresentationSha256\": \"30195834af82ffe3e3209407545763a67aa8cb3e04ad2a235cc0592cfa7e46fc\", \"editionId\": \"social-drone-ua\", \"retained\": [{\"authoredPresentationSha256\": \"ef26881b40bfc01a8ac1ef4ce5d746d11b253a64d2c44316dde458659f541195\"}, {\"authoredPresentationSha256\": \"7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826\"}, {\"authoredPresentationSha256\": \"3a82bd8aa3306adf9f02be6f56945985b7e54e1606fc3156a2271ba19bbd16a6\"}, {\"authoredPresentationSha256\": \"985d7722d69526a98abc1d7026c2279ace2a64443362dcc861aab6cd92fb608b\"}, {\"authoredPresentationSha256\": \"b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6\"}, {\"authoredPresentationSha256\": \"9ae68b77e05e8b2a0dc934510e080af89ee5223a3304a0197c3b53a2e61af1b0\"}, {\"authoredPresentationSha256\": \"943441d44205dfced2e89cf47738d2fd6cc22e886cbd0fbea5bb24d77177e0de\"}, {\"authoredPresentationSha256\": \"776e569d90c869e8cdf96beb046d21d9f5439fde57c9fbe991119e4029e0dcd6\"}, {\"authoredPresentationSha256\": \"95c2f3c78f07732c3d804e042b5c5a1bb56d9c38f79330b1d09135f46affecd5\"}]}, {\"authoredPresentationSha256\": \"2dd69ecc1f96478c028aa621629aa6555c1175d540783b05a38320ed86074f29\", \"editionId\": \"ukraine-culture\", \"retained\": [{\"authoredPresentationSha256\": \"3e868c83c369a31d78e3a551e8b83b6179bba80543dca9df19cbb73566deb295\"}, {\"authoredPresentationSha256\": \"430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2\"}, {\"authoredPresentationSha256\": \"95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25\"}, {\"authoredPresentationSha256\": \"004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58\"}, {\"authoredPresentationSha256\": \"b056de12bcb25f16bc3ed5324b5a0e1a7e30f2614a37eb244675ef02a8c2a805\"}, {\"authoredPresentationSha256\": \"976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742\"}, {\"authoredPresentationSha256\": \"c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f\"}]}, {\"authoredPresentationSha256\": \"a26b277283688b02459ae3af631b313d0983abebcffba1d5681f4b74a1b3781f\", \"editionId\": \"victory-drones\", \"retained\": [{\"authoredPresentationSha256\": \"9685f48ccc6c053c69aebb695a1f31e66e54a839806e8956d816258cc07906d8\"}, {\"authoredPresentationSha256\": \"abcba1ea9574640497faf043f8caf26a039f1355d34df68f3e2f8546690439b4\"}, {\"authoredPresentationSha256\": \"afeb4333ec165a3ecbaa01bce74822744e2f56238f7608701284bcbd436638b3\"}, {\"authoredPresentationSha256\": \"6de52c0aa1ae09a7f9699adb5d73f69c779a5220e003434cb6dfe5c6333bff9f\"}, {\"authoredPresentationSha256\": \"36e42f75903c47abf1c23da0f22f46b74498284cdf84abd0b5f36b10d5838037\"}]}], \"publicEligible\": false, \"reproducibleBuilds\": 2, \"requiredExternalQualification\": [\"human-artwork-and-brand-review\", \"human-learning-and-pacing-review\", \"install-offline-upgrade-rollback-matrix\", \"performance-and-accessibility-review\", \"downloaded-release-byte-verification\"], \"sourceEligibility\": {\"assets\": 458, \"files\": 44792, \"format\": \"revealline-public-source-eligibility.v1\", \"status\": \"verified\"}, \"sourceRevision\": \"4d28eb409e45a3db3b26ce4ec7a64437e5929a95\", \"sourceTree\": \"4bd51f0d0b846063e030372d6873ca029852e697\", \"version\": \"v0.151.1\"}"
+  },
+  "verifiedScope": {
+    "candidateReceiptSourceAndTree": true,
+    "reportedReproducibleBuilds": 2,
+    "editionCount": 18,
+    "publicEligible": false,
+    "optionalPracticeJobPassed": true,
+    "optionalPracticeArtifactRead": false,
+    "independentRebuild": false,
+    "nativeOrPublishedAcceptance": false,
+    "performanceQualification": false,
+    "localExecution": false
+  },
+  "limitations": [
+    "This retains the hosted Company's exact-source candidate receipt and job conclusion, not an independent rebuild or downloaded full distribution verification.",
+    "Optional-practice job conclusion is retained; its separate27.5MB integration artifact was not downloaded or analysed in this audit.",
+    "Source gate and remaining Industrial groups remain independently required; this is not complete PR or release admission."
+  ]
+}
