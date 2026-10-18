@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 /** Local native Fresh regression; uses an installed browser and isolated storage. */
 import assert from 'node:assert/strict';
-import { writeFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 import { pbkdf2Sync } from 'node:crypto';
+import {
+  diagnoseQualificationFailure,
+  finishQualification,
+} from './shared-demo-browser-report.mjs';
 import {
   survivalDemoInventory,
   survivalDemoCompiled,
@@ -17,12 +20,9 @@ const args = Object.fromEntries(
 const baseURL = args.url ?? 'http://127.0.0.1:8768';
 assert.ok(['localhost', '127.0.0.1'].includes(new URL(baseURL).hostname));
 const runtime = args.runtime ?? 'playwright';
-const playwright = await import(runtime.startsWith('/') ? pathToFileURL(runtime).href : runtime);
 const engine = args.browser ?? 'chromium';
-const browser = await playwright[engine].launch({
-  headless: true,
-  ...(args.executable ? { executablePath: args.executable } : {}),
-});
+const reportPath = args.report ?? `.cache/survival-fresh-${engine}.json`;
+let browser, page;
 const report = {
   engine,
   started: new Date().toISOString(),
@@ -40,6 +40,11 @@ const saved = JSON.stringify({
   flightTraits: true,
 });
 try {
+  const playwright = await import(runtime.startsWith('/') ? pathToFileURL(runtime).href : runtime);
+  browser = await playwright[engine].launch({
+    headless: true,
+    ...(args.executable ? { executablePath: args.executable } : {}),
+  });
   const context = await browser.newContext();
   await context.exposeBinding('recordSurvivalFreshEvent', (...args) => {
     if (report.events.length < 64) report.events.push(args[1]);
@@ -78,7 +83,7 @@ try {
     },
     { key, saved },
   );
-  const page = await context.newPage();
+  page = await context.newPage();
   page.on('pageerror', (error) => {
     report.errors.push(String(error.stack ?? error));
     report.events.push({
@@ -171,19 +176,13 @@ try {
   assert.deepEqual(report.errors, []);
   report.complete = true;
 } catch (error) {
-  report.error = String(error.stack ?? error);
+  await diagnoseQualificationFailure({
+    report,
+    error,
+    page,
+    screenshotPath: reportPath.replace(/\.json$/, '.png'),
+  });
 } finally {
-  await browser.close();
+  await finishQualification({ report, reportPath, browser });
 }
-report.finished = new Date().toISOString();
-const path = args.report ?? `.cache/survival-fresh-${engine}.json`;
-await writeFile(path, JSON.stringify(report, null, 2) + '\n');
-console.log(
-  JSON.stringify({
-    path,
-    complete: report.complete,
-    error: report.error,
-    checks: report.checks.length,
-  }),
-);
 if (!report.complete) process.exitCode = 1;

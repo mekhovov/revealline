@@ -1,3 +1,4 @@
+import { createOwnedPhaserGame } from '../ui/owned-phaser-game.mjs';
 import {
   overflightTacticalEnemyLayers,
   overflightAttackLayers,
@@ -205,7 +206,7 @@ export async function createOverflightRenderer({
     if (frameActive) benchmark.submission(presentMs + Math.max(0, now - renderStarted), now);
   };
   try {
-    game = new Phaser.Game({
+    const configuration = {
       type: Phaser.WEBGL,
       parent,
       width: 960,
@@ -311,7 +312,8 @@ export async function createOverflightRenderer({
             !failed;
         },
       },
-    });
+    };
+    game = createOwnedPhaserGame(Phaser, configuration, document);
     await ready;
   } catch (error) {
     if (game) {
