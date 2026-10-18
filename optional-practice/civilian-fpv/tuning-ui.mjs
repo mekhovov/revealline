@@ -5,6 +5,8 @@ import {
   paintCameraFraming,
 } from './setup-workbench.mjs';
 import { createSetupDraft } from './setup-draft.mjs';
+import { createControllerTunePanel } from './controller-tune-panel.mjs';
+import { mountResponseBenchPanel } from './response-bench-panel.mjs';
 import { DEFAULT_RESPONSE, responseCurve } from './radio-profile.mjs';
 import { createTunedResponse, TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
 import {
@@ -28,6 +30,7 @@ import { exportJSONFile, exportTextFile } from '../../game/platform.mjs';
 import {
   previewBetaflightImport,
   previewNativeRateImport,
+  betaflightDefaultRateProfile,
   exportBetaflightRates,
   exportNativeRateProfile,
   resolveBetaflightPresetBundle,
@@ -56,6 +59,8 @@ export function mountFlightTuning({
   onCalibration,
   canCalibrate = () => true,
   getFlightConfiguration = () => null,
+  getPracticeConditions = () => null,
+  responseBenchWorkerURL,
   platformOptions = {},
 } = {}) {
   const translations = new Map(),
@@ -80,6 +85,10 @@ export function mountFlightTuning({
     buttons = [],
     drafts = new Map(),
     setupDrafts = new Map();
+  let controllerTunes,
+    responseBench,
+    benchSignature = '',
+    inputReviewSignature = null;
   let workbench,
     physics,
     completeDraft,
@@ -98,6 +107,9 @@ export function mountFlightTuning({
     evaluator,
     savedEvaluator,
     imported = null,
+    importComparison = null,
+    importReviewPanel = null,
+    importTechnical = null,
     hashingImport = null,
     draftProvenance = null,
     frame = null,
@@ -210,6 +222,13 @@ export function mountFlightTuning({
   }
   function clearImportPreview() {
     imported = null;
+    importComparison = null;
+    if (importReviewPanel) {
+      releaseChildren(importReviewPanel);
+      importReviewPanel.replaceChildren();
+      importReviewPanel.hidden = true;
+      importTechnical.hidden = true;
+    }
     if (hashingImport !== null) {
       hashingImport = null;
       status.textContent = t(
@@ -1063,7 +1082,202 @@ export function mountFlightTuning({
       if (!disposed && generation === uploadGeneration) report(error);
     }
   });
-  const importReview = el('pre', undefined, transfer);
+  importReviewPanel = el('section', undefined, transfer);
+  importReviewPanel.className = 'workbench-import-review';
+  importReviewPanel.hidden = true;
+  importTechnical = el('details', undefined, transfer);
+  importTechnical.hidden = true;
+  el('summary', t('Technical import report', 'Технічний звіт імпорту'), importTechnical);
+  const importReview = el('pre', undefined, importTechnical);
+  function importFields(profile, prefix = '', result = {}) {
+    for (const [key, value] of Object.entries(profile ?? {})) {
+      if (key === 'format') continue;
+      const name = prefix ? `${prefix}.${key}` : key;
+      if (value && typeof value === 'object') importFields(value, name, result);
+      else result[name] = value;
+    }
+    return result;
+  }
+  function paintImportReview() {
+    if (!importComparison) return;
+    releaseChildren(importReviewPanel);
+    importReviewPanel.replaceChildren();
+    importReviewPanel.hidden = importTechnical.hidden = false;
+    const { result, before, after, firmwareBaseline } = importComparison;
+    const native = result.provenance.source.kind === 'native';
+    const baselineLabel = firmwareBaseline
+      ? t('Verified firmware defaults', 'Перевірені типові значення прошивки')
+      : t('Before import draft', 'Чернетка до імпорту');
+    const afterLabel = t('Imported result', 'Результат імпорту');
+    el('h4', t('Review import changes', 'Перегляд змін імпорту'), importReviewPanel);
+    const operation = native
+      ? t('SIM rate profile', 'Профіль рейтів SIM')
+      : result.kind === 'patch'
+        ? t('Snippet / preset patch', 'Фрагмент / патч пресету')
+        : result.kind === 'diff'
+          ? t('Sparse diff', 'Різниця від типових значень')
+          : t('Complete configuration', 'Повна конфігурація');
+    el(
+      'p',
+      `${operation} · ${t('Baseline', 'Основа')}: ${baselineLabel}${firmwareBaseline ? ` · ${result.sourceVersion}` : ''}`,
+      importReviewPanel,
+    );
+    if (!native) {
+      const origin =
+        result.sourceVersionOrigin === 'header'
+          ? t('file header', 'заголовок файлу')
+          : result.sourceVersionOrigin === 'manual'
+            ? t('selected manually', 'вибрано вручну')
+            : t('not specified', 'не вказано');
+      el(
+        'p',
+        `${t('Source firmware', 'Прошивка джерела')}: ${result.sourceVersion ?? '—'} (${origin}) · ${t('Source rate profile', 'Профіль рейтів джерела')}: ${result.selectedProfile}${result.name ? ` · ${result.name}` : ''}`,
+        importReviewPanel,
+      );
+    }
+    el(
+      'p',
+      t(
+        'Only rates and throttle are previewed. Aircraft, camera and controller gains stay unchanged. Saving creates a separate profile; assignment remains explicit.',
+        'Переглядаються лише рейти й газ. Дрон, камера та коефіцієнти контролера не змінюються. Збереження створює окремий профіль; призначення виконується явно.',
+      ),
+      importReviewPanel,
+    );
+    const oldFields = importFields(before.rates);
+    const nextFields = importFields(after.rates);
+    const changed =
+      result.changedFields ??
+      Object.entries(nextFields)
+        .filter(([key, value]) => oldFields[key] !== value)
+        .map(([field, value]) => ({ field, before: oldFields[field], after: value }));
+    const tableWrap = el('div', undefined, importReviewPanel);
+    tableWrap.className = 'controller-tune-preview';
+    const table = el('table', undefined, tableWrap);
+    el(
+      'caption',
+      t('Changed settings · native profile units', 'Змінені параметри · власні одиниці профілю'),
+      table,
+    );
+    const head = el('tr', undefined, el('thead', undefined, table));
+    for (const text of [t('Setting', 'Параметр'), t('Before', 'До'), t('After', 'Після')])
+      el('th', text, head).setAttribute('scope', 'col');
+    const body = el('tbody', undefined, table);
+    for (const item of changed) {
+      const row = el('tr', undefined, body);
+      el('th', item.field, row, false).setAttribute('scope', 'row');
+      el('td', String(item.before ?? '—'), row, false);
+      el('td', String(item.after ?? '—'), row, false);
+    }
+    if (!changed.length)
+      el(
+        'p',
+        t('No rate or throttle values change.', 'Значення рейтів і газу не змінюються.'),
+        importReviewPanel,
+      );
+    const selected = (items) =>
+      (items ?? []).filter((item) => item.profile === result.selectedProfile);
+    const list = (label, items, describe = (item) => String(item)) => {
+      const details = el('details', undefined, importReviewPanel);
+      el('summary', `${label} (${items.length})`, details);
+      const rows = el('ul', undefined, details);
+      for (const item of items.slice(0, 32)) el('li', describe(item).slice(0, 512), rows, false);
+      if (items.length > 32)
+        el(
+          'p',
+          t('More entries are in the technical report.', 'Решта записів — у технічному звіті.'),
+          details,
+        );
+    };
+    list(
+      t('Supported imported settings', 'Підтримувані імпортовані параметри'),
+      native
+        ? Object.keys(nextFields)
+        : result.profiles.find((item) => item.index === result.selectedProfile).assignedFields,
+    );
+    list(
+      t('Inferred firmware defaults', 'Виведені типові значення прошивки'),
+      selected(result.inferredDefaults),
+      (item) => `${item.field}: ${item.value}`,
+    );
+    list(
+      t('Firmware normalization', 'Нормалізація прошивки'),
+      selected(result.normalizations),
+      (item) => `${item.field}: ${item.before} → ${item.after}`,
+    );
+    list(
+      t('Ignored · not applied', 'Пропущено · не застосовано'),
+      result.unapplied ?? [],
+      (item) =>
+        `${t('Line', 'Рядок')} ${item.line}: ${item.command ?? `${item.key} = ${item.value}`} · PID ${item.pidProfile} / ${t('rates', 'рейти')} ${item.rateProfile}`,
+    );
+    list(t('Source warnings', 'Попередження джерела'), result.warnings ?? []);
+    const beforeEvaluator = compile(before),
+      afterEvaluator = compile(after);
+    const graph = (label) => {
+      const node = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      node.setAttribute('role', 'img');
+      node.setAttribute('aria-label', label);
+      importReviewPanel.append(node);
+      return node;
+    };
+    el(
+      'p',
+      `${baselineLabel}: ${t('dashed lines', 'штрихові лінії')} · ${afterLabel}: ${t('solid lines', 'суцільні лінії')}.`,
+      importReviewPanel,
+    );
+    drawWorkbenchCurve(
+      doc,
+      graph(t('Import rates: baseline and result', 'Рейти імпорту: основа й результат')),
+      {
+        maximum: Math.max(
+          1,
+          ...axes.flatMap((axis) => [beforeEvaluator.rate(axis, 1), afterEvaluator.rate(axis, 1)]),
+        ),
+        xLabel: t('Stick travel (%)', 'Хід стіка (%)'),
+        series: axes.flatMap((axis, index) => [
+          {
+            evaluate: (x) => beforeEvaluator.rate(axis, x),
+            color: colors[index],
+            dashed: true,
+            label: `${axisName(axis)} · ${baselineLabel}`,
+          },
+          {
+            evaluate: (x) => afterEvaluator.rate(axis, x),
+            color: colors[index],
+            label: `${axisName(axis)} · ${afterLabel}`,
+          },
+        ]),
+      },
+    );
+    drawWorkbenchCurve(
+      doc,
+      graph(t('Import throttle: baseline and result', 'Газ імпорту: основа й результат')),
+      {
+        maximum: 100,
+        yLabel: t('Output (%)', 'Вихід (%)'),
+        xLabel: t('Stick travel (%)', 'Хід стіка (%)'),
+        series: [
+          {
+            evaluate: (x) => beforeEvaluator.throttle(x) * 100,
+            color: '#f1ca72',
+            dashed: true,
+            label: baselineLabel,
+          },
+          {
+            evaluate: (x) => afterEvaluator.throttle(x) * 100,
+            color: '#55c8a4',
+            label: afterLabel,
+          },
+        ],
+      },
+    );
+    for (const axis of axes)
+      el(
+        'p',
+        `${axisName(axis)} · 50%: ${beforeEvaluator.rate(axis, 0.5).toFixed(1)} → ${afterEvaluator.rate(axis, 0.5).toFixed(1)} °/s · 100%: ${beforeEvaluator.rate(axis, 1).toFixed(1)} → ${afterEvaluator.rate(axis, 1).toFixed(1)} °/s`,
+        importReviewPanel,
+      );
+  }
   function parseImport(source = uploadedSource ?? text.value) {
     if (presetNeedsResolution)
       throw new Error(
@@ -1101,14 +1315,27 @@ export function mountFlightTuning({
         : {}),
     });
   }
-  function showImport(result) {
+  function showImport(result, beforeImport) {
+    // Import is one undoable draft edit, including prior unsaved/raw values.
+    updateWorkbench();
     imported = result;
     importReview.textContent = JSON.stringify(result, null, 2);
+    const firmwareBaseline = result.provenance.baseline?.kind === 'firmware-defaults';
+    importComparison = {
+      result,
+      firmwareBaseline,
+      before: firmwareBaseline
+        ? createTunedResponse(betaflightDefaultRateProfile(result.sourceVersion))
+        : clone(beforeImport),
+      after: createTunedResponse(result.profile, beforeImport),
+    };
+    paintImportReview();
     draft = createTunedResponse(result.profile, draft);
     draftProvenance = clone(result.provenance);
     algorithmDrafts = {};
     numericDrafts = {};
     paintFields();
+    updateWorkbench();
     status.textContent = t(
       'Preview only. Save as a new profile, then assign it explicitly.',
       'Лише перегляд. Збережіть новий профіль, а потім призначте його явно.',
@@ -1146,7 +1373,7 @@ export function mountFlightTuning({
           if (hashingImport === generation) clearImportPreview();
           return;
         }
-        showImport(result);
+        showImport(result, JSON.parse(originalDraft));
       } catch (error) {
         if (
           !disposed &&
@@ -1284,8 +1511,9 @@ export function mountFlightTuning({
       };
       presetNeedsResolution = false;
       importKind.value = 'patch';
-      importReview.textContent = JSON.stringify(result, null, 2);
       clearImportPreview();
+      importReview.textContent = JSON.stringify(result, null, 2);
+      importTechnical.hidden = false;
       status.textContent = t(
         'Review options, resolve again after changes, then preview the patch against its baseline.',
         'Перевірте опції, повторно розгорніть після змін і перегляньте патч на вибраній основі.',
@@ -1458,6 +1686,8 @@ export function mountFlightTuning({
       ),
     );
     if (disposed) return;
+    // Saving replaces the comparison baseline even when the draft itself is unchanged.
+    responseBench?.invalidate();
     drafts.delete(profileId);
     setupDrafts.delete(setup.id);
     editedSetup = null;
@@ -2283,6 +2513,7 @@ export function mountFlightTuning({
       workbench?.current() === 'rates' &&
       previewDisclosure.open &&
       !win.matchMedia?.('(prefers-reduced-motion: reduce)').matches &&
+      doc.body?.dataset.effects !== 'reduced' &&
       evaluator &&
       previousTime !== null
     )
@@ -2290,8 +2521,10 @@ export function mountFlightTuning({
         (angle +
           evaluator.rate(
             previewAxis.value,
-            capturePreview.checked && getDiagnostics().context === 'live-preview'
-              ? (getDiagnostics().calibrated?.[previewAxis.value] ?? 0)
+            capturePreview.checked
+              ? getDiagnostics().context === 'live-preview'
+                ? (getDiagnostics().calibrated?.[previewAxis.value] ?? 0)
+                : 0
               : Number(previewStick.value) / 100,
           ) *
             Math.min(0.05, (time - previousTime) / 1000)) %
@@ -2370,6 +2603,8 @@ export function mountFlightTuning({
   }
   function close() {
     openEpoch++;
+    responseBench?.invalidate();
+    controllerTunes?.invalidate();
     clearImportPreview();
     remember();
     if (root.open) root.close();
@@ -2431,6 +2666,24 @@ export function mountFlightTuning({
   );
   flow.className = 'workbench-flow';
   const inputReadiness = el('p', '', workbench.panel('overview'));
+  const inputReviewed = field(
+    t(
+      'I checked my input connection, mapping and stick centres',
+      'Я перевірив з’єднання, призначення каналів і центри стіків',
+    ),
+    'checkbox',
+    workbench.panel('overview'),
+  );
+  function readinessSignature() {
+    const conditions = getPracticeConditions();
+    return JSON.stringify(
+      conditions?.input ?? { source: getDiagnostics().source ?? 'unavailable' },
+    );
+  }
+  listen(inputReviewed, 'change', () => {
+    inputReviewSignature = inputReviewed.checked ? readinessSignature() : null;
+    responseBench?.invalidate();
+  });
   const inputMeters = new Map();
   const inputMeterGroup = el('div', undefined, workbench.panel('overview'));
   inputMeterGroup.className = 'workbench-input-meters';
@@ -2673,6 +2926,7 @@ export function mountFlightTuning({
       setup = readSetup(false);
     } catch {
       completeDraft?.capture(completeDraft.snapshot(), captureEditorState());
+      responseBench?.invalidate();
       return;
     }
     try {
@@ -2796,9 +3050,100 @@ export function mountFlightTuning({
       }
     }
     workbench.refresh();
+    const nextSignature = JSON.stringify({ setup, response: draft, raw: captureEditorState() });
+    if (nextSignature !== benchSignature) {
+      benchSignature = nextSignature;
+      responseBench?.invalidate();
+      controllerTunes?.refresh();
+    }
   }
-  listen(root, 'input', updateWorkbench);
-  listen(root, 'change', updateWorkbench);
+  function comparisonConfiguration({ saved = false } = {}) {
+    if (!library || !draft) return null;
+    if (!saved && root.querySelector('[aria-invalid="true"]'))
+      throw new Error(
+        t(
+          'Complete valid draft values before comparison.',
+          'Перед порівнянням введіть коректні значення чернетки.',
+        ),
+      );
+    const baseline = saved ? completeDraft.baseline() : null;
+    const setup = baseline?.setup ?? readSetup(false);
+    return {
+      format: 'FpvEffectiveFlightConfig.v1',
+      response: clone(baseline?.profile.response ?? draft),
+      camera: clone(setup.camera),
+      setupId: setup.id,
+      profileId: baseline?.profile.sourceId ?? selected,
+      ...(setup.advanced ? { advanced: clone(setup.advanced) } : {}),
+    };
+  }
+  function useController(controller) {
+    const configuration = physics.read();
+    if (!configuration)
+      throw new Error(t('Select a compatible aircraft first.', 'Спочатку оберіть сумісний дрон.'));
+    configuration.controller = clone(controller);
+    const raw = Object.fromEntries(
+      Object.entries(physics.raw()).filter(([path]) => !path.startsWith('controller.')),
+    );
+    physics.load(configuration, physicalBaseline(currentSetup()), raw);
+    updateWorkbench();
+    workbench.show('controller');
+    status.textContent = t(
+      'Controller values copied into the draft. Test, compare and save when ready.',
+      'Значення контролера скопійовано в чернетку. Перевірте, порівняйте й збережіть, коли будете готові.',
+    );
+  }
+  controllerTunes = createControllerTunePanel({
+    document: doc,
+    window: win,
+    locale,
+    getConfiguration: () => comparisonConfiguration(),
+    onUse: useController,
+    report,
+    platformOptions,
+  });
+  workbench.panel('library').append(controllerTunes.root);
+  action(
+    t('Choose or save a controller tune', 'Вибрати або зберегти налаштування контролера'),
+    () => {
+      workbench.show('library');
+      const title = controllerTunes.root.querySelector('h3');
+      title.tabIndex = -1;
+      title.focus();
+      title.scrollIntoView?.({ block: 'start' });
+    },
+    workbench.panel('controller'),
+  );
+  responseBench = mountResponseBenchPanel({
+    document: doc,
+    window: win,
+    locale,
+    report,
+    getSaved: () => comparisonConfiguration({ saved: true }),
+    getDraft: () => comparisonConfiguration(),
+    onUse: useController,
+    workerURL: responseBenchWorkerURL,
+    getInputReadiness: () => ({
+      ready: inputReviewed.checked && inputReviewSignature === readinessSignature(),
+    }),
+    getPracticeConditions,
+    onManualTest(configuration) {
+      remember();
+      testing = true;
+      draftFlightActive = true;
+      returnButton.hidden = false;
+      close();
+      onTest(clone(configuration));
+    },
+  });
+  workbench.panel('controller').append(responseBench.root);
+  function workbenchEdit(event) {
+    if (controllerTunes.root.contains(event.target) || responseBench.root.contains(event.target))
+      return;
+    updateWorkbench();
+  }
+  listen(root, 'input', workbenchEdit);
+  listen(root, 'change', workbenchEdit);
   // Keep typing and adjustment keys inside the modal; Escape still uses dialog cancel.
   listen(root, 'keydown', (event) => {
     if (['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target?.tagName)) event.stopPropagation();
@@ -2873,6 +3218,9 @@ export function mountFlightTuning({
         }
       }
       for (const { node, name, pair } of attributeBindings) node.setAttribute(name, t(...pair));
+      controllerTunes?.refresh();
+      responseBench?.refresh();
+      paintImportReview();
       const pair = translations.get(status.textContent);
       if (pair) status.textContent = t(...pair);
       if (library && !busy) {
@@ -2890,6 +3238,8 @@ export function mountFlightTuning({
     dispose() {
       if (disposed) return;
       disposed = true;
+      responseBench?.dispose();
+      controllerTunes?.dispose();
       if (frame !== null) win.cancelAnimationFrame(frame);
       for (const remove of removers) remove();
       for (const button of buttons) button.remove();

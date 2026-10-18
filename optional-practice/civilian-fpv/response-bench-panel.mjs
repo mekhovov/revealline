@@ -34,11 +34,20 @@ export function mountResponseBenchPanel({
     client = null,
     disposed = false,
     running = false,
+    manualLaunching = false,
+    notesSaving = false,
+    manualSequence = 0,
     result = null,
     manual = null,
     previousLocale = lang();
   const listeners = [],
-    bindings = [];
+    bindings = [],
+    attributeBindings = [];
+  function searchable(node, en, uk, aliases = '') {
+    node.dataset.search = `${en} ${uk} ${aliases}`;
+    node.setAttribute('aria-label', t(en, uk));
+    attributeBindings.push({ node, en, uk });
+  }
   const el = (tag, en, uk, parent) => {
     const node = doc.createElement(tag);
     if (en !== undefined) {
@@ -77,6 +86,7 @@ export function mountResponseBenchPanel({
   function select(en, uk, values) {
     const label = el('label', en, uk, fields),
       node = el('select', undefined, undefined, label);
+    searchable(node, en, uk, values.flat().join(' '));
     for (const [value, english, ukrainian] of values) {
       const option = el('option', english, ukrainian, node);
       option.value = value;
@@ -138,6 +148,7 @@ export function mountResponseBenchPanel({
     manualSection,
   );
   const manualConditions = el('p', undefined, undefined, manualSection);
+  const manualScopeStatus = el('p', undefined, undefined, manualSection);
   const manualActions = el('div', undefined, undefined, manualSection);
   manualActions.className = 'tuning-actions';
   const prepare = button(
@@ -176,6 +187,12 @@ export function mountResponseBenchPanel({
   function note(en, uk) {
     const label = el('label', en, uk, notes),
       field = el('textarea', undefined, undefined, label);
+    searchable(
+      field,
+      en,
+      uk,
+      'manual A/B practice feedback notes ручне тренування порівняння враження нотатки',
+    );
     field.rows = 3;
     field.maxLength = 2000;
     return field;
@@ -206,6 +223,8 @@ export function mountResponseBenchPanel({
     if (disposed) return;
     if (previousLocale !== lang()) {
       for (const binding of bindings) binding.node.textContent = t(binding.en, binding.uk);
+      for (const binding of attributeBindings)
+        binding.node.setAttribute('aria-label', t(binding.en, binding.uk));
       previousLocale = lang();
       if (result) renderResult(result);
       renderHistory();
@@ -241,9 +260,18 @@ export function mountResponseBenchPanel({
     compare.disabled = running || !supported || !workerAvailable;
     suggest.disabled = running || !supported || !workerAvailable || !input.ready;
     cancel.hidden = !running;
-    prepare.disabled = running;
-    flySaved.disabled = flyDraft.disabled = !manual || typeof onManualTest !== 'function';
-    saveNotes.disabled = !manual;
+    prepare.disabled = running || manualLaunching;
+    flySaved.disabled = flyDraft.disabled =
+      !manual ||
+      manual.scope !== scope.value ||
+      manualLaunching ||
+      typeof onManualTest !== 'function';
+    saveNotes.disabled = !manual || notesSaving;
+    manualScopeStatus.hidden = !manual || manual.scope === scope.value;
+    manualScopeStatus.textContent = t(
+      'Comparison scope changed. Prepare a new A/B pair before flying; your existing notes can still be saved.',
+      'Обсяг порівняння змінено. Перед польотом підготуйте нову пару A/B; попередні нотатки можна зберегти.',
+    );
     if (!manual)
       manualConditions.textContent = t(
         'Prepare a frozen saved/draft pair before testing or writing notes.',
@@ -610,7 +638,8 @@ export function mountResponseBenchPanel({
           ),
         );
       manual = {
-        id: `manual-${Date.now()}`,
+        id: `manual-${Date.now()}-${++manualSequence}`,
+        scope: scope.value,
         saved,
         draft,
         conditions: boundedJSON(conditions, { maxBytes: 8192, maxNodes: 500, maxDepth: 12 }),
@@ -633,7 +662,15 @@ export function mountResponseBenchPanel({
     }
   }
   async function flyManual(variant) {
-    if (!manual || typeof onManualTest !== 'function') return;
+    if (
+      disposed ||
+      manualLaunching ||
+      !manual ||
+      manual.scope !== scope.value ||
+      typeof onManualTest !== 'function'
+    )
+      return;
+    const generation = epoch;
     try {
       const currentConditions = getPracticeConditions();
       if (
@@ -646,10 +683,16 @@ export function mountResponseBenchPanel({
             'Умови тренування або вводу змінилися. Перед польотом підготуйте нову пару A/B.',
           ),
         );
+      manualLaunching = true;
+      refresh();
       await onManualTest(copy(manual[variant]), { variant, conditions: copy(manual.conditions) });
     } catch (error) {
+      if (disposed || generation !== epoch) return;
       report(error);
       manualConditions.textContent = String(error?.message ?? error);
+    } finally {
+      manualLaunching = false;
+      if (!disposed) refresh();
     }
   }
   function readNotes() {
@@ -701,7 +744,8 @@ export function mountResponseBenchPanel({
     }
   }
   async function persistNotes() {
-    if (!manual) return;
+    if (disposed || notesSaving || !manual) return;
+    const generation = epoch;
     const entry = {
       id: manual.id,
       savedIdentity: manual.savedIdentity,
@@ -709,6 +753,14 @@ export function mountResponseBenchPanel({
       saved: notesA.value.slice(0, 2000),
       draft: notesB.value.slice(0, 2000),
     };
+    notesSaving = true;
+    refresh();
+    const ownsResult = () =>
+      !disposed &&
+      generation === epoch &&
+      manual?.id === entry.id &&
+      notesA.value.slice(0, 2000) === entry.saved &&
+      notesB.value.slice(0, 2000) === entry.draft;
     const write = () => {
       const storage = win?.localStorage;
       if (!storage)
@@ -724,16 +776,19 @@ export function mountResponseBenchPanel({
     try {
       if (win?.navigator?.locks?.request) await win.navigator.locks.request(NOTES_KEY, write);
       else write();
-      if (disposed) return;
+      if (!ownsResult()) return;
       notesStatus.textContent = t(
         'Comparison notes saved on this device. The latest six pairs are retained.',
         'Нотатки збережено на цьому пристрої. Зберігаються останні шість пар.',
       );
       renderHistory();
     } catch (error) {
-      if (disposed) return;
+      if (!ownsResult()) return;
       notesStatus.textContent = `${t('Notes could not be saved. Your text remains here.', 'Не вдалося зберегти нотатки. Текст залишається тут.')} ${error?.message ?? error}`;
       report(error);
+    } finally {
+      notesSaving = false;
+      if (!disposed) refresh();
     }
   }
   renderHistory();
@@ -750,6 +805,7 @@ export function mountResponseBenchPanel({
       for (const listener of listeners) listener.remove();
       listeners.length = 0;
       bindings.length = 0;
+      attributeBindings.length = 0;
       root.remove();
     },
   });
