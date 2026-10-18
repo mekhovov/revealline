@@ -191,6 +191,87 @@ test('native Darwin SDK source contains bounded, double-checked identity and pri
   assert.doesNotMatch(source, /\bkill\(|\bprintf\([^\n]*expected|\bprintf\([^\n]*bytes/);
 });
 
+// Both the prerequisite and browser-owner boundary must retain the explicitly
+// selected evidence format. This changes evidence only, never the verdict.
+const hostedAmbiguityInventories = (mode) =>
+  mode === 'identity-maps-v2' ? 'identity-maps-v2' : mode === 'identity-maps-v1';
+
+test('actual hosted prerequisite forwards evidence mode and retains failures before assertions', async () => {
+  const source = await readFile(new URL(import.meta.url), 'utf8');
+  const tree = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const native = tree.body.find(
+    (node) =>
+      node.type === 'ExpressionStatement' &&
+      node.expression.callee?.name === 'test' &&
+      node.expression.arguments[0]?.value ===
+        'hosted Darwin native owner closes a short leader and rejects forced deadline cleanup',
+  ).expression.arguments[2];
+  for (const [mode, expected] of [
+    ['identity-maps-v2', 'identity-maps-v2'],
+    ['identity-maps-v1', true],
+    [undefined, false],
+    ['identity-maps-v3', false],
+  ]) {
+    const options = [],
+      receipts = [];
+    let fail = false;
+    const dependencies = {
+      assert,
+      Buffer,
+      join,
+      hostedAmbiguityInventories,
+      process: {
+        execPath: '/modeled/node',
+        env: {
+          SOLO_DARWIN_AMBIGUITY_EVIDENCE: mode,
+          SOLO_DARWIN_OWNER_EVIDENCE: '/modeled/evidence',
+        },
+      },
+      tmpdir: () => '/modeled',
+      realpath: async (path) => path,
+      mkdtemp: async (path) => path + 'control',
+      rm: async () => {},
+      mkdir: async () => {},
+      writeFile: async (path, bytes, flags) => {
+        assert.equal(flags.flag, 'wx');
+        receipts.push(JSON.parse(bytes));
+      },
+      ownedCommand: async (command, opts) => {
+        options.push(opts);
+        const normal = command[2].includes('short owned leader');
+        return {
+          processInventory: { platform: 'darwin' },
+          initialLeaderCapture: 'direct-child-birth',
+          survivors: [],
+          ambiguous: [],
+          status: normal ? 'closed' : 'failed',
+          forcedCleanup: !normal,
+          violation: normal ? null : fail ? 'unattributed-new-browser' : 'deadline',
+        };
+      },
+    };
+    const callback = new Function(
+      ...Object.keys(dependencies),
+      `return (${source.slice(native.start, native.end)});`,
+    )(...Object.values(dependencies));
+    await callback({ after() {} });
+    assert.deepEqual(
+      options.map((opts) => [opts.timeoutMs, opts.retainAmbiguityInventories]),
+      [
+        [10000, expected],
+        [100, expected],
+      ],
+    );
+    assert.deepEqual(
+      receipts.map((row) => row.case),
+      ['normal', 'deadline'],
+    );
+    fail = true;
+    await assert.rejects(callback({ after() {} }), /unattributed-new-browser/);
+    assert.equal(receipts.at(-1).result.violation, 'unattributed-new-browser');
+  }
+});
+
 test(
   'hosted Darwin native owner closes a short leader and rejects forced deadline cleanup',
   {
@@ -209,8 +290,9 @@ test(
         env: process.env,
         log: join(dir, `${id}.log`),
         timeoutMs,
-        retainAmbiguityInventories:
-          process.env.SOLO_DARWIN_AMBIGUITY_EVIDENCE === 'identity-maps-v1',
+        retainAmbiguityInventories: hostedAmbiguityInventories(
+          process.env.SOLO_DARWIN_AMBIGUITY_EVIDENCE,
+        ),
       });
       if (process.env.SOLO_DARWIN_OWNER_EVIDENCE) {
         const bytes = JSON.stringify({ case: id, result }, null, 2) + '\n';

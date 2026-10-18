@@ -27,8 +27,10 @@ small-box comparisons, an eleven-count closed-form check for ten equal intervals
 rank reordering, scale invariance, monotonic widening, zero hooks, actual probe-produced
 tail/count evidence, incomplete/censored reports, quality mismatch, raw failures and
 unknown method rejection. Exact default synthetic report hashes match the pre-change
-app and journal outputs. The automatic changed-test entry point also imports both
-complete existing analyzer contracts. Scoped lint, formatting and diff checks pass;
+app and journal outputs. The new `*.test.mjs` entry point imports both complete
+existing analyzer contracts. The current focused-test plan delegates these changed
+scripts to the exact-head release build; this does not claim an observed focused-CI
+admission or remote pass. Scoped lint, formatting and diff checks pass;
 all seven changed code/test inputs and seventeen recorded loaded paths stayed stable.
 
 Original-assessor controls retain five expected missing-method failures. The broader

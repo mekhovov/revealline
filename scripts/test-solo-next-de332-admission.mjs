@@ -259,7 +259,8 @@ test('Next is explicit main-branch manual selection only, never a PR event or au
     mutate(x);
     assert.equal(evaluate(x, { lane: 'next' }), false);
   }
-  for (const lane of ['first-eight', 'all', undefined]) assert.equal(evaluate(g, { lane }), false);
+  for (const lane of ['first-eight', 'cocoa', 'all', undefined])
+    assert.equal(evaluate(g, { lane }), false);
   for (const term of guard.split(' && '))
     assert.throws(() =>
       workflowAdmission(
