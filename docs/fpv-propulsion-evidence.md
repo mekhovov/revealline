@@ -61,7 +61,7 @@ Thrust, torque and current may contain signed observations, including noise. The
 
 ## Conditional battery load calculation
 
-`solvePropulsionEvidenceLoad` in `propulsion-load.mjs` calculates a static electrical operating point from one to four eligible voltage sweeps. This is a pure prerequisite for a later propulsion adapter. It has no UI, runtime, preset, persistence or network integration, and does not change historical flight identities. No external measurement rows are bundled.
+`solvePropulsionEvidenceLoad` in `propulsion-load.mjs` calculates a static electrical operating point from one to four eligible voltage sweeps. This pure prerequisite for a later propulsion adapter is also available through the explicit inspection controls described below. It has no flight-runtime, preset, persistence or network integration, and does not change historical flight identities. No external measurement rows are bundled.
 
 ```js
 import { solvePropulsionEvidenceLoad } from '../optional-practice/civilian-fpv/propulsion-load.mjs';
@@ -108,7 +108,7 @@ Validation: `node --test game/test/fpv-aircraft-propulsion-load.test.mjs game/te
 
 [ENOLA version 1](https://zenodo.org/records/20111572) is explicitly CC BY-SA 4.0 and separates experimental and numerical data. The inspected AeronautCAM9×5 and APC15×8 CSVs include uncertainty and airspeed, but lack motor electrical measurements. Their header is missing a separator between thrust and thrust uncertainty; a future adapter must record that normalization. No external measurement rows are bundled in this increment.
 
-Flight activation remains separate. It needs an appropriate measured operating domain, a versioned voltage/current solver, variable torque/thrust allocation checks, explicit fallback labeling, and replay/numerical qualification. The existing analytic aircraft model and all twelve default configurations remain unchanged.
+Flight activation remains separate. It needs an appropriate measured operating domain, a versioned voltage/current solver, variable torque/thrust allocation checks, explicit fallback labeling, and replay/numerical qualification. The existing analytic aircraft model and default configurations remain unchanged.
 
 Validation: `node --test game/test/fpv-aircraft-propulsion-evidence.test.mjs`.
 
@@ -119,6 +119,58 @@ Validation: `node --test game/test/fpv-aircraft-propulsion-evidence.test.mjs`.
 The panel supports local JSON files, pasted text and the explicit synthetic example. Source text uses safe DOM text. There is no aircraft write callback, persistence or network fetch. Equivalent-thrust comparison is available only for a covered single-rotor static point with known zero airspeed, nonnegative thrust, voltage inside the configured aircraft battery range (empty through full voltage, inclusive) and a compatible aircraft. This conservative guard prevents extrapolating a 1S motor to a 12 V bench point; it does not certify motor operating limits. It inverts the active single-motor thrust model at the supplied voltage, respects the motor output limit, and displays estimated current/torque. It does not reinterpret source command/RPM as normalized motor speed or apply battery sag, whole-aircraft current limits, density correction or transient modeling. Other cases explicitly show comparison unavailable.
 
 Panel tests: `node --test game/test/fpv-aircraft-propulsion-evidence-ui.test.mjs`.
+
+### Manual battery load inspection
+
+The EN/UK panel now offers **Battery load calculation** for its currently imported
+dataset. Open-circuit voltage and series resistance start blank; neither is copied
+from the editable aircraft. The user must enter both, declare that the recorded
+current is DC input current at its recorded terminal voltage (not phase current),
+and explicitly press **Calculate load**. Numerical input bounds are the kernel's
+parser limits, not recommended battery settings.
+
+The copy count defaults to one and accepts integers from one through four. It
+means repeated, identical, independent copies of the same single-rotor voltage
+path, at its recorded fixed command and common terminal voltage. It is not an
+automatic quadrotor configuration or a mixture of independently imported motors.
+The existing command-axis synthetic example remains available for learning the
+evidence format, but its load calculation is explicitly unavailable. The panel
+does not reinterpret that example, create a new voltage sweep, or bundle external
+measurements.
+
+The result keeps measured-source declarations, calculated data and invented data
+distinct. It displays the manual inputs and count, fixed command, terminal voltage,
+total and per-copy current, power at open-circuit voltage, delivered power,
+series-resistance loss, equation residual and numerical tolerance. Optional
+per-copy thrust and shaft torque remain unavailable when absent; they are never
+summed into aircraft forces or yaw torque. Original samples and interpolation
+within a covered interval are labeled separately. Displayed calculation precision
+does not establish measurement accuracy, and uncertainty is not propagated.
+
+An optional total-current warning threshold only flags exceedance; it leaves the
+unregulated operating point intact. Unsupported conditions, incomplete or
+nonmonotone current, changing command, uncovered roots, gaps and inadequate
+floating-point resolution produce explicit EN/UK unavailable explanations.
+There is no apply-to-aircraft action, automatic fit, current regulator, discharge
+simulation or command-to-RPM conversion.
+
+Changing any calculation input clears its previous result. A successful dataset
+replacement also clears the DC-current acknowledgment; an invalid import retains
+the previous dataset and its corresponding calculation. Locale refresh preserves
+the current inputs and result. Superseded file reads and disposal retain the
+inspector's generation/lifecycle protections. Native labels, a fieldset legend,
+button actions and a live result status support keyboard and assistive use.
+
+Validation: `node --test game/test/fpv-aircraft-propulsion-load-ui.test.mjs
+game/test/fpv-aircraft-propulsion-evidence-ui.test.mjs
+game/test/fpv-aircraft-propulsion-load.test.mjs
+game/test/fpv-aircraft-propulsion-evidence.test.mjs`. The seven new DOM checks use
+invented analytic circuit oracles and cover explicit action, invalid inputs,
+copies, diagnostic-only limits, unavailable conditions, source-kind retention,
+inert text, stale imports, disposal and EN/UK labels. These are software checks,
+not new browser/device measurements or physical-fidelity qualification. The UI
+adds the already committed `propulsion-load.mjs` to the optional package closure;
+measured runtime activation remains a separate R6 gate.
 
 The Advanced practice tuning screen mounts this panel below its aircraft controls. Comparisons read the validated editable draft, refresh after field edits, aircraft selection and revert, and cannot modify the running worker. Incomplete drafts show comparison unavailable. The host uses its selected EN/UK locale at mount; a newly localized host gets a newly localized panel. Disposal removes listeners and ignores outstanding file reads.
 
@@ -139,3 +191,33 @@ Academy's installed-core cache, which retains the full shared locale catalog, is
 The ghost display retains at most 8,192 position samples, including endpoints. Display interpolation does not replace complete replay verification; reduced display sampling is labeled approximate. Data imports and optional challenge selection do not change the default twelve-aircraft configurations.
 
 Package checks: `node --test scripts/test-optional-fpv-package.mjs scripts/test-build-fpv-native.mjs scripts/test-world-texture-acceptance.mjs`. These package checks establish offline inclusion and bounded build output, not physical-device qualification.
+
+### Load-inspector package measurements — 18 October 2026
+
+The load inspector adds the first-party solver to the main, Academy, World and
+native dependency closures. Complete source-file allowances rise by exactly one,
+from 150 to **151** for Academy and 210 to **211** for World. Byte limits and
+third-party dependencies are unchanged. Missing-solver negative tests protect
+the offline dependency. The three focused package suites pass **19/19**.
+
+| Build | Runtime files | Runtime bytes | Complete source files | Complete source bytes |
+| --- | ---: | ---: | ---: | ---: |
+| Academy standalone | 149 | 12,089,844 | 151 | 12,132,214 |
+| World standalone | 209 | 18,596,589 | 211 | 18,646,931 |
+| Native inventory | 214 | 18,985,854 | — | — |
+
+Academy original inputs are 13,267,453 bytes, leaving 36,355 bytes under their
+existing cap. World original inputs are 19,752,688 bytes. Bundled Academy is
+138 files / 13,095,062 bytes, leaving only **12,138 bytes** under its unchanged
+13,107,200-byte cap; integration and later source changes must remeasure this
+narrow margin. Native inventory retains 14,568,578 bytes of headroom. Native
+packaging/CSP checks do not constitute testing on a native device.
+
+These measurements include package commit `f9ddc2693` and the reviewed load UI
+content: `propulsion-evidence-ui.mjs` is 39,752 bytes with SHA-256
+`29549afbc43963ae4a24b3bb087bb11b5260098993f94582c6f7867c488e1c32`;
+`propulsion-load.mjs` is 7,768 bytes with SHA-256
+`5a8697405784c5f6b3e8805fdd468ec560a7eee1c7a699e7aec708d1361bfb01`.
+The combined evaluator, kernel and DOM suites pass **46/46**. Independent source,
+test and documentation review found no blocking issue. This increment qualifies
+local inspection software and packaging, not a measured propulsion runtime.
