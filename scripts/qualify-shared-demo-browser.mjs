@@ -8,6 +8,7 @@ import {
 } from './shared-demo-browser-report.mjs';
 import { pathToFileURL } from 'node:url';
 import { pbkdf2Sync } from 'node:crypto';
+import { startProductionPreview } from './serve-production-preview.mjs';
 
 // Uses a supplied, already installed Playwright runtime; never installs browsers.
 const args = Object.fromEntries(
@@ -16,6 +17,10 @@ const args = Object.fromEntries(
 const runtime = args.runtime ?? 'playwright';
 const engine = args.browser ?? 'chromium';
 const duration = Number(args.seconds ?? 0);
+if (Object.hasOwn(args, 'emitted-preview')) {
+  assert.ok(args['emitted-preview'], 'Supply a nonempty emitted-preview directory.');
+  assert.ok(!Object.hasOwn(args, 'url'), 'Choose emitted-preview or url, not both.');
+}
 const nativeEntries = {
   snake: '/game/snake/play.html?level=classic-snake-open-loop&ready=1',
   sim: '/optional-practice/fpv-worlds/index.html',
@@ -41,7 +46,7 @@ const report = {
   errors: [],
   complete: false,
 };
-let browser, context, page;
+let browser, context, page, preview;
 const snapshot = () =>
   page.locator('#demo-dialog').evaluate((node) => ({
     mode: node.dataset.demoMode,
@@ -70,6 +75,29 @@ const ready = (timeout = 35000) =>
     { timeout },
   );
 try {
+  if (args['emitted-preview']) {
+    preview = await startProductionPreview({
+      root: process.cwd(),
+      port: Number(args.port ?? 8773),
+      fixtureAccess: true,
+      cache: 'revalidate',
+      emittedPreview: args['emitted-preview'],
+      verifyEmittedSource: true,
+    });
+    report.preview = {
+      url: preview.url,
+      mode: preview.mode,
+      headers: preview.headers,
+      cache: preview.cache,
+      fixtureAccess: preview.fixtureAccess,
+      emittedPreview: preview.emittedPreview,
+    };
+    assert.ok(preview.emittedPreview, 'The requested emitted preview must be admitted.');
+    assert.equal(preview.emittedPreview.sourceVerified, true, 'Emitted source must be verified.');
+    report.limitations = [
+      'The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview.',
+    ];
+  }
   const playwright = await import(runtime.startsWith('/') ? pathToFileURL(runtime).href : runtime);
   await mkdir(new URL('../.cache/', import.meta.url), { recursive: true });
   browser = await playwright[engine].launch({
@@ -79,25 +107,29 @@ try {
   context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
   // Same test-only credential as access-gate-runtime.test.mjs. Route rewriting is
   // confined to this ephemeral local test context; production files are untouched.
-  const baseURL = args.url ?? 'http://127.0.0.1:8768';
+  const baseURL = preview?.url.replace(/\/$/, '') ?? args.url ?? 'http://127.0.0.1:8768';
   assert.ok(['127.0.0.1', 'localhost'].includes(new URL(baseURL).hostname));
-  const salt = Buffer.from('password-gate-test');
-  const verifier = pbkdf2Sync('fixture-password', salt, 150000, 32, 'sha256').toString('base64url');
-  await context.route(`${baseURL}/**`, async (route) => {
-    if (route.request().resourceType() !== 'document') return route.continue();
-    const response = await route.fetch();
-    let body = await response.text();
-    for (const [name, value] of [
-      ['salt', salt.toString('base64url')],
-      ['verifier', verifier],
-      ['id', 'demo-browser-fixture'],
-    ])
-      body = body.replace(
-        new RegExp(`(name="revealline-access-${name}"\\s+content=")[^"]+`),
-        `$1${value}`,
-      );
-    await route.fulfill({ response, body });
-  });
+  if (!preview) {
+    const salt = Buffer.from('password-gate-test');
+    const verifier = pbkdf2Sync('fixture-password', salt, 150000, 32, 'sha256').toString(
+      'base64url',
+    );
+    await context.route(`${baseURL}/**`, async (route) => {
+      if (route.request().resourceType() !== 'document') return route.continue();
+      const response = await route.fetch();
+      let body = await response.text();
+      for (const [name, value] of [
+        ['salt', salt.toString('base64url')],
+        ['verifier', verifier],
+        ['id', 'demo-browser-fixture'],
+      ])
+        body = body.replace(
+          new RegExp(`(name="revealline-access-${name}"\\s+content=")[^"]+`),
+          `$1${value}`,
+        );
+      await route.fulfill({ response, body });
+    });
+  }
   page = await context.newPage();
   page.on('pageerror', (error) => {
     if (report.errors.length < 64) report.errors.push(String(error.stack ?? error));
@@ -361,6 +393,35 @@ try {
     screenshotPath: reportPath.replace(/\.json$/, '.png'),
   });
 } finally {
-  const summary = await finishQualification({ report, reportPath, browser });
+  const summary = await finishQualification({
+    report,
+    reportPath,
+    browser,
+    writeReport: async (...writeArgs) => {
+      if (preview) {
+        report.preview.fixtureResponses = preview.fixtureResponses;
+        try {
+          preview.server.closeAllConnections();
+          await new Promise((resolve, reject) => {
+            const closeTimer = setTimeout(
+              () => reject(new Error('Preview cleanup exceeded 2000ms.')),
+              2000,
+            );
+            preview.server.close((error) => {
+              clearTimeout(closeTimer);
+              if (error) reject(error);
+              else resolve();
+            });
+          });
+          report.previewClosed = true;
+        } catch (error) {
+          report.previewClosed = false;
+          report.complete = false;
+          report.failure ??= String(error.stack ?? error);
+        }
+      }
+      await writeQualificationReport(...writeArgs);
+    },
+  });
   if (!summary.complete) process.exitCode = 1;
 }

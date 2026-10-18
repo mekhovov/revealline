@@ -166,9 +166,12 @@ for (const interruption of ['focus', 'hidden'])
   test(`native incoming Solo handoff still yields to newer ${interruption} while metadata waits`, async (t) => {
     nativeSoloBoot(t);
     let release,
-      entered = false;
-    const gate = new Promise((resolve) => {
+      reject,
+      entered = false,
+      requestFinished = false;
+    const gate = new Promise((resolve, fail) => {
       release = resolve;
+      reject = fail;
     });
     const storage = memoryStorage();
     const page = solo(t, {
@@ -179,7 +182,11 @@ for (const interruption of ['focus', 'hidden'])
           return new Response(await readFile(path));
         if (path === 'content/mission-library-index.json') {
           entered = true;
-          await gate;
+          try {
+            await gate;
+          } finally {
+            requestFinished = true;
+          }
         }
       },
     });
@@ -210,7 +217,8 @@ for (const interruption of ['focus', 'hidden'])
         doc.hidden = true;
         doc.emit('visibilitychange');
       }
-      release();
+      await settle(() => doc.documentElement.dataset.bootState === 'ready');
+      assert.equal(requestFinished, false, 'Retirement releases boot before metadata settles.');
       const p = await page;
       assert.deepEqual(p.errors, []);
       assert.notEqual(p.doc.body.dataset.flightState, 'running');
@@ -236,10 +244,104 @@ for (const interruption of ['focus', 'hidden'])
         ),
       );
       if (interruption === 'focus') assert.equal(doc.activeElement.id, 'overlay-menu');
+      const retainedMessage = p.$('run-message').textContent;
+      if (interruption === 'hidden') reject(new Error('Retired metadata failed late.'));
+      else release();
+      await settle(() => requestFinished);
+      await new Promise((resolve) => setImmediate(resolve));
+      p.frame(0);
+      assert.equal(p.rendered.run.levelId, 'first-return');
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.rendered.paused, true);
+      assert.notEqual(p.$('journey-chooser')?.open, true);
+      assert.equal(p.$('run-message').textContent, retainedMessage);
+      assert.deepEqual([...storage.map], savedBefore);
+      if (interruption === 'focus') assert.equal(doc.activeElement.id, 'overlay-menu');
       assert.deepEqual(p.errors, []);
     } finally {
       // Settle the original page before its fixture restores global DOM state,
       // even when interception or an assertion fails. Keep the original failure.
+      release();
+      await pageSettled;
+    }
+  });
+
+for (const retired of [false, true])
+  test(`incoming Solo ${retired ? 'retires without awaiting its pending boot picture' : 'awaits its owned boot picture before exact launch'}`, async (t) => {
+    nativeSoloBoot(t);
+    let release,
+      held = false,
+      responseFinished = false;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    const storage = memoryStorage();
+    const page = solo(t, {
+      storage,
+      search: incomingSoloSearch(),
+      waitForPictures: false,
+      fetchResponse: async (path, options) => {
+        if (String(path).includes('/content-design/assets/'))
+          return new Response(await readFile(path));
+        if (!held && options?.signal && String(path).includes('/presentation/compiled/')) {
+          held = true;
+          await gate;
+          responseFinished = true;
+        }
+      },
+    });
+    const pageSettled = page.catch(() => {});
+    try {
+      await settleBoot(
+        () =>
+          held &&
+          globalThis.document.documentElement.dataset.bootState === 'interactive' &&
+          globalThis.document.getElementById('journey-chooser'),
+      );
+      const doc = globalThis.document;
+      const savedBefore = [...storage.map];
+      assert.equal(responseFinished, false);
+      assert.equal(doc.body.dataset.pictureState, 'pending');
+      assert.equal(doc.documentElement.dataset.bootState, 'interactive');
+      if (retired) {
+        doc.getElementById('overlay-menu').focus();
+        await settle(() => doc.documentElement.dataset.bootState === 'ready');
+        assert.equal(responseFinished, false, 'Cancelled prewarm cannot hold boot readiness.');
+        const p = await page;
+        p.frame(0);
+        assert.equal(p.rendered.run.levelId, 'first-return');
+        const checkpoint = authoritativeCheckpoint(p.rendered.run);
+        assert.equal(p.rendered.paused, true);
+        assert.equal(doc.activeElement.id, 'overlay-menu');
+        assert.deepEqual([...storage.map], savedBefore);
+        release();
+        await settle(() => responseFinished && doc.body.dataset.pictureState === 'ready');
+        p.frame(0);
+        assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+        assert.equal(p.rendered.paused, true);
+        assert.equal(doc.activeElement.id, 'overlay-menu');
+        assert.notEqual(p.$('journey-chooser').open, true);
+        assert.deepEqual([...storage.map], savedBefore);
+        assert.deepEqual(p.errors, []);
+        // A later explicit opening owns its own cancellation slot and may use
+        // the shared metadata whose obsolete incoming waiter has now finished.
+        await openMissionLibrary(p, 'shell-play');
+        assert.equal(p.$('journey-chooser').open, true);
+      } else {
+        // Keep the producer pending through another task: mere control
+        // availability must not announce ready before the owned handoff ends.
+        await new Promise((resolve) => setImmediate(resolve));
+        assert.equal(doc.documentElement.dataset.bootState, 'interactive');
+        release();
+        await settle(() => doc.documentElement.dataset.bootState === 'ready');
+        const p = await page;
+        assert.equal(p.rendered.run.levelId, 'choose-your-share');
+        assert.equal(p.rendered.run.tick, 0);
+        assert.equal(p.rendered.paused, true);
+        assert.equal(doc.body.dataset.flightState, 'briefing');
+        assert.deepEqual(p.errors, []);
+      }
+    } finally {
       release();
       await pageSettled;
     }

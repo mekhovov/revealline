@@ -20,6 +20,8 @@ import { parse } from '../publishing/vendor/acorn-8.18.0.mjs';
 import { demoPackagingRequirements, readEmittedOfflineConfig } from './qualify-demo-packaging.mjs';
 import { SOLO_BUILTIN_DEMO_INDEX } from '../game/demo-modes/solo-builtins-index.mjs';
 import { loadAuthoredJourneyRoute } from '../game/content-design/route-loader.mjs';
+import { captureEmittedPreview } from './emitted-preview.mjs';
+import { fingerprintDemoSources } from './demo-source-fingerprint.mjs';
 import { SURVIVAL_DEMO_RUNTIME_VARIANTS } from '../game/demo-modes/survival-runtime-variants.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -30,31 +32,7 @@ export const defaultBaselines = {
   inventory: evidence + 'main-pages-baseline-inventory-461ace.json',
   archive: evidence + 'main-pages-baseline-archive-receipt-461ace.json',
 };
-async function fingerprint(directories = ['game', 'optional-practice', 'publishing']) {
-  const paths = execFileSync('rg', ['--files', ...directories], {
-    cwd: root,
-    encoding: 'utf8',
-    maxBuffer: 8 * 1024 * 1024,
-  })
-    .trim()
-    .split('\n')
-    .filter(
-      (p) =>
-        /\.(mjs|js|json|css|html)$/.test(p) &&
-        !p.includes('/test/') &&
-        !p.endsWith('.test.mjs') &&
-        !p.endsWith('/coverage.json'),
-    )
-    .sort();
-  const h = createHash('sha256');
-  let bytes = 0;
-  for (const p of paths) {
-    const b = await readFile(path.join(root, p));
-    bytes += b.length;
-    h.update(p + '\0').update(Buffer.from(sha(b), 'hex'));
-  }
-  return { sha256: h.digest('hex'), files: paths.length, bytes };
-}
+const fingerprint = (directories) => fingerprintDemoSources(root, directories);
 /** Only the existing distribution metadata projection may change source bytes.
  * Authored packs, images, replays, and generated full Journey sources stay exact. */
 export async function demoNativeDependencyBytes(name, bytes) {
@@ -268,6 +246,7 @@ export function mainPagesAuditFailures(report) {
 }
 export async function qualifyDemoMainPages({
   reportPath,
+  previewOutput = null,
   baselineInventory = defaultBaselines.inventory,
   baselineArchive: baselineArchivePath = defaultBaselines.archive,
 } = {}) {
@@ -281,6 +260,18 @@ export async function qualifyDemoMainPages({
     try {
       await stat(filename);
       throw new Error(`Refusing to overwrite existing evidence: ${filename}`);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+  if (previewOutput !== null) {
+    assert.ok(
+      typeof previewOutput === 'string' && previewOutput,
+      'Preview output must name a new directory.',
+    );
+    try {
+      await stat(path.resolve(root, previewOutput));
+      throw new Error('Refusing to overwrite existing emitted preview output.');
     } catch (error) {
       if (error.code !== 'ENOENT') throw error;
     }
@@ -679,6 +670,35 @@ export async function qualifyDemoMainPages({
   };
   report.errors = mainPagesAuditFailures(report);
   report.complete = report.errors.length === 0;
+  if (previewOutput && report.complete) {
+    try {
+      report.emittedPreview = await captureEmittedPreview({
+        directory: previewOutput,
+        root,
+        entries: finalEntries,
+        auditReportPath: output,
+        sourceRevision,
+        sourceFingerprint: before,
+        buildInputFingerprint: buildBefore,
+      });
+      report.finalSourceFingerprint = await fingerprint();
+      report.finalBuildInputFingerprint = await fingerprint(['scripts', 'authoring']);
+      report.headStable = sourceRevision === git('rev-parse', 'HEAD');
+      report.sourceStable =
+        before.sha256 === report.finalSourceFingerprint.sha256 &&
+        buildBefore.sha256 === report.finalBuildInputFingerprint.sha256;
+      if (!report.headStable || !report.sourceStable)
+        report.errors.push('Source or HEAD changed during emitted preview capture.');
+    } catch (error) {
+      report.errors.push(`Emitted preview capture failed: ${error.message}`);
+      report.emittedPreview = {
+        complete: false,
+        error: String(error),
+        cleanup: error.previewCleanup ?? null,
+      };
+    }
+    report.complete = report.errors.length === 0;
+  }
   await mkdir(path.dirname(output), { recursive: true });
   await writeFile(output, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
   await writeFile(inventoryOutput, JSON.stringify({ sourceRevision, files: stagedFiles }) + '\n', {
@@ -758,6 +778,7 @@ export function mainPagesAuditArguments(args) {
   const result = {};
   const names = new Map([
     ['report', 'reportPath'],
+    ['preview-output', 'previewOutput'],
     ['baseline-inventory', 'baselineInventory'],
     ['baseline-archive', 'baselineArchive'],
   ]);
