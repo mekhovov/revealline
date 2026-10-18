@@ -404,3 +404,185 @@ test('disabled pause markers read no clock and retain no event rows', () => {
   assert.equal(reads, before);
   assert.equal(session.export({ paused: true }).eventWitnesses.total, 0);
 });
+
+test('callback work labels the first active callback independently of its preparation interval', () => {
+  let now = 0;
+  const session = createPerformanceSession({ now: () => now });
+  session.setPhase('preparing');
+  session.recordFrame((now = 10), 1, 1, 0, 0, 2, 'preparing');
+  session.setPhase('playing', (now = 15));
+  session.recordFrame((now = 26), 3, 2, 1, 1, 11, 'playing');
+  const data = session.export({ paused: true });
+  assert.equal(data.recentFrames.at(-1).phase, 'preparing');
+  assert.equal(data.recentFrames.at(-1).workPhase, 'playing');
+  assert.equal(data.phases.preparing.frames.totalMs, 16);
+  assert.equal(data.phases.preparing.work.totalMs, 11, 'Legacy work bucket remains unchanged');
+  assert.equal(data.callbackWork.phases.playing.work.totalMs, 11);
+  assert.deepEqual(
+    Object.fromEntries(
+      ['updateMs', 'drawMs', 'hudMs', 'simulationMs'].map((key) => [
+        key,
+        data.recentFrames.at(-1)[key],
+      ]),
+    ),
+    { updateMs: 3, drawMs: 2, hudMs: 1, simulationMs: 1 },
+  );
+  assert.equal(data.callbackWork.attributedFrameCount, 2);
+  assert.equal(data.callbackWork.unattributedFrameCount, 0);
+});
+
+test('external Pause and first result callback retain their prior-playing intervals only', () => {
+  let now = 0;
+  const session = createPerformanceSession({ now: () => now });
+  session.setPhase('playing');
+  session.recordFrame((now = 16), 1, 0, 0, 0, 1, 'playing');
+  session.setPhase('paused', (now = 17));
+  session.recordFrame((now = 32), 3, 0, 0, 0, 3, 'paused');
+  session.setPhase('playing', (now = 33));
+  session.recordFrame((now = 48), 5, 0, 0, 0, 5, 'playing');
+  session.setPhase('result', (now = 64));
+  session.recordFrame(now, 7, 0, 0, 0, 7, 'result');
+  const data = session.export({ paused: true });
+  assert.deepEqual(
+    data.recentFrames.map(({ phase, workPhase }) => [phase, workPhase]),
+    [
+      ['boot', 'playing'],
+      ['playing', 'paused'],
+      ['paused', 'playing'],
+      ['playing', 'result'],
+    ],
+  );
+  assert.equal(data.phases.playing.frames.count, 2);
+  assert.equal(data.phases.playing.work.totalMs, 10);
+  assert.equal(data.callbackWork.phases.playing.work.totalMs, 6);
+  assert.equal(data.callbackWork.phases.paused.work.totalMs, 3);
+  assert.equal(data.callbackWork.phases.result.work.totalMs, 7);
+});
+
+test('pause, terminal and failure transitions inside a callback retain its playing work entry', () => {
+  for (const finalPhase of ['paused', 'result', 'error']) {
+    let now = 0;
+    const session = createPerformanceSession({ now: () => now });
+    session.setPhase('playing');
+    session.recordFrame((now = 16), 1, 0, 0, 0, 1, 'playing');
+    session.setPhase(finalPhase, (now = 412));
+    if (finalPhase === 'paused') session.interruption(396);
+    if (finalPhase === 'error') session.reportFailure('Actual callback did not complete normally');
+    session.recordFrame(now, 133, 1, 14, 0, 134, 'playing');
+    const data = session.export({ paused: true });
+    assert.equal(data.phase, finalPhase);
+    assert.equal(data.recentFrames.at(-1).phase, 'playing');
+    assert.equal(data.recentFrames.at(-1).workPhase, 'playing');
+    assert.equal(data.phases.playing.frames.maxMs, 396);
+    assert.equal(data.callbackWork.phases.playing.work.maxMs, 134);
+    assert.equal(data.callbackWork.phases[finalPhase].work.count, 0);
+    assert.equal(data.failures.count, finalPhase === 'error' ? 1 : 0);
+    assert.equal(data.interruptions.count, finalPhase === 'paused' ? 1 : 0);
+  }
+});
+
+test('hidden suspension overrides interval attribution without relabeling visible callback work', () => {
+  let now = 0;
+  const session = createPerformanceSession({ now: () => now });
+  session.setPhase('playing');
+  session.recordFrame((now = 16), 1, 0, 0, 0, 1, 'playing');
+  session.setPhase('hidden', (now = 20));
+  session.setPhase('playing', (now = 10000));
+  session.recordFrame((now = 10016), 9, 0, 0, 0, 9, 'playing');
+  const data = session.export({ paused: true });
+  assert.equal(data.recentFrames.at(-1).phase, 'hidden');
+  assert.equal(data.recentFrames.at(-1).workPhase, 'playing');
+  assert.equal(data.phases.hidden.frames.maxMs, 10000);
+  assert.equal(data.callbackWork.phases.playing.work.totalMs, 10);
+  assert.equal(data.callbackWork.phases.hidden.work.count, 0);
+  assert.equal(
+    data.worstHitches.some((row) => row.intervalMs === 10000),
+    false,
+  );
+});
+
+test('callback labels remain bounded through recent eviction and worst-hitch replacement', () => {
+  let now = 0;
+  const session = createPerformanceSession({ now: () => now, capacity: 2 });
+  session.setPhase('playing');
+  for (let i = 1; i <= 40; i++)
+    session.recordFrame((now += i), i, 0, 0, 0, i, i % 2 ? 'playing' : 'paused');
+  const data = session.export({ paused: true });
+  assert.equal(data.retainedFrameCount, 2);
+  assert.equal(data.omittedFrameCount, 38);
+  assert.equal(data.worstHitches.length, 16);
+  for (const row of [...data.recentFrames, ...data.worstHitches])
+    assert.equal(row.workPhase, row.updateMs % 2 ? 'playing' : 'paused');
+  assert.equal(data.callbackWork.phases.playing.work.count, 20);
+  assert.equal(data.callbackWork.phases.paused.work.count, 20);
+  assert.equal(data.callbackWork.attributedFrameCount, 40);
+});
+
+test('absent or invalid work phases stay unattributed and disabled frame collection reads no clock', () => {
+  let reads = 0;
+  const session = createPerformanceSession({
+    now: () => {
+      reads++;
+      return 0;
+    },
+  });
+  session.setPhase('playing', 0);
+  for (const [i, phase] of [
+    undefined,
+    null,
+    'unknown',
+    3,
+    {
+      toString() {
+        throw Error('No coercion');
+      },
+    },
+  ].entries())
+    session.recordFrame(i + 1, 1, 0, 0, 0, 1, phase);
+  let data = session.export({ paused: true });
+  assert.equal(data.callbackWork.attributedFrameCount, 0);
+  assert.equal(data.callbackWork.unattributedFrameCount, 5);
+  assert(data.recentFrames.every((row) => row.workPhase === null));
+  session.setEnabled(false);
+  const before = reads;
+  session.recordFrame(100, 100, 0, 0, 0, 100, 'playing');
+  assert.equal(reads, before);
+  data = session.export({ paused: true });
+  assert.equal(data.frames.count, 5);
+  assert.equal(data.callbackWork.unattributedFrameCount, 5);
+});
+
+test('explicit work labels leave every existing interval, failure and phase aggregate unchanged', () => {
+  let now = 0;
+  const legacy = createPerformanceSession({ now: () => now });
+  const labeled = createPerformanceSession({ now: () => now });
+  for (const session of [legacy, labeled]) session.setPhase('preparing');
+  const record = (stamp, phase) => {
+    now = stamp;
+    legacy.recordFrame(now, 9, 4, 2, 1, 15);
+    labeled.recordFrame(now, 9, 4, 2, 1, 15, phase);
+  };
+  record(16, 'preparing');
+  for (const session of [legacy, labeled]) session.setPhase('playing', 17);
+  record(32, 'playing');
+  for (const session of [legacy, labeled]) {
+    session.setPhase('paused', 428);
+    session.interruption(396);
+    session.reportFailure('Retained failure', 428);
+  }
+  record(428, 'playing');
+  const originalFields = ({
+    callbackWork: _callbackWork,
+    recentFrames,
+    worstHitches,
+    ...rest
+  }) => ({
+    ...rest,
+    recentFrames: recentFrames.map(({ workPhase: _workPhase, ...row }) => row),
+    worstHitches: worstHitches.map(({ workPhase: _workPhase, ...row }) => row),
+  });
+  assert.deepEqual(
+    originalFields(labeled.export({ paused: true })),
+    originalFields(legacy.export({ paused: true })),
+  );
+});
