@@ -30,6 +30,13 @@ A separate [finite memory-only transaction experiment](fpv-archive-retention-mem
 
 ## Remaining diagnostic gates
 
+The UI correction now removes only a confirmed deleted row from its cached list
+and explicitly reports a failed or cancelled following refresh. Initial list
+errors are also shown separately. All **19/19** archive controls/integration tests
+pass, including EN/UK error and cancellation cases. No storage algorithm changes,
+automatic retry or extra deletion were added. The observed public incident
+predates this correction; its mutation outcome remains uncertain.
+
 1. Preserve the failed-context observations and stop destructive cleanup. Do not report the six protected sessions as preserved without finding/exporting them or verifying their native records.
 2. When an allowed native diagnostic surface is available, capture the exact origin/storage context, database name/version, object-store counts, original exception stack and close/versionchange events before and after one minimal reproduction. Record whether reopening performs a version-zero creation or opens an existing database. Avoid injected deletion, automated cleanup or forced quota changes in the affected profile.
 3. In an isolated diagnostic profile, use small disposable archives to check confirmed single-session deletion, preservation of all unrelated IDs, reload retention, interruption during a write and unexpected-connection closure. Verify receipts against actual native records, not only cached UI rows.
