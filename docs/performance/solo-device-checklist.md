@@ -1,5 +1,7 @@
 # Published Solo device checks
 
+Availability update, 18 October 2026: the user confirmed neither target device is currently available. Physical qualification remains open; continue automated work independently.
+
 This checklist collects the physical-device evidence that desktop Chromium and WebKit cannot supply. It does not replace the automated timing, replay, raster or resource gates in the [current plan](solo-performance-followup-plan.md).
 
 ## Build and device record
