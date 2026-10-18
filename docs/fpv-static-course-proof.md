@@ -1,6 +1,6 @@
-# Static aircraft course verification tooling
+# Static aircraft course verification
 
-R11B adds an offline, unscored diagnostic verifier. It answers whether an exported aircraft session both reproduces its physical recording and completes an explicitly supplied static course under the recorded mission-adapter version. The simulator's existing archive verification, archive formats, saved setups, aircraft physics, package byte/file caps, comparison eligibility and awards are unchanged.
+R11B introduced an offline, unscored diagnostic verifier. R11C now shares its reconstruction kernel with the simulator’s explicit **Verify course completion** action; the original physics-only action remains unchanged. It answers whether an exported aircraft session both reproduces its physical recording and completes an explicitly supplied static course under the recorded mission-adapter version. The simulator's existing archive verification, archive formats, saved setups, aircraft physics, package byte/file caps, comparison eligibility and awards are unchanged.
 
 This is a software verification tool, not a claim of measured aircraft fidelity or authenticated pilot input. A course dependency supplied by the operator is not an official-course authority, and its hashes are not signatures. The tool does not grant leaderboard, ghost, personal-best or other production eligibility.
 
@@ -24,7 +24,7 @@ The dependency is separate from the unchanged production archive. It freezes the
 
 Only the second pass's ordinary mission predicates determine completion and objective boundaries. Reported objective durations are at 50 Hz mission resolution, not 500 Hz physics-step timing. At most 64 objective rows are retained. The existing observed pause-panel rows are not accepted as proof or imported into the verifier.
 
-The report keeps `physics` and `course` separate. A physically valid but unsupported or incomplete course can return `physics.verified: true` with `course.verified: false` and an explicit reason. A successful report always says `toolingOnly: true` and `scored: false`.
+The report keeps `physics` and `course` separate. A physically valid but unsupported or incomplete course can return `physics.verified: true` with `course.verified: false` and an explicit reason. A successful CLI report says `toolingOnly: true` and `scored: false`. Browser reports also remain `scored: false`; they do not carry the CLI-only provenance wrapper.
 
 In-process consumers may call `isVerifiedStaticCourseProof` only on the exact frozen object returned by this module. Its private WeakSet admits successful course reconstructions only. Copies and parsed JSON reports are untrusted, and no object is registered with production comparison eligibility. A persisted report must be verified again before a consumer treats it as an in-process proof.
 
@@ -60,4 +60,4 @@ Run the focused suite:
 node --test scripts/test-fpv-static-course-proof.mjs
 ```
 
-The tool and its tests/docs are outside the shipped runtime. No runtime package rebuild is needed to establish that this change adds zero shipped runtime bytes; normal repository release checks still apply when integrating it. Any later browser integration, dynamic-course support, portable trust envelope, sector references or scoring remains a separate reviewed increment.
+The Node CLI wrapper and its tests/docs remain outside the shipped runtime. R11C moves the reconstruction kernel into the existing archive verifier, with host-owned adapters installed in dedicated workers. Academy does not import the World model. The browser freezes the selected archive/course, pauses flight, and cancels stale operations on session replacement, recovery or selection changes. It labels the archive, course and recorded mode; verification never completes the current live attempt or activates scoring. See the [browser acceptance and package receipt](fpv-browser-course-verification-20261018.md). Dynamic-course support, reference/ghost selection and scored promotion remain separate reviewed increments.
