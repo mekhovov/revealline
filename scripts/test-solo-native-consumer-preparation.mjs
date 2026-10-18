@@ -118,7 +118,7 @@ function checkJob(text, lane) {
 test('readiness and touch are exact main-only choices with their unchanged adapter matrices and native bounds', async () => {
   assert.match(
     workflow,
-    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,?\s*\]/,
+    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,\s*replay-portability,?\s*\]/,
   );
   assert.match(workflow, /cancel-in-progress: false/);
   for (const [lane, spec] of Object.entries(lanes)) {

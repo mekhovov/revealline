@@ -1,0 +1,80 @@
+{
+  "format": "SoloFixedReplayPortabilityPlanV1",
+  "status": "reviewed-diagnostic-only",
+  "repository": "mekhovov/revealline",
+  "sourceRun": 39109911286,
+  "sourceArtifact": 12130067688,
+  "sourceArtifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+  "records": [
+    "baseline-first30-chromium",
+    "baseline-first30-webkit",
+    "candidate-first30-chromium",
+    "candidate-first30-webkit"
+  ],
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "rowTimeoutMs": 120000,
+  "helperTimeoutMs": 4500000,
+  "performanceExclusion": true,
+  "automaticRetries": 0,
+  "concurrency": 1,
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "producer": "Exact previously verified normal main8b V2 package; complete archive, readiness, source and CSP verification remains mandatory. No rebuild, fallback or republishing.",
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV2",
+      "sourceRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "sourceTree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+      "run": 38998342742,
+      "artifact": 12088541389,
+      "name": "solo-normal-baseline-8b019919-38998342742-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-baseline-temporary.yml",
+        "run": 38998342742,
+        "attempt": 1,
+        "toolingRevision": "c9e637ad81fadf49caec884155d1bd0c2496c59c",
+        "toolingTree": "4d72cdb0aa075386bc1e6b5cd53f9f80eeb4a08c"
+      },
+      "outer": {
+        "bytes": 1073805912,
+        "sha256": "63545549d9d087e96dcade7e549369a3e2cc00eaa8ae292c314686d0b0563230"
+      },
+      "inner": {
+        "bytes": 1073243091,
+        "sha256": "8f8808fe79390429308cb4637c66ea34aeb5043947616a14b9cffcacf044dc1e"
+      },
+      "manifestSHA256": "3b448d181f75bf54aa1f2929e30f8b6a3fbc39a8b4eeb58914f5b29a704a85e8",
+      "ready": {
+        "bytes": 1599,
+        "sha256": "22b6a3cfdba87f242daa41309611ba2671dac18bcf6455cd7ebb68cb6b741d88"
+      }
+    }
+  },
+  "candidate": {
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "run": 39104551453,
+    "artifact": 12128990483,
+    "outer": {
+      "bytes": 1094639112,
+      "sha256": "76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897"
+    },
+    "inner": {
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
+    },
+    "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+    "producer": "Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer."
+  },
+  "scope": {
+    "input": "Only the four byte-pinned recordings from reviewed run39109911286; no gameplay rerun or arbitrary reference/source/artifact input.",
+    "reference": "The owned row generates and retains its own exact Node22.13.1 reference after reproducing the recorded Node mismatch and checking all47 module identities before and after.",
+    "native": "Existing unchanged strict native replay must reproduce its recorded checkpoint and native module identities before a separate fresh context traces selected scalar columns.",
+    "comparison": "Complete31 canonical player/enemy fields only. Classic and all other authoritative sections are explicitly excluded. No whole-state first-divergence, portability pass, performance pass, or regression verdict.",
+    "bounds": "Each entire owned row is120s including reference preparation, strict replay, scalar trace, source checks, retention, and cleanup. Reference <=2MiB; comparison <=64KiB; complete companion envelope <=512KiB or bounded incomplete overflow.",
+    "admission": "Main-only manual fixed lane after exactNode source controls pass; complete package/archive/worker/offline/CSP validation and fresh owned commands remain mandatory.",
+    "history": "All executed first-eight declarations/results, existing native verifier, and common owner runner stay byte-identical."
+  }
+}
