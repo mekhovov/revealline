@@ -1,0 +1,61 @@
+{
+  "format": "revealline-offline-demo-catalog-final-review.v1",
+  "sourceRevision": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+  "ownedFiles": {
+    "scripts/demo-native-dependencies.mjs": "9a126a95fd643e4312c115d6382649961ab6e8c1250036989bb2f1ecf24db624",
+    "scripts/offline-content.mjs": "0c22169d29b779432ed95b79fde136657e974df509246c33e9716181b79d14ca",
+    "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a",
+    "scripts/qualify-demo-packaging.mjs": "fdcd21070af2d65363e0753e9f0f809199d28ced2c15377f003938f2cc21c95c",
+    "scripts/test-demo-native-dependencies.mjs": "a082b06ad73176c84545406844d826e808ec13b0dfc3c52b2022962a089e419c"
+  },
+  "validation": [
+    {
+      "receipt": "docs/qualification/shared-demos/offline-demo-catalog-ownership-dd337c8-review.json",
+      "complete": true,
+      "sourceStable": true,
+      "headStable": true,
+      "assertions": {
+        "tests": 23,
+        "pass": 23,
+        "fail": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "receipt": "docs/qualification/shared-demos/offline-demo-catalog-packaging-dd337c8-review.json",
+      "complete": true,
+      "sourceStable": true,
+      "headStable": true,
+      "assertions": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "runtimeChanged": false,
+  "limitsChanged": false,
+  "fullEmittedBuildStillRequired": true,
+  "independentReview": {
+    "reviewer": "snake_adapter",
+    "result": "No blocker: finite catalog ownership retains optional isolation, exact emitted audit checks and existing SIM owner requirements.",
+    "noAdditionalTestOrBuild": true
+  },
+  "note": "23 assertions passed in the initial three whole files; 17 passed in the follow-up packaging/audit pair, including 10 repeated audit assertions (30 distinct tests overall).",
+  "repairedCatalogs": [
+    {
+      "path": "game/demo-data/snake/catalog.json",
+      "bytes": 84327,
+      "sha256": "96d1055c3c87bb21fc6aa6b198be6bee0b86206bc97267a910681249c143cd91",
+      "performances": 240
+    },
+    {
+      "path": "game/demo-data/survival/catalog.json",
+      "bytes": 7582,
+      "sha256": "5e738959a8ee395d2b8ebd4eda93d08d38a499f9c844e150dd58afbfff5503d8",
+      "performances": 18
+    }
+  ],
+  "complete": true
+}

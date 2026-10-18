@@ -1,0 +1,356 @@
+{"phase":"start","sourceRevision":"0b8ca8b059e5ec382d9718b219523fe31fdec322","sourceFingerprint":{"sha256":"bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d","files":9996,"bytes":404389524}}
+{"phase":"prepared","files":5944,"bytes":958844191}
+{
+  "format": "revealline-demo-main-pages-inspection.v1",
+  "started": "2026-10-18T23:40:14.607Z",
+  "finished": "2026-10-18T23:46:51.884Z",
+  "sourceRevision": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+  "sourceFingerprint": {
+    "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+    "files": 9996,
+    "bytes": 404389524
+  },
+  "finalSourceFingerprint": {
+    "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+    "files": 9996,
+    "bytes": 404389524
+  },
+  "buildInputFingerprint": {
+    "sha256": "252b9ce1d9dc0522414d68b13b3c31935a7df266e7e93bde18a19594e67a1355",
+    "files": 9398,
+    "bytes": 348353698
+  },
+  "finalBuildInputFingerprint": {
+    "sha256": "252b9ce1d9dc0522414d68b13b3c31935a7df266e7e93bde18a19594e67a1355",
+    "files": 9398,
+    "bytes": 348353698
+  },
+  "auditScriptSha256": "fa190f627045ff69c0c1034097842a9b1ae83c84e3a3b426ccb3c6adedf1fa8d",
+  "headStable": true,
+  "sourceStable": true,
+  "publicationProfile": "main-pages",
+  "materializedBuild": false,
+  "files": 5944,
+  "payloadBytesIncludingManifest": 959784348,
+  "manifestDescriptor": {
+    "bytes": 940157,
+    "sha256": "25c48eeb1449e568344db968e1a7e3fa8569b41278f4da1bbefa282f645b3754"
+  },
+  "rollingMainPagesLimitBytes": 980000000,
+  "rollingCoreHeadroomBeforeOtherHostedComponents": 20215652,
+  "releasePlanningBudgetBytes": 950000000,
+  "wholeSiteCapacityAccepted": false,
+  "completeHostedFileInventory": true,
+  "publicEligible": false,
+  "publicationAssessment": "not-performed",
+  "missingHostedComponents": [
+    "Actual uploaded Pages artifact; this local run models GNU tar size but does not publish or admit an artifact"
+  ],
+  "requiredPayloadsAndDiagnostics": 2478,
+  "missingPayloads": [],
+  "mismatchedPayloads": [],
+  "literalDemoModuleClosure": {
+    "roots": [
+      "authoring/production/preview.mjs",
+      "authoring/design-atlas/reveal-audit.mjs",
+      "authoring/design-atlas/reveal-audit-viewer.mjs",
+      "game/demo-modes/solo.mjs",
+      "game/demo-modes/solo-catalog.mjs",
+      "game/demo-modes/snake.mjs",
+      "game/demo-modes/sim.mjs",
+      "game/demo-modes/survival.mjs"
+    ],
+    "files": 412,
+    "missingModules": []
+  },
+  "requiredNativePaths": 128,
+  "missingNative": [],
+  "mismatchedNative": [],
+  "nativeMetadataProjection": {
+    "path": "game/content/mission-library-index.json",
+    "producer": "scripts/default-runtime-metadata.mjs#projectDefaultRuntimeMetadata",
+    "contract": "Existing lossless JSON compaction only; all authored native sources retain exact byte checks."
+  },
+  "classic": [],
+  "journeys": [
+    {
+      "routeId": "whole-spatial-v25",
+      "levels": 91,
+      "snapshot": "game/content-design/runtime/whole-spatial-v25.json",
+      "present": true,
+      "snapshotBytes": 277154,
+      "snapshotSha256": "26cafd633827012c3c8729329bb2fad0c3feedd2637c2e257bf50d8e123585e7",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v24",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v24.json",
+      "present": true,
+      "snapshotBytes": 276540,
+      "snapshotSha256": "54af78a72743cfb23ae5c9d091aec92e9f4a63a588aacd81953949c2ad4d5385",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v23",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v23.json",
+      "present": true,
+      "snapshotBytes": 275331,
+      "snapshotSha256": "3b006b71af58209831aa9973dad88d47405188d0c8f28bad74d0ec03bd52a660",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v22",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v22.json",
+      "present": true,
+      "snapshotBytes": 273373,
+      "snapshotSha256": "4268a186d8565460ee8efc5566f0571d8150ec4d665380fbe329fdbd214b4072",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v21",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v21.json",
+      "present": true,
+      "snapshotBytes": 271337,
+      "snapshotSha256": "45eff01ef344cb77700977c7135a265e9e0c7c2c7ff1e7f3366644c8517473b8",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v20",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v20.json",
+      "present": true,
+      "snapshotBytes": 270352,
+      "snapshotSha256": "505b52ec7be45d06c71ccbfdaa6ab23a962dc6777d147c619cd0d0e6b33abe1d",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v19",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v19.json",
+      "present": true,
+      "snapshotBytes": 269126,
+      "snapshotSha256": "d0e631a5b8551d422ee6b3d5a2476aa25bdf38b824bdd86def06312f0c10658e",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v18",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v18.json",
+      "present": true,
+      "snapshotBytes": 267605,
+      "snapshotSha256": "2eef985ba79babbac1a1b761f039dd6678bd447fbd02c18eb28367d20a5fdedb",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v17",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v17.json",
+      "present": true,
+      "snapshotBytes": 265782,
+      "snapshotSha256": "615510f0643bc972817bdf0d285a00bc6986a3bfb04667754393dc509929b0ea",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v16",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v16.json",
+      "present": true,
+      "snapshotBytes": 264185,
+      "snapshotSha256": "cb4761bfb1b528c0264de5b44ab9bb1e05b7d1b9bff752ba50828fbd1b650b8e",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v15",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v15.json",
+      "present": true,
+      "snapshotBytes": 263597,
+      "snapshotSha256": "bd832d139178a8e82dbb8eea68aca94ee2e1b395897bcf6818af1cbb7966c6c9",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v14",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v14.json",
+      "present": true,
+      "snapshotBytes": 262645,
+      "snapshotSha256": "a5fa79c0174104525174559a7701c6241c747b2df3d8fc1f99484cfbca8312ef",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v13",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v13.json",
+      "present": true,
+      "snapshotBytes": 261539,
+      "snapshotSha256": "dbad0867d7642b78fe46d8eb1b1bf13d367d433248b673b0f00933fdc79491c2",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v12",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v12.json",
+      "present": true,
+      "snapshotBytes": 260606,
+      "snapshotSha256": "93ff983369b33f0b0cf005ddd3e3112475c8af6ac5d3d43ef1bdbe49e9df2325",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v11",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v11.json",
+      "present": true,
+      "snapshotBytes": 259575,
+      "snapshotSha256": "3d7b5b67d5d78a3f25a8108468385f9a6f1b2520fc12b275bcc3bf952ae0d978",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v10",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v10.json",
+      "present": true,
+      "snapshotBytes": 258783,
+      "snapshotSha256": "04b2c25e1e6bbbf8890b89a6661ec80fadac53f280ae2ae2caf77fd3de3ed4fc",
+      "missingAssets": []
+    },
+    {
+      "routeId": "whole-spatial-v9",
+      "levels": 3,
+      "snapshot": "game/content-design/runtime/whole-spatial-v9.json",
+      "present": true,
+      "snapshotBytes": 257778,
+      "snapshotSha256": "80d2406bece474a0dc169e9d8ea31b473d04d68144e8df6dd4eff41c7850e27a",
+      "missingAssets": []
+    }
+  ],
+  "finalStaged": {
+    "files": 5952,
+    "bytes": 959792442,
+    "headroomBytes": 20207558,
+    "overlayFiles": 4,
+    "metadataFiles": 4
+  },
+  "archiveSizeModel": {
+    "bytes": 964771840,
+    "files": 5952,
+    "directories": 283,
+    "longPaths": 216,
+    "blockBytes": 512,
+    "recordBytes": 10240,
+    "terminalBytes": 1024,
+    "format": "GNU tar with long-name records; regular files and parent directories; no xattrs, sparse bodies, links, or PAX metadata",
+    "headroomBytes": 15228160,
+    "baseline": {
+      "sourceRevision": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "actualMeasuredArchiveBytes": 965601280,
+      "model": {
+        "bytes": 965601280,
+        "files": 3469,
+        "directories": 293,
+        "longPaths": 159,
+        "blockBytes": 512,
+        "recordBytes": 10240,
+        "terminalBytes": 1024,
+        "format": "GNU tar with long-name records; regular files and parent directories; no xattrs, sparse bodies, links, or PAX metadata"
+      },
+      "exactMatch": true
+    },
+    "actualUploadedArtifact": false
+  },
+  "baselineEvidence": {
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-baseline-inventory-461ace.json",
+      "sha256": "decdb760892aaba8f2dd9743bc2216b153601daa966b140b909fd0f1d059c75c"
+    },
+    "archive": {
+      "path": "docs/qualification/shared-demos/main-pages-baseline-archive-receipt-461ace.json",
+      "sha256": "f5c89c6e40ab2c82ba1e32759a185217afddd76bb7507a70d78070b592d1351b"
+    }
+  },
+  "baselineDelta": {
+    "sourceRevision": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "stagedBytes": -2791910,
+    "changedOrAddedFiles": 2619,
+    "changedOrAddedDeltaBytes": 87785237,
+    "removedFiles": 33,
+    "removedBytes": 90577147
+  },
+  "omittedOriginalWorker": {
+    "workerConfigMatchesCache": true,
+    "inventoryMatchesRemovedOriginals": true,
+    "count": 33,
+    "paths": [
+      "authoring/library/1994-forever-art/originals/last-train-cassette.png",
+      "authoring/library/1994-forever-art/originals/midnight-arcade.png",
+      "authoring/library/1994-forever-art/originals/rainy-video-rental.png",
+      "authoring/library/challenge-chapter-art/originals/crosswind-depot.png",
+      "authoring/library/challenge-chapter-art/originals/signal-switchback.png",
+      "authoring/library/challenge-chapter-art/originals/split-signal-foundry.png",
+      "authoring/library/retro-route-art/originals/crosswind-courier.png",
+      "authoring/library/retro-route-art/originals/midnight-workshop.png",
+      "authoring/library/retro-route-art/originals/signal-thread.png",
+      "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+      "authoring/library/sentinel-circuit-art/originals/open-the-circuit.png",
+      "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+      "authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "authoring/library/sentinel-theme-art/retro/originals/listening-court.png",
+      "authoring/library/sentinel-theme-art/retro/originals/open-the-circuit.png",
+      "authoring/library/sentinel-theme-art/retro/originals/switchyard-gates.png",
+      "authoring/library/sentinel-theme-art/ukraine/originals/listening-court.png",
+      "authoring/library/sentinel-theme-art/ukraine/originals/open-the-circuit.png",
+      "authoring/library/sentinel-theme-art/ukraine/originals/switchyard-gates.png",
+      "authoring/library/spend-network-art/originals/city-savings-observatory.png",
+      "authoring/library/spend-network-art/originals/shared-value-harbor.png",
+      "authoring/library/spend-network-art/originals/thoughtful-market-workshop.png",
+      "authoring/library/spend-route-art/originals/network-garden.png",
+      "authoring/library/spend-route-art/originals/shared-harbor.png",
+      "authoring/library/spend-route-art/originals/value-foundry.png",
+      "authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png",
+      "authoring/library/ukraine-atlas-art/originals/dnipro-autumn-watch.png",
+      "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+      "authoring/library/ukraine-route-art/originals/carpathian-thread-relay.png",
+      "authoring/library/ukraine-route-art/originals/crosswind-market-depot.png",
+      "authoring/library/ukraine-route-art/originals/two-lanes-forge.png"
+    ],
+    "fallbackCount": 18,
+    "fallbackPaths": [
+      "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+      "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+      "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+      "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+      "optional/external-chapters/route-worlds-coupa/media.rlmedia",
+      "optional/external-chapters/route-worlds-coupa/pack.json",
+      "optional/external-chapters/route-worlds-retro/media.rlmedia",
+      "optional/external-chapters/route-worlds-retro/pack.json",
+      "optional/external-chapters/route-worlds-ukraine/media.rlmedia",
+      "optional/external-chapters/route-worlds-ukraine/pack.json",
+      "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+      "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+      "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia",
+      "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+      "optional/external-chapters/sentinel-circuit-retro/media.rlmedia",
+      "optional/external-chapters/sentinel-circuit-retro/pack.json",
+      "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia",
+      "optional/external-chapters/sentinel-circuit-ukraine/pack.json"
+    ],
+    "collisions": []
+  },
+  "demoOfflineSelection": {
+    "complete": false,
+    "error": "Demo dependency is outside the selected offline closure: game/demo-data/snake/catalog.json"
+  },
+  "limitations": [
+    "This is a complete in-memory staged-file candidate with actual metadata producers, not upload or deployment admission. The archive figure is a baseline-calibrated GNU tar size model.",
+    "Native dependency audit covers catalog-selected authored Classic source bodies and base artwork, exact Journey full-source snapshots and selected backgrounds, plus literal demo module imports; dynamic data-driven asset transport remains independently qualified."
+  ],
+  "errors": [
+    "Demo dependency is outside the selected offline closure: game/demo-data/snake/catalog.json"
+  ],
+  "complete": false
+}

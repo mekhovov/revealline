@@ -13,6 +13,7 @@ import { buildOfflineContent } from './offline-content.mjs';
 import { applyPublicationProfile } from './game-cli.mjs';
 import { downloadFiles } from '../game/download-catalogue.mjs';
 import { gameplaySelection } from '../game/offline-download-session.mjs';
+import { SURVIVAL_DEMO_RUNTIME_VARIANTS } from '../game/demo-modes/survival-runtime-variants.mjs';
 
 const entry = (name, value) => ({ name, bytes: Buffer.from(JSON.stringify(value)) });
 function fixture() {
@@ -141,6 +142,52 @@ test('current reviewed and qualified catalogs resolve the exact authored native 
     .map((mission) => mission.sourceFile.path);
   assert.ok(requiredArchivePaths.length > 0);
   assert.ok(requiredArchivePaths.every((name) => classicDemoSourcePaths(entries).has(name)));
+});
+
+test('the demo extra directly owns the actual Snake and Survival catalogs and every referenced recording', async () => {
+  const read = async (name) => ({
+    name,
+    bytes: await readFile(new URL(`../${name}`, import.meta.url)),
+  });
+  const catalogs = await Promise.all(
+    ['snake', 'survival'].map((mode) => read(`game/demo-data/${mode}/catalog.json`)),
+  );
+  const bodies = catalogs.flatMap((catalog) => {
+    const survival = catalog.name.includes('/survival/');
+    return JSON.parse(catalog.bytes).entries.flatMap(({ levelId }) => {
+      assert.match(levelId, /^[a-zA-Z0-9_-]+$/);
+      return (survival ? ['', ...SURVIVAL_DEMO_RUNTIME_VARIANTS] : ['']).map((variant) =>
+        catalog.name.replace(
+          'catalog.json',
+          `${levelId}${variant ? `.${variant}` : ''}.replay.json`,
+        ),
+      );
+    });
+  });
+  assert.equal(new Set(bodies).size, bodies.length);
+  const entries = [...catalogs, ...(await Promise.all(bodies.map(read)))];
+  const excluded = new Set(entries.map((item) => item.name));
+  const catalogue = await buildOfflineContent(entries, excluded, '1.0.0');
+  const demo = catalogue.groups.find((group) => group.id === 'extras:demo');
+  // Catalogs are tooling-only in the full import graph. They need explicit
+  // ownership; incidental reachability through the shared group is insufficient.
+  assert.deepEqual(new Set(demo.files), new Set(entries.map((item) => item.name)));
+  assert.deepEqual(demo.requires, ['shared']);
+  assert.equal(demo.hidden, undefined);
+  const pins = new Map(downloadFiles(catalogue, ['extras:demo']).map((file) => [file.path, file]));
+  for (const item of entries) {
+    assert.equal(pins.get(item.name)?.bytes, item.bytes.length, item.name);
+    assert.equal(
+      pins.get(item.name)?.sha256,
+      createHash('sha256').update(item.bytes).digest('hex'),
+      item.name,
+    );
+  }
+  assert.deepEqual(
+    downloadFiles(catalogue, gameplaySelection(catalogue, { all: true })),
+    [],
+    'Ordinary current-game downloads do not acquire optional demo metadata or recordings.',
+  );
 });
 
 function simFixture() {
