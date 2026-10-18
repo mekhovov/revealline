@@ -8472,6 +8472,7 @@ export function mountWorldApp({
     document: doc,
     library: missionLibrary,
     supportedModes: ['solo'],
+    browsingContext: ({ label }) => `${navigationContext()} · ${label}`,
     description: () =>
       txt(
         'Every world and school lesson in one list. Choose a route; your flight settings and lesson coach stay with it.',
