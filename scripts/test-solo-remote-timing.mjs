@@ -1511,6 +1511,7 @@ for (const sourceLabel of ['de332', '797']) {
         ),
       ),
     );
+    if (sourceLabel === '797' && phase === 'warm-first30') return m;
     if (reviewed) {
       // Synthetic model-only evidence for phases whose actual declarations remain held.
       m.release.status = 'reviewed-and-released';
@@ -1550,7 +1551,7 @@ for (const sourceLabel of ['de332', '797']) {
     let rows = 0;
     for (const phase of representativePhases) {
       const held = await representative(phase, false);
-      const released = sourceLabel === '797' && phase === 'cold-first30';
+      const released = sourceLabel === '797' && ['cold-first30', 'warm-first30'].includes(phase);
       if (released) {
         assert.equal(held.release.status, 'reviewed-and-released');
         assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
