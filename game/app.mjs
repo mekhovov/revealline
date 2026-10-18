@@ -11557,7 +11557,7 @@ try {
     if (event.persisted) gameWakeLock.setActive(false);
     else gameWakeLock.dispose();
   });
-  function update(elapsed) {
+  function update(elapsed, flightWasActive) {
     let terminalHUD = false;
     gameWakeLock.setActive(
       !demoHost?.active && started && !paused && run.status === 'running' && !document.hidden,
@@ -11701,6 +11701,7 @@ try {
       message: status.message.slice(0, 240),
     });
     if (
+      flightWasActive &&
       !courseBlocked() &&
       !paused &&
       started &&
@@ -13365,7 +13366,9 @@ try {
                     : 'ready',
       );
       try {
-        update(dt);
+        // Controller Menu/Confirm can Resume synchronously while polling below.
+        // Its paused UI interval must not become authoritative gameplay time.
+        update(dt, active);
         updateMs = performance.now() - workStart;
         if (!foreground || demoHost?.active) this.retainUnchangedDisplay();
         if (demoHost?.active || !foreground || rendererLost.size) return;
