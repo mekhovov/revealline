@@ -2,17 +2,18 @@
 
 Updated **18 October 2026** (Europe/Berlin). Continuous implementation of the [approved staged plan](plan.md) is underway. This board covers this workstream; release integration and publication remain separate gates.
 
-**83 feature groups · 113 deliverables · 13 feature PRs ready for checks · 5 draft feature PRs · 3 implementation lanes active · 1 merged · 0 verified live.**
+**83 feature groups · 113 deliverables · 12 feature PRs ready for checks · 13 draft feature PRs · 3 implementation lanes active · 2 merged · 0 verified live.**
 
 ## Merged
 
 **F83a — Deck regression fixtures · [#1613](https://github.com/mekhovov/revealline/pull/1613)** merged at `461ace72e7` after independent review and required exact-head checks. The change corrects the test clock and preserves interaction assertions. Physical Deck acceptance remains F83b; live deployment is not claimed.
 
+**F81 — nested-menu recovery · [#1618](https://github.com/mekhovov/revealline/pull/1618)** merged at `cb8dddd3d3` after required checks. Actual Collection/Records and Saves return preserved the paused flight. Live publication remains unverified.
+
 ## Ready for checks and merge
 
 | Priority | Deliverable                                                                                       | Evidence so far                                                                                                                                     | Remaining                                                                                                                                                                                      |
 | -------- | ------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P1       | **F81 — recovery after nested tools** · [#1618](https://github.com/mekhovov/revealline/pull/1618) | Actual browser recovery works after Collection/Records and Saves; paused flight preserved.                                                          | Exact-head release-ready passed; merge reconciliation remains queued. Clean-base listener assertion is separately documented.                                                                  |
 | P1       | **F82 — offline startup repair** · [#1616](https://github.com/mekhovov/revealline/pull/1616)      | 157 focused checks; exact built worker recovery → repair → offline Home passes.                                                                     | Retired-trigger prerequisite [#1633](https://github.com/mekhovov/revealline/pull/1633) is ready; rebase and rerun checks after merge. Prepared Pages capacity and hardware remain unqualified. |
 | P1       | **F14 — offline readiness** · [#1624](https://github.com/mekhovov/revealline/pull/1624)           | 51 checks; real component with modeled readiness, stale edition, missing files and unavailable storage inspected in EN/UK. Rebased on current main. | Exact-head CI; committed-package and physical qualification.                                                                                                                                   |
 | P1       | **F16 — persistent music recovery** · [#1617](https://github.com/mekhovov/revealline/pull/1617)   | 316 focused checks; actual panel with modeled transport verifies Retry, focus and music-only pause. Rebase complete.                                | Exact-head CI; real failed-track playback and listening.                                                                                                                                       |
@@ -29,31 +30,42 @@ Updated **18 October 2026** (Europe/Berlin). Continuous implementation of the [a
 
 ## Drafts and active development
 
-| Priority | Item / owner                                                                                          | Current status and next result                                                                                                                                                         |
-| -------- | ----------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| P1       | **F01 / Snake** · [#1637](https://github.com/mekhovov/revealline/pull/1637) · lane A                  | Draft stack on Capture: 182 focused checks/source gates; source review passed, browser review in progress.                                                                             |
-| P1       | **F01 / Duel** · [#1640](https://github.com/mekhovov/revealline/pull/1640) · lane A                   | Draft stack on Capture: 68 checks/source gates; independent browser review pending. Team is developing next.                                                                           |
-| P1       | **F11b / review and extraction** · [#1635](https://github.com/mekhovov/revealline/pull/1635) · lane B | Source and actual browser review passed; downloaded original component matches ZIP bytes. Draft stack on1627. Ordered review/apply with partial recovery is developing separately.     |
-| P1       | **F15b / menu animation** · [#1636](https://github.com/mekhovov/revealline/pull/1636) · lane C        | Actual Solo modeled-storage failure/retry, other-tab intent, focus and Ukrainian320px review passed. Draft stack on1629. Demo owner remains dependent on D.                            |
-| P1       | **F06 / native comfort presets** · [#1641](https://github.com/mekhovov/revealline/pull/1641) · lane C | Preview/Apply/Undo, partial-save Retry and newer-choice preservation reviewed in actual Solo; final page-cache expiry tested. Draft stack on1636. Remaining family presets developing. |
-| P1       | **F78 / current query and pagination** · integration                                                  | Develop complete ownership after F12; pending search must prevent old Load more from mixing result sets.                                                                               |
-| P1       | **Delivery prerequisite** · [#1633](https://github.com/mekhovov/revealline/pull/1633)                 | Ready;136 checks and two independent reviews.13 expired diagnostic triggers retired; active gates and merge policy unchanged. Exact-head CI queued/running.                            |
+| Priority | Item / owner                                                                                          | Current status and next result                                                                                                                                                                         |
+| -------- | ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| P1       | **F01 / Snake** · [#1637](https://github.com/mekhovov/revealline/pull/1637) · lane A                  | Draft stack on Capture: 194 checks/source gates; browser found a Duel/Versus wording mismatch, corrected at63ef. Final correction browser review remains.                                              |
+| P1       | **F01 / Duel** · [#1640](https://github.com/mekhovov/revealline/pull/1640) · lane A                   | Draft stack on Capture: 68 checks/source gates; independent source and actual unlaunched menu/Back review passed. Team is a separate draft.                                                            |
+| P1       | **F11b / review and extraction** · [#1635](https://github.com/mekhovov/revealline/pull/1635) · lane B | Source and actual browser review passed; downloaded original component matches ZIP bytes. Draft stack on1627. Guided apply is draft1646 with independent source review passed; browser review is next. |
+| P1       | **F15b / menu animation** · [#1636](https://github.com/mekhovov/revealline/pull/1636) · lane C        | Actual Solo modeled-storage failure/retry, other-tab intent, focus and Ukrainian320px review passed. Draft stack on1629. Demo owner remains dependent on D.                                            |
+| P1       | **F06 / native comfort presets** · [#1641](https://github.com/mekhovov/revealline/pull/1641) · lane C | Preview/Apply/Undo, partial-save Retry and newer-choice preservation reviewed in actual Solo; final page-cache expiry tested. Draft stack on1636. Remaining family presets developing.                 |
+| P1       | **F78 / query and pagination** · [#1644](https://github.com/mekhovov/revealline/pull/1644)            | 45 tests and source gates; independent source and actual modeled-service browser review passed. Draft stack on F12.                                                                                    |
+| P1       | **Delivery prerequisite** · [#1633](https://github.com/mekhovov/revealline/pull/1633)                 | Ready;136 checks and two independent reviews.13 expired diagnostic triggers retired; active gates and merge policy unchanged. Exact-head CI queued/running.                                            |
+
+| P1 | **F01 / Team** · [#1643](https://github.com/mekhovov/revealline/pull/1643) | Independent source review passed; browser review pending. Draft stack on Duel. |
+| P1 | **F01 / Hunt** · [#1648](https://github.com/mekhovov/revealline/pull/1648) | 125 checks/source gates; authoritative EN/UK identity and Classic handoff. Review pending. |
+| P1 | **F06 / Snake and Survival** · [#1642](https://github.com/mekhovov/revealline/pull/1642) | Source review and actual Snake Team Apply/Undo plus paused Survival return passed. Draft stack on native presets. |
+| P1 | **F06 / SIM** · [#1645](https://github.com/mekhovov/revealline/pull/1645) | Source review and actual Academy/World preview, partial-save Retry and Undo passed; flight controls unchanged. Draft stack on arcade. |
+| P1 | **F06 / Creator** · [#1647](https://github.com/mekhovov/revealline/pull/1647) | 49 focused and15 offline checks; review pending. Draft stack on SIM. |
+| P1 | **F11b / guided restore** · [#1646](https://github.com/mekhovov/revealline/pull/1646) | 140 focused checks/source gates; independent source review passed. Actual browser review pending. |
+| P1 | **F79 / local Installed** · integration | Source review and actual catalog-outage install/reopen/play passed. One unavailable entry no longer hides healthy games. Final gates/PR pending; offline recovery entry remains next. |
+| P1 | **F80 / removal review** · lane B | Complete confirmation/default Keep implementation developing; integrate on F79, then source/browser review. |
 
 Next: **F79** local Installed inventory, **F80** removal consequences, **F02a** existing first-flight entry after F01, and **F04b** production suspend after its assessment. Priority remains P1. Estimates remain the plan's working-day ranges, excluding CI/review queues and unavailable hardware.
 
+**Shared preset copy:** [#1649](https://github.com/mekhovov/revealline/pull/1649) removes the inaccurate “below” instruction across hosts. It is a separate reviewed-stack follow-up;18 focused checks and localization pass; independent source review passed.
+
 ## Phase status
 
-| Phase                        | Progress                                          | Main remaining work                                                     |
-| ---------------------------- | ------------------------------------------------- | ----------------------------------------------------------------------- |
-| 0 — Baseline                 | Setup complete                                    | Maintain exact candidate identities and shared-file ownership.          |
-| 1 — Reliability              | 1 merged; 8 ready slices; F15b partial            | Remaining clarity, service readiness, long-flight and Demo slices.      |
-| 2 — Learn and start          | Capture ready; Snake/Duel drafts; Team developing | Selection hierarchy, onboarding, readability and contextual guidance.   |
-| 3 — Progress and offline     | F82/F14/F11a/F04a ready; F11b/F78 developing      | Archive/restore, Survival suspend assessment, community reliability.    |
-| 4 — Comfort, input and audio | Native presets draft; remaining hosts developing  | Presets, cues, remapping, readable UI and accessibility/audio evidence. |
-| 5 — Practice and social      | Planned                                           | Playlists, practice, replays, rooms and device calibration.             |
-| 6 — Creation and community   | Planned                                           | Creator entry, validation, playtest, publishing and discovery.          |
-| 7 — Progression and content  | Planned                                           | Albums, goals, cosmetics and bounded balance experiments.               |
-| 8 — Services and platforms   | Planned                                           | Service readiness, cloud, native packages and platform evidence.        |
+| Phase                        | Progress                                                     | Main remaining work                                                     |
+| ---------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| 0 — Baseline                 | Setup complete                                               | Maintain exact candidate identities and shared-file ownership.          |
+| 1 — Reliability              | 2 merged; reliability slices reviewed; F15b partial          | Remaining clarity, service readiness, long-flight and Demo slices.      |
+| 2 — Learn and start          | Capture ready; Snake/Duel/Team/Hunt drafts; SIM developing   | Selection hierarchy, onboarding, readability and contextual guidance.   |
+| 3 — Progress and offline     | F82/F14/F11a/F04a ready; F11b/F78 drafts; F79/F80 developing | Archive/restore, Survival suspend assessment, community reliability.    |
+| 4 — Comfort, input and audio | Native/arcade/SIM reviewed drafts; Creator draft; Rooms next | Presets, cues, remapping, readable UI and accessibility/audio evidence. |
+| 5 — Practice and social      | Planned                                                      | Playlists, practice, replays, rooms and device calibration.             |
+| 6 — Creation and community   | Planned                                                      | Creator entry, validation, playtest, publishing and discovery.          |
+| 7 — Progression and content  | Planned                                                      | Albums, goals, cosmetics and bounded balance experiments.               |
+| 8 — Services and platforms   | Planned                                                      | Service readiness, cloud, native packages and platform evidence.        |
 
 ## Open limits and findings
 
@@ -63,8 +75,8 @@ Next: **F79** local Installed inventory, **F80** removal consequences, **F02a** 
 - **Existing source checks:** F82's full formatting check has eight unchanged baseline failures. F81's unrelated recovery-display listener-count assertion also fails on clean main. Changed-file checks pass; the failures are not waived or counted as passes.
 - **F15a:** current Solo Help shows no localization placeholder. About's version token appears only in source preview and is replaced in the built package. The broader localization finding remains scoped and unreproduced; existing Studio work stays with PR #1525.
 - **D:** substantial original-checkout Demo work is preserved. Reconcile it into an explicit reviewed predecessor before dependent changes.
-- **Merge admission:** F82 awaits #1633, which removes automatic registration from expired PR #1544 diagnostics. Active diagnostic workflows, required validation and strict merge policy stay unchanged. F81’s exact-head release-ready check passed; merge reconciliation is queued.
-- **Disk:** task-owned checkout sparsity and removal of retained generated output after checksum receipts recovered space (6.4 GiB at the latest check). No original WIP or unrelated files removed; large builds remain serialized.
+- **Merge admission:** F82 awaits #1633, which removes automatic registration from expired PR #1544 diagnostics. Active diagnostic workflows, required validation and strict merge policy stay unchanged. F81 merged after exact-head checks.
+- **Disk:** task-owned checkout sparsity and removal of retained generated output after checksum receipts recovered space (4.0 GiB at the latest check). No original WIP or unrelated files removed; large builds remain serialized.
 
 The [structured tracker](progress.json) retains all 113 deliverables, priorities, estimates, owners, dependencies and evidence. “Assessment complete,” “browser checked,” “merged” and “verified live” remain distinct. Every substantial milestone updates both records.
 
@@ -73,4 +85,6 @@ The [structured tracker](progress.json) retains all 113 deliverables, priorities
 - **F12:** independent review fixed back/forward-cache store lifetime and readiness/sign-out races before promotion. All source validation stages pass; unchanged baseline formatting findings remain documented.
 - **F04a:** the serializer is a trusted test oracle. It establishes feasibility, not a production import format or mobile memory guarantee. F04b must add recoverable storage, exact package admission and durable result ownership.
 - **F06:** Undo keeps newer settings. A restored page now expires the old Undo because missed cross-tab events cannot establish ownership. Width320 browser evidence is not physical iPhone qualification.
-- **CI:** no additional PR has merged at this snapshot. Ready means reviewed and eligible for required checks; it does not mean deployed.
+- **CI:** F81 is now merged. Ready means reviewed and eligible for required checks; it does not mean deployed.
+
+- **F79:** Installed is based on local runtime ownership. Corrupt/unavailable entries stay visible without a Play action and cannot hide healthy entries. The catalog-outage browser receipt is not a full offline PWA or whole-media integrity claim. Retained-package recovery access stays an explicit P1 follow-up.
