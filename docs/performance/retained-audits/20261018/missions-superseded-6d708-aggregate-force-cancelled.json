@@ -1,0 +1,65 @@
+{
+  "format": "SupersededSourceAggregationCancellationV1",
+  "scope": "Only obsolete always() final-report jobs after all source/test jobs settled. Failed source validation and prior passing scoped tests preserved. No browser or native cleanup.",
+  "record": {
+    "run": 39154234156,
+    "head": "6d7083d92bdf1120a1b5c8639445a8bdbb21f9c5",
+    "at": "2026-10-18T19:34:18.731692+00:00",
+    "ordinaryCancellationAccepted": true,
+    "priorJobs": [
+      {
+        "id": 117757119128,
+        "name": "preflight",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 117760469833,
+        "name": "focused_shards (3)",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "id": 117760469903,
+        "name": "focused_shards (2)",
+        "status": "completed",
+        "conclusion": "cancelled"
+      },
+      {
+        "id": 117760469953,
+        "name": "focused_shards (1)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "id": 117760469959,
+        "name": "focused_shards (4)",
+        "status": "completed",
+        "conclusion": "cancelled"
+      },
+      {
+        "id": 117760470766,
+        "name": "test",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 117760471122,
+        "name": "build",
+        "status": "completed",
+        "conclusion": "skipped"
+      },
+      {
+        "id": 117768881070,
+        "name": "focused",
+        "status": "queued",
+        "conclusion": null
+      }
+    ],
+    "supersedingHead": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+    "outcome": "force-cancel-requested",
+    "requestExit": 0,
+    "response": "{}",
+    "error": ""
+  }
+}
