@@ -35,11 +35,7 @@ import {
   settingsTabOwnsKey,
 } from '../ui/settings-panels.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
-import {
-  getMenuAnimation,
-  setMenuAnimation,
-  subscribeMenuAnimation,
-} from '../ui/menu-animation-preferences.mjs';
+import { menuAnimationBinding } from '../ui/menu-animation-preferences.mjs';
 import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
 import { attachModalNavigation } from '../ui/modal-navigation.mjs';
 import { attachFullscreen } from '../ui/fullscreen.mjs';
@@ -2163,11 +2159,7 @@ globalSettings = mountGlobalSettings({
     offlineTools: offlineSettings,
   },
   bindings: {
-    menuAnimation: {
-      get: () => getMenuAnimation(win),
-      set: (value) => setMenuAnimation(value, win),
-      subscribe: (listener) => subscribeMenuAnimation(listener, win),
-    },
+    menuAnimation: menuAnimationBinding(win),
   },
 });
 settingsTools = mountGlobalSettingsTools({

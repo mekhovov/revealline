@@ -1040,7 +1040,7 @@ test('the image/canvas plane stays registered to original artwork through cover 
   f.api.dispose();
 });
 
-test('storage denial retains current-page preference and cross-tab updates are applied', () => {
+test('storage denial retains unsaved menu motion across remote updates until a new explicit save', () => {
   const f = fixture();
   f.win.localStorage = {
     getItem() {
@@ -1053,7 +1053,18 @@ test('storage denial retains current-page preference and cross-tab updates are a
   setMenuAnimation(false, f.win);
   assert.equal(getMenuAnimation(f.win), false);
   assert.equal(f.scene.dataset.motion, 'off');
-  f.win.localStorage = { getItem: () => 'on' };
+  let stored = 'on';
+  f.win.localStorage = {
+    getItem: () => stored,
+    setItem: (_key, value) => {
+      stored = value;
+    },
+  };
+  f.win.emit('storage', { key: MENU_ANIMATION_KEY });
+  assert.equal(f.scene.dataset.motion, 'off');
+  setMenuAnimation(false, f.win);
+  assert.equal(stored, 'off');
+  stored = 'on';
   f.win.emit('storage', { key: MENU_ANIMATION_KEY });
   assert.equal(f.scene.dataset.motion, 'on');
   f.api.dispose();
