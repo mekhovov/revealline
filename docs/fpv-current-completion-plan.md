@@ -1,6 +1,6 @@
 # SIM completion plan — current status and remaining work
 
-Reviewed **18 October 2026, 22:18 CEST (Europe/Berlin)**. This is the current
+Reviewed **18 October 2026, 22:20 CEST (Europe/Berlin)**. This is the current
 execution index for the accepted rates, aircraft and Setup Workbench plans.
 It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
@@ -21,7 +21,7 @@ reported `20555cda6bd44a0736aa829e64c52e455b4e770c`; its
 [Pages build, deployment and verification](https://github.com/mekhovov/revealline/actions/runs/39145153450)
 all passed. This review downloaded the three corrected public modules and
 confirmed their bytes matched the verified PR #1583 release. The later live
-metadata check at 20:33 CEST reports
+metadata check at 22:19 CEST reports
 `461ace72e78f8cbd77c26549381d9e21d0a65e91`, the continuation's refreshed base;
 the new continuation changes are not yet public.
 
@@ -214,6 +214,30 @@ Original-input margin remains 24,478 bytes and selected source file counts remai
 full. This closes the bounded byte-headroom change locally, not every future
 capacity or delivery gate. Publication remains pending.
 
+### Static-course recording verification — tooling complete
+
+R11B is committed and pushed as `a1d883ccedb68704acc320352ec6a3f895d8b580`,
+with **42/42 checks passing** on the clean committed source and independent
+review complete. It first verifies recorded physics, then reconstructs the
+supplied static course through its original mission adapter. All fifteen
+catalog aircraft in both modes complete the introductory lesson; gate crossing,
+miss/wrong-direction, historical v1, tampering, cancellation and CLI tests pass.
+[Feature and limitations](fpv-static-course-proof.md) ·
+[Qualification receipt](fpv-static-course-tool-qualification-20261018.json).
+
+The tooling is integrated unchanged as `eb44937112e205ac5336ae6ad49e0d0c6c71de66`
+on the combined follow-up branch. All three file hashes match the reviewed
+commit. It changes no shipped runtime, aircraft configuration, archive format or
+scoring authority. The existing package receipt remains bound to its stated
+source, not relabeled as a new build of the later tooling commit.
+
+Dynamic/action-dependent courses, challenge wrappers, Regional/free flight,
+partial-origin clips and unknown versions remain explicitly unsupported. Parsed
+reports are descriptive output, not trusted production proof. The 39,000-tick
+cursor check verifies bounded schedule traversal, not a long physical flight.
+Browser integration, comparison/ghost selection and competitive qualification
+remain R11 work; this narrow command-line tool does not complete those items.
+
 ## Delivered and retained
 
 | Accepted area            | Completed behavior                                                                                                                                                                                                                   | Evidence / qualification boundary                                                                                                                                                                                                                                                                          |
@@ -291,7 +315,7 @@ qualification; P3 depends on a qualified physical/platform baseline.
 | R10 / P3                          | Measured propwash and ground effect. **Gated on a qualified base and effect-specific evidence.**                                                                                                                                                                                                                                                           | **No dependable ETA yet.** Define a fit/implementation estimate only after usable measurements and acceptance tolerances exist.                                                                                                                  | Each effect has an identified measurement basis and held-out validation, with versioned behavior and preserved historical playback. Arbitrary coefficients cannot close the gate.                                                                                                                                                                                                            |
 | R11A / P2, independent software   | **Implemented, independently reviewed and locally accepted** at `a113208ce8e4076c19b2acc99332c3172e53bfcc`. Academy/World aircraft practice shows bounded, unscored objective times. All fifteen aircraft in both modes retain identical full recovery output with observations enabled/disabled. Rendered Meteor75 lesson and EN/UK recovery labels pass. | **Hosted integration and deployed acceptance remain.** Actual package checks pass; its original 683-byte margin is now 52,800 bytes after R17/R18; every later integration still needs remeasurement.                                            | Accepted mission intervals only; no 12-minute ceiling or invented pre-recovery history. No physics/configuration/recording or scoring authority change. Regional free flight explicitly has no course splits.                                                                                                                                                                                |
 | R17 / P2                          | **Implemented, reviewed and locally accepted** at `39a8be8c19c2a107b7be2352f45dbfe5cc23f5cd`. Existing recovery messages follow EN→UK→EN without repeating operations or live-status writes; the known full-store reason translates and unknown diagnostics remain literal.                                                                                | **Hosted integration and deployed acceptance remain.** 36/36 focused controls checks and 19/19 package checks pass. Rendered recovery/language-switch acceptance passes on a fresh isolated origin.                                              | Publish without changing recovery/storage/physics behavior. Its original 261-byte Academy margin is now 52,800 bytes after R18; full-store translation was tested automatically, not reproduced in that fresh-origin rendered check.                                                                                                                                                         |
-| R11B / P2, independent software   | **Tooling implementation in progress** on `codex/fpv-static-course-proof-20261018`: reconstruct static civilian course objectives from reset using the existing session adapter, separately from physics-only replay. No shipped-runtime, archive-format, ghost or scoring changes.                                                                        | **2–4 engineering days**, provisional, including tamper, cancellation, historical-adapter and all-model tests. No radio/pilot dependency.                                                                                                        | Exact bounded course dependency and source digest; generated terrain, canonical inputs, hashes and segment boundaries verified; explicit unsupported reasons for dynamic/action-dependent courses and partial origins. Exported reports do not grant comparison eligibility.                                                                                                                 |
+| R11B / P2, independent software   | **Tooling complete, independently reviewed and committed** at `a1d883ccedb68704acc320352ec6a3f895d8b580`; integrated unchanged on the combined follow-up. 42/42 checks pass, including all 15 aircraft × both modes on one lesson. No shipped-runtime, archive-format or scoring changes.                                                                  | **Repository integration/release remains.** No radio/pilot dependency. Browser and comparison integration are separate R11 work, not an implied completed feature.                                                                               | Exact bounded dependency, canonical reset/terrain/inputs and segment hashes are verified through the original mission adapter. Dynamic/action-dependent courses, partial origins and unknown versions fail closed. Reports grant no comparison eligibility.                                                                                                                                  |
 | R18 / P1 integration prerequisite | **Implemented, independently reviewed and accepted locally** at `7f38f550e5f67278aea5fa8d1f3aad1b059caa0c`. Build-only presentation indentation projection saves 52,539 bytes with exact asset/token preservation. Actual packaged Academy startup, previews and EN/UK paused recovery pass.                                                               | **Hosted integration and publication remain.** Preservation 9/9 and packages 19/19 pass. Bundled Academy now has **52,800 bytes** spare; original-input margin and full file counts remain constraints.                                          | Publish the reviewed projection with unchanged caps, numerical identities, offline pins and assets. Every later runtime/dependency addition still needs a fresh capacity check.                                                                                                                                                                                                              |
 | R11 / P3                          | Advanced scored comparison/sector integration and default promotion. **Not enabled; integration as well as qualification remains.**                                                                                                                                                                                                                        | **Software proof/sector/ghost work can proceed before external qualification.** Promotion allowance remains **1–2 engineering weeks after relevant physical/platform gates and comparison rules are agreed**, provisional; no calendar date now. | Comparison/sector filtering and verified records work with frozen identities; platform/physical qualification and a reviewed promotion decision are recorded. Practice archives remain unscored until then.                                                                                                                                                                                  |
 | R12 / separate distribution scope | Signed/full-game native distribution. **Unscheduled product/packaging work; simulator-only fixture is delivered.**                                                                                                                                                                                                                                         | **Not estimated** until target platforms, signing/distribution access and package-budget scope are decided. Does not block the current web release.                                                                                              | Reviewed package fits the distribution budget and passes signed installation, update and runtime checks on its target platforms.                                                                                                                                                                                                                                                             |
@@ -308,7 +332,7 @@ acceptance**, while the archive-retention investigation remains open. R2 invento
 are complete; R5 candidates await hosted release checks.
 R4 is now tied to the open archive-retention incident; approval is no longer missing.
 R6 software preparation proceeds independently; measured activation and R7–R9
-qualification await the relevant evidence/devices. R10 and competitive promotion remain downstream; R11A observed timing and later trusted course-proof software can proceed independently. Do not wait for
+qualification await the relevant evidence/devices. R10 and competitive promotion remain downstream; R11A observed timing and R11B static-course tooling are now locally complete. R17 locale recovery and R18 byte headroom are locally accepted; their publication and later comparison/ghost integration remain separate gates. Do not wait for
 R6–R12 to improve released practice.
 
 ### R6 software and evidence follow-up
