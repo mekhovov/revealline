@@ -1,3 +1,4 @@
+import { assertSharedOwnerDeclaredTool } from './solo-shared-owner-declared-source.mjs';
 import {
   assertDeclaredReadinessTool,
   modelCurrentReadinessTools,
@@ -74,7 +75,9 @@ function sparse(text) {
   return [...text.matchAll(/^            \/(.+)$/gm)].map((match) => match[1]);
 }
 async function current(ref, declarationPath = null) {
-  if (declarationPath && (await assertDeclaredReadinessTool(declarationPath, ref))) return;
+  if (declarationPath === plans.correctness) {
+    if (await assertSharedOwnerDeclaredTool(declarationPath, ref)) return;
+  } else if (declarationPath && (await assertDeclaredReadinessTool(declarationPath, ref))) return;
   const bytes = await read(ref.path);
   assert.equal(bytes.length, ref.bytes, ref.path);
   assert.equal(sha(bytes), ref.sha256, ref.path);
@@ -141,7 +144,7 @@ test('fixed declarations retain current or exact historical refs and their actua
     const plan = await json(path);
     const inputRefs = refs(plan);
     assert.equal(new Set(inputRefs.map((ref) => ref.path)).size, inputRefs.length);
-    for (const ref of inputRefs) await current(ref, name === 'correctness' ? null : path);
+    for (const ref of inputRefs) await current(ref, path);
     const selected = sparse(job(workflow, name));
     assert.equal(selected.length, new Set(selected).size);
     for (const input of [
