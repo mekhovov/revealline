@@ -43,10 +43,9 @@ export function installDemoRecoveryProbe(env = globalThis) {
       };
     },
   });
-  const snapshot = (label) => {
+  const snapshot = (label, diagnostics = null) => {
     const doc = env.document,
       parent = game?.scene?.scenes?.find((s) => s.lastPaint?.run);
-    const performance = env.RevealLineSoloPerformance?.export();
     return {
       label,
       atMs: env.performance.now(),
@@ -65,8 +64,9 @@ export function installDemoRecoveryProbe(env = globalThis) {
       painterId: identity(painter),
       drawCount,
       lastDraw: last,
-      quality: performance?.quality,
-      calibration: performance?.cadenceCalibration,
+      diagnosticsSource: diagnostics ? 'public-paused-export' : 'not-requested',
+      quality: diagnostics?.quality ?? null,
+      calibration: diagnostics?.cadenceCalibration ?? null,
       disabled: Object.fromEntries(
         ['demo-resume', 'demo-takeover', 'demo-next', 'demo-watch-pause', 'demo-return'].map(
           (id) => [id, doc.getElementById(id)?.disabled],
@@ -105,7 +105,10 @@ export function installDemoRecoveryProbe(env = globalThis) {
         return result;
       };
     },
-    snapshot,
+    // Full diagnostics retain their public paused-only authority. Fault and
+    // retired-owner boundaries observe existing state without requesting export.
+    snapshot: (label) => snapshot(label, env.RevealLineSoloPerformance?.export()),
+    state: (label) => snapshot(label),
     readiness() {
       return { id: identity(run), tick: run?.tick, paused: last?.paused, drawCount };
     },

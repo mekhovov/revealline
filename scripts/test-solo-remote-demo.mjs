@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { parse } from 'acorn';
 import { DEMO_ARMS, validateDemoPlan, assertDemoResult, unchanged } from './solo-remote-demo.mjs';
 import { installDemoRecoveryProbe } from './solo-demo-recovery-probe.mjs';
 const source = 'a'.repeat(40),
@@ -166,7 +167,7 @@ test('quality acceptance permits no automatic transition but requires actual mat
     assert.throws(() => assertDemoResult(r, command(), source, version));
   }
 });
-function environment() {
+function environment(separateParent = false) {
   const display = new EventTarget();
   Object.assign(display, { id: 'demo-canvas', width: 640, height: 480 });
   const layer = new EventTarget();
@@ -214,7 +215,9 @@ function environment() {
   env.Phaser = {
     Game: class {
       constructor() {
-        this.scene = { scenes: [{ lastPaint: { run } }] };
+        this.scene = {
+          scenes: [{ lastPaint: { run: separateParent ? { ...run, tick: 0 } : run } }],
+        };
       }
     },
   };
@@ -277,4 +280,207 @@ test('readiness polling does not read DOM, export diagnostics, or copy checkpoin
   assert.deepEqual(f.env.demoRecoveryProbe.readiness(), before);
   f.run.tick++;
   assert.equal(f.env.demoRecoveryProbe.readiness().tick, before.tick + 1);
+});
+
+function pausedExportFixture() {
+  const f = environment(true);
+  let active = false,
+    exported = 0;
+  const draw = (paused) => {
+    active = !paused;
+    f.painter.draw({ canvas: f.display }, f.run, 0, {
+      quality: 'full',
+      paused,
+      displayCSSWidth: 640,
+    });
+  };
+  f.env.RevealLineSoloPerformance.export = () => {
+    exported++;
+    if (active) throw Error('Pause gameplay before exporting diagnostics');
+    return { quality: { tier: 'full' }, cadenceCalibration: { samples: 30 } };
+  };
+  draw(true);
+  return { ...f, draw, exported: () => exported };
+}
+
+test('active context loss preserves public paused export authority and reaches the actual surface', () => {
+  const f = pausedExportFixture(),
+    probe = f.env.demoRecoveryProbe;
+  const baseline = probe.snapshot('before-activation');
+  assert.equal(baseline.quality.tier, 'full');
+  f.draw(false);
+  probe.retain('owned-concealment-layer', 'active');
+  let losses = 0;
+  f.layer.addEventListener('contextlost', () => losses++);
+  const exportsBefore = f.exported();
+  const loss = probe.event('active', 'contextlost');
+  assert.equal(losses, 1);
+  assert.equal(loss.before.lastDraw.paused, false);
+  unchanged(loss.before, loss.after);
+  assert.equal(f.exported(), exportsBefore, 'The active fault must not request diagnostics');
+  assert.equal(loss.before.quality, null);
+  assert.equal(loss.before.calibration, null);
+  assert.equal(loss.before.diagnosticsSource, 'not-requested');
+  assert.throws(() => probe.snapshot('still-active'), /Pause gameplay/);
+  const active = probe.state('active-retired-owner');
+  assert.equal(active.quality, null);
+  f.draw(true);
+  assert.equal(probe.snapshot('after-public-pause').quality.tier, 'full');
+});
+
+test('paused export failures remain failures rather than becoming partial quality proof', () => {
+  const f = pausedExportFixture(),
+    failure = Error('Owner has unsettled preparation');
+  f.env.RevealLineSoloPerformance.export = () => {
+    throw failure;
+  };
+  assert.throws(
+    () => f.env.demoRecoveryProbe.snapshot('paused'),
+    (error) => error === failure,
+  );
+  const state = f.env.demoRecoveryProbe.state('loss-boundary');
+  assert.equal(state.quality, null);
+  assert.equal(state.calibration, null);
+});
+
+const driverSource = await readFile(
+    new URL('./observe-solo-demo-recovery.mjs', import.meta.url),
+    'utf8',
+  ),
+  driverAST = parse(driverSource, { ecmaVersion: 'latest', sourceType: 'module' });
+function actualDriverFunction(name, bindings) {
+  const declaration = driverAST.body
+    .filter((node) => node.type === 'VariableDeclaration')
+    .flatMap((node) => node.declarations)
+    .find((node) => node.id.name === name);
+  assert(declaration?.init, `Missing actual driver function ${name}`);
+  return Function(
+    ...Object.keys(bindings),
+    `return (${driverSource.slice(declaration.init.start, declaration.init.end)});`,
+  )(...Object.values(bindings));
+}
+
+for (const id of DEMO_ARMS) {
+  test(`actual ${id} driver faults active paint and exports only after public Pause`, async () => {
+    const f = pausedExportFixture(),
+      probe = f.env.demoRecoveryProbe,
+      practice = id.startsWith('practice'),
+      report = { arms: [], snapshots: [] },
+      actions = [],
+      ordinaryBefore = probe.snapshot('ordinary-before-demo');
+    let running = false,
+      armed = false,
+      lost = false;
+    const setDisabled = (value) => {
+      for (const name of [
+        'demo-resume',
+        'demo-takeover',
+        'demo-next',
+        'demo-watch-pause',
+        'demo-return',
+      ])
+        f.env.document.getElementById(name).disabled = value;
+    };
+    const target = id.endsWith('-display') ? f.display : f.layer;
+    target.addEventListener('contextlost', () => {
+      actions.push('contextlost');
+      assert.equal(running, true, 'No artificial pause may precede the fault');
+      running = false;
+      lost = true;
+      setDisabled(true);
+    });
+    target.addEventListener('contextrestored', () => {
+      actions.push('contextrestored');
+      lost = false;
+      f.draw(true);
+      setDisabled(false);
+    });
+    const click = async (selector) => {
+      actions.push(selector);
+      if (selector === '#demo-resume') {
+        armed = true;
+        running = !practice;
+      } else {
+        assert.equal(selector, practice ? '#demo-pause' : '#demo-watch-pause');
+        running = false;
+        f.draw(true);
+      }
+    };
+    const wait = async (ms) => {
+      actions.push(`wait:${ms}`);
+      if (running && !lost) {
+        f.run.tick++;
+        f.draw(false);
+      }
+    };
+    const key = async () => {
+      if (practice && armed && !lost) running = true;
+    };
+    const page = {
+      evaluate: async (fn, value) => fn(value),
+      keyboard: { down: key, up: async () => {}, press: key },
+    };
+    const retain = (list, value, cap) => {
+      assert(list.length < cap);
+      list.push(value);
+    };
+    const common = {
+      window: f.env,
+      assert,
+      ensure: () => {},
+      page,
+      report,
+      retain,
+    };
+    const snap = actualDriverFunction('snap', common);
+    const fault = actualDriverFunction('fault', {
+      ...common,
+      snap,
+      click,
+      wait,
+      unchanged,
+      validQuality: (s) => {
+        assert.equal(s.diagnosticsSource, 'public-paused-export');
+        assert.equal(s.quality.tier, s.lastDraw.quality);
+      },
+      pausedDraw: async () => assert.equal(probe.readiness().paused, true),
+      pause: async (value) => click(value ? '#demo-pause' : '#demo-watch-pause'),
+      ordinaryBefore,
+      save: async () => {},
+    });
+    await fault(id);
+    const arm = report.arms[0];
+    assert.equal(arm.status, 'pass');
+    assert.equal(arm.loss.before.lastDraw.paused, false);
+    assert.equal(arm.loss.before.diagnosticsSource, 'not-requested');
+    assert.equal(arm.resumed.diagnosticsSource, 'public-paused-export');
+    assert.equal(f.exported(), 2, 'Only baseline and post-Pause export are requested');
+    assert(actions.indexOf('contextlost') < actions.indexOf('contextrestored'));
+    assert(
+      actions.indexOf('contextrestored') <
+        actions.lastIndexOf(practice ? '#demo-pause' : '#demo-watch-pause'),
+    );
+    unchanged(ordinaryBefore, arm.resumed, 'ordinary');
+  });
+}
+
+test('active reopened and stale-owner driver reads use retained state without export', async () => {
+  const f = pausedExportFixture();
+  f.draw(false);
+  const snap = actualDriverFunction('snap', {
+    window: f.env,
+    assert,
+    ensure: () => {},
+    page: { evaluate: async (fn, value) => fn(value) },
+    report: { snapshots: [] },
+    retain: (rows, value) => rows.push(value),
+  });
+  assert.equal((await snap('reopened', true)).quality, null);
+  assert.equal((await snap('after-retired-events', true)).quality, null);
+  assert.equal(f.exported(), 0);
+  await assert.rejects(snap('paused-proof'), /Pause gameplay/);
+  for (const label of ['reopened', 'after-retired-events']) {
+    const escaped = label.replaceAll('-', '\\-');
+    assert.match(driverSource, new RegExp(`snap\\('` + escaped + `', true\\)`));
+  }
 });
