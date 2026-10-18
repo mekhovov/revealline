@@ -27,17 +27,10 @@ const root = new URL('../', import.meta.url);
 const read = (p) => readFile(new URL(p, root));
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 const source = '797e03f28743921842df6aa57520a72016ba3dfc';
-// Modeled parser control only; actual797 first-eight evidence remains null in the held plans.
-const modeledProof = {
-  format: 'SoloFirstEightCorrectnessEvidenceV1',
-  sourceRevision: source,
-  runId: 1,
-  artifactId: 2,
-  artifactSHA256: 'a'.repeat(64),
-  summarySHA256: 'b'.repeat(64),
-  correctness: 'passed',
-  ownersClosed: true,
-};
+// Actual correctness-only receipt; numerical failures remain in the same reviewed outcome.
+const actualProof = JSON.parse(
+  await read('docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json'),
+).proof;
 
 const manifest = JSON.parse(await read('docs/performance/solo-next-geometric-797e03-plan.json'));
 const prior = JSON.parse(
@@ -45,14 +38,7 @@ const prior = JSON.parse(
 );
 const bytes = await read(manifest.recipes.next.path),
   recipe = JSON.parse(bytes);
-const reviewed = () => {
-  const p = structuredClone(manifest);
-  p.status = 'reviewed-diagnostic-only';
-  p.release.status = 'reviewed-diagnostic-only';
-  p.release.firstEightAllCorrectnessPassed = true;
-  p.release.firstEightEvidence = structuredClone(modeledProof);
-  return p;
-};
+const reviewed = () => structuredClone(manifest);
 const flags = (revision) => [
   '--authored-next-route=authored-next-geometric-v1',
   '--work-probe',
@@ -60,26 +46,32 @@ const flags = (revision) => [
   '--cadence=settled120',
   '--source-revision=' + revision,
 ];
-test('held797 Next requires new same-source first-eight proof and retains the exact six jobs', () => {
+test('797 Next binds actual same-source first-eight proof and retains the exact six jobs', () => {
   assert.equal(NEXT_ROUTE_797E03_SOURCE, source);
   assert.equal(
     GEOMETRIC_NEXT_797E03_SOURCE.candidateTree,
     'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
   );
-  assert.equal(manifest.release.firstEightEvidence, null);
-  assert.throws(() => sustainedMatrix(manifest));
+  assert.deepEqual(manifest.release.firstEightEvidence, actualProof);
+  assert.equal(manifest.release.firstEightAllCorrectnessPassed, true);
+  assert.equal(manifest.status, 'reviewed-diagnostic-only');
+  assert.equal(manifest.release.status, 'reviewed-diagnostic-only');
+  const held = structuredClone(manifest);
+  held.status = 'held-awaiting-source-and-first-eight-review';
+  held.release.status = 'held';
+  assert.throws(() => sustainedMatrix(held));
   const statusOnly = structuredClone(manifest);
-  statusOnly.release.status = 'reviewed-diagnostic-only';
+  statusOnly.release.firstEightEvidence = null;
   assert.throws(() => sustainedMatrix(statusOnly));
   assert.deepEqual(qualificationNextRouteOptions(flags(source), recipe, bytes), {
     protocol: 'authored-next-geometric-v1',
     sourceRevision: source,
   });
   assert.throws(() => qualificationNextRouteOptions(flags('f'.repeat(40)), recipe, bytes));
-  const matrix = sustainedMatrix(reviewed());
+  const matrix = sustainedMatrix(manifest);
   assert.equal(matrix.include.length, 6);
   for (const row of matrix.include) {
-    const p = bindSustainedJob(reviewed(), row.engine, row.repetition);
+    const p = bindSustainedJob(manifest, row.engine, row.repetition);
     assert.equal(p.rows.length, 1);
     assert.equal(p.rows[0].source, 'candidate');
     assert.equal(p.rows[0].timeoutMs, 1440000);

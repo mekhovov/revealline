@@ -382,8 +382,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 107252,
-      "sha256": "4ab9c2532e317c590e8c1fd6090c57f22cfdd437d4099941d98a15d39295e00c"
+      "bytes": 107356,
+      "sha256": "ba1d2ee933ff00cea34108c10eb757e036ef63ed8c3eb2cf39f7d1997428d400"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",

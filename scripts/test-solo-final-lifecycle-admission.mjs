@@ -775,7 +775,8 @@ for (const sourceLabel of ['de332', '797']) {
       assert.equal(result.protocolStatus, 'pass');
       assert.equal(result.status, phase === 'retry' ? 'passed' : 'failed');
       assert.equal(result.performanceQualification, 'not-qualified-diagnostic-only');
-      assert.equal(result.firstEightRequired, false);
+      assert.equal(result.firstEightRequired, sourceLabel === '797');
+      assert.equal(result.firstEightAllCorrectnessPassed, sourceLabel === '797' ? true : undefined);
       if (phase === 'long29') assert.equal(result.preReloadPerformance.status, 'inconclusive');
       for (const mutate of [
         (r) => {

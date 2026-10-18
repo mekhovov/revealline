@@ -47,7 +47,20 @@ function expression(value, inputs) {
     JSON.parse,
   );
 }
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
 function reviewed(plan, lane) {
+  if (plan.release.status !== 'held-for-review') {
+    assert.deepEqual(plan.release.firstEightEvidence, actualFirstEightProof);
+    assert.equal(plan.release.firstEightAllCorrectnessPassed, true);
+    return structuredClone(plan);
+  }
   assert.equal(plan.release.status, 'held-for-review');
   assert.equal(plan.release.firstEightEvidence, null);
   assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
@@ -294,8 +307,12 @@ test('actual shell selectors accept only the fixed phase-to-declaration map', ()
 
 test('real binders keep ten journal pairs and all72 matched timing roles while held releases refuse admission', async () => {
   const journal = await manifest('journal-cost');
-  assert.equal(journal.release.status, 'held-for-review');
-  assert.throws(() => diagnosticsMatrix(journal));
+  assert.equal(journal.release.status, 'reviewed-diagnostic-only');
+  assert.deepEqual(journal.release.firstEightEvidence, actualFirstEightProof);
+  assert.equal(diagnosticsMatrix(journal).include.length, 2);
+  const missing = structuredClone(journal);
+  missing.release.firstEightEvidence = null;
+  assert.throws(() => diagnosticsMatrix(missing));
   const j = reviewed(journal, 'journal-cost');
   for (const row of diagnosticsMatrix(j).include) {
     assert.deepEqual([row.jobMinutes, row.stepMinutes, row.outerSeconds], [130, 88, 5220]);
@@ -311,9 +328,17 @@ test('real binders keep ten journal pairs and all72 matched timing roles while h
   let count = 0;
   for (const phase of timing) {
     const held = await manifest('timing', phase);
-    assert.equal(held.release.firstEightAllCorrectnessPassed, false);
-    assert.equal(held.release.status, 'held-for-review');
-    assert.throws(() => timingMatrix(held));
+    if (phase === 'cold-first30') {
+      assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
+      assert.equal(timingMatrix(held).include.length, 6);
+      const missing = structuredClone(held);
+      missing.release.firstEightEvidence = null;
+      assert.throws(() => timingMatrix(missing));
+    } else {
+      assert.equal(held.release.firstEightAllCorrectnessPassed, false);
+      assert.equal(held.release.status, 'held-for-review');
+      assert.throws(() => timingMatrix(held));
+    }
     const m = reviewed(held, 'timing');
     for (const row of timingMatrix(m).include) {
       assert.deepEqual([row.jobMinutes, row.stepMinutes, row.outerSeconds], [122, 78, 4620]);
@@ -338,8 +363,16 @@ test('real lifecycle binders match actual job/outer expressions for36 independen
   let count = 0;
   for (const phase of lifecycle) {
     const held = await manifest('lifecycle', phase);
-    assert.equal(held.release.status, 'held-for-review');
-    assert.throws(() => sustainedMatrix(held));
+    if (phase === 'soak') {
+      assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
+      assert.equal(sustainedMatrix(held).include.length, 6);
+      const missing = structuredClone(held);
+      missing.release.firstEightEvidence = null;
+      assert.throws(() => sustainedMatrix(missing));
+    } else {
+      assert.equal(held.release.status, 'held-for-review');
+      assert.throws(() => sustainedMatrix(held));
+    }
     const m = reviewed(held, 'lifecycle');
     for (const row of sustainedMatrix(m).include) {
       assert.equal(row.jobMinutes, get(/^    timeout-minutes: \$\{\{ (.+) \}\}$/m, phase));
@@ -390,4 +423,37 @@ test('every plan reference is current and retained in each exact sparse measurem
       }
     }
   }
+});
+
+test('actual797 correctness receipt preserves failed numerical and portability evidence', async () => {
+  const bytes = await read(
+    'docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+  );
+  assert.equal(bytes.length, 2213);
+  assert.equal(sha(bytes), '3bedb1f0cc889e21ea2937addd936cbfd7ec78824434b37571d84dbdc1b65f9f');
+  const record = JSON.parse(bytes);
+  assert.equal(record.format, 'SoloFirstEightReviewedOutcomeV1');
+  assert.deepEqual(record.proof, {
+    format: 'SoloFirstEightCorrectnessEvidenceV1',
+    sourceRevision: '797e03f28743921842df6aa57520a72016ba3dfc',
+    runId: 39109911286,
+    artifactId: 12130067688,
+    artifactSHA256: '5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916',
+    summarySHA256: '5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8',
+    correctness: 'passed',
+    ownersClosed: true,
+  });
+  assert.deepEqual(
+    [
+      record.correctnessPassed,
+      record.strictSameEngineNativeReplaysPassed,
+      record.ownedCommandsClosed,
+    ],
+    [8, 4, 14],
+  );
+  assert.equal(record.rawNumericalFailuresRetained, 3);
+  assert.equal(record.nodePortabilityMismatchesRetained, 4);
+  assert.equal(record.candidateWebKit.rawStatus, 'failed');
+  assert.equal(record.candidateWebKit.sensitivityOnly.status, 'failed');
+  assert.equal(record.candidateWebKit.sensitivityOnly.changesAcceptanceGate, false);
 });

@@ -19,13 +19,21 @@ const workflow = (await read(workflowPath)).toString();
 const plans = {
   correctness: 'docs/performance/solo-remote-797e03-correctness-plan.json',
   sustained: 'docs/performance/solo-next-geometric-797e03-plan.json',
-  raster: 'docs/performance/solo-remote-73a345-earned-raster-plan.json',
+  raster: 'docs/performance/solo-remote-797e03-earned-raster-plan.json',
   'hud-cpu': 'docs/performance/solo-first-victory-cpu-797e03-plan.json',
 };
 const historicalToolingPlans = {
   correctness: 'docs/performance/solo-remote-de332-correctness-tooling-plan.json',
   sustained: 'docs/performance/solo-next-geometric-de332-tooling-plan.json',
 };
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
 function reviewedParserControl(value) {
   // Parser-only held-state control. The on-disk797 declaration carries no first-eight result.
   if (!value.status?.startsWith('held-')) return value;
@@ -221,9 +229,7 @@ function manualAdmission(text, name, jobMinutes, stepMinutes) {
   assert.match(body, /4620s node scripts\/run-solo-remote-correctness\.mjs/);
   assert.match(body, /SOLO_TOOLING_REVISION: \$\{\{ github.sha \}\}/);
   const candidate =
-    name === 'raster'
-      ? '73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e'
-      : '797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5';
+    '797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5';
   assert(
     body.includes(
       'solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 ' +
@@ -311,7 +317,7 @@ function wrapperCommand(text, name, newTest) {
   assert(firstFile > 1);
   assert(!argv.slice(firstFile).some((arg) => arg.startsWith('--test')));
 }
-test('797 Next and HUD use exact setup commands and remain held without same-source proof', async () => {
+test('797 Next and HUD use exact setup commands and require actual same-source proof', async () => {
   for (const [name, file, binder] of [
     [
       'sustained',
@@ -322,11 +328,10 @@ test('797 Next and HUD use exact setup commands and remain held without same-sou
   ]) {
     wrapperCommand(workflow, name, file);
     const plan = await json(plans[name]);
-    assert.equal(plan.release.firstEightEvidence, null);
-    assert.throws(() => binder(plan));
+    assert.deepEqual(plan.release.firstEightEvidence, actualFirstEightProof);
+    assert.equal(binder(plan).candidate.revision, actualFirstEightProof.sourceRevision);
     const statusOnly = structuredClone(plan);
-    statusOnly.status = 'reviewed-diagnostic-only';
-    statusOnly.release.status = 'reviewed-diagnostic-only';
+    statusOnly.release.firstEightEvidence = null;
     assert.throws(() => binder(statusOnly));
     const body = job(workflow, name),
       command = body.split('\n').find((line) => line.trim().startsWith('node --test '));

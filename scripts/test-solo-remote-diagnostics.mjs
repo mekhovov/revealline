@@ -632,13 +632,20 @@ test('explicit final diagnostics setup successors retain prior failed declaratio
   }
 });
 
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
 for (const sourceLabel of ['de332', '797']) {
   const sourceRevision =
     sourceLabel === '797'
       ? '797e03f28743921842df6aa57520a72016ba3dfc'
       : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
-  // Both prospective declarations remain held; these modeled receipt shapes
-  // exercise source admission and never grant remote execution authority.
+  // Legacy held controls remain modeled;797 exercises its actual reviewed declaration.
   async function prospectiveManifest(journal = false) {
     const f = JSON.parse(
       await readFile(
@@ -648,6 +655,11 @@ for (const sourceLabel of ['de332', '797']) {
         ),
       ),
     );
+    if (sourceLabel === '797') {
+      assert.deepEqual(f.release.firstEightEvidence, actualFirstEightProof);
+      assert.equal(f.release.status, 'reviewed-diagnostic-only');
+      return f;
+    }
     f.release.status = 'reviewed-diagnostic-only';
     for (const key of ['priorProofInspected', 'noUnclosedOwners', 'allPriorPlannedJobsClosed'])
       f.release[key] = true;
@@ -675,20 +687,22 @@ for (const sourceLabel of ['de332', '797']) {
     }
     return f;
   }
-  test(`${sourceLabel}: exact package/method/bounds retain held receipt and source-specific first-eight refusal`, async () => {
+  test(`${sourceLabel}: exact package/method/bounds retain source-specific first-eight admission and refusal`, async () => {
     for (const journal of [false, true]) {
       const name = journal ? 'journal-cost' : 'app-diagnostics';
       const held = JSON.parse(
         await readFile(join(repository, `docs/performance/solo-${sourceLabel}-${name}-plan.json`)),
       );
-      assert.equal(held.release.status, 'held-for-review');
-      assert.equal(held.release.noUnclosedOwners, false);
-      assert.deepEqual(held.release.evidence, []);
       if (sourceLabel === '797') {
-        assert.equal(held.release.firstEightAllCorrectnessPassed, false);
-        assert.equal(held.release.firstEightEvidence, null);
+        assert.equal(held.release.status, 'reviewed-diagnostic-only');
+        assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
+        assert.equal(bindDiagnosticsJob(held, 'chromium').rows.length, 1);
+      } else {
+        assert.equal(held.release.status, 'held-for-review');
+        assert.equal(held.release.noUnclosedOwners, false);
+        assert.deepEqual(held.release.evidence, []);
+        assert.throws(() => bindDiagnosticsJob(held, 'chromium'));
       }
-      assert.throws(() => bindDiagnosticsJob(held, 'chromium'));
       const f = await prospectiveManifest(journal);
       const old = JSON.parse(
         await readFile(join(repository, `docs/performance/solo-final-${name}-v2-plan.json`)),

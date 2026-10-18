@@ -20,36 +20,16 @@ function body(text) {
   assert(result, 'Missing app-overhead job');
   return result.split(/\n  [a-z][a-z-]+:\n/)[0];
 }
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
 function reviewedFixture() {
-  // Modeled evidence exercises the held source boundary; it is never saved or dispatched.
-  const value = structuredClone(held);
-  Object.assign(value.release, {
-    status: 'reviewed-diagnostic-only',
-    noUnclosedOwners: true,
-    allPriorPlannedJobsClosed: true,
-    priorProofInspected: true,
-    firstEightAllCorrectnessPassed: true,
-    firstEightEvidence: {
-      format: 'SoloFirstEightCorrectnessEvidenceV1',
-      sourceRevision: '797e03f28743921842df6aa57520a72016ba3dfc',
-      runId: 1,
-      artifactId: 2,
-      artifactSHA256: '0'.repeat(64),
-      summarySHA256: '0'.repeat(64),
-      correctness: 'passed',
-      ownersClosed: true,
-    },
-    evidence: [
-      {
-        runId: 1,
-        artifactId: 2,
-        artifactSHA256: '0'.repeat(64),
-        summarySHA256: '0'.repeat(64),
-        disposition: 'passed',
-      },
-    ],
-  });
-  return value;
+  return structuredClone(held);
 }
 
 function admission(text) {
@@ -109,13 +89,22 @@ function admission(text) {
   return guard;
 }
 
-test('app-overhead holds797 admission until its own correctness receipt without changing matched limits', () => {
-  assert.equal(held.release.status, 'held-for-review');
-  assert.equal(held.release.noUnclosedOwners, false);
-  assert.equal(held.release.firstEightEvidence, null);
-  assert.equal(held.release.firstEightAllCorrectnessPassed, false);
-  assert.deepEqual(held.release.evidence, []);
-  assert.throws(() => bindDiagnosticsJob(held, 'chromium'));
+test('app-overhead binds actual797 correctness without changing matched limits', () => {
+  assert.equal(held.release.status, 'reviewed-diagnostic-only');
+  assert.equal(held.release.noUnclosedOwners, true);
+  assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
+  assert.equal(held.release.firstEightAllCorrectnessPassed, true);
+  assert.equal(bindDiagnosticsJob(held, 'chromium').rows[0].timeoutMs, 1800000);
+  for (const mutate of [
+    (p) => (p.release.status = 'held-for-review'),
+    (p) => (p.release.firstEightEvidence = null),
+    (p) =>
+      (p.release.firstEightEvidence.sourceRevision = '73a345cec696d7789198cf295ca5c37b17ca0e71'),
+  ]) {
+    const missing = structuredClone(held);
+    mutate(missing);
+    assert.throws(() => bindDiagnosticsJob(missing, 'chromium'));
+  }
   const value = reviewedFixture();
   assert.equal(value.runtimeRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
   assert.equal(value.candidate.artifact, 12128990483);
