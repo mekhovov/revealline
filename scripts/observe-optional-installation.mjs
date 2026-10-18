@@ -1161,6 +1161,16 @@ try {
           importNotice: profileImportNotice,
         }),
       );
+      const profileImportPolicy = {
+        policy: ratesOwner ? 'calibration-only-rates-owner' : 'legacy-profile-response-import',
+        exportFormat: importedProfiles.format,
+        explicitNotice: profileImportNotice,
+        priorResponseSha256: ratesOwner ? sha(JSON.stringify(priorProfileExport.response)) : null,
+        retainedResponseSha256: sha(JSON.stringify(importedProfiles.response)),
+        hashEncoding: 'UTF-8 JSON.stringify response object',
+        radioImported: true,
+        radioVerified: false,
+      };
       if (migrationEnabled) {
         const references = {},
           inventories = new Map(),
@@ -1415,7 +1425,11 @@ try {
           helperSha256,
           historicalAuthority,
           proof: { sha256: sha(savedProof), attempts: 1, synthetic: true },
-          profiles: { sha256: sha(savedProfiles), radioVerified: false },
+          profiles: {
+            sha256: sha(savedProfiles),
+            radioVerified: false,
+            importPolicy: profileImportPolicy,
+          },
           migration,
           checkpoints,
           errors,
@@ -2168,10 +2182,12 @@ try {
           attempts: 1,
         },
         profiles: {
-          input:
-            'synthetic unverified radio mapping and independent simulator response imported through Setup',
+          input: ratesOwner
+            ? 'synthetic unverified radio calibration imported through Setup; separate Rates & throttle response retained'
+            : 'synthetic unverified radio mapping and legacy response imported through Setup',
           sha256: sha(savedProfiles),
           radioVerified: false,
+          importPolicy: profileImportPolicy,
         },
         osApps,
         checkpoints,
