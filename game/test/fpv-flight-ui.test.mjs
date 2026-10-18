@@ -78,6 +78,7 @@ async function fixture(
     disposed = false,
     pads = [];
   Object.assign(win, {
+    CustomEvent,
     location: new URL(url),
     performance: { now: () => 0 },
     navigator: { getGamepads: () => pads, ...(serviceWorker ? { serviceWorker } : {}) },
@@ -2564,4 +2565,35 @@ test('keyboard resume never grants another input owner throttle or changes check
       input.dispose();
     }
   }
+});
+
+test('actual Academy settings keep an unsaved menu animation choice and Retry the same checkbox', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const key = 'revealline.menu-animation.v1',
+    data = new Map([[key, 'on']]);
+  let working = false;
+  const storage = {
+    getItem: (key) => data.get(key) ?? null,
+    setItem(key, value) {
+      if (key === 'revealline.menu-animation.v1' && !working)
+        throw new DOMException('Modeled blocked storage', 'SecurityError');
+      data.set(key, value);
+    },
+  };
+  const h = await fixture(t, { storage }),
+    input = h.doc.getElementById('academy-global-menuAnimation');
+  input.checked = false;
+  input.emit('change');
+  const status = h.doc.getElementById(`${input.id}-status`),
+    retry = status.parentNode.querySelector('.global-settings-save-retry');
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*blocked/);
+  assert.equal(h.doc.documentElement.dataset.menuAnimation, 'off');
+  working = true;
+  retry.click();
+  assert.equal(data.get(key), 'off');
+  assert.equal(status.textContent, 'Saved');
+  assert.equal(retry.hidden, true);
 });

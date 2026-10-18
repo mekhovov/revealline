@@ -5,7 +5,8 @@ import { prepareNativeMenus } from '../ui/native-menus.mjs';
 import { attachSettingsPanels } from '../ui/settings-panels.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { GLOBAL_SETTINGS } from '../ui/global-settings-view.mjs';
-import { attachLanguageControls } from '../i18n/index.mjs';
+import { attachLanguageControls, getLocale, setLocale } from '../i18n/index.mjs';
+import { MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 import { mountCouch } from './helpers/mount-html.mjs';
 
@@ -14,6 +15,51 @@ const modes = [
   ['team', '../couch/relay-rescue.html', 'coop-settings', 'coop-', 'coop-options'],
   ['versus', '../couch/index.html', 'race-settings', 'race-', 'race-options-panel'],
 ];
+
+for (const entry of modes)
+  test(`${entry[0]} keeps its actual menu-motion checkbox and offers a localized save Retry`, async (t) => {
+    const original = getLocale();
+    t.after(() => setLocale(original));
+    const f = await fixture(...entry),
+      win = f.document.defaultView,
+      input = f.document.getElementById(`${f.prefix}-background-animation`);
+    t.after(() => f.menu.destroy());
+    let stored = 'on',
+      working = false;
+    win.localStorage = {
+      getItem: (key) => (key === MENU_ANIMATION_KEY ? stored : null),
+      setItem(key, value) {
+        if (!working) throw new DOMException('Modeled full storage', 'QuotaExceededError');
+        if (key === MENU_ANIMATION_KEY) stored = value;
+      },
+    };
+    f.menu.refreshGlobalSettings();
+    if (f.root.tagName === 'DIALOG') f.root.showModal();
+    else f.root.hidden = false;
+    f.menu.panels.accessibility.hidden = false;
+    const status = f.document.getElementById(`${input.id}-save-status`),
+      retry = f.document.getElementById(`${input.id}-save-retry`);
+    assert.equal(status.hidden, true);
+    input.checked = false;
+    input.emit('change');
+    assert.equal(input.checked, false);
+    assert.equal(stored, 'on');
+    assert.match(status.textContent, /Session only.*storage is full/);
+    assert.equal(retry.hidden, false);
+    assert.equal(status.closest('[data-global-setting]').dataset.globalSetting, 'menuAnimation');
+    retry.focus();
+    setLocale('uk');
+    assert.match(status.textContent, /Лише в цьому сеансі.*заповнене/);
+    assert.equal(f.document.activeElement, retry);
+    working = true;
+    retry.click();
+    assert.equal(stored, 'off');
+    assert.equal(status.textContent, 'Збережено');
+    assert.equal(retry.hidden, true);
+    assert.equal(f.document.activeElement, input);
+    assert.equal(f.document.getElementById(input.id), input);
+    assert.match(input.getAttribute('aria-describedby'), new RegExp(status.id));
+  });
 
 async function fixture(mode, file, prefix, fieldPrefix, settingsId) {
   const document = new Document();
