@@ -1,6 +1,6 @@
 # SIM completion plan — current status and remaining work
 
-Reviewed **18 October 2026, 20:06 CEST (Europe/Berlin)**. This is the current
+Reviewed **18 October 2026, 20:43 CEST (Europe/Berlin)**. This is the current
 execution index for the accepted rates, aircraft and Setup Workbench plans.
 It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
@@ -16,18 +16,31 @@ competitive promotion remain open or explicitly excluded as detailed below.
 The latest three corrections are released through
 [PR #1583](https://github.com/mekhovov/revealline/pull/1583), merged as
 `3a2880287b501dffcdd1ab1937ffbe0fead8b782` on 18 October at 09:14 CEST.
-The current [public deployment metadata](https://mekhovov.github.io/revealline/main-deployment.json)
-reports `20555cda6bd44a0736aa829e64c52e455b4e770c`; its
+The release's [public deployment metadata](https://mekhovov.github.io/revealline/main-deployment.json)
+reported `20555cda6bd44a0736aa829e64c52e455b4e770c`; its
 [Pages build, deployment and verification](https://github.com/mekhovov/revealline/actions/runs/39145153450)
 all passed. This review downloaded the three corrected public modules and
-confirmed their bytes still match the verified PR #1583 release.
+confirmed their bytes matched the verified PR #1583 release. The later live
+metadata check at 20:33 CEST reports
+`461ace72e78f8cbd77c26549381d9e21d0a65e91`, the continuation's refreshed base;
+the new continuation changes are not yet public.
 
 ### Current continuation — implementation and acceptance in progress
 
 Work is isolated on `codex/fpv-sustained-flight-20261018`, based on refreshed
 main `e3a20a2a342757444775c0c261131da168280b58`. Unrelated local demo/UI edits
 remain untouched. The reviewed six-commit candidate was subsequently rebased
-cleanly onto main `461ace72e78f8cbd77c26549381d9e21d0a65e91`. The following work is **local, not yet published**:
+cleanly onto main `461ace72e78f8cbd77c26549381d9e21d0a65e91`. The following work is
+**committed and under hosted review, not yet published** in
+[PR #1626](https://github.com/mekhovov/revealline/pull/1626), final source
+`cf13bcad9a59a387be7c31c9af8d30d74e7c1860`.
+
+Candidate and optional-practice checks are running; remaining source/feature
+checks are receiving runners. An obsolete cancelled run's always-run aggregate
+had blocked the source lane and was force-cancelled; the final source still must
+pass its own normal checks. No final-source gate was waived. Repository
+`REVEALLINE_FULL_CI=false` means the broader deferred lint/test gates must not be
+reported as a full-repository pass. Publication and deployed UI acceptance remain.
 
 | Priority                                  | Current result                                                                                                                                                                                                                                                                                                                                                                                                                                       | Next gate                                                                                                                                                                                                                               |
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -143,9 +156,35 @@ and bounded sheet-header inspection limits.
 Current sequence: **pause/resume fix and archive investigation → source-frozen
 sustained receipt → local rendered acceptance → hosted release**. R2 inventory and R3 local paired-control acceptance
 are complete; R5 candidates await hosted release checks.
-R4 is now tied to the open archive-retention incident; approval is no longer missing. R6–R9 proceed when actual
-evidence/devices become available; R10–R11 remain downstream. Do not wait for
+R4 is now tied to the open archive-retention incident; approval is no longer missing.
+R6 software preparation proceeds independently; measured activation and R7–R9
+qualification await the relevant evidence/devices. R10–R11 remain downstream. Do not wait for
 R6–R12 to improve released practice.
+
+### R6 software and evidence follow-up
+
+The exact Meteor75 reference remains **0802SE 19500KV, 40 mm two-blade props and
+BT2.0 1S 450 mAh**. The [manufacturer battery page](https://betafpv.com/products/bt2-0-450mah-1s-30c-battery-4pcs)
+provides an image of voltage versus time under a constant 11 A discharge. It is
+not a motor/propeller map, a maximum-current measurement or a battery-resistance
+measurement. Raw observations, test temperature, cell age and repeated samples
+remain unavailable. No matched propulsion dataset was found in the bounded
+primary-source follow-up; do not blend another motor revision into this preset.
+
+Software preparation continues without pilots or real radios. Commit
+`66305696561c6c35e065a009066364cf777fe10c` on the separate
+`codex/fpv-propulsion-load-20261018` branch implements a non-activating load-line
+solver: it intersects documented voltage paths and solves battery voltage against
+their current, using explicit battery-model inputs and a caller-declared DC
+current basis. **30/30 tests** pass (14 new load cases and 16 existing evidence
+cases); formatting, lint and independent review pass. Review caught and corrected
+a false solution at nearly coincident voltage samples; that case now returns an
+explicit numerical-resolution failure. [Contract and limits](fpv-propulsion-evidence.md).
+
+This is a local numerical prerequisite with no UI/runtime integration, external
+measurement bundle or catalog change. It does not delay PR #1626, activate measured
+aircraft physics or close R6. Inspector integration, command/voltage surfaces,
+allocation, versioned runtime integration and real measurements still remain.
 
 ## Blockers, concerns and scope boundaries
 
@@ -173,7 +212,7 @@ R6–R12 to improve released practice.
   lazy-start fix prevents new empty archives; it does not delete old records.
   The requested deletion attempt failed, then reload exposed a different inventory. The six older entries cannot be confirmed preserved; no further deletion is authorized outside the named ten.
 - **Local workspace is shared and resource headroom varies.** Unrelated demo/UI
-  edits remain untouched. Available disk space was approximately **1.1 GiB** at the latest check, below the 3 GiB heavy-work floor. Large local builds are deferred to hosted CI; focused source/tests use an isolated sparse worktree. Free space changed during the audit, so recheck
+  edits remain untouched. Available disk space was approximately **1.1 GiB** during the failed-storage investigation and **5.9 GiB** at the latest check. Heavy verification already running in hosted CI is not duplicated locally; focused source/tests use isolated sparse worktrees. Free space changed during the audit, so recheck
   before large builds. Do not delete user files, archives or generated work to
   manufacture a passing check.
 
