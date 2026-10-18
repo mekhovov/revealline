@@ -1,3 +1,4 @@
+import { dataIdentity } from '../../game/data-json.mjs';
 import { fpvReturnURL } from '../../game/fpv-entry.mjs';
 import { getLocale, setLocale } from '../../game/i18n/index.mjs';
 import { attachDefeatSoundControls } from '../../game/ui/defeat-sound-controls.mjs';
@@ -2301,6 +2302,12 @@ export function mountFlightApp({
     locale: () => locale,
     onOpen: () => pause(),
     getFlightConfiguration: () => workbenchAttemptConfiguration,
+    getPracticeConditions: () => ({
+      host: 'Academy', courseId: authoringCourse?.id ?? courses[selected]?.id ?? null, mode,
+      courseIdentity: dataIdentity(authoringCourse ?? courses[selected]),
+      label: `Academy · ${authoringCourse?.id ?? courses[selected]?.id ?? ''} · ${mode}`,
+      input: { source: input.owner(), keyboard: $('keyboard-preset').value, touch: $('touch-response').value, radio: radio.status().profile, radioDevice: radio.status().selected?.key ?? null, controller: { id: gamepad.status().id, index: gamepad.status().index } },
+    }),
     onCalibration(done) { tuningCalibrationReturn = done; openDialog('setup-dialog'); },
     onApply() {
       playShell?.enterPlay();

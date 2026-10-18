@@ -76,6 +76,7 @@ export function createControllerTunePanel({
     const wrap = el('label', parent);
     label(el('span', wrap), en, uk);
     const input = el(tag, wrap);
+    input.dataset.search = `${en} ${uk} controller tune PID P I D FF feedforward filters контролер налаштування коефіцієнти випередження фільтри`;
     bindings.push(() => input.setAttribute('aria-label', t(en, uk)));
     input.setAttribute('aria-label', t(en, uk));
     if (tag === 'input') input.type = 'text';
@@ -87,11 +88,16 @@ export function createControllerTunePanel({
     buttons.push(node);
     listen(node, 'click', () => {
       if (disposed || busy || node.disabled) return;
+      const epoch = generation;
       busy = true;
       for (const action of buttons) action.disabled = true;
       void Promise.resolve()
-        .then(run)
-        .catch(fail)
+        .then(() => {
+          if (!disposed && epoch === generation) return run();
+        })
+        .catch((failure) => {
+          if (epoch === generation) fail(failure);
+        })
         .finally(() => {
           busy = false;
           if (!disposed) refresh();
@@ -554,6 +560,12 @@ export function createControllerTunePanel({
   return {
     root,
     refresh,
+    invalidate() {
+      if (disposed) return;
+      clearImport();
+      confirmDelete = false;
+      refresh();
+    },
     dispose() {
       disposed = true;
       generation++;

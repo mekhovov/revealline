@@ -36,7 +36,7 @@ const comparison = () => ({
     ],
   },
 });
-function fixture(t, { ready = true, storageFailure = false } = {}) {
+function fixture(t, { ready = true, storageFailure = false, onManualTest = () => {} } = {}) {
   const document = new Document(),
     window = new Events(),
     data = new Map(),
@@ -92,7 +92,10 @@ function fixture(t, { ready = true, storageFailure = false } = {}) {
       return fakeClient;
     },
     getPracticeConditions: () => conditions,
-    onManualTest: (value, context) => flights.push({ value, context }),
+    onManualTest: (value, context) => {
+      flights.push({ value, context });
+      return onManualTest(value, context);
+    },
   });
   document.body.append(panel.root);
   t.after(() => panel.dispose());
@@ -291,4 +294,94 @@ test('manual A/B rejects changed host or input conditions before launching eithe
   await f.click('Fly draft setup');
   assert.equal(f.flights.length, 1);
   assert.equal(f.flights[0].context.conditions.inputSource, 'controller');
+});
+
+test('comparison controls have bilingual search aliases and localized accessible names without losing values', (t) => {
+  const f = fixture(t);
+  const controls = f.panel.root.querySelectorAll('select,textarea');
+  assert.equal(controls.length, 4);
+  for (const control of controls) {
+    assert.ok(control.getAttribute('aria-label'));
+    assert.match(control.dataset.search, /[А-Яа-яІіЇїЄє]/);
+    assert.match(control.dataset.search, /[A-Za-z]/);
+  }
+  assert.match(controls[0].dataset.search, /PID.*контролер/);
+  assert.match(controls[1].dataset.search, /yaw.*Рискання/);
+  controls[0].value = 'setup';
+  controls[2].value = 'My notes';
+  f.locale('uk');
+  assert.equal(controls[0].getAttribute('aria-label'), 'Що порівнювати');
+  assert.equal(controls[2].getAttribute('aria-label'), 'Збережені: керованість і комфорт');
+  assert.equal(controls[0].value, 'setup');
+  assert.equal(controls[2].value, 'My notes');
+});
+
+test('manual launch is single-flight and late failures after close cannot change a reopened panel', async (t) => {
+  let reject;
+  const f = fixture(t, {
+    onManualTest: () =>
+      new Promise((_resolve, fail) => {
+        reject = fail;
+      }),
+  });
+  await f.click('Prepare A/B practice');
+  await f.click('Fly draft setup');
+  assert.equal(f.button('Fly saved setup').disabled, true);
+  await f.click('Fly saved setup');
+  assert.equal(f.flights.length, 1);
+  f.panel.invalidate();
+  reject(new Error('old launch failed'));
+  await flush();
+  assert.equal(f.errors.length, 0);
+  assert.doesNotMatch(f.panel.root.textContent, /old launch failed/);
+  assert.equal(f.button('Fly saved setup').disabled, false);
+});
+
+test('changing comparison scope requires preparing a matching manual pair while retaining notes', async (t) => {
+  const f = fixture(t);
+  const scope = f.panel.root.querySelectorAll('select')[0];
+  scope.value = 'setup';
+  scope.emit('change');
+  await f.click('Prepare A/B practice');
+  const note = f.panel.root.querySelector('textarea');
+  note.value = 'Saved feedback';
+  scope.value = 'controller';
+  scope.emit('change');
+  assert.equal(f.button('Fly draft setup').disabled, true);
+  await f.click('Fly draft setup');
+  assert.equal(f.flights.length, 0);
+  assert.equal(note.value, 'Saved feedback');
+  await f.click('Save comparison notes on this device');
+  assert.equal(JSON.parse([...f.data.values()][0]).entries[0].saved, 'Saved feedback');
+  await f.click('Prepare A/B practice');
+  assert.equal(f.button('Fly draft setup').disabled, false);
+});
+
+test('queued note saves persist their explicit snapshot without announcing changed text as saved', async (t) => {
+  const f = fixture(t);
+  let finish;
+  f.window.navigator = {
+    locks: {
+      request: (_key, write) =>
+        new Promise((resolve) => {
+          finish = () => {
+            write();
+            resolve();
+          };
+        }),
+    },
+  };
+  await f.click('Prepare A/B practice');
+  const note = f.panel.root.querySelector('textarea');
+  note.value = 'Submitted note';
+  await f.click('Save comparison notes on this device');
+  assert.equal(f.button('Save comparison notes on this device').disabled, true);
+  note.value = 'New unsaved note';
+  f.panel.invalidate();
+  finish();
+  await flush();
+  assert.equal(JSON.parse([...f.data.values()][0]).entries[0].saved, 'Submitted note');
+  assert.equal(note.value, 'New unsaved note');
+  assert.doesNotMatch(f.panel.root.textContent, /Comparison notes saved on this device/);
+  assert.equal(f.button('Save comparison notes on this device').disabled, false);
 });
