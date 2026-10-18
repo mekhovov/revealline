@@ -187,12 +187,12 @@ const pause = async (practice) => {
   await click(practice ? '#demo-pause' : '#demo-watch-pause');
   await pausedDraw();
 };
-const openDemo = async (differentRun = null) => {
+const openDemo = async (differentRun = null, beforeOpen = null) => {
   // Back restores the Settings owner for this public entry route. A repeated
   // visit must use that visible dialog rather than Home beneath its modal.
-  if (!differentRun || !(await page.locator('#settings-dialog').isVisible()))
-    await click('#shell-options');
+  if (!(await page.locator('#settings-dialog').isVisible())) await click('#shell-options');
   await click('#settings-tab-extras');
+  if (beforeOpen) await beforeOpen();
   await click('#shell-demo');
   await page.waitForFunction(
     (differentRun) => {
@@ -666,10 +666,21 @@ const observation = async () => {
   await writeFile(output + '.before.replay.json', recordingBefore, { flag: 'wx' });
   await closeExport();
   if (resourceMode)
-    report.resourceStorageBaseline = await bounded('web storage baseline', () =>
+    report.resourceNavigationStorageBefore = await bounded('web storage before Settings', () =>
       page.evaluate(readDemoWebStorage),
     );
-  await openDemo();
+  await openDemo(
+    null,
+    resourceMode
+      ? async () => {
+          // Opening public Settings may save the paused parent. Protect the exact
+          // bytes after that action and before the first Demo activation.
+          report.resourceStorageBaseline = await bounded('web storage Demo-entry baseline', () =>
+            page.evaluate(readDemoWebStorage),
+          );
+        }
+      : null,
+  );
   await pause(false);
   await bounded('source response drain', () => Promise.all(pending));
   assert(report.sources.every((s) => !s.failure));
@@ -713,8 +724,9 @@ const observation = async () => {
     const oldPainter = await page.evaluate(() =>
       window.demoRecoveryProbe.retain('owned-concealment-layer', 'stale'),
     );
+    const oldRun = await page.evaluate(() => window.demoRecoveryProbe.readiness().id);
     await click('#demo-back');
-    await openDemo();
+    await openDemo(oldRun);
     const newer = await snap('reopened', true);
     assert.notEqual(newer.painterId, oldPainter.painterId);
     const oldLoss = await page.evaluate(() =>
@@ -814,7 +826,33 @@ const observation = async () => {
   report.functionalStatus = 'pass';
 };
 const closeObservation = async () => {
-  if (browser) await bounded('observation browser close', () => browser.close(), 5000);
+  const deadline = performance.now() + 5000;
+  const remaining = () => {
+    const ms = deadline - performance.now();
+    assert(ms > 0, 'observation browser close deadline');
+    return ms;
+  };
+  // This browser is attached to the exact Chrome child launched above. CDP
+  // disconnect alone leaves that child running; request its graceful shutdown
+  // before disconnecting, within the original browser-close slot.
+  if (browser?.isConnected() && chrome && !exited) {
+    try {
+      await bounded(
+        'observation browser shutdown',
+        async () => {
+          const session = await browser.newBrowserCDPSession();
+          await session.send('Browser.close');
+        },
+        remaining(),
+      );
+    } catch (error) {
+      // Closing the target may reject the transport command. Only the actual
+      // clean child exit below can establish successful shutdown.
+      report.ownedProcess.closeRequestError = String(error).slice(0, 2048);
+    }
+  }
+  if (browser?.isConnected())
+    await bounded('observation browser close', () => browser.close(), remaining());
   if (chrome && !exited) await bounded('observation process exit', () => exitPromise, 5000);
   report.observedBrowserClosed = Boolean(
     browser &&

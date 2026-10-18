@@ -1079,53 +1079,265 @@ test('actual repeat source observer retains the original distinct-record and agg
   assert.equal(capped.report.overflow, true);
 });
 
-test('actual reopen waits for a fresh owner and reuses visible Settings instead of covered Home', async () => {
-  for (const settingsVisible of [true, false]) {
-    let state = { id: 10, tick: 20, paused: true };
-    const clicks = [],
-      old = [];
-    const open = actualDriverFunction('openDemo', {
-      window: { demoRecoveryProbe: { readiness: () => state } },
-      document: { getElementById: () => ({ dataset: { scene: 'playing' } }) },
-      click: async (selector) => {
-        if (settingsVisible)
-          assert.notEqual(selector, '#shell-options', 'Home is covered by Settings');
-        clicks.push(selector);
-      },
-      page: {
-        locator: (selector) => {
-          assert.equal(selector, '#settings-dialog');
-          return { isVisible: async () => settingsVisible };
+test('actual Demo entry uses visible Settings for both initial and repeated visits', async () => {
+  for (const previous of [null, 10]) {
+    for (const settingsVisible of [true, false]) {
+      let state = { id: 10, tick: 20, paused: true };
+      const clicks = [],
+        old = [];
+      const open = actualDriverFunction('openDemo', {
+        window: { demoRecoveryProbe: { readiness: () => state } },
+        document: { getElementById: () => ({ dataset: { scene: 'playing' } }) },
+        click: async (selector) => {
+          if (settingsVisible)
+            assert.notEqual(selector, '#shell-options', 'Home is covered by Settings');
+          clicks.push(selector);
         },
-        waitForFunction: async (fn, previous, options) => {
-          assert.equal(options.timeout, 60000);
-          assert.equal(previous, 10);
-          old.push(fn(previous));
-          state = { id: 11, tick: 1, paused: true };
-          old.push(fn(previous));
-          state.paused = false;
-          assert.equal(fn(previous), true);
+        page: {
+          locator: (selector) => {
+            assert.equal(selector, '#settings-dialog');
+            return { isVisible: async () => settingsVisible };
+          },
+          waitForFunction: async (fn, prior, options) => {
+            assert.equal(options.timeout, 60000);
+            assert.equal(prior, previous);
+            if (prior !== null) {
+              old.push(fn(prior));
+              state = { id: 11, tick: 1, paused: true };
+              old.push(fn(prior));
+            }
+            state = { id: 11, tick: 1, paused: false };
+            assert.equal(fn(prior), true);
+          },
         },
-      },
-    });
-    await open(10);
-    assert.deepEqual(old, [false, false]);
-    assert.deepEqual(clicks, [
-      ...(settingsVisible ? [] : ['#shell-options']),
-      '#settings-tab-extras',
-      '#shell-demo',
-    ]);
+      });
+      await open(previous);
+      assert.deepEqual(old, previous === null ? [] : [false, false]);
+      assert.deepEqual(clicks, [
+        ...(settingsVisible ? [] : ['#shell-options']),
+        '#settings-tab-extras',
+        '#shell-demo',
+      ]);
+    }
   }
-  const clicks = [];
-  const legacy = actualDriverFunction('openDemo', {
-    click: async (selector) => clicks.push(selector),
+});
+
+test('actual Demo entry captures full storage after Settings and before the first Demo action', async () => {
+  let stored = 'before-settings',
+    baseline = null;
+  const actions = [];
+  const open = actualDriverFunction('openDemo', {
+    click: async (selector) => {
+      actions.push(selector);
+      if (selector === '#shell-options') stored = 'saved-by-public-settings';
+      if (selector === '#shell-demo') assert.equal(baseline, 'saved-by-public-settings');
+    },
     page: {
-      waitForFunction: async (fn, previous, options) => {
-        assert.equal(previous, null);
-        assert.equal(options.timeout, 60000);
-      },
+      locator: () => ({ isVisible: async () => false }),
+      waitForFunction: async () => {},
     },
   });
-  await legacy();
-  assert.deepEqual(clicks, ['#shell-options', '#settings-tab-extras', '#shell-demo']);
+  await open(null, async () => {
+    actions.push('full-storage-baseline');
+    baseline = stored;
+  });
+  assert.deepEqual(actions, [
+    '#shell-options',
+    '#settings-tab-extras',
+    'full-storage-baseline',
+    '#shell-demo',
+  ]);
+  actions.length = 0;
+  await assert.rejects(
+    open(null, async () => {
+      throw Error('storage read failed');
+    }),
+    /storage read failed/,
+  );
+  assert(!actions.includes('#shell-demo'), 'Failed baseline must prevent Demo activation');
+});
+
+test('full suspended-parent hash is protected during initial Demo and every repeat', () => {
+  const raw = resourceReport();
+  const entry = {
+    key: 'revealline.suspended.journey-opening.v1',
+    bytes: 5606,
+    sha256: 'a'.repeat(64),
+  };
+  raw.resourceStorageBaseline.localStorage = [entry];
+  for (const cycle of raw.cycles) {
+    cycle.storageBefore = structuredClone(raw.resourceStorageBaseline);
+    cycle.storageAfter = structuredClone(raw.resourceStorageBaseline);
+  }
+  assessDemoResourceCycles(raw, source, cycleContract());
+  const initialDrift = structuredClone(raw);
+  for (const cycle of initialDrift.cycles) {
+    cycle.storageBefore.localStorage[0].sha256 = 'b'.repeat(64);
+    cycle.storageAfter.localStorage[0].sha256 = 'b'.repeat(64);
+  }
+  assert.throws(
+    () => assessDemoResourceCycles(initialDrift, source, cycleContract()),
+    /Web storage changed between cycles/,
+  );
+  const repeatDrift = structuredClone(raw);
+  repeatDrift.cycles[19].storageAfter.localStorage[0].sha256 = 'b'.repeat(64);
+  assert.throws(
+    () => assessDemoResourceCycles(repeatDrift, source, cycleContract()),
+    /Demo changed observed web storage/,
+  );
+});
+
+function actualCloseFixture(mode, { acquisitionMs = 0, sendMs = 0 } = {}) {
+  const declaration = driverAST.body
+    .filter((node) => node.type === 'VariableDeclaration')
+    .flatMap((node) => node.declarations)
+    .find((node) => node.id.name === 'closeObservation');
+  assert(declaration?.init);
+  const setup = [
+    'let exited = false, connected = !mode.startsWith("disconnected"), now = 0, resolveExit;',
+    'const events = [], bounds = [], report = { ownedProcess: { pid: 123 } };',
+    'const performance = { now: () => now };',
+    'const exitPromise = new Promise(resolve => { resolveExit = resolve; });',
+    'const finish = (code = 0, signal = null) => {',
+    '  exited = true;',
+    '  Object.assign(report.ownedProcess, { exitCode: code, exitSignal: signal });',
+    '  resolveExit();',
+    '};',
+    'const chrome = { pid: 123 };',
+    "const chromeLog = { close: async () => events.push('log-close') };",
+    'const bounded = async (label, operation, ms) => {',
+    '  assert(ms > 0 && ms <= 5000); bounds.push({ label, ms });',
+    "  if (label === 'observation process exit') {",
+    "    if (mode.includes('never-exits')) throw Error(label + ' deadline');",
+    "    finish(mode.includes('nonzero-exit') ? 1 : 0, mode.includes('signal-exit') ? 'SIGTERM' : null);",
+    "    if (mode.includes('spawn-error')) report.ownedProcess.error = 'spawn error';",
+    '  }',
+    '  return operation();',
+    '};',
+    'const browser = {',
+    '  isConnected: () => connected,',
+    '  newBrowserCDPSession: async () => {',
+    "    events.push('acquire'); now += acquisitionMs;",
+    '    return { send: async (command) => {',
+    "      assert.equal(command, 'Browser.close'); events.push(command); now += sendMs;",
+    "      if (mode.startsWith('target-close-race')) { connected = false; throw Error('target closed'); }",
+    '    } };',
+    '  },',
+    "  close: async () => { events.push('disconnect'); connected = false; },",
+    '};',
+    'const close = (' + driverSource.slice(declaration.init.start, declaration.init.end) + ');',
+    'return { close, events, bounds, report };',
+  ].join('\n');
+  return Function(
+    'assert',
+    'mode',
+    'acquisitionMs',
+    'sendMs',
+    setup,
+  )(assert, mode, acquisitionMs, sendMs);
+}
+
+test('actual Demo cleanup closes exact owned Chrome before disconnecting, within original slots', async () => {
+  const f = actualCloseFixture('success', { acquisitionMs: 1000, sendMs: 500 });
+  await f.close();
+  assert.deepEqual(f.events, ['acquire', 'Browser.close', 'disconnect', 'log-close']);
+  assert.equal(f.report.observedBrowserClosed, true);
+  assert.deepEqual(f.bounds, [
+    { label: 'observation browser shutdown', ms: 5000 },
+    { label: 'observation browser close', ms: 3500 },
+    { label: 'observation process exit', ms: 5000 },
+  ]);
+});
+
+test('actual Demo cleanup permits a retained transport race only after exact clean process exit', async () => {
+  const f = actualCloseFixture('target-close-race');
+  await f.close();
+  assert.equal(f.report.observedBrowserClosed, true);
+  assert.match(f.report.ownedProcess.closeRequestError, /target closed/);
+  assert.deepEqual(f.events, ['acquire', 'Browser.close', 'log-close']);
+  for (const mode of [
+    'never-exits',
+    'nonzero-exit',
+    'signal-exit',
+    'spawn-error',
+    'target-close-race-never-exits',
+    'target-close-race-nonzero-exit',
+    'disconnected-never-exits',
+  ]) {
+    const failed = actualCloseFixture(mode);
+    await assert.rejects(
+      failed.close(),
+      mode.includes('never-exits') ? /process exit deadline/ : /false.*true/s,
+    );
+    assert.notEqual(failed.report.observedBrowserClosed, true, mode);
+  }
+});
+
+test('actual Demo cleanup never renews the original browser-close deadline', async () => {
+  const f = actualCloseFixture('success', { acquisitionMs: 4000, sendMs: 1000 });
+  await assert.rejects(f.close(), /browser close deadline/);
+  assert.deepEqual(f.events, ['acquire', 'Browser.close']);
+  assert.notEqual(f.report.observedBrowserClosed, true);
+});
+
+test('actual initial observation binds its baseline before any Demo activation', async () => {
+  const observation = driverAST.body
+    .filter((node) => node.type === 'VariableDeclaration')
+    .flatMap((node) => node.declarations)
+    .find((node) => node.id.name === 'observation')?.init;
+  assert(observation?.body?.body);
+  const index = observation.body.body.findIndex(
+    (node) =>
+      node.type === 'IfStatement' &&
+      driverSource.slice(node.start, node.end).includes('report.resourceNavigationStorageBefore'),
+  );
+  assert(index >= 0, 'Initial navigation evidence is retained');
+  const first = observation.body.body[index],
+    next = observation.body.body[index + 1];
+  assert.equal(next.type, 'ExpressionStatement');
+  assert.equal(next.expression.type, 'AwaitExpression');
+  assert.equal(next.expression.argument.callee.name, 'openDemo');
+  const report = {},
+    actions = [];
+  let stored = 'before-settings';
+  const page = {
+    evaluate: async () => ({
+      localStorage: [{ key: 'parent', bytes: 10, sha256: stored }],
+      sessionStorage: [],
+    }),
+    locator: () => ({ isVisible: async () => false }),
+    waitForFunction: async () => {},
+  };
+  const openDemo = actualDriverFunction('openDemo', {
+    page,
+    click: async (selector) => {
+      actions.push(selector);
+      if (selector === '#shell-options') stored = 'after-public-settings-save';
+      if (selector === '#shell-demo') {
+        assert.equal(report.resourceStorageBaseline.localStorage[0].sha256, stored);
+        assert.equal(
+          report.resourceNavigationStorageBefore.localStorage[0].sha256,
+          'before-settings',
+        );
+      }
+    },
+  });
+  const entry = Function(
+    'resourceMode',
+    'report',
+    'bounded',
+    'page',
+    'readDemoWebStorage',
+    'openDemo',
+    'return (async () => {' + driverSource.slice(first.start, next.end) + '})();',
+  );
+  await entry(
+    true,
+    report,
+    async (label, fn) => fn(),
+    page,
+    () => {},
+    openDemo,
+  );
+  assert.deepEqual(actions, ['#shell-options', '#settings-tab-extras', '#shell-demo']);
 });
