@@ -1,6 +1,6 @@
 # SIM completion plan — current status and remaining work
 
-Reviewed **18 October 2026, 21:15 CEST (Europe/Berlin)**. This is the current
+Reviewed **18 October 2026, 21:11 CEST (Europe/Berlin)**. This is the current
 execution index for the accepted rates, aircraft and Setup Workbench plans.
 It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
@@ -231,18 +231,26 @@ cases); formatting, lint and independent review pass. Review caught and correcte
 a false solution at nearly coincident voltage samples; that case now returns an
 explicit numerical-resolution failure. [Contract and limits](fpv-propulsion-evidence.md).
 
-This is a local numerical prerequisite with no UI/runtime integration, external
-measurement bundle or catalog change. It does not delay PR #1626, activate measured
-aircraft physics or close R6. Inspector integration, command/voltage surfaces,
-allocation, versioned runtime integration and real measurements still remain.
+The initial kernel increment is a local numerical prerequisite without an external
+measurement bundle or catalog change. Its subsequent inspector integration is
+described below. It does not delay PR #1626, activate measured aircraft physics or
+close R6. Command/voltage surfaces, allocation, versioned runtime integration and
+real measurements still remain.
 
 Non-activating inspector integration is committed as `9d4da6c13` after dependency
 commit `f9ddc2693` on that follow-up branch, not yet published:
 manual circuit assumptions, an explicit DC-input-current declaration and a
 user-requested calculation against the imported eligible voltage sweep. It has
 no aircraft write path or measured-default claim. **46/46** targeted checks and
-**19/19** package checks pass, along with independent review. Rendered UI acceptance
-and hosted release remain. The unchanged bundled Academy byte budget has only
+**19/19** package checks pass, along with independent review. A local English
+browser check on `40611b264` reached the inspector through World Settings →
+Workbench → Expert PID → Advanced reference practice, imported explicitly
+synthetic voltage data and obtained the expected **2.5 V / 2.5 A** operating
+point. Input editing cleared results, and the built-in command-axis example
+disabled calculation with an explanation. No flight was started or configuration
+saved; the draft and Basic preference were restored. This does not qualify
+Ukrainian rendering, narrow layouts or production deployment. Hosted release
+remains. The unchanged bundled Academy byte budget has only
 **12,138 bytes** spare, so integration/rebase must remeasure it.
 
 ## Blockers, concerns and scope boundaries
