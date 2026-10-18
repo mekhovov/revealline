@@ -1,0 +1,1322 @@
+{
+  "format": "WebKitNativeNavigationDiagnosticV1",
+  "started": "2026-10-18T18:58:33.674Z",
+  "complete": true,
+  "probe": {
+    "path": ".cache/qualify-webkit-native-teardown.mjs",
+    "sha256": "d21a14ada21826924c62de8f157529c4594145bc36f2b13fb17cb2774a8eecf9"
+  },
+  "scope": "Independent minimal HTML, native fetch/createImageBitmap, and deliberate navigation. No game modules are imported or executed. Native promises get rejection handlers synchronously before navigation.",
+  "checks": [
+    {
+      "kind": "control",
+      "iteration": 1,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "control",
+      "iteration": 2,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "control",
+      "iteration": 3,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "control",
+      "iteration": 4,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "control",
+      "iteration": 5,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 1,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 2,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 3,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 4,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "fetch",
+      "iteration": 5,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 1,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 2,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 3,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 4,
+      "reloadReached": true,
+      "pageErrors": 0
+    },
+    {
+      "kind": "decode",
+      "iteration": 5,
+      "reloadReached": true,
+      "pageErrors": 0
+    }
+  ],
+  "pageErrors": [],
+  "console": [],
+  "requestsFailed": [
+    {
+      "stage": "control-1",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "control-2",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "control-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "control-4",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "control-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-1",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-2",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-3",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-4",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/image?i=0",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/image?i=1",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/image?i=2",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "fetch-5",
+      "url": "http://127.0.0.1:8772/image?i=3",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-1",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-2",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-3",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-4",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    },
+    {
+      "stage": "decode-5",
+      "url": "http://127.0.0.1:8772/event",
+      "failure": {
+        "errorText": "cancelled"
+      }
+    }
+  ],
+  "events": [
+    {
+      "receivedAt": "2026-10-18T18:58:34.475Z",
+      "id": "?kind=control&iteration=1",
+      "at": 1792349914469,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.497Z",
+      "id": "?kind=control&iteration=1",
+      "at": 1792349914495,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.500Z",
+      "id": "?kind=control&iteration=1",
+      "at": 1792349914499,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.515Z",
+      "id": "?kind=control&iteration=1",
+      "at": 1792349914511,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.614Z",
+      "id": "?kind=control&iteration=1",
+      "at": 1792349914612,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.626Z",
+      "id": "?kind=control&iteration=2",
+      "at": 1792349914622,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.644Z",
+      "id": "?kind=control&iteration=2",
+      "at": 1792349914642,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.648Z",
+      "id": "?kind=control&iteration=2",
+      "at": 1792349914646,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.662Z",
+      "id": "?kind=control&iteration=2",
+      "at": 1792349914657,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.761Z",
+      "id": "?kind=control&iteration=2",
+      "at": 1792349914759,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.774Z",
+      "id": "?kind=control&iteration=3",
+      "at": 1792349914769,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.788Z",
+      "id": "?kind=control&iteration=3",
+      "at": 1792349914785,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.790Z",
+      "id": "?kind=control&iteration=3",
+      "at": 1792349914789,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.803Z",
+      "id": "?kind=control&iteration=3",
+      "at": 1792349914798,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.904Z",
+      "id": "?kind=control&iteration=3",
+      "at": 1792349914902,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.917Z",
+      "id": "?kind=control&iteration=4",
+      "at": 1792349914912,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.933Z",
+      "id": "?kind=control&iteration=4",
+      "at": 1792349914931,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.936Z",
+      "id": "?kind=control&iteration=4",
+      "at": 1792349914934,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:34.948Z",
+      "id": "?kind=control&iteration=4",
+      "at": 1792349914945,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.049Z",
+      "id": "?kind=control&iteration=4",
+      "at": 1792349915048,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.062Z",
+      "id": "?kind=control&iteration=5",
+      "at": 1792349915058,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.076Z",
+      "id": "?kind=control&iteration=5",
+      "at": 1792349915074,
+      "type": "handlers-attached",
+      "kind": "control",
+      "count": 0
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.078Z",
+      "id": "?kind=control&iteration=5",
+      "at": 1792349915077,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.090Z",
+      "id": "?kind=control&iteration=5",
+      "at": 1792349915087,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.189Z",
+      "id": "?kind=control&iteration=5",
+      "at": 1792349915188,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.202Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915198,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.219Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915215,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.220Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915216,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.220Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915216,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.221Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915216,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.221Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915216,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.222Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915220,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.234Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915230,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.335Z",
+      "id": "?kind=fetch&iteration=1",
+      "at": 1792349915333,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.348Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915343,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.365Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915360,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.365Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915361,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.366Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915362,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.367Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915362,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.367Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915362,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.368Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915366,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.381Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915376,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.480Z",
+      "id": "?kind=fetch&iteration=2",
+      "at": 1792349915478,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.491Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915488,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.506Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915503,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.506Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915503,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.506Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915503,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.508Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915503,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.508Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915503,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.509Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915507,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.522Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915518,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.621Z",
+      "id": "?kind=fetch&iteration=3",
+      "at": 1792349915620,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.634Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915631,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.649Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915647,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.649Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915647,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.649Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915647,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.651Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915647,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.651Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915647,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.654Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915650,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.665Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915662,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.762Z",
+      "id": "?kind=fetch&iteration=4",
+      "at": 1792349915760,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.774Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915771,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.788Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915787,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.788Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915787,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.789Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915786,
+      "type": "handlers-attached",
+      "kind": "fetch",
+      "count": 4
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.790Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915787,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.790Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915787,
+      "type": "caught-fetch",
+      "message": "TypeError: Load failed"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.791Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915789,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.806Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915802,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.902Z",
+      "id": "?kind=fetch&iteration=5",
+      "at": 1792349915901,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.914Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915911,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.929Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915927,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.929Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915926,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.929Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915927,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.930Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915927,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.930Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915927,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.931Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915927,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.931Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915927,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.933Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915927,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.933Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915927,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.934Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915929,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:35.943Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349915939,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.040Z",
+      "id": "?kind=decode&iteration=1",
+      "at": 1792349916038,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.052Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916048,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.065Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916063,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.065Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916064,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.065Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916063,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.067Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916064,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.067Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916064,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.069Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916064,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.069Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916064,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.071Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916064,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.071Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916064,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.072Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916066,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.080Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916077,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.176Z",
+      "id": "?kind=decode&iteration=2",
+      "at": 1792349916175,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.189Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916186,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.203Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916201,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.203Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916202,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.203Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916201,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.205Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916202,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.205Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916202,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.206Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916202,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.206Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916202,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.207Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916202,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.207Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916202,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.209Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916204,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.218Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916214,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.318Z",
+      "id": "?kind=decode&iteration=3",
+      "at": 1792349916317,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.331Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916327,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.346Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916344,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.346Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916344,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.346Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916343,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.347Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916344,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.347Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916344,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.349Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916344,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.349Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916344,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.350Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916344,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.350Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916344,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.351Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916347,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.361Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916358,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.457Z",
+      "id": "?kind=decode&iteration=4",
+      "at": 1792349916456,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.470Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916466,
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.483Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916482,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.483Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916482,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.484Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916481,
+      "type": "handlers-attached",
+      "kind": "decode",
+      "count": 8
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.485Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916482,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.485Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916482,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.486Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916482,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.487Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916482,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.488Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916482,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.488Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916482,
+      "type": "caught-decode",
+      "message": "InvalidStateError: An error occured reading the Blob argument to createImageBitmap"
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.489Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916484,
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "receivedAt": "2026-10-18T18:58:36.498Z",
+      "id": "?kind=decode&iteration=5",
+      "at": 1792349916494,
+      "type": "pageshow",
+      "persisted": false
+    }
+  ],
+  "limitations": [
+    "This proves only the behavior observed in this installed browser and automation transport; it does not identify every diagnostic in the game.",
+    "Document teardown can prevent event delivery. Absence of a delivered error or rejection event alone is not proof of absence.",
+    "No application error is filtered or converted to a success. Functional checks and native diagnostic observations are reported separately."
+  ],
+  "image": {
+    "path": "game/assets/field-kit/sprites/player-scout-compact.png",
+    "sha256": "827da59e870daf2e8548168399449bd894b4cdf7953a1f8ca48a7ed6df8f8d91"
+  },
+  "browserVersion": "26.5",
+  "functionalComplete": true,
+  "observedNativeConsoleDiagnostics": 0,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "serverClosed": true,
+  "finished": "2026-10-18T18:58:36.603Z"
+}

@@ -1,0 +1,177 @@
+{
+  "engine": "firefox",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T19:04:47.031Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-44273034491a74e4",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First return",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-living-twin-intercepts:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Twin Intercepts",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Шукачі укриття, бігуни й майстри зміни курсу ділять три двори. Обирайте підхід за наміром кожного."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:container-yard-03-acro-988a786656816ea8",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Crossing crane",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 163,
+          "materials": 131,
+          "textures": 26,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 14,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Пройдіть орієнтири, оминаючи рухомі перешкоди. Спершу спостерігайте за їхнім ритмом."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:container-yard-03-acro-988a786656816ea8",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792350319250,
+        "loadingMs": 15092,
+        "preparation": {
+          "status": "failed",
+          "stage": "renderer",
+          "elapsedMs": 15092,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 1,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 14296,
+            "scene-import": 84,
+            "artwork": 517,
+            "renderer": 194,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "firefox",
+              "engineHint": "firefox",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19478,
+              "totalTicks": 19478,
+              "elapsedMs": 14296
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "timeoutFailure@http://127.0.0.1:8769/game/demo-loading.mjs:26:19\nwithDemoLoadingDeadline/</<@http://127.0.0.1:8769/game/demo-loading.mjs:56:51\npromise callback*withDemoLoadingDeadline/<@http://127.0.0.1:8769/game/demo-loading.mjs:52:48\nwithDemoLoadingDeadline@http://127.0.0.1:8769/game/demo-loading.mjs:30:10\nnext@http://127.0.0.1:8769/game/demo-director.mjs:195:26\nasync*attachDemoHost/<@http://127.0.0.1:8769/game/ui/demo-host.mjs:1231:21"
+      },
+      "tick": "21",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Crossing crane",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 163,
+          "materials": 131,
+          "textures": 26,
+          "gpuGeometries": 61,
+          "gpuTextures": 18,
+          "gpuPrograms": 19,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Пройдіть орієнтири, оминаючи рухомі перешкоди. Спершу спостерігайте за їхнім ритмом."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": false,
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'sim',\n    'snake',\n    'solo',\n-   'survival'\n  ]\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:182:10",
+  "visibleText": "TACTICAL EDITION\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path. Reveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nCopy level link\nMission brief\nHome\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nDEMO · Recorded play\n\nSIM · Crossing crane\nPause\nNext level\nWant to play?\nAudio & details\nFullscreen\nBack\nFire\n↔ Yaw · ↕ Throttle\n↔ Roll · ↕ Pitch\n\nFlight guide\n\nPass the markers while avoiding the moving obstacles. Watch their rhythm before crossing.\n\nFlying\n\nSound off\n\nCarol of the Bells (Metal Version) · Alexander Nakarada\n\nSteer to take over · practice, no rewards",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T19:05:23.194Z"
+}
