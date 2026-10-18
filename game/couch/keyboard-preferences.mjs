@@ -4,7 +4,10 @@ import {
   replaceCouchKey,
 } from './keyboard-bindings.mjs';
 
+import { claimProfileWriter, ownsProfileWriter } from '../profile-writer.mjs';
+
 export const COUCH_KEYBOARD_KEY = 'revealline.couch-keyboard.v1';
+const writerKey = `${COUCH_KEYBOARD_KEY}:writer`;
 const decode = (raw) => {
   if (typeof raw !== 'string' || raw.length > 4096) return null;
   try {
@@ -17,6 +20,7 @@ const decode = (raw) => {
  * change a running round's keyboard map. Pending fields merge at verified save. */
 export function createCouchKeyboardPreferences({
   getStorage = () => globalThis.localStorage,
+  getLockManager = () => globalThis.navigator?.locks,
 } = {}) {
   let state = resolveCouchKeyboard(),
     status = 'idle',
@@ -38,18 +42,32 @@ export function createCouchKeyboardPreferences({
     state.seats.forEach(Object.freeze);
     Object.freeze(state.seats);
     Object.freeze(state);
-    return { bindings: state, status, reason, revision };
+    return { bindings: state, status, reason, revision, saving: writing };
   };
   const notify = () => {
     for (const listener of listeners) listener(snapshot());
   };
-  function save() {
-    if (disposed || !pending.size || writing) return;
+  async function save() {
+    if (disposed || !pending.size) return;
+    if (writing) {
+      notify();
+      return;
+    }
     writing = true;
     const action = revision;
-    let phase = 'unavailable';
+    let phase = 'lockUnavailable',
+      lease;
     const current = () => !disposed && action === revision;
+    reason = 'saving';
+    notify();
     try {
+      lease = await claimProfileWriter(getLockManager(), writerKey);
+      if (!current()) return;
+      if (!ownsProfileWriter(lease, writerKey)) {
+        reason = lease.reasonCode === 'occupied' ? 'occupied' : 'lockUnavailable';
+        return;
+      }
+      phase = 'unavailable';
       const { storage, value } = read();
       if (!current()) return;
       const candidate = value ?? resolveCouchKeyboard();
@@ -60,6 +78,7 @@ export function createCouchKeyboardPreferences({
       phase = 'conflict';
       const accepted = resolveCouchKeyboard(candidate),
         raw = JSON.stringify(accepted);
+      if (!current() || !ownsProfileWriter(lease, writerKey)) return;
       phase = 'write';
       storage.setItem(COUCH_KEYBOARD_KEY, raw);
       if (!current()) return;
@@ -82,6 +101,7 @@ export function createCouchKeyboardPreferences({
               ? 'full'
               : phase;
     } finally {
+      lease?.release();
       writing = false;
       if (!disposed) {
         if (pending.size) status = 'session';
@@ -104,7 +124,7 @@ export function createCouchKeyboardPreferences({
       revision++;
       status = 'session';
       reason = 'unconfirmed';
-      save();
+      return save();
     },
     reset() {
       if (disposed) return;
@@ -115,9 +135,14 @@ export function createCouchKeyboardPreferences({
       revision++;
       status = 'session';
       reason = 'unconfirmed';
-      save();
+      return save();
     },
     retry: save,
+    suspend() {
+      if (disposed || !writing) return;
+      revision++;
+      reason = 'unconfirmed';
+    },
     refresh() {
       if (disposed || pending.size) return;
       try {

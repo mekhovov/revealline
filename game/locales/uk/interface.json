@@ -6046,5 +6046,8 @@
   "couchKeyboard.save.verify": "Не вдалося прочитати збережені клавіші.",
   "couchKeyboard.save.unconfirmed": "Не вдалося підтвердити збереження.",
   "couchKeyboard.save.conflict": "Інша вкладка призначила конфліктну клавішу. Перевірте або скиньте призначення перед повторною спробою.",
+  "couchKeyboard.save.saving": "Збереження…",
+  "couchKeyboard.save.occupied": "Інша вкладка зберігає ці клавіші. Повторіть спробу, коли вона завершить.",
+  "couchKeyboard.save.lockUnavailable": "Цей браузер не може зарезервувати безпечне збереження. Ці клавіші діють лише в цьому сеансі.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

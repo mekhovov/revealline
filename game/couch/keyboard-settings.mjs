@@ -113,7 +113,10 @@ export function mountCouchKeyboardSettings({
     cancel.textContent = tr('cancel');
     cancel.hidden = !capturing;
     retry.textContent = tr('retry');
+    if (state.status === 'saved' && doc.activeElement === retry && available())
+      (lastChanged ?? reset).focus({ preventScroll: true });
     retry.hidden = state.status !== 'session';
+    retry.setAttribute('aria-disabled', String(state.saving));
     reset.textContent = tr('reset');
   }
   function stopCapture(focus = false) {
@@ -133,9 +136,8 @@ export function mountCouchKeyboardSettings({
     preferences.reset();
   });
   listen(retry, 'click', () => {
-    if (!available()) return;
-    preferences.retry();
-    if (retry.hidden && available()) (lastChanged ?? reset).focus({ preventScroll: true });
+    if (!available() || preferences.snapshot().saving) return;
+    void preferences.retry();
   });
   listen(
     win,
@@ -195,8 +197,12 @@ export function mountCouchKeyboardSettings({
   listen(doc, 'focusin', (event) => {
     if (capturing && event.target !== capturing.button && event.target !== cancel) stopCapture();
   });
-  listen(win, 'blur', () => stopCapture());
-  listen(win, 'pagehide', () => stopCapture());
+  const suspend = () => {
+    stopCapture();
+    preferences.suspend();
+  };
+  listen(win, 'blur', suspend);
+  listen(win, 'pagehide', suspend);
   const stop = preferences.subscribe(render),
     stopLocale = onLocaleChange(render);
   return {
