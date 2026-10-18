@@ -1,7 +1,7 @@
 import { required } from '../data-json.mjs';
-import { creatorSHA256 } from '../creator/bytes.mjs';
+import { creatorSHA256, ownCreatorBlob } from '../creator/bytes.mjs';
 import { approveCreatorBundle } from '../creator/bundle.mjs';
-import { inspectCommunityPackage } from './package-family.mjs';
+import { COMMUNITY_PACKAGE_MAX_BYTES, inspectCommunityPackage } from './package-family.mjs';
 import { createCommunityClassicInstalled } from './classic-installed.mjs';
 import { createCommunityNativeInstalled } from './native-installed.mjs';
 import {
@@ -20,6 +20,13 @@ const packageHash = async (blob) => creatorSHA256(await blob.arrayBuffer());
 const association = (state, id) => state.editions.find((item) => item.editionId === id);
 const removalReviews = new WeakMap();
 const offloadReviews = new WeakMap();
+const sameAssociation = (left, right) =>
+  !!left &&
+  ['editionId', 'collectionId', 'creatorEditionId', 'slug', 'version', 'packageSha256'].every(
+    (key) => left[key] === right[key],
+  ) &&
+  (left.family ?? 'creator') === (right.family ?? 'creator') &&
+  left.runtimeIdentity === right.runtimeIdentity;
 
 /** Coordinates immutable catalog metadata with the existing exact creator
  * validator and atomic creator store. It never interprets server approval as
@@ -148,6 +155,9 @@ export function createCommunityLibrary({
     const safe = validateCommunityEdition(edition);
     const inspected = await verifyPackage(safe, blob);
     knownEditions.set(safe.editionId, safe);
+    return installInspected(safe, blob, inspected);
+  }
+  async function installInspected(safe, blob, inspected, expectedAssociation = null) {
     const prepared = inspected.family === 'creator' ? inspected.prepared : inspected;
     const approval = inspected.family === 'creator' ? approveCreatorBundle(prepared) : null;
     let review =
@@ -162,7 +172,17 @@ export function createCommunityLibrary({
     // final commit is interrupted, the catalog shows a retained package ready
     // to retry. If the last journal write fails, status still discovers the
     // committed manifest by its immutable creator edition identity.
-    await downloadStore.put(safe.editionId, blob);
+    if (expectedAssociation) {
+      const retained = ownCreatorBlob(
+        await downloadStore.get(safe.editionId),
+        COMMUNITY_PACKAGE_MAX_BYTES,
+        'Retained recovery package',
+      );
+      required(
+        (await packageHash(retained)) === safe.packageSha256,
+        'The recovery copy changed. Review this edition again.',
+      );
+    } else await downloadStore.put(safe.editionId, blob);
     const staged = {
       editionId: safe.editionId,
       creatorEditionId: prepared.editionId,
@@ -180,6 +200,11 @@ export function createCommunityLibrary({
       installedAt: null,
     };
     await stateStore.update((state) => {
+      if (expectedAssociation)
+        required(
+          sameAssociation(association(state, safe.editionId), expectedAssociation),
+          'The retained edition identity changed. Review it again.',
+        );
       state.editions = [
         ...state.editions.filter((item) => item.editionId !== safe.editionId),
         staged,
@@ -213,37 +238,57 @@ export function createCommunityLibrary({
       journalComplete,
     });
   }
-  async function localCatalog({ query, cursor, limit, signal }) {
+  async function localCatalog({ query, cursor, limit, signal, recovery = false }) {
     signal?.throwIfAborted();
     required(
       Number.isSafeInteger(limit) && limit >= 1 && limit <= 100,
       'Catalog limit is invalid.',
     );
     required(
-      cursor === null || /^local:ed_[a-f0-9]{64}$/u.test(cursor),
+      cursor === null ||
+        (recovery ? /^recovery:ed_[a-f0-9]{64}$/u : /^local:ed_[a-f0-9]{64}$/u).test(cursor),
       'Local catalog cursor is invalid.',
     );
     const state = await stateStore.read();
     const needle = query.trim().toLocaleLowerCase();
-    const after = cursor?.slice('local:'.length) ?? '';
+    const prefix = recovery ? 'recovery:' : 'local:';
+    const after = cursor?.slice(prefix.length) ?? '';
     const rows = [];
     for (const linked of [...state.editions].sort((a, b) =>
       a.editionId.localeCompare(b.editionId),
     )) {
       signal?.throwIfAborted();
       if (linked.editionId <= after) continue;
-      let current;
+      let current, retainedBytes;
+      if (recovery) {
+        try {
+          const retained = await downloadStore.get(linked.editionId);
+          signal?.throwIfAborted();
+          if (!retained) continue;
+          retainedBytes = ownCreatorBlob(
+            retained,
+            COMMUNITY_PACKAGE_MAX_BYTES,
+            'Retained recovery package',
+          ).size;
+        } catch {
+          current = { installed: false, localUnavailable: true, family: linked.family };
+        }
+      }
       try {
-        current = await status(linked.editionId);
+        current ??= await status(linked.editionId);
       } catch {
         // One damaged/unavailable runtime owner must not hide other local games.
         // Keep its journal identity visible, without claiming it is playable.
-        current = { installed: false, localUnavailable: true, family: linked.family };
+        current = {
+          installed: false,
+          ...(recovery ? { runtimeUnavailable: true } : { localUnavailable: true }),
+          family: linked.family,
+        };
       }
       signal?.throwIfAborted();
       // A journal entry, retained download or offloaded manifest alone does not
       // prove that this exact runtime edition is currently installed.
-      if (!current.installed && !current.localUnavailable) continue;
+      if (!recovery && !current.installed && !current.localUnavailable) continue;
       const cached = knownEditions.get(linked.editionId);
       const metadata =
         cached &&
@@ -274,6 +319,9 @@ export function createCommunityLibrary({
           managementAvailable: !!metadata,
           previewAvailable: false,
           updateAvailable: false,
+          ...(recovery
+            ? { recoveryCopy: true, retainedBytes, recoveryAvailable: !current.localUnavailable }
+            : {}),
         }),
       );
       if (rows.length > limit) break;
@@ -282,13 +330,18 @@ export function createCommunityLibrary({
     if (more) rows.pop();
     return Object.freeze({
       editions: Object.freeze(rows),
-      nextCursor: more ? `local:${rows.at(-1).editionId}` : null,
+      nextCursor: more ? `${prefix}${rows.at(-1).editionId}` : null,
     });
   }
   return Object.freeze({
     async catalog({ query = '', installed = 'all', cursor = null, limit = 20, signal } = {}) {
-      required(['all', 'installed', 'available'].includes(installed), 'Catalog filter is invalid.');
+      required(
+        ['all', 'installed', 'available', 'recovery'].includes(installed),
+        'Catalog filter is invalid.',
+      );
       if (installed === 'installed') return localCatalog({ query, cursor, limit, signal });
+      if (installed === 'recovery')
+        return localCatalog({ query, cursor, limit, signal, recovery: true });
       const page = await client.catalog({ query, cursor, limit, signal });
       for (const edition of page.editions) {
         const safe = validateCommunityEdition(edition);
@@ -390,6 +443,33 @@ export function createCommunityLibrary({
           'This package is not retained for offline installation. Connect and download it again.',
         );
         return installBytes(safe, await client.download(safe));
+      });
+    },
+    /** Local journal identity and exact retained bytes replace remote catalog
+     * metadata only for this explicit reinstall. Existing native admission and
+     * progress owners still perform the commit. Listing is not integrity proof. */
+    async restoreRetained(editionId) {
+      required(/^ed_[a-f0-9]{64}$/u.test(editionId), 'Choose a retained edition.');
+      return withEditionLock(editionId, async () => {
+        const linked = association(await stateStore.read(), editionId);
+        required(linked, 'This edition has no local recovery record.');
+        const blob = ownCreatorBlob(
+          await downloadStore.get(editionId),
+          COMMUNITY_PACKAGE_MAX_BYTES,
+          'Retained recovery package',
+        );
+        required(
+          (await packageHash(blob)) === linked.packageSha256,
+          'The retained recovery package failed its integrity check. Keep an intact copy.',
+        );
+        const inspected = await inspectCommunityPackage(blob, { decodeImage });
+        required(
+          inspected.editionId === linked.creatorEditionId &&
+            inspected.family === (linked.family ?? 'creator') &&
+            inspected.runtimeIdentity === linked.runtimeIdentity,
+          'The retained package does not match this edition’s local identity.',
+        );
+        return installInspected(linked, blob, inspected, linked);
       });
     },
     /** Proves that the installed runtime can reproduce the exact published
