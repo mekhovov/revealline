@@ -8959,7 +8959,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: c72c76aff2abf1bb486d89a7377176e11c5c6d1f6de191b5a672d6e9f1fc55c2
+// Canonical source sha256: d76d65d744f5b5f3111bfba6d03c8d61af0d0afda2dc1daca76566013594c4be
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9167,6 +9167,20 @@ settings.closest('[hidden],[inert],[aria-hidden="true"]')||
 return false;
 return panelOwners.get(settings)?.back()===true;
 }
+
+/** A nested tool may close after its Settings parent changed responsive layout. */
+function restoreSettingsPanelFocus(root,opener){
+const settings=root?.classList?.contains('native-settings')
+?root
+:root?.querySelector?.('.native-settings');
+if(
+!settings||
+settings.closest('[hidden],[inert],[aria-hidden="true"]')||
+!settings.getClientRects().length
+)
+return false;
+return panelOwners.get(settings)?.restoreFocus(opener)===true;
+}
 const owns=(root,doc,list,{tab,panel})=>
 root?.ownerDocument===doc&&
 doc?.contains(root)&&
@@ -9278,7 +9292,37 @@ return true;
 }
 return false;
 };
-if(root)panelOwners.set(root,{back});
+const focusable=(element)=>
+element?.isConnected&&
+!element.disabled&&
+element.getAttribute('aria-disabled')!=='true'&&
+element.tabIndex>=0&&
+!element.closest('[hidden],[inert],[aria-hidden="true"]')&&
+element.getClientRects().length&&
+doc.defaultView?.getComputedStyle(element)?.visibility!=='hidden';
+const restoreFocus=(opener)=>{
+if(!current|| !owned(current)|| !enabled(current))return false;
+// Reveal only the still-selected category. A retired/hidden control must
+// not change categories or be made available by closing a child tool.
+if(
+current.panel.contains(opener)&&
+!opener.disabled&&
+!opener.closest('[hidden],[inert],[aria-hidden="true"]')
+){
+if(compact())view('panel');
+if(focusable(opener)){
+opener.focus({preventScroll:true});
+if(compact())opener.scrollIntoView?.({block:'nearest',inline:'nearest'});
+return true;
+}
+}
+view('categories');
+if(!focusable(current.tab))return false;
+current.tab.focus({preventScroll:true});
+if(compact())current.tab.scrollIntoView?.({block:'nearest',inline:'nearest'});
+return true;
+};
+if(root)panelOwners.set(root,{back,restoreFocus});
 const cancel=(event)=>{
 if(back()){
 event.preventDefault();
@@ -10321,6 +10365,7 @@ return{
 GAME_MODE_ORDER,
 renderModeChoices,
 settingsPanelBack,
+restoreSettingsPanelFocus,
 settingsTabOwnsKey,
 attachSettingsPanels,
 MODE_SETTINGS_CATEGORIES,
