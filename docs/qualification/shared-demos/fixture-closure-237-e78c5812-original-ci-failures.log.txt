@@ -1,0 +1,112 @@
+2026-10-18T22:06:18.2777710Z   ...
+2026-10-18T22:06:18.2778222Z # Subtest: real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source
+2026-10-18T22:06:18.2779039Z not ok 1263 - real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source
+2026-10-18T22:06:18.2779505Z   ---
+2026-10-18T22:06:18.2779692Z   duration_ms: 582.110729
+2026-10-18T22:06:18.2780104Z   location: '/home/runner/work/revealline/revealline/scripts/test-game-cli.mjs:180:1'
+2026-10-18T22:06:18.2780534Z   failureType: 'testCodeFailure'
+2026-10-18T22:06:18.2781048Z   error: |-
+2026-10-18T22:06:18.2781392Z     file:///home/runner/work/revealline/revealline/scripts/game-cli.mjs:79
+2026-10-18T22:06:18.2781741Z       throw new Error(message);
+2026-10-18T22:06:18.2781966Z             ^
+2026-10-18T22:06:18.2782145Z     
+2026-10-18T22:06:18.2783048Z     Error: node /tmp/xonix-tool-test-BRl90l/temporary-real/xonix-snapshot-Xf1fqe/source/scripts/game-cli.mjs failed: node:internal/modules/esm/resolve:275
+2026-10-18T22:06:18.2783499Z         throw new ERR_MODULE_NOT_FOUND(
+2026-10-18T22:06:18.2783655Z               ^
+2026-10-18T22:06:18.2783767Z     
+2026-10-18T22:06:18.2784425Z     Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/tmp/xonix-tool-test-BRl90l/temporary-real/xonix-snapshot-Xf1fqe/source/scripts/main-pages-source-originals.mjs' imported from /tmp/xonix-tool-test-BRl90l/temporary-real/xonix-snapshot-Xf1fqe/source/scripts/build-implementation.mjs
+2026-10-18T22:06:18.2785157Z         at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+2026-10-18T22:06:18.2785429Z         at moduleResolve (node:internal/modules/esm/resolve:932:10)
+2026-10-18T22:06:18.2785682Z         at defaultResolve (node:internal/modules/esm/resolve:1056:11)
+2026-10-18T22:06:18.2785962Z         at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:654:12)
+2026-10-18T22:06:18.2786254Z         at #cachedDefaultResolve (node:internal/modules/esm/loader:603:25)
+2026-10-18T22:06:18.2786530Z         at ModuleLoader.resolve (node:internal/modules/esm/loader:586:38)
+2026-10-18T22:06:18.2786856Z         at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:242:38)
+2026-10-18T22:06:18.2787159Z         at ModuleJob._link (node:internal/modules/esm/module_job:135:49) {
+2026-10-18T22:06:18.2787377Z       code: 'ERR_MODULE_NOT_FOUND',
+2026-10-18T22:06:18.2787738Z       url: 'file:///tmp/xonix-tool-test-BRl90l/temporary-real/xonix-snapshot-Xf1fqe/source/scripts/main-pages-source-originals.mjs'
+2026-10-18T22:06:18.2788057Z     }
+2026-10-18T22:06:18.2788163Z     
+2026-10-18T22:06:18.2788274Z     Node.js v22.13.1
+2026-10-18T22:06:18.2788511Z         at fail (file:///home/runner/work/revealline/revealline/scripts/game-cli.mjs:79:9)
+2026-10-18T22:06:18.2788852Z         at command (file:///home/runner/work/revealline/revealline/scripts/game-cli.mjs:1480:5)
+2026-10-18T22:06:18.2789217Z         at releaseSnapshot (file:///home/runner/work/revealline/revealline/scripts/game-cli.mjs:1598:5)
+2026-10-18T22:06:18.2789542Z         at async file:///tmp/xonix-tool-test-BRl90l/project/[eval1]:1:131
+2026-10-18T22:06:18.2789735Z     
+2026-10-18T22:06:18.2789843Z     Node.js v22.13.1
+2026-10-18T22:06:18.2789966Z     
+2026-10-18T22:06:18.2790068Z     
+2026-10-18T22:06:18.2790172Z     1 !== 0
+2026-10-18T22:06:18.2790280Z     
+2026-10-18T22:06:18.2790389Z   code: 'ERR_ASSERTION'
+2026-10-18T22:06:18.2790528Z   name: 'AssertionError'
+2026-10-18T22:06:18.2790663Z   expected: 0
+2026-10-18T22:06:18.2790780Z   actual: 1
+2026-10-18T22:06:18.2790903Z   operator: 'strictEqual'
+2026-10-18T22:06:18.2791037Z   stack: |-
+2026-10-18T22:06:18.2791222Z     finalizeResolution (node:internal/modules/esm/resolve:275:11)
+2026-10-18T22:06:18.2791476Z     moduleResolve (node:internal/modules/esm/resolve:932:10)
+2026-10-18T22:06:18.2791719Z     defaultResolve (node:internal/modules/esm/resolve:1056:11)
+2026-10-18T22:06:18.2791990Z     ModuleLoader.defaultResolve (node:internal/modules/esm/loader:654:12)
+2026-10-18T22:06:18.2792273Z     #cachedDefaultResolve (node:internal/modules/esm/loader:603:25)
+2026-10-18T22:06:18.2792538Z     ModuleLoader.resolve (node:internal/modules/esm/loader:586:38)
+2026-10-18T22:06:18.2793204Z     ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:242:38)
+2026-10-18T22:06:18.2793521Z     ModuleJob._link (node:internal/modules/esm/module_job:135:49) {
+2026-10-18T22:06:18.2793809Z     fail (file:///home/runner/work/revealline/revealline/scripts/game-cli.mjs:79:9)
+2026-10-18T22:06:18.2794243Z     command (file:///home/runner/work/revealline/revealline/scripts/game-cli.mjs:1480:5)
+2026-10-18T22:06:18.2794890Z     releaseSnapshot (file:///home/runner/work/revealline/revealline/scripts/game-cli.mjs:1598:5)
+2026-10-18T22:06:18.2795239Z     async file:///tmp/xonix-tool-test-BRl90l/project/[eval1]:1:131
+2026-10-18T22:06:18.2795687Z     run (file:///home/runner/work/revealline/revealline/scripts/test-game-cli.mjs:197:12)
+2026-10-18T22:06:18.2796282Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-game-cli.mjs:287:5)
+2026-10-18T22:06:18.2796761Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-18T22:06:18.2797066Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-18T22:06:18.2797397Z   ...
+
+2026-10-18T22:06:23.4427385Z   ...
+2026-10-18T22:06:23.4427814Z # Subtest: committed inspector CLI writes only exact nonpromotable metadata and never overwrites it
+2026-10-18T22:06:23.4428543Z not ok 1297 - committed inspector CLI writes only exact nonpromotable metadata and never overwrites it
+2026-10-18T22:06:23.4428936Z   ---
+2026-10-18T22:06:23.4429081Z   duration_ms: 132.232577
+2026-10-18T22:06:23.4429376Z   location: '/home/runner/work/revealline/revealline/scripts/test-inspect-default-build.mjs:164:1'
+2026-10-18T22:06:23.4429670Z   failureType: 'testCodeFailure'
+2026-10-18T22:06:23.4429824Z   error: |-
+2026-10-18T22:06:23.4429969Z     node:internal/modules/esm/resolve:275
+2026-10-18T22:06:23.4430166Z         throw new ERR_MODULE_NOT_FOUND(
+2026-10-18T22:06:23.4430323Z               ^
+2026-10-18T22:06:23.4430451Z     
+2026-10-18T22:06:23.4430922Z     Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/tmp/default-input-test-xKxpGc/scripts/main-pages-source-originals.mjs' imported from /tmp/default-input-test-xKxpGc/scripts/game-cli.mjs
+2026-10-18T22:06:23.4431456Z         at finalizeResolution (node:internal/modules/esm/resolve:275:11)
+2026-10-18T22:06:23.4431720Z         at moduleResolve (node:internal/modules/esm/resolve:932:10)
+2026-10-18T22:06:23.4431986Z         at defaultResolve (node:internal/modules/esm/resolve:1056:11)
+2026-10-18T22:06:23.4432269Z         at ModuleLoader.defaultResolve (node:internal/modules/esm/loader:654:12)
+2026-10-18T22:06:23.4432581Z         at #cachedDefaultResolve (node:internal/modules/esm/loader:603:25)
+2026-10-18T22:06:23.4433017Z         at ModuleLoader.resolve (node:internal/modules/esm/loader:586:38)
+2026-10-18T22:06:23.4433328Z         at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:242:38)
+2026-10-18T22:06:23.4433807Z         at ModuleJob._link (node:internal/modules/esm/module_job:135:49) {
+2026-10-18T22:06:23.4434161Z       code: 'ERR_MODULE_NOT_FOUND',
+2026-10-18T22:06:23.4434618Z       url: 'file:///tmp/default-input-test-xKxpGc/scripts/main-pages-source-originals.mjs'
+2026-10-18T22:06:23.4434984Z     }
+2026-10-18T22:06:23.4435142Z     
+2026-10-18T22:06:23.4435317Z     Node.js v22.13.1
+2026-10-18T22:06:23.4435496Z     
+2026-10-18T22:06:23.4435612Z     
+2026-10-18T22:06:23.4435719Z     1 !== 0
+2026-10-18T22:06:23.4435829Z     
+2026-10-18T22:06:23.4435967Z   code: 'ERR_ASSERTION'
+2026-10-18T22:06:23.4436178Z   name: 'AssertionError'
+2026-10-18T22:06:23.4436311Z   expected: 0
+2026-10-18T22:06:23.4436433Z   actual: 1
+2026-10-18T22:06:23.4436551Z   operator: 'strictEqual'
+2026-10-18T22:06:23.4436683Z   stack: |-
+2026-10-18T22:06:23.4436865Z     finalizeResolution (node:internal/modules/esm/resolve:275:11)
+2026-10-18T22:06:23.4437113Z     moduleResolve (node:internal/modules/esm/resolve:932:10)
+2026-10-18T22:06:23.4437353Z     defaultResolve (node:internal/modules/esm/resolve:1056:11)
+2026-10-18T22:06:23.4437622Z     ModuleLoader.defaultResolve (node:internal/modules/esm/loader:654:12)
+2026-10-18T22:06:23.4437900Z     #cachedDefaultResolve (node:internal/modules/esm/loader:603:25)
+2026-10-18T22:06:23.4438161Z     ModuleLoader.resolve (node:internal/modules/esm/loader:586:38)
+2026-10-18T22:06:23.4438599Z     ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:242:38)
+2026-10-18T22:06:23.4438888Z     ModuleJob._link (node:internal/modules/esm/module_job:135:49) {
+2026-10-18T22:06:23.4439358Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-inspect-default-build.mjs:171:10)
+2026-10-18T22:06:23.4439708Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-18T22:06:23.4439973Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-18T22:06:23.4440181Z   ...

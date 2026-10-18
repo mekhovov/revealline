@@ -1,0 +1,594 @@
+{
+  "format": "SharedDemoAffectedBrowserRefreshSummaryV1",
+  "created": "2026-10-18T22:19:13.175518+00:00",
+  "allRequestedJobsAttempted": true,
+  "complete": false,
+  "qualificationStatus": "8 of 11 jobs passed; all three restoration jobs remain failed. Every browser and task-owned preview confirmed cleanup. No failed job was retried or upgraded by this summary.",
+  "counts": {
+    "attemptedJobs": 11,
+    "passedJobs": 8,
+    "failedJobs": 3,
+    "recordedCheckEntries": 115,
+    "pageErrors": 1,
+    "unforcedLoadingFailureEventsCaptured": 5,
+    "expectedInjectedFaultEventsCaptured": 1
+  },
+  "aggregate": {
+    "path": "docs/qualification/shared-demos/browser-refresh-final-237-affected.json",
+    "sha256": "025aaf1658ee74024786030b8dffd04371683199953d84bec866fee07243efc6",
+    "started": "2026-10-18T22:06:23.875Z",
+    "finished": "2026-10-18T22:17:57.103Z"
+  },
+  "sourceBinding": {
+    "head": "e78c5812f8bf3da6975c75221924239666a2e9ed",
+    "manifest": {
+      "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "sha256": "d671dc455b97a69a6164b645df194b4953fe3c2a5c3a0fbddef86d596b608cb9",
+      "created": "2026-10-18T21:24:01.185264+00:00",
+      "integrationBase": "237b405437def3c41b01165fe057af1ab06f618c",
+      "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "sourceFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+      "files": 9996,
+      "bytes": 404376334
+    },
+    "hashScope": {
+      "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+    },
+    "before": {
+      "runtime": {
+        "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+        "files": 9996,
+        "bytes": 404376334
+      },
+      "harness": {
+        "sha256": "996321729b454a1134ecd82d7942c5b1a34cdb8811f71e183ae6adf97598f06b",
+        "files": 926,
+        "bytes": 11068641
+      }
+    },
+    "after": {
+      "runtime": {
+        "sha256": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+        "files": 9996,
+        "bytes": 404376334
+      },
+      "harness": {
+        "sha256": "996321729b454a1134ecd82d7942c5b1a34cdb8811f71e183ae6adf97598f06b",
+        "files": 926,
+        "bytes": 11068641
+      }
+    },
+    "changedFiles": {
+      "runtime": [],
+      "harness": []
+    },
+    "verification": "The ignored wrapper recomputed the complete declared runtime and all files under scripts before and after the serial matrix. Runtime, scripts, HEAD and manifest stayed held. Child report hashes were rechecked while composing this summary. Later unrelated CI test-fixture work is outside this measured interval."
+  },
+  "jobs": [
+    {
+      "id": "mixed-chromium",
+      "reportPath": "docs/qualification/shared-demos/mixed-chromium-final-237-affected.json",
+      "reportSHA256": "65d1278ee282a366f4c277b8e9a64719ba7cb9283ebd5bca0c101bc519bce3a2",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T22:06:39.395Z",
+      "finished": "2026-10-18T22:08:48.893Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 28,
+      "errorCount": 0
+    },
+    {
+      "id": "mixed-firefox",
+      "reportPath": "docs/qualification/shared-demos/mixed-firefox-final-237-affected.json",
+      "reportSHA256": "203e17f22c6ce93dd6dadb05efd47d256ac4c2a4df9c43478726f2b36c3c7b0b",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T22:08:48.900Z",
+      "finished": "2026-10-18T22:10:33.584Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 27,
+      "errorCount": 0
+    },
+    {
+      "id": "mixed-webkit",
+      "reportPath": "docs/qualification/shared-demos/mixed-webkit-final-237-affected.json",
+      "reportSHA256": "614ffe4b06445fc766d76268f72bd15294750d9fb2f2a9df46833bd6f9e63460",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T22:10:33.586Z",
+      "finished": "2026-10-18T22:12:13.810Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 27,
+      "errorCount": 0
+    },
+    {
+      "id": "sim-fresh-chromium",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-chromium-final-237-affected.json",
+      "reportSHA256": "2cfe101576652f655c0e8b9e9f4e39059689ed2ed2f1c03d0ccf35b251e0dcf7",
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "started": "2026-10-18T22:12:13.818Z",
+      "finished": "2026-10-18T22:12:50.196Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0
+    },
+    {
+      "id": "sim-fresh-firefox",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-firefox-final-237-affected.json",
+      "reportSHA256": "b2bce900d49b8f6fb40b44d3d8ea6715a2544be575d33dcb8cf444b64cc91019",
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "started": "2026-10-18T22:12:50.229Z",
+      "finished": "2026-10-18T22:13:44.836Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0
+    },
+    {
+      "id": "sim-fresh-webkit",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-webkit-final-237-affected.json",
+      "reportSHA256": "96ad53141b31d23191ba11107b76736dc499aea81f0885e857100d67cf537ac2",
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "started": "2026-10-18T22:13:44.872Z",
+      "finished": "2026-10-18T22:14:04.336Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0
+    },
+    {
+      "id": "graphics-chromium",
+      "reportPath": "docs/qualification/shared-demos/graphics-chromium-final-237-affected.json",
+      "reportSHA256": "2d14a9948c3309aba54fe379e2d73f5d3426fa907a481af34449ee3190aa1667",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T22:14:04.340Z",
+      "finished": "2026-10-18T22:14:30.405Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 7,
+      "errorCount": 0
+    },
+    {
+      "id": "listeners-chromium",
+      "reportPath": "docs/qualification/shared-demos/listeners-chromium-final-237-affected.json",
+      "reportSHA256": "6dab23b1e2526a6c44d3140dee6edcdb75767db8b92ee9ff1f4dbc25a390d8c1",
+      "scriptSHA256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+      "started": "2026-10-18T22:14:30.413Z",
+      "finished": "2026-10-18T22:15:27.019Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0
+    },
+    {
+      "id": "restoration-chromium",
+      "reportPath": "docs/qualification/shared-demos/restoration-chromium-final-237-affected.json",
+      "reportSHA256": "d404e31386f92b5cbd69afccea8ca76496fede40269a76ed618ccb3f98d68944",
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "started": "2026-10-18T22:15:27.023Z",
+      "finished": "2026-10-18T22:15:50.307Z",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "complete": false,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 2,
+      "errorCount": 0
+    },
+    {
+      "id": "restoration-firefox",
+      "reportPath": "docs/qualification/shared-demos/restoration-firefox-final-237-affected.json",
+      "reportSHA256": "72919ad299e4247250b5138ee7ceabc4accc0d29d1c018507187e8cc2d09fd4b",
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "started": "2026-10-18T22:15:50.314Z",
+      "finished": "2026-10-18T22:16:13.609Z",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "complete": false,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 2,
+      "errorCount": 0
+    },
+    {
+      "id": "restoration-webkit",
+      "reportPath": "docs/qualification/shared-demos/restoration-webkit-final-237-affected.json",
+      "reportSHA256": "0fc3620a6309cc86afd907041c128616f44e88dd0d92c314659761e0e372da71",
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "started": "2026-10-18T22:16:13.612Z",
+      "finished": "2026-10-18T22:17:46.401Z",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "complete": false,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 1
+    }
+  ],
+  "capturedFailures": {
+    "deduplication": "Exact (event.at, event.sourceId) key across recursively captured failureDetails; repeated snapshots of one event count once.",
+    "events": [
+      {
+        "jobId": "mixed-chromium",
+        "event": "failed",
+        "at": 1792361251127,
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "loadingMs": 15068.199999999255,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15067.7,
+          "durationsMs": {
+            "preparation": 0.3999999985098839,
+            "prefetch": 9.199999999254942,
+            "retirement": 0.19999999925494194,
+            "adapter": 0,
+            "source": 0.20000000298023224,
+            "payload": 0,
+            "verification": 15057.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 14640,
+              "totalTicks": 19454,
+              "elapsedMs": 15057.7
+            }
+          ]
+        },
+        "snapshotOccurrences": 3,
+        "expectedInjectedFault": false
+      },
+      {
+        "jobId": "mixed-chromium",
+        "event": "failed",
+        "at": 1792361271786,
+        "sourceId": "survival:relay-ruins-split-compound:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "loadingMs": 15359.300000000745,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15359.1,
+          "durationsMs": {
+            "preparation": 0.19999999925494194,
+            "prefetch": 9.400000002235174,
+            "retirement": 0.09999999776482582,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 15349.4,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 12720,
+              "totalTicks": 19218,
+              "elapsedMs": 15349.4
+            }
+          ]
+        },
+        "snapshotOccurrences": 7,
+        "expectedInjectedFault": false
+      },
+      {
+        "jobId": "mixed-chromium",
+        "event": "failed",
+        "at": 1792361326519,
+        "sourceId": "survival:orchard-strongpoint-irrigation-courts:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "loadingMs": 15307.599999997765,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15307.6,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 5.300000000745058,
+            "retirement": 0.09999999776482582,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 15302.2,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 16320,
+              "totalTicks": 19526,
+              "elapsedMs": 15302.2
+            }
+          ]
+        },
+        "snapshotOccurrences": 2,
+        "expectedInjectedFault": false
+      },
+      {
+        "jobId": "mixed-firefox",
+        "event": "failed",
+        "at": 1792361393685,
+        "sourceId": "survival:chalk-quarry-haul-switchbacks:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "loadingMs": 15013,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15012,
+          "durationsMs": {
+            "preparation": 1,
+            "prefetch": 0,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 15011,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "firefox",
+              "engineHint": "firefox",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 16080,
+              "totalTicks": 19598,
+              "elapsedMs": 15011
+            }
+          ]
+        },
+        "snapshotOccurrences": 5,
+        "expectedInjectedFault": false
+      },
+      {
+        "jobId": "mixed-firefox",
+        "event": "failed",
+        "at": 1792361429277,
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "loadingMs": 15107,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15107,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 3,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 15104,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "firefox",
+              "engineHint": "firefox",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 16560,
+              "totalTicks": 19454,
+              "elapsedMs": 15104
+            }
+          ]
+        },
+        "snapshotOccurrences": 1,
+        "expectedInjectedFault": false
+      },
+      {
+        "jobId": "graphics-chromium",
+        "event": "playback-failed",
+        "at": 1792361664511,
+        "sourceId": "sim:snake-hunt-ground-routes-crossing-arrivals-acro-22dfa2bb72ff1f5b",
+        "modeId": "sim",
+        "code": "demo-mode-unavailable",
+        "message": "SIM graphics context was lost.",
+        "loadingMs": null,
+        "preparation": null,
+        "snapshotOccurrences": 1,
+        "expectedInjectedFault": true
+      }
+    ],
+    "interpretation": "Five unforced source failures occurred during strict native Survival verification: three in Chromium and two in Firefox. Each used the preferred matching-engine payload already prefetched. All three mixed jobs still demonstrated all four modes and passed their behavioral/resource assertions. These passes do not erase failed source preparation or establish predictable startup; source deadlines were unchanged. Graphics context loss was intentionally injected by its separate fault test.",
+    "limits": "Bounded snapshots may omit intervening failures. Verification duration combines computation and cooperative yielding; no ambient CPU/storage cause is inferred. This summary does not independently reconstruct each complete 30-second recovery interval."
+  },
+  "restoration": {
+    "restoration-chromium": {
+      "checks": 2,
+      "functionalComplete": false,
+      "strictDiagnosticGate": false,
+      "errors": [],
+      "failure": "locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#shell-menu')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"shell-menu\" data-menu-label=\"MENU\" aria-label=\"Game menu\" data-i18n-aria-label=\"interface:gameMenu\" data-i18n-data-menu-label=\"common:navigation.menu\">\u2026</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:171:32)\n    at async startDemo (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:185:3)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:384:22",
+      "activeStage": {
+        "mode": "solo",
+        "stage": "practice"
+      },
+      "failedState": {
+        "documentId": "1792361741630-0.641942908881959",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "browserCloseCompleted": true,
+      "previewClosed": true
+    },
+    "restoration-firefox": {
+      "checks": 2,
+      "functionalComplete": false,
+      "strictDiagnosticGate": false,
+      "errors": [],
+      "failure": "locator.click: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#shell-menu')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"shell-menu\" data-menu-label=\"MENU\" aria-label=\"Game menu\" data-i18n-aria-label=\"interface:gameMenu\" data-i18n-data-menu-label=\"common:navigation.menu\">\u2026</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:171:32)\n    at async startDemo (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:185:3)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:384:22",
+      "activeStage": {
+        "mode": "solo",
+        "stage": "practice"
+      },
+      "failedState": {
+        "documentId": "1792361766225-0.9146438076825427",
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [],
+        "nativeSurfaces": 0,
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "reload",
+            "notRestoredReasons": null
+          }
+        ]
+      },
+      "browserCloseCompleted": true,
+      "previewClosed": true
+    },
+    "restoration-webkit": {
+      "checks": 12,
+      "functionalComplete": true,
+      "strictDiagnosticGate": false,
+      "errors": [
+        {
+          "mode": "solo",
+          "stage": "ordinary-control-reload-1",
+          "receivedAt": "2026-10-18T22:16:20.375Z",
+          "message": "Cache API operation failed: Context is stopped"
+        }
+      ],
+      "failure": "AssertionError [ERR_ASSERTION]: {\"pageErrors\":[{\"mode\":\"solo\",\"stage\":\"ordinary-control-reload-1\",\"receivedAt\":\"2026-10-18T22:16:20.375Z\",\"message\":\"Cache API operation failed: Context is stopped\"}],\"domErrors\":[]}\n\nfalse !== true\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-demo-restoration-browser.mjs:473:10",
+      "activeStage": {
+        "mode": "survival",
+        "stage": "reload-from-practice"
+      },
+      "failedState": null,
+      "browserCloseCompleted": true,
+      "previewClosed": true
+    }
+  },
+  "restorationInterpretation": {
+    "chromiumAndFirefox": "Each passed ordinary Solo control reload and watching reload, then the unchanged 3000ms #shell-menu click failed while preparing Solo practice. Captured postfailure state was briefing with no open dialogs, Demo or native surfaces. Chromium actionability reached visible/enabled/stable and completed scrolling; Firefox was waiting for stability. No screenshot or hit-test chronology was captured by the durable qualifier. Cause remains unproved pending an observation-only probe.",
+    "webkit": "All 12 functional reload checks passed, but the strict diagnostic gate failed for one Solo ordinary-control pageerror: Cache API operation failed: Context is stopped. Native error.name is now retained, narrowing this event to the Cache API diagnostic path. This does not establish the particular cache operation, lifecycle ownership, impact or a harmlessness exemption. Earlier failed receipts remain failed."
+  },
+  "scopeLimits": [
+    "Only the approved affected matrix ran: mixed3, exact SIM Fresh3, graphics Chromium, listener Chromium, restoration3. Classic native coverage, Survival Fresh and offline checks were not rerun because their source paths were unchanged by this upstream integration.",
+    "SIM Fresh checks same-page and cross-page exact authored response at tick0/disarmed Ready, with custom saved tuning unchanged. Native explicit pause/resume and pending-step behavior is covered separately by focused tests, not by this browser Fresh action.",
+    "Direct listener qualification observes attached targets and explicit owner counts through three close cycles, not every detached object, native worker exit or GPU allocation.",
+    "Reload is not actual browser discard. No BFCache restoration is claimed by this sequence. No new full890 corpus replay or two-hour endurance completion is claimed.",
+    "Some unchanged non-restoration qualifiers can retain empty-stack pageerrors as empty strings; every captured pageerror still fails their strict count. Restoration preserves native names and failed on the recorded Cache API event.",
+    "No production or durable harness changes, deadlines, forced clicks, pageerror filters or retries were introduced during the matrix. Further diagnostics must remain separately source-bound."
+  ]
+}

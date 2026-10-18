@@ -1,0 +1,275 @@
+TAP version 13
+# Subtest: published FPV contact and support modules are included in main and optional package inputs
+ok 1 - published FPV contact and support modules are included in main and optional package inputs
+  ---
+  duration_ms: 8.261958
+  ...
+# Subtest: published regional review modules match the installed FPV source closure
+ok 2 - published regional review modules match the installed FPV source closure
+  ---
+  duration_ms: 2.69925
+  ...
+# Subtest: build binds the same release version into Solo, Versus and Team landing HTML
+ok 3 - build binds the same release version into Solo, Versus and Team landing HTML
+  ---
+  duration_ms: 75.117041
+  ...
+# Subtest: strict command parsing rejects typos, duplicates and absent values
+ok 4 - strict command parsing rejects typos, duplicates and absent values
+  ---
+  duration_ms: 0.884333
+  ...
+# Subtest: version and relative-path rules exclude traversal and command-like labels
+ok 5 - version and relative-path rules exclude traversal and command-like labels
+  ---
+  duration_ms: 0.225333
+  ...
+# Subtest: snapshot rejects unsafe refs and index-conflicting labels before any Git command
+ok 6 - snapshot rejects unsafe refs and index-conflicting labels before any Git command
+  ---
+  duration_ms: 0.593541
+  ...
+# Subtest: direct CLI invocation works through an aliased directory and reports command failures
+ok 7 - direct CLI invocation works through an aliased directory and reports command failures
+  ---
+  duration_ms: 759.52475
+  ...
+# Subtest: real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source
+ok 8 - real Git snapshot runs an older frozen entry through an aliased temp root and preserves immutable source
+  ---
+  duration_ms: 6177.923375
+  ...
+# Subtest: build is byte-reproducible and each manifest checksum covers exact output bytes
+ok 9 - build is byte-reproducible and each manifest checksum covers exact output bytes
+  ---
+  duration_ms: 115.107416
+  ...
+# Subtest: manifest-only inspection shares exact build preparation without site or ZIP writes
+ok 10 - manifest-only inspection shares exact build preparation without site or ZIP writes
+  ---
+  duration_ms: 52.320375
+  ...
+# Subtest: manifest-only inspection retains the ordinary reference and malformed-input gates
+ok 11 - manifest-only inspection retains the ordinary reference and malformed-input gates
+  ---
+  duration_ms: 11.832708
+  ...
+# Subtest: an existing authoring dependency must be explicitly admitted without its neighboring originals
+ok 12 - an existing authoring dependency must be explicitly admitted without its neighboring originals
+  ---
+  duration_ms: 58.384166
+  ...
+# Subtest: owned rebuild replaces old outputs and changes checksums when source changes
+ok 13 - owned rebuild replaces old outputs and changes checksums when source changes
+  ---
+  duration_ms: 95.731833
+  ...
+# Subtest: build refuses unrelated output, overlapping source and malformed revision
+ok 14 - build refuses unrelated output, overlapping source and malformed revision
+  ---
+  duration_ms: 20.984083
+  ...
+# Subtest: missing dependencies and invalid JSON fail before replacing a working build
+ok 15 - missing dependencies and invalid JSON fail before replacing a working build
+  ---
+  duration_ms: 62.137833
+  ...
+# Subtest: build excludes private include paths and rejects symbolic source links
+ok 16 - build excludes private include paths and rejects symbolic source links
+  ---
+  duration_ms: 21.574
+  ...
+# Subtest: runtime builds omit source-only game tests while retaining ordinary game files
+ok 17 - runtime builds omit source-only game tests while retaining ordinary game files
+  ---
+  duration_ms: 62.407209
+  ...
+# Subtest: portable resource checks resolve nested relative imports and reject root-only URLs
+ok 18 - portable resource checks resolve nested relative imports and reject root-only URLs
+  ---
+  duration_ms: 14.515833
+  ...
+# Subtest: deferred module references and worker dependency closure are required before replacing a build
+ok 19 - deferred module references and worker dependency closure are required before replacing a build
+  ---
+  duration_ms: 144.31125
+  ...
+# Subtest: module references use syntax rather than commented examples and support static template imports
+ok 20 - module references use syntax rather than commented examples and support static template imports
+  ---
+  duration_ms: 13.512417
+  ...
+# Subtest: literal worker URLs must be admitted even when files exist outside the build include
+ok 21 - literal worker URLs must be admitted even when files exist outside the build include
+  ---
+  duration_ms: 20.2125
+  ...
+# Subtest: ZIP uses standard CRC, sorted names, fixed timestamps and stored data
+ok 22 - ZIP uses standard CRC, sorted names, fixed timestamps and stored data
+  ---
+  duration_ms: 0.357083
+  ...
+# Subtest: static server supports portable nested paths, ESM MIME and HEAD
+ok 23 - static server supports portable nested paths, ESM MIME and HEAD
+  ---
+  duration_ms: 24.2765
+  ...
+# Subtest: static server refuses traversal, hidden files, malformed paths and symlink escape
+ok 24 - static server refuses traversal, hidden files, malformed paths and symlink escape
+  ---
+  duration_ms: 25.155583
+  ...
+# Subtest: Git archive reader extracts regular data and rejects links, traversal and duplicates
+ok 25 - Git archive reader extracts regular data and rejects links, traversal and duplicates
+  ---
+  duration_ms: 3.715291
+  ...
+# Subtest: generator produces deterministic explicit valid maps across seeds using the actual core
+ok 26 - generator produces deterministic explicit valid maps across seeds using the actual core
+  ---
+  duration_ms: 5.991083
+  ...
+# Subtest: campaign validation uses the core and rejects duplicate or malformed levels
+ok 27 - campaign validation uses the core and rejects duplicate or malformed levels
+  ---
+  duration_ms: 13.286167
+  ...
+# Subtest: theme validation uses the actual content registry and rejects invalid or duplicate entries
+ok 28 - theme validation uses the actual content registry and rejects invalid or duplicate entries
+  ---
+  duration_ms: 40.956042
+  ...
+# Subtest: class validation accepts current data and rejects unsupported mechanics through the core
+ok 29 - class validation accepts current data and rejects unsupported mechanics through the core
+  ---
+  duration_ms: 15.566042
+  ...
+# Subtest: packaged offline builds generate scoped metadata, generated brand icons, complete integrity inventory and reproducible bytes
+ok 30 - packaged offline builds generate scoped metadata, generated brand icons, complete integrity inventory and reproducible bytes
+  ---
+  duration_ms: 6405.048
+  ...
+# Subtest: offline source sentinel requires its template and does not silently emit an incomplete installer
+ok 31 - offline source sentinel requires its template and does not silently emit an incomplete installer
+  ---
+  duration_ms: 19.221917
+  ...
+# Subtest: compact offline catalogue and inventory preserve reader results, source text and integrity
+ok 32 - compact offline catalogue and inventory preserve reader results, source text and integrity
+  ---
+  duration_ms: 2509.290959
+  ...
+# Subtest: public package has local entry, accurate storage notices and enforced preview headers without changing source serving
+ok 33 - public package has local entry, accurate storage notices and enforced preview headers without changing source serving
+  ---
+  duration_ms: 70.799666
+  ...
+# Subtest: optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source
+ok 34 - optional indexed pack keeps exact shipped and ZIP bytes while core cache excludes only the declared source
+  ---
+  duration_ms: 4322.955333
+  ...
+# Subtest: optional offline policy rejects non-pack, unknown, duplicate, unsafe, missing and excluded sources
+ok 35 - optional offline policy rejects non-pack, unknown, duplicate, unsafe, missing and excluded sources
+  ---
+  duration_ms: 25.926917
+  ...
+# Subtest: archived packs stay downloadable with exact bytes while both navigation catalogs remain in the core cache
+ok 36 - archived packs stay downloadable with exact bytes while both navigation catalogs remain in the core cache
+  ---
+  duration_ms: 2163.085083
+  ...
+# Subtest: declaring an optional pack does not relax the 80 MiB core cache budget
+ok 37 - declaring an optional pack does not relax the 80 MiB core cache budget
+  ---
+  duration_ms: 3533.0505
+  ...
+# Subtest: default input inspection binds all committed include originals with shared source-only exclusions
+ok 38 - default input inspection binds all committed include originals with shared source-only exclusions
+  ---
+  duration_ms: 429.524166
+  ...
+# Subtest: sparse missing unreferenced originals fail with exact hydration bytes instead of undercounting
+ok 39 - sparse missing unreferenced originals fail with exact hydration bytes instead of undercounting
+  ---
+  duration_ms: 390.618375
+  ...
+# Subtest: default input inspection rejects dirty, assumed-unchanged, ignored and linked originals
+ok 40 - default input inspection rejects dirty, assumed-unchanged, ignored and linked originals
+  ---
+  duration_ms: 613.234666
+  ...
+# Subtest: inspection refuses another checkout and malformed CLI arguments without producing output
+ok 41 - inspection refuses another checkout and malformed CLI arguments without producing output
+  ---
+  duration_ms: 3005.468166
+  ...
+# Subtest: committed inspector CLI writes only exact nonpromotable metadata and never overwrites it
+ok 42 - committed inspector CLI writes only exact nonpromotable metadata and never overwrites it
+  ---
+  duration_ms: 1312.977459
+  ...
+# Subtest: source binding verifies available producer originals outside includes, including hidden edits
+ok 43 - source binding verifies available producer originals outside includes, including hidden edits
+  ---
+  duration_ms: 630.711125
+  ...
+# Subtest: publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+ok 44 - publication writer preserves catalogue values and emits reproducible repository-formatted JavaScript
+  ---
+  duration_ms: 268.759291
+  ...
+# Subtest: real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies
+ok 45 - real archived CLI builds reviewed soundtrack metadata without installed formatter dependencies
+  ---
+  duration_ms: 2985.948875
+  ...
+# Subtest: absent album opt-in preserves output bytes and does not read the audio producer
+ok 46 - absent album opt-in preserves output bytes and does not read the audio producer
+  ---
+  duration_ms: 4145.987917
+  ...
+# Subtest: opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+ok 47 - opt-in album bytes join loose, ZIP and manifest once, excluded from core and legacy pack metadata
+  ---
+  duration_ms: 1473.939166
+  ...
+# Subtest: incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+ok 48 - incorrect compiled body, symbolic source or automatic binary inclusion refuses without replacing old output
+  ---
+  duration_ms: 1198.132042
+  ...
+# Subtest: all 70 hosted registrations retain provenance without inventing listening approval
+ok 49 - all 70 hosted registrations retain provenance without inventing listening approval
+  ---
+  duration_ms: 11.135333
+  ...
+# Subtest: real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries
+ok 50 - real candidate producer compiles every tiny fixture, verifies import bytes and preserves output boundaries
+  ---
+  duration_ms: 105.516917
+  ...
+# Subtest: real candidate producer refuses a changed final source body, false runtime hash and unassigned recording
+ok 51 - real candidate producer refuses a changed final source body, false runtime hash and unassigned recording
+  ---
+  duration_ms: 51.318459
+  ...
+# Subtest: real candidate producer refuses altered derivative provenance and changed runtime bytes
+ok 52 - real candidate producer refuses altered derivative provenance and changed runtime bytes
+  ---
+  duration_ms: 65.770041
+  ...
+# Subtest: approved original recordings are optional binaries while their catalogue remains offline metadata
+ok 53 - approved original recordings are optional binaries while their catalogue remains offline metadata
+  ---
+  duration_ms: 2446.737292
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 27450.299083
