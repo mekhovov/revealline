@@ -1344,6 +1344,7 @@ try {
     bodyId = theme.player;
   }
   const audioMaster = createAudioMaster();
+  let audioSaveWarningOwner = null;
   const audioPreferences = createAudioPreferences({
     audioMaster,
     window,
@@ -1354,8 +1355,19 @@ try {
     },
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
-    onWarning: (message) => {
-      if (message) warning(message);
+    onWarning: (message, key) => {
+      if (message) {
+        if (warning(key ? localizedMessage(key) : message, null, 'host.audio-preferences'))
+          audioSaveWarningOwner = flightInformation.token();
+      } else if (audioSaveWarningOwner) {
+        const expected = audioSaveWarningOwner;
+        audioSaveWarningOwner = null;
+        // A recovered save owns only its own current caption, never a later
+        // gameplay notice, replacement attempt or restored-page message.
+        flightInformation.commitWarning(expected, '', null, 'host.audio-preferences', {
+          allowTerminal: true,
+        });
+      }
     },
   });
   const displayPreferences = createDisplayPreferences({
@@ -2168,15 +2180,19 @@ try {
     activateDeferredAudio();
     // Only explicit player actions mirror the legacy preference. Playback promises never do.
     const saved = preferences({ musicEnabled: !audioMaster.snapshot().muted });
-    const warning = audioPreferences.getWarning() || saved.warning || '';
+    const warning = audioPreferenceWarning() || saved.warning || '';
     return { ok: !warning, warning };
   }
   function setMasterVolume(volume) {
     audioPreferences.setVolume(volume);
     activateDeferredAudio();
     const saved = preferences({ masterVolume: audioMaster.snapshot().volume });
-    const warning = audioPreferences.getWarning() || saved.warning || '';
+    const warning = audioPreferenceWarning() || saved.warning || '';
     return { ok: !warning, warning };
+  }
+  function audioPreferenceWarning() {
+    const key = audioPreferences.getWarningKey();
+    return key ? t(key) : audioPreferences.getWarning();
   }
   function activateDeferredAudio() {
     const master = audioMaster.snapshot();
