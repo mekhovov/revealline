@@ -58,6 +58,7 @@ export function mountAircraftArchiveControls({
     work = null,
     operation = null,
     rows = [],
+    rowsLocale = null,
     inventoryError = null,
     lastPollTick = -1,
     listLoaded = false,
@@ -130,6 +131,7 @@ export function mountAircraftArchiveControls({
     setResult(subject + text);
   }
   function renderRows() {
+    rowsLocale = locale();
     const selected = select.value;
     select.replaceChildren();
     for (const row of rows) {
@@ -141,6 +143,7 @@ export function mountAircraftArchiveControls({
     select.value = rows.some((row) => row.id === selected) ? selected : (rows[0]?.id ?? '');
   }
   function paint() {
+    if (rowsLocale !== locale()) renderRows();
     heading.textContent = t('Saved flight sessions', 'Збережені льотні сесії');
     explanation.textContent = t(
       'Sessions save locally after flight begins, up to 32 MiB each, 128 MiB total and 16 sessions. Nothing is deleted automatically. Finish an archive to save its final segment; flying can continue. All aircraft archives are unscored.',

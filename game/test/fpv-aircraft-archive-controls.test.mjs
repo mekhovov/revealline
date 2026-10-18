@@ -735,6 +735,8 @@ test('completed course feedback translates without repeating verification or liv
   f.setLocale('uk');
   f.update();
   assert.match(text, /Початковий курс.*Завершення курсу в записі перевірено: 6.02 с.*Без заліку/);
+  assert.match(f.ui.root.querySelector('select').textContent, /завершено/);
+  assert.equal(f.ui.root.querySelector('select').value, 'recorded-flight');
   assert.equal(writes, 1);
   f.setLocale('en');
   f.update();
