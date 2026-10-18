@@ -1,6 +1,7 @@
 import { t, localizedText, localizedMessage } from '../i18n/index.mjs';
 import { createOperationStatus } from './operation-status.mjs';
 import { prepareBackupSet } from '../backup-set.mjs';
+import { prepareBackupArchive } from '../backup-archive.mjs';
 
 const PURPOSES = {
   game: 'game data',
@@ -29,7 +30,17 @@ export function attachBackupSetPanel({
     localizedText(element, () => text);
     return element;
   };
-  const prepare = node(
+  const prepareArchive = node(
+      'button',
+      'prepare-backup-archive',
+      localizedMessage('interface:backupArchive.prepare'),
+    ),
+    archiveHelp = node(
+      'p',
+      'backup-archive-help',
+      localizedMessage('interface:backupArchive.help'),
+    ),
+    prepare = node(
       'button',
       'prepare-backup-set',
       localizedMessage('interface:prepareGameAndOriginalsBackup'),
@@ -52,7 +63,9 @@ export function attachBackupSetPanel({
       localizedMessage('interface:fileNames'),
     ),
     filenameList = node('dl', 'backup-set-filename-list', '');
-  prepare.type = cancelButton.type = 'button';
+  prepareArchive.type = prepare.type = cancelButton.type = 'button';
+  prepareArchive.className = 'button primary';
+  prepareArchive.setAttribute('aria-describedby', archiveHelp.id);
   prepare.className = 'button primary';
   cancelButton.className = 'button secondary';
   cancelButton.hidden = true;
@@ -61,7 +74,7 @@ export function attachBackupSetPanel({
   filenames.hidden = true;
   filenames.open = false;
   filenames.append(filenameSummary, filenameList);
-  root.append(prepare, cancelButton, status, list, filenames);
+  root.append(prepareArchive, archiveHelp, prepare, cancelButton, status, list, filenames);
   const presenter = createOperationStatus(status);
   const showStatus = (message, state = 'ready') =>
     presenter.begin({ message }).finish({ message, state });
@@ -93,7 +106,8 @@ export function attachBackupSetPanel({
     focus = true,
     message = t('interface:preparationCancelledYourDataIsUnchanged'),
   } = {}) {
-    const op = operation;
+    const op = operation,
+      returnTo = op?.opener ?? (prepared?.archiveReport ? prepareArchive : prepare);
     if (!op && !prepared) return false;
     if (op) {
       op.controller.abort();
@@ -101,7 +115,7 @@ export function attachBackupSetPanel({
     }
     release();
     showStatus(message, op ? 'cancelled' : 'ready');
-    if (!op && focus && dialog.open && !document.hidden) prepare.focus({ preventScroll: true });
+    if (!op && focus && dialog.open && !document.hidden) returnTo.focus({ preventScroll: true });
     return true;
   }
   function checkCurrent() {
@@ -112,10 +126,18 @@ export function attachBackupSetPanel({
       cancel({ message: t('interface:gameDataChangedPrepareTheBackupSetAgain') });
     }
   }
-  prepare.onclick = async () => {
+  const archiveScope = (result) =>
+    t('interface:backupArchive.scope', {
+      journey: t(`interface:backupArchive.journey.${result.archiveReport.journey}`),
+    }) +
+    (result.coverage.detachedStories.length || result.coverage.referenceOnlyMusic?.length
+      ? ' ' + t('interface:backupArchive.incompleteOriginals')
+      : '');
+  async function prepareFiles(archive) {
     if (busy() || !dialog.open || !root.getClientRects().length) return false;
     release();
     const op = {
+      opener: archive ? prepareArchive : prepare,
       controller: new AbortController(),
       controls: [...dialog.querySelectorAll('button,input,select,textarea')].map((element) => [
         element,
@@ -137,7 +159,7 @@ export function attachBackupSetPanel({
     cancelButton.disabled = false;
     cancelButton.focus({ preventScroll: true });
     try {
-      const result = await prepareBackupSet(source, {
+      const result = await (archive ? prepareBackupArchive : prepareBackupSet)(source, {
         signal: op.controller.signal,
         onProgress: (text) => {
           op.lease.update({ message: text });
@@ -148,8 +170,20 @@ export function attachBackupSetPanel({
       prepared = result;
       for (const file of result.files) {
         const row = node('li', `backup-set-${file.id}`, ''),
-          link = node('a', `download-backup-${file.id}`, `Download ${PURPOSES[file.id]}`),
-          state = node('span', `backup-set-state-${file.id}`, `Prepared · ${file.bytes} bytes`),
+          link = node(
+            'a',
+            `download-backup-${file.id}`,
+            archive
+              ? localizedMessage('interface:backupArchive.download')
+              : `Download ${PURPOSES[file.id]}`,
+          ),
+          state = node(
+            'span',
+            `backup-set-state-${file.id}`,
+            archive
+              ? localizedMessage('interface:backupArchive.preparedBytes', { bytes: file.bytes })
+              : `Prepared · ${file.bytes} bytes`,
+          ),
           url = URLImpl.createObjectURL(file.blob);
         urls.add(url);
         link.href = url;
@@ -169,12 +203,18 @@ export function attachBackupSetPanel({
             return false;
           }
           presentFeedback();
-          localizedText(state, () => `Download requested · ${file.bytes} bytes`);
+          localizedText(state, () =>
+            archive
+              ? t('interface:backupArchive.requestedBytes', { bytes: file.bytes })
+              : `Download requested · ${file.bytes} bytes`,
+          );
           showStatus(
-            'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.' +
-              (result.coverage.musicRecoveryNotice
-                ? ` ${result.coverage.musicRecoveryNotice}`
-                : ''),
+            archive
+              ? () => t('interface:backupArchive.requested') + ' ' + archiveScope(result)
+              : 'Download requested. Check your browser destination; this does not confirm a disk write. Keep this five-file set in a separate folder with the shown filenames. Prepared files remain available to retry.' +
+                  (result.coverage.musicRecoveryNotice
+                    ? ` ${result.coverage.musicRecoveryNotice}`
+                    : ''),
           );
           return true; // Native default action, no async or synthetic click.
         };
@@ -187,11 +227,16 @@ export function attachBackupSetPanel({
       }
       filenames.hidden = false;
       showStatus(
-        result.coverage.musicRecoveryNotice
-          ? `Prepared music recovery references. ${result.coverage.musicRecoveryNotice}${result.coverage.detachedStories.length ? ` ${result.coverage.detachedStories.length} detached story original(s) are also unavailable.` : ''} Read the coverage report. No file has been saved to disk.`
-          : result.coverage.detachedStories.length
-            ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
-            : t('interface:preparedAllFourSavedInventoriesAndTheirCoverageReportDownload'),
+        archive
+          ? () =>
+              t('interface:backupArchive.prepared', { count: result.archiveReport.files.length }) +
+              ' ' +
+              archiveScope(result)
+          : result.coverage.musicRecoveryNotice
+            ? `Prepared music recovery references. ${result.coverage.musicRecoveryNotice}${result.coverage.detachedStories.length ? ` ${result.coverage.detachedStories.length} detached story original(s) are also unavailable.` : ''} Read the coverage report. No file has been saved to disk.`
+            : result.coverage.detachedStories.length
+              ? `Prepared an incomplete set: ${result.coverage.detachedStories.length} detached story original(s) are unavailable. Read the coverage report. No file has been saved to disk.`
+              : t('interface:preparedAllFourSavedInventoriesAndTheirCoverageReportDownload'),
       );
       const hadCancelFocus = finish(op);
       if (!document.hidden && document.hasFocus?.() !== false && hadCancelFocus)
@@ -213,17 +258,23 @@ export function attachBackupSetPanel({
           document.hasFocus?.() !== false &&
           hadCancelFocus
         )
-          prepare.focus({ preventScroll: true });
+          op.opener.focus({ preventScroll: true });
       }
     }
-  };
+  }
+  prepare.onclick = () => prepareFiles(false);
+  prepareArchive.onclick = () => prepareFiles(true);
   cancelButton.onclick = () => cancel();
   dialog.addEventListener('close', () => {
     if (!dialog.open) cancel({ focus: false });
   });
-  globalThis.addEventListener?.('pagehide', () => cancel({ focus: false }));
+  globalThis.addEventListener?.('pagehide', (event) => {
+    if (!event.persisted || operation || !prepared?.archiveReport) cancel({ focus: false });
+  });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) cancel({ focus: false });
+    // A prepared ZIP remains available across a Files-app round trip. Its native
+    // link rechecks ownership before every activation; close/unload still releases it.
+    if (document.hidden && (operation || !prepared?.archiveReport)) cancel({ focus: false });
   });
   return {
     cancel: () => {

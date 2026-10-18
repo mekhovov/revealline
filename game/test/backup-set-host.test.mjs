@@ -7,6 +7,7 @@ import { backupSetFixture, catalogueBackupAudio } from './helpers/backup-set-fix
 import { deferred } from './helpers/media-fixtures.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 const fetchBlob = globalThis.fetch;
 
 async function panel() {
@@ -59,6 +60,128 @@ async function panel() {
     busy: () => busy,
   };
 }
+
+test('portable archive uses one native link, retains it across a Files round trip and releases it on close', async () => {
+  const h = await panel();
+  assert.equal(await h.$('prepare-backup-archive').onclick(), true);
+  assert.equal(h.urls.size, 1);
+  assert.equal(h.$('backup-set-files').querySelectorAll('a').length, 1);
+  assert.equal(h.document.activeElement.id, 'download-backup-archive');
+  const link = h.$('download-backup-archive');
+  assert.match(link.download, /^fpv-line-backup-[0-9TZ]+-[a-f0-9]{32}\.zip$/);
+  assert.match(h.$('backup-set-status').textContent, /Journey: not included/);
+  assert.match(h.$('backup-set-status').textContent, /No file has been saved/);
+  assert.equal(link.emit('click').defaultPrevented, false);
+  assert.match(h.$('backup-set-status').textContent, /does not confirm a disk write/);
+  h.document.hidden = true;
+  h.document.emit('visibilitychange');
+  assert.equal(h.urls.size, 1, 'Files-app backgrounding does not revoke a prepared archive');
+  h.document.hidden = false;
+  h.document.emit('visibilitychange');
+  assert.equal(link.emit('click').defaultPrevented, false);
+  h.dialog.open = false;
+  h.dialog.emit('close');
+  assert.equal(h.urls.size, 0);
+  assert.equal(link.emit('click').defaultPrevented, true);
+});
+
+test('archive preparation cancels on hide and changed Journey ownership blocks a later download', async () => {
+  const h = await panel(),
+    entered = deferred(),
+    held = deferred();
+  let revision = 1;
+  h.source.journey = {
+    identity: () => revision,
+    read: async () => {
+      entered.resolve();
+      await held.promise;
+      return { raw: '{}', partial: false };
+    },
+  };
+  const pending = h.$('prepare-backup-archive').onclick();
+  await entered.promise;
+  h.document.hidden = true;
+  h.document.emit('visibilitychange');
+  held.resolve();
+  assert.equal(await pending, false);
+  assert.equal(h.urls.size, 0);
+  assert.equal(h.busy(), false);
+  h.document.hidden = false;
+  h.document.emit('visibilitychange');
+  assert.equal(await h.$('prepare-backup-archive').onclick(), true);
+  const link = h.$('download-backup-archive');
+  revision++;
+  assert.equal(link.emit('click').defaultPrevented, true);
+  assert.equal(h.urls.size, 0);
+  assert.equal(h.document.activeElement.id, 'prepare-backup-archive');
+});
+
+test('archive clearly labels partial Journey evidence and missing originals in both interface languages', async () => {
+  const locale = getLocale();
+  try {
+    for (const language of ['en', 'uk']) {
+      setLocale(language, { persist: false });
+      const h = await panel();
+      await catalogueBackupAudio(h);
+      h.source.journey = { identity: () => 1, read: async () => ({ raw: '{}', partial: true }) };
+      assert.equal(await h.$('prepare-backup-archive').onclick(), true);
+      const status = h.$('backup-set-status');
+      assert.match(
+        status.textContent,
+        language === 'en' ? /recovery data only/ : /лише дані для відновлення/,
+      );
+      assert.match(
+        status.textContent,
+        language === 'en'
+          ? /cannot supply the missing originals/
+          : /не може надати відсутні оригінали/,
+      );
+      assert.doesNotMatch(status.textContent, /interface:|backupArchive\.|\{\{/);
+      if (language === 'en') {
+        const url = h.$('download-backup-archive').href;
+        setLocale('uk', { persist: false });
+        assert.match(status.textContent, /лише дані для відновлення/);
+        assert.equal(
+          h.$('download-backup-archive').href,
+          url,
+          'language changes preserve prepared bytes and their native link',
+        );
+        setLocale('en', { persist: false });
+      }
+      h.$('download-backup-archive').emit('click');
+      assert.match(
+        status.textContent,
+        language === 'en' ? /recovery data only/ : /лише дані для відновлення/,
+      );
+      h.dialog.open = false;
+      h.dialog.emit('close');
+    }
+  } finally {
+    setLocale(locale, { persist: false });
+  }
+});
+
+test('actual Journey host includes its current progress in an archive without changing saved data or resuming', async (t) => {
+  const h = await soloPage(t, { search: '?journey=1' });
+  h.$('library-button').click();
+  const saves = [...h.$('library-dialog').querySelectorAll('button')].find(
+    (node) => node.dataset.libraryPanel === 'saves',
+  );
+  saves.click();
+  await settle(() => !!h.$('prepare-backup-archive') && !h.$('library-saves').hidden);
+  const stored = new Map(h.storage.map),
+    before = authoritativeCheckpoint(h.rendered.run);
+  assert.equal(
+    await h.$('prepare-backup-archive').onclick(),
+    true,
+    h.$('backup-set-status').textContent,
+  );
+  assert.match(h.$('backup-set-status').textContent, /Journey: current profile/);
+  assert.deepEqual(h.storage.map, stored);
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
+  assert.deepEqual(h.errors, []);
+  h.$('library-dialog').close();
+});
 
 test('restricted music remains visibly reference-only before and after native download activation', async () => {
   const h = await panel();

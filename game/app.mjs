@@ -7977,6 +7977,12 @@ try {
       ? null
       : {
           edition: { version: buildVersion, channel, sourceRevision: buildSourceRevision },
+          journey: journeyProfile
+            ? {
+                identity: () => journeyProfile.stateRevision(),
+                read: (options) => journeyProfile.exportAsync(options),
+              }
+            : null,
           gameIdentity: () => {
             assertWriter();
             if (courseSession || courseEntry || contentSwitchBusy || sessionBusy || backupBusy)
