@@ -209,12 +209,48 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   assert.deepEqual(p.errors, []);
 });
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
+function appendLibraryWaitEvidence(error, p, initialPictureRequested) {
+  try {
+    const doc = p?.doc ?? globalThis.document;
+    const rendered = p?.rendered;
+    const text = (value) => (typeof value === 'string' ? value.slice(0, 512) : null);
+    const errors = Array.isArray(p?.errors) ? p.errors : null;
+    const evidence = JSON.stringify({
+      format: 'mission-library-wait.v1',
+      fixtureReady: !!p,
+      flightState: text(doc?.body?.dataset.flightState),
+      pictureState: text(doc?.body?.dataset.pictureState),
+      renderedRun: rendered
+        ? {
+            levelId: text(rendered.run?.levelId),
+            tick: Number.isSafeInteger(rendered.run?.tick) ? rendered.run.tick : null,
+            paused: typeof rendered.paused === 'boolean' ? rendered.paused : null,
+          }
+        : null,
+      chooserOpen: doc?.getElementById('journey-chooser')?.open ?? null,
+      collectionExists: !!doc?.getElementById('journey-collection'),
+      hidden: doc?.hidden ?? null,
+      hasFocus: doc?.hasFocus?.() ?? null,
+      runMessage: text(doc?.getElementById('run-message')?.textContent),
+      errors: errors?.slice(0, 4).map((item) => String(item).slice(0, 512)) ?? null,
+      errorsOmitted: errors ? Math.max(0, errors.length - 4) : null,
+      initialPictureRequested,
+    });
+    if (typeof error?.message === 'string' && Buffer.byteLength(evidence, 'utf8') <= 8192) {
+      void error.stack;
+      error.message += `\n${evidence}`;
+    }
+  } catch {
+    // Observation must never replace the original assertion failure.
+  }
+}
 async function open(p) {
   p.$('shell-play').click();
   try {
     await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   } catch (error) {
     error.message += ` ${p.$('run-message').textContent} ${p.errors.map(String).join(';')}`;
+    appendLibraryWaitEvidence(error, p);
     throw error;
   }
 }
@@ -507,9 +543,14 @@ for (const transition of ['finish', 'newer input', 'failed initial picture'])
           return new Response('Deliberate initial picture outage', { status: 503 });
       },
     });
-    await settle(
-      () => initialRequested && globalThis.document.getElementById('journey-collection'),
-    );
+    try {
+      await settle(
+        () => initialRequested && globalThis.document.getElementById('journey-collection'),
+      );
+    } catch (error) {
+      appendLibraryWaitEvidence(error, null, initialRequested);
+      throw error;
+    }
     const doc = globalThis.document;
     assert.notEqual(doc.body.dataset.flightState, 'running');
     assert.equal(
