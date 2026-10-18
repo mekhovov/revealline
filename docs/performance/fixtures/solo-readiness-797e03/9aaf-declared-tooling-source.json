@@ -284,6 +284,21 @@
       "references": ["scripts/solo-qualification-cpu-profile.mjs"],
       "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
       "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-remote-cpu-profile-plan.json",
+      "references": ["scripts/solo-qualification-cpu-profile.mjs"],
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+      "execution": "not-asserted-by-this-source-record"
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json",
+      "references": [
+        "scripts/qualify-solo-runtime.mjs",
+        "scripts/solo-qualification-cpu-profile.mjs"
+      ],
+      "revision": "f6557a569599f920b47e55c179bdb664eacdd3f0",
+      "execution": "not-asserted-by-this-source-record"
     }
   ],
   "records": [
@@ -545,6 +560,20 @@
       "bytes": 30410,
       "sha256": "de6caca54ad8e5702e3b90908e9bf15fc54f92cbb957282af0445361565d1800",
       "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-remote-cpu-profile-plan.json",
+      "object": "3f3a55dba6a9961cf56b0eb292eb8b6a4f46be7c",
+      "bytes": 9913,
+      "sha256": "23139ecdc03518fe3989a9f2344c13c6f66ea13b3d05bc9d9035333470f6cf9a",
+      "revision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b"
+    },
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json",
+      "object": "29deaffd2c581ebb7547c8363b3e0a83c8bec0c9",
+      "bytes": 10952,
+      "sha256": "9e07cc1bdefc3697704942b0fd9a1b5f266ae6462925dd452bf2c4aaa34dfc38",
+      "revision": "f6557a569599f920b47e55c179bdb664eacdd3f0"
     }
   ],
   "scope": "Exact Git readback of declarations and changed helper references. Records do not assert that every declaration was dispatched; held plans remain held. Prior observations and failures are unchanged. No production historical fallback.",
@@ -556,6 +585,10 @@
     {
       "revision": "d87a2ee10e069fa3720040d9003f9740acd9427c",
       "tree": "a036ad2355165d1c288165fc52e8328835fb4c95"
+    },
+    {
+      "revision": "f6557a569599f920b47e55c179bdb664eacdd3f0",
+      "tree": "5ac18d562b0986bd102b59e7bfa4b4b54a98af10"
     }
   ]
 }

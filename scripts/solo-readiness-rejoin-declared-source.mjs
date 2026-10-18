@@ -13,14 +13,14 @@ export const changedReadinessTools = Object.freeze([
 ]);
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export function declaredReadinessToolRefs(bytes, manifestPath, manifestBytes) {
-  assert.equal(bytes.length, 22598);
-  assert.equal(sha(bytes), 'e95472900720744990ce451743d7ef220646fee8657114c039762a896c529d9c');
+  assert.equal(bytes.length, 23983);
+  assert.equal(sha(bytes), '5626a41e29c66ebad2e45ac1ebff4b6c943ec7370838697b3e3dff136401965e');
   const witness = JSON.parse(bytes);
   assert.equal(witness.format, 'SoloReadinessChangedToolDeclaredSourceV1');
   assert.equal(witness.postHocExactGitReadback, true);
   assert.equal(witness.revision, '9aaf4ea6ee9ebe23821552e59851f2e3e817a15b');
   assert.equal(witness.tree, '7e64a66f9eb309b692719b163ca00fbe78146ad5');
-  assert.equal(witness.records.length, 37);
+  assert.equal(witness.records.length, 39);
   const record = witness.records.find(
     (row) =>
       row.path === manifestPath &&

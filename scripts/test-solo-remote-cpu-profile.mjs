@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import { readHistoricalPageErrorRefs } from './solo-page-error-source-witness.mjs';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
@@ -265,6 +266,11 @@ test('immutable parked declaration and witnessed source refs remain exact', asyn
     ),
   );
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
+    if (
+      ref.path === 'scripts/solo-qualification-cpu-profile.mjs' &&
+      (await assertDeclaredReadinessTool('docs/performance/solo-remote-cpu-profile-plan.json', ref))
+    )
+      continue;
     const historical =
       witness.files.find((row) => row.path === ref.path) ?? errorHistory.get(ref.path);
     const actual = historical

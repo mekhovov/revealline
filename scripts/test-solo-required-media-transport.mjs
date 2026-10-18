@@ -766,6 +766,7 @@ test('actual qualifier action hook takes completion after native key, retains be
     'readinessModule',
     'readinessOptions',
     'save',
+    'frameRecorder = null',
     code.slice(begin, end),
   );
   for (const bad of [false, true]) {
@@ -1067,6 +1068,7 @@ test('actual qualifier initializer wires the first original trusted direct Start
     'requiredOriginal',
     'requiredStartRetention',
     'faultEntryURL',
+    'requiredRejoin',
     body,
   )(
     b.env,
@@ -1078,6 +1080,7 @@ test('actual qualifier initializer wires the first original trusted direct Start
     true,
     'trusted-initial-start-v1',
     entry,
+    undefined,
   );
   const event = { isTrusted: true, target: { closest: () => ({ id: 'start-button' }) } };
   b.handlers.get('click')(event);
@@ -1265,6 +1268,7 @@ test('required rejoin opt-in is exact source/protocol/start bound and leaves old
     '--source-revision=797e03f28743921842df6aa57520a72016ba3dfc',
     '--readiness-probe=required-original-cancel-v1',
     '--readiness-required-start=trusted-initial-start-v1',
+    '--server-fixture-access',
     '--work-probe',
     '--hitch-journal',
     '--cadence=settled120',

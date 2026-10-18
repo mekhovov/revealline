@@ -213,11 +213,16 @@ test('manual trusted-main job selects only797 with exact command ordering and un
     ['78m node', '79m node'],
     [activeTree, prior.candidate.tree],
     [
-      'node --test scripts/test-solo-797e03-correctness.mjs',
-      'node scripts/test-solo-797e03-correctness.mjs --test',
+      job.split('\n').find((line) => line.trim().startsWith('node --test ')),
+      job
+        .split('\n')
+        .find((line) => line.trim().startsWith('node --test '))
+        .replace('node --test ', 'node '),
     ],
-  ])
+  ]) {
+    assert(job.includes(before), 'Mutation must target the actual workflow');
     assert.throws(() => workflowAdmission(job.replace(before, after)));
+  }
 });
 async function current(ref) {
   if (await assertDeclaredReadinessTool(planPath, ref)) return;
