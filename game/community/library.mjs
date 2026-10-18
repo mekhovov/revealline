@@ -211,9 +211,9 @@ export function createCommunityLibrary({
     });
   }
   return Object.freeze({
-    async catalog({ query = '', installed = 'all', cursor = null, limit = 20 } = {}) {
+    async catalog({ query = '', installed = 'all', cursor = null, limit = 20, signal } = {}) {
       required(['all', 'installed', 'available'].includes(installed), 'Catalog filter is invalid.');
-      const page = await client.catalog({ query, cursor, limit });
+      const page = await client.catalog({ query, cursor, limit, signal });
       const state = await stateStore.read();
       const local = await installedSet();
       const needle = query.trim().toLocaleLowerCase();

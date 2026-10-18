@@ -5894,5 +5894,14 @@
   "expeditions.relayProgress": "Relays {{done}}/{{total}}",
   "expeditions.stageProgress": "Targets {{done}}/{{total}}",
   "gettingReadyGameplayIsPaused": "Getting ready. Gameplay is paused.",
-  "gameNotReadyTryStartOrResumeAgain": "The game is not ready yet. Try Start or Resume again."
+  "gameNotReadyTryStartOrResumeAgain": "The game is not ready yet. Try Start or Resume again.",
+  "community.service.heading": "Community connection",
+  "community.service.checking": "Checking the community connection before setup…",
+  "community.service.ready": "Community connection available. Sign-in and publishing permissions are checked separately.",
+  "community.service.unavailable": "Community connection unavailable. Online browsing, account setup and publishing are paused. Local play and creation remain available; already installed content depends on what is kept on this device.",
+  "community.service.retry": "Check connection again",
+  "community.service.localPlay": "Return to local play",
+  "community.service.localCreate": "Create locally",
+  "community.service.catalogWaiting": "The catalog opens after the connection check.",
+  "community.service.accountWaiting": "Connection is checked before sign-in."
 }
