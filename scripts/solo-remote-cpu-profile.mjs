@@ -85,6 +85,48 @@ const FRAME_TRACE_CANDIDATE = Object.freeze({
 });
 const warmFrameTrace = (plan) =>
   plan?.phase === 'warm-browser-frame-trace' && plan?.sourceCohort === 'warm-frame-9d5139-v1';
+const failureFrameTrace = (plan) =>
+  plan?.phase === 'warm-browser-frame-trace' &&
+  plan?.sourceCohort === 'warm-frame-9d5139-failure-investigation-v1';
+const anyWarmFrameTrace = (plan) => warmFrameTrace(plan) || failureFrameTrace(plan);
+const FRAME_FAILURE_EVIDENCE = Object.freeze({
+  format: 'SoloFailedFirstEightDiagnosticEvidenceV1',
+  sourceRevision: '9d5139b9983c700a6a708f65f379fa4d5a8b0395',
+  runId: 39130685076,
+  attempt: 1,
+  toolingRevision: '557ad1d936f6152b6decefab11db48a5674c05bc',
+  toolingTree: 'bfc39e36a6ceb5e5695c89aa71c5f472b3507da3',
+  artifact: {
+    id: 12138336732,
+    bytes: 821195,
+    sha256: '8892f95644cc62886eeb246f8d38bd9220ff98973678b9e4b4be0b25100a1397',
+  },
+  audit: {
+    gitDataBlob: 'a5208f05089a3e2f3109aae6039958e853f10e4c',
+    bytes: 373472,
+    sha256: '588b031ce672b491a06f246d5793ddf0e51e9e40213e7c32999ab381e58e8b20',
+  },
+  correctnessPassed: 7,
+  correctnessFailed: 1,
+  failedCase: 'candidate-worker-webkit',
+  failedReport: {
+    bytes: 2670,
+    sha256: '093e1bca8af32ddaee765532aa8a17c9037c3fd3043d71aa2d9436cb6e0e22af',
+  },
+  nativeReplayPassed: 4,
+  nodePortabilityMismatches: 4,
+  closedOwners: 14,
+  ownerAnomalies: 0,
+  disposition: 'independent-diagnostic-only',
+});
+function validateFrameFailureEvidence(release) {
+  assert.equal(release.firstEightRequired, false);
+  assert.equal(release.firstEightAllCorrectnessPassed, false);
+  assert.equal(release.firstEightEvidence, null);
+  assert.equal(release.firstEightStatus, 'failed-one-of-eight');
+  assert.deepEqual(release.failedFirstEightEvidence, FRAME_FAILURE_EVIDENCE);
+}
+
 const frameRecipe = Object.freeze({
   path: 'docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture',
   bytes: 6570,
@@ -195,6 +237,74 @@ function validateFrameTracePlan(plan) {
   return plan;
 }
 
+function validateFrameFailurePlan(plan) {
+  assert.equal(plan.format, 'SoloHostedCpuProfilePlanV1');
+  assert.equal(plan.status, 'reviewed-diagnostic-only');
+  assert(failureFrameTrace(plan));
+  assert.equal(plan.repository, 'mekhovov/revealline');
+  for (const key of Object.keys(FRAME_TRACE_CANDIDATE))
+    assert.deepEqual(plan.candidate[key], FRAME_TRACE_CANDIDATE[key], key);
+  assert.equal(plan.runtimeRevision, FRAME_TRACE_CANDIDATE.revision);
+  assert.deepEqual(plan.baseline, {
+    revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
+    tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+  });
+  assert.equal(plan.upload, undefined);
+  assert.equal(plan.stressOrigin, undefined);
+  assert.equal(plan.node, '22.13.1');
+  assert.equal(plan.playwright, '1.62.1');
+  assert.equal(plan.cpu, 'fresh-verified-mid');
+  assert.equal(plan.calibrationPreset, 'mid');
+  assert.equal(plan.calibrationTimeoutMs, 5 * 60000);
+  assert.equal(plan.performanceExclusion, true);
+  assert.equal(plan.maxParallel, 1);
+  assert.equal(plan.automaticRetries, 0);
+  assert.equal(plan.automaticPhaseContinuation, false);
+  assert.equal(plan.setupTimeoutMs, 40 * 60000);
+  assert.equal(plan.helperTimeoutMs, 75 * 60000);
+  assert.equal(plan.evidenceBytes, 256 * MiB);
+  assert.equal(plan.rowEvidenceBytes, 128 * MiB);
+  assert.equal(plan.scenarioTimeoutMs, 360000);
+  assert.deepEqual(plan.rows, [rowDefinition(plan)]);
+  assert.deepEqual(plan.recipe, frameRecipe);
+  assert.deepEqual(plan.profile, frameProfile);
+  assert.equal(plan.release.status, 'reviewed');
+  assert.equal(plan.release.scope, 'independent-first-eight-failure-investigation');
+  assert.equal(plan.release.performanceQualification, 'excluded-browser-frame-tracing');
+  validateFrameFailureEvidence(plan.release);
+  assert.deepEqual(plan.release.dispatch, {
+    workflow: '.github/workflows/solo-native-package-consumer.yml',
+    lane: 'frame-trace',
+    ref: 'main',
+    source: FRAME_TRACE_CANDIDATE.revision,
+    automaticRetries: 0,
+  });
+  assert.deepEqual(
+    plan.adapterInputs.map((x) => x.path),
+    ['scripts/solo-remote-cpu-profile.mjs', 'scripts/solo-remote-baseline.mjs'],
+  );
+  assert(
+    Array.isArray(plan.frozenTools) && plan.frozenTools.length > 0 && plan.frozenTools.length <= 64,
+  );
+  assert.equal(new Set(references(plan).map((x) => x.path)).size, references(plan).length);
+  for (const path of [
+    'scripts/solo-qualification-cpu-profile.mjs',
+    'scripts/qualify-solo-runtime.mjs',
+    'scripts/run-solo-remote-correctness.mjs',
+    'scripts/solo-remote-supplemental.mjs',
+    'scripts/solo-remote-sustained.mjs',
+    'scripts/calibrate-solo-performance.mjs',
+    'scripts/vendor/devtools-benchmark.mjs',
+  ])
+    assert(plan.frozenTools.some((ref) => ref.path === path));
+  for (const ref of references(plan)) {
+    assert(/^(scripts|game|docs)\//.test(ref.path) && !ref.path.split('/').includes('..'));
+    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < MiB);
+    assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+  }
+  return plan;
+}
+
 const firstVictory797 = (plan) =>
   plan?.phase === 'first-victory-cpu-profile' &&
   plan?.sourceCohort === 'first-victory-797e03-main8b-v1';
@@ -233,7 +343,7 @@ const firstVictory239 = (plan) =>
 const firstVictory = (plan) => plan?.phase === 'first-victory-cpu-profile';
 const longRail = (plan) => plan?.phase === 'long-rail-cpu-profile';
 const source = (plan) =>
-  warmFrameTrace(plan)
+  anyWarmFrameTrace(plan)
     ? FRAME_TRACE_CANDIDATE.revision
     : firstVictory(plan)
       ? firstVictory797(plan)
@@ -247,7 +357,7 @@ const source = (plan) =>
         ? LONG_RAIL_CPU_SOURCE
         : CPU_PROFILE_SOURCE;
 const recipeHash = (plan) =>
-  warmFrameTrace(plan)
+  anyWarmFrameTrace(plan)
     ? frameRecipe.sha256
     : firstVictory(plan)
       ? firstVictory797(plan)
@@ -261,7 +371,7 @@ const recipeHash = (plan) =>
         ? LONG_RAIL_CPU_RECIPE
         : CPU_PROFILE_RECIPE;
 const rowDefinition = (plan) => ({
-  id: warmFrameTrace(plan)
+  id: anyWarmFrameTrace(plan)
     ? 'warm-browser-frame-trace-chromium-candidate'
     : firstVictory(plan)
       ? 'first-victory-cpu-profile-chromium-candidate'
@@ -356,6 +466,7 @@ export function firstVictoryDe332ProfileOrigin() {
 
 export function validateCpuProfilePlan(plan) {
   if (warmFrameTrace(plan)) return validateFrameTracePlan(plan);
+  if (failureFrameTrace(plan)) return validateFrameFailurePlan(plan);
   assert.equal(plan.format, 'SoloHostedCpuProfilePlanV1');
   assert.equal(plan.status, 'reviewed-diagnostic-only');
   assert(
@@ -661,11 +772,11 @@ export async function prepareCpuProfileMode(ctx) {
   const scenario = await readSupplementalJSON(recipePath, MiB);
   assert.equal(
     scenario.timeoutMs,
-    warmFrameTrace(ctx.plan) ? ctx.plan.scenarioTimeoutMs : ctx.plan.profile.maximumMs,
+    anyWarmFrameTrace(ctx.plan) ? ctx.plan.scenarioTimeoutMs : ctx.plan.profile.maximumMs,
   );
   assert.equal(scenario.kind, 'performance');
   assert(scenario.expectedReplayDefinition && scenario.replayRequirements);
-  if (warmFrameTrace(ctx.plan)) {
+  if (anyWarmFrameTrace(ctx.plan)) {
     const { verifiedMidCalibration, prepareCalibrationScratch } = await import(
       './solo-remote-sustained.mjs'
     );
@@ -685,8 +796,13 @@ export async function prepareCpuProfileMode(ctx) {
     Object.assign(ctx.report, {
       performanceExclusion: true,
       performanceQualification: 'excluded-browser-frame-tracing',
-      firstEightRequired: true,
-      firstEightAllCorrectnessPassed: true,
+      ...(failureFrameTrace(ctx.plan)
+        ? {
+            firstEightRequired: false,
+            firstEightAllCorrectnessPassed: false,
+            firstEightStatus: 'failed-one-of-eight',
+          }
+        : { firstEightRequired: true, firstEightAllCorrectnessPassed: true }),
       releaseScope: ctx.plan.release.scope,
       frameTraceStratum: {
         engine: 'chromium',
@@ -711,7 +827,7 @@ export async function prepareCpuProfileMode(ctx) {
   return { recipePath };
 }
 export function cpuProfileArguments(ctx, url, dir) {
-  if (warmFrameTrace(ctx.plan)) {
+  if (anyWarmFrameTrace(ctx.plan)) {
     assert(Number.isFinite(ctx.modeState.cpu) && ctx.modeState.cpu >= 1 && ctx.modeState.cpu <= 20);
     assert(ctx.modeState.calibration && typeof ctx.modeState.browserVersion === 'string');
     return [
@@ -747,7 +863,8 @@ export function cpuProfileArguments(ctx, url, dir) {
 }
 
 export function frameTraceAssessment(plan, raw, command, readback, mode) {
-  validateFrameTracePlan(plan);
+  if (failureFrameTrace(plan)) validateFrameFailurePlan(plan);
+  else validateFrameTracePlan(plan);
   const replay = raw?.replay?.nativeVerification,
     trace = raw?.frameTrace;
   const calibration = mode?.calibration;
@@ -850,8 +967,13 @@ export function frameTraceAssessment(plan, raw, command, readback, mode) {
     traceRetention: retained ? 'pass' : 'fail',
     rawPerformanceGateStatus: raw?.performanceGateStatus ?? 'unobserved',
     performanceQualification: 'excluded-browser-frame-tracing',
-    firstEightRequired: true,
-    firstEightAllCorrectnessPassed: true,
+    ...(failureFrameTrace(plan)
+      ? {
+          firstEightRequired: false,
+          firstEightAllCorrectnessPassed: false,
+          firstEightStatus: 'failed-one-of-eight',
+        }
+      : { firstEightRequired: true, firstEightAllCorrectnessPassed: true }),
     calibration: calibration ?? null,
     cpu: mode?.cpu ?? null,
     backend: trace?.backend ?? {
@@ -900,7 +1022,8 @@ export async function readFrameTraceEvidence(path, raw) {
 }
 
 export function cpuProfileAssessment(plan, raw, command, profileReadback, mode) {
-  if (warmFrameTrace(plan)) return frameTraceAssessment(plan, raw, command, profileReadback, mode);
+  if (anyWarmFrameTrace(plan))
+    return frameTraceAssessment(plan, raw, command, profileReadback, mode);
   const profile = raw?.cpuProfile,
     replay = raw?.replay?.nativeVerification;
   const correct =
@@ -1037,7 +1160,7 @@ export async function runCpuProfileRow(ctx, row, dir, tmp) {
     const raw = await readSupplementalJSON(join(dir, 'report.json'));
     row.profileReadback = { status: 'failed' };
     try {
-      if (warmFrameTrace(ctx.plan)) {
+      if (anyWarmFrameTrace(ctx.plan)) {
         row.profileReadback = await readFrameTraceEvidence(
           join(dir, 'report.json.frame-trace.json'),
           raw.frameTrace,

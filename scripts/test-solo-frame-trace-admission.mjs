@@ -290,7 +290,8 @@ test('actual preparation performs a fresh verified calibration inside the origin
     'mkdir',
     'copyFile',
     'readSupplementalJSON',
-    'warmFrameTrace',
+    'anyWarmFrameTrace',
+    'failureFrameTrace',
     'longRail',
     'firstVictory797',
     'firstVictory',
@@ -315,6 +316,7 @@ test('actual preparation performs a fresh verified calibration inside the origin
             replayRequirements: {},
           },
     () => true,
+    (plan) => plan.sourceCohort === 'warm-frame-9d5139-failure-investigation-v1',
     () => false,
     () => false,
     () => false,
@@ -468,11 +470,43 @@ test('actual trace readback rehashes raw anchors and refuses changed bytes, alia
   await writeFile(path, Buffer.concat([x.bytes, Buffer.from(' ')]));
   await assert.rejects(readFrameTraceEvidence(path, x.raw));
 });
-test('new declaration freezes actual tools and the unchanged complete warm recipe', async () => {
+async function priorHeldFrameAdapter() {
+  const witnessBytes = await read(
+    'docs/performance/fixtures/solo-browser-frame-trace/83f-held-source.json',
+  );
+  assert.equal(witnessBytes.length, 896);
+  assert.equal(
+    hash(witnessBytes),
+    'a3945336e8ac2c8eeabedd6f92669bb04c90c7564280d8b0b726bb10b9a9bf06',
+  );
+  const witness = JSON.parse(witnessBytes);
+  assert.equal(witness.format, 'SoloHeldFrameTraceDeclaredSourceV1');
+  assert.equal(witness.revision, '83f401a61808fe6db29a97c072d36a31ec7029ab');
+  assert.equal(witness.tree, 'b34e3779d36398aa059f18b7c4d9d4be7dfd938f');
+  assert.deepEqual(
+    witness.records.map((r) => r.path),
+    [
+      'docs/performance/solo-browser-frame-trace-warm-plan.json',
+      'scripts/solo-remote-cpu-profile.mjs',
+    ],
+  );
+  const declaration = await read(witness.records[0].path);
+  assert.equal(declaration.length, witness.records[0].bytes);
+  assert.equal(hash(declaration), witness.records[0].sha256);
+  return witness.records[1];
+}
+
+test('held declaration keeps exact prior adapter and unchanged complete warm recipe', async () => {
+  const prior = await priorHeldFrameAdapter();
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
-    const bytes = await read(ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(hash(bytes), ref.sha256, ref.path);
+    if (ref.path === prior.path) {
+      assert.equal(prior.bytes, ref.bytes);
+      assert.equal(prior.sha256, ref.sha256);
+    } else {
+      const bytes = await read(ref.path);
+      assert.equal(bytes.length, ref.bytes, ref.path);
+      assert.equal(hash(bytes), ref.sha256, ref.path);
+    }
   }
   const recipe = JSON.parse(await read(manifest.recipe.path));
   assert.equal(recipe.timeoutMs, 360000);
@@ -518,7 +552,7 @@ test('fixed trace choice shares only the bounded CPU job and keeps manual main-o
         manifest.candidate.tree,
     ),
   );
-  assert(body.includes('bind-plan docs/performance/solo-browser-frame-trace-warm-plan.json'));
+  assert(body.includes('bind-plan docs/performance/solo-browser-frame-trace-9d-failure-plan.json'));
   assert(body.includes('bind-plan docs/performance/solo-first-victory-cpu-797e03-plan.json'));
   assert(
     !body.includes('inputs.source') &&
@@ -537,8 +571,12 @@ test('fixed trace choice shares only the bounded CPU job and keeps manual main-o
     assert(sparse.includes(p), p);
   const command = body.split('\n').find((s) => s.trim().startsWith('node --test '));
   const argv = command.trim().split(/\s+/);
-  assert(argv.includes('scripts/test-solo-frame-trace-admission.mjs'));
-  assert(argv.includes('scripts/solo-frame-trace.test.mjs'));
+  assert(argv.includes('scripts/solo-frame-trace-failure-admission.test.mjs'));
+  const successorEntry = (
+    await read('scripts/solo-frame-trace-failure-admission.test.mjs')
+  ).toString();
+  assert(successorEntry.includes("import './test-solo-frame-trace-admission.mjs';"));
+  assert(successorEntry.includes("import './solo-frame-trace.test.mjs';"));
   assert(
     !argv.includes('scripts/test-solo-qualification-cpu-profile.mjs'),
     'owner suite imported once by trace entry',
@@ -549,7 +587,7 @@ test('fixed trace choice shares only the bounded CPU job and keeps manual main-o
   assert(traceEntry.includes("import './test-solo-qualification-cpu-profile.mjs';"));
   assert(
     body.includes(
-      "SOLO_DIAGNOSTIC_OUTPUT: ${{ inputs.lane == 'frame-trace' && 'solo-linux-9d5139-frame-trace' || 'solo-linux-797e03-hud-cpu' }}",
+      "SOLO_DIAGNOSTIC_OUTPUT: ${{ inputs.lane == 'frame-trace' && 'solo-linux-9d5139-frame-failure' || 'solo-linux-797e03-hud-cpu' }}",
     ),
   );
   assert(
