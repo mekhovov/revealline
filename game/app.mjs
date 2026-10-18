@@ -12996,6 +12996,7 @@ try {
       this.framePending = false;
       this.pendingSubmission = false;
       this.frameStartedAt = null;
+      this.frameWorkPhase = null;
       const preStep = () => this.beginFrame();
       const postRender = (renderer) => this.finishFrame(renderer);
       this.game.events.on(Phaser.Core.Events.PRE_STEP, preStep);
@@ -13147,6 +13148,7 @@ try {
       // A failed/aborted renderer may not emit POST_RENDER.
       this.restoreDisplayRender();
       this.frameStartedAt = performance.now();
+      this.frameWorkPhase = null;
       this.framePending = false;
       this.pendingSubmission = false;
       this.submittedInputCount = 0;
@@ -13205,6 +13207,7 @@ try {
           this.frameHudMs,
           this.frameSimulationMs,
           workMs,
+          this.frameWorkPhase,
         );
       }
       gameShell?.setQuality(qualityPolicy.snapshot().tier);
@@ -13428,8 +13431,10 @@ try {
           : time.elapsedSeconds
         : Math.min(rawMs / 1000, 0.1);
       if (time.interrupted) performanceSession?.interruption(rawMs);
-      performanceSession?.setPhase(
-        !foreground
+      // Capture the update-entry phase before this callback can pause or win.
+      // Diagnostics-off keeps the phase expression unevaluated as before.
+      const frameWorkPhase = performanceSession
+        ? !foreground
           ? 'hidden'
           : rendererLost.size
             ? 'error'
@@ -13441,8 +13446,9 @@ try {
                   ? 'playing'
                   : started
                     ? 'paused'
-                    : 'ready',
-      );
+                    : 'ready'
+        : null;
+      performanceSession?.setPhase(frameWorkPhase);
       try {
         // Controller Menu/Confirm can Resume synchronously while polling below.
         // Its paused UI interval must not become authoritative gameplay time.
@@ -13536,6 +13542,7 @@ try {
       } finally {
         this.framePending = true;
         this.frameNow = now;
+        this.frameWorkPhase = frameWorkPhase;
         this.frameRawMs = rawMs;
         this.frameActive = active;
         this.frameDemoPractice = demoPractice;
