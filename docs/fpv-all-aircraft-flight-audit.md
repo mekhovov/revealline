@@ -191,5 +191,5 @@ climbed upright at 71% throttle and responded to steering. No automatic throttle
 or physical-constant changes were introduced to hide gravity or input behavior.
 
 ```sh
-node --test game/test/fpv-world-recovery-stall.test.mjs
+node --test game/test/fpv-aircraft-recovery-stall.test.mjs
 ```
