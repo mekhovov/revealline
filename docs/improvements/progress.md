@@ -2,13 +2,13 @@
 
 Updated **18 October 2026** (Europe/Berlin). The [approved plan](plan.md) covers **83 feature groups / 113 deliverables**. Implementation is continuing in three lanes, with independent review and browser qualification in parallel.
 
-**2 merged · 15 feature PRs ready for required checks · 24 draft feature PRs · 0 verified live.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
+**3 merged · 14 feature PRs ready for required checks · 24 draft feature PRs · 0 verified live.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
 
 ## Current priorities
 
 | Priority | Work | Status / next result |
 | --- | --- | --- |
-| P1 | Delivery checks and merge admission | Prerequisite [#1633](https://github.com/mekhovov/revealline/pull/1633) passed all four focused shards; aggregate admission remains queued. Rebase dependent offline work after merge. No gates waived. |
+| P1 | Delivery checks and merge admission | Prerequisite [#1633](https://github.com/mekhovov/revealline/pull/1633) passed all four focused shards; focused aggregate also passes; final release admission remains queued. Rebase dependent offline work after merge. No gates waived. |
 | P1 | **F04b — Survival suspend** · lane A | Draft1663 implements typed checkpoints, paused restore and durable result receipts. Full-capacity recovery and controller-entry corrections pass independent/source gates. Exact expanded package and actual browser review remain. |
 | P1 | **F11b — archive restore** · lane B → review | Nonempty round trip passed. Browser found backward focus after consecutive Keep choices; narrow correction passes source review and focused tests. Exact final browser check passes; reconcile the stack and required checks. |
 | P1 | **F07a/b — critical cues** · review | Inventory1656 ready. Active compact muted self-contact cause and sentry aim warning are visibly confirmed. Sentry-hit, cross-host and listening evidence remain separate. |
@@ -26,6 +26,8 @@ Estimates remain the plan’s developer-day ranges, excluding review/CI queues a
 | **F83a** Deck regression fixtures · [#1613](https://github.com/mekhovov/revealline/pull/1613) | Merged at461ace72e7 after independent review and required checks; fixture clock corrected, interaction assertions retained. | F83b physical Deck acceptance; no production-controller fix or live deployment inferred. |
 | **F81** nested-menu recovery · [#1618](https://github.com/mekhovov/revealline/pull/1618) | Merged atcb8dddd3d3; actual Collection/Records/Saves return preserves paused flight and refreshes recovery controls. | Live publication unverified. |
 
+| **F75** long-flight save guidance · [#1630](https://github.com/mekhovov/revealline/pull/1630) | Merged at237b40543 after all exact-head required gates. Earlier actual paused-flight Saves/export/return review retained. | Live publication and real30-minute device run unverified. |
+
 ## Ready for required checks
 
 All rows are **P1**. Ready means reviewed and eligible for checks, not merged or deployed.
@@ -36,7 +38,6 @@ All rows are **P1**. Ready means reviewed and eligible for checks, not merged or
 | **F14** offline readiness · [#1624](https://github.com/mekhovov/revealline/pull/1624) | 51 checks; real EN/UK component with modeled readiness/storage states. | Exact checks, committed-package/device qualification. |
 | **F16** music recovery · [#1617](https://github.com/mekhovov/revealline/pull/1617) | 316 checks; modeled-transport panel Retry, focus and music-only pause. | Actual failed-track playback/listening; exact checks. |
 | **F17** lesson mode choice · [#1625](https://github.com/mekhovov/revealline/pull/1625) | 114 checks; actual coach with modeled paused host and unscored alternative. | Real flight integration; exact checks. |
-| **F75** long-flight saves · [#1630](https://github.com/mekhovov/revealline/pull/1630) | 8 new +96 regression checks; actual paused flight Saves/export/return. | Exact checks; no real30-minute device run claimed. |
 | **F15b** automatic play preferences · [#1629](https://github.com/mekhovov/revealline/pull/1629) | 83+9 checks; modeled storage failure, Retry, cross-tab intent, EN/UK320px. | Exact checks; remaining owners/Demo separate. |
 | **F05** Continue destination · [#1622](https://github.com/mekhovov/revealline/pull/1622) | 158 checks/source gates; actual saved mission Continue and paused caption. | Exact checks and reconciliation. |
 | **F11a** portable archive · [#1627](https://github.com/mekhovov/revealline/pull/1627) | 82 checks; actual downloaded ZIP passes CRC and every member hash/size. | Exact checks; device export/return separate. |
@@ -87,7 +88,7 @@ All rows are **P1**. The structured tracker pins every reviewed revision and dis
 | Phase | Progress | Main remaining work |
 | --- | --- | --- |
 | 0 — Baseline | Established | Maintain isolated branches, exact revisions and shared-file ownership. |
-| 1 — Reliability |2 merged; reviewed reliability slices queued | Merge reconciliation, localization findings and Demo-dependent reliability. |
+| 1 — Reliability |3 merged; reviewed reliability slices queued | Merge reconciliation, localization findings and Demo-dependent reliability. |
 | 2 — Learn and start | Capture/First Flight ready; inspected context hosts reviewed | Selection hierarchy, further onboarding, readability and guidance. |
 | 3 — Progress and offline | Archive/local recovery reviewed; Survival suspend active | Production suspend, diagnostics, package capacity, device evidence. |
 | 4 — Comfort/input/audio | All identified preset hosts reviewed; bindings active | Critical cues, seat mappings, scaling, assistive technology and listening. |

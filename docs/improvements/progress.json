@@ -314,22 +314,25 @@
       "impact": "H/M",
       "effort": "**2–4d**",
       "featureId": "F75",
-      "status": "ready_for_checks",
+      "status": "merged",
       "owner": "lane-a",
       "qualification": {
-        "automated": "focused_passed",
+        "automated": "required_ci_passed",
         "browser": "scoped_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1630",
       "commit": "61ddf9aaf4a18d7c57210d67f5ba1bbc670a0ed9",
-      "next": "Required CI and merge reconciliation; no 30-minute real-device acceptance claimed.",
+      "next": "Source deliverable merged; live publication and actual30-minute device acceptance remain separately unverified.",
       "evidence": [
         "Recording cap is 30 minutes. The two-hour validator belongs to legacy collection statistics, not all authored Journey progress. Do not imply broader expiration.",
         "8 new limit tests include legal simulated 30-minute run, one advance warning, pause budget preservation, cap behavior and byte-identical earlier checkpoint; 96 regressions plus lint/validate/format pass.",
-        "Real paused First return at 1:14: Flight saves → Saves → Export attempt → Close preserves time/lives/score and returns focus. Final Capture-only stylesheet extraction independently reviewed."
-      ]
+        "Real paused First return at 1:14: Flight saves → Saves → Export attempt → Close preserves time/lives/score and returns focus. Final Capture-only stylesheet extraction independently reviewed.",
+        "All registered exact-head checks, including release-ready and preview admissions, passed; trusted controller merged at237b405437 on2026-10-18T21:07:44Z. General test/build scope-skipped, not counted as passes."
+      ],
+      "mergeCommit": "237b405437def3c41b01165fe057af1ab06f618c",
+      "mergedAt": "2026-10-18T21:07:44Z"
     },
     {
       "id": "F76b",
@@ -2792,6 +2795,11 @@
       "date": "2026-10-18",
       "item": "Review corrections and F09 handoff",
       "reason": "F04 capacity correction and F08 save ownership pass independent checks; F08 final browser passes but missing full validate retained as gate. Snake support1664 passes source/browser/download equality. F09 compatibility implementation begins.2merged/15ready/24draft/0live."
+    },
+    {
+      "date": "2026-10-18",
+      "item": "F75 merged",
+      "reason": "Long-flight save guidance merged after exact-head admission.3merged/14ready/24draft/0live. Readability starts from fresh main237b40543; earlier frozen candidates remain pinned until their qualification/reconciliation."
     }
   ],
   "deliveryDependencies": [
@@ -2802,13 +2810,13 @@
       "pr": "https://github.com/mekhovov/revealline/pull/1633",
       "commit": "c9e6f0f09",
       "scope": "Retire13expiredPR1544automatic diagnostic triggers; preserve exact original jobs and historical evidence. Active workflows unchanged; merge-controller and check policy unchanged.",
-      "evidence": "136 focused and independent review pass; all4 exact-head focused shards pass. Aggregate focused remains queued without an assigned runner; general test/build scope-skipped, not passes."
+      "evidence": "136 focused and independent review pass; all4 exact-head focused shards pass. Aggregate focused remains queued without an assigned runner; general test/build scope-skipped, not passes. Focused aggregate now passes; release-ready queued at latest observation."
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 15,
+    "featurePRsReady": 14,
     "featurePRsDraft": 24,
-    "deliverablesMerged": 2,
+    "deliverablesMerged": 3,
     "verifiedLive": 0,
     "hardware": "unavailable"
   }
