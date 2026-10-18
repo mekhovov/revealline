@@ -59,12 +59,12 @@
     "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
     "gameplayPerformanceQualification": false,
     "hitchJournalOverheadQualification": false,
-    "priorProofInspected": false,
-    "noUnclosedOwners": false,
-    "allPriorPlannedJobsClosed": false,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "allPriorPlannedJobsClosed": true,
     "fullJournalOverheadQualification": false,
     "measurementScope": "synchronous-hook-envelope-only",
-    "status": "held-for-review",
+    "status": "reviewed-diagnostic-only",
     "dispatch": {
       "workflow": ".github/workflows/solo-native-package-consumer.yml",
       "ref": "refs/heads/main",
@@ -73,9 +73,26 @@
     "firstEightRequired": true,
     "clockErrorAssumption": "observed-minimum-step-bounds-duration-error",
     "unconditionalClockGuarantee": false,
-    "evidence": [],
-    "firstEightAllCorrectnessPassed": false,
-    "firstEightEvidence": null
+    "evidence": [
+      {
+        "runId": 39109911286,
+        "artifactId": 12130067688,
+        "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+        "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+        "disposition": "failed-reviewed"
+      }
+    ],
+    "firstEightAllCorrectnessPassed": true,
+    "firstEightEvidence": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    }
   },
   "adapterInputs": [
     {
@@ -287,8 +304,8 @@
     },
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 107252,
-      "sha256": "4ab9c2532e317c590e8c1fd6090c57f22cfdd437d4099941d98a15d39295e00c"
+      "bytes": 107356,
+      "sha256": "ba1d2ee933ff00cea34108c10eb757e036ef63ed8c3eb2cf39f7d1997428d400"
     },
     {
       "path": "scripts/soundtrack-archive-admissions.mjs",
@@ -318,5 +335,10 @@
     "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
   },
   "analysisMethod": "paired-p95-endpoint-box-v1",
-  "executionAdmission": "Held until an actual source797 first-eight correctness/closed-owner receipt and every declared predecessor are independently reviewed. No source73 correctness or numerical result transfers; no automatic dispatch, continuation or retry."
+  "executionAdmission": "Actual exact797 first-eight correctness and closed-owner proof independently reviewed. This fixed manual lane is eligible after current source CI/review and merge; its own native scenario remains unobserved. All raw numerical and portability failures remain. No automatic dispatch, continuation or retry.",
+  "firstEightReview": {
+    "path": "docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json",
+    "bytes": 2213,
+    "sha256": "3bedb1f0cc889e21ea2937addd936cbfd7ec78824434b37571d84dbdc1b65f9f"
+  }
 }

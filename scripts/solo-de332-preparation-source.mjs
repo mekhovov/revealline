@@ -35,6 +35,9 @@ export const changedPreparationTools = Object.freeze([
   'scripts/solo-remote-touch.mjs',
   'scripts/solo-remote-sustained.mjs',
   'scripts/solo-qualification-next-route.mjs',
+  'scripts/qualify-solo-runtime.mjs',
+  'scripts/run-solo-remote-correctness.mjs',
+  'scripts/solo-qualification.mjs',
   'scripts/solo-qualification-hitch-journal.mjs',
   'scripts/solo-remote-diagnostics.mjs',
 ]);

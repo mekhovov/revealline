@@ -61,8 +61,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-raster.mjs",
-      "bytes": 26228,
-      "sha256": "3e67ba9d5fb4914aba21938a25c42f29ea2cdddf8ac993e06668215ae086f7bf"
+      "bytes": 28814,
+      "sha256": "a665a372f5a62682ab9802dc00fa87e3ccc28a3f460790ab3605e9537709e489"
     }
   ],
   "frozenTools": [
@@ -214,90 +214,27 @@
   ],
   "raster": {
     "cases": [
-      {
-        "quality": "full",
-        "mode": "initial"
-      },
-      {
-        "quality": "full",
-        "mode": "pre-capture"
-      },
-      {
-        "quality": "full",
-        "mode": "post-capture"
-      },
-      {
-        "quality": "full",
-        "mode": "erosion-warning"
-      },
-      {
-        "quality": "full",
-        "mode": "post-erosion"
-      },
-      {
-        "quality": "full",
-        "mode": "large-capture"
-      },
-      {
-        "quality": "full",
-        "mode": "final"
-      },
-      {
-        "quality": "reduced",
-        "mode": "initial"
-      },
-      {
-        "quality": "reduced",
-        "mode": "pre-capture"
-      },
-      {
-        "quality": "reduced",
-        "mode": "post-capture"
-      },
-      {
-        "quality": "reduced",
-        "mode": "erosion-warning"
-      },
-      {
-        "quality": "reduced",
-        "mode": "post-erosion"
-      },
-      {
-        "quality": "reduced",
-        "mode": "large-capture"
-      },
-      {
-        "quality": "reduced",
-        "mode": "final"
-      },
-      {
-        "quality": "minimal",
-        "mode": "initial"
-      },
-      {
-        "quality": "minimal",
-        "mode": "pre-capture"
-      },
-      {
-        "quality": "minimal",
-        "mode": "post-capture"
-      },
-      {
-        "quality": "minimal",
-        "mode": "erosion-warning"
-      },
-      {
-        "quality": "minimal",
-        "mode": "post-erosion"
-      },
-      {
-        "quality": "minimal",
-        "mode": "large-capture"
-      },
-      {
-        "quality": "minimal",
-        "mode": "final"
-      }
+      { "quality": "full", "mode": "initial" },
+      { "quality": "full", "mode": "pre-capture" },
+      { "quality": "full", "mode": "post-capture" },
+      { "quality": "full", "mode": "erosion-warning" },
+      { "quality": "full", "mode": "post-erosion" },
+      { "quality": "full", "mode": "large-capture" },
+      { "quality": "full", "mode": "final" },
+      { "quality": "reduced", "mode": "initial" },
+      { "quality": "reduced", "mode": "pre-capture" },
+      { "quality": "reduced", "mode": "post-capture" },
+      { "quality": "reduced", "mode": "erosion-warning" },
+      { "quality": "reduced", "mode": "post-erosion" },
+      { "quality": "reduced", "mode": "large-capture" },
+      { "quality": "reduced", "mode": "final" },
+      { "quality": "minimal", "mode": "initial" },
+      { "quality": "minimal", "mode": "pre-capture" },
+      { "quality": "minimal", "mode": "post-capture" },
+      { "quality": "minimal", "mode": "erosion-warning" },
+      { "quality": "minimal", "mode": "post-erosion" },
+      { "quality": "minimal", "mode": "large-capture" },
+      { "quality": "minimal", "mode": "final" }
     ],
     "observationTimeoutMs": 120000,
     "retryCount": 0,
@@ -310,11 +247,7 @@
     },
     "primitiveInputs": {},
     "attributeWitness": "Actual native context attributes observed under the unchanged earned protocol; no conditional synthetic compositor prefix.",
-    "sourceObservation": {
-      "perSourceBytes": 2097152,
-      "aggregateBytes": 8388608,
-      "records": 256
-    },
+    "sourceObservation": { "perSourceBytes": 2097152, "aggregateBytes": 8388608, "records": 256 },
     "protocol": "earned-capture-erosion-v1"
   },
   "scope": "Candidate-only native Canvas2D earned capture and erosion diagnostics: seven fixed legal First Fracture states in full, reduced and minimal decoration. Same-owner subjects and fresh controls with matched presentation history; exact replay checkpoints and zero pixel tolerance. No timing, physical-device or repaired-terrain claim.",

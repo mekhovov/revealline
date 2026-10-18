@@ -463,6 +463,14 @@ test('missing owners remain inconclusive and budget/protocol failures remain fai
   assert.equal(baseline.ownedResourceAssessment.rows.length, 5);
 });
 
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
 for (const sourceLabel of ['de332', '797']) {
   const sourceRevision =
     sourceLabel === '797'
@@ -472,6 +480,12 @@ for (const sourceLabel of ['de332', '797']) {
     const m = JSON.parse(
       await load(`docs/performance/solo-${sourceLabel}-lifecycle-soak-plan.json`),
     );
+    if (sourceLabel === '797') {
+      assert.equal(m.release.status, 'reviewed-diagnostic-only');
+      assert.deepEqual(m.release.firstEightEvidence, actualFirstEightProof);
+      assert.equal(bindSustainedJob(m, 'chromium', 1).rows.length, 2);
+      return m;
+    }
     assert.equal(m.release.status, 'held-for-review');
     assert.throws(() => bindSustainedJob(m, 'chromium', 1));
     // Test-only release facts exercise the actual adapter, not release authority.
@@ -657,7 +671,8 @@ for (const sourceLabel of ['de332', '797']) {
     assert.equal(result.retentionQualification, 'review-required');
     assert.equal(result.status, 'review-required');
     assert.equal(result.performanceQualification, 'not-qualified-diagnostic-only');
-    assert.equal(result.firstEightRequired, false);
+    assert.equal(result.firstEightRequired, sourceLabel === '797');
+    assert.equal(result.firstEightAllCorrectnessPassed, sourceLabel === '797' ? true : undefined);
     const missing = structuredClone(hydrated);
     missing.hitchJournal.documents.shift();
     assert.equal(

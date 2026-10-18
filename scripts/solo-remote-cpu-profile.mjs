@@ -638,9 +638,11 @@ export function cpuProfileAssessment(plan, raw, command, profileReadback) {
     profileRetention: retained ? 'pass' : 'fail',
     rawPerformanceGateStatus: raw?.performanceGateStatus ?? 'unobserved',
     performanceQualification: 'excluded-cpu-profiling',
-    ...(firstVictory(plan)
-      ? { firstEightRequired: false }
-      : { firstEightAllCorrectnessPassed: false }),
+    ...(firstVictory797(plan)
+      ? { firstEightRequired: true, firstEightAllCorrectnessPassed: true }
+      : firstVictory(plan)
+        ? { firstEightRequired: false }
+        : { firstEightAllCorrectnessPassed: false }),
     scope:
       'One causal JavaScript CPU profile; no timing, device, thermal, trace or prerequisite credit. Fixed stress factor is not calibrated on this host.',
   };

@@ -1,0 +1,368 @@
+{
+  "format": "SoloHostedRasterManifestV1",
+  "status": "reviewed-diagnostic-only",
+  "repository": "mekhovov/revealline",
+  "cohort": "linux-earned-raster-797e03",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "jobs": ["raster-chromium", "raster-webkit"],
+  "maxParallel": 2,
+  "performanceExclusion": true,
+  "helperTimeoutMs": 4500000,
+  "setupTimeoutMs": 2400000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 134217728,
+  "candidate": {
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "run": 39104551453,
+    "artifact": 12128990483,
+    "outer": {
+      "bytes": 1094639112,
+      "sha256": "76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897"
+    },
+    "inner": {
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
+    },
+    "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+    "producer": "Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "role": "Source identity only; no baseline build or browser in candidate raster."
+  },
+  "release": {
+    "status": "reviewed-diagnostic-only",
+    "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "scope": "independent-native-raster",
+    "automaticRetries": 0,
+    "performanceQualification": "excluded",
+    "firstEightAllCorrectnessPassed": true,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "sourceCohort": "earned-raster-candidate797e03",
+    "evidence": [
+      {
+        "runId": 39109911286,
+        "artifactId": 12130067688,
+        "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+        "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8"
+      }
+    ],
+    "dispatch": {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "ref": "refs/heads/main",
+      "lane": "raster",
+      "reviewOrder": "manual-after-current-first-eight"
+    },
+    "firstEightRequired": true,
+    "firstEightEvidence": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    },
+    "dispatchReview": "Exact source797 first-eight correctness/closed-owner proof independently reviewed. Fixed manual main-branch dispatch only; no timing, physical, codec or merged Pages qualification is inferred."
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-raster.mjs",
+      "bytes": 28814,
+      "sha256": "a665a372f5a62682ab9802dc00fa87e3ccc28a3f460790ab3605e9537709e489"
+    }
+  ],
+  "frozenTools": [
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+    },
+    {
+      "path": "scripts/core-soundtrack-publication.mjs",
+      "bytes": 5789,
+      "sha256": "6986e149248e2c614374a0ccba3f88cf3670f49ac20f0dc1844d655a11bf0726"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/external-distribution.mjs",
+      "bytes": 6651,
+      "sha256": "f0d91db8311a483d8d008612760b7ad7ae3741f5a7c6aae9df8fb04f3e1463cd"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    },
+    {
+      "path": "scripts/hosted-soundtrack-publication.mjs",
+      "bytes": 10450,
+      "sha256": "62c5a7954084ef0f2971cc62035ff4f3a5fc165c10c88aa09dac23a327977ee6"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/observe-solo-native-raster.mjs",
+      "bytes": 22552,
+      "sha256": "edcdc5a4a06f23aab95aa639ba26da84c88014749e5aa401b578dfece3df6f3f"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/optional-artwork.mjs",
+      "bytes": 4613,
+      "sha256": "83e456393b4d26bb54b30e4ce1b15499dd5b9aaeeef72bd274f27c2989d9928e"
+    },
+    {
+      "path": "scripts/optional-distribution.mjs",
+      "bytes": 2584,
+      "sha256": "0fb416bddd39eab244c911d453df383a6488ce3a3a515eae37d07560aec93c71"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/reviewed-soundtrack-batches.mjs",
+      "bytes": 16280,
+      "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 74932,
+      "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-earned-raster-protocol.mjs",
+      "bytes": 15489,
+      "sha256": "ad48a0fa7b2689f5e0086a04f090581a59d526d6acaacf7f5f92e0b53a7b5e4d"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-raster-protocols.mjs",
+      "bytes": 41879,
+      "sha256": "d579882dd06cbc50881715116dd3a163a8654c19ead3356de031ad29d43e69d9"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/solo-shared-source-checkout.sh",
+      "bytes": 3734,
+      "sha256": "e6e833f247c27f55a1fc8ea14327ac94ffe9116f1ccb5842d02d08807ea47c07"
+    },
+    {
+      "path": "scripts/soundtrack-archive-admissions.mjs",
+      "bytes": 5614,
+      "sha256": "103e246b66045e0a480f41c8c42fa5966ac3f0587943f8307fa89bd3b47b380d"
+    },
+    {
+      "path": "scripts/soundtrack-distribution.mjs",
+      "bytes": 15378,
+      "sha256": "8f0e7d0178de524a8939fab2c951702f9a315c581f80d703bd834f8a4c492ac2"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ],
+  "raster": {
+    "cases": [
+      { "quality": "full", "mode": "initial" },
+      { "quality": "full", "mode": "pre-capture" },
+      { "quality": "full", "mode": "post-capture" },
+      { "quality": "full", "mode": "erosion-warning" },
+      { "quality": "full", "mode": "post-erosion" },
+      { "quality": "full", "mode": "large-capture" },
+      { "quality": "full", "mode": "final" },
+      { "quality": "reduced", "mode": "initial" },
+      { "quality": "reduced", "mode": "pre-capture" },
+      { "quality": "reduced", "mode": "post-capture" },
+      { "quality": "reduced", "mode": "erosion-warning" },
+      { "quality": "reduced", "mode": "post-erosion" },
+      { "quality": "reduced", "mode": "large-capture" },
+      { "quality": "reduced", "mode": "final" },
+      { "quality": "minimal", "mode": "initial" },
+      { "quality": "minimal", "mode": "pre-capture" },
+      { "quality": "minimal", "mode": "post-capture" },
+      { "quality": "minimal", "mode": "erosion-warning" },
+      { "quality": "minimal", "mode": "post-erosion" },
+      { "quality": "minimal", "mode": "large-capture" },
+      { "quality": "minimal", "mode": "final" }
+    ],
+    "observationTimeoutMs": 120000,
+    "retryCount": 0,
+    "pixelTolerance": 0,
+    "conditionalLocalization": false,
+    "fixture": {
+      "path": "docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture",
+      "bytes": 3425,
+      "sha256": "f645e2f2d07571e0a5423ab15ec72f365e5658fea6dc844bb30934411daf119d"
+    },
+    "primitiveInputs": {},
+    "attributeWitness": "Actual native context attributes observed under the unchanged earned protocol; no conditional synthetic compositor prefix.",
+    "sourceObservation": { "perSourceBytes": 2097152, "aggregateBytes": 8388608, "records": 256 },
+    "protocol": "earned-capture-erosion-v1"
+  },
+  "scope": "Candidate-only native Canvas2D earned capture and erosion diagnostics: seven fixed legal First Fracture states in full, reduced and minimal decoration. Same-owner subjects and fresh controls with matched presentation history; exact replay checkpoints and zero pixel tolerance. No timing, physical-device or repaired-terrain claim.",
+  "acceptance": {
+    "primary": "All 21 unchanged cases must preserve exact authored state and strict raster, concealment and exposed positive-control assertions. Retain the first failed case and all earlier captures; no retries.",
+    "history": "Synthetic predecessor results and original Mac WebKit failure stay historical and cannot be resolved by this distinct earned protocol.",
+    "failure": "Any partial observation, deadline, cap, source/CSP mismatch, late request/page failure, unsettled source drain or unknown owner closure fails."
+  },
+  "resources": {
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "finalizationReserveBytes": 4194304,
+    "helperDisjointMinutes": {
+      "candidatePreparation": 40,
+      "oneRowMaximum": 20,
+      "remainingFinalization": 15,
+      "total": 75
+    },
+    "jobDisjointMinutes": {
+      "checkoutAndNode": 9,
+      "dependenciesBrowsers": 20,
+      "testsAndBinding": 3,
+      "helperStep": 79,
+      "setupRetention": 2,
+      "upload": 10,
+      "total": 123,
+      "jobCap": 125
+    },
+    "stageProtocol": "One fixed earned-state observation per engine, 120s native deadline inside the unchanged 1200s owned row. No conditional localization or retry.",
+    "sourceCheckoutAllowance": "Each full exact source checkout has3minutes instead of2; +2minutes setup fits existing125minute outer envelope. Sparse tools remain2minutes. Native/owner/cleanup budgets unchanged."
+  },
+  "sourceCohort": "earned-raster-candidate797e03",
+  "runtimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+  "packageBinding": {
+    "format": "SoloCurrentPackageMetadataBinding.v1",
+    "producerRun": 39104551453,
+    "producerConclusion": "success",
+    "scope": "Exact verified797 preview source/tree/package only; complete archive, manifest, served source/worker and CSP verification remains mandatory in the hosted consumer."
+  },
+  "bindingScope": {
+    "status": "held-current-source-controls-pending",
+    "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "sourceAssets": "Exact797 full source and served artifact equality are mandatory; no source73 result transfers.",
+    "baseline": "Exact 8b source identity only; no baseline package or browser in this raster lane.",
+    "qualification": "Separate native raster diagnostic; no timing, physical-device, shipped-art or terrain-repair claim."
+  },
+  "prospectiveOutcome": {
+    "status": "unobserved",
+    "scope": "This lane has not executed. Prior first-eight correctness is only its scoped prerequisite."
+  },
+  "toolingClosure": {
+    "status": "pending-current-source-controls",
+    "runtimeScriptReferences": 30,
+    "completeTests": [
+      "scripts/test-solo-797e03-earned-raster.mjs",
+      "scripts/test-solo-native-consumer-current.mjs",
+      "scripts/test-solo-de332-earned-raster.mjs",
+      "scripts/test-solo-earned-raster.mjs",
+      "scripts/test-solo-remote-raster.mjs",
+      "scripts/test-solo-remote-correctness.mjs",
+      "scripts/test-solo-build-worker-closure.mjs",
+      "scripts/test-solo-remote-baseline.mjs",
+      "scripts/test-solo-source-verifier-smoke.mjs",
+      "scripts/test-solo-final-earned-raster-v2.mjs"
+    ],
+    "sparseInputs": 325,
+    "method": "Current exact runtime references are read back. Final existing-consumer sparse support and complete command are composed separately; inherited sparse counts are not asserted.",
+    "currentSourceControlsPassed": false,
+    "scope": "Exact prospective refs are reviewed in this packet; complete source controls still require CI on the composed commit.",
+    "sparseCountMethod": "Explicit fixed job sparse-checkout entries in the composed workflow; source tests remain pending CI."
+  },
+  "sourceCompatibility": {
+    "path": "docs/performance/fixtures/solo-readiness-797e03/source-compatibility.json",
+    "bytes": 4867,
+    "sha256": "89b9d6a7c5d380833e0a3ab32edebf9885e70207ab22b8ddbc79d1794b241dbc"
+  },
+  "prospectiveTooling": {
+    "status": "reviewed-source-controls-pending",
+    "finalToolingRevision": null
+  },
+  "currentSourceCorrectness": {
+    "status": "passed-correctness-only",
+    "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "receipt": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    },
+    "scope": "Eight correctness rows, four strict native replay verifications and fourteen closed commands. Three raw numerical failures and four Node portability mismatches remain retained; no numerical, physical, codec or Pages pass."
+  },
+  "sourceScope": "Exact797 runtime with separately frozen tooling; historical73/de332 results remain unchanged. No result from earlier sources transfers.",
+  "sourceSuccessor": {
+    "previousDeclaration": "docs/performance/solo-remote-73a345-earned-raster-plan.json",
+    "previousRuntimeRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+    "scope": "Exact verified797 package with unchanged workloads, bounds and gates; prior declarations/results remain immutable."
+  },
+  "executionAdmission": "Scoped correctness prerequisite reviewed; fixed manual main dispatch only after this tooling change passes source controls and is merged. Every row still requires full package/source/CSP, strict replay, numerical and owner checks."
+}

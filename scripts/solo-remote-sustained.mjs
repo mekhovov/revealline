@@ -777,6 +777,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
       ) ||
         ([
           'readiness-preparation-row-candidate73',
+          'readiness-preparation-row-candidate797',
           'readiness-preparation-row-candidatede332',
           'readiness-geometry-corrected-package',
           'readiness-preparation-row-candidatee1cc',
@@ -790,6 +791,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         [
           'readiness-preparation-row-candidatede332',
           'readiness-preparation-row-candidate73',
+          'readiness-preparation-row-candidate797',
         ].includes(plan.sourceCohort)
       ) {
         const { preparationReadinessSelection } = await import('./solo-remote-readiness.mjs');

@@ -1481,6 +1481,14 @@ test('heavy preparation policy cannot be applied to altered or unrelated recipe 
   assert.throws(() => qualificationHitchJournalOptions(flags, JSON.parse(bytes), bytes));
 });
 
+const actualFirstEightProof = JSON.parse(
+  await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+      import.meta.url,
+    ),
+  ),
+).proof;
 for (const sourceLabel of ['de332', '797']) {
   const sourceRevision =
     sourceLabel === '797'
@@ -1542,9 +1550,16 @@ for (const sourceLabel of ['de332', '797']) {
     let rows = 0;
     for (const phase of representativePhases) {
       const held = await representative(phase, false);
-      assert.equal(held.release.status, 'held-for-review');
-      assert.equal(held.release.firstEightAllCorrectnessPassed, false);
-      if (sourceLabel === '797') assert.equal(held.release.firstEightEvidence, null);
+      const released = sourceLabel === '797' && phase === 'cold-first30';
+      if (released) {
+        assert.equal(held.release.status, 'reviewed-and-released');
+        assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
+        assert.equal(timingMatrix(held).include.length, 6);
+      } else {
+        assert.equal(held.release.status, 'held-for-review');
+        assert.equal(held.release.firstEightAllCorrectnessPassed, false);
+        if (sourceLabel === '797') assert.equal(held.release.firstEightEvidence, null);
+      }
       assert.deepEqual(held.phaseOrder, representativePhases);
       assert.equal(held.cohort, `${sourceLabel}-${phase}-matched-timing-v1`);
       assert.equal(held.performanceExclusion, false);
@@ -1554,8 +1569,8 @@ for (const sourceLabel of ['de332', '797']) {
           representativePhases.map((name) => [name, name === 'warm-first30' ? 360000 : 240000]),
         ),
       );
-      assert.throws(() => timingMatrix(held));
-      const m = await representative(phase);
+      if (!released) assert.throws(() => timingMatrix(held));
+      const m = released ? held : await representative(phase);
       const matrix = timingMatrix(m);
       assert.equal(matrix.include.length, 6);
       for (const { engine, repetition, jobMinutes, stepMinutes, outerSeconds } of matrix.include) {

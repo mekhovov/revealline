@@ -19,28 +19,15 @@ const root = new URL('../', import.meta.url);
 const read = (p) => readFile(new URL(p, root));
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 const source = '797e03f28743921842df6aa57520a72016ba3dfc';
-// Modeled parser control only; actual797 first-eight evidence remains null in the held plans.
-const modeledProof = {
-  format: 'SoloFirstEightCorrectnessEvidenceV1',
-  sourceRevision: source,
-  runId: 1,
-  artifactId: 2,
-  artifactSHA256: 'a'.repeat(64),
-  summarySHA256: 'b'.repeat(64),
-  correctness: 'passed',
-  ownersClosed: true,
-};
+// Actual correctness-only receipt; numerical failures remain in the same reviewed outcome.
+const actualProof = JSON.parse(
+  await read('docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json'),
+).proof;
 
 const manifest = JSON.parse(await read('docs/performance/solo-first-victory-cpu-797e03-plan.json'));
 const bytes = await read(manifest.recipe.path),
   recipe = JSON.parse(bytes);
-const reviewed = () => {
-  const p = structuredClone(manifest);
-  p.status = 'reviewed-diagnostic-only';
-  p.release.firstEightAllCorrectnessPassed = true;
-  p.release.firstEightEvidence = structuredClone(modeledProof);
-  return p;
-};
+const reviewed = () => structuredClone(manifest);
 const plan = () => bindCpuProfileJob(reviewed());
 const args = () =>
   cpuProfileArguments(
@@ -48,13 +35,17 @@ const args = () =>
     'http://127.0.0.1:1/game/',
     '/owned',
   ).slice(4);
-test('held797 HUD cannot execute by status alone or using source73 evidence', () => {
-  assert.equal(manifest.release.firstEightEvidence, null);
-  assert.throws(() => cpuProfileMatrix(manifest));
-  const p = structuredClone(manifest);
-  p.status = 'reviewed-diagnostic-only';
-  assert.throws(() => cpuProfileMatrix(p));
-  assert.deepEqual(cpuProfileMatrix(reviewed()).include, [
+test('797 HUD binds actual same-source first-eight proof and rejects status alone', () => {
+  assert.deepEqual(manifest.release.firstEightEvidence, actualProof);
+  assert.equal(manifest.release.firstEightAllCorrectnessPassed, true);
+  assert.equal(manifest.status, 'reviewed-diagnostic-only');
+  const held = structuredClone(manifest);
+  held.status = 'held-awaiting-source-and-first-eight-review';
+  assert.throws(() => cpuProfileMatrix(held));
+  const statusOnly = structuredClone(manifest);
+  statusOnly.release.firstEightEvidence = null;
+  assert.throws(() => cpuProfileMatrix(statusOnly));
+  assert.deepEqual(cpuProfileMatrix(manifest).include, [
     {
       phase: 'first-victory-cpu-profile',
       engine: 'chromium',
@@ -137,13 +128,25 @@ test('actual797 CPU assessment retains original replay, source, profile and clea
       n.expression.arguments[0]?.value === name,
   )?.expression;
   assert(call);
+  const assessments = [];
+  const assess = (...args) => {
+    const result = cpuProfileAssessment(...args);
+    assessments.push(result);
+    return result;
+  };
   const callback = new Function(
     'assert',
     'plan',
     'cpuProfileAssessment',
     'return (' + text.slice(call.arguments[1].start, call.arguments[1].end) + ');',
-  )(assert, plan, cpuProfileAssessment);
+  )(assert, plan, assess);
   callback();
+  assert(assessments.length > 1);
+  for (const result of assessments) {
+    assert.equal(result.firstEightRequired, true);
+    assert.equal(result.firstEightAllCorrectnessPassed, true);
+    assert.equal(result.performanceQualification, 'excluded-cpu-profiling');
+  }
 });
 test('797 profile refs freeze current source and preserve prior declaration bytes', async () => {
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
