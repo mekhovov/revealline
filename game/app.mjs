@@ -158,7 +158,6 @@ import {
   verifyOptionalInstalled,
 } from './optional-chapters.mjs';
 import { presentSourceChapter } from './ui/optional-chapter-presentation.mjs';
-import { attachOptionalChaptersPanel } from './ui/optional-chapters-panel.mjs';
 import { arcadeActionCapabilities } from './core/arcade-actions.mjs';
 import {
   nextInputModality,
@@ -1567,6 +1566,9 @@ try {
     missionPicker = null,
     enemyGuide = null,
     optionalWorlds = null,
+    optionalWorldsModule = null,
+    cancelOptionalWorldsOpening = null,
+    optionalWorldsOpenRevision = 0,
     optionalWorldsDisposed = false;
   const demoAudioListeners = new Set();
   let demoAudioOperation = 0,
@@ -3683,6 +3685,7 @@ try {
     const demoActive = demoHost?.active;
     demoHost?.suspend();
     cancelUnifiedOpening?.();
+    cancelOptionalWorldsOpening?.();
     ++unifiedOpenRevision;
     ++unifiedLaunchRevision;
     // Suspend while this tab still owns the writer. A history-cache return
@@ -12845,6 +12848,7 @@ try {
     ++unifiedBuildRevision;
     retireMissionThumbnails();
     cancelUnifiedOpening?.();
+    cancelOptionalWorldsOpening?.();
     // Returning to focus must not revive a picker or launch requested before
     // the interruption, even when its asynchronous work finishes afterward.
     ++unifiedOpenRevision;
@@ -14781,7 +14785,76 @@ try {
       }
     };
   }
-  function getOptionalWorlds() {
+
+  async function openOptionalWorlds(opener, options) {
+    cancelOptionalWorldsOpening?.();
+    if (optionalWorldsDisposed || !paused || !options?.isCurrent()) return;
+    cancelUnifiedOpening?.();
+    ++unifiedOpenRevision;
+    ++unifiedLaunchRevision;
+    ++resultAttemptEpoch;
+    clearInput();
+    const oldRun = run,
+      oldRecorder = recorder,
+      oldRunId = runId,
+      wasStarted = started;
+    const revision = ++optionalWorldsOpenRevision;
+    const feedback = document.createElement('span');
+    feedback.id = 'optional-worlds-opening-status';
+    feedback.className = 'micro-note';
+    feedback.setAttribute('role', 'status');
+    localizedText(feedback, () => t('interface:loading'));
+    opener.after(feedback);
+    const cancel = () => {
+      if (revision === optionalWorldsOpenRevision) ++optionalWorldsOpenRevision;
+      opening.dispose();
+      feedback.remove();
+      if (cancelOptionalWorldsOpening === cancel) cancelOptionalWorldsOpening = null;
+    };
+    const opening = trackMissionLibraryOpening({ onRetire: cancel });
+    cancelOptionalWorldsOpening = cancel;
+    const sameFlight = () =>
+      !optionalWorldsDisposed &&
+      revision === optionalWorldsOpenRevision &&
+      !document.hidden &&
+      document.hasFocus?.() !== false &&
+      paused &&
+      run === oldRun &&
+      recorder === oldRecorder &&
+      runId === oldRunId &&
+      started === wasStarted;
+    const isCurrent = () => sameFlight() && opening.current() && options.isCurrent();
+    let attachOptionalChaptersPanel;
+    try {
+      if (!optionalWorlds) {
+        // Native imports cannot be aborted. Share their result, but give each
+        // opening its own current-input authority before constructing a panel.
+        optionalWorldsModule ??= import('./ui/optional-chapters-panel.mjs').catch((error) => {
+          optionalWorldsModule = null;
+          throw error;
+        });
+        ({ attachOptionalChaptersPanel } = await optionalWorldsModule);
+      }
+    } catch {
+      if (isCurrent()) {
+        localizedText(feedback, () => t('interface:loadingInterruptedRetryWhenReady'));
+        // Keep the retry message until another input retires this request.
+      } else cancel();
+      return;
+    }
+    if (!isCurrent()) {
+      cancel();
+      return;
+    }
+    // Deliberately leaving the old menu can move focus. Retire the input guard
+    // before that synchronous handoff, then recheck the host and shell owners.
+    opening.dispose();
+    feedback.remove();
+    if (cancelOptionalWorldsOpening === cancel) cancelOptionalWorldsOpening = null;
+    if (!options.leave() || !sameFlight()) return;
+    getOptionalWorlds(attachOptionalChaptersPanel)?.open();
+  }
+  function getOptionalWorlds(attachOptionalChaptersPanel) {
     if (optionalWorldsDisposed) return null;
     return (optionalWorlds ??= attachOptionalChaptersPanel({
       onPlayActivation: captureWorldPlay,
@@ -15002,7 +15075,7 @@ try {
     onTitleCancel: cancelTitleFlight,
     onModeDeparture: requestModeDeparture,
     separateTeam: !!authoredRoute,
-    onWorlds: () => getOptionalWorlds()?.open(),
+    onWorlds: openOptionalWorlds,
     onMissions: !practiceSession
       ? (opener) =>
           journeyChooser.open(opener, {

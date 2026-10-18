@@ -184,7 +184,9 @@ test('offline Play of the current chapter preserves its paused cut without repla
   const requests = downloads(t, () => Promise.reject(new Error('Offline fixture')));
   retainedMissions(page);
   page.$('shell-worlds').click();
-  await settle(() => !page.$('optional-worlds-reload').disabled);
+  await settle(
+    () => page.$('optional-worlds-reload') && !page.$('optional-worlds-reload').disabled,
+  );
   assert.match(page.$('optional-worlds-status').textContent, /Online list unavailable/);
   const stored = new Map(page.storage.map);
   page.change('optional-worlds-theme', 'fpv');
