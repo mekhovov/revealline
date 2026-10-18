@@ -418,6 +418,41 @@ test('physical aircraft with retained Legacy feel can open Advanced without conv
   assert.equal(opened[0].components.cameraPayload.massGrams, 4);
 });
 
+for (const locale of ['en', 'uk'])
+  test(`Legacy reference entry explains its supported choices without changing the draft (${locale})`, async (t) => {
+    const opened = [],
+      f = fixture(t, { locale, onAdvanced: (configuration) => opened.push(configuration) }),
+      before = f.store.export(),
+      values = () => f.ui.root.querySelectorAll('input').map((node) => node.value),
+      draft = values();
+    await f.click(
+      locale === 'uk'
+        ? 'Еталонний дрон Advanced · експериментальний'
+        : 'Advanced reference quad · experimental',
+    );
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      locale === 'uk'
+        ? /Для практики Advanced виберіть фізичний пресет дрона або сучасні рейти/
+        : /Choose a physical aircraft preset or modern rates for Advanced practice/,
+    );
+    assert.equal(f.ui.root.open, true);
+    assert.deepEqual(opened, []);
+    assert.deepEqual(values(), draft);
+    assert.equal(f.store.export(), before);
+    await f.click(locale === 'uk' ? 'Експортувати CLI лише рейтів' : 'Export rate-only CLI');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      locale === 'uk'
+        ? /Класична реакція не має еквівалента Betaflight/
+        : /Legacy feel has no Betaflight equivalent/,
+      'the CLI export retains its compatibility explanation',
+    );
+    assert.deepEqual(opened, []);
+    assert.deepEqual(values(), draft);
+    assert.equal(f.store.export(), before);
+  });
+
 test('returning from an Advanced save reloads the saved component inventory without adding an unsaved payload twice', async (t) => {
   const opened = [],
     f = fixture(t, { onAdvanced: (configuration) => opened.push(configuration) });
@@ -1885,6 +1920,74 @@ test('switching locale updates accessible controls without changing numeric, nam
   assert.equal(f.find('Drone name').value, 'Локальний дрон');
   assert.equal(f.find('Rates used by this drone', 'select').value, selected);
   assert.equal((await f.draft()).axes.roll.rate, 99);
+  assert.equal(f.store.export(), saved);
+});
+
+test('fine-adjust accessible names start in Ukrainian for inertia and PID gains', (t) => {
+  const f = fixture(t, { locale: 'uk' }),
+    names = f.ui.root
+      .querySelectorAll('.workbench-fine-adjust button')
+      .map((node) => node.getAttribute('aria-label'));
+  assert.equal(names.length, 30);
+  assert.ok(names.every((name) => /^(Зменшити|Збільшити) /.test(name)));
+  assert.ok(names.includes('Зменшити Інерція: Тангаж (кг·м²)'));
+  assert.ok(names.includes('Збільшити Крен P (N·m/(rad/s))'));
+});
+
+test('fine-adjust locale refresh preserves numeric text, commanded values and undo history', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  const saved = f.store.export(),
+    inertia = f.find('Pitch inertia (kg·m²)'),
+    gain = f.find('Roll P (N·m/(rad/s))'),
+    originalInertia = inertia.value,
+    originalGain = gain.value;
+  f.edit('Pitch inertia (kg·m²)', '0.000012300');
+  f.edit('Roll P (N·m/(rad/s))', '0.123400');
+  f.edit('Roll P (N·m/(rad/s))', '-');
+  const numericText = () =>
+      f.ui.root
+        .querySelectorAll('input')
+        .filter((node) => node.type === 'number')
+        .map((node) => node.value),
+    before = numericText();
+  for (const locale of ['uk', 'en']) {
+    f.setLocale(locale);
+    const names = f.ui.root
+      .querySelectorAll('.workbench-fine-adjust button')
+      .map((node) => node.getAttribute('aria-label'));
+    assert.equal(names.length, 30);
+    assert.ok(
+      names.every((name) =>
+        (locale === 'uk' ? /^(Зменшити|Збільшити) / : /^(Decrease|Increase) /).test(name),
+      ),
+    );
+    assert.ok(
+      names.includes(
+        locale === 'uk' ? 'Зменшити Інерція: Тангаж (кг·м²)' : 'Decrease Pitch inertia (kg·m²)',
+      ),
+    );
+    assert.ok(
+      names.includes(
+        locale === 'uk' ? 'Збільшити Крен P (N·m/(rad/s))' : 'Increase Roll P (N·m/(rad/s))',
+      ),
+    );
+    assert.deepEqual(numericText(), before);
+    assert.equal(f.store.export(), saved);
+  }
+  await f.click('Undo last edit');
+  assert.equal(gain.value, '0.123400');
+  assert.equal(inertia.value, '0.000012300');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.controller.gains.roll.p, 0.1234);
+  assert.equal(f.tested[0].advanced.aircraft.inertia.x, 0.0000123);
+  f.ui.open({ keepDraft: true });
+  await f.click('Undo last edit');
+  assert.equal(gain.value, originalGain);
+  assert.equal(inertia.value, '0.000012300');
+  await f.click('Undo last edit');
+  assert.equal(inertia.value, originalInertia);
   assert.equal(f.store.export(), saved);
 });
 

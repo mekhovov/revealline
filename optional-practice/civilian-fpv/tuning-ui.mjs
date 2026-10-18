@@ -1608,14 +1608,15 @@ export function mountFlightTuning({
     },
     transfer,
   );
-  function portable() {
+  function portable(legacyMessage) {
     commitNumericInputs();
     if (draft.format !== TUNED_RESPONSE_FORMAT)
       throw new Error(
-        t(
-          'Legacy feel has no Betaflight equivalent',
-          'Класична реакція не має еквівалента Betaflight',
-        ),
+        legacyMessage ??
+          t(
+            'Legacy feel has no Betaflight equivalent',
+            'Класична реакція не має еквівалента Betaflight',
+          ),
       );
     return draft.rates;
   }
@@ -1876,7 +1877,13 @@ export function mountFlightTuning({
       () => {
         const setup = readSetup();
         if (setup.advanced?.aircraft.format === 'AdvancedAircraft.v2') commitNumericInputs();
-        else portable();
+        else
+          portable(
+            t(
+              'Choose a physical aircraft preset or modern rates for Advanced practice.',
+              'Для практики Advanced виберіть фізичний пресет дрона або сучасні рейти.',
+            ),
+          );
         remember();
         close();
         return onAdvanced({
@@ -2904,6 +2911,7 @@ export function mountFlightTuning({
     el,
     field,
     action,
+    translatedAttribute,
     listen,
     aircraftParent: workbench.panel('aircraft'),
     controllerParent: workbench.panel('controller'),

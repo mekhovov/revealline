@@ -175,6 +175,7 @@ export function mountWorkbenchPhysics({
   el,
   field,
   action,
+  translatedAttribute,
   listen,
   aircraftParent,
   controllerParent,
@@ -249,27 +250,31 @@ export function mountWorkbenchPhysics({
       const adjust = el('div', undefined, row);
       adjust.className = 'workbench-fine-adjust';
       for (const direction of [-1, 1])
-        action(
-          direction < 0 ? '−' : '+',
-          () => {
-            const current = Number(input.value);
-            if (!Number.isFinite(current) || !input.value.trim()) return;
-            const step =
-              current === 0 ? 0.000001 : 10 ** (Math.floor(Math.log10(Math.abs(current))) - 2);
-            input.value = String(
-              Number(
-                Math.min(
-                  Number(input.max),
-                  Math.max(Number(input.min), current + direction * step),
-                ).toPrecision(10),
-              ),
-            );
-            changed();
-          },
-          adjust,
-        ).setAttribute(
+        translatedAttribute(
+          action(
+            direction < 0 ? '−' : '+',
+            () => {
+              const current = Number(input.value);
+              if (!Number.isFinite(current) || !input.value.trim()) return;
+              const step =
+                current === 0 ? 0.000001 : 10 ** (Math.floor(Math.log10(Math.abs(current))) - 2);
+              input.value = String(
+                Number(
+                  Math.min(
+                    Number(input.max),
+                    Math.max(Number(input.min), current + direction * step),
+                  ).toPrecision(10),
+                ),
+              );
+              changed();
+            },
+            adjust,
+          ),
           'aria-label',
-          `${direction < 0 ? t('Decrease', 'Зменшити') : t('Increase', 'Збільшити')} ${t(en, uk)}`,
+          t(
+            `${direction < 0 ? 'Decrease' : 'Increase'} ${en}`,
+            `${direction < 0 ? 'Зменшити' : 'Збільшити'} ${uk}`,
+          ),
         );
     }
     listen(input, 'input', changed);
