@@ -1,0 +1,199 @@
+{
+  "format": "SoloQualificationArtifactAvailabilityAuditV1",
+  "observedAt": "2026-10-18T20:57:14.351738+00:00",
+  "toolingRef": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+  "scope": "Read-only API metadata and immutable declaration-byte audit; no payload downloads, test execution, dispatch or admission change.",
+  "artifacts": [
+    {
+      "id": 12088541389,
+      "name": "solo-normal-baseline-8b019919-38998342742-1",
+      "size_in_bytes": 1073805912,
+      "digest": "sha256:63545549d9d087e96dcade7e549369a3e2cc00eaa8ae292c314686d0b0563230",
+      "expired": false,
+      "created_at": "2026-10-17T03:33:04Z",
+      "expires_at": "2026-10-31T03:32:57Z",
+      "workflow_run": {
+        "id": 38998342742,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/solo-performance",
+        "head_sha": "c9e637ad81fadf49caec884155d1bd0c2496c59c"
+      }
+    },
+    {
+      "id": 12135616655,
+      "name": "appearance-preview-pr-1593-9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+      "size_in_bytes": 1094656114,
+      "digest": "sha256:84c1621400e4a4a7ce662cf0ee52916fe03e716ec51f0559fbaa218bafa01888",
+      "expired": false,
+      "created_at": "2026-10-18T11:44:20Z",
+      "expires_at": "2026-10-25T11:44:12Z",
+      "workflow_run": {
+        "id": 39122543440,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/solo-pause-stage-observations",
+        "head_sha": "9d5139b9983c700a6a708f65f379fa4d5a8b0395"
+      }
+    },
+    {
+      "id": 12135546832,
+      "name": "appearance-preview-metadata-pr-1593-9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+      "size_in_bytes": 37136,
+      "digest": "sha256:03459bff1a036a679e65f93448fbfb7ada5132a9d05ae61ed472a9a4be46dd97",
+      "expired": false,
+      "created_at": "2026-10-18T11:44:21Z",
+      "expires_at": "2026-10-25T11:44:20Z",
+      "workflow_run": {
+        "id": 39122543440,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/solo-pause-stage-observations",
+        "head_sha": "9d5139b9983c700a6a708f65f379fa4d5a8b0395"
+      }
+    },
+    {
+      "id": 12128990483,
+      "name": "appearance-preview-pr-1584-797e03f28743921842df6aa57520a72016ba3dfc",
+      "size_in_bytes": 1094639112,
+      "digest": "sha256:76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897",
+      "expired": false,
+      "created_at": "2026-10-18T07:08:28Z",
+      "expires_at": "2026-10-25T07:08:22Z",
+      "workflow_run": {
+        "id": 39104551453,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/solo-lazy-missions-chooser",
+        "head_sha": "797e03f28743921842df6aa57520a72016ba3dfc"
+      }
+    },
+    {
+      "id": 12130067688,
+      "name": "solo-linux-797e03-correctness-39109911286-1",
+      "size_in_bytes": 817140,
+      "digest": "sha256:5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "expired": false,
+      "created_at": "2026-10-18T08:12:49Z",
+      "expires_at": "2026-11-01T09:12:48Z",
+      "workflow_run": {
+        "id": 39109911286,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "main",
+        "head_sha": "1255a79a90268316f8ea768d3e0c56610b26df52"
+      }
+    },
+    {
+      "id": 12138336732,
+      "name": "solo-linux-9d5139b-correctness-39130685076-1",
+      "size_in_bytes": 821195,
+      "digest": "sha256:8892f95644cc62886eeb246f8d38bd9220ff98973678b9e4b4be0b25100a1397",
+      "expired": false,
+      "created_at": "2026-10-18T13:26:46Z",
+      "expires_at": "2026-11-01T13:26:46Z",
+      "workflow_run": {
+        "id": 39130685076,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "main",
+        "head_sha": "557ad1d936f6152b6decefab11db48a5674c05bc"
+      }
+    },
+    {
+      "id": 12141982962,
+      "name": "solo-linux-9d5139-frame-failure-39142189874-1",
+      "size_in_bytes": 4780169,
+      "digest": "sha256:4db3792a97693d2ab4b600efc36d3c6e8a109bc1e6d3ec80151d1f0e4463c716",
+      "expired": false,
+      "created_at": "2026-10-18T15:53:59Z",
+      "expires_at": "2026-11-01T15:53:58Z",
+      "workflow_run": {
+        "id": 39142189874,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "main",
+        "head_sha": "fd78700a0e3167e104da7c854a8b04f2cea9a19f"
+      }
+    },
+    {
+      "id": 12141573283,
+      "name": "solo-linux-runtime797-demo-resources-39142158750-1",
+      "size_in_bytes": 301547,
+      "digest": "sha256:4eb112a65ca25dbdba0f8fb2f789dcfa5ecb61c33ac14730a2a15fe9a67da16e",
+      "expired": false,
+      "created_at": "2026-10-18T15:52:22Z",
+      "expires_at": "2026-11-01T15:52:21Z",
+      "workflow_run": {
+        "id": 39142158750,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "main",
+        "head_sha": "fd78700a0e3167e104da7c854a8b04f2cea9a19f"
+      }
+    },
+    {
+      "id": 12148837541,
+      "name": "admission-39156220119-1",
+      "size_in_bytes": 711,
+      "digest": "sha256:d63bf17eb3ba00eef127c0dfac04f6cf28357959f476e5d6cb53bcd8b81a0a28",
+      "expired": false,
+      "created_at": "2026-10-18T20:00:35Z",
+      "expires_at": "2026-10-25T20:00:34Z",
+      "workflow_run": {
+        "id": 39156220119,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/solo-bounded-task-frame-trace",
+        "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+      }
+    }
+  ],
+  "declarations": [
+    {
+      "path": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+      "bytes": 17005,
+      "sha256": "21a6c7ea6245bffd3ce6b2d9b42c4cf2c56243823be8cb319ae327a276972bfa",
+      "gitBlob": "78c4a5f588b13097744746539c078acd9128220d"
+    },
+    {
+      "path": "docs/performance/solo-demo-resources-797e03-activation-boundary-plan.json",
+      "bytes": 19275,
+      "sha256": "220a967c590759b78aaad70d527fe83f44e80c44d08a357c4a6a375002d55201",
+      "gitBlob": "4fa919ee055c69763e943fc6d84b09dbacdefdb2"
+    },
+    {
+      "path": "docs/performance/solo-remote-9d5139b-correctness-plan.json",
+      "bytes": 22918,
+      "sha256": "96de01992eee1a674923bc8304d1d6af9a59df1d3ddb5a527b71924a715fc97b",
+      "gitBlob": "2750d9bb6ef9e72e7af7ccce156a468703aa7a53"
+    }
+  ],
+  "bindings": [
+    {
+      "declaration": "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+      "source": "9d5139b9983c700a6a708f65f379fa4d5a8b0395",
+      "artifact": 12135616655,
+      "metadataMatchesDeclaredOuterIdentity": true
+    },
+    {
+      "declaration": "docs/performance/solo-demo-resources-797e03-activation-boundary-plan.json",
+      "source": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "artifact": 12128990483,
+      "metadataMatchesDeclaredOuterIdentity": true
+    },
+    {
+      "declaration": "docs/performance/solo-remote-9d5139b-correctness-plan.json",
+      "source": "8b01991942dc764b8aa4726851699ce1985e53ae",
+      "artifact": 12088541389,
+      "metadataMatchesDeclaredOuterIdentity": true
+    }
+  ],
+  "limits": [
+    "No immediate expiry pressure at this snapshot; fixed797 package expires2026-10-25T07:08:22Z, fixed9d package expires2026-10-25T11:44:12Z, normal8b baseline expires2026-10-31T03:32:57Z.",
+    "Metadata availability does not prove full archive integrity, source/worker/CSP correctness, current native ownership or successful runtime.",
+    "Git-retained audit summaries do not replace artifact payloads required by unchanged native admission.",
+    "Expiry cannot be repaired by relabeling a rebuilt package under an old identity; a separately reviewed successor is required if an input becomes unavailable.",
+    "Final combined-runtime qualification needs its own auditable normal Appearance package and exact-source declarations. Current9d/797 diagnostic selectors remain historical."
+  ]
+}

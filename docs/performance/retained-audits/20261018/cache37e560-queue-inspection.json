@@ -1,0 +1,221 @@
+{
+  "format": "SoloLookupRequiredAggregateQueueInspectionV1",
+  "observedAt": "2026-10-18T20:43:24.326Z",
+  "pullRequest": 1631,
+  "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+  "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+  "run": {
+    "id": 39154332460,
+    "path": ".github/workflows/deploy-pages.yml",
+    "event": "pull_request",
+    "status": "queued",
+    "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+    "createdAt": "2026-10-18T18:28:49Z",
+    "updatedAt": "2026-10-18T19:23:57Z",
+    "attempt": 1
+  },
+  "job": {
+    "id": 117766867300,
+    "run_id": 39154332460,
+    "workflow_name": "Validate source for continuous main",
+    "head_branch": "codex/solo-local-recording-lookup-20261018",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39154332460",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAba3PJZA",
+    "head_sha": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117766867300",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117766867300",
+    "status": "queued",
+    "conclusion": null,
+    "created_at": "2026-10-18T19:23:57Z",
+    "started_at": "2026-10-18T19:23:57Z",
+    "completed_at": null,
+    "name": "focused",
+    "steps": [],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117766867300",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 0,
+    "runner_name": "",
+    "runner_group_id": 0,
+    "runner_group_name": ""
+  },
+  "executedWorkflow": {
+    "revision": "95f99a21179120eace0ecbd3fa0ac732737fd3cb",
+    "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+    "bytes": 19972,
+    "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+    "sameAsCandidate": true,
+    "workflowConcurrency": {
+      "groupExpression": "source-gates-${{ github.ref }}",
+      "cancelInProgressExpression": "${{ github.event_name == 'pull_request' }}",
+      "expectedPullRequestGroup": "source-gates-refs/pull/1631/merge"
+    },
+    "focusedJob": {
+      "runsOn": "ubuntu-latest",
+      "jobConcurrency": null,
+      "environment": null,
+      "needs": [
+        "preflight",
+        "focused_shards"
+      ],
+      "timeoutMinutes": 5,
+      "requiresFourShardSuccess": true
+    },
+    "releaseReady": "Created only after focused and other declared prerequisites conclude."
+  },
+  "dependencies": [
+    {
+      "id": 117754310730,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "completedAt": "2026-10-18T18:36:14Z",
+      "runnerLabels": [
+        "ubuntu-latest"
+      ]
+    },
+    {
+      "id": 117756013584,
+      "name": "focused_shards (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "completedAt": "2026-10-18T19:11:24Z",
+      "runnerLabels": [
+        "ubuntu-latest"
+      ]
+    },
+    {
+      "id": 117756013600,
+      "name": "focused_shards (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "completedAt": "2026-10-18T19:09:05Z",
+      "runnerLabels": [
+        "ubuntu-latest"
+      ]
+    },
+    {
+      "id": 117756013626,
+      "name": "focused_shards (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "completedAt": "2026-10-18T19:19:31Z",
+      "runnerLabels": [
+        "ubuntu-latest"
+      ]
+    },
+    {
+      "id": 117756013660,
+      "name": "focused_shards (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "completedAt": "2026-10-18T19:23:57Z",
+      "runnerLabels": [
+        "ubuntu-latest"
+      ]
+    }
+  ],
+  "pendingDeployments": [],
+  "approvalHistory": [],
+  "checkOutput": {
+    "title": null,
+    "summary": null,
+    "text": null,
+    "annotations_count": 0,
+    "annotations_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117766867300/annotations"
+  },
+  "branchRunHistory": {
+    "total": 6,
+    "allRuns": [
+      {
+        "id": 39159510906,
+        "name": "Fastline exact-head auto-merge",
+        "workflowId": 367428689,
+        "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+        "event": "pull_request",
+        "status": "queued",
+        "conclusion": null,
+        "created": "2026-10-18T19:36:06Z",
+        "updated": "2026-10-18T20:25:52Z"
+      },
+      {
+        "id": 39154332573,
+        "name": "Fastline exact-head auto-merge",
+        "workflowId": 367428689,
+        "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+        "event": "pull_request",
+        "status": "completed",
+        "conclusion": "success",
+        "created": "2026-10-18T18:28:49Z",
+        "updated": "2026-10-18T18:36:57Z"
+      },
+      {
+        "id": 39154332725,
+        "name": "Record queue admission",
+        "workflowId": 366608540,
+        "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+        "event": "pull_request_target",
+        "status": "completed",
+        "conclusion": "success",
+        "created": "2026-10-18T18:28:49Z",
+        "updated": "2026-10-18T18:39:54Z"
+      },
+      {
+        "id": 39154332603,
+        "name": "Company edition candidates",
+        "workflowId": 367513384,
+        "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+        "event": "pull_request",
+        "status": "completed",
+        "conclusion": "success",
+        "created": "2026-10-18T18:28:49Z",
+        "updated": "2026-10-18T19:08:37Z"
+      },
+      {
+        "id": 39154332491,
+        "name": "Industrial feature verification",
+        "workflowId": 374330211,
+        "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+        "event": "pull_request",
+        "status": "completed",
+        "conclusion": "success",
+        "created": "2026-10-18T18:28:49Z",
+        "updated": "2026-10-18T19:09:44Z"
+      },
+      {
+        "id": 39154332460,
+        "name": "Validate source for continuous main",
+        "workflowId": 356583005,
+        "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+        "event": "pull_request",
+        "status": "queued",
+        "conclusion": null,
+        "created": "2026-10-18T18:28:49Z",
+        "updated": "2026-10-18T19:23:57Z"
+      }
+    ]
+  },
+  "otherQueuedSameBranch": {
+    "run": 39159510906,
+    "path": ".github/workflows/fastline-auto-merge.yml",
+    "gitBlob": "231cf239370fb69919ffbb3e09e0cbf5f5c0f8b3",
+    "groupExpression": "fastline-merge-${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || github.run_id }}",
+    "expectedGroup": "fastline-merge-1631",
+    "differentFromSource": true
+  },
+  "findings": [
+    "No custom runner label, job-level concurrency, environment approval, unmet declared dependency or older active same-branch source run was found.",
+    "Runner and group have not been assigned. Source job has no started steps or annotated error.",
+    "Newer Ubuntu jobs starting does not establish FIFO order, queue policy, provider outage or account concurrency limit.",
+    "Actual evaluated concurrency key and scheduler queue reason are not exposed by these REST responses."
+  ],
+  "actions": {
+    "rerun": false,
+    "cancel": false,
+    "settingsChanges": false,
+    "branchChanges": false,
+    "localWrites": false
+  }
+}

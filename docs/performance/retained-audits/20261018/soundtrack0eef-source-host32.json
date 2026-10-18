@@ -1,0 +1,225 @@
+{
+  "format": "DemandedSoundtrackExactHeadHostRegressionEvidenceV1",
+  "observedAt": "2026-10-18T20:45:01.545Z",
+  "pullRequest": 1619,
+  "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+  "tree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+  "run": 39155641770,
+  "job": {
+    "id": 117776663378,
+    "run_id": 39155641770,
+    "workflow_name": "Validate source for continuous main",
+    "head_branch": "codex/solo-demanded-soundtrack-catalogue",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39155641770",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbbAlDUg",
+    "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117776663378",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39155641770/job/117776663378",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-18T20:07:26Z",
+    "started_at": "2026-10-18T20:39:14Z",
+    "completed_at": "2026-10-18T20:43:03Z",
+    "name": "focused_shards (3)",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T20:39:15Z",
+        "completed_at": "2026-10-18T20:39:17Z"
+      },
+      {
+        "name": "Check out exact pull-request source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-18T20:39:17Z",
+        "completed_at": "2026-10-18T20:40:41Z"
+      },
+      {
+        "name": "Check out trusted focused-gate automation",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-18T20:40:41Z",
+        "completed_at": "2026-10-18T20:40:43Z"
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-18T20:40:43Z",
+        "completed_at": "2026-10-18T20:40:50Z"
+      },
+      {
+        "name": "Download the immutable preflight path inventory",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-10-18T20:40:50Z",
+        "completed_at": "2026-10-18T20:40:50Z"
+      },
+      {
+        "name": "Capture the reviewed changed-path set",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-10-18T20:40:50Z",
+        "completed_at": "2026-10-18T20:40:50Z"
+      },
+      {
+        "name": "Select the fail-closed focused gate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-10-18T20:40:50Z",
+        "completed_at": "2026-10-18T20:40:51Z"
+      },
+      {
+        "name": "Verify exact tracked source before commands",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-10-18T20:40:51Z",
+        "completed_at": "2026-10-18T20:41:19Z"
+      },
+      {
+        "name": "Install dependencies once for selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-10-18T20:41:19Z",
+        "completed_at": "2026-10-18T20:41:22Z"
+      },
+      {
+        "name": "Install pinned authoring dependencies for selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-10-18T20:41:22Z",
+        "completed_at": "2026-10-18T20:41:23Z"
+      },
+      {
+        "name": "Run selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-10-18T20:41:23Z",
+        "completed_at": "2026-10-18T20:42:31Z"
+      },
+      {
+        "name": "Verify exact tracked source after commands",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-10-18T20:42:31Z",
+        "completed_at": "2026-10-18T20:43:00Z"
+      },
+      {
+        "name": "Retain available focused shard evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-18T20:43:00Z",
+        "completed_at": "2026-10-18T20:43:01Z"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24,
+        "started_at": "2026-10-18T20:43:01Z",
+        "completed_at": "2026-10-18T20:43:01Z"
+      },
+      {
+        "name": "Post Check out trusted focused-gate automation",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 25,
+        "started_at": "2026-10-18T20:43:01Z",
+        "completed_at": "2026-10-18T20:43:01Z"
+      },
+      {
+        "name": "Post Check out exact pull-request source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 26,
+        "started_at": "2026-10-18T20:43:01Z",
+        "completed_at": "2026-10-18T20:43:02Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 27,
+        "started_at": "2026-10-18T20:43:02Z",
+        "completed_at": "2026-10-18T20:43:02Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117776663378",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000042660,
+    "runner_name": "GitHub Actions 1000042660",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "artifact": {
+    "id": 12150127703,
+    "node_id": "MDg6QXJ0aWZhY3QxMjE1MDEyNzcwMw==",
+    "name": "focused-shard-39155641770-1-3",
+    "size_in_bytes": 2977,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150127703",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150127703/zip",
+    "expired": false,
+    "digest": "sha256:8eb9c3ad51daa75f595f38629124bc2313d2ffcfe6949e22c2a4ec789a077f2b",
+    "created_at": "2026-10-18T20:43:01Z",
+    "updated_at": "2026-10-18T20:43:01Z",
+    "expires_at": "2026-10-25T20:43:00Z",
+    "workflow_run": {
+      "id": 39155641770,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "codex/solo-demanded-soundtrack-catalogue",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    }
+  },
+  "archiveSizeSha256CRCVerified": true,
+  "entries": {
+    "output.log": {
+      "bytes": 8241,
+      "sha256": "5f6987071471cee12d3a7b812e169415d91c4a046268b3476ea0fb2355a6e138",
+      "content": "### Focused release gate\n\nCategories: bounded non-runtime change\nCommands: 4\nFallback validation: game/test/solo-soundtrack-admission-host.test.mjs, game/test/soundtrack-host.test.mjs, game/test/soundtrack-panel.test.mjs, game/ui/soundtrack-panel.mjs\nFocused shard 3/4: 1/4 commands; plan e9d1209f61b87bfa8ea9f00e4c133d4659953a7594643f1c5c09b42348b04539\n\n[focused:changed-test:game/test/soundtrack-host.test.mjs] node --test game/test/soundtrack-host.test.mjs\nTAP version 13\n# Subtest: silent Solo Start defers native audio until unmute in its control gesture\nok 1 - silent Solo Start defers native audio until unmute in its control gesture\n  ---\n  duration_ms: 2593.750412\n  ...\n# Subtest: silent Solo Start defers native audio until volume rises in its control gesture\nok 2 - silent Solo Start defers native audio until volume rises in its control gesture\n  ---\n  duration_ms: 2057.257532\n  ...\n# Subtest: deferred Solo activation preserves an explicit music Pause when master sound is restored\nok 3 - deferred Solo activation preserves an explicit music Pause when master sound is restored\n  ---\n  duration_ms: 2053.521751\n  ...\n# Subtest: muted fresh Solo browses metadata only on Studio demand and acquires no recordings before Play\nok 4 - muted fresh Solo browses metadata only on Studio demand and acquires no recordings before Play\n  ---\n  duration_ms: 1246.601564\n  ...\n# Subtest: failed explicit Audio catalogue metadata is reported and Studio retries it once without acquiring recordings\nok 5 - failed explicit Audio catalogue metadata is reported and Studio retries it once without acquiring recordings\n  ---\n  duration_ms: 1328.452194\n  ...\n# Subtest: Settings music text follows master immediately and remains coherent after transport notifications\nok 6 - Settings music text follows master immediately and remains coherent after transport notifications\n  ---\n  duration_ms: 1141.405065\n  ...\n# Subtest: Solo playing banners and Audio summary expose creator links and clear them on a sourceless track\nok 7 - Solo playing banners and Audio summary expose creator links and clear them on a sourceless track\n  ---\n  duration_ms: 1168.937442\n  ...\n# Subtest: trusted Solo creator-link gestures cannot start, retry or restore music\nok 8 - trusted Solo creator-link gestures cannot start, retry or restore music\n  ---\n  duration_ms: 1304.598726\n  ...\n# Subtest: late Settings Play cancellation cannot replace a newer Library Pause label\nok 9 - late Settings Play cancellation cannot replace a newer Library Pause label\n  ---\n  duration_ms: 1164.220027\n  ...\n# Subtest: blocked Settings Play feedback survives master edits until a real transport retry\nok 10 - blocked Settings Play feedback survives master edits until a real transport retry\n  ---\n  duration_ms: 1146.643882\n  ...\n# Subtest: actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight\nok 11 - actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and returns to a paused flight\n  ---\n  duration_ms: 3702.919266\n  ...\n# Subtest: actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection\nok 12 - actual MP3 keeps its stream and position through menus, a real victory, results, next level and collection\n  ---\n  duration_ms: 10801.03179\n  ...\n# Subtest: actual master, music and SFX controls remain independent and the studio fader persists to game settings\nok 13 - actual master, music and SFX controls remain independent and the studio fader persists to game settings\n  ---\n  duration_ms: 1272.901756\n  ...\n# Subtest: Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight\nok 14 - Studio master controls preserve a paused MP3 and persist the shared setting without advancing flight\n  ---\n  duration_ms: 1185.712524\n  ...\n# Subtest: actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume\nok 15 - actual hide/focus restores listening on the same stream while flight stays paused until explicit Resume\n  ---\n  duration_ms: 2465.973331\n  ...\n# Subtest: missing file-audio API disables Studio and leaves the original synth fallback usable\nok 16 - missing file-audio API disables Studio and leaves the original synth fallback usable\n  ---\n  duration_ms: 1071.790767\n  ...\n# Subtest: actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight\nok 17 - actual audition hide/focus releases the preview and restores prior MP3 listening without resuming flight\n  ---\n  duration_ms: 1296.406616\n  ...\n# Subtest: a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight\nok 18 - a visible back/forward-cache pageshow restores music without requiring an extra focus event or resuming flight\n  ---\n  duration_ms: 2171.004434\n  ...\n# Subtest: actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight\nok 19 - actual Studio prepares without downloading; controller, keyboard and touch request its retained link without resuming flight\n  ---\n  duration_ms: 2767.135238\n  ...\n# Subtest: closing Studio during pending Play respects play with saved audio disabled when flight starts\nok 20 - closing Studio during pending Play respects play with saved audio disabled when flight starts\n  ---\n  duration_ms: 2001.549038\n  ...\n# Subtest: closing Studio during pending Play respects pause with saved audio disabled when flight starts\nok 21 - closing Studio during pending Play respects pause with saved audio disabled when flight starts\n  ---\n  duration_ms: 2075.129126\n  ...\n# Subtest: closing Studio during pending Play respects pause with saved audio enabled when flight starts\nok 22 - closing Studio during pending Play respects pause with saved audio enabled when flight starts\n  ---\n  duration_ms: 2108.307892\n  ...\n# Subtest: closing Studio during pending Play respects mute with saved audio enabled when flight starts\nok 23 - closing Studio during pending Play respects mute with saved audio enabled when flight starts\n  ---\n  duration_ms: 2038.957059\n  ...\n# Subtest: Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner\nok 24 - Solo Audio exposes full current credits while compact Pause remains an ordinary Pause owner\n  ---\n  duration_ms: 1240.22296\n  ...\n# Subtest: Settings Audio Play/Pause stays out of landing and Pause while Pause Next uses the shared transport\nok 25 - Settings Audio Play/Pause stays out of landing and Pause while Pause Next uses the shared transport\n  ---\n  duration_ms: 2419.183121\n  ...\n# Subtest: quick Solo keyboard retry owns its blocked playback gesture exactly once\nok 26 - quick Solo keyboard retry owns its blocked playback gesture exactly once\n  ---\n  duration_ms: 1180.693068\n  ...\n# Subtest: quick Solo pointer retry owns its blocked playback gesture exactly once\nok 27 - quick Solo pointer retry owns its blocked playback gesture exactly once\n  ---\n  duration_ms: 1177.307173\n  ...\n# Subtest: Solo reload uses saved fpv on generic start without rewriting preferences\nok 28 - Solo reload uses saved fpv on generic start without rewriting preferences\n  ---\n  duration_ms: 1940.185626\n  ...\n# Subtest: Solo reload uses saved fusion on generic play without rewriting preferences\nok 29 - Solo reload uses saved fusion on generic play without rewriting preferences\n  ---\n  duration_ms: 1227.76219\n  ...\n# Subtest: closing Studio cancels a pending saved-style Play without a late stream\nok 30 - closing Studio cancels a pending saved-style Play without a late stream\n  ---\n  duration_ms: 1227.651817\n  ...\n# Subtest: generic saved-style Play wins while Studio discovery is still pending\nok 31 - generic saved-style Play wins while Studio discovery is still pending\n  ---\n  duration_ms: 1294.219686\n  ...\n# Subtest: generic saved-style Play is cancelled on close while Studio discovery is still pending\nok 32 - generic saved-style Play is cancelled on close while Studio discovery is still pending\n  ---\n  duration_ms: 1277.706615\n  ...\n1..32\n# tests 32\n# suites 0\n# pass 32\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 67686.564741\n"
+    },
+    "receipt.json": {
+      "bytes": 1324,
+      "sha256": "4e606e091437dba7c6a67befe8adf49072efadd844b1cf93f2ec469bb3f914b0",
+      "content": "{\"format\":\"revealline-focused-shard.v1\",\"state\":\"complete\",\"shard\":{\"index\":3,\"total\":4},\"identity\":{\"sourceRevision\":\"0eef99dfa3fef571281b32d260c1b4d00efb625d\",\"workflowRevision\":\"fa43184f036f5ee5e24f3cea4e12befb47bddc50\",\"policyDigest\":\"bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142\",\"testPolicySha256\":\"ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2\",\"manifestSha256\":\"d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479\",\"changedPathsSha256\":\"6b7df9d167527f080ef0e9f2e00d35e5e6e83c4a7196928420c6210a7989c3fa\",\"fallbackHandled\":false,\"sourceTree\":\"bcc6145844d909668cf09fc4e1da3fc7ca76893f\"},\"plan\":{\"commands\":[{\"id\":\"unknown-runtime-validate\",\"command\":\"npm\",\"args\":[\"run\",\"validate\"],\"timeoutMs\":1800000},{\"id\":\"changed-test:game/test/solo-soundtrack-admission-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/solo-soundtrack-admission-host.test.mjs\"]},{\"id\":\"changed-test:game/test/soundtrack-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/soundtrack-host.test.mjs\"]},{\"id\":\"changed-test:game/test/soundtrack-panel.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/soundtrack-panel.test.mjs\"]}],\"sha256\":\"e9d1209f61b87bfa8ea9f00e4c133d4659953a7594643f1c5c09b42348b04539\"},\"indices\":[2],\"result\":{\"attempted\":1,\"failures\":[],\"exitCode\":0}}\n"
+    }
+  },
+  "summary": {
+    "tests": 32,
+    "pass": 32,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 67686.564741
+  },
+  "verifiedNewControls": [
+    "generic saved-style Play wins while Studio discovery is still pending",
+    "generic saved-style Play is cancelled on close while Studio discovery is still pending"
+  ],
+  "priorFailedEvidence": "5a3450a2a09a5f869421e30602b7aa8ac4dc5cf9 remains failed at old20ac; corrected test-only0eef now executes this actual-host group successfully.",
+  "remaining": [
+    "Three other source shards and focused/release-ready aggregates",
+    "Full Appearance preview/package",
+    "Published/native acceptance"
+  ],
+  "limits": "Actual software host fixture execution on corrected head; no physical-media/device/performance or whole-app acceptance."
+}

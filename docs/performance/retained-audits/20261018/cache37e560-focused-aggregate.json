@@ -1,0 +1,255 @@
+{
+  "format": "SoloLookupFocusedAggregateCompletionV1",
+  "observedAt": "2026-10-18T20:45:02.818Z",
+  "pullRequest": 1631,
+  "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+  "tree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+  "run": 39154332460,
+  "job": {
+    "id": 117766867300,
+    "run_id": 39154332460,
+    "workflow_name": "Validate source for continuous main",
+    "head_branch": "codex/solo-local-recording-lookup-20261018",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39154332460",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAba3PJZA",
+    "head_sha": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117766867300",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117766867300",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-18T19:23:57Z",
+    "started_at": "2026-10-18T20:42:59Z",
+    "completed_at": "2026-10-18T20:43:13Z",
+    "name": "focused",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T20:43:00Z",
+        "completed_at": "2026-10-18T20:43:01Z"
+      },
+      {
+        "name": "Require every shard job to succeed",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-18T20:43:01Z",
+        "completed_at": "2026-10-18T20:43:01Z"
+      },
+      {
+        "name": "Check out trusted focused receipt verifier",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-18T20:43:01Z",
+        "completed_at": "2026-10-18T20:43:02Z"
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-18T20:43:02Z",
+        "completed_at": "2026-10-18T20:43:07Z"
+      },
+      {
+        "name": "Download immutable preflight admission",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-10-18T20:43:07Z",
+        "completed_at": "2026-10-18T20:43:08Z"
+      },
+      {
+        "name": "Download all four focused shard receipts",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-10-18T20:43:08Z",
+        "completed_at": "2026-10-18T20:43:09Z"
+      },
+      {
+        "name": "Require exact complete command coverage",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-10-18T20:43:09Z",
+        "completed_at": "2026-10-18T20:43:09Z"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-18T20:43:09Z",
+        "completed_at": "2026-10-18T20:43:09Z"
+      },
+      {
+        "name": "Post Check out trusted focused receipt verifier",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 14,
+        "started_at": "2026-10-18T20:43:09Z",
+        "completed_at": "2026-10-18T20:43:10Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 15,
+        "started_at": "2026-10-18T20:43:10Z",
+        "completed_at": "2026-10-18T20:43:10Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117766867300",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000042672,
+    "runner_name": "GitHub Actions 1000042672",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "queueInspection": "38acbafc4400387605654b0f3462f486b2cffc37",
+  "aggregateLog": {
+    "bytes": 23090,
+    "sha256": "f52e1eb671efc71bc7ea7a93322ceaf718b4fba708d4ea86268b0e4f53cd7aac",
+    "content": "﻿2026-10-18T20:43:00.3030592Z Current runner version: '2.337.0'\n2026-10-18T20:43:00.3055251Z ##[group]Runner Image Provisioner\n2026-10-18T20:43:00.3056129Z Hosted Compute Agent\n2026-10-18T20:43:00.3057233Z Version: 20261012.601\n2026-10-18T20:43:00.3058035Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-18T20:43:00.3058887Z Build Date: 2026-10-12T17:48:21Z\n2026-10-18T20:43:00.3059620Z Worker ID: {364cfa1b-b2fa-4d49-9725-6198aaa58d61}\n2026-10-18T20:43:00.3060335Z Region: westus2\n2026-10-18T20:43:00.3060963Z Cloud: Azure\n2026-10-18T20:43:00.3061504Z ##[endgroup]\n2026-10-18T20:43:00.3062995Z ##[group]Operating System\n2026-10-18T20:43:00.3063756Z Ubuntu\n2026-10-18T20:43:00.3064298Z 24.04.5\n2026-10-18T20:43:00.3064883Z LTS\n2026-10-18T20:43:00.3065416Z ##[endgroup]\n2026-10-18T20:43:00.3066025Z ##[group]Runner Image\n2026-10-18T20:43:00.3066731Z Image: ubuntu-24.04\n2026-10-18T20:43:00.3067535Z Version: 20261012.334.1\n2026-10-18T20:43:00.3068883Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-18T20:43:00.3070442Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-18T20:43:00.3071506Z ##[endgroup]\n2026-10-18T20:43:00.3072590Z ##[group]GITHUB_TOKEN Permissions\n2026-10-18T20:43:00.3074601Z Contents: read\n2026-10-18T20:43:00.3075232Z Metadata: read\n2026-10-18T20:43:00.3075901Z ##[endgroup]\n2026-10-18T20:43:00.3078373Z Secret source: Actions\n2026-10-18T20:43:00.3079500Z Cache mode: write\n2026-10-18T20:43:00.3080247Z Prepare workflow directory\n2026-10-18T20:43:00.3669532Z Prepare all required actions\n2026-10-18T20:43:00.3717521Z Getting action download info\n2026-10-18T20:43:00.6969942Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)\n2026-10-18T20:43:00.8159304Z Download action repository 'actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)\n2026-10-18T20:43:00.9573984Z Download action repository 'actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131' (SHA:37930b1c2abaa49bbe596cd826c3c89aef350131)\n2026-10-18T20:43:01.2736511Z Complete job name: focused\n2026-10-18T20:43:01.3471528Z ##[group]Run test \"$SHARDS_RESULT\" = success\n2026-10-18T20:43:01.3472257Z \u001b[36;1mtest \"$SHARDS_RESULT\" = success\u001b[0m\n2026-10-18T20:43:01.3731267Z shell: /usr/bin/bash -e {0}\n2026-10-18T20:43:01.3732232Z env:\n2026-10-18T20:43:01.3732846Z   EXPECTED_SOURCE: 37e560e21602ac915b3a9cc70fc51e92f3f1a3dc\n2026-10-18T20:43:01.3734065Z   EXPECTED_AUTOMATION: 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:01.3735044Z   SHARDS_RESULT: success\n2026-10-18T20:43:01.3735582Z ##[endgroup]\n2026-10-18T20:43:01.4115387Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09\n2026-10-18T20:43:01.4116173Z with:\n2026-10-18T20:43:01.4116675Z   ref: 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:01.4117607Z   path: automation\n2026-10-18T20:43:01.4118060Z   fetch-depth: 1\n2026-10-18T20:43:01.4118540Z   persist-credentials: false\n2026-10-18T20:43:01.4119619Z   sparse-checkout: publishing/focused-test-map.json\npublishing/focused-tests.mjs\npublishing/test-policy.json\npublishing/test-policy.mjs\n\n2026-10-18T20:43:01.4120768Z   sparse-checkout-cone-mode: false\n2026-10-18T20:43:01.4121308Z   repository: mekhovov/revealline\n2026-10-18T20:43:01.4125123Z   token: ***\n2026-10-18T20:43:01.4126071Z   ssh-strict: true\n2026-10-18T20:43:01.4126992Z   ssh-user: git\n2026-10-18T20:43:01.4127691Z   clean: true\n2026-10-18T20:43:01.4128409Z   fetch-tags: false\n2026-10-18T20:43:01.4129139Z   show-progress: true\n2026-10-18T20:43:01.4129601Z   lfs: false\n2026-10-18T20:43:01.4130058Z   submodules: false\n2026-10-18T20:43:01.4130506Z   set-safe-directory: true\n2026-10-18T20:43:01.4131013Z   allow-unsafe-pr-checkout: false\n2026-10-18T20:43:01.4131515Z env:\n2026-10-18T20:43:01.4132008Z   EXPECTED_SOURCE: 37e560e21602ac915b3a9cc70fc51e92f3f1a3dc\n2026-10-18T20:43:01.4132768Z   EXPECTED_AUTOMATION: 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:01.4133676Z ##[endgroup]\n2026-10-18T20:43:01.5114119Z Syncing repository: mekhovov/revealline\n2026-10-18T20:43:01.5116090Z ##[group]Getting Git version info\n2026-10-18T20:43:01.5117216Z Working directory is '/home/runner/work/revealline/revealline/automation'\n2026-10-18T20:43:01.5118353Z [command]/usr/bin/git version\n2026-10-18T20:43:01.5217057Z git version 2.55.0\n2026-10-18T20:43:01.5342288Z ##[endgroup]\n2026-10-18T20:43:01.5353249Z Temporarily overriding HOME='/home/runner/work/_temp/124a3e9f-4813-449a-9aa2-dbd606af5af6' before making global git config changes\n2026-10-18T20:43:01.5356585Z Adding repository directory to the temporary git global config as a safe directory\n2026-10-18T20:43:01.5358835Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline/automation\n2026-10-18T20:43:01.5365528Z ##[group]Initializing the repository\n2026-10-18T20:43:01.5366493Z [command]/usr/bin/git init /home/runner/work/revealline/revealline/automation\n2026-10-18T20:43:01.5483465Z hint: Using 'master' as the name for the initial branch. This default branch name\n2026-10-18T20:43:01.5485097Z hint: will change to \"main\" in Git 3.0. To configure the initial branch name\n2026-10-18T20:43:01.5488102Z hint: to use in all of your new repositories, which will suppress this warning,\n2026-10-18T20:43:01.5489503Z hint: call:\n2026-10-18T20:43:01.5490266Z hint:\n2026-10-18T20:43:01.5491225Z hint: \tgit config --global init.defaultBranch <name>\n2026-10-18T20:43:01.5492407Z hint:\n2026-10-18T20:43:01.5493535Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\n2026-10-18T20:43:01.5495225Z hint: 'development'. The just-created branch can be renamed via this command:\n2026-10-18T20:43:01.5496589Z hint:\n2026-10-18T20:43:01.5497645Z hint: \tgit branch -m <name>\n2026-10-18T20:43:01.5498449Z hint:\n2026-10-18T20:43:01.5499522Z hint: Disable this message with \"git config set advice.defaultBranchName false\"\n2026-10-18T20:43:01.5501732Z Initialized empty Git repository in /home/runner/work/revealline/revealline/automation/.git/\n2026-10-18T20:43:01.5505526Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline\n2026-10-18T20:43:01.5560105Z ##[endgroup]\n2026-10-18T20:43:01.5561560Z ##[group]Disabling automatic garbage collection\n2026-10-18T20:43:01.5564677Z [command]/usr/bin/git config --local gc.auto 0\n2026-10-18T20:43:01.5610483Z ##[endgroup]\n2026-10-18T20:43:01.5611725Z ##[group]Setting up auth\n2026-10-18T20:43:01.5618454Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T20:43:01.5659832Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T20:43:01.6041252Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T20:43:01.6080464Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T20:43:01.6317474Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T20:43:01.6357391Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T20:43:01.6584114Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***\n2026-10-18T20:43:01.6627254Z ##[endgroup]\n2026-10-18T20:43:01.6628837Z ##[group]Fetching the repository\n2026-10-18T20:43:01.6639845Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:02.0757020Z From https://github.com/mekhovov/revealline\n2026-10-18T20:43:02.0759380Z  * branch            95f99a21179120eace0ecbd3fa0ac732737fd3cb -> FETCH_HEAD\n2026-10-18T20:43:02.0763698Z ##[endgroup]\n2026-10-18T20:43:02.0764912Z ##[group]Determining the checkout info\n2026-10-18T20:43:02.0766314Z ##[endgroup]\n2026-10-18T20:43:02.0767993Z ##[group]Setting up sparse checkout\n2026-10-18T20:43:02.0769692Z [command]/usr/bin/git config core.sparseCheckout true\n2026-10-18T20:43:02.0814834Z [command]/usr/bin/git rev-parse --git-path info/sparse-checkout\n2026-10-18T20:43:02.0839185Z .git/info/sparse-checkout\n2026-10-18T20:43:02.0847758Z ##[endgroup]\n2026-10-18T20:43:02.0849146Z ##[group]Checking out the ref\n2026-10-18T20:43:02.0851985Z [command]/usr/bin/git checkout --progress --force 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:02.5583294Z Note: switching to '95f99a21179120eace0ecbd3fa0ac732737fd3cb'.\n2026-10-18T20:43:02.5585220Z \n2026-10-18T20:43:02.5586518Z You are in 'detached HEAD' state. You can look around, make experimental\n2026-10-18T20:43:02.5589849Z changes and commit them, and you can discard any commits you make in this\n2026-10-18T20:43:02.5592906Z state without impacting any branches by switching back to a branch.\n2026-10-18T20:43:02.5594731Z \n2026-10-18T20:43:02.5595941Z If you want to create a new branch to retain commits you create, you may\n2026-10-18T20:43:02.5598632Z do so (now or later) by using -c with the switch command. Example:\n2026-10-18T20:43:02.5599861Z \n2026-10-18T20:43:02.5600457Z   git switch -c <new-branch-name>\n2026-10-18T20:43:02.5601636Z \n2026-10-18T20:43:02.5602227Z Or undo this operation with:\n2026-10-18T20:43:02.5602984Z \n2026-10-18T20:43:02.5603418Z   git switch -\n2026-10-18T20:43:02.5603970Z \n2026-10-18T20:43:02.5605044Z Turn off this advice by setting config variable advice.detachedHead to false\n2026-10-18T20:43:02.5606575Z \n2026-10-18T20:43:02.5608473Z HEAD is now at 95f99a2 Merge 37e560e21602ac915b3a9cc70fc51e92f3f1a3dc into 461ace72e78f8cbd77c26549381d9e21d0a65e91\n2026-10-18T20:43:02.5613241Z ##[endgroup]\n2026-10-18T20:43:02.5651303Z [command]/usr/bin/git log -1 --format=%H\n2026-10-18T20:43:02.5678203Z 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:02.5688760Z ##[group]Removing auth\n2026-10-18T20:43:02.5692670Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T20:43:02.5726298Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T20:43:02.6006634Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T20:43:02.6042529Z http.https://github.com/.extraheader\n2026-10-18T20:43:02.6051867Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader\n2026-10-18T20:43:02.6089279Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T20:43:02.6346614Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T20:43:02.6382234Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T20:43:02.6637270Z ##[endgroup]\n2026-10-18T20:43:02.6872946Z ##[group]Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444\n2026-10-18T20:43:02.6873758Z with:\n2026-10-18T20:43:02.6874247Z   package-manager-cache: false\n2026-10-18T20:43:02.6874802Z   node-version: 20.19.x\n2026-10-18T20:43:02.6875303Z   always-auth: false\n2026-10-18T20:43:02.6875789Z   check-latest: false\n2026-10-18T20:43:02.6879403Z   token: ***\n2026-10-18T20:43:02.6879876Z env:\n2026-10-18T20:43:02.6880417Z   EXPECTED_SOURCE: 37e560e21602ac915b3a9cc70fc51e92f3f1a3dc\n2026-10-18T20:43:02.6881191Z   EXPECTED_AUTOMATION: 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:02.6881860Z ##[endgroup]\n2026-10-18T20:43:02.8426489Z Attempting to download 20.19.x...\n2026-10-18T20:43:02.8534605Z (node:2404) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n2026-10-18T20:43:02.8536165Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T20:43:03.3361504Z Acquiring 20.19.6 - x64 from https://github.com/actions/node-versions/releases/download/20.19.6-19690675733/node-20.19.6-linux-x64.tar.gz\n2026-10-18T20:43:03.8227945Z Extracting ...\n2026-10-18T20:43:03.8347544Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/44040155-6351-4a58-a285-de88b7daaf96 -f /home/runner/work/_temp/1e173f3f-b779-44c1-9679-44bc6c9f15f5\n2026-10-18T20:43:04.8565049Z Adding to the cache ...\n2026-10-18T20:43:07.0092926Z ##[group]Environment details\n2026-10-18T20:43:07.2262951Z node: v20.19.6\n2026-10-18T20:43:07.2263393Z npm: 10.8.2\n2026-10-18T20:43:07.2263713Z yarn: 1.22.22\n2026-10-18T20:43:07.2264348Z ##[endgroup]\n2026-10-18T20:43:07.2510213Z ##[group]Run actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131\n2026-10-18T20:43:07.2510709Z with:\n2026-10-18T20:43:07.2510932Z   name: admission-39154332460-1\n2026-10-18T20:43:07.2511250Z   path: /home/runner/work/_temp/preflight-admission\n2026-10-18T20:43:07.2511593Z   merge-multiple: false\n2026-10-18T20:43:07.2511841Z   repository: mekhovov/revealline\n2026-10-18T20:43:07.2512110Z   run-id: 39154332460\n2026-10-18T20:43:07.2512341Z env:\n2026-10-18T20:43:07.2512599Z   EXPECTED_SOURCE: 37e560e21602ac915b3a9cc70fc51e92f3f1a3dc\n2026-10-18T20:43:07.2513010Z   EXPECTED_AUTOMATION: 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:07.2513350Z ##[endgroup]\n2026-10-18T20:43:07.3979770Z Downloading single artifact\n2026-10-18T20:43:07.6525255Z Preparing to download the following artifacts:\n2026-10-18T20:43:07.6526500Z - admission-39154332460-1 (ID: 12146393081, Size: 423, Expected Digest: sha256:970801bb3b73eba17163d2054f6f7e5be4bf9eda76f362ab7b6d9bb39a99212e)\n2026-10-18T20:43:08.1381649Z Redirecting to blob download url: https://productionresultssa4.blob.core.windows.net/actions-results/25752883-933d-88b1-bd4c-22f313eb6bba/workflow-job-run-aef68d30-4d80-58b9-a50d-937f6ddcb050/artifacts/00e43f909279c038587949150e5924342b7acf13ccc753ed878746517351b6be.zip\n2026-10-18T20:43:08.1384724Z Starting download of artifact to: /home/runner/work/_temp/preflight-admission\n2026-10-18T20:43:08.3981590Z (node:2440) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\n2026-10-18T20:43:08.3982963Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T20:43:08.4020107Z SHA256 digest of downloaded artifact is 970801bb3b73eba17163d2054f6f7e5be4bf9eda76f362ab7b6d9bb39a99212e\n2026-10-18T20:43:08.4020934Z Artifact download completed successfully.\n2026-10-18T20:43:08.4021417Z Total of 1 artifact(s) downloaded\n2026-10-18T20:43:08.4028228Z Download artifact has finished successfully\n2026-10-18T20:43:08.4184623Z ##[group]Run actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131\n2026-10-18T20:43:08.4185100Z with:\n2026-10-18T20:43:08.4185354Z   pattern: focused-shard-39154332460-1-*\n2026-10-18T20:43:08.4185702Z   path: /home/runner/work/_temp/focused-shards\n2026-10-18T20:43:08.4186017Z   merge-multiple: false\n2026-10-18T20:43:08.4186282Z   repository: mekhovov/revealline\n2026-10-18T20:43:08.4186538Z   run-id: 39154332460\n2026-10-18T20:43:08.4186764Z env:\n2026-10-18T20:43:08.4187513Z   EXPECTED_SOURCE: 37e560e21602ac915b3a9cc70fc51e92f3f1a3dc\n2026-10-18T20:43:08.4187954Z   EXPECTED_AUTOMATION: 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:08.4188311Z ##[endgroup]\n2026-10-18T20:43:08.8177825Z Found 5 artifact(s)\n2026-10-18T20:43:08.8178928Z Filtering artifacts by pattern 'focused-shard-39154332460-1-*'\n2026-10-18T20:43:08.8199113Z Preparing to download the following artifacts:\n2026-10-18T20:43:08.8201035Z - focused-shard-39154332460-1-2 (ID: 12148305409, Size: 1008, Expected Digest: sha256:0c337a5a0336411ad2517b0c11a33bb6ee6300cff0d52d6bf4670975e060000d)\n2026-10-18T20:43:08.8203941Z - focused-shard-39154332460-1-3 (ID: 12147990600, Size: 1008, Expected Digest: sha256:f1f9fccfdc772d16e9dcf9bb50e32d7cacdc148a8f97bf392565657853dde22c)\n2026-10-18T20:43:08.8206286Z - focused-shard-39154332460-1-4 (ID: 12147812419, Size: 1008, Expected Digest: sha256:baa3a34aa5afe25133b562f7222426585009370e24695c11735156b7c09258e4)\n2026-10-18T20:43:08.8208806Z - focused-shard-39154332460-1-1 (ID: 12147238540, Size: 3176, Expected Digest: sha256:e393ae57592baaf3dcc6728a94852660e0274db920ee17fc14c1a37c8fa70b27)\n2026-10-18T20:43:09.3019418Z Redirecting to blob download url: https://productionresultssa4.blob.core.windows.net/actions-results/25752883-933d-88b1-bd4c-22f313eb6bba/workflow-job-run-6b524343-77a3-53b8-8880-d35add69378f/artifacts/134b3e0adc4b5f70528da8fddd1f0030b6b6aa0351d0f658e3bacdb61dfcd0fa.zip\n2026-10-18T20:43:09.3021403Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39154332460-1-3\n2026-10-18T20:43:09.3133949Z Redirecting to blob download url: https://productionresultssa4.blob.core.windows.net/actions-results/25752883-933d-88b1-bd4c-22f313eb6bba/workflow-job-run-33ec5901-4b58-5958-b200-a93717e9468b/artifacts/d044721b84eadd9465da3beb12daf9bca91b27baa9dece4842228dcdff515476.zip\n2026-10-18T20:43:09.3136755Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39154332460-1-1\n2026-10-18T20:43:09.3142317Z Redirecting to blob download url: https://productionresultssa4.blob.core.windows.net/actions-results/25752883-933d-88b1-bd4c-22f313eb6bba/workflow-job-run-645cdf14-298e-55f6-988c-2dacac2cf4e5/artifacts/5c5b7e12bfacd607ca43adf2a44e7531adedae9b8e8b11496ec63f8b6a21505f.zip\n2026-10-18T20:43:09.3145214Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39154332460-1-4\n2026-10-18T20:43:09.3240694Z Redirecting to blob download url: https://productionresultssa4.blob.core.windows.net/actions-results/25752883-933d-88b1-bd4c-22f313eb6bba/workflow-job-run-762ad075-8b64-5045-90ca-10c1aca02fdb/artifacts/1a05fc11af593fb33acd4217016c3d75c0200628072d29ad5170cf8d93cbac86.zip\n2026-10-18T20:43:09.3242317Z Starting download of artifact to: /home/runner/work/_temp/focused-shards/focused-shard-39154332460-1-2\n2026-10-18T20:43:09.5693368Z (node:2452) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.\n2026-10-18T20:43:09.5695707Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T20:43:09.5761213Z SHA256 digest of downloaded artifact is baa3a34aa5afe25133b562f7222426585009370e24695c11735156b7c09258e4\n2026-10-18T20:43:09.5762449Z Artifact download completed successfully.\n2026-10-18T20:43:09.5763857Z SHA256 digest of downloaded artifact is e393ae57592baaf3dcc6728a94852660e0274db920ee17fc14c1a37c8fa70b27\n2026-10-18T20:43:09.5764832Z Artifact download completed successfully.\n2026-10-18T20:43:09.5835289Z SHA256 digest of downloaded artifact is f1f9fccfdc772d16e9dcf9bb50e32d7cacdc148a8f97bf392565657853dde22c\n2026-10-18T20:43:09.5836001Z Artifact download completed successfully.\n2026-10-18T20:43:09.5890883Z SHA256 digest of downloaded artifact is 0c337a5a0336411ad2517b0c11a33bb6ee6300cff0d52d6bf4670975e060000d\n2026-10-18T20:43:09.5892087Z Artifact download completed successfully.\n2026-10-18T20:43:09.5892817Z Total of 4 artifact(s) downloaded\n2026-10-18T20:43:09.5897960Z Download artifact has finished successfully\n2026-10-18T20:43:09.6017706Z ##[group]Run node automation/publishing/focused-tests.mjs \\\n2026-10-18T20:43:09.6018239Z \u001b[36;1mnode automation/publishing/focused-tests.mjs \\\u001b[0m\n2026-10-18T20:43:09.6018718Z \u001b[36;1m  --verify-shards \"$RUNNER_TEMP/focused-shards\" \\\u001b[0m\n2026-10-18T20:43:09.6019165Z \u001b[36;1m  --artifact-prefix \"focused-shard-39154332460-1-\" \\\u001b[0m\n2026-10-18T20:43:09.6019676Z \u001b[36;1m  --admission \"$RUNNER_TEMP/preflight-admission/admission.json\" \\\u001b[0m\n2026-10-18T20:43:09.6020201Z \u001b[36;1m  --manifest automation/publishing/focused-test-map.json \\\u001b[0m\n2026-10-18T20:43:09.6020866Z \u001b[36;1m  --test-policy automation/publishing/test-policy.json\u001b[0m\n2026-10-18T20:43:09.6086590Z shell: /usr/bin/bash -e {0}\n2026-10-18T20:43:09.6087144Z env:\n2026-10-18T20:43:09.6087452Z   EXPECTED_SOURCE: 37e560e21602ac915b3a9cc70fc51e92f3f1a3dc\n2026-10-18T20:43:09.6087922Z   EXPECTED_AUTOMATION: 95f99a21179120eace0ecbd3fa0ac732737fd3cb\n2026-10-18T20:43:09.6088308Z ##[endgroup]\n2026-10-18T20:43:09.6517058Z All four focused shards passed: {\"shards\":4,\"commands\":1,\"sourceTree\":\"f6160d67ad8797fe8050f46dd5e7441b46a2bd33\",\"planSha256\":\"b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee\"}\n2026-10-18T20:43:09.6631538Z Post job cleanup.\n2026-10-18T20:43:09.7854713Z (node:2476) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.\n2026-10-18T20:43:09.7856202Z (Use `node --trace-deprecation ...` to show where the warning was created)\n2026-10-18T20:43:09.8039444Z Post job cleanup.\n2026-10-18T20:43:09.8916065Z [command]/usr/bin/git version\n2026-10-18T20:43:09.8963049Z git version 2.55.0\n2026-10-18T20:43:09.9007253Z Temporarily overriding HOME='/home/runner/work/_temp/682da6e5-6a9d-4691-be02-c11bf6b44e32' before making global git config changes\n2026-10-18T20:43:09.9008872Z Adding repository directory to the temporary git global config as a safe directory\n2026-10-18T20:43:09.9014404Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline/automation\n2026-10-18T20:43:09.9067202Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T20:43:09.9112717Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T20:43:09.9429549Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T20:43:09.9471029Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T20:43:09.9756160Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T20:43:09.9812605Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T20:43:10.0348766Z Cleaning up orphan processes\n"
+  },
+  "additionalEmptyShardReceipts": [
+    {
+      "id": 12148305409,
+      "bytes": 1008,
+      "sha256": "0c337a5a0336411ad2517b0c11a33bb6ee6300cff0d52d6bf4670975e060000d",
+      "zipCRCVerified": true,
+      "members": {
+        "output.log": {
+          "bytes": 181,
+          "sha256": "206ed5edf0642a9c8ff9376c27a68e5bb9884c7d4ab757b28a30849a71f9eb3e",
+          "content": "### Focused release gate\n\nCategories: official-download-retention\nCommands: 1\nFocused shard 2/4: 0/1 commands; plan b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee\n"
+        },
+        "receipt.json": {
+          "format": "revealline-focused-shard.v1",
+          "state": "complete",
+          "shard": {
+            "index": 2,
+            "total": 4
+          },
+          "identity": {
+            "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+            "workflowRevision": "95f99a21179120eace0ecbd3fa0ac732737fd3cb",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+            "changedPathsSha256": "4642033ae0ab70c6f6d3a61010a1a09e8061b25496ea59c9086d959d6b865b1d",
+            "fallbackHandled": false,
+            "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33"
+          },
+          "plan": {
+            "commands": [
+              {
+                "id": "official-download-retention",
+                "command": "node",
+                "args": [
+                  "--test",
+                  "game/test/official-downloads.test.mjs",
+                  "game/test/offline-download-access.test.mjs",
+                  "game/test/offline-team-retention-host.test.mjs"
+                ]
+              }
+            ],
+            "sha256": "b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee"
+          },
+          "indices": [],
+          "result": {
+            "attempted": 0,
+            "failures": [],
+            "exitCode": 0
+          }
+        }
+      }
+    },
+    {
+      "id": 12147812419,
+      "bytes": 1008,
+      "sha256": "baa3a34aa5afe25133b562f7222426585009370e24695c11735156b7c09258e4",
+      "zipCRCVerified": true,
+      "members": {
+        "output.log": {
+          "bytes": 181,
+          "sha256": "f7abad6cd0ea012365b063d97330b78ae42296ddd487f694931ce9778b4e74fb",
+          "content": "### Focused release gate\n\nCategories: official-download-retention\nCommands: 1\nFocused shard 4/4: 0/1 commands; plan b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee\n"
+        },
+        "receipt.json": {
+          "format": "revealline-focused-shard.v1",
+          "state": "complete",
+          "shard": {
+            "index": 4,
+            "total": 4
+          },
+          "identity": {
+            "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+            "workflowRevision": "95f99a21179120eace0ecbd3fa0ac732737fd3cb",
+            "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+            "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+            "changedPathsSha256": "4642033ae0ab70c6f6d3a61010a1a09e8061b25496ea59c9086d959d6b865b1d",
+            "fallbackHandled": false,
+            "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33"
+          },
+          "plan": {
+            "commands": [
+              {
+                "id": "official-download-retention",
+                "command": "node",
+                "args": [
+                  "--test",
+                  "game/test/official-downloads.test.mjs",
+                  "game/test/offline-download-access.test.mjs",
+                  "game/test/offline-team-retention-host.test.mjs"
+                ]
+              }
+            ],
+            "sha256": "b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee"
+          },
+          "indices": [],
+          "result": {
+            "attempted": 0,
+            "failures": [],
+            "exitCode": 0
+          }
+        }
+      }
+    }
+  ],
+  "priorFullSourceAndShard13Audit": "ab09c368951167116b393b04c2899f4e498a70f0",
+  "verifiedCoverage": {
+    "shards": 4,
+    "commands": 1,
+    "planSha256": "b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee"
+  },
+  "actualTests": {
+    "tests": 42,
+    "pass": 42,
+    "newControls": 8,
+    "zeroCommandShards": [
+      2,
+      3,
+      4
+    ]
+  },
+  "remainingRequiredGate": {
+    "name": "release-ready",
+    "job": 117784760040,
+    "status": "queued"
+  },
+  "actions": {
+    "reruns": 0,
+    "cancellations": 0,
+    "configurationChanges": 0
+  },
+  "limits": "Aggregate is passed; required release-ready remains pending, so no merge-ready recommendation yet."
+}

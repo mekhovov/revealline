@@ -1,0 +1,370 @@
+{
+  "format": "RevealLineAppearanceAdmissionSourceAuditV1",
+  "at": "2026-10-18T20:37:29.817008+00:00",
+  "scope": "Exact-head completed Demo and installed host admission controls only, not the still-pending full Appearance build, public browser or performance qualification.",
+  "runId": 39159253015,
+  "cohorts": [
+    {
+      "artifact": {
+        "id": 12150206090,
+        "node_id": "MDg6QXJ0aWZhY3QxMjE1MDIwNjA5MA==",
+        "name": "appearance-demo-admission-eb2a71273125eaaf0f523f74bbdb1dd299a1dc18-1",
+        "size_in_bytes": 5953,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150206090",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150206090/zip",
+        "expired": false,
+        "digest": "sha256:653e74af37397ab14e468979c57ee18352bbefe3172e0bf3a6a70c48e50abb29",
+        "created_at": "2026-10-18T20:34:09Z",
+        "updated_at": "2026-10-18T20:34:09Z",
+        "expires_at": "2026-10-25T20:34:08Z",
+        "workflow_run": {
+          "id": 39159253015,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/solo-missions-stage-observation",
+          "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+        }
+      },
+      "crcVerified": true,
+      "job": {
+        "id": 117768881866,
+        "run_id": 39159253015,
+        "workflow_name": "Appearance preview",
+        "head_branch": "codex/solo-missions-stage-observation",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253015",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAba5KGyg",
+        "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117768881866",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159253015/job/117768881866",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-18T19:32:45Z",
+        "started_at": "2026-10-18T20:32:16Z",
+        "completed_at": "2026-10-18T20:34:11Z",
+        "name": "demo_admission",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T20:32:17Z",
+            "completed_at": "2026-10-18T20:32:18Z"
+          },
+          {
+            "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T20:32:18Z",
+            "completed_at": "2026-10-18T20:33:04Z"
+          },
+          {
+            "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T20:33:04Z",
+            "completed_at": "2026-10-18T20:33:13Z"
+          },
+          {
+            "name": "Read exact-source Demo admission policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T20:33:13Z",
+            "completed_at": "2026-10-18T20:33:13Z"
+          },
+          {
+            "name": "Install Demo admission test dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T20:33:13Z",
+            "completed_at": "2026-10-18T20:33:15Z"
+          },
+          {
+            "name": "Run complete Demo ownership, transitions and resources regressions",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T20:33:15Z",
+            "completed_at": "2026-10-18T20:34:08Z"
+          },
+          {
+            "name": "Bind exact-source Demo admission proof",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T20:34:08Z",
+            "completed_at": "2026-10-18T20:34:08Z"
+          },
+          {
+            "name": "Retain Demo admission proof and partial diagnostics",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T20:34:08Z",
+            "completed_at": "2026-10-18T20:34:09Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T20:34:09Z",
+            "completed_at": "2026-10-18T20:34:09Z"
+          },
+          {
+            "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-18T20:34:09Z",
+            "completed_at": "2026-10-18T20:34:09Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T20:34:09Z",
+            "completed_at": "2026-10-18T20:34:09Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117768881866",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000042631,
+        "runner_name": "GitHub Actions 1000042631",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      "proof": {
+        "format": "AppearanceAdmissionProofV1",
+        "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+        "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39159253015",
+        "node": "v22.13.1",
+        "testPolicy": {
+          "policyMode": "required",
+          "mode": "required",
+          "runTests": "true",
+          "qualification": "tests-required",
+          "forced": false,
+          "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "policy": {
+            "format": "revealline-release-test-policy.v1",
+            "mode": "required",
+            "authorization": "explicit-user-request-20261004",
+            "scope": "automated-test-suites",
+            "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+            "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+          }
+        },
+        "result": "passed",
+        "executed": true,
+        "command": "node --test --test-concurrency=1",
+        "files": [
+          "game/test/demo-scene-transition.test.mjs",
+          "game/test/victory-story-ui.test.mjs",
+          "game/test/demo-bot.test.mjs",
+          "game/test/demo-sources.test.mjs",
+          "game/test/solo-demo-resources-host.test.mjs",
+          "game/test/demo-loading-host.test.mjs"
+        ],
+        "output": {
+          "path": "demo-admission-tests.tap",
+          "bytes": 20930,
+          "sha256": "dcb5bef8e87b00ebce9c555eef3effccf13a692e1b9a9fcdf0eb613a953e4ba1"
+        }
+      },
+      "tap": "TAP version 13\n# Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names\nok 1 - live whitelist pins actual standard maps, rules and roster while allowing translated names\n  ---\n  duration_ms: 5.685319\n  ...\n# Subtest: orchard-crossing/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings\nok 2 - orchard-crossing/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings\n  ---\n  duration_ms: 4448.034532\n  ...\n# {\"seed\":1,\"ticks\":3540,\"status\":\"running\",\"coverage\":0.514505119453925,\"captures\":5,\"bends\":7,\"endReason\":\"no-safe-macro\",\"maxPlanningMs\":537}\n# {\"seed\":2,\"ticks\":3770,\"status\":\"won\",\"coverage\":0.8528156996587031,\"captures\":4,\"bends\":5,\"endReason\":null,\"maxPlanningMs\":270}\n# {\"seed\":3,\"ticks\":3919,\"status\":\"running\",\"coverage\":0.47696245733788395,\"captures\":5,\"bends\":6,\"endReason\":\"no-safe-macro\",\"maxPlanningMs\":255}\n# Subtest: orchard-crossing/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings\nok 3 - orchard-crossing/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings\n  ---\n  duration_ms: 5836.074288\n  ...\n# {\"seed\":1,\"ticks\":6311,\"status\":\"won\",\"coverage\":0.7892491467576792,\"captures\":10,\"bends\":13,\"endReason\":null,\"maxPlanningMs\":241}\n# {\"seed\":2,\"ticks\":6139,\"status\":\"won\",\"coverage\":0.7039249146757679,\"captures\":9,\"bends\":10,\"endReason\":null,\"maxPlanningMs\":246}\n# {\"seed\":3,\"ticks\":5346,\"status\":\"won\",\"coverage\":0.7414675767918089,\"captures\":6,\"bends\":10,\"endReason\":null,\"maxPlanningMs\":313}\n# Subtest: courtyard-exits/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings\nok 4 - courtyard-exits/immediate: three qualified seeds make useful varied scenes within 60 seconds and exact recordings\n  ---\n  duration_ms: 4206.316549\n  ...\n# {\"seed\":1,\"ticks\":3837,\"status\":\"won\",\"coverage\":0.7707612456747405,\"captures\":6,\"bends\":5,\"endReason\":null,\"maxPlanningMs\":323}\n# {\"seed\":2,\"ticks\":5799,\"status\":\"won\",\"coverage\":0.740484429065744,\"captures\":9,\"bends\":12,\"endReason\":null,\"maxPlanningMs\":238}\n# {\"seed\":3,\"ticks\":2256,\"status\":\"running\",\"coverage\":0.45501730103806226,\"captures\":3,\"bends\":2,\"endReason\":\"no-safe-macro\",\"maxPlanningMs\":229}\n# Subtest: courtyard-exits/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings\nok 5 - courtyard-exits/grid-center: three qualified seeds make useful varied scenes within 60 seconds and exact recordings\n  ---\n  duration_ms: 5977.180905\n  ...\n# {\"seed\":1,\"ticks\":5969,\"status\":\"won\",\"coverage\":0.7768166089965398,\"captures\":10,\"bends\":13,\"endReason\":null,\"maxPlanningMs\":221}\n# {\"seed\":2,\"ticks\":6246,\"status\":\"won\",\"coverage\":0.8209342560553633,\"captures\":11,\"bends\":15,\"endReason\":null,\"maxPlanningMs\":228}\n# {\"seed\":3,\"ticks\":4687,\"status\":\"running\",\"coverage\":0.6384083044982699,\"captures\":6,\"bends\":7,\"endReason\":\"no-safe-macro\",\"maxPlanningMs\":229}\n# Subtest: planning is deterministic and declines an exposed cut without changing it\nok 6 - planning is deterministic and declines an exposed cut without changing it\n  ---\n  duration_ms: 415.219772\n  ...\n# Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets\nok 7 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets\n  ---\n  duration_ms: 3523.208406\n  ...\n# Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay\nok 8 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay\n  ---\n  duration_ms: 464.370151\n  ...\n# Subtest: background budget releases a rejected stale result to the unchanged fault boundary\nok 9 - background budget releases a rejected stale result to the unchanged fault boundary\n  ---\n  duration_ms: 267.390507\n  ...\n# Subtest: background budget never bypasses the existing planning watchdog\nok 10 - background budget never bypasses the existing planning watchdog\n  ---\n  duration_ms: 258.714951\n  ...\n# Subtest: missing Worker, abort and planning watchdog fail closed and release every worker\nok 11 - missing Worker, abort and planning watchdog fail closed and release every worker\n  ---\n  duration_ms: 12.64643\n  ...\n# Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading\nok 12 - future search exhaustion ends only after the current safe macro, never runs an old heading\n  ---\n  duration_ms: 260.623292\n  ...\n# Subtest: a stale future plan remains a fault, not a successful exhaustion handoff\nok 13 - a stale future plan remains a fault, not a successful exhaustion handoff\n  ---\n  duration_ms: 270.743575\n  ...\n# Subtest: live playback crosses the old 60 second cutoff without claiming completion\nok 14 - live playback crosses the old 60 second cutoff without claiming completion\n  ---\n  duration_ms: 360.421221\n  ...\n# Subtest: full live admission rejects an exhausted route before display and resets a completed seed\nok 15 - full live admission rejects an exhausted route before display and resets a completed seed\n  ---\n  duration_ms: 5374.934767\n  ...\n# Subtest: resource diagnostic observes Worker lifetime before initial preparation resolves\nok 16 - resource diagnostic observes Worker lifetime before initial preparation resolves\n  ---\n  duration_ms: 2.443973\n  ...\n# Subtest: resource diagnostic callbacks cannot alter Worker watchdog or cleanup\nok 17 - resource diagnostic callbacks cannot alter Worker watchdog or cleanup\n  ---\n  duration_ms: 14.662538\n  ...\n# Subtest: a pending scene picture releases its painter on deadline before the decoder settles\nok 18 - a pending scene picture releases its painter on deadline before the decoder settles\n  ---\n  duration_ms: 2522.211033\n  ...\n# Subtest: a pending scene picture releases its painter on Back before the decoder settles\nok 19 - a pending scene picture releases its painter on Back before the decoder settles\n  ---\n  duration_ms: 1867.980343\n  ...\n# Subtest: loading fades only the displayed frame and holds darkness until a prepared scene arrives\nok 20 - loading fades only the displayed frame and holds darkness until a prepared scene arrives\n  ---\n  duration_ms: 0.724121\n  ...\n# Subtest: fast scene loading still finishes departure; privacy clearing discards the snapshot\nok 21 - fast scene loading still finishes departure; privacy clearing discards the snapshot\n  ---\n  duration_ms: 0.130246\n  ...\n# Subtest: Next during arrival preserves its dimming and accepts the displayed reward frame\nok 22 - Next during arrival preserves its dimming and accepts the displayed reward frame\n  ---\n  duration_ms: 0.120561\n  ...\n# Subtest: settled arrival and loading hold do not keep rewriting opacity\nok 23 - settled arrival and loading hold do not keep rewriting opacity\n  ---\n  duration_ms: 0.186\n  ...\n# Subtest: resource diagnostic retains only the currently allocated transition surface\nok 24 - resource diagnostic retains only the currently allocated transition surface\n  ---\n  duration_ms: 1.166979\n  ...\n# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily\nok 25 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily\n  ---\n  duration_ms: 615.900901\n  ...\n# Subtest: same map IDs in separately installed themed owners do not collide\nok 26 - same map IDs in separately installed themed owners do not collide\n  ---\n  duration_ms: 54.763648\n  ...\n# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey\nok 27 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey\n  ---\n  duration_ms: 3293.691629\n  ...\n# Subtest: actual public company editions expose only their own isolated installed levels\nok 28 - actual public company editions expose only their own isolated installed levels\n  ---\n  duration_ms: 2935.160962\n  ...\n# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs\nok 29 - missing Worker and uninstalled content filter sources without downloading or installing packs\n  ---\n  duration_ms: 30.962334\n  ...\n# Subtest: manually kept local recordings join the catalogue without enabling automatic collection\nok 30 - manually kept local recordings join the catalogue without enabling automatic collection\n  ---\n  duration_ms: 95.826802\n  ...\n# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline\nok 31 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline\n  ---\n  duration_ms: 109.012475\n  ...\n# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation\nok 32 - scene creation rejects a valid but wrong bundled recording and respects cancellation\n  ---\n  duration_ms: 18.106719\n  ...\n# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation\nok 33 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation\n  ---\n  duration_ms: 0.50427\n  ...\n# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference\nok 34 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference\n  ---\n  duration_ms: 303.777873\n  ...\n# Subtest: the ordinary game build includes every dynamic demo asset and Worker module\nok 35 - the ordinary game build includes every dynamic demo asset and Worker module\n  ---\n  duration_ms: 734.312794\n  ...\n# Subtest: a personal cache that never settles times out without discarding bundled sources\nok 36 - a personal cache that never settles times out without discarding bundled sources\n  ---\n  duration_ms: 20.425875\n  ...\n# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache\nok 37 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache\n  ---\n  duration_ms: 0.619754\n  ...\n# Subtest: resource diagnostic reaches live source rehearsal before its player can be returned\nok 38 - resource diagnostic reaches live source rehearsal before its player can be returned\n  ---\n  duration_ms: 18.151566\n  ...\n# Subtest: manual resource export requires real Demo Pause and retains closed display across reopen\nok 39 - manual resource export requires real Demo Pause and retains closed display across reopen\n  ---\n  duration_ms: 2647.001337\n  ...\n# Subtest: closed Demo retains unsettled scene reservation until ignored decode actually completes\nok 40 - closed Demo retains unsettled scene reservation until ignored decode actually completes\n  ---\n  duration_ms: 1552.080809\n  ...\n# Subtest: manual resource export rejects advancing practice despite the retained interrupted spectator flag\nok 41 - manual resource export rejects advancing practice despite the retained interrupted spectator flag\n  ---\n  duration_ms: 1760.9614\n  ...\n# Subtest: exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs\nok 42 - exact poster stays visible through silent preparation; explicit native action starts one segment without reward APIs\n  ---\n  duration_ms: 26.459628\n  ...\n# Subtest: Skip and Replay preserve the same poster, seek the selected start and never mint a new result\nok 43 - Skip and Replay preserve the same poster, seek the selected start and never mint a new result\n  ---\n  duration_ms: 12.522903\n  ...\n# Subtest: blocked play is truthful, returns music gain and offers a later native retry\nok 44 - blocked play is truthful, returns music gain and offers a later native retry\n  ---\n  duration_ms: 9.488821\n  ...\n# Subtest: blur pauses pending play and a late successful promise cannot restart audible video\nok 45 - blur pauses pending play and a late successful promise cannot restart audible video\n  ---\n  duration_ms: 7.002854\n  ...\n# Subtest: inactive-page pause releases hidden focus and needs explicit Resume story\nok 46 - inactive-page pause releases hidden focus and needs explicit Resume story\n  ---\n  duration_ms: 12.021438\n  ...\n# Subtest: pause during Replay seek cancels its autoplay intent but allows later explicit Play\nok 47 - pause during Replay seek cancels its autoplay intent but allows later explicit Play\n  ---\n  duration_ms: 5.115109\n  ...\n# Subtest: Skip before metadata keeps the exact poster and never starts after late readiness\nok 48 - Skip before metadata keeps the exact poster and never starts after late readiness\n  ---\n  duration_ms: 5.035108\n  ...\n# Subtest: reduced motion stays opt-in, and enabling it during playback returns to the exact poster\nok 49 - reduced motion stays opt-in, and enabling it during playback returns to the exact poster\n  ---\n  duration_ms: 7.460464\n  ...\n# Subtest: cinematic volume is independent and pause releases only this music lease\nok 50 - cinematic volume is independent and pause releases only this music lease\n  ---\n  duration_ms: 5.360529\n  ...\n# Subtest: stale frame callback cannot clear the newer Replay poll or finish a different play epoch\nok 51 - stale frame callback cannot clear the newer Replay poll or finish a different play epoch\n  ---\n  duration_ms: 5.349403\n  ...\n# Subtest: finite load, seek and play deadlines preserve poster and release temporary music\nok 52 - finite load, seek and play deadlines preserve poster and release temporary music\n  ---\n  duration_ms: 14.483779\n  ...\n# Subtest: different playback dimensions or unhonored seek never show video\nok 53 - different playback dimensions or unhonored seek never show video\n  ---\n  duration_ms: 11.356315\n  ...\n# Subtest: duration mutation and media decode failure stop the player without replacing earned art\nok 54 - duration mutation and media decode failure stop the player without replacing earned art\n  ---\n  duration_ms: 9.759508\n  ...\n# Subtest: without frame callbacks the current-time observer still ends the selected segment\nok 55 - without frame callbacks the current-time observer still ends the selected segment\n  ---\n  duration_ms: 4.327082\n  ...\n# Subtest: dispose/pagehide revokes one owned URL, all listeners/timers and late play success\nok 56 - dispose/pagehide revokes one owned URL, all listeners/timers and late play success\n  ---\n  duration_ms: 4.492621\n  ...\n# Subtest: an external abort before or after opening releases owned media and keeps the caller poster\nok 57 - an external abort before or after opening releases owned media and keeps the caller poster\n  ---\n  duration_ms: 11.543447\n  ...\n# Subtest: a broken music restoration adapter cannot prevent owned video cleanup and reports its limit\nok 58 - a broken music restoration adapter cannot prevent owned video cleanup and reports its limit\n  ---\n  duration_ms: 4.628456\n  ...\n# Subtest: failed gain acquisition rolls back only the new lease and never starts media\nok 59 - failed gain acquisition rolls back only the new lease and never starts media\n  ---\n  duration_ms: 4.444138\n  ...\n# Subtest: premature native end reports truncation instead of claiming the selected segment completed\nok 60 - premature native end reports truncation instead of claiming the selected segment completed\n  ---\n  duration_ms: 5.284134\n  ...\n# Subtest: native focus follows visible story actions through Play, Pause, end and Replay\nok 61 - native focus follows visible story actions through Play, Pause, end and Replay\n  ---\n  duration_ms: 4.250496\n  ...\n# Subtest: story completion preserves focus on volume or the enclosing Close action\nok 62 - story completion preserves focus on volume or the enclosing Close action\n  ---\n  duration_ms: 7.3915\n  ...\n# Subtest: a deliberate focus change during native blur wins over story fallback\nok 63 - a deliberate focus change during native blur wins over story fallback\n  ---\n  duration_ms: 4.721426\n  ...\n# Subtest: Skip and natural end move a disappearing Skip action to Replay without changing the earned poster\nok 64 - Skip and natural end move a disappearing Skip action to Replay without changing the earned poster\n  ---\n  duration_ms: 4.170846\n  ...\n# Subtest: closing the presentation during a focus change cannot focus a retired story action\nok 65 - closing the presentation during a focus change cannot focus a retired story action\n  ---\n  duration_ms: 3.90776\n  ...\n# Subtest: an obsolete play result cannot pause or redock a newer explicit play\nok 66 - an obsolete play result cannot pause or redock a newer explicit play\n  ---\n  duration_ms: 5.053707\n  ...\n# Subtest: native media interruption releases music and requires explicit story Resume\nok 67 - native media interruption releases music and requires explicit story Resume\n  ---\n  duration_ms: 5.630586\n  ...\n# Subtest: abort during video allocation cleans the returned unadopted video without loading an original\nok 68 - abort during video allocation cleans the returned unadopted video without loading an original\n  ---\n  duration_ms: 3.796773\n  ...\n# Subtest: abort during URL allocation revokes the returned unadopted URL exactly once\nok 69 - abort during URL allocation revokes the returned unadopted URL exactly once\n  ---\n  duration_ms: 3.816802\n  ...\n# Subtest: abort during gain acquisition releases the returned lease without starting video\nok 70 - abort during gain acquisition releases the returned lease without starting video\n  ---\n  duration_ms: 3.904385\n  ...\n# Subtest: abort during status callback keeps disposed state after pending seek readiness\nok 71 - abort during status callback keeps disposed state after pending seek readiness\n  ---\n  duration_ms: 4.693073\n  ...\n# Subtest: abort during gain release cannot reopen a disposed story as a static view\nok 72 - abort during gain release cannot reopen a disposed story as a static view\n  ---\n  duration_ms: 3.936853\n  ...\n# Subtest: cinematic slider remains independent while explicit playback honors master attenuation and mute\nok 73 - cinematic slider remains independent while explicit playback honors master attenuation and mute\n  ---\n  duration_ms: 4.176434\n  ...\n# Subtest: invalid master controls refuse without changing current cinematic controls\nok 74 - invalid master controls refuse without changing current cinematic controls\n  ---\n  duration_ms: 3.857614\n  ...\n# Subtest: injected master applies once and synchronously without changing cinematic volume or story transport\nok 75 - injected master applies once and synchronously without changing cinematic volume or story transport\n  ---\n  duration_ms: 5.94512\n  ...\n# Subtest: master mute survives pending story Play and owned cleanup releases only the story output\nok 76 - master mute survives pending story Play and owned cleanup releases only the story output\n  ---\n  duration_ms: 4.055782\n  ...\n# Subtest: actual story controls keep modal Tab at Close and Cinematic volume without playing or changing volume\nok 77 - actual story controls keep modal Tab at Close and Cinematic volume without playing or changing volume\n  ---\n  duration_ms: 5.998801\n  ...\n# Subtest: Ukrainian-first story controls and accepted notices switch without changing playback ownership\nok 78 - Ukrainian-first story controls and accepted notices switch without changing playback ownership\n  ---\n  duration_ms: 6.971106\n  ...\n# Subtest: earned video starts once after its exact poster is ready, then stays available for replay\nok 79 - earned video starts once after its exact poster is ready, then stays available for replay\n  ---\n  duration_ms: 7.641066\n  ...\n# Subtest: reduced motion and background cancellation prevent automatic earned-video playback\nok 80 - reduced motion and background cancellation prevent automatic earned-video playback\n  ---\n  duration_ms: 9.194487\n  ...\n# Subtest: blocked earned autoplay leaves the exact poster and an explicit Play retry\nok 81 - blocked earned autoplay leaves the exact poster and an explicit Play retry\n  ---\n  duration_ms: 4.201762\n  ...\n# Subtest: cinematic arrival keeps the exact poster through starting and fades only decoded playback\nok 82 - cinematic arrival keeps the exact poster through starting and fades only decoded playback\n  ---\n  duration_ms: 5.294719\n  ...\n# Subtest: resource diagnostic counts exact native media owners without playing or allocating\nok 83 - resource diagnostic counts exact native media owners without playing or allocating\n  ---\n  duration_ms: 4.634324\n  ...\n# Subtest: resource diagnostic distinguishes owned play cancellation from unobservable native settlement\nok 84 - resource diagnostic distinguishes owned play cancellation from unobservable native settlement\n  ---\n  duration_ms: 4.032217\n  ...\n1..84\n# tests 84\n# suites 0\n# pass 84\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 52480.128302\n",
+      "tests": 84
+    },
+    {
+      "artifact": {
+        "id": 12150141361,
+        "node_id": "MDg6QXJ0aWZhY3QxMjE1MDE0MTM2MQ==",
+        "name": "appearance-installed-admission-eb2a71273125eaaf0f523f74bbdb1dd299a1dc18-1",
+        "size_in_bytes": 2648,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150141361",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150141361/zip",
+        "expired": false,
+        "digest": "sha256:68b67cbafa95b4257092b4a579f85c50833c161faf69cc5ac44b77df47302f64",
+        "created_at": "2026-10-18T20:33:37Z",
+        "updated_at": "2026-10-18T20:33:37Z",
+        "expires_at": "2026-10-25T20:33:37Z",
+        "workflow_run": {
+          "id": 39159253015,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/solo-missions-stage-observation",
+          "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+        }
+      },
+      "crcVerified": true,
+      "job": {
+        "id": 117768881909,
+        "run_id": 39159253015,
+        "workflow_name": "Appearance preview",
+        "head_branch": "codex/solo-missions-stage-observation",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253015",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAba5KG9Q",
+        "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117768881909",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159253015/job/117768881909",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-18T19:32:45Z",
+        "started_at": "2026-10-18T20:29:54Z",
+        "completed_at": "2026-10-18T20:33:40Z",
+        "name": "installed_admission",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T20:29:55Z",
+            "completed_at": "2026-10-18T20:29:56Z"
+          },
+          {
+            "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T20:29:56Z",
+            "completed_at": "2026-10-18T20:30:41Z"
+          },
+          {
+            "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T20:30:41Z",
+            "completed_at": "2026-10-18T20:30:50Z"
+          },
+          {
+            "name": "Read exact-source Installed chapter admission policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T20:30:50Z",
+            "completed_at": "2026-10-18T20:30:50Z"
+          },
+          {
+            "name": "Install Installed chapter admission test dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T20:30:50Z",
+            "completed_at": "2026-10-18T20:30:52Z"
+          },
+          {
+            "name": "Run complete installed chapter ownership and preparation regressions",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T20:30:52Z",
+            "completed_at": "2026-10-18T20:33:36Z"
+          },
+          {
+            "name": "Bind exact-source Installed chapter admission proof",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T20:33:36Z",
+            "completed_at": "2026-10-18T20:33:36Z"
+          },
+          {
+            "name": "Retain Installed chapter admission proof and partial diagnostics",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T20:33:36Z",
+            "completed_at": "2026-10-18T20:33:37Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T20:33:37Z",
+            "completed_at": "2026-10-18T20:33:37Z"
+          },
+          {
+            "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 16,
+            "started_at": "2026-10-18T20:33:37Z",
+            "completed_at": "2026-10-18T20:33:38Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T20:33:38Z",
+            "completed_at": "2026-10-18T20:33:38Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117768881909",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000042623,
+        "runner_name": "GitHub Actions 1000042623",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      "proof": {
+        "format": "AppearanceAdmissionProofV1",
+        "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+        "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39159253015",
+        "node": "v22.13.1",
+        "testPolicy": {
+          "policyMode": "required",
+          "mode": "required",
+          "runTests": "true",
+          "qualification": "tests-required",
+          "forced": false,
+          "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "policy": {
+            "format": "revealline-release-test-policy.v1",
+            "mode": "required",
+            "authorization": "explicit-user-request-20261004",
+            "scope": "automated-test-suites",
+            "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+            "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+          }
+        },
+        "result": "passed",
+        "executed": true,
+        "command": "node --test --test-concurrency=1",
+        "files": [
+          "game/test/couch-installed-chapters.test.mjs"
+        ],
+        "output": {
+          "path": "installed-admission-tests.tap",
+          "bytes": 6798,
+          "sha256": "9c98be1f84d0853775d3f82dbb65ff2651186655e9bd8061056f4c628fda4f54"
+        }
+      },
+      "tap": "TAP version 13\n# Subtest: initial Start ownership preserves a newer Tab to Settings choice\nok 1 - initial Start ownership preserves a newer Tab to Settings choice\n  ---\n  duration_ms: 6324.856294\n  ...\n# Subtest: initial Start ownership preserves a newer pointer to Settings choice\nok 2 - initial Start ownership preserves a newer pointer to Settings choice\n  ---\n  duration_ms: 5891.736641\n  ...\n# Subtest: initial Start ownership preserves a newer Settings then BODY choice\nok 3 - initial Start ownership preserves a newer Settings then BODY choice\n  ---\n  duration_ms: 5877.538805\n  ...\n# Subtest: initial Start ownership survives admitted direct touch without prior button focus\nok 4 - initial Start ownership survives admitted direct touch without prior button focus\n  ---\n  duration_ms: 5814.261733\n  ...\n# Subtest: initial Start ownership keeps a shipped synchronous touch start immediate\nok 5 - initial Start ownership keeps a shipped synchronous touch start immediate\n  ---\n  duration_ms: 2122.694509\n  ...\n# Subtest: initial Start ownership checks newer focus produced during completion cleanup\nok 6 - initial Start ownership checks newer focus produced during completion cleanup\n  ---\n  duration_ms: 5878.079713\n  ...\n# Subtest: interrupted async Start confirmation stays ready after blur and return until a fresh Start\nok 7 - interrupted async Start confirmation stays ready after blur and return until a fresh Start\n  ---\n  duration_ms: 5977.296994\n  ...\n# Subtest: cancelled Start confirmation cannot overwrite Retry for the same untouched attempt\nok 8 - cancelled Start confirmation cannot overwrite Retry for the same untouched attempt\n  ---\n  duration_ms: 6041.823671\n  ...\n# Subtest: installed couch reader authenticates the same three originals without acquiring a writer or changing solo data\nok 9 - installed couch reader authenticates the same three originals without acquiring a writer or changing solo data\n  ---\n  duration_ms: 4591.456482\n  ...\n# Subtest: selected pack refresh requires exact validated content and reports its source owner without store or Solo writes\nok 10 - selected pack refresh requires exact validated content and reports its source owner without store or Solo writes\n  ---\n  duration_ms: 3607.270888\n  ...\n# Subtest: publication rejects a changed original generation after actual decode and a changed pointer before Start\nok 11 - publication rejects a changed original generation after actual decode and a changed pointer before Start\n  ---\n  duration_ms: 5414.300769\n  ...\n# Subtest: cancelled decode is joined before replacement and cannot publish a late image\nok 12 - cancelled decode is joined before replacement and cannot publish a late image\n  ---\n  duration_ms: 3840.83806\n  ...\n# Subtest: pending journals, missing descriptors and absent original bytes refuse instead of displaying generic artwork\nok 13 - pending journals, missing descriptors and absent original bytes refuse instead of displaying generic artwork\n  ---\n  duration_ms: 3229.012362\n  ...\n# Subtest: Couch recovers installed R5 originals when its optional shipped URL is unavailable\nok 14 - Couch recovers installed R5 originals when its optional shipped URL is unavailable\n  ---\n  duration_ms: 5363.124564\n  ...\n# Subtest: actual Couch selection shares the exact installed image, keeps separate motion and restores asynchronous action focus\nok 15 - actual Couch selection shares the exact installed image, keeps separate motion and restores asynchronous action focus\n  ---\n  duration_ms: 9833.224285\n  ...\n# Subtest: superseding embedded inspection cancels the old decoder between images and retains the exact legacy fit\nok 16 - superseding embedded inspection cancels the old decoder between images and retains the exact legacy fit\n  ---\n  duration_ms: 3956.241663\n  ...\n# Subtest: main-lobby Back cancels an explicitly pending Retry and never enables Start after the late decode\nok 17 - main-lobby Back cancels an explicitly pending Retry and never enables Start after the late decode\n  ---\n  duration_ms: 6351.55757\n  ...\n# Subtest: new Fracture owner keeps exact installed originals through the reader and shared Couch boards without solo writes\nok 18 - new Fracture owner keeps exact installed originals through the reader and shared Couch boards without solo writes\n  ---\n  duration_ms: 8820.707384\n  ...\n# Subtest: new Countercurrent owner keeps exact installed originals through the reader and shared Couch boards without solo writes\nok 19 - new Countercurrent owner keeps exact installed originals through the reader and shared Couch boards without solo writes\n  ---\n  duration_ms: 8287.655022\n  ...\n# Subtest: installed Rematch decode failure keeps completed Results, wins and the original available to View\nok 20 - installed Rematch decode failure keeps completed Results, wins and the original available to View\n  ---\n  duration_ms: 6542.951761\n  ...\n# Subtest: installed Rematch confirmation refusal retains the prior lease until one successful retry starts play\nok 21 - installed Rematch confirmation refusal retains the prior lease until one successful retry starts play\n  ---\n  duration_ms: 7282.352151\n  ...\n# Subtest: installed cancelled Rematch cannot overwrite a newer retry or revive Start after blur and return\nok 22 - installed cancelled Rematch cannot overwrite a newer retry or revive Start after blur and return\n  ---\n  duration_ms: 7203.622351\n  ...\n# Subtest: installed Next round decode failure keeps completed Results, wins and the original available to View\nok 23 - installed Next round decode failure keeps completed Results, wins and the original available to View\n  ---\n  duration_ms: 6954.383061\n  ...\n# Subtest: installed Next round confirmation refusal retains the prior lease until one successful retry starts play\nok 24 - installed Next round confirmation refusal retains the prior lease until one successful retry starts play\n  ---\n  duration_ms: 7884.377512\n  ...\n# Subtest: installed cancelled Next round cannot overwrite a newer retry or revive Start after blur and return\nok 25 - installed cancelled Next round cannot overwrite a newer retry or revive Start after blur and return\n  ---\n  duration_ms: 7882.034677\n  ...\n# Subtest: installed candidate ready callback cancel retains accepted ownership until a confirmed commit\nok 26 - installed candidate ready callback cancel retains accepted ownership until a confirmed commit\n  ---\n  duration_ms: 3965.109992\n  ...\n# Subtest: installed candidate ready callback replacement retains accepted ownership until a confirmed commit\nok 27 - installed candidate ready callback replacement retains accepted ownership until a confirmed commit\n  ---\n  duration_ms: 4317.409172\n  ...\n1..27\n# tests 27\n# suites 0\n# pass 27\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 164437.631147\n",
+      "tests": 27
+    }
+  ],
+  "priorAdmissionAudit": "ba1636b1a43cd00f55df1a761cf7c00d3ba89a20",
+  "preview": {
+    "jobId": 117782732805,
+    "status": "queued",
+    "fullAdmissionCount": 663,
+    "scope": "All four prerequisite admissions completed; preview has not run or passed."
+  }
+}

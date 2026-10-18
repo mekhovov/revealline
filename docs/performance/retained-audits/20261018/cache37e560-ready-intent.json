@@ -1,0 +1,55 @@
+{
+  "format": "SoloReviewedRecordingLookupPendingMergeIntentV1",
+  "at": "2026-10-18T20:46:43.436589+00:00",
+  "pr": 1631,
+  "url": "https://github.com/mekhovov/revealline/pull/1631",
+  "reviewedHead": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+  "observedMain": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "draftBefore": true,
+  "draftAfter": false,
+  "nativeAutoMergeBefore": null,
+  "nativeAutoMergeAfter": null,
+  "mutationResponse": {
+    "data": {
+      "markPullRequestReadyForReview": {
+        "pullRequest": {
+          "id": "PR_kwDOUYDvKM8AAAABJMIXUQ",
+          "number": 1631,
+          "isDraft": false,
+          "headRefOid": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc"
+        }
+      }
+    }
+  },
+  "sourceRun": 39154332460,
+  "focusedJob": {
+    "id": 117766867300,
+    "name": "focused",
+    "status": "completed",
+    "conclusion": "success",
+    "completed_at": "2026-10-18T20:43:13Z"
+  },
+  "releaseReadyAtIntent": {
+    "id": 117784760040,
+    "name": "release-ready",
+    "status": "queued",
+    "conclusion": null
+  },
+  "reviewedPaths": [
+    {
+      "path": "game/official-downloads.mjs",
+      "gitBlob": "66c30dce706e797f90852955daee448a05685e6d"
+    },
+    {
+      "path": "game/test/official-downloads.test.mjs",
+      "gitBlob": "c34bb11422823c8ad6d38c632da0b0b40d8bd792"
+    }
+  ],
+  "authorization": "Existing user authorization to fix, verify and merge the performance follow-ups.",
+  "scope": "Only ready-for-review intent on unchanged reviewed head; repository controller must enforce complete exact-head registered checks, successful release receipt, verified policy/provenance/dependencies and a second fresh observation. No native auto-merge, bypass, settings/label changes, source edit or direct main merge.",
+  "constraints": [
+    "Keep this head unchanged or return to draft before further edits.",
+    "All other follow-ups remain draft and their release/native sequencing is preserved.",
+    "Readiness is not a test, publication, numerical-performance or physical-device pass."
+  ]
+}
