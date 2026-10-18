@@ -471,10 +471,7 @@ test('historical Node mirror executes its checked modules and removes all owned 
     assert.notEqual(root.href, new URL('../', import.meta.url).href);
     const catalog = await readFile(new URL('game/i18n/catalogs.mjs', root));
     assert.equal(catalog.length, 1264959);
-    assert.equal(
-      sha(catalog),
-      'ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224',
-    );
+    assert.equal(sha(catalog), 'ba333d67a719078e6fca92094bee9d60e7fdcfd2ed197adadefed115766e9224');
     const core = await import(new URL('game/core/index.mjs', root));
     const replay = await import(new URL('game/replay.mjs', root));
     assert.equal(typeof core.createRun, 'function');
@@ -534,12 +531,12 @@ test('historical Node catalog, borrowed modules, closure and source identity can
       value.nodeSourceRevision = '0'.repeat(40);
     },
     (value) => {
-      value.nodeModules.find((item) => item.path === 'game/i18n/catalogs.mjs').sha256 =
-        '0'.repeat(64);
+      value.nodeModules.find((item) => item.path === 'game/i18n/catalogs.mjs').sha256 = '0'.repeat(
+        64,
+      );
     },
     (value) => {
-      value.nodeModules.find((item) => item.path === 'game/core/index.mjs').sha256 =
-        '0'.repeat(64);
+      value.nodeModules.find((item) => item.path === 'game/core/index.mjs').sha256 = '0'.repeat(64);
     },
     (value) => {
       value.nodeModules.pop();
