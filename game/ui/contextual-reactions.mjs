@@ -388,7 +388,7 @@ export function attachContextualReactions({
     }
     panel.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
     panel.style.color = 'var(--text-color, #fff)';
-    caption.style.fontSize = `${state.scale}rem`;
+    caption.style.fontSize = `calc(${state.scale}rem * var(--primary-text-scale, 1))`;
     if (current) {
       const localized =
         (current.line.resultContext

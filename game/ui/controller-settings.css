@@ -2,13 +2,13 @@
 @layer legacy {
   .controller-settings-heading {
     margin: 0 0 8px;
-    font-size: 0.95rem;
+    font-size: calc(0.95rem * var(--primary-text-scale, 1));
     line-height: 1.4;
   }
   .controller-settings-summary,
   .controller-settings-note,
   .controller-settings-status {
-    font-size: 0.78rem;
+    font-size: calc(0.78rem * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .controller-settings-note {
@@ -31,7 +31,7 @@
     min-height: 44px;
     padding: 12px 0;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--primary-text-scale, 1));
     font-weight: 650;
   }
   .controller-settings-section-body {
@@ -49,7 +49,7 @@
   }
   .controller-settings-section legend {
     padding-inline: 6px;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
   }
   .controller-settings-field {
     display: grid;
@@ -57,7 +57,7 @@
     gap: 10px;
     align-items: center;
     min-height: 44px;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
   }
   .controller-settings-field select,
   .controller-settings-field input {
@@ -88,7 +88,7 @@
     min-height: 44px;
   }
   .controller-settings-errors {
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
     line-height: 1.5;
     padding-left: 20px;
   }

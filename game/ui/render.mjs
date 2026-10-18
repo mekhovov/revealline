@@ -866,6 +866,7 @@ export class BoardPainter {
       playerScale = 1,
       displayCSSWidth = null,
       textFace = 'pixel',
+      textScale = 1,
       actorSkins = {},
       actorAppearance = null,
       backdrop = null,
@@ -1690,6 +1691,7 @@ export class BoardPainter {
           width: W,
           height: H,
           fonts,
+          textScale,
         });
       if (!fullReveal && !reduced && eventAccents && f.type === 'craft.redeployed' && f.age < 0.6) {
         ctx.save();
@@ -1719,7 +1721,9 @@ export class BoardPainter {
       drawRecoveryCue(ctx, state, p, {
         screenScale: canvasCSSWidth / W,
         width: W,
+        height: H,
         fonts,
+        textScale,
       });
     this.effects = this.effects.filter((f) => f.age < 0.7);
     if (fullReveal) drawCelebration(ctx, finale, p, W, H);
