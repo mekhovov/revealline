@@ -273,12 +273,40 @@ export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, lea
 // Optional failed-observation evidence only. These are parser-accepted identity
 // maps, never new ownership inputs. Full-or-overflow avoids a partial inventory
 // looking complete; only kernel paths are retained, never argv/environment text.
-function ambiguityIdentityMap(map, maximumBytes, owned = false) {
+function compactIdentitySnapshot(rowsJSON, totalRows, maximumBytes) {
+  const snapshot = {
+    status: 'complete',
+    totalRows,
+    maximumBytes,
+    encoding: 'compact-json-array',
+    bytes: Buffer.byteLength(rowsJSON),
+    encodedRowsBytes: Buffer.byteLength(JSON.stringify(rowsJSON)),
+    sha256: hash(rowsJSON),
+    rowsJSON,
+  };
+  // Count the actual escaped outer JSON, including the same maximum containing
+  // indentation reserved by V1. Only the fixed metadata lines are indented;
+  // rows remain one JSON string even in pretty-printed containing receipts.
+  const nested = JSON.stringify(snapshot, null, 2).replace(/^/gm, ' '.repeat(24));
+  const serializationBytes = Buffer.byteLength(nested);
+  if (serializationBytes > maximumBytes)
+    return {
+      status: 'overflow',
+      reason: 'byte-cap',
+      totalRows,
+      maximumBytes,
+      minimumSerializationBytes: serializationBytes,
+      rowsJSON: null,
+    };
+  return snapshot;
+}
+function ambiguityIdentityMap(map, maximumBytes, owned = false, compact = false) {
   const totalRows = map.size;
   if (totalRows >= 16384)
     return { status: 'overflow', reason: 'row-cap', totalRows, maximumBytes, rows: null };
   const rows = [];
   let serializationBytes = 2;
+  let encodedRowsBytes = 4; // The escaped outer string's quotes and [] framing.
   for (const row of map.values()) {
     if (
       !darwinKernelIdentity(row) ||
@@ -328,6 +356,21 @@ function ambiguityIdentityMap(map, maximumBytes, owned = false) {
           }
         : {}),
     };
+    if (compact) {
+      const encoded = JSON.stringify(selected);
+      encodedRowsBytes += Buffer.byteLength(JSON.stringify(encoded)) - 2 + (rows.length ? 1 : 0);
+      if (encodedRowsBytes > maximumBytes)
+        return {
+          status: 'overflow',
+          reason: 'byte-cap',
+          totalRows,
+          maximumBytes,
+          minimumEncodedRowsBytes: encodedRowsBytes,
+          rowsJSON: null,
+        };
+      rows.push(encoded);
+      continue;
+    }
     const encoded = JSON.stringify(selected, null, 2);
     // Reserve up to 24 extra indent bytes per line for the existing nested
     // command/host receipts; the budget is conservative, not truncation.
@@ -343,6 +386,7 @@ function ambiguityIdentityMap(map, maximumBytes, owned = false) {
       };
     rows.push(selected);
   }
+  if (compact) return compactIdentitySnapshot(`[${rows.join(',')}]`, totalRows, maximumBytes);
   return {
     status: 'complete',
     totalRows,
@@ -353,15 +397,15 @@ function ambiguityIdentityMap(map, maximumBytes, owned = false) {
     rows,
   };
 }
-function ambiguityIdentityMaps(before, all, owned, leaderPid) {
+function ambiguityIdentityMaps(before, all, owned, leaderPid, compact = false) {
   return {
-    format: 'SoloFirstAmbiguousIdentityMapsV1',
+    format: compact ? 'SoloFirstAmbiguousIdentityMapsV2' : 'SoloFirstAmbiguousIdentityMapsV1',
     scope:
       'First ambiguous observation only; no ownership, signalling, classification or argument authority.',
     leaderPid,
-    before: ambiguityIdentityMap(before, 256 * 1024),
-    current: ambiguityIdentityMap(all, 256 * 1024),
-    owned: ambiguityIdentityMap(owned, 64 * 1024, true),
+    before: ambiguityIdentityMap(before, 256 * 1024, false, compact),
+    current: ambiguityIdentityMap(all, 256 * 1024, false, compact),
+    owned: ambiguityIdentityMap(owned, 64 * 1024, true, compact),
   };
 }
 
@@ -405,7 +449,13 @@ export function collectUnattributedProcesses(
   // This is bounded evidence only, never ownership or signal authority.
   if (ambiguous.length && !record.firstAmbiguousInventory) {
     if (darwin && retainInventories)
-      record.firstAmbiguousIdentityMaps = ambiguityIdentityMaps(before, all, owned, leaderPid);
+      record.firstAmbiguousIdentityMaps = ambiguityIdentityMaps(
+        before,
+        all,
+        owned,
+        leaderPid,
+        retainInventories === 'identity-maps-v2',
+      );
     const row = ambiguous[0],
       argv = row.argv ?? '';
     record.firstAmbiguousInventory = {

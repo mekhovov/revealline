@@ -1055,6 +1055,9 @@ async function parent(output, plan = MP3_CONTROL) {
           timeoutMs: plan.ownerPreflightTimeoutMs,
           log: join(output, 'owner-preflight.log'),
           receipt: join(output, 'owner-preflight-command.json'),
+          ...(cocoaEnvironment.SOLO_DARWIN_AMBIGUITY_EVIDENCE === 'identity-maps-v2'
+            ? { retainAmbiguityInventories: 'identity-maps-v2' }
+            : {}),
         },
       );
       const bytes = await readFile(join(output, 'owner-preflight.json'));
