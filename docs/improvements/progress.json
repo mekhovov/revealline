@@ -14,9 +14,9 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
+    "Correct the newly demonstrated primary200% reader layouts",
     "Admit reviewed foundations through exact-head merge gates",
     "Finish reconciling archive, mode-context, comfort and local-content stacks",
-    "Advance primary200% text and responsive navigation after their predecessors",
     "Complete remaining P1 host adapters and evidence-based readability work",
     "Deliver bounded upgrade-consequence improvements after the active comfort stack",
     "Continue Demo-dependent work after D; physical-only gates remain Not tested"
@@ -599,13 +599,17 @@
         },
         {
           "id": "sim-context",
-          "status": "draft_review",
-          "evidence": "195 focused SIM/shell tests and full source gates pass; independent source review passed. Browser review pending. Explicit corrected Snake stack; existing Academy/World identity owners retained. Actual exact-head Academy/World Home → chooser → Back preserves context/mission/focus. Chooser still reports generic Solo; separate follow-up now developing.",
+          "status": "reviewed_stack",
+          "evidence": [
+            "195 focused SIM/shell tests and full source gates pass; independent source review passed. Browser review pending. Explicit corrected Snake stack; existing Academy/World identity owners retained. Actual exact-head Academy/World Home → chooser → Back preserves context/mission/focus. Chooser still reports generic Solo; separate follow-up now developing.",
+            "IntegratedSIMHome28e63 onSnakea1c: all four original feature deltas preserved with current-main F17.210/210 no-skip expanded tests/full lint/full validation/test formatting pass. Two large-app formatting debts are unchanged from exact parent. C independent review clear; published dependent draft. Earlier actual Home/Back scope retained; combined-projection admission separate."
+          ],
           "pr": "https://github.com/mekhovov/revealline/pull/1652",
-          "commit": "768db57646d00a8972f3fcb9bf0e9976bd8dc652",
+          "commit": "28e63d1f4a316a5d80ee4f7a604609321ea0c39a",
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "observedRemoteHead": "768db57646d00a8972f3fcb9bf0e9976bd8dc652"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "28e63d1f4a316a5d80ee4f7a604609321ea0c39a",
+          "next": "Await predecessor admission and current exact-head required checks."
         },
         {
           "id": "overflight-existing-context",
@@ -614,14 +618,18 @@
         },
         {
           "id": "sim-chooser-context",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "owner": "root",
-          "evidence": "150 host/projection tests, full lint/validate and independent review pass. Two pre-existing large-file formatting findings unchanged; formatted predecessor/current differ only by callbacks. Actual exact browser Academy EN/World UK chooser captions and Back preserve mission/focus. No flight/device claim.",
+          "evidence": [
+            "150 host/projection tests, full lint/validate and independent review pass. Two pre-existing large-file formatting findings unchanged; formatted predecessor/current differ only by callbacks. Actual exact browser Academy EN/World UK chooser captions and Back preserve mission/focus. No flight/device claim.",
+            "Integrated chooser cba3 onSIMHome28e63: four original feature deltas unchanged;165/165 host/projection checks, full lint/validation/test formatting pass; two unchanged app-formatting debts retained. C independent review clear; published draft, original655 actual chooser/Back scope retained."
+          ],
           "pr": "https://github.com/mekhovov/revealline/pull/1659",
-          "commit": "65594f1622ca4d87e95198c54bc916130f1a96b2",
+          "commit": "cba3e73918eb8690cfc10efe9227bc9f98448b69",
           "deliveryState": "draft",
-          "mergeState": "UNSTABLE",
-          "observedRemoteHead": "65594f1622ca4d87e95198c54bc916130f1a96b2"
+          "mergeState": "DIRTY",
+          "observedRemoteHead": "cba3e73918eb8690cfc10efe9227bc9f98448b69",
+          "next": "Await predecessor admission and current exact-head required checks."
         }
       ]
     },
@@ -909,12 +917,12 @@
       "id": "F22",
       "priority": "P2",
       "phase": "Phase 2 — Find, understand and start the right game",
-      "description": "Bring Capture’s objective, progress and relevant rules together in pause.",
+      "description": "Add current and remaining mission progress to the existing paused Field details view, retaining its objective, threat and rule information.",
       "impact": "H/M",
       "effort": "**3–5d**",
       "featureId": "F22",
-      "status": "planned",
-      "owner": null,
+      "status": "assessment",
+      "owner": "lane-a",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -923,8 +931,10 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
-      "evidence": []
+      "next": "After current lane-A P1 integrations, extend the accepted paused facts with relevant reveal/target/remaining progress. Preserve Hunt quota, required objectives, locale repaint and pause/read/Back ownership.",
+      "evidence": [
+        "Read-only exactdd337 source assessment credits existing goal, objectives, rules, threats, binding and paused ownership. Actual isolated22a Choose your share Field details shows Reveal65% but no current/remaining coverage inside the modal; HUD0% remains outside. Back retains17:16/3lives/0score and opener focus. No exact-main browser replay or comprehension/physical claim. Assessment /tmp/revealline-f22-assessment-oct19.md; F09 reader-layout problem is tracked separately."
+      ]
     },
     {
       "id": "F23",
@@ -1067,7 +1077,7 @@
             "Integrated on query53d: six original feature blobs and +528/−35 delta identical.54/54 focused cases, full lint, uninterrupted full validation and changed format/diff pass. Eight full-format parent-baseline files unchanged. Independent integration review clear; published dependent draft. Actual catalog-outage browser receipt remains attributed to00d predecessor; no full PWA/device claim."
           ],
           "deliveryState": "draft",
-          "mergeState": "UNKNOWN",
+          "mergeState": "UNSTABLE",
           "observedRemoteHead": "6c340efc5b9f66b8fafe2baa6135718d1b1bcf9a"
         },
         {
@@ -1077,12 +1087,12 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1657",
           "commit": "22772f197235be127485b92744c46981b899b489",
           "deliveryState": "draft",
-          "mergeState": "CLEAN",
+          "mergeState": "UNKNOWN",
           "observedRemoteHead": "22772f197235be127485b92744c46981b899b489"
         }
       ],
       "deliveryState": "draft",
-      "mergeState": "UNKNOWN",
+      "mergeState": "UNSTABLE",
       "observedRemoteHead": "6c340efc5b9f66b8fafe2baa6135718d1b1bcf9a"
     },
     {
@@ -1093,7 +1103,7 @@
       "impact": "H/H",
       "effort": "**2–3d**",
       "featureId": "F80",
-      "status": "draft_review",
+      "status": "reviewed_stack",
       "owner": "lane-b",
       "qualification": {
         "automated": "focused_and_source_gates_passed",
@@ -1102,17 +1112,18 @@
       },
       "blocker": "Explicit F79 integration dependency.",
       "pr": "https://github.com/mekhovov/revealline/pull/1653",
-      "commit": "dfe5fcf45b1f7a05764855ef6b7817295b3cabc2",
-      "next": "Reconcile F79 stack and exact checks; destructive recovery-copy deletion and hardware remain untested.",
+      "commit": "a4cf2afb23cd55bb1df26f8fbc1d76e713c03dd9",
+      "next": "Await predecessor admission and current exact-head required checks.",
       "evidence": [
         "Draft implementation uses existing review capabilities; no new deletion primitive. Media/progress/recovery/local-copy consequences distinguished.",
         "Offloaded edition disappears from current Installed filter; review must not promise offline reinstallation access before F79 recovery entry is delivered.",
         "69 focused checks, full lint/validate, changed format/diff passed. Independent source review passed. Browser and built/hardware checks pending.",
-        "Exact dfe browser: UK/EN review defaults Keep; Keep preserves content and returns focus. Confirmed offload removes Play while retaining recovery; reinstall restores Play. Recovery-download review inspected and cancelled. No actual recovery-copy deletion or earned-progress equality claimed."
+        "Exact dfe browser: UK/EN review defaults Keep; Keep preserves content and returns focus. Confirmed offload removes Play while retaining recovery; reinstall restores Play. Recovery-download review inspected and cancelled. No actual recovery-copy deletion or earned-progress equality claimed.",
+        "IntegratedF80a4cf onInstalled6c340: five standalone feature blobs unchanged; locale union retains21 original additions and intentional offloaded-copy correction. Same8-file +653/−14 feature delta.76/76 focused/full lint/uninterrupted validation/changed format/diff pass; eight unchanged formatting-baseline files retained. Root independent review clear; published dependent draft, original actual Keep/offload/recovery-cancel scope retained."
       ],
       "deliveryState": "draft",
-      "mergeState": "CLEAN",
-      "observedRemoteHead": "dfe5fcf45b1f7a05764855ef6b7817295b3cabc2"
+      "mergeState": "UNSTABLE",
+      "observedRemoteHead": "a4cf2afb23cd55bb1df26f8fbc1d76e713c03dd9"
     },
     {
       "id": "F04a",
@@ -1462,38 +1473,46 @@
         },
         {
           "id": "sim-presets",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1645",
-          "commit": "efaea9ae198d1240d733df18479fbc98877d70b0",
+          "commit": "ce6a141cbdb0328a7d901a43540f3278d8b0d6a7",
           "evidence": [
             "179 focused/policy and15 offline tests, i18n/projection pass; independent source review passed. Actual Academy Apply/Undo and World menu-only failure→Retry→Undo preserve displayed flight mode/input/camera/FOV/tilt. No World flight started or new UK320/device claim.",
-            "Integrated candidatece6 preserves the original seven feature deltas and current-main SIM additions. A real projection omission was reproduced, then official generation added49 canonical preset-style lines to the embedded SIM stylesheet.190/190 focused cases, lint/format and both projection checks pass; uninterrupted full validation in progress. Actual320px Academy EN and World UK preview/Apply/Undo/Back pass with zero preview writes, Apply2/Undo4 and flight controls retained. World language changed through actual Settings after a fixture-only partial switch. No flight/audio/physical or new partial-failure claim. Receipt /tmp/f06-sim-ce6-browser-receipt.json."
+            "Integrated candidatece6 preserves the original seven feature deltas and current-main SIM additions. A real projection omission was reproduced, then official generation added49 canonical preset-style lines to the embedded SIM stylesheet.190/190 focused cases, lint/format and both projection checks pass; uninterrupted full validation in progress. Actual320px Academy EN and World UK preview/Apply/Undo/Back pass with zero preview writes, Apply2/Undo4 and flight controls retained. World language changed through actual Settings after a fixture-only partial switch. No flight/audio/physical or new partial-failure claim. Receipt /tmp/f06-sim-ce6-browser-receipt.json.",
+            "Final integratedce6 uninterrupted full validation passed.190/190 focused/lint/format/both projection checks and independent review clear; published dependent draft on7c5. Root actual320px Academy EN/World UK Apply/Undo/Back receipt retained; no flight/physical claim."
           ],
           "deliveryState": "draft",
-          "mergeState": "UNKNOWN",
-          "observedRemoteHead": "efaea9ae198d1240d733df18479fbc98877d70b0",
-          "candidateCommit": "ce6a141cbdb0328a7d901a43540f3278d8b0d6a7",
-          "next": "Candidatece6 independently reviewed; uninterrupted full validation then publish dependent draft."
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "ce6a141cbdb0328a7d901a43540f3278d8b0d6a7",
+          "next": "Await predecessor admission and current exact-head required checks."
         },
         {
           "id": "creator-presets",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1647",
-          "commit": "d1911c737ca68344b50abd0feaeefc18a129e8a4",
-          "evidence": "49 focused and15 offline tests; source review passed. Actual installed generated1px-fixture player at integrated4ff: Start→Pause→Settings preview0writes, Apply2, Undo4 restores original display/menu, Back preserves paused mission and Settings focus. Model also checks checkpoint equality; browser does not inspect hidden bytes.",
+          "commit": "1902857a5343c1073040713f472284aede9aed7e",
+          "evidence": [
+            "49 focused and15 offline tests; source review passed. Actual installed generated1px-fixture player at integrated4ff: Start→Pause→Settings preview0writes, Apply2, Undo4 restores original display/menu, Back preserves paused mission and Settings focus. Model also checks checkpoint equality; browser does not inspect hidden bytes.",
+            "IntegratedCreator190 onSIMce6: all three original feature blobs unchanged; focused/source gates including uninterrupted full validation and independent review pass. Published dependent draft; earlier actual installed-fixture Pause→Apply/Undo→Back scope retained."
+          ],
           "deliveryState": "draft",
-          "mergeState": "CLEAN",
-          "observedRemoteHead": "d1911c737ca68344b50abd0feaeefc18a129e8a4"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "1902857a5343c1073040713f472284aede9aed7e",
+          "next": "Await predecessor admission and current exact-head required checks."
         },
         {
           "id": "shared-preset-copy",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1649",
-          "commit": "0e269d7fe9a2085205ece25776f5417399a6617d",
-          "evidence": "18 shared/policy tests and full i18n passed. Accurate EN/UK success wording uses neutral individual-settings guidance; generated SIM projection checked. Independent source review passed; actual Creator/Rooms show corrected text.",
+          "commit": "289f4d8d4ecd91830c25f4050e89f93779345b68",
+          "evidence": [
+            "18 shared/policy tests and full i18n passed. Accurate EN/UK success wording uses neutral individual-settings guidance; generated SIM projection checked. Independent source review passed; actual Creator/Rooms show corrected text.",
+            "Integrated copy289 onCreator190: both feature blobs identical;18/18 focused, full lint/format/projection and uninterrupted validation pass. Independent review clear; published dependent draft with original EN/UK copy/browser boundaries retained."
+          ],
           "deliveryState": "draft",
-          "mergeState": "UNSTABLE",
-          "observedRemoteHead": "0e269d7fe9a2085205ece25776f5417399a6617d"
+          "mergeState": "UNKNOWN",
+          "observedRemoteHead": "289f4d8d4ecd91830c25f4050e89f93779345b68",
+          "next": "Await predecessor admission and current exact-head required checks."
         },
         {
           "id": "rooms-presets",
@@ -1647,17 +1666,17 @@
       "impact": "H/H",
       "effort": "**3–5d**",
       "featureId": "F09",
-      "status": "reviewed_stack",
+      "status": "developing",
       "owner": "lane-b",
       "qualification": {
         "automated": "focused_and_full_source_passed",
-        "browser": "primary_200_percent_scoped_passed",
+        "browser": "sampled_passes_plus_new_reader_gaps",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
       "commit": "0fa88f0bed68de9730e8619528e712f361d73403",
-      "next": "Await compatibility1668 and primary1672 admission; continue other-family layouts as F09b. No blanket all-theme/device compliance claim.",
+      "next": "Correct newly observed primary Field details and Mission brief enlarged-reader layouts, then re-review at320px and short landscape. Earlier briefing/pause/win passes remain valid; F09b follows.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
@@ -1678,7 +1697,7 @@
         },
         {
           "id": "primary-200-percent",
-          "status": "reviewed_stack",
+          "status": "changes_requested",
           "commit": "22a2c244a02bdce8632c51ca552af4ab3b51c727",
           "dependency": "PR1668 compatibility",
           "evidence": [
@@ -1687,10 +1706,11 @@
             "Actual Extra large selection persists in the shared record. Start and directional play worked; First return reached34.3% in7seconds and automatic Next opened Choose your share. Pause0:04 remained paused through resize. This does not qualify results layout or physical devices. Later820 adds initial-boot scaling and regenerated reaction/SIM projections; final uninterrupted validation was still pending at this snapshot.",
             "Actual f6dc review: 320×720 Extra large/theme-font pause has full-width readable actions; briefing top/title now reachable by scrolling. At 844×390, Resume and lower Sound/Settings/Home are reachable with readable columns. Actual game EN→UK at 390×844 shows readable Accessibility heading, full labels/select values/checkboxes; Back returns same paused First return 0:00/3 lives/00000 with Settings focus. Briefing still incorrectly shows Sound/Config/Full screen: hidden ownership is data-kind CSS, so an attribute-only guard was insufficient. PR remains draft; no final acceptance claim.",
             "Actual7b browser fixes briefing Sound/Config/Fullscreen ownership and preserves pause controls. Auto-next/retry disabled through actual Settings; First return earned win34.3%,8160points,18seconds,3lives. Full-width result actions are scroll-reachable, but picture squeezes title into a narrow column.22a adds XL won-only vertical reading layout preserving hidden picture and ordinary/earned semantics; independent source review clear, actual corrected-win review pending.",
-            "Final22a:168/168 in one serial no-skip focused run; uninterrupted full validation, full lint and changed format/diff pass. Eight full-format findings are byte-identical parent baseline. Independent source review clear. Actual320×720 Extra large/theme-font run earned First return100%,23800points,14seconds,3lives; corrected picture-above-title layout keeps whole words and full-width footer actions reachable with native scrolling. Briefing/pause and EN/UK landscape scopes remain as previously recorded. Screenshot f09-primary-result-title-corrected.png; no physical or all-theme compliance claim."
+            "Final22a:168/168 in one serial no-skip focused run; uninterrupted full validation, full lint and changed format/diff pass. Eight full-format findings are byte-identical parent baseline. Independent source review clear. Actual320×720 Extra large/theme-font run earned First return100%,23800points,14seconds,3lives; corrected picture-above-title layout keeps whole words and full-width footer actions reachable with native scrolling. Briefing/pause and EN/UK landscape scopes remain as previously recorded. Screenshot f09-primary-result-title-corrected.png; no physical or all-theme compliance claim.",
+            "Additional actual22a review found two bounded reader gaps at320×720 XL/theme-font: Field details falls to its64px CSS minimum with only about one visible line; Read/End still scroll and Done/Back remain reachable. Mission brief header squeezes edition context into one-letter column beside Back/All missions and pushes the reader below view. Read Escape and both dialog returns preserve Choose your share17:16/3lives/0score and respective opener focus. Receipt /tmp/f09-primary-reader-followup-receipt.json. Layout correction now active; prior168-case/full-source and briefing/pause/win receipts remain valid for22a at their stated scopes, not final all-primary acceptance."
           ],
           "pr": "https://github.com/mekhovov/revealline/pull/1672",
-          "next": "Reviewed dependent draft on1668. Required exact-head admission remains; broader families and physical devices are separate.",
+          "next": "Fix Field details one-line reading space and Mission brief one-letter header column at primary200%; retain text size, reading ownership and safe Back. Then rerun affected source/browser gates.",
           "deliveryState": "draft",
           "mergeState": "UNSTABLE",
           "observedRemoteHead": "22a2c244a02bdce8632c51ca552af4ab3b51c727"
@@ -3234,6 +3254,11 @@
       "date": "2026-10-19",
       "item": "Primary scaling accepted and descendant integration",
       "reason": "Primary22a passes uninterrupted source gates and actual compact earned-win review; F09b remains separate. Menu/native/arcade/keyboard/context/community descendants independently reconciled. SIM missing style projection corrected and actual compact EN/UK Apply/Undo reviewed. F19 assessment replaces generic comparison work with bounded charge/capacity and commitment consequences. Split deliverable descriptions clarified;113 tasks preserved."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Reader gaps discovered during deeper pause review",
+      "reason": "Primary22a earned-win reflow remains passed, but Field details exposes a one-line reader and Mission brief an overcompressed header. Reopened bounded primary-layout correction before F09b. SIM/Creator presets, SIM Home and removal review integrations now pass exact gates. F22 narrowed to paused current/remaining progress in its existing owner."
     }
   ],
   "deliveryDependencies": [
