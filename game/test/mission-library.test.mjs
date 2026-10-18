@@ -355,3 +355,184 @@ test('Solo preparation and failure cannot poison a ready Versus mission', async 
   assert.equal(library.availability(row, 'versus').state, 'ready');
   assert.equal(library.launch(row, { mode: 'versus' }), true);
 });
+
+for (const count of [0, 1, 32]) {
+  test(`initial ${count}-source construction builds indexes once and later mutations remain observable`, (t) => {
+    const collections = ['Custom', 'Journey', 'Classic'];
+    const described = [];
+    const sources = Array.from({ length: count }, (_, index) =>
+      source({
+        id: `owner-${index}`,
+        collection: collections[index % collections.length],
+        entries: Array.from({ length: 2 }, (_, position) => ({
+          ...entry(`mission-${index}-${position}`, position ? ['team'] : ['solo', 'versus']),
+          levelIndex: position,
+          canonicalLevelKey: `canonical-${index}-${position}`,
+          globalLevelNumber: 2 * index + position + 1,
+        })),
+        describe(value) {
+          described.push(value);
+          return value;
+        },
+        launch: (value) => value,
+      }),
+    );
+    const orderedSources = [...sources].sort(
+      (a, b) =>
+        ['Journey', 'Classic', 'Custom'].indexOf(a.collection) -
+        ['Journey', 'Classic', 'Custom'].indexOf(b.collection),
+    );
+    const expected = orderedSources.flatMap((owner) =>
+      owner.entries.map((value) => ({ owner, value })),
+    );
+    const nativeSort = Array.prototype.sort;
+    let sorts = 0;
+    const sort = t.mock.method(Array.prototype, 'sort', function (compare) {
+      sorts++;
+      return nativeSort.call(this, compare);
+    });
+    let library;
+    try {
+      library = createMissionLibrary(sources);
+    } finally {
+      sort.mock.restore();
+    }
+    try {
+      assert.equal(sorts, count ? 1 : 0, 'Only final construction publishes sorted indexes');
+      assert.deepEqual(
+        described,
+        sources.flatMap((owner) => owner.entries),
+      );
+      assert.equal(library.missions.length, expected.length);
+      expected.forEach(({ owner, value }, index) => {
+        const row = library.missions[index];
+        assert.equal(row.ownerId, owner.id);
+        assert.equal(row.runtimeId, value.id);
+        assert.equal(library.find(row.id), row);
+        assert.equal(library.launch(row, { mode: value.modes[0] }), value);
+      });
+      for (const mode of ['solo', 'versus', 'team']) {
+        const rows = library.missions.filter((row) => row.modes.includes(mode));
+        assert.deepEqual(library.forMode(mode), rows);
+        assert.deepEqual(library.search('', { mode }), rows);
+      }
+
+      let notifications = 0;
+      library.subscribe(() => {
+        notifications++;
+        for (const row of library.missions) assert.equal(library.find(row.id), row);
+        for (const mode of ['solo', 'versus', 'team']) {
+          assert.deepEqual(
+            library.forMode(mode),
+            library.missions.filter((row) => row.modes.includes(mode)),
+          );
+        }
+      });
+      const extra = source({ id: 'later', entries: [entry('later', ['team'])] });
+      library.register(extra);
+      const old = library.missions.find((row) => row.ownerId === extra.id);
+      assert.equal(notifications, 1);
+      library.register({ ...extra, entries: [entry('replacement', ['solo'])] });
+      assert.equal(notifications, 2);
+      assert.equal(library.find(old.id), null);
+      assert.throws(() => library.launch(old, { mode: 'team' }), /stale/);
+      assert.equal(library.remove(extra.id), true);
+      assert.equal(notifications, 3);
+      assert.equal(library.missions.length, expected.length);
+    } finally {
+      library?.dispose();
+    }
+  });
+}
+
+test('initial duplicate owners replace in place without changing authored collection order', () => {
+  const first = source({ id: 'first', entries: [entry('old')] });
+  const second = source({ id: 'second', entries: [entry('second')] });
+  const replacement = { ...first, entries: [entry('new')], launch: (value) => value };
+  const library = createMissionLibrary([first, second, replacement]);
+  try {
+    assert.deepEqual(
+      library.missions.map((row) => [row.ownerId, row.runtimeId]),
+      [
+        ['first', 'new'],
+        ['second', 'second'],
+      ],
+    );
+    const row = library.missions[0];
+    assert.equal(library.find(row.id), row);
+    assert.equal(library.launch(row), replacement.entries[0]);
+  } finally {
+    library.dispose();
+  }
+});
+
+test('initial numbering conflicts fail before later owners can conceal an invalid prefix', () => {
+  let laterDescriptions = 0;
+  const numbered = (id, key, number = 1) =>
+    source({
+      id,
+      entries: [{ ...entry(id), canonicalLevelKey: key, globalLevelNumber: number }],
+    });
+  assert.throws(
+    () =>
+      createMissionLibrary([
+        numbered('first', 'first-key'),
+        numbered('second', 'conflicting-key'),
+        {
+          ...numbered('second', 'second-key', 2),
+          describe(value) {
+            laterDescriptions++;
+            return value;
+          },
+        },
+      ]),
+    /Official level number/,
+  );
+  assert.equal(laterDescriptions, 0, 'A later replacement cannot mask an earlier conflict');
+
+  const shared = createMissionLibrary([
+    numbered('solo', 'same-canonical'),
+    numbered('team', 'same-canonical'),
+  ]);
+  try {
+    assert.equal(
+      shared.missions.length,
+      2,
+      'The same canonical mission can share its official number',
+    );
+    assert(shared.missions.every((row) => shared.find(row.id) === row));
+  } finally {
+    shared.dispose();
+  }
+});
+
+test('initial row and capacity failures stop before later source adapters run', () => {
+  for (const invalid of [
+    [source({ entries: [entry(), entry()] })],
+    [source({ entries: [entry('bad', ['online'])] })],
+    [
+      source({
+        entries: Array.from({ length: 4096 }, (_, index) => ({
+          ...entry(String(index)),
+          levelIndex: index,
+        })),
+      }),
+      source({ id: 'overflow' }),
+    ],
+  ]) {
+    let laterDescriptions = 0;
+    assert.throws(() =>
+      createMissionLibrary([
+        ...invalid,
+        source({
+          id: 'later',
+          describe(value) {
+            laterDescriptions++;
+            return value;
+          },
+        }),
+      ]),
+    );
+    assert.equal(laterDescriptions, 0);
+  }
+});
