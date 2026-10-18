@@ -153,6 +153,7 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
     keyboardPreset = 'two-stick',
     touchResponse = 'precise',
     ratesApplied = false,
+    keyboardResumeSession = null,
     disposed = false;
   const keys = new Set(),
     touch = neutralFlightInput(),
@@ -167,6 +168,7 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
   const clear = () => {
     keys.clear();
     throttle = 0;
+    keyboardResumeSession = null;
     Object.assign(touch, neutralFlightInput());
     Object.assign(rawTouch, neutralFlightInput());
     for (const release of releases) release();
@@ -187,7 +189,10 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
         return;
       event.preventDefault();
       enabled = false;
+      // Reopening an already paused menu releases keys without losing eligibility.
+      const resumeSession = keyboardResumeSession;
       clear();
+      keyboardResumeSession = resumeSession;
       onPause('paused');
       return;
     }
@@ -236,6 +241,26 @@ export function createFlightInput({ window: win, document: doc, onPause = () => 
     enable(value) {
       enabled = !!value;
       if (!enabled) clear();
+    },
+    // A deliberate pause may retain eligibility, never held keys or live input.
+    // The host supplies a flight identity so another attempt cannot inherit it.
+    pause({ session = null, retainKeyboardThrottle = false } = {}) {
+      const retained = keyboardResumeSession;
+      enabled = false;
+      clear();
+      if (owner === 'keyboard' && session && (retainKeyboardThrottle || retained === session))
+        keyboardResumeSession = session;
+    },
+    resume(session, consumedThrottle) {
+      enabled = true;
+      if (
+        owner === 'keyboard' &&
+        session &&
+        keyboardResumeSession === session &&
+        Number.isFinite(consumedThrottle)
+      )
+        throttle = clamp(consumedThrottle, 0, 1);
+      keyboardResumeSession = null;
     },
     owner: () => owner,
     keyboardPreset(value) {
