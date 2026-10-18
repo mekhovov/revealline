@@ -221,3 +221,28 @@ test('pause-only containers respect actual legacy briefing and result visibility
     }
   }
 });
+
+test('ordinary and earned results give enlarged copy the full reading width', () => {
+  const { byId } = page();
+  const overlay = byId('game-overlay'),
+    reading = byId('overlay-reading');
+  const card = byId('overlay-reading-unit'),
+    picture = byId('result-picture');
+  setAttr(overlay, 'data-kind', 'won');
+  for (const earned of [null, 'true']) {
+    setAttr(card, 'data-earned-result-layout', earned);
+    for (const width of [320, 390, 844, 1280]) {
+      assert.equal(computed(reading, 'display', width), 'flex');
+      assert.equal(computed(reading, 'flex-direction', width), 'column');
+      for (const node of reading.childNodes.filter((child) => child.tagName)) {
+        assert.equal(computed(node, 'grid-column', width), 'auto');
+        assert.equal(computed(node, 'grid-row', width), 'auto');
+        assert.equal(computed(node, 'max-inline-size', width), '100%');
+      }
+      setAttr(picture, 'hidden', '');
+      assert.equal(computed(picture, 'display', width), 'none');
+      setAttr(picture, 'hidden', null);
+      assert.equal(computed(picture, 'inline-size', width), '100%');
+    }
+  }
+});
