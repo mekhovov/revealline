@@ -150,3 +150,66 @@ test('an imported Team pack keeps its own identity instead of borrowing the auth
     /Browsing Team · from Local arena collection · Team/,
   );
 });
+
+test('default Team Home uses concise Capture identity in English and Ukrainian', async (t) => {
+  english(t);
+  const f = await page(t, {
+    ...options,
+    href: 'http://localhost/game/couch/relay-rescue.html',
+    waitPicture: false,
+  });
+  const context = f.$('coop-navigation-context');
+  assert.equal(context.textContent, 'Capture · Team · Foundation specialists · Twin landings');
+  // This fixture supplies no original picture. It qualifies the actual public
+  // title's identity and translation, not artwork readiness or launch.
+  setLocale('uk', { persist: false });
+  assert.match(context.textContent, /^Захоплення · Команда · /);
+  assert.doesNotMatch(
+    context.textContent,
+    /enemy speed|shared reserves|швидкість ворогів|спільний резерв/,
+  );
+  assert.equal(f.$('coop-menu').hidden, false, 'Changing labels never launches the flight.');
+});
+
+for (const [route, en, uk] of [
+  [
+    'team-cultural-specialist-originals-2',
+    'Ukrainian spatial specialists II',
+    'Українські просторові спеціалісти II',
+  ],
+  ['team-pressure-originals-1', 'Shared pressure', 'Спільний тиск'],
+  ['team-timed-originals', 'Shared windows', 'Спільні вікна'],
+]) {
+  test(`explicit ${route} keeps its short owned navigation identity`, async (t) => {
+    english(t);
+    const f = await page(t, {
+      ...options,
+      href: `http://localhost/game/couch/relay-rescue.html?journey=${route}`,
+      waitPicture: false,
+    });
+    const context = f.$('coop-navigation-context');
+    assert.ok(context.textContent.startsWith(`${en} · Team · `), context.textContent);
+    assert.doesNotMatch(context.textContent, /enemy speed|shared reserves/);
+    setLocale('uk', { persist: false });
+    assert.ok(context.textContent.startsWith(`${uk} · Команда · `), context.textContent);
+    assert.doesNotMatch(context.textContent, /швидкість ворогів|спільний резерв/);
+  });
+}
+
+for (const [route, label] of [
+  ['pursuit-pilots-v1', 'Pursuit partners · prototypes'],
+  ['pursuit-campaigns-v1', 'Pursuit partners · six prototype chapters'],
+]) {
+  test(`explicit ${route} retains the source-owned Pursuit identity`, async (t) => {
+    english(t);
+    const f = await page(t, {
+      ...options,
+      href: `http://localhost/game/couch/relay-rescue.html?journey=${route}`,
+      waitPicture: false,
+    });
+    assert.ok(f.$('coop-navigation-context').textContent.startsWith(`${label} · Team · `));
+    assert.doesNotMatch(f.$('coop-navigation-context').textContent, /^Capture/);
+    // Let this route's async picture attempt settle before removing its DOM.
+    await waitFor(() => ['ready', 'error'].includes(f.$('coop-picture-status').dataset.state));
+  });
+}
