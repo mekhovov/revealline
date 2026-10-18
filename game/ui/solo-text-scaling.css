@@ -341,7 +341,7 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] #overlay-readi
 html[data-text-scaling='solo']
   body[data-text-size='extra-large']
   #game-overlay
-  :is(.overlay-actions, .pause-menu-section, .pause-secondary-groups) {
+  :is(.overlay-actions, .pause-menu-section, .pause-secondary-groups):not([hidden]) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
@@ -371,7 +371,11 @@ html[data-text-scaling='solo']
   html[data-text-scaling='solo']
     body[data-text-size='extra-large']
     #game-overlay
-    :is(.pause-action-grid, .pause-command-grid) {
+    :is(
+      .pause-action-grid,
+      .pause-command-grid,
+      [data-pause-group='missions'] .pause-command-grid
+    ) {
     grid-template-columns: minmax(0, 1fr);
   }
 }
