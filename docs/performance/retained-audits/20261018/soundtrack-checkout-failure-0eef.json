@@ -1,0 +1,128 @@
+{
+  "format": "SoloSoundtrackCheckoutFailureAuditV1",
+  "observedAt": "2026-10-18T19:20:35.243Z",
+  "pullRequest": 1619,
+  "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+  "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+  "run": 39155641633,
+  "job": {
+    "id": 117758188238,
+    "run_id": 39155641633,
+    "workflow_name": "Appearance preview",
+    "head_branch": "codex/solo-demanded-soundtrack-catalogue",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39155641633",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbau9azg",
+    "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117758188238",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/job/117758188238",
+    "status": "completed",
+    "conclusion": "failure",
+    "created_at": "2026-10-18T18:45:44Z",
+    "started_at": "2026-10-18T19:15:08Z",
+    "completed_at": "2026-10-18T19:18:12Z",
+    "name": "admission",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T19:15:09Z",
+        "completed_at": "2026-10-18T19:15:10Z"
+      },
+      {
+        "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "status": "completed",
+        "conclusion": "failure",
+        "number": 2,
+        "started_at": "2026-10-18T19:15:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      },
+      {
+        "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 3,
+        "started_at": "2026-10-18T19:18:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      },
+      {
+        "name": "Read exact-source admission policy",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 4,
+        "started_at": "2026-10-18T19:18:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      },
+      {
+        "name": "Install admission test dependencies",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 5,
+        "started_at": "2026-10-18T19:18:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      },
+      {
+        "name": "Run complete optional-proof and saved-flight regressions",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 6,
+        "started_at": "2026-10-18T19:18:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      },
+      {
+        "name": "Bind exact-source admission proof",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 7,
+        "started_at": "2026-10-18T19:18:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      },
+      {
+        "name": "Retain admission proof and partial diagnostics",
+        "status": "completed",
+        "conclusion": "skipped",
+        "number": 8,
+        "started_at": "2026-10-18T19:18:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      },
+      {
+        "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 16,
+        "started_at": "2026-10-18T19:18:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 17,
+        "started_at": "2026-10-18T19:18:10Z",
+        "completed_at": "2026-10-18T19:18:10Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117758188238",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000042366,
+    "runner_name": "GitHub Actions 1000042366",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "artifacts": [],
+  "log": {
+    "bytes": 11076,
+    "sha256": "a1995e03f143b95e7cff6b58323d7407c568f6c3c4cfb473a5246b81a559454e",
+    "content": "﻿2026-10-18T19:15:09.5001320Z Current runner version: '2.337.0'\n2026-10-18T19:15:09.5022956Z ##[group]Runner Image Provisioner\n2026-10-18T19:15:09.5023719Z Hosted Compute Agent\n2026-10-18T19:15:09.5024180Z Version: 20261012.601\n2026-10-18T19:15:09.5024614Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-18T19:15:09.5025116Z Build Date: 2026-10-12T17:48:21Z\n2026-10-18T19:15:09.5025582Z Worker ID: {62322645-2758-4fcc-aa19-6b8a717214e1}\n2026-10-18T19:15:09.5026040Z Region: westus3\n2026-10-18T19:15:09.5026439Z Cloud: Azure\n2026-10-18T19:15:09.5026790Z ##[endgroup]\n2026-10-18T19:15:09.5027994Z ##[group]Operating System\n2026-10-18T19:15:09.5028382Z Ubuntu\n2026-10-18T19:15:09.5028734Z 24.04.5\n2026-10-18T19:15:09.5029150Z LTS\n2026-10-18T19:15:09.5029476Z ##[endgroup]\n2026-10-18T19:15:09.5030004Z ##[group]Runner Image\n2026-10-18T19:15:09.5030421Z Image: ubuntu-24.04\n2026-10-18T19:15:09.5030769Z Version: 20261012.334.1\n2026-10-18T19:15:09.5031727Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-18T19:15:09.5032657Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-18T19:15:09.5033290Z ##[endgroup]\n2026-10-18T19:15:09.5034057Z ##[group]GITHUB_TOKEN Permissions\n2026-10-18T19:15:09.5035552Z Contents: read\n2026-10-18T19:15:09.5035904Z Metadata: read\n2026-10-18T19:15:09.5036324Z ##[endgroup]\n2026-10-18T19:15:09.5037958Z Secret source: Actions\n2026-10-18T19:15:09.5038628Z Cache mode: write\n2026-10-18T19:15:09.5039116Z Prepare workflow directory\n2026-10-18T19:15:09.5439605Z Prepare all required actions\n2026-10-18T19:15:09.5478793Z Getting action download info\n2026-10-18T19:15:09.8257556Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)\n2026-10-18T19:15:09.9053902Z Download action repository 'actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)\n2026-10-18T19:15:10.0088370Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)\n2026-10-18T19:15:10.1906998Z Complete job name: admission\n2026-10-18T19:15:10.2400556Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09\n2026-10-18T19:15:10.2401173Z with:\n2026-10-18T19:15:10.2401456Z   ref: 0eef99dfa3fef571281b32d260c1b4d00efb625d\n2026-10-18T19:15:10.2401811Z   persist-credentials: false\n2026-10-18T19:15:10.2402112Z   repository: mekhovov/revealline\n2026-10-18T19:15:10.2404320Z   token: ***\n2026-10-18T19:15:10.2404557Z   ssh-strict: true\n2026-10-18T19:15:10.2404801Z   ssh-user: git\n2026-10-18T19:15:10.2405031Z   clean: true\n2026-10-18T19:15:10.2405278Z   sparse-checkout-cone-mode: true\n2026-10-18T19:15:10.2405570Z   fetch-depth: 1\n2026-10-18T19:15:10.2405812Z   fetch-tags: false\n2026-10-18T19:15:10.2406060Z   show-progress: true\n2026-10-18T19:15:10.2406307Z   lfs: false\n2026-10-18T19:15:10.2406533Z   submodules: false\n2026-10-18T19:15:10.2406804Z   set-safe-directory: true\n2026-10-18T19:15:10.2407086Z   allow-unsafe-pr-checkout: false\n2026-10-18T19:15:10.2407440Z env:\n2026-10-18T19:15:10.2408328Z   APPEARANCE_TEAM_TEST_FILES: game/test/couch-static-pictures.test.mjs game/test/couch-static-picture-host.test.mjs game/test/couch-shell.test.mjs game/test/controller-navigation.test.mjs game/test/controller-reading.test.mjs\n2026-10-18T19:15:10.2409346Z   APPEARANCE_INSTALLED_TEST_FILES: game/test/couch-installed-chapters.test.mjs\n2026-10-18T19:15:10.2412546Z   APPEARANCE_ADMISSION_TEST_FILES: game/test/journey-performance-admission.test.mjs game/test/journey-performance-observation-admission.test.mjs game/test/journey-profile-owned-transition.test.mjs game/test/journey-required-progress-admission.test.mjs game/test/solo-required-progress-preparation-host.test.mjs game/test/owned-recorder.test.mjs game/test/demo-library-indexeddb.test.mjs game/test/optional-learning-admission.test.mjs game/test/optional-replay-admission.test.mjs game/test/solo-pending-verification-gameplay-host.test.mjs game/test/edition-mastery-host.test.mjs game/test/edition-lessons.test.mjs game/test/capture-presentation-session.test.mjs game/test/solo-dense-replay-persistence.test.mjs game/test/library-entry.test.mjs game/test/solo-lazy-library-host.test.mjs game/test/solo-transition-performance-host.test.mjs\n2026-10-18T19:15:10.2416396Z   APPEARANCE_DEMO_TEST_FILES: game/test/demo-scene-transition.test.mjs game/test/victory-story-ui.test.mjs game/test/demo-bot.test.mjs game/test/demo-sources.test.mjs game/test/solo-demo-resources-host.test.mjs game/test/demo-loading-host.test.mjs\n2026-10-18T19:15:10.2417402Z   PREVIEW_HEAD_SHA: 0eef99dfa3fef571281b32d260c1b4d00efb625d\n2026-10-18T19:15:10.2417889Z   PREVIEW_RUN_URL: https://github.com/mekhovov/revealline/actions/runs/39155641633\n2026-10-18T19:15:10.2418314Z ##[endgroup]\n2026-10-18T19:15:10.3176047Z Syncing repository: mekhovov/revealline\n2026-10-18T19:15:10.3177410Z ##[group]Getting Git version info\n2026-10-18T19:15:10.3177915Z Working directory is '/home/runner/work/revealline/revealline'\n2026-10-18T19:15:10.3178745Z [command]/usr/bin/git version\n2026-10-18T19:15:10.3263469Z git version 2.55.0\n2026-10-18T19:15:10.3315789Z ##[endgroup]\n2026-10-18T19:15:10.3328327Z Temporarily overriding HOME='/home/runner/work/_temp/23fdcecd-c699-4fb8-a4ce-c3442fa223fe' before making global git config changes\n2026-10-18T19:15:10.3329950Z Adding repository directory to the temporary git global config as a safe directory\n2026-10-18T19:15:10.3333572Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline\n2026-10-18T19:15:10.3396575Z Deleting the contents of '/home/runner/work/revealline/revealline'\n2026-10-18T19:15:10.3402740Z ##[group]Initializing the repository\n2026-10-18T19:15:10.3408351Z [command]/usr/bin/git init /home/runner/work/revealline/revealline\n2026-10-18T19:15:10.3511802Z hint: Using 'master' as the name for the initial branch. This default branch name\n2026-10-18T19:15:10.3530887Z hint: will change to \"main\" in Git 3.0. To configure the initial branch name\n2026-10-18T19:15:10.3531574Z hint: to use in all of your new repositories, which will suppress this warning,\n2026-10-18T19:15:10.3532311Z hint: call:\n2026-10-18T19:15:10.3532541Z hint:\n2026-10-18T19:15:10.3532869Z hint: \tgit config --global init.defaultBranch <name>\n2026-10-18T19:15:10.3533332Z hint:\n2026-10-18T19:15:10.3533814Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\n2026-10-18T19:15:10.3534368Z hint: 'development'. The just-created branch can be renamed via this command:\n2026-10-18T19:15:10.3534776Z hint:\n2026-10-18T19:15:10.3535019Z hint: \tgit branch -m <name>\n2026-10-18T19:15:10.3535294Z hint:\n2026-10-18T19:15:10.3535656Z hint: Disable this message with \"git config set advice.defaultBranchName false\"\n2026-10-18T19:15:10.3536242Z Initialized empty Git repository in /home/runner/work/revealline/revealline/.git/\n2026-10-18T19:15:10.3537431Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline\n2026-10-18T19:15:10.3583241Z ##[endgroup]\n2026-10-18T19:15:10.3583992Z ##[group]Disabling automatic garbage collection\n2026-10-18T19:15:10.3588224Z [command]/usr/bin/git config --local gc.auto 0\n2026-10-18T19:15:10.3628226Z ##[endgroup]\n2026-10-18T19:15:10.3628952Z ##[group]Setting up auth\n2026-10-18T19:15:10.3636351Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T19:15:10.3676370Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T19:15:10.4010319Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T19:15:10.4049266Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T19:15:10.4253051Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T19:15:10.4290815Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T19:15:10.4494128Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***\n2026-10-18T19:15:10.4535239Z ##[endgroup]\n2026-10-18T19:15:10.4542866Z ##[group]Fetching the repository\n2026-10-18T19:15:10.4543731Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 0eef99dfa3fef571281b32d260c1b4d00efb625d\n2026-10-18T19:18:10.2380775Z ##[error]The action 'Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' has timed out after 3 minutes.\n2026-10-18T19:18:10.2524804Z Post job cleanup.\n2026-10-18T19:18:10.3172399Z [command]/usr/bin/git version\n2026-10-18T19:18:10.3213286Z git version 2.55.0\n2026-10-18T19:18:10.3243571Z Temporarily overriding HOME='/home/runner/work/_temp/c1e1e278-8733-4f5f-b7ab-d1b0f8ca4e22' before making global git config changes\n2026-10-18T19:18:10.3244303Z Adding repository directory to the temporary git global config as a safe directory\n2026-10-18T19:18:10.3248335Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline\n2026-10-18T19:18:10.3292307Z [command]/usr/bin/git config --local --name-only --get-regexp core\\.sshCommand\n2026-10-18T19:18:10.3340335Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'core\\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\"\n2026-10-18T19:18:10.3600040Z [command]/usr/bin/git config --local --name-only --get-regexp http\\.https\\:\\/\\/github\\.com\\/\\.extraheader\n2026-10-18T19:18:10.3612067Z http.https://github.com/.extraheader\n2026-10-18T19:18:10.3623329Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader\n2026-10-18T19:18:10.3662736Z [command]/usr/bin/git submodule foreach --recursive sh -c \"git config --local --name-only --get-regexp 'http\\.https\\:\\/\\/github\\.com\\/\\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\"\n2026-10-18T19:18:10.3904153Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\\.gitdir:\n2026-10-18T19:18:10.3939268Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url\n2026-10-18T19:18:10.4263194Z Evaluate and set job outputs\n2026-10-18T19:18:10.4269436Z Cleaning up orphan processes\n2026-10-18T19:18:10.4534491Z Terminate orphan process: pid (2076) (git)\n2026-10-18T19:18:10.4585135Z Terminate orphan process: pid (2077) (git)\n2026-10-18T19:18:10.4653931Z Terminate orphan process: pid (2078) (git-remote-https)\n"
+  },
+  "classification": "Exact-source checkout exceeded existing 3-minute action deadline before Node setup, policy selection, tests or proof emission. No current-head functional execution occurred in this job.",
+  "limits": [
+    "Does not identify an application regression or qualify performance.",
+    "No source/test/deadline edits or automatic retries were performed.",
+    "Remaining current-head workflow jobs were still pending when observed."
+  ]
+}

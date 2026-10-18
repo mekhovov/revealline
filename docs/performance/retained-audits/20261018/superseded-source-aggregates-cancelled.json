@@ -1,0 +1,128 @@
+{
+  "format": "SupersededSourceAggregationCancellationV1",
+  "at": "2026-10-18T19:23:08.426780+00:00",
+  "runs": [
+    {
+      "id": 39152079448,
+      "head": "20ac8d950bd2095aa9a931fdc6ad22d205f6cd71",
+      "reason": "Superseded task-owned head; all source shards settled, only aggregate/report job remains queued. Existing success, failure and cancellation evidence retained; no native or current-head job cancelled.",
+      "priorJobs": [
+        {
+          "id": 117748955602,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 117751786224,
+          "name": "focused_shards (4)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 117751786256,
+          "name": "focused_shards (3)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 117751786257,
+          "name": "focused_shards (1)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 117751786272,
+          "name": "focused_shards (2)",
+          "status": "completed",
+          "conclusion": "cancelled"
+        },
+        {
+          "id": 117751786975,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 117751787317,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 117758442015,
+          "name": "focused",
+          "status": "queued",
+          "conclusion": null
+        }
+      ],
+      "requestExit": 0,
+      "response": "{}",
+      "error": ""
+    },
+    {
+      "id": 39152912601,
+      "head": "85a1f6386b337becea016736dee03087bdc964c2",
+      "reason": "Superseded task-owned head; all source shards settled, only aggregate/report job remains queued. Existing success, failure and cancellation evidence retained; no native or current-head job cancelled.",
+      "priorJobs": [
+        {
+          "id": 117752000295,
+          "name": "preflight",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 117754994673,
+          "name": "focused_shards (3)",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 117754994721,
+          "name": "focused_shards (1)",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "id": 117754994751,
+          "name": "focused_shards (4)",
+          "status": "completed",
+          "conclusion": "cancelled"
+        },
+        {
+          "id": 117754994778,
+          "name": "focused_shards (2)",
+          "status": "completed",
+          "conclusion": "cancelled"
+        },
+        {
+          "id": 117754995880,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 117754996036,
+          "name": "test",
+          "status": "completed",
+          "conclusion": "skipped"
+        },
+        {
+          "id": 117759872020,
+          "name": "focused",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "id": 117765459445,
+          "name": "release-ready",
+          "status": "queued",
+          "conclusion": null
+        }
+      ],
+      "requestExit": 0,
+      "response": "{}",
+      "error": ""
+    }
+  ]
+}

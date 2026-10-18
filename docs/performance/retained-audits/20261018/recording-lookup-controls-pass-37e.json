@@ -1,0 +1,126 @@
+{
+  "format": "SoloLocalRecordingLookupExecutionAuditV1",
+  "observedAt": "2026-10-18T19:14:44.247Z",
+  "pullRequest": 1631,
+  "run": 39154332460,
+  "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+  "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+  "assertion": "All eight new local recording lookup controls actually executed and passed in shard1;42/42 total, no failed/cancelled/skipped/todo. Shard3 was a zero-command shard, not extra test evidence.",
+  "limits": "This proves focused source regressions only. Full workflow aggregation, remaining required checks, production publication and native/physical performance qualification are separate.",
+  "artifacts": [
+    {
+      "id": 12147990600,
+      "name": "focused-shard-39154332460-1-3",
+      "bytes": 1008,
+      "sha256": "f1f9fccfdc772d16e9dcf9bb50e32d7cacdc148a8f97bf392565657853dde22c",
+      "zipCRCVerified": true,
+      "receipt": {
+        "format": "revealline-focused-shard.v1",
+        "state": "complete",
+        "shard": {
+          "index": 3,
+          "total": 4
+        },
+        "identity": {
+          "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+          "workflowRevision": "95f99a21179120eace0ecbd3fa0ac732737fd3cb",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "4642033ae0ab70c6f6d3a61010a1a09e8061b25496ea59c9086d959d6b865b1d",
+          "fallbackHandled": false,
+          "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33"
+        },
+        "plan": {
+          "commands": [
+            {
+              "id": "official-download-retention",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/official-downloads.test.mjs",
+                "game/test/offline-download-access.test.mjs",
+                "game/test/offline-team-retention-host.test.mjs"
+              ]
+            }
+          ],
+          "sha256": "b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee"
+        },
+        "indices": [],
+        "result": {
+          "attempted": 0,
+          "failures": [],
+          "exitCode": 0
+        }
+      },
+      "log": {
+        "bytes": 181,
+        "sha256": "05e11efdefe105ea225737187ca0128a3ee2bd98f2384ef188cc90c10b67421d",
+        "text": "### Focused release gate\n\nCategories: official-download-retention\nCommands: 1\nFocused shard 3/4: 0/1 commands; plan b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee\n"
+      }
+    },
+    {
+      "id": 12147238540,
+      "name": "focused-shard-39154332460-1-1",
+      "bytes": 3176,
+      "sha256": "e393ae57592baaf3dcc6728a94852660e0274db920ee17fc14c1a37c8fa70b27",
+      "zipCRCVerified": true,
+      "receipt": {
+        "format": "revealline-focused-shard.v1",
+        "state": "complete",
+        "shard": {
+          "index": 1,
+          "total": 4
+        },
+        "identity": {
+          "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+          "workflowRevision": "95f99a21179120eace0ecbd3fa0ac732737fd3cb",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "4642033ae0ab70c6f6d3a61010a1a09e8061b25496ea59c9086d959d6b865b1d",
+          "fallbackHandled": false,
+          "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33"
+        },
+        "plan": {
+          "commands": [
+            {
+              "id": "official-download-retention",
+              "command": "node",
+              "args": [
+                "--test",
+                "game/test/official-downloads.test.mjs",
+                "game/test/offline-download-access.test.mjs",
+                "game/test/offline-team-retention-host.test.mjs"
+              ]
+            }
+          ],
+          "sha256": "b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee"
+        },
+        "indices": [
+          0
+        ],
+        "result": {
+          "attempted": 1,
+          "failures": [],
+          "exitCode": 0
+        }
+      },
+      "log": {
+        "bytes": 9323,
+        "sha256": "8c55656ef4ad87449673b0dad26a36dceaf96ebda689f36a358d588997f3436b",
+        "text": "### Focused release gate\n\nCategories: official-download-retention\nCommands: 1\nFocused shard 1/4: 1/1 commands; plan b878d0fa1de456f215d165ac7c3db6fea63b6dcb6527730541403c72677d4cee\n\n[focused:official-download-retention] node --test game/test/official-downloads.test.mjs game/test/offline-download-access.test.mjs game/test/offline-team-retention-host.test.mjs\nTAP version 13\n# Subtest: music yields before fetching when another window is already playing\nok 1 - music yields before fetching when another window is already playing\n  ---\n  duration_ms: 101.093546\n  ...\n# Subtest: connection loss preserves committed files and a new downloader resumes only the missing file\nok 2 - connection loss preserves committed files and a new downloader resumes only the missing file\n  ---\n  duration_ms: 32.435976\n  ...\n# Subtest: pause preserves the completed file and cancellation never marks the group complete\nok 3 - pause preserves the completed file and cancellation never marks the group complete\n  ---\n  duration_ms: 12.846553\n  ...\n# Subtest: quota failure preserves existing files and a retry resumes atomically\nok 4 - quota failure preserves existing files and a retry resumes atomically\n  ---\n  duration_ms: 9.76319\n  ...\n# Subtest: same-sized corruption is detected and only the damaged file is repaired\nok 5 - same-sized corruption is detected and only the damaged file is repaired\n  ---\n  duration_ms: 7.917738\n  ...\n# Subtest: updates reuse hashes across editions and removal retains shared references and user caches\nok 6 - updates reuse hashes across editions and removal retains shared references and user caches\n  ---\n  duration_ms: 7.099582\n  ...\n# Subtest: remove preserves all files and checkpoints when another owner's metadata is unreadable\nok 7 - remove preserves all files and checkpoints when another owner's metadata is unreadable\n  ---\n  duration_ms: 20.389663\n  ...\n# Subtest: remove preserves data when its ownership mutation fails\nok 8 - remove preserves data when its ownership mutation fails\n  ---\n  duration_ms: 6.804843\n  ...\n# Subtest: retain preserves all files and checkpoints when another owner's metadata is unreadable\nok 9 - retain preserves all files and checkpoints when another owner's metadata is unreadable\n  ---\n  duration_ms: 21.400095\n  ...\n# Subtest: retain preserves data when its ownership mutation fails\nok 10 - retain preserves data when its ownership mutation fails\n  ---\n  duration_ms: 4.040525\n  ...\n# Subtest: failed music leaves game readiness intact and imported bytes avoid a network request\nok 11 - failed music leaves game readiness intact and imported bytes avoid a network request\n  ---\n  duration_ms: 3.748131\n  ...\n# Subtest: partial, truncated, oversized, corrupt and redirected downloads cannot be committed\nok 12 - partial, truncated, oversized, corrupt and redirected downloads cannot be committed\n  ---\n  duration_ms: 0.998785\n  ...\n# Subtest: game closure includes shared artwork without including or depending on soundtracks\nok 13 - game closure includes shared artwork without including or depending on soundtracks\n  ---\n  duration_ms: 0.533683\n  ...\n# Subtest: played chapter retains its complete runtime and artwork after deselection while unplayed bytes are freed\nok 14 - played chapter retains its complete runtime and artwork after deselection while unplayed bytes are freed\n  ---\n  duration_ms: 10.695576\n  ...\n# Subtest: missing, corrupt, aborted and soundtrack files cannot acquire a played chapter owner\nok 15 - missing, corrupt, aborted and soundtrack files cannot acquire a played chapter owner\n  ---\n  duration_ms: 4.242836\n  ...\n# Subtest: damaged download ownership keeps its recovery message live in English and Ukrainian\nok 16 - damaged download ownership keeps its recovery message live in English and Ukrainian\n  ---\n  duration_ms: 6.123321\n  ...\n# Subtest: local recording lookup opens the cache once for a complete 77-track catalogue\nok 17 - local recording lookup opens the cache once for a complete 77-track catalogue\n  ---\n  duration_ms: 19.301185\n  ...\n# Subtest: local recording lookup preserves catalogue order, duplicate IDs and shared-hash tracks\nok 18 - local recording lookup preserves catalogue order, duplicate IDs and shared-hash tracks\n  ---\n  duration_ms: 0.795202\n  ...\n# Subtest: local recording lookup excludes missing and metadata-corrupt hashes without reading bodies\nok 19 - local recording lookup excludes missing and metadata-corrupt hashes without reading bodies\n  ---\n  duration_ms: 0.755233\n  ...\n# Subtest: local recording lookup returns no partial IDs when cache open or a later read fails\nok 20 - local recording lookup returns no partial IDs when cache open or a later read fails\n  ---\n  duration_ms: 0.898385\n  ...\n# Subtest: local recording lookup leaves an empty catalogue unopened and handles absent Cache Storage\nok 21 - local recording lookup leaves an empty catalogue unopened and handles absent Cache Storage\n  ---\n  duration_ms: 0.305915\n  ...\n# Subtest: conflicting declared sizes retain per-track readiness regardless of the last duplicate\nok 22 - conflicting declared sizes retain per-track readiness regardless of the last duplicate\n  ---\n  duration_ms: 0.959787\n  ...\n# Subtest: invalid later recording descriptors cannot expose earlier ready IDs\nok 23 - invalid later recording descriptors cannot expose earlier ready IDs\n  ---\n  duration_ms: 0.329359\n  ...\n# Subtest: a later recording lookup opens the current cache after another owner deletes it\nok 24 - a later recording lookup opens the current cache after another owner deletes it\n  ---\n  duration_ms: 0.445562\n  ...\n# Subtest: unprepared chapter requests confirmation before it can prepare a mission\nok 25 - unprepared chapter requests confirmation before it can prepare a mission\n  ---\n  duration_ms: 18.398433\n  ...\n# Subtest: UI readiness alone cannot authorize an incomplete or corrupt chapter\nok 26 - UI readiness alone cannot authorize an incomplete or corrupt chapter\n  ---\n  duration_ms: 2.153711\n  ...\n# Subtest: closing or aborting a package request preserves the existing attempt\nok 27 - closing or aborting a package request preserves the existing attempt\n  ---\n  duration_ms: 0.775963\n  ...\n# Subtest: development and legacy editions do not fetch a new catalogue\nok 28 - development and legacy editions do not fetch a new catalogue\n  ---\n  duration_ms: 0.129863\n  ...\n# Subtest: passive previews never open a download prompt for missing assets\nok 29 - passive previews never open a download prompt for missing assets\n  ---\n  duration_ms: 0.804235\n  ...\n# Subtest: a reused original cannot substitute another mission edition package\nok 30 - a reused original cannot substitute another mission edition package\n  ---\n  duration_ms: 0.769784\n  ...\n# Subtest: optional tool URLs resolve only their published tooling group\nok 31 - optional tool URLs resolve only their published tooling group\n  ---\n  duration_ms: 0.713911\n  ...\n# Subtest: a stalled catalogue can be cancelled and does not block the next mission request\nok 32 - a stalled catalogue can be cancelled and does not block the next mission request\n  ---\n  duration_ms: 0.802673\n  ...\n# Subtest: an online network blackhole times out and can retry without reopening the app\nok 33 - an online network blackhole times out and can retry without reopening the app\n  ---\n  duration_ms: 12.27964\n  ...\n# Subtest: cancelled catalogue response cannot parse or admit late ownership\nok 34 - cancelled catalogue response cannot parse or admit late ownership\n  ---\n  duration_ms: 1.949648\n  ...\n# Subtest: cancelled catalogue body cannot parse or admit late ownership\nok 35 - cancelled catalogue body cannot parse or admit late ownership\n  ---\n  duration_ms: 4.017362\n  ...\n# Subtest: mode navigation prepares the exact published destination and rejects guessed owners\nok 36 - mode navigation prepares the exact published destination and rejects guessed owners\n  ---\n  duration_ms: 2.392817\n  ...\n# Subtest: an explicit historical destination retains its exact archive owner\nok 37 - an explicit historical destination retains its exact archive owner\n  ---\n  duration_ms: 0.928409\n  ...\n# Subtest: local imported/return ownership only prepares its receiving runtime\nok 38 - local imported/return ownership only prepares its receiving runtime\n  ---\n  duration_ms: 0.697587\n  ...\n# Subtest: deliberate mission admission retains the verified runtime and artwork dependency closure\nok 39 - deliberate mission admission retains the verified runtime and artwork dependency closure\n  ---\n  duration_ms: 1.407652\n  ...\n# Subtest: cancellation after verification does not retain or admit a mission\nok 40 - cancellation after verification does not retain or admit a mission\n  ---\n  duration_ms: 0.532551\n  ...\n# Subtest: a prepared Team preview is not pinned; deliberate Start waits for retention and cancelled work cannot start later\nok 41 - a prepared Team preview is not pinned; deliberate Start waits for retention and cancelled work cannot start later\n  ---\n  duration_ms: 1956.080057\n  ...\n# Subtest: Team starts online without downloaded files or an install popup\nok 42 - Team starts online without downloaded files or an install popup\n  ---\n  duration_ms: 1574.755592\n  ...\n1..42\n# tests 42\n# suites 0\n# pass 42\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 12522.616578\n"
+      }
+    }
+  ],
+  "newControlOkLines": [
+    "ok 17 - local recording lookup opens the cache once for a complete 77-track catalogue",
+    "ok 18 - local recording lookup preserves catalogue order, duplicate IDs and shared-hash tracks",
+    "ok 19 - local recording lookup excludes missing and metadata-corrupt hashes without reading bodies",
+    "ok 20 - local recording lookup returns no partial IDs when cache open or a later read fails",
+    "ok 21 - local recording lookup leaves an empty catalogue unopened and handles absent Cache Storage",
+    "ok 22 - conflicting declared sizes retain per-track readiness regardless of the last duplicate",
+    "ok 23 - invalid later recording descriptors cannot expose earlier ready IDs",
+    "ok 24 - a later recording lookup opens the current cache after another owner deletes it"
+  ]
+}

@@ -1,0 +1,1701 @@
+{
+  "format": "SoloLocalRecordingLookupBuildAuditV1",
+  "observedAt": "2026-10-18T19:18:42.920Z",
+  "pullRequest": 1631,
+  "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+  "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+  "runs": [
+    {
+      "id": 39154332491,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332491",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117754310909,
+          "name": "feature (gameplay)",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T18:48:35Z",
+          "completed_at": "2026-10-18T18:53:05Z"
+        },
+        {
+          "id": 117754311009,
+          "name": "feature (presentation)",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T18:33:00Z",
+          "completed_at": "2026-10-18T18:36:02Z"
+        },
+        {
+          "id": 117754311010,
+          "name": "feature (recordings)",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T18:56:00Z",
+          "completed_at": "2026-10-18T18:58:42Z"
+        },
+        {
+          "id": 117754311040,
+          "name": "feature (creator)",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T18:38:20Z",
+          "completed_at": "2026-10-18T18:42:24Z"
+        },
+        {
+          "id": 117754311082,
+          "name": "feature (rooms)",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T18:58:16Z",
+          "completed_at": "2026-10-18T19:00:52Z"
+        },
+        {
+          "id": 117754311093,
+          "name": "feature (local-ux)",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T19:01:40Z",
+          "completed_at": "2026-10-18T19:09:44Z"
+        }
+      ]
+    },
+    {
+      "id": 39154332603,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332603",
+      "status": "completed",
+      "conclusion": "success",
+      "jobs": [
+        {
+          "id": 117754311232,
+          "name": "candidate",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T18:42:09Z",
+          "completed_at": "2026-10-18T19:08:37Z"
+        },
+        {
+          "id": 117754311566,
+          "name": "optional-practice",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2026-10-18T18:46:59Z",
+          "completed_at": "2026-10-18T19:01:23Z"
+        }
+      ]
+    }
+  ],
+  "industrial": [
+    {
+      "artifact": {
+        "id": 12147610157,
+        "bytes": 6949,
+        "sha256": "4875869b4a37419d98d932e3188394a388fcd8bb0f4f4f3987d367274b5eb85a",
+        "zipCRCVerified": true
+      },
+      "receipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "rooms",
+        "startedAt": "2026-10-18T19:00:01.048Z",
+        "finishedAt": "2026-10-18T19:00:48.242Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+          "tree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+            "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+            "files": 44775,
+            "bytes": 3407692200,
+            "aggregateSha256": "63f572484aeb43db819f31a4dfe968ce5197639854cbd564bca3055d4447db84",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/online-room-artwork.test.mjs",
+          "game/test/online-room-client.test.mjs",
+          "game/test/online-room-content.test.mjs",
+          "game/test/online-room-input.test.mjs",
+          "game/test/online-room-presentation.test.mjs",
+          "game/test/online-room-registry.test.mjs",
+          "game/test/online-room-service.test.mjs",
+          "game/test/online-room-v2.test.mjs",
+          "game/test/online-room.test.mjs",
+          "game/test/online-room-http-qualification.test.mjs",
+          "game/test/room-environment.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/online-room-artwork.test.mjs",
+            "sha256": "88c15be71bb86a35b4b5815369bd5ec2d297942404e08e252a3a280eb138972d"
+          },
+          {
+            "file": "game/test/online-room-client.test.mjs",
+            "sha256": "76c40294e1289f618c47242616e2517571f2d23d9ef0e5452c935699f4e8bfb5"
+          },
+          {
+            "file": "game/test/online-room-content.test.mjs",
+            "sha256": "199d111e64765797ccf57fd704e80ac3e73c0d8f1bc9827174d2e8737d442f85"
+          },
+          {
+            "file": "game/test/online-room-input.test.mjs",
+            "sha256": "22339fb06fb9424026ea285417cb3903c1451c10440011d9d4bc378c22a994aa"
+          },
+          {
+            "file": "game/test/online-room-presentation.test.mjs",
+            "sha256": "24822ed13576d489691edb7dc3b30d05be8493b4d662367e52d903ce295ec307"
+          },
+          {
+            "file": "game/test/online-room-registry.test.mjs",
+            "sha256": "c83578b2942e5f49dabfacdeea12768b53e0f9216b65af77333bd73bf2629fb3"
+          },
+          {
+            "file": "game/test/online-room-service.test.mjs",
+            "sha256": "09f52955ed9bda862c8997ba1e8e75960b00e9cb874e75f3e5ca4f8ab9749782"
+          },
+          {
+            "file": "game/test/online-room-v2.test.mjs",
+            "sha256": "acd5bb3ee4387b6b613f740e0993b81de0e7373a4e238909d127278961d3ca0b"
+          },
+          {
+            "file": "game/test/online-room.test.mjs",
+            "sha256": "feb859efad27bb614b6ac55a68fbea7e0ca315e5940ea31bb52deea114258a8d"
+          },
+          {
+            "file": "game/test/online-room-http-qualification.test.mjs",
+            "sha256": "85f2e7ccaa66e88d4d7cc1341dd3ec4c52cdcbea75d1a25fbcc990c50ee42d7c"
+          },
+          {
+            "file": "game/test/room-environment.test.mjs",
+            "sha256": "5740a71c2bf3d4ac1403ce3c04d393e4f1669e7dd045c431fabd454b8858d293"
+          }
+        ],
+        "logSha256": "a2fe48c3dcbeaf614c6e235e1242168a10124336ea207c4b33de7cae2383e0bd",
+        "logReadError": null,
+        "summary": {
+          "tests": 80,
+          "pass": 80,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": {
+        "bytes": 19785,
+        "sha256": "a2fe48c3dcbeaf614c6e235e1242168a10124336ea207c4b33de7cae2383e0bd",
+        "footer": {
+          "tests": 80,
+          "pass": 80,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    },
+    {
+      "artifact": {
+        "id": 12147208968,
+        "bytes": 35627,
+        "sha256": "d1385810eed90fc1c912f089ed4ddcf9d797d2f298eec987ca036c7dd7fe85fb",
+        "zipCRCVerified": true
+      },
+      "receipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "local-ux",
+        "startedAt": "2026-10-18T19:03:33.720Z",
+        "finishedAt": "2026-10-18T19:09:39.308Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+          "tree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+            "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+            "files": 44775,
+            "bytes": 3407692200,
+            "aggregateSha256": "63f572484aeb43db819f31a4dfe968ce5197639854cbd564bca3055d4447db84",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/art-review-navigation.test.mjs",
+          "game/test/art-review-host-navigation.test.mjs",
+          "game/test/classic-snake-ui.test.mjs",
+          "game/test/hunt-host.test.mjs",
+          "game/test/coop-briefing-host.test.mjs",
+          "game/test/mode-play-shell.test.mjs",
+          "game/test/phase-briefing.test.mjs",
+          "game/test/civilian-practice-ui.test.mjs",
+          "game/test/fpv-flight-ui.test.mjs",
+          "game/test/workshop-return.test.mjs",
+          "game/test/content-studio-navigation.test.mjs",
+          "game/test/couch-departure.test.mjs",
+          "game/test/title-mode-departure-host.test.mjs",
+          "game/test/mode-choice-appearance.test.mjs",
+          "game/test/enemy-appearance-controls.test.mjs",
+          "game/test/military-level-directory.test.mjs",
+          "game/test/fpv-theme-family-controls.test.mjs",
+          "game/test/download-initialization.test.mjs",
+          "game/test/offline.test.mjs",
+          "game/test/classic-environment.test.mjs",
+          "game/test/capture-attempt-appearance-host.test.mjs",
+          "game/test/fpv-world-appearance-ui.test.mjs",
+          "game/test/fpv-regional-location-storage.test.mjs",
+          "game/test/industrial-environment-review.test.mjs",
+          "game/test/continuous-host.test.mjs",
+          "game/test/overflight-host.test.mjs",
+          "game/test/overflight-sortie.test.mjs",
+          "game/test/overflight-controller.test.mjs",
+          "game/test/overflight-upgrade-preview.test.mjs",
+          "game/test/overflight-upgrade-card.test.mjs",
+          "game/test/overflight-review-audio.test.mjs",
+          "game/test/overflight-survival-hud.test.mjs",
+          "game/test/overflight-world-audio.test.mjs",
+          "game/test/team-discovery-host.test.mjs",
+          "game/test/couch-audio-master.test.mjs",
+          "game/test/coop-picture-landing-recovery.test.mjs",
+          "game/test/fpv-world-record-storage.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/art-review-navigation.test.mjs",
+            "sha256": "869bc1e6a310db38b2b850546115796d85ca103661c9c5e4d0befa622141d153"
+          },
+          {
+            "file": "game/test/art-review-host-navigation.test.mjs",
+            "sha256": "0f38b74dc0c2741cdf6300533ca7982a52e6be043b6493ab38b3ca923afcf1e3"
+          },
+          {
+            "file": "game/test/classic-snake-ui.test.mjs",
+            "sha256": "ab1f360758c23766cf1f601472950f9b9e6c80ba335e2199aa5967c9ad2a5f99"
+          },
+          {
+            "file": "game/test/hunt-host.test.mjs",
+            "sha256": "48f977c3fa3eb15d5ce4339c04c8ea2536a2e355721f001e345fade1c5801401"
+          },
+          {
+            "file": "game/test/coop-briefing-host.test.mjs",
+            "sha256": "ecadc8115308c83a02d250c4eb7c5d7f2232934b9a626e308c3bc034dd229c08"
+          },
+          {
+            "file": "game/test/mode-play-shell.test.mjs",
+            "sha256": "4ea2ebb721610738ac34d1bd62ea3363ea9b519a43cd391dfe5233af952f06e3"
+          },
+          {
+            "file": "game/test/phase-briefing.test.mjs",
+            "sha256": "ffac02e3a48d18c2d521b57cc6e44e4554c9d8602215de747ce7f9af37fcce90"
+          },
+          {
+            "file": "game/test/civilian-practice-ui.test.mjs",
+            "sha256": "c02da1b131a100894cfe94c849c455dcd01a12b2a69307da9114058c0b25721e"
+          },
+          {
+            "file": "game/test/fpv-flight-ui.test.mjs",
+            "sha256": "40671e8e72d3a7991da560c55f440a9a29dcf0fc7ec2938658c34dcde58e63f9"
+          },
+          {
+            "file": "game/test/workshop-return.test.mjs",
+            "sha256": "292c3fb9025253662f13563da64680220592972daae2c66756582d1f9285774a"
+          },
+          {
+            "file": "game/test/content-studio-navigation.test.mjs",
+            "sha256": "25023c9197275d2c4369fc467f527510d7743c742e2eef5af9ec60535e9315a4"
+          },
+          {
+            "file": "game/test/couch-departure.test.mjs",
+            "sha256": "ce8711a43c2c1765e17635d73f9437dff8e8212894fa3a95818ee51aceeb7dfc"
+          },
+          {
+            "file": "game/test/title-mode-departure-host.test.mjs",
+            "sha256": "5cce34c29d92d1635291942cee3710ec3f1429236d4a8375e3f9815e9ba5ad2a"
+          },
+          {
+            "file": "game/test/mode-choice-appearance.test.mjs",
+            "sha256": "1cfd44a2fca47019f49451e389ad6f010dee19646a575d7cde8e942fb8f2a48d"
+          },
+          {
+            "file": "game/test/enemy-appearance-controls.test.mjs",
+            "sha256": "f75a78cee06d6175eb63f72010c0e556dccc938ba97dd20305204506bcfd57a7"
+          },
+          {
+            "file": "game/test/military-level-directory.test.mjs",
+            "sha256": "74736fd887b0186b8022cb0ad0efb9cfe1289ec1d6282f9d45539b7450665935"
+          },
+          {
+            "file": "game/test/fpv-theme-family-controls.test.mjs",
+            "sha256": "84c1f2540d2f3ad927ccf046b7d7b3903061320198f65ab93878b404a9570c7b"
+          },
+          {
+            "file": "game/test/download-initialization.test.mjs",
+            "sha256": "6a40d4bd77d6665a7e960d4524a677fe97144ba8ae6c80b783824f5fb71e792b"
+          },
+          {
+            "file": "game/test/offline.test.mjs",
+            "sha256": "d3cf55f8b6a3335ba35fa53a5cea94a7e12eff21a97f178e62138e33128a7297"
+          },
+          {
+            "file": "game/test/classic-environment.test.mjs",
+            "sha256": "2714833a1a422305610881cce41551a123073ac736ad004c9593813904c361e8"
+          },
+          {
+            "file": "game/test/capture-attempt-appearance-host.test.mjs",
+            "sha256": "2c389d5c6dd8617a18236b79f543f7c53f58c43c9b91ca43605bd0392c1f23c6"
+          },
+          {
+            "file": "game/test/fpv-world-appearance-ui.test.mjs",
+            "sha256": "4b48cb43892990463e27b09cc75aaa417548f9044f066fbd3319933ff902ce60"
+          },
+          {
+            "file": "game/test/fpv-regional-location-storage.test.mjs",
+            "sha256": "ce9dd1a9a30c7aabc5ecb32d47b9aeb3f62d4a7d45011adbbc300973432883a6"
+          },
+          {
+            "file": "game/test/industrial-environment-review.test.mjs",
+            "sha256": "61a0d4e23b6d364e038a19804672f29b4ab2a64ef467a08142c9370715e452fc"
+          },
+          {
+            "file": "game/test/continuous-host.test.mjs",
+            "sha256": "4f4f34940421849b5a33d5e688ebdf7af880582b95d6781992f22f787c41cf20"
+          },
+          {
+            "file": "game/test/overflight-host.test.mjs",
+            "sha256": "b02f645f67de9ae15f59a00f684e88b2ccd8df9dd3120cbcd35966afb6272870"
+          },
+          {
+            "file": "game/test/overflight-sortie.test.mjs",
+            "sha256": "e26350cb877cf92a86e4c06059af2400957501aeb430970cd5ff201f9d8515fb"
+          },
+          {
+            "file": "game/test/overflight-controller.test.mjs",
+            "sha256": "da2dbdad03a6f24a57064b4f4fc4b07b3f04ce7c32e864fed8ce83f7c1ad319e"
+          },
+          {
+            "file": "game/test/overflight-upgrade-preview.test.mjs",
+            "sha256": "dad5b8c758d8bb770de449a34f69cebf6ba7cedd8259174078d119f0c08e3bbe"
+          },
+          {
+            "file": "game/test/overflight-upgrade-card.test.mjs",
+            "sha256": "c5a5af611443e09fbb34d04a406b83735cce5c1ad7075eef94b77730581ec403"
+          },
+          {
+            "file": "game/test/overflight-review-audio.test.mjs",
+            "sha256": "1602d7cb31f3de0bd981a97b6d3eb5d64fe205a71c68c527b5be442012727900"
+          },
+          {
+            "file": "game/test/overflight-survival-hud.test.mjs",
+            "sha256": "639d9c7d1d4984679bd7d968b6a8739b9cb01501c1e800bf6fde11d5b63be5fb"
+          },
+          {
+            "file": "game/test/overflight-world-audio.test.mjs",
+            "sha256": "6d10133bbfe2a81d86ce5e4695a7a490960a94338575bd95db4ac44adcb4a7c5"
+          },
+          {
+            "file": "game/test/team-discovery-host.test.mjs",
+            "sha256": "4aa198f3f36deb86cf636d9e50272f248d07d42f3245c31a1cb4e479b04cf3b9"
+          },
+          {
+            "file": "game/test/couch-audio-master.test.mjs",
+            "sha256": "8909ca7710b6e4bc97e93cfc619ab6f72fc82f5e5ababbe6dd015320da5b3771"
+          },
+          {
+            "file": "game/test/coop-picture-landing-recovery.test.mjs",
+            "sha256": "3cc8cc41a13a1be00d755387bf9d4079f96e2d24741aa13b061229bb76cb1848"
+          },
+          {
+            "file": "game/test/fpv-world-record-storage.test.mjs",
+            "sha256": "6d9ec755349a30ff0498d0ad8c4f0c7e0ee4a2f3b7ef510bdfb27142ad94afe4"
+          }
+        ],
+        "logSha256": "7fb0b7201d204e9f76c4171b5808d2af2274b41aadb48102567efdc301d061e8",
+        "logReadError": null,
+        "summary": {
+          "tests": 724,
+          "pass": 724,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": {
+        "bytes": 175084,
+        "sha256": "7fb0b7201d204e9f76c4171b5808d2af2274b41aadb48102567efdc301d061e8",
+        "footer": {
+          "tests": 724,
+          "pass": 724,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    },
+    {
+      "artifact": {
+        "id": 12147131525,
+        "bytes": 19892,
+        "sha256": "3c20430140419182a1d6b13fe7563830631dca6a8caf8779900d70b7c9a35888",
+        "zipCRCVerified": true
+      },
+      "receipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "gameplay",
+        "startedAt": "2026-10-18T18:50:03.719Z",
+        "finishedAt": "2026-10-18T18:53:01.194Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+          "tree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+            "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+            "files": 44775,
+            "bytes": 3407692200,
+            "aggregateSha256": "63f572484aeb43db819f31a4dfe968ce5197639854cbd564bca3055d4447db84",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/pursuit-successor.test.mjs",
+          "game/test/pursuit-specialists.test.mjs",
+          "game/test/pursuit-intercept-routes.test.mjs",
+          "game/test/content-pursuit-intercept.test.mjs",
+          "game/test/classic-snake-v2.test.mjs",
+          "game/test/classic-snake-v3.test.mjs",
+          "game/test/classic-snake-pilot-completion.test.mjs",
+          "game/test/fpv-pilot-completion.test.mjs",
+          "game/test/capture-pilot-completion.test.mjs",
+          "game/test/capture-pilot-contact-completion.test.mjs",
+          "game/test/fpv-native-pursuit-successor.test.mjs",
+          "game/test/fpv-native-pursuit-completion.test.mjs",
+          "game/test/fpv-native-pursuit.test.mjs",
+          "game/test/coop-hunting.test.mjs",
+          "game/test/hunt-core.test.mjs",
+          "game/test/pursuit-variants.test.mjs",
+          "game/test/pursuit-campaigns.test.mjs",
+          "game/test/snake-hunt-core.test.mjs",
+          "game/test/snake-hunt-content.test.mjs",
+          "game/test/snake-hunt-transport.test.mjs",
+          "game/test/classic-snake-core.test.mjs",
+          "game/test/classic-snake-progress.test.mjs",
+          "game/test/hunt-records.test.mjs",
+          "game/test/team-hunt-attempts.test.mjs",
+          "game/test/team-hunt-progress.test.mjs",
+          "game/test/running-enemies-core.test.mjs",
+          "game/test/team-running-enemies.test.mjs",
+          "game/test/classic-snake-legacy-seeds.test.mjs",
+          "game/test/overflight-core.test.mjs",
+          "game/test/overflight-riy.test.mjs",
+          "game/test/overflight-balance.test.mjs",
+          "game/test/overflight-flight-profile.test.mjs",
+          "game/test/overflight-raid-variants.test.mjs",
+          "game/test/overflight-records.test.mjs",
+          "game/test/overflight-rebalance.test.mjs",
+          "game/test/overflight-boundary.test.mjs",
+          "game/test/overflight-riy-squad.test.mjs",
+          "game/test/overflight-raid-balance.test.mjs",
+          "game/test/overflight-riy-cover.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/pursuit-successor.test.mjs",
+            "sha256": "e06ee8d6246e7bf7df3135a514e8c883c3a50d4f41492b757698b0acb5abf33a"
+          },
+          {
+            "file": "game/test/pursuit-specialists.test.mjs",
+            "sha256": "11860dd2c246a7e7ca27427975914d5c6c68fcbaa1dbd214850b72a1bc66c10c"
+          },
+          {
+            "file": "game/test/pursuit-intercept-routes.test.mjs",
+            "sha256": "23e9fa62aeff9df69a4e48cf286664613dd1c3f11265fe4ed26338f74445b260"
+          },
+          {
+            "file": "game/test/content-pursuit-intercept.test.mjs",
+            "sha256": "f842d36b44ae7c1f473e4b9302b7f49a5a542eb12e6dfea94cb56f8e4265b0e7"
+          },
+          {
+            "file": "game/test/classic-snake-v2.test.mjs",
+            "sha256": "4537f9d30f101de940a180ad8523e185ebcfbea9d7707bd2db74eb5c28236a2f"
+          },
+          {
+            "file": "game/test/classic-snake-v3.test.mjs",
+            "sha256": "c7d78061c1f75767f9c669bd66257294347088988cfb97ebbc3c60749a3838de"
+          },
+          {
+            "file": "game/test/classic-snake-pilot-completion.test.mjs",
+            "sha256": "c816614b96c97fd929fda19a921ffa12df89f3a4c4013ef115a1d23bdabcd2e7"
+          },
+          {
+            "file": "game/test/fpv-pilot-completion.test.mjs",
+            "sha256": "838a480f252c4d1713638fd66e1309c87994df2e49a25e7ec99301a8c89fc973"
+          },
+          {
+            "file": "game/test/capture-pilot-completion.test.mjs",
+            "sha256": "b740b49c98be62065903328e607812edc813a1f59a3a601eeb0009df0cd2be1d"
+          },
+          {
+            "file": "game/test/capture-pilot-contact-completion.test.mjs",
+            "sha256": "9fee971e52e37bc7d4b30445c9692f76434f9569c9e2ded92e7410ce7bedc297"
+          },
+          {
+            "file": "game/test/fpv-native-pursuit-successor.test.mjs",
+            "sha256": "c45c4cd2952e152bb14d1e2615f0c50c7824560429b11f4b27b293b8f65212fc"
+          },
+          {
+            "file": "game/test/fpv-native-pursuit-completion.test.mjs",
+            "sha256": "f1e6ecf32d34451840210685f696d78613abfd25621284b7351fa067b985a7ba"
+          },
+          {
+            "file": "game/test/fpv-native-pursuit.test.mjs",
+            "sha256": "58bcc5ee021badf76d808ce845cb0ba6050e68fef1252fb7e832bcb57fa2e6ac"
+          },
+          {
+            "file": "game/test/coop-hunting.test.mjs",
+            "sha256": "179c6999349fe211dfecc8560164ff80a602a6559ac20cf068d1b2ec78579afc"
+          },
+          {
+            "file": "game/test/hunt-core.test.mjs",
+            "sha256": "f43898ec43caf5a523e480c9f9ea49a9fe28b3194244079a6afa5e2439b8c6bf"
+          },
+          {
+            "file": "game/test/pursuit-variants.test.mjs",
+            "sha256": "92906523813135f9d23dcb1a9fda06493c468ade6318a7fd0949f8372ffca610"
+          },
+          {
+            "file": "game/test/pursuit-campaigns.test.mjs",
+            "sha256": "4fd8b9230f4c1c5a5a412b2518df8ddae52af49334d49f958b61fae60e08a3fd"
+          },
+          {
+            "file": "game/test/snake-hunt-core.test.mjs",
+            "sha256": "1c3fd25b67e1963bf19ad3d3701e55c464c0e19e065cb324d5b65cf160e48991"
+          },
+          {
+            "file": "game/test/snake-hunt-content.test.mjs",
+            "sha256": "0e3e87ec824eaf4b2c71cb959425448bcc3b4d61a3bbe4801e4bdcd351f3b821"
+          },
+          {
+            "file": "game/test/snake-hunt-transport.test.mjs",
+            "sha256": "e48340dc79bc03caa8ea42ef9bc326fd5c2b2d0e7112ee58774f442e04cf6331"
+          },
+          {
+            "file": "game/test/classic-snake-core.test.mjs",
+            "sha256": "589b781c2be7cfcfec63852ec86be9c402a12b33b330c2f8fe9bb1741ebe6397"
+          },
+          {
+            "file": "game/test/classic-snake-progress.test.mjs",
+            "sha256": "c72e92f2fe204f3f161e14935adda438765052684ae809d0e1b896c111bf6ae7"
+          },
+          {
+            "file": "game/test/hunt-records.test.mjs",
+            "sha256": "6253d8c003f5a6cb78a493082d2eeb91a22baec69ddd5b3fcd5cdac368f96d7c"
+          },
+          {
+            "file": "game/test/team-hunt-attempts.test.mjs",
+            "sha256": "b2d14308aab13871141cfea96699730b83cb1843c82ab789b3a0020f6d31fd39"
+          },
+          {
+            "file": "game/test/team-hunt-progress.test.mjs",
+            "sha256": "69045e9e7121387350c271a2cff5c3860b09e2c132501d24a5cbcc56f294375b"
+          },
+          {
+            "file": "game/test/running-enemies-core.test.mjs",
+            "sha256": "06d6181c4c30c82f89238d323ea5732c1aa9cdeba605d809144e8071efdfd5d9"
+          },
+          {
+            "file": "game/test/team-running-enemies.test.mjs",
+            "sha256": "779b822b804b75bf561de7547c7e2e24ac8967a6b62358438e6d48f14ee41eb5"
+          },
+          {
+            "file": "game/test/classic-snake-legacy-seeds.test.mjs",
+            "sha256": "e53b842cab0a21fd6bd8c3571ac44127603e404e27a5b21ab4a77380e763d6d5"
+          },
+          {
+            "file": "game/test/overflight-core.test.mjs",
+            "sha256": "f2bfe41ab798e7b2d9ee631cc6ce789d96db4254d0d898576bb798070d6be10f"
+          },
+          {
+            "file": "game/test/overflight-riy.test.mjs",
+            "sha256": "ad2392e0d54bb928102f326ee5b0ff50a4420eb380098e5146d0529e58fbe530"
+          },
+          {
+            "file": "game/test/overflight-balance.test.mjs",
+            "sha256": "44666b62b512de49345bac8c6677b44656723b4ae8fbb880a420db1fd56c76ea"
+          },
+          {
+            "file": "game/test/overflight-flight-profile.test.mjs",
+            "sha256": "8c92b5cfd13d30e065ce0c24aa00ae1178be896e0aa4930a9d002271b75be049"
+          },
+          {
+            "file": "game/test/overflight-raid-variants.test.mjs",
+            "sha256": "45b31f9afb8b6444b8c1f10d433ead9d4c503c561c1e648474a00449d94b0549"
+          },
+          {
+            "file": "game/test/overflight-records.test.mjs",
+            "sha256": "bbef18384c341a4d676bf407ce56905e2a72464e50200b370302f35642e2572c"
+          },
+          {
+            "file": "game/test/overflight-rebalance.test.mjs",
+            "sha256": "9929d95d017233ad54f72f8962f2e0e5d553f42a7b52d1e1ff796b744893bb0e"
+          },
+          {
+            "file": "game/test/overflight-boundary.test.mjs",
+            "sha256": "24e908fd99e9ba359d620dd7151e56796f4b0c6fbf748ed7f44765278c41055e"
+          },
+          {
+            "file": "game/test/overflight-riy-squad.test.mjs",
+            "sha256": "4380273572593e7e13596417d297b05fa1f39f5c81c2234b0052b7516541cee1"
+          },
+          {
+            "file": "game/test/overflight-raid-balance.test.mjs",
+            "sha256": "f6e16b0da465706eeccbdb88793a797acb96d24a84cf48a64621c8c53070cbf8"
+          },
+          {
+            "file": "game/test/overflight-riy-cover.test.mjs",
+            "sha256": "9d38076080c1d1b64a9a78f492c79541aafaaa9ed2c63a0fad448ce9571dff38"
+          }
+        ],
+        "logSha256": "da3269df6350fa2839176cbc0a2767875246b8834322ff29f9c122c8c72c58f5",
+        "logReadError": null,
+        "summary": {
+          "tests": 339,
+          "pass": 339,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": {
+        "bytes": 82537,
+        "sha256": "da3269df6350fa2839176cbc0a2767875246b8834322ff29f9c122c8c72c58f5",
+        "footer": {
+          "tests": 339,
+          "pass": 339,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    },
+    {
+      "artifact": {
+        "id": 12146613026,
+        "bytes": 16115,
+        "sha256": "98a0d37c7d3b7f921ad53bf0eaba1a8ad713ddc686838a3b121df4dba41deea8",
+        "zipCRCVerified": true
+      },
+      "receipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "creator",
+        "startedAt": "2026-10-18T18:39:59.971Z",
+        "finishedAt": "2026-10-18T18:42:20.424Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+          "tree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+            "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+            "files": 44775,
+            "bytes": 3407692200,
+            "aggregateSha256": "63f572484aeb43db819f31a4dfe968ce5197639854cbd564bca3055d4447db84",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/company-studio-build.test.mjs",
+          "game/test/solo-database.test.mjs",
+          "game/test/motion-lab-shared-actor.test.mjs",
+          "game/test/motion-lab-display-host.test.mjs",
+          "game/test/studio-pursuit-editor.test.mjs",
+          "game/test/studio-pursuit-preview.test.mjs",
+          "game/test/fpv-native-pursuit-editor.test.mjs",
+          "game/test/fpv-world-contact-hunt-editor.test.mjs",
+          "game/test/snake-studio-preview.test.mjs",
+          "game/test/snake-studio-launch.test.mjs",
+          "game/test/team-installed-host.test.mjs",
+          "game/test/team-installed-media-results-host.test.mjs",
+          "game/test/asset-studio-return.test.mjs",
+          "game/test/asset-studio-actor-animation.test.mjs",
+          "game/test/asset-studio-preview-motion.test.mjs",
+          "game/test/classic-community-package.test.mjs",
+          "game/test/installed-team-presentation.test.mjs",
+          "game/test/fpv-world-editor-appearance.test.mjs",
+          "game/test/creator-player-navigation.test.mjs",
+          "game/test/creator-storage-retention.test.mjs",
+          "game/test/overflight-project.test.mjs",
+          "game/test/overflight-content.test.mjs",
+          "game/test/overflight-reuse.test.mjs",
+          "game/test/overflight-community.test.mjs",
+          "game/test/overflight-studio.test.mjs",
+          "game/test/overflight-riy-project.test.mjs",
+          "game/test/overflight-riy-community.test.mjs",
+          "game/test/overflight-balance-integration.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/company-studio-build.test.mjs",
+            "sha256": "0bf1fb0c7fbfe2b95fe50db0ac832a8411663b504fd1b2f317f480c4f33f5a72"
+          },
+          {
+            "file": "game/test/solo-database.test.mjs",
+            "sha256": "a7226b30dfd38996098dc00f11c79d0b49411dbc70dcd998b01b693b3c717919"
+          },
+          {
+            "file": "game/test/motion-lab-shared-actor.test.mjs",
+            "sha256": "559cd945cdb848e000e78e9092588ed8da230d2f379c6d4a8e69c4413cbac827"
+          },
+          {
+            "file": "game/test/motion-lab-display-host.test.mjs",
+            "sha256": "f8600a35fca4cbbe365bd0b442b12c277706948719f1a771e39a3bc7ff33f3ee"
+          },
+          {
+            "file": "game/test/studio-pursuit-editor.test.mjs",
+            "sha256": "1d01ede61d47b748e33ad0dfe28be546cedadabe3e1f401d2e554c9ba0c9df64"
+          },
+          {
+            "file": "game/test/studio-pursuit-preview.test.mjs",
+            "sha256": "99e58e4a97af014aabca00d1581f7548adcb2e52db4d226cfbb1f130ae32640f"
+          },
+          {
+            "file": "game/test/fpv-native-pursuit-editor.test.mjs",
+            "sha256": "7b0c0785800d7c0a350d73efe93827f2e8a72649376cd955f01df8e887dbf61e"
+          },
+          {
+            "file": "game/test/fpv-world-contact-hunt-editor.test.mjs",
+            "sha256": "beb358a17f40b6d4b74c5527b7740d6893d2a76d9d3a62d8874c827f3d8a5a57"
+          },
+          {
+            "file": "game/test/snake-studio-preview.test.mjs",
+            "sha256": "24a17b0e4862445a88851988915e7b7f8cbc6acf988a6eef38c147074ecaf685"
+          },
+          {
+            "file": "game/test/snake-studio-launch.test.mjs",
+            "sha256": "32dfa0d8207e74644deb39086ebe6926e025ba8338ff6b420efd9fd9f3025edd"
+          },
+          {
+            "file": "game/test/team-installed-host.test.mjs",
+            "sha256": "aaa063026692a7fff1d1d0e7427af26422acdb0beeb7692dbe9e8bd32d68a222"
+          },
+          {
+            "file": "game/test/team-installed-media-results-host.test.mjs",
+            "sha256": "eb0d9aa2f2e563e81acc65ba1e475dfee1109ae28c46b4d3c93706c53cb091c2"
+          },
+          {
+            "file": "game/test/asset-studio-return.test.mjs",
+            "sha256": "d3ccd3eb84389f43e23dca5fa76e3b9a35c157def704884964a42f9b26c5f5e8"
+          },
+          {
+            "file": "game/test/asset-studio-actor-animation.test.mjs",
+            "sha256": "c14e7f91050cccd4f40d9334e6bc6077485532c808df472ed519faa3e04aa05e"
+          },
+          {
+            "file": "game/test/asset-studio-preview-motion.test.mjs",
+            "sha256": "e1d147d7655adffe0375f286403506437df675ae29f0efd6d9a1b58dffbd5a65"
+          },
+          {
+            "file": "game/test/classic-community-package.test.mjs",
+            "sha256": "587f26bd06305ad8d672310aa59a5a3580f75ef701de85b5f6681eec2a71bd91"
+          },
+          {
+            "file": "game/test/installed-team-presentation.test.mjs",
+            "sha256": "84e4fd5e0d4524c0bca51d608731913ea097694259f5b8c5f1f4b66776a19e10"
+          },
+          {
+            "file": "game/test/fpv-world-editor-appearance.test.mjs",
+            "sha256": "4453747b40122a14a673658ec45b710efb564d641a1154afe50fe755148f4298"
+          },
+          {
+            "file": "game/test/creator-player-navigation.test.mjs",
+            "sha256": "8c8c43f0d27f23c01f8c2982e63ec9e829f02b96686ef5479d51dbd148417781"
+          },
+          {
+            "file": "game/test/creator-storage-retention.test.mjs",
+            "sha256": "80d1bda14f04fc184c1d3908ecb768fd847633bef63567165643154e74064c7a"
+          },
+          {
+            "file": "game/test/overflight-project.test.mjs",
+            "sha256": "2aaa3d5b21a68839429b3bf4b2de00a516c5459c81d4e0d929dcda83d3970697"
+          },
+          {
+            "file": "game/test/overflight-content.test.mjs",
+            "sha256": "607f425ef29fd299a4e064b9229de01b82dd43b9444f607935e8edfe1feaf077"
+          },
+          {
+            "file": "game/test/overflight-reuse.test.mjs",
+            "sha256": "903c32060a406a9238c7e0c20abbae01e85416353e989accbfe18d5a9915e119"
+          },
+          {
+            "file": "game/test/overflight-community.test.mjs",
+            "sha256": "486a5241d87b5797358a9a654381946075d931f97734af6e1702b0ebcacc2df9"
+          },
+          {
+            "file": "game/test/overflight-studio.test.mjs",
+            "sha256": "c23bd48d961291f560574a5c7862deee5efe67f584032595baef94b708c399d2"
+          },
+          {
+            "file": "game/test/overflight-riy-project.test.mjs",
+            "sha256": "46165a51c78d42911a3852ca7ca1379de01a8fe1c87705b121f5376a937832b7"
+          },
+          {
+            "file": "game/test/overflight-riy-community.test.mjs",
+            "sha256": "8f9f272f8a2a086ed063b39d49cd74adc210c52942aaac17ed8376e0ea64bf27"
+          },
+          {
+            "file": "game/test/overflight-balance-integration.test.mjs",
+            "sha256": "896080ff2c02d7370b53d531df99ca3a5c022c938588492fea2a5fa51e4670b4"
+          }
+        ],
+        "logSha256": "06e8d1e3f46775a45c23785d48a6dfe0ded6d67e2dc1e5510ca8ed4c27ef4b45",
+        "logReadError": null,
+        "summary": {
+          "tests": 259,
+          "pass": 259,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": {
+        "bytes": 63557,
+        "sha256": "06e8d1e3f46775a45c23785d48a6dfe0ded6d67e2dc1e5510ca8ed4c27ef4b45",
+        "footer": {
+          "tests": 259,
+          "pass": 259,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    },
+    {
+      "artifact": {
+        "id": 12146279454,
+        "bytes": 5938,
+        "sha256": "b9a6d19638856b76e40a63c54ad29b6356d6515cc1dfe15b5d9c9c8a3d0961f9",
+        "zipCRCVerified": true
+      },
+      "receipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "recordings",
+        "startedAt": "2026-10-18T18:57:40.393Z",
+        "finishedAt": "2026-10-18T18:58:39.134Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+          "tree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+            "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+            "files": 44775,
+            "bytes": 3407692200,
+            "aggregateSha256": "63f572484aeb43db819f31a4dfe968ce5197639854cbd564bca3055d4447db84",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/fpv-endurance-attribution.test.mjs",
+          "game/test/multiplayer-recording.test.mjs",
+          "game/test/terminal-recording-export.test.mjs",
+          "game/test/recording-verification-navigation.test.mjs",
+          "game/test/multiplayer-finale-strategies.test.mjs",
+          "game/test/multiplayer-finale-mistakes.test.mjs",
+          "game/test/fpv-world-record-archive.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/fpv-endurance-attribution.test.mjs",
+            "sha256": "ef690af8bb5dfa2bdc0205b6907b7d4f665a8ab187696a5951c383553b194d13"
+          },
+          {
+            "file": "game/test/multiplayer-recording.test.mjs",
+            "sha256": "087ef2aabe96642982cb26074441eebfda3675841b29d35f8af62ea3c56a2ae9"
+          },
+          {
+            "file": "game/test/terminal-recording-export.test.mjs",
+            "sha256": "e54c69dbee7aa2122e1c1a091504528317823ac2b482b075cfc549b455a38afb"
+          },
+          {
+            "file": "game/test/recording-verification-navigation.test.mjs",
+            "sha256": "62a2cc959a00f3799bd953b7900fed4d5321489144755001c78478808dcf1a99"
+          },
+          {
+            "file": "game/test/multiplayer-finale-strategies.test.mjs",
+            "sha256": "0b17c4293b0e987c7c72d7d5c8976604153595f1db1df34a97db125ebf0fd8b9"
+          },
+          {
+            "file": "game/test/multiplayer-finale-mistakes.test.mjs",
+            "sha256": "43bc77f509c2ef95c51b4124dea60098bb59186af7c80714390fdfa4f931a9f8"
+          },
+          {
+            "file": "game/test/fpv-world-record-archive.test.mjs",
+            "sha256": "eb7b3f7f713198e46327386654261f3854c7fc5b255bd9ef0a2ebeb5d98b404e"
+          }
+        ],
+        "logSha256": "4fc4d0e72b13e97797f2cf9c769f0ce90de1def1484e4de85636e03b88a1d8b0",
+        "logReadError": null,
+        "summary": {
+          "tests": 81,
+          "pass": 81,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": {
+        "bytes": 20966,
+        "sha256": "4fc4d0e72b13e97797f2cf9c769f0ce90de1def1484e4de85636e03b88a1d8b0",
+        "footer": {
+          "tests": 81,
+          "pass": 81,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    },
+    {
+      "artifact": {
+        "id": 12146093035,
+        "bytes": 24361,
+        "sha256": "526a1fe80cdb395faec38316751b8206c196f7c86d52e73fd17174405ae43784",
+        "zipCRCVerified": true
+      },
+      "receipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "presentation",
+        "startedAt": "2026-10-18T18:34:40.937Z",
+        "finishedAt": "2026-10-18T18:35:59.355Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+          "tree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+            "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+            "files": 44775,
+            "bytes": 3407692200,
+            "aggregateSha256": "63f572484aeb43db819f31a4dfe968ce5197639854cbd564bca3055d4447db84",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/actor-animation-budget.test.mjs",
+          "game/test/industrial-arcade.test.mjs",
+          "game/test/industrial-material-sample.test.mjs",
+          "game/test/industrial-review-motion.test.mjs",
+          "game/test/industrial-encounter-audio.test.mjs",
+          "game/test/shared-encounter-audio.test.mjs",
+          "game/test/hunt-overhead-art.test.mjs",
+          "game/test/classic-snake-presentation.test.mjs",
+          "game/test/defeat-presentation-host.test.mjs",
+          "game/test/field-kit-adoption.test.mjs",
+          "game/test/presentation-host.test.mjs",
+          "game/test/actor-atlas-runtime.test.mjs",
+          "game/test/actor-appearance-lease.test.mjs",
+          "game/test/industrial-soldier-roster.test.mjs",
+          "game/test/industrial-machinery.test.mjs",
+          "game/test/industrial-native-vehicles.test.mjs",
+          "game/test/industrial-environment-production.test.mjs",
+          "game/test/industrial-native-soldiers.test.mjs",
+          "game/test/industrial-soldier-debris.test.mjs",
+          "game/test/classic-catch-audio.test.mjs",
+          "game/test/enemy-artwork-preferences.test.mjs",
+          "game/test/classic-presentation.test.mjs",
+          "game/test/combat-presentation.test.mjs",
+          "game/test/audio.test.mjs",
+          "game/test/published-audio.test.mjs",
+          "game/test/coop-view-presentation.test.mjs",
+          "game/test/fpv-world-textures.test.mjs",
+          "game/test/fpv-objective-labels.test.mjs",
+          "game/test/fpv-regional-library-labels.test.mjs",
+          "game/test/industrial-environments.test.mjs",
+          "game/test/attempt-appearance.test.mjs",
+          "game/test/capture-presentation-session.test.mjs",
+          "game/test/team-presentation-attempt.test.mjs",
+          "game/test/classic-environment-renderer.test.mjs",
+          "game/test/fpv-industrial-environments.test.mjs",
+          "game/test/capture-environment-painter.test.mjs",
+          "game/test/actor-defeat-presentation.test.mjs",
+          "game/test/overflight-renderer.test.mjs",
+          "game/test/overflight-trial-report.test.mjs",
+          "game/test/team-duel-audio-qualification.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/actor-animation-budget.test.mjs",
+            "sha256": "3f50c0741bf1ace0f527ee2dd78fdbfbb848ba227c16ec6abc597515a028e10c"
+          },
+          {
+            "file": "game/test/industrial-arcade.test.mjs",
+            "sha256": "28a0de60076066c81938cfcacc63d2ae3f07ff6667cafecce137daae2bc49e0f"
+          },
+          {
+            "file": "game/test/industrial-material-sample.test.mjs",
+            "sha256": "abf6527296e13abe51794fe94f4c22639d220e44b0aab82db93c2cacd8496c65"
+          },
+          {
+            "file": "game/test/industrial-review-motion.test.mjs",
+            "sha256": "b08bcba06164389dbe3fbababf029e8addcdf6f36faa250b287e3e2e70943e87"
+          },
+          {
+            "file": "game/test/industrial-encounter-audio.test.mjs",
+            "sha256": "15f740da3e69e823234004e43fdf4eabfd2f46b4df7134c9debde5d2f0039a5f"
+          },
+          {
+            "file": "game/test/shared-encounter-audio.test.mjs",
+            "sha256": "d199f8cd98ff0b9bc2778850b6a5bb04fd88fa1c63ee3e42e158951fef817fc5"
+          },
+          {
+            "file": "game/test/hunt-overhead-art.test.mjs",
+            "sha256": "c692ac5e42a86ee263d3c8cc47b0db1c0f65e9547f3906be463f0b6d9b39c0b0"
+          },
+          {
+            "file": "game/test/classic-snake-presentation.test.mjs",
+            "sha256": "66eadfbe2b6041899e8427ec5d117a5e8c8483439943b2671926505623264505"
+          },
+          {
+            "file": "game/test/defeat-presentation-host.test.mjs",
+            "sha256": "c14df7b5a50958eeef7fc461aedbc01b22f0179a96897cf5f6c2b08157148b2e"
+          },
+          {
+            "file": "game/test/field-kit-adoption.test.mjs",
+            "sha256": "0bc9fdbc254d42b5c7a7cb18622e3f06e77e28953b7d709221e4c696195dc2bc"
+          },
+          {
+            "file": "game/test/presentation-host.test.mjs",
+            "sha256": "84d839f76117711b346277d6359f6f9cbbd78018d800e3ec9cff9239b2cecd6e"
+          },
+          {
+            "file": "game/test/actor-atlas-runtime.test.mjs",
+            "sha256": "58a928727573fab4c8d654dafa3c0750b776cdaa4610a5907e35ddd3eb454677"
+          },
+          {
+            "file": "game/test/actor-appearance-lease.test.mjs",
+            "sha256": "eaecf2f911c71a2eb6149e26a22a107be65ece016f4efb013123b4fe5cea2a32"
+          },
+          {
+            "file": "game/test/industrial-soldier-roster.test.mjs",
+            "sha256": "ec45627627843b71ab7e11b2fcaaadf40355131c7c0754ad305f774c66d4441f"
+          },
+          {
+            "file": "game/test/industrial-machinery.test.mjs",
+            "sha256": "a0267e21afff1bf990caa8aa448bfdd0f21b9f569c124be176c257327ab796bc"
+          },
+          {
+            "file": "game/test/industrial-native-vehicles.test.mjs",
+            "sha256": "ab25b735f27e2f8da8707419569d826e73c9a1a1b7a241473be8c3902f34deb6"
+          },
+          {
+            "file": "game/test/industrial-environment-production.test.mjs",
+            "sha256": "aa2d8f0e96d9d9bc14990a33acc34f3ef07b43f1194acce788b490bd2ed2bd47"
+          },
+          {
+            "file": "game/test/industrial-native-soldiers.test.mjs",
+            "sha256": "b0fdadd6f7d596bc1351de7ad9994acb8be6e49bff1c4a8edd571ef581ea62d5"
+          },
+          {
+            "file": "game/test/industrial-soldier-debris.test.mjs",
+            "sha256": "338157f0796864631877f86265481335787d81885644c7c80b13142994dbbe68"
+          },
+          {
+            "file": "game/test/classic-catch-audio.test.mjs",
+            "sha256": "8e68f9559a6d0e002b3fed0eab643632c4950ae6cc2aa0cda09299c56454ae99"
+          },
+          {
+            "file": "game/test/enemy-artwork-preferences.test.mjs",
+            "sha256": "212ad8b5a419cce8d32602f1ea56c41cc32a12c9018ece02002d9c62fcb86a94"
+          },
+          {
+            "file": "game/test/classic-presentation.test.mjs",
+            "sha256": "09be6567dcf9f7c2b1317032f5fa7f294b3ac8eeae5de4d00a17cce9aa5e0ef0"
+          },
+          {
+            "file": "game/test/combat-presentation.test.mjs",
+            "sha256": "95f4acbc7564b9e31d667e8bc42a564fd59157678c2026f4be142be18f720d95"
+          },
+          {
+            "file": "game/test/audio.test.mjs",
+            "sha256": "11aa9d355eda746fe0505e48c19d18b6af31002ae89c0c51880e6a180528852e"
+          },
+          {
+            "file": "game/test/published-audio.test.mjs",
+            "sha256": "d7b8101f4823e2bb91b5ec1f28ec743ac541b9921db5c33bb31f272992d8a677"
+          },
+          {
+            "file": "game/test/coop-view-presentation.test.mjs",
+            "sha256": "fa210593f20f280d0fa70e99fb8e29abb895b06c114eee21ed41fab4ff47eec8"
+          },
+          {
+            "file": "game/test/fpv-world-textures.test.mjs",
+            "sha256": "53a9c43ea86e02bac74ae297d40d410293946ff2e598732e92d2eeed373425a9"
+          },
+          {
+            "file": "game/test/fpv-objective-labels.test.mjs",
+            "sha256": "28f553bfcc7e19f98c741d982caf968ded673ab89bac09cd4bc331bfc1f417a5"
+          },
+          {
+            "file": "game/test/fpv-regional-library-labels.test.mjs",
+            "sha256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272"
+          },
+          {
+            "file": "game/test/industrial-environments.test.mjs",
+            "sha256": "0b52bc492b1ea6d104935143587a33b79dc558ab3659d03dde873e1fb206917e"
+          },
+          {
+            "file": "game/test/attempt-appearance.test.mjs",
+            "sha256": "6b049409d61e87190199018f83839ebd2b783f3424a635b5e2c4ef9b1dc12206"
+          },
+          {
+            "file": "game/test/capture-presentation-session.test.mjs",
+            "sha256": "9ee4dcec64e1a3452882aa56ad5973e8d58aa74786e1ce358f12eeee5aff596f"
+          },
+          {
+            "file": "game/test/team-presentation-attempt.test.mjs",
+            "sha256": "7f398ece644d396ea302b44396935e57c79141c2ca0da06635422b61ced5b8c2"
+          },
+          {
+            "file": "game/test/classic-environment-renderer.test.mjs",
+            "sha256": "c7c85a751876afb28a8eaa09e98936a81895cfe88b595566aaf9f15626570229"
+          },
+          {
+            "file": "game/test/fpv-industrial-environments.test.mjs",
+            "sha256": "dd5686cc12cf8c30e8fa5a1cc956015cb90766df8bf00994f85702d4a330c495"
+          },
+          {
+            "file": "game/test/capture-environment-painter.test.mjs",
+            "sha256": "95c220d6bbafe0873708d9a930e137b06f84b5c8dda7936d5c3d401912b81427"
+          },
+          {
+            "file": "game/test/actor-defeat-presentation.test.mjs",
+            "sha256": "e94a7acb426689dedf78523e99d24066b120bb6723a8cb5cce6111cb741543f5"
+          },
+          {
+            "file": "game/test/overflight-renderer.test.mjs",
+            "sha256": "280fd06eda5bb1525c1c860496cb238714312d5764bcd3c6dbe2b934ea18ad49"
+          },
+          {
+            "file": "game/test/overflight-trial-report.test.mjs",
+            "sha256": "88b39b0be4b0587e45d3fa82d5dc38896393dceab235c25ddfe40e6943c2b673"
+          },
+          {
+            "file": "game/test/team-duel-audio-qualification.test.mjs",
+            "sha256": "44dc0184c5f98e50ca8cf6ac492e2af2721ffc7e4bdfa5618e1615366840e4e6"
+          }
+        ],
+        "logSha256": "8fcdd442b30b99188afc0087af5aff2e1735b3262da6da557aac732b93d94be4",
+        "logReadError": null,
+        "summary": {
+          "tests": 402,
+          "pass": 402,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": {
+        "bytes": 100261,
+        "sha256": "8fcdd442b30b99188afc0087af5aff2e1735b3262da6da557aac732b93d94be4",
+        "footer": {
+          "tests": 402,
+          "pass": 402,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        }
+      }
+    }
+  ],
+  "candidate": {
+    "artifact": {
+      "id": 12147615801,
+      "bytes": 1008125,
+      "sha256": "ad234f17a6318abc7b256fa8c37c4ca2841ef32a6e0fbaa6adefbb7220f658f9",
+      "zipCRCVerified": true
+    },
+    "receipt": {
+      "admission": {
+        "editions": [
+          {
+            "distributionSha256": "020af26a005348c8aa5955917116f951b2cc2d21ec3808c6eee2c5b51b1b5ec7",
+            "files": 1060,
+            "id": "droneaid-community",
+            "sourceArchiveSha256": "4a36b0bb45f0a584bf8b595566119a9ceff9b95a54365094b1d961d9b75c459c",
+            "totalBytes": 32596981
+          },
+          {
+            "distributionSha256": "327a2dfd525d92c1e9345bd0b2bdcdd860e363080c3e31e6607ec6ce7edbedbc",
+            "files": 1070,
+            "id": "droneaid-nl-careful-handoff",
+            "sourceArchiveSha256": "4b449fb00eedaf91c255fd62ebad18548a2cf4ff7079977c34d85c4a6b790e0b",
+            "totalBytes": 34820298
+          },
+          {
+            "distributionSha256": "55087c8370f8519e79d459986a552675ccbbc807d24cf72b5672aec5dc81e721",
+            "files": 1138,
+            "id": "droneaid-nl-community",
+            "sourceArchiveSha256": "9a5ae8fa6765475e3dad3f45c6ab60cc88f256e23f4bb354b6a0af162d97f070",
+            "totalBytes": 72206409
+          },
+          {
+            "distributionSha256": "42aaa9df818efe641551db5d882dc30610873f3a096785df9d186fd02304d17f",
+            "files": 1070,
+            "id": "droneaid-nl-makers-together",
+            "sourceArchiveSha256": "efa7fbc2040fa305d61122a851dfd1b54ff7c231e260ec07023520c6f5c385a9",
+            "totalBytes": 34695722
+          },
+          {
+            "distributionSha256": "0a0da82de4159393999946827cd0fe321cb57e009f9393b90ffc91b0e72a6cf7",
+            "files": 1072,
+            "id": "droneaid-nl-parts-in-motion",
+            "sourceArchiveSha256": "39b23bdc1960616a0cf87930580b2a82fd9578df32cf3ab5319411bb646f02bc",
+            "totalBytes": 35213884
+          },
+          {
+            "distributionSha256": "09f861bcfd454ad66fcff3bec59fcc918467e56d8b530e5fe4d1c84f9a4ca9e9",
+            "files": 1070,
+            "id": "droneaid-nl-shared-horizon",
+            "sourceArchiveSha256": "392a2158e58d34fbe319b3b52b3f5d75939aa96cc40e55ea447072fad8c75dba",
+            "totalBytes": 35006704
+          },
+          {
+            "distributionSha256": "e494e01569b8dd804058c53fbb59b3fe83987718da6718cc28cba66199a11ab4",
+            "files": 1070,
+            "id": "droneaid-nl-signals-of-support",
+            "sourceArchiveSha256": "10e75c5ba9302b8e169a8bf785a60ad4818891173e2d3d201bc8cd3a8850d704",
+            "totalBytes": 34807115
+          },
+          {
+            "distributionSha256": "d6206d9c06a686d4762da05caafb1f7d0f3a875d7a72d6cfd642790e4c62dd46",
+            "files": 1070,
+            "id": "droneaid-nl-workshop-lights",
+            "sourceArchiveSha256": "6622d1f3af798ebdb14ff8fdfc7e6d53cb579e39a515ed7b34fac38709ce4b21",
+            "totalBytes": 33505188
+          },
+          {
+            "distributionSha256": "e2c1ce28c067f3d8db03568caf73f3c54bd1cfd138924d300952542aeb1d2045",
+            "files": 1152,
+            "id": "fpv-learning",
+            "sourceArchiveSha256": "03ce1ce69e3de179d353f665d298afab959c0ef722e80a428efe81cf77bf1233",
+            "totalBytes": 41320104
+          },
+          {
+            "distributionSha256": "80ec30e71d3e2246064806c46f5edcb4c721852ea025ade2f397b58f06bce717",
+            "files": 1096,
+            "id": "social-drone-ua",
+            "sourceArchiveSha256": "7409c3dd4f77054f563126c8881b74acd41c39e950a2d06e04e74050cf2db42f",
+            "totalBytes": 40117997
+          },
+          {
+            "distributionSha256": "f4d057445a443981ced0c5ad1f950f15729805e067c6d263ba3a42775ca94712",
+            "files": 1127,
+            "id": "ukraine-culture",
+            "sourceArchiveSha256": "2043663914829ce3be773566f5928e509b2535e005db12c19a4af36b5dfbbeaf",
+            "totalBytes": 50207416
+          },
+          {
+            "distributionSha256": "df38dda8a0ae171159bf43cabc5056c679473c1f1dc681a59ba5aefc73b4427e",
+            "files": 1076,
+            "id": "victory-drones",
+            "sourceArchiveSha256": "0d8e62ce3fd82988195dc001f325cfd2edc6467a50b9c8a32f227e228d131dde",
+            "totalBytes": 29800509
+          }
+        ],
+        "format": "revealline-editions-admission.v1",
+        "publicEligible": false,
+        "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+        "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+        "status": "verified-candidate-members",
+        "version": "v0.151.1",
+        "zipMembersVerified": true
+      },
+      "envelopeSha256": "9b335b6b4b59ff72e00413cf013aa7fa5d00cd3ebb07d38731d2193875279447",
+      "format": "revealline-edition-candidate-verification.v1",
+      "presentationReceipts": [
+        {
+          "authoredPresentationSha256": "37badc3a8660b647430f7611aa215cbb5789b05cbeaf2ca46ef0f283e59e3df4",
+          "editionId": "droneaid-community"
+        },
+        {
+          "authoredPresentationSha256": "eb0891a6a26235ede2a5fa078cfa619f6f41d97064e04a13d8630c19cc9a4226",
+          "editionId": "droneaid-nl-careful-handoff",
+          "retained": [
+            {
+              "authoredPresentationSha256": "fb9dafae437c37905dcdd07cec0f67b53ead801a8894c2bf2070309dfd16a913"
+            },
+            {
+              "authoredPresentationSha256": "2cb54a68ee115af048b210d130af7418d44307adbeb69ab54dbc4fc0418cacd7"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "d141c4a6b967be2089c08efb94c01e4560b51224a64d4ff076c039e2b8621a22",
+          "editionId": "droneaid-nl-community",
+          "retained": [
+            {
+              "authoredPresentationSha256": "13bf4f80b1b055d9fb5abdc137dfc93b94fe4ba55072104e697fb29615374679"
+            },
+            {
+              "authoredPresentationSha256": "3445135910a80ceb5b5fdb862c431ead7db00a09631ede2ec28426119d907f67"
+            },
+            {
+              "authoredPresentationSha256": "389459b2b3b2a5b330a053b9eaf11918878a8f19688e035cd19b641744f98c85"
+            },
+            {
+              "authoredPresentationSha256": "8b53a415ac9b76ebd25aca2ac7b67464f026e43e39185970c59501e6f918e3cb"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "4bd4f5e45704594aba28f8e2f10d95189d5deb3d93b3f7e2cfa64c38e73ba384",
+          "editionId": "droneaid-nl-makers-together",
+          "retained": [
+            {
+              "authoredPresentationSha256": "609db6d6c7ea54120531b53b2b5c54b26d1484306195a426c39bd40d5236b478"
+            },
+            {
+              "authoredPresentationSha256": "8c7d12be0f28ca874e88bbb453ab06fc947245681e8a4fc851b0c70a88314488"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "c90ee45a84f94ff7bff7ceeda4876ffda8a4eb286f86f26dda04adb81241d58f",
+          "editionId": "droneaid-nl-parts-in-motion",
+          "retained": [
+            {
+              "authoredPresentationSha256": "0b402f348a0d84f534c5db803d731394f7120160d7fd9c538887a4361a20ae40"
+            },
+            {
+              "authoredPresentationSha256": "e8c32e78d0ef5bf6f09a08cbe2ccaf244ec4917c877bce69c2fdf9cb3f38673b"
+            },
+            {
+              "authoredPresentationSha256": "375300b9464b5a567c7cc8888e9a46f6f3e00cb01de0a25bf5cf2eff3c3b5f01"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "5862e6c5d31ddfba52ea647b5ed75a162ae37b0b768159e70ae201bcdb93c193",
+          "editionId": "droneaid-nl-shared-horizon",
+          "retained": [
+            {
+              "authoredPresentationSha256": "1c5fc1701fb224c9a548d1540b19e2f8c893b43c6bc81d2b91a0bb65d3bcf0a6"
+            },
+            {
+              "authoredPresentationSha256": "fb225362d153cdd9af4d0421e7e7905521bb0d926cab7557985d40982924e429"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "9f83cc366d579118503b20bf2ebc7ce9267e6b7533b6293ab44866584b6d9090",
+          "editionId": "droneaid-nl-signals-of-support",
+          "retained": [
+            {
+              "authoredPresentationSha256": "013849c9507447451ca1f9a58d845da2d44436dbf776b231162ab8715cc61863"
+            },
+            {
+              "authoredPresentationSha256": "048f59ae3ab8452c1e2f387a15dc10baad8d88c921663e2c576e7ad2fffa2b44"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "8793606f36cf35c064304b63362d018b79b8d99a482361e6b6be2f70195a45dc",
+          "editionId": "droneaid-nl-workshop-lights",
+          "retained": [
+            {
+              "authoredPresentationSha256": "4e9e2e8ebc38f4bf6ae0b5a06144c103947cb90704b6646800bec534bcbf5c14"
+            },
+            {
+              "authoredPresentationSha256": "115d034320ff3efb161abd00b5886485bd92c7a161d405e5f8cb384263480b70"
+            },
+            {
+              "authoredPresentationSha256": "f4882beacf8fc6bb07aaee36b818541df42b08c0e64ffcc461a2744f6503d302"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "5fe07f863586800fcd47eadcc815871dc200939ec6d4f7a5f915108749a569f2",
+          "editionId": "fpv-learning",
+          "retained": [
+            {
+              "authoredPresentationSha256": "2b0c8781faf178c7e7952018a07ad290af67cf32217eedcbeeacf9a42c732ace"
+            },
+            {
+              "authoredPresentationSha256": "a34183de94677f3e2d20a88062a3643778723a34b53a57c606eb667740e9d70c"
+            },
+            {
+              "authoredPresentationSha256": "2ccf3e4f9b9066359219e3fdcd2dad32366f9ea3e2cf12d1b16c0de09d36c604"
+            },
+            {
+              "authoredPresentationSha256": "089b0801b048970f1920e76b03ceda92f389e256c5e38e45c5e25abeebe04f0d"
+            },
+            {
+              "authoredPresentationSha256": "5c23ab5e0b883f17e9de0df3a5b8b41010a86da1c495969c6e0efcc96658bdea"
+            },
+            {
+              "authoredPresentationSha256": "108c4348f0a40c6e6b48387a9fa81d95161f006f842d1239e3048986c29696b2"
+            },
+            {
+              "authoredPresentationSha256": "ace3662d4631d798e58b5eeea22d4f0d2c3fc8bf538f6a7a47bcb54ae6938fd0"
+            },
+            {
+              "authoredPresentationSha256": "d5188109991148940036debb16fabe91d600104b3e82d4670efa5aed5dabfa16"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "30195834af82ffe3e3209407545763a67aa8cb3e04ad2a235cc0592cfa7e46fc",
+          "editionId": "social-drone-ua",
+          "retained": [
+            {
+              "authoredPresentationSha256": "ef26881b40bfc01a8ac1ef4ce5d746d11b253a64d2c44316dde458659f541195"
+            },
+            {
+              "authoredPresentationSha256": "7a5367fe55d1b22621662ac29d4c1224a1635fa0b40d0a8cb6e24d620b19a826"
+            },
+            {
+              "authoredPresentationSha256": "3a82bd8aa3306adf9f02be6f56945985b7e54e1606fc3156a2271ba19bbd16a6"
+            },
+            {
+              "authoredPresentationSha256": "985d7722d69526a98abc1d7026c2279ace2a64443362dcc861aab6cd92fb608b"
+            },
+            {
+              "authoredPresentationSha256": "b082d3766168bd305e235adad284813b2a8578de5de009f8ca985aaf1a2e5bd6"
+            },
+            {
+              "authoredPresentationSha256": "9ae68b77e05e8b2a0dc934510e080af89ee5223a3304a0197c3b53a2e61af1b0"
+            },
+            {
+              "authoredPresentationSha256": "943441d44205dfced2e89cf47738d2fd6cc22e886cbd0fbea5bb24d77177e0de"
+            },
+            {
+              "authoredPresentationSha256": "776e569d90c869e8cdf96beb046d21d9f5439fde57c9fbe991119e4029e0dcd6"
+            },
+            {
+              "authoredPresentationSha256": "95c2f3c78f07732c3d804e042b5c5a1bb56d9c38f79330b1d09135f46affecd5"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "2dd69ecc1f96478c028aa621629aa6555c1175d540783b05a38320ed86074f29",
+          "editionId": "ukraine-culture",
+          "retained": [
+            {
+              "authoredPresentationSha256": "3e868c83c369a31d78e3a551e8b83b6179bba80543dca9df19cbb73566deb295"
+            },
+            {
+              "authoredPresentationSha256": "430cb1cb0c5231f9c42dc9fd9d2b0e55b35a49c676e09c0df8effa17f9a396b2"
+            },
+            {
+              "authoredPresentationSha256": "95915f9348a50bb93f6c5d234624f85fc1a758f59d1db2bb4f804876257a3c25"
+            },
+            {
+              "authoredPresentationSha256": "004d6874394bf5d37967eb841fa0004c4980d40169f7154b425ab3fcdea83e58"
+            },
+            {
+              "authoredPresentationSha256": "b056de12bcb25f16bc3ed5324b5a0e1a7e30f2614a37eb244675ef02a8c2a805"
+            },
+            {
+              "authoredPresentationSha256": "976af38b7451ae581864ff9baef4975cab0c3feb385fa73ea8d3680e43ed5742"
+            },
+            {
+              "authoredPresentationSha256": "c92804d620efc050f08aacc1428bf20a5517d5f89488daf07abc67c336815e7f"
+            }
+          ]
+        },
+        {
+          "authoredPresentationSha256": "a26b277283688b02459ae3af631b313d0983abebcffba1d5681f4b74a1b3781f",
+          "editionId": "victory-drones",
+          "retained": [
+            {
+              "authoredPresentationSha256": "9685f48ccc6c053c69aebb695a1f31e66e54a839806e8956d816258cc07906d8"
+            },
+            {
+              "authoredPresentationSha256": "abcba1ea9574640497faf043f8caf26a039f1355d34df68f3e2f8546690439b4"
+            },
+            {
+              "authoredPresentationSha256": "afeb4333ec165a3ecbaa01bce74822744e2f56238f7608701284bcbd436638b3"
+            },
+            {
+              "authoredPresentationSha256": "6de52c0aa1ae09a7f9699adb5d73f69c779a5220e003434cb6dfe5c6333bff9f"
+            },
+            {
+              "authoredPresentationSha256": "36e42f75903c47abf1c23da0f22f46b74498284cdf84abd0b5f36b10d5838037"
+            }
+          ]
+        }
+      ],
+      "publicEligible": false,
+      "reproducibleBuilds": 2,
+      "requiredExternalQualification": [
+        "human-artwork-and-brand-review",
+        "human-learning-and-pacing-review",
+        "install-offline-upgrade-rollback-matrix",
+        "performance-and-accessibility-review",
+        "downloaded-release-byte-verification"
+      ],
+      "sourceEligibility": {
+        "assets": 458,
+        "files": 44787,
+        "format": "revealline-public-source-eligibility.v1",
+        "status": "verified"
+      },
+      "sourceRevision": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+      "sourceTree": "f6160d67ad8797fe8050f46dd5e7441b46a2bd33",
+      "version": "v0.151.1"
+    }
+  },
+  "limits": [
+    "This is current-head software/build evidence, not published or physical performance qualification.",
+    "Full candidate archive and optional-flight 27MB artifact were not independently downloaded; provider-side candidate member verification is retained.",
+    "All 1885 Industrial TAP tests passed with no failure/cancel/skip/todo; the eight newly added focused lookup controls are separately retained in Git blob ab09c368951167116b393b04c2899f4e498a70f0.",
+    "Appearance is still incomplete; no merge authorization is implied."
+  ]
+}

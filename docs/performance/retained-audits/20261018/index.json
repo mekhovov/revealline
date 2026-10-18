@@ -140,6 +140,42 @@
       "blob": "7c78ce13fa2f8045bee26e30409163b706f06af0",
       "bytes": 12057,
       "sha256": "18e004b716632dfd76a8d6ec1005cdc45711b4cb5c4c79f4198b2f2476a9445c"
+    },
+    {
+      "path": "missions-demo-team-pass-6d708.json",
+      "blob": "4bf5c7cede2c7328c3ade80b29e51c2371ec0726",
+      "bytes": 104822,
+      "sha256": "6a9470ccb8b23432d24a4d4a33e097807420c3bd090b6c2836595df4436bcfe8"
+    },
+    {
+      "path": "missions-host-198-pass-6d708.json",
+      "blob": "bed0cf0ccb69e2b3ffddf05e75414b8aefe82302",
+      "bytes": 53578,
+      "sha256": "91b2c2c97999662805fbaa4164f0f744efbfec54fbb6c4406f8d560c4d1b3a87"
+    },
+    {
+      "path": "recording-lookup-controls-pass-37e.json",
+      "blob": "ab09c368951167116b393b04c2899f4e498a70f0",
+      "bytes": 14997,
+      "sha256": "9df3123d631c0d75ae1ef87185f5ef610436a1ab1d498c89d76dc9461f13c548"
+    },
+    {
+      "path": "recording-industrial-company-pass-37e.json",
+      "blob": "dcbe4fa110de6e99944f641a263d82802a9ca327",
+      "bytes": 76454,
+      "sha256": "0c0797f510d1b03a4aea7d1a88838d3cfc8442acc8343069d68007cdb4edf33b"
+    },
+    {
+      "path": "soundtrack-checkout-failure-0eef.json",
+      "blob": "6c6465ec4c4ae46eee910c5dd956339d6ceee2b0",
+      "bytes": 15787,
+      "sha256": "1a116e0cd15c035759ee53ade6e3f56257e11b96e440119dc9cf9c3bd0d2a5d1"
+    },
+    {
+      "path": "superseded-source-aggregates-cancelled.json",
+      "blob": "ac88bc31bd1a87192292b6d137a279c3816e02a5",
+      "bytes": 3517,
+      "sha256": "b4ad3bf72a8ab5a0b24a89f1bb4166e19c3b7eaee37efa46ef7701e4bec10ffc"
     }
   ]
 }
