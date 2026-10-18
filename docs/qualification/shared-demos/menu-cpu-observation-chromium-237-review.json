@@ -1,0 +1,227 @@
+{
+  "format": "SharedDemoMenuCPUObservationReviewV1",
+  "created": "2026-10-18T22:27:46.876374+00:00",
+  "diagnosticStatus": "Both clicks succeeded with unchanged3000ms timeout. The original4013ms stall did not recur; this does not repair or supersede failed qualification.",
+  "evidence": [
+    {
+      "path": "docs/qualification/shared-demos/menu-cpu-observation-chromium-237.json",
+      "sha256": "c4a0647c1b0f1c9c24065e7856bb076755ba9ca87859c308d43c3b4576855f83"
+    },
+    {
+      "path": "docs/qualification/shared-demos/menu-cpu-observation-chromium-237-binding.json",
+      "sha256": "4ee1be722ffceed8828c2d2eea6548a776e36c0231d105f2faebe9de64c0fa88"
+    }
+  ],
+  "attempts": [
+    {
+      "stage": "watching",
+      "clickResolved": true,
+      "attemptElapsedMs": 710.0,
+      "profilerStartAcknowledgementDelayMs": 273.0,
+      "profileDurationMicros": 713999,
+      "longTasks": [
+        {
+          "startTime": 4280.800000000745,
+          "duration": 221,
+          "name": "self"
+        },
+        {
+          "startTime": 4626.800000000745,
+          "duration": 57,
+          "name": "self"
+        }
+      ],
+      "nativeProfile": {
+        "path": "docs/qualification/shared-demos/menu-cpu-observation-chromium-237-attempt-1-cpu.json",
+        "sha256": "2f1db22b1dbc347c308672142e8e7c3e5c6e0f2a3b075d89ba7ea88f65833491"
+      },
+      "nativeProfileBytes": 43804,
+      "topApplicationInclusive": [
+        {
+          "micros": 210205,
+          "frame": {
+            "id": 32,
+            "functionName": "",
+            "scriptId": "63",
+            "url": "http://127.0.0.1:8771/game/app.mjs",
+            "lineNumber": 13975,
+            "columnNumber": 23
+          }
+        },
+        {
+          "micros": 209700,
+          "frame": {
+            "id": 33,
+            "functionName": "createCandidateVersusHost",
+            "scriptId": "570",
+            "url": "http://127.0.0.1:8771/game/content-design/versus-host.mjs",
+            "lineNumber": 11,
+            "columnNumber": 41
+          }
+        },
+        {
+          "micros": 203496,
+          "frame": {
+            "id": 34,
+            "functionName": "createContentExecutionCatalog",
+            "scriptId": "341",
+            "url": "http://127.0.0.1:8771/game/content-design/execution.mjs",
+            "lineNumber": 10,
+            "columnNumber": 45
+          }
+        },
+        {
+          "micros": 190268,
+          "frame": {
+            "id": 43,
+            "functionName": "campaignKey",
+            "scriptId": "258",
+            "url": "http://127.0.0.1:8771/game/library.mjs",
+            "lineNumber": 124,
+            "columnNumber": 27
+          }
+        },
+        {
+          "micros": 164943,
+          "frame": {
+            "id": 44,
+            "functionName": "normalizedLevel",
+            "scriptId": "260",
+            "url": "http://127.0.0.1:8771/game/core/level.mjs",
+            "lineNumber": 417,
+            "columnNumber": 31
+          }
+        },
+        {
+          "micros": 116834,
+          "frame": {
+            "id": 45,
+            "functionName": "validateLevel",
+            "scriptId": "260",
+            "url": "http://127.0.0.1:8771/game/core/level.mjs",
+            "lineNumber": 274,
+            "columnNumber": 29
+          }
+        },
+        {
+          "micros": 76220,
+          "frame": {
+            "id": 54,
+            "functionName": "foundationGeometry",
+            "scriptId": "394",
+            "url": "http://127.0.0.1:8771/game/core/foundations.mjs",
+            "lineNumber": 12,
+            "columnNumber": 34
+          }
+        }
+      ]
+    },
+    {
+      "stage": "practice",
+      "clickResolved": true,
+      "attemptElapsedMs": 253.0,
+      "profilerStartAcknowledgementDelayMs": 117.0,
+      "profileDurationMicros": 252039,
+      "longTasks": [],
+      "nativeProfile": {
+        "path": "docs/qualification/shared-demos/menu-cpu-observation-chromium-237-attempt-2-cpu.json",
+        "sha256": "75ed4743a03874f99f2bf90d4d4f6e53fbd0ddd3634867aca5c09ca3a2dfb775"
+      },
+      "nativeProfileBytes": 17120,
+      "topApplicationInclusive": [
+        {
+          "micros": 21795,
+          "frame": {
+            "id": 74,
+            "functionName": "update",
+            "scriptId": "599",
+            "url": "http://127.0.0.1:8771/game/ui/menu-scenes.mjs",
+            "lineNumber": 156,
+            "columnNumber": 17
+          }
+        },
+        {
+          "micros": 19170,
+          "frame": {
+            "id": 77,
+            "functionName": "prepare",
+            "scriptId": "650",
+            "url": "http://127.0.0.1:8771/game/ui/menu-scene-motion.mjs",
+            "lineNumber": 305,
+            "columnNumber": 18
+          }
+        },
+        {
+          "micros": 19170,
+          "frame": {
+            "id": 76,
+            "functionName": "setRunning",
+            "scriptId": "650",
+            "url": "http://127.0.0.1:8771/game/ui/menu-scene-motion.mjs",
+            "lineNumber": 421,
+            "columnNumber": 14
+          }
+        },
+        {
+          "micros": 19170,
+          "frame": {
+            "id": 75,
+            "functionName": "syncMotion",
+            "scriptId": "599",
+            "url": "http://127.0.0.1:8771/game/ui/menu-scenes.mjs",
+            "lineNumber": 233,
+            "columnNumber": 21
+          }
+        },
+        {
+          "micros": 15649,
+          "frame": {
+            "id": 67,
+            "functionName": "openHome",
+            "scriptId": "176",
+            "url": "http://127.0.0.1:8771/game/ui/game-shell.mjs",
+            "lineNumber": 254,
+            "columnNumber": 19
+          }
+        },
+        {
+          "micros": 13093,
+          "frame": {
+            "id": 29,
+            "functionName": "",
+            "scriptId": "464",
+            "url": "http://127.0.0.1:8771/game/ui/media-preparation.mjs",
+            "lineNumber": 52,
+            "columnNumber": 14
+          }
+        },
+        {
+          "micros": 11830,
+          "frame": {
+            "id": 30,
+            "functionName": "",
+            "scriptId": "141",
+            "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+            "lineNumber": 579,
+            "columnNumber": 12
+          }
+        }
+      ]
+    }
+  ],
+  "findings": [
+    "The first sampled attempt included a221ms long task with about210ms cumulative application work in asynchronous unified mission-library construction: createCandidateVersusHost \u2192 createContentExecutionCatalog \u2192 campaignKey \u2192 normalizedLevel/validateLevel \u2192 foundationGeometry/compileMapGeometry.",
+    "The second attempt had no recorded long task and completed in253ms. No4second owner was identified.",
+    "Profiler.start acknowledgements arrived273ms and117ms after Node attempt timestamps. The profile itself began before the acknowledgement; without startup-spanning capture the exact relationship to earlier work is uncertain.",
+    "The next authorized observation moves sampling before navigation, keeping the click3s and the same flow unchanged."
+  ],
+  "limitations": [
+    "CPU sampling and read-only observers perturb scheduling; no causal claim is made from a non-reproducing run.",
+    "Native profiles are43,804 and17,120bytes; no full-browser trace or large video was recorded.",
+    "All sources and HEAD remained unchanged; browser and preview both closed. No production/durable harness changes or pageerror filtering."
+  ],
+  "functionalChecks": 3,
+  "pageErrors": [],
+  "browserCloseCompleted": true,
+  "previewClosed": true
+}

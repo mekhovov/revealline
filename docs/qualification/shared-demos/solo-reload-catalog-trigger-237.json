@@ -1,0 +1,118 @@
+{
+  "format": "SharedDemoSoloReloadCatalogTriggerAuditV1",
+  "created": "2026-10-18T22:42:22.356740+00:00",
+  "scope": "Read-only source and retained profile audit. No browser or test launched; no production or harness edits. Line references bind to the captured f970 HEAD, not concurrent working-tree edits.",
+  "head": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+  "runtimeFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+  "sourceHashes": {
+    "game/app.mjs": "04c1a8594312923bb7ed4eae173e4d87d142464f1cff2675671173b169ef1c35",
+    "game/ui/game-shell.mjs": "37c667a50de294c07a14031e095231475f5d794d3c595c62a5a8ca5ffc37cd63",
+    "game/ui/journey-collection.mjs": "3291388d1dc0678212d3fa9ac05f4ccdd74daaac61e768d8fc4e1798296c9f79",
+    "game/mission-library/played-level-link.mjs": "17ff6a98efab130f4ab2179a3d6e28b75b181e8d060f8ba9d764478b19deb9df",
+    "game/mission-library/handoff.mjs": "787ae1c86b81f431b6c75e9904d852cefd3039648c6ab6a2c6a31fd4fc627659",
+    "game/mission-library/accepted-played-mission.mjs": "4f826916091074a15b1c6f20c832ca67b5a2d00f78d8b70464669b21c7fb2d90",
+    "game/content-design/route-loader.mjs": "03d08de39cb888795da30b1f02c148a26a8a50fd4e7ddf06264bf866fbf93762",
+    "game/content-design/published-journey.mjs": "432e63793b02cf074b695020c84e9ef770c8ab215071683c4708214a688e3d00",
+    "game/content-design/solo-route-host.mjs": "5083ffbf16ecf1a4f33084cd3adaae4feae2a64fb487e1155d6417db4f18e092",
+    "game/test/solo-share-link-host.test.mjs": "b18d60939da1bfe03c1298b1d0c7fec0aff25f3e6e6534accda00e5c6dac7fe5",
+    "game/test/mission-library-return-intent-host.test.mjs": "11698dfc09faea8c8ae08dbe2a1c3bfe927c83b69b65b06c6e752d3b09ec491c"
+  },
+  "profileEvidence": {
+    "path": "docs/qualification/shared-demos/menu-startup-cpu-observation-chromium-237-whole-cpu.json",
+    "sha256": "0d7565657e55b9547d99f04e17564402515d5953445b08bdc14a7ef5f18d3822",
+    "sampledSynchronousCallStack": [
+      {
+        "nodeId": 890,
+        "functionName": "getUnifiedMissionLibrary",
+        "scriptId": "63",
+        "url": "http://127.0.0.1:8771/game/app.mjs",
+        "lineNumber": 13934,
+        "columnNumber": 41
+      },
+      {
+        "nodeId": 889,
+        "functionName": "",
+        "scriptId": "63",
+        "url": "http://127.0.0.1:8771/game/app.mjs",
+        "lineNumber": 15462,
+        "columnNumber": 11
+      },
+      {
+        "nodeId": 259,
+        "functionName": "",
+        "scriptId": "63",
+        "url": "http://127.0.0.1:8771/game/app.mjs",
+        "lineNumber": -1,
+        "columnNumber": -1
+      },
+      {
+        "nodeId": 1,
+        "functionName": "(root)",
+        "scriptId": "0",
+        "url": "",
+        "lineNumber": -1,
+        "columnNumber": -1
+      }
+    ],
+    "conclusion": "getUnifiedMissionLibrary was called from the incoming libraryHandoff boot IIFE at app.mjs:15463. Its later expensive async continuation has that same creation site. This rules out collection refresh as the initiating caller for this retained profile."
+  },
+  "triggerChain": [
+    {
+      "source": "game/ui/game-shell.mjs:804",
+      "action": "Initial Home calls openHome; openHome calls the supplied pause(true)."
+    },
+    {
+      "source": "game/app.mjs:10999",
+      "action": "Unstarted/terminal pause calls updatePlayedLevelLink({discoverClassic:true})."
+    },
+    {
+      "source": "game/app.mjs:6453",
+      "action": "Safe optional Classic discovery validates the accepted current mission through acceptedClassicMission; playedLevelHref derives its exact public mission-library link."
+    },
+    {
+      "source": "game/app.mjs:6525",
+      "action": "history.replaceState publishes that link into the address bar, including library-mission. It does not navigate, but subsequent page.reload uses that current URL."
+    },
+    {
+      "source": "game/app.mjs:639",
+      "action": "Next boot reads the now-present library-mission."
+    },
+    {
+      "source": "game/app.mjs:15451",
+      "action": "Incoming mission boot awaits getUnifiedMissionLibrary before exact lookup/launch. The profile contains this direct parent stack."
+    }
+  ],
+  "notAnEagerGallery": {
+    "source": "game/ui/journey-collection.mjs",
+    "finding": "attachJourneyCollection constructs UI without calling getState. getState is called only by returned open(), and app invokes open from the explicit collection button."
+  },
+  "avoidableWork": {
+    "finding": "Incoming Classic selection currently builds the full unified catalog before looking up the exact Classic row; raw source mode compiles the default Solo Journey and Versus preview although neither is the requested Classic runtime. This is an identified work-expansion opportunity, not a proved owner of the earlier4013ms stall.",
+    "measuredFinalReloadOnlyMs": {
+      "unifiedLibrary": 1216.05,
+      "createSoloRouteHost": 1067.731,
+      "compileContentProject": 921.267,
+      "inspectMissionTopology": 641.492,
+      "createCandidateVersusHost": 148.222
+    },
+    "sourceVsPublication": "Raw route-loader has SHIPPED_ROUTE_SNAPSHOT=null. Built distributions substitute verified published navigation, and publishedRouteViews avoids this raw full-compilation branch; do not transfer source-preview timing directly to shipped output.",
+    "safeOptimizationBoundary": "A canonical installed-Classic fast path would need to reuse exact native indexed/installed validation and guarded launch, and fall back to ordinary chooser for unavailable content. Do not use shape-only or current-selected-ID shortcuts, cache partial catalogs as complete, or bypass progress/installation rules."
+  },
+  "readiness": {
+    "readyLine": 15443,
+    "handoffLine": 15451,
+    "finding": "Public ready and inert removal happen before awaited incoming handoff and exact-return opening. This permits the existing deliberate focus/input cancellation contract; moving the entire ready call after handoff without another visible-input phase would regress that contract.",
+    "regressionContract": "game/test/mission-library-return-intent-host.test.mjs: native incoming Solo handoff yields to newer focus/hidden while metadata waits; overlay-menu must be visible/focusable."
+  },
+  "provenance": {
+    "optionalClassicDiscoveryCommit": "b893d46617",
+    "addressBarReplacementCommit": "3b266a8013",
+    "incomingHandoffBootBranchCommit": "4cdcd8ad29",
+    "baseIncludesDiscovery": true
+  },
+  "unresolved": [
+    "The previous4013ms task was observed without CPU stack; this successful run did not reproduce it.",
+    "Clock mapping showed the returned CPU profile retained only final reload, not the menu-attempt interval.",
+    "No code fix, new timing measurement, or completion claim is made by this source audit."
+  ]
+}

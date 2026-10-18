@@ -52,7 +52,7 @@ test('the actual inline guard hides the title until the ready handshake', async 
   const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
   assert.match(
     html,
-    /html:not\(\[data-boot-state='ready'\]\)\s+body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)\s*\{\s*display: none !important;/,
+    /html:not\(\[data-boot-state='ready'\]\):not\(\[data-boot-state='interactive'\]\)\s+body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)\s*\{\s*display: none !important;/,
   );
 });
 

@@ -1,0 +1,69 @@
+TAP version 13
+# (node:31838) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+# --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./.cache/boot-return-start-diagnostic-loader-237.mjs", pathToFileURL("./"));'
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: actual Title Missions → versus → Back restores exact menu without adoption
+ok 1 - actual Title Missions → versus → Back restores exact menu without adoption # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.394708
+  ...
+# Subtest: actual paused cut Missions → versus → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 11753.049167
+      ...
+    # Subtest: actual Versus host returns through the fixed own link
+    ok 2 - actual Versus host returns through the fixed own link
+      ---
+      duration_ms: 2270.612417
+      ...
+    # Subtest: receiving Solo opens exact Missions focus, with no flight resume
+    ok 3 - receiving Solo opens exact Missions focus, with no flight resume
+      ---
+      duration_ms: 8268.897833
+      ...
+    # Subtest: the same return query is consumed, not replayed
+    ok 4 - the same return query is consumed, not replayed
+      ---
+      duration_ms: 1324.125209
+      ...
+    1..4
+ok 2 - actual paused cut Missions → versus → Back restores exact menu without adoption
+  ---
+  duration_ms: 23617.574583
+  ...
+# Subtest: failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+ok 3 - failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.050958
+  ...
+# Subtest: storage failure after a successful check requires another deliberate Leave with truthful warning
+ok 4 - storage failure after a successful check requires another deliberate Leave with truthful warning # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02775
+  ...
+# Subtest: unavailable return storage preserves ready title with an explicit fixed fallback
+ok 5 - unavailable return storage preserves ready title with an explicit fixed fallback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.078833
+  ...
+# Subtest: unavailable return storage preserves verified flight with an explicit fixed fallback
+ok 6 - unavailable return storage preserves verified flight with an explicit fixed fallback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026916
+  ...
+# Subtest: Stay cancels a pending verified-save wait and late completion cannot navigate or write
+ok 7 - Stay cancels a pending verified-save wait and late completion cannot navigate or write # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017125
+  ...
+1..7
+# tests 11
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 6
+# todo 0
+# duration_ms 24016.449875

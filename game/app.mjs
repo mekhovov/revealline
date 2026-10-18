@@ -13474,7 +13474,10 @@ try {
     }
     update(now) {
       if (practiceRenderFailure.failed) return;
-      if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
+      if (
+        globalThis.RevealLineBoot &&
+        !['interactive', 'ready'].includes(document.documentElement.dataset.bootState)
+      )
         return;
       const workStart = performance.now();
       if (this.failedPreparationRun !== run || !paused) this.failedPreparationRun = null;
@@ -15473,13 +15476,16 @@ try {
     });
   const bootHome = controllerDialog() === $('shell-home');
   const bootFocus = document.activeElement;
-  if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.ready();
+  // Controls remain available to cancel incoming navigation, but readiness
+  // belongs to the completed or retired handoff below.
+  if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.reveal?.();
   else {
     document.querySelectorAll('[data-boot-inert]').forEach((element) => {
       element.inert = false;
-      element.removeAttribute('aria-busy');
+      element.setAttribute('aria-busy', 'true');
     });
-    $('boot-status').hidden = true;
+    $('boot-screen').hidden = true;
+    document.documentElement.dataset.bootState = 'interactive';
   }
   if (libraryHandoff && !practiceSession) {
     const revision = ++unifiedOpenRevision;
@@ -15558,6 +15564,14 @@ try {
     // This selector is lazy. Await its owned opening so normal boot focus does
     // not retire it; a real newer focus/visibility choice still cancels it.
     await openUnifiedMissions($('shell-play'), { returnLabel: t('interface:backToMenu2') });
+  }
+  if (globalThis.RevealLineBoot) globalThis.RevealLineBoot.ready();
+  else {
+    document.querySelectorAll('[data-boot-inert]').forEach((element) => {
+      element.removeAttribute('aria-busy');
+    });
+    $('boot-status').hidden = true;
+    document.documentElement.dataset.bootState = 'ready';
   }
   const workshopReturn = readWorkshopReturn(location.search);
   const ownedWorkshopBootFocus =
