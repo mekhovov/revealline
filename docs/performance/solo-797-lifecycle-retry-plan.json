@@ -297,17 +297,60 @@
   ],
   "release": {
     "format": "SoloHostedPhaseReleaseV1",
-    "status": "held-for-review",
+    "status": "reviewed-diagnostic-only",
     "phase": "retry",
     "previousPhase": "next",
     "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
     "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
-    "noUnclosedOwners": false,
-    "allPriorPlannedJobsClosed": false,
-    "priorProofInspected": false,
-    "evidence": [],
+    "noUnclosedOwners": true,
+    "allPriorPlannedJobsClosed": true,
+    "priorProofInspected": true,
+    "evidence": [
+      {
+        "runId": 39115157669,
+        "artifactId": 12132605296,
+        "artifactSHA256": "f92b1a0988b5247e252492f4d103ad851cf0c5da9b279444cce839a710548d8d",
+        "summarySHA256": "8ec141ef79ea439e9f841c2261c336f3f3c35a94b7f07b0012d0d99aef05aa28",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115157669,
+        "artifactId": 12132346133,
+        "artifactSHA256": "f3f7218d155b18f057419c3865c2037171703128c20f911c499ea6088977091a",
+        "summarySHA256": "a42c96b177505d314ed44a44157f8a4292975bd6a62d2fe6e9ce10a1760c79e6",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115157669,
+        "artifactId": 12132106903,
+        "artifactSHA256": "a42d491f75330d55eaa8af45c320379e374e6298504cb60a8635aa755b0159ba",
+        "summarySHA256": "695750ff63832b6745df4c98b4561ca8b8d2e6ce468c028d868157e80b496132",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115157669,
+        "artifactId": 12132048428,
+        "artifactSHA256": "a6143fb6057ea1b9d62d005b9bc201bf196a42bc5d187a654a76cad68e75a5bc",
+        "summarySHA256": "414e808c89f4d66555470600356bfc27b742e8bae98bc11dfd0672dbf724f979",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115157669,
+        "artifactId": 12131969667,
+        "artifactSHA256": "d4e41d907a6752d49261716c733a90f1779ed6bb524ab969486fce60d6be75f8",
+        "summarySHA256": "d5a3466290a8f6925286182c751c27232fea7260a6f7d7ecaeece3e45e949a0c",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115157669,
+        "artifactId": 12131553804,
+        "artifactSHA256": "67dc4254579f44dccf99e190e057d04ec409abd0f035b27f7e2b24f573b3f583",
+        "summarySHA256": "83be2bda60d3cb4c300636cd54902336da3bf4ebbdf3660c27e2412124981514",
+        "disposition": "failed-reviewed"
+      }
+    ],
     "scope": "independent-comparison-diagnostics",
-    "predecessorRun": null,
+    "predecessorRun": 39115157669,
     "automaticRetries": 0,
     "automaticPhaseContinuation": false,
     "performanceQualification": "not-qualified-diagnostic-only",
@@ -319,8 +362,17 @@
       "lane": "lifecycle",
       "phase": "retry"
     },
-    "firstEightAllCorrectnessPassed": false,
-    "firstEightEvidence": null
+    "firstEightAllCorrectnessPassed": true,
+    "firstEightEvidence": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    }
   },
   "resources": {
     "serial": true,
@@ -396,7 +448,7 @@
   "latestSourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
   "latestRuntimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
   "hitchJournal": "bounded-v1",
-  "executionAdmission": "Held until an actual source797 first-eight correctness/closed-owner receipt and every declared predecessor are independently reviewed. No source73 correctness or numerical result transfers; no automatic dispatch, continuation or retry.",
+  "executionAdmission": "The exact source797 first-eight correctness proof and complete predecessor cohort were independently reviewed; all owners closed. Every predecessor failure remains failed-reviewed. This releases only the distinct declared phase after source CI and normal merge, with unchanged recipe, bounds, replay and numerical gates. No automatic continuation or retry; this is not a native result for the new phase.",
   "toolingClosure": {
     "status": "dynamic-verifier-smoke-required",
     "dynamicSourceValidation": [
