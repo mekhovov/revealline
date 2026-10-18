@@ -104,6 +104,42 @@
       "blob": "da430509f8592920a62ec52875aae99169c7561e",
       "bytes": 947,
       "sha256": "5594e0193ee53ca8c81695e25384e2918167c8f82bdec7f8a92f863b5599c37f"
+    },
+    {
+      "path": "publication-461-complete.json",
+      "blob": "cf10001ebd9af233bc435462f6f370cee98254f7",
+      "bytes": 1449,
+      "sha256": "41c82b70af7422ce2e3f3413b6f076b54b8f6091c17c70c36d21d49adfe16edc"
+    },
+    {
+      "path": "published-smoke-461-webkit-failure.json",
+      "blob": "9682ac683aced49c577ae9f29c5468201d5d3ec2",
+      "bytes": 24615,
+      "sha256": "488c205d9d5babfdaf1dc27e5b67fd5e25d0876c4fffc90558980c71cca1cd8b"
+    },
+    {
+      "path": "published-smoke-461-chromium-failure.json",
+      "blob": "1e3b022b17bae9a4f28eb8bb38466f566ea7d408",
+      "bytes": 16437,
+      "sha256": "5d330e028ad0f48f577e89dad9dda79edb8e18a78ebf1b28cfe64dc6393cc1a7"
+    },
+    {
+      "path": "soundtrack-host-failures-20ac.json",
+      "blob": "5a3450a2a09a5f869421e30602b7aa8ac4dc5cf9",
+      "bytes": 5827,
+      "sha256": "e3034ff949b5fd91211ffa215dbe73d5ca5f1591280f5cd5f8e8645dddc9163c"
+    },
+    {
+      "path": "trace-source-closure-failure-85a1.json",
+      "blob": "d7c03b8d1abc657cedd5ef7a552945a540d426a0",
+      "bytes": 156603,
+      "sha256": "29c2a1681137f40d203452a6f230042fb9c3abf6792e8236d00a35a88847350c"
+    },
+    {
+      "path": "missions-source-pass-6d708.json",
+      "blob": "7c78ce13fa2f8045bee26e30409163b706f06af0",
+      "bytes": 12057,
+      "sha256": "18e004b716632dfd76a8d6ec1005cdc45711b4cb5c4c79f4198b2f2476a9445c"
     }
   ]
 }

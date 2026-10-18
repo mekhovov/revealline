@@ -1,0 +1,50 @@
+{
+  "format": "SoloSoundtrackHostAppearanceFailureAuditV1",
+  "observedAt": "2026-10-18T18:38:52.127Z",
+  "head": "20ac8d950bd2095aa9a931fdc6ad22d205f6cd71",
+  "tree": "60d2ecca87f45c617d886173bdcc9ae04d32a0fd",
+  "run": 39152079393,
+  "job": 117750122476,
+  "artifact": {
+    "id": 12145569890,
+    "bytes": 82448,
+    "sha256": "ecc429af4696665eea1b7068340aee94748d50a2e24d66ba9c384b972ba49721",
+    "digestAndZipCRCVerified": true
+  },
+  "tap": {
+    "path": "focused-tests.tap",
+    "bytes": 419146,
+    "sha256": "2b0fa99924d9b3d953b09840dacbff050c1d489d866a80334b615b6aeb652b8e",
+    "tests": 1809,
+    "passed": 1804,
+    "failed": 5,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 1486739.628823,
+    "complete": true
+  },
+  "failures": [
+    "not ok 1286 - muted fresh Solo menu and Studio do not acquire admitted hosted recordings before Play\n  ---\n  duration_ms: 1779.103482\n  location: '/home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:262:1'\n  failureType: 'testCodeFailure'\n  error: 'The real bounded catalogue reader admits the metadata before Studio opens'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:92:10)\n    async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:279:3)\n    async Test.run (node:internal/test_runner/test:932:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:629:7)\n  ...\n",
+    "not ok 1287 - failed silent catalogue metadata is reported and Studio retries it once without acquiring recordings\n  ---\n  duration_ms: 1791.596793\n  location: '/home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:297:1'\n  failureType: 'testCodeFailure'\n  error: 'A rejected HTTP response stays visible before a fresh explicit Studio visit'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:92:10)\n    async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:308:3)\n    async Test.run (node:internal/test_runner/test:932:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:629:7)\n  ...\n",
+    "not ok 1310 - Solo reload uses saved fpv on generic start without rewriting preferences\n  ---\n  duration_ms: 1158.632874\n  location: '/home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:1125:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    only the pre-existing panel discovery runs before Play\n    \n    0 !== 1\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 1\n  actual: 0\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:1138:12)\n    async Test.run (node:internal/test_runner/test:932:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:629:7)\n  ...\n",
+    "not ok 1311 - Solo reload uses saved fusion on generic play without rewriting preferences\n  ---\n  duration_ms: 1141.822427\n  location: '/home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:1125:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    only the pre-existing panel discovery runs before Play\n    \n    0 !== 1\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 1\n  actual: 0\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:1138:12)\n    async Test.run (node:internal/test_runner/test:932:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:629:7)\n  ...\n",
+    "not ok 1312 - closing Studio cancels a pending saved-style Play without a late stream\n  ---\n  duration_ms: 1798.625643\n  location: '/home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:1170:1'\n  failureType: 'testCodeFailure'\n  error: 'generic Play awaits catalogue'\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: true\n  actual: false\n  operator: '=='\n  stack: |-\n    waitFor (file:///home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:92:10)\n    async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/game/test/soundtrack-host.test.mjs:1186:3)\n    async Test.run (node:internal/test_runner/test:932:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:629:7)\n  ...\n"
+  ],
+  "sourceAttribution": {
+    "testBlob": "542454f59f5353a0ca7af1fecefe9fd542915ee4",
+    "panelBlob": "e8895405a301f6279ad9968afc04c11461108f79",
+    "appBlob": "cdf5b96eebb02439c0fd35ea2786c1ec5d60838b",
+    "observations": [
+      "First two controls wait for silent public metadata before any visible browse after hidden preload was deliberately removed.",
+      "Saved-library helper clicks Audio and Studio in same turn, then waits only local-library status; this is not a public-catalogue readiness boundary.",
+      "Production Studio open still starts loadOnlineCatalogue; asynchronous source-preferences/read work can remain pending when helper returns.",
+      "Visible Audio queued admission properly rejects the parent closed synchronously by Studio opening."
+    ],
+    "remaining": [
+      "Preserve failed evidence.",
+      "Review minimal tests against actual new demand, including saved FPV/fusion and pending generic Play cancellation.",
+      "No runtime pass, rerun, deadline relaxation or successful package claimed."
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "format": "SoloPages461PublicationCompletionAuditV1",
+  "observedAt": "2026-10-18T18:44:57.113Z",
+  "priorReadbackAudit": {
+    "gitBlob": "ef9bbe25d1f089c8e80220b139e67aab8fd0166a",
+    "bytes": 9229,
+    "sha256": "9a5998517fb3168f127604ac3d692a0dd94e39da71a5eb261a0944074ac38bb7"
+  },
+  "sourceRevision": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+  "run": 39151144640,
+  "jobs": [
+    {
+      "id": 117748708985,
+      "name": "build",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:04:45Z",
+      "completedAt": "2026-10-18T18:17:07Z"
+    },
+    {
+      "id": 117751676966,
+      "name": "deploy",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:20:14Z",
+      "completedAt": "2026-10-18T18:22:27Z"
+    },
+    {
+      "id": 117752882147,
+      "name": "verify",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:43:08Z",
+      "completedAt": "2026-10-18T18:43:43Z"
+    }
+  ],
+  "practiceReceipt": {
+    "artifact": 12145859653,
+    "bytes": 284,
+    "sha256": "de2d03f284fb6b8d15aa547ccb1cbce0674a7822f43a1dbb31fa721079314118",
+    "entries": {
+      "practice-site-receipt.json": {
+        "indexURL": "https://mekhovov.github.io/revealline/practice/index.json",
+        "checked": [],
+        "missingCatalogueIsFailure": true
+      }
+    }
+  },
+  "qualification": "Publication identity/selected inventory and publisher verification only; no browser gameplay or device qualification."
+}
