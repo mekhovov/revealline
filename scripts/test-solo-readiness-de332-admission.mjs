@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import {
   readDeclaredPreparationRefs,
   changedPreparationTools,
@@ -57,6 +58,14 @@ test('prospective readiness references match candidate tools without refreshing 
   ];
   assert.equal(new Set(refs.map((ref) => ref.path)).size, refs.length);
   for (const ref of refs) {
+    if (
+      ref.path === 'scripts/solo-qualification-cpu-profile.mjs' &&
+      (await assertDeclaredReadinessTool(
+        'docs/performance/solo-readiness-preparation-de332-plan.json',
+        ref,
+      ))
+    )
+      continue;
     if (changedPreparationTools.includes(ref.path)) {
       const old = historical.get(ref.path);
       assert(old, ref.path);

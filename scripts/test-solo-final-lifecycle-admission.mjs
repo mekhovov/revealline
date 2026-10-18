@@ -1,3 +1,7 @@
+import {
+  assertDeclaredReadinessTool,
+  modelCurrentReadinessTools,
+} from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -604,6 +608,13 @@ for (const sourceLabel of ['de332', '797']) {
       assert.equal(m.candidate.artifact, sourceLabel === '797' ? 12128990483 : 12123463810);
       assert.equal(m.baseline.reusableArtifact.artifact, 12088541389);
       for (const ref of [...m.frozenTools, ...m.adapterInputs, ...Object.values(m.recipes)]) {
+        if (
+          await assertDeclaredReadinessTool(
+            `docs/performance/solo-${sourceLabel}-lifecycle-${phase}-plan.json`,
+            ref,
+          )
+        )
+          continue;
         const bytes = await load(ref.path);
         assert.equal(bytes.length, ref.bytes, ref.path);
         assert.equal(sha(bytes), ref.sha256, ref.path);
@@ -711,7 +722,14 @@ for (const sourceLabel of ['de332', '797']) {
         dir = await temporary(t),
         work = join(dir, 'work');
       await mkdir(work);
-      const p = bindSustainedJob(m, 'webkit', 1);
+      const p = bindSustainedJob(
+        await modelCurrentReadinessTools(
+          `docs/performance/solo-${sourceLabel}-lifecycle-${phase}-plan.json`,
+          m,
+        ),
+        'webkit',
+        1,
+      );
       const ctx = {
         plan: p,
         repository: root,

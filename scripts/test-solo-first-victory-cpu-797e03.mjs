@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createHash } from 'node:crypto';
@@ -150,6 +151,13 @@ test('actual797 CPU assessment retains original replay, source, profile and clea
 });
 test('797 profile refs freeze current source and preserve prior declaration bytes', async () => {
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
+    if (
+      await assertDeclaredReadinessTool(
+        'docs/performance/solo-first-victory-cpu-797e03-plan.json',
+        ref,
+      )
+    )
+      continue;
     const b = await read(ref.path);
     assert.equal(b.length, ref.bytes, ref.path);
     assert.equal(sha(b), ref.sha256, ref.path);

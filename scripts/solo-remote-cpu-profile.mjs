@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { copyFile, lstat, mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
+import { copyFile, lstat, mkdir, open, readFile, realpath, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
@@ -67,6 +67,134 @@ const FIRST_VICTORY_797E03_CPU_CANDIDATE = Object.freeze({
   producer:
     'Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer.',
 });
+
+const FRAME_TRACE_CANDIDATE = Object.freeze({
+  revision: '9d5139b9983c700a6a708f65f379fa4d5a8b0395',
+  tree: '99f9e6cea7ea7dc27c93609aae632908531d93d1',
+  run: 39122543440,
+  artifact: 12135616655,
+  outer: {
+    bytes: 1094656114,
+    sha256: '84c1621400e4a4a7ce662cf0ee52916fe03e716ec51f0559fbaa218bafa01888',
+  },
+  inner: {
+    bytes: 1075818191,
+    sha256: 'ef878c4d42fdcb8ae61ff1e05c4199a6c1b7023decd45a35c9f5fd1dcecd2b16',
+  },
+  manifestSHA256: '8d4bc6d5d25e92e4743afa9d241180735b16cd446e333ab7b0dab0bca45641c2',
+});
+const warmFrameTrace = (plan) =>
+  plan?.phase === 'warm-browser-frame-trace' && plan?.sourceCohort === 'warm-frame-9d5139-v1';
+const frameRecipe = Object.freeze({
+  path: 'docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture',
+  bytes: 6570,
+  sha256: '6da01ca449068ca6705012f3d6604362c581fe52c4583407797c0961acf3156d',
+});
+const frameProfile = Object.freeze({
+  mode: 'browser-frame-trace',
+  maximumMs: 30000,
+  maximumBytes: 64 * MiB,
+  bufferKiB: 8192,
+  chunkBytes: 65536,
+  maximumReads: 1025,
+  sampling: false,
+  screenshots: false,
+  heap: false,
+});
+function validateFrameFirstEight(release) {
+  assert.equal(release.firstEightRequired, true);
+  assert.equal(release.firstEightAllCorrectnessPassed, true);
+  const proof = release.firstEightEvidence;
+  assert(proof && typeof proof === 'object' && !Array.isArray(proof));
+  assert.deepEqual(
+    Object.keys(proof).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(proof.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(proof.sourceRevision, FRAME_TRACE_CANDIDATE.revision);
+  for (const key of ['runId', 'artifactId'])
+    assert(Number.isSafeInteger(proof[key]) && proof[key] > 0);
+  for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(proof[key], /^[a-f0-9]{64}$/);
+  assert.equal(proof.correctness, 'passed');
+  assert.equal(proof.ownersClosed, true);
+}
+function validateFrameTracePlan(plan) {
+  assert.equal(plan.format, 'SoloHostedCpuProfilePlanV1');
+  assert.equal(plan.status, 'reviewed-diagnostic-only');
+  assert(warmFrameTrace(plan));
+  assert.equal(plan.repository, 'mekhovov/revealline');
+  for (const key of Object.keys(FRAME_TRACE_CANDIDATE))
+    assert.deepEqual(plan.candidate[key], FRAME_TRACE_CANDIDATE[key], key);
+  assert.equal(plan.runtimeRevision, FRAME_TRACE_CANDIDATE.revision);
+  assert.deepEqual(plan.baseline, {
+    revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
+    tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
+  });
+  assert.equal(plan.upload, undefined);
+  assert.equal(plan.stressOrigin, undefined);
+  assert.equal(plan.node, '22.13.1');
+  assert.equal(plan.playwright, '1.62.1');
+  assert.equal(plan.cpu, 'fresh-verified-mid');
+  assert.equal(plan.calibrationPreset, 'mid');
+  assert.equal(plan.calibrationTimeoutMs, 5 * 60000);
+  assert.equal(plan.performanceExclusion, true);
+  assert.equal(plan.maxParallel, 1);
+  assert.equal(plan.automaticRetries, 0);
+  assert.equal(plan.automaticPhaseContinuation, false);
+  assert.equal(plan.setupTimeoutMs, 40 * 60000);
+  assert.equal(plan.helperTimeoutMs, 75 * 60000);
+  assert.equal(plan.evidenceBytes, 256 * MiB);
+  assert.equal(plan.rowEvidenceBytes, 128 * MiB);
+  assert.equal(plan.scenarioTimeoutMs, 360000);
+  assert.deepEqual(plan.rows, [rowDefinition(plan)]);
+  assert.deepEqual(plan.recipe, frameRecipe);
+  assert.deepEqual(plan.profile, frameProfile);
+  assert.equal(plan.release.status, 'reviewed');
+  assert.equal(plan.release.scope, 'single-browser-frame-diagnostic');
+  assert.equal(plan.release.performanceQualification, 'excluded-browser-frame-tracing');
+  validateFrameFirstEight(plan.release);
+  assert.deepEqual(plan.release.dispatch, {
+    workflow: '.github/workflows/solo-native-package-consumer.yml',
+    lane: 'frame-trace',
+    ref: 'main',
+    source: FRAME_TRACE_CANDIDATE.revision,
+    automaticRetries: 0,
+  });
+  assert.deepEqual(
+    plan.adapterInputs.map((x) => x.path),
+    ['scripts/solo-remote-cpu-profile.mjs', 'scripts/solo-remote-baseline.mjs'],
+  );
+  assert(
+    Array.isArray(plan.frozenTools) && plan.frozenTools.length > 0 && plan.frozenTools.length <= 64,
+  );
+  assert.equal(new Set(references(plan).map((x) => x.path)).size, references(plan).length);
+  for (const path of [
+    'scripts/solo-qualification-cpu-profile.mjs',
+    'scripts/qualify-solo-runtime.mjs',
+    'scripts/run-solo-remote-correctness.mjs',
+    'scripts/solo-remote-supplemental.mjs',
+    'scripts/solo-remote-sustained.mjs',
+    'scripts/calibrate-solo-performance.mjs',
+    'scripts/vendor/devtools-benchmark.mjs',
+  ])
+    assert(plan.frozenTools.some((ref) => ref.path === path));
+  for (const ref of references(plan)) {
+    assert(/^(scripts|game|docs)\//.test(ref.path) && !ref.path.split('/').includes('..'));
+    assert(Number.isSafeInteger(ref.bytes) && ref.bytes > 0 && ref.bytes < MiB);
+    assert.match(ref.sha256, /^[a-f0-9]{64}$/);
+  }
+  return plan;
+}
+
 const firstVictory797 = (plan) =>
   plan?.phase === 'first-victory-cpu-profile' &&
   plan?.sourceCohort === 'first-victory-797e03-main8b-v1';
@@ -105,35 +233,41 @@ const firstVictory239 = (plan) =>
 const firstVictory = (plan) => plan?.phase === 'first-victory-cpu-profile';
 const longRail = (plan) => plan?.phase === 'long-rail-cpu-profile';
 const source = (plan) =>
-  firstVictory(plan)
-    ? firstVictory797(plan)
-      ? FIRST_VICTORY_797E03_CPU_SOURCE
-      : firstVictoryDe332(plan)
-        ? FIRST_VICTORY_DE332_CPU_SOURCE
-        : firstVictory239(plan)
-          ? FIRST_VICTORY_239_CPU_SOURCE
-          : FIRST_VICTORY_CPU_SOURCE
-    : longRail(plan)
-      ? LONG_RAIL_CPU_SOURCE
-      : CPU_PROFILE_SOURCE;
+  warmFrameTrace(plan)
+    ? FRAME_TRACE_CANDIDATE.revision
+    : firstVictory(plan)
+      ? firstVictory797(plan)
+        ? FIRST_VICTORY_797E03_CPU_SOURCE
+        : firstVictoryDe332(plan)
+          ? FIRST_VICTORY_DE332_CPU_SOURCE
+          : firstVictory239(plan)
+            ? FIRST_VICTORY_239_CPU_SOURCE
+            : FIRST_VICTORY_CPU_SOURCE
+      : longRail(plan)
+        ? LONG_RAIL_CPU_SOURCE
+        : CPU_PROFILE_SOURCE;
 const recipeHash = (plan) =>
-  firstVictory(plan)
-    ? firstVictory797(plan)
-      ? '0c279175bbc49ae0426dcf628b3fb7607031d3943cde56f9c6ea3d7420f2ddf3'
-      : firstVictoryDe332(plan)
-        ? 'b1f50b274862dbe09237011e40f5fced6042095e745f488c44d72933906ef5ba'
-        : firstVictory239(plan)
-          ? '328ae1964a398623c9dd1b71ff14c91e3dbb4156670558bcf381306334e9cf4c'
-          : FIRST_VICTORY_CPU_RECIPE
-    : longRail(plan)
-      ? LONG_RAIL_CPU_RECIPE
-      : CPU_PROFILE_RECIPE;
+  warmFrameTrace(plan)
+    ? frameRecipe.sha256
+    : firstVictory(plan)
+      ? firstVictory797(plan)
+        ? '0c279175bbc49ae0426dcf628b3fb7607031d3943cde56f9c6ea3d7420f2ddf3'
+        : firstVictoryDe332(plan)
+          ? 'b1f50b274862dbe09237011e40f5fced6042095e745f488c44d72933906ef5ba'
+          : firstVictory239(plan)
+            ? '328ae1964a398623c9dd1b71ff14c91e3dbb4156670558bcf381306334e9cf4c'
+            : FIRST_VICTORY_CPU_RECIPE
+      : longRail(plan)
+        ? LONG_RAIL_CPU_RECIPE
+        : CPU_PROFILE_RECIPE;
 const rowDefinition = (plan) => ({
-  id: firstVictory(plan)
-    ? 'first-victory-cpu-profile-chromium-candidate'
-    : longRail(plan)
-      ? 'long-rail-cpu-profile-chromium-candidate'
-      : 'cold-cpu-profile-chromium-candidate',
+  id: warmFrameTrace(plan)
+    ? 'warm-browser-frame-trace-chromium-candidate'
+    : firstVictory(plan)
+      ? 'first-victory-cpu-profile-chromium-candidate'
+      : longRail(plan)
+        ? 'long-rail-cpu-profile-chromium-candidate'
+        : 'cold-cpu-profile-chromium-candidate',
   kind: 'cpu-profile',
   source: 'candidate',
   engine: 'chromium',
@@ -221,6 +355,7 @@ export function firstVictoryDe332ProfileOrigin() {
 }
 
 export function validateCpuProfilePlan(plan) {
+  if (warmFrameTrace(plan)) return validateFrameTracePlan(plan);
   assert.equal(plan.format, 'SoloHostedCpuProfilePlanV1');
   assert.equal(plan.status, 'reviewed-diagnostic-only');
   assert(
@@ -524,9 +659,44 @@ export async function prepareCpuProfileMode(ctx) {
     await copyFile(upload, join(ctx.evidence, 'long-rail.xonix.json'));
   }
   const scenario = await readSupplementalJSON(recipePath, MiB);
-  assert.equal(scenario.timeoutMs, ctx.plan.profile.maximumMs);
+  assert.equal(
+    scenario.timeoutMs,
+    warmFrameTrace(ctx.plan) ? ctx.plan.scenarioTimeoutMs : ctx.plan.profile.maximumMs,
+  );
   assert.equal(scenario.kind, 'performance');
   assert(scenario.expectedReplayDefinition && scenario.replayRequirements);
+  if (warmFrameTrace(ctx.plan)) {
+    const { verifiedMidCalibration, prepareCalibrationScratch } = await import(
+      './solo-remote-sustained.mjs'
+    );
+    const path = join(ctx.evidence, 'fresh-mid-calibration.json');
+    const scratch = await prepareCalibrationScratch(ctx.report);
+    await ctx.required(
+      'fresh-mid-calibration',
+      [process.execPath, join(ctx.here, 'calibrate-solo-performance.mjs'), path],
+      ctx.plan.calibrationTimeoutMs,
+      { env: { ...ctx.cleanEnv, TMPDIR: scratch.path } },
+    );
+    const mode = {
+      recipePath,
+      ...verifiedMidCalibration(await readSupplementalJSON(path, MiB)),
+      calibration: { path, ...(await ctx.digest(path)) },
+    };
+    Object.assign(ctx.report, {
+      performanceExclusion: true,
+      performanceQualification: 'excluded-browser-frame-tracing',
+      firstEightRequired: true,
+      firstEightAllCorrectnessPassed: true,
+      releaseScope: ctx.plan.release.scope,
+      frameTraceStratum: {
+        engine: 'chromium',
+        cpu: mode.cpu,
+        calibration: mode.calibration,
+        browserVersion: mode.browserVersion,
+      },
+    });
+    return mode;
+  }
   Object.assign(ctx.report, {
     performanceExclusion: true,
     performanceQualification: 'excluded-cpu-profiling',
@@ -541,6 +711,23 @@ export async function prepareCpuProfileMode(ctx) {
   return { recipePath };
 }
 export function cpuProfileArguments(ctx, url, dir) {
+  if (warmFrameTrace(ctx.plan)) {
+    assert(Number.isFinite(ctx.modeState.cpu) && ctx.modeState.cpu >= 1 && ctx.modeState.cpu <= 20);
+    assert(ctx.modeState.calibration && typeof ctx.modeState.browserVersion === 'string');
+    return [
+      join(ctx.here, 'qualify-solo-runtime.mjs'),
+      url,
+      ctx.modeState.recipePath,
+      join(dir, 'report.json'),
+      '--server-fixture-access',
+      '--work-probe',
+      '--cadence=settled120',
+      '--cpu=' + ctx.modeState.cpu,
+      '--browser=chromium',
+      '--source-revision=' + source(ctx.plan),
+      '--frame-trace=warm-first3-v1',
+    ];
+  }
   return [
     join(ctx.here, 'qualify-solo-runtime.mjs'),
     url,
@@ -558,7 +745,162 @@ export function cpuProfileArguments(ctx, url, dir) {
       : []),
   ];
 }
-export function cpuProfileAssessment(plan, raw, command, profileReadback) {
+
+export function frameTraceAssessment(plan, raw, command, readback, mode) {
+  validateFrameTracePlan(plan);
+  const replay = raw?.replay?.nativeVerification,
+    trace = raw?.frameTrace;
+  const calibration = mode?.calibration;
+  const calibrated =
+    Number.isFinite(mode?.cpu) &&
+    mode.cpu >= 1 &&
+    mode.cpu <= 20 &&
+    typeof mode.browserVersion === 'string' &&
+    Number.isSafeInteger(calibration?.bytes) &&
+    calibration.bytes > 0 &&
+    calibration.bytes <= MiB &&
+    /^[a-f0-9]{64}$/.test(calibration.sha256);
+  const correct =
+    calibrated &&
+    command?.status === 'closed' &&
+    command.exitCode === 0 &&
+    !command.signal &&
+    !command.forcedCleanup &&
+    !command.cleanupUnconfirmed &&
+    !command.violation &&
+    command.survivors?.length === 0 &&
+    command.ambiguous?.length === 0 &&
+    raw?.format === 'SoloQualificationReportV1' &&
+    raw.kind === 'frame-trace-diagnostic' &&
+    raw.cpuProfile === undefined &&
+    raw.scenarioKind === 'performance' &&
+    raw.audioProof === false &&
+    raw.scenarioStatus === 'pass' &&
+    raw.scenarioSHA256 === frameRecipe.sha256 &&
+    raw.sourceRevision === FRAME_TRACE_CANDIDATE.revision &&
+    raw.buildIdentity?.sourceRevision === FRAME_TRACE_CANDIDATE.revision &&
+    raw.environment?.engine === 'chromium' &&
+    raw.environment.headless === true &&
+    raw.environment.cpuThrottle === mode.cpu &&
+    raw.environment.contextMode === 'ephemeral' &&
+    raw.environment.browserVersion === mode.browserVersion &&
+    raw.environment.requestedDisplay?.viewport?.width === 1280 &&
+    raw.environment.requestedDisplay.viewport.height === 800 &&
+    raw.environment.requestedDisplay.deviceScaleFactor === 1 &&
+    raw.environment.requestedDisplay.isMobile === false &&
+    raw.environment.requestedDisplay.hasTouch === false &&
+    raw.workProbe === true &&
+    raw.cadenceProtocol === 'settled120' &&
+    raw.baselineRuntime === false &&
+    raw.replay?.scope === 'completed-scenario' &&
+    replay?.status === 'pass' &&
+    replay.engine === 'chromium' &&
+    replay.browserVersion === raw.environment.browserVersion &&
+    raw.pageErrors?.length === 0 &&
+    !raw.failure &&
+    !raw.finalReadFailure &&
+    !raw.failureCleanupFailure &&
+    !raw.contextCleanupFailure &&
+    !raw.replayFailure;
+  const retained =
+    readback?.status === 'passed' &&
+    trace?.status === 'retained' &&
+    trace.protocol === 'warm-first3-v1' &&
+    trace.backend?.applicationRenderer === 'unobserved' &&
+    trace.backend.hardwareGraphics === 'unobserved' &&
+    trace.maximumMs === 30000 &&
+    trace.maximumBytes === 64 * MiB &&
+    trace.bufferKiB === 8192 &&
+    trace.chunkBytes === 65536 &&
+    trace.maximumReads === 1025 &&
+    trace.stopReason === 'safe-border-direction-3' &&
+    Number.isFinite(trace.stopRequestedElapsedMs) &&
+    trace.stopRequestedElapsedMs >= 0 &&
+    trace.stopRequestedElapsedMs <= 30000 &&
+    Number.isFinite(trace.preStartSetupMs) &&
+    trace.preStartSetupMs >= 0 &&
+    trace.preStartSetupMs < 60000 &&
+    trace.startAcknowledged === true &&
+    trace.completionObserved === true &&
+    trace.dataLossOccurred === false &&
+    trace.streamEOF === true &&
+    trace.streamClosed === true &&
+    trace.cdpDetached === true &&
+    !trace.limitReached &&
+    !trace.bufferFull &&
+    !trace.failure &&
+    !trace.startOutcomeUnknown &&
+    !trace.completionUnconfirmed &&
+    !trace.ownerClosureRequested &&
+    !trace.ownerCloseFailure &&
+    !trace.streamCloseFailure &&
+    !trace.detachFailure &&
+    !raw.frameTraceFailure &&
+    trace.bytes === readback.bytes &&
+    trace.sha256 === readback.sha256 &&
+    trace.bytes > 0 &&
+    trace.bytes <= 64 * MiB &&
+    readback.inspectionVerified === true;
+  return {
+    status:
+      correct && retained && raw?.performanceGateStatus === 'excluded-browser-frame-tracing'
+        ? 'passed'
+        : 'failed',
+    nativeRecipeCorrectness: correct ? 'pass' : 'fail',
+    traceRetention: retained ? 'pass' : 'fail',
+    rawPerformanceGateStatus: raw?.performanceGateStatus ?? 'unobserved',
+    performanceQualification: 'excluded-browser-frame-tracing',
+    firstEightRequired: true,
+    firstEightAllCorrectnessPassed: true,
+    calibration: calibration ?? null,
+    cpu: mode?.cpu ?? null,
+    backend: trace?.backend ?? {
+      applicationRenderer: 'unobserved',
+      hardwareGraphics: 'unobserved',
+    },
+    scope:
+      'One perturbed Chromium warm browser-frame trace with a fresh verified mid calibration. No numerical qualification, physical presentation, hardware GPU, OS scheduling or causal attribution is inferred.',
+  };
+}
+export async function readFrameTraceEvidence(path, raw) {
+  const { inspectFrameTrace, FRAME_TRACE_CATEGORIES } = await import(
+    './solo-qualification-cpu-profile.mjs'
+  );
+  assert.equal(raw?.file, path);
+  assert.equal(await realpath(path), path);
+  const info = await lstat(path);
+  assert(info.isFile() && !info.isSymbolicLink() && info.size > 0 && info.size <= 64 * MiB);
+  const handle = await open(path, 'r');
+  try {
+    const opened = await handle.stat();
+    assert.equal(opened.dev, info.dev);
+    assert.equal(opened.ino, info.ino);
+    assert.equal(opened.size, info.size);
+    const bytes = Buffer.alloc(info.size + 1);
+    let offset = 0;
+    while (offset < bytes.length) {
+      const result = await handle.read(bytes, offset, bytes.length - offset, offset);
+      if (!result.bytesRead) break;
+      offset += result.bytesRead;
+    }
+    assert.equal(offset, info.size, 'Trace changed size during readback');
+    const after = await handle.stat();
+    assert.equal(after.dev, info.dev);
+    assert.equal(after.ino, info.ino);
+    assert.equal(after.size, info.size);
+    const retained = bytes.subarray(0, offset),
+      identity = { bytes: offset, sha256: createHash('sha256').update(retained).digest('hex') };
+    assert.deepEqual(identity, { bytes: raw.bytes, sha256: raw.sha256 });
+    assert.deepEqual(raw.categories, FRAME_TRACE_CATEGORIES);
+    assert.deepEqual(inspectFrameTrace(retained, raw.anchors), raw.inspection);
+    return { status: 'passed', ...identity, inspectionVerified: true };
+  } finally {
+    await handle.close();
+  }
+}
+
+export function cpuProfileAssessment(plan, raw, command, profileReadback, mode) {
+  if (warmFrameTrace(plan)) return frameTraceAssessment(plan, raw, command, profileReadback, mode);
   const profile = raw?.cpuProfile,
     replay = raw?.replay?.nativeVerification;
   const correct =
@@ -695,23 +1037,33 @@ export async function runCpuProfileRow(ctx, row, dir, tmp) {
     const raw = await readSupplementalJSON(join(dir, 'report.json'));
     row.profileReadback = { status: 'failed' };
     try {
-      const profilePath = join(dir, 'report.json.cpuprofile');
-      assert.equal(raw.cpuProfile?.file, profilePath);
-      assert.equal(await realpath(profilePath), profilePath);
-      const info = await lstat(profilePath);
-      assert(
-        info.isFile() &&
-          !info.isSymbolicLink() &&
-          info.size > 0 &&
-          info.size <= ctx.plan.profile.maximumBytes,
-      );
-      const identity = await ctx.digest(profilePath);
-      assert.deepEqual(identity, { bytes: raw.cpuProfile.bytes, sha256: raw.cpuProfile.sha256 });
-      row.profileReadback = { status: 'passed', ...identity };
+      if (warmFrameTrace(ctx.plan)) {
+        row.profileReadback = await readFrameTraceEvidence(
+          join(dir, 'report.json.frame-trace.json'),
+          raw.frameTrace,
+        );
+      } else {
+        const profilePath = join(dir, 'report.json.cpuprofile');
+        assert.equal(raw.cpuProfile?.file, profilePath);
+        assert.equal(await realpath(profilePath), profilePath);
+        const info = await lstat(profilePath);
+        assert(
+          info.isFile() &&
+            !info.isSymbolicLink() &&
+            info.size > 0 &&
+            info.size <= ctx.plan.profile.maximumBytes,
+        );
+        const identity = await ctx.digest(profilePath);
+        assert.deepEqual(identity, { bytes: raw.cpuProfile.bytes, sha256: raw.cpuProfile.sha256 });
+        row.profileReadback = { status: 'passed', ...identity };
+      }
     } catch (error) {
       row.profileReadback.failure = String(error);
     }
-    Object.assign(row, cpuProfileAssessment(ctx.plan, raw, row.command, row.profileReadback));
+    Object.assign(
+      row,
+      cpuProfileAssessment(ctx.plan, raw, row.command, row.profileReadback, ctx.modeState),
+    );
     row.browserVersion = raw.environment?.browserVersion;
     await verifyInputs(ctx);
   } finally {

@@ -14,9 +14,16 @@ import {
   MEDIA_FAULT_PILOTS,
   qualificationReadinessOptions,
   createBrowserReadinessProbe,
+  createRequiredRejoinObservation,
   captureOptionalIconFallback,
   assertOptionalIconFallback,
 } from './solo-qualification-readiness.mjs';
+import {
+  bindReadinessJob,
+  readinessRowPlan,
+  readinessArguments,
+  readinessAssessment,
+} from './solo-remote-readiness.mjs';
 const entry = 'https://fixture.invalid/deployment/game/index.html';
 const bytes = {
   required: await readFile(new URL('../game/' + requiredOriginal.relativePath, import.meta.url)),
@@ -390,6 +397,7 @@ function browser(options) {
     escape,
     setNow: (v) => (now = v),
     setScenes: (v) => (scenes = v),
+    getScenes: () => scenes,
   };
 }
 test('serialized browser witness returns exact native promise/options and ties current busy Escape to real AbortSignals', async () => {
@@ -528,7 +536,7 @@ test('exact held fault recipes admit only their source/protocol/hash and reject 
     );
   }
 });
-async function requiredCompleted(retainStart = false) {
+async function requiredCompleted(retainStart = false, rejoin = false) {
   const b = browser(retainStart ? { startRetention: 'trusted-initial-start-v1' } : undefined);
   b.scene.cadence = {
     snapshot: () => ({
@@ -544,12 +552,27 @@ async function requiredCompleted(retainStart = false) {
   b.scene.displayedBoardValid = true;
   b.scene.preparedState = { run: b.run };
   b.scene.submittedRun = b.run;
-  const probe = createBrowserReadinessProbe(() => b.scene, b.env, 'required-original-cancel-v1');
+  const retained = rejoin
+    ? createRequiredRejoinObservation(
+        b.getScenes,
+        (r) => ({ tick: r.tick, x: r.x }),
+        () => b.scene.constructor,
+      )
+    : null;
+  const probe = createBrowserReadinessProbe(
+    () => b.scene,
+    b.env,
+    'required-original-cancel-v1',
+    false,
+    false,
+    rejoin ? (event) => b.owner.captureStart(event) : null,
+    retained,
+  );
   b.fetch();
   b.setNow(20);
-  b.handlers.get('click')({ isTrusted: true, target: { closest: () => ({}) } });
+  b.handlers.get('click')({ isTrusted: true, target: { closest: () => ({ id: 'start-button' }) } });
   if (retainStart) {
-    directStart(b);
+    if (!rejoin) directStart(b);
     b.scene.lastPaint = null;
   }
   b.escape();
@@ -560,9 +583,20 @@ async function requiredCompleted(retainStart = false) {
   const witness = b.owner.snapshot();
   assertRequiredOriginalAfterCancel(witness);
   b.setNow(700);
-  if (retainStart) b.scene.lastPaint = { run: b.run };
+  if (retainStart && !rejoin) b.scene.lastPaint = { run: b.run };
+  if (rejoin) {
+    b.scene.prepared = () => false;
+    b.scene.displayedBoardValid = false;
+    b.scene.preparedState = null;
+  }
   b.handlers.get('click')({ isTrusted: true, target: { closest: () => ({}) } });
   b.setNow(800);
+  if (rejoin) {
+    b.scene.lastPaint = { run: b.run };
+    b.scene.prepared = () => true;
+    b.scene.displayedBoardValid = true;
+    b.scene.preparedState = { run: b.run };
+  }
   b.document.body.dataset.flightState = 'running';
   probe.phase('running');
   b.setNow(2000);
@@ -578,6 +612,7 @@ async function requiredCompleted(retainStart = false) {
   return {
     protocol: 'required-original-cancel-v1',
     ...(retainStart ? { startRetention: 'trusted-initial-start-v1' } : {}),
+    ...(rejoin ? { requiredClickIdentityObservation: 'retained-reference-rejoin-v1' } : {}),
     observation: probe.export(),
     application: { baselineMs: 16, cadenceCalibration: b.scene.cadence.snapshot() },
     documents: 1,
@@ -1071,4 +1106,345 @@ test('actual qualifier initializer wires the first original trusted direct Start
   requiredWitness.close();
   readiness.dispose();
   assert.equal(requiredWitness.snapshot().failure, null);
+});
+
+test('named rejoin successor retains identity without inventing a current fresh-click board', async () => {
+  const row = await requiredCompleted(true, true);
+  assert.equal(assessReadinessMediaFault(row).status, 'passed');
+  const [initial, fresh, running] = row.observation.records;
+  assert.equal(initial.run, 1);
+  assert.equal(fresh.run, null);
+  assert.equal(fresh.tick, null);
+  assert.equal(fresh.levelId, null);
+  assert.equal(fresh.prepared, false);
+  assert.equal(fresh.displayedBoardValid, false);
+  assert.equal(fresh.preparedRunMatches, null);
+  assert.equal(fresh.submittedRunMatches, null);
+  assert.equal(fresh.requiredRejoin.run, initial.run);
+  assert.equal(fresh.requiredRejoin.identityEvidence, 'retained-reference-only');
+  assert.equal(fresh.requiredRejoin.currentPaintObserved, false);
+  assert.equal(running.run, initial.run);
+  assert.equal(running.tick, 0);
+  assert(running.prepared && running.displayedBoardValid && running.submittedRunMatches);
+  const legacy = structuredClone(row);
+  delete legacy.requiredClickIdentityObservation;
+  delete legacy.observation.requiredClickIdentityObservation;
+  for (const item of legacy.observation.records) delete item.requiredRejoin;
+  assert.equal(assessReadinessMediaFault(legacy).status, 'failed');
+  assert.equal(assessReadinessMediaFault(await requiredCompleted(true)).status, 'passed');
+});
+
+test('rejoin successor independently rejects altered reference, current-state, cadence and cleanup evidence', async () => {
+  const raw = await requiredCompleted(true, true);
+  for (const alter of [
+    (x) => delete x.requiredClickIdentityObservation,
+    (x) => (x.requiredClickIdentityObservation = 'unknown'),
+    (x) => delete x.startRetention,
+    (x) => delete x.observation.requiredClickIdentityObservation,
+    (x) => (x.observation.records[1].requiredRejoin.sceneAttached = false),
+    (x) => (x.observation.records[1].requiredRejoin.identityEvidence = 'current-authoritative-run'),
+    (x) => x.observation.records[1].requiredRejoin.run++,
+    (x) => x.observation.records[1].requiredRejoin.tick++,
+    (x) => x.observation.records[1].requiredRejoin.checkpoint.x++,
+    (x) => (x.observation.records[1].requiredRejoin.currentPaintObserved = true),
+    (x) => (x.observation.records[1].prepared = true),
+    (x) => (x.observation.records[1].displayedBoardValid = true),
+    (x) => (x.observation.records[1].submittedRunMatches = true),
+    (x) => (x.observation.records[1].trusted = false),
+    (x) => (x.observation.records[1].focused = false),
+    (x) => (x.observation.records[1].phase = 'running'),
+    (x) => (x.observation.records[2].run = null),
+    (x) => x.observation.records[2].run++,
+    (x) => (x.observation.records[2].prepared = false),
+    (x) => (x.observation.records[2].displayedBoardValid = false),
+    (x) => (x.observation.records[2].preparedRunMatches = false),
+    (x) => (x.observation.records[2].submittedRunMatches = false),
+    (x) => (x.observation.records[2].tick = 1),
+    (x) => (x.observation.records[2].cadence.samples = 29),
+    (x) => (x.observation.records[3].tick = 119),
+    (x) => (x.transport.closed = false),
+    (x) => (x.witness.closed = false),
+    (x) => (x.cleanupFailure = 'late failure'),
+  ]) {
+    const value = structuredClone(raw);
+    alter(value);
+    assert.equal(assessReadinessMediaFault(value).status, 'failed', String(alter));
+  }
+});
+
+function rejoinScene() {
+  const run = { tick: 0, level: { id: 'first-return' }, x: 4 };
+  class FieldScene {
+    constructor() {
+      this.lastPaint = { run };
+      this.submittedRun = run;
+    }
+    prepared() {
+      return true;
+    }
+  }
+  const scene = new FieldScene();
+  let scenes = [scene],
+    checkpoint = (r) => ({ tick: r.tick, x: r.x });
+  const create = new Function('return (' + createRequiredRejoinObservation.toString() + ')')();
+  const observer = create(
+    () => scenes,
+    (r) => checkpoint(r),
+    () => FieldScene,
+  );
+  return {
+    run,
+    scene,
+    observer,
+    setScenes(value) {
+      scenes = value;
+    },
+    setCheckpoint(value) {
+      checkpoint = value;
+    },
+  };
+}
+
+test('serialized rejoin observer reads attached identity at boundaries and releases its retained references', () => {
+  const b = rejoinScene();
+  const first = b.observer.observe('start-click');
+  b.scene.lastPaint = null;
+  const fresh = b.observer.observe('start-click');
+  assert.equal(fresh.scene, b.scene);
+  assert.equal(fresh.retainedRun, b.run);
+  assert.equal(fresh.evidence.currentPaintObserved, false);
+  assert.equal(first.evidence.checkpoint.x, 4);
+  b.scene.lastPaint = { run: b.run };
+  assert.equal(b.observer.observe('first-running').evidence.tick, 0);
+  b.run.tick = 144;
+  b.run.x = 5;
+  assert.equal(b.observer.observe('after-running').evidence.tick, 144);
+  assert.equal(first.evidence.checkpoint.x, 4);
+  b.observer.dispose();
+  assert.throws(() => b.observer.observe('start-click'));
+});
+
+test('actual serialized scene resolver refuses detached, replaced, ambiguous or mutated retained identities', () => {
+  for (const alter of [
+    (b) => b.setScenes([]),
+    (b) => b.setScenes([{ ...b.scene }]),
+    (b) => b.setScenes([b.scene, { ...b.scene }]),
+    (b) => b.setScenes(new Array(65).fill(b.scene)),
+    (b) => (b.scene.lastPaint = { run: structuredClone(b.run) }),
+    (b) => (b.scene.submittedRun = structuredClone(b.run)),
+    (b) => b.run.tick++,
+    (b) => b.run.x++,
+    (b) => (b.run.level.id = 'other'),
+    (b) => b.setCheckpoint(() => null),
+    (b) => b.setCheckpoint(() => ({ large: 'x'.repeat(2049) })),
+    (b) => b.observer.dispose(),
+  ]) {
+    const b = rejoinScene();
+    b.observer.observe('start-click');
+    b.scene.lastPaint = null;
+    alter(b);
+    assert.throws(() => b.observer.observe('start-click'), String(alter));
+  }
+  const b = rejoinScene();
+  b.observer.observe('start-click');
+  b.scene.lastPaint = null;
+  b.observer.observe('start-click');
+  assert.throws(() => b.observer.observe('first-running'));
+  assert.throws(() => rejoinScene().observer.observe('first-running'));
+});
+
+test('required rejoin opt-in is exact source/protocol/start bound and leaves old pilot unchanged', async () => {
+  const fixture = await readFile(
+    new URL(
+      '../docs/performance/fixtures/solo-readiness-797e03/required-original-cancel-start-v2.qualification.fixture',
+      import.meta.url,
+    ),
+  );
+  const scenario = JSON.parse(fixture);
+  const flags = [
+    '--source-revision=797e03f28743921842df6aa57520a72016ba3dfc',
+    '--readiness-probe=required-original-cancel-v1',
+    '--readiness-required-start=trusted-initial-start-v1',
+    '--work-probe',
+    '--hitch-journal',
+    '--cadence=settled120',
+  ];
+  const old = qualificationReadinessOptions(flags, scenario, fixture);
+  assert.equal(old.requiredClickIdentityObservation, undefined);
+  const opt = '--readiness-required-rejoin=retained-reference-rejoin-v1';
+  const selected = qualificationReadinessOptions([...flags, opt], scenario, fixture);
+  assert.deepEqual(selected, {
+    ...old,
+    requiredClickIdentityObservation: 'retained-reference-rejoin-v1',
+  });
+  for (const bad of [
+    [...flags, opt, opt],
+    [...flags, '--readiness-required-rejoin=unknown'],
+    [...flags.filter((f) => !f.startsWith('--readiness-required-start')), opt],
+    [...flags.filter((f) => !f.startsWith('--source-revision')), opt],
+    [
+      ...flags.map((f) => f.replace('required-original-cancel-v1', 'optional-icon-missing-v1')),
+      opt,
+    ],
+  ])
+    assert.throws(() => qualificationReadinessOptions(bad, scenario, fixture));
+});
+
+test('actual rejoin resolver refuses initial paint/submission mismatch and non-Solo prepared objects', () => {
+  for (const alter of [
+    (b) => (b.scene.submittedRun = structuredClone(b.run)),
+    (b) => (b.scene.lastPaint = null),
+    (b) => b.setScenes([{ lastPaint: { run: b.run }, submittedRun: b.run, prepared: () => true }]),
+    (b) => b.setScenes([b.scene, { prepared: () => true }]),
+  ]) {
+    const b = rejoinScene();
+    alter(b);
+    assert.throws(() => b.observer.observe('start-click'), String(alter));
+  }
+});
+test('actual rejoin resolver refuses detached or ambiguous scene after first running too', () => {
+  for (const alter of [
+    (b) => b.setScenes([]),
+    (b) => b.setScenes([{ ...b.scene }]),
+    (b) => b.setScenes([b.scene, b.scene]),
+    (b) => (b.scene.lastPaint = { run: structuredClone(b.run) }),
+    (b) => (b.scene.submittedRun = structuredClone(b.run)),
+  ]) {
+    const b = rejoinScene();
+    b.observer.observe('start-click');
+    b.scene.lastPaint = null;
+    b.observer.observe('start-click');
+    b.scene.lastPaint = { run: b.run };
+    b.observer.observe('first-running');
+    b.run.tick = 144;
+    alter(b);
+    assert.throws(() => b.observer.observe('after-running'), String(alter));
+  }
+});
+
+test('actual final successor admission keeps missing or mismatched native replay and owner failure non-passing', async () => {
+  // Modeled report authority only: no native result or new release is claimed.
+  const manifest = JSON.parse(
+    await readFile(
+      new URL('../docs/performance/solo-readiness-preparation-797e03-plan.json', import.meta.url),
+    ),
+  );
+  manifest.requiredClickIdentityObservation = 'retained-reference-rejoin-v1';
+  const plan = bindReadinessJob(manifest, 'chromium');
+  const row = plan.rows.find((r) => r.phase === 'required-original-cancel');
+  const single = readinessRowPlan(plan, row);
+  const recipeBytes = await readFile(new URL('../' + single.fixture.path, import.meta.url));
+  const recipe = JSON.parse(recipeBytes);
+  const model = await requiredCompleted(true, true);
+  const raw = {
+    format: 'SoloQualificationReportV1',
+    kind: 'readiness-diagnostic',
+    scenarioKind: 'lifecycle',
+    scenarioStatus: 'pass',
+    scenarioSHA256: single.fixture.sha256,
+    sourceRevision: manifest.candidate.revision,
+    buildIdentity: { sourceRevision: manifest.candidate.revision },
+    environment: {
+      engine: 'chromium',
+      browserVersion: 'modeled',
+      cpuThrottle: 1,
+      contextMode: 'ephemeral',
+      graphicsCapability: {
+        format: 'SoloReadinessGpuCapabilityV1',
+        engine: 'chromium',
+        canProceed: true,
+        requestBudgetMs: 5000,
+        cleanupBudgetMs: 2000,
+        maximumBytes: 16384,
+        status: 'unsupported',
+        requestSettled: false,
+        sessionDetached: false,
+        reason: 'browser-session-api-unavailable',
+      },
+    },
+    workProbe: true,
+    cadenceProtocol: 'settled120',
+    cacheMode: 'fresh-context',
+    baselineRuntime: false,
+    readinessPilot: {
+      protocol: model.protocol,
+      performanceQualification: false,
+      requiredStartRetention: model.startRetention,
+      requiredClickIdentityObservation: model.requiredClickIdentityObservation,
+    },
+    startupCadenceObservations: [
+      { pilotStartupWait: 'omitted; immediate partial samples retained' },
+    ],
+    readinessDocuments: 1,
+    readinessObservation: model.observation,
+    snapshots: [{ application: model.application }],
+    mediaFaultTransport: model.transport,
+    requiredOriginalWitness: model.witness,
+    readinessAssessment: assessReadinessMediaFault(model),
+    performanceGateStatus: 'fail',
+    pageErrors: [],
+    replay: {
+      scope: 'completed-scenario',
+      nativeVerification: {
+        status: 'pass',
+        engine: 'chromium',
+        browserVersion: 'modeled',
+        observation: { match: true },
+      },
+    },
+    actions: recipe.actions.map((action, i) => ({
+      path: String(i),
+      type: action.type,
+      label: action.label ?? null,
+      status: 'pass',
+    })),
+  };
+  const command = { status: 'closed', exitCode: 2, survivors: [], ambiguous: [] };
+  const check = (value, owner = command) =>
+    readinessAssessment(single, row, value, owner, { status: 'complete' });
+  const accepted = await check(raw);
+  assert.equal(accepted.readinessCorrectness, 'pass', JSON.stringify(accepted));
+  assert.equal(accepted.status, 'failed');
+  assert.equal(accepted.rawPerformanceGateStatus, 'fail');
+  for (const mutate of [
+    (r) => delete r.replay,
+    (r) => delete r.replay.nativeVerification,
+    (r) => (r.replay.nativeVerification.status = 'fail'),
+    (r) => (r.replay.nativeVerification.observation.match = false),
+    (r) => (r.replay.nativeVerification.engine = 'webkit'),
+    (r) => (r.replay.nativeVerification.browserVersion = 'different'),
+    (r) => (r.replayFailure = 'native verification failed'),
+    (r) => (r.contextCleanupFailure = 'browser closure failed'),
+    (r) => (r.readinessPilot.requiredClickIdentityObservation = 'unknown'),
+  ]) {
+    const invalid = structuredClone(raw);
+    mutate(invalid);
+    assert.equal((await check(invalid)).readinessCorrectness, 'fail', String(mutate));
+  }
+  assert.equal(
+    (await check(raw, { ...command, cleanupUnconfirmed: true })).readinessCorrectness,
+    'fail',
+  );
+  for (const entry of plan.rows) {
+    const args = readinessArguments(
+      { plan, here: '/tools/scripts', repository: '/tools' },
+      entry,
+      'http://fixture.invalid/',
+      '/evidence',
+    );
+    assert.equal(
+      args.includes('--readiness-required-rejoin=retained-reference-rejoin-v1'),
+      entry.phase === 'required-original-cancel',
+    );
+  }
+  const args = readinessArguments(
+    { plan, here: '/tools/scripts', repository: '/tools' },
+    row,
+    'http://fixture.invalid/',
+    '/evidence',
+  );
+  assert.equal(
+    qualificationReadinessOptions(args, recipe, recipeBytes).requiredClickIdentityObservation,
+    'retained-reference-rejoin-v1',
+  );
 });

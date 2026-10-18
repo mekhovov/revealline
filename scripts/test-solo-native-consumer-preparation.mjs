@@ -15,7 +15,7 @@ const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const workflow = (await read(workflowPath)).toString();
 const lanes = {
   readiness: {
-    path: 'docs/performance/solo-readiness-preparation-797e03-plan.json',
+    path: 'docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json',
     status: 'reviewed-readiness-diagnostic-only',
     key: 'engine',
     values: ['chromium', 'webkit'],
@@ -38,7 +38,12 @@ const actualFirstEight = JSON.parse(
 ).proof;
 const manifest = async (lane) => {
   const value = JSON.parse(await read(lanes[lane].path));
-  assert.equal(value.status, lanes[lane].status);
+  if (lane === 'readiness') {
+    assert.equal(value.status, 'held-awaiting-source-and-dispatch-review');
+    assert.throws(() => lanes[lane].matrix(value));
+    // Source-only model: actual successor remains held until complete controls and review.
+    value.status = lanes[lane].status;
+  } else assert.equal(value.status, lanes[lane].status);
   assert.equal(value.currentSourceCorrectness.status, 'passed-correctness-only');
   assert.deepEqual(value.release.firstEightEvidence, actualFirstEight);
   assert.deepEqual(value.currentSourceCorrectness.receipt, actualFirstEight);
@@ -118,7 +123,7 @@ function checkJob(text, lane) {
 test('readiness and touch are exact main-only choices with their unchanged adapter matrices and native bounds', async () => {
   assert.match(
     workflow,
-    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,\s*replay-portability,?\s*\]/,
+    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,\s*replay-portability,\s*frame-trace,?\s*\]/,
   );
   assert.match(workflow, /cancel-in-progress: false/);
   for (const [lane, spec] of Object.entries(lanes)) {
@@ -237,6 +242,8 @@ test('actual preparation adapters reject changed current bytes before package ad
 
 test('every job executing shared preparation controls retains the complete cross-lane read set', async () => {
   const required = new Set([
+    'scripts/solo-readiness-rejoin-declared-source.mjs',
+    'docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json',
     workflowPath,
     'scripts/test-solo-native-consumer-preparation.mjs',
     'docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',

@@ -1,3 +1,4 @@
+import { modelCurrentReadinessTools } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdtemp, mkdir, readFile, realpath, rm, symlink, writeFile } from 'node:fs/promises';
@@ -1665,7 +1666,14 @@ for (const sourceLabel of ['de332', '797']) {
   test(`${sourceLabel}: prospective actual preparation copies exact upload bytes and assembles unchanged native commands`, async (t) => {
     const repository = await realpath(new URL('../', import.meta.url));
     for (const phase of representativePhases) {
-      const p = bindTimingJob(await representative(phase), 'webkit', 1);
+      const p = bindTimingJob(
+        await modelCurrentReadinessTools(
+          `docs/performance/solo-${sourceLabel}-timing-${phase}-plan.json`,
+          await representative(phase),
+        ),
+        'webkit',
+        1,
+      );
       const work = await realpath(await mkdtemp(join(tmpdir(), 'solo-representative-prepare-')));
       t.after(() => rm(work, { recursive: true, force: true }));
       let baselineCalls = 0;

@@ -100,8 +100,9 @@ test('three reviewed fixed source797 lanes retain actual proof with unchanged en
     .split(',')
     .map((value) => value.trim())
     .filter(Boolean);
-  assert.deepEqual(choices.slice(-4, -1), ['shared-return', 'demo-recovery', 'demo-resources']);
-  assert.equal(choices.at(-1), 'replay-portability');
+  assert.deepEqual(choices.slice(-5, -2), ['shared-return', 'demo-recovery', 'demo-resources']);
+  assert.equal(choices.at(-2), 'replay-portability');
+  assert.equal(choices.at(-1), 'frame-trace');
   assert(workflow.includes('cancel-in-progress: false'));
   for (const [lane, spec] of Object.entries(lanes)) {
     check(workflow, lane);
