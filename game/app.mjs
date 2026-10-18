@@ -14564,14 +14564,40 @@ try {
     );
     refreshJourneySkip();
     $('journey-save-retry').onclick = () => void journeyProfile.flush();
+    let journeySaveExportOperation = null;
     $('journey-save-export').onclick = async () => {
       if (previewSession) return;
+      journeySaveExportOperation?.abort();
+      const controller = new AbortController();
+      journeySaveExportOperation = controller;
+      const assertCurrent = unifiedLibraryGuard(
+        () => journeySaveExportOperation === controller && !controller.signal.aborted,
+      );
       try {
-        await downloadJSON(JSON.parse(journeyProfile.export()), journeyProfile.backupFilename);
+        assertCurrent();
+        const { raw, partial } = await journeyProfile.exportAsync({ signal: controller.signal });
+        assertCurrent();
+        const filename = partial
+          ? journeyProfile.backupFilename.replace(/\.json$/, '-recovery.json')
+          : journeyProfile.backupFilename;
+        const result = await downloadJSON(JSON.parse(raw), filename);
+        assertCurrent();
+        if (partial)
+          localizedText($('journey-save-message'), () =>
+            t('interface:journeyBackup.exportPartial', { result: result.message }),
+          );
       } catch (error) {
+        try {
+          assertCurrent();
+        } catch {
+          return;
+        }
         localizedText($('journey-save-message'), () =>
           t('interface:journey.progressExportError', { error: error.message }),
         );
+      } finally {
+        if (journeySaveExportOperation === controller) journeySaveExportOperation = null;
+        controller.abort();
       }
     };
     if (previewSession) {

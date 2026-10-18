@@ -10,6 +10,10 @@ import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { emptyJourneyPerformance } from '../journey/performance.mjs';
 import { emptyJourneyPictures } from '../journey/pictures.mjs';
 import { createMediaPreparation } from '../ui/media-preparation.mjs';
+import { attachJourneyBackup } from '../ui/journey-backup.mjs';
+import { Document } from './helpers/couch-dom.mjs';
+import { SoloElement } from './helpers/solo-dom.mjs';
+import { parse } from 'acorn';
 const root = new URL(`${pathToFileURL(process.cwd()).href}/`);
 const url = (path) => new URL(path, root).href;
 const encode = (source) => `data:text/javascript;base64,${Buffer.from(source).toString('base64')}`;
@@ -805,4 +809,371 @@ test('unscheduled and injected backends preserve their original capture-time pro
     assert.equal((await store.performance.capture(f.state.performance.records[0])).durable, true);
     assert.equal(reads, 2, 'original profile refresh plus independent performance/CAS read');
   }
+});
+
+function backupDialog(profile) {
+  const document = new Document();
+  document.createElement = (tag) => new SoloElement(document, tag);
+  const downloads = [],
+    filenames = [];
+  const dialog = attachJourneyBackup({
+    document,
+    profile,
+    exportFile: async (value, filename) => {
+      downloads.push(value);
+      filenames.push(filename);
+      return { message: 'Exported fixture' };
+    },
+  });
+  dialog.open();
+  return {
+    dialog,
+    downloads,
+    filenames,
+    button: document.getElementById('journey-backup-export'),
+    status: document.getElementById('journey-backup-status'),
+  };
+}
+function holdBackupAdmission(f) {
+  let release,
+    held = true,
+    entered = 0;
+  const wait = new Promise((resolve) => {
+    release = resolve;
+  });
+  return {
+    schedule: async (work, request) => {
+      entered++;
+      if (held) await wait;
+      request.signal?.throwIfAborted();
+      return f.scheduleChunk(work, request);
+    },
+    release() {
+      held = false;
+      release();
+    },
+    get entered() {
+      return entered;
+    },
+  };
+}
+
+test('public Export waits for the unread durable sidecar without delaying required progress', async (t) => {
+  const f = await instrumented(t),
+    gate = holdBackupAdmission(f);
+  t.after(() => gate.release());
+  const { store, backend } = await privatelyOwnedProfile(t, f, { schedule: gate.schedule });
+  await store.load();
+  await until(() => gate.entered > 0);
+  const before = await backend.readState();
+  assert.equal(store.status().durable, true);
+  assert.equal(store.performance.snapshot().records.length, 0);
+  const ui = backupDialog(store),
+    exporting = ui.button.onclick();
+  await delay();
+  assert.deepEqual(
+    ui.downloads,
+    [],
+    'Never emit a successful progress-only backup while durable evidence is unread',
+  );
+  gate.release();
+  await exporting;
+  assert.equal(ui.downloads.length, 1);
+  assert.deepEqual(ui.downloads[0].performance.records, before.performance.records);
+  assert.deepEqual(ui.downloads[0].profile, before.profile);
+  assert.deepEqual(
+    await backend.readState(),
+    before,
+    'Export performs no persistence or progress mutation',
+  );
+  ui.dialog.close();
+});
+
+test('public Export labels unread optional evidence as a recovery backup without changing durable progress', async (t) => {
+  const f = await instrumented(t);
+  const { store, backend } = await privatelyOwnedProfile(t, f, {
+    schedule: async () => {
+      throw new Error('Modeled sidecar unavailable');
+    },
+  });
+  await store.load();
+  const before = await backend.readState(),
+    ui = backupDialog(store);
+  await ui.button.onclick();
+  assert.equal(ui.downloads.length, 1);
+  assert.deepEqual(ui.downloads[0].profile, before.profile);
+  assert.equal(ui.downloads[0].performance, undefined);
+  assert.match(ui.filenames[0], /-recovery\.json$/);
+  assert.match(ui.status.textContent, /recovery backup/i);
+  assert.match(ui.status.textContent, /may be missing/i);
+  assert.equal(store.status().durable, true);
+  assert.deepEqual(await backend.readState(), before);
+  ui.dialog.close();
+});
+
+test('closing and reopening the public backup aborts the pending read and suppresses its late download', async (t) => {
+  const f = await instrumented(t),
+    gate = holdBackupAdmission(f);
+  t.after(() => gate.release());
+  const { store } = await privatelyOwnedProfile(t, f, { schedule: gate.schedule });
+  await store.load();
+  let signal;
+  const actual = store.exportAsync.bind(store);
+  store.exportAsync = (options) => {
+    signal = options.signal;
+    return actual(options);
+  };
+  const ui = backupDialog(store),
+    exporting = ui.button.onclick();
+  await until(() => signal !== undefined);
+  ui.dialog.close();
+  assert.equal(signal.aborted, true);
+  ui.dialog.open();
+  const reopenedStatus = ui.status.textContent;
+  gate.release();
+  await exporting;
+  assert.deepEqual(ui.downloads, []);
+  assert.equal(ui.status.textContent, reopenedStatus);
+  ui.dialog.close();
+});
+
+test('explicit async export refuses active play before optional I/O or validation', async (t) => {
+  const f = await instrumented(t),
+    { store, requests } = await privatelyOwnedProfile(t, f);
+  await store.load();
+  await until(() => store.performance.snapshot().records.length === 1);
+  f.phase('playing');
+  requests.length = 0;
+  f.tracker.marks.length = 0;
+  await assert.rejects(store.exportAsync(), /paused/);
+  assert.deepEqual(requests, []);
+  assert.deepEqual(f.tracker.marks, []);
+});
+
+test('unsupported scheduled hosts export the raw bounded envelope without replay or projection authority', async (t) => {
+  const f = await instrumented(t),
+    gate = holdBackupAdmission(f);
+  t.after(() => gate.release());
+  const { backend } = await privatelyOwnedProfile(t, f, { schedule: gate.schedule });
+  const before = await backend.readState();
+  const store = f.createJourneyProfileStore({ schedulePerformanceChunk: gate.schedule });
+  t.after(() => store.performance.dispose());
+  await store.load();
+  assert.equal(store.performance.snapshot().supported, false);
+  const ui = backupDialog(store),
+    exporting = ui.button.onclick();
+  await delay();
+  assert.deepEqual(ui.downloads, []);
+  gate.release();
+  await exporting;
+  assert.deepEqual(ui.downloads[0].performance.records, before.performance.records);
+  assert.deepEqual(store.performance.snapshot().records, []);
+  assert.deepEqual(await backend.readState(), before);
+  ui.dialog.close();
+});
+
+test('a delayed older read cannot replace a newer generation accepted while export was pending', async (t) => {
+  const f = await instrumented(t),
+    newer = stateFor('newer-retained', 5),
+    older = stateFor('older-on-disk', 1);
+  let finish,
+    reading = false;
+  f.backend.readState = () =>
+    new Promise((resolve) => {
+      reading = true;
+      finish = resolve;
+    });
+  const exporting = f.controller.backupAsync();
+  exporting.catch(() => {});
+  t.after(() => finish?.(older));
+  await until(() => reading);
+  f.controller.observe(newer);
+  await until(() => f.controller.snapshot().records.some((r) => r.runId === 'newer-retained'));
+  const before = f.controller.snapshot(),
+    synchronous = f.controller.backup();
+  finish(older);
+  const exported = await exporting;
+  assert.equal(exported.generation, 5);
+  assert.deepEqual(exported.records, synchronous.records);
+  assert.equal(f.controller.snapshot(), before);
+  assert.equal(f.writes, 0);
+});
+
+test('an explicit backup preserves a verified pending row while an older disk read is returned', async (t) => {
+  let release,
+    committing = false;
+  const heldCommit = new Promise((resolve) => {
+    release = resolve;
+  });
+  t.after(() => release());
+  const f = await instrumented(t, {
+    commit: async () => {
+      committing = true;
+      await heldCommit;
+    },
+  });
+  const prior = stateFor('prior', 1),
+    pending = {
+      ...structuredClone(original),
+      missionId: original.missionId + '/next',
+      runId: 'pending',
+    };
+  prior.profile.clears.solo[pending.missionId] = {
+    runId: pending.runId,
+    gameplayId: pending.gameplayId,
+    difficulty: pending.difficulty,
+  };
+  f.state = structuredClone(prior);
+  const capturing = f.controller.capture(pending);
+  await until(() => committing);
+  f.backend.readState = async () => structuredClone(prior);
+  const before = f.controller.snapshot(),
+    exported = await f.controller.backupAsync();
+  assert(exported.records.some((row) => row.runId === pending.runId));
+  assert.equal(f.controller.snapshot(), before);
+  assert.equal(f.writes, 1, 'Export cannot add another write or claim the pending write completed');
+  release();
+  await capturing;
+});
+
+function actualNoticeExportHost(source, profile) {
+  const start = source.indexOf("    $('journey-save-export').onclick = async () => {"),
+    end = source.indexOf('    if (previewSession) {', start);
+  assert(start >= 0 && end > start);
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }),
+    guards = [];
+  const visit = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'FunctionDeclaration' && node.id?.name === 'unifiedLibraryGuard')
+      guards.push(node);
+    for (const child of Object.values(node))
+      if (Array.isArray(child)) child.forEach(visit);
+      else if (child && typeof child === 'object') visit(child);
+  };
+  visit(ast);
+  assert.equal(guards.length, 1);
+  const body = [
+    'const journeyProfile=profile,previewSession=null,downloads=[],filenames=[],button={},message={};',
+    'let journeySaveExportOperation=null,unifiedBuildRevision=0,unifiedDisposed=false,run={},paused=true,mediaPreparationPhase="paused";',
+    'const document={hidden:false,hasFocus:()=>true},$=(id)=>id==="journey-save-export"?button:message;',
+    'const downloadJSON=async(value,filename)=>{downloads.push(value);filenames.push(filename);return{message:"Exported fixture"};},localizedText=(node,value)=>{node.text=value();},t=(key,args)=>args?.error??key;',
+    source.slice(guards[0].start, guards[0].end),
+    source.slice(start, end),
+    'return {button,downloads,filenames,message,resumeThenPause(){paused=false;unifiedBuildRevision++;paused=true;}};',
+  ].join('\n');
+  return Function('profile', body)(profile);
+}
+
+test('actual save-notice Export awaits evidence and refuses a late result after Resume then Pause', async () => {
+  const source = await readFile(new URL('../app.mjs', import.meta.url), 'utf8');
+  let finish, signal;
+  const profile = {
+    backupFilename: 'fixture.json',
+    export: () => JSON.stringify({ profile: {} }),
+    exportAsync: (options) => {
+      signal = options.signal;
+      return new Promise((resolve) => {
+        finish = resolve;
+      });
+    },
+  };
+  const host = actualNoticeExportHost(source, profile),
+    pending = host.button.onclick();
+  await delay();
+  assert.deepEqual(host.downloads, [], 'Old synchronous notice export loses the unread sidecar');
+  assert.equal(signal.aborted, false);
+  host.resumeThenPause();
+  finish({
+    raw: JSON.stringify({ profile: {}, performance: { records: ['retained'] } }),
+    partial: false,
+  });
+  await pending;
+  assert.deepEqual(host.downloads, []);
+  assert.equal(signal.aborted, true);
+  assert.equal(host.message.text, undefined);
+  const current = host.button.onclick();
+  finish({
+    raw: JSON.stringify({ profile: {}, performance: { records: ['retained'] } }),
+    partial: false,
+  });
+  await current;
+  assert.deepEqual(host.downloads, [{ profile: {}, performance: { records: ['retained'] } }]);
+});
+
+async function failedStorageBackupProfile(t) {
+  const f = await instrumented(t);
+  let commits = 0;
+  const store = f.createJourneyProfileStore({
+    backend: {
+      read: async () => {
+        throw new Error('Modeled storage unavailable');
+      },
+      commit: async () => {
+        commits++;
+        throw new Error('Modeled storage unavailable');
+      },
+    },
+  });
+  t.after(() => store.performance.dispose());
+  store.restore({ format: 'revealline-journey-backup.v1', profile: stateFor().profile });
+  assert.equal(await store.flush(), false);
+  return { store, commits: () => commits };
+}
+
+test('actual backup dialog Export rescues a pending restored clear when storage read and write fail', async (t) => {
+  const { store, commits } = await failedStorageBackupProfile(t),
+    before = store.snapshot(),
+    status = store.status(),
+    ui = backupDialog(store),
+    writes = commits();
+  await ui.button.onclick();
+  assert.equal(ui.downloads.length, 1);
+  assert.deepEqual(ui.downloads[0].profile, before);
+  assert.equal(ui.downloads[0].profile.clears.solo[original.missionId].runId, original.runId);
+  assert.match(ui.filenames[0], /-recovery\.json$/);
+  assert.match(ui.status.textContent, /may be missing/i);
+  assert.deepEqual(store.snapshot(), before);
+  assert.deepEqual(store.status(), status);
+  assert.equal(commits(), writes, 'Recovery export never retries or credits a save');
+  ui.dialog.close();
+});
+
+test('actual save-notice Export keeps the failed-storage rescue with a labelled recovery filename', async (t) => {
+  const { store, commits } = await failedStorageBackupProfile(t),
+    before = store.snapshot(),
+    status = store.status(),
+    writes = commits();
+  const source = await readFile(new URL('../app.mjs', import.meta.url), 'utf8'),
+    host = actualNoticeExportHost(source, store);
+  await host.button.onclick();
+  assert.equal(host.downloads.length, 1);
+  assert.deepEqual(host.downloads[0].profile, before);
+  assert.match(host.filenames[0], /-recovery\.json$/);
+  assert.equal(host.message.text, 'interface:journeyBackup.exportPartial');
+  assert.deepEqual(store.snapshot(), before);
+  assert.deepEqual(store.status(), status);
+  assert.equal(commits(), writes);
+});
+
+test('conflicting current evidence identity never becomes a recovery fallback or download', async (t) => {
+  const f = await instrumented(t),
+    store = f.createJourneyProfileStore({
+      backend: f.backend,
+      acceptPerformanceBinding: () => true,
+      schedulePerformanceChunk: f.scheduleChunk,
+    });
+  t.after(() => store.performance.dispose());
+  await store.load();
+  await until(() => store.performance.snapshot().records.length === 1);
+  const before = store.snapshot(),
+    projection = store.performance.snapshot();
+  f.state.performance.records[0].replay.options.seed = 2;
+  const ui = backupDialog(store);
+  await ui.button.onclick();
+  assert.deepEqual(ui.downloads, []);
+  assert.match(ui.status.textContent, /Performance run identity changed/);
+  assert.deepEqual(store.snapshot(), before);
+  assert.equal(store.performance.snapshot(), projection);
+  assert.equal(f.writes, 0);
+  ui.dialog.close();
 });

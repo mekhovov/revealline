@@ -4439,6 +4439,7 @@
   "journeyBackup.inspectFailed": "Cannot inspect: {{error}} Progress is unchanged.",
   "journeyBackup.restoreFailed": "Restore failed: {{error}} Existing progress is retained.",
   "journeyBackup.exportFailed": "Export failed: {{error}} Your progress remains in this session.",
+  "journeyBackup.exportPartial": "{{result}} This recovery backup includes progress and evidence available in this session. Saved performance comparisons or replays that could not be read may be missing.",
   "quickMusic.controls": "Music controls",
   "quickMusic.next": "Next song",
   "quickMusic.shortcuts": "Music shortcuts",
