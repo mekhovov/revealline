@@ -122,7 +122,7 @@ export function verifySnakeDemo(source, { level } = {}) {
   const diagnostics = snakeDemoDiagnostics();
   const diagnosticMatch = createClassicSnakeMatch(level, demo.recording.options);
   const divergent = (tick) => {
-    const error = new Error(`Snake demo first diverged at diagnostic tick ${tick}.`);
+    const error = new Error(`Snake demo first mismatching checkpoint is at tick ${tick}.`);
     error.name = 'ReplayVerificationError';
     error.diagnostics = [{ code: 'checkpoint-mismatch', tick }];
     throw error;

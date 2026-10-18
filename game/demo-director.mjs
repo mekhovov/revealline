@@ -2,6 +2,7 @@ import { withDemoLoadingDeadline } from './demo-loading.mjs';
 import { createDemoRotation } from './demo-rotation.mjs';
 import { createDemoPrefetch } from './demo-prefetch.mjs';
 import { identifyDemoSource } from './demo-source-metadata.mjs';
+import { createDemoPreparation } from './demo-preparation.mjs';
 
 export const DEMO_RECOVERY_TIMEOUT_MS = 30000;
 const unavailableMode = (error) =>
@@ -11,6 +12,7 @@ const unavailableMode = (error) =>
     'renderer-unavailable',
     'package-unavailable',
   ].includes(error?.code);
+const timedOut = (error) => ['demo-load-timeout', 'demo-recovery-timeout'].includes(error?.code);
 
 /** Presentation-only rotation. Each prepared player owns an isolated run; this
  * controller never reads input, advances a hidden clock, or writes a profile. */
@@ -38,13 +40,14 @@ export function createDemoDirector({
     .filter((source) => scope === 'all' || source.modeId === modeId);
   const failed = new Set();
   const diagnostics = [];
-  const record = (event, item, failure = null, loadingMs = null) => {
+  const record = (event, item, failure = null, loadingMs = null, preparation = null) => {
     diagnostics.push({
       event,
       sourceId: item?.id ?? null,
       modeId: item?.modeId ?? null,
       at: Date.now(),
       loadingMs,
+      preparation,
       code: failure?.code ?? null,
       message: failure ? String(failure.message ?? failure).slice(0, 240) : null,
       stack:
@@ -186,14 +189,19 @@ export function createDemoDirector({
       phase = 'loading';
       emit();
       let prepared = null;
-      const preparationStarted = Date.now();
+      const preparationStarted = now();
+      const preparation = createDemoPreparation({ now });
       try {
         prepared = await withDemoLoadingDeadline(
           (signal) => {
-            if (prefetch.source !== candidate) return prepare(candidate, { signal });
+            preparation.bind(signal);
+            const reportPreparation = preparation.report;
+            if (prefetch.source !== candidate)
+              return prepare(candidate, { signal, reportPreparation });
+            reportPreparation('prefetch');
             return prefetch.take(candidate, { signal }).then((payload) => {
               signal.throwIfAborted();
-              return prepare(candidate, { signal, payload });
+              return prepare(candidate, { signal, payload, reportPreparation });
             });
           },
           {
@@ -203,6 +211,14 @@ export function createDemoDirector({
           },
         );
         if (!current() || expired()) {
+          const event = timedOut(controller.signal.reason) ? 'failed' : 'cancelled';
+          record(
+            event,
+            candidate,
+            controller.signal.reason,
+            now() - preparationStarted,
+            preparation.finish(event),
+          );
           release(prepared);
           return false;
         }
@@ -215,7 +231,7 @@ export function createDemoDirector({
         source = candidate;
         rotation.accept(candidate);
         lastVerified = candidate;
-        record('ready', candidate, null, Date.now() - preparationStarted);
+        record('ready', candidate, null, now() - preparationStarted, preparation.finish('ready'));
         requiredNextKind = null;
         finishLoading();
         error = '';
@@ -226,12 +242,8 @@ export function createDemoDirector({
         prefetch.start(choose());
         return true;
       } catch (failure) {
-        record(
-          current() ? 'failed' : 'cancelled',
-          candidate,
-          failure,
-          Date.now() - preparationStarted,
-        );
+        const event = current() || timedOut(failure) ? 'failed' : 'cancelled';
+        record(event, candidate, failure, now() - preparationStarted, preparation.finish(event));
         release(prepared);
         if (player === prepared) {
           player = null;

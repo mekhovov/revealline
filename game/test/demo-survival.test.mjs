@@ -110,6 +110,7 @@ test('cancelled preparation cannot adopt a Survival player', async () => {
 test('one prefetched payload can fall back only to another fully verified runtime performance', async () => {
   const original = await readProof(inventory[0]);
   const requests = [];
+  const preparation = [];
   const adapter = createSurvivalDemoAdapter({
     fetch: async (url) => {
       requests.push(url.pathname);
@@ -123,11 +124,37 @@ test('one prefetched payload can fall back only to another fully verified runtim
   const [source] = adapter.enumerateSources();
   const payload = await source.loadPayload();
   assert.equal(requests.length, 1);
-  const player = await source.create({ payload });
+  const player = await source.create({
+    payload,
+    reportPreparation: (stage, details) => preparation.push({ stage, details }),
+  });
   assert.equal(requests.length, 2);
   assert.equal(player.state.tick, 0);
   assert.equal(player.phase, 'paused');
+  assert.equal(preparation.filter((row) => row.stage === 'candidate').length, 2);
+  assert.equal(preparation.find((row) => row.stage === 'candidate').details.prefetched, true);
+  assert.equal(
+    preparation.find((row) => row.stage === 'candidate-failed').details.code,
+    'demo-content-mismatch',
+  );
+  assert.equal(
+    preparation.findLast((row) => row.stage === 'progress').details.tick,
+    original.ticks,
+  );
+  assert.equal(preparation.at(-1).stage, 'candidate-verified');
   await player.dispose();
+});
+
+test('a failed preparation diagnostic observer cannot alter native verification', async () => {
+  const proof = await readProof(inventory[0]);
+  const summary = await verifySurvivalDemo(inventory[0], proof, {
+    yieldEvery: Infinity,
+    reportPreparation() {
+      throw new Error('Unavailable diagnostics');
+    },
+  });
+  assert.equal(summary.tick, proof.ticks);
+  assert.equal(summary.outcome, proof.outcome);
 });
 
 for (const prefetch of [false, true])

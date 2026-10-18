@@ -1,6 +1,6 @@
 # Shared game demonstrations
 
-**Delivery status:** implementation and prior qualification evidence are retained, but the full approved plan is not complete. See the [updated implementation plan and status](shared-game-demos-plan.md) for the latest-main integration, known deadline defect, exact-tick diagnostic gap, remaining checks, and conditional estimates. The behavior below describes the implemented design; it is not a claim that every final acceptance gate has passed.
+**Delivery status:** implementation and prior qualification evidence are retained, but the full approved plan is not complete. See the [updated implementation plan and status](shared-game-demos-plan.md) for the pushed latest-main integration and deadline corrections, offline exact-tick diagnostics, remaining qualification checks, and conditional estimates. The behavior below describes the implemented design; it is not a claim that every final acceptance gate has passed.
 
 The ordinary game menus expose **Watch a demo** for the current mode and **Watch all modes** for a continuous mixed rotation. Eligible idle menus enter the current mode after 60 seconds. Reduced-motion settings disable idle entry by default; the player can change that choice in demo Details.
 
@@ -59,6 +59,17 @@ The presentation identifies mode, mission, goal, and recorded/live source. Capti
 ## Qualification
 
 Recordings bind to exact content and simulation identities. Newly generated recordings include checkpoints every five simulation seconds, in addition to full native replay verification. A checkpoint mismatch identifies the first mismatching checkpoint; it does not claim to identify an exact divergent tick between sparse checkpoints. Existing narrowly scoped reviewed Solo compatibility remains unchanged. New Solo and Survival browser alternatives are separately authored, bounded, strict performances; they do not relax checkpoint equality or fabricate outcomes.
+
+Exact-tick investigation uses the offline `scripts/diagnose-demo-ticks.mjs` tool. Capture a reference in a known-good runtime; it independently verifies the complete replay, observes a second complete run, and retains every native tick identity plus a detached checksum receipt. Compare the same recording, content, simulation and setup in the candidate runtime. Comparison finds the first mismatch even when states later reconverge, and reports the unchanged native verification result separately. It never admits a failed recording or rewrites checkpoints. Keep the reference and its receipt from the verified run; checksums detect accidental changes, not a forged pair.
+
+```sh
+node scripts/diagnose-demo-ticks.mjs --mode=sim --recording=optional-practice/civilian-fpv/demo-data/beginner-01-self-level-5b7652234b696e5a.json --capture=.cache/beginner-reference.trace.json
+node scripts/diagnose-demo-ticks.mjs --mode=sim --recording=optional-practice/civilian-fpv/demo-data/beginner-01-self-level-5b7652234b696e5a.json --reference=.cache/beginner-reference.trace.json --report=.cache/beginner-comparison.json
+```
+
+The same interfaces support Solo, Snake, SIM and Survival. Browser-compatible capture/comparison APIs and `scripts/qualify-demo-ticks-browser.mjs` exercise real native observations in installed browser engines. Select the exact browser-specific performance where required; a different recording is a different reference. Trace generation is on demand, bounded to 32 MiB, and excluded from game/package output. Per-tick Survival hashing can take several minutes; normal demo startup continues to use sparse diagnostics and full native verification.
+
+Preparation diagnostics retain one bounded snapshot per existing director event: elapsed stages, up to four candidate variants, preferred engine, prefetch use and latest verified tick. Successful and failed snapshots freeze before entering the capped history, so late work cannot rewrite them. These session-only observations distinguish import, payload, verification, artwork, renderer and retirement delays without recording player input or writing progress.
 
 Repeatable checks (`npm run demos:check` runs the four native coverage commands):
 

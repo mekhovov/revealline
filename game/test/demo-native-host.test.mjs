@@ -62,7 +62,8 @@ function fixture(t, options = {}) {
         levelId: 'a',
         variantId: 'standard',
         kind: 'replay',
-        create() {
+        create({ reportPreparation } = {}) {
+          options.onPrepareSource?.(reportPreparation);
           let phase = 'paused';
           const state = { status: 'running', tick: 0 };
           const player = {
@@ -130,7 +131,8 @@ function fixture(t, options = {}) {
       practices.push(practice);
       return practice;
     },
-    async mountScene({ parent, document }) {
+    async mountScene({ parent, document, reportPreparation }) {
+      options.onMountScene?.(reportPreparation);
       const canvas = document.createElement('canvas');
       parent.append(canvas);
       const scene = {
@@ -357,4 +359,31 @@ test('graphics loss retires the native engine and publishes its bounded diagnost
   assert.equal(page.doc.querySelectorAll('.demo-native-surface').length, 0);
   assert.ok(page.host.diagnostics.some((item) => item.event === 'playback-failed'));
   assert.ok(page.host.diagnostics.length <= 128);
+});
+
+test('native preparation forwards one bounded reporter through source and renderer ownership', async (t) => {
+  let sourceReport, mountReport;
+  const page = fixture(t, {
+    onPrepareSource(report) {
+      sourceReport = report;
+      report('candidate', { variant: 'chromium', engineHint: 'chromium', prefetched: false });
+      report('verification');
+      report('progress', { tick: 10, totalTicks: 10 });
+      report('candidate-verified');
+    },
+    onMountScene(report) {
+      mountReport = report;
+      report('renderer');
+    },
+  });
+  await page.host.open();
+  assert.equal(typeof sourceReport, 'function');
+  assert.equal(sourceReport, mountReport);
+  const row = page.host.diagnostics.find((item) => item.event === 'ready');
+  assert.equal(row.preparation.stage, 'renderer');
+  assert.equal(row.preparation.status, 'ready');
+  assert.equal(row.preparation.candidates[0].tick, 10);
+  assert.deepEqual(JSON.parse(page.$('demo-dialog').dataset.demoPreparationDetails), row);
+  await page.host.close();
+  assert.deepEqual(page.storage.writes, []);
 });
