@@ -14,6 +14,7 @@ import {
   subscribeSimMenuAnimation,
   attachSimThemeFamilyControls,
   mountSimGlobalSettings,
+  mountSimComfortPresets,
   mountSimModeSettings,
   simAttachSettingsPanels,
   simSettingsPanelBack,
@@ -818,6 +819,12 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     },
     duplicates: { masterMuted: [$('sound')] },
   });
+  const comfortPresets = mountSimComfortPresets({
+    document: doc,
+    window: win,
+    root: modeSettings.panels.accessibility,
+    display,
+  });
   const audioCues = section('gym-audio-cues');
   const stopAudioCues = attachSimMenuAudioSettings(
     {
@@ -930,6 +937,7 @@ export function mountCivilianPractice({ document: doc, window: win }) {
     $('sound').onclick = null;
     menuNavigation.dispose();
     menuHint.remove();
+    comfortPresets.destroy();
     globalSettings?.destroy();
     globalTools?.dispose();
     appearance.dispose();
