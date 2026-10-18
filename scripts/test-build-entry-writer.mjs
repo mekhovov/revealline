@@ -18,11 +18,13 @@ test('expanded builds bound concurrent writes to four and create each parent onl
   let active = 0,
     maximum = 0;
   const pending = writeBuildEntries('/source', '/staging', entries, {
+    stat: async () => ({ dev: 1 }),
     mkdir: async (directory, options) => {
       assert.deepEqual(options, { recursive: true });
       directories.push(directory);
     },
-    writeEntry: async (source, target, bytes) => {
+    writeEntry: async (source, target, bytes, options) => {
+      assert.deepEqual(options, { tryClone: true });
       active++;
       maximum = Math.max(maximum, active);
       await new Promise((resolve) => releases.push(resolve));
@@ -60,6 +62,7 @@ test('expanded build failure stops scheduling and settles owned writes before st
   const failure = new Error('Share disconnected');
   let settled = false;
   const pending = writeBuildEntries('/source', '/staging', entries, {
+    stat: async () => ({ dev: 1 }),
     mkdir: async () => {},
     writeEntry: async (_source, target) =>
       new Promise((resolve, reject) => operations.push({ target, resolve, reject })),
@@ -90,6 +93,7 @@ test('parent creation failure settles peers and empty builds schedule nothing', 
   const failure = new Error('Cannot create parent');
   await assert.rejects(
     writeBuildEntries('/source', '/staging', [{ name: 'game/a', bytes: Buffer.from('a') }], {
+      stat: async () => ({ dev: 1 }),
       mkdir: async () => {
         throw failure;
       },
@@ -100,6 +104,9 @@ test('parent creation failure settles peers and empty builds schedule nothing', 
     (error) => error === failure,
   );
   await writeBuildEntries('/source', '/staging', [], {
+    stat: async () => {
+      throw new Error('Unexpected device probe');
+    },
     mkdir: async () => {
       throw new Error('Unexpected directory');
     },
@@ -108,6 +115,61 @@ test('parent creation failure settles peers and empty builds schedule nothing', 
     },
   });
   assert.equal(writes, 0);
+});
+
+test('cross-volume batch probes devices once and vetoes every impossible clone', async () => {
+  const probes = [],
+    writes = [];
+  const entries = Array.from({ length: 24 }, (_, i) => ({
+    name: `game/${i}`,
+    bytes: Buffer.from(`accepted ${i}`),
+  }));
+  await writeBuildEntries('/source', '/staging', entries, {
+    stat: async (name) => {
+      probes.push(name);
+      return { dev: name === '/source' ? 1 : 2 };
+    },
+    mkdir: async () => {},
+    writeEntry: async (source, target, bytes, options) => {
+      writes.push({ source, target, bytes, options });
+    },
+  });
+  assert.deepEqual(probes.sort(), ['/source', '/staging']);
+  assert.equal(writes.length, entries.length);
+  for (const write of writes) assert.deepEqual(write.options, { tryClone: false });
+  assert.deepEqual(
+    writes.map((write) => write.bytes.toString()).sort(),
+    entries.map((entry) => entry.bytes.toString()).sort(),
+  );
+});
+
+test('unknown device metadata only vetoes cloning and settles both probes before writing', async () => {
+  let release,
+    writes = 0;
+  const destination = new Promise((resolve) => {
+    release = resolve;
+  });
+  const pending = writeBuildEntries(
+    '/source',
+    '/staging',
+    [{ name: 'game/a', bytes: Buffer.from('accepted') }],
+    {
+      stat: async (name) => {
+        if (name === '/source') throw new Error('Unavailable device metadata');
+        return destination;
+      },
+      mkdir: async () => {},
+      writeEntry: async (_source, _target, _bytes, options) => {
+        assert.deepEqual(options, { tryClone: false });
+        writes++;
+      },
+    },
+  );
+  await new Promise(setImmediate);
+  assert.equal(writes, 0);
+  release({ dev: 2 });
+  await pending;
+  assert.equal(writes, 1);
 });
 
 test('cloning is eligible only for known matching filesystem devices', () => {
@@ -122,6 +184,8 @@ test('cloning is eligible only for known matching filesystem devices', () => {
 // Exercise the actual writer body against explicit filesystem boundaries. These
 // are synthetic branch tests, not filesystem-speed or publication evidence.
 async function writerBoundary({
+  tryClone = true,
+  onProbe = () => {},
   platform = 'darwin',
   sameDevice = true,
   regular = true,
@@ -142,10 +206,12 @@ async function writerBoundary({
   };
   const boundary = {
     lstat: async () => {
+      onProbe();
       if (missing) throw Error('Missing generated source');
       return { dev: 1, size: accepted.length, isFile: () => regular };
     },
     stat: async () => {
+      onProbe();
       if (parentFails) throw Error('Parent stat unavailable');
       return { dev: sameDevice ? 1 : 2 };
     },
@@ -163,21 +229,25 @@ async function writerBoundary({
       target = Buffer.from(bytes);
     },
   };
-  await runInNewContext(`(${writeBuildEntry.toString()})('/source', '/target', accepted)`, {
-    Buffer,
-    accepted,
-    fs: boundary,
-    process: { platform },
-    dirname: path.dirname,
-    resolve: path.resolve,
-    constants,
-    canCloneBuildEntry,
-    runFile: async (command, args) => {
-      assert.equal(command, '/bin/cp');
-      assert.deepEqual(Array.from(args), ['-c', '/source', '/target']);
-      await clone();
+  await runInNewContext(
+    `(${writeBuildEntry.toString()})('/source', '/target', accepted, { tryClone })`,
+    {
+      Buffer,
+      accepted,
+      tryClone,
+      fs: boundary,
+      process: { platform },
+      dirname: path.dirname,
+      resolve: path.resolve,
+      constants,
+      canCloneBuildEntry,
+      runFile: async (command, args) => {
+        assert.equal(command, '/bin/cp');
+        assert.deepEqual(Array.from(args), ['-c', '/source', '/target']);
+        await clone();
+      },
     },
-  });
+  );
   assert.deepEqual(target, accepted);
   return calls;
 }
@@ -185,6 +255,24 @@ async function writerBoundary({
 test('cross-device entries bypass native copies and retain accepted bytes on both platforms', async () => {
   for (const platform of ['darwin', 'linux'])
     assert.deepEqual(await writerBoundary({ platform, sameDevice: false }), ['write']);
+});
+
+test('explicit clone veto writes accepted bytes without any metadata probes', async () => {
+  let probes = 0;
+  assert.deepEqual(
+    await writerBoundary({
+      tryClone: false,
+      onProbe: () => {
+        probes++;
+      },
+    }),
+    ['write'],
+  );
+  assert.equal(probes, 0);
+  await assert.rejects(
+    writerBoundary({ tryClone: false, writeFails: true }),
+    /Destination write failed/,
+  );
 });
 
 test('same-device exact clones are verified and need no fallback write', async () => {
