@@ -1,5 +1,12 @@
 # Flight practice: status, remaining work and estimates — 18 October 2026
 
+> **Latest:** [accepted main 237b40543: verified work, blockers and remaining estimates](flight-practice-execution-2026-10-18.md).
+> Source `6177d2cc8` passes 1,270 Practice and 756 local-UX tests, fresh package
+> admission, ten native exercises, current guides/backups and Gym continuity.
+> Current full production and heavier follow-ups are storage-blocked (~1.7 GiB
+> free versus a ~3.2 GiB start guard). Hosting/hardware/historical Worlds are deferred.
+> The rest of this file is the preserved earlier review, not current execution status.
+
 > **Superseded execution status:** the [integrated execution checkpoint](flight-practice-execution-2026-10-18.md)
 > records the completed rebase, 1,232 Practice passes, current production build,
 > six restarted-offline routes, corrected backup guides and native tuning restores.

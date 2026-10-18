@@ -1,5 +1,10 @@
 # Flight practice: integrated-main continuation
 
+**Newest:** [accepted main 237b40543 and current remaining table](flight-practice-execution-2026-10-18.md).
+The latest source `6177d2cc8` is separately verified; do not relabel the older
+receipts below. Remaining heavy work is currently storage-blocked, while the
+owner explicitly deferred hosting, physical hardware and the historical Worlds check.
+
 **Latest execution:** [18 October integrated results and remaining work](flight-practice-execution-2026-10-18.md)
 supersedes the read-only status and historical next steps below. It records the
 rebase, current 3,558-member build, 1,232 Practice passes, actual offline/guide/
