@@ -508,3 +508,316 @@ test('a failed owner with readable zero counters is still explicitly uncertain',
   );
   assert.equal(result.rawPerformanceGateStatus, 'fail');
 });
+
+// Execute the actual manual Demo snapshot body against explicit modeled owners.
+// No browser, renderer, native allocation or timing result is implied.
+const demoSource = await readFile(new URL('../game/ui/demo-host.mjs', import.meta.url), 'utf8');
+const demoStart = demoSource.indexOf('  function resourceSnapshot() {');
+const demoEnd = demoSource.indexOf('\n  const listen =', demoStart);
+assert(demoStart > 0 && demoEnd > demoStart);
+const demoSnapshot = new Function(
+  'state',
+  `const {canvas,resourceOwners,active,disposed,preparationPhase,pendingSourceLoads,
+    pendingPreparations,sceneTransition,reward,workerHandles,workersCreated,
+    workerTerminationRequests}=state;
+   ${demoSource.slice(demoStart, demoEnd)}
+   return resourceSnapshot();`,
+);
+const surface = (pixels = 0) => ({
+  canvases: Number(pixels > 0),
+  pixels,
+  rgbaBytesEstimate: pixels * 4,
+});
+function demoState(overrides = {}) {
+  return {
+    canvas: { width: 640, height: 480 },
+    resourceOwners: new Set(),
+    active: false,
+    disposed: false,
+    preparationPhase: () => null,
+    pendingSourceLoads: 0,
+    pendingPreparations: 0,
+    sceneTransition: { resourceSnapshot: () => ({ ...surface(), loading: false }) },
+    reward: {
+      resourceSnapshot: () => ({
+        state: 'idle',
+        pendingPreparations: 0,
+        poster: surface(),
+        presentation: null,
+        presentationUnavailable: false,
+      }),
+    },
+    workerHandles: 0,
+    workersCreated: 0,
+    workerTerminationRequests: 0,
+    ...overrides,
+  };
+}
+function demoReport(count = 3) {
+  const input = report(count);
+  for (const snapshot of input.snapshots)
+    snapshot.application.resources.demo = demoSnapshot(demoState());
+  return input;
+}
+const demoOptions = {
+  last: 3,
+  demo: { format: 'DemoOwnedResourcesV1', sourceRevision: 'a'.repeat(40) },
+};
+
+test('Demo assessment is explicit and source-bound; the historical default stays exact', () => {
+  assert.deepEqual(assessSoloOwnedResources(demoReport()), assessSoloOwnedResources(report(3)));
+  for (const demo of [
+    {},
+    { ...demoOptions.demo, format: 'DemoOwnedResourcesV2' },
+    { ...demoOptions.demo, sourceRevision: 'b'.repeat(40) },
+    { ...demoOptions.demo, sourceRevision: null },
+  ])
+    assert.throws(() => assessSoloOwnedResources(demoReport(), { last: 3, demo }));
+  const result = assessSoloOwnedResources(report(3), demoOptions);
+  assert.equal(result.bounds.status, 'inconclusive');
+  assert(result.rows[0].unknown.some((item) => item.path === 'demo.format'));
+  assert.equal(series(result, 'demo.display.pixels').status, 'unobserved');
+});
+
+test('actual Demo snapshot across ten close/reopen cycles retains display and nonadditive images', () => {
+  const input = report(0);
+  const image = { width: 32, height: 24 };
+  const snapshot = { resolved: { assets: { original: {} } }, image: () => ({ image }) };
+  for (let cycle = 1; cycle <= 10; cycle++) {
+    const r = resources();
+    const painter = clone(r.renderer);
+    const owner = {
+      painter: { resourceSnapshot: () => painter },
+      presentation: { snapshot },
+      actors: { snapshot },
+      picture: { backdrop: { image } },
+    };
+    r.demo = demoSnapshot(
+      demoState({
+        active: true,
+        preparationPhase: () => 'paused',
+        resourceOwners: new Set([owner]),
+        workerHandles: 1,
+        workersCreated: cycle,
+        workerTerminationRequests: cycle - 1,
+      }),
+    );
+    input.snapshots.push({ group: 'demo-paused', application: { resources: r } });
+    const closed = resources();
+    closed.demo = demoSnapshot(
+      demoState({ workersCreated: cycle, workerTerminationRequests: cycle }),
+    );
+    input.snapshots.push({ group: 'demo-closed', application: { resources: closed } });
+  }
+  input.failure = { message: 'A separate raw failure remains authoritative.' };
+  const original = JSON.stringify(input);
+  const result = assessSoloOwnedResources(input, {
+    ...demoOptions,
+    group: 'demo-closed',
+    last: 10,
+  });
+  assert.equal(result.bounds.status, 'pass');
+  assert.equal(result.retention.status, 'requires-owner-trend-review');
+  assert.equal(series(result, 'demo.display.pixels').minimum, 640 * 480);
+  assert.equal(series(result, 'demo.painterTotals.canvases').maximum, 0);
+  assert.equal(series(result, 'demo.workers.observedHandles').maximum, 0);
+  assert.equal(series(result, 'demo.workers.created').firstToLast, 9);
+  assert.equal(result.rows[0].values['demo.sharedImages.uniqueObserved.images'], 1);
+  assert.equal(result.rows[0].values['demo.sharedImages.categories.actors.images'], 1);
+  assert.equal(result.rawFailurePresent, true);
+  assert.equal(result.nativeMemoryQualification, false);
+  assert.equal(result.gameplayQualification, false);
+  assert.equal(Object.hasOwn(result, 'totalMemoryBytes'), false);
+  assert.equal(JSON.stringify(input), original);
+});
+
+test('closed canceled Demo work remains pending until actual modeled settlement', () => {
+  const input = demoReport();
+  input.snapshots[0].application.resources.demo = demoSnapshot(
+    demoState({
+      pendingSourceLoads: 1,
+      pendingPreparations: 1,
+      workerHandles: 1,
+      workersCreated: 1,
+    }),
+  );
+  const pending = input.snapshots[0].application.resources.demo;
+  pending.reward.pendingPreparations = 1;
+  for (const snapshot of input.snapshots.slice(1)) {
+    snapshot.application.resources.demo.workers.created = 1;
+    snapshot.application.resources.demo.workers.terminationRequests = 1;
+  }
+  const result = assessSoloOwnedResources(input, demoOptions);
+  assert.equal(result.bounds.status, 'pass');
+  assert.equal(result.retention.pendingAtObservedBoundaries, 'observed-pending');
+  assert.deepEqual(series(result, 'demo.pendingPreparations').values, [1, 0, 0]);
+  assert.deepEqual(series(result, 'demo.reward.pendingPreparations').values, [1, 0, 0]);
+  assert.deepEqual(series(result, 'demo.workers.observedHandles').values, [1, 0, 0]);
+});
+
+test('Demo accounting rejects contradictions, invalid exports and oversized evidence without leak claims', () => {
+  for (const mutate of [
+    (d) => {
+      d.format = 'wrong';
+    },
+    (d) => {
+      d.display.rgbaBytesEstimate++;
+    },
+    (d) => {
+      d.transition.canvases = 2;
+    },
+    (d) => {
+      d.workers.created = 1;
+    },
+    (d) => {
+      d.workers.observedHandles = -1;
+    },
+    (d) => {
+      d.active = true;
+      d.phase = 'playing';
+    },
+    (d) => {
+      d.active = true;
+      d.phase = 'paused';
+      d.pendingPreparations = 1;
+    },
+    (d) => {
+      d.sharedImages.uniqueObserved.images = 1;
+    },
+    (d) => {
+      d.painters = Array.from({ length: 65 }, () => ({}));
+    },
+  ]) {
+    const input = demoReport();
+    mutate(input.snapshots[0].application.resources.demo);
+    const result = assessSoloOwnedResources(input, demoOptions);
+    assert.equal(result.bounds.status, 'fail', String(mutate));
+    assert.equal(result.nativeMemoryQualification, false);
+  }
+});
+
+test('Demo missing owners, image dimensions and reward inspection stay unknown rather than zero', () => {
+  for (const mutate of [
+    (d) => {
+      delete d.painters;
+    },
+    (d) => {
+      delete d.workers;
+    },
+    (d) => {
+      d.sharedImages.unavailableSnapshots = 1;
+    },
+    (d) => {
+      const image = { width: 0, height: 0 };
+      const snapshot = { resolved: { assets: { original: {} } }, image: () => ({ image }) };
+      const actual = demoSnapshot(
+        demoState({ resourceOwners: new Set([{ presentation: { snapshot } }]) }),
+      );
+      d.scenes = actual.scenes;
+      d.sharedImages = actual.sharedImages;
+    },
+    (d) => {
+      d.reward.presentationUnavailable = true;
+    },
+    (d) => {
+      delete d.reward.presentation;
+    },
+  ]) {
+    const input = demoReport();
+    mutate(input.snapshots[0].application.resources.demo);
+    const result = assessSoloOwnedResources(input, demoOptions);
+    assert.equal(result.bounds.status, 'inconclusive', String(mutate));
+    assert(result.rows[0].unknown.length > 0);
+  }
+});
+
+test('Demo reward media counts only owned objects and pending command, never native decode memory', () => {
+  const input = demoReport();
+  for (const snapshot of input.snapshots) {
+    snapshot.application.resources.demo.reward.presentation = {
+      state: 'paused',
+      disposed: false,
+      mediaElements: 1,
+      ownedBlobURLs: 1,
+      ownedBlobBytes: 2345,
+      pendingPlayCommand: true,
+      nativeDecodedBytes: null,
+    };
+  }
+  const result = assessSoloOwnedResources(input, demoOptions);
+  assert.equal(result.bounds.status, 'pass');
+  assert.equal(series(result, 'demo.reward.presentation.ownedBlobBytes').maximum, 2345);
+  assert.equal(result.retention.pendingAtObservedBoundaries, 'observed-pending');
+  const bad = clone(input);
+  bad.snapshots[0].application.resources.demo.reward.presentation.ownedBlobURLs = 0;
+  assert.equal(assessSoloOwnedResources(bad, demoOptions).bounds.status, 'fail');
+  bad.snapshots[0].application.resources.demo.reward.presentation = null;
+  delete bad.snapshots[0].application.resources.demo.reward.presentationUnavailable;
+  assert.equal(assessSoloOwnedResources(bad, demoOptions).bounds.status, 'inconclusive');
+});
+
+test('Demo painter category accounting and page-pool replicas are validated without adding shared bytes', () => {
+  const input = demoReport();
+  for (const snapshot of input.snapshots) {
+    const r = snapshot.application.resources;
+    r.demo = demoSnapshot(
+      demoState({
+        active: true,
+        preparationPhase: () => 'paused',
+        resourceOwners: new Set([{ painter: { resourceSnapshot: () => clone(r.renderer) } }]),
+      }),
+    );
+  }
+  const result = assessSoloOwnedResources(input, demoOptions);
+  assert.equal(result.bounds.status, 'pass');
+  assert.equal(
+    series(result, 'demo.painterTotals.pixels').maximum,
+    input.snapshots[0].application.resources.renderer.ownedCanvases.pixels,
+  );
+  assert.equal(
+    result.retention.series.some((item) => item.path.startsWith('demo.painters.')),
+    false,
+  );
+  for (const mutate of [
+    (r) => {
+      r.demo.painters[0].ownedCanvases.categories.sourceArt.pixels++;
+    },
+    (r) => {
+      r.demo.painters[0].ownedCanvases.retainedPixelBufferBytes++;
+    },
+    (r) => {
+      r.demo.painters[0].enemyImages.decodedBytes++;
+    },
+    (r) => {
+      r.demo.painters[0].legacyImages.active = 2;
+    },
+    (r) => {
+      r.demo.scenes = 0;
+    },
+    (r) => {
+      r.demo.disposed = true;
+    },
+  ]) {
+    const bad = clone(input);
+    mutate(bad.snapshots[0].application.resources);
+    assert.equal(assessSoloOwnedResources(bad, demoOptions).bounds.status, 'fail', String(mutate));
+  }
+  const missing = clone(input);
+  delete missing.snapshots[0].application.resources.demo.painters[0].ownedCanvases.categories
+    .sourceArt;
+  assert.equal(assessSoloOwnedResources(missing, demoOptions).bounds.status, 'inconclusive');
+});
+
+test('Demo breaches before the comparable window and overflow remain explicit failures', () => {
+  const input = demoReport(4);
+  input.snapshots[0].group = 'failed-demo-prepare';
+  input.snapshots[0].application.resources.demo.workers.created = Number.MAX_SAFE_INTEGER;
+  input.snapshots[0].application.resources.demo.workers.observedHandles = Number.MAX_SAFE_INTEGER;
+  input.snapshots[0].application.resources.demo.workers.terminationRequests =
+    Number.MAX_SAFE_INTEGER;
+  const result = assessSoloOwnedResources(input, demoOptions);
+  assert.equal(result.retention.observed, 3);
+  assert.equal(result.bounds.status, 'fail');
+  assert(result.rows[0].failures.some((item) => item.code === 'sum-overflow'));
+  assert.equal(series(result, 'demo.workers.observedHandles').status, 'observed-flat');
+});

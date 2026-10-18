@@ -27,35 +27,71 @@ const expectedPaths = [
   'solo-darwin-process-inventory.c',
   'solo-darwin-process-inventory.mjs',
 ].map((path) => 'scripts/' + path);
-function currentInputs(plan, inputs) {
+const witnessPath = 'docs/performance/fixtures/solo-cocoa-identity/1cbc-executed-source.json';
+const witnessBytes = await read(witnessPath);
+const declarationBytes = await read(planPath);
+const workflowBytes = await read(workflowPath);
+function executedInputs(
+  plan,
+  bytes = witnessBytes,
+  declaration = declarationBytes,
+  workflow = workflowBytes,
+) {
+  assert.equal(bytes.length, 2969);
+  assert.equal(sha(bytes), 'b9903815048202055fdbf02afc638773bb1ab2c5bd512fb9c29a565ddbfb40a7');
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloCocoaExecutedSourceV1');
+  assert.equal(witness.sourceRevision, '1cbc4a98afd4e980817579b31d76b995ba261773');
+  assert.equal(witness.sourceTree, '39f99c40699057805673baa6b2cd3d0301e128cd');
+  assert.equal(witness.run, 39082271731);
+  assert.equal(witness.artifact, 12119746074);
+  assert.equal(witness.status, 'failed-fresh-owner-media-withheld');
+  assert.equal(witness.records.length, 10);
+  const refs = new Map(witness.records.map((row) => [row.path, row]));
+  assert.equal(refs.size, 10);
   assert.equal(plan.format, 'SoloNativeCocoaIdentityReleaseV1');
   assert.deepEqual(
-    plan.currentInputs.map((ref) => ref.path),
+    plan.currentInputs.map((row) => row.path),
     expectedPaths,
   );
   for (const ref of plan.currentInputs) {
-    const bytes = inputs.get(ref.path);
-    assert(bytes, ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(sha(bytes), ref.sha256, ref.path);
+    const original = refs.get(ref.path);
+    assert(original, ref.path);
+    assert.match(original.gitBlob, /^[a-f0-9]{40}$/);
+    assert.deepEqual(ref, { path: original.path, bytes: original.bytes, sha256: original.sha256 });
+  }
+  for (const [path, input] of [
+    [planPath, declaration],
+    [workflowPath, workflow],
+  ]) {
+    const ref = refs.get(path);
+    assert(ref, path);
+    assert.equal(input.length, ref.bytes, path);
+    assert.equal(sha(input), ref.sha256, path);
   }
 }
-test('new Cocoa release freezes the seven actual current native admission and provider inputs', async () => {
-  const inputs = new Map(
-    await Promise.all(expectedPaths.map(async (path) => [path, await read(path)])),
-  );
-  currentInputs(manifest, inputs);
+test('executed1cbc Cocoa release preserves original seven inputs, declaration and workflow', () => {
+  executedInputs(manifest);
   for (const path of expectedPaths) {
-    const missing = new Map(inputs);
-    missing.delete(path);
-    assert.throws(() => currentInputs(manifest, missing));
-    const changed = new Map(inputs);
-    changed.set(path, Buffer.concat([inputs.get(path), Buffer.from(' ')]));
-    assert.throws(() => currentInputs(manifest, changed));
-    const plan = structuredClone(manifest);
-    plan.currentInputs.find((ref) => ref.path === path).sha256 = '0'.repeat(64);
-    assert.throws(() => currentInputs(plan, inputs));
+    const changed = structuredClone(manifest);
+    changed.currentInputs.find((row) => row.path === path).sha256 = '0'.repeat(64);
+    assert.throws(() => executedInputs(changed));
+    const missing = structuredClone(manifest);
+    missing.currentInputs = missing.currentInputs.filter((row) => row.path !== path);
+    assert.throws(() => executedInputs(missing));
   }
+  assert.throws(() => executedInputs(manifest, Buffer.from('{}')));
+  assert.throws(() =>
+    executedInputs(manifest, witnessBytes, Buffer.concat([declarationBytes, Buffer.from(' ')])),
+  );
+  assert.throws(() =>
+    executedInputs(
+      manifest,
+      witnessBytes,
+      declarationBytes,
+      Buffer.concat([workflowBytes, Buffer.from(' ')]),
+    ),
+  );
 });
 function previousAttempt(plan) {
   const previous = plan.previousAttempt;

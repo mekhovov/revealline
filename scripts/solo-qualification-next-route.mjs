@@ -5,10 +5,12 @@ export const NEXT_ROUTE_PROTOCOL = 'authored-next-geometric-v1';
 export const NEXT_ROUTE_SOURCE = 'c696af41857840359ae473558b90682f3d71f2db';
 export const NEXT_ROUTE_FINAL_SOURCE = 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17';
 export const NEXT_ROUTE_39774_SOURCE = '39774cce8697d412d138ef4da11ac547a5f8e535';
+export const NEXT_ROUTE_DE332_SOURCE = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
 const nextRouteSources = Object.freeze([
   NEXT_ROUTE_SOURCE,
   NEXT_ROUTE_FINAL_SOURCE,
   NEXT_ROUTE_39774_SOURCE,
+  NEXT_ROUTE_DE332_SOURCE,
 ]);
 export const NEXT_ROUTE_IDENTITIES = [
   {
