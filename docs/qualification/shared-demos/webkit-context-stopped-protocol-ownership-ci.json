@@ -1,0 +1,1409 @@
+{
+  "format": "WebKitFilteredProtocolDiagnosticV1",
+  "started": "2026-10-18T19:25:25.121Z",
+  "complete": true,
+  "probeSHA256": "b94452f1b98542e35b86b79fd163d970b4f61f02f96f5b528aa4b3129570ead7",
+  "childReportPath": "docs/qualification/shared-demos/webkit-owner-protocol-reloads-ownership-ci.json",
+  "scope": "Bounded native protocol observations from a temporary instrumented host reload probe. Not a replacement for production qualification.",
+  "events": [
+    {
+      "receivedAt": "2026-10-18T19:25:26.941Z",
+      "direction": "receive",
+      "method": "Target.targetCreated",
+      "params": {
+        "targetInfo": {
+          "targetId": "page-8",
+          "type": "page",
+          "isPaused": true
+        }
+      },
+      "browserContextId": "8000000000000002",
+      "pageProxyId": "7"
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:27.681Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 1,
+          "type": "normal",
+          "name": "",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:27.692Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 2,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:27.974Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "4294967297",
+          "loaderId": "16",
+          "url": "http://127.0.0.1:8771/game/?journey=legacy",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:27.975Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 3,
+          "type": "normal",
+          "name": "",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:27.976Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 4,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:27.987Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 67,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 67,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:30.372Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "type": "log",
+          "line": 0,
+          "column": 0,
+          "url": "http://127.0.0.1:8771/game/build-info.json",
+          "repeatCount": 1,
+          "networkRequestId": "5.2190",
+          "timestamp": 1792351530.366493
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:30.694Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "21474836488",
+          "loaderId": "",
+          "url": "about:blank",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771",
+          "parentId": "4294967297",
+          "name": "enemy-guide-frame"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:30.694Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 5,
+          "type": "normal",
+          "name": "",
+          "frameId": "21474836488"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:30.694Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 6,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "21474836488"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:31.638Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 7,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:31.875Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameDetached",
+      "params": {
+        "frameId": "21474836488"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:31.906Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "4294967297",
+          "loaderId": "27",
+          "url": "http://127.0.0.1:8771/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:31.907Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 8,
+          "type": "normal",
+          "name": "",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:31.908Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 9,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:31.908Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 10,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:31.914Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 148,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 148,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:31.915Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 150,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 150,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:33.241Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "type": "log",
+          "line": 0,
+          "column": 0,
+          "url": "http://127.0.0.1:8771/game/build-info.json",
+          "repeatCount": 1,
+          "networkRequestId": "5.5464",
+          "timestamp": 1792351533.240476
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:33.499Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "21474836508",
+          "loaderId": "",
+          "url": "about:blank",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771",
+          "parentId": "4294967297",
+          "name": "enemy-guide-frame"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:33.499Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 11,
+          "type": "normal",
+          "name": "",
+          "frameId": "21474836508"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:33.500Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 12,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836508"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:33.500Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 13,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "21474836508"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:34.366Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 14,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:34.541Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "security",
+          "level": "error",
+          "text": "Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy.",
+          "type": "log",
+          "line": 0,
+          "column": 0,
+          "url": "",
+          "repeatCount": 1,
+          "timestamp": 1792351534.539595
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:43.716Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameDetached",
+      "params": {
+        "frameId": "21474836508"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:43.738Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "4294967297",
+          "loaderId": "30",
+          "url": "http://127.0.0.1:8771/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:43.739Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 15,
+          "type": "normal",
+          "name": "",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:43.739Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 16,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:43.739Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 17,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:43.740Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 18,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:43.744Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 186,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 186,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:43.744Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 188,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 188,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:45.320Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "type": "log",
+          "line": 0,
+          "column": 0,
+          "url": "http://127.0.0.1:8771/game/build-info.json",
+          "repeatCount": 1,
+          "networkRequestId": "5.7975",
+          "timestamp": 1792351545.318294
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:45.585Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "21474836519",
+          "loaderId": "",
+          "url": "about:blank",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771",
+          "parentId": "4294967297",
+          "name": "enemy-guide-frame"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:45.586Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 19,
+          "type": "normal",
+          "name": "",
+          "frameId": "21474836519"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:45.587Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 20,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836519"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:45.587Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 21,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836519"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:45.587Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 22,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "21474836519"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:46.176Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 23,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:55.727Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "security",
+          "level": "error",
+          "text": "Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy.",
+          "type": "log",
+          "line": 0,
+          "column": 0,
+          "url": "",
+          "repeatCount": 1,
+          "timestamp": 1792351555.712924
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.261Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "javascript",
+          "level": "error",
+          "text": "Cannot load blob:http://127.0.0.1:8771/1873bc37-e44f-4379-8140-87dbc498a641 due to access control checks.",
+          "type": "log",
+          "line": 163,
+          "column": 38,
+          "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+          "repeatCount": 1,
+          "timestamp": 1792351557.2609,
+          "stackTrace": {
+            "callFrames": [
+              {
+                "functionName": "browserDecode",
+                "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+                "scriptId": "81",
+                "lineNumber": 163,
+                "columnNumber": 38
+              },
+              {
+                "functionName": "",
+                "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+                "scriptId": "81",
+                "lineNumber": 598,
+                "columnNumber": 44
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.288Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameDetached",
+      "params": {
+        "frameId": "21474836519"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.310Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "4294967297",
+          "loaderId": "34",
+          "url": "http://127.0.0.1:8771/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.310Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 24,
+          "type": "normal",
+          "name": "",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.311Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 25,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.311Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 26,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.311Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 27,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.311Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 28,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.316Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 224,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 224,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:57.316Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 226,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 226,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:58.541Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "type": "log",
+          "line": 0,
+          "column": 0,
+          "url": "http://127.0.0.1:8771/game/build-info.json",
+          "repeatCount": 1,
+          "networkRequestId": "5.10421",
+          "timestamp": 1792351558.540886
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:58.799Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "21474836530",
+          "loaderId": "",
+          "url": "about:blank",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771",
+          "parentId": "4294967297",
+          "name": "enemy-guide-frame"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:58.800Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 29,
+          "type": "normal",
+          "name": "",
+          "frameId": "21474836530"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:58.800Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 30,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836530"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:58.801Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 31,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836530"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:58.801Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 32,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "21474836530"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:58.801Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 33,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836530"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:59.345Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 34,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:25:59.547Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "security",
+          "level": "error",
+          "text": "Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy.",
+          "type": "log",
+          "line": 0,
+          "column": 0,
+          "url": "",
+          "repeatCount": 1,
+          "timestamp": 1792351559.544527
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.127Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "javascript",
+          "level": "error",
+          "text": "Fetch API cannot load http://127.0.0.1:8771/game/presentation/compiled/assets/fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef.woff2 due to access control checks.",
+          "type": "log",
+          "line": 345,
+          "column": 31,
+          "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+          "repeatCount": 1,
+          "timestamp": 1792351570.126719,
+          "stackTrace": {
+            "callFrames": [
+              {
+                "functionName": "bytesAt",
+                "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+                "scriptId": "115",
+                "lineNumber": 345,
+                "columnNumber": 31
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.133Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameDetached",
+      "params": {
+        "frameId": "21474836530"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.160Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "4294967297",
+          "loaderId": "39",
+          "url": "http://127.0.0.1:8771/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.160Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 35,
+          "type": "normal",
+          "name": "",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.160Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 36,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.160Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 37,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.160Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 38,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.161Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 39,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.161Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 40,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "4294967297"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.165Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 262,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 262,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:10.165Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "error": {
+        "code": -32000,
+        "message": "Missing injected script for given objectId",
+        "data": [
+          {
+            "code": -32000,
+            "message": "Missing injected script for given objectId"
+          }
+        ]
+      },
+      "id": 264,
+      "associatedRequest": {
+        "method": "Runtime.callFunctionOn",
+        "id": 264,
+        "contextId": null,
+        "expression": "(utilityScript, ...args) => utilityScript.evaluate(...args)"
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:11.553Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Console.messageAdded",
+      "params": {
+        "message": {
+          "source": "network",
+          "level": "error",
+          "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+          "type": "log",
+          "line": 0,
+          "column": 0,
+          "url": "http://127.0.0.1:8771/game/build-info.json",
+          "repeatCount": 1,
+          "networkRequestId": "5.12832",
+          "timestamp": 1792351571.552897
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:11.785Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Page.frameNavigated",
+      "params": {
+        "frame": {
+          "id": "21474836541",
+          "loaderId": "",
+          "url": "about:blank",
+          "mimeType": "text/html",
+          "securityOrigin": "http://127.0.0.1:8771",
+          "parentId": "4294967297",
+          "name": "enemy-guide-frame"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:11.786Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 41,
+          "type": "normal",
+          "name": "",
+          "frameId": "21474836541"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:11.787Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 42,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836541"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:11.787Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 43,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836541"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:11.787Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 44,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836541"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:11.787Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 45,
+          "type": "internal",
+          "name": "Media Controls (Document)",
+          "frameId": "21474836541"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:11.787Z",
+      "direction": "receive",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "method": "Runtime.executionContextCreated",
+      "params": {
+        "context": {
+          "id": 46,
+          "type": "user",
+          "name": "__playwright_utility_world__",
+          "frameId": "21474836541"
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T19:26:21.234Z",
+      "direction": "receive",
+      "method": "Target.targetDestroyed",
+      "params": {
+        "targetId": "page-8",
+        "crashed": false
+      },
+      "browserContextId": "8000000000000002",
+      "pageProxyId": "7"
+    }
+  ],
+  "oversizedOrUnparseable": 0,
+  "overflow": 0,
+  "childSummary": "{\"reportPath\":\"docs/qualification/shared-demos/webkit-owner-protocol-reloads-ownership-ci.json\",\"complete\":false,\"checks\":4,\"failure\":\"AssertionError [ERR_ASSERTION]: {\\\"pageErrors\\\":[{\\\"mode\\\":\\\"solo\\\",\\\"stage\\\":\\\"ordinary-control-reload-3\\\",\\\"receivedAt\\\":\\\"2026-10-18T19:25:57.263Z\\\",\\\"message\\\":\\\"Cannot load blob:http://127.0.0.1:8771/1873bc37-e44f-4379-8140-87dbc498a641 due to access control checks.\\\\n    at browserDecode (http://127.0.0.1:8771/game/presentation/host.mjs:163:38)\\\\n    at unknown (http://127.0.0.1:8771/game/presentation/host.mjs:598:44)\\\"},{\\\"mode\\\":\\\"solo\\\",\\\"stage\\\":\\\"ordinary-control-reload-4\\\",\\\"receivedAt\\\":\\\"2026-10-18T19:26:10.127Z\\\",\\\"message\\\":\\\"Fetch API cannot load http://127.0.0.1:8771/game/presentation/compiled/assets/fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef.woff2 due to access control checks.\\\\n    at bytesAt (http://127.0.0.1:8771/game/presentation/host.mjs:345:31)\\\"}],\\\"domErrors\\\":[]}\\n\\nfalse !== true\\n\\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-webkit-owner-protocol-child.mjs:503:10\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+  "childExit": {
+    "code": 1,
+    "signal": null
+  },
+  "finished": "2026-10-18T19:26:21.325Z",
+  "childReportSHA256": "68410a6394efbb8d81087066750f353cc4f598cdc7d79770e8d62b7011635e52",
+  "browserCloseCompleted": true,
+  "previewClosed": true,
+  "source": {
+    "binding": "Diagnostic-only host variant and unchanged ordinary app snapshot are pinned by exact served bytes. Remaining runtime dependencies are not frozen by this probe; the parent may edit unrelated Demo inventory during the run. Manifest is descriptive, not full-tree admission.",
+    "head": "5c69d1d932815d44a5ceec87b74a119f0cd21d61",
+    "manifestPath": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "created": "2026-10-18T18:59:08.330364+00:00",
+    "integrationBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+    "files": 9991,
+    "bytes": 404326765,
+    "declarationAfter": {
+      "created": "2026-10-18T18:59:08.330364+00:00",
+      "integrationBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "sourceFingerprint": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+      "files": 9991,
+      "bytes": 404326765
+    },
+    "appLiveSHA256After": "aabdf3b7fdee28fdf7911fda86be8fd54fab29d005e5396b4789816aaafd0da8",
+    "hostLiveSHA256After": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2"
+  },
+  "strictDiagnosticGate": false
+}
