@@ -3,10 +3,10 @@
   "feature": "F07a",
   "sourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
   "date": "2026-10-18",
-  "status": "source_and_scoped_model_assessment_complete_browser_pending",
+  "status": "source_and_scoped_model_and_browser_assessment_remaining_scenarios_pending",
   "scope": "Critical cue categories across current native game families, installed Custom, Rooms and optional assisted gym; authored/imported scenarios need separate admitted evidence.",
   "scopeLimitations": [
-    "No new browser or listening receipt yet.",
+    "Two scoped actual-browser fixture receipts exist for C01/C02 and C03; remaining rows and listening are unqualified.",
     "Model traces do not prove visual legibility, output audio or assistive technology.",
     "Reaction captions are optional and cannot be the sole critical alternative.",
     "Legacy company public entry redirects to native Solo; dormant company-player is not separately qualified.",
@@ -40,7 +40,7 @@
       "evidence": {
         "source": "inspected",
         "model": "see scoped run receipts; not a blanket row pass",
-        "browser": "not_run_for_this_assessment",
+        "browser": "scoped_actual_visible_capture_self_contact_compact; see browserRuns, not entire row qualification",
         "listening": "not_performed",
         "physical": "not_tested"
       }
@@ -80,7 +80,7 @@
       "evidence": {
         "source": "inspected",
         "model": "see scoped run receipts; not a blanket row pass",
-        "browser": "not_run_for_this_assessment",
+        "browser": "scoped_actual_visible_capture_self_contact_compact; see browserRuns, not entire row qualification",
         "listening": "not_performed",
         "physical": "not_tested"
       }
@@ -112,7 +112,7 @@
       "evidence": {
         "source": "inspected",
         "model": "see scoped run receipts; not a blanket row pass",
-        "browser": "not_run_for_this_assessment",
+        "browser": "scoped_actual_visible_optional_sentry_warning; impact and timing remain pending",
         "listening": "not_performed",
         "physical": "not_tested"
       }
@@ -976,10 +976,93 @@
       ]
     }
   ],
-  "browserRuns": [],
+  "browserRuns": [
+    {
+      "id": "capture-self-contact-compact",
+      "rows": ["C01", "C02"],
+      "observer": "root agent, actual in-app browser",
+      "sourceRevision": "e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1",
+      "runtimeSourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "content": "Normal Solo host with the existing self-contact retry fixture admitted through its campaign response; real legal Down then Up, no game-state/event injection.",
+      "delivery": "Immutable task-owned HTTP server reads production Git objects at e64; fixture sources frozen separately.",
+      "settings": {
+        "masterMute": "on",
+        "reactionCaptions": "off",
+        "effects": "reduced",
+        "locale": "uk",
+        "innerViewport": {
+          "width": 316,
+          "height": 776
+        }
+      },
+      "visibleObserved": [
+        "Canvas recovery countdown 0.8s",
+        "Specific bottom cause: Твоя лінія перетнула себе. Обери новий маршрут."
+      ],
+      "domObserved": [
+        "2 lives after self-contact",
+        "run-message block / visible / opacity1 / fixed; x12 y735.609 width292 height36.391 inside 776px viewport"
+      ],
+      "screenshots": [
+        {
+          "filename": "f07-active-compact-self-contact.png",
+          "sha256": "05d10b70c25eb771e811901ac596cb9c2e0787dfefba749b37e975a86f5a082e"
+        }
+      ],
+      "limits": [
+        "Only this legal self-contact/recovery path; no shield, crowded-cue, every C01 transition or other-family pass.",
+        "Earlier paused/cropped screenshots and AX-only text were inconclusive about active visible cause; the active screenshot resolves this particular concern.",
+        "No audio listening, screen-reader, physical-device or input-hardware evidence."
+      ]
+    },
+    {
+      "id": "optional-sentry-warning",
+      "rows": ["C03"],
+      "observer": "root agent, actual in-app browser",
+      "sourceRevision": "e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1",
+      "runtimeSourceRevision": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "content": "F07 optional sentry review xonix-pack.v6 / xonix-core.v6; exact frozen packFor + e64 combat fixture, classes and first theme; normal Library → Expansion packs file import → validate → Play → Start.",
+      "pack": {
+        "filename": "revealline-f07-silent-guard-e64c9c08.json",
+        "bytes": 5784,
+        "sha256": "043d12c1664f10405ef0a99c6a42f1b506d7abe87927657b09aa3a32910f06f5",
+        "validation": {
+          "valid": true,
+          "errors": [],
+          "warnings": []
+        }
+      },
+      "settings": {
+        "masterMute": "on in fixture; no acoustic test",
+        "viewport": "not retained in this receipt",
+        "effects": "no normal/reduced comparison retained"
+      },
+      "actions": "Legal Right held approximately 2 seconds then released; accepted continuous direction continues after release.",
+      "visibleObserved": [
+        "At 0:02, dashed diagonal sentry aim ray and bracketed shooter; 3 lives and LIVE LINE.",
+        "At 0:07, successful 50% completion / 11900 score / 3 lives."
+      ],
+      "screenshots": [
+        {
+          "filename": "f07-guard-silent-contact.png",
+          "sha256": "7828f54f3c68de4a96e65eb1f572c79816802b038c7d6da04246619ffe048a05"
+        },
+        {
+          "filename": "f07-guard-silent-result.png",
+          "sha256": "eeefa1a80dd7089728cef091ac846ac297b7cd48c255608464d505378548e157"
+        }
+      ],
+      "limits": [
+        "Visible threat geometry only; no projectile impact/damage/cause, manual evasion or measured warning timing claim.",
+        "Fixture instruction release-to-stationary-hit was incorrect under continuous steering. The filename contact does not establish a hit.",
+        "Initial incompatible-version fixture, hidden-Home staging helper and fixture MutationObserver failures are excluded; they are not product defects.",
+        "No listening, AT, physical device, production-art or other-host qualification."
+      ]
+    }
+  ],
   "demonstratedRepairCandidates": [],
   "openEvidence": [
-    "Actual silent-play busy-state comparisons with normal/reduced effects.",
+    "Remaining silent-play scenarios and busy-state normal/reduced comparisons; C01/C02 self-contact and C03 visible sentry warning are narrowly observed.",
     "Admitted imported/specialist content and per-seat warning attribution.",
     "F13 actual listening with stated speakers/headphones and mix settings.",
     "F18 real AT navigation/announcements; no screen reader or switch hardware used.",
