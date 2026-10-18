@@ -50,3 +50,6 @@ import './test-solo-final-soak-admission.mjs';
 import './test-solo-remote-timing.mjs';
 // Complete Demo observer repair and immutable executed-input controls.
 import './test-solo-demo-797e03-tooling-admission.mjs';
+
+// Actual production boot and current shared-return successor admission.
+import './test-solo-shared-mode-boot-admission.mjs';
