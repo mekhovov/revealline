@@ -105,7 +105,7 @@ test('workflow passes pinned policy without weakening the exact-source or requir
   );
   assert.equal(
     workflow.split('--test-policy automation/publishing/test-policy.json').length - 1,
-    2,
+    3,
   );
   assert.match(
     workflow,

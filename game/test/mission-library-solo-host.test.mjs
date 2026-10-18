@@ -11,6 +11,8 @@ import { preparePack, emptyPackLibrary, installPack, exportPackLibrary } from '.
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
 import { loadLibrary } from '../library.mjs';
 import { inspectImageDataUrl } from '../content.mjs';
+import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
+import { MULTIPLAYER_EXPANSION_LAYOUTS } from '../content-design/multiplayer-expansion-layouts.mjs';
 
 class Picture {
   width = 1774;
@@ -103,7 +105,12 @@ test('installed Custom late mission in a second campaign launches its exact auth
     level.id = `custom-second-${index}`;
   });
   source.campaigns.push(second);
-  const { pack } = await preparePack(source);
+  const { pack } = await preparePack(source, {
+    decodeImage: async (dataUrl) => {
+      const image = inspectImageDataUrl(dataUrl);
+      return { naturalWidth: image.width, naturalHeight: image.height };
+    },
+  });
   const assets = await installedAssets(pack);
   const p = await soloPage(t, { titleScreen: true, assetIndexedDB: assets.indexedDB });
   await open(p);
@@ -157,9 +164,21 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
     p.key('ArrowDown', false);
     for (let tick = 0; tick < 900 && p.rendered.run.status !== 'won'; tick++) p.frame();
     assert.equal(p.rendered.run.status, 'won');
-    for (let tick = 0; tick < 400 && p.$('game-overlay').dataset.kind !== 'won'; tick++)
-      p.frame();
-    assert.equal(p.$('game-overlay').dataset.kind, 'won');
+    const completed = authoritativeCheckpoint(p.rendered.run);
+    assert.equal(p.$('skip-celebration').hidden, true);
+    for (
+      let frame = 0;
+      frame < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && p.$('show-result').hidden;
+      frame++
+    )
+      p.frame(100);
+    assert.equal(p.$('show-result').hidden, false);
+    p.$('show-result').click();
+    assert.deepEqual(authoritativeCheckpoint(p.rendered.run), completed);
+    await settle(() => {
+      p.frame(0);
+      return p.$('game-overlay').dataset.kind === 'won';
+    });
     assert.equal(p.$('next-button').hidden, false);
   }
   await clear();
@@ -190,12 +209,48 @@ test('late Custom clear follows authored Next, ends truthfully, and never grants
   assert.deepEqual(p.errors, []);
 });
 const settle = (predicate) => waitFor(predicate, { timeoutMs: 15000 });
+function appendLibraryWaitEvidence(error, p, initialPictureRequested) {
+  try {
+    const doc = p?.doc ?? globalThis.document;
+    const rendered = p?.rendered;
+    const text = (value) => (typeof value === 'string' ? value.slice(0, 512) : null);
+    const errors = Array.isArray(p?.errors) ? p.errors : null;
+    const evidence = JSON.stringify({
+      format: 'mission-library-wait.v1',
+      fixtureReady: !!p,
+      flightState: text(doc?.body?.dataset.flightState),
+      pictureState: text(doc?.body?.dataset.pictureState),
+      renderedRun: rendered
+        ? {
+            levelId: text(rendered.run?.levelId),
+            tick: Number.isSafeInteger(rendered.run?.tick) ? rendered.run.tick : null,
+            paused: typeof rendered.paused === 'boolean' ? rendered.paused : null,
+          }
+        : null,
+      chooserOpen: doc?.getElementById('journey-chooser')?.open ?? null,
+      collectionExists: !!doc?.getElementById('journey-collection'),
+      hidden: doc?.hidden ?? null,
+      hasFocus: doc?.hasFocus?.() ?? null,
+      runMessage: text(doc?.getElementById('run-message')?.textContent),
+      errors: errors?.slice(0, 4).map((item) => String(item).slice(0, 512)) ?? null,
+      errorsOmitted: errors ? Math.max(0, errors.length - 4) : null,
+      initialPictureRequested,
+    });
+    if (typeof error?.message === 'string' && Buffer.byteLength(evidence, 'utf8') <= 8192) {
+      void error.stack;
+      error.message += `\n${evidence}`;
+    }
+  } catch {
+    // Observation must never replace the original assertion failure.
+  }
+}
 async function open(p) {
   p.$('shell-play').click();
   try {
     await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
   } catch (error) {
     error.message += ` ${p.$('run-message').textContent} ${p.errors.map(String).join(';')}`;
+    appendLibraryWaitEvidence(error, p);
     throw error;
   }
 }
@@ -204,14 +259,38 @@ function showAllLifecycles(p) {
   p.$('journey-lifecycle').emit('change');
 }
 async function startPrepared(p, id) {
-  await running(p, id);
+  let activated = false,
+    acceptedRun;
+  await running(p, id, () => {
+    if (activated) return;
+    const start = p.$('start-button');
+    if (
+      p.rendered.run.levelId !== id ||
+      p.doc.body.dataset.flightState !== 'briefing' ||
+      p.doc.body.dataset.pictureState !== 'ready' ||
+      !p.rendered.paused ||
+      p.rendered.run.tick !== 0 ||
+      p.$('shell-home').open ||
+      p.$('journey-chooser')?.open ||
+      start.hidden ||
+      start.disabled ||
+      start.closest('[hidden],[inert]')
+    )
+      return;
+    acceptedRun = p.rendered.run;
+    activated = true;
+    start.click();
+  });
+  assert.equal(activated, true, 'The exact prepared briefing needs one explicit Start.');
+  assert.equal(p.rendered.run === acceptedRun, true, 'Start retains the accepted mission run.');
   assert.equal(p.rendered.paused, false);
   assert.equal(p.$('game-overlay').hidden, true);
 }
-async function running(p, id) {
+async function running(p, id, beforeRead) {
   try {
     await settle(() => {
       p.frame(0);
+      beforeRead?.();
       return p.rendered.run.levelId === id && p.doc.body.dataset.flightState === 'running';
     });
   } catch (error) {
@@ -300,7 +379,7 @@ test('Journey setup changes next preset and library details without replacing th
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo validates and directly launches the included late Classic', async (t) => {
+test('unified Solo validates and launches the explicitly downloaded late Classic', async (t) => {
   const p = await soloPage(t, { titleScreen: true });
   await open(p);
   p.$('journey-collection').value = 'Classic';
@@ -313,8 +392,9 @@ test('unified Solo validates and directly launches the included late Classic', a
     (button) => button.dataset.missionId === row.id,
   );
   assert.ok(card);
-  assert.equal(card.dataset.availabilityState, 'included');
-  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.dataset.availabilityState, 'download');
+  assert.equal(Boolean(card.querySelector('.journey-card-action').hidden), false);
+  assert.match(card.querySelector('.journey-card-action').textContent, /^Download & play · /);
   assert.equal(card.disabled, false);
   card.focus();
   card.click();
@@ -324,7 +404,7 @@ test('unified Solo validates and directly launches the included late Classic', a
   assert.deepEqual(p.errors, []);
 });
 
-test('unified Solo failed included-chapter read retries inline and preserves the flight until retry succeeds', async (t) => {
+test('unified Solo failed downloadable-chapter read retries inline and preserves the flight until retry succeeds', async (t) => {
   let available = false,
     requests = 0;
   const p = await soloPage(t, {
@@ -347,8 +427,9 @@ test('unified Solo failed included-chapter read retries inline and preserves the
     selected = () =>
       [...p.$('journey-cards').children].find((card) => card.dataset.missionId === row.id);
   const card = selected();
-  assert.equal(card.dataset.availabilityState, 'included');
-  assert.equal(card.querySelector('.journey-card-action').hidden, true);
+  assert.equal(card.dataset.availabilityState, 'download');
+  assert.equal(Boolean(card.querySelector('.journey-card-action').hidden), false);
+  assert.match(card.querySelector('.journey-card-action').textContent, /^Download & play · /);
   assert.equal(card.disabled, false);
   card.focus();
   card.click();
@@ -462,9 +543,14 @@ for (const transition of ['finish', 'newer input', 'failed initial picture'])
           return new Response('Deliberate initial picture outage', { status: 503 });
       },
     });
-    await settle(
-      () => initialRequested && globalThis.document.getElementById('journey-collection'),
-    );
+    try {
+      await settle(
+        () => initialRequested && globalThis.document.getElementById('journey-collection'),
+      );
+    } catch (error) {
+      appendLibraryWaitEvidence(error, null, initialRequested);
+      throw error;
+    }
     const doc = globalThis.document;
     assert.notEqual(doc.body.dataset.flightState, 'running');
     assert.equal(
@@ -514,7 +600,7 @@ test('unknown incoming identity reports failure and never starts a different mis
   assert.deepEqual(p.errors, []);
 });
 
-test('default Journey mounts335 missions and hands the exact Classic selection to its own host', async (t) => {
+test('default Journey mounts435 missions and hands the exact Classic selection to its own host', async (t) => {
   const p = await journeyPage(t);
   await open(p);
   showAllLifecycles(p);
@@ -549,12 +635,21 @@ test('Solo mode filter exposes the same qualified Journey identities in Versus w
   p.$('journey-mode').value = 'versus';
   p.$('journey-mode').emit('change');
   const cards = [...p.$('journey-cards').children];
+  const owner = (card) => JSON.parse(card.dataset.missionId)[0];
+  const additions = new Set(['journey:humanoid-hunt-v1', 'journey:duel-expedition-v1']);
   assert.deepEqual(
-    cards.map((card) => card.dataset.missionId),
+    cards.filter((card) => !additions.has(owner(card))).map((card) => card.dataset.missionId),
     original,
+    'Every previously qualified shared identity retains its order and receiving owner.',
   );
   assert.equal(new Set(original).size, 435);
-  const target = cards[1];
+  assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
+  assert.equal(cards.filter((card) => owner(card) === 'journey:humanoid-hunt-v1').length, 6);
+  assert.equal(
+    cards.filter((card) => owner(card) === 'journey:duel-expedition-v1').length,
+    MULTIPLAYER_EXPANSION_LAYOUTS.filter((row) => row.mode === 'versus').length,
+  );
+  const target = cards.find((card) => card.dataset.missionId === original[1]);
   assert.match(target.textContent, /Journey.*Band 1\/12/);
   assertReadyCard(target);
   target.click();
@@ -573,11 +668,28 @@ for (const collection of ['Journey', 'Classic'])
     p.$('journey-mode').value = 'team';
     p.$('journey-mode').emit('change');
     const cards = [...p.$('journey-cards').children];
-    assert.equal(cards.length, 14);
-    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, 14);
-    const target = cards.find((card) =>
-      card.querySelector('.journey-card-tags').textContent.includes(collection),
+    const owner = (card) => JSON.parse(card.dataset.missionId)[0];
+    const retained = new Set([
+      'journey:team-cultural-specialist-originals-2',
+      'team-classic:relay-rescue-starter',
+    ]);
+    assert.equal(cards.filter((card) => retained.has(owner(card))).length, 14);
+    assert.equal(cards.filter((card) => owner(card) === 'team-journey:humanoid-hunt-v1').length, 6);
+    const expeditionCount = MULTIPLAYER_EXPANSION_LAYOUTS.filter(
+      (row) => row.mode === 'team',
+    ).length;
+    assert.equal(
+      cards.filter((card) => owner(card) === 'journey:team-expedition-v1').length,
+      expeditionCount,
     );
+    assert.equal(cards.length, 14 + 6 + expeditionCount);
+    assert.equal(new Set(cards.map((card) => card.dataset.missionId)).size, cards.length);
+    const targetOwner =
+      collection === 'Journey'
+        ? 'journey:team-cultural-specialist-originals-2'
+        : 'team-classic:relay-rescue-starter';
+    const target = cards.find((card) => owner(card) === targetOwner);
+    assert.match(target.querySelector('.journey-card-tags').textContent, new RegExp(collection));
     assertReadyCard(target);
     target.click();
     await settle(() => globalThis.location.href.includes('library-mission='));

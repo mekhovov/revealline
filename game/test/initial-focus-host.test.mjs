@@ -52,7 +52,7 @@ test('the actual inline guard hides the title until the ready handshake', async 
   const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
   assert.match(
     html,
-    /html:not\(\[data-boot-state='ready'\]\) body > :not\(#boot-screen\):not\(script\)\s*\{\s*display: none !important;/,
+    /html:not\(\[data-boot-state='ready'\]\)\s+body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)\s*\{\s*display: none !important;/,
   );
 });
 
@@ -134,6 +134,18 @@ test('a background ready handoff does not claim keyboard focus', async (t) => {
   const page = await soloPage(t, { titleScreen: true });
   assert.equal(page.doc.activeElement, page.doc.body);
   assert.equal(page.$('shell-home').open, true);
+  for (let i = 0; i < 30; i++) page.frame();
+  assert.equal(page.doc.activeElement, page.doc.body);
+  assert.equal(page.$('shell-home').open, true);
+  // A background page need not paint. Observe its authoritative state only
+  // after returning to the foreground, without choosing Deploy or Continue.
+  page.doc.focused = true;
+  page.win.emit('focus');
+  page.frame(0);
   assert.equal(page.rendered.run.tick, 0);
+  assert.equal(page.rendered.paused, true);
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  for (let i = 0; i < 30; i++) page.frame();
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(page.errors, []);
 });

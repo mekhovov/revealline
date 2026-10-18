@@ -15,11 +15,28 @@ function checkAbort(signal) {
   if (signal?.aborted) throw abortError();
 }
 
-function workerTransport(WorkerClass, watchdogMs) {
+function workerTransport(WorkerClass, watchdogMs, onWorker) {
   if (typeof WorkerClass !== 'function') throw new Error('Live autoplay requires a Web Worker.');
   const worker = new WorkerClass(new URL('./demo-bot-worker.mjs', import.meta.url), {
     type: 'module',
   });
+  let releaseObservation = null;
+  try {
+    const release = onWorker?.();
+    if (typeof release === 'function') releaseObservation = release;
+  } catch {
+    // Optional diagnostics cannot change the worker's lifetime or gameplay.
+  }
+  const terminate = () => {
+    worker.terminate();
+    const release = releaseObservation;
+    releaseObservation = null;
+    try {
+      release?.();
+    } catch {
+      // A diagnostic observer never prevents ordinary owner cleanup.
+    }
+  };
   let serial = 0,
     stopped = false;
   const waiting = new Map();
@@ -49,7 +66,7 @@ function workerTransport(WorkerClass, watchdogMs) {
         const timer = setTimeout(() => {
           finish(id, new Error('Autoplay planning deadline reached.'));
           // A stuck search must not retain a CPU owner after the watchdog fires.
-          worker.terminate();
+          terminate();
           stopped = true;
         }, watchdogMs);
         waiting.set(id, { resolve, reject, timer });
@@ -65,7 +82,7 @@ function workerTransport(WorkerClass, watchdogMs) {
       worker.removeEventListener('message', message);
       worker.removeEventListener('error', error);
       for (const id of waiting.keys()) finish(id, abortError());
-      worker.terminate();
+      terminate();
     },
   };
 }
@@ -117,6 +134,7 @@ export async function prepareBotPlayer(
     WorkerClass = globalThis.Worker,
     plannerSeed = options.seed ?? 1,
     watchdogMs = 1000,
+    onWorker = null,
   } = {},
 ) {
   checkAbort(signal);
@@ -216,7 +234,7 @@ export async function prepareBotPlayer(
     decision = 0;
     state = createRun(sourceLevel, sourceOptions);
     recorder = createRecorder(sourceLevel, sourceOptions, 'revealline-live-demo.v1');
-    transport = workerTransport(WorkerClass, watchdogMs);
+    transport = workerTransport(WorkerClass, watchdogMs, onWorker);
     try {
       const result = await transport.request(state, plannerSeed, decision);
       checkAbort(signal);

@@ -1,0 +1,61 @@
+{
+  "format": "SoloOptionalAudioV4ExecutedSourceV1",
+  "revision": "bab3b2790944c6257f9c1f9b346839996bbefebb",
+  "tree": "4bdfc784e14b41ed5d32895b4fa139920f494a63",
+  "run": 39059454404,
+  "scope": "Executed source identity only; outcome is assessed separately. No historical numerical or correctness verdict is rewritten.",
+  "records": [
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 87962,
+      "sha256": "810aeb3dd3eee54892f7b27b0bce9785f2a0175d8fefa39120e62f0fc483126a",
+      "blob": "9a2ed926aedb2033f4616aef4a27d3a8cd29fbf2"
+    },
+    {
+      "path": "scripts/solo-qualification-readiness.mjs",
+      "bytes": 110726,
+      "sha256": "7f4990e99c77e986d275cc869d8ef1c90c662e13412a1f7590141e09aa0144b7",
+      "blob": "a2403f21d0e79e4efdaeed3ffe7916d29837a9b7"
+    },
+    {
+      "path": "scripts/solo-remote-readiness.mjs",
+      "bytes": 77457,
+      "sha256": "264e66ecb1295419d6b5cf4bf259809ed37ef09829af120ffad2b5e8b6651033",
+      "blob": "501b810740a28197b0d1dae47bb89d43f189464c"
+    },
+    {
+      "path": "scripts/solo-remote-sustained.mjs",
+      "bytes": 85658,
+      "sha256": "7b5ca954303bb0734079c285b495b6c51f85abad7f45936ae9e8f91d206fb936",
+      "blob": "712dbefe7db4f8c8228b291b103d4a4bba34c9c1"
+    },
+    {
+      "path": "docs/performance/solo-optional-start-audio-e1cc-v4-plan.json",
+      "bytes": 16306,
+      "sha256": "0b61fe337f42c950a07e8d308d712318d96889b93d464b8de1ff7610c5500b5a",
+      "blob": "2ef77a66daa61e91a7e1daf83dd80ac39b734b1f"
+    },
+    {
+      "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v4-temporary.yml",
+      "bytes": 27480,
+      "sha256": "9ac0f743ad4c7c8bffb2bb1d2b466b7c3ea7512ba0d1f54d1bf012dd4d0ceff7",
+      "blob": "3049a4221f411863a56b79e191a1ea8b9aa92f54"
+    },
+    {
+      "path": "scripts/solo-qualification-next-route.mjs",
+      "blob": "669991c554b697f8bc2f606aef012045b7d952d4",
+      "bytes": 32924,
+      "sha256": "3583627c435d3b36b66ea25048c1ebe85dcf49e6908ef5385fc579d244a2af4a"
+    }
+  ],
+  "postHocReadback": {
+    "format": "SoloAdditiveExecutedSourceReadbackV1",
+    "scope": "Additive exact-Git source identity readback after execution; no historical declaration, workflow, observation or verdict changes.",
+    "originalWitness": {
+      "bytes": 1780,
+      "sha256": "8a1be51e842c364e616939097096971f71b6ed9629aecb38b4cf65a3f3d62162",
+      "recordCount": 6
+    },
+    "addedPaths": ["scripts/solo-qualification-next-route.mjs"]
+  }
+}

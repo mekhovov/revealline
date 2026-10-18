@@ -4,4 +4,4 @@
 
 SHA-256: `953573b8fdab71599749ea5f2b33d3e760c2116178f9423ee7458dbe39d59453` (233,301 bytes).
 
-This copy is used only to inspect optional archive import graphs without executing archive code. It belongs to trusted publishing tooling, not the shipped simulator or its offline budget. The sparse release publisher deliberately does not install npm dependencies; keep this file and `optional-module-closure.mjs` in that explicit checkout. Update the copy, license, hash check and package lock together when changing parser versions.
+This copy inspects optional archive import graphs and production build references without executing imported code. It belongs to trusted build/publishing tooling, not the shipped simulator or its offline budget. The sparse release publisher and extracted historical source snapshots do not install npm dependencies; keep this file available to `optional-module-closure.mjs` and `scripts/game-cli.mjs` in those source closures. Update the copy, license, hash check and package lock together when changing parser versions.

@@ -5,7 +5,7 @@ import { MENU_AUDIO_KEY } from '../ui/menu-audio.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { setImmediate, setTimeout as delay } from 'node:timers/promises';
+import { setTimeout as delay } from 'node:timers/promises';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, exportReplay, authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
@@ -18,6 +18,7 @@ import {
   LEGACY_THEME_PREFERENCES_KEY,
 } from '../presentation/theme-system.mjs';
 import { Document, Element, Events } from './helpers/couch-dom.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { editionProviderFixture } from './helpers/edition-provider-fixture.mjs';
 import { loadRuntimeContentProvider } from '../runtime-content-provider.mjs';
 import { createCandidateSoloHost } from '../content-design/solo-host.mjs';
@@ -55,11 +56,7 @@ function recording() {
   return exportReplay(recorder, run);
 }
 async function until(predicate, label) {
-  for (let i = 0; i < 150; i++) {
-    if (predicate()) return;
-    await setImmediate();
-  }
-  assert.fail(label);
+  await waitFor(predicate, { message: label });
 }
 function fixture(
   t,

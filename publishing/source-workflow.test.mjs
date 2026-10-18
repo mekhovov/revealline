@@ -114,3 +114,132 @@ test('the retired Pages playbook cannot prescribe a deployment path', async () =
   );
   assert.doesNotMatch(source, /actions\/deploy-pages|upload-pages-artifact|pages:\s*write/u);
 });
+
+test('optional practice integrates the event workflow source while company admission retains the PR head', async () => {
+  const source = await fs.readFile(new URL('company-edition-candidate.yml', workflows), 'utf8');
+  const optional = source.split('\n  optional-practice:\n')[1]?.split('\n  candidate:\n')[0];
+  const candidate = source.split('\n  candidate:\n')[1];
+  assert.ok(optional && candidate);
+  assert.match(optional, /^          ref: \$\{\{ github.sha \}\}$/mu);
+  assert.doesNotMatch(optional, /^          ref: .*pull_request\.head\.sha/mu);
+  assert.ok(optional.includes('test "$(git rev-parse HEAD)" = "$EVENT_SOURCE_REVISION"'));
+  assert.ok(optional.includes('EVENT_SOURCE_REVISION: ${{ github.sha }}'));
+  assert.ok(
+    optional.includes('PR_HEAD_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}'),
+  );
+  assert.ok(
+    optional.includes(
+      'name: optional-flight-integration-${{ github.sha }}-head-${{ github.event.pull_request.head.sha || github.sha }}',
+    ),
+  );
+  assert.ok(optional.includes('npm run practice:test'));
+  assert.doesNotMatch(optional, /continue-on-error: true|--if-present/u);
+  assert.match(optional, /^    timeout-minutes: 12$/mu);
+  assert.match(
+    candidate,
+    /^          ref: \$\{\{ github.event.pull_request.head.sha \|\| github.sha \}\}$/mu,
+  );
+  assert.ok(
+    candidate.includes(
+      'name: company-capacity-${{ github.event.pull_request.head.sha || github.sha }}',
+    ),
+  );
+  assert.ok(
+    candidate.includes(
+      'name: company-candidate-${{ github.event.pull_request.head.sha || github.sha }}',
+    ),
+  );
+});
+
+test('focused matrix retains trusted automation, two workers per host, limits and failure evidence', async () => {
+  const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
+  const shards = source.split('\n  focused_shards:\n')[1]?.split('\n  focused:\n')[0];
+  const aggregate = source.split('\n  focused:\n')[1]?.split('\n  test:\n')[0];
+  assert.ok(shards && aggregate);
+  assert.match(shards, /timeout-minutes: 90/u);
+  assert.match(
+    shards,
+    /fail-fast: false\n      max-parallel: 4\n      matrix:\n        shard: \[1, 2, 3, 4\]/u,
+  );
+  assert.match(shards, /needs: preflight/u);
+  for (const condition of [
+    "needs.preflight.result == 'success'",
+    "needs.preflight.outputs.admission != 'hold'",
+    "needs.preflight.outputs.focusedRequired == 'true'",
+  ])
+    assert.ok(shards.includes(condition), condition);
+  for (const name of ['before', 'after'])
+    assert.ok(shards.includes(`Verify exact tracked source ${name} commands`));
+  assert.equal(
+    shards.split('node ../automation/scripts/check-source-identity.mjs --root .').length - 1,
+    2,
+  );
+  assert.match(shards, /EXPECTED_AUTOMATION: \$\{\{ github.workflow_sha \}\}/u);
+  assert.match(shards, /ref: \$\{\{ github.workflow_sha \}\}\n          path: automation/u);
+  assert.ok(shards.includes('--shard ${{ matrix.shard }}/4'));
+  assert.ok(shards.includes('--receipt "$RUNNER_TEMP/focused-shard/receipt.json"'));
+  assert.ok(shards.includes('--admission "$RUNNER_TEMP/preflight-admission/admission.json"'));
+  assert.match(shards, /set -euo pipefail\n          mkdir -p "\$RUNNER_TEMP\/focused-shard"/u);
+  assert.ok(shards.includes('2>&1 | tee "$RUNNER_TEMP/focused-shard/output.log"'));
+  assert.match(shards, /name: Retain available focused shard evidence\n        if: always\(\)/u);
+  assert.ok(
+    shards.includes(
+      'name: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.shard }}',
+    ),
+  );
+  assert.match(shards, /if-no-files-found: error/u);
+  assert.doesNotMatch(
+    shards + aggregate,
+    /continue-on-error|if-no-files-found: (?:ignore|warn)|node source\/publishing\/focused-tests/u,
+  );
+  const runner = await fs.readFile(new URL('./focused-tests.mjs', import.meta.url), 'utf8');
+  assert.match(
+    runner,
+    /runFocusedCommandsParallel\(partition\?\.commands \?\? execution.commands,\s*\{\s*root,\s*concurrency: 2/u,
+  );
+  assert.match(runner, /command\.timeoutMs \?\? timeoutMs/u);
+});
+
+test('aggregate preserves the required focused status and rejects any nonsuccess matrix result', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
+  const aggregate = source.split('\n  focused:\n')[1]?.split('\n  test:\n')[0];
+  assert.match(aggregate, /always\(\) && github.event_name == 'pull_request'/u);
+  for (const condition of [
+    "needs.preflight.result == 'success'",
+    "needs.preflight.outputs.admission != 'hold'",
+    "needs.preflight.outputs.focusedRequired == 'true'",
+  ])
+    assert.ok(aggregate.includes(condition), condition);
+  assert.match(aggregate, /needs: \[preflight, focused_shards\]/u);
+  assert.match(aggregate, /timeout-minutes: 5/u);
+  assert.match(aggregate, /ref: \$\{\{ github.workflow_sha \}\}\n          path: automation/u);
+  assert.doesNotMatch(aggregate, /path: source|npm ci|working-directory: source/u);
+  assert.match(aggregate, /SHARDS_RESULT: \$\{\{ needs.focused_shards.result \}\}/u);
+  const guard = aggregate.match(/        run: (test "\$SHARDS_RESULT" = success)\n/u)?.[1];
+  assert.ok(guard);
+  for (const status of ['success', 'failure', 'cancelled', 'skipped', '']) {
+    const result = spawnSync('bash', ['-c', guard], {
+      env: { ...process.env, SHARDS_RESULT: status },
+      timeout: 1000,
+    });
+    assert.equal(result.status === 0, status === 'success', status);
+  }
+  assert.ok(
+    aggregate.includes('pattern: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-*'),
+  );
+  assert.match(aggregate, /merge-multiple: false/u);
+  assert.ok(aggregate.includes('--verify-shards "$RUNNER_TEMP/focused-shards"'));
+  assert.ok(
+    aggregate.includes(
+      '--artifact-prefix "focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-"',
+    ),
+  );
+  assert.ok(aggregate.includes('--admission "$RUNNER_TEMP/preflight-admission/admission.json"'));
+  assert.ok(aggregate.includes('--test-policy automation/publishing/test-policy.json'));
+  const ready = source.split('\n  release-ready:\n')[1];
+  assert.match(ready, /needs: \[preflight, focused, test, build\]/u);
+  assert.match(ready, /FOCUSED_RESULT: \$\{\{ needs.focused.result \}\}/u);
+  assert.ok(ready.includes('test "$FOCUSED_RESULT" = success'));
+  assert.ok(ready.includes('test "$FOCUSED_RESULT" = skipped'));
+});
