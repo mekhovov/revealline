@@ -16,13 +16,13 @@
   "nextPriority": [
     "Exact-head checks and merge admission",
     "F04b production Survival suspend/resume",
+    "F11b Keep-focus fix final review",
     "F07a visible critical-cue review; only demonstrated F07b repairs",
-    "F01 SIM chooser context follow-up",
-    "F11b nonempty actual restore qualification and archive instructions",
-    "F06 optional 2D gym presets",
-    "F08 per-seat keyboard bindings and F09 scaling next",
-    "Demo-dependent work after predecessor D",
-    "Physical acceptance remains unavailable; continue independent work"
+    "F08 Versus keyboard bindings",
+    "F58a local support summary",
+    "Reconcile reviewed F01/F06/F11/F79 stacks",
+    "F09 measured text/HUD scaling gaps",
+    "Demo-dependent work after D; physical checks remain unavailable"
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -392,7 +392,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Finish SIM chooser context follow-up; reconcile reviewed Capture/Snake/Duel/Team/Hunt/SIM stacks after predecessors.",
+      "next": "Reconcile reviewed Capture/Snake/Duel/Team/Hunt/SIM context stacks after predecessors; no known remaining chooser-caption defect in inspected hosts.",
       "evidence": [
         "Mission library already owns focus-only selection, launch and Back; Overflight already groups Survival/Raid operations. Extend existing owners; do not introduce a second chooser or rename established game identities."
       ],
@@ -446,9 +446,11 @@
         },
         {
           "id": "sim-chooser-context",
-          "status": "developing",
+          "status": "draft_review",
           "owner": "root",
-          "evidence": "Two host-owned browsingContext callbacks reuse existing projected chooser. Actual-host tests preserve EN/UK identity, selection and paused flight; complete source gates in progress."
+          "evidence": "150 host/projection tests, full lint/validate and independent review pass. Two pre-existing large-file formatting findings unchanged; formatted predecessor/current differ only by callbacks. Actual exact browser Academy EN/World UK chooser captions and Back preserve mission/focus. No flight/device claim.",
+          "pr": "https://github.com/mekhovov/revealline/pull/1659",
+          "commit": "65594f1622ca4d87e95198c54bc916130f1a96b2"
         }
       ]
     },
@@ -963,7 +965,7 @@
       "blocker": "Review/extraction draft stacks on F11a; guided application is a further complete slice.",
       "pr": "https://github.com/mekhovov/revealline/pull/1635",
       "commit": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5",
-      "next": "Complete nonempty actual archive qualification and correct stale generated ZIP instructions; reconcile reviewed restore stacks.",
+      "next": "Finish narrow Keep-focus correction and exact browser rerun, then reconcile archive stacks; device acceptance separate.",
       "evidence": [
         "14 initial parser tests pass for bounded ZIP records/paths/counts, CRC and manifest hashes. UI/lifecycle review in progress.",
         "64 focused tests, full lint/validate and changed formatting pass; reader accepts the real 11679-byte F11a browser export with all five member hashes. Eight full-format baseline failures unchanged.",
@@ -984,6 +986,13 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1646",
           "commit": "1e69df126b6de66dc756287b4ad34b882ea43b26",
           "evidence": "140 focused tests, full lint/validate and changed formatting passed. Independent source review verifies explicit per-component confirmation, order, partial/unconfirmed outcomes, generation ownership and actual commit reporting. Browser review pending; stack on1635. Actual browser at2c9e4a: real11679-byte archive, cancel kept later steps locked, explicit pictures/stories/music/Journey reviews reached4/4 saved; closing clears temporary receipt and restores focus. Archive has zero originals/music/clears; no nonempty asset or device claim. Three surrounding copy issues found; narrow follow-up developing. Copy follow-up1e69df corrected guided help/selection/order/download receipt, preserving extraction-only wording.24 focused checks/full source gates and independent review passed."
+        },
+        {
+          "id": "nonempty-qualification",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1658",
+          "commit": "b33c6c902cd527a43d7f46253cae4acacda8007d",
+          "evidence": "44 focused checks/full source gates and independent source review. Actual exact browser native import of PNG/MP4/MP3 and synthetic Journey record reaches4/4 after explicit confirmation. Cancel blocks later steps. Reload→102139-byte export matches all3 original payload hashes and synthetic receipt. Duplicate Journey review reports0 new clears; cancelled. Acoustic playback/earned progression/large media/device not claimed. Browser found backward focus after consecutive Keep; narrow correction4f87e07 passes47 tests plus8 independently rerun, full validation pending."
         }
       ]
     },
@@ -1042,8 +1051,8 @@
       "impact": "H/H",
       "effort": "**3–5d**, including the controller addition",
       "featureId": "F58",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -1052,7 +1061,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
+      "next": "Implement primary Solo/Journey local support summary with bounded allowlisted preview/export, existing sampled-controller freshness and read-only capability checks; no endpoint or transmission.",
       "evidence": []
     },
     {
@@ -1094,7 +1103,7 @@
       "blocker": "Native slice stacks on F15b menu1636; remaining hosts still open.",
       "pr": null,
       "commit": null,
-      "next": "Complete optional 2D practice gym coverage; reconcile reviewed native/arcade/SIM/Creator/Rooms stacks. Hardware remains separate.",
+      "next": "Reconcile reviewed native/arcade/SIM/Creator/Rooms/gym preset stacks; preserve physical and release qualification separately.",
       "evidence": [],
       "implementationSlices": [
         {
@@ -1141,8 +1150,10 @@
         },
         {
           "id": "optional-2d-gym-presets",
-          "status": "developing",
-          "evidence": "Broader reachability review found optional-practice/civilian-flight/app.mjs is a separate playable host with its own display owner. Explicit pending F06 slice; earlier all-host claim corrected. Host integration/test design prepared; implementation follows current critical-cue review."
+          "status": "draft_review",
+          "evidence": "37 host/shared/policy+14 optional-offline checks, i18n/lint/changed format/projection pass. Independent source review and actual gym Start/movement/Pause→Settings→preview0→partialApply2→Retry3→Undo5→Back passed with modeled preferences. Browser returns Settings opener focus; finite model returns Resume. Both retain pause. No new UK320/hidden transcript/device claim.",
+          "pr": "https://github.com/mekhovov/revealline/pull/1660",
+          "commit": "47de8345c29c8f64fccd4aea76ead8f5679baca8"
         }
       ]
     },
@@ -1199,8 +1210,8 @@
       "impact": "H/H",
       "effort": "**4–6d**",
       "featureId": "F08",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-c",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -1209,7 +1220,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
+      "next": "Implement Versus two-seat keyboard map/settings as first complete host slice, reusing key extraction/labels and preserving menu activation; remaining Team/Snake separate.",
       "evidence": []
     },
     {
@@ -2732,7 +2743,7 @@
   ],
   "deliverySnapshot": {
     "featurePRsReady": 13,
-    "featurePRsDraft": 19,
+    "featurePRsDraft": 22,
     "deliverablesMerged": 2,
     "verifiedLive": 0,
     "hardware": "unavailable"
