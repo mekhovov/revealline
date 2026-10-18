@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { setTimeout as delay } from 'node:timers/promises';
 import { createSoundtrackPlayer } from '../ui/soundtrack-player.mjs';
+import { createAudioMaster } from '../ui/audio-master.mjs';
 import {
   BUILTIN_SOUNDTRACK_TRACKS,
   emptySoundtrackLibrary,
@@ -414,6 +415,242 @@ test('preparing a local MP3 keeps playback silent, then a gesture wake starts it
   assert.equal(h.player.snapshot().preparation, null);
   h.player.dispose();
 });
+async function publishedGestureFixture(
+  t,
+  { prepared = true, muted = false, boundMaster = true } = {},
+) {
+  const master = createAudioMaster({ muted }),
+    h = setup({
+      library: emptySoundtrackLibrary(),
+      ...(boundMaster ? { audioMaster: master } : {}),
+    });
+  if (!boundMaster) h.media.muted = muted;
+  const stop = master.subscribe((state) => {
+    h.soundscape.audioMaster = state;
+  });
+  t.after(() => {
+    stop();
+    h.player.dispose();
+  });
+  const publication = (id = 'a') => ({
+    id: `published.${id.repeat(64)}`,
+    title: 'Prepared publication',
+    allowed: () => true,
+    readBlob: async () => new Blob([original.blob], { type: 'audio/mpeg' }),
+  });
+  h.player.setPublishedTrack(publication());
+  if (prepared) {
+    await h.player.prepare();
+    assert.equal(h.player.snapshot().track.kind, 'published');
+    assert.equal(h.created.length, 1);
+  }
+  const resumes = [];
+  h.context.resume = () =>
+    new Promise((resolve, reject) => {
+      resumes.push({
+        finish(state = 'running') {
+          h.context.state = state;
+          resolve();
+        },
+        reject,
+      });
+    });
+  return { ...h, master, resumes, publication };
+}
+
+for (const prepared of [true, false]) {
+  test(`published gesture calls media play before context settlement (${prepared ? 'prepared play' : 'startAt after read'})`, async (t) => {
+    const h = await publishedGestureFixture(t, { prepared });
+    const playing = h.player.play();
+    if (!prepared) await settleUntil(() => h.resumes.length === 1);
+    assert.equal(h.resumes.length, 1, 'The real Soundscape calls context.resume.');
+    assert.equal(h.media.plays, 1, 'Prepared media starts in the same turn as context.resume.');
+    assert.equal(h.media.muted, true, 'Pending context activation cannot emit media audio.');
+    h.player.update(false, {});
+    h.player.setVolume(0.8);
+    assert.equal(h.media.muted, true, 'Regular mixer updates preserve the pending gate.');
+    h.resumes[0].finish();
+    assert.equal(await playing, true);
+    assert.equal(h.media.muted, false);
+    assert.equal(h.media.paused, false);
+    assert.equal(h.player.snapshot().playing, true);
+    assert.equal(h.created.length, 1);
+    assert.equal(h.revoked.length, 0);
+  });
+}
+
+test('published gesture denial pauses silent media and observes a later rejected play', async (t) => {
+  for (const rejection of [false, true]) {
+    const h = await publishedGestureFixture(t);
+    let rejectPlay;
+    h.media.play = () => {
+      h.media.plays++;
+      h.media.paused = false;
+      return new Promise((_, reject) => {
+        rejectPlay = reject;
+      });
+    };
+    const playing = h.player.play();
+    assert.equal(h.media.plays, 1);
+    assert.equal(h.media.muted, true);
+    if (rejection) h.resumes[0].reject(new Error('Context activation denied'));
+    else h.resumes[0].finish('interrupted');
+    assert.equal(await playing, false);
+    assert.equal(h.media.paused, true);
+    assert.equal(h.media.muted, false);
+    assert.equal(h.player.snapshot().playing, false);
+    rejectPlay(new DOMException('Playback interrupted by pause', 'AbortError'));
+    await delay(0);
+    assert.equal(h.created.length, 1, 'Denial preserves the selected prepared resource.');
+    assert.equal(h.revoked.length, 0);
+  }
+});
+
+test('published gesture retains master mute and volume changes across successful activation', async (t) => {
+  for (const muted of [true, false]) {
+    const h = await publishedGestureFixture(t, { muted });
+    const playing = h.player.play();
+    assert.equal(h.media.plays, 1);
+    h.master.setMuted(true);
+    h.master.setVolume(0.4);
+    h.resumes[0].finish();
+    assert.equal(await playing, true);
+    assert.equal(h.media.muted, true);
+    assert.deepEqual(h.master.snapshot(), { muted: true, volume: 0.4, revision: 2 });
+    h.master.setMuted(false);
+    assert.equal(h.media.muted, false);
+    assert.equal(h.master.snapshot().volume, 0.4);
+  }
+});
+
+test('published gesture cancellation cannot restore playback after pause, suspend or disposal', async (t) => {
+  for (const action of ['pause', 'suspend', 'dispose']) {
+    const h = await publishedGestureFixture(t);
+    const playing = h.player.play();
+    assert.equal(h.media.plays, 1);
+    h.player[action]();
+    assert.equal(h.media.paused, true);
+    h.resumes[0].finish();
+    assert.equal(await playing, false);
+    assert.equal(h.media.plays, 1);
+    assert.equal(h.media.paused, true);
+    assert.equal(
+      h.player.snapshot().status,
+      { pause: 'paused', suspend: 'suspended', dispose: 'disposed' }[action],
+    );
+    assert.equal(h.revoked.length, action === 'dispose' ? 1 : 0);
+  }
+});
+
+test('published gesture replacement and newer intent own their own mute and resource', async (t) => {
+  for (const replace of [false, true]) {
+    const h = await publishedGestureFixture(t);
+    const first = h.player.play();
+    assert.equal(h.media.plays, 1);
+    if (replace) {
+      h.player.setPublishedTrack(null);
+      h.player.setPublishedTrack(h.publication('b'));
+      h.player.setIntent(false);
+      await h.player.prepare();
+    }
+    const next = h.player.play();
+    assert.equal(h.media.plays, 2);
+    assert.equal(h.resumes.length, 2);
+    h.resumes[0].finish();
+    assert.equal(await first, false);
+    assert.equal(h.media.muted, true, 'Stale activation cannot release the newer mute.');
+    assert.equal(h.media.paused, false, 'Stale cleanup cannot pause newer media.');
+    h.resumes[1].finish();
+    assert.equal(await next, true);
+    assert.equal(h.media.muted, false);
+    assert.equal(h.media.paused, false);
+    assert.equal(h.created.length, replace ? 2 : 1);
+    assert.equal(h.revoked.length, replace ? 1 : 0);
+  }
+});
+
+test('published gesture observes immediate media rejection while activation is still pending', async (t) => {
+  const h = await publishedGestureFixture(t);
+  h.media.rejectPlay = new DOMException('Gesture unavailable', 'NotAllowedError');
+  const playing = h.player.play();
+  assert.equal(h.media.plays, 1);
+  await delay(0);
+  assert.equal(h.media.muted, true);
+  h.resumes[0].finish();
+  assert.equal(await playing, false);
+  assert.equal(h.player.snapshot().status, 'blocked');
+  assert.equal(h.media.paused, true);
+  assert.equal(h.media.muted, false);
+});
+
+test('published gesture preserves an unbound adapter mute and denied activation', async (t) => {
+  for (const muted of [true, false]) {
+    const h = await publishedGestureFixture(t, { muted, boundMaster: false });
+    const playing = h.player.play();
+    assert.equal(h.media.plays, 1);
+    assert.equal(h.media.muted, true);
+    h.player.update(false, {});
+    assert.equal(h.media.muted, true);
+    h.resumes[0].finish('interrupted');
+    assert.equal(await playing, false);
+    assert.equal(h.media.paused, true);
+    assert.equal(h.media.muted, muted);
+  }
+});
+
+test('published gesture late play settlement cannot disturb a newer successful play', async (t) => {
+  const h = await publishedGestureFixture(t);
+  let rejectOldPlay;
+  const play = h.media.play.bind(h.media);
+  h.media.play = () => {
+    h.media.plays++;
+    h.media.paused = false;
+    return new Promise((_, reject) => {
+      rejectOldPlay = reject;
+    });
+  };
+  const first = h.player.play();
+  h.resumes[0].finish();
+  await delay(0);
+  assert.equal(h.media.muted, true);
+  h.player.pause();
+  h.media.play = play;
+  assert.equal(await h.player.play(), true);
+  assert.equal(h.media.muted, false);
+  rejectOldPlay(new DOMException('Retired play', 'AbortError'));
+  assert.equal(await first, false);
+  assert.equal(h.player.snapshot().playing, true);
+  assert.equal(h.media.paused, false);
+  assert.equal(h.media.muted, false);
+  assert.equal(h.created.length, 1);
+  assert.equal(h.revoked.length, 0);
+});
+
+test('published gesture observes activation after synchronous media failure or reentrant cancellation', async (t) => {
+  const h = await publishedGestureFixture(t);
+  h.media.play = () => {
+    h.media.plays++;
+    throw new DOMException('Gesture unavailable', 'NotAllowedError');
+  };
+  assert.equal(await h.player.play(), false);
+  assert.equal(h.player.snapshot().status, 'blocked');
+  assert.equal(h.media.paused, true);
+  assert.equal(h.media.muted, false);
+  h.resumes[0].reject(new Error('Late activation rejection'));
+  await delay(0);
+
+  const other = await publishedGestureFixture(t);
+  other.soundscape.enable = () => {
+    other.player.pause();
+    return Promise.reject(new Error('Retired activation'));
+  };
+  assert.equal(await other.player.play(), false);
+  await delay(0);
+  assert.equal(other.media.plays, 0);
+  assert.equal(other.media.muted, false);
+  assert.equal(other.player.snapshot().status, 'paused');
+});
+
 test('synth song boundary signals once at actual audio deadline and does not schedule the next song early', async () => {
   const h = audioHarness();
   await h.soundscape.enable();

@@ -138,6 +138,7 @@ export function createSoundtrackPlayer({
     weight: 0,
     remoteWatchdog: null,
     remoteProgress: 0,
+    activationMute: null,
   }));
   const preparationQueue = soundscape.mediaPreparation ?? createMediaPreparation();
   const ownsPreparationQueue = !soundscape.mediaPreparation;
@@ -373,8 +374,60 @@ export function createSoundtrackPlayer({
     if (settings.music !== music) soundscape.configure({ music });
     for (const deck of decks) {
       const localVolume = Math.max(0, Math.min(1, master * music * deck.weight));
-      if (deck.masterMedia) deck.masterMedia.setLocal({ volume: localVolume });
-      else if (deck.media.volume !== localVolume) deck.media.volume = localVolume;
+      if (deck.masterMedia)
+        deck.masterMedia.setLocal({ volume: localVolume, muted: !!deck.activationMute });
+      else {
+        if (deck.activationMute) deck.media.muted = true;
+        if (deck.media.volume !== localVolume) deck.media.volume = localVolume;
+      }
+    }
+  }
+  function releaseActivationMute(deck, owner, pause = true) {
+    if (deck.activationMute !== owner || deck.resource !== owner.resource) return;
+    deck.activationMute = null;
+    if (pause) deck.media.pause();
+    if (deck.activationMute || deck.resource !== owner.resource) return;
+    if (deck.masterMedia) deck.masterMedia.setLocal({ muted: false });
+    else deck.media.muted = owner.muted;
+  }
+  async function playPublishedMedia(deck, token) {
+    if (deck.activationMute) releaseActivationMute(deck, deck.activationMute);
+    const owner = { resource: deck.resource, muted: !!deck.media.muted },
+      intent = intentGeneration;
+    deck.activationMute = owner;
+    const current = () =>
+      deck.activationMute === owner &&
+      deck.resource === owner.resource &&
+      activeDeck === deck &&
+      token === generation &&
+      intent === intentGeneration &&
+      !disposed &&
+      desired;
+    // Both calls belong to this activation turn. Keep independent media output
+    // silent until activation and playback succeed; a denied context must not
+    // leak audio. Observe both promises immediately, including cancellation.
+    const observed = (promise) =>
+      Promise.resolve(promise).then(
+        (value) => ({ ok: true, value }),
+        (error) => ({ ok: false, error }),
+      );
+    try {
+      gains();
+      if (!current()) return false;
+      const enabled = observed(soundscape.enable());
+      if (!current()) return false;
+      const playing = observed(deck.media.play());
+      const activation = await enabled;
+      if (!current()) return false;
+      if (!activation.ok) throw activation.error;
+      if (!activation.value) return false;
+      const playback = await playing;
+      if (!current()) return false;
+      if (!playback.ok) throw playback.error;
+      releaseActivationMute(deck, owner, false);
+      return true;
+    } finally {
+      releaseActivationMute(deck, owner);
     }
   }
   /** Temporary attenuation only; the player remains the owner of base volume/intent.
@@ -408,6 +461,7 @@ export function createSoundtrackPlayer({
     });
   }
   function clearDeck(deck) {
+    if (deck.activationMute) releaseActivationMute(deck, deck.activationMute);
     deck.resource++;
     clearTimeout(deck.remoteWatchdog);
     deck.remoteWatchdog = null;
@@ -458,6 +512,8 @@ export function createSoundtrackPlayer({
   function cancel(keep = null) {
     cancelPublicStyleLoad();
     generation++;
+    for (const deck of decks)
+      if (deck.activationMute) releaseActivationMute(deck, deck.activationMute);
     operation?.abort();
     operation = null;
     cancelPreload(keep);
@@ -896,15 +952,14 @@ export function createSoundtrackPlayer({
           throwIfSoundtrackAborted(controller.signal);
           if (token !== generation || disposed) return false;
           if (desired) {
-            const enabled = soundscape.enable();
-            if (
-              current.kind === 'published' &&
-              (!(await enabled) || token !== generation || disposed || !desired)
-            )
-              return false;
-            watchCurrentRemote();
-            await activeDeck.media.play();
-            await enabled;
+            if (current.kind === 'published') {
+              if (!(await playPublishedMedia(activeDeck, token))) return false;
+            } else {
+              const enabled = soundscape.enable();
+              watchCurrentRemote();
+              await activeDeck.media.play();
+              await enabled;
+            }
             if (token !== generation || disposed || !desired) return false;
             status = 'playing';
           }
@@ -1465,14 +1520,13 @@ export function createSoundtrackPlayer({
             current.kind !== 'remote' || isResolvedOnlineSoundtrackTrack(current),
             t('interface:invalidOnlineSoundtrackRecording'),
           );
-          const enabled = soundscape.enable();
-          if (
-            current.kind === 'published' &&
-            (!(await enabled) || token !== generation || disposed || !desired)
-          )
-            return false;
-          await activeDeck.media.play();
-          await enabled;
+          if (current.kind === 'published') {
+            if (!(await playPublishedMedia(activeDeck, token))) return false;
+          } else {
+            const enabled = soundscape.enable();
+            await activeDeck.media.play();
+            await enabled;
+          }
         }
         if (token !== generation || !desired) return false;
         status = 'playing';
@@ -1525,8 +1579,8 @@ export function createSoundtrackPlayer({
   }
   /**
    * Clear a lifecycle suspension in the same event turn as a user gesture.
-   * Do not await this before play(): iOS Safari associates media permission
-   * with the synchronous call stack that contains the gesture.
+   * Request native media play in the originating user action before awaiting
+   * wake; activation lifetime and persistence vary across browsers.
    */
   function wake() {
     if (disposed) return false;
