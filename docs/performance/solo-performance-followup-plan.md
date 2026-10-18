@@ -2,7 +2,7 @@
 
 Updated 18 October 2026 for [draft PR #1544](https://github.com/mekhovov/revealline/pull/1544).
 
-The affected devices are **iPhone 17 Pro Safari on the published HTTPS site** and **Steam Deck OLED Chrome**. Work remains isolated on `codex/solo-performance`; latest fetched main `fe1bb1cecbfcead7edaad24e802242d62b4e3b99` was integrated in `c45e1b40a8a3a1c467f9bcf462037b801c1837b0`. The original checkout and unfinished FPV work are untouched.
+The affected devices are **iPhone 17 Pro Safari on the published HTTPS site** and **Steam Deck OLED Chrome**. Work remains isolated on `codex/solo-performance`; latest fetched main `a3db2c95b4ce446f2232b829f9551b73e0f51514` was integrated in `a0c93ea1c5`. Its newer FPV content changes are preserved. The original checkout and unfinished FPV work are untouched.
 
 **Qualification is incomplete.** The principal Solo runtime fixes and identified shared-mode defects are implemented, but failed timing rows, earlier unattributed source-test timeouts and unavailable physical-device checks remain. Do not describe correctness checks or a successful build as a performance pass. Keep the PR draft.
 
@@ -85,6 +85,8 @@ A separate CPU-report reader incorrectly expected generic `pass` while the actua
 - **Raster, touch and overhead:** earlier 42 raster cases/84 PNG comparisons pass; final-source restoration/raster remains open. Chromium trusted touch movement replays, while timing fails or is inconclusive and WebKit export remains unresolved. Neither app diagnostics nor journal overhead qualifies within the 5% gate at current measurement resolution. [Touch limits](solo-touch-export-readback-20261017.md), [overhead review](solo-overhead-resolution-review-20261017.md).
 
 ## Next execution order
+
+The [remaining execution matrix](solo-final-execution-matrix-20261018.md) names the existing workload, runner, bounds, retained outcome and exact admission gap for each lane. The thirty-minute obligation remains a lifecycle session; report its active duty cycle rather than inventing an uninterrupted-play gate. The held Demo recovery observer's active-export conflict is [corrected through retained state and public paused exports](solo-demo-recovery-observer-20261018.md); all fourteen source controls pass, while its final-source native lane remains unexecuted. The existing overhead assessors already use raw p95; their measurement-resolution limits need a prospective bounded analysis, not a histogram change or a relaxed five-percent gate.
 
 1. Preserve the completed shared Team/Versus and controller source regression checks and run their final-package native scenarios. Retain and investigate the older intermittent Solo startup timeouts; current complete-file passes do not establish their cause. Verify explicit preparation failure/Retry on the final package.
 2. Use the verified 397 package only for its declared source; retain its successful build and exact identity. Build and verify the subsequent fixes separately. Validate final workers, lazy modules, offline closure and CSP through that final production package.
