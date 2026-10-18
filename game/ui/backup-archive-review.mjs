@@ -148,7 +148,7 @@ export function attachBackupArchiveReview({
     for (const message of manifest.exclusions) exclusions.append(node('li', null, () => message));
     results.append(
       exclusions,
-      node('h4', null, () => copy('order')),
+      node('h4', null, () => (restore ? t('interface:backupApply.order') : copy('order'))),
     );
     const apply = restore
       ? attachBackupArchiveApply({
@@ -267,7 +267,9 @@ export function attachBackupArchiveReview({
   input.onchange = () => {
     operation?.controller.abort();
     release();
-    showStatus(() => copy('selectionChanged'));
+    showStatus(() =>
+      restore ? t('interface:backupApply.selectionChanged') : copy('selectionChanged'),
+    );
   };
   dialog.addEventListener('close', () => {
     if (!dialog.open) invalidate();

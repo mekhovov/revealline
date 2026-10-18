@@ -227,6 +227,14 @@ test('ordinary authored Home exports an archive with truthful exclusions while l
   await settle(() => !!h.$('prepare-backup-archive') && !h.$('library-saves').hidden);
   const stored = new Map(h.storage.map),
     before = authoritativeCheckpoint(h.rendered.run);
+  assert.match(
+    h.$('backup-archive-help').textContent,
+    /choose Inspect and restore an archive below/,
+  );
+  assert.match(
+    h.$('backup-archive-help').textContent,
+    /coverage report.*also extract.*not encrypted/,
+  );
   assert.equal(await h.$('prepare-backup-set').onclick(), false);
   assert.match(h.$('backup-set-status').textContent, /Authored test flights use separate storage/);
   assert.equal(
@@ -251,6 +259,7 @@ test('ordinary authored Home exports an archive with truthful exclusions while l
   assert.ok(report.exclusions.some((value) => /unfinished authored flight/.test(value)));
   h.$('backup-review-file').files = [blob];
   h.$('backup-review-file').emit('change');
+  assert.match(h.$('backup-set-status').textContent, /Inspect it before restoring any components/);
   assert.equal(
     await h.$('backup-review-inspect').onclick(),
     true,
@@ -258,6 +267,7 @@ test('ordinary authored Home exports an archive with truthful exclusions while l
   );
   assert.equal(h.$('backup-review-step-game'), null);
   assert.ok(h.$('backup-review-step-journey'));
+  assert.match(h.$('backup-review-results').textContent, /Review components in this order/);
   assert.equal(h.doc.activeElement.id, 'backup-review-download-media');
   assert.equal(h.$('backup-review-download-media').emit('click').defaultPrevented, false);
   assert.match(h.$('backup-set-status').textContent, /does not change the restore progress/);
