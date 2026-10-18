@@ -1,0 +1,590 @@
+TAP version 13
+# Subtest: sim-origin captured pads enter solo practice only after fresh movement
+ok 1 - sim-origin captured pads enter solo practice only after fresh movement
+  ---
+  duration_ms: 11.806416
+  ...
+# Subtest: sim-origin captured pads enter snake practice only after fresh movement
+ok 2 - sim-origin captured pads enter snake practice only after fresh movement
+  ---
+  duration_ms: 1.037375
+  ...
+# Subtest: sim-origin captured pads enter survival practice only after fresh movement
+ok 3 - sim-origin captured pads enter survival practice only after fresh movement
+  ---
+  duration_ms: 2.03
+  ...
+# Subtest: snake-origin captured pads enter solo practice only after fresh movement
+ok 4 - snake-origin captured pads enter solo practice only after fresh movement
+  ---
+  duration_ms: 3.619625
+  ...
+# Subtest: snake-origin captured pads enter snake practice only after fresh movement
+ok 5 - snake-origin captured pads enter snake practice only after fresh movement
+  ---
+  duration_ms: 0.89625
+  ...
+# Subtest: snake-origin captured pads enter survival practice only after fresh movement
+ok 6 - snake-origin captured pads enter survival practice only after fresh movement
+  ---
+  duration_ms: 0.851084
+  ...
+# Subtest: raw samples retain configured actions, menu edges, and clear their release gate without persistence
+ok 7 - raw samples retain configured actions, menu edges, and clear their release gate without persistence
+  ---
+  duration_ms: 0.685834
+  ...
+# Subtest: authoritative Solo frames retain mapped controls and the native Confirm owner
+ok 8 - authoritative Solo frames retain mapped controls and the native Confirm owner
+  ---
+  duration_ms: 0.469042
+  ...
+# Subtest: Survival-origin frames share exact bindings while retaining analog movement and Confirm release
+ok 9 - Survival-origin frames share exact bindings while retaining analog movement and Confirm release
+  ---
+  duration_ms: 4.976833
+  ...
+# Subtest: SIM receives its original raw frame for native throttle and verified radio handling
+ok 10 - SIM receives its original raw frame for native throttle and verified radio handling
+  ---
+  duration_ms: 0.464083
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 11 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 6715.558792
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 12 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 5002.708167
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 13 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 3626.20925
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 14 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 19569.637083
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 15 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 8081.078083
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 16 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+  ---
+  duration_ms: 2655.126375
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 17 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+  ---
+  duration_ms: 2609.211334
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 18 - controller gameplay action takes over while preserving one hardware read per frame
+  ---
+  duration_ms: 3639.008833
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 19 - a single remaining source prepares a new painter on repetition without reusing disposed media
+  ---
+  duration_ms: 6277.020208
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 20 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+  ---
+  duration_ms: 14777.144166
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 21 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+  ---
+  duration_ms: 4995.906166
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 22 - a replay fork completing after blur cannot arm hidden practice or replace its current owner
+  ---
+  duration_ms: 3990.981
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 23 - locked Fresh handoff cancelled by blur remains paused until another explicit choice
+  ---
+  duration_ms: 3455.0095
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 24 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+  ---
+  duration_ms: 3338.0385
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+ok 25 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 25472.077625
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+ok 26 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+  ---
+  duration_ms: 24593.206792
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 27 - demo control hints show the saved keyboard bindings in the actual app
+  ---
+  duration_ms: 3616.820459
+  ...
+# Subtest: spectator information and play invitation stay visible while details remain optional
+ok 28 - spectator information and play invitation stay visible while details remain optional
+  ---
+  duration_ms: 3460.34525
+  ...
+# Subtest: demo guide respects the shared character-reactions preference without hiding teaching captions
+ok 29 - demo guide respects the shared character-reactions preference without hiding teaching captions
+  ---
+  duration_ms: 3414.896125
+  ...
+# Subtest: practice handoff requires every observed keyboard key to become neutral before fresh steering
+ok 30 - practice handoff requires every observed keyboard key to become neutral before fresh steering
+  ---
+  duration_ms: 7.279125
+  ...
+# Subtest: blur: an unobservable outside key release cannot permanently block practice
+ok 31 - blur: an unobservable outside key release cannot permanently block practice
+  ---
+  duration_ms: 0.437167
+  ...
+# Subtest: hidden: an unobservable outside key release cannot permanently block practice
+ok 32 - hidden: an unobservable outside key release cannot permanently block practice
+  ---
+  duration_ms: 0.25975
+  ...
+# Subtest: ability: a quick keyboard or pointer impulse survives release until consumed once
+ok 33 - ability: a quick keyboard or pointer impulse survives release until consumed once
+  ---
+  duration_ms: 0.332417
+  ...
+# Subtest: pickup: a quick keyboard or pointer impulse survives release until consumed once
+ok 34 - pickup: a quick keyboard or pointer impulse survives release until consumed once
+  ---
+  duration_ms: 0.253041
+  ...
+# Subtest: releasing either Boost key or a separate touch cannot release another physical Boost owner
+ok 35 - releasing either Boost key or a separate touch cannot release another physical Boost owner
+  ---
+  duration_ms: 0.16075
+  ...
+# Subtest: tap-steering toggles pointer Boost while keyboard Boost stays Hold, and lifecycle clear retires the latch
+ok 36 - tap-steering toggles pointer Boost while keyboard Boost stays Hold, and lifecycle clear retires the latch
+  ---
+  duration_ms: 1.752291
+  ...
+# Subtest: click-only assistive Boost toggles without a release event and preserves independent keyboard Hold
+ok 37 - click-only assistive Boost toggles without a release event and preserves independent keyboard Hold
+  ---
+  duration_ms: 3.501166
+  ...
+# Subtest: cancelling the active touch Boost toggle clears it while an unrelated finger cannot
+ok 38 - cancelling the active touch Boost toggle clears it while an unrelated finger cannot
+  ---
+  duration_ms: 0.424834
+  ...
+# Subtest: stick: capture failure, outside release, cancellation and stale moves preserve one touch owner
+ok 39 - stick: capture failure, outside release, cancellation and stale moves preserve one touch owner
+  ---
+  duration_ms: 0.539916
+  ...
+# Subtest: swipe: capture failure, outside release, cancellation and stale moves preserve one touch owner
+ok 40 - swipe: capture failure, outside release, cancellation and stale moves preserve one touch owner
+  ---
+  duration_ms: 0.195583
+  ...
+# Subtest: deliberate clear retires a captured steering finger before late capture notifications
+ok 41 - deliberate clear retires a captured steering finger before late capture notifications
+  ---
+  duration_ms: 0.169791
+  ...
+# Subtest: a fresh configured keyboard direction takes over once, survives async clear, and never leaks to ordinary input
+ok 42 - a fresh configured keyboard direction takes over once, survives async clear, and never leaks to ordinary input
+  ---
+  duration_ms: 0.968625
+  ...
+# Subtest: Back exits watching on pointerdown and consumes its trailing PointerEvent click after Home restores
+ok 43 - Back exits watching on pointerdown and consumes its trailing PointerEvent click after Home restores
+  ---
+  duration_ms: 0.151208
+  ...
+# Subtest: Back exits watching on pointerdown and consumes its trailing MouseEvent click after Home restores
+ok 44 - Back exits watching on pointerdown and consumes its trailing MouseEvent click after Home restores
+  ---
+  duration_ms: 0.138125
+  ...
+# Subtest: Back inside Demo UI exits watching on Enter and consumes repeats, release and click after focus moves Home
+ok 45 - Back inside Demo UI exits watching on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.141625
+  ...
+# Subtest: Back inside Demo UI exits loading on Enter and consumes repeats, release and click after focus moves Home
+ok 46 - Back inside Demo UI exits loading on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.080042
+  ...
+# Subtest: Back inside Demo UI exits practice on Enter and consumes repeats, release and click after focus moves Home
+ok 47 - Back inside Demo UI exits practice on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.115292
+  ...
+# Subtest: Back inside Demo UI exits watching on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 48 - Back inside Demo UI exits watching on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.142084
+  ...
+# Subtest: Back inside Demo UI exits loading on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 49 - Back inside Demo UI exits loading on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.073375
+  ...
+# Subtest: Back inside Demo UI exits practice on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 50 - Back inside Demo UI exits practice on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.071709
+  ...
+# Subtest: Back inside Demo UI exits watching on Space and consumes repeats, release and click after focus moves Home
+ok 51 - Back inside Demo UI exits watching on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.114375
+  ...
+# Subtest: Back inside Demo UI exits loading on Space and consumes repeats, release and click after focus moves Home
+ok 52 - Back inside Demo UI exits loading on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.071958
+  ...
+# Subtest: Back inside Demo UI exits practice on Space and consumes repeats, release and click after focus moves Home
+ok 53 - Back inside Demo UI exits practice on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.1475
+  ...
+# Subtest: Back reports only an actual fresh unmodified native activation to the Confirm owner
+ok 54 - Back reports only an actual fresh unmodified native activation to the Confirm owner
+  ---
+  duration_ms: 0.10525
+  ...
+# Subtest: teardown removes keyboard, pointer and lifecycle observers
+ok 55 - teardown removes keyboard, pointer and lifecycle observers
+  ---
+  duration_ms: 0.087417
+  ...
+# Subtest: PointerEvent click: another finger cannot duplicate the first play action
+ok 56 - PointerEvent click: another finger cannot duplicate the first play action
+  ---
+  duration_ms: 0.134167
+  ...
+# Subtest: MouseEvent click: another finger cannot duplicate the first play action
+ok 57 - MouseEvent click: another finger cannot duplicate the first play action
+  ---
+  duration_ms: 0.153042
+  ...
+# Subtest: fresh keyboard ability takes over with exactly one retained semantic action
+ok 58 - fresh keyboard ability takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.127209
+  ...
+# Subtest: fresh keyboard pickup takes over with exactly one retained semantic action
+ok 59 - fresh keyboard pickup takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.08425
+  ...
+# Subtest: fresh keyboard boost takes over with exactly one retained semantic action
+ok 60 - fresh keyboard boost takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.346375
+  ...
+# Subtest: fresh keyboard hangar takes over with exactly one retained semantic action
+ok 61 - fresh keyboard hangar takes over with exactly one retained semantic action
+  ---
+  duration_ms: 3.11375
+  ...
+# Subtest: keyboard auto-repeat, held entry keys, IME and modified shortcuts cannot take over
+ok 62 - keyboard auto-repeat, held entry keys, IME and modified shortcuts cannot take over
+  ---
+  duration_ms: 1.617834
+  ...
+# Subtest: stick: watch touch waits for a recognized direction and forwards it once
+ok 63 - stick: watch touch waits for a recognized direction and forwards it once
+  ---
+  duration_ms: 0.460666
+  ...
+# Subtest: swipe: watch touch waits for a recognized direction and forwards it once
+ok 64 - swipe: watch touch waits for a recognized direction and forwards it once
+  ---
+  duration_ms: 0.296542
+  ...
+# Subtest: a deliberate canvas tap takes over without inventing a direction; cancellation and dragging do not
+ok 65 - a deliberate canvas tap takes over without inventing a direction; cancellation and dragging do not
+  ---
+  duration_ms: 0.254792
+  ...
+# Subtest: pointer: explicit movement and action buttons take over once
+ok 66 - pointer: explicit movement and action buttons take over once
+  ---
+  duration_ms: 0.135125
+  ...
+# Subtest: assistive: explicit movement and action buttons take over once
+ok 67 - assistive: explicit movement and action buttons take over once
+  ---
+  duration_ms: 0.074667
+  ...
+# Subtest: fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks
+ok 68 - fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks
+  ---
+  duration_ms: 0.185375
+  ...
+# Subtest: KeyP opens the watching menu while Escape exits
+ok 69 - KeyP opens the watching menu while Escape exits
+  ---
+  duration_ms: 0.128792
+  ...
+# Subtest: KeyX opens the watching menu while Escape exits
+ok 70 - KeyX opens the watching menu while Escape exits
+  ---
+  duration_ms: 1.009125
+  ...
+# Subtest: controller menu/back remain separate from gameplay takeover and pending preparation cannot navigate
+ok 71 - controller menu/back remain separate from gameplay takeover and pending preparation cannot navigate
+  ---
+  duration_ms: 0.233791
+  ...
+# Subtest: real controller router: analog takes over only after join/neutral and a fresh deliberate edge
+ok 72 - real controller router: analog takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 6.664791
+  ...
+# Subtest: real controller router: dpad takes over only after join/neutral and a fresh deliberate edge
+ok 73 - real controller router: dpad takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 1.017959
+  ...
+# Subtest: real controller router: ability takes over only after join/neutral and a fresh deliberate edge
+ok 74 - real controller router: ability takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.77575
+  ...
+# Subtest: real controller router: pickup takes over only after join/neutral and a fresh deliberate edge
+ok 75 - real controller router: pickup takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.331292
+  ...
+# Subtest: real controller router: boost takes over only after join/neutral and a fresh deliberate edge
+ok 76 - real controller router: boost takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.729833
+  ...
+# Subtest: real controller router: hangar takes over only after join/neutral and a fresh deliberate edge
+ok 77 - real controller router: hangar takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.259084
+  ...
+# Subtest: controller disconnect/reconnect and held controls do not interrupt watching or auto-takeover
+ok 78 - controller disconnect/reconnect and held controls do not interrupt watching or auto-takeover
+  ---
+  duration_ms: 0.1375
+  ...
+# Subtest: spectator menu canvas gameplay keys take over; owned UI and lifecycle suspension do not
+ok 79 - spectator menu canvas gameplay keys take over; owned UI and lifecycle suspension do not
+  ---
+  duration_ms: 0.198042
+  ...
+# Subtest: watching: audio controls and source links keep native activation and editing
+ok 80 - watching: audio controls and source links keep native activation and editing
+  ---
+  duration_ms: 10.526667
+  ...
+# Subtest: practice: audio controls and source links keep native activation and editing
+ok 81 - practice: audio controls and source links keep native activation and editing
+  ---
+  duration_ms: 3.5225
+  ...
+# Subtest: focused audio UI owns controller navigation until a new gameplay edge after leaving it
+ok 82 - focused audio UI owns controller navigation until a new gameplay edge after leaving it
+  ---
+  duration_ms: 0.41
+  ...
+# Subtest: practice audio focus retires held keyboard and multi-touch actions before the next frame
+ok 83 - practice audio focus retires held keyboard and multi-touch actions before the next frame
+  ---
+  duration_ms: 0.537958
+  ...
+# Subtest: audio ownership clears queued practice impulses even before a focus or controller event
+ok 84 - audio ownership clears queued practice impulses even before a focus or controller event
+  ---
+  duration_ms: 1.476625
+  ...
+# Subtest: touching audio UI retires a held practice action even when the browser keeps canvas focus
+ok 85 - touching audio UI retires a held practice action even when the browser keeps canvas focus
+  ---
+  duration_ms: 0.953583
+  ...
+# Subtest: held controller boost cannot return from audio navigation as a practice action
+ok 86 - held controller boost cannot return from audio navigation as a practice action
+  ---
+  duration_ms: 0.514125
+  ...
+# Subtest: spectator router preserves configured back with flight input and no duplicate gameplay action
+ok 87 - spectator router preserves configured back with flight input and no duplicate gameplay action
+  ---
+  duration_ms: 3.792459
+  ...
+# Subtest: spectator router preserves configured menu with flight input and no duplicate gameplay action
+ok 88 - spectator router preserves configured menu with flight input and no duplicate gameplay action
+  ---
+  duration_ms: 7.480291
+  ...
+# Subtest: spectator Back follows remapped menu binding, while ordinary flight retains its original pickup
+ok 89 - spectator Back follows remapped menu binding, while ordinary flight retains its original pickup
+  ---
+  duration_ms: 0.850875
+  ...
+# Subtest: spectator hold Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+ok 90 - spectator hold Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+  ---
+  duration_ms: 15.293291
+  ...
+# Subtest: spectator toggle Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+ok 91 - spectator toggle Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+  ---
+  duration_ms: 0.529084
+  ...
+# Subtest: native mixed entry reads saved shared controls without writes (legacy profile)
+ok 92 - native mixed entry reads saved shared controls without writes (legacy profile)
+  ---
+  duration_ms: 72.706875
+  ...
+# Subtest: native mixed entry reads saved shared controls without writes (generation profile)
+ok 93 - native mixed entry reads saved shared controls without writes (generation profile)
+  ---
+  duration_ms: 30.306833
+  ...
+# Subtest: shared demo control snapshots reject malformed or inaccessible profiles without writes
+ok 94 - shared demo control snapshots reject malformed or inaccessible profiles without writes
+  ---
+  duration_ms: 1.135583
+  ...
+# Subtest: native device guidance replaces generic pad mappings and updates while paused
+ok 95 - native device guidance replaces generic pad mappings and updates while paused
+  ---
+  duration_ms: 10.606666
+  ...
+# Subtest: Solo and native entries share dev settings without writes until an explicit change
+ok 96 - Solo and native entries share dev settings without writes until an explicit change
+  ---
+  duration_ms: 20.864708
+  ...
+# Subtest: Solo and native entries share release-0.145.0 settings without writes until an explicit change
+ok 97 - Solo and native entries share release-0.145.0 settings without writes until an explicit change
+  ---
+  duration_ms: 25.458292
+  ...
+# Subtest: native small metadata agrees with Solo edition and release channel isolation
+ok 98 - native small metadata agrees with Solo edition and release channel isolation
+  ---
+  duration_ms: 3.385083
+  ...
+# Subtest: legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+ok 99 - legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+  ---
+  duration_ms: 0.6985
+  ...
+# Subtest: denied storage uses reduced-motion defaults and explicit changes stay session-only
+ok 100 - denied storage uses reduced-motion defaults and explicit changes stay session-only
+  ---
+  duration_ms: 6.591958
+  ...
+# Subtest: stalled and oversized metadata cannot hold startup or change the settings channel
+ok 101 - stalled and oversized metadata cannot hold startup or change the settings channel
+  ---
+  duration_ms: 7.223625
+  ...
+# Subtest: SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+ok 102 - SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+  ---
+  duration_ms: 15.974792
+  ...
+# Subtest: SIM foreground loss pauses practice and requires a fresh keyboard edge
+ok 103 - SIM foreground loss pauses practice and requires a fresh keyboard edge
+  ---
+  duration_ms: 7.142708
+  ...
+# Subtest: SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+ok 104 - SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+  ---
+  duration_ms: 6.412041
+  ...
+# Subtest: SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+ok 105 - SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+  ---
+  duration_ms: 2.427209
+  ...
+# Subtest: SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+ok 106 - SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+  ---
+  duration_ms: 13.186875
+  ...
+# Subtest: every conflicting action chord pauses an active controller before neutral flight input can be used
+ok 107 - every conflicting action chord pauses an active controller before neutral flight input can be used
+  ---
+  duration_ms: 12.853416
+  ...
+# Subtest: overlapping action handoff pauses once; the same ambiguity while disarmed never arms
+ok 108 - overlapping action handoff pauses once; the same ambiguity while disarmed never arms
+  ---
+  duration_ms: 4.866416
+  ...
+# Subtest: disconnect and reconnect retain the deliberate neutral pickup and arm boundary
+ok 109 - disconnect and reconnect retain the deliberate neutral pickup and arm boundary
+  ---
+  duration_ms: 0.588875
+  ...
+# Subtest: blocked workbench preview maps observed sticks without acquiring readiness or integrating throttle
+ok 110 - blocked workbench preview maps observed sticks without acquiring readiness or integrating throttle
+  ---
+  duration_ms: 7.016458
+  ...
+# Subtest: preview applies the flight deadzone and button fallbacks once, with the same stick priority
+ok 111 - preview applies the flight deadzone and button fallbacks once, with the same stick priority
+  ---
+  duration_ms: 0.581167
+  ...
+# Subtest: preview cannot consume action edges, change flight throttle or change subsequent controls
+ok 112 - preview cannot consume action edges, change flight throttle or change subsequent controls
+  ---
+  duration_ms: 2.126875
+  ...
+# Subtest: preview copies diagnostics, preserves honest timestamp cadence, and disappears for missing/unsupported devices
+ok 113 - preview copies diagnostics, preserves honest timestamp cadence, and disappears for missing/unsupported devices
+  ---
+  duration_ms: 0.292584
+  ...
+# Subtest: captured controller requires release then fresh B press/release and never navigates or confirms
+ok 114 - captured controller requires release then fresh B press/release and never navigates or confirms
+  ---
+  duration_ms: 2.221125
+  ...
+# Subtest: capture escape ignores other devices and requires an explicit captured-controller index
+ok 115 - capture escape ignores other devices and requires an explicit captured-controller index
+  ---
+  duration_ms: 1.286375
+  ...
+# Subtest: capture escape rejects action chords, frame gaps, disconnects and invalid samples
+ok 116 - capture escape rejects action chords, frame gaps, disconnects and invalid samples
+  ---
+  duration_ms: 3.085958
+  ...
+1..116
+# tests 116
+# suites 0
+# pass 116
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 150269.024

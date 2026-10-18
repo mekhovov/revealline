@@ -1,7 +1,8 @@
 import { attachDemoHost } from './demo-host.mjs';
 import { DEMO_SHELL } from './demo-shell.mjs';
 import { DEFAULT_PREFERENCES } from '../library.mjs';
-import { loadDemoSettingsKey } from '../demo-settings.mjs';
+import { loadDemoSettingsKey, readDemoPreferences } from '../demo-settings.mjs';
+import { readStoredTouchControls } from '../touch-preferences.mjs';
 import { t, translateDOM } from '../i18n/index.mjs';
 export { demoLaunchURL } from '../demo-launch.mjs';
 export { resolveSimDemoLaunch } from '../demo-modes/sim.mjs';
@@ -63,18 +64,35 @@ export async function installDemoEntry({
     actions.push(button);
   }
   registerActions(actions);
+  const settingsKey = options.settingsKey ?? (await loadDemoSettingsKey({ document: doc }));
+  let preferences = DEFAULT_PREFERENCES,
+    touchSettings = preferences.touchControls;
   return attachDemoHost({
     ...options,
     document: doc,
     modeId,
     canOpen,
     canAutoStart,
-    onEnter,
+    onEnter() {
+      // A native page can watch any mode. Honor the current edition's saved
+      // shared controls, while native adapters retain their own input mapping.
+      let storage;
+      try {
+        storage = options.storage ?? doc.defaultView?.localStorage;
+      } catch {
+        // Private/blocked storage uses the same safe defaults as ordinary Solo.
+      }
+      preferences = readDemoPreferences(storage, settingsKey);
+      touchSettings = readStoredTouchControls(storage) ?? preferences.touchControls;
+      onEnter();
+    },
     onExit,
     onFreshStart,
     clearInput,
     getContext: () => ({
-      preferences: DEFAULT_PREFERENCES,
+      preferences,
+      touchSettings,
+      tapSteering: preferences.tapSteering,
       library: {},
       entries: [],
       reduced: doc.defaultView?.matchMedia?.('(prefers-reduced-motion: reduce)').matches === true,
@@ -83,7 +101,7 @@ export async function installDemoEntry({
     loadSources: options.loadSources,
     readMedia: options.readMedia ?? (async () => null),
     menu: options.menu ?? (() => {}),
-    settingsKey: options.settingsKey ?? (await loadDemoSettingsKey({ document: doc })),
+    settingsKey,
     canWrite: options.canWrite ?? (() => true),
   });
 }

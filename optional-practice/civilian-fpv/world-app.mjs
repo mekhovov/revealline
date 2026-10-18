@@ -44,6 +44,7 @@ import {
   createFlightGamepad,
   keyboardFlightPreset,
   keyboardFlightHelp,
+  gamepadFlightHelp,
   KEYBOARD_PRESET_KEY,
 } from './input.mjs';
 import { createRadioRuntime } from './radio-runtime.mjs';
@@ -1984,11 +1985,7 @@ export function mountWorldApp({
     if (flight) updateHUD(flight.snapshot());
     (open ? $('world-flight-close-menu') : $('world-flight-resume')).focus({ preventScroll: true });
   }
-  const gamepadHelp = () =>
-    txt(
-      'A / Cross: arm · Y / Triangle: reset · Menu / B: pause · R3: camera. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle · X/Square: fire. Steam Input: use a Gamepad layout.',
-      'A / Cross: увімкнути · Y / Triangle: скинути · Menu / B: пауза · R3: камера. Лівий стік: поворот і зміна газу; центр утримує газ. Правий стік / D-pad: нахил. LB/RB: поворот · LT/RT: менше/більше газу · X/Square: вогонь. Steam Input: розкладка Gamepad.',
-    );
+  const gamepadHelp = () => gamepadFlightHelp(locale);
   function gamepadScope() {
     if (
       !flight ||
