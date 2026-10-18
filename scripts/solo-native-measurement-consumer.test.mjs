@@ -457,3 +457,28 @@ test('actual797 correctness receipt preserves failed numerical and portability e
   assert.equal(record.candidateWebKit.sensitivityOnly.status, 'failed');
   assert.equal(record.candidateWebKit.sensitivityOnly.changesAcceptanceGate, false);
 });
+
+test('readiness and touch retain the invoked source checkout script in sparse tools', async () => {
+  const requiredSourceCheckout = (text, lane) => {
+    const job = body(text, lane);
+    const command = job.match(/^          bash tools\/(scripts\/[a-z0-9-]+\.sh) [^\n]+$/m);
+    assert(command, lane + ': shared source checkout command');
+    assert.equal(command[1], 'scripts/solo-shared-source-checkout.sh');
+    const sparse = [...job.matchAll(/^            \/(.+)$/gm)].map((match) => match[1]);
+    assert(sparse.includes(command[1]), lane + ': missing invoked sparse source checkout');
+    return command[1];
+  };
+  for (const lane of ['readiness', 'touch']) {
+    const path = requiredSourceCheckout(workflow, lane);
+    assert((await read(path)).length > 0);
+    const job = body(workflow, lane);
+    const entry = '            /' + path + '\n';
+    assert.equal(job.split(entry).length, 2);
+    const missing = job.replace(entry, '');
+    assert(missing.includes('bash tools/' + path + ' '));
+    assert.throws(
+      () => requiredSourceCheckout(workflow.replace(job, missing), lane),
+      /missing invoked sparse source checkout/,
+    );
+  }
+});
