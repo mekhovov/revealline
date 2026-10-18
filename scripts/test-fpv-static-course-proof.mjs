@@ -604,6 +604,12 @@ test('frozen pre-change mission fixture stays physically exact and does not gain
     id: fixture.presetId,
     mode: fixture.mode,
     model: fixture.identity.model,
+    // This pre-v3 fixture must keep its original backend and fixed timing.
+    alterOptions: (options) => ({
+      ...options,
+      backend: 'civilian-quad-aircraft-regional.v2',
+      frequency: 500,
+    }),
     ticks: commands.length,
     input: (tick) => commands[tick],
   });
