@@ -7,6 +7,7 @@ import {
   TUNING_LIBRARY_KEY,
 } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
 import { createRateProfile } from '../../optional-practice/civilian-fpv/rates.mjs';
+import { createTunedResponse } from '../../optional-practice/civilian-fpv/flight-response.mjs';
 import { exportNativeRateProfile } from '../../optional-practice/civilian-fpv/betaflight-import.mjs';
 import {
   createPresetConfiguration,
@@ -16,7 +17,16 @@ import {
 const settle = () => new Promise((resolve) => setImmediate(resolve));
 function fixture(
   t,
-  { locale = 'en', getDiagnostics, locks, platformOptions, onAdvanced, camera } = {},
+  {
+    locale = 'en',
+    getDiagnostics,
+    locks,
+    platformOptions,
+    onAdvanced,
+    onCalibration,
+    getFlightConfiguration,
+    camera,
+  } = {},
 ) {
   let currentLocale = locale;
   const document = new Document(),
@@ -39,6 +49,7 @@ function fixture(
     getItem: (key) => data.get(key) ?? null,
     setItem: (key, value) => data.set(key, value),
   };
+  window.localStorage = storage;
   const store = createTuningLibraryStore({ storage, locks, ...(camera ? { camera } : {}) }),
     applied = [],
     tested = [],
@@ -56,6 +67,8 @@ function fixture(
     onSaved: (config) => saved.push(config),
     onClose: (context) => closed.push(context),
     onAdvanced,
+    onCalibration,
+    getFlightConfiguration,
   });
   // The minimal DOM does not update a select when its first option's value is
   // assigned after insertion. Native HTML selects choose that first option.
@@ -143,7 +156,8 @@ test('aircraft picker creates an independent editable setup with starter rates a
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
   assert.match(f.ui.root.textContent, /37.68/);
   assert.match(f.ui.root.textContent, /Specification-based estimate/);
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   assert.equal(f.store.snapshot().setups.length, 2);
   assert.equal(f.store.effective().advanced.aircraft.id, 'meteor75-analog-2022');
   assert.equal(f.store.effective().response.rates.axes.yaw.rate, 60);
@@ -197,19 +211,23 @@ test('aircraft picker keeps complete current Legacy rates and restores saved cus
     legacy = f.store.effective().response;
   f.edit('Rates when selecting an aircraft', 'keep', { tag: 'select', event: 'change' });
   f.edit('Aircraft preset', 'holybro-x650-v2', { tag: 'select', event: 'change' });
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   const selected = f.store.snapshot().selectedSetupId;
   assert.deepEqual(f.store.effective().response, legacy);
   f.edit('Camera tilt (degrees)', '41', { event: 'change' });
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   f.edit('Drone setup', selected, { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   assert.equal(f.find('Camera tilt (degrees)').value, '41');
   assert.equal(f.store.effective().advanced.aircraft.mass, 3.2);
   f.edit('Rates when selecting an aircraft', 'defaults', { tag: 'select', event: 'change' });
-  await f.click('Reset saved aircraft to its preset');
+  await f.click('Reset draft to aircraft defaults');
+  await f.click('Save for next flight');
   assert.equal(f.find('Camera tilt (degrees)').value, '10');
   assert.equal(f.store.effective().response.rates.axes.roll.rate, 30);
 });
@@ -220,7 +238,8 @@ test('physical aircraft with retained Legacy feel can open Advanced without conv
   const legacy = f.store.effective().response;
   f.edit('Rates when selecting an aircraft', 'keep', { tag: 'select', event: 'change' });
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   f.edit('Physical camera payload', 'custom', { tag: 'select', event: 'change' });
   f.edit('Additional camera mass (g)', '4');
   await f.click('Advanced reference quad · experimental');
@@ -237,7 +256,8 @@ test('returning from an Advanced save reloads the saved component inventory with
   const opened = [],
     f = fixture(t, { onAdvanced: (configuration) => opened.push(configuration) });
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   f.edit('Drone name', 'Pending custom name');
   f.edit('Physical camera payload', 'custom', { tag: 'select', event: 'change' });
   f.edit('Additional camera mass (g)', '4');
@@ -258,7 +278,7 @@ test('returning from an Advanced save reloads the saved component inventory with
   assert.ok(Math.abs(f.tested[0].advanced.aircraft.mass - 0.04168) < 1e-15);
   f.ui.open({ keepDraft: true });
   f.edit('Additional camera mass (g)', '5');
-  await f.click('Save battery & physical camera');
+  await f.click('Save for next flight');
   assert.ok(Math.abs(f.store.effective().advanced.aircraft.mass - 0.04268) < 1e-15);
   await f.click('Advanced reference quad · experimental');
   const preset = createPresetConfiguration('holybro-x650-v2'),
@@ -288,7 +308,8 @@ test('aircraft selection reports storage failure without changing the active set
   f.storage.setItem = () => {
     throw new Error('quota full');
   };
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   assert.equal(f.store.export(), before);
   assert.equal(f.applied.length, 0);
   assert.match(f.ui.root.querySelector('[role="status"]').textContent, /quota full/);
@@ -299,7 +320,8 @@ test('optional depletion stays in the draft until saved and reaches Test and Adv
     f = fixture(t, { onAdvanced: (configuration) => opened.push(configuration) });
   assert.equal(f.axis('Optional battery endurance').hidden, true);
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   const currentFlight = f.store.effective();
   assert.equal(f.axis('Optional battery endurance').hidden, false);
   assert.equal(f.find('Battery depletion (optional)').checked, false);
@@ -323,7 +345,8 @@ test('optional depletion stays in the draft until saved and reaches Test and Adv
 test('fresh-battery restart saves the complete draft and invokes a new flight only after successful validation', async (t) => {
   const f = fixture(t);
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   f.find('Battery depletion (optional)').checked = true;
   f.edit('Physical camera payload', 'custom', { tag: 'select', event: 'change' });
   f.edit('Additional camera mass (g)', '4');
@@ -348,12 +371,15 @@ test('fresh-battery restart saves the complete draft and invokes a new flight on
 test('depletion drafts survive locale and setup navigation; preset reset restores its explicitly off default', async (t) => {
   const f = fixture(t);
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   const selected = f.store.snapshot().selectedSetupId;
   f.find('Battery depletion (optional)').checked = true;
   f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   f.edit('Drone setup', selected, { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   assert.equal(f.find('Battery depletion (optional)').checked, true);
   f.setLocale('uk');
@@ -366,7 +392,8 @@ test('depletion drafts survive locale and setup navigation; preset reset restore
   await f.click('Зберегти для наступного польоту');
   assert.equal(f.store.effective().advanced.aircraft.battery.depletion, true);
   f.setLocale('en');
-  await f.click('Reset saved aircraft to its preset');
+  await f.click('Reset draft to aircraft defaults');
+  await f.click('Save for next flight');
   assert.equal(f.find('Battery depletion (optional)').checked, false);
   assert.equal(f.store.effective().advanced.aircraft.battery.depletion, false);
 });
@@ -378,14 +405,16 @@ test('aircraft controls and evidence refresh in Ukrainian without changing the s
   assert.equal(f.find('Пресет дрона', 'select').value, 'meteor75-pro-matrix');
   assert.equal(f.find('Рейти під час вибору дрона', 'select').value, 'defaults');
   assert.match(f.ui.root.textContent, /Оцінка за характеристиками/);
-  await f.click('Використати цей дрон');
+  await f.click('Використати в чернетці');
+  await f.click('Зберегти для наступного польоту');
   assert.equal(f.store.effective().advanced.aircraft.id, 'meteor75-pro-matrix');
 });
 
 test('battery and physical-camera drafts change the tested physics without changing a saved or current flight', async (t) => {
   const f = fixture(t);
   f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   const original = f.store.effective();
   f.edit('Battery', 'custom', { tag: 'select', event: 'change' });
   f.edit('Battery capacity (mAh)', '600');
@@ -401,13 +430,13 @@ test('battery and physical-camera drafts change the tested physics without chang
   assert.deepEqual(f.tested[0].advanced.controller, original.advanced.controller);
   assert.equal(f.store.effective().advanced.aircraft.mass, original.advanced.aircraft.mass);
   await f.click('Return to tuning', f.document.body);
-  await f.click('Save battery & physical camera');
+  await f.click('Save for next flight');
   const saved = f.store.effective();
   assert.ok(Math.abs(saved.advanced.aircraft.mass - 0.04498) < 1e-15);
   assert.equal(f.applied.length, 0);
   f.edit('Camera tilt (degrees)', '37');
   f.edit('Vertical FOV (degrees)', '110');
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   assert.deepEqual(
     f.store.effective().advanced,
     saved.advanced,
@@ -422,17 +451,20 @@ test('battery and physical-camera drafts change the tested physics without chang
 
 test('incomplete component drafts survive navigation, reject saves and refresh their labels in Ukrainian', async (t) => {
   const f = fixture(t);
-  await f.click('Use this aircraft');
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
   const selected = f.store.snapshot().selectedSetupId;
   f.edit('Battery', 'custom', { tag: 'select', event: 'change' });
   f.edit('Battery mass (g)', '');
   f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   f.edit('Drone setup', selected, { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   assert.equal(f.find('Battery mass (g)').value, '');
   const before = f.store.export();
-  await f.click('Save battery & physical camera');
+  await f.click('Save for next flight');
   assert.equal(f.store.export(), before);
   assert.equal(f.find('Battery mass (g)').getAttribute('aria-invalid'), 'true');
   f.setLocale('uk');
@@ -572,6 +604,7 @@ test('curve overlays, axis visibility and diagnostics show actual available meas
   assert.match(diagnostics, /cadence \(Hz\): unavailable/);
   const motion = f.find('Animate rotation preview');
   motion.checked = true;
+  await f.click('Rates & throttle');
   f.frame(500);
   f.frame(525);
   assert.notEqual(f.ui.root.querySelector('.tuning-quad').style.transform, 'rotateZ(0deg)');
@@ -635,28 +668,33 @@ test('drone drafts survive rate-profile changes, reopening and independent setup
   f.edit('Camera tilt (degrees)', 35);
   f.edit('Rates used by this drone', profileId, { tag: 'select', event: 'change' });
   f.edit('Rate profile', 'legacy-feel', { tag: 'select', event: 'change' });
+  await f.click('Use rate profile in draft');
   assert.equal(f.find('Drone name').value, 'My pending drone');
   assert.equal(f.find('Camera tilt (degrees)').value, '35');
-  assert.equal(f.find('Rates used by this drone', 'select').value, profileId);
+  assert.equal(f.find('Rates used by this drone', 'select').value, 'legacy-feel');
   await f.click('Close');
   f.ui.open();
   assert.equal(f.find('Camera tilt (degrees)').value, '35');
   f.edit('Rate profile', profileId, { tag: 'select', event: 'change' });
+  await f.click('Use rate profile in draft');
   await f.click('Save for next flight');
   assert.equal(f.store.effective().camera.tilt, 35);
   f.edit('Camera tilt (degrees)', 42);
   await f.click('Duplicate drone setup');
+  await f.click('Save for next flight');
   const copy = f.store.snapshot().selectedSetupId;
   f.edit('Camera tilt (degrees)', 21);
   f.edit('Drone setup', original, { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   assert.equal(f.find('Camera tilt (degrees)').value, '42');
   await f.click('Revert draft');
   assert.equal(f.find('Camera tilt (degrees)').value, '35');
   f.edit('Drone setup', copy, { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   assert.equal(f.find('Camera tilt (degrees)').value, '21');
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   assert.equal(f.store.effective().camera.tilt, 21);
   assert.equal(f.store.snapshot().setups.find((setup) => setup.id === original).camera.tilt, 35);
 });
@@ -669,7 +707,7 @@ test('a retained drone draft cannot overwrite another tab and explicit refresh d
   await other.saveSetup({ ...other.snapshot().setups[0], camera: { tilt: 45, verticalFov: 90 } });
   f.ui.open();
   assert.equal(f.find('Camera tilt (degrees)').value, '35');
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   assert.match(f.ui.root.querySelector('[role="status"]').textContent, /changed|predates/);
   assert.equal(other.effective().camera.tilt, 45);
   await f.click('Refresh library');
@@ -677,7 +715,6 @@ test('a retained drone draft cannot overwrite another tab and explicit refresh d
 });
 
 for (const action of [
-  'Save drone assignment & camera',
   'Save for next flight',
   'Apply & restart',
   'Duplicate drone setup',
@@ -713,6 +750,7 @@ test('incomplete camera text survives independent draft navigation and leaves ra
   const f = fixture(t),
     original = f.store.snapshot().selectedSetupId;
   await f.click('Duplicate drone setup');
+  await f.click('Save for next flight');
   const duplicate = f.store.snapshot().selectedSetupId;
   f.edit('Camera tilt (degrees)', '');
   f.edit('Vertical FOV (degrees)', '999');
@@ -725,10 +763,12 @@ test('incomplete camera text survives independent draft navigation and leaves ra
   assert.equal(f.find('Camera tilt (degrees)').value, '');
   assert.equal(f.find('Vertical FOV (degrees)').value, '999');
   f.edit('Drone setup', original, { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   assert.equal(f.find('Camera tilt (degrees)').value, '10');
   assert.equal(f.find('Vertical FOV (degrees)').value, '82');
   f.edit('Drone setup', duplicate, { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
   await settle();
   assert.equal(f.find('Camera tilt (degrees)').value, '');
   assert.equal(f.find('Vertical FOV (degrees)').value, '999');
@@ -744,7 +784,7 @@ test('valid fractional camera migration, editing, testing and Advanced preview r
   f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
   assert.equal(f.find('Camera tilt (degrees)').step, 'any');
   assert.equal(f.find('Vertical FOV (degrees)').step, 'any');
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   assert.deepEqual(f.store.effective().camera, camera);
   for (const value of ['', '32', '32.', '32.25']) {
     f.edit('Camera tilt (degrees)', value);
@@ -806,6 +846,7 @@ test('Save and Test commit pending numeric text, while blank values block stale-
 for (const transition of ['algorithm', 'profile', 'close', 'locale', 'throttle version'])
   test(`unfinished rates survive ${transition} navigation and still block stale-value saves`, async (t) => {
     const f = fixture(t);
+    f.edit('When saving edited rates', 'update', { tag: 'select', event: 'change' });
     await f.click('New Actual profile');
     const profileId = f.find('Rate profile', 'select').value;
     f.edit('Maximum rate (°/s)', '', { scope: f.axis('Roll'), type: 'number' });
@@ -816,7 +857,9 @@ for (const transition of ['algorithm', 'profile', 'close', 'locale', 'throttle v
       f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
     } else if (transition === 'profile') {
       f.edit('Rate profile', 'legacy-feel', { tag: 'select', event: 'change' });
+      await f.click('Use rate profile in draft');
       f.edit('Rate profile', profileId, { tag: 'select', event: 'change' });
+      await f.click('Use rate profile in draft');
     } else if (transition === 'close') {
       f.ui.close();
       f.ui.open();
@@ -890,6 +933,7 @@ for (const replacement of ['Revert draft', 'Restore revision to draft', 'Preview
     const f = fixture(t);
     f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
     await f.click('Save for next flight');
+    f.edit('When saving edited rates', 'update', { tag: 'select', event: 'change' });
     f.edit('Maximum rate (°/s)', 900, { scope: f.axis('Roll'), type: 'number' });
     await f.click('Save for next flight');
     f.edit('Maximum rate (°/s)', '', { scope: f.axis('Roll'), type: 'number' });
@@ -954,7 +998,7 @@ test('import preview creates a new profile only on save and assignment remains e
   assert.equal(library.setups[0].profileId, null);
   assert.equal(f.store.effective().profileId, 'legacy-feel');
   f.edit('Rates used by this drone', imported.id, { tag: 'select', event: 'change' });
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   assert.equal(f.store.effective().profileId, imported.id);
 });
 
@@ -1029,6 +1073,7 @@ test('unsupported firmware headers invalidate a prior preview and cannot save ag
 
 test('shared profile users, name history and per-drone vertical camera values remain visible', async (t) => {
   const f = fixture(t);
+  f.edit('When saving edited rates', 'update', { tag: 'select', event: 'change' });
   await f.click('New Actual profile');
   f.edit('Profile name', 'My Actual');
   await f.click('Save for next flight');
@@ -1036,8 +1081,9 @@ test('shared profile users, name history and per-drone vertical camera values re
   assert.match(f.ui.root.textContent, /Shared by: My drone · player default/);
   f.edit('Camera tilt (degrees)', 29);
   f.edit('Vertical FOV (degrees)', 105);
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   await f.click('Duplicate drone setup');
+  await f.click('Save for next flight');
   assert.equal(f.store.snapshot().setups.length, 2);
   assert.equal(f.store.effective().camera.verticalFov, 105);
   const portable = await f.draft();
@@ -1073,7 +1119,7 @@ test('stale tab notification preserves the draft and a save cannot overwrite new
 
 test('Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation', async (t) => {
   const f = fixture(t, { locale: 'uk' });
-  assert.equal(f.ui.root.getAttribute('aria-label'), 'Дрон, рейти й газ');
+  assert.equal(f.ui.root.getAttribute('aria-label'), 'Майстерня налаштувань');
   assert.ok(f.find('Вертикальне поле зору (градуси)'));
   assert.ok(f.ui.root.querySelector('[role="status"]'));
   assert.equal(f.frames.size, 1);
@@ -1216,7 +1262,7 @@ test('failed preset resolution cannot preview stale text, while deliberate paste
 });
 
 for (const failure of ['quota', 'stale tab'])
-  test(`failed drone selection restores the visible selection and retains drafts (${failure})`, async (t) => {
+  test(`browsing drones is independent of storage and failed saves retain the complete draft (${failure})`, async (t) => {
     const f = fixture(t);
     await f.store.saveSetup({
       id: 'second-drone',
@@ -1239,35 +1285,41 @@ for (const failure of ['quota', 'stale tab'])
     const stored = f.storage.getItem(TUNING_LIBRARY_KEY);
     f.edit('Drone setup', 'second-drone', { tag: 'select', event: 'change' });
     await settle();
-    assert.match(f.ui.root.textContent, failure === 'quota' ? /Quota exceeded/ : /Another tab/);
-    assert.equal(f.find('Drone setup', 'select').value, 'my-drone');
+    assert.equal(f.find('Drone setup', 'select').value, 'second-drone');
     assert.equal(f.store.snapshot().selectedSetupId, 'my-drone');
     assert.equal(f.find('Drone name').value, 'Unsaved first drone');
     assert.equal(f.find('Camera tilt (degrees)').value, '23');
     assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), stored);
     assert.equal(f.saved.length, 0);
+    await f.click('Save for next flight');
+    assert.match(
+      f.ui.root.querySelector('[role="status"]').textContent,
+      failure === 'quota' ? /Quota exceeded/ : /Another tab/,
+    );
+    assert.equal(f.find('Drone name').value, 'Unsaved first drone');
+    assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), stored);
     f.storage.setItem = write;
     if (failure === 'quota') {
-      await f.click('Save drone assignment & camera');
+      await f.click('Save for next flight');
       const setups = f.store.snapshot().setups;
       assert.equal(setups[0].name, 'Unsaved first drone');
       assert.equal(setups[0].camera.tilt, 23);
       assert.equal(setups[1].name, 'Second drone');
     } else {
-      await f.click('Save drone assignment & camera');
+      await f.click('Save for next flight');
       assert.match(f.ui.root.textContent, /Another tab/);
       assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), stored);
       await f.click('Refresh library');
     }
     f.edit('Drone setup', 'second-drone', { tag: 'select', event: 'change' });
-    await settle();
+    await f.click('Use saved setup in draft');
     assert.equal(f.find('Drone setup', 'select').value, 'second-drone');
     assert.equal(f.find('Drone name').value, 'Second drone');
   });
 
-test('duplicating a drone creates and selects its draft in one storage write', async (t) => {
+test('duplicating a drone creates an unsaved draft, then saves its complete copy in one write', async (t) => {
   const f = fixture(t);
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   const original = f.store.snapshot().setups[0];
   f.edit('Drone name', 'Draft drone');
   f.edit('Camera tilt (degrees)', 31);
@@ -1278,6 +1330,9 @@ test('duplicating a drone creates and selects its draft in one storage write', a
     write(key, value);
   };
   await f.click('Duplicate drone setup');
+  assert.equal(writes, 0);
+  assert.equal(f.store.snapshot().setups.length, 1);
+  await f.click('Save for next flight');
   assert.equal(writes, 1);
   const library = f.store.snapshot();
   assert.equal(library.setups.length, 2);
@@ -1291,9 +1346,9 @@ test('duplicating a drone creates and selects its draft in one storage write', a
 });
 
 for (const failure of ['quota', 'stale tab', 'invalid camera'])
-  test(`failed drone duplication preserves the library and editable draft (${failure})`, async (t) => {
+  test(`failed duplicate save preserves the library and editable draft (${failure})`, async (t) => {
     const f = fixture(t);
-    await f.click('Save drone assignment & camera');
+    await f.click('Save for next flight');
     f.edit('Drone name', 'Unsaved drone');
     f.edit('Camera tilt (degrees)', failure === 'invalid camera' ? '' : '31');
     const write = f.storage.setItem;
@@ -1308,26 +1363,22 @@ for (const failure of ['quota', 'stale tab', 'invalid camera'])
     const stored = f.storage.getItem(TUNING_LIBRARY_KEY),
       before = f.store.export();
     await f.click('Duplicate drone setup');
+    if (failure !== 'invalid camera') await f.click('Save for next flight');
     assert.equal(f.store.export(), before);
     assert.equal(f.storage.getItem(TUNING_LIBRARY_KEY), stored);
-    assert.equal(f.find('Drone setup', 'select').value, 'my-drone');
-    assert.equal(f.find('Drone name').value, 'Unsaved drone');
+    assert.equal(f.store.snapshot().selectedSetupId, 'my-drone');
+    assert.equal(
+      f.find('Drone name').value,
+      failure === 'invalid camera' ? 'Unsaved drone' : 'Unsaved drone copy',
+    );
     assert.equal(f.find('Camera tilt (degrees)').value, failure === 'invalid camera' ? '' : '31');
     assert.match(f.ui.root.querySelector('[role="status"]').textContent, /Could not apply/);
     if (failure === 'quota') {
       f.storage.setItem = write;
-      await f.click('Duplicate drone setup');
+      await f.click('Save for next flight');
       assert.equal(f.store.snapshot().setups.length, 2);
       assert.notEqual(f.store.snapshot().selectedSetupId, 'my-drone');
-      assert.equal(
-        f.ui.root.querySelector('[role="status"]').textContent,
-        'Drone setup duplicated and selected.',
-      );
-      f.setLocale('uk');
-      assert.equal(
-        f.ui.root.querySelector('[role="status"]').textContent,
-        'Налаштування дрона продубльовано й вибрано.',
-      );
+      assert.equal(f.store.snapshot().setups[1].camera.tilt, 31);
     }
   });
 
@@ -1352,7 +1403,7 @@ test('ordinary tuning and camera saves preserve a drone’s existing Advanced ai
   assert.equal(f.store.effective().camera.tilt, 37);
   assert.equal(f.store.effective().response.rates.algorithm, 'actual');
   f.edit('Vertical FOV (degrees)', 111);
-  await f.click('Save drone assignment & camera');
+  await f.click('Save for next flight');
   assert.deepEqual(f.store.effective().advanced, advanced);
   assert.equal(f.store.effective().camera.verticalFov, 111);
 });
@@ -1521,8 +1572,8 @@ test('switching locale updates accessible controls without changing numeric, nam
   f.edit('Rates used by this drone', selected, { tag: 'select', event: 'change' });
   const saved = f.store.export();
   f.setLocale('uk');
-  assert.equal(f.ui.root.getAttribute('aria-label'), 'Дрон, рейти й газ');
-  assert.equal(f.ui.root.querySelector('h2').textContent, 'Дрон, рейти й газ');
+  assert.equal(f.ui.root.getAttribute('aria-label'), 'Майстерня налаштувань');
+  assert.equal(f.ui.root.querySelector('h2').textContent, 'Майстерня налаштувань');
   assert.equal(f.find('Назва профілю').value, 'Мої рейти');
   assert.equal(f.find('Назва дрона').value, 'Локальний дрон');
   assert.equal(f.find('Нахил камери (градуси)').value, '60');
@@ -1594,6 +1645,7 @@ test('closing a draft comparison retains the unscored return affordance until a 
 
 test('import receipt stays visible through save, duplicate, manual edit and revision restoration', async (t) => {
   const f = fixture(t);
+  f.edit('When saving edited rates', 'update', { tag: 'select', event: 'change' });
   f.edit(
     'Paste CLI or a SIM rate profile',
     exportNativeRateProfile(createRateProfile({ axes: { roll: { rate: 83 } } })),
@@ -1626,6 +1678,7 @@ test('import receipt stays visible through save, duplicate, manual edit and revi
 for (const source of ['native', 'CLI'])
   test(`restoring same-rate history cancels an earlier pending ${source} import`, async (t) => {
     const f = fixture(t);
+    f.edit('When saving edited rates', 'update', { tag: 'select', event: 'change' });
     await f.click('New Actual profile');
     f.edit('Profile name', 'Renamed profile');
     await f.click('Save for next flight');
@@ -1677,6 +1730,7 @@ test('restoring history invalidates a completed same-rate preview and retains th
   await f.click('Preview import');
   f.edit('Profile name', 'Original receipt');
   await f.click('Save import as new profile');
+  f.edit('When saving edited rates', 'update', { tag: 'select', event: 'change' });
   const original = f.store.snapshot().profiles.at(-1);
   f.edit('Profile name', 'Renamed receipt');
   await f.click('Save for next flight');
@@ -1816,6 +1870,7 @@ for (const transition of ['algorithm round trip', 'edit back to saved value', 'r
   test(`a cancelled pending import stays cancelled after ${transition}`, async (t) => {
     const f = fixture(t);
     await f.click('New Actual profile');
+    await f.click('Save for next flight');
     const realDigest = globalThis.crypto.subtle.digest.bind(globalThis.crypto.subtle);
     let release,
       first = true;
@@ -1917,4 +1972,390 @@ test('rotation-only CLI export crosses throttle versions only after an explicit 
   assert.match(exported, /throttle settings are omitted/);
   assert.match(f.ui.root.querySelector('[role="status"]').textContent, /rotation rates only/);
   assert.deepEqual(await f.draft(), before);
+});
+
+test('workbench starts in Basic with six sections and a clean saved setup', async (t) => {
+  const f = fixture(t),
+    before = f.store.export();
+  const panels = f.ui.root.querySelectorAll('.workbench-panel');
+  assert.deepEqual(
+    panels.map((panel) => panel.dataset.section),
+    ['overview', 'aircraft', 'rates', 'camera', 'controller', 'library'],
+  );
+  assert.equal(f.ui.root.dataset.view, 'basic');
+  assert.equal(panels.filter((panel) => !panel.hidden).length, 1);
+  assert.equal(panels.find((panel) => !panel.hidden).dataset.section, 'overview');
+  assert.match(
+    f.ui.root.querySelector('.workbench-summary').textContent,
+    /0 changes.*Saved for next flight/,
+  );
+  for (const label of [
+    'Aircraft',
+    'Rates & throttle',
+    'Camera',
+    'Flight response / PID',
+    'Library',
+    'Overview',
+  ])
+    await f.click(label);
+  assert.equal(f.store.export(), before);
+  assert.equal(f.applied.length, 0);
+});
+
+test('Basic and Expert retain incomplete text, native algorithms and customized PID values', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  f.edit('Rate algorithm', 'quick', { tag: 'select', event: 'change' });
+  f.edit('Maximum rate (°/s)', '', { scope: f.axis('Roll'), type: 'number' });
+  await f.click('Expert');
+  const p = f.find('Roll P (N·m/(rad/s))');
+  const original = Number(p.value);
+  p.value = String(original * 1.1);
+  p.emit('input');
+  await f.click('Basic');
+  assert.equal(f.ui.root.dataset.view, 'basic');
+  assert.equal(f.find('Rate algorithm', 'select').value, 'quick');
+  assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value, '');
+  assert.equal(
+    p.closest('.workbench-physical-field').hidden,
+    false,
+    'Customized expert values remain visible in Basic',
+  );
+  assert.equal(Number(p.value), original * 1.1);
+  assert.equal(f.store.snapshot().revision, 0);
+});
+
+test('settings search reveals expert fields without changing Basic preference and supports Ukrainian aliases', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  const input = f.find('Roll FEEDFORWARD (N·m/(rad/s²))');
+  assert.equal(input.closest('.workbench-physical-field').hidden, true);
+  f.edit('Search all settings', 'feedforward');
+  const results = f.ui.root.querySelector('.workbench-search-results');
+  const result = results
+    .querySelectorAll('button')
+    .find((button) => button.textContent.startsWith('Roll FEEDFORWARD'));
+  assert.ok(result);
+  result.emit('click');
+  assert.equal(input.closest('.workbench-physical-field').hidden, false);
+  assert.equal(f.document.activeElement, input);
+  assert.equal(f.ui.root.dataset.view, 'basic');
+  assert.notEqual(f.storage.getItem('revealline.fpv.workbench.view.v1'), 'expert');
+  f.edit('Search all settings', 'випередження');
+  assert.ok(results.querySelectorAll('button').length > 0);
+  f.edit('Search all settings', 'FOV');
+  assert.ok(
+    results
+      .querySelectorAll('button')
+      .some((button) => button.textContent.includes('Vertical FOV')),
+  );
+  assert.equal(f.store.snapshot().revision, 0);
+});
+
+test('direct PID editing enters the tested draft with exact units and invalid text blocks saving', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
+  const before = f.store.effective(),
+    raw = f.store.export();
+  await f.click('Flight response / PID');
+  await f.click('Edit exact PID gains');
+  const p = f.find('Roll P (N·m/(rad/s))');
+  assert.equal(p.closest('.workbench-physical-field').hidden, false);
+  f.edit('Roll P (N·m/(rad/s))', '');
+  await f.click('Save for next flight');
+  assert.equal(f.store.export(), raw);
+  assert.equal(p.value, '');
+  assert.equal(p.getAttribute('aria-invalid'), 'true');
+  const exact = before.advanced.controller.gains.roll.p * 1.03;
+  f.edit('Roll P (N·m/(rad/s))', exact);
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.controller.gains.roll.p, exact);
+  assert.deepEqual(f.tested[0].advanced.aircraft, before.advanced.aircraft);
+  assert.deepEqual(f.tested[0].response, before.response);
+  assert.equal(f.store.export(), raw);
+  await f.click('Return to tuning', f.document.body);
+  assert.equal(
+    f.ui.root.querySelectorAll('.workbench-panel').find((panel) => !panel.hidden).dataset.section,
+    'controller',
+  );
+});
+
+test('draft camera framing updates precisely and invalid text retains the last valid preview', async (t) => {
+  const f = fixture(t),
+    before = f.store.export();
+  await f.click('Camera');
+  const preview = f.ui.root.querySelector('[aria-label="Camera framing preview at 16:9"]');
+  f.edit('Camera tilt (degrees)', '27.25');
+  f.edit('Vertical FOV (degrees)', '100.5');
+  assert.match(preview.textContent, /Vertical FOV 100.5° · Tilt 27.25°/);
+  assert.match(preview.textContent, /16:9 · Horizontal/);
+  const valid = preview.textContent;
+  f.edit('Camera tilt (degrees)', '');
+  assert.equal(preview.textContent, valid);
+  assert.equal(f.find('Camera tilt (degrees)').value, '');
+  assert.equal(f.store.export(), before);
+});
+
+test('shared edits default to independent copies and unchanged saves add neither profiles nor revisions', async (t) => {
+  const f = fixture(t);
+  const original = f.store.snapshot().profiles[0];
+  assert.equal(f.find('When saving edited rates', 'select').value, 'copy');
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  f.edit('Maximum rate (°/s)', 920, { scope: f.axis('Roll'), type: 'number' });
+  await f.click('Save for next flight');
+  assert.equal(f.store.snapshot().profiles.length, 2);
+  assert.deepEqual(f.store.snapshot().profiles[0], original);
+  assert.equal(f.store.snapshot().defaultProfileId, original.id);
+  assert.notEqual(f.store.effective().profileId, original.id);
+  const saved = f.store.export();
+  await f.click('Save for next flight');
+  assert.equal(f.store.export(), saved);
+});
+
+test('workbench undo restores one valid edit and leaves the saved baseline untouched', async (t) => {
+  const f = fixture(t),
+    before = f.store.export();
+  f.edit('Camera tilt (degrees)', 20);
+  f.edit('Camera tilt (degrees)', 30);
+  await f.click('Undo last edit');
+  assert.equal(f.find('Camera tilt (degrees)').value, '20');
+  await f.click('Undo last edit');
+  assert.equal(f.find('Camera tilt (degrees)').value, '10');
+  assert.equal(f.store.export(), before);
+});
+
+test('calibration returns to the unchanged draft and input editing keys stay within the workbench', async (t) => {
+  const calibration = [],
+    f = fixture(t, { onCalibration: (done) => calibration.push(done) });
+  f.edit('Camera tilt (degrees)', '');
+  let leaked = 0;
+  f.document.body.addEventListener('keydown', () => leaked++);
+  f.find('Camera tilt (degrees)').emit('keydown', { key: 'ArrowUp' });
+  assert.equal(leaked, 0);
+  await f.click('Check input & calibration');
+  assert.equal(f.ui.root.open, false);
+  assert.equal(calibration.length, 1);
+  calibration[0]();
+  assert.equal(f.ui.root.open, true);
+  assert.equal(f.find('Camera tilt (degrees)').value, '');
+  assert.equal(f.applied.length, 0);
+  assert.equal(f.tested.length, 0);
+  assert.equal(f.store.snapshot().revision, 0);
+});
+
+test('animated rotation pauses outside Rates, when backgrounded and for reduced motion', async (t) => {
+  const f = fixture(t);
+  await f.click('Rates & throttle');
+  f.find('Animate rotation preview').checked = true;
+  f.frame(0);
+  f.frame(25);
+  const model = f.ui.root.querySelector('.tuning-quad');
+  assert.notEqual(model.style.transform, 'rotateZ(0deg)');
+  await f.click('Camera');
+  const hidden = model.style.transform;
+  f.frame(50);
+  assert.equal(model.style.transform, hidden);
+  await f.click('Rates & throttle');
+  f.document.hidden = true;
+  f.frame(75);
+  assert.equal(model.style.transform, hidden);
+  f.document.hidden = false;
+  f.window.matchMedia = () => ({ matches: true });
+  f.frame(100);
+  assert.equal(model.style.transform, hidden);
+});
+
+test('changing the rate assignment loads the chosen profile and player-default inheritance remains explicit', async (t) => {
+  const f = fixture(t);
+  await f.store.createProfile({ id: 'fast-rates', name: 'Fast rates' });
+  await f.click('Refresh library');
+  const oldFlight = f.store.effective();
+  f.edit('Rates used by this drone', 'fast-rates', { tag: 'select', event: 'change' });
+  assert.equal(f.find('Rate algorithm', 'select').value, 'actual');
+  assert.equal(f.store.effective().profileId, 'legacy-feel');
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().profileId, 'fast-rates');
+  assert.equal(f.store.snapshot().setups[0].profileId, 'fast-rates');
+  assert.equal(oldFlight.profileId, 'legacy-feel');
+  f.edit('Rates used by this drone', '', { tag: 'select', event: 'change' });
+  assert.equal(f.find('Rate algorithm', 'select').value, 'legacy');
+  await f.click('Save for next flight');
+  assert.equal(f.store.snapshot().setups[0].profileId, null);
+  assert.equal(f.store.effective().profileId, 'legacy-feel');
+});
+
+test('fixing one incomplete PID value after reopening preserves other valid gain edits in the tested configuration', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
+  const original = f.store.effective();
+  const changedPitch = original.advanced.controller.gains.pitch.p * 1.1;
+  f.edit('Pitch P (N·m/(rad/s))', changedPitch);
+  f.edit('Roll P (N·m/(rad/s))', '');
+  await f.click('Close');
+  f.ui.open({ keepDraft: true });
+  assert.equal(f.find('Pitch P (N·m/(rad/s))').value, String(changedPitch));
+  assert.equal(f.find('Roll P (N·m/(rad/s))').value, '');
+  f.edit('Roll P (N·m/(rad/s))', original.advanced.controller.gains.roll.p);
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].advanced.controller.gains.pitch.p, changedPitch);
+  assert.equal(
+    f.tested[0].advanced.controller.gains.roll.p,
+    original.advanced.controller.gains.roll.p,
+  );
+  assert.deepEqual(f.store.effective(), original);
+});
+
+test('testing a Legacy setup draft cannot inherit the selected physical aircraft backend', async (t) => {
+  const f = fixture(t);
+  f.edit('Aircraft preset', 'meteor75-analog-2022', { tag: 'select', event: 'change' });
+  await f.click('Use in draft');
+  await f.click('Save for next flight');
+  const physical = f.store.effective();
+  assert.ok(physical.advanced);
+  f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  await f.click('Use saved setup in draft');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].setupId, 'my-drone');
+  assert.equal(f.tested[0].profileId, 'legacy-feel');
+  assert.equal(Object.hasOwn(f.tested[0], 'advanced'), false);
+  assert.equal(f.tested[0].response.format, 'FlightResponseProfile.v1');
+  assert.deepEqual(f.store.effective(), physical);
+});
+
+test('saved aircraft remain editable when their catalog reference is no longer bundled', async (t) => {
+  const f = fixture(t);
+  const config = createPresetConfiguration('meteor75-analog-2022');
+  const aircraft = { ...config.aircraft, id: 'retired-aircraft-reference' };
+  await f.store.saveSetup({
+    ...f.store.snapshot().setups[0],
+    name: 'Preserved historical setup',
+    preset: { id: aircraft.id, revision: 1 },
+    advanced: { aircraft, controller: config.controller },
+  });
+  await f.click('Refresh library');
+  assert.doesNotMatch(
+    f.ui.root.querySelector('[role="status"]').textContent,
+    /Unknown aircraft preset/,
+  );
+  await f.click('Flight response / PID');
+  assert.equal(Number(f.find('Roll P (N·m/(rad/s))').value), config.controller.gains.roll.p);
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested.length, 1);
+  assert.deepEqual(f.tested[0].advanced.aircraft, aircraft);
+});
+
+for (const preset of listAircraftPresets())
+  test(`workbench can test ${preset.id} without saving or changing its physical coefficients`, async (t) => {
+    const f = fixture(t),
+      reference = createPresetConfiguration(preset.id),
+      before = f.store.export();
+    f.edit('Aircraft preset', preset.id, { tag: 'select', event: 'change' });
+    await f.click('Use in draft');
+    await f.click('Flight response / PID');
+    await f.click('Expert');
+    await f.click('Test draft · unscored');
+    assert.equal(f.tested.length, 1);
+    assert.deepEqual(f.tested[0].advanced, {
+      aircraft: reference.aircraft,
+      controller: reference.controller,
+    });
+    assert.deepEqual(f.tested[0].response, reference.response);
+    assert.deepEqual(f.tested[0].camera, reference.camera);
+    assert.equal(f.store.export(), before);
+  });
+
+test('Library browsing previews each native algorithm without applying it or discarding raw draft text', async (t) => {
+  const f = fixture(t);
+  for (const algorithm of ['actual', 'betaflight', 'quick', 'kiss', 'raceflight'])
+    await f.store.createProfile({
+      id: algorithm,
+      name: `${algorithm} saved`,
+      response: createTunedResponse(createRateProfile({ algorithm })),
+    });
+  await f.click('Refresh library');
+  f.edit('Maximum rate (°/s)', '321');
+  f.edit('Camera tilt (degrees)', '');
+  const before = f.store.export();
+  for (const algorithm of ['actual', 'betaflight', 'quick', 'kiss', 'raceflight']) {
+    f.edit('Rate profile', algorithm, { tag: 'select', event: 'change' });
+    const preview = f.ui.root.querySelector('[aria-label="Rate profile preview"]');
+    assert.match(preview.textContent, new RegExp(`${algorithm} saved`));
+    assert.match(preview.textContent, /center slope .*50% .*100% .*°\/s/);
+    assert.equal(preview.querySelectorAll('path').length, 3);
+    assert.equal(f.find('Rate algorithm', 'select').value, 'legacy');
+    assert.equal(f.find('Maximum rate (°/s)').value, '321');
+    assert.equal(f.find('Camera tilt (degrees)').value, '');
+  }
+  assert.equal(f.store.export(), before);
+  f.setLocale('uk');
+  const translated = f.ui.root.querySelector('[aria-label="Перегляд профілю рейтів"]');
+  assert.match(translated.textContent, /raceflight saved/);
+  assert.match(translated.textContent, /нахил у центрі/);
+  assert.equal(f.find('Профіль рейтів', 'select').value, 'raceflight');
+  assert.equal(f.find('Алгоритм рейтів', 'select').value, 'legacy');
+});
+
+test('saved setup browsing shows its own aircraft, camera and assigned rates before explicit application', async (t) => {
+  const f = fixture(t);
+  await f.store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'meteor-preview',
+    profileId: 'meteor-preview-rates',
+    rates: 'defaults',
+  });
+  const aircraftSetup = f.store.snapshot().setups.find((item) => item.id === 'meteor-preview');
+  await f.store.saveSetup({
+    ...aircraftSetup,
+    name: 'My custom Meteor',
+    camera: { tilt: 27, verticalFov: 103 },
+  });
+  await f.click('Refresh library');
+  f.edit('Camera tilt (degrees)', '42');
+  f.edit('Drone setup', 'my-drone', { tag: 'select', event: 'change' });
+  let preview = f.ui.root.querySelector('[aria-label="Saved setup preview"]');
+  assert.match(preview.textContent, /Legacy aircraft/);
+  assert.match(preview.textContent, /Legacy feel/);
+  assert.equal(f.find('Drone name').value, 'My custom Meteor');
+  assert.equal(f.find('Camera tilt (degrees)').value, '42');
+  f.edit('Drone setup', 'meteor-preview', { tag: 'select', event: 'change' });
+  preview = f.ui.root.querySelector('[aria-label="Saved setup preview"]');
+  assert.match(preview.textContent, /My custom Meteor/);
+  assert.match(preview.textContent, /Meteor75/);
+  assert.match(preview.textContent, /tilt 27° · vertical FOV 103°/);
+  assert.match(preview.textContent, /Actual/);
+  assert.match(preview.textContent, /100% 600\.0 °\/s/);
+  assert.equal(f.find('Camera tilt (degrees)').value, '42');
+  await f.click('Test draft · unscored');
+  assert.equal(f.tested[0].camera.tilt, 42);
+  assert.equal(f.tested[0].advanced.aircraft.id, 'meteor75-analog-2022');
+  assert.equal(f.store.effective().camera.tilt, 27);
+});
+
+test('inspected commanded rate refreshes for exact stick, axis, algorithm and edited rates', async (t) => {
+  const f = fixture(t);
+  const readout = () => f.ui.root.querySelector('[aria-label="Inspected rate"]').textContent;
+  f.edit('Preview stick position · exact (%)', '100');
+  assert.equal(readout(), '100% · Roll 240.0 °/s');
+  f.edit('Maximum rate (°/s)', '360');
+  assert.equal(readout(), '100% · Roll 360.0 °/s');
+  f.edit('Rotation preview axis', 'yaw', { tag: 'select', event: 'change' });
+  assert.equal(readout(), '100% · Yaw 360.0 °/s');
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  assert.equal(readout(), '100% · Yaw 670.0 °/s');
+  f.edit('Maximum rate (°/s)', '900', { scope: f.axis('Yaw') });
+  assert.equal(readout(), '100% · Yaw 900.0 °/s');
+  f.edit('Preview stick position · exact (%)', '-100');
+  assert.equal(readout(), '-100% · Yaw -900.0 °/s');
+  f.edit('Preview stick position · exact (%)', '');
+  assert.equal(
+    readout(),
+    '-100% · Yaw -900.0 °/s',
+    'incomplete exact text retains last evaluated position',
+  );
 });

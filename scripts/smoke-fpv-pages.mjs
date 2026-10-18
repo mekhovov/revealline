@@ -37,6 +37,15 @@ const required = [
   'rates.mjs',
   'tuning-library.mjs',
   'tuning-ui.mjs',
+  'setup-draft.mjs',
+  'setup-workbench.mjs',
+  'aircraft-tuning-fields.mjs',
+  'controller-tune-library.mjs',
+  'controller-tune-panel.mjs',
+  'response-bench.mjs',
+  'response-bench-client.mjs',
+  'response-bench-worker.mjs',
+  'response-bench-panel.mjs',
   'tuning.css',
   'betaflight-import.mjs',
   'advanced-worker.mjs',
@@ -180,13 +189,20 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
       inventory.has('optional-practice/fpv-worlds/advanced-worker.mjs'),
       'Missing World-scoped worker entry',
     );
+    assert.ok(
+      inventory.has('optional-practice/fpv-worlds/response-bench-worker.mjs'),
+      'Missing World-scoped response comparison worker',
+    );
     for (const id of packages) {
       const worker = await readFile(path.join(site, `optional-practice/${id}/worker.js`), 'utf8');
       for (const name of required.filter(
         (name) => id === 'fpv-worlds' || name !== 'advanced-regional.mjs',
       ))
         assert.ok(worker.includes(name), `${id} offline worker omits ${name}`);
-      if (id === 'fpv-worlds') assert.ok(worker.includes('"path":"advanced-worker.mjs"'));
+      if (id === 'fpv-worlds') {
+        assert.ok(worker.includes('"path":"advanced-worker.mjs"'));
+        assert.ok(worker.includes('"path":"response-bench-worker.mjs"'));
+      }
     }
     await new Promise((resolve, reject) => {
       server.once('error', reject);
@@ -303,9 +319,12 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
         .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
         .filter({ visible: true })
         .click();
-      await page.getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true }).waitFor();
-      await page.getByText(/^Input source:/).waitFor();
-      assert.match(await page.getByText(/^Input source:/).textContent(), /Raw input:/);
+      await page.getByRole('dialog', { name: 'Setup workbench', exact: true }).waitFor();
+      await page.getByRole('button', { name: 'Overview', exact: true }).click();
+      await page.getByText('Input diagnostics', { exact: true }).click();
+      const diagnostics = page.locator('pre[aria-label="Input diagnostics"]');
+      await diagnostics.waitFor();
+      assert.match(await diagnostics.textContent(), /Raw input:/);
       await page.evaluate(async () => {
         await document.fonts.ready;
         await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
@@ -372,9 +391,12 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
       return { route, activations, statusRole: 'status', completion: readyText };
     };
     const advanced = async (packageId) => {
+      await page.getByRole('button', { name: 'Library', exact: true }).click();
       await page
         .getByLabel('Rate profile', { exact: true })
         .selectOption({ label: 'Pages rates check' });
+      await page.getByRole('button', { name: 'Use rate profile in draft', exact: true }).click();
+      await page.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
       assert.equal(
         await page
           .getByRole('group', { name: 'Roll', exact: true })
@@ -382,6 +404,7 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
           .inputValue(),
         '900',
       );
+      await page.getByRole('button', { name: 'Flight response / PID', exact: true }).click();
       await page
         .getByRole('button', { name: 'Advanced reference quad · experimental', exact: true })
         .click();
@@ -430,7 +453,7 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
         () => window.pagesWorkerState.created === window.pagesWorkerState.terminated,
       );
       await page
-        .getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true })
+        .getByRole('dialog', { name: 'Setup workbench', exact: true })
         .getByRole('button', { name: 'Close', exact: true })
         .click();
       return {
@@ -479,11 +502,13 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
       );
       await openTuning();
       if (index === 0) {
+        await page.getByRole('button', { name: 'Library', exact: true }).click();
         await page.getByRole('button', { name: 'New Actual profile', exact: true }).click();
         await page.waitForFunction(
           () => JSON.parse(localStorage.getItem('revealline.fpv.tuning.v1'))?.profiles.length === 2,
         );
         await page.getByLabel('Profile name', { exact: true }).fill('Pages rates check');
+        await page.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
         await page
           .getByRole('group', { name: 'Roll', exact: true })
           .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
@@ -562,6 +587,10 @@ export async function smokeFPVPages({ site, playwrightModule, output }) {
         error.offline &&
         error.url === optionalToolsURL &&
         error.text === 'Failed to load resource: net::ERR_INTERNET_DISCONNECTED',
+    );
+    assert.ok(
+      inventory.has('optional-practice/fpv-worlds/response-bench-worker.mjs'),
+      'Missing World-scoped response comparison worker',
     );
     for (const id of packages) {
       assert.equal(

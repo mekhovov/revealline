@@ -255,6 +255,12 @@ export function createTuningLibraryStore({
       );
       const next = copy(current);
       mutate(next);
+      // A no-op save is not a new revision. Explicit restores still write so
+      // they can repair unreadable storage even when the fallback is identical.
+      if (!recover && canonicalJSON(next) === canonicalJSON(current)) {
+        error = null;
+        return copy(current);
+      }
       next.revision++;
       const valid = validateTuningLibrary(next),
         serialized = canonicalJSON(valid);
@@ -287,6 +293,22 @@ export function createTuningLibraryStore({
   };
   function updateProfile(value, id, changes) {
     const profile = find(value, id);
+    const candidate = { ...copy(profile) };
+    if (changes.name !== undefined) candidate.name = changes.name;
+    if (changes.response !== undefined)
+      candidate.response = validateFlightResponse(changes.response);
+    if (Object.hasOwn(changes, 'provenance')) {
+      if (changes.provenance === null) delete candidate.provenance;
+      else candidate.provenance = validateRateImportReceipt(changes.provenance);
+    } else if (
+      candidate.provenance &&
+      (!candidate.response.rates ||
+        candidate.provenance.rateIdentity !== rateProfileIdentity(candidate.response.rates))
+    ) {
+      // Edited rates cannot claim the unchanged output of their source import.
+      delete candidate.provenance;
+    }
+    if (canonicalJSON(candidate) === canonicalJSON(profile)) return false;
     profile.history = [
       ...profile.history,
       {
@@ -297,20 +319,11 @@ export function createTuningLibraryStore({
       },
     ].slice(-24);
     profile.revision++;
-    if (changes.name !== undefined) profile.name = changes.name;
-    if (changes.response !== undefined) profile.response = validateFlightResponse(changes.response);
-    if (Object.hasOwn(changes, 'provenance')) {
-      if (changes.provenance === null) delete profile.provenance;
-      else profile.provenance = validateRateImportReceipt(changes.provenance);
-    } else if (
-      profile.provenance &&
-      (!profile.response.rates ||
-        profile.provenance.rateIdentity !== rateProfileIdentity(profile.response.rates))
-    ) {
-      // The old revision retains its receipt; edited rates cannot claim to be
-      // the unchanged output of the original import.
-      delete profile.provenance;
-    }
+    profile.name = candidate.name;
+    profile.response = candidate.response;
+    if (candidate.provenance) profile.provenance = candidate.provenance;
+    else delete profile.provenance;
+    return true;
   }
   return Object.freeze({
     snapshot: () => copy(current),
@@ -339,6 +352,60 @@ export function createTuningLibraryStore({
         const index = value.setups.findIndex((item) => item.id === drone.id);
         required(index >= 0, 'Unknown drone setup');
         value.setups[index] = drone;
+      });
+    },
+    /** Persist the whole workbench draft in the existing single library entry.
+     * The selected response is explicitly assigned; opening/browsing an item
+     * never calls this method. Shared updates require an explicit action. */
+    saveSetupDraft: async (input, expected = current.revision) => {
+      const request = submitted(input);
+      exactKeys(
+        request,
+        ['setup', 'profile', 'rateAction', 'newProfileId', 'newProfileName', 'select'],
+        'complete setup draft',
+      );
+      exactKeys(request.profile, ['sourceId', 'name', 'response', 'provenance'], 'draft rates');
+      required(
+        request.rateAction === undefined || ['copy', 'update'].includes(request.rateAction),
+        'Choose whether to copy rates or update their shared profile',
+      );
+      required(
+        request.select === undefined || typeof request.select === 'boolean',
+        'Invalid setup selection',
+      );
+      return transaction(expected, (value) => {
+        const source = find(value, request.profile.sourceId),
+          setup = copy(request.setup),
+          trial = copy(value),
+          { sourceId, ...patch } = request.profile;
+        required(
+          patch.name !== undefined && patch.response !== undefined,
+          'Draft rates are incomplete',
+        );
+        const changed = updateProfile(trial, sourceId, patch);
+        setup.profileId =
+          setup.profileId === null && source.id === value.defaultProfileId ? null : source.id;
+        if (changed && (request.rateAction ?? 'copy') === 'copy') {
+          required(
+            stableId(request.newProfileId) &&
+              !value.profiles.some((profile) => profile.id === request.newProfileId),
+            'Choose a new rate profile ID for this copy',
+          );
+          const edited = find(trial, sourceId);
+          value.profiles.push({
+            id: request.newProfileId,
+            name: request.newProfileName ?? edited.name,
+            response: copy(edited.response),
+            revision: 0,
+            history: [],
+            ...(edited.provenance ? { provenance: copy(edited.provenance) } : {}),
+          });
+          setup.profileId = request.newProfileId;
+        } else if (changed) updateProfile(value, sourceId, patch);
+        const index = value.setups.findIndex((item) => item.id === setup.id);
+        if (index < 0) value.setups.push(setup);
+        else value.setups[index] = setup;
+        if (request.select) value.selectedSetupId = setup.id;
       });
     },
     createProfile: async (input, expected = current.revision) => {
