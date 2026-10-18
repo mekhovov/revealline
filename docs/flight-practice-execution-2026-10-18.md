@@ -1,5 +1,129 @@
 # Flight practice: integrated execution checkpoint — 18 October 2026
 
+## Current checkpoint: accepted main 237b40543
+
+The second rebase is complete: all 26 Practice commits replayed cleanly onto
+`237b405437def3c41b01165fe057af1ab06f618c`. Verified runtime/candidate source is
+`6177d2cc83adb9cb76ff4088d502c21ddfd7d199`, tree
+`ba3902515d73e97ae18dda8ffc57ee698eba9825`. Later evidence-only documentation
+commits do not relabel that runtime. The primary dirty checkout remains untouched.
+This is a recorded accepted-main checkpoint, not a claim main cannot move again.
+
+### Newly completed on this source
+
+- **1,270/1,270 Practice tests**, 564.626 seconds; **756/756 local-UX tests**,
+  199.371 seconds. Both finish within their unchanged 600-second diagnostic
+  ceilings with unchanged source/input pins. The complete Practice script
+  selection includes the expanded fifteen-aircraft/terrain cases. No failures,
+  skips or cancellations in either suite. These local diagnostics are not the
+  official full tracked-source CI receipt; the older remote timeout's cause is
+  still not established by a newer local pass.
+- **369/369 focused accepted-SIM/capture/guide checks** and **377 observer tests
+  plus one explicit historical-fixture skip** pass.
+- All three packages reproduce twice and pass strict original admission.
+  Envelope SHA-256:
+  `b64909c3127ea428be8d188444bf2ae0873e299b71bfd991a737ba0c658ce2a5`.
+  Gym/Academy/Worlds retain 96/148/208 members respectively. Their revisions are
+  `b59023973f9a8a69302b231bf81998c8a1683c7277d78275cec028c0d9f9fa6f`,
+  `0e10677152c52e673448d28f526d20537466e581feb28a1c30141055b1776777`,
+  `64e3d6d2d02ef419156bf389b9dc4c48a37b8f6bc64ea8cbcae70ec3e8588de7`.
+  They remain development `v0.151.1`, `publicEligible: false`, with pending reviews.
+- **Ten native beginner exercises and repeated independent export replays pass**
+  again on these new packages: two assisted Gym and eight EN/UK FPV
+  Self-level/Acro cases. No prior runtime receipt was substituted.
+- **Six actual packaged EN/UK guides and four populated tuning-library backup
+  journeys pass** again. Public download/upload/restore removes the later fourth
+  profile, restores the named three-profile library and preserves all semantic
+  fields through reload. Exact admitted sources, exports, ten PNGs and cleanup
+  are audited. Only the declared core-tools lazy request and its four real
+  localized fallback messages receive the bounded existing exemption.
+- **Gym historical installed-session continuity passes again**, now against this
+  new candidate: resumed-motion witness at 7.132 seconds, stable paused height
+  0.30 m, explicit resumed lift
+  to 0.40 m, unchanged old document/time origin, genuine trusted native blur.
+  Ten all-package upgrade/rollback checkpoints, seven exact saved-World witnesses
+  and 3,237 dependency rows pass. The owned OS app/profile are removed.
+
+Timing interpretation: the retained Gym audits' `activeSessionElapsedMs` field
+is the last visible motion witness, not the entire procedure. Final menu pause,
+identity checks and cleanup follow it. Academy's corresponding field is its last
+final-pause witness. The unchanged thirty-second session guard remains enforced;
+these timestamps are not frame-pacing or whole-run performance measurements.
+
+The new Academy active-session invocation was prepared but did not receive input;
+it was cancelled before Node/browser startup when low space was rechecked. No
+log or native receipt exists for it. This is **not run**, not an app failure and
+not a credentials blocker. Academy's passing `3c6` historical receipt remains
+valid for its original payload only. Historical Worlds remains **owner-deferred
+and unverified**; current Worlds beginner exercises above do pass.
+
+[Current checkpoint evidence](flight-practice-main-237-20261018-evidence.tgz):
+135 original files plus inventory, 12,378,813 bytes before compression; SHA-256
+`1a0f3da8ca6b037a71d00ba1777f913fd3bdf268ed2a653dcb4518ff6e2ebf8c`.
+The archive was extracted and every inventoried file rehashed. It includes the
+new candidate metadata/byte differences, suites, native exports, audits, screenshots,
+storage preflight, explicit not-run record and generated-build relocation receipt.
+Full package ZIPs remain in
+`/Volumes/alex/CodexMigrationStaging/flight-practice-main-237-20261018-candidate`.
+
+### Actual resource blocker and safe cleanup
+
+Only our generated old production output was relocated: all **3,561 files** were
+copied and hash-verified at
+`/Volumes/alex/CodexMigrationStaging/flight-practice-production-3c6ac5ee0-20261018/site-original`
+before removing the exact local generated directory. Its original ZIPs and
+metadata remain in the parent folder. This is recoverable; no primary-checkout,
+user data, user archives or unrelated files were removed. Original capture paths
+inside historical receipts remain unchanged; use this relocation map to find them.
+
+The latest read-only build preflight selects 4,429 committed inputs totalling
+875,266,210 bytes. Under the existing storage guard, a local build needs
+**3,361,145,156 bytes** including the **1,610,612,736-byte reserve**; only
+**1,820,684,288 bytes** were available. The current full production rebuild was
+therefore **not started**. The previously verified `3c6` production build and its
+six journeys are not silently transferred to `6177`. The earlier external-volume
+attempt timed out and remains failed. Do not relax deadlines, delete user files
+or invent a hosting change to bypass this blocker. Request at least **4 GiB of
+free fast local workspace**, allowing for concurrent work; a fast drive path is
+an alternative. The full Practice run's minimum measured free space remained
+1,854,656,512 bytes, above its unchanged 1.5 GiB reserve.
+
+### Remaining order, impact and conditional estimates
+
+The original plan is **not fully complete**. Estimates are focused effort after
+prerequisites, not calendar promises; storage, queued CI and human waiting time
+have no assigned ETA. No completion percentage or release date is claimed.
+
+| Priority / ID       | Remaining next step                                                                                                                                                                  | Why it matters / impact if omitted                                                                                  | Effort and dependency                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| P0 / R1             | Obtain fresh complete CI on the preserved rebased head                                                                                                                               | Local success does not make a queued remote job green; the old timeout is still undiagnosed                         | 1–2 h plus unknown queue time; no test/deadline waiver                                            |
+| P0 / R2             | Refresh Academy's installed historical continuity with the new payload; retain Gym's new pass                                                                                        | The earlier Academy receipt cannot qualify changed current bytes                                                    | 1–2 h after safe disk headroom; Worlds is D3, not passed                                          |
+| P0 / R3             | Complete current all-app recovery using actual public backups: Worlds projects/assets/records, other advertised libraries/archives, exact semantic restore and final offline flights | The real one-proof Academy recovery below is valuable but does not guarantee recovery of every record/world/library | 1–2 days after storage; use SIM-maintained export/import controls, not hidden database writes     |
+| P0 / R4             | Native Cancel with genuinely outstanding digest work; settle late writes and check old/sibling preservation                                                                          | Unit-held digest and delayed final-ready reply do not prove real hash-time overlap                                  | 4–8 h; finite trace/clock/worker ownership protocol; absent overlap stays unverified/inconclusive |
+| P1 / R5             | Build current full production and rerun six EN/UK directory/return plus affected restarted-offline routes                                                                            | New capture/main-shell and input bytes cannot inherit the old 3,558-member build's proof                            | 4–8 h after storage; **currently resource-blocked**, not a diagnosed product assertion            |
+| P1 / R6             | Measure agreed moving-flight/menu/load/recovery workloads on the chosen local browser and obtain accepted budgets                                                                    | Fast startup or simulated flight ticks are not an approved rendered-performance result                              | 4–8 h after workload/budget choice; local browser is selected, thresholds are not                 |
+| P1 / R7             | Actual 200% readable layout/full focus review and EN/UK screen-reader speech                                                                                                         | DOM geometry and cropped/blank captures cannot establish visual/spoken usability                                    | 1–2 review days plus fixes; named screen-reader/operator needed                                   |
+| P1 / R8             | Real novice and maintainer guide walkthroughs                                                                                                                                        | Automated recipe completion is not evidence of understanding                                                        | 0.5–1 review day plus participant scheduling                                                      |
+| Required / R9       | Freeze final evidence and obtain 24 attributable package-gate decisions                                                                                                              | Reproducibility, tests and this agent's audit cannot approve content/licenses/learning/hardware                     | 0.5–1 assembly day after checks; actual reviewer turnaround unknown                               |
+| D1 / owner-deferred | Physical controller/radio/touch checks                                                                                                                                               | Supported physical inputs remain unqualified                                                                        | No ETA; not passed                                                                                |
+| D2 / owner-deferred | Hosting/capacity/release allocation/upload/selection/public verification                                                                                                             | Local packages do not establish public availability                                                                 | No ETA; no publication action                                                                     |
+| D3 / owner-deferred | Historical Worlds automated active-session check                                                                                                                                     | Current Worlds exercises do not prove its old/new active-flight continuity                                          | No ETA; explicitly left unverified by the owner                                                   |
+
+Approximately **3–5 focused engineering days** remain for the conditional software
+work, excluding review/setup waiting, major new defects and deferred items. This
+is not a full Phase 1/public-release ETA. Do not keep rebasing unmerged SIM work
+or overwrite older evidence to make the list appear complete.
+
+The SIM owner's [archive-retention incident](fpv-archive-retention-followup-20261018.md)
+remains open: missing protected archives and a closing-database observation are
+not explained by the small reconnect fix. Our fresh-profile controlled eviction
+test neither accessed that affected profile nor diagnosed its cause. Preserve
+that concern and use disposable data for R3; do not perform destructive cleanup
+on the affected user archives. Human approvals and accepted performance limits
+are separate from the local-browser choice.
+
+The earlier follow-ups below remain source-bound historical evidence.
+
 ## Follow-up: verified integration and recovery
 
 Later results on the same **3c6 runtime packages**, with clean observer

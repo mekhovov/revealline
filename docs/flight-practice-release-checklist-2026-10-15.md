@@ -1,5 +1,12 @@
 # Flight practice: non-hosting release checklist — 15 October 2026
 
+**Current source-bound checkpoint:** [accepted-main 237b40543 report](flight-practice-execution-2026-10-18.md)
+supersedes older status summaries below. Source `6177d2cc8` has fresh package,
+suite, ten-exercise, guide/backup and Gym-update passes. Current full production,
+Academy current-payload rerun and broader recovery/cancellation remain open;
+storage is the immediate heavy-check blocker. Explicit deferrals and human
+approvals are not converted to passes.
+
 ## Latest execution checkpoint — 18 October 2026
 
 Use the [integrated execution checkpoint](flight-practice-execution-2026-10-18.md)

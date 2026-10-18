@@ -1,5 +1,22 @@
 # Flight practice: completion plan and priority review
 
+## Current accepted-main checkpoint — 237b40543
+
+Use the [latest execution status and remaining-order table](flight-practice-execution-2026-10-18.md)
+at the top of that report. The second rebase, fresh three-package reproduction/
+admission, 1,270 Practice tests, 756 local-UX tests, ten native exercises, six
+guides, four populated tuning restores and current Gym update continuity pass.
+Evidence source is `6177d2cc8`, not the older runtime receipts below.
+
+Next: safe local disk headroom (at least 4 GiB recommended), fresh remote CI,
+Academy's current-payload update rerun, remaining all-app recovery and native
+hash-overlap cancellation, then the current full production/offline journeys.
+The measured full-build storage guard currently refuses to start. Only our own
+generated old build was relocated after hash verification; no user data was removed.
+Hosting, hardware and the historical Worlds active check are explicitly deferred,
+not passed. Performance, spoken/visual, real walkthrough and 24 review decisions
+retain their separate prerequisites and conditional estimates in the latest table.
+
 ## Latest execution checkpoint — 18 October 2026
 
 The [integrated execution checkpoint](flight-practice-execution-2026-10-18.md)
