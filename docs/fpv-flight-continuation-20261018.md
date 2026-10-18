@@ -169,8 +169,20 @@ The setup preparation exposed a separate negative: **Apply & restart** advanced
 the newly configured flight without an explicit Arm action after scene loading,
 despite the pause explanation saying a new attempt waits for Arm. The elapsed
 8.92 seconds above came from that unintended start, not an intended flight test.
-The two hosts' restart lifecycle is being corrected separately; backup restore
-itself did not resume or replace the paused attempt.
+That negative was corrected separately as `07196f3a29f423d94e6708aff466740837106765`;
+backup restore itself did not resume or replace the paused attempt.
+
+After a normal reload of that fixed source, World Apply & restart with a saved
+Meteor75 reached **Ready. Choose your controls, then arm.**, **Motors off** and
+**0.0 s**. It remained there through an additional two-second neutral Shift input
+and a subsequent observation. Only clicking **Arm / resume** started the attempt;
+it was deliberately paused at **0:01.02**. The workbench confirmed the saved
+Meteor75 configuration was used by this flight. The original library was restored
+again and exported values matched exactly apart from the expected revision 4→6.
+FPV camera and Self-level preferences were retained, the test tab was closed and
+the source server stopped. No archives were deleted. This is local English World
+acceptance; Academy/Regional and Legacy/Actual settings have separate targeted
+host checks, not additional rendered observations.
 
 ## Open archive-retention incident
 
