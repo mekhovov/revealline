@@ -48,6 +48,56 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] #settings-dial
 html[data-text-scaling='solo'] body[data-text-size='extra-large'] #settings-dialog > h2 {
   max-inline-size: 100%;
 }
+/* Enlarged reader headers may exceed the window. Let the outer dialog scroll,
+ * while preserving a useful inner region for the existing reading controls.
+ * The responsive size is a layout choice, not an accessibility threshold. */
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(#flight-details-dialog[open], #shell-missions[open][data-view='brief']) {
+  display: block;
+  block-size: auto;
+  overflow: auto;
+  scroll-padding-block: 12px;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(
+    #flight-details-unit,
+    #shell-missions[data-view='brief'] #shell-brief-content:not([hidden]),
+    #shell-missions[data-view='brief'] #mission-brief-unit
+  ) {
+  display: block;
+  flex: none;
+  min-block-size: 0;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(#flight-details-reading, #shell-missions[data-view='brief'] #mission-brief-reading) {
+  box-sizing: border-box;
+  flex: none;
+  block-size: clamp(16rem, calc(var(--dialog-viewport-height, 100dvh) * 0.6), 32rem);
+  min-block-size: 16rem;
+  max-block-size: none;
+  margin-block: 12px;
+  overflow: auto;
+  scroll-margin-block: 12px;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #shell-missions[data-view='brief']
+  .shell-dialog-heading:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #shell-missions[data-view='brief']
+  .shell-mission-actions:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  inline-size: 100%;
+  min-inline-size: 0;
+}
 html[data-text-scaling='solo']
   body[data-text-size='extra-large']
   #settings-dialog
