@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createHash } from 'node:crypto';
@@ -243,6 +244,13 @@ test('797 observer refs freeze current bytes while prior declarations remain unc
     ...manifest.frozenTools,
     ...Object.values(manifest.recipes),
   ]) {
+    if (
+      await assertDeclaredReadinessTool(
+        'docs/performance/solo-next-geometric-797e03-plan.json',
+        ref,
+      )
+    )
+      continue;
     const b = await read(ref.path);
     assert.equal(b.length, ref.bytes, ref.path);
     assert.equal(sha(b), ref.sha256, ref.path);

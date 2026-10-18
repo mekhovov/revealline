@@ -219,6 +219,7 @@ test('all three manual measurement jobs retain exact guards, source checkout, bu
     'demo-recovery',
     'demo-resources',
     'replay-portability',
+    'frame-trace',
   ]);
   assert.deepEqual(choices('phase'), ['none', ...timing, ...lifecycle]);
   boundedMatch(workflow, /cancel-in-progress: false/);

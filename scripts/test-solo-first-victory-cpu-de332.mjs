@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, mkdtemp, rm } from 'node:fs/promises';
@@ -248,6 +249,13 @@ test('prior CPU declaration retains exact Git-bound tools while unchanged inputs
   const refs = [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools];
   assert.equal(new Set(refs.map((x) => x.path)).size, refs.length);
   for (const ref of refs) {
+    if (
+      ['scripts/qualify-solo-runtime.mjs', 'scripts/solo-qualification-cpu-profile.mjs'].includes(
+        ref.path,
+      ) &&
+      (await assertDeclaredReadinessTool(path, ref))
+    )
+      continue;
     const old = historical.get(ref.path);
     if (old) {
       assert.equal(old.bytes, ref.bytes, ref.path);
