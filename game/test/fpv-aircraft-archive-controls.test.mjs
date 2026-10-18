@@ -16,7 +16,10 @@ test('shared archive file chooser stays visible when mounted directly in the Adv
     /\.aircraft-archive-controls input\[type=['"]file['"]\]\s*\{[^}]*display:\s*block/,
   );
 });
-function fixture(t, { verify, begin, append, list, remove, key = 'academy' } = {}) {
+function fixture(
+  t,
+  { verify, verifyCourse, course, begin, append, list, remove, key = 'academy' } = {},
+) {
   const document = new Document(),
     window = new Events(),
     records = new Map(),
@@ -82,6 +85,7 @@ function fixture(t, { verify, begin, append, list, remove, key = 'academy' } = {
     close() {},
   };
   const session = {
+    ...(course ? { course: () => course } : {}),
     async readSealedSegment(after) {
       reads++;
       return {
@@ -120,6 +124,7 @@ function fixture(t, { verify, begin, append, list, remove, key = 'academy' } = {
     makeId: () => `archive-${++ids}`,
     onPause: () => pauses++,
     verify: verify ?? (async () => ({ verificationScope: 'complete-session' })),
+    ...(verifyCourse ? { verifyCourse } : {}),
     exportFile: async () => ({ status: 'requested' }),
   });
   const update = () =>
@@ -141,6 +146,9 @@ function fixture(t, { verify, begin, append, list, remove, key = 'academy' } = {
     update,
     get reads() {
       return reads;
+    },
+    get pauses() {
+      return pauses;
     },
     button: (text) => ui.root.querySelectorAll('button').find((node) => node.textContent === text),
     setGeneration: (value) => {
@@ -647,4 +655,208 @@ test('archive names identify the real host in English and Ukrainian', async (t) 
       assert.ok(record.name.startsWith(`${name} · `));
     }
   }
+});
+
+const verificationCourse = () => ({
+  id: 'frozen-intro',
+  locales: { en: { title: 'Frozen intro' }, uk: { title: 'Початковий курс' } },
+});
+const courseVerified = () => ({
+  scored: false,
+  physics: { verified: true, verificationScope: 'complete-session' },
+  course: { verified: true, completedAtTick: 301, missionHz: 50, splits: [] },
+});
+async function prepareCourseArchive(f) {
+  f.records.set('recorded-flight', {
+    ...savedRow('recorded-flight'),
+    config: { response: { mode: 'acro' }, aircraft: { id: 'recorded-meteor75' } },
+  });
+  f.update();
+  await settle();
+}
+
+test('course verification freezes the source course and uses the selected archive settings without writes', async (t) => {
+  const course = verificationCourse();
+  let received;
+  const f = fixture(t, {
+    course,
+    verifyCourse: async (packet, frozen, options) => {
+      assert.equal(f.pauses, 1);
+      received = frozen;
+      assert.notEqual(frozen, course);
+      assert.equal(packet.manifest.config.aircraft.id, 'recorded-meteor75');
+      assert.equal(packet.manifest.config.response.mode, 'acro');
+      options.onProgress({ phase: 'course' });
+      assert.match(f.ui.root.textContent, /Checking recorded course objectives/);
+      return courseVerified();
+    },
+  });
+  await prepareCourseArchive(f);
+  const before = structuredClone([...f.records]);
+  f.button('Verify course completion').click();
+  course.locales.en.title = 'Changed after click';
+  await settle();
+  assert.equal(received.locales.en.title, 'Frozen intro');
+  assert.match(
+    f.ui.root.textContent,
+    /recorded-flight · Frozen intro · Acro.*Recorded course completion verified: 6.02 s.*Unscored.*current flight is unchanged/,
+  );
+  assert.deepEqual([...f.records], before);
+  assert.deepEqual(f.calls, []);
+});
+
+test('completed course feedback translates without repeating verification or live-region writes', async (t) => {
+  let verifies = 0;
+  const f = fixture(t, {
+    course: verificationCourse(),
+    verifyCourse: async () => {
+      verifies++;
+      return courseVerified();
+    },
+  });
+  await prepareCourseArchive(f);
+  f.button('Verify course completion').click();
+  await settle();
+  const result = f.ui.root
+    .querySelectorAll('p')
+    .find((node) => node.textContent.includes('Recorded course completion verified'));
+  let text = result.textContent,
+    writes = 0;
+  Object.defineProperty(result, 'textContent', {
+    configurable: true,
+    get: () => text,
+    set: (value) => {
+      text = value;
+      writes++;
+    },
+  });
+  for (let i = 0; i < 50; i++) f.update();
+  assert.equal(writes, 0);
+  f.setLocale('uk');
+  f.update();
+  assert.match(text, /Початковий курс.*Завершення курсу в записі перевірено: 6.02 с.*Без заліку/);
+  assert.equal(writes, 1);
+  f.setLocale('en');
+  f.update();
+  assert.match(text, /Frozen intro.*Recorded course completion verified/);
+  assert.equal(verifies, 1);
+  assert.deepEqual(f.calls, []);
+});
+
+for (const [reason, en, uk] of [
+  ['incomplete-course', /course was not completed/, /Курс не завершено/],
+  ['course-needs-complete-reset-session', /archive is a clip/, /архів є фрагментом/],
+  ['course-identity-mismatch', /different course or revision/, /іншого курсу або його версії/],
+  [
+    'unsupported-dynamic-course',
+    /Unsupported course or recording: unsupported-dynamic-course/,
+    /Непідтримуваний курс або запис: unsupported-dynamic-course/,
+  ],
+])
+  test(`course verification reports ${reason} separately from successful physics`, async (t) => {
+    const f = fixture(t, {
+      course: verificationCourse(),
+      verifyCourse: async () => ({ ...courseVerified(), course: { verified: false, reason } }),
+    });
+    await prepareCourseArchive(f);
+    f.button('Verify course completion').click();
+    await settle();
+    assert.match(
+      f.ui.root.textContent,
+      /Recorded physics verified. Course completion not verified/,
+    );
+    assert.match(f.ui.root.textContent, en);
+    f.setLocale('uk');
+    f.update();
+    assert.match(f.ui.root.textContent, uk);
+    assert.doesNotMatch(f.ui.root.textContent, /Завершення курсу в записі перевірено/);
+  });
+
+test('Regional and other hosts without a frozen course retain physics-only verification', async (t) => {
+  let checks = 0;
+  const f = fixture(t, {
+    key: 'regional',
+    verify: async () => {
+      checks++;
+      return { verificationScope: 'complete-session' };
+    },
+  });
+  await prepareCourseArchive(f);
+  assert.equal(f.button('Verify course completion').disabled, true);
+  assert.match(
+    f.ui.root.textContent,
+    /Course completion checks are available in Academy and World/,
+  );
+  assert.equal(f.button('Verify selected archive').disabled, false);
+  f.button('Verify selected archive').click();
+  await settle();
+  assert.equal(checks, 1);
+  assert.match(f.ui.root.textContent, /Complete session physics verified/);
+});
+
+for (const change of ['replace', 'restore', 'selection', 'dispose'])
+  test(`course verification ignores late progress and results after ${change}`, async (t) => {
+    let options, release;
+    const f = fixture(t, {
+      course: verificationCourse(),
+      verifyCourse: async (_packet, _course, o) => {
+        options = o;
+        return new Promise((resolve) => {
+          release = resolve;
+        });
+      },
+    });
+    await prepareCourseArchive(f);
+    f.button('Verify course completion').click();
+    await settle();
+    if (change === 'replace') {
+      f.replaceSession();
+      f.update();
+    }
+    if (change === 'restore') {
+      f.setGeneration('restored-same-owner');
+      f.update();
+    }
+    if (change === 'selection') {
+      const select = f.ui.root.querySelector('select');
+      select.value = 'different-archive';
+      select.emit('change');
+    }
+    if (change === 'dispose') f.ui.dispose();
+    assert.equal(options.signal.aborted, true);
+    const before = f.ui.root.textContent;
+    options.onProgress({ phase: 'course' });
+    assert.equal(f.ui.root.textContent, before);
+    release(courseVerified());
+    await settle();
+    assert.doesNotMatch(
+      f.ui.root.textContent,
+      /Recorded course completion verified|Course verification cancelled|Could not verify course/,
+    );
+    assert.deepEqual(f.calls, []);
+  });
+
+test('explicit cancellation terminates a course job and keeps its result correctly scoped and translatable', async (t) => {
+  let signal;
+  const f = fixture(t, {
+    course: verificationCourse(),
+    verifyCourse: async (_packet, _course, options) => {
+      signal = options.signal;
+      await new Promise((_resolve, reject) =>
+        signal.addEventListener('abort', () => reject(new DOMException('cancelled', 'AbortError'))),
+      );
+    },
+  });
+  await prepareCourseArchive(f);
+  f.button('Verify course completion').click();
+  await settle();
+  f.button('Cancel archive operation').click();
+  await settle();
+  assert.equal(signal.aborted, true);
+  assert.match(f.ui.root.textContent, /recorded-flight.*Course verification cancelled/);
+  f.setLocale('uk');
+  f.update();
+  assert.match(f.ui.root.textContent, /Перевірку курсу скасовано/);
+  assert.equal(f.button('Перевірити завершення курсу').disabled, false);
+  assert.deepEqual(f.calls, []);
 });
