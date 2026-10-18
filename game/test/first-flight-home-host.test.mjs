@@ -144,6 +144,18 @@ test('existing First Flight can be skipped, replayed and left for normal play wi
   page.change('first-flight-select', FIRST_FLIGHT_LESSONS[0].id);
   await settle(() => page.$('first-flight-select').value === FIRST_FLIGHT_LESSONS[0].id);
   assert.equal(page.$('start-button').hidden, false);
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running');
+  page.key('ArrowDown');
+  for (let i = 0; i < 27; i++) page.frame();
+  page.key('ArrowDown', false);
+  page.key('ArrowRight');
+  page.frame();
+  page.key('ArrowRight', false);
+  assert.equal(page.rendered.run.player.cutting, true, 'The existing first lesson is playable.');
+  page.$('pause-button').click();
+  page.frame(0);
+  assert.equal(page.rendered.paused, true);
   page.$('first-flight-exit').click();
   assert.equal(destinations.length, 1);
   const target = new URL(destinations[0]);
