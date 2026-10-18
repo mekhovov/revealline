@@ -1,5 +1,6 @@
 // Stable legacy-named CI entry point; complete contracts below check current797
 // bindings plus immutable historical declarations. No native execution is admitted.
+// Include complete preparation read coverage when repairing native runner setup.
 import './solo-de332-diagnostics.test.mjs';
 import './solo-de332-timing.test.mjs';
 import './solo-de332-lifecycle.test.mjs';
