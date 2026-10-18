@@ -8,11 +8,13 @@ import {
   defaultBaselines,
   omittedOriginalWorkerProof,
   demoNativeDependencyBytes,
+  demoOfflineSelectionProof,
   gnuTarSize,
   mainPagesAuditArguments,
   mainPagesAuditFailures,
   qualifyDemoMainPages,
 } from './qualify-demo-main-pages.mjs';
+import { SIM_DEMO_INDEX, SIM_DEMO_RUNTIME_PATHS } from './demo-native-dependencies.mjs';
 
 test('the tar model reproduces the actual pinned baseline without building or materializing payloads', async () => {
   const bytes = await readFile(new URL('../' + defaultBaselines.inventory, import.meta.url));
@@ -59,6 +61,7 @@ test('tar accounting includes parent directories, long UTF-8 names, block paddin
 });
 
 const goodReport = () => ({
+  demoOfflineSelection: { complete: true },
   headStable: true,
   sourceStable: true,
   missingPayloads: [],
@@ -73,6 +76,8 @@ const goodReport = () => ({
 test('every missing or mismatched dependency and either staged or modeled capacity breach fails the gate', () => {
   assert.deepEqual(mainPagesAuditFailures(goodReport()), []);
   for (const mutate of [
+    (r) => (r.demoOfflineSelection = { complete: false, error: 'missing selected body' }),
+    (r) => delete r.demoOfflineSelection,
     (r) => (r.headStable = false),
     (r) => (r.sourceStable = false),
     (r) => r.missingPayloads.push('replay.json'),
@@ -246,4 +251,111 @@ test('a profile with no original omissions requires the optional worker field to
     () => omittedOriginalWorkerProof(invalid.entries, invalid.originals),
     /when no originals are removed/,
   );
+});
+
+function demoSelectionFixture(mutate = () => {}) {
+  const moduleRoot = 'game/demo.mjs';
+  const nativePath = 'optional-practice/civilian-fpv/model.mjs';
+  const recording = 'optional-practice/civilian-fpv/demo-data/course-acro.json';
+  const entries = [
+    {
+      name: moduleRoot,
+      bytes: Buffer.from("import '../optional-practice/civilian-fpv/demo-player.mjs';"),
+    },
+    {
+      name: SIM_DEMO_INDEX,
+      bytes: Buffer.from(
+        JSON.stringify({ format: 'SimDemoCatalog.v1', entries: [{ file: 'course-acro.json' }] }),
+      ),
+    },
+    { name: recording, bytes: Buffer.from('{"recording":"complete"}') },
+    ...SIM_DEMO_RUNTIME_PATHS.map((name) => ({
+      name,
+      bytes: Buffer.from(
+        name.endsWith('demo-player.mjs')
+          ? "import './model.mjs';"
+          : `export const name = ${JSON.stringify(name)};`,
+      ),
+    })),
+    { name: nativePath, bytes: Buffer.from('export const physics = 1;') },
+    { name: 'optional-practice/civilian-fpv/native.png', bytes: Buffer.from('native artwork') },
+  ];
+  const file = (entry) => ({
+    path: entry.name,
+    bytes: entry.bytes.length,
+    sha256: createHash('sha256').update(entry.bytes).digest('hex'),
+    kind: 'gameplay',
+  });
+  const descriptors = entries.map(file);
+  const catalogue = {
+    format: 'revealline-offline-content.v1',
+    files: descriptors.slice(1),
+    groups: [
+      { id: 'shared', kind: 'gameplay', requires: [], files: [] },
+      {
+        id: 'extras:demo',
+        kind: 'gameplay',
+        requires: ['shared', 'extras:sim-fpv'],
+        files: [SIM_DEMO_INDEX, recording, ...SIM_DEMO_RUNTIME_PATHS],
+      },
+      {
+        id: 'extras:sim-fpv',
+        kind: 'gameplay',
+        requires: ['shared'],
+        files: [nativePath, 'optional-practice/civilian-fpv/native.png'],
+      },
+    ],
+  };
+  const config = {
+    files: descriptors.slice(0, 1),
+    downloadFiles: descriptors.slice(1).map((row) => ({ ...row })),
+  };
+  mutate({ entries, catalogue, config, moduleRoot, nativePath, recording });
+  entries.push(
+    { name: 'offline-content.json', bytes: Buffer.from(JSON.stringify(catalogue)) },
+    { name: 'offline-cache.json', bytes: Buffer.from(JSON.stringify(config)) },
+    {
+      name: 'service-worker.js',
+      bytes: Buffer.from(`(() => { const CONFIG = ${JSON.stringify(config)}; })();`),
+    },
+  );
+  return { entries, roots: [moduleRoot], requiredPaths: [recording] };
+}
+
+test('emitted demo ownership proves real selected bodies, native imports and worker pins, retaining finite group metadata', async () => {
+  const f = demoSelectionFixture();
+  const proof = await demoOfflineSelectionProof(f.entries, f);
+  assert.equal(proof.complete, true);
+  assert.equal(proof.simRecordings, 1);
+  assert.equal(proof.literalModuleCount, 3);
+  assert.equal(proof.groups.length, 2);
+  assert.ok(
+    proof.groups.find((group) => group.id === 'extras:demo').requires.includes('extras:sim-fpv'),
+  );
+  assert.equal(proof.selectedFiles.length, 8);
+  assert.equal(proof.coreDescriptors.length, 1);
+  assert.equal(proof.coreDescriptors[0].path, 'game/demo.mjs');
+  assert.equal(proof.browserInstallationVerified, false);
+  assert.ok(proof.requiredPaths.includes('optional-practice/civilian-fpv/model.mjs'));
+});
+
+test('emitted demo gate rejects hosted-but-unselected native/body dependencies, bad pins and missing worker registration', async () => {
+  for (const mutate of [
+    (f) => f.catalogue.groups[1].requires.pop(),
+    (f) => f.catalogue.groups[2].files.shift(),
+    (f) => f.catalogue.groups[1].files.splice(1, 1),
+    (f) => (f.catalogue.groups[1].hidden = true),
+    (f) => (f.catalogue.files[0].sha256 = 'a'.repeat(64)),
+    (f) => (f.config.downloadFiles[0].sha256 = 'b'.repeat(64)),
+    (f) => f.config.downloadFiles[0].bytes++,
+    (f) => f.config.downloadFiles.shift(),
+    (f) => f.config.downloadFiles.push(f.config.files[0]),
+    (f) =>
+      (f.entries.find((entry) => entry.name === f.nativePath).bytes =
+        Buffer.from('changed native module')),
+    (f) => f.entries.pop(),
+  ]) {
+    const f = demoSelectionFixture(mutate);
+    await assert.rejects(demoOfflineSelectionProof(f.entries, f));
+  }
 });
