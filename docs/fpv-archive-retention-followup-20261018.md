@@ -70,6 +70,32 @@ remained paused at 5.30 seconds; no new flight, reload, save or deletion was
 performed. This read-only refresh does not recover or account for the six
 protected archives.
 
+## Later same-tab local recurrence — reviewed 19 October
+
+On isolated `127.0.0.1:8873`, frozen runtime `7d4e043d7`, the completed Meteor75
+archive `World · 2026-10-18T20:44:29.447Z` verified twice and supplied the 14.48 s
+course reference. After a later Retry → Practice, autosave reported storage
+unavailable at 15.98 s. Restore exposed a closing `IDBDatabase` connection.
+The failed restore kept the paused flight and reference intact. A further Retry
+and course verification reported **Aircraft archive was not found**, although
+the cached picker still displayed the archive. No archive deletion, import,
+explicit inventory refresh or page reload occurred in this sequence.
+
+The separately opened emitted Academy build on `127.0.0.1:8874` showed no archived
+sessions where preceding acceptance had a 3.88-second record. It remained
+unarmed at 0.00 s; no save/import/deletion was attempted. Browser warning/error
+logs for the World sequence were empty. These observations broaden the failure
+evidence but do not identify eviction, context replacement, disk pressure or a
+specific deletion mechanism. The user’s public tab was not touched.
+
+Recovery controls use a different one-slot host database. A separately reviewed
+fix invalidates its closed handle and permits one reopen only when transaction
+creation fails before requests can be issued. It never retries an admitted write
+or creates a substitute for a missing record. Five new regressions fail before
+that fix and the complete focused controls suite passes 77/77 afterward. Pending
+rendered acceptance and publication, this is R19 resilience work; R13 remains
+open and the six protected public records remain unaccounted for.
+
 ## Remaining diagnostic gates
 
 The UI correction now removes only a confirmed deleted row from its cached list
