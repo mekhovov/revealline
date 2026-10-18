@@ -305,6 +305,37 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] .reaction-live
   max-block-size: none;
   overflow: visible;
 }
+/* Enlarged result copy keeps the full reading width. Both ordinary and earned
+ * results retain their picture, content order and existing outer scroll owner. */
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #game-overlay[data-kind='won']
+  #overlay-reading:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #game-overlay[data-kind='won']
+  #overlay-reading
+  > * {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  grid-column: auto;
+  grid-row: auto;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #game-overlay[data-kind='won']
+  #result-picture:not([hidden]) {
+  box-sizing: border-box;
+  align-self: center;
+  inline-size: 100%;
+  block-size: auto;
+}
+
 /* The pause/result controls are independent of the board's visible size. */
 html[data-text-scaling='solo'] body[data-text-size='extra-large'] #game-overlay:not([hidden]) {
   display: block;
