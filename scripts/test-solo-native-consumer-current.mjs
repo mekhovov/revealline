@@ -17,10 +17,14 @@ const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const workflow = (await read(workflowPath)).toString();
 const plans = {
-  correctness: 'docs/performance/solo-remote-de332-correctness-tooling-plan.json',
+  correctness: 'docs/performance/solo-remote-73a345-correctness-plan.json',
   sustained: 'docs/performance/solo-next-geometric-de332-tooling-plan.json',
   raster: 'docs/performance/solo-remote-de332-earned-raster-plan.json',
   'hud-cpu': 'docs/performance/solo-first-victory-cpu-de332-plan.json',
+};
+const historicalToolingPlans = {
+  correctness: 'docs/performance/solo-remote-de332-correctness-tooling-plan.json',
+  sustained: plans.sustained,
 };
 const refs = (plan) => [
   ...(plan.adapterInputs ?? []),
@@ -71,7 +75,7 @@ test('completed first-eight and Next declarations retain exact Git authority, in
 
 test('tooling successors retain exact packages, every scenario, limits and original raw-result declarations', async () => {
   for (const name of ['correctness', 'sustained']) {
-    const plan = await json(plans[name]);
+    const plan = await json(historicalToolingPlans[name]);
     const old = await json(plan.toolingSuccessor.historicalDeclaration);
     assert.equal(plan.toolingSuccessor.format, 'SoloDe332CurrentToolingSuccessorV1');
     assert.equal(plan.toolingSuccessor.executedTooling, '68ad6a4730ae558cbfd14abf59800c8e462b1dc9');
@@ -145,15 +149,19 @@ test('current Next admission still refuses changed tooling before package or nat
   assert.equal(effects, 0);
 });
 
-test('current first-eight and Next successors retain their reviewed live guards and explicit phase order', async () => {
+test('source73 first-eight stays manual while historical Next retains its guard and explicit phase order', async () => {
   const historical = (await read(DE332_EXECUTED_WORKFLOW)).toString();
   function admission(text) {
-    for (const name of ['correctness', 'declare']) {
+    for (const name of ['declare']) {
       assert.equal(
         job(text, name).match(/^    if: (.+)$/m)?.[1],
         job(historical, name).match(/^    if: (.+)$/m)?.[1],
       );
     }
+    assert.equal(
+      job(text, 'correctness').match(/^    if: (.+)$/m)?.[1],
+      "github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'first-eight'",
+    );
     assert.match(job(text, 'correctness'), /^    timeout-minutes: 145$/m);
     assert.match(job(text, 'declare'), /^    timeout-minutes: 5$/m);
     assert.match(job(text, 'sustained'), /^    needs: declare$/m);
