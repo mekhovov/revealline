@@ -62,6 +62,7 @@ const canPublish = () =>
 let catalogRequest = null;
 let catalogGeneration = 0;
 let sessionGeneration = 0;
+let accountMutations = 0;
 const renderAccount = () => {
   $('account-signed-out').hidden = Boolean(accountSession);
   $('account-signed-in').hidden = !accountSession;
@@ -505,6 +506,7 @@ function scheduleSubmissionCheck() {
 $('account-sign-up').onclick = async () => {
   if (!account) return;
   sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-up').disabled = true;
   try {
     accountSession = await account.signUp({
@@ -518,6 +520,8 @@ $('account-sign-up').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-up').disabled = false;
   }
 };
@@ -566,6 +570,7 @@ $('account-reset').onclick = async () => {
 $('account-sign-in').onclick = async () => {
   if (!account) return;
   sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-in').disabled = true;
   try {
     accountSession = await account.signIn({
@@ -578,12 +583,15 @@ $('account-sign-in').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-in').disabled = false;
   }
 };
 $('account-sign-out').onclick = async () => {
   if (!account) return;
   sessionGeneration += 1;
+  accountMutations += 1;
   $('account-sign-out').disabled = true;
   try {
     await account.signOut();
@@ -595,6 +603,8 @@ $('account-sign-out').onclick = async () => {
   } catch (error) {
     setAccountStatus(error.message, true);
   } finally {
+    accountMutations -= 1;
+    sessionGeneration += 1;
     $('account-sign-out').disabled = false;
   }
 };
@@ -604,12 +614,14 @@ const cancelReadinessWork = () => {
   sessionGeneration += 1;
   catalogRequest?.abort();
 };
-window.addEventListener('pagehide', () => {
+window.addEventListener('pagehide', (event) => {
   cancelReadinessWork();
   clearTimeout(submissionTimer);
   for (const url of previewURLs) URL.revokeObjectURL(url);
-  library.close();
-  creatorStore.close();
+  if (!event.persisted) {
+    library.close();
+    creatorStore.close();
+  }
 });
 window.addEventListener('pageshow', (event) => {
   if (event.persisted) void readiness.check();
@@ -620,7 +632,7 @@ window.addEventListener('offline', () => {
 });
 window.addEventListener('online', () => void readiness.check());
 async function restoreAccount() {
-  if (!account) return;
+  if (!account || accountMutations) return;
   const current = ++sessionGeneration;
   try {
     const session = await communityRequest(() => account.session());

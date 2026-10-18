@@ -24,7 +24,10 @@ const deferred = () => {
 const settle = async () => {
   for (let turn = 0; turn < 25; turn++) await Promise.resolve();
 };
-function host(t, { probe = async () => true, catalog, injected = false, publish, select } = {}) {
+function host(
+  t,
+  { probe = async () => true, catalog, injected = false, publish, select, session, signOut } = {},
+) {
   const document = new Document();
   const append = (parent, node) => {
     if (!node.tagName) {
@@ -47,6 +50,7 @@ function host(t, { probe = async () => true, catalog, injected = false, publish,
   const $ = (id) => document.getElementById(id);
   $('filter').value = 'all';
   const calls = { session: 0, catalog: 0, publish: 0, selected: 0 };
+  let closed = false;
   const window = new Events();
   vm.runInNewContext(source, {
     ...i18n,
@@ -67,20 +71,28 @@ function host(t, { probe = async () => true, catalog, injected = false, publish,
       headers: async () => ({}),
       session: async () => {
         calls.session++;
-        return null;
+        return session?.() ?? null;
       },
+      signOut: async () => signOut?.(),
     }),
     createCommunityClient: () => ({}),
-    createCreatorStore: () => ({ close() {} }),
+    createCreatorStore: () => ({
+      close() {
+        closed = true;
+      },
+    }),
     createCommunityStateStore: () => ({}),
     createCommunityDownloadStore: () => ({}),
     createTusBrowserUpload: () => ({}),
     createCommunityLibrary: () => ({
       catalog: async (args) => {
         calls.catalog++;
+        if (closed) throw new Error('Store closed permanently');
         return catalog?.(args) ?? { editions: [], nextCursor: null };
       },
-      close() {},
+      close() {
+        closed = true;
+      },
     }),
     createCommunityPublisher: () => ({
       current: () => (injected ? {} : null),
@@ -193,4 +205,39 @@ test('a rejected new package cannot re-enable the previously selected package on
   assert.equal(h.$('publish').disabled, true);
   await h.$('publish').onclick();
   assert.equal(h.calls.publish, 0);
+});
+
+test('persisted navigation keeps local owners open before the pageshow recheck', async (t) => {
+  const h = host(t);
+  await settle();
+  h.window.dispatchEvent(Object.assign(new Event('pagehide'), { persisted: true }));
+  h.window.dispatchEvent(Object.assign(new Event('pageshow'), { persisted: true }));
+  await settle();
+  assert.equal(h.calls.catalog, 2);
+  assert.equal(h.$('service-status').dataset.state, 'ready');
+  assert.doesNotMatch(h.$('status').textContent, /closed/u);
+});
+
+test('Retry during sign-out cannot restore a stale signed-in session', async (t) => {
+  const signingOut = deferred(),
+    oldRead = deferred();
+  let reads = 0;
+  const identity = { user: { name: 'Review creator', email: 'review@example.test' } };
+  const h = host(t, {
+    session: () => (++reads === 1 ? identity : oldRead.promise),
+    signOut: () => signingOut.promise,
+  });
+  await settle();
+  assert.equal(h.$('account-signed-in').hidden, false);
+  await h.$('service-retry').onclick(); // A slow read started before sign-out.
+  const exiting = h.$('account-sign-out').onclick();
+  await h.$('service-retry').onclick(); // No automatic read while mutation runs.
+  assert.equal(reads, 2);
+  signingOut.resolve();
+  await exiting;
+  oldRead.resolve(identity);
+  await settle();
+  assert.equal(h.$('account-signed-in').hidden, true);
+  assert.equal(h.$('account-signed-out').hidden, false);
+  assert.equal(h.$('publish').disabled, true);
 });
