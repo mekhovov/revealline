@@ -114,37 +114,94 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page.goto(url);
             await page.waitForFunction(() => window.qualificationReady);
             const button = (name) => page.getByRole('button', { name, exact: true });
-            if (touch) await button('Rates & throttle').tap();
+            const section = (name) => button(name).click();
+            const libraryActions = new Set([
+              'New Actual profile',
+              'Duplicate',
+              'Make player default',
+              'Delete & reassign',
+              'Restore revision to draft',
+              'Preview import',
+              'Save import as new profile',
+              'Resolve preset and review options',
+              'Export SIM rates',
+              'Export rate-only CLI',
+              'Download file',
+              'Backup complete library',
+              'Restore library backup',
+              'Refresh library',
+              'Use rate profile in draft',
+              'Use saved setup in draft',
+            ]);
+            const click = async (name) => {
+              if (libraryActions.has(name)) await section('Library');
+              if (name === 'Duplicate drone setup') await section('Aircraft');
+              if (name === 'Advanced reference quad · experimental')
+                await section('Flight response / PID');
+              await button(name).click();
+            };
+            const useProfile = async (id) => {
+              await section('Library');
+              await page.getByLabel('Rate profile', { exact: true }).selectOption(id);
+              await click('Use rate profile in draft');
+            };
+
+            if (touch) await button('Aircraft, rates & throttle').tap();
             else {
-              await button('Rates & throttle').focus();
+              await button('Aircraft, rates & throttle').focus();
               await page.keyboard.press('Enter');
             }
-            await page.getByRole('dialog', { name: 'Rates & throttle', exact: true }).waitFor();
+            await page.getByRole('dialog', { name: 'Setup workbench', exact: true }).waitFor();
             check(
               await page.locator('h2').evaluate((node) => node === document.activeElement),
               'Heading did not receive keyboard focus',
             );
-            await button('New Actual profile').click();
+            await click('New Actual profile');
             await page.waitForFunction(
               () => window.qualificationStore.snapshot().profiles.length === 2,
             );
+            await page
+              .getByLabel('When saving edited rates', { exact: true })
+              .selectOption('update');
+            await section('Library');
             await page.getByLabel('Profile name', { exact: true }).fill('Race practice');
+            await section('Rates & throttle');
             await page.getByLabel('Link roll and pitch edits', { exact: true }).check();
-            const roll = page.getByRole('group', { name: 'Roll', exact: true });
-            const pitch = page.getByRole('group', { name: 'Pitch', exact: true });
+            const roll = page.getByRole('group', {
+              name: 'Roll',
+              exact: true,
+              includeHidden: true,
+            });
+            const pitch = page.getByRole('group', {
+              name: 'Pitch',
+              exact: true,
+              includeHidden: true,
+            });
             await roll
-              .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+              .getByRole('spinbutton', {
+                name: 'Maximum rate (°/s)',
+                exact: true,
+                includeHidden: true,
+              })
               .fill('895');
             check(
               (await roll
-                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .getByRole('spinbutton', {
+                  name: 'Maximum rate (°/s)',
+                  exact: true,
+                  includeHidden: true,
+                })
                 .inputValue()) === '895',
               'An unfinished number was snapped before committing',
             );
             await page.keyboard.press('Tab');
             check(
               (await roll
-                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .getByRole('spinbutton', {
+                  name: 'Maximum rate (°/s)',
+                  exact: true,
+                  includeHidden: true,
+                })
                 .inputValue()) === '900' &&
                 (await roll
                   .getByRole('slider', { name: 'Maximum rate (°/s)', exact: true })
@@ -153,23 +210,41 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             );
             check(
               (await pitch
-                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .getByRole('spinbutton', {
+                  name: 'Maximum rate (°/s)',
+                  exact: true,
+                  includeHidden: true,
+                })
                 .inputValue()) === '900',
               'Linked pitch did not update',
             );
             await pitch
-              .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+              .getByRole('spinbutton', {
+                name: 'Maximum rate (°/s)',
+                exact: true,
+                includeHidden: true,
+              })
               .fill('670');
             check(
               (await roll
-                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .getByRole('spinbutton', {
+                  name: 'Maximum rate (°/s)',
+                  exact: true,
+                  includeHidden: true,
+                })
                 .inputValue()) === '670',
               'Returning the peer to its original rate left the linked draft stale',
             );
             await roll
-              .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+              .getByRole('spinbutton', {
+                name: 'Maximum rate (°/s)',
+                exact: true,
+                includeHidden: true,
+              })
               .fill('900');
+            await section('Rates & throttle');
             await page.getByLabel('Rate algorithm', { exact: true }).selectOption('quick');
+            await section('Rates & throttle');
             await page.getByLabel('Rate algorithm', { exact: true }).selectOption('betaflight');
             const rcRate = roll.getByRole('spinbutton', { name: 'RC rate', exact: true });
             for (const [typed, committed] of [
@@ -188,10 +263,15 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 'RC rate did not commit supported units',
               );
             }
+            await section('Rates & throttle');
             await page.getByLabel('Rate algorithm', { exact: true }).selectOption('actual');
             check(
               (await roll
-                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .getByRole('spinbutton', {
+                  name: 'Maximum rate (°/s)',
+                  exact: true,
+                  includeHidden: true,
+                })
                 .inputValue()) === '900',
               'Algorithm draft was reinterpreted',
             );
@@ -203,6 +283,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 .getByLabel('Rate profile', { exact: true })
                 .inputValue(),
               beforeUnfinishedRate = await page.evaluate(() => window.qualificationStore.export());
+            await section('Rates & throttle');
             await unfinishedRate.fill('');
             const checkUnfinishedRate = async (transition) => {
               check(
@@ -211,7 +292,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 `${transition} discarded the unfinished rate entry`,
               );
               for (const action of ['Save for next flight', 'Test draft · unscored']) {
-                await button(action).click();
+                await click(action);
                 await page.getByRole('status').filter({ hasText: 'enter a value' }).waitFor();
               }
               check(
@@ -225,14 +306,16 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 `${transition} allowed saving or flying the previous hidden rate`,
               );
             };
+            await section('Rates & throttle');
             await page.getByLabel('Rate algorithm', { exact: true }).selectOption('quick');
+            await section('Rates & throttle');
             await page.getByLabel('Rate algorithm', { exact: true }).selectOption('actual');
             await checkUnfinishedRate('Algorithm navigation');
-            await page.getByLabel('Rate profile', { exact: true }).selectOption('legacy-feel');
-            await page.getByLabel('Rate profile', { exact: true }).selectOption(unfinishedProfile);
+            await useProfile('legacy-feel');
+            await useProfile(unfinishedProfile);
             await checkUnfinishedRate('Profile navigation');
-            await button('Close').click();
-            await button('Rates & throttle').click();
+            await click('Close');
+            await click('Aircraft, rates & throttle');
             await checkUnfinishedRate('Editor reopening');
             await page.evaluate(() => {
               window.qualificationLocale = 'uk';
@@ -250,18 +333,21 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               window.qualificationUI.refresh();
             });
             await checkUnfinishedRate('Language round trip');
+            await section('Rates & throttle');
             await unfinishedRate.fill('900');
             await page.keyboard.press('Tab');
             evidence.checks.unfinishedRateDraftNavigation = true;
+            await section('Library');
             await page
               .getByText('Import / export · Betaflight and backups', { exact: true })
               .click();
-            await button('Export SIM rates').click();
+            await click('Export SIM rates');
             const digestTransfer = page.getByLabel('Paste CLI or a SIM rate profile', {
                 exact: true,
               }),
               digestCandidate = JSON.parse(await digestTransfer.inputValue());
             digestCandidate.profile.axes.roll.rate = 88;
+            await section('Library');
             await digestTransfer.fill(JSON.stringify(digestCandidate));
             // Hold only this component's next digest completion, then use the
             // real WebCrypto implementation. This tests asynchronous admission,
@@ -278,12 +364,13 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 });
               };
             });
-            await button('Preview import').click();
+            await click('Preview import');
             await page.getByRole('status').filter({ hasText: 'Checking import source' }).waitFor();
+            await section('Rates & throttle');
             await unfinishedRate.fill('');
             await page.evaluate(() => window.qualificationReleaseDigest());
             await page.getByRole('status').filter({ hasText: 'Import changed' }).waitFor();
-            await button('Save import as new profile').click();
+            await click('Save import as new profile');
             await page
               .getByRole('status')
               .filter({ hasText: 'Preview the import first' })
@@ -294,27 +381,38 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                   beforeUnfinishedRate,
               'Late import preview replaced or saved a newer unfinished edit',
             );
+            await section('Rates & throttle');
             await unfinishedRate.fill('900');
             await page.keyboard.press('Tab');
             evidence.checks.pendingImportPreservesNewerNumericText = true;
+            await section('Library');
             await page
               .getByText('Import / export · Betaflight and backups', { exact: true })
               .click();
-            const cameraTilt = page.getByLabel('Camera tilt (degrees)', { exact: true }),
-              cameraFov = page.getByLabel('Vertical FOV (degrees)', { exact: true });
+            await section('Camera');
+            const cameraTilt = page.getByRole('spinbutton', {
+                name: 'Camera tilt (degrees)',
+                exact: true,
+                includeHidden: true,
+              }),
+              cameraFov = page.getByRole('spinbutton', {
+                name: 'Vertical FOV (degrees)',
+                exact: true,
+                includeHidden: true,
+              });
+            await section('Camera');
             await cameraTilt.fill('');
             const beforeInvalidCamera = await page.evaluate(() =>
               window.qualificationStore.export(),
             );
             for (const action of [
-              'Save drone assignment & camera',
               'Save for next flight',
               'Apply & restart',
               'Duplicate drone setup',
               'Test draft · unscored',
               'Advanced reference quad · experimental',
             ]) {
-              await button(action).click();
+              await click(action);
               await page.getByRole('status').filter({ hasText: 'enter a value' }).waitFor();
               check(
                 (await cameraTilt.inputValue()) === '' &&
@@ -328,41 +426,55 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 `${action} accepted an incomplete camera value`,
               );
             }
+            await section('Aircraft');
             await page.getByLabel('Drone name', { exact: true }).fill('Pending camera setup');
             const draftProfileId = await page
               .getByLabel('Rate profile', { exact: true })
               .inputValue();
-            await page.getByLabel('Rate profile', { exact: true }).selectOption('legacy-feel');
-            await page.getByLabel('Rate profile', { exact: true }).selectOption(draftProfileId);
+            await useProfile('legacy-feel');
+            await useProfile(draftProfileId);
             check(
               (await cameraTilt.inputValue()) === '',
               'Changing profiles coerced a blank camera draft',
             );
-            await button('Close').click();
-            await button('Rates & throttle').click();
+            await click('Close');
+            await click('Aircraft, rates & throttle');
             check((await cameraTilt.inputValue()) === '', 'Reopening coerced a blank camera draft');
+            await section('Camera');
             await cameraTilt.pressSequentially('35.25');
+            await section('Camera');
             await cameraFov.fill('999');
-            await button('Test draft · unscored').click();
+            await click('Test draft · unscored');
             await page.getByRole('status').filter({ hasText: 'enter a value' }).waitFor();
             check(
               await page.evaluate(() => window.qualificationEvents.tests.length === 0),
               'Out-of-range FOV escaped into a draft flight',
             );
+            await section('Camera');
             await cameraFov.fill('100.5');
-            await page.getByLabel('Rate profile', { exact: true }).selectOption('legacy-feel');
-            await page.getByLabel('Rate profile', { exact: true }).selectOption(draftProfileId);
+            await useProfile('legacy-feel');
+            await useProfile(draftProfileId);
             check(
-              (await page.getByLabel('Camera tilt (degrees)', { exact: true }).inputValue()) ===
-                '35.25' &&
-                (await page.getByLabel('Vertical FOV (degrees)', { exact: true }).inputValue()) ===
-                  '100.5' &&
+              (await page
+                .getByRole('spinbutton', {
+                  name: 'Camera tilt (degrees)',
+                  exact: true,
+                  includeHidden: true,
+                })
+                .inputValue()) === '35.25' &&
+                (await page
+                  .getByRole('spinbutton', {
+                    name: 'Vertical FOV (degrees)',
+                    exact: true,
+                    includeHidden: true,
+                  })
+                  .inputValue()) === '100.5' &&
                 (await page.getByLabel('Drone name', { exact: true }).inputValue()) ===
                   'Pending camera setup',
               'Selecting a rate profile discarded the independent drone draft',
             );
             const beforeDraft = await page.evaluate(() => window.qualificationStore.export());
-            await button('Test draft · unscored').click();
+            await click('Test draft · unscored');
             await page.waitForFunction(() => window.qualificationEvents.tests.length === 1);
             check(
               await page.evaluate(
@@ -384,20 +496,25 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page.getByRole('button', { name: /^Return to tuning/ }).click();
             check(
               (await roll
-                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .getByRole('spinbutton', {
+                  name: 'Maximum rate (°/s)',
+                  exact: true,
+                  includeHidden: true,
+                })
                 .inputValue()) === '900',
               'Returning lost draft',
             );
-            await button('Save for next flight').click();
+            await click('Save for next flight');
             await page
               .getByRole('status')
               .filter({ hasText: 'Saved for the next flight' })
               .waitFor();
             const profileId = await page.getByLabel('Rate profile', { exact: true }).inputValue();
+            await section('Aircraft');
             await page
               .getByLabel('Rates used by this drone', { exact: true })
               .selectOption(profileId);
-            await button('Save drone assignment & camera').click();
+            await click('Save for next flight');
             await page.waitForFunction(
               (id) => window.qualificationStore.effective().profileId === id,
               profileId,
@@ -410,15 +527,16 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             evidence.checks.independentSetupDraftAcrossProfiles = true;
             evidence.checks.cameraValidationAndRawDraftPreservation = true;
             evidence.checks.fractionalCameraDegrees = true;
+            await section('Library');
             await page
               .getByText('Import / export · Betaflight and backups', { exact: true })
               .click();
-            await button('Export SIM rates').click();
+            await click('Export SIM rates');
             const transfer = page.getByLabel('Paste CLI or a SIM rate profile', { exact: true });
             const native = await transfer.inputValue();
             check(JSON.parse(native).profile.axes.roll.rate === 90, 'Native export lost rates');
             const downloadPromise = page.waitForEvent('download');
-            await button('Download file').click();
+            await click('Download file');
             const download = await downloadPromise;
             const contents = await readFile(await download.path(), 'utf8');
             check(
@@ -429,8 +547,9 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             // A name-only save gives history the same evaluated rates. Restoring
             // it must cancel older import intent even though value comparison
             // alone cannot distinguish the two drafts.
+            await section('Library');
             await page.getByLabel('Profile name', { exact: true }).fill('Race practice history');
-            await button('Save for next flight').click();
+            await click('Save for next flight');
             await page.waitForFunction(
               (id) =>
                 window.qualificationStore.snapshot().profiles.find((profile) => profile.id === id)
@@ -442,6 +561,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               ),
               historyCandidate = JSON.parse(native);
             historyCandidate.profile.axes.roll.rate = 88;
+            await section('Library');
             await transfer.fill(JSON.stringify(historyCandidate));
             await page.evaluate(() => {
               const subtle = crypto.subtle,
@@ -461,11 +581,11 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 });
               };
             });
-            await button('Preview import').click();
+            await click('Preview import');
             await page.waitForFunction(
               () => typeof window.qualificationReleaseHistoryDigest === 'function',
             );
-            await button('Restore revision to draft').click();
+            await click('Restore revision to draft');
             check(
               (await page.getByLabel('Profile name', { exact: true }).inputValue()) ===
                 'Race practice',
@@ -474,7 +594,11 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page.evaluate(() => window.qualificationReleaseHistoryDigest());
             check(
               (await roll
-                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .getByRole('spinbutton', {
+                  name: 'Maximum rate (°/s)',
+                  exact: true,
+                  includeHidden: true,
+                })
                 .inputValue()) === '900' &&
                 (await page.getByLabel('Profile name', { exact: true }).inputValue()) ===
                   'Race practice' &&
@@ -482,7 +606,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                   beforeHistoryImport,
               'Late import replaced restored same-rate history or changed the saved library',
             );
-            await button('Save import as new profile').click();
+            await click('Save import as new profile');
             await page
               .getByRole('status')
               .filter({ hasText: 'Preview the import first' })
@@ -492,7 +616,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
                 beforeHistoryImport,
               'Cancelled history import remained eligible to save',
             );
-            await button('Save for next flight').click();
+            await click('Save for next flight');
             await page
               .getByRole('status')
               .filter({ hasText: 'Saved for the next flight' })
@@ -500,7 +624,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             evidence.checks.historyRestoreCancelsPendingImport = true;
             const firmware = page.getByLabel('Source / export firmware version', { exact: true });
             await firmware.selectOption('4.5.2');
-            await button('Export rate-only CLI').click();
+            await click('Export rate-only CLI');
             await page
               .getByRole('status')
               .filter({ hasText: 'different throttle curve' })
@@ -509,7 +633,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               exact: true,
             });
             await includeThrottle.uncheck();
-            await button('Export rate-only CLI').click();
+            await click('Export rate-only CLI');
             const rotationOnly = await transfer.inputValue();
             check(
               !/set (?:thr_|throttle_)/.test(rotationOnly) &&
@@ -520,10 +644,11 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await includeThrottle.check();
             await firmware.selectOption('');
             await page.getByLabel('Patch baseline', { exact: true }).selectOption('defaults');
+            await section('Library');
             await transfer.fill('# Betaflight 4.5.2\nset roll_srate = 81');
-            await button('Preview import').click();
+            await click('Preview import');
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
-            await button('Save import as new profile').click();
+            await click('Save import as new profile');
             await page.waitForFunction(
               () => window.qualificationStore.snapshot().profiles.length === 3,
             );
@@ -541,7 +666,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page
               .getByLabel('Replacement when deleting', { exact: true })
               .selectOption(profileId);
-            await button('Delete & reassign').click();
+            await click('Delete & reassign');
             await page.waitForFunction(
               () => window.qualificationStore.snapshot().profiles.length === 2,
             );
@@ -550,23 +675,25 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             await page
               .getByLabel('Source / export firmware version', { exact: true })
               .selectOption('2025.12.5');
+            await section('Library');
             await transfer.fill('set roll_rc_rate = not-a-number');
-            await button('Preview import').click();
+            await click('Preview import');
             await page.getByRole('status').filter({ hasText: 'Could not apply' }).waitFor();
             check(
               (await page.evaluate(() => window.qualificationStore.export())) === beforeImport,
               'Malformed import changed storage',
             );
             for (const version of ['3.5.7', '2025.12.5-dev', '2025.12.5+local.1']) {
+              await section('Library');
               await transfer.fill(
                 `# Betaflight / STM32F405 (S405) ${version} (abcdef)\nset roll_srate = 83`,
               );
-              await button('Preview import').click();
+              await click('Preview import');
               await page
                 .getByRole('status')
                 .filter({ hasText: 'conflicts with the file header' })
                 .waitFor();
-              await button('Save import as new profile').click();
+              await click('Save import as new profile');
               await page
                 .getByRole('status')
                 .filter({ hasText: 'Preview the import first' })
@@ -578,15 +705,21 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             }
             evidence.checks.unsupportedFirmwareHeadersRejectedAtomically = true;
             const importSource = 'set roll_rc_rate = 12\nset yaw_expo = 30\nset p_roll = 80';
+            await section('Library');
             await transfer.fill(importSource);
-            await button('Preview import').click();
+            await click('Preview import');
             // SHA-256 source receipts finish asynchronously; never click Save
             // merely because the pointer action itself has completed.
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
+            await section('Rates & throttle');
             await roll
-              .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+              .getByRole('spinbutton', {
+                name: 'Maximum rate (°/s)',
+                exact: true,
+                includeHidden: true,
+              })
               .fill('990');
-            await button('Save import as new profile').click();
+            await click('Save import as new profile');
             await page.getByRole('status').filter({ hasText: 'changed' }).waitFor();
             check(
               await page.evaluate(() => window.qualificationStore.snapshot().profiles.length === 2),
@@ -594,13 +727,17 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             );
             check(
               (await roll
-                .getByRole('spinbutton', { name: 'Maximum rate (°/s)', exact: true })
+                .getByRole('spinbutton', {
+                  name: 'Maximum rate (°/s)',
+                  exact: true,
+                  includeHidden: true,
+                })
                 .inputValue()) === '990',
               'Rejecting stale preview discarded the visible edit',
             );
-            await button('Preview import').click();
+            await click('Preview import');
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
-            await button('Save import as new profile').click();
+            await click('Save import as new profile');
             await page.waitForFunction(
               () => window.qualificationStore.snapshot().profiles.length === 3,
             );
@@ -629,14 +766,14 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               (await page.locator('details[open] pre').filter({ hasText: sourceHash }).count()) > 0,
               'Saved import receipt is not visible as inert text',
             );
-            await button('Backup complete library').click();
+            await click('Backup complete library');
             const receiptBackup = JSON.parse(await transfer.inputValue());
             check(
               receiptBackup.profiles.find((profile) => profile.id === imported.id).provenance.source
                 .sha256 === sourceHash,
               'Complete library backup dropped the receipt',
             );
-            await button('Restore library backup').click();
+            await click('Restore library backup');
             await page.waitForFunction(
               (revision) => window.qualificationStore.snapshot().revision > revision,
               receiptBackup.revision,
@@ -660,7 +797,7 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               .setInputFiles(presetFolder);
             const presetEntry = page.getByLabel('Preset entry path within folder', { exact: true });
             await presetEntry.fill('main.txt');
-            await button('Resolve preset and review options').click();
+            await click('Resolve preset and review options');
             const fastYaw = page.getByLabel('Fast yaw', { exact: true });
             await fastYaw.waitFor();
             check(
@@ -668,16 +805,16 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               'Checked root option did not select a differently cased included option',
             );
             evidence.checks.presetIncludeOptionCaseCompatibility = true;
-            await button('Preview import').click();
+            await click('Preview import');
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
             await fastYaw.uncheck();
             const beforePresetSave = await page.evaluate(() => window.qualificationStore.export());
-            await button('Preview import').click();
+            await click('Preview import');
             await page
               .getByRole('status')
               .filter({ hasText: 'Resolve the preset again before previewing' })
               .waitFor();
-            await button('Save import as new profile').click();
+            await click('Save import as new profile');
             await page
               .getByRole('status')
               .filter({ hasText: 'Preview the import first' })
@@ -686,10 +823,10 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               (await page.evaluate(() => window.qualificationStore.export())) === beforePresetSave,
               'Changed preset options saved the obsolete resolved text',
             );
-            await button('Resolve preset and review options').click();
-            await button('Preview import').click();
+            await click('Resolve preset and review options');
+            await click('Preview import');
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
-            await button('Save import as new profile').click();
+            await click('Save import as new profile');
             await page.waitForFunction(
               () =>
                 window.qualificationStore.snapshot().profiles.at(-1).provenance?.source.kind ===
@@ -709,15 +846,15 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             );
             await presetEntry.fill('other.txt');
             check((await fastYaw.count()) === 0, 'Entry change retained obsolete option controls');
-            await button('Preview import').click();
+            await click('Preview import');
             await page
               .getByRole('status')
               .filter({ hasText: 'Resolve the preset again before previewing' })
               .waitFor();
-            await button('Resolve preset and review options').click();
-            await button('Preview import').click();
+            await click('Resolve preset and review options');
+            await click('Preview import');
             await page.getByRole('status').filter({ hasText: 'Preview only' }).waitFor();
-            await button('Save import as new profile').click();
+            await click('Save import as new profile');
             await page.waitForFunction(
               () =>
                 window.qualificationStore.snapshot().profiles.at(-1).provenance?.preset?.entry ===
@@ -736,9 +873,10 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
             evidence.checks.stalePresetResolutionRejected = true;
             evidence.checks.presetEntryClearsPriorOptions = true;
 
+            await useProfile(profileId);
+            await click('Revert draft');
             const firstSetup = await page.getByLabel('Drone setup', { exact: true }).inputValue();
             const beforeDuplicate = await page.evaluate(() => {
-              const select = document.querySelector('[aria-label="Drone setup"]');
               window.qualificationSetupWrites = { calls: 0, reject: true };
               window.qualificationSetItem = Storage.prototype.setItem;
               Storage.prototype.setItem = function (key, value) {
@@ -753,79 +891,91 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               return {
                 saved: localStorage.getItem('revealline.fpv.tuning.v1'),
                 library: window.qualificationStore.export(),
-                selected: select.value,
-                options: Array.from(select.options, (option) => option.value),
-                draftName: document.querySelector('[aria-label="Drone name"]').value,
               };
             });
-            await button('Duplicate drone setup').click();
+            await click('Duplicate drone setup');
+            const secondSetup = await page.getByLabel('Drone setup', { exact: true }).inputValue();
+            check(secondSetup !== firstSetup, 'Duplicate did not create a detached setup draft');
+            check(
+              await page.evaluate(
+                (before) =>
+                  window.qualificationSetupWrites.calls === 0 &&
+                  window.qualificationStore.export() === before.library,
+                beforeDuplicate,
+              ),
+              'Draft duplication wrote the library before Save',
+            );
+            await click('Save for next flight');
             await page
               .getByRole('status')
               .filter({ hasText: 'Injected setup quota failure' })
               .waitFor();
             check(
-              await page.evaluate((before) => {
-                const select = document.querySelector('[aria-label="Drone setup"]');
-                return (
+              await page.evaluate(
+                ({ before, draftId }) =>
                   localStorage.getItem('revealline.fpv.tuning.v1') === before.saved &&
                   window.qualificationStore.export() === before.library &&
-                  select.value === before.selected &&
-                  JSON.stringify(Array.from(select.options, (option) => option.value)) ===
-                    JSON.stringify(before.options) &&
-                  document.querySelector('[aria-label="Drone name"]').value === before.draftName
-                );
-              }, beforeDuplicate),
-              'Rejected duplicate changed saved setups, visible selection or the draft',
+                  document.querySelector('[aria-label="Drone setup"]').value === draftId,
+                { before: beforeDuplicate, draftId: secondSetup },
+              ),
+              'Rejected save changed the saved library or discarded the duplicate draft',
             );
             await page.evaluate(() => {
               window.qualificationSetupWrites = { calls: 0, reject: false };
             });
-            await button('Duplicate drone setup').click();
+            await click('Save for next flight');
             await page.waitForFunction(
-              (id) => window.qualificationStore.snapshot().selectedSetupId !== id,
-              firstSetup,
+              (id) => window.qualificationStore.snapshot().selectedSetupId === id,
+              secondSetup,
             );
             const duplicateWrites = await page.evaluate(() => {
               Storage.prototype.setItem = window.qualificationSetItem;
               return window.qualificationSetupWrites.calls;
             });
-            check(duplicateWrites === 1, 'Duplicate creation and selection used multiple writes');
-            await page
-              .getByRole('status')
-              .filter({ hasText: 'Drone setup duplicated and selected.' })
-              .waitFor();
-            evidence.checks.failedDuplicatePreservesSavedAndVisibleSetup = true;
+            check(duplicateWrites === 1, 'Duplicate save and selection used multiple writes');
+            evidence.checks.duplicateIsDraftUntilSave = true;
+            evidence.checks.failedDuplicateSavePreservesLibraryAndDraft = true;
             evidence.checks.duplicateCreationAndSelectionUseOneWrite = true;
             evidence.checks.successfulDuplicateRetryClearsFailure = true;
-            const secondSetup = await page.getByLabel('Drone setup', { exact: true }).inputValue();
+            await section('Library');
             await page.getByLabel('Drone setup', { exact: true }).selectOption(firstSetup);
+            await click('Use saved setup in draft');
+            await click('Save for next flight');
             await page.waitForFunction(
               (id) => window.qualificationStore.snapshot().selectedSetupId === id,
               firstSetup,
             );
+            await section('Aircraft');
             await page.getByLabel('Drone name', { exact: true }).fill('Unsaved selection draft');
             const other = await context.newPage();
             await other.goto(url);
             await other.waitForFunction(() => window.qualificationReady);
-            await other.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
+            await other
+              .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
+              .click();
+            await other.getByRole('button', { name: 'Library', exact: true }).click();
             await other.getByRole('button', { name: 'New Actual profile', exact: true }).click();
             await page.getByRole('status').filter({ hasText: 'Another tab changed' }).waitFor();
+            await section('Library');
             await page.getByLabel('Drone setup', { exact: true }).selectOption(secondSetup);
+            check(
+              (await page.getByLabel('Drone name', { exact: true }).inputValue()) ===
+                'Unsaved selection draft',
+              'Browsing a saved setup changed the current edited draft',
+            );
+            await click('Save for next flight');
             await page.getByRole('status').filter({ hasText: 'Could not apply' }).waitFor();
             check(
-              (await page.getByLabel('Drone setup', { exact: true }).inputValue()) === firstSetup &&
-                (await page.getByLabel('Drone name', { exact: true }).inputValue()) ===
-                  'Unsaved selection draft',
-              'Rejected setup selection did not restore the visible drone and retain its draft',
+              (await page.getByLabel('Drone name', { exact: true }).inputValue()) ===
+                'Unsaved selection draft',
+              'Rejected stale save discarded its draft',
             );
-            evidence.checks.failedSetupSelectionRestoresVisibleDrone = true;
-            await button('Save for next flight').click();
-            await page.getByRole('status').filter({ hasText: 'Could not apply' }).waitFor();
+            evidence.checks.browsingKeepsCurrentDraft = true;
             evidence.checks.realCrossTabStaleEdit = true;
             await other.close();
             await page.reload();
             await page.waitForFunction(() => window.qualificationReady);
-            await button('Rates & throttle').click();
+            await click('Aircraft, rates & throttle');
             check(
               await page.evaluate((id) => {
                 const config = window.qualificationStore.effective();
@@ -853,7 +1003,10 @@ export async function smokeFpvTuning({ playwrightModule, output } = {}) {
               window.qualificationLocale = 'uk';
               window.qualificationUI.refresh();
             });
-            await page.getByRole('dialog', { name: 'Рейти й газ', exact: true }).waitFor();
+            await page
+              .getByRole('dialog', { name: 'Майстерня налаштувань', exact: true })
+              .waitFor();
+            await section('Рейти й газ');
             await page.getByLabel('Алгоритм рейтів', { exact: true }).waitFor();
             const size = await page.locator('dialog').evaluate((node) => ({
               clientWidth: node.clientWidth,

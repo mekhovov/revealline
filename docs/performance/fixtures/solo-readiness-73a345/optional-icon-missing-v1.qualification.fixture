@@ -1,0 +1,135 @@
+{
+  "format": "SoloQualificationV1",
+  "kind": "lifecycle",
+  "timeoutMs": 240000,
+  "query": {
+    "journey": "opening"
+  },
+  "replayRequirements": {
+    "movingTicks": 120
+  },
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  },
+  "id": "optional-icon-missing-first-return-v1",
+  "coverage": [
+    "Correctness-only: verify the exact optional control.ability original before replacing its single request with an empty404.",
+    "Observe the localized public optional-artwork fallback, then Start with all required original board/actor images unchanged and strict replay.",
+    "The original failed response and numerical gate outcomes remain raw; this does not qualify performance."
+  ],
+  "actions": [
+    {
+      "type": "expect",
+      "selector": "#asset-warning:not([hidden])",
+      "timeoutMs": 15000,
+      "label": "optional-icon-fallback"
+    },
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 15000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1200,
+      "label": "meaningful-safe-border"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "snapshot",
+      "group": "after-media-fault"
+    },
+    {
+      "type": "exportReplay",
+      "label": "after-media-fault"
+    }
+  ],
+  "mediaReadinessFault": {
+    "protocol": "optional-icon-missing-v1",
+    "sourceRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71"
+  }
+}

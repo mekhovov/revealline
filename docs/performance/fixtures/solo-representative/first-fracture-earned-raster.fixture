@@ -1,0 +1,213 @@
+{
+  "format": "SoloEarnedRasterFixtureV1",
+  "protocol": "earned-capture-erosion-v1",
+  "level": {
+    "version": "xonix-level.v5",
+    "id": "first-fracture",
+    "revision": "greybox-1",
+    "name": "First fracture",
+    "width": 72,
+    "height": 36,
+    "spawn": {
+      "x": 35.5,
+      "y": 0.5
+    },
+    "walls": [],
+    "foundations": [
+      {
+        "x": 29,
+        "y": 13,
+        "w": 13,
+        "h": 5
+      }
+    ],
+    "goal": {
+      "coverage": 0.76
+    },
+    "encounter": null,
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": [],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "cutter",
+        "type": "eroder",
+        "x": 60.5,
+        "y": 8.5,
+        "vx": -2.4,
+        "vy": 0
+      },
+      {
+        "id": "keeper",
+        "type": "bouncer",
+        "x": 12.5,
+        "y": 26.5,
+        "vx": 1.6970562748477138,
+        "vy": -1.6970562748477138
+      },
+      {
+        "id": "outer",
+        "type": "border-patrol",
+        "speed": 1.8,
+        "clockwise": true,
+        "x": 71.5,
+        "y": 27.5
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.65,
+      "graceSeconds": 1,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [
+        90,
+        150
+      ],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 0,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0,
+      "stopOnCapture": true
+    },
+    "signalZones": [],
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 35.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ]
+  },
+  "options": {
+    "seed": 1,
+    "classId": "scout",
+    "turnPolicy": "immediate"
+  },
+  "simulationIdentity": "51ae3b099a516de5",
+  "segments": [
+    [
+      "down",
+      192
+    ],
+    [
+      "left",
+      414
+    ],
+    [
+      "right",
+      6
+    ],
+    [
+      "up",
+      192
+    ],
+    [
+      "right",
+      588
+    ],
+    [
+      "down",
+      414
+    ],
+    [
+      "up",
+      6
+    ],
+    [
+      "down",
+      12
+    ],
+    [
+      "left",
+      600
+    ],
+    [
+      "up",
+      108
+    ],
+    [
+      "right",
+      594
+    ],
+    [
+      "left",
+      6
+    ],
+    [
+      "right",
+      12
+    ],
+    [
+      "up",
+      204
+    ],
+    [
+      "right",
+      12
+    ],
+    [
+      "up",
+      24
+    ],
+    [
+      "left",
+      186
+    ]
+  ],
+  "ticks": 3570,
+  "checkpoint": "4e10c76cdb1ad249",
+  "required": {
+    "closures": 5,
+    "erosions": 3,
+    "repair": "unobserved"
+  },
+  "stages": [
+    {
+      "name": "initial",
+      "tick": 0,
+      "checkpoint": "1a2d0faf53398b0a"
+    },
+    {
+      "name": "pre-capture",
+      "tick": 605,
+      "checkpoint": "8d9c4d5c2ee4ff1b"
+    },
+    {
+      "name": "post-capture",
+      "tick": 606,
+      "checkpoint": "ab2c5bb9da4cbeff"
+    },
+    {
+      "name": "erosion-warning",
+      "tick": 1213,
+      "checkpoint": "9073a37c1eed5f46"
+    },
+    {
+      "name": "post-erosion",
+      "tick": 1273,
+      "checkpoint": "32408d538f72e813"
+    },
+    {
+      "name": "large-capture",
+      "tick": 1806,
+      "checkpoint": "0a44b69b5a02cfdf"
+    },
+    {
+      "name": "final",
+      "tick": 3570,
+      "checkpoint": "4e10c76cdb1ad249"
+    }
+  ]
+}

@@ -38,6 +38,7 @@ async function fixture(
     serviceWorker,
     home = false,
     blurOnTitleMount = false,
+    windowOptions = {},
     ...factories
   } = {},
 ) {
@@ -94,6 +95,7 @@ async function fixture(
     },
     setTimeout: (fn) => fn(),
     URL: { createObjectURL: () => 'blob:flight-test', revokeObjectURL() {} },
+    ...windowOptions,
   });
   Object.defineProperty(win, 'localStorage', {
     get() {
@@ -196,6 +198,127 @@ function radioProfile(pad) {
     switches: { arm: null, pause: null, reset: null },
   };
 }
+
+test('Academy prepares a saved aircraft with exact geometry, course advice and continuous practice controls', async (t) => {
+  const [tuning, presets, workers] = await Promise.all([
+    import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+    import('../../optional-practice/civilian-fpv/aircraft-presets.mjs'),
+    import('../../optional-practice/civilian-fpv/advanced-worker.mjs'),
+  ]);
+  const data = new Map(),
+    storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    };
+  const library = tuning.createTuningLibraryStore({ storage });
+  await library.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'whoop',
+    profileId: 'whoop-rates',
+    rates: 'defaults',
+  });
+  class Worker extends Events {
+    constructor() {
+      super();
+      this.closed = false;
+      this.handler = workers.createAdvancedWorkerHandler((data) => {
+        if (!this.closed) this.emit('message', { data });
+      });
+    }
+    postMessage(value) {
+      void this.handler.receive(value).finally(() => {
+        if (this.closed) this.handler.dispose();
+      });
+    }
+    terminate() {
+      this.closed = true;
+      this.handler.dispose();
+    }
+  }
+  let shownAircraft;
+  const h = await fixture(t, {
+    storage,
+    windowOptions: { Worker, setTimeout, clearTimeout },
+    rendererFactory: () => ({
+      available: true,
+      setCourse() {},
+      setPath() {},
+      setAircraft(value) {
+        shownAircraft = structuredClone(value);
+      },
+      draw() {},
+      dispose() {},
+    }),
+  });
+  const preset = presets.createPresetConfiguration('meteor75-analog-2022');
+  assert.equal(h.view.snapshot().reason, 'prepared');
+  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 500);
+  assert.deepEqual(shownAircraft.geometry, preset.aircraft.geometry);
+  assert.match(h.doc.body.textContent, /All courses remain available in practice/);
+  assert.equal(h.doc.querySelector('.aircraft-practice-controls').hidden, false);
+  h.$('arm').click();
+  for (let tick = 0; tick < 8; tick++) {
+    h.tick();
+    await new Promise((resolve) => setImmediate(resolve));
+  }
+  assert.ok(h.view.snapshot().ticks > 0);
+  assert.equal(h.view.snapshot().advancedTelemetry.usedAh, 0);
+  const challengeKind = h.doc.querySelector('[data-aircraft-challenge="kind"]'),
+    challengeDuration = h.doc.querySelector('[data-aircraft-challenge="duration"]'),
+    challengeRestart = h.doc.querySelector('[data-aircraft-challenge="restart"]');
+  assert.equal(h.view.snapshot().challenge, undefined);
+  for (const kind of ['timed-practice', 'battery-endurance', 'none']) {
+    h.view.pause();
+    challengeKind.value = kind;
+    challengeKind.emit('change');
+    challengeDuration.value = '30';
+    challengeDuration.emit('input');
+    challengeRestart.click();
+    await new Promise((resolve) => setImmediate(resolve));
+    await h.view.settled();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(challengeRestart.disabled, false);
+    assert.equal(h.view.snapshot().ticks, 0);
+    assert.equal(shownAircraft.battery.depletion, kind === 'battery-endurance');
+    assert.equal(h.view.snapshot().advancedTelemetry.usedAh, 0);
+    assert.equal(h.view.snapshot().challenge?.missionTick, kind === 'none' ? undefined : 0);
+    h.$('arm').click();
+    for (let tick = 0; tick < 8; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.ok(h.view.snapshot().ticks > 0);
+    assert.equal(h.view.snapshot().advancedTelemetry.usedAh > 0, kind === 'battery-endurance');
+    const recorded = await h.view.exportRecording();
+    assert.equal(recorded.config.configuration.challenge?.kind, kind === 'none' ? undefined : kind);
+  }
+  assert.equal(library.effective().advanced.aircraft.battery.depletion, false);
+  for (const [action, fov] of [
+    ['Apply & restart', '106'],
+    ['Test draft · unscored', '108'],
+  ]) {
+    h.view.pause();
+    h.$('academy-shell-action-settings').click();
+    const settings = h.$('academy-shell-settings-dialog');
+    assert.equal(settings.open, true);
+    await openAcademyTuning(h);
+    const camera = academyTuningControl(h, 'Vertical FOV (degrees)');
+    camera.value = fov;
+    camera.emit('input');
+    await academyTuningClick(h, action);
+    await h.view.settled();
+    assert.equal(h.doc.querySelector('.fpv-tuning').open, false, action);
+    assert.equal(settings.open, false, `${action} must leave Settings before flight`);
+    assert.equal(h.view.snapshot().reason, 'prepared', action);
+    assert.equal(h.view.snapshot().ticks, 0, action);
+    h.$('arm').click();
+    for (let tick = 0; tick < 8; tick++) {
+      h.tick();
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.ok(h.view.snapshot().ticks > 0, `${action} must allow arming from the flight button`);
+  }
+});
 
 test('SIM world selection freezes on first arm and applies queued preference only on reset', async (t) => {
   const h = await fixture(t);
@@ -1852,6 +1975,111 @@ async function openAcademyTuning(h) {
   assert.equal(h.doc.querySelector('.fpv-tuning').open, true);
 }
 
+test('Academy mode, reset and input changes preserve the tested draft until a normal course launch', async (t) => {
+  const [tuning, workers] = await Promise.all([
+    import('../../optional-practice/civilian-fpv/tuning-library.mjs'),
+    import('../../optional-practice/civilian-fpv/advanced-worker.mjs'),
+  ]);
+  const data = new Map(),
+    storage = {
+      getItem: (key) => data.get(key) ?? null,
+      setItem: (key, value) => data.set(key, value),
+    };
+  const store = tuning.createTuningLibraryStore({ storage });
+  await store.createPresetSetup({
+    presetId: 'helion-pro-o4',
+    setupId: 'saved-helion',
+    profileId: 'saved-rates',
+    rates: 'defaults',
+  });
+  const saved = store.export(),
+    instances = [];
+  const comfortKey = 'revealline.fpv.flight-comfort.v1.academy.camera',
+    savedComfort = JSON.stringify({ fov: 99, tilt: 17 });
+  data.set(comfortKey, savedComfort);
+  class Worker extends Events {
+    constructor() {
+      super();
+      this.closed = false;
+      this.messages = [];
+      instances.push(this);
+      this.handler = workers.createAdvancedWorkerHandler((data) => {
+        if (!this.closed) this.emit('message', { data });
+      });
+    }
+    postMessage(value) {
+      this.messages.push(structuredClone(value));
+      void this.handler.receive(value).finally(() => {
+        if (this.closed) this.handler.dispose();
+      });
+    }
+    terminate() {
+      this.closed = true;
+      this.handler.dispose();
+    }
+  }
+  const h = await fixture(t, { storage, windowOptions: { Worker, setTimeout, clearTimeout } });
+  await openAcademyTuning(h);
+  const aircraft = academyTuningControl(h, 'Aircraft preset', 'select');
+  aircraft.value = 'meteor75-analog-2022';
+  aircraft.emit('change');
+  await academyTuningClick(h, 'Use in draft');
+  const fov = academyTuningControl(h, 'Vertical FOV (degrees)');
+  fov.value = '103';
+  fov.emit('input');
+  await academyTuningClick(h, 'Test draft · unscored');
+  await h.view.settled();
+  const init = () => instances.at(-1).messages.find((message) => message.type === 'init').options;
+  const draft = init();
+  assert.equal(draft.aircraft.id, 'meteor75-analog-2022');
+  h.$('camera-fov').value = '106';
+  h.$('camera-fov').emit('input');
+  h.$('camera-fov').emit('change');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(
+    data.get('revealline.fpv.tuning.v1'),
+    saved,
+    'Trial camera must not edit saved Helion',
+  );
+  assert.equal(data.get(comfortKey), savedComfort);
+  for (const action of ['mode', 'reset', 'input', 'retry', 'keyboard-reset']) {
+    if (action === 'mode') {
+      h.$('mode').value = 'acro';
+      h.$('mode').emit('change');
+    } else if (action === 'input') {
+      h.$('input-source').value = 'touch';
+      h.$('input-source').emit('change');
+    } else if (action === 'keyboard-reset') {
+      h.$('viewport').focus();
+      h.key('KeyR');
+    } else h.$(action).click();
+    await h.view.settled();
+    assert.deepEqual(init().aircraft, draft.aircraft, `${action} must retain the tested aircraft`);
+    assert.deepEqual(init().controller, draft.controller);
+    assert.deepEqual(init().response, draft.response);
+    assert.equal(init().assist.mode, 'acro');
+    assert.equal(h.$('camera-fov').value, '103');
+    assert.equal(h.doc.querySelector('.tuning-return').hidden, false);
+    assert.equal(data.get('revealline.fpv.tuning.v1'), saved);
+    h.view.pause();
+  }
+  h.$('next').click();
+  await h.view.settled();
+  assert.equal(init().aircraft.id, 'helion-pro-o4');
+  assert.equal(h.doc.querySelector('.tuning-return').hidden, true);
+  h.$('camera-fov').value = '109';
+  h.$('camera-fov').emit('input');
+  h.$('camera-fov').emit('change');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(JSON.parse(data.get(comfortKey)).fov, 109);
+  assert.equal(
+    JSON.parse(data.get('revealline.fpv.tuning.v1')).setups.find(
+      (setup) => setup.id === 'saved-helion',
+    ).camera.verticalFov,
+    109,
+  );
+});
+
 for (const source of ['keyboard', 'touch', 'controller', 'radio'])
   test(`Academy tuning diagnostics follow ${source} ownership with a different calibrated radio connected`, async (t) => {
     const h = await fixture(t);
@@ -1891,6 +2119,7 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     assert.ok(committed.ticks > 0);
     radioPad.axes[0] = -0.9;
     await openAcademyTuning(h);
+    if (source === 'controller') controllerPad.axes[2] = 0.78;
     h.tick(40);
     const text = h.doc.querySelector('[aria-label="Input diagnostics"]').textContent;
     assert.match(
@@ -1901,7 +2130,7 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     );
     assert.match(
       text,
-      source === 'radio'
+      source === 'radio' || source === 'controller'
         ? /Live input preview; flight is paused/
         : /Last committed flight input; flight is paused/,
     );
@@ -1910,7 +2139,17 @@ for (const source of ['keyboard', 'touch', 'controller', 'radio'])
     if (source === 'keyboard') assert.match(text, /Raw input: \{"keys":\["ArrowRight"\]\}/);
     if (source === 'touch')
       assert.match(text, /Calibrated: \{"roll":0,"pitch":0,"yaw":0,"throttle":0.6\}/);
-    if (source === 'controller') assert.match(text, /Raw input: \{"axes":\[0,0,0.56,0\]/);
+    if (source === 'controller') {
+      assert.match(text, /Raw input: \{"axes":\[0,0,0.78,0\]/);
+      assert.match(text, /Mapping: standard-mode-2/);
+      assert.match(text, /flight throttle unavailable/);
+      assert.match(text, /"throttle":null/);
+      assert.equal(
+        h.view.snapshot().ticks,
+        committed.ticks,
+        'Preview must not advance the paused flight',
+      );
+    }
     if (source !== 'radio') assert.doesNotMatch(text, /"roll":-0.9/);
     else assert.match(text, /"roll":-0.9/);
     assert.match(text, /Browser sample age \(ms\): unavailable/);

@@ -514,7 +514,7 @@ test('edition runs the complete Solo host with canonical rules, settings and mis
   page.$('replay-dialog').close();
   assert.ok(page.$('settings-panel-data').textContent.includes('Earlier preview save retained'));
   page.$('shell-worlds').click();
-  await settle(() => page.$('journey-chooser').open);
+  await settle(() => page.$('journey-chooser')?.open);
   assert.deepEqual(
     [...page.$('journey-mode').options].map((option) => option.value),
     ['solo'],
@@ -926,6 +926,19 @@ test('reward-enabled controller practice boots without a Journey authority and c
   });
   assert.equal(page.rendered.run.levelId, mission.missionId);
   for (let i = 0; i < 20; i++) page.frame();
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  assert.equal(page.$('shell-collection').hidden, false);
+  assert.equal(page.$('shell-collection').disabled, false);
+  page.$('shell-collection').click();
+  assert.equal(page.$('collection-dialog').open, true);
+  // This finite host has no MutationObserver; advance its paused UI polling clock.
+  page.frame(100);
+  await settle(
+    () =>
+      page.$('collection-dialog').open &&
+      page.$('completion-reward-shelf').querySelector('article'),
+  );
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   const card = page.$('completion-reward-shelf').querySelector('article');
   assert.equal(card.dataset.earned, 'false');
   assert.equal(card.querySelector('button'), null);
@@ -1129,7 +1142,7 @@ test('same-origin installed creator campaign cannot inject missions into a selec
       fetchResponse: f.fetcher,
     });
   page.$('shell-worlds').click();
-  await settle(() => page.$('journey-chooser').open);
+  await settle(() => page.$('journey-chooser')?.open);
   assert.deepEqual(
     [...page.$('journey-collection').options].map((option) => option.value),
     ['', 'Journey'],

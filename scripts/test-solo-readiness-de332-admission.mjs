@@ -1,0 +1,402 @@
+import {
+  readDeclaredPreparationRefs,
+  changedPreparationTools,
+} from './solo-de332-preparation-source.mjs';
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { readFile, mkdtemp, rm, realpath } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { parse } from 'acorn';
+import { createContext, runInContext, runInNewContext } from 'node:vm';
+import {
+  bindReadinessJob,
+  readinessRowPlan,
+  readinessArguments,
+  readinessMatrix,
+  DE332_READINESS_SOURCE,
+  DE332_READINESS_COHORT,
+  DE332_READINESS_ROW,
+  DE332_READINESS_FAULT_FIXTURES,
+  PREPARATION_READINESS_PHASES,
+} from './solo-remote-readiness.mjs';
+import {
+  qualificationReadinessOptions,
+  selectedFontSourceBinding,
+  createSelectedFontSettlementOwner,
+  createSelectedFontSettlementProbe,
+  createBrowserReadinessProbe,
+  selectedFont,
+  assessSelectedFontSettlementReadiness,
+  SELECTED_FONT_SOURCE_BINDING,
+} from './solo-qualification-readiness.mjs';
+import {
+  createBrowserHitchJournal,
+  createHitchJournalStore,
+} from './solo-qualification-hitch-journal.mjs';
+import { verifyTimingHitchJournal } from './solo-remote-sustained.mjs';
+const read = (path) => readFile(new URL('../' + path, import.meta.url));
+const manifest = JSON.parse(
+  await read('docs/performance/solo-readiness-preparation-de332-plan.json'),
+);
+const reviewed = () => ({
+  ...structuredClone(manifest),
+  status: 'reviewed-readiness-diagnostic-only',
+});
+const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+test('prospective readiness references match candidate tools without refreshing any executed declaration', async () => {
+  const historical = await readDeclaredPreparationRefs(
+    'docs/performance/solo-readiness-preparation-de332-plan.json',
+  );
+  const refs = [
+    manifest.fixture,
+    ...manifest.additionalFixtures,
+    ...manifest.adapterInputs,
+    ...manifest.frozenTools,
+  ];
+  assert.equal(new Set(refs.map((ref) => ref.path)).size, refs.length);
+  for (const ref of refs) {
+    if (changedPreparationTools.includes(ref.path)) {
+      const old = historical.get(ref.path);
+      assert(old, ref.path);
+      assert.equal(ref.bytes, old.bytes, ref.path);
+      assert.equal(ref.sha256, old.sha256, ref.path);
+      continue;
+    }
+    const bytes = await read(ref.path);
+    assert.equal(bytes.length, ref.bytes, ref.path);
+    assert.equal(hash(bytes), ref.sha256, ref.path);
+  }
+});
+test('held declaration refuses execution; reviewed exact selection preserves twelve serial boundaries and real recipe bytes', async () => {
+  assert.throws(() =>
+    readinessMatrix({
+      ...structuredClone(manifest),
+      status: 'held-awaiting-source-and-dispatch-review',
+    }),
+  );
+  const selected = reviewed();
+  assert.equal(selected.sourceCohort, DE332_READINESS_COHORT);
+  assert.deepEqual(
+    readinessMatrix(selected).include.map((r) => [r.jobMinutes, r.stepMinutes, r.outerSeconds]),
+    [
+      [130, 78, 4620],
+      [130, 78, 4620],
+    ],
+  );
+  assert.equal(selected.candidate.revision, 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4');
+  assert.equal(selected.candidate.run, 39091745654);
+  assert.equal(selected.candidate.artifact, 12123463810);
+  for (const engine of selected.engines) {
+    const plan = bindReadinessJob(selected, engine);
+    assert.deepEqual(
+      plan.rows.map((row) => row.phase),
+      PREPARATION_READINESS_PHASES,
+    );
+    for (const row of plan.rows) {
+      const single = readinessRowPlan(plan, row),
+        bytes = await read(single.fixture.path);
+      assert.equal(bytes.length, single.fixture.bytes);
+      assert.equal(hash(bytes), single.fixture.sha256);
+      assert.equal(single.sourceCohort, DE332_READINESS_ROW);
+      const args = readinessArguments(
+        { plan, here: '/tools/scripts', repository: '/tools' },
+        row,
+        'http://127.0.0.1:1/game/',
+        '/evidence',
+      );
+      const pilot = qualificationReadinessOptions(args, JSON.parse(bytes), bytes);
+      assert.equal(pilot.sourceRevision, DE332_READINESS_SOURCE.revision);
+      assert.equal(pilot.protocol, single.protocol.name);
+      assert.equal(row.timeoutMs, 480000);
+      assert.equal(JSON.parse(bytes).timeoutMs, 240000);
+      assert.equal(pilot.documents ?? 1, row.phase === 'saved-resume' ? 2 : 1);
+      assert.equal(
+        args.includes('--readiness-geometry=phase-boundary-v1'),
+        ['cold-first30', 'warm-resume', 'saved-resume'].includes(row.phase),
+      );
+      assert.equal(
+        args.includes('--readiness-required-start=trusted-initial-start-v1'),
+        row.phase === 'required-original-cancel',
+      );
+      assert.equal(
+        args.includes('--readiness-cancel-boundary=post-command-v3'),
+        row.phase === 'selected-font-cancel',
+      );
+      for (const change of [
+        (x) => x.filter((f) => f !== '--work-probe'),
+        (x) => x.concat('--source-revision=' + DE332_READINESS_SOURCE.revision),
+        (x) =>
+          x.map((f) =>
+            f.startsWith('--source-revision=') ? '--source-revision=' + 'f'.repeat(40) : f,
+          ),
+        (x) => x.concat('--density-comparison=full-muted-v1'),
+      ])
+        assert.throws(() => qualificationReadinessOptions(change(args), JSON.parse(bytes), bytes));
+      assert.throws(() =>
+        qualificationReadinessOptions(
+          args,
+          JSON.parse(bytes),
+          Buffer.concat([bytes, Buffer.from('\n')]),
+        ),
+      );
+    }
+  }
+});
+test('new fault fixtures differ only at the exact embedded source; actions, delays, assets and expected replay are unchanged', async () => {
+  const sources = {
+    'selected-font-cancel': [
+      'solo-readiness-font/selected-font-request-settlement-v4.qualification.fixture',
+      'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+    ],
+    'required-original-cancel': [
+      'solo-readiness-media/required-original-cancel-start-v2.qualification.fixture',
+      '239c574ecddd5bb6d5896e621d9edc53e7f6a313',
+    ],
+    'optional-icon-missing': [
+      'solo-readiness-media/optional-icon-missing-v1.qualification.fixture',
+      'e1cc5dd7656bab349715cd1c3ce6e9f783508c17',
+    ],
+  };
+  for (const [phase, [path, source]] of Object.entries(sources)) {
+    const old = (await read('docs/performance/fixtures/' + path)).toString();
+    assert.equal(old.split(source).length, 2);
+    const next = (await read(DE332_READINESS_FAULT_FIXTURES[phase].path)).toString();
+    assert.equal(next, old.replace(source, DE332_READINESS_SOURCE.revision));
+  }
+});
+test('source/package/fixture/row/limit mutations cannot gain reviewed readiness admission', () => {
+  for (const mutate of [
+    (m) => m.candidate.artifact++,
+    (m) => m.candidate.run++,
+    (m) => m.candidate.outer.bytes++,
+    (m) => (m.candidate.inner.sha256 = '0'.repeat(64)),
+    (m) => (m.candidate.tree = '0'.repeat(40)),
+    (m) => (m.candidate.manifestSHA256 = '0'.repeat(64)),
+    (m) => (m.runtimeRevision = '0'.repeat(40)),
+    (m) => (m.additionalFixtures[2].sha256 = '0'.repeat(64)),
+    (m) => m.protocol.phases.pop(),
+    (m) => m.protocol.geometry.pop(),
+    (m) => (m.release.dispatch.lane = 'next'),
+    (m) => (m.automaticRetries = 1),
+    (m) => m.helperTimeoutMs++,
+    (m) => m.rowEvidenceBytes++,
+    (m) => (m.cpu = 4),
+    (m) => (m.performanceExclusion = false),
+  ]) {
+    const changed = reviewed();
+    mutate(changed);
+    assert.throws(() => bindReadinessJob(changed, 'webkit'));
+  }
+  const plan = bindReadinessJob(reviewed(), 'chromium');
+  assert.throws(() => readinessRowPlan(plan, { ...plan.rows[0], phase: 'other' }));
+  assert.throws(() => readinessRowPlan(plan, { ...plan.rows[0], timeoutMs: 480001 }));
+});
+test('de332 all six exact row policies reuse positive binary journal verification; saved requires two active documents', async (t) => {
+  const dir = await realpath(await mkdtemp(join(tmpdir(), 'solo-preparation-journal-')));
+  t.after(() => rm(dir, { recursive: true, force: true }));
+  const url = 'http://127.0.0.1:4321/game/?journey=opening';
+  const plan = bindReadinessJob(reviewed(), 'webkit');
+  for (const row of plan.rows) {
+    const p = readinessRowPlan(plan, row),
+      output = join(dir, row.phase + '.json');
+    const store = createHitchJournalStore(output, () => 0, { soloURL: url });
+    const count = row.phase === 'saved-resume' ? 2 : 1;
+    for (let i = 0; i < count; i++) {
+      const allocation = store.beginDocument({ url, action: i ? 'reload-7' : 'initial' });
+      let now = 0;
+      const j = createBrowserHitchJournal(
+        {},
+        {
+          performance: { now: () => now, timeOrigin: 1700000000000 + i * 1000 },
+          location: { origin: 'http://127.0.0.1:4321', pathname: '/game/' },
+          document: { hidden: false, hasFocus: () => true, addEventListener() {} },
+          addEventListener() {},
+          btoa: (s) => Buffer.from(s, 'binary').toString('base64'),
+        },
+      );
+      j.configure(allocation);
+      j.first(0, 0);
+      j.subscribe(0);
+      j.phase(2, 0);
+      j.frame(0, 40, 2, 2);
+      j.beginWork(1, 2);
+      j.endWork(55, 2);
+      j.phase(3, 60);
+      now = 100;
+      await store.retain(
+        j.seal('paused'),
+        i === count - 1 ? 'final-existing-public-boundary' : 'before-reload-7',
+      );
+    }
+    const r = {
+      hitchJournal: store.finish(),
+      readinessPilot: {
+        protocol: p.protocol.name,
+        ...(p.protocol.requiredStartRetention
+          ? { requiredStartRetention: p.protocol.requiredStartRetention }
+          : {}),
+        ...(row.phase === 'selected-font-cancel'
+          ? { settlementObservation: 'original-demand-v1' }
+          : {}),
+        ...(p.protocol.geometryObservation
+          ? { geometryObservation: p.protocol.geometryObservation }
+          : {}),
+        ...(p.protocol.cancelBoundaryObservation
+          ? { cancelBoundaryObservation: p.protocol.cancelBoundaryObservation }
+          : {}),
+      },
+    };
+    const result = await verifyTimingHitchJournal(p, r, output, url);
+    assert.equal(result.status, 'complete', JSON.stringify(result));
+    for (const change of [
+      (q) => (q.candidate.tree = '0'.repeat(40)),
+      (q) => (q.fixture.sha256 = '0'.repeat(64)),
+      (q) => (q.protocol.name = 'other'),
+    ]) {
+      const q = structuredClone(p);
+      change(q);
+      assert.equal((await verifyTimingHitchJournal(q, r, output, url)).status, 'invalid-evidence');
+    }
+    if (count === 2) {
+      const missing = structuredClone(r);
+      missing.hitchJournal.documents.pop();
+      assert.equal(
+        (await verifyTimingHitchJournal(p, missing, output, url)).status,
+        'invalid-evidence',
+      );
+    }
+  }
+});
+
+test('actual V4 serialized owner and independent assessor require the chosen exact font source', async () => {
+  const original = await readFile(
+    resolve('scripts/test-solo-selected-font-settlement.mjs'),
+    'utf8',
+  );
+  const ast = parse(original, { ecmaVersion: 'latest', sourceType: 'module' });
+  const names = ['deferred', 'face', 'harness', 'ownerHarness', 'completedOwner', 'readinessModel'];
+  const functions = names
+    .map((name) => {
+      const node = ast.body.find((n) => n.type === 'FunctionDeclaration' && n.id.name === name);
+      assert(node, name);
+      return original.slice(node.start, node.end);
+    })
+    .join('\n');
+  const prior = await readFile(resolve('scripts/test-solo-selected-font-post-command.mjs'), 'utf8');
+  const actualModel = prior.slice(
+    prior.indexOf('function model('),
+    prior.indexOf("\ntest('V3 serialized"),
+  );
+  const sandbox = {
+    assert,
+    JSON,
+    TextEncoder,
+    URL,
+    structuredClone,
+    createContext,
+    runInContext,
+    runInNewContext,
+    createSelectedFontSettlementProbe,
+    createBrowserReadinessProbe,
+    selectedFont,
+    actualModel,
+    target: "600 16px 'Field Kit Display', 'Handjet', sans-serif",
+    sample: 'Workshop Майстерня 012345',
+    flush: async () => {
+      await Promise.resolve();
+      await Promise.resolve();
+    },
+    createSelectedFontSettlementOwner: (options) =>
+      createSelectedFontSettlementOwner({
+        ...options,
+        sourceRevision: DE332_READINESS_SOURCE.revision,
+      }),
+  };
+  const { completedOwner, readinessModel } = runInNewContext(
+    functions + '\n({completedOwner,readinessModel})',
+    sandbox,
+  );
+  const h = await completedOwner(),
+    model = readinessModel('selected-font-request-settlement-v4');
+  const raw = JSON.parse(
+    JSON.stringify({ observation: model.observation, app: model.app, transport: model.transport }),
+  );
+  const owner = JSON.parse(JSON.stringify(h.owner.snapshot()));
+  assert.deepEqual(owner.sourceBinding, {
+    ...SELECTED_FONT_SOURCE_BINDING,
+    revision: DE332_READINESS_SOURCE.revision,
+  });
+  assert.equal(
+    assessSelectedFontSettlementReadiness(
+      raw.observation,
+      raw.app,
+      1,
+      raw.transport,
+      owner,
+      DE332_READINESS_SOURCE.revision,
+    ).status,
+    'passed',
+  );
+  assert.equal(
+    assessSelectedFontSettlementReadiness(raw.observation, raw.app, 1, raw.transport, owner).status,
+    'failed',
+  );
+  for (const change of [
+    (o) => (o.sourceBinding.revision = SELECTED_FONT_SOURCE_BINDING.revision),
+    (o) => (o.sourceBinding.css.sha256 = '0'.repeat(64)),
+    (o) => o.sourceBinding.themeHost.bytes++,
+    (o) => (o.closed = false),
+    (o) => (o.evidence.calls[0].settlement = 'rejected'),
+  ]) {
+    const changed = structuredClone(owner);
+    change(changed);
+    assert.equal(
+      assessSelectedFontSettlementReadiness(
+        raw.observation,
+        raw.app,
+        1,
+        raw.transport,
+        changed,
+        DE332_READINESS_SOURCE.revision,
+      ).status,
+      'failed',
+    );
+  }
+  assert.deepEqual(selectedFontSourceBinding(), SELECTED_FONT_SOURCE_BINDING);
+  assert.throws(() => selectedFontSourceBinding('a'.repeat(40)));
+  assert.throws(() =>
+    createSelectedFontSettlementOwner({ page: {}, sourceRevision: 'a'.repeat(40) }),
+  );
+});
+test('actual qualifier forwards admitted source to both font owner and final assessment', async () => {
+  const source = await readFile(new URL('./qualify-solo-runtime.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }),
+    calls = [];
+  const walk = (n) => {
+    if (!n || typeof n !== 'object') return;
+    if (
+      n.type === 'CallExpression' &&
+      n.callee?.type === 'MemberExpression' &&
+      ['createSelectedFontSettlementOwner', 'assessSelectedFontSettlementReadiness'].includes(
+        n.callee.property.name,
+      )
+    )
+      calls.push(n);
+    for (const [key, value] of Object.entries(n))
+      if (key !== 'parent') Array.isArray(value) ? value.forEach(walk) : walk(value);
+  };
+  walk(ast);
+  assert.equal(calls.length, 2);
+  const owner = calls.find((n) => n.callee.property.name === 'createSelectedFontSettlementOwner');
+  const property = owner.arguments[0].properties.find((n) => n.key.name === 'sourceRevision');
+  assert.equal(
+    source.slice(property.value.start, property.value.end),
+    'readinessOptions.sourceRevision',
+  );
+  const final = calls
+    .find((n) => n.callee.property.name === 'assessSelectedFontSettlementReadiness')
+    .arguments.at(-1);
+  assert.equal(source.slice(final.start, final.end), 'readinessOptions.sourceRevision');
+});

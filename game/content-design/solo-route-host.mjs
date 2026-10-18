@@ -7,13 +7,14 @@ import { journeyMissionDetails } from '../mission-library/journey-presentation.m
 /** Old source hosts retain their exact contract; publication hosts materialize
  * complete packs into an append-only registry without replacing active entries. */
 export async function createSoloRouteHost(route, options = {}) {
+  options.assertCurrent?.();
   if (!route.navigation)
     return createEncounterSoloHost(route.source, {
       ...options,
       corePackIds: route.corePackIds,
       optionalCampaignIds: route.optionalCampaignIds,
     });
-  const { ensurePackage, signal, fetchAsset, ...hostOptions } = options;
+  const { ensurePackage, signal, fetchAsset, assertCurrent, ...hostOptions } = options;
   const view = publishedRouteViews(route).solo,
     catalog = view.catalog;
   const descriptors = new Map(route.navigation.chapters.map((item) => [item.packId, item]));
@@ -50,7 +51,8 @@ export async function createSoloRouteHost(route, options = {}) {
     }
     if (additions.length) entries = Object.freeze([...entries, ...additions]);
   };
-  const loadPack = async (packId, { signal, prepare = true } = {}) => {
+  const loadPack = async (packId, { signal, prepare = true, assertCurrent } = {}) => {
+    assertCurrent?.();
     check(signal);
     const descriptor = descriptors.get(packId);
     if (!descriptor) return null;
@@ -58,10 +60,16 @@ export async function createSoloRouteHost(route, options = {}) {
     // verifies ordinary network responses without requiring a prepared package.
     if (prepare && typeof ensurePackage === 'function') {
       await ensurePackage(descriptor.groups.solo, { signal, retain: true });
+      assertCurrent?.();
       check(signal);
     }
     if (loaded.has(packId)) return loaded.get(packId);
-    const source = await loadPublishedChapter(route, descriptor, { fetchAsset, signal });
+    const source = await loadPublishedChapter(route, descriptor, {
+      fetchAsset,
+      signal,
+      assertCurrent,
+    });
+    assertCurrent?.();
     check(signal);
     const host = createEncounterSoloHost(source, {
       ...hostOptions,
@@ -268,6 +276,12 @@ export async function createSoloRouteHost(route, options = {}) {
       for (const item of loaded.values()) item.host.preparer.dispose();
     },
   });
-  await loadPack(route.navigation.starterPackId, { signal, prepare: false });
+  try {
+    await loadPack(route.navigation.starterPackId, { signal, prepare: false, assertCurrent });
+    assertCurrent?.();
+  } catch (error) {
+    facade.preparer.dispose();
+    throw error;
+  }
   return Object.freeze(facade);
 }

@@ -141,7 +141,15 @@ The library supports up to 32 profiles and 32 drone setups, with a 512 KiB stora
 
 If another tab changes settings, export an unsaved draft before choosing **Refresh library**. Revision checks reject stale saves; browsers supporting Web Locks also serialize cross-tab writes.
 
-## Current scope
+## Historical reference-backend scope
+
+This section describes the earlier experimental reference arena and its original
+compatibility boundaries. It is not the current aircraft-catalog or recording
+compatibility guide. For the thirteen-aircraft practice backend, Setup Workbench,
+continuous archives and current priorities, use the
+[current completion plan](fpv-current-completion-plan.md),
+[workbench guide](fpv-setup-workbench.md) and
+[aircraft completion record](fpv-aircraft-completion.md).
 
 ### Experimental Advanced practice
 

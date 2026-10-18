@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { couchPage } from './helpers/couch-host.mjs';
 import { combatLevel } from './helpers/combat-fixture.mjs';
 import { memoryStorage } from './helpers/solo-dom.mjs';
@@ -93,6 +117,8 @@ test('Versus Help reads actual optional board rules without advancing either pau
   const checkpoints = p.checkpoint(),
     boards = [...p.renders],
     writes = p.storage.writes.length;
+  p.$('race-options').click();
+  p.$('race-settings-tab-extras').click();
   p.$('race-help').focus();
   key(p, 'Enter');
   const section = p.$('race-encounter-help');
@@ -141,6 +167,8 @@ test('combined mission Help localizes its existing reader and preserves paused b
   // Uncommitted setup controls must not become the rules of the held round.
   p.$('race-level').value = 'an-uncommitted-choice';
   p.$('race-class').value = 'carrier';
+  p.$('race-options').click();
+  p.$('race-settings-tab-extras').click();
   p.$('race-help').click();
   const section = p.$('race-encounter-help');
   const rows = section.querySelectorAll('[data-encounter-topic]');
@@ -178,7 +206,7 @@ test('combined mission Help localizes its existing reader and preserves paused b
   key(p, 'Escape');
   assert.equal(p.doc.activeElement, p.$('race-help-read'));
   p.$('race-help-back').click();
-  assert.equal(p.doc.activeElement, p.$('race-help'));
+  boundedIdentity(p.doc.activeElement, p.$('race-help'));
   assert.equal(p.doc.body.dataset.couchStatus, 'paused');
   assert.deepEqual(p.checkpoint(), checkpoint);
 });
@@ -191,6 +219,8 @@ test('absent and disabled patrol rules add no Help section or actions', async (t
       else level.classic.combatPatrols.enabled = enabled;
       const p = await host(t, level);
       const checkpoint = p.checkpoint();
+      p.$('race-options').click();
+      p.$('race-settings-tab-extras').click();
       p.$('race-help').click();
       const section = p.$('race-encounter-help');
       assert.equal(section.hidden, true);
@@ -210,6 +240,8 @@ test('reading encounter guidance after the real time limit retains both result b
   const checkpoint = p.checkpoint(),
     boards = [...p.renders],
     writes = p.storage.writes.length;
+  p.$('race-options').click();
+  p.$('race-settings-tab-extras').click();
   p.$('race-help').click();
   assert.equal(p.$('race-encounter-help').hidden, false);
   p.$('race-help-read').focus();
@@ -222,7 +254,7 @@ test('reading encounter guidance after the real time limit retains both result b
   assert.deepEqual(p.checkpoint(), checkpoint);
   assert.deepEqual(p.renders, boards);
   assert.equal(p.storage.writes.length, writes);
-  assert.equal(p.doc.activeElement, p.$('race-help'));
+  boundedIdentity(p.doc.activeElement, p.$('race-help'));
 });
 
 test('controller reading uses the existing end-only Help return and survives cached page restore', async (t) => {
@@ -242,6 +274,8 @@ test('controller reading uses the existing end-only Help return and survives cac
   p.join(0);
   // A separate pointer entry follows the controller's neutral/echo interval.
   p.frames(200);
+  p.$('race-options').click();
+  p.$('race-settings-tab-extras').click();
   p.$('race-help').click();
   p.frame(0);
   p.$('race-help-reading').scrollHeight = 600;

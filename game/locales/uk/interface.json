@@ -5356,7 +5356,7 @@
   "completionRewards.promise": "Переможіть, щоб відкрити",
   "completionRewards.progress": "Виконано {{completed}} з {{total}}",
   "completionRewards.explore": "Дослідити відкриття",
-  "completionRewards.playVideo": "Відтворити отримане відео",
+  "completionRewards.playVideo": "Переглянути відео ще раз",
   "completionRewards.videoDiscovery": "Відео",
   "completionRewards.discovery": "Нове відкриття",
   "completionRewards.exhibit": "Відкрити виставку кампанії",
@@ -5997,5 +5997,7 @@
   "expeditions.allStages": "Захопіть пронумеровані цілі по черзі: {{count}}",
   "expeditions.relayProgress": "Реле {{done}}/{{total}}",
   "expeditions.stageProgress": "Цілі {{done}}/{{total}}",
+  "gettingReadyGameplayIsPaused": "Готуємося до гри. Гра на паузі.",
+  "gameNotReadyTryStartOrResumeAgain": "Гра ще не готова. Спробуйте знову натиснути «Старт» або «Продовжити».",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }

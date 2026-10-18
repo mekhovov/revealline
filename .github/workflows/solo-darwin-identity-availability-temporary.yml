@@ -1,0 +1,63 @@
+name: Temporary read-only Darwin identity availability diagnostic
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/solo-darwin-identity-availability-temporary.yml'
+      - 'scripts/solo-darwin-identity-availability.c'
+      - 'scripts/solo-darwin-identity-availability.mjs'
+      - 'scripts/test-solo-darwin-identity-availability.mjs'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: solo-darwin-identity-availability-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  diagnostic:
+    # New read-only diagnostic; no browser, media or owner authority.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c41a02216c0811952232a387fd1743e09452c269'
+    runs-on: macos-15
+    timeout-minutes: 10
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        timeout-minutes: 2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /scripts/solo-darwin-identity-availability.c
+            /scripts/solo-darwin-identity-availability.mjs
+            /scripts/test-solo-darwin-identity-availability.mjs
+            /.github/workflows/solo-darwin-identity-availability-temporary.yml
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        timeout-minutes: 1
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Verify parser and mocked SDK omission and failure controls
+        timeout-minutes: 2
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/solo-darwin-availability-tests"
+          node --test scripts/test-solo-darwin-identity-availability.mjs 2>&1 | head -c 1048576 > "$RUNNER_TEMP/solo-darwin-availability-tests/controls.tap"
+      - name: Observe one bounded global read-only availability snapshot
+        timeout-minutes: 1
+        run: node scripts/solo-darwin-identity-availability.mjs "$RUNNER_TEMP/solo-darwin-identity-availability"
+      - name: Retain complete or failed observation and compiler provenance
+        if: always()
+        timeout-minutes: 1
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-darwin-identity-availability-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/solo-darwin-identity-availability
+            ${{ runner.temp }}/solo-darwin-availability-tests
+          if-no-files-found: warn
+          retention-days: 14

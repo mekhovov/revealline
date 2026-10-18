@@ -552,6 +552,7 @@ export function mountFlightComfort({
   host,
   locale = () => 'en',
   canChange = () => true,
+  canPersistCamera = () => true,
   comparison,
 }) {
   const putText = (node, value) => {
@@ -641,7 +642,8 @@ export function mountFlightComfort({
   function cameraChanged() {
     if (updatingCamera) return;
     // Manual values remain authoritative; presets never silently re-apply.
-    save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
+    if (canPersistCamera())
+      save(cameraKey, { fov: Number(fov.value), tilt: Number(tilt.value) });
     refresh();
   }
   listen(fov, 'input', cameraChanged);
@@ -8957,7 +8959,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: 0a1b36e832eec686895fdb10f4b43e32c451c7c1b7469f3bd53cddd6ea7b2705
+// Canonical source sha256: c72c76aff2abf1bb486d89a7377176e11c5c6d1f6de191b5a672d6e9f1fc55c2
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -9972,9 +9974,13 @@ buttons.fullscreen,
 cleanups.push(()=>landingNavigation.dispose());
 const pauseMenu=content.pause;
 pauseMenu.classList.add('shared-pause-menu');
+const resumeNotice=el('p','pause-resume-notice');
+resumeNotice.id=`${idPrefix}-resume-notice`;
+resumeNotice.setAttribute('role','status');
+resumeNotice.hidden=true;
 const resume=button('resume',()=>activate('resume'),true,'pause-resume');
 resume.classList.add('pause-command-primary');
-pauseMenu.append(resume);
+pauseMenu.append(resumeNotice,resume);
 const pauseGroup=(name,key,controls)=>{
 const section=el('section','pause-command-section');
 section.dataset.pauseGroup=name;
@@ -10122,6 +10128,17 @@ put(mission,'textContent',text(state.missionName));
 put(mission,'hidden',!mission.textContent);
 put(briefingSummary,'textContent',text(state.summary)||text(state.missionName));
 put(briefingSummary,'hidden',!briefingSummary.textContent);
+// Home's canResume also describes saved progress, so it may be false for a
+// valid tick-zero pause. Blocking an open attempt is an explicit capability.
+put(resume,'disabled',state.pauseResumeDisabled===true);
+put(
+resumeNotice,
+'textContent',
+state.pauseResumeDisabled===true?text(state.resumeUnavailableReason):'',
+);
+put(resumeNotice,'hidden',!resumeNotice.textContent);
+if(resumeNotice.hidden)resume.removeAttribute('aria-describedby');
+else attribute(resume,'aria-describedby',resumeNotice.id);
 put(
 buttons.pause,
 'disabled',
@@ -10147,6 +10164,8 @@ onSurfaceChange('play');
 focusPlay();
 }
 function activate(action){
+if(state.pauseResumeDisabled===true&&['resume','continue'].includes(action))
+return false;
 if(typeof actions[action]!=='function'&& !(action==='continue'&&actions.resume))
 return false;
 enterPlay();
@@ -10155,7 +10174,32 @@ return(actions[action]??(action==='continue'?actions.resume:null))?.();
 }
 function initialFocus(name,dialog){
 if(name==='home')return buttons.primary;
-if(name==='pause')return resume;
+if(name==='pause'){
+if(!resume.disabled)return resume;
+const usable=(node)=>{
+if(
+!node||
+node.disabled||
+!dialog.contains(node)||
+node.closest('[hidden],[inert],[aria-hidden="true"]')
+)
+return false;
+for(
+let ancestor=node;
+ancestor&&ancestor!==dialog;
+ancestor=ancestor.parentElement
+){
+const style=doc.defaultView?.getComputedStyle?.(ancestor);
+if(style?.display==='none'||style?.visibility==='hidden')return false;
+}
+return true;
+};
+return(
+[actions.pauseFocus?.(),buttons['pause-restart'],buttons['pause-choose']].find(
+usable,
+)??dialog.querySelector('h1')
+);
+}
 if(name==='results'){
 const preferred=actions.resultFocus?.();
 const usable=(node)=>

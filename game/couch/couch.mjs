@@ -601,7 +601,11 @@ try {
         track: null,
         pictureEntry: baseEntry,
         musicCampaignKey: campaignKey(campaign),
-        authoredBackground: null,
+        authoredBackground:
+          baseEntry.levelVisuals.find((visual) => visual.levelId === level.id)?.visualOverrides
+            ?.background ??
+          baseEntry.visualOverrides.background ??
+          null,
       }));
   let featuredSource,
     featuredStatus = '';
@@ -2032,7 +2036,9 @@ try {
         updateMenu();
       }
       const mayFocus = !disposed && controller === contentController && !controller.signal.aborted;
-      if (prepared && focusOrigin !== $('race-start'))
+      // Configured menu changes keep their selector; they do not authorize Start.
+      if (configured) restoreFocus(focusOrigin, mayFocus);
+      else if (prepared && focusOrigin !== $('race-start'))
         restoreFocus.pending($('race-start'), mayFocus);
       else restoreFocus($('race-start'), mayFocus, { retain: !!prepared });
     }

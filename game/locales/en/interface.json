@@ -5246,7 +5246,7 @@
   "completionRewards.promise": "Win to discover",
   "completionRewards.progress": "{{completed}} / {{total}} complete",
   "completionRewards.explore": "Explore discovery",
-  "completionRewards.playVideo": "Play earned video",
+  "completionRewards.playVideo": "Watch video again",
   "completionRewards.videoDiscovery": "Video",
   "completionRewards.discovery": "A new discovery",
   "completionRewards.exhibit": "Open campaign exhibit",
@@ -5887,5 +5887,7 @@
   "expeditions.allStages": "Capture {{count}} numbered targets in order",
   "expeditions.relayProgress": "Relays {{done}}/{{total}}",
   "expeditions.stageProgress": "Targets {{done}}/{{total}}",
+  "gettingReadyGameplayIsPaused": "Getting ready. Gameplay is paused.",
+  "gameNotReadyTryStartOrResumeAgain": "The game is not ready yet. Try Start or Resume again.",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

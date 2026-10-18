@@ -1,0 +1,39 @@
+{
+  "format": "SoloTouchHistoricalObserverWitnessV1",
+  "sourceRevision": "69639b30d985ffa723a4d0c11756b632fc2da5c1",
+  "sourceTree": "d022c57efa75dbe7b7aeeca00a1950f61426595b",
+  "run": 39017369097,
+  "scope": "Exact executed display-setup successor source. Its original declaration and workflow were also retained unchanged at this commit. Only the changed observer reference is substituted in historical release tests; this does not admit new execution with stale tools.",
+  "refs": [
+    {
+      "path": "scripts/observe-solo-native-touch.mjs",
+      "bytes": 22315,
+      "sha256": "de83cce174f1491acb2619746fe0161f197068a69dc736e522dca069874f0e9d",
+      "blob": "ac6c2187d0248a327ce915b36f2f5e32c9aab33a"
+    },
+    {
+      "path": "docs/performance/solo-native-touch-plan.json",
+      "bytes": 10560,
+      "sha256": "37743d7f5336312093fa4c6f09338945483b90347d1fb4972e8ad6de990e60f2",
+      "blob": "aa4cd778a70ed8a4aeea134f3a2b65a26eee109d"
+    },
+    {
+      "path": ".github/workflows/solo-remote-native-touch-temporary.yml",
+      "bytes": 14806,
+      "sha256": "2201784f3549a6995cce205eb3b2233078059ddc47ba9e7c224c49c68cba79b5",
+      "blob": "761b8ccac3fb82e563a6b60221ffccc1f86cf414"
+    },
+    {
+      "path": "docs/performance/solo-native-touch-v2-plan.json",
+      "bytes": 13591,
+      "sha256": "4facf977b824d69c308793105e137bd40d3868748822ebd160bb0b9447dd4d84",
+      "blob": "c78862af306dfb7e4b96050b91aa660a368f1f97"
+    },
+    {
+      "path": ".github/workflows/solo-remote-native-touch-v2-temporary.yml",
+      "bytes": 15885,
+      "sha256": "cd6df3ae33d36f366f6a9ce756e0c70a29f6bd2c6959b66328123902153f6e8a",
+      "blob": "3a1e9e27189a0dcb17ded31604385c5c0bde6ad2"
+    }
+  ]
+}
