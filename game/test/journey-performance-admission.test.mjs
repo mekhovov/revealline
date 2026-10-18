@@ -1123,9 +1123,9 @@ test('actual optional Journey caller rejects only the existing array overflow be
   const end = source.indexOf(';', start);
   assert(start > 0 && end > start);
   const prepare = new Function(
-    'recorder',
+    'acceptedRecorder',
     'acceptedRun',
-    'scheduleOptionalReplayChunk',
+    'scheduleChunk',
     'exportReplayAsync',
     'JOURNEY_PERFORMANCE_LIMITS',
     `return (${source.slice(start + 'const optionalReplay ='.length, end)});`,

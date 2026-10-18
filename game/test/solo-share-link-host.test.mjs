@@ -151,3 +151,86 @@ test('the accepted current Journey exposes its exact link immediately at Start w
   );
   assert.deepEqual(page.errors, []);
 });
+
+test('an incoming Journey briefing retains its exact share link through a fresh page load before Start', async (t) => {
+  const id = JSON.stringify([
+    'journey:' + DEFAULT_JOURNEY_ROUTES.solo,
+    DEFAULT_JOURNEY_ROUTES.solo,
+    JSON.stringify(['candidate', 'journey-opening', 'prologue']),
+    'candidate/journey-opening/prologue/choose-your-share',
+    '',
+  ]);
+  let search =
+    '?' +
+    new URLSearchParams({
+      journey: DEFAULT_JOURNEY_ROUTES.solo,
+      'library-mission': id,
+    });
+  for (const visit of ['incoming share', 'reload accepted share']) {
+    await t.test(visit, async (t) => {
+      const replacements = [];
+      const copies = [];
+      const page = await soloPage(t, {
+        search,
+        titleScreen: true,
+        journeyIndexedDB: managedIndexedDB().indexedDB,
+        browserSetup({ globals, window }) {
+          globals.navigator.clipboard = {
+            async writeText(value) {
+              copies.push(value);
+            },
+          };
+          const history = {
+            state: null,
+            replaceState(state, _title, href) {
+              const next = new URL(href, globals.location.href);
+              assert.equal(next.origin, globals.location.origin);
+              this.state = state;
+              Object.assign(globals.location, {
+                href: next.href,
+                search: next.search,
+                pathname: next.pathname,
+                hash: next.hash,
+              });
+              replacements.push(next.href);
+            },
+          };
+          globals.history = history;
+          window.history = history;
+        },
+        fetchResponse: async (path) =>
+          String(path).includes('/content-design/assets/')
+            ? new Response(await readFile(path))
+            : undefined,
+      });
+      page.frame(0);
+      assert.equal(page.rendered.run.levelId, 'choose-your-share');
+      assert.equal(page.doc.body.dataset.flightState, 'briefing');
+      assert.equal(page.doc.body.dataset.pictureState, 'ready');
+      assert.equal(page.rendered.paused, true);
+      assert.equal(page.rendered.run.tick, 0);
+      assert.equal(page.$('journey-chooser').open, false);
+      assert.equal(page.$('copy-level-link').hidden, false);
+      const href = new URL(page.$('played-level-link').value);
+      assert.equal(href.searchParams.get('journey'), DEFAULT_JOURNEY_ROUTES.solo);
+      assert.equal(href.searchParams.get('library-mission'), id);
+      assert.equal(globalThis.location.href, href.href);
+      assert.equal(
+        replacements.at(-1),
+        href.href,
+        'The actual history writer published this target.',
+      );
+      const checkpoint = authoritativeCheckpoint(page.rendered.run);
+      await activateHostAction(page.$('copy-level-link'));
+      assert.deepEqual(copies, [href.href]);
+      assert.equal(page.$('level-link-status').hidden, false);
+      assert.equal(page.$('played-level-link').value, href.href);
+      assert.equal(globalThis.location.href, href.href);
+      assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+      assert.equal(page.doc.body.dataset.flightState, 'briefing');
+      assert.equal(page.rendered.paused, true);
+      assert.deepEqual(page.errors, []);
+      search = new URL(copies[0]).search;
+    });
+  }
+});
