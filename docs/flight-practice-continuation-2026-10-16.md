@@ -3,6 +3,13 @@
 Hosting and real hardware remain owner-deferred. This report advances local
 qualification without selecting a public release or approving human review gates.
 
+**18 October status:** see the [current status, remaining work, estimates and
+blockers](flight-practice-status-2026-10-18.md). That planning checkpoint supersedes
+historical “next” statements here, not the original receipts or their source
+identities. It records current integration conflicts and CI timeout, improved
+disk headroom and the still-open native/human acceptance cases. No new test pass
+is inferred from that documentation review.
+
 ## Follow-up after the first batch merged
 
 ### Fresh guide candidate and real browser-eviction capability
