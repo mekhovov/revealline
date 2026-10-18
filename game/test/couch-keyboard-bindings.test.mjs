@@ -296,3 +296,17 @@ test('Team persistence and Reset own a separate record and save lock from Duel',
     [`${COUCH_KEYBOARD_KEY}:writer`, `${TEAM_KEYBOARD_KEY}:writer`].sort(),
   );
 });
+
+test('Snake two-player policy has four directions, independent format and reserved retry action', () => {
+  const snake = resolveCouchKeyboard(null, 'snake');
+  assert.equal(Object.keys(couchKeyMap(snake, 'snake')).length, 8);
+  assert.throws(() => replaceCouchKey(snake, 0, 'up', 'KeyR', 'snake'), { reason: 'reserved' });
+  for (const action of ['action', 'pickup', 'boost'])
+    assert.throws(() => replaceCouchKey(snake, 0, action, 'KeyI', 'snake'), { reason: 'format' });
+  assert.throws(() => resolveCouchKeyboard(snake, 'team'));
+  assert.throws(() => resolveCouchKeyboard(snake));
+  assert.deepEqual(couchKeyMap(replaceCouchKey(snake, 1, 'down', 'KeyJ', 'snake'), 'snake').KeyJ, [
+    1,
+    'down',
+  ]);
+});
