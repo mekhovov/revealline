@@ -62,3 +62,5 @@ import './test-solo-demo-trusted-close-admission.mjs';
 
 // Actual input-owner Close activation and immutable click-only evidence.
 import './test-solo-demo-activation-admission.mjs';
+
+import './test-solo-demo-geometry-admission.mjs';
