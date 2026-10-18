@@ -34,7 +34,7 @@
     "role": "Source identity only; no baseline build or browser in candidate raster."
   },
   "release": {
-    "status": "reviewed-diagnostic-only",
+    "status": "reviewed",
     "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
     "scope": "independent-native-raster",
     "automaticRetries": 0,
