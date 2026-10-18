@@ -1,0 +1,235 @@
+/* Only the explicitly qualified primary document opts into this presentation.
+ * Font tokens remain their authored Standard values. Each absolute text
+ * declaration multiplies once; em/inherit text follows its enlarged parent.
+ * This never scales the browser viewport, artwork or logical game board. */
+html[data-text-scaling='solo'][data-theme-text-size='extra-large'] {
+  --primary-text-scale: 2;
+}
+html[data-text-scaling='solo'] body[data-text-size] {
+  --primary-text-scale: 1;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] {
+  --primary-text-scale: 2;
+  min-inline-size: 0;
+  block-size: auto;
+  min-block-size: 100dvh;
+  max-block-size: none;
+  overflow: auto;
+}
+
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] :is(button, .button, summary) {
+  min-block-size: 44px;
+  block-size: auto;
+  max-inline-size: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] :is(input, select, textarea) {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] :is(p, h1, h2, h3, h4, label) {
+  overflow-wrap: anywhere;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] dialog {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: calc(var(--dialog-viewport-width, 100vw) - 16px);
+  max-block-size: calc(var(--dialog-viewport-height, 100dvh) - 16px);
+  overflow: auto;
+}
+/* One scroll region keeps tabs and the return action reachable in short windows. */
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #settings-dialog[open] {
+  display: block;
+  padding: 16px;
+  overflow: auto;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #settings-dialog
+  > .field-kit-settings-panel {
+  overflow: visible;
+  min-block-size: auto;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .field-kit-settings-tabs {
+  display: grid;
+  overflow: visible;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(.field, .settings-grid, .library-grid) {
+  min-inline-size: 0;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .dialog-actions {
+  flex-wrap: wrap;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(.native-menu-action, .native-menu-group, .native-select-row) {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #shell-home.native-landing[open] {
+  padding-inline: max(16px, var(--safe-left, 0px)) max(16px, var(--safe-right, 0px));
+  justify-content: safe center;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  .native-landing
+  :is(.home-content, .menu-copy) {
+  width: min(900px, 100%);
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(.mission-current-actions, .reading-toolbar, .reading-actions) {
+  flex-wrap: wrap;
+}
+
+/* Enlarged live information occupies document flow instead of covering the
+ * arena or clipping into a fixed header/footer. Its ordinary scroll remains
+ * available on narrow and short windows. The arena keeps its logical ratio. */
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] > main,
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .game-layout,
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .arena-panel {
+  position: relative;
+  inset: auto;
+  block-size: auto;
+  min-block-size: 0;
+  max-block-size: none;
+  inline-size: 100%;
+  max-inline-size: 100%;
+  overflow: visible;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .game-layout {
+  display: block;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .arena-panel {
+  max-inline-size: 1100px;
+  margin-inline: auto;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .shell-bar {
+  position: relative;
+  inset: auto;
+  display: flex;
+  flex-wrap: wrap;
+  block-size: auto;
+  min-block-size: 52px;
+  padding: 8px;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .telemetry {
+  position: relative;
+  inset: auto;
+  transform: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  inline-size: 100%;
+  block-size: auto;
+  min-block-size: 0;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 0;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .telemetry > div {
+  display: block;
+  min-inline-size: 0;
+  padding: 0;
+  border: 0;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .telemetry :is(strong, #target) {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #arena-shell {
+  position: relative;
+  inset: auto;
+  transform: none;
+  inline-size: 100%;
+  block-size: auto;
+  min-block-size: 0;
+  max-inline-size: 100%;
+  max-block-size: none;
+  aspect-ratio: var(--board-ratio, 4 / 3);
+  margin: 0;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(
+    #run-message,
+    #encounter-status,
+    #hunt-feedback,
+    #first-flight-task,
+    #save-warning,
+    #game-now-playing,
+    .play-controls
+  ) {
+  position: relative;
+  inset: auto;
+  transform: none;
+  inline-size: 100%;
+  block-size: auto;
+  max-inline-size: 100%;
+  max-block-size: none;
+  margin: 8px 0;
+  white-space: normal;
+  text-overflow: clip;
+  overflow: visible;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .play-controls {
+  flex-wrap: wrap;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] .reaction-live-caption {
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-block-size: none;
+  overflow: visible;
+}
+/* The pause/result controls are independent of the board's visible size. */
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #game-overlay:not([hidden]) {
+  position: fixed;
+  inset: max(8px, var(--safe-top, 0px)) max(8px, var(--safe-right, 0px))
+    max(8px, var(--safe-bottom, 0px)) max(8px, var(--safe-left, 0px));
+  block-size: auto;
+  max-block-size: none;
+  padding: 16px;
+  overflow: auto;
+  align-items: safe center;
+  z-index: 20;
+}
+html[data-text-scaling='solo'] body[data-text-size='extra-large'] #game-overlay > .overlay-card {
+  max-inline-size: 900px;
+  max-block-size: none;
+  flex: 0 0 auto;
+}
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(.pause-command-grid, [data-pause-group='missions'] .pause-command-grid) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 640px) {
+  html[data-text-scaling='solo']
+    body[data-text-size='extra-large']
+    :is(
+      .pause-command-grid,
+      [data-pause-group='missions'] .pause-command-grid,
+      .field-kit-settings-tabs,
+      .mission-grid,
+      .loadout-grid,
+      .library-grid
+    ) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html[data-text-scaling='solo'] body[data-text-size='extra-large'] .dialog-actions > button {
+    flex: 1 1 100%;
+  }
+}
+
+/* These controls contain only direction glyphs. Their hit areas and the separate
+ * steering instruction stay usable without making the arrows overflow a pad. */
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  :is(#touch-surface > span:first-child, .direction-controls button) {
+  --primary-text-scale: 1;
+}

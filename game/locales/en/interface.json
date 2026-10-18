@@ -5913,5 +5913,6 @@
   "flightLimits.collectionExpired": "The two-hour Classic collection limit has passed. This flight can continue, but its completion cannot be kept in the Classic collection. Earlier progress is unchanged.",
   "textSizeCompatibility.retained": "Extra large · using Large here",
   "textSizeCompatibility.fallback": "Extra large is kept as your preferred size. This screen currently uses Large. Choose Standard or Large to change the shared preference.",
-  "textSizeCompatibility.readOnlyFallback": "Extra large is kept as your preferred size. This screen currently uses Large."
+  "textSizeCompatibility.readOnlyFallback": "Extra large is kept as your preferred size. This screen currently uses Large.",
+  "textSizeCompatibility.extraLarge": "Extra large"
 }

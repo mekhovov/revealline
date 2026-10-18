@@ -30,7 +30,7 @@
   }
   .field-kit.game-shell #shell-title {
     margin: 0 0 14px;
-    font-size: clamp(58px, 6vw, 92px);
+    font-size: calc(clamp(58px, 6vw, 92px) * var(--primary-text-scale, 1));
     line-height: 0.9;
   }
   .field-kit #shell-title span {
@@ -38,7 +38,7 @@
   }
   .field-kit .home-copy {
     color: var(--fk-text);
-    font-size: var(--fk-text-body);
+    font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
     line-height: 1.5;
     margin: 0;
   }
@@ -52,7 +52,7 @@
   .field-kit.game-shell .home-actions :is(.button, #shell-play, #shell-featured) {
     padding: 8px 14px;
     min-height: 44px;
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
     border: 2px solid transparent;
     display: flex;
     justify-content: space-between;
@@ -86,14 +86,14 @@
     max-width: 38ch;
     margin-block: 10px 0;
     color: var(--fk-cyan);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .field-kit .home-play-options {
     max-width: 350px;
     margin-top: 10px;
     color: var(--fk-text-muted);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
   }
   .field-kit .home-play-options summary {
     min-height: 44px;
@@ -127,7 +127,7 @@
     display: flex;
     gap: 36px;
     color: var(--fk-text);
-    font: 500 14px var(--fk-font-mono);
+    font: 500 calc(14px * var(--primary-text-scale, 1)) var(--fk-font-mono);
     padding: 8px 12px;
     background: var(--fk-bg);
   }
@@ -153,11 +153,11 @@
     text-align: left;
   }
   .field-kit .workshop-destinations span {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.4;
   }
   .field-kit .shell-tools {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
   }
   .field-kit.game-shell .shell-missions {
     width: min(1180px, calc(100vw - 32px));
@@ -188,10 +188,10 @@
   .field-kit .mission-picker-card {
     background: var(--fk-panel-raised);
     border-color: var(--fk-control-line);
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
   }
   .field-kit .mission-picker-card-state {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.4;
   }
   .field-kit .mission-picker-card[aria-pressed='true'] {
@@ -217,14 +217,14 @@
     grid-row: 2;
     margin-left: 10px;
     color: var(--fk-muted);
-    font-size: 14px;
+    font-size: calc(14px * var(--primary-text-scale, 1));
   }
   .field-kit .mission-gallery .mission .name {
     grid-column: 2;
     grid-row: 2;
     padding-right: 10px;
     color: var(--fk-text);
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
     line-height: 1.35;
   }
   .field-kit .mission-gallery .mission .medal {
@@ -233,7 +233,7 @@
     padding: 0 10px;
     color: var(--fk-amber);
     min-height: 20px;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
   }
   .field-kit .mission-gallery .mission:disabled {
     opacity: 1;
@@ -294,7 +294,7 @@
     padding: 5px 8px;
     background: rgb(7 11 18 / 90%);
     color: var(--fk-muted);
-    font: 400 14px/1.3 var(--fk-font-ui);
+    font: 400 calc(14px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui);
   }
   .field-kit .mission-gallery-pages {
     display: flex;
@@ -384,7 +384,7 @@
       background: linear-gradient(180deg, transparent 48%, rgb(7 11 18 / 30%));
     }
     .field-kit.game-shell #shell-title {
-      font-size: 64px;
+      font-size: calc(64px * var(--primary-text-scale, 1));
     }
     .field-kit .home-content {
       max-width: none;
@@ -470,7 +470,7 @@
     margin: 0;
   }
   .field-kit .shell-prepared-context .button {
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
   }
   .field-kit .mission-picker-setup {
     scroll-margin-block: 16px;

@@ -15,7 +15,7 @@
     margin-left: auto;
     min-width: 44px;
     min-height: 44px;
-    font-size: 22px;
+    font-size: calc(22px * var(--primary-text-scale, 1));
   }
   body.field-kit.game-shell:is(
       :is([data-flight-state='running'], [data-flight-layout='preparing']),
@@ -71,13 +71,13 @@
   .game-shell .play-controls .ability-buttons .button {
     min-height: 44px;
     padding: 4px 8px;
-    font-size: 17px;
+    font-size: calc(17px * var(--primary-text-scale, 1));
   }
   .game-shell .play-controls .ability-buttons kbd {
     display: none;
   }
   .game-shell .ability-buttons > span {
-    font-size: 14px;
+    font-size: calc(14px * var(--primary-text-scale, 1));
     text-align: right;
   }
   .game-shell main {
@@ -111,16 +111,16 @@
   }
   .game-shell .flight-status {
     margin: 8px 0 0;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
   }
   .game-shell .run-message {
     margin: 4px 0;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
     line-height: 1.25;
     min-height: 0;
   }
   .game-shell .encounter-status:not([hidden]):not([data-phase='open']) {
-    font-size: 15px;
+    font-size: calc(15px * var(--primary-text-scale, 1));
     margin: 4px 0;
     padding: 4px 8px;
   }
@@ -199,7 +199,7 @@
     background: rgb(4 12 25 / 96%);
     color: #d9fbff;
     font:
-      12px/1.4 ui-monospace,
+      calc(12px * var(--primary-text-scale, 1)) / 1.4 ui-monospace,
       monospace;
   }
   .game-shell .controller-confirm-trace pre {
@@ -267,7 +267,7 @@
       gap: 6px;
     }
     body.field-kit.game-shell .game-overlay[data-kind='pause'] .pause-label {
-      font-size: 13px;
+      font-size: calc(13px * var(--primary-text-scale, 1));
     }
     .game-shell .game-overlay[data-kind='pause'] .overlay-actions {
       gap: 6px;
@@ -277,7 +277,7 @@
       .overlay-actions
       :is(.button, summary) {
       padding-inline: 8px;
-      font-size: 15px;
+      font-size: calc(15px * var(--primary-text-scale, 1));
       text-align: center;
     }
     .game-shell .game-overlay[data-kind='pause'] .overlay-actions :is(.button, summary)::before {
@@ -313,7 +313,7 @@
       inset-inline-start: 4px;
       padding-inline: 3px;
       background: #050a14;
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
       line-height: 1;
       pointer-events: none;
     }
@@ -325,7 +325,7 @@
       .overlay-actions
       :is(.button, summary) {
       padding-inline: 6px;
-      font-size: 13px;
+      font-size: calc(13px * var(--primary-text-scale, 1));
       line-height: 1.1;
       text-align: center;
     }
@@ -348,11 +348,11 @@
       margin-bottom: 4px;
     }
     .game-shell .telemetry strong {
-      font-size: 23px;
+      font-size: calc(23px * var(--primary-text-scale, 1));
     }
     .game-shell .telemetry span,
     .game-shell .telemetry em {
-      font-size: 13px;
+      font-size: calc(13px * var(--primary-text-scale, 1));
     }
     .game-shell .arena-panel,
     .game-shell .arena-panel:has(> .encounter-status[data-kind='classic'][data-phase='open']),
@@ -366,11 +366,11 @@
       );
     }
     .game-shell .flight-status {
-      font-size: 14px;
+      font-size: calc(14px * var(--primary-text-scale, 1));
       margin-top: 3px;
     }
     .game-shell .run-message {
-      font-size: 14px;
+      font-size: calc(14px * var(--primary-text-scale, 1));
     }
   }
   @media (max-width: 280px) {
@@ -420,7 +420,7 @@
     }
     .game-shell #shell-menu::after {
       content: ' ' attr(data-menu-label);
-      font-size: 17px;
+      font-size: calc(17px * var(--primary-text-scale, 1));
       letter-spacing: 1px;
     }
   }
@@ -633,13 +633,13 @@
     }
     .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .telemetry span,
     .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing']) .telemetry em {
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
       line-height: 1;
     }
     .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
       .telemetry
       strong {
-      font-size: 20px;
+      font-size: calc(20px * var(--primary-text-scale, 1));
       margin-top: 1px;
     }
     .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])
@@ -661,7 +661,7 @@
       margin: 0;
       padding: 4px 8px;
       background: #07101eb3;
-      font-size: 13px;
+      font-size: calc(13px * var(--primary-text-scale, 1));
       pointer-events: none;
     }
     .game-shell:is([data-flight-state='running'], [data-flight-layout='preparing'])

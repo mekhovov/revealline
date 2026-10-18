@@ -24,6 +24,7 @@ function seed(
   records = {},
   {
     studio = false,
+    primaryTextScaling = false,
     coarse = false,
     reduced = false,
     brokenStorage = false,
@@ -39,6 +40,7 @@ function seed(
           appearanceRevision: appearanceDefault.revision,
         }
       : {};
+  if (primaryTextScaling) dataset.textScaling = 'solo';
   const document = {
     documentElement: { dataset, style: { setProperty: (key, value) => variables.set(key, value) } },
     currentScript: { dataset: { themeDensity: studio ? 'studio' : 'player' } },
@@ -455,4 +457,27 @@ test('unqualified extra size paints established Large before modules without ove
   assert.equal(resolved.accessibility.textSize, 'large');
   assert.equal(presentationThemeVariables(resolved)['--iw-text-size'], '20px');
   assert.deepEqual(records, before);
+});
+
+test('qualified primary extra-large seeds the same authored tokens used by its multiplier', () => {
+  const { variables, dataset } = seed(
+    {
+      'revealline.display.v1': raw({
+        textSize: 'extra-large',
+        textFace: 'plain',
+        reducedEffects: false,
+      }),
+    },
+    { primaryTextScaling: true },
+  );
+  assert.equal(dataset.themeTextSize, 'extra-large');
+  assert.equal(variables.get('--iw-text-size'), '16px');
+  const resolved = resolvePresentation({
+    accessibility: { textSize: 'extra-large', textFace: 'plain', extraLarge: true },
+  });
+  assert.equal(resolved.accessibility.textSize, 'extra-large');
+  assert.equal(
+    presentationThemeVariables(resolved)['--iw-text-size'],
+    variables.get('--iw-text-size'),
+  );
 });

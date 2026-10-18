@@ -14,7 +14,7 @@
     margin: 0 0 10px;
   }
   .enemy-guide-dialog p {
-    font-size: 17px;
+    font-size: calc(17px * var(--primary-text-scale, 1));
     line-height: 1.25;
     margin: 8px 0;
   }
@@ -22,7 +22,7 @@
   .enemy-guide-dialog select,
   .enemy-guide-dialog button {
     font: inherit;
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
   }
   .enemy-guide-dialog button,
   .enemy-guide-dialog select {
@@ -89,7 +89,7 @@
       gap: 8px;
     }
     .enemy-guide-dialog p {
-      font-size: 16px;
+      font-size: calc(16px * var(--primary-text-scale, 1));
     }
     .enemy-guide-dialog canvas {
       width: 192px;
@@ -99,7 +99,7 @@
     }
     .enemy-guide-dialog button,
     .enemy-guide-dialog select {
-      font-size: 16px;
+      font-size: calc(16px * var(--primary-text-scale, 1));
     }
   }
 }

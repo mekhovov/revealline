@@ -7,7 +7,8 @@
 .hunt-status,
 .field-kit .hunt-status {
   margin: 0.25rem 0;
-  font: var(--fk-text-secondary, 0.875rem) / 1.35 var(--fk-font-ui, system-ui, sans-serif);
+  font: calc(var(--fk-text-secondary, 0.875rem) * var(--primary-text-scale, 1)) / 1.35
+    var(--fk-font-ui, system-ui, sans-serif);
   color: var(--fk-text, inherit);
   overflow-wrap: anywhere;
 }
@@ -26,7 +27,7 @@
   padding: 0.5rem 0.7rem;
   border-radius: 0.4rem;
   font:
-    var(--reaction-caption-size, 1rem) / 1.45 system-ui,
+    calc(var(--reaction-caption-size, 1rem) * var(--primary-text-scale, 1)) / 1.45 system-ui,
     sans-serif;
   text-align: start;
   white-space: normal;

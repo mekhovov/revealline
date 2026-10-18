@@ -14,11 +14,11 @@ body .game-overlay .capture-flight-limits > summary {
   min-height: 44px;
   padding-block: 12px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: calc(14px * var(--primary-text-scale, 1));
 }
 body .game-overlay .capture-flight-limits > p {
   margin: 0 0 10px;
-  font-size: 14px;
+  font-size: calc(14px * var(--primary-text-scale, 1));
   line-height: 1.45;
   white-space: normal;
 }
@@ -34,5 +34,5 @@ body .game-overlay .capture-flight-limit-actions > button {
   white-space: normal;
 }
 body[data-text-size='large'] .game-overlay .capture-flight-limits > :is(summary, p) {
-  font-size: 20px;
+  font-size: calc(20px * var(--primary-text-scale, 1));
 }

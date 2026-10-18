@@ -13,7 +13,7 @@
   .authoring-input-hint {
     margin: 0;
     font:
-      14px/1.5 'Field Kit UI',
+      calc(14px * var(--primary-text-scale, 1)) / 1.5 'Field Kit UI',
       system-ui,
       sans-serif;
   }
@@ -30,7 +30,7 @@
     background: #152a40;
     border: 2px solid #7bdff2;
     font:
-      400 16px/1.4 'Reveal Line Pixel',
+      400 calc(16px * var(--primary-text-scale, 1)) / 1.4 'Reveal Line Pixel',
       'Field Kit UI',
       monospace;
   }
@@ -75,7 +75,7 @@
     background: #0b1625;
     border: 2px solid #7bdff2;
     font:
-      16px/1.5 'Field Kit UI',
+      calc(16px * var(--primary-text-scale, 1)) / 1.5 'Field Kit UI',
       system-ui,
       sans-serif;
   }
