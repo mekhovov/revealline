@@ -18,6 +18,7 @@ import {
   createZip,
   generateLevel,
   inspectBuildProject,
+  main,
   parseArguments,
   PUBLIC_SECURITY_HEADERS,
   readBuildConfig,
@@ -424,6 +425,67 @@ test('build is byte-reproducible and each manifest checksum covers exact output 
     await fs.readFile(path.join(root, 'game/core.mjs'), 'utf8'),
     'export const value = 3;\n',
   );
+});
+
+test('optional build progress preserves exact output bytes and reports preparation and replacement', async (t) => {
+  const { root, out, directory } = await fixture(t);
+  const original = await buildProject({ root, out });
+  const phases = [];
+  const observed = await buildProject({
+    root,
+    out: path.join(directory, 'observed'),
+    onPhase: (phase) => phases.push(phase),
+  });
+  assert.equal(observed.sha256, original.sha256);
+  assert.deepEqual(
+    await fs.readFile(path.join(observed.out, 'distribution.zip')),
+    await fs.readFile(path.join(out, 'distribution.zip')),
+  );
+  for (const phase of [
+    'inputs',
+    'references',
+    'content-snapshots',
+    'source-files',
+    'offline-metadata',
+    'manifest',
+    'zip',
+    'expanded-files',
+    'zip-file',
+    'replace-output',
+  ])
+    assert(phases.includes(phase), `Missing phase: ${phase}`);
+  assert.equal(phases[0], 'inputs');
+  assert.equal(phases.at(-1), 'replace-output');
+  assert.equal(new Set(phases).size, phases.length);
+});
+
+test('progress errors remain visible and cannot replace a working output', async (t) => {
+  const { root, out, directory } = await fixture(t);
+  await buildProject({ root, out });
+  const original = await fs.readFile(path.join(out, 'distribution.zip'));
+  await fs.writeFile(path.join(root, 'game/core.mjs'), 'export const value = 99;\n');
+  const failure = new Error('Progress destination unavailable');
+  await assert.rejects(
+    buildProject({
+      root,
+      out,
+      onPhase: async (phase) => {
+        if (phase === 'replace-output') throw failure;
+      },
+    }),
+    (error) => error === failure,
+  );
+  assert.deepEqual(await fs.readFile(path.join(out, 'distribution.zip')), original);
+  assert(!(await fs.readdir(directory)).some((name) => name.startsWith('.xonix-build-')));
+  await assert.rejects(buildProject({ root, out, onPhase: 'stderr' }), /progress callback/i);
+});
+
+test('CLI progress accepts only the explicit stderr destination', async () => {
+  assert.deepEqual(parseArguments(['build', '--progress', 'stderr']), {
+    action: 'build',
+    options: { progress: 'stderr' },
+  });
+  await assert.rejects(main(['build', '--progress', 'other']), /progress.*stderr/i);
 });
 
 test('manifest-only inspection shares exact build preparation without site or ZIP writes', async (t) => {
