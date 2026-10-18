@@ -1,0 +1,38 @@
+{
+  "engine": "chromium",
+  "started": "2026-10-18T20:53:30.134Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "snake-hunt-loops-02",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "c1cb9a00172ae05e",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "woodland-08",
+      "mode": "acro",
+      "ticks": 0,
+      "courseIdentity": "8164cc42c8e5d330",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": false,
+  "browserCloseAttempted": true,
+  "failure": "Error: Qualification browser cleanup failed.\n    at finishQualification (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:101:20)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-sim-fresh-browser.mjs:195:3",
+  "secondaryDiagnostics": [
+    {
+      "stage": "browser-close",
+      "error": "Error: Operation exceeded 10000ms.\n    at Timeout.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:22:24)\n    at listOnTimeout (node:internal/timers:581:17)\n    at process.processTimers (node:internal/timers:519:7)"
+    }
+  ],
+  "browserCloseCompleted": false,
+  "finished": "2026-10-18T20:53:50.941Z"
+}

@@ -1,0 +1,50 @@
+{
+  "format": "SimExportOwnershipQualificationV1",
+  "created": "2026-10-18T21:07:19.694Z",
+  "source": [
+    {
+      "path": "scripts/shared-demo-download.mjs",
+      "sha256": "d0f32ea1b0ebf47fa129038e42a61b50eba144b829dc272decdae82c849e7a8d"
+    },
+    {
+      "path": "scripts/test-shared-demo-download.mjs",
+      "sha256": "63a44de3c8621fe37cd6811feb1538cdca16ce84ddb8d8b7720af25ceee35731"
+    },
+    {
+      "path": "scripts/qualify-sim-fresh-browser.mjs",
+      "sha256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53"
+    }
+  ],
+  "wrapper": "docs/qualification/shared-demos/browser-refresh-final-cb8-f580-owned-export.json",
+  "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+  "runtimeFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+  "harnessFingerprint": "c9b6a769c8b2a93b64ad307b6e3d5c437b3a001f60aff7d3b8cb6b892a634c55",
+  "sourceStable": true,
+  "functionalChecks": 2,
+  "pageErrors": 0,
+  "complete": true,
+  "browserCloseCompleted": true,
+  "gracefulCloseMs": 755,
+  "forcedKillObserved": false,
+  "cleanup": {
+    "launchedPIDs": [
+      14923
+    ],
+    "ownedProfiles": [
+      "/tmp/playwright_chromiumdev_profile-q2uGSH"
+    ],
+    "remainingProcesses": [],
+    "remainingProfiles": []
+  },
+  "regressions": {
+    "path": "docs/qualification/shared-demos/sim-download-ownership-regressions-final-cb8-f580.tap.txt",
+    "tests": 14,
+    "passed": 14
+  },
+  "scope": "Qualification-only export lifecycle correction. Actual downloads complete before their JSON is read and verified, then their owned artifacts are removed. No game/build changes, no Blob interception, no observer preload, no explicit context.close, unchanged10000ms browser-close bound.",
+  "preservedFailures": [
+    "docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580.json",
+    "docs/qualification/shared-demos/sim-close-observation-final-cb8-f580-qualifier.json"
+  ],
+  "diagnosticLimit": "A single post-correction ordinary run passes. The preceding observer tied pending download and forced shutdown in one reproduction; this does not claim all browser exit stalls have the same cause."
+}

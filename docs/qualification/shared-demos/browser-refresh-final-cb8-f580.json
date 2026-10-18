@@ -1,0 +1,305 @@
+{
+  "format": "SharedDemoFinalBrowserRefreshV1",
+  "started": "2026-10-18T20:49:13.963Z",
+  "complete": false,
+  "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "194a6ae89232f4cfcc823d10e30e807f716dcc62c98b8cd015ad2099676e691b",
+    "created": "2026-10-18T20:30:13.091774+00:00",
+    "integrationBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "files": 9994,
+    "bytes": 404341587
+  },
+  "authoritative": {
+    "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+    "base": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "fingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "files": 9994,
+    "bytes": 404341587
+  },
+  "wrapper": {
+    "path": ".cache/run-final-demo-refresh.mjs",
+    "sha256": "80cd5a1a85185515b3ef90e549a2cd49343d4f1d65d982a6ad3c473c37f61b58"
+  },
+  "hashScope": {
+    "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+  },
+  "selected": [
+    "mixed-chromium",
+    "mixed-firefox",
+    "mixed-webkit",
+    "survival-fresh-chromium",
+    "survival-fresh-firefox",
+    "survival-fresh-webkit",
+    "sim-fresh-chromium",
+    "classic-builtins-chromium",
+    "classic-builtins-firefox",
+    "classic-builtins-webkit",
+    "graphics-chromium",
+    "offline-chromium",
+    "listeners-chromium",
+    "restoration-chromium",
+    "restoration-firefox",
+    "restoration-webkit"
+  ],
+  "jobs": [
+    {
+      "id": "mixed-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/mixed-chromium-final-cb8-f580.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/mixed-chromium-final-cb8-f580.json",
+      "started": "2026-10-18T20:49:16.998Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-chromium-final-cb8-f580.json\",\"complete\":true,\"checks\":28,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:51:00.263Z",
+      "reportSHA256": "97258a93720de153cb89df611f31616c619a8c9a66ccf09affd3974b192e89db",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 28,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "mixed-firefox",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/mixed-firefox-final-cb8-f580.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/mixed-firefox-final-cb8-f580.json",
+      "started": "2026-10-18T20:51:00.266Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-firefox-final-cb8-f580.json\",\"complete\":true,\"checks\":27,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:51:46.769Z",
+      "reportSHA256": "297861e1b5219bc033208b31a8d84707156aca7c22d8a851e94defa3f9f33fc8",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 27,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "mixed-webkit",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/mixed-webkit-final-cb8-f580.json",
+        "--practice=true",
+        "--localeCheck=true",
+        "--lifecycle=true",
+        "--cycles=12"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/mixed-webkit-final-cb8-f580.json",
+      "started": "2026-10-18T20:51:46.771Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/mixed-webkit-final-cb8-f580.json\",\"complete\":true,\"checks\":27,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:52:54.152Z",
+      "reportSHA256": "86bdb289fbd428aeca2923e67b6db9a783d9b324fe340f5b19810d391008cffe",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 27,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "survival-fresh-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-survival-fresh-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/survival-fresh-chromium-final-cb8-f580.json"
+      ],
+      "scriptSHA256": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc",
+      "reportPath": "docs/qualification/shared-demos/survival-fresh-chromium-final-cb8-f580.json",
+      "started": "2026-10-18T20:52:54.157Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/survival-fresh-chromium-final-cb8-f580.json\",\"complete\":true,\"checks\":4,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:53:04.637Z",
+      "reportSHA256": "82904f62c774f4e0dd89d56051a19a592e7dbfbe054bbc68f980854396fb5a9e",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "survival-fresh-firefox",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-survival-fresh-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/survival-fresh-firefox-final-cb8-f580.json"
+      ],
+      "scriptSHA256": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc",
+      "reportPath": "docs/qualification/shared-demos/survival-fresh-firefox-final-cb8-f580.json",
+      "started": "2026-10-18T20:53:04.641Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/survival-fresh-firefox-final-cb8-f580.json\",\"complete\":true,\"checks\":4,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:53:19.584Z",
+      "reportSHA256": "aa91f60e8324f3d234324b15faff924c93d26514bf75c792d4b5b7caf51945b3",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "survival-fresh-webkit",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-survival-fresh-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/survival-fresh-webkit-final-cb8-f580.json"
+      ],
+      "scriptSHA256": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc",
+      "reportPath": "docs/qualification/shared-demos/survival-fresh-webkit-final-cb8-f580.json",
+      "started": "2026-10-18T20:53:19.587Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/survival-fresh-webkit-final-cb8-f580.json\",\"complete\":true,\"checks\":4,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:53:29.956Z",
+      "reportSHA256": "0c4e7b21301218954890c3b5ead57ff8468c44aa27ea90fbe9cffe110a50848a",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "sim-fresh-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-sim-fresh-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580.json"
+      ],
+      "scriptSHA256": "714fc37ab4605a6a06c9e0f93ff197f9dfcd4662323dd5ca54f7469ee04f4555",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580.json",
+      "started": "2026-10-18T20:53:29.958Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580.json\",\"complete\":false,\"checks\":2,\"failure\":\"Error: Qualification browser cleanup failed.\\n    at finishQualification (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:101:20)\\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-sim-fresh-browser.mjs:195:3\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":false,\"secondaryDiagnostics\":[{\"stage\":\"browser-close\",\"error\":\"Error: Operation exceeded 10000ms.\\n    at Timeout.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:22:24)\\n    at listOnTimeout (node:internal/timers:581:17)\\n    at process.processTimers (node:internal/timers:519:7)\"}]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:54:10.998Z",
+      "reportSHA256": "c8900d17ca5cb4b6a9f3f0e05c58f13b1f28cf1b199ccaebdb25f29023eb449e",
+      "complete": false,
+      "browserCloseCompleted": false,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0,
+      "failure": "Error: Qualification browser cleanup failed.\n    at finishQualification (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:101:20)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-sim-fresh-browser.mjs:195:3"
+    }
+  ],
+  "failedJobs": [
+    "sim-fresh-chromium"
+  ],
+  "limitations": [
+    "Existing durable qualifiers only, sequential isolated browsers. No production or harness changes are made by this wrapper. Each selected job runs once; a strict failure remains failed while later independent jobs may proceed only after confirmed browser/server cleanup.",
+    "Some durable qualifiers retain empty-stack pageerrors as empty strings; any pageerror still fails their strict count. Raw/name diagnostics require a separate bounded probe after preserving such a failed receipt.",
+    "Classic checks cover metadata union and three real selected base/current/archive performances per engine, not all 240 complete performances again.",
+    "The two-hour actual-wall-time rotation and outstanding physical-device/human review checks remain separate."
+  ],
+  "before": {
+    "runtime": {
+      "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "harness": {
+      "sha256": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+      "files": 923,
+      "bytes": 11055220
+    }
+  },
+  "failure": "AssertionError [ERR_ASSERTION]: sim-fresh-chromium did not confirm browser cleanup.\n\nfalse !== true\n\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/run-final-demo-refresh.mjs:119:12",
+  "after": {
+    "runtime": {
+      "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "harness": {
+      "sha256": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+      "files": 923,
+      "bytes": 11055220
+    }
+  },
+  "changedFiles": {
+    "runtime": [],
+    "harness": []
+  },
+  "finished": "2026-10-18T20:54:14.844Z"
+}

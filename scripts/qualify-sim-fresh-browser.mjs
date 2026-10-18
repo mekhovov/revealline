@@ -12,6 +12,7 @@ import {
 } from '../optional-practice/civilian-fpv/tuning-library.mjs';
 import { pathToFileURL } from 'node:url';
 import { pbkdf2Sync } from 'node:crypto';
+import { readQualificationJSONDownload } from './shared-demo-download.mjs';
 
 // Uses a supplied, already installed Playwright runtime; never installs browsers.
 const args = Object.fromEntries(
@@ -149,19 +150,11 @@ try {
     const after = await page.evaluate(() => globalThis.fpvWorldStudio.snapshot());
     assert.equal(after.state.ticks, 0);
     assert.equal(after.state.status, 'disarmed');
-    await page.evaluate(() => {
-      const original = URL.createObjectURL;
-      globalThis.demoExportBlob = null;
-      URL.createObjectURL = function (blob) {
-        globalThis.demoExportBlob = blob;
-        return original.call(this, blob);
-      };
+    const exported = await readQualificationJSONDownload({
+      page,
+      trigger: () => page.locator('#export-flight').evaluate((node) => node.click()),
     });
-    await page.locator('#export-flight').evaluate((node) => node.click());
-    await page.waitForFunction(() => globalThis.demoExportBlob);
-    const proof = await page.evaluate(
-      async () => JSON.parse(await globalThis.demoExportBlob.text()).records[0].proof,
-    );
+    const proof = exported.records[0].proof;
     const expected = catalog.find((row) => `sim:${row.id}` === source.source).proof;
     assert.equal(proof.courseIdentity, expected.courseIdentity);
     assert.equal(proof.mode, expected.mode);

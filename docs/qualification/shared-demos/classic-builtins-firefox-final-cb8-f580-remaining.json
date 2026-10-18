@@ -1,0 +1,103 @@
+{
+  "engine": "firefox",
+  "started": "2026-10-18T20:55:24.726Z",
+  "checks": [
+    {
+      "name": "dynamic-clean-profile-union",
+      "levels": 240,
+      "classicLevels": 101,
+      "metadataOnly": true,
+      "journeyAndCrossMode": true
+    },
+    {
+      "name": "native-selected-performance",
+      "group": "base",
+      "sourceId": "first-signal-left",
+      "levelId": "signal-01",
+      "prepareMs": 383,
+      "outcome": "won",
+      "ticks": 3682,
+      "capturedCells": 740,
+      "isolatedPractice": true,
+      "nativeImages": true,
+      "requests": [
+        "/game/content/campaign.json",
+        "/game/content/base-artwork.json",
+        "/game/demo-data/first-signal-left.replay.json",
+        "/game/demo-data/first-signal-left.chromium-macos.replay.json"
+      ]
+    },
+    {
+      "name": "native-selected-performance",
+      "group": "bundled",
+      "sourceId": "solo-qualified-bda094dfb23a16c2",
+      "levelId": "night-shift-01",
+      "prepareMs": 96,
+      "outcome": "won",
+      "ticks": 565,
+      "capturedCells": 1054,
+      "isolatedPractice": true,
+      "nativeImages": true,
+      "requests": [
+        "/game/content/packs/night-shift.json",
+        "/game/demo-data/solo-qualified-bda094dfb23a16c2.replay.json"
+      ]
+    },
+    {
+      "name": "native-selected-performance",
+      "group": "archived",
+      "sourceId": "solo-qualified-ec7912cb8caf199d",
+      "levelId": "night-signal",
+      "prepareMs": 905,
+      "outcome": "lost",
+      "ticks": 3121,
+      "capturedCells": 106,
+      "isolatedPractice": true,
+      "nativeImages": true,
+      "requests": [
+        "/game/content/packs/fpv-arcade-r2.json",
+        "/game/demo-data/solo-qualified-ec7912cb8caf199d.firefox.replay.json"
+      ]
+    },
+    {
+      "name": "disposal-and-persistence",
+      "allPreparedEntriesReleased": true,
+      "persistenceUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "scope": "One isolated empty profile; metadata union plus one selected base, current and archived Classic performance. No full-catalog replay or ordinary app launch.",
+  "before": {
+    "game/demo-modes/solo-classic-builtins.mjs": "748eb0a5200a20bdb42688c15490767d0cbbea9657e38fa17b5be9e48027a680",
+    "game/demo-modes/solo-classic-launch.mjs": "acdabcdddae9ff37881a5b50979f872a7b4d95d0b6605b8ba3a75277f9f77652",
+    "game/demo-modes/solo-source-owner.mjs": "c0122c017ed20f672e82ce57a5f1a82b7a3e05b47fe6e4f2e0b821a4deb397d6",
+    "game/demo-modes/solo-builtins.mjs": "1aad4c9e8f50cae6dcbc3a2d3303a94d9fc85e5c6642f75a2340804fb6b95ac8",
+    "game/demo-modes/solo-catalog.mjs": "847fc44a3a5588e0c5e1707974a8743494da35ed46ad8527e0559967c46cea42",
+    "game/imports.mjs": "eaae5ee0f75dc5033c3ec2c56880d0e82552655d587c221c4f890cff2f48a675",
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/packs.mjs": "b001380b814b489d0f99414dcab7b99e1550ff7779d427cc89b1f5627465e027",
+    "game/content/mission-library-index.json": "7ce7ab10b1a135489e0f80b35495701cd7e2e9daf64edc1a28b9b144d872570d",
+    "game/demo-data/catalog.json": "2dcb1597df76c9a7401b37d22cc963fcf15984222a9bda88cad823efcd7d4f0b",
+    "scripts/qualify-classic-demo-builtins-browser.mjs": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046"
+  },
+  "browserVersion": "153.0",
+  "after": {
+    "game/demo-modes/solo-classic-builtins.mjs": "748eb0a5200a20bdb42688c15490767d0cbbea9657e38fa17b5be9e48027a680",
+    "game/demo-modes/solo-classic-launch.mjs": "acdabcdddae9ff37881a5b50979f872a7b4d95d0b6605b8ba3a75277f9f77652",
+    "game/demo-modes/solo-source-owner.mjs": "c0122c017ed20f672e82ce57a5f1a82b7a3e05b47fe6e4f2e0b821a4deb397d6",
+    "game/demo-modes/solo-builtins.mjs": "1aad4c9e8f50cae6dcbc3a2d3303a94d9fc85e5c6642f75a2340804fb6b95ac8",
+    "game/demo-modes/solo-catalog.mjs": "847fc44a3a5588e0c5e1707974a8743494da35ed46ad8527e0559967c46cea42",
+    "game/imports.mjs": "eaae5ee0f75dc5033c3ec2c56880d0e82552655d587c221c4f890cff2f48a675",
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/packs.mjs": "b001380b814b489d0f99414dcab7b99e1550ff7779d427cc89b1f5627465e027",
+    "game/content/mission-library-index.json": "7ce7ab10b1a135489e0f80b35495701cd7e2e9daf64edc1a28b9b144d872570d",
+    "game/demo-data/catalog.json": "2dcb1597df76c9a7401b37d22cc963fcf15984222a9bda88cad823efcd7d4f0b",
+    "scripts/qualify-classic-demo-builtins-browser.mjs": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046"
+  },
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T20:55:28.814Z"
+}

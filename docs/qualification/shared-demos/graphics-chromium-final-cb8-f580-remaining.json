@@ -1,0 +1,129 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T20:55:31.339Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:beginner-09-acro-a76f372299d61107",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Your first corner",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-quiet-conservatory:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Quiet Conservatory",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-f1f91fa91991d51b",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Folded corner",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "real-webgl-loss-recovery",
+      "mode": "snake",
+      "source": "snake:classic-operation-temporary-permanent:standard",
+      "phase": "playing",
+      "failure": "sim:flight-04-self-level-9f0f8cfdac49a166 demo-mode-unavailable: SIM graphics context was lost.",
+      "failureDetails": {
+        "event": "playback-failed",
+        "sourceId": "sim:flight-04-self-level-9f0f8cfdac49a166",
+        "modeId": "sim",
+        "at": 1792356948020,
+        "loadingMs": null,
+        "preparation": null,
+        "code": "demo-mode-unavailable",
+        "message": "SIM graphics context was lost.",
+        "stack": "Error: SIM graphics context was lost.\n    at failMode (http://127.0.0.1:8769/game/demo-modes/sim.mjs:3:17)\n    at onContextLost (http://127.0.0.1:8769/game/demo-modes/sim.mjs:156:23)\n    at HTMLCanvasElement.lost (http://127.0.0.1:8769/optional-practice/civilian-fpv/renderer.mjs:3555:5)"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Temporary and Permanent",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "pause",
+      "mode": "snake"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T20:55:48.910Z",
+  "enduranceFinished": "2026-10-18T20:55:48.910Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T20:55:49.503Z"
+}

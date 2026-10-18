@@ -1,0 +1,135 @@
+{
+  "format": "SharedDemoReadOnlyReview.v1",
+  "createdAt": "2026-10-18T20:47:06.580075+00:00",
+  "reviewedHead": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sourceFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "integrationBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "fullFingerprintRecomputedByThisReview": false,
+    "meaning": "Read from the existing declaration; this review does not independently establish full-tree source equality."
+  },
+  "method": "Bounded read-only comparison of the accepted scope, current framework/adapters, focused test cases, and evidence index. No tests, browser sessions, heavy replays, or Git mutations were performed.",
+  "result": "No additional material runtime or acceptance blocker identified within this review scope.",
+  "findings": [],
+  "reviewedInvariants": [
+    {
+      "invariant": "Balanced mode and level/variant rotation without extra weight for duplicate recordings; unavailable and corrupt sources cannot starve healthy entries.",
+      "implementation": [
+        "game/demo-rotation.mjs",
+        "game/demo-director.mjs",
+        "game/demo-registry.mjs"
+      ],
+      "testsRead": [
+        "game/test/demo-shared.test.mjs:100",
+        "game/test/demo-shared.test.mjs:125",
+        "game/test/demo-shared.test.mjs:149",
+        "game/test/demo-shared.test.mjs:186",
+        "game/test/demo-shared.test.mjs:216"
+      ],
+      "limit": "Normal bag cycles avoid adjacent repeats; bounded recovery may reuse a previously verified performance."
+    },
+    {
+      "invariant": "Total recovery deadline includes alternate candidates; cancelled or late results are retired; prefetch does not create a second scene.",
+      "implementation": [
+        "game/demo-loading.mjs",
+        "game/demo-director.mjs",
+        "game/demo-prefetch.mjs"
+      ],
+      "testsRead": [
+        "game/test/demo-shared.test.mjs:42",
+        "game/test/demo-shared.test.mjs:66",
+        "game/test/demo-shared.test.mjs:245",
+        "game/test/demo-loading.test.mjs:68",
+        "game/test/demo-loading.test.mjs:141",
+        "game/test/demo-loading.test.mjs:213"
+      ]
+    },
+    {
+      "invariant": "Scene retirement independently attempts owned cleanup, retains cross-close ordering, and discards accumulated settled results.",
+      "implementation": [
+        "game/ui/demo-host.mjs:388",
+        "game/ui/demo-host.mjs:760",
+        "game/ui/demo-host.mjs:806",
+        "game/demo-modes/solo.mjs",
+        "game/demo-modes/solo-source-owner.mjs"
+      ],
+      "testsRead": [
+        "game/test/demo-shared.test.mjs:267",
+        "game/test/demo-shared.test.mjs:293",
+        "game/test/demo-native-host.test.mjs:287",
+        "game/test/demo-native-host.test.mjs:305",
+        "game/test/demo-native-host.test.mjs:323",
+        "game/test/demo-solo-adapter.test.mjs:67",
+        "game/test/demo-solo-adapter.test.mjs:98",
+        "game/test/demo-solo-adapter.test.mjs:119"
+      ]
+    },
+    {
+      "invariant": "A shared scheduler bounds hidden playback, rebases freeze/resume, respects explicit pause, and preserves ordinary state.",
+      "implementation": [
+        "game/ui/demo-clock.mjs",
+        "game/ui/demo-host.mjs:732",
+        "game/ui/demo-entry.mjs"
+      ],
+      "testsRead": [
+        "game/test/demo-clock.test.mjs:230",
+        "game/test/demo-clock.test.mjs:250",
+        "game/test/demo-clock.test.mjs:294",
+        "game/test/demo-clock.test.mjs:383",
+        "game/test/demo-background.test.mjs:24",
+        "game/test/demo-background.test.mjs:65",
+        "game/test/demo-background.test.mjs:103",
+        "game/test/demo-background.test.mjs:224"
+      ],
+      "limit": "Unit lifecycle coverage is not proof of actual browser discard. Solo navigation/BFCache pause policy is distinct from freeze/resume playback intent."
+    },
+    {
+      "invariant": "Fresh input enters isolated practice; shared settings are read-only until an explicit change, with no boot migration writes.",
+      "implementation": [
+        "game/ui/demo-host.mjs",
+        "game/demo-settings.mjs",
+        "optional-practice/civilian-fpv/demo-input.mjs"
+      ],
+      "testsRead": [
+        "game/test/demo-native-host.test.mjs:210",
+        "game/test/demo-native-host.test.mjs:258",
+        "game/test/demo-settings.test.mjs:137",
+        "game/test/demo-settings.test.mjs:207",
+        "game/test/demo-settings.test.mjs:223",
+        "game/test/demo-settings.test.mjs:246",
+        "game/test/demo-host.test.mjs:175"
+      ],
+      "limit": "Physical controller/radio and real mobile behavior remain device review gates."
+    }
+  ],
+  "evidenceScope": {
+    "inventory": {
+      "solo": 240,
+      "snake": 240,
+      "sim": 392,
+      "survival": 18,
+      "total": 890
+    },
+    "indexRead": "docs/qualification/shared-demos/README.md",
+    "observations": [
+      "Browser-specific recordings are not counted as additional required levels.",
+      "Full native/browser replay proofs are distinguished from representative interaction and exact-tick samples.",
+      "Historical, partial, and strict-failed receipts retain their source and outcome limitations.",
+      "No new final acceptance credit is created by this read-only review."
+    ]
+  },
+  "documentationFollowUp": {
+    "path": "docs/shared-game-demos.md:53",
+    "status": "Verified corrected wording in the working tree after parent edit.",
+    "sha256": "ad6f4597b8b8c7c4353511bd44926a7af73526abc56d438b303fef718e9eda90",
+    "meaning": "Eligible launches arrive at Ready; installed locked Solo missions enter isolated practice and uninstalled missions open the ordinary chooser. This documentation edit is not represented as part of the reviewed HEAD."
+  },
+  "outstandingGatesUnchanged": [
+    "Final emitted packaging and frozen-source browser refresh retain their own pending/running status and receipts.",
+    "Strict WebKit navigation diagnostics, including the unclassified historical Context is stopped event, remain explicitly tracked.",
+    "An uninterrupted two-hour final-source rotation remains required; interrupted earlier runs provide no duration credit.",
+    "Hosted CI and physical-controller/radio, real mobile, audible-output, and unfamiliar-player review remain separate gates.",
+    "Public deployment remains separate."
+  ]
+}

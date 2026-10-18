@@ -50,7 +50,7 @@ Takeover reconstructs the displayed checkpoint into an isolated native practice 
 
 Watching and practice do not write scores, rewards, ordinary saves, recovery records, or tuning preferences. Explicit demo settings and explicit audio changes remain player choices. All entry pages share the existing per-build demo-settings channel; native entries read the same small build identity, and the earlier global shared key is a read-only fallback when that channel has no saved settings. Opening a demo never migrates storage or clears Solo recording consent. Audio controls borrow the page's existing player; rotation and pause do not create a second music player or replace listening intent.
 
-Play from beginning uses ordinary guarded departure and exact mission identity. The destination arrives at Ready; SIM remains disarmed. Solo artwork uses existing earned-picture rules. A separate Journey profile cannot unlock another route's art. Existing Solo personal recordings remain supported; other modes do not collect personal recordings.
+Play from beginning uses ordinary guarded departure and exact mission identity. Eligible ordinary launches arrive at Ready; SIM remains disarmed. Solo preserves its existing eligibility rules: installed locked missions enter isolated practice, and uninstalled missions open the normal chooser. Solo artwork uses existing earned-picture rules. A separate Journey profile cannot unlock another route's art. Existing Solo personal recordings remain supported; other modes do not collect personal recordings.
 
 ## Explanations and accessibility
 

@@ -1,0 +1,347 @@
+{
+  "format": "SharedDemoFinalBrowserRefreshV1",
+  "started": "2026-10-18T20:55:14.999Z",
+  "complete": true,
+  "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "194a6ae89232f4cfcc823d10e30e807f716dcc62c98b8cd015ad2099676e691b",
+    "created": "2026-10-18T20:30:13.091774+00:00",
+    "integrationBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "files": 9994,
+    "bytes": 404341587
+  },
+  "authoritative": {
+    "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+    "base": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "fingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "files": 9994,
+    "bytes": 404341587
+  },
+  "wrapper": {
+    "path": ".cache/run-final-demo-refresh.mjs",
+    "sha256": "80cd5a1a85185515b3ef90e549a2cd49343d4f1d65d982a6ad3c473c37f61b58"
+  },
+  "hashScope": {
+    "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+  },
+  "selected": [
+    "classic-builtins-chromium",
+    "classic-builtins-firefox",
+    "classic-builtins-webkit",
+    "graphics-chromium",
+    "offline-chromium",
+    "listeners-chromium",
+    "restoration-chromium",
+    "restoration-firefox",
+    "restoration-webkit"
+  ],
+  "jobs": [
+    {
+      "id": "classic-builtins-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-classic-demo-builtins-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/classic-builtins-chromium-final-cb8-f580-remaining.json"
+      ],
+      "scriptSHA256": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046",
+      "reportPath": "docs/qualification/shared-demos/classic-builtins-chromium-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:55:20.290Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/classic-builtins-chromium-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":5,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:55:24.688Z",
+      "reportSHA256": "22ce8f9c510c8464bc4ae8e3934ce95ca6107fa8ad96148db97d6c59abebcbdf",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 5,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "classic-builtins-firefox",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-classic-demo-builtins-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/classic-builtins-firefox-final-cb8-f580-remaining.json"
+      ],
+      "scriptSHA256": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046",
+      "reportPath": "docs/qualification/shared-demos/classic-builtins-firefox-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:55:24.692Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/classic-builtins-firefox-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":5,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:55:28.821Z",
+      "reportSHA256": "036c45f3d6156fe1a5f8c15e7d646e286b0d265f41de4e4e53a8fd8a15b083f7",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 5,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "classic-builtins-webkit",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-classic-demo-builtins-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/classic-builtins-webkit-final-cb8-f580-remaining.json"
+      ],
+      "scriptSHA256": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046",
+      "reportPath": "docs/qualification/shared-demos/classic-builtins-webkit-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:55:28.822Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/classic-builtins-webkit-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":5,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:55:31.313Z",
+      "reportSHA256": "2f8ca724851b7084365a457443310d42e1bfd14d7f3f092b1b4e42dc9f642ed9",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 5,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "graphics-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/graphics-chromium-final-cb8-f580-remaining.json",
+        "--fault=graphics"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/graphics-chromium-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:55:31.314Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/graphics-chromium-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":7,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:55:49.511Z",
+      "reportSHA256": "d155365adcbc556a257e8c6514fa37f75869352f0de7977e1c2437305b7abeff",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 7,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "offline-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/offline-chromium-final-cb8-f580-remaining.json",
+        "--fault=offline"
+      ],
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "reportPath": "docs/qualification/shared-demos/offline-chromium-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:55:49.512Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/offline-chromium-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":8,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:56:05.808Z",
+      "reportSHA256": "a5aa8086a510a5e0a7e58830fc5a0836d274383d09b1df746512fbcb715b85a0",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 8,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "listeners-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-shared-demo-listeners.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/listeners-chromium-final-cb8-f580-remaining.json",
+        "--fingerprint=f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591"
+      ],
+      "scriptSHA256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+      "reportPath": "docs/qualification/shared-demos/listeners-chromium-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:56:05.809Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/listeners-chromium-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":4,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:56:53.877Z",
+      "reportSHA256": "9661b26c11ed0bd860a479db6ba98b888e1d45e7e50f272a2f1d538384a6e1dc",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "restoration-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-chromium-final-cb8-f580-remaining.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-chromium-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:56:53.879Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-chromium-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":12,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:57:41.069Z",
+      "reportSHA256": "dcd56e40460be686f2c1fe7404d0e26e5b6bf20f59b4fb5b3ceaa3a386114908",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "restoration-firefox",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=firefox",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-firefox-final-cb8-f580-remaining.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-firefox-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:57:41.071Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-firefox-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":12,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T20:58:41.447Z",
+      "reportSHA256": "f371e2d7e7c0fab329e7520539aa034e0321bfcc76b84b81154525ffa6c37369",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0,
+      "failure": null
+    },
+    {
+      "id": "restoration-webkit",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-restoration-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=webkit",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/restoration-webkit-final-cb8-f580-remaining.json",
+        "--port=8771"
+      ],
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "reportPath": "docs/qualification/shared-demos/restoration-webkit-final-cb8-f580-remaining.json",
+      "started": "2026-10-18T20:58:41.449Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/restoration-webkit-final-cb8-f580-remaining.json\",\"complete\":true,\"checks\":12,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T21:00:00.937Z",
+      "reportSHA256": "b580242d907a5a40d0d2f3a492245375367786f40991ebea9b0bdea26e3332f9",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0,
+      "failure": null
+    }
+  ],
+  "failedJobs": [],
+  "limitations": [
+    "Existing durable qualifiers only, sequential isolated browsers. No production or harness changes are made by this wrapper. Each selected job runs once; a strict failure remains failed while later independent jobs may proceed only after confirmed browser/server cleanup.",
+    "Some durable qualifiers retain empty-stack pageerrors as empty strings; any pageerror still fails their strict count. Raw/name diagnostics require a separate bounded probe after preserving such a failed receipt.",
+    "Classic checks cover metadata union and three real selected base/current/archive performances per engine, not all 240 complete performances again.",
+    "The two-hour actual-wall-time rotation and outstanding physical-device/human review checks remain separate."
+  ],
+  "before": {
+    "runtime": {
+      "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "harness": {
+      "sha256": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+      "files": 923,
+      "bytes": 11055220
+    }
+  },
+  "after": {
+    "runtime": {
+      "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "harness": {
+      "sha256": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+      "files": 923,
+      "bytes": 11055220
+    }
+  },
+  "changedFiles": {
+    "runtime": [],
+    "harness": []
+  },
+  "finished": "2026-10-18T21:00:04.596Z"
+}
