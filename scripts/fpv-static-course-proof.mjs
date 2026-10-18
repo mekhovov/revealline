@@ -6,21 +6,25 @@ import { open, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { boundedJSON, canonicalJSON, dataIdentity, exactKeys } from '../game/data-json.mjs';
-import { validateFlightCourse, createFlight } from '../optional-practice/civilian-fpv/model.mjs';
+import { validateFlightCourse } from '../optional-practice/civilian-fpv/model.mjs';
 import {
   validateWorldCourse,
   createWorldFlight,
 } from '../optional-practice/civilian-fpv/world-model.mjs';
-import { createAircraftCourseSession } from '../optional-practice/civilian-fpv/aircraft-course-session.mjs';
-import { createAdvancedSimulation } from '../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import {
   validateAircraftArchivePackage,
   AIRCRAFT_ARCHIVE_PACKAGE_BYTES,
 } from '../optional-practice/civilian-fpv/aircraft-archive.mjs';
-import { verifyAircraftArchive } from '../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
-import { createPracticeSectorObserver } from '../optional-practice/civilian-fpv/flight-sectors.mjs';
+import {
+  STATIC_COURSE_VERIFIER,
+  aircraftCourseMissionModel as modelFor,
+  verifyAircraftCourseArchive,
+} from '../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
+export {
+  STATIC_COURSE_VERIFIER,
+  createStaticCourseInputCursor,
+} from '../optional-practice/civilian-fpv/aircraft-archive-verifier.mjs';
 
-export const STATIC_COURSE_VERIFIER = 'AircraftStaticCourseVerification.v1';
 export const STATIC_COURSE_SIDECAR = 'AircraftStaticCourseDependency.v1';
 export const STATIC_COURSE_SIDECAR_BYTES = 4 * 1024 * 1024 + 4096;
 const verifiedReports = new WeakSet();
@@ -32,7 +36,6 @@ function freeze(value) {
   }
   return value;
 }
-const models = ['aircraft-course-practice.v1', 'aircraft-course-practice.v2'];
 const sha256 = (value) => createHash('sha256').update(canonicalJSON(value)).digest('hex');
 const same = (a, b) => canonicalJSON(a) === canonicalJSON(b);
 const fail = (code, message = code) => {
@@ -91,14 +94,6 @@ function courseValue(source) {
   if (value.format === 'FlightCourse.v2') return validateWorldCourse(value);
   fail('unsupported-course-format');
 }
-function modelFor(config) {
-  const adapter = config.configuration?.missionAdapter;
-  if (adapter === undefined) return models[0];
-  requireValue(adapter?.format === 'AircraftCourseMission.v2', 'unsupported-mission-adapter');
-  exactKeys(adapter, ['format', 'floorHeightMm'], 'Static course mission adapter');
-  requireValue(Number.isSafeInteger(adapter.floorHeightMm), 'invalid-mission-floor');
-  return models[1];
-}
 export function createStaticCourseSidecar(archiveSource, courseSource) {
   const archive = validateAircraftArchivePackage(archiveSource),
     course = courseValue(courseSource);
@@ -145,99 +140,7 @@ function dependency(source, archive) {
   );
   return { ...value, course };
 }
-function supportedCourse(archive, dep) {
-  const { config, host } = archive.manifest,
-    course = dep.course;
-  requireValue(['academy', 'world'].includes(host), 'unsupported-archive-host');
-  requireValue(
-    config.configuration?.environment?.host ===
-      (course.format === 'FlightCourse.v1' ? 'academy' : 'world'),
-    'course-family-mismatch',
-  );
-  requireValue(
-    !course.actors?.length && !config.dynamicColliders?.length,
-    'unsupported-dynamic-course',
-  );
-  requireValue(
-    Object.values(course.steps).every((steps) =>
-      steps.every((step) => ['hold', 'gate', 'land'].includes(step.type)),
-    ),
-    'unsupported-course-objective',
-  );
-  requireValue(config.configuration.challenge === undefined, 'unsupported-challenge-wrapper');
-  requireValue(
-    config.frequency === 500 &&
-      ['civilian-quad-aircraft-regional.v1', 'civilian-quad-aircraft-regional.v2'].includes(
-        config.backend,
-      ),
-    'unsupported-session-backend',
-  );
-  if (dep.missionModel === models[1])
-    requireValue(
-      config.configuration.missionAdapter.floorHeightMm === course.bounds.min.y,
-      'mission-floor-mismatch',
-    );
-}
-
-/** Traverse one segment at a time without expanding a clock into an input array. */
-export function createStaticCourseInputCursor(segments, frequency = 500) {
-  requireValue(
-    Array.isArray(segments) && segments.length > 0 && segments.length <= 256 && frequency === 500,
-    'unsupported-input-schedule',
-  );
-  let segmentIndex = 0,
-    eventIndex = 0,
-    tick = 0,
-    terrain;
-  const first = segments[0];
-  requireValue(first.startTick === 0, 'course-needs-canonical-reset');
-  const event = first.events[0];
-  requireValue(
-    Array.isArray(event) && event.length === 3 && event[0] === 'terrain' && event[1] === 0,
-    'missing-generated-terrain',
-  );
-  terrain = event[2];
-  eventIndex++;
-  return {
-    terrain: () => terrain,
-    next() {
-      if (segmentIndex >= segments.length) return null;
-      const segment = segments[segmentIndex];
-      requireValue(
-        Number.isSafeInteger(segment.endTick) && segment.endTick > tick,
-        'invalid-course-clock',
-      );
-      const item = segment.events[eventIndex++];
-      requireValue(
-        Array.isArray(item) &&
-          item.length === 8 &&
-          item[0] === 'input' &&
-          item[1] === tick * (frequency / 50) &&
-          item[2] === tick &&
-          item[3] === tick * 20000 &&
-          Number.isSafeInteger(item[3]) &&
-          item.slice(4).every(Number.isFinite) &&
-          item.slice(4, 7).every((n) => n >= -1 && n <= 1) &&
-          item[7] >= 0 &&
-          item[7] <= 1,
-        'unsupported-input-schedule',
-      );
-      const command = { roll: item[4], pitch: item[5], yaw: item[6], throttle: item[7] };
-      tick++;
-      const boundary = tick === segment.endTick;
-      if (boundary) {
-        requireValue(eventIndex === segment.events.length, 'unsupported-course-events');
-        segmentIndex++;
-        eventIndex = 0;
-        if (segmentIndex < segments.length)
-          requireValue(segments[segmentIndex].startTick === tick, 'course-segment-gap');
-      }
-      return { command, tick, segmentIndex: boundary ? segmentIndex - 1 : segmentIndex, boundary };
-    },
-  };
-}
-
-/** Two independent passes. No result is admitted to production comparison or awards. */
+/** Node-only dependency binding and source diagnostics around the shared two-pass kernel. */
 export async function verifyStaticAircraftCourse(
   archiveSource,
   sidecarSource,
@@ -249,166 +152,28 @@ export async function verifyStaticAircraftCourse(
   const pins = await sourcePins(),
     repository = repositorySource();
   cancelled(signal);
-  const physics = await verifyAircraftArchive(archive, {
+  const result = await verifyAircraftCourseArchive(archive, dep.course, {
     signal,
-    onProgress: (progress) => onProgress({ phase: 'physics', ...progress }),
-  });
-  const report = {
-    format: STATIC_COURSE_VERIFIER,
-    toolingOnly: true,
-    scored: false,
-    archiveSha256: dep.archiveSha256,
-    courseSha256: dep.courseSha256,
-    missionModel: dep.missionModel,
-    selectedSourceSha256: pins,
-    sourceRepository: repository,
-    physics: {
-      verified: true,
-      verificationScope: physics.verificationScope,
-      finalHash: physics.finalHash,
-      verifiedThroughMission: physics.verifiedThroughMission,
+    onProgress,
+    courseAdapter: {
+      format: 'FlightCourse.v2',
+      validate: validateWorldCourse,
+      createMission: createWorldFlight,
     },
-    course: { verified: false, reason: 'incomplete-course' },
-  };
-  let session, simulation;
-  try {
-    requireValue(
-      physics.verificationScope === 'complete-session',
-      'course-needs-complete-reset-session',
-    );
-    supportedCourse(archive, dep);
-    const { config } = archive.manifest,
-      cursor = createStaticCourseInputCursor(archive.segments);
-    const client = {
-      async initialize(options) {
-        // Backend is the one explicit historical numerical selector. Other
-        // configuration must be reproduced by the ordinary course session.
-        simulation = createAdvancedSimulation({
-          ...options,
-          backend: config.backend,
-          recording: false,
-        });
-        requireValue(
-          same(simulation.configuration(), config),
-          'noncanonical-session-configuration',
-        );
-        requireValue(
-          same(simulation.checkpoint(), archive.segments[0].checkpoint) &&
-            simulation.stateHash() === archive.segments[0].initialHash,
-          'noncanonical-session-reset',
-        );
-        return { telemetry: simulation.telemetry() };
-      },
-      async stageTerrainFrame(frame) {
-        requireValue(same(frame, cursor.terrain()), 'generated-terrain-mismatch');
-        return simulation.stageTerrainFrame(frame);
-      },
-      async commitTerrainFrame(decision) {
-        return simulation.commitTerrainFrame(decision);
-      },
-      async step(sample, motions) {
-        requireValue(!motions?.length, 'unsupported-dynamic-course');
-        simulation.enqueueInput(sample);
-        return simulation.stepMission({ motions });
-      },
-      dispose() {
-        simulation?.dispose();
-        simulation = null;
-      },
-    };
-    session = createAircraftCourseSession(
-      {
-        course: dep.course,
-        mode: config.response.mode,
-        legacy: dep.course.format === 'FlightCourse.v1',
-        model: dep.missionModel,
-        configuration: {
-          advanced: { aircraft: config.aircraft, controller: config.controller },
-          response: config.configuration.response,
-        },
-      },
-      {
-        createClient: () => client,
-        createMission: dep.course.format === 'FlightCourse.v1' ? createFlight : createWorldFlight,
-      },
-    );
-    await session.prepare();
-    cancelled(signal);
-    const observer = createPracticeSectorObserver();
-    observer.reset(session.snapshot());
-    session.arm();
-    let item,
-      completedAtTick = null,
-      segmentCount = 0,
-      hashIndex = 0;
-    while ((item = cursor.next())) {
-      cancelled(signal);
-      const state = await session.step(item.command);
-      requireValue(
-        state.ticks === item.tick && observer.consume(state),
-        'course-mission-clock-mismatch',
-      );
-      const segment = archive.segments[item.segmentIndex];
-      if (segment.hashes[hashIndex]?.[0] === item.tick) {
-        requireValue(
-          simulation.stateHash() === segment.hashes[hashIndex++][1],
-          'course-periodic-hash-mismatch',
-        );
-      }
-      if (completedAtTick === null && state.step === state.total) completedAtTick = state.ticks;
-      if (item.boundary) {
-        requireValue(
-          hashIndex === segment.hashes.length && simulation.stateHash() === segment.finalHash,
-          'course-segment-final-mismatch',
-        );
-        const next = archive.segments[item.segmentIndex + 1];
-        if (next)
-          requireValue(
-            same(simulation.checkpoint(), next.checkpoint),
-            'course-segment-checkpoint-mismatch',
-          );
-        segmentCount++;
-        hashIndex = 0;
-      }
-      if (item.tick % 25 === 0 || item.boundary) {
-        onProgress({
-          phase: 'course',
-          verifiedThroughMission: item.tick,
-          totalMissionTicks: archive.manifest.endTick,
-        });
-        await new Promise((resolve) => setTimeout(resolve, 0));
-      }
-    }
-    cancelled(signal);
-    requireValue(
-      simulation.stateHash() === archive.manifest.finalHash &&
-        session.snapshot().ticks === archive.manifest.endTick,
-      'course-final-mismatch',
-    );
-    report.course = {
-      verified: completedAtTick !== null,
-      ...(completedAtTick === null ? { reason: 'incomplete-course' } : {}),
-      mode: config.response.mode,
-      completedAtTick,
-      missionHz: 50,
-      verifiedSegments: segmentCount,
-      verifiedThroughMission: archive.manifest.endTick,
-      splits: observer.snapshot().rows,
-    };
-  } catch (error) {
-    cancelled(signal);
-    if (!error.code) throw error;
-    report.course = { verified: false, reason: error.code };
-  } finally {
-    await session?.dispose();
-    simulation?.dispose();
-  }
+  });
   cancelled(signal);
   requireValue(
     same(pins, await sourcePins()) && same(repository, repositorySource()),
     'evaluator-source-changed',
   );
-  freeze(report);
+  const report = freeze({
+    ...result,
+    toolingOnly: true,
+    archiveSha256: dep.archiveSha256,
+    courseSha256: dep.courseSha256,
+    selectedSourceSha256: pins,
+    sourceRepository: repository,
+  });
   if (report.course.verified) verifiedReports.add(report);
   return report;
 }
