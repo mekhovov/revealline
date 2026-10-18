@@ -6000,5 +6000,14 @@
   "expeditions.stageProgress": "Цілі {{done}}/{{total}}",
   "gettingReadyGameplayIsPaused": "Готуємося до гри. Гра на паузі.",
   "gameNotReadyTryStartOrResumeAgain": "Гра ще не готова. Спробуйте знову натиснути «Старт» або «Продовжити».",
+  "community.service.heading": "З’єднання зі спільнотою",
+  "community.service.checking": "Перевіряємо з’єднання зі спільнотою перед налаштуванням…",
+  "community.service.ready": "З’єднання зі спільнотою доступне. Вхід і права на публікацію перевіряються окремо.",
+  "community.service.unavailable": "З’єднання зі спільнотою недоступне. Онлайн-каталог, налаштування облікового запису й публікація призупинені. Локальна гра та створення доступні; встановлений вміст залежить від збережених на пристрої даних.",
+  "community.service.retry": "Перевірити з’єднання знову",
+  "community.service.localPlay": "До локальної гри",
+  "community.service.localCreate": "Створювати локально",
+  "community.service.catalogWaiting": "Каталог відкриється після перевірки з’єднання.",
+  "community.service.accountWaiting": "З’єднання перевіряється перед входом.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }
