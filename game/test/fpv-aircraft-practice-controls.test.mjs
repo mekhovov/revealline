@@ -255,6 +255,127 @@ test('restore observations reset only after current successful restores and cann
   assert.equal(notices.length, 1, 'cancelled restore retains observations');
 });
 
+for (const outcome of ['restored', 'exported', 'export-cancelled', 'failed'])
+  test(`completed recovery operation localizes ${outcome} feedback without repeating work`, async (t) => {
+    const diagnostic = 'IDB connection closing <unchanged diagnostic>';
+    let calls = 0;
+    const f = fixture(t, {
+      ...(outcome === 'failed'
+        ? {
+            store: {
+              load: async () => {
+                calls++;
+                throw new Error(diagnostic);
+              },
+              close() {},
+            },
+          }
+        : outcome.startsWith('export')
+          ? {
+              exportFile: async () => {
+                calls++;
+                return { status: outcome === 'exported' ? 'requested' : 'cancelled' };
+              },
+            }
+          : {}),
+    });
+    await f.click(
+      outcome.startsWith('export') ? 'Export recent clip' : 'Restore last saved checkpoint',
+    );
+    const expected = {
+      restored: [
+        'Checkpoint restored. The flight remains paused; arm when ready.',
+        'Точку відновлено. Політ залишається на паузі; запустіть двигуни, коли будете готові.',
+      ],
+      exported: [
+        'Export requested. Check the selected destination.',
+        'Експорт запитано. Перевірте вибране місце призначення.',
+      ],
+      'export-cancelled': ['Export cancelled.', 'Експорт скасовано.'],
+      failed: [`Could not complete: ${diagnostic}`, `Не вдалося завершити: ${diagnostic}`],
+    }[outcome];
+    const effects = () => [calls, f.restores.length, f.exports.length, f.writes.length, f.pauses];
+    const before = effects();
+    for (const [language, message] of [
+      ['en', expected[0]],
+      ['uk', expected[1]],
+      ['en', expected[0]],
+    ]) {
+      f.locale(language);
+      await settle();
+      assert.ok(f.ui.root.textContent.includes(message), `${language}: ${message}`);
+      assert.deepEqual(effects(), before, 'changing language only repaints the completed outcome');
+    }
+    f.active = { ...f.active };
+    f.update(0);
+    assert.ok(!f.ui.root.textContent.includes(expected[0]), 'a new session clears the old outcome');
+  });
+
+test('pending and cancelled recovery feedback follows locale without replaying a file read', async (t) => {
+  const f = fixture(t);
+  let release,
+    reads = 0;
+  f.file.files = [
+    {
+      size: 100,
+      text: () => {
+        reads++;
+        return new Promise((resolve) => {
+          release = resolve;
+        });
+      },
+    },
+  ];
+  f.file.emit('change');
+  await settle();
+  assert.match(f.ui.root.textContent, /Preparing…/);
+  f.locale('uk');
+  assert.match(f.ui.root.textContent, /Підготовка…/);
+  await f.click('Скасувати відновлення');
+  assert.match(f.ui.root.textContent, /Відновлення скасовано/);
+  f.locale('en');
+  assert.match(f.ui.root.textContent, /Recovery cancelled/);
+  f.locale('uk');
+  assert.match(f.ui.root.textContent, /Відновлення скасовано/);
+  release(JSON.stringify(checkpoint(250)));
+  await settle();
+  assert.equal(reads, 1);
+  assert.equal(f.restores.length, 0);
+  assert.equal(f.pauses, 0);
+  assert.equal(f.writes.length, 0);
+});
+
+test('unchanged recovery feedback does not repeatedly mutate its live status region', async (t) => {
+  const f = fixture(t);
+  await f.click('Restore last saved checkpoint');
+  const node = f.ui.root
+    .querySelectorAll('p')
+    .find((item) => item.textContent.startsWith('Checkpoint restored.'));
+  assert.ok(node);
+  const content = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(node), 'textContent');
+  let writes = 0;
+  Object.defineProperty(node, 'textContent', {
+    get() {
+      return content.get.call(this);
+    },
+    set(value) {
+      writes++;
+      content.set.call(this, value);
+    },
+  });
+  for (let index = 0; index < 50; index++) f.update(250);
+  assert.equal(writes, 0, 'steady flight paints do not repeat a status announcement');
+  f.locale('uk');
+  assert.equal(writes, 1, 'a changed language updates the status once');
+  assert.match(node.textContent, /Точку відновлено/);
+  for (let index = 0; index < 50; index++) f.update(250);
+  assert.equal(writes, 1);
+  f.locale('en');
+  assert.equal(writes, 2);
+  assert.match(node.textContent, /Checkpoint restored/);
+  assert.equal(f.restores.length, 1);
+});
+
 test('live autosave keeps one pending write, records the captured tick, and never pauses flight', async (t) => {
   let resolveSave;
   const writes = [],

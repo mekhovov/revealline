@@ -210,6 +210,7 @@ export function mountAircraftPracticeControls({
   const controls = [],
     removers = [];
   let disposed = false,
+    operationMessage = () => '',
     owner = null,
     state = null,
     lastAttempt = -1,
@@ -233,6 +234,8 @@ export function mountAircraftPracticeControls({
   }
   const same = (session) => !disposed && getSession() === session && owner === session;
   function paint() {
+    const message = operationMessage();
+    if (operationStatus.textContent !== message) operationStatus.textContent = message;
     heading.textContent = t('Practice clips & recovery', 'Записи практики й відновлення');
     exportClip.textContent = t('Export recent clip', 'Експортувати останній запис');
     exportRecovery.textContent = t('Export recovery checkpoint', 'Експортувати точку відновлення');
@@ -285,7 +288,7 @@ export function mountAircraftPracticeControls({
     cancelled?.controller.abort();
     if (cancelled) {
       operation = null;
-      operationStatus.textContent = t('Recovery cancelled.', 'Відновлення скасовано.');
+      operationMessage = () => t('Recovery cancelled.', 'Відновлення скасовано.');
       if (!disposed) paint();
     }
   }
@@ -295,13 +298,13 @@ export function mountAircraftPracticeControls({
     cancelSave();
     const job = { controller: new AbortController(), cancellable };
     operation = job;
-    operationStatus.textContent = t('Preparing…', 'Підготовка…');
+    operationMessage = () => t('Preparing…', 'Підготовка…');
     paint();
     try {
       await action(session, job.controller.signal);
     } catch (error) {
       if (same(session) && operation === job)
-        operationStatus.textContent =
+        operationMessage = () =>
           error.name === 'AbortError'
             ? t('Recovery cancelled.', 'Відновлення скасовано.')
             : `${t('Could not complete', 'Не вдалося завершити')}: ${error.message}`;
@@ -320,7 +323,7 @@ export function mountAircraftPracticeControls({
       ...platformOptions,
     });
     if (!same(session)) return;
-    operationStatus.textContent =
+    operationMessage = () =>
       result?.status === 'cancelled'
         ? t('Export cancelled.', 'Експорт скасовано.')
         : t(
@@ -355,10 +358,11 @@ export function mountAircraftPracticeControls({
     }
     lastAttempt = state.ticks ?? 0;
     durableTick = null;
-    operationStatus.textContent = t(
-      'Checkpoint restored. The flight remains paused; arm when ready.',
-      'Точку відновлено. Політ залишається на паузі; запустіть двигуни, коли будете готові.',
-    );
+    operationMessage = () =>
+      t(
+        'Checkpoint restored. The flight remains paused; arm when ready.',
+        'Точку відновлено. Політ залишається на паузі; запустіть двигуни, коли будете готові.',
+      );
   }
   const restore = button(() =>
     run(
@@ -455,7 +459,7 @@ export function mountAircraftPracticeControls({
         lastAttempt = -1;
         durableTick = null;
         storageError = null;
-        operationStatus.textContent = '';
+        operationMessage = () => '';
       }
       state = next;
       archives.update(next);

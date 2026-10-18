@@ -521,6 +521,39 @@ test('a full archive store is not consulted until flight begins and cannot stop 
   assert.equal(f.records.size, 0);
 });
 
+for (const known of [true, false])
+  test(`archive stopped reason ${known ? 'localizes controlled capacity text' : 'preserves unknown diagnostics'} without retrying storage`, async (t) => {
+    const message = known
+      ? 'Aircraft archive storage is full; delete an archive to make space'
+      : 'IDB connection closing <raw diagnostic>';
+    const f = fixture(t, {
+      begin: async () => {
+        throw new Error(message);
+      },
+    });
+    f.setTicks(1);
+    f.update();
+    await settle();
+    assert.match(f.ui.root.textContent, /Archive stopped; flying continues/);
+    assert.ok(f.ui.root.textContent.includes(message));
+    const before = structuredClone(f.calls),
+      reads = f.reads;
+    for (const language of ['uk', 'en']) {
+      f.setLocale(language);
+      f.update();
+      await settle();
+      const expected =
+        known && language === 'uk'
+          ? 'Сховище архівів заповнене; видаліть архів, щоб звільнити місце'
+          : message;
+      assert.ok(f.ui.root.textContent.includes(expected), `${language}: ${expected}`);
+      if (known && language === 'uk') assert.ok(!f.ui.root.textContent.includes(message));
+      assert.deepEqual(f.calls, before, 'locale changes never retry the uncertain archive write');
+      assert.equal(f.reads, reads);
+      assert.equal(f.records.size, 0);
+    }
+  });
+
 test('pending segment writes remain bounded and the final write uses the durable revision', async (t) => {
   let release,
     pending = 0,
