@@ -16,6 +16,7 @@ export function createVisualQualityPolicy() {
     missed = 0,
     work = 0,
     expensive = 0,
+    overBudget = 0,
     titleStalled = false,
     overloadWindows = 0,
     headroomWindows = 0,
@@ -23,7 +24,7 @@ export function createVisualQualityPolicy() {
   const snapshot = () => TIERS[Math.max(level, reducedPreference ? 1 : 0)];
   const resetWindow = (nowMs) => {
     windowStart = nowMs;
-    count = missed = work = expensive = 0;
+    count = missed = work = expensive = overBudget = 0;
     titleStalled = false;
     intervalBuckets.fill(0);
   };
@@ -62,6 +63,7 @@ export function createVisualQualityPolicy() {
       work += workMs;
       if (frameMs > baselineMs * 1.5) missed++;
       if (workMs > baselineMs * 0.6) expensive++;
+      if (workMs > Math.min(10, baselineMs * 0.6)) overBudget++;
       // Long title stalls use the final bin; the histogram remains bounded.
       intervalBuckets[Math.min(127, Math.floor((2 * frameMs) / baselineMs))]++;
       if (nowMs - windowStart < 1000) return snapshot();
@@ -84,9 +86,12 @@ export function createVisualQualityPolicy() {
           }
         }
       }
+      // A per-window tail proxy retains expensive callbacks hidden by the mean.
+      // It is presentation relief, not the whole-run qualification result.
       const overloaded =
         titleStalled ||
         average > baselineMs * 0.6 ||
+        overBudget / count > 0.05 ||
         (missed / count > 0.1 && expensive / count > 0.2) ||
         irregular;
       overloadWindows = overloaded ? overloadWindows + 1 : 0;
