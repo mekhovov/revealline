@@ -61,6 +61,15 @@ storage. Separate checkpoint recovery succeeded at 20.00 seconds. No archive
 was deleted. Same-tab recovery and earlier same-tab archive verification remain
 positive observations; cross-context durability remains unqualified.
 
+### Same public tab rechecked without mutation
+
+At 22:12 CEST on 18 October, the existing paused public tab still showed the
+single `2026-10-18T17:50:35.065Z` open/incomplete session. **Refresh saved
+sessions** completed and retained that same one-entry inventory. The flight
+remained paused at 5.30 seconds; no new flight, reload, save or deletion was
+performed. This read-only refresh does not recover or account for the six
+protected archives.
+
 ## Remaining diagnostic gates
 
 The UI correction now removes only a confirmed deleted row from its cached list
