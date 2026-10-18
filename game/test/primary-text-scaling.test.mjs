@@ -120,6 +120,19 @@ test('the primary CSS closure has no overlooked absolute font declaration', asyn
     ),
     visited = new Set(),
     omitted = [];
+  const inspect = (css, label) => {
+    for (const match of css.matchAll(/(?<![\w-])(font-size|font|line-height)\s*:\s*([^;{}]+);/g)) {
+      const [, property, value] = match;
+      const absolute =
+        /(?:\d(?:px|rem|vw|vh)|var\(--(?:fk-text|iw-text|native-action|handheld-|reaction-caption))/.test(
+          value,
+        );
+      if (absolute && !value.includes('--primary-text-scale'))
+        omitted.push(`${label} ${property}: ${value.trim()}`);
+    }
+  };
+  for (const match of html.matchAll(/<style>([\s\S]*?)<\/style>/g))
+    inspect(match[1], 'game/index.html inline style');
   for (const name of [
     'terminal-recording-export.css',
     'controller-field-editor.css',
@@ -136,15 +149,7 @@ test('the primary CSS closure has no overlooked absolute font declaration', asyn
     const css = await readFile(file, 'utf8');
     for (const match of css.matchAll(/@import\s+url\(['"]([^'"]+)/g))
       pending.push(path.resolve(path.dirname(file), match[1]));
-    for (const match of css.matchAll(/(?<![\w-])(font-size|font|line-height)\s*:\s*([^;{}]+);/g)) {
-      const [, property, value] = match;
-      const absolute =
-        /(?:\d(?:px|rem|vw|vh)|var\(--(?:fk-text|iw-text|native-action|handheld-|reaction-caption))/.test(
-          value,
-        );
-      if (absolute && !value.includes('--primary-text-scale'))
-        omitted.push(`${path.relative(root, file)} ${property}: ${value.trim()}`);
-    }
+    inspect(css, path.relative(root, file));
   }
   assert.deepEqual(omitted, []);
   assert.ok(visited.size >= 40, 'Include the primary entry and its recursive CSS imports.');

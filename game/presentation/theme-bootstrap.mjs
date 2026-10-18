@@ -1536,6 +1536,8 @@
       "'Field Kit UI', 'Exo 2', sans-serif";
   variables['--iw-target'] = studio && !coarse && !large && !extraLarge ? '32px' : '44px';
   variables['--iw-text-size'] = large ? '20px' : '16px';
+  if (root.dataset.textScaling === 'solo')
+    variables['--primary-text-scale'] = extraLarge ? '2' : '1';
   for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
   Object.assign(root.dataset, {
     interfaceTheme: id,

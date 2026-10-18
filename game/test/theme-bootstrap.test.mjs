@@ -459,7 +459,7 @@ test('unqualified extra size paints established Large before modules without ove
   assert.deepEqual(records, before);
 });
 
-test('qualified primary extra-large seeds the same authored tokens used by its multiplier', () => {
+test('qualified primary extra-large seeds its multiplier before deferred styles or modules', async () => {
   const { variables, dataset } = seed(
     {
       'revealline.display.v1': raw({
@@ -472,6 +472,25 @@ test('qualified primary extra-large seeds the same authored tokens used by its m
   );
   assert.equal(dataset.themeTextSize, 'extra-large');
   assert.equal(variables.get('--iw-text-size'), '16px');
+  assert.equal(variables.get('--primary-text-scale'), '2');
+  const html = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
+  const inlineStyles = [...html.matchAll(/<style>([\s\S]*?)<\/style>/g)]
+    .map((match) => match[1])
+    .join('\n');
+  assert.match(
+    inlineStyles,
+    /#boot-screen\s*\{[^}]*calc\(18px \* var\(--primary-text-scale, 1\)\)/,
+  );
+  for (const textSize of ['standard', 'large']) {
+    const primary = seed(
+      { 'revealline.display.v1': raw({ textSize }) },
+      { primaryTextScaling: true },
+    );
+    assert.equal(primary.variables.get('--primary-text-scale'), '1');
+  }
+  const other = seed({ 'revealline.display.v1': raw({ textSize: 'extra-large' }) });
+  assert.equal(other.variables.has('--primary-text-scale'), false);
+  assert.equal(other.dataset.themeTextSize, 'large');
   const resolved = resolvePresentation({
     accessibility: { textSize: 'extra-large', textFace: 'plain', extraLarge: true },
   });

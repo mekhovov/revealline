@@ -171,6 +171,7 @@ export async function buildThemeBootstrap() {
   if (plain) variables['--iw-font-display'] = variables['--iw-font-ui'] = "'Field Kit UI', 'Exo 2', sans-serif";
   variables['--iw-target'] = studio && !coarse && !large && !extraLarge ? '32px' : '44px';
   variables['--iw-text-size'] = large ? '20px' : '16px';
+  if (root.dataset.textScaling === 'solo') variables['--primary-text-scale'] = extraLarge ? '2' : '1';
   for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
   Object.assign(root.dataset, { interfaceTheme: id, themeFamily: id, themeStyled: String(styled), themeContrast: high ? 'high' : 'normal', themeTexture: textured ? 'on' : 'off', themeSurface: high ? 'flat' : seed.surface, themeMaterial: seed.materialStyle, themeFinish: seed.materialVariant ?? seed.materialStyle, themeHud: high || intent.opaqueHud ? 'opaque' : 'normal', themeMotion: reduced ? 'reduced' : 'full', themeDensity: studio ? 'studio' : 'player', themeTextSize: extraLarge ? 'extra-large' : large ? 'large' : 'standard', themeBootstrapped: 'true' });
   const meta = doc.querySelector?.('meta[name="theme-color"]');
