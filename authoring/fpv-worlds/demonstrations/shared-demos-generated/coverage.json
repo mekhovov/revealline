@@ -1,0 +1,1126 @@
+{
+  "required": 112,
+  "verified": [
+    {
+      "id": "snake-hunt-loops-01:self-level:3b4a1c3fc34c705d",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1225,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-01:acro:3b4a1c3fc34c705d",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1225,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-02:self-level:cb5af0f8873b2a63",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2094,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-02:acro:cb5af0f8873b2a63",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2093,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-03:self-level:4646cf2eb8780f84",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 2487,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-03:acro:4646cf2eb8780f84",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 2486,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-04:self-level:d154d7194625a062",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 2631,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-04:acro:d154d7194625a062",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 2633,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-05:self-level:2032ff1d09bb4d10",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 7,
+      "totalTargets": 7,
+      "ticks": 3529,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-05:acro:2032ff1d09bb4d10",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 7,
+      "totalTargets": 7,
+      "ticks": 3528,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-06:self-level:86f62172427c11a0",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 8,
+      "totalTargets": 8,
+      "ticks": 3605,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-loops-06:acro:86f62172427c11a0",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 8,
+      "totalTargets": 8,
+      "ticks": 3607,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-01:self-level:1fd6471e7501cbe6",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1310,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-01:acro:1fd6471e7501cbe6",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1312,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-02:self-level:79a1cc4db002c46f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2222,
+      "contacts": 1,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-02:acro:79a1cc4db002c46f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2222,
+      "contacts": 1,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-03:self-level:5718be4455dbb364",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2439,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-03:acro:5718be4455dbb364",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2440,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-04:self-level:5771923bdf896839",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 3064,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-04:acro:5771923bdf896839",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 3064,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-05:self-level:b79dc21793195b8a",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 3279,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-05:acro:b79dc21793195b8a",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 3282,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-06:self-level:31dd3d0c1307edab",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 8,
+      "totalTargets": 8,
+      "ticks": 4283,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-weave-06:acro:31dd3d0c1307edab",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 8,
+      "totalTargets": 8,
+      "ticks": 4288,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-01:self-level:7a0b520c505b369c",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1286,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-01:acro:7a0b520c505b369c",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1285,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-02:self-level:32ddc2e3772c67c3",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1738,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-02:acro:32ddc2e3772c67c3",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1738,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-03:self-level:4bb975c0a6c13095",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2389,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-03:acro:4bb975c0a6c13095",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2389,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-04:self-level:98231d4fb2bab9aa",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 3070,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-04:acro:98231d4fb2bab9aa",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 3068,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-05:self-level:f3c76ffd96e59d5f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 2795,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-05:acro:f3c76ffd96e59d5f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 2795,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-06:self-level:a8158db3a041cf40",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 8,
+      "totalTargets": 8,
+      "ticks": 3718,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-heights-06:acro:a8158db3a041cf40",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 8,
+      "totalTargets": 8,
+      "ticks": 3718,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-01:self-level:29d5f9a1eee0c54f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1363,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-01:acro:29d5f9a1eee0c54f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1362,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-02:self-level:7d2187cbef14db64",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2094,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-02:acro:7d2187cbef14db64",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2095,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-03:self-level:01b9494dd4385932",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 3041,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-03:acro:01b9494dd4385932",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 3041,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-04:self-level:1d9fd67d61c58ea5",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 4028,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-04:acro:1d9fd67d61c58ea5",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 4030,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-05:self-level:8012b94f01055490",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 7,
+      "totalTargets": 7,
+      "ticks": 3640,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-05:acro:8012b94f01055490",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 7,
+      "totalTargets": 7,
+      "ticks": 3640,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-06:self-level:c91ff32dfaa62cd9",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 10,
+      "totalTargets": 10,
+      "ticks": 5056,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-chase-06:acro:c91ff32dfaa62cd9",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 10,
+      "totalTargets": 10,
+      "ticks": 5056,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-loop-intercept:self-level:87fde9899f3423ba",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1490,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-loop-intercept:acro:87fde9899f3423ba",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1491,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-two-return-lanes:self-level:5aa29fc9c2ba76ef",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1687,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-two-return-lanes:acro:5aa29fc9c2ba76ef",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1688,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-corner-approach:self-level:123e730a32e8b2d0",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1637,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-corner-approach:acro:123e730a32e8b2d0",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1651,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-crossing-patrols:self-level:0af9c00724097fdb",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1644,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-crossing-patrols:acro:0af9c00724097fdb",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1711,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass:self-level:e4f72e7ef2119926",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1600,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-island-bypass:acro:e4f72e7ef2119926",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1594,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-staggered-interception:self-level:1acc61b450d8adee",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 5189,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-interception-staggered-interception:acro:1acc61b450d8adee",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 5189,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-warehouse-return:self-level:9586a414f8d7e715",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2078,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-warehouse-return:acro:9586a414f8d7e715",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2077,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-courtyard-approaches:self-level:0767d7a495801f82",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2679,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-courtyard-approaches:acro:0767d7a495801f82",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 5635,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter:self-level:62580d92ae17749e",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1637,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-platform-perimeter:acro:62580d92ae17749e",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1639,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-boundary-cutback:self-level:acdb5b6cb78fd27f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 3903,
+      "contacts": 1,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-boundary-cutback:acro:acdb5b6cb78fd27f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 3894,
+      "contacts": 1,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-cross-route-choice:self-level:f4d190b08a35083f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2081,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-cross-route-choice:acro:f4d190b08a35083f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2081,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit:self-level:dc83846a2b0b4d08",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 7859,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-route-choices-airfield-circuit:acro:dc83846a2b0b4d08",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 7859,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-low-pass-depot:self-level:ebc583128e1cc807",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1539,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-low-pass-depot:acro:ebc583128e1cc807",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 3,
+      "totalTargets": 3,
+      "ticks": 1543,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-split-yard-return:self-level:7e783801753dd500",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2114,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-split-yard-return:acro:7e783801753dd500",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2114,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-crossing-arrivals:self-level:22dfa2bb72ff1f5b",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1650,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-crossing-arrivals:acro:22dfa2bb72ff1f5b",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1652,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-shelter-arc:self-level:4c28fb8fe462cfdc",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2539,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-shelter-arc:acro:4c28fb8fe462cfdc",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2538,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-freight-slalom:self-level:2b037eb18b810f1f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2392,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-freight-slalom:acro:2b037eb18b810f1f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2392,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-forked-depot:self-level:a682f8b8a384a380",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 3353,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-ground-routes-forked-depot:acro:a682f8b8a384a380",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 3356,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-low-roof-window:self-level:c493212fc881f7ea",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2927,
+      "contacts": 11,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-low-roof-window:acro:c493212fc881f7ea",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 2931,
+      "contacts": 11,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-roofline-exchange:self-level:2c507fd99c33913e",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1978,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-roofline-exchange:acro:2c507fd99c33913e",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 4,
+      "totalTargets": 4,
+      "ticks": 1978,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-return-slot:self-level:46ac9c8522e311d4",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2008,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-return-slot:acro:46ac9c8522e311d4",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2009,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-staggered-roofs:self-level:1d49ebd2e6260507",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2403,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-staggered-roofs:acro:1d49ebd2e6260507",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 5,
+      "totalTargets": 5,
+      "ticks": 2404,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-window-chain:self-level:4d86d994066e593e",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 7081,
+      "contacts": 38,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-window-chain:acro:4d86d994066e593e",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 6,
+      "totalTargets": 6,
+      "ticks": 7062,
+      "contacts": 37,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-three-yard-finale:self-level:3a59b447f6ecb47b",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 8,
+      "totalTargets": 8,
+      "ticks": 4141,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "snake-hunt-approach-windows-three-yard-finale:acro:3a59b447f6ecb47b",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 8,
+      "totalTargets": 8,
+      "ticks": 4142,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-refuge-return:self-level:cb0399429b973f68",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 1,
+      "totalTargets": 1,
+      "ticks": 983,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-refuge-return:acro:cb0399429b973f68",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 1,
+      "totalTargets": 1,
+      "ticks": 983,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-meeting-yard:self-level:b6d7b83bfa3cffbd",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 2,
+      "totalTargets": 2,
+      "ticks": 810,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-meeting-yard:acro:b6d7b83bfa3cffbd",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 2,
+      "totalTargets": 2,
+      "ticks": 808,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-runner-court:self-level:1c2f4e12f6cab75c",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 1,
+      "totalTargets": 1,
+      "ticks": 326,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-runner-court:acro:1c2f4e12f6cab75c",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 1,
+      "totalTargets": 1,
+      "ticks": 326,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-burst-lanes:self-level:9112756abe5f6643",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 1,
+      "totalTargets": 1,
+      "ticks": 420,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-burst-lanes:acro:9112756abe5f6643",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 1,
+      "totalTargets": 1,
+      "ticks": 420,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-refuge-return:self-level:b8e39faef6189918",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 1,
+      "totalTargets": 1,
+      "ticks": 670,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-refuge-return:acro:b8e39faef6189918",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 1,
+      "totalTargets": 1,
+      "ticks": 670,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-switchback-crossing:self-level:148b660f5ae3bea1",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 2,
+      "totalTargets": 2,
+      "ticks": 1061,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-switchback-crossing:acro:148b660f5ae3bea1",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 2,
+      "totalTargets": 2,
+      "ticks": 1061,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-meeting-yard:self-level:bf364ae9edd1d98f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 2,
+      "totalTargets": 2,
+      "ticks": 773,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-meeting-yard:acro:bf364ae9edd1d98f",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 2,
+      "totalTargets": 2,
+      "ticks": 780,
+      "contacts": 0,
+      "health": 100
+    },
+    {
+      "id": "native-pursuit-armor-windows:self-level:8c8d4d94ea6c2f13",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 2,
+      "totalTargets": 2,
+      "ticks": 2236,
+      "contacts": 1,
+      "health": 75
+    },
+    {
+      "id": "native-pursuit-armor-windows:acro:8c8d4d94ea6c2f13",
+      "strategy": "overhead",
+      "outcome": "complete",
+      "caught": 2,
+      "totalTargets": 2,
+      "ticks": 2236,
+      "contacts": 1,
+      "health": 75
+    }
+  ],
+  "missing": []
+}

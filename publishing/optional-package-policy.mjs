@@ -503,6 +503,7 @@ const RUNTIME_PACKAGE_POLICIES = Object.freeze({
         'world-zip.mjs',
         'beginner-coach.mjs',
         'world-demonstrations.mjs',
+        'demonstration-resolver.mjs',
         'world-assets.mjs',
         'world-editor.mjs',
         'content-definitions.mjs',
@@ -677,6 +678,10 @@ export const OPTIONAL_PACKAGE_POLICIES = Object.freeze(
                 Object.freeze({
                   from: 'optional-practice/civilian-fpv/sim-presentation.mjs',
                   source: '../../game/ui/global-settings-tools.mjs',
+                }),
+                Object.freeze({
+                  from: 'optional-practice/civilian-fpv/world-app.mjs',
+                  source: '../../game/ui/demo-entry.mjs',
                 }),
                 // Only a verified iOS stage supplies this bridge. Web packages
                 // retain browser exports and never evaluate the iOS import.

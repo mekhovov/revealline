@@ -96,5 +96,8 @@
   "joinHint": "Почни керувати · тренування без нагород",
   "closeDetails": "Закрити деталі",
   "fullscreenShort": "На весь екран",
-  "windowedShort": "У вікні"
+  "windowedShort": "У вікні",
+  "watchAll": "Дивитися всі режими",
+  "retry": "Спробувати знову",
+  "recentCaptions": "Останні пояснення"
 }

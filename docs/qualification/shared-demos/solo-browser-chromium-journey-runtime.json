@@ -1,0 +1,501 @@
+{
+  "engine": "chromium",
+  "started": "2026-10-18T04:18:58.227Z",
+  "complete": true,
+  "verified": [],
+  "variants": [],
+  "performances": [],
+  "failures": [],
+  "catalogs": "demo-data/catalog.journey-current.json,demo-data/catalog.journey-archive.json",
+  "required": 81,
+  "browserVersion": "155.0.8059.85",
+  "runtime": [
+    {
+      "id": "solo-qualified-44273034491a74e4",
+      "ok": true,
+      "outcome": "won",
+      "tick": 632
+    },
+    {
+      "id": "solo-qualified-d1a5994b174c9108",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1082
+    },
+    {
+      "id": "solo-qualified-b669b6afe477abbb",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1724
+    },
+    {
+      "id": "solo-qualified-c0d8a5252aaa7f39",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3149
+    },
+    {
+      "id": "solo-qualified-1d64e506d5980412",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5590
+    },
+    {
+      "id": "solo-qualified-4ac90773fa58369b",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6872
+    },
+    {
+      "id": "solo-qualified-11133b7849422018",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1755
+    },
+    {
+      "id": "solo-qualified-be318c73458f4900",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6475
+    },
+    {
+      "id": "solo-qualified-5678d483da29e23a",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6926
+    },
+    {
+      "id": "solo-qualified-965c3d07edf7944d",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3534
+    },
+    {
+      "id": "solo-qualified-f7181f0af9511fcc",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5070
+    },
+    {
+      "id": "solo-qualified-0e6f0bf3f5775703",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6337
+    },
+    {
+      "id": "solo-qualified-728dc5622c493506",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4289
+    },
+    {
+      "id": "solo-qualified-3996626042c502db",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2236
+    },
+    {
+      "id": "solo-qualified-b7b6ea7705c422d5",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5912
+    },
+    {
+      "id": "solo-qualified-70a708ee64355d75",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3946
+    },
+    {
+      "id": "solo-qualified-d87dc7be0d62a2b1",
+      "ok": true,
+      "outcome": "won",
+      "tick": 9878
+    },
+    {
+      "id": "solo-qualified-7b3a3b7248f976ce",
+      "ok": true,
+      "outcome": "won",
+      "tick": 8227
+    },
+    {
+      "id": "solo-qualified-a06599f68a914d16",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1745
+    },
+    {
+      "id": "solo-qualified-9dddcc84f7d60f65",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1510
+    },
+    {
+      "id": "solo-qualified-9aa30fcd0b3c8281",
+      "ok": true,
+      "outcome": "won",
+      "tick": 7809
+    },
+    {
+      "id": "solo-qualified-f1f91fa91991d51b",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4392
+    },
+    {
+      "id": "solo-qualified-dd5c4beb661682f0",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6736
+    },
+    {
+      "id": "solo-qualified-bbd69e7ccb5526d9",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5100
+    },
+    {
+      "id": "solo-qualified-484de1d1d425f0c5",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3486
+    },
+    {
+      "id": "solo-qualified-0eafd68dc70ee8a8",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5883
+    },
+    {
+      "id": "solo-qualified-821bba1882552b03",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4681
+    },
+    {
+      "id": "solo-qualified-bbe0c5897adb725d",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6142
+    },
+    {
+      "id": "solo-qualified-dc59e6e76ae9df8b",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2801
+    },
+    {
+      "id": "solo-qualified-08bfbce48d50a5c0",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5030
+    },
+    {
+      "id": "solo-qualified-614567e280b3c780",
+      "ok": true,
+      "outcome": "won",
+      "tick": 7561
+    },
+    {
+      "id": "solo-qualified-2df382183e2f00d6",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4019
+    },
+    {
+      "id": "solo-qualified-7e1cae99ddeff5f9",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3920
+    },
+    {
+      "id": "solo-qualified-2d3df26570caee45",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5451
+    },
+    {
+      "id": "solo-qualified-10d16d94f297eb0c",
+      "ok": true,
+      "outcome": "won",
+      "tick": 10473
+    },
+    {
+      "id": "solo-qualified-8f766bd89a83be7e",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6391
+    },
+    {
+      "id": "solo-qualified-7ff2d0d3f752cf2b",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2812
+    },
+    {
+      "id": "solo-qualified-bcc2b9ca5521a87d",
+      "ok": true,
+      "outcome": "won",
+      "tick": 11238
+    },
+    {
+      "id": "solo-qualified-86af557da6e8a323",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3048
+    },
+    {
+      "id": "solo-qualified-f223736d7f7b47b2",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4867
+    },
+    {
+      "id": "solo-qualified-1c903081aa79df1e",
+      "ok": true,
+      "outcome": "won",
+      "tick": 9009
+    },
+    {
+      "id": "solo-qualified-30038742a961b399",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1398
+    },
+    {
+      "id": "solo-qualified-bfae960cf9bf13c8",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1742
+    },
+    {
+      "id": "solo-qualified-b03217288edf527a",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6040
+    },
+    {
+      "id": "solo-qualified-72dfbcf032b5ad25",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4097
+    },
+    {
+      "id": "solo-qualified-4a4987306df02c59",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6243
+    },
+    {
+      "id": "solo-qualified-2d68ede8fad57f5b",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5037
+    },
+    {
+      "id": "solo-qualified-4301d76f85efb491",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5634
+    },
+    {
+      "id": "solo-qualified-20e853301cb3ac52",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3479
+    },
+    {
+      "id": "solo-qualified-11ac088d9288363c",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3646
+    },
+    {
+      "id": "solo-qualified-b2087ebb50aee570",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6282
+    },
+    {
+      "id": "solo-qualified-8abdfdb8249526a1",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3536
+    },
+    {
+      "id": "solo-qualified-0c1decf0a2983bd4",
+      "ok": true,
+      "outcome": "won",
+      "tick": 8606
+    },
+    {
+      "id": "solo-qualified-2c530a2670b6a7f3",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1492
+    },
+    {
+      "id": "solo-qualified-47b82cbab227cd1f",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3030
+    },
+    {
+      "id": "solo-qualified-23166f06bb57b9b3",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2856
+    },
+    {
+      "id": "solo-qualified-5bd37fe7b93c3853",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2410
+    },
+    {
+      "id": "solo-qualified-a57cfb4b64844ce9",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2563
+    },
+    {
+      "id": "solo-qualified-5307e5f38725a0e3",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2775
+    },
+    {
+      "id": "solo-qualified-5915fde156c7fb92",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3166
+    },
+    {
+      "id": "solo-qualified-f229f1af7ed82073",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2301
+    },
+    {
+      "id": "solo-qualified-81e24a32328f7a3c",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4007
+    },
+    {
+      "id": "solo-qualified-8d1b4bbb885d0b9d",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4250
+    },
+    {
+      "id": "solo-qualified-5aa8f6bd6fb84df2",
+      "ok": true,
+      "outcome": "won",
+      "tick": 6641
+    },
+    {
+      "id": "solo-qualified-47cfdd798430bc97",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3051
+    },
+    {
+      "id": "solo-qualified-8fbfa21663542ea1",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2399
+    },
+    {
+      "id": "solo-qualified-93ffe1fc5a201d2e",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1745
+    },
+    {
+      "id": "solo-qualified-a922c6b22d771e68",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2303
+    },
+    {
+      "id": "solo-qualified-d3260fe50e480049",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2271
+    },
+    {
+      "id": "solo-qualified-b61cda337720b14d",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1890
+    },
+    {
+      "id": "solo-qualified-c4afd0fd10fd9d29",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5877
+    },
+    {
+      "id": "solo-qualified-d6b94392830623da",
+      "ok": true,
+      "outcome": "won",
+      "tick": 1852
+    },
+    {
+      "id": "solo-qualified-bd23e3eb635875d1",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2956
+    },
+    {
+      "id": "solo-qualified-6ab3604dd6a03040",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3091
+    },
+    {
+      "id": "solo-qualified-84508838cf882427",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4009
+    },
+    {
+      "id": "solo-qualified-f1a05094f22dda3a",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2106
+    },
+    {
+      "id": "solo-qualified-9695696535e4ee17",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5045
+    },
+    {
+      "id": "solo-qualified-348cde9a8a95df59",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2450
+    },
+    {
+      "id": "solo-qualified-f57d5e1891de81f5",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2146
+    },
+    {
+      "id": "solo-qualified-53797d64463a8706",
+      "ok": true,
+      "outcome": "won",
+      "tick": 2909
+    },
+    {
+      "id": "solo-qualified-7c360a513791c0c5",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4478
+    }
+  ],
+  "finished": "2026-10-18T04:20:49.770Z"
+}

@@ -1,0 +1,2694 @@
+{
+  "engine": "chromium",
+  "version": "155.0.8059.85",
+  "entries": [
+    {
+      "levelId": "field-crossing-broken-crossroads",
+      "outcome": "won",
+      "ticks": 19020,
+      "checkpoints": 63,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-field-crossing-broken-crossroads",
+        "projectIdentity": "f58d3caba411de4a",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 317,
+        "tick": 19020,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 2681,
+          "spawned": 3438,
+          "enemiesAlive": 757,
+          "enemiesVisible": 558,
+          "peakAlive": 757,
+          "peakVisible": 558,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 256003.02801224505,
+          "damageTaken": 40,
+          "damageCauses": {
+            "contact": 40,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4163,
+          "xpCollected": 3966,
+          "xpOnGround": 197,
+          "pickupsAlive": 153,
+          "pickupMerges": 0,
+          "boostsUsed": 55,
+          "airframesLost": 0,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 144298,
+          "hits": 5958,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 777,
+          "armorSegmentsBroken": 307,
+          "warningDeferrals": 67,
+          "motionDeferrals": 14,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.016666666666666,
+            "tick": 1141
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 28.166666666666668,
+            "tick": 1690
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.28333333333333,
+            "tick": 2837
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 54.13333333333333,
+            "tick": 3248
+          },
+          {
+            "id": "side-burst:1",
+            "time": 76.46666666666667,
+            "tick": 4588
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 103.51666666666667,
+            "tick": 6211
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 132.98333333333332,
+            "tick": 7979
+          },
+          {
+            "id": "side-burst:2",
+            "time": 160.55,
+            "tick": 9633
+          },
+          {
+            "id": "scanner:1",
+            "time": 186.08333333333334,
+            "tick": 11165
+          },
+          {
+            "id": "side-burst:3",
+            "time": 201.4,
+            "tick": 12084
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2894
+        }
+      }
+    },
+    {
+      "levelId": "field-crossing-shelterbelt-gaps",
+      "outcome": "won",
+      "ticks": 19208,
+      "checkpoints": 64,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-field-crossing-shelterbelt-gaps",
+        "projectIdentity": "ff669dab0dd8a615",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 320.1333333333333,
+        "tick": 19208,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 2856,
+          "spawned": 3124,
+          "enemiesAlive": 268,
+          "enemiesVisible": 117,
+          "peakAlive": 562,
+          "peakVisible": 392,
+          "heaviesAlive": 2,
+          "specialistsAlive": 3,
+          "priorityAttacks": 0,
+          "damageDealt": 281395.8607436525,
+          "damageTaken": 60,
+          "damageCauses": {
+            "contact": 60,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4506,
+          "xpCollected": 4250,
+          "xpOnGround": 256,
+          "pickupsAlive": 212,
+          "pickupMerges": 0,
+          "boostsUsed": 53,
+          "airframesLost": 0,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 164280,
+          "hits": 6579,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1417.5,
+          "armorSegmentsBroken": 322,
+          "warningDeferrals": 97,
+          "motionDeferrals": 178
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 20.266666666666666,
+            "tick": 1216
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 29.083333333333332,
+            "tick": 1745
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.18333333333333,
+            "tick": 2831
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 52.833333333333336,
+            "tick": 3170
+          },
+          {
+            "id": "side-burst:1",
+            "time": 64.35,
+            "tick": 3861
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 101.68333333333334,
+            "tick": 6101
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 130.91666666666666,
+            "tick": 7855
+          },
+          {
+            "id": "side-burst:2",
+            "time": 179.8,
+            "tick": 10788
+          },
+          {
+            "id": "scanner:1",
+            "time": 203.46666666666667,
+            "tick": 12208
+          },
+          {
+            "id": "side-burst:3",
+            "time": 210.48333333333332,
+            "tick": 12629
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2746
+        }
+      }
+    },
+    {
+      "levelId": "field-crossing-supply-orchard-edge",
+      "outcome": "won",
+      "ticks": 19446,
+      "checkpoints": 64,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-field-crossing-supply-orchard-edge",
+        "projectIdentity": "5070970bf9677397",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 324.1,
+        "tick": 19446,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 2889,
+          "spawned": 3462,
+          "enemiesAlive": 573,
+          "enemiesVisible": 494,
+          "peakAlive": 602,
+          "peakVisible": 500,
+          "heaviesAlive": 2,
+          "specialistsAlive": 7,
+          "priorityAttacks": 0,
+          "damageDealt": 283201.5888191412,
+          "damageTaken": 160,
+          "damageCauses": {
+            "contact": 160,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4462,
+          "xpCollected": 4266,
+          "xpOnGround": 196,
+          "pickupsAlive": 146,
+          "pickupMerges": 0,
+          "boostsUsed": 66,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 166848,
+          "hits": 6602,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 822.9518522063106,
+          "armorSegmentsBroken": 336,
+          "warningDeferrals": 47,
+          "motionDeferrals": 115,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.2,
+            "tick": 1152
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 28.983333333333334,
+            "tick": 1739
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.166666666666664,
+            "tick": 2830
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 53.6,
+            "tick": 3216
+          },
+          {
+            "id": "side-burst:1",
+            "time": 70.16666666666667,
+            "tick": 4210
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 106.66666666666667,
+            "tick": 6400
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 135.13333333333333,
+            "tick": 8108
+          },
+          {
+            "id": "side-burst:2",
+            "time": 160.76666666666668,
+            "tick": 9646
+          },
+          {
+            "id": "scanner:1",
+            "time": 186.36666666666667,
+            "tick": 11182
+          },
+          {
+            "id": "side-burst:3",
+            "time": 202,
+            "tick": 12120
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2988
+        }
+      }
+    },
+    {
+      "levelId": "freight-depot-shunting-yard",
+      "outcome": "won",
+      "ticks": 19028,
+      "checkpoints": 63,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-freight-depot-shunting-yard",
+        "projectIdentity": "42a985d6fadc7ac5",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 317.1333333333333,
+        "tick": 19028,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 2783,
+          "spawned": 3356,
+          "enemiesAlive": 573,
+          "enemiesVisible": 139,
+          "peakAlive": 573,
+          "peakVisible": 337,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 260526.25556454988,
+          "damageTaken": 40,
+          "damageCauses": {
+            "contact": 40,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4370,
+          "xpCollected": 4242,
+          "xpOnGround": 128,
+          "pickupsAlive": 83,
+          "pickupMerges": 0,
+          "boostsUsed": 65,
+          "airframesLost": 0,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 150143,
+          "hits": 6183,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 550.1237668784323,
+          "armorSegmentsBroken": 291,
+          "motionDeferrals": 26,
+          "warningDeferrals": 97
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 22.283333333333335,
+            "tick": 1337
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 29.55,
+            "tick": 1773
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.2,
+            "tick": 2832
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 50.96666666666667,
+            "tick": 3058
+          },
+          {
+            "id": "side-burst:1",
+            "time": 64.73333333333333,
+            "tick": 3884
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 109.01666666666667,
+            "tick": 6541
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 135.18333333333334,
+            "tick": 8111
+          },
+          {
+            "id": "side-burst:2",
+            "time": 161.6,
+            "tick": 9696
+          },
+          {
+            "id": "scanner:1",
+            "time": 189.03333333333333,
+            "tick": 11342
+          },
+          {
+            "id": "side-burst:3",
+            "time": 207.48333333333332,
+            "tick": 12449
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 3079
+        }
+      }
+    },
+    {
+      "levelId": "freight-depot-loading-loop",
+      "outcome": "won",
+      "ticks": 19877,
+      "checkpoints": 66,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-freight-depot-loading-loop",
+        "projectIdentity": "149c35368d7de169",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 331.28333333333336,
+        "tick": 19877,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 2956,
+          "spawned": 3339,
+          "enemiesAlive": 383,
+          "enemiesVisible": 248,
+          "peakAlive": 685,
+          "peakVisible": 489,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 297691.7753256467,
+          "damageTaken": 80,
+          "damageCauses": {
+            "contact": 80,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4347,
+          "xpCollected": 4007,
+          "xpOnGround": 340,
+          "pickupsAlive": 289,
+          "pickupMerges": 0,
+          "boostsUsed": 66,
+          "airframesLost": 0,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 176529,
+          "hits": 6920,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1341.2386012315997,
+          "armorSegmentsBroken": 338,
+          "warningDeferrals": 45,
+          "motionDeferrals": 23
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 21.316666666666666,
+            "tick": 1279
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 38.516666666666666,
+            "tick": 2311
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 50.63333333333333,
+            "tick": 3038
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 57.583333333333336,
+            "tick": 3455
+          },
+          {
+            "id": "side-burst:1",
+            "time": 91.41666666666667,
+            "tick": 5485
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 123.88333333333334,
+            "tick": 7433
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 142.81666666666666,
+            "tick": 8569
+          },
+          {
+            "id": "side-burst:2",
+            "time": 164.03333333333333,
+            "tick": 9842
+          },
+          {
+            "id": "scanner:1",
+            "time": 193.66666666666666,
+            "tick": 11620
+          },
+          {
+            "id": "side-burst:3",
+            "time": 204.86666666666667,
+            "tick": 12292
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2865
+        }
+      }
+    },
+    {
+      "levelId": "freight-depot-dispatch-junction",
+      "outcome": "won",
+      "ticks": 19561,
+      "checkpoints": 65,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-freight-depot-dispatch-junction",
+        "projectIdentity": "a4e52e3952c1223e",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 326.01666666666665,
+        "tick": 19561,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 3055,
+          "spawned": 3492,
+          "enemiesAlive": 437,
+          "enemiesVisible": 342,
+          "peakAlive": 630,
+          "peakVisible": 381,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 307084.3303443748,
+          "damageTaken": 80,
+          "damageCauses": {
+            "contact": 80,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4648,
+          "xpCollected": 4479,
+          "xpOnGround": 169,
+          "pickupsAlive": 123,
+          "pickupMerges": 0,
+          "boostsUsed": 64,
+          "airframesLost": 0,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 178802,
+          "hits": 7112,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1287.1493238037426,
+          "armorSegmentsBroken": 377,
+          "warningDeferrals": 115,
+          "motionDeferrals": 58
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.016666666666666,
+            "tick": 1141
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 28.633333333333333,
+            "tick": 1718
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 45.5,
+            "tick": 2730
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 52.166666666666664,
+            "tick": 3130
+          },
+          {
+            "id": "side-burst:1",
+            "time": 64.23333333333333,
+            "tick": 3854
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 110.03333333333333,
+            "tick": 6602
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 134.25,
+            "tick": 8055
+          },
+          {
+            "id": "side-burst:2",
+            "time": 161.23333333333332,
+            "tick": 9674
+          },
+          {
+            "id": "scanner:1",
+            "time": 180.15,
+            "tick": 10809
+          },
+          {
+            "id": "side-burst:3",
+            "time": 203.08333333333334,
+            "tick": 12185
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 3018
+        }
+      }
+    },
+    {
+      "levelId": "relay-ruins-antenna-court",
+      "outcome": "won",
+      "ticks": 19188,
+      "checkpoints": 63,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-relay-ruins-antenna-court",
+        "projectIdentity": "06f791f1fd2e86fb",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 319.8,
+        "tick": 19188,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 2835,
+          "spawned": 3414,
+          "enemiesAlive": 579,
+          "enemiesVisible": 338,
+          "peakAlive": 580,
+          "peakVisible": 344,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 272941.4644977185,
+          "damageTaken": 80,
+          "damageCauses": {
+            "contact": 80,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4446,
+          "xpCollected": 4282,
+          "xpOnGround": 164,
+          "pickupsAlive": 113,
+          "pickupMerges": 0,
+          "boostsUsed": 58,
+          "airframesLost": 0,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 154639,
+          "hits": 6356,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 790.5,
+          "armorSegmentsBroken": 325,
+          "warningDeferrals": 94,
+          "motionDeferrals": 48
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 22.283333333333335,
+            "tick": 1337
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 34.666666666666664,
+            "tick": 2080
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.15,
+            "tick": 2829
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 53.233333333333334,
+            "tick": 3194
+          },
+          {
+            "id": "side-burst:1",
+            "time": 64.25,
+            "tick": 3855
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 106.26666666666667,
+            "tick": 6376
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 133.26666666666668,
+            "tick": 7996
+          },
+          {
+            "id": "side-burst:2",
+            "time": 159.4,
+            "tick": 9564
+          },
+          {
+            "id": "scanner:1",
+            "time": 182.9,
+            "tick": 10974
+          },
+          {
+            "id": "side-burst:3",
+            "time": 199.3,
+            "tick": 11958
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 3048
+        }
+      }
+    },
+    {
+      "levelId": "relay-ruins-split-compound",
+      "outcome": "won",
+      "ticks": 19218,
+      "checkpoints": 64,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-relay-ruins-split-compound",
+        "projectIdentity": "fbc5b19faa30dff3",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 320.3,
+        "tick": 19218,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 2962,
+          "spawned": 3459,
+          "enemiesAlive": 497,
+          "enemiesVisible": 383,
+          "peakAlive": 701,
+          "peakVisible": 472,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 294546.7432612372,
+          "damageTaken": 180,
+          "damageCauses": {
+            "contact": 180,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4472,
+          "xpCollected": 4128,
+          "xpOnGround": 344,
+          "pickupsAlive": 286,
+          "pickupMerges": 0,
+          "boostsUsed": 64,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 168072,
+          "hits": 6879,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 784.3386625220796,
+          "armorSegmentsBroken": 333,
+          "warningDeferrals": 123,
+          "motionDeferrals": 137,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.266666666666666,
+            "tick": 1156
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 30.566666666666666,
+            "tick": 1834
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.5,
+            "tick": 2850
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 59.93333333333333,
+            "tick": 3596
+          },
+          {
+            "id": "side-burst:1",
+            "time": 71.5,
+            "tick": 4290
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 115.28333333333333,
+            "tick": 6917
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 139.16666666666666,
+            "tick": 8350
+          },
+          {
+            "id": "side-burst:2",
+            "time": 189.13333333333333,
+            "tick": 11348
+          },
+          {
+            "id": "scanner:1",
+            "time": 200.36666666666667,
+            "tick": 12022
+          },
+          {
+            "id": "side-burst:3",
+            "time": 213.15,
+            "tick": 12789
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2984
+        }
+      }
+    },
+    {
+      "levelId": "relay-ruins-receiver-gardens",
+      "outcome": "won",
+      "ticks": 19598,
+      "checkpoints": 65,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-relay-ruins-receiver-gardens",
+        "projectIdentity": "3a083474db46d91d",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 326.6333333333333,
+        "tick": 19598,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 3132,
+          "spawned": 3619,
+          "enemiesAlive": 487,
+          "enemiesVisible": 318,
+          "peakAlive": 823,
+          "peakVisible": 478,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 328603.661008283,
+          "damageTaken": 140,
+          "damageCauses": {
+            "contact": 140,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4751,
+          "xpCollected": 4342,
+          "xpOnGround": 409,
+          "pickupsAlive": 360,
+          "pickupMerges": 0,
+          "boostsUsed": 68,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 191611,
+          "hits": 7514,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1188.8699495910716,
+          "armorSegmentsBroken": 401,
+          "warningDeferrals": 42,
+          "motionDeferrals": 86
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.35,
+            "tick": 1161
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 28.883333333333333,
+            "tick": 1733
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 46.38333333333333,
+            "tick": 2783
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 55.38333333333333,
+            "tick": 3323
+          },
+          {
+            "id": "side-burst:1",
+            "time": 75.68333333333334,
+            "tick": 4541
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 116.05,
+            "tick": 6963
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 136.36666666666667,
+            "tick": 8182
+          },
+          {
+            "id": "side-burst:2",
+            "time": 164.46666666666667,
+            "tick": 9868
+          },
+          {
+            "id": "scanner:1",
+            "time": 180.68333333333334,
+            "tick": 10841
+          },
+          {
+            "id": "side-burst:3",
+            "time": 198.96666666666667,
+            "tick": 11938
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 3144
+        }
+      }
+    },
+    {
+      "levelId": "river-port-pump-apron",
+      "outcome": "won",
+      "ticks": 19130,
+      "checkpoints": 63,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-river-port-pump-apron",
+        "projectIdentity": "2d6c535ae347334a",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 318.8333333333333,
+        "tick": 19130,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 2834,
+          "spawned": 3228,
+          "enemiesAlive": 394,
+          "enemiesVisible": 191,
+          "peakAlive": 521,
+          "peakVisible": 382,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 277704.7144205029,
+          "damageTaken": 100,
+          "damageCauses": {
+            "contact": 100,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4332,
+          "xpCollected": 4064,
+          "xpOnGround": 268,
+          "pickupsAlive": 206,
+          "pickupMerges": 0,
+          "boostsUsed": 60,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 154229,
+          "hits": 6459,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1315.8154554102296,
+          "armorSegmentsBroken": 352,
+          "warningDeferrals": 171,
+          "motionDeferrals": 224
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 21.183333333333334,
+            "tick": 1271
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 28.733333333333334,
+            "tick": 1724
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 48.18333333333333,
+            "tick": 2891
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 55.18333333333333,
+            "tick": 3311
+          },
+          {
+            "id": "side-burst:1",
+            "time": 64.7,
+            "tick": 3882
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 108.73333333333333,
+            "tick": 6524
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 137.15,
+            "tick": 8229
+          },
+          {
+            "id": "side-burst:2",
+            "time": 160.61666666666667,
+            "tick": 9637
+          },
+          {
+            "id": "scanner:1",
+            "time": 185.1,
+            "tick": 11106
+          },
+          {
+            "id": "side-burst:3",
+            "time": 200.91666666666666,
+            "tick": 12055
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2895
+        }
+      }
+    },
+    {
+      "levelId": "river-port-twin-docks",
+      "outcome": "won",
+      "ticks": 19460,
+      "checkpoints": 64,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-river-port-twin-docks",
+        "projectIdentity": "4666449a86d20ee4",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 324.3333333333333,
+        "tick": 19460,
+        "airframes": 3,
+        "airframesRemaining": 1,
+        "stats": {
+          "kills": 3103,
+          "spawned": 3419,
+          "enemiesAlive": 316,
+          "enemiesVisible": 165,
+          "peakAlive": 541,
+          "peakVisible": 428,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 308008.67562662007,
+          "damageTaken": 200,
+          "damageCauses": {
+            "contact": 200,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4643,
+          "xpCollected": 4471,
+          "xpOnGround": 172,
+          "pickupsAlive": 123,
+          "pickupMerges": 0,
+          "boostsUsed": 68,
+          "airframesLost": 2,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 179362,
+          "hits": 7160,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1055.635972253727,
+          "armorSegmentsBroken": 331,
+          "warningDeferrals": 141,
+          "motionDeferrals": 177,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.016666666666666,
+            "tick": 1141
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 29.683333333333334,
+            "tick": 1781
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 48.38333333333333,
+            "tick": 2903
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 54.13333333333333,
+            "tick": 3248
+          },
+          {
+            "id": "side-burst:1",
+            "time": 67.18333333333334,
+            "tick": 4031
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 112.5,
+            "tick": 6750
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 134.78333333333333,
+            "tick": 8087
+          },
+          {
+            "id": "side-burst:2",
+            "time": 167.75,
+            "tick": 10065
+          },
+          {
+            "id": "scanner:1",
+            "time": 195.98333333333332,
+            "tick": 11759
+          },
+          {
+            "id": "side-burst:3",
+            "time": 212.13333333333333,
+            "tick": 12728
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2945
+        }
+      }
+    },
+    {
+      "levelId": "river-port-floodgate-yard",
+      "outcome": "won",
+      "ticks": 19478,
+      "checkpoints": 64,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-river-port-floodgate-yard",
+        "projectIdentity": "7fc0528a9d7d6ab9",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 324.6333333333333,
+        "tick": 19478,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 3074,
+          "spawned": 3461,
+          "enemiesAlive": 387,
+          "enemiesVisible": 179,
+          "peakAlive": 677,
+          "peakVisible": 391,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 306394.70226033666,
+          "damageTaken": 100,
+          "damageCauses": {
+            "contact": 100,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4730,
+          "xpCollected": 4580,
+          "xpOnGround": 150,
+          "pickupsAlive": 103,
+          "pickupMerges": 0,
+          "boostsUsed": 65,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 164365,
+          "hits": 6998,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1479,
+          "armorSegmentsBroken": 355,
+          "warningDeferrals": 88,
+          "motionDeferrals": 141
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.883333333333333,
+            "tick": 1193
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 30.966666666666665,
+            "tick": 1858
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.28333333333333,
+            "tick": 2837
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 51.63333333333333,
+            "tick": 3098
+          },
+          {
+            "id": "side-burst:1",
+            "time": 62.5,
+            "tick": 3750
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 118,
+            "tick": 7080
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 137.36666666666667,
+            "tick": 8242
+          },
+          {
+            "id": "side-burst:2",
+            "time": 165.13333333333333,
+            "tick": 9908
+          },
+          {
+            "id": "scanner:1",
+            "time": 184.18333333333334,
+            "tick": 11051
+          },
+          {
+            "id": "side-burst:3",
+            "time": 200.2,
+            "tick": 12012
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2987
+        }
+      }
+    },
+    {
+      "levelId": "chalk-quarry-survey-basin",
+      "outcome": "won",
+      "ticks": 19357,
+      "checkpoints": 64,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-survey-basin",
+        "projectIdentity": "0cc7b58044b11ae5",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 322.6166666666667,
+        "tick": 19357,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 2706,
+          "spawned": 3288,
+          "enemiesAlive": 582,
+          "enemiesVisible": 349,
+          "peakAlive": 601,
+          "peakVisible": 407,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 274375.3540809901,
+          "damageTaken": 160,
+          "damageCauses": {
+            "contact": 140,
+            "lane": 0,
+            "fan": 0,
+            "ground": 20
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4125,
+          "xpCollected": 3923,
+          "xpOnGround": 202,
+          "pickupsAlive": 146,
+          "pickupMerges": 0,
+          "boostsUsed": 63,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 155441,
+          "hits": 6290,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 935.7009065456408,
+          "armorSegmentsBroken": 338,
+          "warningDeferrals": 73,
+          "motionDeferrals": 10,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.016666666666666,
+            "tick": 1141
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 28.166666666666668,
+            "tick": 1690
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.28333333333333,
+            "tick": 2837
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 54.13333333333333,
+            "tick": 3248
+          },
+          {
+            "id": "side-burst:1",
+            "time": 76.46666666666667,
+            "tick": 4588
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 103.51666666666667,
+            "tick": 6211
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 136.28333333333333,
+            "tick": 8177
+          },
+          {
+            "id": "side-burst:2",
+            "time": 163.5,
+            "tick": 9810
+          },
+          {
+            "id": "scanner:1",
+            "time": 193,
+            "tick": 11580
+          },
+          {
+            "id": "side-burst:3",
+            "time": 208.08333333333334,
+            "tick": 12485
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2826
+        }
+      }
+    },
+    {
+      "levelId": "chalk-quarry-haul-switchbacks",
+      "outcome": "won",
+      "ticks": 19598,
+      "checkpoints": 65,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-haul-switchbacks",
+        "projectIdentity": "f4001a6ab6081cc2",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 326.6333333333333,
+        "tick": 19598,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 2966,
+          "spawned": 3393,
+          "enemiesAlive": 427,
+          "enemiesVisible": 313,
+          "peakAlive": 572,
+          "peakVisible": 354,
+          "heaviesAlive": 3,
+          "specialistsAlive": 7,
+          "priorityAttacks": 0,
+          "damageDealt": 298077.46151951957,
+          "damageTaken": 20,
+          "damageCauses": {
+            "contact": 20,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4449,
+          "xpCollected": 4256,
+          "xpOnGround": 193,
+          "pickupsAlive": 127,
+          "pickupMerges": 0,
+          "boostsUsed": 65,
+          "airframesLost": 0,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 175610,
+          "hits": 6964,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1806.0547823201678,
+          "armorSegmentsBroken": 339,
+          "warningDeferrals": 30,
+          "motionDeferrals": 63
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 18.066666666666666,
+            "tick": 1084
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 28.683333333333334,
+            "tick": 1721
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.45,
+            "tick": 2847
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 52.93333333333333,
+            "tick": 3176
+          },
+          {
+            "id": "side-burst:1",
+            "time": 69.93333333333334,
+            "tick": 4196
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 102.53333333333333,
+            "tick": 6152
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 133.68333333333334,
+            "tick": 8021
+          },
+          {
+            "id": "side-burst:2",
+            "time": 165.45,
+            "tick": 9927
+          },
+          {
+            "id": "scanner:1",
+            "time": 194.9,
+            "tick": 11694
+          },
+          {
+            "id": "side-burst:3",
+            "time": 208.55,
+            "tick": 12513
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2918
+        }
+      }
+    },
+    {
+      "levelId": "chalk-quarry-reclaimer-court",
+      "outcome": "won",
+      "ticks": 19274,
+      "checkpoints": 64,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-chalk-quarry-reclaimer-court",
+        "projectIdentity": "2c942f0944b184e2",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 321.23333333333335,
+        "tick": 19274,
+        "airframes": 3,
+        "airframesRemaining": 3,
+        "stats": {
+          "kills": 2746,
+          "spawned": 3363,
+          "enemiesAlive": 617,
+          "enemiesVisible": 281,
+          "peakAlive": 622,
+          "peakVisible": 340,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 269742.8233637494,
+          "damageTaken": 80,
+          "damageCauses": {
+            "contact": 60,
+            "lane": 20,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4264,
+          "xpCollected": 4127,
+          "xpOnGround": 137,
+          "pickupsAlive": 91,
+          "pickupMerges": 0,
+          "boostsUsed": 65,
+          "airframesLost": 0,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 156723,
+          "hits": 6269,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1066.082113405973,
+          "armorSegmentsBroken": 309,
+          "warningDeferrals": 10,
+          "motionDeferrals": 34
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.266666666666666,
+            "tick": 1156
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 34.3,
+            "tick": 2058
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 49.46666666666667,
+            "tick": 2968
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 55.016666666666666,
+            "tick": 3301
+          },
+          {
+            "id": "side-burst:1",
+            "time": 65.85,
+            "tick": 3951
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 121.05,
+            "tick": 7263
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 141,
+            "tick": 8460
+          },
+          {
+            "id": "side-burst:2",
+            "time": 164.41666666666666,
+            "tick": 9865
+          },
+          {
+            "id": "scanner:1",
+            "time": 190.43333333333334,
+            "tick": 11426
+          },
+          {
+            "id": "side-burst:3",
+            "time": 203.91666666666666,
+            "tick": 12235
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2948
+        }
+      }
+    },
+    {
+      "levelId": "orchard-strongpoint-harvest-clearing",
+      "outcome": "won",
+      "ticks": 19604,
+      "checkpoints": 65,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-orchard-strongpoint-harvest-clearing",
+        "projectIdentity": "63fba71d0403a480",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 326.73333333333335,
+        "tick": 19604,
+        "airframes": 3,
+        "airframesRemaining": 1,
+        "stats": {
+          "kills": 2865,
+          "spawned": 3392,
+          "enemiesAlive": 527,
+          "enemiesVisible": 263,
+          "peakAlive": 589,
+          "peakVisible": 378,
+          "heaviesAlive": 2,
+          "specialistsAlive": 6,
+          "priorityAttacks": 0,
+          "damageDealt": 287752.5697234259,
+          "damageTaken": 200,
+          "damageCauses": {
+            "contact": 200,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4383,
+          "xpCollected": 4151,
+          "xpOnGround": 232,
+          "pickupsAlive": 174,
+          "pickupMerges": 0,
+          "boostsUsed": 71,
+          "airframesLost": 2,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 165728,
+          "hits": 6724,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1556.0626828569784,
+          "armorSegmentsBroken": 332,
+          "warningDeferrals": 66,
+          "motionDeferrals": 76
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 19.016666666666666,
+            "tick": 1141
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 28.883333333333333,
+            "tick": 1733
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 46.63333333333333,
+            "tick": 2798
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 50.7,
+            "tick": 3042
+          },
+          {
+            "id": "side-burst:1",
+            "time": 64.93333333333334,
+            "tick": 3896
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 104.5,
+            "tick": 6270
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 136.1,
+            "tick": 8166
+          },
+          {
+            "id": "side-burst:2",
+            "time": 173.93333333333334,
+            "tick": 10436
+          },
+          {
+            "id": "scanner:1",
+            "time": 195.83333333333334,
+            "tick": 11750
+          },
+          {
+            "id": "side-burst:3",
+            "time": 207.68333333333334,
+            "tick": 12461
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": false,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2918
+        }
+      }
+    },
+    {
+      "levelId": "orchard-strongpoint-irrigation-courts",
+      "outcome": "won",
+      "ticks": 19526,
+      "checkpoints": 65,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-orchard-strongpoint-irrigation-courts",
+        "projectIdentity": "9bc8deee90de3d73",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 325.43333333333334,
+        "tick": 19526,
+        "airframes": 3,
+        "airframesRemaining": 2,
+        "stats": {
+          "kills": 3000,
+          "spawned": 3361,
+          "enemiesAlive": 361,
+          "enemiesVisible": 117,
+          "peakAlive": 659,
+          "peakVisible": 410,
+          "heaviesAlive": 1,
+          "specialistsAlive": 7,
+          "priorityAttacks": 0,
+          "damageDealt": 306859.8430320808,
+          "damageTaken": 100,
+          "damageCauses": {
+            "contact": 100,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4491,
+          "xpCollected": 4201,
+          "xpOnGround": 290,
+          "pickupsAlive": 243,
+          "pickupMerges": 0,
+          "boostsUsed": 65,
+          "airframesLost": 1,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 181374,
+          "hits": 7205,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1869,
+          "armorSegmentsBroken": 347,
+          "warningDeferrals": 95,
+          "motionDeferrals": 232,
+          "cachesClaimed": 1
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 20.283333333333335,
+            "tick": 1217
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 30.133333333333333,
+            "tick": 1808
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 46.28333333333333,
+            "tick": 2777
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 54.516666666666666,
+            "tick": 3271
+          },
+          {
+            "id": "side-burst:1",
+            "time": 65.38333333333334,
+            "tick": 3923
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 114.06666666666666,
+            "tick": 6844
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 137.01666666666668,
+            "tick": 8221
+          },
+          {
+            "id": "side-burst:2",
+            "time": 177.73333333333332,
+            "tick": 10664
+          },
+          {
+            "id": "scanner:1",
+            "time": 196.98333333333332,
+            "tick": 11819
+          },
+          {
+            "id": "side-burst:3",
+            "time": 213.1,
+            "tick": 12786
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2887
+        }
+      }
+    },
+    {
+      "levelId": "orchard-strongpoint-glasshouse-ruins",
+      "outcome": "won",
+      "ticks": 19454,
+      "checkpoints": 64,
+      "summary": {
+        "flight": {
+          "id": "balanced",
+          "speed": 180,
+          "boostSpeed": 330,
+          "maxHull": 100
+        },
+        "format": "OverflightRunSummaryV1",
+        "projectId": "survivor-orchard-strongpoint-glasshouse-ruins",
+        "projectIdentity": "a8bdfbce7e8f185f",
+        "seed": 17031991,
+        "phase": "won",
+        "outcome": "won",
+        "reason": "sortie-complete",
+        "fixture": null,
+        "fixtureWorkload": null,
+        "time": 324.23333333333335,
+        "tick": 19454,
+        "airframes": 3,
+        "airframesRemaining": 1,
+        "stats": {
+          "kills": 2771,
+          "spawned": 3285,
+          "enemiesAlive": 514,
+          "enemiesVisible": 204,
+          "peakAlive": 701,
+          "peakVisible": 449,
+          "heaviesAlive": 2,
+          "specialistsAlive": 8,
+          "priorityAttacks": 0,
+          "damageDealt": 255511.4278670492,
+          "damageTaken": 220,
+          "damageCauses": {
+            "contact": 220,
+            "lane": 0,
+            "fan": 0,
+            "ground": 0
+          },
+          "shieldBlocks": 0,
+          "xpEarned": 4405,
+          "xpCollected": 4032,
+          "xpOnGround": 373,
+          "pickupsAlive": 310,
+          "pickupMerges": 0,
+          "boostsUsed": 68,
+          "airframesLost": 2,
+          "upgradesChosen": 10,
+          "rerollsUsed": 1,
+          "droppedVisualEffects": 0,
+          "collisionCandidates": 141924,
+          "hits": 5964,
+          "retired": 0,
+          "spawnDeferred": 0,
+          "fixtureDefeats": 0,
+          "projectileDeferrals": 0,
+          "guardDamageBlocked": 1063.5,
+          "armorSegmentsBroken": 263,
+          "warningDeferrals": 62,
+          "motionDeferrals": 29
+        },
+        "build": {
+          "primary": {
+            "rank": 4,
+            "branch": "wide",
+            "evolved": true
+          },
+          "combat": [
+            {
+              "id": "proximity-pulse",
+              "rank": 3
+            },
+            {
+              "id": "side-burst",
+              "rank": 3
+            }
+          ],
+          "support": {
+            "id": "scanner",
+            "rank": 1
+          },
+          "reinforcement": 0,
+          "repair": 0
+        },
+        "upgrades": [
+          {
+            "id": "primary:wide:2",
+            "time": 17.766666666666666,
+            "tick": 1066
+          },
+          {
+            "id": "primary:wide:3",
+            "time": 31.333333333333332,
+            "tick": 1880
+          },
+          {
+            "id": "primary:wide:4",
+            "time": 47.88333333333333,
+            "tick": 2873
+          },
+          {
+            "id": "proximity-pulse:1",
+            "time": 53,
+            "tick": 3180
+          },
+          {
+            "id": "side-burst:1",
+            "time": 78.13333333333334,
+            "tick": 4688
+          },
+          {
+            "id": "proximity-pulse:2",
+            "time": 108.63333333333334,
+            "tick": 6518
+          },
+          {
+            "id": "proximity-pulse:3",
+            "time": 134.83333333333334,
+            "tick": 8090
+          },
+          {
+            "id": "side-burst:2",
+            "time": 160.35,
+            "tick": 9621
+          },
+          {
+            "id": "scanner:1",
+            "time": 184.2,
+            "tick": 11052
+          },
+          {
+            "id": "side-burst:3",
+            "time": 213.73333333333332,
+            "tick": 12824
+          }
+        ],
+        "goals": {
+          "eliteSpawned": true,
+          "eliteDefeated": true,
+          "finalSpawned": true,
+          "finalDefeated": true,
+          "finalId": 2811
+        }
+      }
+    }
+  ]
+}

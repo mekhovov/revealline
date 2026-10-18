@@ -1,0 +1,118 @@
+{
+  "format": "SharedDemoFrameworkReview.v1",
+  "reviewedAt": "2026-10-18T05:25:53Z",
+  "integrationBase": "7e9575053",
+  "scope": "Read-only acceptance review of the shared framework and current uncommitted implementation. No production or test files were changed by this review.",
+  "result": "No new confirmed production blocker found in the audited invariants.",
+  "invariants": [
+    {
+      "name": "Balanced normal rotation and bounded recovery fallback",
+      "evidence": [
+        "game/test/demo-shared.test.mjs:100 — uneven catalogs and twenty duplicate recordings preserve mode and entry weight over thirty-six performances",
+        "game/test/demo-shared.test.mjs:125 — unavailable engine is attempted once despite two hundred authored entries",
+        "game/test/demo-shared.test.mjs:149 — forty corrupt entries cannot starve healthy unvisited modes",
+        "game/test/demo-shared.test.mjs:186 — a deferred mode returns with a healthy alternate recording",
+        "game/test/demo-shared.test.mjs:216 — corrupt duplicate recordings cannot cause indefinite fallback repetition",
+        "game/test/demo-director.test.mjs:59 — approachable first performance and ordinary entry-cycle boundaries"
+      ],
+      "qualification": "Normal shuffled-bag cycles avoid adjacent mode and entry repeats when alternatives exist. During fault recovery a previously verified fallback may repeat; the intentional first → first → last case is not a promise of zero recovery repeats. Failed candidates cannot indefinitely starve healthy modes or entries."
+    },
+    {
+      "name": "Overall recovery deadline and abandoned asynchronous results",
+      "evidence": [
+        "game/test/demo-shared.test.mjs:245 — alternate preparation attempts share the thirty-second recovery limit",
+        "game/test/demo-loading.test.mjs:35 — fetch and body share one deadline and retire timers/listeners",
+        "game/test/demo-loading.test.mjs:68 — timeout and cancellation settle before an uncooperative response body",
+        "game/test/demo-loading.test.mjs:110 — a late fetch cancels its body without starting parsing",
+        "game/test/demo-loading.test.mjs:141 — synchronous errors, early abort, late rejection and late cleanup failure",
+        "game/test/demo-loading.test.mjs:183 — slow fetch cannot restart the body deadline",
+        "game/test/demo-director.test.mjs:101 — late cancelled preparation cannot replace a newer owner",
+        "game/test/demo-director.test.mjs:444 — timed-out bot falls back while preserving explicit Pause",
+        "game/test/demo-director.test.mjs:486 — Next cancels preparation that never returns",
+        "game/test/demo-director.test.mjs:516 — disposal settles loading and retires its late adapter exactly once"
+      ],
+      "inspection": "The host subtracts elapsed initial retirement and metadata loading from the thirty-second startup budget before constructing the director. Replacement cleanup admission is bounded at five seconds."
+    },
+    {
+      "name": "One active scene and independent asynchronous cleanup",
+      "evidence": [
+        "game/test/demo-shared.test.mjs:66 — prefetch consumes one payload without preparing a second player",
+        "game/test/demo-shared.test.mjs:267 — replacement waits for asynchronous graphics disposal",
+        "game/test/demo-shared.test.mjs:293 — fallback waits for rejected prepared-owner cleanup",
+        "game/test/demo-native-host.test.mjs:285 — quick close/reopen waits before mounting a replacement",
+        "game/test/demo-native-host.test.mjs:303 — failed renderer cleanup still retires physics and the surface",
+        "game/test/demo-native-host.test.mjs:315 — a late practice fork is disposed exactly once",
+        "game/test/demo-solo-adapter.test.mjs:67 — Solo preserves the disposal promise",
+        "game/test/demo-solo-adapter.test.mjs:98 — every Solo owner is released despite another cleanup failure",
+        "game/test/demo-solo-adapter.test.mjs:119 — abort starts cleanup immediately and joins late asset retirement",
+        "game/test/solo-demo-resources-host.test.mjs:58 — unsettled decode ownership remains visible after closing"
+      ]
+    },
+    {
+      "name": "One simulation scheduler and isolated practice",
+      "evidence": [
+        "game/test/demo-clock.test.mjs:111 — repeated start retains one clock owner",
+        "game/test/demo-clock.test.mjs:164 — visible RAF/timer siblings cannot advance twice",
+        "game/test/demo-clock.test.mjs:250 — visibility invalidates stale callbacks",
+        "game/test/demo-clock.test.mjs:294 — loading/freeze discard debt and resume rebases time",
+        "game/test/demo-clock.test.mjs:359 — close during advance stops the remaining burst",
+        "game/test/demo-retained-presentation-host.test.mjs:85 — practice advances and paints once per native callback while preserving the spectator",
+        "game/test/snake-demo.test.mjs:64 — exact native prefix and initiating input consumed once",
+        "game/test/demo-sim.test.mjs:99 — exact native SIM prefix and unchanged spectator state",
+        "game/test/demo-survival.test.mjs:58 — exact Survival fork and independent later mutations"
+      ]
+    },
+    {
+      "name": "Persistence and originating-game preservation",
+      "evidence": [
+        "game/test/demo-host.test.mjs:50 — keyboard/touch watching, takeover and return preserve ordinary checkpoints and saved data",
+        "game/test/demo-host.test.mjs:225 — practice reconstructs the displayed state without advancing either original owner",
+        "game/test/demo-host.test.mjs:265 — controller takeover keeps one hardware read per frame",
+        "game/test/demo-host.test.mjs:426 — late fork after blur cannot arm hidden practice",
+        "game/test/demo-host.test.mjs:446 — cancelled Fresh handoff preserves ordinary state and storage",
+        "game/test/demo-host.test.mjs:476 — failed saved-flight write remains behind departure review; Stay preserves the paused cut",
+        "game/test/demo-loading-host.test.mjs:10 — failed preparation and Back preserve ordinary state and saved bytes",
+        "game/test/demo-native-host.test.mjs:208 — native practice lifecycle makes no storage writes",
+        "game/test/demo-native-host.test.mjs:256 — raw SIM-origin controller takeover/disconnect makes no storage writes",
+        "scripts/qualify-shared-demo-browser.mjs:320 — actual-browser return compares player persistence with its pre-watch snapshot"
+      ],
+      "browserReports": [
+        "mixed-firefox-integrated.json",
+        "mixed-webkit-integrated.json",
+        "graphics-chromium-integrated.json",
+        "offline-chromium-integrated.json"
+      ]
+    }
+  ],
+  "additionalReadOnlyProbes": [
+    {
+      "name": "Same-level variants and cycle boundaries across seeded randomness",
+      "method": "Imported createDemoRotation in an inline Node process; used 200 seeds, ninety performances per seed, three modes, two variants of the same level and seventeen duplicate recordings for one variant.",
+      "performances": 18000,
+      "result": "Passed: each normal mode cycle and each per-mode level/variant cycle was balanced; no adjacent mode or entry repetition across normal cycle boundaries."
+    },
+    {
+      "name": "Late adapters after the overall recovery budget",
+      "method": "Used the existing controlled loading clock with two pending preparations; expired the overall budget at thirty seconds, then resolved both abandoned adapters.",
+      "result": "Passed: both adapters disposed exactly once, phase remained unavailable, no player revived, no loading timers remained."
+    },
+    {
+      "name": "Cleanup that does not finish before its admission deadline",
+      "method": "Held the current player's disposal promise, requested Next, and advanced the existing controlled clock by five seconds before releasing cleanup.",
+      "result": "Passed: replacement preparation never began, phase became unavailable at the cleanup deadline, and no loading timers remained."
+    }
+  ],
+  "suiteStatusAtReview": {
+    "affectedSuite": "713 tests: 708 passed and five known failures. The stale paused-picture explanation was fixed; hidden-readout and restored-origin expectations were corrected.",
+    "focusedRerun": "All twenty-six tests passed in .cache/demo-final-host-regressions.log, covering all five known failures plus related host behavior.",
+    "nextGate": "Rerun the complete affected suite after the separate shared-settings change; this review does not claim that rerun has passed."
+  },
+  "limitations": [
+    "Exact line references describe the review snapshot and may shift after subsequent edits.",
+    "The inline probes produced passing process output but were not added as durable executable test cases.",
+    "This review does not replace full catalog qualification, final packaging, or a completed two-hour actual-browser rotation.",
+    "Firefox/WebKit mixed receipts cover their recorded interaction checks; their lifecycle flag does not establish Chromium-only CDP freeze/resume behavior.",
+    "Resource counters cover observable owned handles, scenes and listeners; they do not prove operating-system thread exit or measure all browser/GPU memory.",
+    "Physical-controller/radio, real mobile, audible-output and unfamiliar-player comprehension checks remain pending human/device review."
+  ]
+}

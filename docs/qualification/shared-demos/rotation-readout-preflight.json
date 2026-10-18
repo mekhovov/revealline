@@ -1,0 +1,37 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 7200,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T05:04:16.724Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-44273034491a74e4",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First return",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": false,
+  "failure": "AssertionError [ERR_ASSERTION]: solo practice accepts fresh input.\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:150:14",
+  "visibleText": "TACTICAL EDITION\nMissions\nCollection\nSettings\nREVEALED\n0.0%\nTARGET 45%\nLIVES\n◆ ◆ ◆\nTIME\n0:00\nSCORE\n00000\n\nMISSION 01\n\nClear a path. Reveal a world.\n\nLeave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy.\n\nStandard difficulty.\n\nStart mission ↗\nLearn by playing\nCopy level link\nMission brief\nHome\n\nTap a direction to fly. Equipment controls are in How to play. Esc / P pauses.\n\nReady for launch\nClose a line to reveal the picture\n\nYour first route: fly down from the marked start to the opposite border.\n\nDEMO · Practice · no rewards\n\nSolo · First return\nAudio & details\nFullscreen\nBack\n\nPractice: steer, bend your cut and reconnect on safe ground. Pause to choose another action.\n\n0% captured · 3 lives · 1s\n\nWatch real gameplay: leave safe ground, turn, then reconnect to capture an area.\nCarol of the Bells (Metal Version)\nAlexander Nakarada\nCreator source ↗\nSound on\nPlay music\nNext song\nAudio options\n\npaused\n\nShow a demo after 60 seconds on the idle home screen\nReveal all demo pictures (gameplay effects remain)\n\nScrambled preview. Earn the original picture in normal play.\n\nPlay from beginning\nContinue practice\nReturn to demo\nPause\n\nUse your direction keys, controller, swipe the board, or tap these arrows.\n\nDirections: ↑ / W · ↓ / S · ← / A · → / D · Pause: P · Esc: back to home\n\n←\n↑\n↓\n→\nScout\nLight carrier\nHeavy carrier\nInterceptor\nFiber relay\nImpact craft\nTrapper",
+  "finished": "2026-10-18T05:04:23.476Z"
+}

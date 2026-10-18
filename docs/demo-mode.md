@@ -1,8 +1,10 @@
-# Demo mode
+# Solo demo mode — historical implementation
+
+**Historical reference.** The current implementation is documented in [Shared game demonstrations](shared-game-demos.md), with [current qualification evidence](qualification/shared-demos/README.md). This September guide preserves the earlier Solo design and receipts. Its scene-completion rules, source counts, menu locations, loading deadlines, and release-gate statuses do not describe the current shared framework.
 
 Demo mode presents normal gameplay on installed levels, with recorded routes, a small qualified live-autoplay pool, contextual tips, and an explicit invitation to play. It runs through the ordinary simulation and renderer. It does not change level rules, grant progress, or replace a suspended flight while watching.
 
-This guide describes the working implementation originally ported onto main `a10fcbf8a` (v0.142.1), with subsequent playback, input, audio and qualification work. The [current plan status](demo-plan-status-2026-09-30.md) reconciles the original phases with delivered behavior and release blockers. See the [qualification follow-up](verification/demo-qualification-2026-09-29/README.md) for source-specific cache, host, Worker, browser and packaging evidence. The [initial verification record](verification/demo-mode-2026-09-28.md) remains historical evidence.
+This guide records the Solo implementation originally ported onto main `a10fcbf8a` (v0.142.1), with subsequent playback, input, audio and qualification work. The [September plan status](demo-plan-status-2026-09-30.md) reconciles the original phases with delivered behavior and release blockers. See the [qualification follow-up](verification/demo-qualification-2026-09-29/README.md) for source-specific cache, host, Worker, browser and packaging evidence. The [initial verification record](verification/demo-mode-2026-09-28.md) remains historical evidence.
 
 ## Player behavior
 

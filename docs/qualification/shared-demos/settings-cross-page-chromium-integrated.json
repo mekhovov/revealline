@@ -1,0 +1,108 @@
+{
+  "format": "SharedDemoCrossPageSettingsBrowser.v1",
+  "engine": "chromium",
+  "integrationBase": "7e9575053",
+  "started": "2026-10-18T05:32:19.431Z",
+  "canonicalKey": "revealline.demo.dev.v1",
+  "legacyKey": "revealline.demo.shared.v1",
+  "checks": [
+    {
+      "type": "legacy-read-only-fallback",
+      "mode": "solo",
+      "auto": false,
+      "autoLive": false,
+      "hidePictures": true,
+      "canonical": null,
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": []
+    },
+    {
+      "type": "legacy-read-only-fallback",
+      "mode": "snake",
+      "auto": false,
+      "autoLive": false,
+      "hidePictures": true,
+      "canonical": null,
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": []
+    },
+    {
+      "type": "legacy-read-only-fallback",
+      "mode": "sim",
+      "auto": false,
+      "autoLive": false,
+      "hidePictures": true,
+      "canonical": null,
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": []
+    },
+    {
+      "type": "legacy-read-only-fallback",
+      "mode": "survival",
+      "auto": false,
+      "autoLive": false,
+      "hidePictures": true,
+      "canonical": null,
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": []
+    },
+    {
+      "type": "explicit-solo-preference-write",
+      "auto": true,
+      "autoLive": true,
+      "hidePictures": true,
+      "canonical": "{\"version\":1,\"auto\":true,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": [
+        {
+          "operation": "setItem",
+          "key": "revealline.demo.dev.v1",
+          "value": "{\"version\":1,\"auto\":true,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}"
+        }
+      ]
+    },
+    {
+      "type": "canonical-cross-page-preference",
+      "mode": "snake",
+      "auto": true,
+      "autoLive": true,
+      "hidePictures": true,
+      "canonical": "{\"version\":1,\"auto\":true,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": []
+    },
+    {
+      "type": "canonical-cross-page-preference",
+      "mode": "sim",
+      "auto": true,
+      "autoLive": true,
+      "hidePictures": true,
+      "canonical": "{\"version\":1,\"auto\":true,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": []
+    },
+    {
+      "type": "canonical-cross-page-preference",
+      "mode": "survival",
+      "auto": true,
+      "autoLive": true,
+      "hidePictures": true,
+      "canonical": "{\"version\":1,\"auto\":true,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": []
+    },
+    {
+      "type": "canonical-cross-page-preference",
+      "mode": "solo",
+      "auto": true,
+      "autoLive": true,
+      "hidePictures": true,
+      "canonical": "{\"version\":1,\"auto\":true,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "legacy": "{\"version\":1,\"auto\":false,\"collect\":false,\"gameSounds\":false,\"hidePictures\":true,\"showAllPictures\":false}",
+      "writes": []
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "finished": "2026-10-18T05:32:30.656Z"
+}

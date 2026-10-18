@@ -1,0 +1,30 @@
+{
+  "engine": "chromium",
+  "started": "2026-10-18T04:46:20.176Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "adventure-orchard-01",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "6c16155f13b1a1dd",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "courtyard-07",
+      "mode": "acro",
+      "ticks": 0,
+      "courseIdentity": "bc3eb0f6a025635a",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "finished": "2026-10-18T04:46:42.828Z"
+}

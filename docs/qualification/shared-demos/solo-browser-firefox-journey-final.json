@@ -1,0 +1,268 @@
+{
+  "engine": "firefox",
+  "started": "2026-10-18T04:25:23.397Z",
+  "complete": true,
+  "verified": [
+    {
+      "id": "solo-qualified-86ee84d48134b04b",
+      "captures": 10,
+      "capturedCells": 1796,
+      "ticks": 5978,
+      "outcome": "won",
+      "checkpoint": "5630586675308766",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ead64a471b9edd54",
+      "captures": 9,
+      "capturedCells": 1731,
+      "ticks": 4755,
+      "outcome": "won",
+      "checkpoint": "f03b8dd1d292cc0f",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-cd19eddd5888061f",
+      "captures": 12,
+      "capturedCells": 1809,
+      "ticks": 6516,
+      "outcome": "won",
+      "checkpoint": "4d065441b49d4e01",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-84debdfc44a43699",
+      "captures": 6,
+      "capturedCells": 1876,
+      "ticks": 2791,
+      "outcome": "won",
+      "checkpoint": "07cda148ead134a2",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4f9aec8fe9b37c0d",
+      "captures": 24,
+      "capturedCells": 2167,
+      "ticks": 10045,
+      "outcome": "won",
+      "checkpoint": "70762898773c64c3",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-fd3673e16fd6a8fb",
+      "captures": 15,
+      "capturedCells": 1882,
+      "ticks": 8815,
+      "outcome": "won",
+      "checkpoint": "9d578a11d33d042b",
+      "variant": true,
+      "independent": false
+    }
+  ],
+  "variants": [
+    {
+      "id": "solo-qualified-86ee84d48134b04b",
+      "engine": "firefox",
+      "outcome": "won",
+      "recordingIdentity": "4a573ca21631d8c3",
+      "replayURL": "./demo-data/solo-qualified-86ee84d48134b04b.firefox.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-86ee84d48134b04b.firefox.diagnostics.json",
+      "inputTraceIdentity": "8992ac0d1473197e",
+      "durationSeconds": 49.81666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "914ec1dbdf0c2efe",
+      "checkpoint": "5630586675308766",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "f24cf16b7a5e78c6",
+          "actual": "e8696f5dc0cd66d4"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "527568f962493325",
+          "actual": "3d0d6dee97e5caf2"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-cd19eddd5888061f",
+      "engine": "firefox",
+      "outcome": "won",
+      "recordingIdentity": "2fa4884bb4d0a10e",
+      "replayURL": "./demo-data/solo-qualified-cd19eddd5888061f.firefox.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-cd19eddd5888061f.firefox.diagnostics.json",
+      "inputTraceIdentity": "e9107126b9918f46",
+      "durationSeconds": 54.3,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "4458a317c246cc02",
+      "checkpoint": "4d065441b49d4e01",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "bf7ab9192f23bddd",
+          "actual": "12d51837dff41bb5"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-84debdfc44a43699",
+      "engine": "firefox",
+      "outcome": "won",
+      "recordingIdentity": "127ab8a071f51a67",
+      "replayURL": "./demo-data/solo-qualified-84debdfc44a43699.firefox.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-84debdfc44a43699.firefox.diagnostics.json",
+      "inputTraceIdentity": "edc7954054a97950",
+      "durationSeconds": 23.258333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "783822ea30ec7287",
+      "checkpoint": "07cda148ead134a2",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "09b4a7431ad471d1",
+          "actual": "af238ff6a8727c9c"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-4f9aec8fe9b37c0d",
+      "engine": "firefox",
+      "outcome": "won",
+      "recordingIdentity": "e4d3be94daba94a2",
+      "replayURL": "./demo-data/solo-qualified-4f9aec8fe9b37c0d.firefox.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-4f9aec8fe9b37c0d.firefox.diagnostics.json",
+      "inputTraceIdentity": "5be29d1937efd817",
+      "durationSeconds": 83.70833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "fc201249113a4161",
+      "checkpoint": "70762898773c64c3",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "2e30ce7a3b70abf3",
+          "actual": "2d09f9865b2fe585"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "7f4551e6e67a52db",
+          "actual": "5e6aaf8aa207f343"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-fd3673e16fd6a8fb",
+      "engine": "firefox",
+      "outcome": "won",
+      "recordingIdentity": "05a40cb14840bfc4",
+      "replayURL": "./demo-data/solo-qualified-fd3673e16fd6a8fb.firefox.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-fd3673e16fd6a8fb.firefox.diagnostics.json",
+      "inputTraceIdentity": "1559248ee689b84d",
+      "durationSeconds": 73.45833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "dec479c19c7f8245",
+      "checkpoint": "9d578a11d33d042b",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "cc605f4caa6a6545",
+          "actual": "4c281df0495a502a"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "afd2fd20cdda55a2",
+          "actual": "6bc73be0b3566121"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "6d8c0434f6aa6f8b",
+          "actual": "40d01420ff6a1a64"
+        }
+      ]
+    }
+  ],
+  "performances": [
+    {
+      "id": "solo-qualified-ead64a471b9edd54",
+      "engine": "firefox",
+      "outcome": "won",
+      "recordingIdentity": "cfdc87e61f83ca69",
+      "replayURL": "./demo-data/solo-qualified-ead64a471b9edd54.firefox.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-ead64a471b9edd54.firefox.performance.diagnostics.json",
+      "inputTraceIdentity": "b6fbe2545b853658",
+      "durationSeconds": 39.625,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "227beb54e16e8fa7",
+      "checkpoint": "f03b8dd1d292cc0f",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "7caf6bd24ab1d712",
+          "actual": "d55f818b5eec3935"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "dda9fc1160bdcc1d",
+          "actual": "e58b4445a4eabd53"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "9f8854509953432c",
+          "actual": "01e807d8c161817e"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "c2214dd7d30e3d33",
+          "actual": "de21a5d8b98b41f3"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "5ffd2bf1dbf6f16d",
+          "actual": "e8ee9aa9dc98bf5d"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "catalogs": "demo-data/catalog.journey-current.json,demo-data/catalog.journey-archive.json",
+  "required": 6,
+  "browserVersion": "153.0",
+  "finished": "2026-10-18T04:25:30.420Z"
+}

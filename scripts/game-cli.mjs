@@ -856,14 +856,15 @@ export async function addOfflineEntries(
     ...entries
       .filter((entry) => entry.name.startsWith('optional-practice/'))
       .map((entry) => entry.name),
-    // Demo recordings and the large landing photograph remain published for
+    // Demo recordings/diagnostics and the large landing photograph remain published for
     // online playback, but they are optional bodies rather than core offline boot.
     // Excluding only their bodies preserves URLs, provenance and on-demand tests
     // while keeping the 80 MiB service-worker cache bound.
     ...entries
       .filter(
         (entry) =>
-          (entry.name.startsWith('game/demo-data/') && entry.name.endsWith('.replay.json')) ||
+          (entry.name.startsWith('game/demo-data/') &&
+            /\.(?:replay|diagnostics)\.json$/.test(entry.name)) ||
           entry.name === 'game/ui/art/menu-scenes/droneaid-main-background.webp' ||
           // The current Social Drone reward uses the mobile-prepared v2 clip.
           // Keep v1 hosted for retained presentations without charging every

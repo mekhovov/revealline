@@ -1,0 +1,58 @@
+{
+  "format": "SharedDemoEnduranceStatusV1",
+  "complete": false,
+  "requiredSeconds": 7200,
+  "report": "rotation-chromium-two-hour.json",
+  "started": "2026-10-18T05:48:44.057Z",
+  "lastSample": "2026-10-18T07:17:53.617Z",
+  "sampledSeconds": 5349.56,
+  "samples": 534,
+  "observedPageErrors": 0,
+  "observedRecoverableFailures": [
+    {
+      "event": "failed",
+      "sourceId": "survival:river-port-floodgate-yard:standard",
+      "modeId": "survival",
+      "at": 1792302476012,
+      "loadingMs": 15123,
+      "code": "demo-load-timeout",
+      "message": "Demo preparation exceeded its loading deadline.",
+      "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+    },
+    {
+      "event": "failed",
+      "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+      "modeId": "survival",
+      "at": 1792303087699,
+      "loadingMs": 16015,
+      "code": "demo-load-timeout",
+      "message": "Demo preparation exceeded its loading deadline.",
+      "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+    },
+    {
+      "event": "failed",
+      "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+      "modeId": "survival",
+      "at": 1792303996682,
+      "loadingMs": 15001,
+      "code": "demo-load-timeout",
+      "message": "Demo preparation exceeded its loading deadline.",
+      "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+    },
+    {
+      "event": "failed",
+      "sourceId": "survival:freight-depot-loading-loop:standard",
+      "modeId": "survival",
+      "at": 1792305035131,
+      "loadingMs": 15462,
+      "code": "demo-load-timeout",
+      "message": "Demo preparation exceeded its loading deadline.",
+      "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+    }
+  ],
+  "exitCode": 1,
+  "termination": "Process exited without a final report during an observed disk-full condition. No completion or final cleanup/persistence result is available; exact termination cause was not captured.",
+  "sourceFingerprint": "source-freeze-before-retirement-fix.json",
+  "finalCorrections": "Final host/CSS corrections are qualified separately by integration-checks.json.",
+  "status": "Pending a fresh uninterrupted two-hour run with sufficient disk space."
+}

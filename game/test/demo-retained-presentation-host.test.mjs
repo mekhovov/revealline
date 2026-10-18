@@ -9,6 +9,31 @@ const frames = (page, count) => {
   for (let index = 0; index < count; index++) page.frame(1000 / 60);
 };
 
+test('practice advances between throttled diagnostic readout updates', async (t) => {
+  const page = await demoPage(t);
+  await page.open();
+  page.$('demo-interrupt').click();
+  page.$('demo-takeover').click();
+  await settle(() => !page.$('demo-practice-controls').hidden);
+  page.frame(0);
+  const checkpoint = page.demoFrame.run.tick;
+  demoKey(page, 'ArrowRight');
+  demoKey(page, 'ArrowRight', false);
+  frames(page, 45);
+  assert.ok(page.demoFrame.run.tick > checkpoint, 'The native practice simulation advances.');
+  assert.equal(
+    Number(page.$('demo-dialog').dataset.demoTick),
+    checkpoint,
+    'The unchanged whole-second readout deliberately retains its diagnostic tick.',
+  );
+  frames(page, 20);
+  assert.ok(
+    Number(page.$('demo-dialog').dataset.demoTick) > checkpoint,
+    'The next visible readout update publishes the progressed tick.',
+  );
+  assert.deepEqual(page.errors, []);
+});
+
 test('paused Demo retains its board and controls, invalidates on visible changes, and resumes normally', async (t) => {
   const page = await demoPage(t);
   await page.open();

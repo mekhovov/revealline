@@ -1,4 +1,6 @@
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../snake/classic-campaign.mjs';
+import { demoLaunchURL } from '../demo-launch.mjs';
+import { createDemoMusicTransport } from '../ui/demo-music-transport.mjs';
 const SAVE_KEY = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
 import { classicOperationStatus } from '../snake/classic-operation-status.mjs';
 import { OPERATION_PROTOTYPES } from './manual/snake-operation-recipes.mjs';
@@ -173,7 +175,7 @@ async function harness({
   mount(parseHTML(html), document.body);
   const window = new Events();
   const pads = [];
-  let tools, offlinePanel, offlineOptions;
+  let tools, offlinePanel, offlineOptions, demoOptions;
   const storage = new Map();
   if (savedRound) storage.set(SAVE_KEY, JSON.stringify(savedRound));
   if (legacySavedRound)
@@ -212,6 +214,25 @@ async function harness({
     appearanceActions = [],
     acceptedAppearances = [];
   const context = createContext({
+    // This fixture owns ordinary Snake UI. Shared demo behavior is exercised
+    // through the native-host tests and the real three-browser entry harness.
+    installDemoEntry: async (options) => {
+      demoOptions = options;
+      const actions = ['demo-button', 'demo-all-button'].map((id) => {
+        const button = document.createElement('button');
+        button.id = id;
+        button.type = 'button';
+        options.parent.append(button);
+        return button;
+      });
+      options.registerActions(actions);
+      return { active: false, update() {}, destroy() {} };
+    },
+    createClassicSnakeCommunityLibrary: () => ({
+      load: async () => ({ entries: [entry], pack: { title: { en: 'Community Snake' } } }),
+    }),
+    demoLaunchURL,
+    createDemoMusicTransport,
     CLASSIC_SNAKE_CAMPAIGN_REVISION,
     classicBoardPreferences,
     isClassicWorldStyle,
@@ -581,6 +602,7 @@ async function harness({
     pads,
     offlinePanel,
     canActivateOffline: () => offlineOptions.canActivate(),
+    canOpenDemo: () => demoOptions.canOpen(),
     disposeTools: () => {
       tools.dispose();
       offlinePanel.dispose();
@@ -604,6 +626,9 @@ for (const mode of ['solo', 'versus', 'team']) {
   test(`${mode} Snake can finish offline setup from Ready but defers during a paused flight`, async (t) => {
     const state = await harness({ mode, sharedTools: true, directEntry: false });
     t.after(() => state.disposeTools());
+    assert.equal(state.canOpenDemo(), mode === 'solo', 'Only authored Solo exposes demo entry.');
+    for (const id of ['demo-button', 'demo-all-button'])
+      assert.equal(state.$(id).hidden, mode !== 'solo');
     assert.equal(state.canActivateOffline(), true);
     state.shell.open('settings');
     state.$('snake-menu-settings-tab-content').click();
@@ -1345,6 +1370,31 @@ test('selecting a new library mission launches directly while retaining the olde
     back.searchParams.get('seed'),
     new URL(state.location.href).searchParams.get('seed'),
   );
+});
+
+test('Snake demo actions follow mode changes and stay outside excluded menu navigation', async () => {
+  const state = await harness({ directEntry: false });
+  for (const mode of ['solo', 'team', 'versus', 'solo']) {
+    state.$('mode-tabs').querySelector(`[data-mode="${mode}"]`).click();
+    state.shell.openHome();
+    for (const id of ['demo-button', 'demo-all-button'])
+      assert.equal(state.$(id).hidden, mode !== 'solo', `${mode}: ${id}`);
+    assert.equal(state.canOpenDemo(), mode === 'solo');
+    const settings = state.shell.elements.buttons.settings;
+    settings.focus();
+    settings.emit('keydown', { key: 'ArrowDown', code: 'ArrowDown', repeat: false });
+    assert.equal(
+      state.document.activeElement,
+      mode === 'solo' ? state.$('demo-button') : state.shell.elements.buttons.sound,
+    );
+  }
+});
+
+test('community Snake keeps both demo actions hidden even in Solo', async () => {
+  const state = await harness({ query: '&community=test-pack&ready=1' });
+  state.shell.openHome();
+  assert.equal(state.canOpenDemo(), false);
+  for (const id of ['demo-button', 'demo-all-button']) assert.equal(state.$(id).hidden, true);
 });
 
 test('the shared keyboard navigator moves menu focus without leaking directional input into Snake', async () => {

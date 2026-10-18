@@ -1,0 +1,3368 @@
+{
+  "format": "snake-demo-coverage.v1",
+  "required": 240,
+  "verified": 240,
+  "missing": [],
+  "entries": [
+    {
+      "levelId": "classic-snake-open-loop",
+      "levelIdentity": "5f286bbd6eb04450",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 18.6,
+      "ticks": 93,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-two-landings",
+      "levelIdentity": "c1f2c6a1cdab450c",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 19.6,
+      "ticks": 98,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-first-baffle",
+      "levelIdentity": "f50c5e0aed79ca12",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 21.6,
+      "ticks": 108,
+      "progress": {
+        "catches": 9,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-offset-docks",
+      "levelIdentity": "bb246ac8df19d088",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 20.4,
+      "ticks": 102,
+      "progress": {
+        "catches": 9,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-room-to-follow",
+      "levelIdentity": "1d3e6e121c09c7f3",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 31.2,
+      "ticks": 156,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-first-circuit",
+      "levelIdentity": "edeee557857dd00e",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 28.2,
+      "ticks": 141,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-open-elbow",
+      "levelIdentity": "99d0c96d9f562a04",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 16.34,
+      "ticks": 86,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-u-turn-yard",
+      "levelIdentity": "e0c3d42af698e5f0",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 37.05,
+      "ticks": 195,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-staggered-elbows",
+      "levelIdentity": "1cf96754051b6779",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 22.99,
+      "ticks": 121,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-turning-pockets",
+      "levelIdentity": "d753cd3509fd8213",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 36.1,
+      "ticks": 190,
+      "progress": {
+        "catches": 9,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-s-bend",
+      "levelIdentity": "acdcf8db54f407d8",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 22.99,
+      "ticks": 121,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-elbow-exchange",
+      "levelIdentity": "13e84fa5cdc7f81c",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 32.3,
+      "ticks": 170,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-long-island",
+      "levelIdentity": "988bb00936b30aed",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 19.26,
+      "ticks": 107,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-split-islands",
+      "levelIdentity": "19f887b8e41225cd",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 35.64,
+      "ticks": 198,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-bent-causeway",
+      "levelIdentity": "460d6bf0139ce4a7",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 22.14,
+      "ticks": 123,
+      "progress": {
+        "catches": 9,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-three-detours",
+      "levelIdentity": "fcf84927be070af6",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 41.04,
+      "ticks": 228,
+      "progress": {
+        "catches": 11,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-inner-or-outer",
+      "levelIdentity": "2bcd9e4742085cdc",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 23.76,
+      "ticks": 132,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-long-circuit",
+      "levelIdentity": "02787cd441f449f9",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 44.1,
+      "ticks": 245,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-forked-chase",
+      "levelIdentity": "4b97ef31c9e3125a",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 39.42,
+      "ticks": 219,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-parallel-paths",
+      "levelIdentity": "2bca9b147b9ad593",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 40.5,
+      "ticks": 225,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-crossroads",
+      "levelIdentity": "8e11475454493c83",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 42.3,
+      "ticks": 235,
+      "progress": {
+        "catches": 13,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-broken-divider",
+      "levelIdentity": "85a5b728b3d7d7c5",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 44.46,
+      "ticks": 247,
+      "progress": {
+        "catches": 13,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-runner-triangle",
+      "levelIdentity": "bd5cd9872856efe3",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 49.68,
+      "ticks": 276,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-cutoff-network",
+      "levelIdentity": "dde74f9c88bc4e67",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 61.02,
+      "ticks": 339,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-keep-the-tail",
+      "levelIdentity": "082fbfee8f25eda6",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 19.075,
+      "ticks": 109,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-lighten-at-home",
+      "levelIdentity": "b117cb5700ab8a7d",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 29.575,
+      "ticks": 169,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-banking-steps",
+      "levelIdentity": "7714e722760fff36",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 18.9,
+      "ticks": 108,
+      "progress": {
+        "catches": 11,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-persistent-hub",
+      "levelIdentity": "03e76a1a7a7c47a8",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 31.5,
+      "ticks": 180,
+      "progress": {
+        "catches": 13,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-two-return-rhythm",
+      "levelIdentity": "57444d4780ed642f",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 20.3,
+      "ticks": 116,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-return-weave",
+      "levelIdentity": "fea79b6fe57374a1",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 35.525,
+      "ticks": 203,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-one-warning",
+      "levelIdentity": "a4c55b685f0eea14",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 35.78,
+      "ticks": 207,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-warning-courtyard",
+      "levelIdentity": "3e94b6df28930df3",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 44.62,
+      "ticks": 265,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-crossed-sightlines",
+      "levelIdentity": "b6c76b9a8d071675",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 39.13,
+      "ticks": 232,
+      "progress": {
+        "catches": 13,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-screened-approach",
+      "levelIdentity": "44c0a13b53ec3f52",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 48.92,
+      "ticks": 294,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-guarded-returns",
+      "levelIdentity": "b2d7e3e38a0a0272",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 39.43,
+      "ticks": 236,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-garden-crossfire",
+      "levelIdentity": "49a25edf2fd12734",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 37.58,
+      "ticks": 222,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-opposite-arrivals",
+      "levelIdentity": "2623e6297b8a379c",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 32.92,
+      "ticks": 195,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-crossing-schedule",
+      "levelIdentity": "567887bb84aeca29",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 45.35,
+      "ticks": 273,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-paired-loops",
+      "levelIdentity": "33761644daf0af59",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 31.22,
+      "ticks": 186,
+      "progress": {
+        "catches": 13,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-shared-detour",
+      "levelIdentity": "7d667b5d0b63eecc",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 57.88,
+      "ticks": 348,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-support-corridor",
+      "levelIdentity": "ec32729d4ceaad9c",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 28.85,
+      "ticks": 174,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-shared-circuit",
+      "levelIdentity": "199d0bd069ff8cc7",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 51.2,
+      "ticks": 306,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-long-opening",
+      "levelIdentity": "4cb7cb256ec495d8",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 47.68,
+      "ticks": 294,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-fork-and-warning",
+      "levelIdentity": "b28ac9c9870bee32",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 47.98,
+      "ticks": 308,
+      "progress": {
+        "catches": 18,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-ordered-islands",
+      "levelIdentity": "a0bb40ecfaadd48b",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 30.51,
+      "ticks": 188,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-last-shedding-bank",
+      "levelIdentity": "0f29c0163c56149c",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 61.855,
+      "ticks": 399,
+      "progress": {
+        "catches": 19,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-woven-gauntlet",
+      "levelIdentity": "10a5319740a44cc2",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 36.825,
+      "ticks": 227,
+      "progress": {
+        "catches": 14,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-snake-final-weave",
+      "levelIdentity": "119560d913f3c503",
+      "simulationIdentity": "classic-snake-core.v1",
+      "outcome": "won",
+      "durationSeconds": 75.655,
+      "ticks": 491,
+      "progress": {
+        "catches": 20,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-oval-intercept",
+      "levelIdentity": "508b71a74e577f2a",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 8.4,
+      "ticks": 42,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-split-yard",
+      "levelIdentity": "bd26c644bce92f20",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 8.8,
+      "ticks": 44,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-island-clock",
+      "levelIdentity": "819d0500cd5bac2e",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 5.4,
+      "ticks": 27,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-passing-bays",
+      "levelIdentity": "79e1322723a69adb",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 14,
+      "ticks": 70,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-crossroads",
+      "levelIdentity": "bf98a0a5ad40aa55",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 19.6,
+      "ticks": 98,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-inner-shortcut",
+      "levelIdentity": "69c10554eb74762c",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 15,
+      "ticks": 75,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-open-intercept",
+      "levelIdentity": "23cf1e77bd083523",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 13,
+      "ticks": 65,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-blind-corner",
+      "levelIdentity": "5a290d1abe0d048e",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 17,
+      "ticks": 85,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-zigzag-exit",
+      "levelIdentity": "58e49a07ff284109",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 21.4,
+      "ticks": 107,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-broken-ring",
+      "levelIdentity": "dbf9eea10fcacfc8",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 24.6,
+      "ticks": 123,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-border-cutoff",
+      "levelIdentity": "81a50d67164279de",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 16.2,
+      "ticks": 81,
+      "progress": {
+        "catches": 7,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-three-way-escape",
+      "levelIdentity": "a4de57fcf681cb1e",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 23.6,
+      "ticks": 118,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-first-dash",
+      "levelIdentity": "4695f2063b5c93ee",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 12.8,
+      "ticks": 64,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-corner-pause",
+      "levelIdentity": "590fc94e4b5c7013",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 22.8,
+      "ticks": 114,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-alternating-straights",
+      "levelIdentity": "f963b753edb6bb5d",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 23,
+      "ticks": 115,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-staggered-cover",
+      "levelIdentity": "9f7ac00b01445f9f",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 16.4,
+      "ticks": 82,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-crossing-bursts",
+      "levelIdentity": "c9d601108a557a93",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 15.2,
+      "ticks": 76,
+      "progress": {
+        "catches": 7,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-long-way-round",
+      "levelIdentity": "4d7c8ef78ef3b55f",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 29,
+      "ticks": 145,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-first-shutter",
+      "levelIdentity": "35a78312957f206a",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 20.4,
+      "ticks": 102,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-split-corridor",
+      "levelIdentity": "6b91cb009f45ae30",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 15.4,
+      "ticks": 77,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-offset-windows",
+      "levelIdentity": "eba7578e659b8db8",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 21.4,
+      "ticks": 107,
+      "progress": {
+        "catches": 7,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-clockwork-ring",
+      "levelIdentity": "a9934579f9280f70",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 24.4,
+      "ticks": 122,
+      "progress": {
+        "catches": 7,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-boundary-detour",
+      "levelIdentity": "0a54845778adbf19",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 27.6,
+      "ticks": 138,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-return-junction",
+      "levelIdentity": "0d9a24b2bbe79762",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 26.8,
+      "ticks": 134,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-first-pulse",
+      "levelIdentity": "5ec69024aa649b9c",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 26.8,
+      "ticks": 134,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-cable-service",
+      "levelIdentity": "a829ab725f323368",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 28,
+      "ticks": 140,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-choose-the-detour",
+      "levelIdentity": "bbed99a0ab224202",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 21.8,
+      "ticks": 109,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-courier-crossing",
+      "levelIdentity": "be9635827fbaa160",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 29.6,
+      "ticks": 148,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-shared-supply",
+      "levelIdentity": "c62a317317b5d364",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 28,
+      "ticks": 140,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-last-offer",
+      "levelIdentity": "ffa7f4b969bcd6f6",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 27.6,
+      "ticks": 138,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-patrol-into-sprint",
+      "levelIdentity": "f44046ff6267311d",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 29.6,
+      "ticks": 148,
+      "progress": {
+        "catches": 9,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-runner-at-the-window",
+      "levelIdentity": "db4bc6b78f88eb7d",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 32.4,
+      "ticks": 162,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-border-relay",
+      "levelIdentity": "670811ad3893a75f",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 18.8,
+      "ticks": 94,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-forked-interception",
+      "levelIdentity": "748e4afddd0b5d69",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 30.8,
+      "ticks": 154,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-supply-circuit",
+      "levelIdentity": "8cc824941332f2e9",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 33.6,
+      "ticks": 168,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-pursuit-final-airfield",
+      "levelIdentity": "f83ad4dbf20352e4",
+      "simulationIdentity": "classic-snake-core.v2",
+      "outcome": "won",
+      "durationSeconds": 47.4,
+      "ticks": 237,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-refuge-bays",
+      "levelIdentity": "46e82c16b06217dd",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 9.4,
+      "ticks": 47,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-switchback-yard",
+      "levelIdentity": "40be051eb6b6a812",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 17.2,
+      "ticks": 86,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-rendezvous-crossing",
+      "levelIdentity": "811025316b830a33",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 18.4,
+      "ticks": 92,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-cable-cutoff",
+      "levelIdentity": "2005a9d3d15a1900",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 14.6,
+      "ticks": 73,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-return-pincer",
+      "levelIdentity": "b7bbeb4024e2d32e",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 13.4,
+      "ticks": 67,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-twin-intercepts",
+      "levelIdentity": "e088f6d8ed3f9f06",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 19.6,
+      "ticks": 98,
+      "progress": {
+        "catches": 9,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-shield-window",
+      "levelIdentity": "e9f8a48c9005bcb8",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 13.2,
+      "ticks": 66,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-brace-break",
+      "levelIdentity": "dc439981ffc2f515",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 21.4,
+      "ticks": 107,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-shutter-flank",
+      "levelIdentity": "a98f40acb2dfc8bc",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 11,
+      "ticks": 55,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-frozen-opening",
+      "levelIdentity": "7d407a87059bb601",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 12.6,
+      "ticks": 63,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-supply-flanks",
+      "levelIdentity": "eef89749f53e155f",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 16.6,
+      "ticks": 83,
+      "progress": {
+        "catches": 9,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-living-living-airfield",
+      "levelIdentity": "2ac448d9723ffe2e",
+      "simulationIdentity": "classic-snake-core.v3",
+      "outcome": "won",
+      "durationSeconds": 26.6,
+      "ticks": 133,
+      "progress": {
+        "catches": 12,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-signal-check",
+      "levelIdentity": "0bafd878ee504dfb",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 8,
+      "ticks": 40,
+      "progress": {
+        "catches": 2,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-quiet-return",
+      "levelIdentity": "d5b469e0264c06f7",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 15.6,
+      "ticks": 78,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-lane-window",
+      "levelIdentity": "c0f2e9930b0624bf",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 8.8,
+      "ticks": 44,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-two-returns",
+      "levelIdentity": "a0dbdf952732f2db",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 8.4,
+      "ticks": 42,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-relay-key",
+      "levelIdentity": "4140199928761bb1",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 5.4,
+      "ticks": 27,
+      "progress": {
+        "catches": 1,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-linked-courts",
+      "levelIdentity": "97f23df0d0afdd76",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 7.8,
+      "ticks": 39,
+      "progress": {
+        "catches": 1,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-broadcast-check",
+      "levelIdentity": "0624f8d1c86fdf20",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 12,
+      "ticks": 60,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-quiet-channel",
+      "levelIdentity": "0c73cc30378d086a",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 17,
+      "ticks": 85,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-signal-crossing",
+      "levelIdentity": "3aef3078d5124c74",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 17.6,
+      "ticks": 88,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-relay-airfield",
+      "levelIdentity": "73011a72c515977c",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 19.2,
+      "ticks": 96,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-border-watch",
+      "levelIdentity": "e9c12d04e2db9020",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 13.4,
+      "ticks": 67,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-border-cutoff",
+      "levelIdentity": "50565d423def850c",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 31.2,
+      "ticks": 156,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-contour-orbit",
+      "levelIdentity": "b4b4bc1d8e4e146f",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 7.2,
+      "ticks": 36,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-contour-transfer",
+      "levelIdentity": "09470716cb317f45",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 27.8,
+      "ticks": 139,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-wake-watch",
+      "levelIdentity": "0aadabe8bbf27ac1",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 10.4,
+      "ticks": 52,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-wake-courtyard",
+      "levelIdentity": "06ffb01f893a39c1",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 31.2,
+      "ticks": 156,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-ricochet-line",
+      "levelIdentity": "ccbb2ffa15192ee2",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 10.6,
+      "ticks": 53,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-ricochet-yard",
+      "levelIdentity": "1ece1dc4f9aaab47",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 26.2,
+      "ticks": 131,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-open-seam",
+      "levelIdentity": "73248b5b35497a68",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 5.2,
+      "ticks": 26,
+      "progress": {
+        "catches": 2,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-seam-return",
+      "levelIdentity": "2a658d8058f386e4",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 9.6,
+      "ticks": 48,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-guard-line",
+      "levelIdentity": "ed0a0a1ea1af06ad",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 7.4,
+      "ticks": 37,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-guard-return",
+      "levelIdentity": "479254861a90336a",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 15.2,
+      "ticks": 76,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-field-links",
+      "levelIdentity": "b93e4eace6e814f5",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 12.6,
+      "ticks": 63,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-field-field-finale",
+      "levelIdentity": "ace6998cd8fede77",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 24.6,
+      "ticks": 123,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-orchard-fork",
+      "levelIdentity": "5b5e4563f79fbbeb",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 7.8,
+      "ticks": 39,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-switchback-courts",
+      "levelIdentity": "b4579800c8729531",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 12.2,
+      "ticks": 61,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-opposite-platforms",
+      "levelIdentity": "27c6e297385a4b7f",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 11,
+      "ticks": 55,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-boundary-exchange",
+      "levelIdentity": "273807a8838fa2bb",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 6,
+      "ticks": 30,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-mirror-returns",
+      "levelIdentity": "1784c5f951fd6479",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 13.8,
+      "ticks": 69,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-inner-outer-transfer",
+      "levelIdentity": "d1490fd048fd71d9",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 11.4,
+      "ticks": 57,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-shutter-split",
+      "levelIdentity": "dbd6b7b10e94859e",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 13.6,
+      "ticks": 68,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-pulse-detour",
+      "levelIdentity": "6d482da589b940d5",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 15.8,
+      "ticks": 79,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-tail-workshop",
+      "levelIdentity": "dbbd420350e3b755",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 20.2,
+      "ticks": 101,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-courier-overpass",
+      "levelIdentity": "d562e28909601ca9",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 23.8,
+      "ticks": 119,
+      "progress": {
+        "catches": 10,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-breaking-bridge",
+      "levelIdentity": "5e320aa21b40eb3b",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 8.8,
+      "ticks": 44,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-clockwork-intercepts",
+      "levelIdentity": "c5b36b7768445fde",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 17.2,
+      "ticks": 86,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-edge-of-reception",
+      "levelIdentity": "5d8f6a3e67947236",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 15.8,
+      "ticks": 79,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-blind-bend",
+      "levelIdentity": "a9a738adc504b46c",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 8.6,
+      "ticks": 43,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-moving-shadow",
+      "levelIdentity": "1ac5594ec1cbc09d",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 10.2,
+      "ticks": 51,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-quiet-relay",
+      "levelIdentity": "d4dd21a66e56a84a",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 16,
+      "ticks": 80,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-clear-ground",
+      "levelIdentity": "404d5118f3010d8f",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 11,
+      "ticks": 55,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-radio-chase",
+      "levelIdentity": "83044fe45da47444",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 19.6,
+      "ticks": 98,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-outpost-circuit",
+      "levelIdentity": "b39006fc5e86eb85",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 15.6,
+      "ticks": 78,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-crosswind-gates",
+      "levelIdentity": "bce6408f9740c8d3",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 13,
+      "ticks": 65,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-relay-islands",
+      "levelIdentity": "4529808c03fd3271",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 18.2,
+      "ticks": 91,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-waking-junction",
+      "levelIdentity": "230a9943f2966e6b",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 11.4,
+      "ticks": 57,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-signal-workshop",
+      "levelIdentity": "9b45a92936f9cdb8",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 13,
+      "ticks": 65,
+      "progress": {
+        "catches": 6,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-expedition-four-routes-home",
+      "levelIdentity": "c991d3126b29f5a3",
+      "simulationIdentity": "classic-snake-core.v4",
+      "outcome": "won",
+      "durationSeconds": 24.6,
+      "ticks": 123,
+      "progress": {
+        "catches": 8,
+        "deliveries": 0,
+        "stages": 0,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-first-dispatch",
+      "levelIdentity": "11773c7d9d5b3a81",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 6.2,
+      "ticks": 31,
+      "progress": {
+        "catches": 2,
+        "deliveries": 0,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-long-and-short",
+      "levelIdentity": "0d115c9e83882233",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 11.2,
+      "ticks": 56,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-platform-cut",
+      "levelIdentity": "4d1ab5a2f1419093",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 11,
+      "ticks": 55,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-courier-gap",
+      "levelIdentity": "43f0107590eb4d6e",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15,
+      "ticks": 75,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-twin-dispatch",
+      "levelIdentity": "a9dca6de1eeae778",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15,
+      "ticks": 75,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-edge-express",
+      "levelIdentity": "673efe606a12884e",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15,
+      "ticks": 75,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-shutter-transfer",
+      "levelIdentity": "b184dfe100be1795",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 5.6,
+      "ticks": 28,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-last-departure",
+      "levelIdentity": "07a81a5fbe39d5f8",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 14.2,
+      "ticks": 71,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-first-pressure",
+      "levelIdentity": "2c1fe343abdc689f",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 9.4,
+      "ticks": 47,
+      "progress": {
+        "catches": 1,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-near-and-far",
+      "levelIdentity": "f154225ad1aafaf3",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 14.2,
+      "ticks": 71,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-pressure-elbow",
+      "levelIdentity": "dcf4241d0128cb83",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 9,
+      "ticks": 45,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-double-pressure",
+      "levelIdentity": "fa78e2dcae26439f",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 20.8,
+      "ticks": 104,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-heavy-crossing",
+      "levelIdentity": "75364633231d1f5c",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 16.2,
+      "ticks": 81,
+      "progress": {
+        "catches": 1,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-runner-valve",
+      "levelIdentity": "8f1e594e004a91ea",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 8.4,
+      "ticks": 42,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-edge-pressure",
+      "levelIdentity": "436241fcf03e3156",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 18.4,
+      "ticks": 92,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-assembly-return",
+      "levelIdentity": "f5cc15b365a382db",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 33.2,
+      "ticks": 166,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-orchard-post",
+      "levelIdentity": "ec235228f7a15c8a",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 10.4,
+      "ticks": 52,
+      "progress": {
+        "catches": 2,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-split-delivery",
+      "levelIdentity": "e1918ee0c0bf8ce2",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 28.4,
+      "ticks": 142,
+      "progress": {
+        "catches": 2,
+        "deliveries": 4,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-glasshouse-elbow",
+      "levelIdentity": "d88138418ce6571a",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15,
+      "ticks": 75,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-two-harvests",
+      "levelIdentity": "f8e8daded79104c6",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 19.4,
+      "ticks": 97,
+      "progress": {
+        "catches": 3,
+        "deliveries": 4,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-refuge-cargo",
+      "levelIdentity": "26a4135f13d42919",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 16.6,
+      "ticks": 83,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-irrigation-shortcut",
+      "levelIdentity": "fb0e73f64bf689d1",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 20.4,
+      "ticks": 102,
+      "progress": {
+        "catches": 2,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-border-harvest",
+      "levelIdentity": "3eedd7ac1e11feee",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 19.8,
+      "ticks": 99,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-harvest-rendezvous",
+      "levelIdentity": "25d806d94f56d275",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 25.4,
+      "ticks": 127,
+      "progress": {
+        "catches": 5,
+        "deliveries": 4,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-harbor-clearances",
+      "levelIdentity": "5d83690bfcae9dfe",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 8.6,
+      "ticks": 43,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-seam-parcels",
+      "levelIdentity": "e369cbc578b30c57",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 14.4,
+      "ticks": 72,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-north-south",
+      "levelIdentity": "d15822734f189b53",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 7.8,
+      "ticks": 39,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-offset-quays",
+      "levelIdentity": "bc3e68e1c136bc7d",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 11.6,
+      "ticks": 58,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-tidal-door",
+      "levelIdentity": "0c06c28dcf0e6e34",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 12.2,
+      "ticks": 61,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-quay-dispatch",
+      "levelIdentity": "8b2a3fc2eb02294c",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 5.4,
+      "ticks": 27,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-lighten-at-sea",
+      "levelIdentity": "010fb4051ebad37a",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15.8,
+      "ticks": 79,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-horizon-relay",
+      "levelIdentity": "e1471e2abdc078e1",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 16.4,
+      "ticks": 82,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-furnace-permit",
+      "levelIdentity": "09d7d292a4e33fb8",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 9.6,
+      "ticks": 48,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-coolant-cargo",
+      "levelIdentity": "aeced2db1f0b2d03",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 22.8,
+      "ticks": 114,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-watch-the-aim",
+      "levelIdentity": "8e70816e29867917",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 12.8,
+      "ticks": 64,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-pressure-flank",
+      "levelIdentity": "359fcd0d6ee91587",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 18.4,
+      "ticks": 92,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-crossing-orders",
+      "levelIdentity": "4d621c623a0b096c",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 9.8,
+      "ticks": 49,
+      "progress": {
+        "catches": 2,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-guarded-transfer",
+      "levelIdentity": "03b0a23c0d083d3d",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 21.2,
+      "ticks": 106,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-furnace-switch",
+      "levelIdentity": "e681060ab85a09a4",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 8.6,
+      "ticks": 43,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-works-clearance",
+      "levelIdentity": "057baedbc1a45374",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 20.6,
+      "ticks": 103,
+      "progress": {
+        "catches": 5,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-dock-permission",
+      "levelIdentity": "e69f3e74de1abffb",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 12.4,
+      "ticks": 62,
+      "progress": {
+        "catches": 1,
+        "deliveries": 2,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-two-landings",
+      "levelIdentity": "a6897ed04cad9cfd",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 31.2,
+      "ticks": 156,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-pump-return",
+      "levelIdentity": "9414e5c372115371",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 23.6,
+      "ticks": 118,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-loading-dispatch",
+      "levelIdentity": "52e19f15243e8b12",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 18.8,
+      "ticks": 94,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-harbor-window",
+      "levelIdentity": "cc5f857e1d09e6e7",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 18.8,
+      "ticks": 94,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-relay-load",
+      "levelIdentity": "86f722f9fdd529fa",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 14.4,
+      "ticks": 72,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-outbound-inbound",
+      "levelIdentity": "56ba4dee37e4ce04",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 16,
+      "ticks": 80,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-harbor-homecoming",
+      "levelIdentity": "26877c5e56e17468",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 34.4,
+      "ticks": 172,
+      "progress": {
+        "catches": 5,
+        "deliveries": 4,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-silent-parcel",
+      "levelIdentity": "8f2cb0b6841ff488",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 19.6,
+      "ticks": 98,
+      "progress": {
+        "catches": 2,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-ridge-reception",
+      "levelIdentity": "8ee4547f11e1415a",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 8.6,
+      "ticks": 43,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-broadcast-freight",
+      "levelIdentity": "a33588a87257a1a0",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 13.6,
+      "ticks": 68,
+      "progress": {
+        "catches": 2,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-unseen-dispatch",
+      "levelIdentity": "f641ce394215b923",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 14.4,
+      "ticks": 72,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-clear-side-channel",
+      "levelIdentity": "4174ff1d2632441f",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 17,
+      "ticks": 85,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-pulse-rendezvous",
+      "levelIdentity": "ce6c74e3bf14bfce",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 22.2,
+      "ticks": 111,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-receiver-bridge",
+      "levelIdentity": "d3c9e52aa2aa735d",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 12.8,
+      "ticks": 64,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-summit-blackbird",
+      "levelIdentity": "39277dee4c01d97b",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 16.6,
+      "ticks": 83,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-first-notch",
+      "levelIdentity": "29cf908cf990f4ff",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 12.2,
+      "ticks": 61,
+      "progress": {
+        "catches": 2,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-loaded-excavation",
+      "levelIdentity": "e9cbc685262d90c3",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 21.4,
+      "ticks": 107,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-stepped-masonry",
+      "levelIdentity": "4bafa887fd69a5d5",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15.4,
+      "ticks": 77,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-survey-seam",
+      "levelIdentity": "366c0a72793d3cbf",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 21.6,
+      "ticks": 108,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-temporary-permanent",
+      "levelIdentity": "3438ab1a37574b98",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 12.8,
+      "ticks": 64,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-ricochet-quarry",
+      "levelIdentity": "1fb893cbebdc4e06",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 17.4,
+      "ticks": 87,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-restored-arch",
+      "levelIdentity": "cc29b64ebbf72ea6",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 22.2,
+      "ticks": 111,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-garden-breaches",
+      "levelIdentity": "7399e9272640bce2",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 19.6,
+      "ticks": 98,
+      "progress": {
+        "catches": 5,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-glasshouse-intentions",
+      "levelIdentity": "210d00eefae32140",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 12.8,
+      "ticks": 64,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-orchard-forks",
+      "levelIdentity": "c23637b1a2031284",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 11.2,
+      "ticks": 56,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-paired-shelters",
+      "levelIdentity": "38a9d1ee86263431",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 13.8,
+      "ticks": 69,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-held-hedge",
+      "levelIdentity": "950fff0fbfeab025",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 14.8,
+      "ticks": 74,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-seedling-spiral",
+      "levelIdentity": "476071d1f345f01f",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 25,
+      "ticks": 125,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-garden-seam",
+      "levelIdentity": "0b09ee5ae90b975b",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 12,
+      "ticks": 60,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-quiet-conservatory",
+      "levelIdentity": "d7eddcacd005b66c",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 20.2,
+      "ticks": 101,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-three-garden-returns",
+      "levelIdentity": "09bae62bec619f67",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 25.4,
+      "ticks": 127,
+      "progress": {
+        "catches": 4,
+        "deliveries": 3,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-pulse-loading-bay",
+      "levelIdentity": "552f540879aaded6",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 23.4,
+      "ticks": 117,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-reel-before-return",
+      "levelIdentity": "17a281cf9206d687",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 26.4,
+      "ticks": 132,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-cold-window",
+      "levelIdentity": "bac5d66319eb0f64",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15.4,
+      "ticks": 77,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-radio-spares",
+      "levelIdentity": "7867cf549ce79256",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 24.2,
+      "ticks": 121,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-short-cable-long-door",
+      "levelIdentity": "08d65a0d95b29489",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 23.6,
+      "ticks": 118,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-freight-flank",
+      "levelIdentity": "650e8f3723875eee",
+      "simulationIdentity": "classic-snake-core.v6",
+      "outcome": "won",
+      "durationSeconds": 14.6,
+      "ticks": 73,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-two-offers-one-route",
+      "levelIdentity": "787e46d343aa5307",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 21.4,
+      "ticks": 107,
+      "progress": {
+        "catches": 5,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-last-train-home",
+      "levelIdentity": "3bc2f0259b8d1c2f",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 17,
+      "ticks": 85,
+      "progress": {
+        "catches": 5,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-shared-manifest",
+      "levelIdentity": "78d641321682ecdc",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15.2,
+      "ticks": 76,
+      "progress": {
+        "catches": 2,
+        "deliveries": 2,
+        "stages": 1,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-opposed-levers",
+      "levelIdentity": "93e03c1b2db935af",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 11.8,
+      "ticks": 59,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-two-held-doors",
+      "levelIdentity": "e3c38db4716b6cf2",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 20.8,
+      "ticks": 104,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-opposite-loads",
+      "levelIdentity": "31369ef5f2189bc6",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 36.2,
+      "ticks": 181,
+      "progress": {
+        "catches": 3,
+        "deliveries": 4,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-shared-frequency",
+      "levelIdentity": "d35e4eab9cd761f8",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 13.8,
+      "ticks": 69,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-staggered-rendezvous",
+      "levelIdentity": "c11dee2d061dfc8a",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 17.4,
+      "ticks": 87,
+      "progress": {
+        "catches": 5,
+        "deliveries": 0,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-relay-partners",
+      "levelIdentity": "556ce7003e21cc7b",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 17.8,
+      "ticks": 89,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-summit-coordination",
+      "levelIdentity": "30106d737d98f7a0",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 10.8,
+      "ticks": 54,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-citadel-dispatch",
+      "levelIdentity": "8ea72c84ba32edfe",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 18,
+      "ticks": 90,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-stone-cable",
+      "levelIdentity": "8c116d15ea2f1e0a",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 18.4,
+      "ticks": 92,
+      "progress": {
+        "catches": 3,
+        "deliveries": 2,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-citadel-reception",
+      "levelIdentity": "cd710f16aaeef5a2",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 24.6,
+      "ticks": 123,
+      "progress": {
+        "catches": 4,
+        "deliveries": 0,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-furnace-terrace",
+      "levelIdentity": "a4c438f030be9e40",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 15.8,
+      "ticks": 79,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-border-citadel",
+      "levelIdentity": "1ae8ecea0a8259e4",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 23.2,
+      "ticks": 116,
+      "progress": {
+        "catches": 4,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-garden-machinery",
+      "levelIdentity": "0672d5bf4674594a",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 14.8,
+      "ticks": 74,
+      "progress": {
+        "catches": 3,
+        "deliveries": 0,
+        "stages": 2,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-three-court-delivery",
+      "levelIdentity": "c07bdc1ab92d93cd",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 25.8,
+      "ticks": 129,
+      "progress": {
+        "catches": 5,
+        "deliveries": 3,
+        "stages": 3,
+        "relays": 0
+      }
+    },
+    {
+      "levelId": "classic-operation-living-citadel-finale",
+      "levelIdentity": "cc386a8036a86c72",
+      "simulationIdentity": "classic-snake-core.v5",
+      "outcome": "won",
+      "durationSeconds": 25.8,
+      "ticks": 129,
+      "progress": {
+        "catches": 6,
+        "deliveries": 2,
+        "stages": 3,
+        "relays": 0
+      }
+    }
+  ]
+}

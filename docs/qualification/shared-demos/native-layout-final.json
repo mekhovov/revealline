@@ -1,0 +1,616 @@
+{
+  "format": "SharedDemoNativeLayout.v1",
+  "phase": "after",
+  "started": "2026-10-18T06:48:19.252Z",
+  "checks": [
+    {
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "board": {
+        "x": 8,
+        "y": 129.5625,
+        "width": 374,
+        "height": 535.5,
+        "right": 382,
+        "bottom": 665.0625
+      },
+      "surface": {
+        "x": 8,
+        "y": 129.5625,
+        "width": 374,
+        "height": 535.5,
+        "right": 382,
+        "bottom": 665.0625
+      },
+      "canvas": {
+        "x": 8,
+        "y": 257.0625,
+        "width": 374,
+        "height": 280.5,
+        "right": 382,
+        "bottom": 537.5625
+      },
+      "image": {
+        "width": 374,
+        "height": 280.5
+      },
+      "centerDelta": {
+        "x": 0,
+        "y": 0
+      },
+      "computed": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center"
+      },
+      "soloCanvasDisplay": "none",
+      "overflow": {
+        "document": false,
+        "dialog": false,
+        "surface": false
+      },
+      "controls": [
+        {
+          "id": "demo-next",
+          "x": 134,
+          "y": 31.5625,
+          "width": 122,
+          "height": 44,
+          "right": 256,
+          "bottom": 75.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-back",
+          "x": 260,
+          "y": 79.5625,
+          "width": 122,
+          "height": 44,
+          "right": 382,
+          "bottom": 123.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-interrupt",
+          "x": 260,
+          "y": 31.5625,
+          "width": 122,
+          "height": 44,
+          "right": 382,
+          "bottom": 75.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-details-toggle",
+          "x": 8,
+          "y": 79.5625,
+          "width": 122,
+          "height": 44,
+          "right": 130,
+          "bottom": 123.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        }
+      ]
+    },
+    {
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "board": {
+        "x": 8,
+        "y": 58,
+        "width": 1264,
+        "height": 734,
+        "right": 1272,
+        "bottom": 792
+      },
+      "surface": {
+        "x": 8,
+        "y": 58,
+        "width": 1264,
+        "height": 734,
+        "right": 1272,
+        "bottom": 792
+      },
+      "canvas": {
+        "x": 8,
+        "y": 58,
+        "width": 1264,
+        "height": 734,
+        "right": 1272,
+        "bottom": 792
+      },
+      "image": {
+        "width": 978.6666666666666,
+        "height": 734
+      },
+      "centerDelta": {
+        "x": 0,
+        "y": 0
+      },
+      "computed": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center"
+      },
+      "soloCanvasDisplay": "none",
+      "overflow": {
+        "document": false,
+        "dialog": false,
+        "surface": false
+      },
+      "controls": [
+        {
+          "id": "demo-next",
+          "x": 791.921875,
+          "y": 8,
+          "width": 88.015625,
+          "height": 44,
+          "right": 879.9375,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-back",
+          "x": 1217.65625,
+          "y": 8,
+          "width": 54.34375,
+          "height": 44,
+          "right": 1272,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-interrupt",
+          "x": 883.9375,
+          "y": 8,
+          "width": 111.453125,
+          "height": 44,
+          "right": 995.390625,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-details-toggle",
+          "x": 999.390625,
+          "y": 8,
+          "width": 120,
+          "height": 44,
+          "right": 1119.390625,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        }
+      ]
+    },
+    {
+      "mode": "sim",
+      "source": "sim:courtyard-05-self-level-17f7577ed3a93f23",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "board": {
+        "x": 8,
+        "y": 129.5625,
+        "width": 374,
+        "height": 515.90625,
+        "right": 382,
+        "bottom": 645.46875
+      },
+      "surface": {
+        "x": 8,
+        "y": 129.5625,
+        "width": 374,
+        "height": 515.90625,
+        "right": 382,
+        "bottom": 645.46875
+      },
+      "canvas": {
+        "x": 8,
+        "y": 129.5625,
+        "width": 374,
+        "height": 515.90625,
+        "right": 382,
+        "bottom": 645.46875
+      },
+      "image": {
+        "width": 373.93204941860466,
+        "height": 515.90625
+      },
+      "centerDelta": {
+        "x": 0,
+        "y": 0
+      },
+      "computed": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center"
+      },
+      "soloCanvasDisplay": "none",
+      "overflow": {
+        "document": false,
+        "dialog": false,
+        "surface": false
+      },
+      "controls": [
+        {
+          "id": "demo-next",
+          "x": 134,
+          "y": 31.5625,
+          "width": 122,
+          "height": 44,
+          "right": 256,
+          "bottom": 75.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-back",
+          "x": 260,
+          "y": 79.5625,
+          "width": 122,
+          "height": 44,
+          "right": 382,
+          "bottom": 123.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-interrupt",
+          "x": 260,
+          "y": 31.5625,
+          "width": 122,
+          "height": 44,
+          "right": 382,
+          "bottom": 75.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-details-toggle",
+          "x": 8,
+          "y": 79.5625,
+          "width": 122,
+          "height": 44,
+          "right": 130,
+          "bottom": 123.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        }
+      ]
+    },
+    {
+      "mode": "sim",
+      "source": "sim:courtyard-05-self-level-17f7577ed3a93f23",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "board": {
+        "x": 8,
+        "y": 58,
+        "width": 1264,
+        "height": 734,
+        "right": 1272,
+        "bottom": 792
+      },
+      "surface": {
+        "x": 8,
+        "y": 58,
+        "width": 1264,
+        "height": 734,
+        "right": 1272,
+        "bottom": 792
+      },
+      "canvas": {
+        "x": 8,
+        "y": 58,
+        "width": 1264,
+        "height": 734,
+        "right": 1272,
+        "bottom": 792
+      },
+      "image": {
+        "width": 1264,
+        "height": 734
+      },
+      "centerDelta": {
+        "x": 0,
+        "y": 0
+      },
+      "computed": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center"
+      },
+      "soloCanvasDisplay": "none",
+      "overflow": {
+        "document": false,
+        "dialog": false,
+        "surface": false
+      },
+      "controls": [
+        {
+          "id": "demo-next",
+          "x": 791.921875,
+          "y": 8,
+          "width": 88.015625,
+          "height": 44,
+          "right": 879.9375,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-back",
+          "x": 1217.65625,
+          "y": 8,
+          "width": 54.34375,
+          "height": 44,
+          "right": 1272,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-interrupt",
+          "x": 883.9375,
+          "y": 8,
+          "width": 111.453125,
+          "height": 44,
+          "right": 995.390625,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-details-toggle",
+          "x": 999.390625,
+          "y": 8,
+          "width": 120,
+          "height": 44,
+          "right": 1119.390625,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        }
+      ]
+    },
+    {
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "board": {
+        "x": 8,
+        "y": 129.5625,
+        "width": 374,
+        "height": 535.5,
+        "right": 382,
+        "bottom": 665.0625
+      },
+      "surface": {
+        "x": 8,
+        "y": 129.5625,
+        "width": 374,
+        "height": 535.5,
+        "right": 382,
+        "bottom": 665.0625
+      },
+      "canvas": {
+        "x": 8,
+        "y": 291.5625,
+        "width": 374,
+        "height": 210.375,
+        "right": 382,
+        "bottom": 501.9375
+      },
+      "image": {
+        "width": 374,
+        "height": 210.375
+      },
+      "centerDelta": {
+        "x": 0,
+        "y": -0.5625
+      },
+      "computed": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center"
+      },
+      "soloCanvasDisplay": "none",
+      "overflow": {
+        "document": false,
+        "dialog": false,
+        "surface": false
+      },
+      "controls": [
+        {
+          "id": "demo-next",
+          "x": 134,
+          "y": 31.5625,
+          "width": 122,
+          "height": 44,
+          "right": 256,
+          "bottom": 75.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-back",
+          "x": 260,
+          "y": 79.5625,
+          "width": 122,
+          "height": 44,
+          "right": 382,
+          "bottom": 123.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-interrupt",
+          "x": 260,
+          "y": 31.5625,
+          "width": 122,
+          "height": 44,
+          "right": 382,
+          "bottom": 75.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-details-toggle",
+          "x": 8,
+          "y": 79.5625,
+          "width": 122,
+          "height": 44,
+          "right": 130,
+          "bottom": 123.5625,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        }
+      ]
+    },
+    {
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "viewport": {
+        "width": 1280,
+        "height": 800
+      },
+      "board": {
+        "x": 8,
+        "y": 58,
+        "width": 1264,
+        "height": 734,
+        "right": 1272,
+        "bottom": 792
+      },
+      "surface": {
+        "x": 8,
+        "y": 58,
+        "width": 1264,
+        "height": 734,
+        "right": 1272,
+        "bottom": 792
+      },
+      "canvas": {
+        "x": 8,
+        "y": 69,
+        "width": 1264,
+        "height": 711,
+        "right": 1272,
+        "bottom": 780
+      },
+      "image": {
+        "width": 1264,
+        "height": 711
+      },
+      "centerDelta": {
+        "x": 0,
+        "y": -0.5
+      },
+      "computed": {
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center"
+      },
+      "soloCanvasDisplay": "none",
+      "overflow": {
+        "document": false,
+        "dialog": false,
+        "surface": false
+      },
+      "controls": [
+        {
+          "id": "demo-next",
+          "x": 791.921875,
+          "y": 8,
+          "width": 88.015625,
+          "height": 44,
+          "right": 879.9375,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-back",
+          "x": 1217.65625,
+          "y": 8,
+          "width": 54.34375,
+          "height": 44,
+          "right": 1272,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-interrupt",
+          "x": 883.9375,
+          "y": 8,
+          "width": 111.453125,
+          "height": 44,
+          "right": 995.390625,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        },
+        {
+          "id": "demo-details-toggle",
+          "x": 999.390625,
+          "y": 8,
+          "width": 120,
+          "height": 44,
+          "right": 1119.390625,
+          "bottom": 52,
+          "enabled": true,
+          "accessible": true,
+          "inViewport": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "finished": "2026-10-18T06:48:35.677Z"
+}

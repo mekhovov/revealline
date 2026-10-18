@@ -1,4 +1,11 @@
 import { OVERFLIGHT_BATTLEFIELDS } from './battlefields.mjs';
+import { installDemoEntry, demoLaunchURL } from '../ui/demo-entry.mjs';
+import { createDemoMusicTransport } from '../ui/demo-music-transport.mjs';
+import {
+  readSurvivalDemoLaunch,
+  survivalDemoProject,
+  survivalDemoSessionOptions,
+} from '../demo-modes/survival-catalog.mjs';
 import { updateOverflightSurvivalHUD } from './survival-hud.mjs';
 import { createOverflightRecords } from './records.mjs';
 import { canonicalJSON } from '../data-json.mjs';
@@ -284,6 +291,9 @@ try {
 } catch {
   /* Storage is optional; local choices remain usable. */
 }
+const demoLaunch =
+  mode.id === 'overflight' && !mode.prototype ? readSurvivalDemoLaunch(params) : null;
+if (demoLaunch) options = survivalDemoSessionOptions(options);
 const persistOptions = () => {
   options = {
     ...options,
@@ -300,17 +310,20 @@ const persistOptions = () => {
 };
 let seed = Number(params.get('seed'));
 if (!Number.isSafeInteger(seed) || seed < 1 || seed > 0xffffffff) seed = mode.defaultProject.seed;
+if (demoLaunch) seed = survivalDemoProject(demoLaunch).seed;
 const reviewCrowd = overflightReviewCrowdSeparation(params, {
   mode: mode.id,
   build: reviewBuild,
   fixture,
 });
-let project = mode.createProject({
-  ...(reviewCrowd ? { crowdSeparation: reviewCrowd } : {}),
-  seed,
-  difficulty: options.difficulty,
-  ...(params.get('layout') ? { layout: params.get('layout') } : {}),
-});
+let project = demoLaunch
+  ? survivalDemoProject(demoLaunch)
+  : mode.createProject({
+      ...(reviewCrowd ? { crowdSeparation: reviewCrowd } : {}),
+      seed,
+      difficulty: options.difficulty,
+      ...(params.get('layout') ? { layout: params.get('layout') } : {}),
+    });
 let compiled = mode.compileProject(project);
 let run = null,
   renderer = null,
@@ -340,6 +353,8 @@ let preparing = false,
   epoch = 0,
   lastPhase = null;
 let lastHUD = 0,
+  demoHost = null,
+  demoFrame = null,
   lastMeasure = 0,
   lastFrame = null,
   offerKey = '',
@@ -473,6 +488,7 @@ function activeModal() {
   return (
     (suspendView?.dialog.open ? suspendView.dialog : null) ??
     (changeDialog?.root.open ? changeDialog.root : null) ??
+    (demoHost?.active ? $('demo-dialog') : null) ??
     settingsTools?.root() ??
     offlinePanel?.root() ??
     modeChoices?.simulatorRoot() ??
@@ -1139,6 +1155,7 @@ async function prepare({
   nextProject = projectForSortie(nextSeed),
   launch = false,
   retainedRun = null,
+  isCurrent = () => true,
   restoreOptions = null,
   expectedAppearance = null,
   restoreAuthored = null,
@@ -1149,6 +1166,7 @@ async function prepare({
   if (!Number.isSafeInteger(nextSeed) || nextSeed < 1 || nextSeed > 0xffffffff)
     throw new TypeError('Invalid preview seed.');
   const ticket = ++epoch;
+  const current = () => !retired && ticket === epoch && isCurrent();
   mode.resetPresentation?.();
   clipRecorder?.cancel();
   if (runtimeFailed) rendererOwner.invalidate();
@@ -1166,10 +1184,10 @@ async function prepare({
   showStatus(text('preparing'));
   try {
     await theme.ready;
-    if (retired || ticket !== epoch) return false;
+    if (!current()) return false;
     const nextWorldSlots = overflightWorldImageSlots(nextCompiled.presentation);
     return await worldSources.use(nextWorldSlots, async (base) => {
-      if (retired || ticket !== epoch) return false;
+      if (!current()) return false;
       const resolvedTheme = theme.snapshot();
       const collection = selectedArcadeCollection(theme.effectivePreferences());
       const cast = castPreferences.snapshot().cast;
@@ -1203,6 +1221,7 @@ async function prepare({
       }
       rendererTouched = true;
       const nextRenderer = await rendererOwner.acquire(JSON.stringify(frozenIdentity), async () => {
+        if (!current()) throw new DOMException('Sortie preparation cancelled.', 'AbortError');
         renderer = null;
         contextGuard.restore();
         recoveryPending = false;
@@ -1250,7 +1269,7 @@ async function prepare({
           },
         });
       });
-      if (retired || ticket !== epoch) return false;
+      if (!current()) return false;
       renderer = nextRenderer;
       preparationIdentity = Object.freeze({
         projectIdentity: nextCompiled.projectIdentity,
@@ -1308,7 +1327,7 @@ async function prepare({
       return true;
     });
   } catch (error) {
-    if (ticket !== epoch || retired) return false;
+    if (!current()) return false;
     preparing = false;
     refreshCharacters();
     if (rendererTouched) runtimeFailed = true;
@@ -1461,6 +1480,29 @@ function measurement({ raw = false } = {}) {
 }
 function onFrame(now) {
   if (retired || preparing || runtimeFailed || !run || !renderer) return;
+  const demoSeconds = demoFrame === null ? 0 : Math.max(0, (now - demoFrame) / 1000);
+  demoFrame = now;
+  if (demoHost?.active) {
+    const controls =
+      controller?.sample({
+        scope: demoHost.gameplayInputActive ? 'flight' : 'menu:shared-demo',
+        spectator: !demoHost.practiceArmed,
+        toggleBoostEligible: demoHost.toggleBoostEligible,
+        timeMs: now,
+      }) ?? {};
+    demoHost.controller({
+      ...controls,
+      gamepads: controller?.gamepads ?? [],
+      sharedController: controller?.sharedFrame,
+      now,
+      flight: controls,
+      ui: { ...controls.ui, confirm: controls.ui?.confirmCommit },
+    });
+    demoHost.update(demoSeconds);
+    return;
+  }
+  demoHost?.update(demoSeconds);
+  if (demoHost?.active) return;
   try {
     if (benchmarkTrial && !completedMeasurement && renderer.measurementComplete()) {
       completedMeasurement = measurement({ raw: true });
@@ -2273,6 +2315,7 @@ navigator = attachControllerNavigation({
   getControlLabels: () => controller?.labels() ?? { confirm: '', back: '', directions: '' },
   onBack: () => {
     if (changeDialog?.root.open) return changeDialog.cancel();
+    if (demoHost?.active) return demoHost.close();
     if (settingsTools?.back()) return;
     if (offlinePanel?.root()) offlinePanel.close();
     else if (modeChoices?.simulatorRoot()) modeChoices.closeSimulator();
@@ -2282,6 +2325,7 @@ navigator = attachControllerNavigation({
   },
   onMenu: () => {
     if (changeDialog?.root.open) return changeDialog.cancel();
+    if (demoHost?.active) return demoHost.interrupt();
     if (settingsTools?.back()) return;
     if (offlinePanel?.root()) offlinePanel.close();
     else if (modeChoices?.simulatorRoot()) modeChoices.closeSimulator();
@@ -2488,6 +2532,7 @@ $('slow-resume').checked = options.slowResume;
 $('flight-traits').checked = options.flightTraits;
 listen($('upgrade-dialog'), 'cancel', (event) => event.preventDefault());
 listen(doc, 'keydown', (event) => {
+  if (demoHost?.active) return;
   if (gameplayKeys.has(event.code)) held.press(event.code, event.repeat);
   if (
     activeModal() ||
@@ -2506,6 +2551,7 @@ listen(
   win,
   'blur',
   guardInstallOfflineBlur(() => {
+    if (demoHost?.active) return demoHost.foregroundLost();
     held.clear();
     pause();
     music?.suspend();
@@ -2513,6 +2559,7 @@ listen(
 );
 listen(doc, 'visibilitychange', () => {
   if (doc.hidden) {
+    if (demoHost?.active) return demoHost.foregroundLost();
     held.clear();
     pause();
     music?.suspend();
@@ -2666,6 +2713,7 @@ listen(win, 'message', async (event) => {
 async function dispose() {
   if (retired) return;
   retired = true;
+  demoHost?.destroy();
   mode.resetPresentation?.();
   epoch++;
   clipRecorder?.dispose();
@@ -2764,6 +2812,100 @@ try {
     seed = compiled.seed;
   }
   await prepare();
+  if (mode.id === 'overflight' && !mode.prototype && !studio && !reviewBuild && !fixture) {
+    demoHost = await installDemoEntry({
+      document: doc,
+      modeId: 'survival',
+      parent: shell.elements.content.home.querySelector('.mode-play-main-menu'),
+      registerActions: (nodes) => shell.addHomeActions(nodes),
+      canOpen: () =>
+        !retired && !preparing && !runtimeFailed && !doc.hidden && !contextGuard.blocked(),
+      canAutoStart: () =>
+        !retired &&
+        !preparing &&
+        !runtimeFailed &&
+        !doc.hidden &&
+        doc.hasFocus() &&
+        activeModal() === shell.elements.home &&
+        ['ready', 'paused', 'won', 'lost'].includes(run?.phase),
+      onEnter() {
+        // Keep the original world and its renderer; never invoke progress/reward paths.
+        mode.pause(run);
+        held.clear();
+        releaseInput();
+        audio.flight?.(run, { active: false });
+        sound.pause();
+        commentator?.suspend();
+        updateShell();
+      },
+      onExit() {
+        held.clear();
+        releaseInput();
+        demoFrame = null;
+        updateShell();
+      },
+      async onFreshStart(source, current) {
+        if (!(await confirmSortieChange()) || !current()) return false;
+        if (source.modeId !== 'survival') {
+          if (!source.launchURL) return false;
+          win.location.assign(
+            appearanceLaunchURL(demoLaunchURL(source), contextualAppearance(doc)),
+          );
+          return true;
+        }
+        const entry = readSurvivalDemoLaunch(new URL(demoLaunchURL(source)).searchParams);
+        if (!entry || entry.levelId !== source.levelId) return false;
+        const previous = { options, seed, project, compiled, run, preparationIdentity };
+        const nextProject = survivalDemoProject(entry);
+        const nextOptions = survivalDemoSessionOptions(options);
+        options = nextOptions;
+        restoreSortieControls();
+        let accepted = false,
+          preparationEpoch = epoch;
+        try {
+          const pending = prepare({
+            nextProject,
+            nextSeed: nextProject.seed,
+            launch: false,
+            isCurrent: current,
+          });
+          preparationEpoch = epoch;
+          accepted = (await pending) && current();
+          if (accepted) {
+            selectedInstalled = false;
+            refreshOperationView();
+            shell.open('home');
+          }
+          return accepted;
+        } finally {
+          if (!accepted && options === nextOptions && epoch === preparationEpoch) {
+            ({ options, seed, project, compiled, run, preparationIdentity } = previous);
+            restoreSortieControls();
+            // A cancelled renderer exchange may already have retired the old
+            // atlas. Reacquire its exact world before exposing the paused run;
+            // the normal epoch guard prevents this recovery replacing a newer
+            // ordinary preparation. Failure retains this run behind recovery UI.
+            if (!retired)
+              await prepare({
+                nextProject: previous.project,
+                nextSeed: previous.seed,
+                retainedRun: previous.run,
+                launch: false,
+              });
+            updateShell();
+          }
+        }
+      },
+      clearInput() {
+        held.clear();
+        releaseInput();
+      },
+      getContext: () => ({ reduced: display.snapshot().effectiveReducedEffects }),
+      menu: (frame) => navigator?.handle(frame),
+      audio: createDemoMusicTransport({ music, audioMaster, audioPreferences }),
+      audioMaster,
+    });
+  }
   $('boot-status').hidden = true;
   Object.defineProperty(win, 'RevealLineOverflight', {
     configurable: true,

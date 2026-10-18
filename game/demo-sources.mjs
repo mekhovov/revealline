@@ -11,6 +11,9 @@ import { prepareImprovPlayer } from './demo-improv-player.mjs';
 import { LIVE_BOT_LEVEL_IDS, supportsDemoBot } from './demo-bot.mjs';
 import { campaignKey } from './library.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from './gameplay-tuning.mjs';
+import { diagnoseDemoReplay } from './demo-replay-diagnostics.mjs';
+import { demoRuntimeEngineHint, preferDemoRuntimeCandidates } from './demo-runtime.mjs';
+export { demoRuntimeEngineHint } from './demo-runtime.mjs';
 
 export async function loadDemoSources({
   entries,
@@ -20,6 +23,8 @@ export async function loadDemoSources({
   fetch: fetcher = globalThis.fetch,
   WorkerClass = globalThis.Worker,
   loading = {},
+  catalogs,
+  engineHint = demoRuntimeEngineHint(),
 }) {
   const checkAbort = () => {
     if (signal?.aborted) throw new DOMException('Cancelled', 'AbortError');
@@ -27,10 +32,8 @@ export async function loadDemoSources({
   checkAbort();
   let clips = [];
   try {
-    clips = resolveDemoCatalog(
-      await loadDemoCatalog({ ...loading, fetch: fetcher, signal }),
-      entries,
-    );
+    const metadata = catalogs ?? [await loadDemoCatalog({ ...loading, fetch: fetcher, signal })];
+    clips = metadata.flatMap((catalog) => resolveDemoCatalog(catalog, entries));
   } catch (error) {
     if (signal?.aborted) throw error;
   }
@@ -53,27 +56,71 @@ export async function loadDemoSources({
     approachable: index === 0,
     async create({ signal }) {
       // Native math can differ between engines. Each alternative is a frozen,
-      // independently authored ordinary replay of this exact pinned input trace.
+      // independently verified ordinary replay of this exact installed content.
       // Only a complete strict verification can select it; never replace outcomes.
-      const candidates = [clip.replayURL, ...(clip.replayVariants ?? [])];
+      const qualified = clip.id.startsWith('solo-qualified-');
+      const recorded = [
+        ...[clip.replayURL, ...(clip.replayVariants ?? [])].map((replayURL) => ({
+          ...clip,
+          replayURL,
+        })),
+        ...(clip.runtimePerformances ?? []).map((performance) => ({ ...clip, ...performance })),
+      ];
+      // Original reviewed clips retain their exact order and compatibility gate.
+      const candidates = qualified
+        ? preferDemoRuntimeCandidates(
+            recorded,
+            engineHint,
+            (candidate) =>
+              candidate.engine ??
+              /\.(chromium|firefox|webkit)\.replay\.json$/.exec(candidate.replayURL)?.[1],
+          )
+        : recorded;
       for (let index = 0; index < candidates.length; index++) {
-        const replay = await loadDemoRecording(
-          { ...clip, replayURL: candidates[index] },
-          { ...loading, fetch: fetcher, signal },
-        );
+        let replay;
         try {
+          replay = await loadDemoRecording(candidates[index], {
+            ...loading,
+            fetch: fetcher,
+            signal,
+          });
           const isLastCandidate = index === candidates.length - 1;
-          const player = await (isLastCandidate && clip.source !== 'local'
+          const player = await (isLastCandidate && clip.source !== 'local' && !qualified
             ? prepareReviewedReplayPlayer(replay, { signal })
             : prepareReplayPlayer(replay, { signal }));
-          if (!['won', 'lost'].includes(player.info.recordedStatus)) {
+          if (
+            !['won', 'lost'].includes(player.info.recordedStatus) ||
+            (candidates[index].outcome && candidates[index].outcome !== player.info.recordedStatus)
+          ) {
             player.dispose();
             throw new Error('Demo recordings must finish with a real win or loss.');
           }
           return player;
         } catch (error) {
+          if (error.name === 'ReplayVerificationError' && !signal?.aborted && qualified) {
+            try {
+              const diagnostic = await withDemoLoadingDeadline(
+                async (signal) => {
+                  const response = await fetcher(
+                    new URL(
+                      candidates[index].replayURL.replace(/\.replay\.json$/, '.diagnostics.json'),
+                      import.meta.url,
+                    ),
+                    { signal },
+                  );
+                  if (!response.ok) return null;
+                  const body = await response.text();
+                  return diagnoseDemoReplay(replay, body, { signal });
+                },
+                { ...loading, signal },
+              );
+              if (diagnostic) error.diagnostics = [...(error.diagnostics ?? []), diagnostic];
+            } catch {
+              // A missing diagnostic cannot change the native verification result.
+            }
+          }
           if (
-            error.name !== 'ReplayVerificationError' ||
+            (!qualified && error.name !== 'ReplayVerificationError') ||
             signal?.aborted ||
             index === candidates.length - 1
           )

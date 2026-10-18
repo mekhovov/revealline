@@ -1,0 +1,849 @@
+{
+  "engine": "webkit",
+  "started": "2026-10-18T04:30:32.144Z",
+  "complete": true,
+  "verified": [],
+  "variants": [],
+  "performances": [],
+  "failures": [],
+  "catalogs": "demo-data/catalog.journey-current.json,demo-data/catalog.journey-archive.json",
+  "required": 139,
+  "browserVersion": "26.5",
+  "admission": [
+    {
+      "id": "solo-qualified-44273034491a74e4",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "3baca20065b4e3a1",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d1a5994b174c9108",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "a97ea6823950c156",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-b669b6afe477abbb",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "8187729db6e057bf",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-c0d8a5252aaa7f39",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "e3a185f3fa8a56e7",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-1d64e506d5980412",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "3d0a3fd7cf2bf081",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-4ac90773fa58369b",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "5e2e42d89ecfeaa2",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-11133b7849422018",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "6f2265019b7b7111",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-be318c73458f4900",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "6939af353126656d",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-5678d483da29e23a",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "159eea929dba6db2",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-965c3d07edf7944d",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "58739b0b28522428",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f7181f0af9511fcc",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "e38d2cbca0ee701d",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-0e6f0bf3f5775703",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "44fc91499d7e0b1a",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-728dc5622c493506",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "bf8e86b683fc3a42",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-3996626042c502db",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "8b86b4ea22a781b7",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-b7b6ea7705c422d5",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "92b2974bb7fa3fd5",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-70a708ee64355d75",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "01537fc12b6cb8fa",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d87dc7be0d62a2b1",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "a7f5e27313e3cc49",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-7b3a3b7248f976ce",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "57e9427e5b54ae32",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-a06599f68a914d16",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "a87f8aa10e07e8f0",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-9dddcc84f7d60f65",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "74995b97e4bd599a",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-9aa30fcd0b3c8281",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "2df046eb19a02b49",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f1f91fa91991d51b",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "a2ee21125c417799",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-dd5c4beb661682f0",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "1677d46209dd8f82",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-bbd69e7ccb5526d9",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "252baa3867f65d8c",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-484de1d1d425f0c5",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "1fd7e5cebea07eaa",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-0eafd68dc70ee8a8",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "c75c9a6701131625",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-821bba1882552b03",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "970de858f70cd57d",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-bbe0c5897adb725d",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "b44542a784dc9ada",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-dc59e6e76ae9df8b",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "f99af0418ac3f10e",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-08bfbce48d50a5c0",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "bd27c267db3591a4",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-614567e280b3c780",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "07eddc379330a3c7",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-2df382183e2f00d6",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "9fd35f8ec940f70a",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-7e1cae99ddeff5f9",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "cba62a88ed3877c8",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-2d3df26570caee45",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "249aa5ae8b086fb5",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-10d16d94f297eb0c",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "3481f431e72d3e16",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-8f766bd89a83be7e",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "6c8830a1d3e29724",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-7ff2d0d3f752cf2b",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "1323901ab898100d",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-bcc2b9ca5521a87d",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "ca483cc7896a56c2",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-86af557da6e8a323",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "f1d5f699680437cc",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f223736d7f7b47b2",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "93cb7f04d2710bc1",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-1c903081aa79df1e",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "a2cc7e008d88c0f9",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-30038742a961b399",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "6cb8b5cc387064f4",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-bfae960cf9bf13c8",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "239e184cbb8c80cb",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-b03217288edf527a",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "5ed7a588e30f9c9c",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-72dfbcf032b5ad25",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "0472d6bb35f7b7a5",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-4a4987306df02c59",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "08292183429546a0",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-2d68ede8fad57f5b",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "7a8c9b7100009faf",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-4301d76f85efb491",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "33f6a1f5b97bf97f",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-20e853301cb3ac52",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "17ea7ba792af41ca",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-11ac088d9288363c",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "a6a40fde1ba258f2",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-a99c5711c5c1839d",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "ea640ceb8ea6b82c",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f96b30d71b0716cf",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "6085e1abddafade4",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-8812ad38e87d1a3e",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "6101cf22b54a213a",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-2e72fe1d788ce165",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "daa8d453f516d576",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-e32d403f3f492be1",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "d99e2bcb7fb12d85",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-205560abb7070791",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "e9d895057d172a39",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-0a95463cda39b995",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "8999719fdcf88e4c",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d5027ee8cc9ab251",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "98d4d11df6071676",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d4d010be74f4ff34",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "a2f04fe73dd43ec4",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-99b7fe8c6c02e8f5",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "9b65c53cbd60f142",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-86e49440668d32eb",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "b1f7ecf6d0e292cc",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-1045a071c392b17f",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "d483de779675a1bd",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-26c083d6a304753c",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "7af475f5b1526c89",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-03e90b310d2bc700",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "76ee3a877da06cb1",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-9bd405709d380bb7",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "bb9ee6e270893801",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-fe13ae38e227f3d4",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "99f8f60f86668c47",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-9b61f76591ea319f",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "5874d7332eb39015",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-b8a409de0207c16a",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "353e79f850ca41ac",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-9a05e4f32fe3e8c3",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "18343c3103722ee5",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-6066cc64f5796336",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "ed18af98aae5e525",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f420d6e14fbac1ed",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "868b25e27f4e781a",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-45ff8eaac10d989c",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "d9704b540636a0a3",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d658e2bd3c0d5c7e",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "c821b61ccc04340d",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-fabdfb2541546426",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "95b6e3808b86669f",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-acd938abf093e19a",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "6d03c1658df4a40b",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-ab4de59fa240aa05",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "4ad8ba984504f384",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f8e0d67f3ee24811",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "5ffdd00eca50f579",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-17b6edccaf82b693",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "fc292b58e0a9d37b",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-512b66c5e6a7ca41",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "4ac387b6ee08ce19",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d775783a12234789",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "b9d9e82ef7e90c6e",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-56165d770d83ee1e",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "1009902f56c27f16",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-6bd31868bd8f9091",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "484560ed4ad9aa0f",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-a13b85ddde0f9663",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "d26f06cfad71cca7",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-22874d7656ce6c3e",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "8c1c6b16fd3776f4",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-dd80d3e78efbf350",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "2661f9d91ca58e94",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-c258ed926a320cc2",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "71c95f5fac8f2f9b",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-86ee84d48134b04b",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "4a573ca21631d8c3",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-ead64a471b9edd54",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "cfdc87e61f83ca69",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-cd19eddd5888061f",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "2fa4884bb4d0a10e",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-84debdfc44a43699",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "127ab8a071f51a67",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-4f9aec8fe9b37c0d",
+      "routeId": "whole-spatial-v25",
+      "recordingIdentity": "e4d3be94daba94a2",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-b2087ebb50aee570",
+      "routeId": "whole-spatial-v24",
+      "recordingIdentity": "e55877fc3b1a2885",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-3ab81dea52f12ba3",
+      "routeId": "whole-spatial-v24",
+      "recordingIdentity": "9ef9323415194fba",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-3037b64d2bd5cd52",
+      "routeId": "whole-spatial-v24",
+      "recordingIdentity": "700c7994ef74e206",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-8abdfdb8249526a1",
+      "routeId": "whole-spatial-v22",
+      "recordingIdentity": "237234a02382b81b",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-0c1decf0a2983bd4",
+      "routeId": "whole-spatial-v22",
+      "recordingIdentity": "9731e0ff2417edb1",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-3e2c476ed99d280e",
+      "routeId": "whole-spatial-v22",
+      "recordingIdentity": "690a9ebda84e52d1",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-2c530a2670b6a7f3",
+      "routeId": "whole-spatial-v21",
+      "recordingIdentity": "616e2fdd56077f1f",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-47b82cbab227cd1f",
+      "routeId": "whole-spatial-v21",
+      "recordingIdentity": "710b27cf5e862996",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-23166f06bb57b9b3",
+      "routeId": "whole-spatial-v21",
+      "recordingIdentity": "d3f86fd3e410da5b",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-5bd37fe7b93c3853",
+      "routeId": "whole-spatial-v19",
+      "recordingIdentity": "bc2fe1b8a58cec27",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-29078bd0c9992bd0",
+      "routeId": "whole-spatial-v19",
+      "recordingIdentity": "c38e16a6688e5bd1",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-ebc3051ed29e5814",
+      "routeId": "whole-spatial-v19",
+      "recordingIdentity": "19933e03d7c3e6d7",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-a57cfb4b64844ce9",
+      "routeId": "whole-spatial-v18",
+      "recordingIdentity": "1a0349a36c160f11",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-ee5ba3df09bda042",
+      "routeId": "whole-spatial-v18",
+      "recordingIdentity": "4c862a92b49aa8b5",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-ee30594d88087e08",
+      "routeId": "whole-spatial-v18",
+      "recordingIdentity": "7894c2d9a53a4765",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-5307e5f38725a0e3",
+      "routeId": "whole-spatial-v17",
+      "recordingIdentity": "02f1352c9eb0f9a8",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-5915fde156c7fb92",
+      "routeId": "whole-spatial-v17",
+      "recordingIdentity": "f09802c6fd4838d1",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-33e6a62cdaa16aaa",
+      "routeId": "whole-spatial-v17",
+      "recordingIdentity": "fdfe6239db478102",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f229f1af7ed82073",
+      "routeId": "whole-spatial-v16",
+      "recordingIdentity": "d4ddca4af2c99e7c",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-81e24a32328f7a3c",
+      "routeId": "whole-spatial-v16",
+      "recordingIdentity": "3ac08715cd89ea84",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-8cfed8cf70713745",
+      "routeId": "whole-spatial-v16",
+      "recordingIdentity": "94d23aaee7a8909c",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-8d1b4bbb885d0b9d",
+      "routeId": "whole-spatial-v15",
+      "recordingIdentity": "b1d6577b0d96e823",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-5aa8f6bd6fb84df2",
+      "routeId": "whole-spatial-v15",
+      "recordingIdentity": "d80698fc23f17926",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-47cfdd798430bc97",
+      "routeId": "whole-spatial-v15",
+      "recordingIdentity": "ec0f23ce57b4b028",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-8fbfa21663542ea1",
+      "routeId": "whole-spatial-v14",
+      "recordingIdentity": "bc4bfd92aa9d5e7b",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-93ffe1fc5a201d2e",
+      "routeId": "whole-spatial-v14",
+      "recordingIdentity": "98e0c57095c29296",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-27223f09fed82eb2",
+      "routeId": "whole-spatial-v14",
+      "recordingIdentity": "da68fae41b8a0e18",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-a922c6b22d771e68",
+      "routeId": "whole-spatial-v13",
+      "recordingIdentity": "04484547ba0eeadb",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d3260fe50e480049",
+      "routeId": "whole-spatial-v13",
+      "recordingIdentity": "df6a32df5c2ada41",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-b61cda337720b14d",
+      "routeId": "whole-spatial-v13",
+      "recordingIdentity": "7cc77ce4144bcb93",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-c4afd0fd10fd9d29",
+      "routeId": "whole-spatial-v12",
+      "recordingIdentity": "6dd4631a82bdda32",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d6b94392830623da",
+      "routeId": "whole-spatial-v12",
+      "recordingIdentity": "d8e8ffb54dbc91bc",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-bd23e3eb635875d1",
+      "routeId": "whole-spatial-v12",
+      "recordingIdentity": "a718e692728dbe86",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-6ab3604dd6a03040",
+      "routeId": "whole-spatial-v11",
+      "recordingIdentity": "968b7e44f7d8cf78",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-84508838cf882427",
+      "routeId": "whole-spatial-v11",
+      "recordingIdentity": "57ea32333b013d7f",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f1a05094f22dda3a",
+      "routeId": "whole-spatial-v11",
+      "recordingIdentity": "e7965876dcb126b1",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-9695696535e4ee17",
+      "routeId": "whole-spatial-v10",
+      "recordingIdentity": "75d2fb551dda6f06",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-348cde9a8a95df59",
+      "routeId": "whole-spatial-v10",
+      "recordingIdentity": "1e748c64d5021003",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-61e28381c52a36af",
+      "routeId": "whole-spatial-v10",
+      "recordingIdentity": "7ad592f99e38e21c",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-f57d5e1891de81f5",
+      "routeId": "whole-spatial-v9",
+      "recordingIdentity": "c35ac1c5ace0fff4",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-53797d64463a8706",
+      "routeId": "whole-spatial-v9",
+      "recordingIdentity": "d8c01dae29ebf2c4",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-7c360a513791c0c5",
+      "routeId": "whole-spatial-v9",
+      "recordingIdentity": "3a21ac03aa5039d7",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-d6bea0fb51f4d9b7",
+      "routeId": "whole-spatial-v23",
+      "recordingIdentity": "52ddc5e9028200cc",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-30d8c82c95cfaa84",
+      "routeId": "whole-spatial-v23",
+      "recordingIdentity": "f0b1bbf6f28d4e63",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-896fc42fcd97192f",
+      "routeId": "whole-spatial-v23",
+      "recordingIdentity": "182d45f98b038b61",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-1c34f9397715919f",
+      "routeId": "whole-spatial-v20",
+      "recordingIdentity": "9f24555a2d13afa7",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-08205883fcfeb6de",
+      "routeId": "whole-spatial-v20",
+      "recordingIdentity": "3891c319ad16405c",
+      "themes": 1
+    },
+    {
+      "id": "solo-qualified-fd3673e16fd6a8fb",
+      "routeId": "whole-spatial-v20",
+      "recordingIdentity": "05a40cb14840bfc4",
+      "themes": 1
+    }
+  ],
+  "finished": "2026-10-18T04:32:50.492Z"
+}

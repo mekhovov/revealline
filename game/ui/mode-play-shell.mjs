@@ -161,6 +161,12 @@ export function wireLandingMenuNavigation({
   modesRoot?.addEventListener('game-mode-choices-ready', refresh);
 
   return {
+    insertAfter(anchor, nodes) {
+      const index = groups.findIndex((group) => group.includes(anchor));
+      if (index < 0) return;
+      groups.splice(index + 1, 0, ...nodes.filter((node) => node?.id).map((node) => [node]));
+      refresh();
+    },
     dispose() {
       modesRoot?.removeEventListener('game-mode-visibility-changed', refresh);
       modesRoot?.removeEventListener('game-mode-choices-ready', refresh);
@@ -760,6 +766,7 @@ export function mountModePlayShell({
     update,
     topDialog,
     elements,
+    addHomeActions: (nodes) => landingNavigation.insertAfter(buttons.settings, nodes),
     setLocale,
     localize: setLocale,
     blocksPlay: () => !!topDialog(),

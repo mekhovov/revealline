@@ -4,6 +4,7 @@ import { demoPage } from './helpers/demo-host-fixture.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { readMissionLibraryHandoff, readMissionLibraryReady } from '../mission-library/handoff.mjs';
+import { SOLO_BUILTIN_DEMO_INDEX } from '../demo-modes/solo-builtins-index.mjs';
 
 test('an accessible demo on an idle Legacy host prepares the same level without automatic Start', async (t) => {
   const page = await demoPage(t);
@@ -25,6 +26,49 @@ test('an accessible demo on an idle Legacy host prepares the same level without 
   assert.equal(page.rendered.run.tick, 0);
   assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), null);
   assert.deepEqual(page.errors, []);
+});
+
+test('an authored Journey demo starts normal play through its exact Ready handoff', async (t) => {
+  const source = SOLO_BUILTIN_DEMO_INDEX.find((entry) => entry.levelId === 'first-return');
+  assert.ok(source);
+  let destination;
+  await t.test('the Legacy host leaves its paused game untouched', async (pageTest) => {
+    const page = await demoPage(pageTest, { clipId: source.id });
+    const ordinary = page.rendered.run,
+      checkpoint = authoritativeCheckpoint(ordinary);
+    await page.open();
+    assert.equal(
+      page.demoFrame.run.levelId,
+      source.levelId,
+      page.$('demo-dialog').dataset.demoFailureDetails,
+    );
+    page.$('demo-interrupt').click();
+    page.$('demo-fresh').click();
+    await waitFor(() => new URL(page.win.location.href).searchParams.get('library-ready') === '1', {
+      timeoutMs: 30000,
+    });
+    destination = new URL(page.win.location.href);
+    assert.equal(destination.searchParams.get('journey'), source.routeId);
+    assert.equal(readMissionLibraryHandoff(destination.searchParams), source.libraryMissionId);
+    assert.equal(readMissionLibraryReady(destination.searchParams), true);
+    assert.deepEqual(authoritativeCheckpoint(ordinary), checkpoint);
+    assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), null);
+    assert.deepEqual(page.errors, []);
+  });
+  await t.test(
+    'the native Journey owner prepares the requested mission at tick zero',
+    async (pageTest) => {
+      const page = await demoPage(pageTest, { search: destination.search });
+      assert.equal(page.rendered.run.levelId, source.levelId);
+      assert.equal(page.rendered.run.tick, 0);
+      assert.equal(page.rendered.paused, true);
+      assert.equal(page.$('game-overlay').dataset.kind, 'ready');
+      for (let i = 0; i < 12; i++) page.frame(16);
+      assert.equal(page.rendered.run.tick, 0);
+      assert.equal(page.storage.getItem('revealline.suspended.dev.v1'), null);
+      assert.deepEqual(page.errors, []);
+    },
+  );
 });
 
 test('default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready', async (t) => {

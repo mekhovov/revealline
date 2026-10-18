@@ -1,0 +1,3547 @@
+{
+  "engine": "webkit",
+  "started": "2026-10-18T04:15:45.174Z",
+  "complete": true,
+  "verified": [
+    {
+      "id": "solo-qualified-44273034491a74e4",
+      "captures": 1,
+      "capturedCells": 1224,
+      "ticks": 632,
+      "outcome": "won",
+      "checkpoint": "9502a190cf93ca76",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d1a5994b174c9108",
+      "captures": 1,
+      "capturedCells": 1564,
+      "ticks": 1082,
+      "outcome": "won",
+      "checkpoint": "450a462cb2e5a849",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b669b6afe477abbb",
+      "captures": 2,
+      "capturedCells": 1890,
+      "ticks": 1724,
+      "outcome": "won",
+      "checkpoint": "c8d31759d53e2e99",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-c0d8a5252aaa7f39",
+      "captures": 4,
+      "capturedCells": 1533,
+      "ticks": 3149,
+      "outcome": "won",
+      "checkpoint": "b52668f9e89ed8b1",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1d64e506d5980412",
+      "captures": 7,
+      "capturedCells": 1500,
+      "ticks": 5590,
+      "outcome": "won",
+      "checkpoint": "690ee4900940c370",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4ac90773fa58369b",
+      "captures": 9,
+      "capturedCells": 1752,
+      "ticks": 6872,
+      "outcome": "won",
+      "checkpoint": "81f5f48a0a7aa380",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-11133b7849422018",
+      "captures": 2,
+      "capturedCells": 2047,
+      "ticks": 1755,
+      "outcome": "won",
+      "checkpoint": "81679285e8a1421c",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-be318c73458f4900",
+      "captures": 7,
+      "capturedCells": 1537,
+      "ticks": 6475,
+      "outcome": "won",
+      "checkpoint": "212b2d668a702063",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5678d483da29e23a",
+      "captures": 8,
+      "capturedCells": 1808,
+      "ticks": 6926,
+      "outcome": "won",
+      "checkpoint": "15e6a6845ee0e1a4",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-965c3d07edf7944d",
+      "captures": 2,
+      "capturedCells": 1640,
+      "ticks": 3534,
+      "outcome": "won",
+      "checkpoint": "bcdc66b19abe0b4b",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f7181f0af9511fcc",
+      "captures": 5,
+      "capturedCells": 2083,
+      "ticks": 5070,
+      "outcome": "won",
+      "checkpoint": "323b2a3a00456ad2",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0e6f0bf3f5775703",
+      "captures": 9,
+      "capturedCells": 1575,
+      "ticks": 6337,
+      "outcome": "won",
+      "checkpoint": "a887b081ca76270b",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-728dc5622c493506",
+      "captures": 5,
+      "capturedCells": 1538,
+      "ticks": 4289,
+      "outcome": "won",
+      "checkpoint": "3ebf40af9d54ce50",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-3996626042c502db",
+      "captures": 3,
+      "capturedCells": 2079,
+      "ticks": 2236,
+      "outcome": "won",
+      "checkpoint": "649adacd7994728c",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-b7b6ea7705c422d5",
+      "captures": 7,
+      "capturedCells": 2092,
+      "ticks": 5912,
+      "outcome": "won",
+      "checkpoint": "c5702b8f42578a08",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-70a708ee64355d75",
+      "captures": 4,
+      "capturedCells": 1677,
+      "ticks": 3946,
+      "outcome": "won",
+      "checkpoint": "aaad6e4dd28c96da",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d87dc7be0d62a2b1",
+      "captures": 11,
+      "capturedCells": 1766,
+      "ticks": 9878,
+      "outcome": "won",
+      "checkpoint": "2b21230212d52b26",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7b3a3b7248f976ce",
+      "captures": 11,
+      "capturedCells": 1833,
+      "ticks": 8227,
+      "outcome": "won",
+      "checkpoint": "b1e18136ca3ba9de",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a06599f68a914d16",
+      "captures": 2,
+      "capturedCells": 2110,
+      "ticks": 1745,
+      "outcome": "won",
+      "checkpoint": "9c5d4c80fe6bbab7",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9dddcc84f7d60f65",
+      "captures": 1,
+      "capturedCells": 1835,
+      "ticks": 1510,
+      "outcome": "won",
+      "checkpoint": "92382e316b68787c",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9aa30fcd0b3c8281",
+      "captures": 9,
+      "capturedCells": 1925,
+      "ticks": 7809,
+      "outcome": "won",
+      "checkpoint": "769d54852566a037",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-f1f91fa91991d51b",
+      "captures": 5,
+      "capturedCells": 1623,
+      "ticks": 4392,
+      "outcome": "won",
+      "checkpoint": "db2e010f88ff6608",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-dd5c4beb661682f0",
+      "captures": 11,
+      "capturedCells": 1669,
+      "ticks": 6736,
+      "outcome": "won",
+      "checkpoint": "666cdaad73c07860",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-bbd69e7ccb5526d9",
+      "captures": 4,
+      "capturedCells": 1374,
+      "ticks": 5100,
+      "outcome": "won",
+      "checkpoint": "5ea68f82cc31d7fe",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-484de1d1d425f0c5",
+      "captures": 5,
+      "capturedCells": 1669,
+      "ticks": 3486,
+      "outcome": "won",
+      "checkpoint": "568539320227ae9f",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-0eafd68dc70ee8a8",
+      "captures": 7,
+      "capturedCells": 1779,
+      "ticks": 5883,
+      "outcome": "won",
+      "checkpoint": "b682b9006f4b74e4",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-821bba1882552b03",
+      "captures": 6,
+      "capturedCells": 1795,
+      "ticks": 4681,
+      "outcome": "won",
+      "checkpoint": "6dd502fc1046d8e9",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bbe0c5897adb725d",
+      "captures": 7,
+      "capturedCells": 1592,
+      "ticks": 6142,
+      "outcome": "won",
+      "checkpoint": "a20d6fd3df25db36",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-dc59e6e76ae9df8b",
+      "captures": 3,
+      "capturedCells": 1683,
+      "ticks": 2801,
+      "outcome": "won",
+      "checkpoint": "1dea575faf61816b",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-08bfbce48d50a5c0",
+      "captures": 8,
+      "capturedCells": 1679,
+      "ticks": 5030,
+      "outcome": "won",
+      "checkpoint": "3f160975a67e572f",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-614567e280b3c780",
+      "captures": 9,
+      "capturedCells": 1588,
+      "ticks": 7561,
+      "outcome": "won",
+      "checkpoint": "b12438abd3494233",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-2df382183e2f00d6",
+      "captures": 6,
+      "capturedCells": 1683,
+      "ticks": 4019,
+      "outcome": "won",
+      "checkpoint": "c421ac3e58444cc6",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7e1cae99ddeff5f9",
+      "captures": 7,
+      "capturedCells": 1492,
+      "ticks": 3920,
+      "outcome": "won",
+      "checkpoint": "9a138c4f164e3341",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2d3df26570caee45",
+      "captures": 5,
+      "capturedCells": 1696,
+      "ticks": 5451,
+      "outcome": "won",
+      "checkpoint": "9ec2c5e4fce82fcb",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-10d16d94f297eb0c",
+      "captures": 15,
+      "capturedCells": 1896,
+      "ticks": 10473,
+      "outcome": "won",
+      "checkpoint": "a8e4c878363f2066",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8f766bd89a83be7e",
+      "captures": 9,
+      "capturedCells": 1651,
+      "ticks": 6391,
+      "outcome": "won",
+      "checkpoint": "0e52b7d062f6f7f4",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-7ff2d0d3f752cf2b",
+      "captures": 1,
+      "capturedCells": 1682,
+      "ticks": 2812,
+      "outcome": "won",
+      "checkpoint": "2027bbdc3fcbcf38",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bcc2b9ca5521a87d",
+      "captures": 17,
+      "capturedCells": 1769,
+      "ticks": 11238,
+      "outcome": "won",
+      "checkpoint": "88633d82ea220a4b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-86af557da6e8a323",
+      "captures": 6,
+      "capturedCells": 1776,
+      "ticks": 3048,
+      "outcome": "won",
+      "checkpoint": "4e414cf0fa9485ec",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f223736d7f7b47b2",
+      "captures": 7,
+      "capturedCells": 1712,
+      "ticks": 4867,
+      "outcome": "won",
+      "checkpoint": "4521f56d5e45a07c",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1c903081aa79df1e",
+      "captures": 15,
+      "capturedCells": 1731,
+      "ticks": 9009,
+      "outcome": "won",
+      "checkpoint": "649ac3c547def8b0",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-30038742a961b399",
+      "captures": 3,
+      "capturedCells": 2179,
+      "ticks": 1398,
+      "outcome": "won",
+      "checkpoint": "1adc43783e082ff4",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bfae960cf9bf13c8",
+      "captures": 4,
+      "capturedCells": 1568,
+      "ticks": 1742,
+      "outcome": "won",
+      "checkpoint": "2a061d01f112f19e",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-b03217288edf527a",
+      "captures": 8,
+      "capturedCells": 1534,
+      "ticks": 6040,
+      "outcome": "won",
+      "checkpoint": "b2218254d34072b6",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-72dfbcf032b5ad25",
+      "captures": 8,
+      "capturedCells": 1718,
+      "ticks": 4097,
+      "outcome": "won",
+      "checkpoint": "25fd80f632286e33",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4a4987306df02c59",
+      "captures": 6,
+      "capturedCells": 1872,
+      "ticks": 6243,
+      "outcome": "won",
+      "checkpoint": "64c1ef89138a07a2",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2d68ede8fad57f5b",
+      "captures": 9,
+      "capturedCells": 1926,
+      "ticks": 5037,
+      "outcome": "won",
+      "checkpoint": "e1c49fa43b2b9bd0",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4301d76f85efb491",
+      "captures": 5,
+      "capturedCells": 1596,
+      "ticks": 5634,
+      "outcome": "won",
+      "checkpoint": "74aedafe297ce68e",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-20e853301cb3ac52",
+      "captures": 6,
+      "capturedCells": 1797,
+      "ticks": 3479,
+      "outcome": "won",
+      "checkpoint": "4bd43b836c93ab0f",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-11ac088d9288363c",
+      "captures": 8,
+      "capturedCells": 1642,
+      "ticks": 3646,
+      "outcome": "won",
+      "checkpoint": "3149eb5eedc2664a",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b2087ebb50aee570",
+      "captures": 6,
+      "capturedCells": 2074,
+      "ticks": 6282,
+      "outcome": "won",
+      "checkpoint": "c438681a2517e78e",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8abdfdb8249526a1",
+      "captures": 2,
+      "capturedCells": 1978,
+      "ticks": 3536,
+      "outcome": "won",
+      "checkpoint": "e6f70f1fca13cfae",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0c1decf0a2983bd4",
+      "captures": 12,
+      "capturedCells": 1726,
+      "ticks": 8606,
+      "outcome": "won",
+      "checkpoint": "ef03d03c363ca571",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2c530a2670b6a7f3",
+      "captures": 3,
+      "capturedCells": 1913,
+      "ticks": 1492,
+      "outcome": "won",
+      "checkpoint": "3b36602e9d575618",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-47b82cbab227cd1f",
+      "captures": 5,
+      "capturedCells": 1776,
+      "ticks": 3030,
+      "outcome": "won",
+      "checkpoint": "05350a98a4ad7fa9",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-23166f06bb57b9b3",
+      "captures": 5,
+      "capturedCells": 1741,
+      "ticks": 2856,
+      "outcome": "won",
+      "checkpoint": "2cb0c08c26e249ca",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5bd37fe7b93c3853",
+      "captures": 4,
+      "capturedCells": 1811,
+      "ticks": 2410,
+      "outcome": "won",
+      "checkpoint": "2e98680484ede9f6",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a57cfb4b64844ce9",
+      "captures": 3,
+      "capturedCells": 1900,
+      "ticks": 2563,
+      "outcome": "won",
+      "checkpoint": "72b6151a9d79112e",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5307e5f38725a0e3",
+      "captures": 4,
+      "capturedCells": 1852,
+      "ticks": 2775,
+      "outcome": "won",
+      "checkpoint": "80ac52e8af167183",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5915fde156c7fb92",
+      "captures": 2,
+      "capturedCells": 1555,
+      "ticks": 3166,
+      "outcome": "won",
+      "checkpoint": "ed48eb59f30b6d1d",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f229f1af7ed82073",
+      "captures": 3,
+      "capturedCells": 1792,
+      "ticks": 2301,
+      "outcome": "won",
+      "checkpoint": "89004ffee1ea35da",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-81e24a32328f7a3c",
+      "captures": 4,
+      "capturedCells": 1549,
+      "ticks": 4007,
+      "outcome": "won",
+      "checkpoint": "a711e7ca98ac031e",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-8d1b4bbb885d0b9d",
+      "captures": 4,
+      "capturedCells": 1570,
+      "ticks": 4250,
+      "outcome": "won",
+      "checkpoint": "326c1b727bfd4a4f",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5aa8f6bd6fb84df2",
+      "captures": 9,
+      "capturedCells": 1694,
+      "ticks": 6641,
+      "outcome": "won",
+      "checkpoint": "e4fa8a28880257d8",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-47cfdd798430bc97",
+      "captures": 4,
+      "capturedCells": 1540,
+      "ticks": 3051,
+      "outcome": "won",
+      "checkpoint": "7b048277baf823d4",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8fbfa21663542ea1",
+      "captures": 1,
+      "capturedCells": 1605,
+      "ticks": 2399,
+      "outcome": "won",
+      "checkpoint": "b265a952ba3c916b",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-93ffe1fc5a201d2e",
+      "captures": 2,
+      "capturedCells": 2108,
+      "ticks": 1745,
+      "outcome": "won",
+      "checkpoint": "852b22eef9c62079",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a922c6b22d771e68",
+      "captures": 1,
+      "capturedCells": 1811,
+      "ticks": 2303,
+      "outcome": "won",
+      "checkpoint": "7f7557ee614489d5",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d3260fe50e480049",
+      "captures": 3,
+      "capturedCells": 1972,
+      "ticks": 2271,
+      "outcome": "won",
+      "checkpoint": "709c328e274fe129",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b61cda337720b14d",
+      "captures": 1,
+      "capturedCells": 1733,
+      "ticks": 1890,
+      "outcome": "won",
+      "checkpoint": "36ffff241e6ce935",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-c4afd0fd10fd9d29",
+      "captures": 5,
+      "capturedCells": 2011,
+      "ticks": 5877,
+      "outcome": "won",
+      "checkpoint": "d1cd869db19ea68f",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-d6b94392830623da",
+      "captures": 2,
+      "capturedCells": 1862,
+      "ticks": 1852,
+      "outcome": "won",
+      "checkpoint": "dd78161e703d6360",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bd23e3eb635875d1",
+      "captures": 4,
+      "capturedCells": 1786,
+      "ticks": 2956,
+      "outcome": "won",
+      "checkpoint": "7fafd4c2b5228eec",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-6ab3604dd6a03040",
+      "captures": 2,
+      "capturedCells": 1741,
+      "ticks": 3091,
+      "outcome": "won",
+      "checkpoint": "2a77c078ab121741",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-84508838cf882427",
+      "captures": 3,
+      "capturedCells": 1756,
+      "ticks": 4009,
+      "outcome": "won",
+      "checkpoint": "e304c03b6ef60ed7",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f1a05094f22dda3a",
+      "captures": 2,
+      "capturedCells": 1910,
+      "ticks": 2106,
+      "outcome": "won",
+      "checkpoint": "9c4511eb11dd5e57",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9695696535e4ee17",
+      "captures": 7,
+      "capturedCells": 1640,
+      "ticks": 5045,
+      "outcome": "won",
+      "checkpoint": "dd3a8e0e1c1d328e",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-348cde9a8a95df59",
+      "captures": 3,
+      "capturedCells": 1861,
+      "ticks": 2450,
+      "outcome": "won",
+      "checkpoint": "93ddcf2720c39eb8",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f57d5e1891de81f5",
+      "captures": 2,
+      "capturedCells": 1656,
+      "ticks": 2146,
+      "outcome": "won",
+      "checkpoint": "7578437a70624d6f",
+      "variant": true,
+      "independent": true
+    },
+    {
+      "id": "solo-qualified-53797d64463a8706",
+      "captures": 4,
+      "capturedCells": 1711,
+      "ticks": 2909,
+      "outcome": "won",
+      "checkpoint": "d5801d0bc5ef1bf4",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7c360a513791c0c5",
+      "captures": 5,
+      "capturedCells": 1938,
+      "ticks": 4478,
+      "outcome": "won",
+      "checkpoint": "c1f27a84e0d42e36",
+      "variant": true,
+      "independent": false
+    }
+  ],
+  "variants": [
+    {
+      "id": "solo-qualified-44273034491a74e4",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "3baca20065b4e3a1",
+      "replayURL": "./demo-data/solo-qualified-44273034491a74e4.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-44273034491a74e4.webkit.diagnostics.json",
+      "inputTraceIdentity": "fa93e180a5040427",
+      "durationSeconds": 5.266666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "47d4d7ea27bbdb4f",
+      "checkpoint": "9502a190cf93ca76",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "294318db27d5af13",
+          "actual": "28135ccc6383491c"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d1a5994b174c9108",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "a97ea6823950c156",
+      "replayURL": "./demo-data/solo-qualified-d1a5994b174c9108.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-d1a5994b174c9108.webkit.diagnostics.json",
+      "inputTraceIdentity": "2fcaa68140a14141",
+      "durationSeconds": 9.016666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "f11156e5f9427443",
+      "checkpoint": "450a462cb2e5a849",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "5b30fa739e5942fa",
+          "actual": "672dd6839bf881cc"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b669b6afe477abbb",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "8187729db6e057bf",
+      "replayURL": "./demo-data/solo-qualified-b669b6afe477abbb.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-b669b6afe477abbb.webkit.diagnostics.json",
+      "inputTraceIdentity": "31ad862e1cfeb9e0",
+      "durationSeconds": 14.366666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "e427a79217872fc4",
+      "checkpoint": "c8d31759d53e2e99",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "a958041bcbb17838",
+          "actual": "0ed5c949ae78129b"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "676151846fa095e5",
+          "actual": "1a2ef9eec6ec9c1f"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-c0d8a5252aaa7f39",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "e3a185f3fa8a56e7",
+      "replayURL": "./demo-data/solo-qualified-c0d8a5252aaa7f39.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-c0d8a5252aaa7f39.webkit.diagnostics.json",
+      "inputTraceIdentity": "06508a730ce26d0d",
+      "durationSeconds": 26.241666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "3268da0db53434f9",
+      "checkpoint": "b52668f9e89ed8b1",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "0062768cfb2ff66a",
+          "actual": "aff02b3c4f252f10"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-1d64e506d5980412",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "3d0a3fd7cf2bf081",
+      "replayURL": "./demo-data/solo-qualified-1d64e506d5980412.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-1d64e506d5980412.webkit.diagnostics.json",
+      "inputTraceIdentity": "f98b95d2342fe189",
+      "durationSeconds": 46.583333333333336,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "423d4b8ea988c795",
+      "checkpoint": "690ee4900940c370",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "33d87b6c2fa668d7",
+          "actual": "18fde3e67d38208b"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "73ac7f116ce66e8a",
+          "actual": "f179dfeb65558bec"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "9b5c119837cc5d38",
+          "actual": "a654d0b40c53de70"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "7dd1f546f2d79a3f",
+          "actual": "433f80acdd992e1c"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-4ac90773fa58369b",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "5e2e42d89ecfeaa2",
+      "replayURL": "./demo-data/solo-qualified-4ac90773fa58369b.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-4ac90773fa58369b.webkit.diagnostics.json",
+      "inputTraceIdentity": "0da95263f03e204f",
+      "durationSeconds": 57.266666666666666,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "9a6fe260b8cd5e33",
+      "checkpoint": "81f5f48a0a7aa380",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "44776eacae381ea4",
+          "actual": "3cfc49acaa50e2da"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "744160c5687c08b1",
+          "actual": "16b87d5b9c7a3934"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "34dd6b30acbd4cb6",
+          "actual": "69dea6678891ad1d"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "f8182829b83ea57d",
+          "actual": "d5d34eba1ed8e9c5"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-11133b7849422018",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "6f2265019b7b7111",
+      "replayURL": "./demo-data/solo-qualified-11133b7849422018.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-11133b7849422018.webkit.diagnostics.json",
+      "inputTraceIdentity": "845842d8145def08",
+      "durationSeconds": 14.625,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "aa100d8a0a220228",
+      "checkpoint": "81679285e8a1421c",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "15934456dfaff856",
+          "actual": "e2705a9fc539014e"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-be318c73458f4900",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "6939af353126656d",
+      "replayURL": "./demo-data/solo-qualified-be318c73458f4900.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-be318c73458f4900.webkit.diagnostics.json",
+      "inputTraceIdentity": "91676898d90f591d",
+      "durationSeconds": 53.958333333333336,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "9740b751c1275e8e",
+      "checkpoint": "212b2d668a702063",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "b8e224f660803d57",
+          "actual": "b99e46a603893ecc"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "2eb56ca19543926a",
+          "actual": "43c484157e6eeaf5"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "afc9cbf0074c08b4",
+          "actual": "9688b89190359e67"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "9656407a3b437cdd",
+          "actual": "c9f0ebfed3d5b99d"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-965c3d07edf7944d",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "58739b0b28522428",
+      "replayURL": "./demo-data/solo-qualified-965c3d07edf7944d.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-965c3d07edf7944d.webkit.diagnostics.json",
+      "inputTraceIdentity": "e7884d434a82762a",
+      "durationSeconds": 29.45,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "843ef6a4315e11d7",
+      "checkpoint": "bcdc66b19abe0b4b",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "5597adae1df9489e",
+          "actual": "1738adb74fdd91ee"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f7181f0af9511fcc",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "e38d2cbca0ee701d",
+      "replayURL": "./demo-data/solo-qualified-f7181f0af9511fcc.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-f7181f0af9511fcc.webkit.diagnostics.json",
+      "inputTraceIdentity": "b122f7c79ad71a49",
+      "durationSeconds": 42.25,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "b84910f5e89abc61",
+      "checkpoint": "323b2a3a00456ad2",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "f9a7844cac2a2312",
+          "actual": "106d6dc253e3df59"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "4263049023793a1f",
+          "actual": "5487db581395247f"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0e6f0bf3f5775703",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "44fc91499d7e0b1a",
+      "replayURL": "./demo-data/solo-qualified-0e6f0bf3f5775703.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-0e6f0bf3f5775703.webkit.diagnostics.json",
+      "inputTraceIdentity": "0a319d94fa624fc9",
+      "durationSeconds": 52.80833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "338e6128670993c2",
+      "checkpoint": "a887b081ca76270b",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "694cb820d6338ec4",
+          "actual": "a5a945fc2fc89649"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "49115a8de69a650f",
+          "actual": "c8998a53db6b20dd"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "214f2898ef15dc64",
+          "actual": "a83986e55952ba80"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-728dc5622c493506",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "bf8e86b683fc3a42",
+      "replayURL": "./demo-data/solo-qualified-728dc5622c493506.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-728dc5622c493506.webkit.diagnostics.json",
+      "inputTraceIdentity": "c63eca93071c28ea",
+      "durationSeconds": 35.74166666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "6eb709e0ba9e9535",
+      "checkpoint": "3ebf40af9d54ce50",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "f367415a1e819a64",
+          "actual": "40cee02f40899967"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "dc6343fa8d1add4e",
+          "actual": "facefe812a790e36"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "45c3b35ca2bb9132",
+          "actual": "6b5a712322772cd7"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b7b6ea7705c422d5",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "92b2974bb7fa3fd5",
+      "replayURL": "./demo-data/solo-qualified-b7b6ea7705c422d5.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-b7b6ea7705c422d5.webkit.diagnostics.json",
+      "inputTraceIdentity": "c3c9c42e8424e238",
+      "durationSeconds": 49.266666666666666,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "70222b614ddc3fa4",
+      "checkpoint": "c5702b8f42578a08",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "bc432917202fe4fa",
+          "actual": "86f76a4bf1751ac0"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "6c7ee9ce3c3b0315",
+          "actual": "606dceaf4593dda5"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "1511f1350657e84a",
+          "actual": "019de5555ae02fd1"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "89f59305509791d5",
+          "actual": "a4eb6444c878f941"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-70a708ee64355d75",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "01537fc12b6cb8fa",
+      "replayURL": "./demo-data/solo-qualified-70a708ee64355d75.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-70a708ee64355d75.webkit.diagnostics.json",
+      "inputTraceIdentity": "c81888b48044f881",
+      "durationSeconds": 32.88333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "71c0b7e9129b4348",
+      "checkpoint": "aaad6e4dd28c96da",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "6f906a453e795328",
+          "actual": "af24e4ecc4c912d1"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "a3177943376dace2",
+          "actual": "f50c5e66c3568c93"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d87dc7be0d62a2b1",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "a7f5e27313e3cc49",
+      "replayURL": "./demo-data/solo-qualified-d87dc7be0d62a2b1.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-d87dc7be0d62a2b1.webkit.diagnostics.json",
+      "inputTraceIdentity": "228636dc6e701988",
+      "durationSeconds": 82.31666666666666,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "5cf9d63ebd1d3f1d",
+      "checkpoint": "2b21230212d52b26",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "3597cff5a0fe833d",
+          "actual": "af31153a61388e83"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "62ba45091fe3b351",
+          "actual": "743618ea85e8a815"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "19f3dce17cfa941e",
+          "actual": "372c62e0b74c049d"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-7b3a3b7248f976ce",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "57e9427e5b54ae32",
+      "replayURL": "./demo-data/solo-qualified-7b3a3b7248f976ce.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-7b3a3b7248f976ce.webkit.diagnostics.json",
+      "inputTraceIdentity": "bd568efde0fc0dac",
+      "durationSeconds": 68.55833333333334,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "04ce83ab0833fc35",
+      "checkpoint": "b1e18136ca3ba9de",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "9c2f8a817d7cb49c",
+          "actual": "68d1c8350bd10806"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "30e68c2de36fb2cf",
+          "actual": "f86ce9e8d65b12d3"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "827fd60961c5d91f",
+          "actual": "a8d411c79b6c7ec9"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "ab3894ce4b6f3f33",
+          "actual": "c6af23742b17c201"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-a06599f68a914d16",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "a87f8aa10e07e8f0",
+      "replayURL": "./demo-data/solo-qualified-a06599f68a914d16.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-a06599f68a914d16.webkit.diagnostics.json",
+      "inputTraceIdentity": "698900e033c8b3e5",
+      "durationSeconds": 14.541666666666666,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "563bb67a90f35459",
+      "checkpoint": "9c5d4c80fe6bbab7",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "a3560e7230c4c37e",
+          "actual": "73829c3562c0270e"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "369e3913ab84d932",
+          "actual": "82b9ad78f19fd3e9"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-9dddcc84f7d60f65",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "74995b97e4bd599a",
+      "replayURL": "./demo-data/solo-qualified-9dddcc84f7d60f65.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-9dddcc84f7d60f65.webkit.diagnostics.json",
+      "inputTraceIdentity": "e844296396bf9203",
+      "durationSeconds": 12.583333333333334,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "4f4cbff36a1b2a8d",
+      "checkpoint": "92382e316b68787c",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "3034de69ea1c115b",
+          "actual": "9e71155d037fba71"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f1f91fa91991d51b",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "a2ee21125c417799",
+      "replayURL": "./demo-data/solo-qualified-f1f91fa91991d51b.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-f1f91fa91991d51b.webkit.diagnostics.json",
+      "inputTraceIdentity": "f2140f18b8e31429",
+      "durationSeconds": 36.6,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "cf7492c0d4158d9f",
+      "checkpoint": "db2e010f88ff6608",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "7770a6f33926f42a",
+          "actual": "1b3932bd782d283b"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "79fbb12ed667649d",
+          "actual": "a3c8dd6d6cf5fd28"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "bd74323128e21b8a",
+          "actual": "be7c08f23a4f1c83"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "cfec1914ab13119e",
+          "actual": "9418da7d6eeec981"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-bbd69e7ccb5526d9",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "252baa3867f65d8c",
+      "replayURL": "./demo-data/solo-qualified-bbd69e7ccb5526d9.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-bbd69e7ccb5526d9.webkit.diagnostics.json",
+      "inputTraceIdentity": "e4c315e751b47b0b",
+      "durationSeconds": 42.5,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "0ef225f054ee67e4",
+      "checkpoint": "5ea68f82cc31d7fe",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "b2c26cfc64f548aa",
+          "actual": "b3c25edbf5e7cd06"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "7d1ee6ad2f11c0cf",
+          "actual": "2d3cb169e1dbca95"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "c44e3677e7a89a0b",
+          "actual": "960fa0dc12252c2c"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0eafd68dc70ee8a8",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "c75c9a6701131625",
+      "replayURL": "./demo-data/solo-qualified-0eafd68dc70ee8a8.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-0eafd68dc70ee8a8.webkit.diagnostics.json",
+      "inputTraceIdentity": "25321f954d488cc2",
+      "durationSeconds": 49.025,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "c5e01fd4351c2696",
+      "checkpoint": "b682b9006f4b74e4",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "6fa6dc4581215d6d",
+          "actual": "a526568ecbfb3532"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "609817d616f3c6bd",
+          "actual": "c6cef67025d2e7d7"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "7a8e0d84c642a82f",
+          "actual": "e740f3f24fc1fd60"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "c155cf63b411eb91",
+          "actual": "af42b063bd306e70"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-821bba1882552b03",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "970de858f70cd57d",
+      "replayURL": "./demo-data/solo-qualified-821bba1882552b03.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-821bba1882552b03.webkit.diagnostics.json",
+      "inputTraceIdentity": "129270b1e24a4826",
+      "durationSeconds": 39.00833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "9f7a112a50919610",
+      "checkpoint": "6dd502fc1046d8e9",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "29d271634a98ba56",
+          "actual": "e00cd07d947c3b2c"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "ab3ad3f357933b43",
+          "actual": "a2b1343ab98a7bcb"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "7fa3692196fe4378",
+          "actual": "0d277949ae3ff9c7"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-bbe0c5897adb725d",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "b44542a784dc9ada",
+      "replayURL": "./demo-data/solo-qualified-bbe0c5897adb725d.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-bbe0c5897adb725d.webkit.diagnostics.json",
+      "inputTraceIdentity": "d3b62ac4f08448f2",
+      "durationSeconds": 51.18333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "f5838490c562d6a0",
+      "checkpoint": "a20d6fd3df25db36",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "34e40748a29cc00d",
+          "actual": "45ec884ef473bb1f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "74dc287c2cca504c",
+          "actual": "28871652c1dd6a79"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "29c33f877dd2795d",
+          "actual": "c631855fa4fdf339"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "d9c3eb28808c302f",
+          "actual": "ca9a0bfa18e61e6f"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-dc59e6e76ae9df8b",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "f99af0418ac3f10e",
+      "replayURL": "./demo-data/solo-qualified-dc59e6e76ae9df8b.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-dc59e6e76ae9df8b.webkit.diagnostics.json",
+      "inputTraceIdentity": "05c99ad3a9ef8ad4",
+      "durationSeconds": 23.341666666666665,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "1ba0b2be301d575d",
+      "checkpoint": "1dea575faf61816b",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "aaeef5094eae9b0b",
+          "actual": "b01f75ac52a781b1"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-08bfbce48d50a5c0",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "bd27c267db3591a4",
+      "replayURL": "./demo-data/solo-qualified-08bfbce48d50a5c0.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-08bfbce48d50a5c0.webkit.diagnostics.json",
+      "inputTraceIdentity": "6b81e4f4a5796b42",
+      "durationSeconds": 41.916666666666664,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "d1d19fe79db2130d",
+      "checkpoint": "3f160975a67e572f",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "1939ab5429855755",
+          "actual": "59d041cbffcb20b2"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "f07ff506ba03e929",
+          "actual": "b061020ea9abc510"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "06d9055ef6f12514",
+          "actual": "86dae329fc70f425"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-2df382183e2f00d6",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "9fd35f8ec940f70a",
+      "replayURL": "./demo-data/solo-qualified-2df382183e2f00d6.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-2df382183e2f00d6.webkit.diagnostics.json",
+      "inputTraceIdentity": "ae485892674cf864",
+      "durationSeconds": 33.49166666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "5c4812cad68c264e",
+      "checkpoint": "c421ac3e58444cc6",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "d081dd35f3f09597",
+          "actual": "470af5ad87abd656"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "0fe1d45aff0973d3",
+          "actual": "6d688936dff53049"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "41fa00c390607626",
+          "actual": "201c9c24627a8499"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-7e1cae99ddeff5f9",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "cba62a88ed3877c8",
+      "replayURL": "./demo-data/solo-qualified-7e1cae99ddeff5f9.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-7e1cae99ddeff5f9.webkit.diagnostics.json",
+      "inputTraceIdentity": "2ea19d83131b2b2f",
+      "durationSeconds": 32.666666666666664,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "5b297b4dd6eee8a9",
+      "checkpoint": "9a138c4f164e3341",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "265eb43e2f8d589e",
+          "actual": "15291cdcc6b1597f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "fb3bb6391a4da09f",
+          "actual": "61f4fb8eaf25bd99"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "2eb6b8774ba7476a",
+          "actual": "d884a1eb0d18dd86"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-2d3df26570caee45",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "249aa5ae8b086fb5",
+      "replayURL": "./demo-data/solo-qualified-2d3df26570caee45.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-2d3df26570caee45.webkit.diagnostics.json",
+      "inputTraceIdentity": "1bda96324293837e",
+      "durationSeconds": 45.425,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "adb9f4a6cf95517f",
+      "checkpoint": "9ec2c5e4fce82fcb",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "5baae43b09fcdeaf",
+          "actual": "82434297bc1be4b9"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-10d16d94f297eb0c",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "3481f431e72d3e16",
+      "replayURL": "./demo-data/solo-qualified-10d16d94f297eb0c.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-10d16d94f297eb0c.webkit.diagnostics.json",
+      "inputTraceIdentity": "4870a2aa7e9e135c",
+      "durationSeconds": 87.275,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "81721eb2fd0164b5",
+      "checkpoint": "a8e4c878363f2066",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "dc5bdac5651d3e2b",
+          "actual": "3d5d7acbc6726b87"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-7ff2d0d3f752cf2b",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "1323901ab898100d",
+      "replayURL": "./demo-data/solo-qualified-7ff2d0d3f752cf2b.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-7ff2d0d3f752cf2b.webkit.diagnostics.json",
+      "inputTraceIdentity": "8f05769c02255e7b",
+      "durationSeconds": 23.433333333333334,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "5a2239a058558027",
+      "checkpoint": "2027bbdc3fcbcf38",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "226dfd79fd49f856",
+          "actual": "4351a39ec64a3d91"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "9ca61811032f516b",
+          "actual": "ec570c179a03fa7f"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f223736d7f7b47b2",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "93cb7f04d2710bc1",
+      "replayURL": "./demo-data/solo-qualified-f223736d7f7b47b2.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-f223736d7f7b47b2.webkit.diagnostics.json",
+      "inputTraceIdentity": "251362f7736fedac",
+      "durationSeconds": 40.55833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "4dba0b6f4ea3e547",
+      "checkpoint": "4521f56d5e45a07c",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "f5479ee5475655eb",
+          "actual": "8d71b2a2bf1e3b67"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "b473baae531949d3",
+          "actual": "0a61c94393e74ec9"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-1c903081aa79df1e",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "a2cc7e008d88c0f9",
+      "replayURL": "./demo-data/solo-qualified-1c903081aa79df1e.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-1c903081aa79df1e.webkit.diagnostics.json",
+      "inputTraceIdentity": "c82bf0cf01daf943",
+      "durationSeconds": 75.075,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "2620883947352c6b",
+      "checkpoint": "649ac3c547def8b0",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "da165e606cdb84ac",
+          "actual": "6cc10b9b59054f03"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "82a667d43c1d5afc",
+          "actual": "88ad4fa7d3b26309"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-30038742a961b399",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "6cb8b5cc387064f4",
+      "replayURL": "./demo-data/solo-qualified-30038742a961b399.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-30038742a961b399.webkit.diagnostics.json",
+      "inputTraceIdentity": "2b2608f17c801ae2",
+      "durationSeconds": 11.65,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "47dd263fd491ab80",
+      "checkpoint": "1adc43783e082ff4",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "48b2ec24997ef83d",
+          "actual": "913d0281482c99b2"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b03217288edf527a",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "5ed7a588e30f9c9c",
+      "replayURL": "./demo-data/solo-qualified-b03217288edf527a.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-b03217288edf527a.webkit.diagnostics.json",
+      "inputTraceIdentity": "a7e8d1223af5f3b6",
+      "durationSeconds": 50.333333333333336,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "f5e7c7e8eed0e827",
+      "checkpoint": "b2218254d34072b6",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "bf0ef1c0d6db08af",
+          "actual": "795673ad11c4779e"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "ed18eeb802b5c36d",
+          "actual": "f5159da2ce9832bd"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-72dfbcf032b5ad25",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "0472d6bb35f7b7a5",
+      "replayURL": "./demo-data/solo-qualified-72dfbcf032b5ad25.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-72dfbcf032b5ad25.webkit.diagnostics.json",
+      "inputTraceIdentity": "f04f6533092bcda7",
+      "durationSeconds": 34.141666666666666,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "3e13afe169b99410",
+      "checkpoint": "25fd80f632286e33",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "9155efacf9e9f1a6",
+          "actual": "df38f0b0b4113042"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "c4c450cb4829086e",
+          "actual": "7e58edbd8cee2b91"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "31cc3534fae2f418",
+          "actual": "e323d13d5b9d9442"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-4a4987306df02c59",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "08292183429546a0",
+      "replayURL": "./demo-data/solo-qualified-4a4987306df02c59.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-4a4987306df02c59.webkit.diagnostics.json",
+      "inputTraceIdentity": "93e7f6356043cb89",
+      "durationSeconds": 52.025,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "0306d7927b35c27d",
+      "checkpoint": "64c1ef89138a07a2",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "241d35cba8c92550",
+          "actual": "29b4906ba89b07b2"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "187e4d115b921c5e",
+          "actual": "ddb8aa450fe6708f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "e412cafb278d79cc",
+          "actual": "bd46517ea24211ef"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-2d68ede8fad57f5b",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "7a8c9b7100009faf",
+      "replayURL": "./demo-data/solo-qualified-2d68ede8fad57f5b.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-2d68ede8fad57f5b.webkit.diagnostics.json",
+      "inputTraceIdentity": "3bd1a4708a6377fb",
+      "durationSeconds": 41.975,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "6a11c4df534765c4",
+      "checkpoint": "e1c49fa43b2b9bd0",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "afe48ea5915446dd",
+          "actual": "a98d4b7b15305364"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-4301d76f85efb491",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "33f6a1f5b97bf97f",
+      "replayURL": "./demo-data/solo-qualified-4301d76f85efb491.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-4301d76f85efb491.webkit.diagnostics.json",
+      "inputTraceIdentity": "7fa056a85af01fb4",
+      "durationSeconds": 46.95,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "83285b5cdf0381d7",
+      "checkpoint": "74aedafe297ce68e",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "04693c90bdaf9731",
+          "actual": "7c5908330d8ee730"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-20e853301cb3ac52",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "17ea7ba792af41ca",
+      "replayURL": "./demo-data/solo-qualified-20e853301cb3ac52.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-20e853301cb3ac52.webkit.diagnostics.json",
+      "inputTraceIdentity": "0e98cc968fb2b62e",
+      "durationSeconds": 28.991666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "73f6636e2987c71c",
+      "checkpoint": "4bd43b836c93ab0f",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "9e8fbcf12f593618",
+          "actual": "138116e6d6f47ce9"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "ca8df1a724a07db3",
+          "actual": "574d1e07979686a7"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "2a2db05410279c31",
+          "actual": "03a09b0eea51c4e6"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-11ac088d9288363c",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "a6a40fde1ba258f2",
+      "replayURL": "./demo-data/solo-qualified-11ac088d9288363c.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-11ac088d9288363c.webkit.diagnostics.json",
+      "inputTraceIdentity": "15f53164309b3a46",
+      "durationSeconds": 30.383333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "cde64b8271fada23",
+      "checkpoint": "3149eb5eedc2664a",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "8ac649518d020077",
+          "actual": "7bbfe6c3b0d0fcab"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "83549ceda92a3fa2",
+          "actual": "4019168b907d0d17"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "0802244580325f08",
+          "actual": "08605ff24b2535ff"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b2087ebb50aee570",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "e55877fc3b1a2885",
+      "replayURL": "./demo-data/solo-qualified-b2087ebb50aee570.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-b2087ebb50aee570.webkit.diagnostics.json",
+      "inputTraceIdentity": "56a6ed9e831d9bbb",
+      "durationSeconds": 52.35,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "587335c3f814c2cd",
+      "checkpoint": "c438681a2517e78e",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "e7eb7e89ff0e6787",
+          "actual": "f101a78a0452acbc"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "0247d5aafa751bbf",
+          "actual": "d1a29f825b85eb0e"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "66e4a490bcb5ea89",
+          "actual": "a57408106fd362b9"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8abdfdb8249526a1",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "237234a02382b81b",
+      "replayURL": "./demo-data/solo-qualified-8abdfdb8249526a1.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-8abdfdb8249526a1.webkit.diagnostics.json",
+      "inputTraceIdentity": "3a1da1bf965373bf",
+      "durationSeconds": 29.466666666666665,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "8f9ad6d0290d762a",
+      "checkpoint": "e6f70f1fca13cfae",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "5bed20fc270b0447",
+          "actual": "fd4194588b65a104"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "cefaa0ef6e7afe17",
+          "actual": "d4243756883dce88"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "0684bb9ba82a365b",
+          "actual": "8deb5de66a6732b7"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0c1decf0a2983bd4",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "9731e0ff2417edb1",
+      "replayURL": "./demo-data/solo-qualified-0c1decf0a2983bd4.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-0c1decf0a2983bd4.webkit.diagnostics.json",
+      "inputTraceIdentity": "67fc405c76480828",
+      "durationSeconds": 71.71666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "e5c4fa5244940b8c",
+      "checkpoint": "ef03d03c363ca571",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "c6795dcbef6badf2",
+          "actual": "9fc16a30ea53f423"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "81be51a97860a777",
+          "actual": "25582852b26f204a"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "d32f166b997d0036",
+          "actual": "69c9269b60220eec"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-2c530a2670b6a7f3",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "616e2fdd56077f1f",
+      "replayURL": "./demo-data/solo-qualified-2c530a2670b6a7f3.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-2c530a2670b6a7f3.webkit.diagnostics.json",
+      "inputTraceIdentity": "8926868ac4522175",
+      "durationSeconds": 12.433333333333334,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "445c0c5bbd7d4779",
+      "checkpoint": "3b36602e9d575618",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "77990d47593acbc5",
+          "actual": "a55efdd7565d8820"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-47b82cbab227cd1f",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "710b27cf5e862996",
+      "replayURL": "./demo-data/solo-qualified-47b82cbab227cd1f.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-47b82cbab227cd1f.webkit.diagnostics.json",
+      "inputTraceIdentity": "e1105febf7fd3316",
+      "durationSeconds": 25.25,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "422ba38c99baa936",
+      "checkpoint": "05350a98a4ad7fa9",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "d213e670b2a73a61",
+          "actual": "d665c979d309ba37"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "73fdc142b74a8a8f",
+          "actual": "c0f3111e296929bc"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "e677583373d19d26",
+          "actual": "13870e2035aa2ac9"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-23166f06bb57b9b3",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "d3f86fd3e410da5b",
+      "replayURL": "./demo-data/solo-qualified-23166f06bb57b9b3.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-23166f06bb57b9b3.webkit.diagnostics.json",
+      "inputTraceIdentity": "e7c1d450bcce99f6",
+      "durationSeconds": 23.8,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "87acd46f86088d68",
+      "checkpoint": "2cb0c08c26e249ca",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "4a9ae11809d06daf",
+          "actual": "97d05aaffa280dd8"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5bd37fe7b93c3853",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "bc2fe1b8a58cec27",
+      "replayURL": "./demo-data/solo-qualified-5bd37fe7b93c3853.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-5bd37fe7b93c3853.webkit.diagnostics.json",
+      "inputTraceIdentity": "b2d198bdc9aaefa0",
+      "durationSeconds": 20.083333333333332,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "48dfd0b8e64cc626",
+      "checkpoint": "2e98680484ede9f6",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "a192a83afbe89124",
+          "actual": "cc642e27a6037879"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "f95b22d980645dbe",
+          "actual": "3f6174e157955402"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "a2571f9c7d23f133",
+          "actual": "de8332f27013dd46"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-a57cfb4b64844ce9",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "1a0349a36c160f11",
+      "replayURL": "./demo-data/solo-qualified-a57cfb4b64844ce9.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-a57cfb4b64844ce9.webkit.diagnostics.json",
+      "inputTraceIdentity": "2917a2581d8e5c0a",
+      "durationSeconds": 21.358333333333334,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "3c2529ff00adf93a",
+      "checkpoint": "72b6151a9d79112e",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "ebc77f3c5ab23ff5",
+          "actual": "22a1facc23d3782c"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "f8abb982d6fc6fe0",
+          "actual": "e1be60bbec71c755"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5307e5f38725a0e3",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "02f1352c9eb0f9a8",
+      "replayURL": "./demo-data/solo-qualified-5307e5f38725a0e3.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-5307e5f38725a0e3.webkit.diagnostics.json",
+      "inputTraceIdentity": "9e371d525a1eadef",
+      "durationSeconds": 23.125,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "d5dc3eb28d717188",
+      "checkpoint": "80ac52e8af167183",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "202b23880d9b224e",
+          "actual": "5d8d3a62c75709f2"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "f66056486e1fd34d",
+          "actual": "1984410c8cbae4a0"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5915fde156c7fb92",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "f09802c6fd4838d1",
+      "replayURL": "./demo-data/solo-qualified-5915fde156c7fb92.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-5915fde156c7fb92.webkit.diagnostics.json",
+      "inputTraceIdentity": "a2c0095e9f1aa891",
+      "durationSeconds": 26.383333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "880318722d867be1",
+      "checkpoint": "ed48eb59f30b6d1d",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "4c90d33dcac1cfa2",
+          "actual": "4c86d33dcab97b1d"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "66d117a5a9d32773",
+          "actual": "10c0fd470bef7b6b"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "53af0f3a1bf8ef95",
+          "actual": "892c50a239bd6124"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8d1b4bbb885d0b9d",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "b1d6577b0d96e823",
+      "replayURL": "./demo-data/solo-qualified-8d1b4bbb885d0b9d.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-8d1b4bbb885d0b9d.webkit.diagnostics.json",
+      "inputTraceIdentity": "c4db40740d4d5ab8",
+      "durationSeconds": 35.416666666666664,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "fa2092df2b3eee13",
+      "checkpoint": "326c1b727bfd4a4f",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "97e5c33f1667a8ac",
+          "actual": "b44cee73aecfeba1"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "0e95dad972f485a0",
+          "actual": "5d9f3ad1bd2a635c"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5aa8f6bd6fb84df2",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "d80698fc23f17926",
+      "replayURL": "./demo-data/solo-qualified-5aa8f6bd6fb84df2.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-5aa8f6bd6fb84df2.webkit.diagnostics.json",
+      "inputTraceIdentity": "338a1232538278dc",
+      "durationSeconds": 55.34166666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "9d90c14110a5e583",
+      "checkpoint": "e4fa8a28880257d8",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "33aae0a0b873574d",
+          "actual": "8a4d5c4d3c3d84d7"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "40c4eda772be762b",
+          "actual": "818f9a4425bbdc44"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "823630be30734642",
+          "actual": "cc401d4629acd9f5"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-47cfdd798430bc97",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "ec0f23ce57b4b028",
+      "replayURL": "./demo-data/solo-qualified-47cfdd798430bc97.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-47cfdd798430bc97.webkit.diagnostics.json",
+      "inputTraceIdentity": "39169a6bc8ede0fb",
+      "durationSeconds": 25.425,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "47ac0fcb94534d6c",
+      "checkpoint": "7b048277baf823d4",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "ab84a5dc7b0bc243",
+          "actual": "d38baa4aed347122"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "9611d0091f06ebba",
+          "actual": "04cde7796c1f5c1d"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "d949e6e20803bd30",
+          "actual": "8b816ef829328624"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8fbfa21663542ea1",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "bc4bfd92aa9d5e7b",
+      "replayURL": "./demo-data/solo-qualified-8fbfa21663542ea1.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-8fbfa21663542ea1.webkit.diagnostics.json",
+      "inputTraceIdentity": "43489b50cc3737a7",
+      "durationSeconds": 19.991666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "80550c6f07f4601c",
+      "checkpoint": "b265a952ba3c916b",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "7a13847b6a96fab4",
+          "actual": "6badec256cd9fdd7"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-93ffe1fc5a201d2e",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "98e0c57095c29296",
+      "replayURL": "./demo-data/solo-qualified-93ffe1fc5a201d2e.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-93ffe1fc5a201d2e.webkit.diagnostics.json",
+      "inputTraceIdentity": "e36e585bab198e51",
+      "durationSeconds": 14.541666666666666,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "9b26f4e01d851da4",
+      "checkpoint": "852b22eef9c62079",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "a3560e7230c4c37e",
+          "actual": "73829c3562c0270e"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "4e76d01fc9a84ea4",
+          "actual": "3b0f16fb4f722bbb"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-a922c6b22d771e68",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "04484547ba0eeadb",
+      "replayURL": "./demo-data/solo-qualified-a922c6b22d771e68.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-a922c6b22d771e68.webkit.diagnostics.json",
+      "inputTraceIdentity": "148491cdf8a17a5f",
+      "durationSeconds": 19.191666666666666,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "40571dce9a3c995f",
+      "checkpoint": "7f7557ee614489d5",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "7764c6d7ce7781ef",
+          "actual": "f1f5fafbd3ffe9f6"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "9cf99becd1e5ace4",
+          "actual": "e81fe8d0ba8756b2"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d3260fe50e480049",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "df6a32df5c2ada41",
+      "replayURL": "./demo-data/solo-qualified-d3260fe50e480049.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-d3260fe50e480049.webkit.diagnostics.json",
+      "inputTraceIdentity": "00eda40f32b92414",
+      "durationSeconds": 18.925,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "d7de5ac75c95ad9b",
+      "checkpoint": "709c328e274fe129",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "3f2cc7d5a1aec0a2",
+          "actual": "51c713501a23c79b"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b61cda337720b14d",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "7cc77ce4144bcb93",
+      "replayURL": "./demo-data/solo-qualified-b61cda337720b14d.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-b61cda337720b14d.webkit.diagnostics.json",
+      "inputTraceIdentity": "76d7f155ec9406a0",
+      "durationSeconds": 15.75,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "2237f211b17d5f2c",
+      "checkpoint": "36ffff241e6ce935",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "939fd79efe58b5c8",
+          "actual": "acec567a75124ba4"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d6b94392830623da",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "d8e8ffb54dbc91bc",
+      "replayURL": "./demo-data/solo-qualified-d6b94392830623da.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-d6b94392830623da.webkit.diagnostics.json",
+      "inputTraceIdentity": "5544620f9e888d06",
+      "durationSeconds": 15.433333333333334,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "da715f3aac6405c9",
+      "checkpoint": "dd78161e703d6360",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "f62900b7d7ed5fbd",
+          "actual": "d061a04b074d53d2"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "1e3c25dc1a3e951d",
+          "actual": "a1d44ada89824461"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6ab3604dd6a03040",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "968b7e44f7d8cf78",
+      "replayURL": "./demo-data/solo-qualified-6ab3604dd6a03040.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-6ab3604dd6a03040.webkit.diagnostics.json",
+      "inputTraceIdentity": "c71e49280192915f",
+      "durationSeconds": 25.758333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "2d0772bbcae5b3f4",
+      "checkpoint": "2a77c078ab121741",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "6e02defdc714cd40",
+          "actual": "fdbb9319397d0c10"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-84508838cf882427",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "57ea32333b013d7f",
+      "replayURL": "./demo-data/solo-qualified-84508838cf882427.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-84508838cf882427.webkit.diagnostics.json",
+      "inputTraceIdentity": "a2a32c8541ac6495",
+      "durationSeconds": 33.40833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "e362a409f48e3ac9",
+      "checkpoint": "e304c03b6ef60ed7",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "00e3a7717c953a67",
+          "actual": "17f400bcb33df456"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "4edb59759d472c25",
+          "actual": "0e49a24e3a64dc6a"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "4d22dd1b82d25b21",
+          "actual": "36e91247af0626fa"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f1a05094f22dda3a",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "e7965876dcb126b1",
+      "replayURL": "./demo-data/solo-qualified-f1a05094f22dda3a.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-f1a05094f22dda3a.webkit.diagnostics.json",
+      "inputTraceIdentity": "4019a1173cbabecc",
+      "durationSeconds": 17.55,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "3965d3baf15796a3",
+      "checkpoint": "9c4511eb11dd5e57",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "385e532b3dc024d7",
+          "actual": "1bd2e091edf91933"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-9695696535e4ee17",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "75d2fb551dda6f06",
+      "replayURL": "./demo-data/solo-qualified-9695696535e4ee17.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-9695696535e4ee17.webkit.diagnostics.json",
+      "inputTraceIdentity": "a423190e48e0d2b3",
+      "durationSeconds": 42.041666666666664,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "8597446b5e226596",
+      "checkpoint": "dd3a8e0e1c1d328e",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "286e1d37bbc23488",
+          "actual": "f0cb9c1d9fa86b22"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "c7093cbea3915689",
+          "actual": "b71e86162c0664d6"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "42929cc9ead3e7cd",
+          "actual": "b7e3144f7c92585e"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-348cde9a8a95df59",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "1e748c64d5021003",
+      "replayURL": "./demo-data/solo-qualified-348cde9a8a95df59.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-348cde9a8a95df59.webkit.diagnostics.json",
+      "inputTraceIdentity": "32246eb8b53634ab",
+      "durationSeconds": 20.416666666666668,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "f688fc58536ab4d2",
+      "checkpoint": "93ddcf2720c39eb8",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "35086a5a06cafa36",
+          "actual": "b2937aad6f65db32"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "fd4db031d5e6d029",
+          "actual": "b6d30f10e4f43be4"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-53797d64463a8706",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "d8c01dae29ebf2c4",
+      "replayURL": "./demo-data/solo-qualified-53797d64463a8706.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-53797d64463a8706.webkit.diagnostics.json",
+      "inputTraceIdentity": "a561b5f69035fd14",
+      "durationSeconds": 24.241666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "36c5da3b4eac721c",
+      "checkpoint": "d5801d0bc5ef1bf4",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "1a3955627991fe94",
+          "actual": "a14d76750de84721"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-7c360a513791c0c5",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "3a21ac03aa5039d7",
+      "replayURL": "./demo-data/solo-qualified-7c360a513791c0c5.webkit.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-7c360a513791c0c5.webkit.diagnostics.json",
+      "inputTraceIdentity": "cfdd06fc51e7ecd6",
+      "durationSeconds": 37.31666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "1bdb8681f7bfd9bc",
+      "checkpoint": "c1f27a84e0d42e36",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "2871ece4f346ffe8",
+          "actual": "067064553da7c89e"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "2e087ea21392eee4",
+          "actual": "fef41aa583df4c94"
+        }
+      ]
+    }
+  ],
+  "performances": [
+    {
+      "id": "solo-qualified-5678d483da29e23a",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "159eea929dba6db2",
+      "replayURL": "./demo-data/solo-qualified-5678d483da29e23a.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-5678d483da29e23a.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "c31eb19df1296035",
+      "durationSeconds": 57.71666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "78fcc6e8d549b384",
+      "checkpoint": "15e6a6845ee0e1a4",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "37221ce3146aa103",
+          "actual": "52afa7390dbc482a"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "d749cdd3db5aa52f",
+          "actual": "7cc0817502db43a9"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "c9458394effc5fcb",
+          "actual": "868ad08992ed524f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "b43c641e99e53936",
+          "actual": "79e58f89ebf4c31b"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-3996626042c502db",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "8b86b4ea22a781b7",
+      "replayURL": "./demo-data/solo-qualified-3996626042c502db.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-3996626042c502db.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "92d27f537d8acd23",
+      "durationSeconds": 18.633333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "5bbe977ee05a9279",
+      "checkpoint": "649adacd7994728c",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "cf62225179af9730",
+          "actual": "56bfb2cdcefef1f4"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "4353529614445121",
+          "actual": "17f1d09a4ddd4dd8"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "ecec8539d45d9181",
+          "actual": "ece88539d459a8aa"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "bbd805173cd0a6b2",
+          "actual": "d600eb6f0b7534b9"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "26cc1625a2732e38",
+          "actual": "877631d7f3d9d3ac"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-9aa30fcd0b3c8281",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "2df046eb19a02b49",
+      "replayURL": "./demo-data/solo-qualified-9aa30fcd0b3c8281.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-9aa30fcd0b3c8281.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "9c3dc6e4338ae358",
+      "durationSeconds": 65.075,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "949e3cb3cd6ed7ca",
+      "checkpoint": "769d54852566a037",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "51b808f5735dcd05",
+          "actual": "56f4807ed68ce4e6"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "114497ddad9423a3",
+          "actual": "beab00319a93e78f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "900760c44402e46e",
+          "actual": "900e5cc44408fc50"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "e69dd50f5af16eac",
+          "actual": "d90b8b527e506f12"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "7cb9ec0cd32a8e92",
+          "actual": "d952fa2c919c1994"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-dd5c4beb661682f0",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "1677d46209dd8f82",
+      "replayURL": "./demo-data/solo-qualified-dd5c4beb661682f0.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-dd5c4beb661682f0.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "ede89f137543140b",
+      "durationSeconds": 56.13333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "931b5ed9148203af",
+      "checkpoint": "666cdaad73c07860",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "87d12879e84fd358",
+          "actual": "87b92879e83b4177"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "9308e6cfadb4b9c3",
+          "actual": "0141fda4b1dcb427"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "149da8ccef4ef79f",
+          "actual": "561bb23aa28a1c5b"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "ffc6785b5c8dfa73",
+          "actual": "c0af31362f6d1203"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "5b3d79b03b16b164",
+          "actual": "f9883d417b151c70"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-484de1d1d425f0c5",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "1fd7e5cebea07eaa",
+      "replayURL": "./demo-data/solo-qualified-484de1d1d425f0c5.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-484de1d1d425f0c5.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "c381fcc30d0f3114",
+      "durationSeconds": 29.05,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "25e06619f0ee6e7f",
+      "checkpoint": "568539320227ae9f",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "161969c976ac1798",
+          "actual": "9223c13b9b33213f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "7110faeb9fbfb649",
+          "actual": "6ae29f5b29ecfcf1"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "2eb0559827e44ab5",
+          "actual": "a601c0478f18c4e5"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "3238df42a375da19",
+          "actual": "b209bf16fc9de31f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "a528830ed61246ee",
+          "actual": "46a49c29c02ccd6d"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-614567e280b3c780",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "07eddc379330a3c7",
+      "replayURL": "./demo-data/solo-qualified-614567e280b3c780.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-614567e280b3c780.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "c08a51f3d6ddbb14",
+      "durationSeconds": 63.00833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "edf631f1620167a4",
+      "checkpoint": "b12438abd3494233",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "01c2d7baf532d4d5",
+          "actual": "ad09ed4384fa91d3"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "2bc36798cb7c9210",
+          "actual": "28fb653175e44a8c"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "60602119158b73b6",
+          "actual": "605c1d1915878413"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "b849570c306c7ba0",
+          "actual": "c50ce33ccfe85665"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "38c02527881b688b",
+          "actual": "57f62774bae57e61"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8f766bd89a83be7e",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "6c8830a1d3e29724",
+      "replayURL": "./demo-data/solo-qualified-8f766bd89a83be7e.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-8f766bd89a83be7e.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "9036b29175195002",
+      "durationSeconds": 53.25833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "c214c1af61ae2259",
+      "checkpoint": "0e52b7d062f6f7f4",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "95e6e24794d962cd",
+          "actual": "522c52623563ebff"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "568b3dbbf63fd189",
+          "actual": "11eabb2ea2d57e13"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "7e3ce5efd455e46a",
+          "actual": "d66acd85cd23da9d"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "22b067569dc67df9",
+          "actual": "9a58f0006750f310"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "5cb7e63b352289e2",
+          "actual": "7981fc8624015ac4"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-bfae960cf9bf13c8",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "239e184cbb8c80cb",
+      "replayURL": "./demo-data/solo-qualified-bfae960cf9bf13c8.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-bfae960cf9bf13c8.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "726b82df9789ac61",
+      "durationSeconds": 14.516666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "74b64e53b2bee772",
+      "checkpoint": "2a061d01f112f19e",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "df71074b4980b87d",
+          "actual": "bb16c327441e2a27"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "a8a4067a9e56646f",
+          "actual": "c0f36ccc7361fd8f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "b7e9ea3d3750a374",
+          "actual": "b7e2ee3d374a8b92"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "a0c7a679059cf9b2",
+          "actual": "d3135c1cdf8aeaa8"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "d005941eae9a34ca",
+          "actual": "09395d3f76865680"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f229f1af7ed82073",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "d4ddca4af2c99e7c",
+      "replayURL": "./demo-data/solo-qualified-f229f1af7ed82073.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-f229f1af7ed82073.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "22170531bbd86438",
+      "durationSeconds": 19.175,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "af841cfd70a68957",
+      "checkpoint": "89004ffee1ea35da",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "7b0245ede045f6ae",
+          "actual": "ece564da066c3d30"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "01b9ac5a0ed23c13",
+          "actual": "8ead22ba439ebf1d"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "81ec283161e8dd26",
+          "actual": "2bf04f8ae9df02df"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "6ad9cfe558c6d7b2",
+          "actual": "78ffb36c2d619ce3"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "1951d810aa1507ff",
+          "actual": "1b576d96993e573a"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-81e24a32328f7a3c",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "3ac08715cd89ea84",
+      "replayURL": "./demo-data/solo-qualified-81e24a32328f7a3c.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-81e24a32328f7a3c.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "554ebe01bd628cd6",
+      "durationSeconds": 33.391666666666666,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "d9e689aa219979a0",
+      "checkpoint": "a711e7ca98ac031e",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "968f7b142a34526d",
+          "actual": "f9b52b338073abc4"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "662d9b45e286cae3",
+          "actual": "9542e8a3dadea264"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "e0c93f7d6456b6c7",
+          "actual": "8ac5b711a2edeaf7"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "152547caeabd2ed6",
+          "actual": "7cad875eafb096a4"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "0c0b3b8bbf49ff6a",
+          "actual": "375ed0f1c44588a4"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-c4afd0fd10fd9d29",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "6dd4631a82bdda32",
+      "replayURL": "./demo-data/solo-qualified-c4afd0fd10fd9d29.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-c4afd0fd10fd9d29.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "edf8bdc664f4b285",
+      "durationSeconds": 48.975,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "20b4f71a33a4b5ab",
+      "checkpoint": "d1cd869db19ea68f",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "0d762e9a643c0489",
+          "actual": "806bb9f3c5c1dbb5"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "bcd48c946b539072",
+          "actual": "f144a28fefc44d2f"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "0ed19b739be95069",
+          "actual": "1a8aafb0e31a223e"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "786d6e8035a35de1",
+          "actual": "1bcc4807fa402ac9"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-bd23e3eb635875d1",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "a718e692728dbe86",
+      "replayURL": "./demo-data/solo-qualified-bd23e3eb635875d1.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-bd23e3eb635875d1.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "e9df3aab9fbb6f2c",
+      "durationSeconds": 24.633333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "bb1ad0f5febe0f80",
+      "checkpoint": "7fafd4c2b5228eec",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "99a19d9791b25874",
+          "actual": "58d761e419a46136"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "744b995b379a93c1",
+          "actual": "87e26239c99697ac"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "acf2965d03d67136",
+          "actual": "b5ebc70d84c38874"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "c16599bbaa67382e",
+          "actual": "10edef5927ddc7ba"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "30b0dc0a201d4ad6",
+          "actual": "b35b66cb82ef2dbf"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f57d5e1891de81f5",
+      "engine": "webkit",
+      "outcome": "won",
+      "recordingIdentity": "c35ac1c5ace0fff4",
+      "replayURL": "./demo-data/solo-qualified-f57d5e1891de81f5.webkit.performance.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-f57d5e1891de81f5.webkit.performance.diagnostics.json",
+      "inputTraceIdentity": "e8958eceeabe8a33",
+      "durationSeconds": 17.883333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "50f54c51f0e4b16e",
+      "checkpoint": "7578437a70624d6f",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "c239181bdd7facda",
+          "actual": "8740f546e1c4b43d"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "clock",
+          "message": "Authoritative clock differs.",
+          "expected": "e3730875ab926f44",
+          "actual": "0fa198f28a71f10c"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "result",
+          "message": "Authoritative result differs.",
+          "expected": "ebf634ef47d776d9",
+          "actual": "a3d183a864a7b4d7"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "e6bb9d9f7d726cb1",
+          "actual": "e54214a0bd9b2e46"
+        },
+        {
+          "code": "summary-mismatch",
+          "message": "Recorded and reconstructed summaries differ."
+        }
+      ]
+    }
+  ],
+  "failures": [],
+  "catalogs": "demo-data/catalog.journey-current.json,demo-data/catalog.journey-archive.json",
+  "required": 81,
+  "browserVersion": "26.5",
+  "finished": "2026-10-18T04:16:19.405Z"
+}

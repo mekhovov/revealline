@@ -96,5 +96,8 @@
   "joinHint": "Steer to take over · practice, no rewards",
   "closeDetails": "Close details",
   "fullscreenShort": "Fullscreen",
-  "windowedShort": "Windowed"
+  "windowedShort": "Windowed",
+  "watchAll": "Watch all modes",
+  "retry": "Retry",
+  "recentCaptions": "Recent explanations"
 }
