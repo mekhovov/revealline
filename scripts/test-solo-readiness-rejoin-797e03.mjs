@@ -46,8 +46,8 @@ const body = (text, name) => {
 test('immutable declared-source witness binds exact historical bytes and never grants production admission', async () => {
   const bytes = await read(READINESS_REJOIN_WITNESS);
   const witness = JSON.parse(bytes);
-  assert.equal(witness.records.length, 37);
-  assert.equal(witness.declarations.length, 31);
+  assert.equal(witness.records.length, 39);
+  assert.equal(witness.declarations.length, 33);
   for (const path of new Set(witness.declarations.map((row) => row.path))) {
     const saved = await read(path);
     const value = JSON.parse(saved);

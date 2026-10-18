@@ -1,4 +1,7 @@
-import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
+import {
+  assertDeclaredReadinessTool,
+  modelCurrentReadinessTools,
+} from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -156,7 +159,9 @@ test('fixed declarations retain current or exact historical refs and their actua
 });
 
 test('current Next admission still refuses changed tooling before package or native operations', async () => {
-  const plan = bindSustainedJob(reviewedParserControl(await json(plans.sustained)), 'webkit', 1);
+  // The modeled clone isolates the deliberately corrupt runner; the executed plan stays immutable.
+  const current = await modelCurrentReadinessTools(plans.sustained, await json(plans.sustained));
+  const plan = bindSustainedJob(reviewedParserControl(current), 'webkit', 1);
   let effects = 0;
   await assert.rejects(
     () =>

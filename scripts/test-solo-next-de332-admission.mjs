@@ -1,3 +1,4 @@
+import { modelCurrentReadinessTools } from './solo-readiness-rejoin-declared-source.mjs';
 import { readExecutedDe332Source, assertExecutedDe332Ref } from './solo-de332-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -304,8 +305,10 @@ test('Next is explicit main-branch manual selection only, never a PR event or au
 
 test('current helper digest mismatch rejects before any package or native operation', async () => {
   const target = 'scripts/run-solo-remote-correctness.mjs';
+  const path = 'docs/performance/solo-next-geometric-797e03-plan.json';
+  // Isolate the corrupt runner against a test-only current clone, never the saved declaration.
   const currentPlan = reviewedParserControl(
-    await json('docs/performance/solo-next-geometric-797e03-plan.json'),
+    await modelCurrentReadinessTools(path, await json(path)),
   );
   let sideEffects = 0;
   await assert.rejects(

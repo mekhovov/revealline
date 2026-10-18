@@ -148,9 +148,11 @@ function workflowAdmission(text) {
   assert(text.includes('scripts/test-solo-73a345-correctness-tooling.mjs'));
   assert(
     text.includes(
-      activePlanPath === planPath
-        ? '73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e'
-        : '797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+      activePlanPath === finalPlanPath
+        ? '9d5139b9983c700a6a708f65f379fa4d5a8b0395 99f9e6cea7ea7dc27c93609aae632908531d93d1'
+        : activePlanPath === planPath
+          ? '73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e'
+          : '797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
     ),
   );
   assert.equal((text.match(/if: \$\{\{ always\(\) \}\}/g) ?? []).length, 2);

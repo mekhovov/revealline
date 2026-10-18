@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
@@ -191,6 +192,7 @@ test('each reviewed sparse set contains every exact adapter and frozen observer 
     const plan = JSON.parse(await read('docs/performance/' + spec.plan));
     for (const ref of [...plan.adapterInputs, ...plan.frozenTools]) {
       assert(inputs.includes(ref.path), ref.path);
+      if (await assertDeclaredReadinessTool('docs/performance/' + spec.plan, ref)) continue;
       const bytes = await read(ref.path);
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
