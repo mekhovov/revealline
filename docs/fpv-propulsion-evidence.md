@@ -59,6 +59,49 @@ Thrust, torque and current may contain signed observations, including noise. The
 - Negative load readings and shaft power exceeding electrical power generate warnings. Energy warnings compare central values, not uncertainty bounds, and do not prove a measurement is impossible. Neither warnings nor imports activate physics automatically.
 - Source/condition/license text is inert. Render it as text, not HTML. No source URL is fetched. Unknown/restricted redistribution remains visible and does not block a user's local inspection.
 
+## Conditional battery load calculation
+
+`solvePropulsionEvidenceLoad` in `propulsion-load.mjs` calculates a static electrical operating point from one to four eligible voltage sweeps. This is a pure prerequisite for a later propulsion adapter. It has no UI, runtime, preset, persistence or network integration, and does not change historical flight identities. No external measurement rows are bundled.
+
+```js
+import { solvePropulsionEvidenceLoad } from '../optional-practice/civilian-fpv/propulsion-load.mjs';
+
+const result = solvePropulsionEvidenceLoad({
+  evidence: [voltageSweep], // A complete PropulsionEvidence.v1 voltage-axis record.
+  openVoltage: 4.2, // Explicit model assumption in volts, not a fitted battery parameter.
+  resistance: 0.08, // Explicit model assumption in ohms.
+  currentBasis: 'dc-input-at-recorded-voltage',
+  currentLimit: 5, // Optional diagnostic threshold in amperes; null means no threshold.
+});
+```
+
+The example's battery numbers are illustrative, not a recommended aircraft tune. The existing `createSyntheticPropulsionEvidence()` example has a **command axis**, so it deliberately returns `voltage-axis-required` rather than being reinterpreted as a voltage sweep. The numerical tests contain separate invented voltage sweeps.
+
+The caller must establish that each path's current denotes **DC input current at its recorded terminal voltage**, and supply the explicit `currentBasis` declaration. Phase current cannot be substituted. The evidence schema cannot establish measurement topology: this declaration is a caller assumption, not source verification. The output records `assumptions.currentBasis: 'caller-declared'` and `assumptions.measurementTopology: 'unverified'`, separately from unchanged source metadata.
+
+Eligible paths require:
+
+- A voltage axis, `single-rotor` scope, `static` flow and explicitly recorded zero airspeed at every sample.
+- A present, constant command at every sample. Canonical normalized and microsecond command units remain distinct; neither is converted to RPM or normalized motor speed. Different paths may use different fixed commands.
+- Present, nonnegative DC input current, nondecreasing through the entire voltage sequence, including across coverage gaps. This supports a unique covered solution; noisy or nonmonotone evidence remains inspectable in the original module but is unavailable for this solver.
+
+The circuit consists only of the supplied independent parallel loads at one common terminal voltage, powered by an ideal fixed open voltage and series resistance. A whole-aircraft path is rejected to prevent mixing measurement scopes. Each supplied path counts once; repeated paths explicitly model repeated identical independent loads. Rotor interaction, additional electronics, unequal wiring losses, transients, battery charge/temperature evolution and voltage regulation are outside this model. It is not a complete aircraft prediction or a measured battery fit.
+
+The solver intersects all covered voltage intervals, merges their sample knots and solves `V + R × sum(I(V)) = openVoltage` within each covered piecewise-linear segment. It never assumes `I ∝ V²`, bridges gaps, extrapolates, invents idle/full-command endpoints, changes commands or constructs a command-by-voltage surface. Closed endpoints and isolated covered points are supported. A floating-point solution is accepted only when its re-evaluated residual is at most `32 × Number.EPSILON × max(|openVoltage|, |V|, |R × I|)` volts; that bound is reported as `residualToleranceVolts`. If the curve is too steep to represent a consistent operating voltage, the result is unavailable with `numerical-resolution` rather than a fabricated current at the rounded voltage.
+
+The returned `PropulsionLoad.v1` object is detached and self-describing:
+
+- `resultKind` is always `calculated`. `model` identifies the fixed battery model, linear load interpolation and common-voltage parallel connection; `assumptions` explicitly marks topology and current interpretation as unverified and load interactions as unmodeled.
+- `sources` retains each evidence identity, source kind/license/revision, component descriptions, conditions, uncertainty metadata, canonical units, fixed-command declaration and diagnostics. Measured, calculated and synthetic sources remain distinct. Source text remains inert and no URL is fetched.
+- `status` is `solved`, `limit-exceeded` or `unavailable`. `reason` and, where applicable, `pathIndex` identify unsupported conditions, missing current/commands, nonmonotone current, absent common coverage, a root outside coverage, a gap or numerical resolution. Malformed records and invalid circuit arguments throw instead of producing a partially accepted result.
+- `operatingPoint` is null when unavailable. Otherwise it contains voltage, summed current, delivered electrical power, series-resistance loss, voltage residual and per-path evaluator results. The central-value power balance is `openVoltage × I = V × I + R × I²`. Missing thrust, torque or RPM stays null. No aggregate body force or reaction torque is inferred.
+- A current threshold produces `limit-exceeded` while retaining the **unregulated** operating point. It does not clip current or solve at an invented lower command. Equality with the threshold is accepted.
+- `uncertaintyBasis: 'central-values-only-not-propagated'` applies to the solved point. Per-path source/interpolation uncertainty is retained, but battery-parameter, model, interpolation and root uncertainty are not propagated.
+
+Voltage and resistance arguments are finite numbers in `0..1000` V and `0..1000` ohms; an optional current threshold is `0..40000` A. These are parser bounds, not qualified hardware limits. Each path retains the original 256 KiB / 256-sample evidence limits, and the combined input is bounded. The local content checksum binds ordered evidence identities and circuit inputs; it is not a signature, measurement qualification or simulation identity.
+
+Validation: `node --test game/test/fpv-aircraft-propulsion-load.test.mjs game/test/fpv-aircraft-propulsion-evidence.test.mjs`. Independent synthetic circuit oracles cover constant/affine and piecewise loads, multiple paths, knots, singleton/intersected/disconnected domains, zero voltage/resistance/current, missing channels, caller declarations, numerical resolution and immutability. Passing these checks qualifies the bounded numerical calculation only. R6 still requires conditioned command/voltage maps, consistent allocation and motor response, versioned runtime integration, and held-out physical evidence.
+
 ## Evidence reviewed and later activation
 
 [Tyto test 6zd](https://database.tytorobotics.com/tests/6zd/dys-samguk-shu-hq-5045) includes command, RPM, force, torque, current and voltage, but is a battery-loaded sweep for a different component combination. It is not a full command-by-voltage surface; redistribution permission was not established. [T-Motor's MN4014 tables](https://store.tmotor.com/product/mn4014-kv330-motor-navigator-type.html) use different propellers from the catalog's X650 and lack torque/low-command coverage. [APC's files](https://www.apcprop.com/performance-data-new/) are calculated results. [UIUC](https://m-selig.web.engr.illinois.edu/props/propDB.html) provides measured propeller coefficients, not full electrical powertrain maps.
