@@ -6,6 +6,14 @@ import { startProductionPreview } from './serve-production-preview.mjs';
 import { PUBLIC_SECURITY_HEADERS } from './game-cli.mjs';
 
 export const FINAL_WORKER_COHORT = 'worker-idle-candidatea6e';
+export const RUNTIME9D_WORKER_COHORT = 'worker-idle-candidate9d5139b';
+const runtime9dSource = Object.freeze({
+  revision: '9d5139b9983c700a6a708f65f379fa4d5a8b0395',
+  tree: '99f9e6cea7ea7dc27c93609aae632908531d93d1',
+  runtime: '9d5139b9983c700a6a708f65f379fa4d5a8b0395',
+});
+const workerSource = (plan) =>
+  plan?.sourceCohort === RUNTIME9D_WORKER_COHORT ? runtime9dSource : finalSource;
 const finalSource = Object.freeze({
   revision: 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4',
   tree: '6b13627e324f695b6ee8d9f2dee2eeeb7217c332',
@@ -13,7 +21,7 @@ const finalSource = Object.freeze({
 });
 function finalWorkerPlan(plan) {
   if (plan?.sourceCohort === undefined) return false;
-  assert.equal(plan.sourceCohort, FINAL_WORKER_COHORT);
+  assert([FINAL_WORKER_COHORT, RUNTIME9D_WORKER_COHORT].includes(plan.sourceCohort));
   assert.equal(plan.format, 'SoloHostedWorkerDiagnosticPlanV1');
   return true;
 }
@@ -54,7 +62,10 @@ export function validateWorkerDiagnosticPlan(plan) {
   assert.equal(plan.playwright, '1.62.1');
   assert.equal(plan.performanceExclusion, true);
   assert.equal(plan.release?.firstEightAllCorrectnessPassed, false);
-  assert.equal(plan.release?.predecessorRun, final ? 39012635540 : 38985941469);
+  assert.equal(
+    plan.release?.predecessorRun,
+    plan.sourceCohort === RUNTIME9D_WORKER_COHORT ? 39130685076 : final ? 39012635540 : 38985941469,
+  );
   assert.equal(plan.release?.candidateRevision, plan.candidate.revision);
   if (confirmation) {
     assert.equal(plan.windowMs, undefined);
@@ -73,25 +84,71 @@ export function validateWorkerDiagnosticPlan(plan) {
   assert.deepEqual(plan.rows, confirmation ? WORKER_CONFIRMATION_ROWS : WORKER_DIAGNOSTIC_ROWS);
   assert.equal(
     plan.candidate.revision,
-    final ? finalSource.revision : '3adcd53792043ef02459e86168c6b33a66d6ef00',
+    final ? workerSource(plan).revision : '3adcd53792043ef02459e86168c6b33a66d6ef00',
   );
   assert.equal(
     plan.candidate.tree,
-    final ? finalSource.tree : '48018be714c3965f989c75c9fe18e8da2529eebd',
+    final ? workerSource(plan).tree : '48018be714c3965f989c75c9fe18e8da2529eebd',
   );
   if (final) {
-    assert.equal(plan.runtimeRevision, finalSource.runtime);
+    assert.equal(plan.runtimeRevision, workerSource(plan).runtime);
     assert.deepEqual(plan.baseline, {
       revision: '8b01991942dc764b8aa4726851699ce1985e53ae',
       tree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
     });
-    assert.equal(plan.release.historicalPredecessorRun, 38985941469);
-    assert.equal(plan.release.scope, 'independent-final-worker-idle-diagnostic');
-    assert.equal(plan.release.onceOnlyBefore, 'a7e0219818842f02399317ca6d2a14bdd506da3d');
-    assert.deepEqual(plan.release.predecessorWorkerReport, {
-      bytes: 2670,
-      sha256: '7b5e8cd5251423092ef4ec8e82b629e8186ed480f77080214503fd91a57b55eb',
-    });
+    if (plan.sourceCohort === RUNTIME9D_WORKER_COHORT) {
+      assert.equal(plan.release.scope, 'independent-source9d-worker-idle-diagnostic');
+      assert.equal(plan.release.firstEightStatus, 'failed-one-of-eight');
+      assert.equal(plan.release.correctnessPassed, 7);
+      assert.equal(plan.release.correctnessFailed, 1);
+      assert.deepEqual(plan.release.dispatch, {
+        workflow: '.github/workflows/solo-worker-idle-diagnostic.yml',
+        ref: 'refs/heads/main',
+        automaticRetries: 0,
+        inputs: 'none',
+      });
+      assert.equal(plan.release.predecessorAttempt, 1);
+      assert.equal(
+        plan.release.predecessorToolingRevision,
+        '557ad1d936f6152b6decefab11db48a5674c05bc',
+      );
+      assert.deepEqual(plan.release.predecessorWorkerReport, {
+        bytes: 2670,
+        sha256: '093e1bca8af32ddaee765532aa8a17c9037c3fd3043d71aa2d9436cb6e0e22af',
+      });
+      assert.deepEqual(plan.release.failedFirstEightAudit, {
+        gitDataBlob: 'a5208f05089a3e2f3109aae6039958e853f10e4c',
+        bytes: 373472,
+        sha256: '588b031ce672b491a06f246d5793ddf0e51e9e40213e7c32999ab381e58e8b20',
+      });
+      assert.deepEqual(plan.release.predecessorArtifact, {
+        id: 12138336732,
+        bytes: 821195,
+        sha256: '8892f95644cc62886eeb246f8d38bd9220ff98973678b9e4b4be0b25100a1397',
+      });
+      assert.equal(plan.candidate.run, 39122543440);
+      assert.equal(plan.candidate.artifact, 12135616655);
+      assert.deepEqual(plan.candidate.outer, {
+        bytes: 1094656114,
+        sha256: '84c1621400e4a4a7ce662cf0ee52916fe03e716ec51f0559fbaa218bafa01888',
+      });
+      assert.deepEqual(plan.candidate.inner, {
+        bytes: 1075818191,
+        sha256: 'ef878c4d42fdcb8ae61ff1e05c4199a6c1b7023decd45a35c9f5fd1dcecd2b16',
+      });
+      assert.equal(
+        plan.candidate.manifestSHA256,
+        '8d4bc6d5d25e92e4743afa9d241180735b16cd446e333ab7b0dab0bca45641c2',
+      );
+    } else {
+      assert.equal(plan.release.historicalPredecessorRun, 38985941469);
+      assert.equal(plan.release.scope, 'independent-final-worker-idle-diagnostic');
+      assert.equal(plan.release.onceOnlyBefore, 'a7e0219818842f02399317ca6d2a14bdd506da3d');
+      assert.deepEqual(plan.release.predecessorWorkerReport, {
+        bytes: 2670,
+        sha256: '7b5e8cd5251423092ef4ec8e82b629e8186ed480f77080214503fd91a57b55eb',
+      });
+    }
     assert(
       Array.isArray(plan.frozenTools) &&
         plan.frozenTools.length > 0 &&
@@ -201,7 +258,7 @@ export function workerProbeArguments(plan, row, address, reportPath) {
 }
 export function workerDiagnosticAssessment(raw, command, row, plan = null) {
   const expectedRevision = finalWorkerPlan(plan)
-    ? finalSource.revision
+    ? workerSource(plan).revision
     : '3adcd53792043ef02459e86168c6b33a66d6ef00';
   const clean =
     command?.status === 'closed' &&
@@ -269,7 +326,7 @@ export async function prepareWorkerDiagnosticMode(ctx) {
   assert.equal(ctx.admitted.status, 'passed');
   assert.equal(ctx.admitted.artifacts.candidate.sourceRevision, ctx.plan.candidate.revision);
   if (finalWorkerPlan(ctx.plan)) {
-    assert.equal(ctx.admitted.artifacts.candidate.sourceTree, finalSource.tree);
+    assert.equal(ctx.admitted.artifacts.candidate.sourceTree, workerSource(ctx.plan).tree);
     assert.equal(
       ctx.admitted.artifacts.candidate.manifestSHA256,
       ctx.plan.candidate.manifestSHA256,

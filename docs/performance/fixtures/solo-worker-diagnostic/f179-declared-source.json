@@ -1,0 +1,27 @@
+{
+  "format": "SoloFinalWorkerDeclaredSourceV1",
+  "revision": "f1798f323204b02898d4e7d45a7c5b69df73914d",
+  "tree": "2c0faa46fc9ed42aa4e8c7af1be44f2899ab582f",
+  "postHocExactGitReadback": true,
+  "scope": "Test-only immutable prior declaration and its two changed helper records. No new execution or successful observation is inferred; production hashes current inputs without historical fallback.",
+  "records": [
+    {
+      "path": "docs/performance/solo-final-worker-diagnostic-plan.json",
+      "blob": "f6fd070175af80fbe834f62c08e6a25d28c05146",
+      "bytes": 11880,
+      "sha256": "a60e3c5b1eceb4ba314c9fad13a0a99e65b61bc93f8c7dfbf2493c7bd5d3e227"
+    },
+    {
+      "path": "scripts/solo-remote-worker-diagnostic.mjs",
+      "blob": "50b6385846424b872d7460c3591ea2f491a239da",
+      "bytes": 13978,
+      "sha256": "2145d4ad77471ba1d810562722a5541a7d78e89720fd48569a0930f8f990c4ea"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "blob": "b3a8d041cdb70697183f1b3562a5f852f70c26fd",
+      "bytes": 57545,
+      "sha256": "cdec62bc65481f30bb36d7055227594a727f390e75d5bbb86415f1b7fa2a07c7"
+    }
+  ]
+}
