@@ -5,6 +5,7 @@ import { setMenuIcon } from '../../game/ui/native-menu-icons.mjs';
 import { mountRevealAuditInput, attachRevealAuditReader } from './reveal-audit-input.mjs';
 import { mountRevealAuditViewer } from './reveal-audit-viewer.mjs';
 import { REVEAL_AUDIT_SOURCES } from './reveal-audit-sources.mjs';
+import { mountRevealAuditThumbnails } from './reveal-audit-thumbnails.mjs';
 
 const doc = document,
   win = window;
@@ -16,7 +17,8 @@ const rasters = doc.querySelector('#rasters'),
 let task = null,
   published = 0,
   disposed = false,
-  readers = [];
+  readers = [],
+  thumbnails = null;
 const foreground = () => !doc.hidden && doc.hasFocus();
 const el = (tag, text, className) => {
   const node = doc.createElement(tag);
@@ -106,7 +108,7 @@ function ownerList(owners, id, title, nextReaders) {
   nextReaders.push({ region: list, id: `${id}-owners`, label: () => title });
   return details;
 }
-function stage(audit, generation) {
+function stage(audit) {
   if (
     audit?.format !== 'fpv-reveal-art-audit.v1' ||
     !Array.isArray(audit.images) ||
@@ -129,7 +131,8 @@ function stage(audit, generation) {
       throw new Error(t('tools:revealSourceMismatch'));
   }
   const originals = new Map(CURRENT_ART_SOURCES.map((entry) => [entry.id, entry]));
-  const nextReaders = [];
+  const nextReaders = [],
+    nextThumbnails = [];
   const images = audit.images.map((entry, index) => {
     const id = `raster-${index + 1}`,
       title = `${String(entry.index).padStart(2, '0')} · ${entry.subject}`;
@@ -140,27 +143,14 @@ function stage(audit, generation) {
       el('span', () => t('tools:needsReplacementOriginalPreserved'), 'tag'),
       heading,
     );
-    const box = el('div', '', 'image'),
-      img = el('img');
-    img.alt = `Existing ${entry.subject} source illustration`;
-    img.loading = 'lazy';
-    img.decoding = 'async';
-    img.width = entry.image.width;
-    img.height = entry.image.height;
-    img.addEventListener(
-      'error',
-      () => {
-        if (!disposed && published === generation && article.isConnected)
-          box.replaceChildren(
-            el('p', () => t('tools:originalUnavailableHereOpenThisAtlasFromItsSourceCheckout')),
-          );
-      },
-      { once: true },
-    );
-    img.src = `../../${entry.path}`;
-    box.append(img);
+    const box = el('div', '', 'image');
+    nextThumbnails.push({
+      box,
+      source: { role: 'original', file: pins.get(id), ...entry.image },
+      alt: `Existing ${entry.subject} source illustration`,
+    });
     const link = el('a', () => t('tools:openUnchangedSourcePng'));
-    link.href = img.src;
+    link.href = `../../${entry.path}`;
     sourceLink(link, id);
     article.append(
       box,
@@ -208,7 +198,7 @@ function stage(audit, generation) {
     );
     return article;
   });
-  return { images, scenes, nextReaders };
+  return { images, scenes, nextReaders, nextThumbnails };
 }
 let generation = 0;
 async function load(explicit = false) {
@@ -226,13 +216,20 @@ async function load(explicit = false) {
     if (!response.ok) throw new Error(`Audit inventory unavailable (${response.status}).`);
     const audit = await response.json();
     if (!valid()) return;
-    const result = stage(audit, current.generation);
+    const result = stage(audit);
     if (!valid()) return;
     owner.navigation.endReading({ restoreFocus: false });
     readers.forEach((reader) => reader.destroy());
+    thumbnails?.dispose();
     rasters.replaceChildren(...result.images);
     procedures.replaceChildren(...result.scenes);
     published = current.generation;
+    thumbnails = mountRevealAuditThumbnails({
+      entries: result.nextThumbnails,
+      rootURL: new URL('../../', import.meta.url).href,
+      document: doc,
+      window: win,
+    });
     readers = result.nextReaders.map((options) =>
       attachRevealAuditReader({ navigation: owner.navigation, ...options }),
     );
@@ -271,6 +268,8 @@ const pagehide = (event) => {
   owner.navigation.endReading({ restoreFocus: false });
   if (event.persisted) return;
   disposed = true;
+  thumbnails?.dispose();
+  thumbnails = null;
   readers.forEach((reader) => reader.destroy());
   sectionReaders.forEach((reader) => reader.destroy());
   viewer.destroy();

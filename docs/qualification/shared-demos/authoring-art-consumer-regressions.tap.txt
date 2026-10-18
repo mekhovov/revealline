@@ -1,0 +1,430 @@
+TAP version 13
+# Subtest: Production preserves direct originals and falls back once to byte-identical pinned artwork only after 404
+ok 1 - Production preserves direct originals and falls back once to byte-identical pinned artwork only after 404
+  ---
+  duration_ms: 1640.851542
+  ...
+# Subtest: Production refuses unavailable, corrupt, redirected and unregistered originals without broader fallback
+ok 2 - Production refuses unavailable, corrupt, redirected and unregistered originals without broader fallback
+  ---
+  duration_ms: 4.911833
+  ...
+# Subtest: Production external fallback retires every temporary decoder and retains only the displayed original
+ok 3 - Production external fallback retires every temporary decoder and retains only the displayed original
+  ---
+  duration_ms: 1298.515791
+  ...
+# Subtest: Production cancellation during a temporary fallback decode retires its URL and rejects late completion
+ok 4 - Production cancellation during a temporary fallback decode retires its URL and rejects late completion
+  ---
+  duration_ms: 78.072041
+  ...
+# Subtest: Production exact original404 cannot admit a corrupted pinned fallback pack
+ok 5 - Production exact original404 cannot admit a corrupted pinned fallback pack
+  ---
+  duration_ms: 12.159333
+  ...
+# Subtest: Reveal audit publishes the complete real historical records and survives late static translation
+ok 6 - Reveal audit publishes the complete real historical records and survives late static translation
+  ---
+  duration_ms: 274.467166
+  ...
+# Subtest: Reveal audit offers stable section readers and preserves native first Enter ownership
+ok 7 - Reveal audit offers stable section readers and preserves native first Enter ownership
+  ---
+  duration_ms: 160.428709
+  ...
+# Subtest: Reveal audit shared controller opens exact owner reading and two Back presses preserve the summary
+ok 8 - Reveal audit shared controller opens exact owner reading and two Back presses preserve the summary
+  ---
+  duration_ms: 289.306125
+  ...
+# Subtest: Reveal audit Sections reach their own stable readers, and live localized labels keep node identity
+ok 9 - Reveal audit Sections reach their own stable readers, and live localized labels keep node identity
+  ---
+  duration_ms: 99.9115
+  ...
+# Subtest: Reveal audit failed late staging preserves the complete previously published article identities
+ok 10 - Reveal audit failed late staging preserves the complete previously published article identities
+  ---
+  duration_ms: 40.697834
+  ...
+# Subtest: Reveal audit historical owner mismatches render unavailable previews without rewriting or losing records
+ok 11 - Reveal audit historical owner mismatches render unavailable previews without rewriting or losing records
+  ---
+  duration_ms: 30.008417
+  ...
+# Subtest: Reveal audit pending Cancel aborts and fences late success without replacing records
+ok 12 - Reveal audit pending Cancel aborts and fences late success without replacing records
+  ---
+  duration_ms: 49.457125
+  ...
+# Subtest: Reveal audit pending Back aborts and fences late success without replacing records
+ok 13 - Reveal audit pending Back aborts and fences late success without replacing records
+  ---
+  duration_ms: 38.557208
+  ...
+# Subtest: Reveal audit pending Escape aborts and fences late success without replacing records
+ok 14 - Reveal audit pending Escape aborts and fences late success without replacing records
+  ---
+  duration_ms: 24.552417
+  ...
+# Subtest: Reveal audit older response and finally cannot replace a newer completed retry
+ok 15 - Reveal audit older response and finally cannot replace a newer completed retry
+  ---
+  duration_ms: 27.82175
+  ...
+# Subtest: Reveal audit pending reload respects newer focus ownership
+ok 16 - Reveal audit pending reload respects newer focus ownership
+  ---
+  duration_ms: 22.839167
+  ...
+# Subtest: Reveal audit pending reload respects newer pointerdown ownership
+ok 17 - Reveal audit pending reload respects newer pointerdown ownership
+  ---
+  duration_ms: 21.820709
+  ...
+# Subtest: Reveal audit pending reload respects newer touchstart ownership
+ok 18 - Reveal audit pending reload respects newer touchstart ownership
+  ---
+  duration_ms: 21.855083
+  ...
+# Subtest: Reveal audit pending reload respects newer wheel ownership
+ok 19 - Reveal audit pending reload respects newer wheel ownership
+  ---
+  duration_ms: 16.471042
+  ...
+# Subtest: Reveal audit pending reload respects newer input ownership
+ok 20 - Reveal audit pending reload respects newer input ownership
+  ---
+  duration_ms: 21.1995
+  ...
+# Subtest: Reveal audit pending reload respects newer blur ownership
+ok 21 - Reveal audit pending reload respects newer blur ownership
+  ---
+  duration_ms: 20.283709
+  ...
+# Subtest: Reveal audit pending reload respects newer hidden ownership
+ok 22 - Reveal audit pending reload respects newer hidden ownership
+  ---
+  duration_ms: 19.705417
+  ...
+# Subtest: Reveal audit pending reload respects newer persisted-pagehide ownership
+ok 23 - Reveal audit pending reload respects newer persisted-pagehide ownership
+  ---
+  duration_ms: 20.840167
+  ...
+# Subtest: Reveal audit pending reload respects newer pagehide ownership
+ok 24 - Reveal audit pending reload respects newer pagehide ownership
+  ---
+  duration_ms: 24.704291
+  ...
+# Subtest: Reveal audit cancels initial JSON decoding without stealing focus or restarting on cached return
+ok 25 - Reveal audit cancels initial JSON decoding without stealing focus or restarting on cached return
+  ---
+  duration_ms: 7.859334
+  ...
+# Subtest: Reveal audit thumbnail admission failures preserve historical records across replacement
+ok 26 - Reveal audit thumbnail admission failures preserve historical records across replacement
+  ---
+  duration_ms: 23.634458
+  ...
+# Subtest: Reveal audit reader cleanup cancels on lifecycle changes and terminal cleanup removes local handlers
+ok 27 - Reveal audit reader cleanup cancels on lifecycle changes and terminal cleanup removes local handlers
+  ---
+  duration_ms: 66.424708
+  ...
+# Subtest: Reveal audit consumed Escape in a reader does not close its surrounding disclosure
+ok 28 - Reveal audit consumed Escape in a reader does not close its surrounding disclosure
+  ---
+  duration_ms: 33.3685
+  ...
+# Subtest: Atlas exposes one unique, actual Reveal audit reentry link
+ok 29 - Atlas exposes one unique, actual Reveal audit reentry link
+  ---
+  duration_ms: 1.515542
+  ...
+# Subtest: Reveal audit Page actions returns to its real home link instead of reopening Sections
+ok 30 - Reveal audit Page actions returns to its real home link instead of reopening Sections
+  ---
+  duration_ms: 57.305833
+  ...
+# Subtest: Reveal audit rejects path drift before binding a pinned source viewer
+ok 31 - Reveal audit rejects path drift before binding a pinned source viewer
+  ---
+  duration_ms: 24.830417
+  ...
+# Subtest: Reveal audit rejects subject drift before binding a pinned source viewer
+ok 32 - Reveal audit rejects subject drift before binding a pinned source viewer
+  ---
+  duration_ms: 24.013625
+  ...
+# Subtest: Reveal audit rejects bytes drift before binding a pinned source viewer
+ok 33 - Reveal audit rejects bytes drift before binding a pinned source viewer
+  ---
+  duration_ms: 31.505792
+  ...
+# Subtest: Reveal audit rejects sha256 drift before binding a pinned source viewer
+ok 34 - Reveal audit rejects sha256 drift before binding a pinned source viewer
+  ---
+  duration_ms: 25.961083
+  ...
+# Subtest: Reveal audit rejects width drift before binding a pinned source viewer
+ok 35 - Reveal audit rejects width drift before binding a pinned source viewer
+  ---
+  duration_ms: 34.443083
+  ...
+# Subtest: Reveal audit rejects height drift before binding a pinned source viewer
+ok 36 - Reveal audit rejects height drift before binding a pinned source viewer
+  ---
+  duration_ms: 29.954333
+  ...
+# Subtest: Reveal thumbnails stay lazy, decode sequentially, and release every adopted image exactly once
+ok 37 - Reveal thumbnails stay lazy, decode sequentially, and release every adopted image exactly once
+  ---
+  duration_ms: 8.376875
+  ...
+# Subtest: Reveal thumbnails abort on hidden/BFCache departure, reject late adoption, and resume pending originals
+ok 38 - Reveal thumbnails abort on hidden/BFCache departure, reject late adoption, and resume pending originals
+  ---
+  duration_ms: 1.560875
+  ...
+# Subtest: Reveal replacement prevents old pending decodes from overwriting the new gallery
+ok 39 - Reveal replacement prevents old pending decodes from overwriting the new gallery
+  ---
+  duration_ms: 0.719542
+  ...
+# Subtest: viewer renders only exact declared UTF-8 text literally, with no navigation or HTML execution
+ok 40 - viewer renders only exact declared UTF-8 text literally, with no navigation or HTML execution
+  ---
+  duration_ms: 39.812542
+  ...
+# Subtest: native source reading consumes first Back and closes on second Back to exact opener
+ok 41 - native source reading consumes first Back and closes on second Back to exact opener
+  ---
+  duration_ms: 6.125208
+  ...
+# Subtest: controller source reading consumes first Back and closes on second Back to exact opener
+ok 42 - controller source reading consumes first Back and closes on second Back to exact opener
+  ---
+  duration_ms: 6.38775
+  ...
+# Subtest: explicit text edges bound long records without changing the text
+ok 43 - explicit text edges bound long records without changing the text
+  ---
+  duration_ms: 5.453584
+  ...
+# Subtest: PNG signature/hash/decode precede publication; actual-size panning is bounded in both axes and Back restores
+ok 44 - PNG signature/hash/decode precede publication; actual-size panning is bounded in both axes and Back restores
+  ---
+  duration_ms: 7.137
+  ...
+# Subtest: invalid bytes remains an explicit source error with reachable Back
+ok 45 - invalid bytes remains an explicit source error with reachable Back
+  ---
+  duration_ms: 2.984542
+  ...
+# Subtest: invalid sha remains an explicit source error with reachable Back
+ok 46 - invalid sha remains an explicit source error with reachable Back
+  ---
+  duration_ms: 2.596292
+  ...
+# Subtest: invalid utf8 remains an explicit source error with reachable Back
+ok 47 - invalid utf8 remains an explicit source error with reachable Back
+  ---
+  duration_ms: 3.05975
+  ...
+# Subtest: invalid redirect remains an explicit source error with reachable Back
+ok 48 - invalid redirect remains an explicit source error with reachable Back
+  ---
+  duration_ms: 3.064375
+  ...
+# Subtest: invalid oversize remains an explicit source error with reachable Back
+ok 49 - invalid oversize remains an explicit source error with reachable Back
+  ---
+  duration_ms: 2.565708
+  ...
+# Subtest: invalid unstreamed remains an explicit source error with reachable Back
+ok 50 - invalid unstreamed remains an explicit source error with reachable Back
+  ---
+  duration_ms: 3.568041
+  ...
+# Subtest: pending close aborts and fences late response; a fresh retry has its own generation
+ok 51 - pending close aborts and fences late response; a fresh retry has its own generation
+  ---
+  duration_ms: 5.80775
+  ...
+# Subtest: pending source blur cannot publish or steal focus on late completion
+ok 52 - pending source blur cannot publish or steal focus on late completion
+  ---
+  duration_ms: 2.44075
+  ...
+# Subtest: pending source hidden cannot publish or steal focus on late completion
+ok 53 - pending source hidden cannot publish or steal focus on late completion
+  ---
+  duration_ms: 1.730958
+  ...
+# Subtest: pending source newer-focus cannot publish or steal focus on late completion
+ok 54 - pending source newer-focus cannot publish or steal focus on late completion
+  ---
+  duration_ms: 1.429333
+  ...
+# Subtest: pending source persisted-pagehide cannot publish or steal focus on late completion
+ok 55 - pending source persisted-pagehide cannot publish or steal focus on late completion
+  ---
+  duration_ms: 2.918833
+  ...
+# Subtest: pending source pagehide cannot publish or steal focus on late completion
+ok 56 - pending source pagehide cannot publish or steal focus on late completion
+  ---
+  duration_ms: 2.354167
+  ...
+# Subtest: late PNG decode after close is revoked and cannot populate a newer text view
+ok 57 - late PNG decode after close is revoked and cannot populate a newer text view
+  ---
+  duration_ms: 2.92625
+  ...
+# Subtest: failed PNG decode revokes its Blob and leaves retry/Back accessible
+ok 58 - failed PNG decode revokes its Blob and leaves retry/Back accessible
+  ---
+  duration_ms: 1.807375
+  ...
+# Subtest: Menu retires the viewer before Sections can route to page controls behind it
+ok 59 - Menu retires the viewer before Sections can route to page controls behind it
+  ---
+  duration_ms: 2.452875
+  ...
+# Subtest: live locale keeps source text/identity and ready state; destruction cleans handlers and URLs
+ok 60 - live locale keeps source text/identity and ready state; destruction cleans handlers and URLs
+  ---
+  duration_ms: 2.206417
+  ...
+# Subtest: external dialog closure releases a decoded PNG without stealing newer focus
+ok 61 - external dialog closure releases a decoded PNG without stealing newer focus
+  ---
+  duration_ms: 4.285
+  ...
+# Subtest: external dialog closure aborts pending text and prevents late publication
+ok 62 - external dialog closure aborts pending text and prevents late publication
+  ---
+  duration_ms: 2.708541
+  ...
+# Subtest: PNG hash mismatch cannot become a displayed source
+ok 63 - PNG hash mismatch cannot become a displayed source
+  ---
+  duration_ms: 2.119834
+  ...
+# Subtest: PNG header mismatch cannot become a displayed source
+ok 64 - PNG header mismatch cannot become a displayed source
+  ---
+  duration_ms: 1.071
+  ...
+# Subtest: PNG dimensions mismatch cannot become a displayed source
+ok 65 - PNG dimensions mismatch cannot become a displayed source
+  ---
+  duration_ms: 1.132041
+  ...
+# Subtest: loaded source cached pagehide releases image and reading without reopening on pageshow
+ok 66 - loaded source cached pagehide releases image and reading without reopening on pageshow
+  ---
+  duration_ms: 5.418833
+  ...
+# Subtest: controller Confirm opens one modal and fences a native compatibility click on its new Back control
+ok 67 - controller Confirm opens one modal and fences a native compatibility click on its new Back control
+  ---
+  duration_ms: 2.42275
+  ...
+# Subtest: queued close from an older view cannot clear a newly opened decoded source
+ok 68 - queued close from an older view cannot clear a newly opened decoded source
+  ---
+  duration_ms: 1.605125
+  ...
+# Subtest: first source open and another source immediately own their visible and accessible titles
+ok 69 - first source open and another source immediately own their visible and accessible titles
+  ---
+  duration_ms: 2.792041
+  ...
+# Subtest: live source-title producers update EN/UK names without replacing text or reader ownership
+ok 70 - live source-title producers update EN/UK names without replacing text or reader ownership
+  ---
+  duration_ms: 6.540167
+  ...
+# Subtest: one pure inventory preserves exact inspection and filters missing Sentinel themes without inflating rigs
+ok 71 - one pure inventory preserves exact inspection and filters missing Sentinel themes without inflating rigs
+  ---
+  duration_ms: 15.808542
+  ...
+# Subtest: actual panel uses metadata only; native filters and Back retain focus, source text stays inert
+ok 72 - actual panel uses metadata only; native filters and Back retain focus, source text stays inert
+  ---
+  duration_ms: 36.784833
+  ...
+# Subtest: explicit preview cancellation prevents late row completion, disposes URLs and never steals focus
+ok 73 - explicit preview cancellation prevents late row completion, disposes URLs and never steals focus
+  ---
+  duration_ms: 18.491708
+  ...
+# Subtest: preview failure is visible; filter, reload and lifecycle cancel current requests without approvals
+ok 74 - preview failure is visible; filter, reload and lifecycle cancel current requests without approvals
+  ---
+  duration_ms: 35.94025
+  ...
+# Subtest: late reload and invalid register preserve the current valid view and active filter
+ok 75 - late reload and invalid register preserve the current valid view and active filter
+  ---
+  duration_ms: 16.889291
+  ...
+# Subtest: preview source URL rejects unsafe or remote roots before any body fetch
+ok 76 - preview source URL rejects unsafe or remote roots before any body fetch
+  ---
+  duration_ms: 1.217791
+  ...
+# Subtest: real PNG byte identity admits native decode once; mismatch and decode failure cannot leave a URL
+ok 77 - real PNG byte identity admits native decode once; mismatch and decode failure cannot leave a URL
+  ---
+  duration_ms: 24.52625
+  ...
+# Subtest: bounded reader rejects redirect/oversized stream and cancellation before decode disposes its URL
+ok 78 - bounded reader rejects redirect/oversized stream and cancellation before decode disposes its URL
+  ---
+  duration_ms: 7.476167
+  ...
+# Subtest: shared project workflow reaches all fourteen skills without duplicating or executing intake templates
+ok 79 - shared project workflow reaches all fourteen skills without duplicating or executing intake templates
+  ---
+  duration_ms: 7.126709
+  ...
+# Subtest: inspected reserves use their terminal checklist and reused production pictures stay excluded from spare totals
+ok 80 - inspected reserves use their terminal checklist and reused production pictures stay excluded from spare totals
+  ---
+  duration_ms: 18.780708
+  ...
+# Subtest: register timeout stops activity even when the underlying reader settles late
+ok 81 - register timeout stops activity even when the underlying reader settles late
+  ---
+  duration_ms: 3.913375
+  ...
+# Subtest: authoring browser qualifier preserves paths containing spaces and rejects ambiguous options
+ok 82 - authoring browser qualifier preserves paths containing spaces and rejects ambiguous options
+  ---
+  duration_ms: 1.049959
+  ...
+# Subtest: committed omission evidence must still match every current code-owned image identity
+ok 83 - committed omission evidence must still match every current code-owned image identity
+  ---
+  duration_ms: 7.838208
+  ...
+# Subtest: atomic authoring receipts never replace an earlier outcome, including a late competing receipt
+ok 84 - atomic authoring receipts never replace an earlier outcome, including a late competing receipt
+  ---
+  duration_ms: 5.700333
+  ...
+1..84
+# tests 84
+# suites 0
+# pass 84
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6961.089583

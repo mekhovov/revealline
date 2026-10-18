@@ -5,6 +5,8 @@ import { parse } from 'parse5';
 import { Document } from './helpers/couch-dom.mjs';
 import { getLocale, setLocale, translateDOM } from '../i18n/index.mjs';
 import { mountAuthoringInputHost } from '../ui/authoring-input-host.mjs';
+import { CURRENT_ART_SOURCES } from '../presentation/current-art-sources.mjs';
+import { sceneDescriptor } from '../ui/scene-art.mjs';
 
 const page = new URL('../../authoring/design-atlas/reveal-audit.html', import.meta.url);
 const html = await readFile(page, 'utf8');
@@ -256,7 +258,16 @@ test('Reveal audit historical owner mismatches render unavailable previews witho
   snapshot.procedural[0].id = 'historical-owner-no-longer-current';
   const h = await fixture(t, { read: async () => response(snapshot) });
   assert.equal(h.$('procedures').querySelectorAll('article').length, 17);
-  assert.equal(h.$('procedures').querySelectorAll('canvas').length, 16);
+  const current = new Map(CURRENT_ART_SOURCES.map((source) => [source.id, source]));
+  const available = snapshot.procedural.filter((entry) => {
+    const source = current.get(entry.id);
+    return (
+      source?.kind === 'procedural' &&
+      JSON.stringify(sceneDescriptor(source.theme, source.level, 0)) ===
+        JSON.stringify(entry.descriptor)
+    );
+  });
+  assert.equal(h.$('procedures').querySelectorAll('canvas').length, available.length);
   assert.match(h.$('procedures').textContent, /historical-owner-no-longer-current/);
   assert.equal(h.$('status').dataset.error, 'false');
 });
@@ -350,19 +361,19 @@ test('Reveal audit cancels initial JSON decoding without stealing focus or resta
   assert.equal(h.doc.activeElement, before);
 });
 
-test('Reveal audit stale image errors cannot alter a replacement generation', async (t) => {
+test('Reveal audit thumbnail admission failures preserve historical records across replacement', async (t) => {
   const h = await fixture(t),
-    image = h.$('rasters').querySelector('img');
+    before = cards(h);
+  assert.equal(h.$('rasters').querySelectorAll('article').length, 21);
+  assert.equal(h.$('rasters').querySelectorAll('img').length, 0);
+  assert.match(h.$('rasters').textContent, /unavailable/i);
   startRetry(h);
   await settle();
-  const before = cards(h);
-  image.emit('error');
-  assert.deepEqual(cards(h), before);
-  assert.equal(h.$('rasters').querySelectorAll('img').length, 21);
-  const current = h.$('rasters').querySelector('img');
-  current.emit('error');
-  assert.equal(h.$('rasters').querySelectorAll('img').length, 20);
+  assert.equal(cards(h).length, before.length);
+  assert.notEqual(cards(h)[0], before[0]);
+  assert.equal(h.$('rasters').querySelectorAll('article').length, 21);
   assert.match(h.$('rasters').textContent, /unavailable/i);
+  assert.equal(h.$('status').dataset.error, 'false');
 });
 
 test('Reveal audit reader cleanup cancels on lifecycle changes and terminal cleanup removes local handlers', async (t) => {

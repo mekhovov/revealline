@@ -1,0 +1,561 @@
+{
+  "format": "revealline-current-art-fallback-proof.v1",
+  "finished": "2026-10-18T19:32:02.838Z",
+  "scope": "Native current-art preview invoked with original PNG404. Full PNG scanline/CRC/pixel decoder and exact retained pack/media pins. No persistence or image files written.",
+  "baselineInventorySHA256": "decdb760892aaba8f2dd9743bc2216b153601daa966b140b909fd0f1d059c75c",
+  "loads": [
+    {
+      "id": "picture.retro.fcfa0aad041f9bbf",
+      "path": "authoring/library/1994-forever-art/originals/last-train-cassette.png",
+      "bytes": 2429841,
+      "sha256": "cac113104f328a57eb7e5f857c5e381aae8d3d1aa0541ba426fdb1f87506d63c",
+      "pixelsSha256": "87e71082c977f1d7a3fc7e3037d4a0a15d66af5b7612061b87f60c8728eb433e",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/1994-forever-art/originals/last-train-cassette.png",
+        "authoring/library/four-worlds-chapters/packs/original-retro-1994.json"
+      ]
+    },
+    {
+      "id": "picture.retro.7957561fc5d0fd35",
+      "path": "authoring/library/1994-forever-art/originals/midnight-arcade.png",
+      "bytes": 2522301,
+      "sha256": "8782b71fffc1f84b7c802d1740cec684bbcf1738beb4528106135311afdc72f0",
+      "pixelsSha256": "402dff921858925e6b1cbf83de7c196e073fabc30a1b11d8faa8029a57d9d081",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/1994-forever-art/originals/midnight-arcade.png",
+        "authoring/library/four-worlds-chapters/packs/original-retro-1994.json"
+      ]
+    },
+    {
+      "id": "picture.retro.b0adb2f7bec09e04",
+      "path": "authoring/library/1994-forever-art/originals/rainy-video-rental.png",
+      "bytes": 2779895,
+      "sha256": "03288b467e66b56ad6068142f26db2cd597e4cfc9547bf679af4d043aba1a1f9",
+      "pixelsSha256": "f8cc24080b53bb3d4d5fe62fed25a7675801bb24647964a6e432ec3715eacb30",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-retro-1994.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/1994-forever-art/originals/rainy-video-rental.png",
+        "authoring/library/four-worlds-chapters/packs/original-retro-1994.json"
+      ]
+    },
+    {
+      "id": "picture.fpv.c3d85f08209b7de8",
+      "path": "authoring/library/challenge-chapter-art/originals/crosswind-depot.png",
+      "bytes": 3136739,
+      "sha256": "c7cd2e7d98ecea4b02a63a46da583e2cdd3bcfe627fb929c06235e39fca2ee04",
+      "pixelsSha256": "f2038b7fa07b622b3b9ca80b5d70114cf6c9e63bc12caa4ea81dc1a4e479d588",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/challenge-chapter-art/originals/crosswind-depot.png",
+        "authoring/library/fpv-route-choices/packs/fpv-route-choices.json"
+      ]
+    },
+    {
+      "id": "picture.fpv.fb5413f595ab2c5b",
+      "path": "authoring/library/challenge-chapter-art/originals/signal-switchback.png",
+      "bytes": 3047928,
+      "sha256": "2f454f321578454b79d6f01205b1e25ab2364d1d1cbb58fb98b9a8197f6ae345",
+      "pixelsSha256": "e2366aa06c7c525842db7c2119535dfa6758d19e5e5a3a39c5387df8b17ffce9",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/challenge-chapter-art/originals/signal-switchback.png",
+        "authoring/library/fpv-route-choices/packs/fpv-route-choices.json"
+      ]
+    },
+    {
+      "id": "picture.fpv.adf5c9eea274ba7f",
+      "path": "authoring/library/challenge-chapter-art/originals/split-signal-foundry.png",
+      "bytes": 2765609,
+      "sha256": "dfc6398db48c897df00254f4516704b44b134a9bfbb4bd993d659996077f0749",
+      "pixelsSha256": "9396c82edcc6521bb956bb127d122f0341af6d52ee0be1469ed29d5f48c5fb6d",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/fpv-route-choices/packs/fpv-route-choices.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/challenge-chapter-art/originals/split-signal-foundry.png",
+        "authoring/library/fpv-route-choices/packs/fpv-route-choices.json"
+      ]
+    },
+    {
+      "id": "picture.retro.4d8b59426e203af3",
+      "path": "authoring/library/retro-route-art/originals/crosswind-courier.png",
+      "bytes": 2760396,
+      "sha256": "a18d10b88cbd52432436c473b45405950708df48ff115264ea47a56500cba80f",
+      "pixelsSha256": "aee1b75d851c33148c950cb98697a37243a118b98ee60cccafe12d2f9e3501da",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-retro/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/retro-route-art/originals/crosswind-courier.png",
+        "optional/external-chapters/route-worlds-retro/pack.json",
+        "optional/external-chapters/route-worlds-retro/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.retro.f5875974ea1c7ec0",
+      "path": "authoring/library/retro-route-art/originals/midnight-workshop.png",
+      "bytes": 2378256,
+      "sha256": "39e0cb08e60bcdfafa93a4e57be6a2fb6751c6d72659360e2aa84534a57568a7",
+      "pixelsSha256": "403510cf5a34fde6f2c3ff3cad453abae80440bfdf894147606620feaae2d0a2",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-retro/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/retro-route-art/originals/midnight-workshop.png",
+        "optional/external-chapters/route-worlds-retro/pack.json",
+        "optional/external-chapters/route-worlds-retro/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.retro.99fcd5c9685d28fe",
+      "path": "authoring/library/retro-route-art/originals/signal-thread.png",
+      "bytes": 2440128,
+      "sha256": "9e21db2d3ce3b29eef175afb6244a0bf4a1a63f3009803619b681cbb4d67b6b4",
+      "pixelsSha256": "b1bc1b2a0a3ac4cfa0c785ba115b8a08b4a96160d7ea757571fcafcbe7e78b2c",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-retro/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/retro-route-art/originals/signal-thread.png",
+        "optional/external-chapters/route-worlds-retro/pack.json",
+        "optional/external-chapters/route-worlds-retro/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.fpv.758214a2ee21bb30",
+      "path": "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+      "bytes": 2948372,
+      "sha256": "1fc560183995092042e7ddbdfe7020412498f177f1f57cbae2e987c78fdb70e1",
+      "pixelsSha256": "310b73ce80acf0b439b843975cb299bdd7ebac39bbefdce5f3b8abe2e5810893",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-circuit-art/originals/listening-court.png",
+        "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.fpv.213f02450431334d",
+      "path": "authoring/library/sentinel-circuit-art/originals/open-the-circuit.png",
+      "bytes": 2701967,
+      "sha256": "102d6083b7dcc21a6a310e80e6e19ee1357fa7f117e3de895db8848829426fe3",
+      "pixelsSha256": "ea1cb0bd53848256cdefabd398e725a44eee34ea8fd48f8633625e7e4da740ff",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-circuit-art/originals/open-the-circuit.png",
+        "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.fpv.4c2e50e6a5e5a496",
+      "path": "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+      "bytes": 2933729,
+      "sha256": "d6160676bdd2bb8b1e0f79bcc39736321881a9320f1482a8c844ab4c673cc6b3",
+      "pixelsSha256": "9ee122f302932cd857de6b1ad66ce8c3f49c48f426f111b6084ff486a72d5ad4",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-circuit-art/originals/switchyard-gates.png",
+        "optional/external-chapters/sentinel-circuit-fpv/pack.json",
+        "optional/external-chapters/sentinel-circuit-fpv/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.coupa.1b09bd3b6f1608be",
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+      "bytes": 2767187,
+      "sha256": "8aab2381420f0b127eb98b402de8c7b2af2fc24d471a61ce6180b0f17910959d",
+      "pixelsSha256": "c8eedc5a63f2c0dd8ed57864b156ac564da1858858fc1adc3ced4b031edeb0ef",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/coupa/originals/listening-court.png",
+        "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.coupa.40f512bb0fb9c2b3",
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+      "bytes": 2449288,
+      "sha256": "c3251eca67f94f7e27c75e0c4ac8d1ade6a81b009ee3c154ec276578eb2a8793",
+      "pixelsSha256": "7e7766a64402eeeaf456f839d100eba9306bf5819e80bb708f5987386251c94f",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/coupa/originals/open-the-circuit.png",
+        "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.coupa.280ea068e8a16fac",
+      "path": "authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+      "bytes": 2187660,
+      "sha256": "1395c68c2742d979eeb811be85dbf1352dfb78f114c1352112fac9937ec5e96a",
+      "pixelsSha256": "624e5a77af08bc5c7cb3ca498c498cd356e920fb6f3b1caa662864c678c496e3",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/coupa/originals/switchyard-gates.png",
+        "optional/external-chapters/sentinel-circuit-coupa/pack.json",
+        "optional/external-chapters/sentinel-circuit-coupa/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.retro.3256a277f274465d",
+      "path": "authoring/library/sentinel-theme-art/retro/originals/listening-court.png",
+      "bytes": 2455383,
+      "sha256": "93c98fc631c7148040d42d8818153e55c32a562096dfc39c66af7d008df9e6cf",
+      "pixelsSha256": "3b978d5d5a3b26ef7e89a5a36df99e186ba77d249477bffefb09a7481a19df72",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-retro/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/retro/originals/listening-court.png",
+        "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "optional/external-chapters/sentinel-circuit-retro/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.retro.1afdd5025f933caa",
+      "path": "authoring/library/sentinel-theme-art/retro/originals/open-the-circuit.png",
+      "bytes": 2423183,
+      "sha256": "03a1ee0b83a70df661885d0c9da0c2830a2349b583556be1012ee07264405eee",
+      "pixelsSha256": "e3c52571e80cca0d48e5a457980b89652201c700bc5e42d4d635a18529ae8561",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-retro/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/retro/originals/open-the-circuit.png",
+        "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "optional/external-chapters/sentinel-circuit-retro/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.retro.24fb94bb1748abf1",
+      "path": "authoring/library/sentinel-theme-art/retro/originals/switchyard-gates.png",
+      "bytes": 2662328,
+      "sha256": "0acd0b721c9d066e890970a1e6d429f4d2ccb8d94b31893e2fdae34f37a75239",
+      "pixelsSha256": "1e0a8fbaf65dcdbe484ae4738d716faf1870afb3040e9142686b079104b74a03",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-retro/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/retro/originals/switchyard-gates.png",
+        "optional/external-chapters/sentinel-circuit-retro/pack.json",
+        "optional/external-chapters/sentinel-circuit-retro/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.ukraine.85ac8f3c1469cdfb",
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/listening-court.png",
+      "bytes": 3018491,
+      "sha256": "f67723506534671cf8a1979d45f07f2fb442ba08485009924f211540a54bdb91",
+      "pixelsSha256": "2f06cc77ce640bcb0a729e861eaededd35aa2da848b6470419d933752c6287ef",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/ukraine/originals/listening-court.png",
+        "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.ukraine.59755656a503791a",
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/open-the-circuit.png",
+      "bytes": 2462247,
+      "sha256": "47fde83552f6fc155f4efc41ca834c8a672b116fb392c5bdd893d6f8e6565ebb",
+      "pixelsSha256": "30007a14db577d93280eab0a3db6e4b92082b066f0995677062f02c4667c1f8f",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/ukraine/originals/open-the-circuit.png",
+        "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.ukraine.c67cc02bc05cf9dd",
+      "path": "authoring/library/sentinel-theme-art/ukraine/originals/switchyard-gates.png",
+      "bytes": 2682645,
+      "sha256": "2d8864ab2d18b130d80f0f8b3738689f00cf65e68093286753e5485db1c3d0a3",
+      "pixelsSha256": "66998baf81b91f0e4ce9cbf64d45c96fd1b41e4a035e004859d00c7c8289d562",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/sentinel-theme-art/ukraine/originals/switchyard-gates.png",
+        "optional/external-chapters/sentinel-circuit-ukraine/pack.json",
+        "optional/external-chapters/sentinel-circuit-ukraine/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.coupa.05d993f4148d93fc",
+      "path": "authoring/library/spend-network-art/originals/city-savings-observatory.png",
+      "bytes": 2702090,
+      "sha256": "71e39606ce0283c0bb6fe120f22e2429415aba1d9dac0d412f629b686ba82175",
+      "pixelsSha256": "36f0259a30d455daa8a754dadcd8fe9df021622626ee2b96a034bc41ad170a09",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/spend-network-art/originals/city-savings-observatory.png",
+        "authoring/library/four-worlds-chapters/packs/original-spend-network.json"
+      ]
+    },
+    {
+      "id": "picture.coupa.0ff486f1577a5fc7",
+      "path": "authoring/library/spend-network-art/originals/shared-value-harbor.png",
+      "bytes": 2577915,
+      "sha256": "d80e371a2bc008ce1b893268725add92a5b9a18bc8589e7b5145cbb4a75b46fa",
+      "pixelsSha256": "467c876afcb9365d64176b19517701294a65937d20e1fa0434f4b43f8f5b924e",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/spend-network-art/originals/shared-value-harbor.png",
+        "authoring/library/four-worlds-chapters/packs/original-spend-network.json"
+      ]
+    },
+    {
+      "id": "picture.coupa.3f2efe130aa97273",
+      "path": "authoring/library/spend-network-art/originals/thoughtful-market-workshop.png",
+      "bytes": 3005071,
+      "sha256": "4f64115023245871c5ae126ddc8f711e9b0b48d130316045a1ba3baf08934fa0",
+      "pixelsSha256": "26c75c583ca1abc31242a0945561ac19fc84d2bcdab9d4b7491871649c918b03",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-spend-network.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/spend-network-art/originals/thoughtful-market-workshop.png",
+        "authoring/library/four-worlds-chapters/packs/original-spend-network.json"
+      ]
+    },
+    {
+      "id": "picture.coupa.2a75ce6ea2ef63e0",
+      "path": "authoring/library/spend-route-art/originals/network-garden.png",
+      "bytes": 2858095,
+      "sha256": "65d18bb0e98d901b9ba4820e62724dfbe32da6cd31c5580fe03096eedbfd39f0",
+      "pixelsSha256": "21425689e19c1e3d5c9d115b3ecd396a01e1181220e51979355e6ba4dd40437c",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-coupa/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/spend-route-art/originals/network-garden.png",
+        "optional/external-chapters/route-worlds-coupa/pack.json",
+        "optional/external-chapters/route-worlds-coupa/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.coupa.b2c793a221d65a11",
+      "path": "authoring/library/spend-route-art/originals/shared-harbor.png",
+      "bytes": 2686912,
+      "sha256": "8abf21258aef8cee936909fe7d2d8c4eb86a9eb8aff61c6fae6e6f918f5a8e3d",
+      "pixelsSha256": "d58e1249f63c6ac900b9495fc4a07ec8835511922211526e30f91337b38640cb",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-coupa/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/spend-route-art/originals/shared-harbor.png",
+        "optional/external-chapters/route-worlds-coupa/pack.json",
+        "optional/external-chapters/route-worlds-coupa/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.coupa.c6000faa77b7d10e",
+      "path": "authoring/library/spend-route-art/originals/value-foundry.png",
+      "bytes": 2725160,
+      "sha256": "0f0c8022f3b80732c24131324ce3ecf404219f5de6546ead11ff825e3dbed518",
+      "pixelsSha256": "6f3ed2ecf487d43407d036a6eaff4abe7132dd6a1dbae1253beea45924eb7b5f",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-coupa/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/spend-route-art/originals/value-foundry.png",
+        "optional/external-chapters/route-worlds-coupa/pack.json",
+        "optional/external-chapters/route-worlds-coupa/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.ukraine.74ca12e56a7c7dae",
+      "path": "authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png",
+      "bytes": 2920551,
+      "sha256": "df27fc7bd2eac13a8cec95a95d95016d5755104830ce30ce922551c5067de0ee",
+      "pixelsSha256": "f236b14d8dbb6931f3d2a40af60b84b2a9550bd8733039109e8e696d4490876c",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png",
+        "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json"
+      ]
+    },
+    {
+      "id": "picture.ukraine.91410bd723c41356",
+      "path": "authoring/library/ukraine-atlas-art/originals/dnipro-autumn-watch.png",
+      "bytes": 3046555,
+      "sha256": "ab6a0a07876b2c2b1149cf58eb0596bf7b0b292a6cd37f61f3e96d76d6974f72",
+      "pixelsSha256": "e32424c808b582bae475d6e16978c2bcb521c01d741de7f0db1e5cc390c14325",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/ukraine-atlas-art/originals/dnipro-autumn-watch.png",
+        "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json"
+      ]
+    },
+    {
+      "id": "picture.ukraine.08afff682ff7f3f2",
+      "path": "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+      "bytes": 3286349,
+      "sha256": "523c5449a07811f806acd6448ada9d3c8fc7dbd621f0d5cae9944235d4e257a0",
+      "pixelsSha256": "1cd9c1722a48d26f3101416930e6350fb7553cf79028f99fa4c70ca5cb2a8309",
+      "origin": {
+        "kind": "optional",
+        "path": "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+        "label": "Exact optional pack original · downloaded only for this preview"
+      },
+      "requestedPaths": [
+        "authoring/library/ukraine-atlas-art/originals/petrykivka-sun-courtyard.png",
+        "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json"
+      ]
+    },
+    {
+      "id": "picture.ukraine.507f4964290a9bf1",
+      "path": "authoring/library/ukraine-route-art/originals/carpathian-thread-relay.png",
+      "bytes": 2926966,
+      "sha256": "6c07adf7345b9e4d7cf1a1426bbb3a2f3e39e57389e7367c0396f39f52458f8f",
+      "pixelsSha256": "e287afa1e811ec3bc808081522ca66c34d19f8de9a1cdfcf265de2d09f7aece0",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-ukraine/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/ukraine-route-art/originals/carpathian-thread-relay.png",
+        "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "optional/external-chapters/route-worlds-ukraine/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.ukraine.337087f2621c76b0",
+      "path": "authoring/library/ukraine-route-art/originals/crosswind-market-depot.png",
+      "bytes": 3107900,
+      "sha256": "18e32f319b61367907a70e22f58310d7206bf2c6aeb7c07e888f3baebe80e9f5",
+      "pixelsSha256": "6aa67108d4daa8b316358b0cbd8a0fa2a6cdae0c22e067d7f2c43b9fdc594116",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-ukraine/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/ukraine-route-art/originals/crosswind-market-depot.png",
+        "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "optional/external-chapters/route-worlds-ukraine/media.rlmedia"
+      ]
+    },
+    {
+      "id": "picture.ukraine.be438b998f2105f7",
+      "path": "authoring/library/ukraine-route-art/originals/two-lanes-forge.png",
+      "bytes": 2780010,
+      "sha256": "571f01cc57ba79bfe07828b9e465f979b597edfe70764f88f454e781dd7b7719",
+      "pixelsSha256": "c5c8adb99cbf6d90315ca0f8062ccb5848f14bf139ffc169312f3779e3a6a48d",
+      "origin": {
+        "kind": "external",
+        "path": "optional/external-chapters/route-worlds-ukraine/media.rlmedia",
+        "label": "Exact original from the validated paired external download · no installation"
+      },
+      "requestedPaths": [
+        "authoring/library/ukraine-route-art/originals/two-lanes-forge.png",
+        "optional/external-chapters/route-worlds-ukraine/pack.json",
+        "optional/external-chapters/route-worlds-ukraine/media.rlmedia"
+      ]
+    }
+  ],
+  "uniqueOriginals": 33,
+  "totalOriginalBytes": 90577147,
+  "allExact": true,
+  "browserRendering": "pending"
+}

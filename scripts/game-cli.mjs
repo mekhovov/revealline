@@ -18,6 +18,7 @@ import {
 import { SOUNDTRACK_BUNDLED_ASSETS } from '../game/content/soundtrack-catalogue.mjs';
 import { generatedBrandIcons } from './brand-icons.mjs';
 import { writeBuildEntry } from './build-entry-writer.mjs';
+import { mainPagesSourceOriginals } from './main-pages-source-originals.mjs';
 import {
   isOptionalSpatialAudioBody,
   isOptionalReactionVoiceBody,
@@ -712,6 +713,19 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
       )
         fail(`Main Pages canonical locale original has a browser consumer: ${entry.name}`);
     for (const name of canonicalLocalePaths) omittedPaths.add(name);
+  }
+  // Source previews share the exact native pack/media resolver. Keep source PNGs
+  // in full releases; omit only finite, byte-pinned redundant workshop originals.
+  const originalProjection = mainPagesSourceOriginals(entries, catalogue, omittedPaths);
+  for (const name of originalProjection.paths) omittedPaths.add(name);
+  for (const group of retainedGroups) {
+    const files = group.files.filter((name) => !omittedPaths.has(name));
+    group.files = [
+      ...new Set([
+        ...files,
+        ...(group.id === 'tooling:workshop' ? originalProjection.dependencies : []),
+      ]),
+    ].sort();
   }
   const retainedGroupIDs = new Set(retainedGroups.map((group) => group.id));
   const groupsRetained = (record) =>
