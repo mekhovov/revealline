@@ -6,6 +6,8 @@ export const OVERFLIGHT_COPY = Object.freeze({
     suspendTitle: 'Keep this Survival flight',
     suspendHelp:
       'Single Drone only. Save while paused, then return to the same game package and appearance. One flight is kept on this device. This is a manual save; progress after your last save is not kept.',
+    suspendRetention:
+      'Personal records have limited space. Recording a result may replace another setup’s record when storage is full.',
     suspendChecking: 'Checking saved flight…',
     suspendWorking: 'Please wait. Keep this page open until the operation finishes.',
     suspendAvailable: 'A paused flight is saved on this device.',
@@ -261,6 +263,8 @@ export const OVERFLIGHT_COPY = Object.freeze({
     suspendTitle: 'Зберегти цей політ на виживання',
     suspendHelp:
       'Лише «Один дрон». Збережіть політ на паузі й поверніться в тому самому пакеті гри з тим самим оформленням. На пристрої зберігається один політ. Це ручне збереження: подальший поступ не зберігається автоматично.',
+    suspendRetention:
+      'Місце для особистих рекордів обмежене. Коли воно заповнене, запис результату може замінити рекорд для іншого набору налаштувань.',
     suspendChecking: 'Перевіряємо збережений політ…',
     suspendWorking: 'Зачекайте. Не закривайте сторінку до завершення операції.',
     suspendAvailable: 'На цьому пристрої збережено політ на паузі.',

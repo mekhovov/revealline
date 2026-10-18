@@ -10,6 +10,7 @@ import {
   createOverflightRecords,
   validateOverflightRecords,
   OVERFLIGHT_RECORDS_FORMAT,
+  overflightRecordContext,
 } from '../overflight/records.mjs';
 import {
   createOverflightMastery,
@@ -27,6 +28,7 @@ import {
   chooseOverflightUpgrade,
 } from '../overflight/core.mjs';
 import { assessmentDigest } from './helpers/survival-roundtrip.mjs';
+import { dataIdentity } from '../data-json.mjs';
 
 const { IDBFactory } = createRequire(
   new URL('../../authoring/fpv-worlds/package.json', import.meta.url),
@@ -252,5 +254,68 @@ test('storage rejection and lost writer never mutate the active flight or replac
   } finally {
     broken.close();
     f.close();
+  }
+});
+
+test('a full records profile can finish, recover after its receipt commits, and save the next flight', async () => {
+  const f = fixture(),
+    { run, project } = flight();
+  const reader = createProfileRecordBackend({
+    key: OVERFLIGHT_RECORDS_FORMAT,
+    empty: () => ({ format: OVERFLIGHT_RECORDS_FORMAT, entries: {} }),
+    validate: validateOverflightRecords,
+    indexedDB: f.indexedDB,
+  });
+  const base = overflightRecordContext(run);
+  await reader.update((state) => {
+    for (let seed = 1000; seed < 1256; seed++) {
+      const context = { ...base, seed };
+      state.entries[dataIdentity(context)] = {
+        context,
+        fastestClear: null,
+        bestScore: null,
+        last: null,
+      };
+    }
+    return state;
+  });
+  const c = createSurvivalSuspend({
+    indexedDB: f.indexedDB,
+    packageIdentity,
+    canWrite: () => true,
+    records: f.records,
+    mastery: {
+      record: async () => {
+        throw new Error('interrupted after records');
+      },
+    },
+    randomUUID: () => ids[0],
+  });
+  try {
+    await c.save(run, project);
+    complete(run);
+    await assert.rejects(c.finish(run), /interrupted after records/);
+    assert.equal((await c.read()).phase, 'finishing');
+    const stored = await reader.read();
+    assert.equal(Object.keys(stored.entries).length, 256);
+    assert.equal(stored.entries[dataIdentity(base)].last.outcome, 'lost');
+  } finally {
+    c.close();
+    f.close();
+    reader.close();
+  }
+  const reopened = fixture(f.indexedDB, { randomUUID: () => ids[1] });
+  try {
+    const recovered = await reopened.coordinator.recoverResults();
+    assert.equal(recovered.records.previous, null, 'The committed receipt is replayed.');
+    assert.equal(recovered.records.durable, true);
+    assert.equal(recovered.mastery.durable, true);
+    assert.equal((await reopened.coordinator.read()).phase, 'consumed');
+    const next = flight(8);
+    await reopened.coordinator.save(next.run, next.project);
+    assert.equal((await reopened.coordinator.read()).attemptId, ids[1]);
+    assert.equal((await reopened.coordinator.prepareRestore()).run.seed, 8);
+  } finally {
+    reopened.close();
   }
 });

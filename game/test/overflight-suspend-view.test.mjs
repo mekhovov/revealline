@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { Document } from './helpers/couch-dom.mjs';
 import { createSurvivalSuspendView } from '../overflight/suspend-view.mjs';
 import { overflightText } from '../overflight/copy.mjs';
+import { mountModePlayShell } from '../ui/mode-play-shell.mjs';
+import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 const settle = () => new Promise((resolve) => setImmediate(resolve));
 function fixture(options = {}) {
   const document = new Document();
@@ -172,5 +174,59 @@ test('a failed initial terminal journal still exposes result retry without resto
     assert.match(f.view.dialog.textContent, /needs result recovery/);
   } finally {
     f.view.dispose();
+  }
+});
+
+test('the Home action participates in controller navigation and returns focus without resuming the paused flight', async () => {
+  const document = new Document();
+  const run = { phase: 'paused', time: 42, airframes: 3 };
+  let view,
+    opens = 0;
+  const shell = mountModePlayShell({
+    document,
+    idPrefix: 'overflight',
+    homeAction: {
+      label: (language) => overflightText(language, 'suspendOpen'),
+      activate: () => view.open(),
+    },
+    actions: { canResume: () => true, resume: () => (run.phase = 'playing') },
+  });
+  const opener = shell.elements.buttons['home-extra'];
+  view = createSurvivalSuspendView({
+    document,
+    opener,
+    text: (key) => overflightText('en', key),
+    onOpen: () => opens++,
+    inspect: async () => ({ phase: 'empty' }),
+    canSave: () => run.phase === 'paused',
+  });
+  const navigation = attachControllerNavigation({
+    document,
+    getScope: () => 'home',
+    getRoot: () => shell.elements.home,
+    getDefaultFocus: () => shell.elements.buttons.primary,
+  });
+  try {
+    shell.update({ phase: 'paused' });
+    shell.open('pause');
+    shell.elements.buttons['pause-home'].click();
+    assert.equal(document.activeElement, shell.elements.buttons.primary);
+    navigation.handle({ direction: 'down' });
+    assert.equal(document.activeElement, opener);
+    opener.click();
+    await settle();
+    assert.equal(opens, 1);
+    assert.equal(view.dialog.open, true);
+    view.dialog.querySelector('[data-suspend-action="close"]').click();
+    assert.equal(document.activeElement, opener);
+    assert.deepEqual(run, { phase: 'paused', time: 42, airframes: 3 });
+    shell.setLocale('uk');
+    assert.equal(opener.textContent, 'Збережений політ');
+    view.dispose();
+    assert.equal(opener.parentElement !== null, true, 'The shell retains ownership of its action.');
+  } finally {
+    navigation.destroy();
+    view.dispose();
+    shell.dispose();
   }
 });
