@@ -2804,7 +2804,7 @@ test('saved aircraft prepares World, Beginner and Regional hosts with physical g
       assert.equal(state.reason, 'prepared', h.$('flight-status').textContent);
       assert.equal(state.unscored, true);
       assert.equal(state.advancedTelemetry.backend, 'civilian-quad-aircraft-regional.v3');
-      assert.equal(state.advancedTelemetry.frequency, 500);
+      assert.equal(state.advancedTelemetry.frequency, 1000);
       assert.deepEqual(displayedAircraft.geometry, preset.aircraft.geometry);
       assert.equal(displayedAircraft.radius, preset.aircraft.radius);
       const worker = RegionalWorker.instances.at(-1);

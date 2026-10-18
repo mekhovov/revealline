@@ -259,7 +259,7 @@ test('Academy prepares a saved aircraft and waits for a pending flight step befo
   const preset = presets.createPresetConfiguration('meteor75-analog-2022');
   assert.equal(h.view.snapshot().reason, 'prepared');
   assert.equal(h.view.observedSplits().ticks, 0);
-  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 500);
+  assert.equal(h.view.snapshot().advancedTelemetry.frequency, 1000);
   assert.deepEqual(shownAircraft.geometry, preset.aircraft.geometry);
   assert.match(h.doc.body.textContent, /All courses remain available in practice/);
   assert.equal(h.doc.querySelector('.aircraft-practice-controls').hidden, false);
