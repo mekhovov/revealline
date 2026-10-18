@@ -347,12 +347,15 @@ test('a failed replacement query cannot present prior rows as its results, and R
   await settle();
   fail = true;
   h.$('search').value = 'replacement';
+  h.$('search').focus();
   await h.$('search').oninput();
   assert.deepEqual(shownTitles(h), []);
   assert.equal(h.$('more').hidden, true);
   assert.equal(h.$('more').disabled, true);
   assert.equal(h.$('catalog').getAttribute('aria-busy'), 'false');
-  assert.equal(h.$('service-status').dataset.state, 'unavailable');
+  assert.equal(h.$('service-status').dataset.state, 'ready');
+  assert.equal(h.$('service-catalog-fields').disabled, false, 'a failed query remains editable');
+  assert.equal(h.$('search').ownerDocument.activeElement, h.$('search'));
   fail = false;
   await h.$('service-retry').onclick();
   await settle();
@@ -399,4 +402,58 @@ test('out-of-order successes and an offline interruption cannot replace the late
   assert.equal(h.$('more').disabled, true);
   assert.equal(h.$('catalog').getAttribute('aria-busy'), 'false');
   assert.equal(h.$('service-status').dataset.state, 'unavailable');
+});
+
+test('pagination preserves existing cards and a newer keyboard focus choice', async (t) => {
+  const pending = deferred();
+  const h = host(t, {
+    catalog: async ({ cursor }) =>
+      cursor
+        ? pending.promise
+        : {
+            editions: [catalogEdition('first')],
+            nextCursor: 'second-page',
+          },
+  });
+  await settle();
+  const existingAction = h.$('catalog').querySelector('button');
+  h.$('more').focus();
+  const more = h.$('more').onclick();
+  await settle();
+  existingAction.focus();
+  pending.resolve({ editions: [catalogEdition('second')], nextCursor: null });
+  await more;
+  assert.equal(
+    h.$('catalog').querySelector('button'),
+    existingAction,
+    'existing cards and loaded previews are retained',
+  );
+  assert.equal(
+    existingAction.ownerDocument.activeElement,
+    existingAction,
+    'newer focus is never reassigned to the new heading',
+  );
+  assert.deepEqual(shownTitles(h), ['Edition first', 'Edition second']);
+});
+
+test('empty filtered pages retain pagination without stale or duplicated empty messages', async (t) => {
+  let page = 0;
+  const h = host(t, {
+    catalog: async () => {
+      page++;
+      return {
+        editions: page < 3 ? [] : [catalogEdition('match')],
+        nextCursor: page < 3 ? `cursor-${page}` : null,
+      };
+    },
+  });
+  await settle();
+  assert.deepEqual(shownTitles(h), []);
+  assert.equal(h.$('catalog').children.length, 0, 'more pages may still contain matches');
+  assert.equal(h.$('more').hidden, false);
+  await h.$('more').onclick();
+  assert.equal(h.$('catalog').children.length, 0);
+  await h.$('more').onclick();
+  assert.deepEqual(shownTitles(h), ['Edition match']);
+  assert.equal(h.$('catalog').children.length, 1, 'only the matching card is shown');
 });

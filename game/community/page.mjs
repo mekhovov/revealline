@@ -147,15 +147,17 @@ const action = (label, run, className = '') => {
   };
   return button;
 };
-function render() {
-  for (const url of previewURLs) URL.revokeObjectURL(url);
-  previewURLs.clear();
-  $('catalog').replaceChildren();
-  if (!rows.length && !catalogBusy)
+function render({ append = false, start = 0 } = {}) {
+  if (!append) {
+    for (const url of previewURLs) URL.revokeObjectURL(url);
+    previewURLs.clear();
+    $('catalog').replaceChildren();
+  }
+  if (!rows.length && !catalogBusy && !nextCursor)
     $('catalog').append(
       text('p', localizedMessage('interface:community.noCampaignsMatch'), 'muted'),
     );
-  for (const edition of rows) {
+  for (const edition of rows.slice(start)) {
     const card = document.createElement('article');
     card.className = 'edition';
     card.append(text('h2', edition.title));
@@ -405,7 +407,7 @@ async function refresh({ reset = true } = {}) {
     catalogSelection = selection;
     nextCursor = result.nextCursor;
     catalogBusy = false;
-    render();
+    render({ append: !reset && previousCount > 0, start: previousCount });
     status(
       localizedMessage('interface:community.editionsShown', {
         count: rows.length,
@@ -415,14 +417,15 @@ async function refresh({ reset = true } = {}) {
       $('catalog').querySelectorAll('h2')[previousCount] ?? (nextCursor ? $('more') : $('status'));
   } catch (error) {
     if (current !== catalogGeneration) return;
-    readiness.unavailable();
+    // A failed query does not invalidate the separate service probe. Keep the
+    // controls available so players can correct the query or retry this page.
     status(
       localizedMessage('interface:community.catalogUnavailable', {
         error: error.message,
       }),
       true,
     );
-    focusDestination = $('service-retry');
+    focusDestination = nextCursor ? $('more') : $('service-retry');
   } finally {
     if (current === catalogGeneration) {
       catalogBusy = false;
