@@ -22,16 +22,42 @@ const valueKey = {
   'recovery-shield': 'shieldCapacity',
   plating: 'armorReduction',
 };
-export function overflightHuntPreviewModel(offer) {
+export function overflightHuntPreviewModel(
+  offer,
+  { player, rulesVersion = offer.rulesVersion ?? 1 } = {},
+) {
   if (offer.kind === 'field') return { field: offer.system, amount: offer.amount };
-  if (offer.kind === 'refit')
-    return {
+  if (offer.kind === 'refit') {
+    const model = {
       system: offer.system,
       beforeSystem: offer.fromSystem,
       before: overflightHuntUpgradeParameters(offer.fromSystem, offer.fromRank),
       after: overflightHuntUpgradeParameters(offer.system, offer.rank),
       baseExposure: offer.baseExposure,
     };
+    if ([offer.fromSystem, offer.system].includes('recovery-shield')) {
+      const capacity = (rank) =>
+          overflightHuntUpgradeParameters('recovery-shield', rank).shieldCapacity,
+        beforeCapacity = capacity(
+          offer.fromSystem === 'recovery-shield' ? offer.fromRank : offer.currentRank,
+        ),
+        afterCapacity = capacity(
+          offer.system === 'recovery-shield' ? offer.rank : offer.fromNextRank,
+        ),
+        available = Number.isInteger(player?.shield) ? player.shield : null;
+      // Native refits keep existing charges, clamped to the new capacity. They
+      // do not perform the refill granted by an ordinary combat shield pick.
+      model.shieldRefit = {
+        before: { capacity: beforeCapacity, available },
+        after: {
+          capacity: afterCapacity,
+          available: available === null ? null : Math.min(available, afterCapacity),
+        },
+        restoresOne: rulesVersion >= 3,
+      };
+    }
+    return model;
+  }
   if (
     !HUNT_UPGRADE_IDS.includes(offer.system) ||
     ![1, 2].includes(offer.rank) ||
@@ -70,6 +96,39 @@ export function overflightHuntPreviewCaption(system, parameters, locale = 'en', 
     'chain-window': uk ? 'серія' : 'chain window',
   };
   return `${value}s · ${labels[system]}`;
+}
+
+function previewCaption(model, index, locale) {
+  const system = index === 0 && model.beforeSystem ? model.beforeSystem : model.system,
+    parameters = index ? model.after : model.before,
+    shield = model.shieldRefit?.[index ? 'after' : 'before'];
+  if (system === 'recovery-shield' && shield)
+    return shield.available === null
+      ? `${shield.capacity} · ${locale === 'uk' ? 'місткість' : 'capacity'}`
+      : `${shield.available}/${shield.capacity} · ${locale === 'uk' ? 'готові' : 'ready'}`;
+  return overflightHuntPreviewCaption(system, parameters, locale, model.baseExposure ?? 3);
+}
+
+function shieldRefitConsequence(shield, locale) {
+  if (!shield) return '';
+  const uk = locale === 'uk',
+    { before, after } = shield,
+    comparison =
+      before.available === null
+        ? `${uk ? 'Місткість екрана' : 'Shield capacity'}: ${before.capacity} → ${after.capacity}.`
+        : `${uk ? 'Готові заряди екрана' : 'Shield charges ready'}: ${before.available}/${before.capacity} → ${after.available}/${after.capacity}.`,
+    refill = uk ? 'Перебудова не відновлює заряди.' : 'Refitting does not recharge the shield.',
+    objective =
+      after.capacity === 0
+        ? ''
+        : shield.restoresOne
+          ? uk
+            ? 'Завершення цілі відновлює один заряд у межах місткості.'
+            : 'Each objective restores one charge, up to capacity.'
+          : uk
+            ? 'Завершення цілі повністю відновлює екран.'
+            : 'Each objective refills the shield.';
+  return [comparison, refill, objective].filter(Boolean).join(' ');
 }
 
 /** Native sprite demonstrations, not another combat simulation. Values are the
@@ -228,24 +287,33 @@ export function paintOverflightHuntPreview(
       bar(cycle > 0.5 || still ? 1 - damage / 100 : 1);
     } else {
       native('drone', 80, 70, 48);
-      const hit = cycle > 0.5;
-      for (let at = 0; at < params.shieldCapacity; at++)
-        line(65 + at * 15, 103, 11, 5, hit && at === 0 && !still ? palette.grid : palette.open);
-      line(22 + cycle * 50, 65, 5, 5, palette.danger);
-      if (hit || still) {
-        if (params.shieldCapacity) line(60, 49, 3, 43, palette.open);
-        else spark(78, 70);
+      const shield = model.shieldRefit?.[index ? 'after' : 'before'];
+      if (shield) {
+        // A refit shows protection available immediately, not a fully charged
+        // demonstration. Outlined slots mean capacity without a live player.
+        for (let at = 0; at < shield.capacity; at++) {
+          if (shield.available === null) {
+            context.strokeStyle = palette.light;
+            context.strokeRect(65 + at * 15, 103, 11, 5);
+          } else
+            line(65 + at * 15, 103, 11, 5, at < shield.available ? palette.open : palette.grid);
+        }
+        if (shield.available > 0) line(60, 49, 3, 43, palette.open);
+      } else {
+        const hit = cycle > 0.5;
+        for (let at = 0; at < params.shieldCapacity; at++)
+          line(65 + at * 15, 103, 11, 5, hit && at === 0 && !still ? palette.grid : palette.open);
+        line(22 + cycle * 50, 65, 5, 5, palette.danger);
+        if (hit || still) {
+          if (params.shieldCapacity) line(60, 49, 3, 43, palette.open);
+          else spark(78, 70);
+        }
       }
     }
     context.fillStyle = palette.light;
     context.textAlign = 'center';
     context.font = '10px system-ui';
-    context.fillText(
-      overflightHuntPreviewCaption(system, params, locale, model.baseExposure ?? 3),
-      78,
-      139,
-      144,
-    );
+    context.fillText(previewCaption(model, index, locale), 78, 139, 144);
     context.restore();
   }
 }
@@ -253,6 +321,8 @@ export function paintOverflightHuntPreview(
 export function createOverflightHuntUpgradeCard({
   document,
   offer,
+  player,
+  rulesVersion,
   locale = 'en',
   reducedEffects = false,
   disabled = false,
@@ -268,7 +338,7 @@ export function createOverflightHuntUpgradeCard({
     element.className = className;
     return element;
   };
-  const model = overflightHuntPreviewModel(offer);
+  const model = overflightHuntPreviewModel(offer, { player, rulesVersion });
   const button = node('button', '', 'overflight-upgrade-card raid-upgrade-card');
   button.type = 'button';
   button.disabled = disabled;
@@ -309,11 +379,14 @@ export function createOverflightHuntUpgradeCard({
   button.paintPreview();
   const comparison = model.field
     ? `${local(offer.current)} → ${local(offer.next)}`
-    : `${text('current')}: ${overflightHuntPreviewCaption(model.beforeSystem ?? model.system, model.before, locale, model.baseExposure ?? 3)}. ${text('next')}: ${overflightHuntPreviewCaption(model.system, model.after, locale, model.baseExposure ?? 3)}`;
+    : `${text('current')}: ${previewCaption(model, 0, locale)}. ${text('next')}: ${previewCaption(model, 1, locale)}`;
+  const consequence = shieldRefitConsequence(model.shieldRefit, locale);
   button.append(heading, canvas, node('span', local(offer.next), 'upgrade-description'));
+  if (consequence)
+    button.append(node('span', consequence, 'upgrade-description upgrade-consequence'));
   button.setAttribute(
     'aria-label',
-    `${local(offer.title)}. ${comparison}. ${local(offer.current)}. ${local(offer.next)}`,
+    `${local(offer.title)}. ${comparison}. ${local(offer.current)}. ${local(offer.next)}${consequence ? ` ${consequence}` : ''}`,
   );
   button.addEventListener('click', () => onChoose(offer.id));
   return button;
