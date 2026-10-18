@@ -542,6 +542,24 @@ for (const sourceLabel of ['de332', '797']) {
     const m = JSON.parse(
       await load(`docs/performance/solo-${sourceLabel}-lifecycle-${phase}-plan.json`),
     );
+    if (sourceLabel === '797' && phase === 'retry') {
+      assert.equal(m.release.status, 'reviewed-diagnostic-only');
+      assert.equal(m.release.predecessorRun, 39115157669);
+      assert.deepEqual(
+        m.release.firstEightEvidence,
+        JSON.parse(
+          await load('docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json'),
+        ).proof,
+      );
+      assert.equal(m.release.evidence.length, 6);
+      assert(
+        m.release.evidence.every(
+          (ref) => ref.runId === 39115157669 && ref.disposition === 'failed-reviewed',
+        ),
+      );
+      bindSustainedJob(m, 'chromium', 1);
+      return m;
+    }
     assert.equal(m.release.status, 'held-for-review');
     assert.throws(() => bindSustainedJob(m, 'chromium', 1));
     // Synthetic release facts test admission shape, never grant remote authority.

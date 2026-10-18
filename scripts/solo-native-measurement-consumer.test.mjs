@@ -329,7 +329,7 @@ test('real binders keep ten journal pairs and all72 matched timing roles while h
   let count = 0;
   for (const phase of timing) {
     const held = await manifest('timing', phase);
-    if (phase === 'cold-first30') {
+    if (['cold-first30', 'warm-first30'].includes(phase)) {
       assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
       assert.equal(timingMatrix(held).include.length, 6);
       const missing = structuredClone(held);
@@ -364,7 +364,7 @@ test('real lifecycle binders match actual job/outer expressions for36 independen
   let count = 0;
   for (const phase of lifecycle) {
     const held = await manifest('lifecycle', phase);
-    if (phase === 'soak') {
+    if (['soak', 'retry'].includes(phase)) {
       assert.deepEqual(held.release.firstEightEvidence, actualFirstEightProof);
       assert.equal(sustainedMatrix(held).include.length, 6);
       const missing = structuredClone(held);
@@ -510,6 +510,58 @@ test('every job retains its invoked shared source checkout script in sparse tool
       () => requiredSourceCheckout(workflow.replace(job, missing), lane),
       /missing invoked sparse source checkout/,
     );
+  }
+});
+
+test('warm and Retry retain the complete failed-reviewed predecessor cohorts without relaxing admission', async () => {
+  for (const [lane, phase, runId, artifactIds, matrix] of [
+    [
+      'timing',
+      'warm-first30',
+      39115166586,
+      [12131109991, 12131394558, 12132168724, 12133135391, 12132972934, 12132319231],
+      timingMatrix,
+    ],
+    [
+      'lifecycle',
+      'retry',
+      39115157669,
+      [12132605296, 12132346133, 12132106903, 12132048428, 12131969667, 12131553804],
+      sustainedMatrix,
+    ],
+  ]) {
+    const plan = await manifest(lane, phase);
+    assert.deepEqual(plan.release.firstEightEvidence, actualFirstEightProof);
+    assert.equal(
+      plan.release.status,
+      lane === 'timing' ? 'reviewed-and-released' : 'reviewed-diagnostic-only',
+    );
+    assert.equal(plan.release.previousPhase, lane === 'timing' ? 'cold-first30' : 'next');
+    assert.equal(plan.performanceExclusion, lane === 'lifecycle');
+    if (lane === 'lifecycle') assert.equal(plan.release.predecessorRun, runId);
+    assert.deepEqual(
+      plan.release.evidence.map((ref) => ref.artifactId),
+      artifactIds,
+    );
+    assert(
+      plan.release.evidence.every(
+        (ref) => ref.runId === runId && ref.disposition === 'failed-reviewed',
+      ),
+    );
+    assert.equal(matrix(plan).include.length, 6);
+    for (const mutate of [
+      (p) => (p.release.status = 'held-for-review'),
+      (p) => (p.release.evidence = []),
+      (p) => (p.release.evidence[0].disposition = 'unreviewed'),
+      (p) => (p.release.noUnclosedOwners = false),
+      (p) => (p.release.allPriorPlannedJobsClosed = false),
+      (p) => (p.release.priorProofInspected = false),
+      (p) => (p.release.firstEightEvidence = null),
+    ]) {
+      const invalid = structuredClone(plan);
+      mutate(invalid);
+      assert.throws(() => matrix(invalid));
+    }
   }
 });
 
