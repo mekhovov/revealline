@@ -334,6 +334,7 @@ export function prepareNativeMenus({
     identity,
   );
   if (mode === 'versus') moveId('race-summary', commands);
+  if (mode === 'team') moveId('coop-navigation-context', commands);
   move(actions, commands);
   move(utilities, commands);
   if (mode === 'versus') moveId('race-preparation', commands);
