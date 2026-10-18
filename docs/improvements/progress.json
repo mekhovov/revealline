@@ -14,12 +14,12 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "Finish primary200% result reflow browser review and exact source gates",
     "Admit reviewed foundations through exact-head merge gates",
-    "Reconcile reviewed mode-context, archive, keyboard, comfort and local-content stacks",
-    "Deliver stats live-language and responsive nested-tool fixes",
-    "Complete remaining P1 adapters and evidence-based readability work",
-    "Continue Demo-dependent work after D; hardware-only gates remain Not tested"
+    "Finish reconciling archive, mode-context, comfort and local-content stacks",
+    "Advance primary200% text and responsive navigation after their predecessors",
+    "Complete remaining P1 host adapters and evidence-based readability work",
+    "Deliver bounded upgrade-consequence improvements after the active comfort stack",
+    "Continue Demo-dependent work after D; physical-only gates remain Not tested"
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -289,17 +289,19 @@
         },
         {
           "id": "menu-animation",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1636",
-          "commit": "190f41cfa3842b2c9f68deb0a9b9d4222824e97b",
+          "commit": "858cbe3d0fb103561622c754e3e30f8d3db9eecd",
           "evidence": [
             "Independent source and actual Solo modeled-storage browser review passed: failed writes, other-tab intent preservation, verified retry/focus, Ukrainian320px warning. Stack on1629; complete parent still includes Demo.",
-            "Independent review clear:all18 original feature deltas identical;14blobs identical,4current-main SIM host/test additions retained.274 distinct cases pass before one sparse missing-module failure; restored existing dependency link and full World89/89 rerun passes. Full scan queued; no browser requalification inferred."
+            "Independent review clear:all18 original feature deltas identical;14blobs identical,4current-main SIM host/test additions retained.274 distinct cases pass before one sparse missing-module failure; restored existing dependency link and full World89/89 rerun passes. Full scan queued; no browser requalification inferred.",
+            "Integrated on preferences31a: 18 original feature deltas identical; current-main SIM additions preserved.274 distinct focused cases passed before a missing sparse dependency; restored existing dependency and affected89-case World file passes. Uninterrupted full validation/lint/changed format and independent review pass. Two unchanged FPV formatting findings retained. Earlier modeled-storage browser scope unchanged."
           ],
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "observedRemoteHead": "190f41cfa3842b2c9f68deb0a9b9d4222824e97b",
-          "candidateCommit": "858cbe3d0fb103561622c754e3e30f8d3db9eecd"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "858cbe3d0fb103561622c754e3e30f8d3db9eecd",
+          "candidateCommit": "858cbe3d0fb103561622c754e3e30f8d3db9eecd",
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
         },
         {
           "id": "demo-settings",
@@ -555,33 +557,45 @@
         },
         {
           "id": "duel-context",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1640",
-          "commit": "ae844211a0b35070eddd8cc342b74d4d55de0358",
-          "evidence": "68 checks/source gates; independent source and actual unlaunched Duel browsing Solo→Back receipt passed, accepted destination/focus retained. UK/paused/Hunt are model evidence; stack on Capture.",
+          "commit": "ee6999522b7b218d6c836a3b262dcaeb83ae855e",
+          "evidence": [
+            "68 checks/source gates; independent source and actual unlaunched Duel browsing Solo→Back receipt passed, accepted destination/focus retained. UK/paused/Hunt are model evidence; stack on Capture.",
+            "Integrated on Capture9c: five original feature blobs identical;68 focused cases, full source gates and independent review pass. Earlier unlaunched chooser/Back browser receipt remains predecessor-scoped."
+          ],
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "observedRemoteHead": "ae844211a0b35070eddd8cc342b74d4d55de0358"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "ee6999522b7b218d6c836a3b262dcaeb83ae855e",
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
         },
         {
           "id": "team-context",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1643",
-          "commit": "886c5ea0d2f9aa88ddd01f0e8cabdbf39b169816",
-          "evidence": "Browser found verbose internal edition details in default Home. Separate short navigation labels correct this without changing detailed edition metadata. 47 focused checks/full source gates; independent source and exact browser review passed: concise Capture/Team EN/UK, chooser context and Back preserve selection/focus. No flight/device claim.",
+          "commit": "0f1cf7fe03ab64867c7416a0860e015c3ea88eb4",
+          "evidence": [
+            "Browser found verbose internal edition details in default Home. Separate short navigation labels correct this without changing detailed edition metadata. 47 focused checks/full source gates; independent source and exact browser review passed: concise Capture/Team EN/UK, chooser context and Back preserve selection/focus. No flight/device claim.",
+            "Integrated on Duel ee699: seven original feature blobs identical; all current-main locale values plus original11 Team keys retained per catalog. Combined98/100 cases: the same two catalog/discovery failures reproduce exact predecessor; all47 corrected feature cases pass. Uninterrupted full source gates and independent review pass. Earlier actual EN/UK menu evidence retained; no fresh Team-flight claim."
+          ],
           "deliveryState": "draft",
           "mergeState": "UNSTABLE",
-          "observedRemoteHead": "886c5ea0d2f9aa88ddd01f0e8cabdbf39b169816"
+          "observedRemoteHead": "0f1cf7fe03ab64867c7416a0860e015c3ea88eb4",
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
         },
         {
           "id": "hunt-context",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1648",
-          "commit": "e1c610a627850907fd3e0560bd8c422a9cd1f88c",
-          "evidence": "125 broader checks, full lint/validate/changed formatting pass. Explicit Solo/Duel Hunt identity and localized six-mission label; exact Classic handoff model covered. Independent review pending. Stack on Duel. Independent root source review passed; browser still pending. Actual exact-head browser EN/UK Home and chooser identity, alternate Duel browsing and Back preserve selected mission/focus. Existing First contact mission title remains English in UK: separate localization follow-up.",
+          "commit": "478eb991a0866bfee93151c1b25c9beec9af1d6b",
+          "evidence": [
+            "125 broader checks, full lint/validate/changed formatting pass. Explicit Solo/Duel Hunt identity and localized six-mission label; exact Classic handoff model covered. Independent review pending. Stack on Duel. Independent root source review passed; browser still pending. Actual exact-head browser EN/UK Home and chooser identity, alternate Duel browsing and Back preserve selected mission/focus. Existing First contact mission title remains English in UK: separate localization follow-up.",
+            "Integrated on Duel ee699: three feature blobs and app feature delta identical;125 focused cases, full lint/validation/changed format and independent review pass. Earlier actual EN/UK six-mission browse/Back evidence retained; no earned Hunt-flight or hardware claim."
+          ],
           "deliveryState": "draft",
           "mergeState": "UNSTABLE",
-          "observedRemoteHead": "e1c610a627850907fd3e0560bd8c422a9cd1f88c"
+          "observedRemoteHead": "478eb991a0866bfee93151c1b25c9beec9af1d6b",
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
         },
         {
           "id": "sim-context",
@@ -615,7 +629,7 @@
       "id": "F02a",
       "priority": "P1",
       "phase": "Phase 2 — Find, understand and start the right game",
-      "description": "**a:** surface existing Capture First Flight; **b:** short Snake introduction; **c:** short Raid introduction. Each is skippable, replayable and leads into normal play.",
+      "description": "Surface the existing Capture First Flight route; keep it skippable, replayable and connected to normal play.",
       "impact": "H/H",
       "effort": "**6–10d total**; b/c require D",
       "featureId": "F02",
@@ -642,7 +656,7 @@
       "id": "F02b",
       "priority": "P1",
       "phase": "Phase 2 — Find, understand and start the right game",
-      "description": "**a:** surface existing Capture First Flight; **b:** short Snake introduction; **c:** short Raid introduction. Each is skippable, replayable and leads into normal play.",
+      "description": "Add a short, skippable and replayable Snake introduction that leads into normal play.",
       "impact": "H/H",
       "effort": "**6–10d total**; b/c require D",
       "featureId": "F02",
@@ -663,7 +677,7 @@
       "id": "F02c",
       "priority": "P1",
       "phase": "Phase 2 — Find, understand and start the right game",
-      "description": "**a:** surface existing Capture First Flight; **b:** short Snake introduction; **c:** short Raid introduction. Each is skippable, replayable and leads into normal play.",
+      "description": "Add a short, skippable and replayable Raid introduction that leads into normal play.",
       "impact": "H/H",
       "effort": "**6–10d total**; b/c require D",
       "featureId": "F02",
@@ -684,7 +698,7 @@
       "id": "F03a",
       "priority": "P1",
       "phase": "Phase 2 — Find, understand and start the right game",
-      "description": "**a:** improve Survival threat/player/effect readability; **b:** bounded Capture, Snake and couch pass. Correct demonstrated contrast and hierarchy problems.",
+      "description": "Assess and correct demonstrated Survival threat, player and effect readability problems.",
       "impact": "H/H",
       "effort": "**8–15d total**",
       "featureId": "F03",
@@ -709,7 +723,7 @@
       "id": "F03b",
       "priority": "P1",
       "phase": "Phase 2 — Find, understand and start the right game",
-      "description": "**a:** improve Survival threat/player/effect readability; **b:** bounded Capture, Snake and couch pass. Correct demonstrated contrast and hierarchy problems.",
+      "description": "Correct demonstrated contrast and hierarchy problems in a bounded Capture, Snake and couch-mode pass.",
       "impact": "H/H",
       "effort": "**8–15d total**",
       "featureId": "F03",
@@ -793,12 +807,12 @@
       "id": "F19",
       "priority": "P2",
       "phase": "Phase 2 — Find, understand and start the right game",
-      "description": "Compare current and resulting upgrade builds; explain caps, exchanges and consumed choices. Makes commitment understandable.",
+      "description": "Explain upgrade commitments, available shield charges, caps and choice costs using existing before/after previews.",
       "impact": "H/M",
-      "effort": "**2–4d**",
+      "effort": "First shield-refit slice 1–2d; commitments 2–4d; reroll policy 2–4d; optional utility copy 1–2d. Shared review may overlap.",
       "featureId": "F19",
       "status": "assessment",
-      "owner": "root",
+      "owner": "lane-c",
       "qualification": {
         "automated": "existing_comparison_24_passed",
         "browser": "scoped_survival_choice_observed",
@@ -807,9 +821,46 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Retain existing before/after comparisons; identify and implement demonstrated gaps in choice costs, caps and exchanges without duplicating the current UI.",
+      "next": "Implement bounded shield-refit available-charge/capacity consequences first; preserve native NOW/NEXT previews. Then assess commitment costs and separately bound reroll action policy.",
       "evidence": [
-        "Current dd337 already provides native current/next Survival SVG and Raid canvas comparisons, rank/evolution markers, utility cap projections and same-rank refit explanations.24/24 existing card/preview/Raid-balance tests pass on byte-equivalent root snapshot, zero skips. Earlier actual normal390px Survival Wide Fan choice showed before/after1→3charges. No new feature complete or Raid earned-refit browser qualification claimed."
+        "Current dd337 already provides native current/next Survival SVG and Raid canvas comparisons, rank/evolution markers, utility cap projections and same-rank refit explanations.24/24 existing card/preview/Raid-balance tests pass on byte-equivalent root snapshot, zero skips. Earlier actual normal390px Survival Wide Fan choice showed before/after1→3charges. No new feature complete or Raid earned-refit browser qualification claimed.",
+        "Exactdd337 assessment credits existing current/next graphics, rank/evolution/refit labels and capped repair math. Executed legal plating2→ObjectiveShield2 refit advertises two hits but leaves available charges0/capacity2 and consumes one choice. First bounded P2 slice: truthful projected charges/capacity, current-rule recharge wording, EN/UK visible/accessible parity, no balance change. Further source-backed gaps: Survival primary/support/final-slot commitment, impossible-to-change reroll disclosure, utility choice-cost/up-to repair prose. Separate reroll behavior requires replay-aware policy; utility copy is P3 polish.31-file Git closure and executed model receipt retained."
+      ],
+      "assessment": {
+        "revision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+        "status": "complete",
+        "source": "/tmp/revealline-f19-dd337/assessment.md",
+        "boundary": "Source and staged native-model execution; no earned Raid refit/browser comprehension/physical claim."
+      },
+      "implementationSlices": [
+        {
+          "id": "shield-refit-consequences",
+          "priority": "P2",
+          "status": "planned",
+          "next": "After current C integration gates, implement actual projected available charges/capacity without changing native balance.",
+          "effort": "1–2d"
+        },
+        {
+          "id": "survival-commitment-context",
+          "priority": "P2",
+          "status": "planned",
+          "next": "Disclose payload path, final combat slot, support family and capped rank using the native legal-choice policy.",
+          "effort": "2–4d"
+        },
+        {
+          "id": "reroll-choice-availability",
+          "priority": "P2",
+          "status": "assessment_complete",
+          "next": "Bound no-alternative detection and replay compatibility before changing action availability; never promise that every card changes.",
+          "effort": "2–4d"
+        },
+        {
+          "id": "utility-choice-cost-copy",
+          "priority": "P3",
+          "status": "planned",
+          "next": "Explain consumed choice and up-to repair gain while preserving the useful pulse at full hull.",
+          "effort": "1–2d"
+        }
       ]
     },
     {
@@ -958,7 +1009,7 @@
       "impact": "H/H",
       "effort": "**2–4d**",
       "featureId": "F78",
-      "status": "draft_review",
+      "status": "reviewed_stack",
       "owner": "integration",
       "qualification": {
         "automated": "focused_and_source_gates_passed",
@@ -967,15 +1018,16 @@
       },
       "blocker": "Explicit stack on F12 #1638.",
       "pr": "https://github.com/mekhovov/revealline/pull/1644",
-      "commit": "d3c44da36d32fdf92c1120051a35d5869a87e958",
-      "next": "Rebase after F12 merge and run exact-head checks.",
+      "commit": "53d0efce3f851cd5eaebb37de950306233098c3f",
+      "next": "Await predecessor admission, then reconcile and run current exact-head required checks.",
       "evidence": [
         "45 distinct focused/regression tests and source gates pass. Independent review found and fixed existing-card focus loss and premature empty-page messages.",
-        "Actual page with read-only modeled service: delayed old query loses to latest query; pagination belongs to its query; keyboard/newer focus preserved; failed query remains editable; EN/UK. No external account/upload action."
+        "Actual page with read-only modeled service: delayed old query loses to latest query; pagination belongs to its query; keyboard/newer focus preserved; failed query remains editable; EN/UK. No external account/upload action.",
+        "Integrated on Communitya3b: two feature blobs unchanged;45 focused cases, full source gates and independent review pass. Eight full-format baseline files unchanged. Earlier modeled-service browser scope retained."
       ],
       "deliveryState": "draft",
-      "mergeState": "CLEAN",
-      "observedRemoteHead": "d3c44da36d32fdf92c1120051a35d5869a87e958"
+      "mergeState": "UNSTABLE",
+      "observedRemoteHead": "53d0efce3f851cd5eaebb37de950306233098c3f"
     },
     {
       "id": "F79",
@@ -985,7 +1037,7 @@
       "impact": "H/H",
       "effort": "**3–5d**",
       "featureId": "F79",
-      "status": "draft_review",
+      "status": "reviewed_stack",
       "owner": "lane-b",
       "qualification": {
         "automated": "focused_and_source_gates_passed",
@@ -994,25 +1046,29 @@
       },
       "blocker": "Explicit F78/F80 integration stacks.",
       "pr": "https://github.com/mekhovov/revealline/pull/1651",
-      "commit": "00d077bd278eb3eadbe632584ac4cfc4e51e206f",
+      "commit": "6c340efc5b9f66b8fafe2baa6135718d1b1bcf9a",
       "next": "Required checks and merge reconciliation for local Installed and retained Recovery copies. Full PWA/hardware qualification remains separate.",
       "evidence": [
         "Local Installed uses runtime-owned storage status without catalog calls. Cached metadata is optional and exact identity pinned; historical names/version stay truthful.",
         "Independent review fixed single failed runtime hiding healthy installed games; failed entries have no Play/install/delete actions. Two new cases independently rerun.",
         "Actual generated30,790-byte package: install→catalog503→reload→Installed→Play→Start→Pause passed, EN/UK local listing checked. Existing runtime-owner checks do not claim every media blob integrity or full PWA cold launch.",
         "Local Installed draft1651 has47 distinct focused checks, full lint/validate and changed format passing; final per-entry failure fix independently reviewed. Eight full-format baseline files unchanged.",
-        "87 tests/full lint/validation/changed formatting; independent source review and 70 independently rerun tests pass. Actual generated 30,790-byte package: offload → catalog503 → reload → Recovery copies → exact local reinstall → Play focus → Creator Continue → Pause. No full offline PWA or physical claim; new nonempty earned-progress equality is model evidence, not browser evidence."
+        "87 tests/full lint/validation/changed formatting; independent source review and 70 independently rerun tests pass. Actual generated 30,790-byte package: offload → catalog503 → reload → Recovery copies → exact local reinstall → Play focus → Creator Continue → Pause. No full offline PWA or physical claim; new nonempty earned-progress equality is model evidence, not browser evidence.",
+        "Integrated on query53d: six original feature blobs and +528/−35 delta identical.54/54 focused cases, full lint, uninterrupted full validation and changed format/diff pass. Eight full-format parent-baseline files unchanged. Independent integration review clear; published dependent draft. Actual catalog-outage browser receipt remains attributed to00d predecessor; no full PWA/device claim."
       ],
       "implementationSlices": [
         {
           "id": "local-installed",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1651",
-          "commit": "00d077bd278eb3eadbe632584ac4cfc4e51e206f",
-          "evidence": "Source review,47 focused tests/source gates and actual catalog-outage browser passed.",
+          "commit": "6c340efc5b9f66b8fafe2baa6135718d1b1bcf9a",
+          "evidence": [
+            "Source review,47 focused tests/source gates and actual catalog-outage browser passed.",
+            "Integrated on query53d: six original feature blobs and +528/−35 delta identical.54/54 focused cases, full lint, uninterrupted full validation and changed format/diff pass. Eight full-format parent-baseline files unchanged. Independent integration review clear; published dependent draft. Actual catalog-outage browser receipt remains attributed to00d predecessor; no full PWA/device claim."
+          ],
           "deliveryState": "draft",
-          "mergeState": "CLEAN",
-          "observedRemoteHead": "00d077bd278eb3eadbe632584ac4cfc4e51e206f"
+          "mergeState": "UNKNOWN",
+          "observedRemoteHead": "6c340efc5b9f66b8fafe2baa6135718d1b1bcf9a"
         },
         {
           "id": "retained-recovery-entry",
@@ -1026,8 +1082,8 @@
         }
       ],
       "deliveryState": "draft",
-      "mergeState": "CLEAN",
-      "observedRemoteHead": "00d077bd278eb3eadbe632584ac4cfc4e51e206f"
+      "mergeState": "UNKNOWN",
+      "observedRemoteHead": "6c340efc5b9f66b8fafe2baa6135718d1b1bcf9a"
     },
     {
       "id": "F80",
@@ -1117,7 +1173,7 @@
         "Actualc1 restored flight ended legally at01:24 with218cleared/162salvage/3upgrades/300contactdamage. Results show First recorded run and Personal records saved; no mastery star earned on loss. Reload Savedflight reports no resumable flight, with Save/Restore/Recover disabled. Desktop Save→reload→paused Restore→Continue→terminal→reload retirement passes; no offline/hardware claim."
       ],
       "deliveryState": "draft",
-      "mergeState": "UNSTABLE",
+      "mergeState": "CLEAN",
       "observedRemoteHead": "c1f56c90529613c95376a92aa74e758cdff4de87"
     },
     {
@@ -1199,13 +1255,17 @@
         },
         {
           "id": "nonempty-qualification",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1658",
-          "commit": "b33c6c902cd527a43d7f46253cae4acacda8007d",
-          "evidence": "44 focused checks/full source gates and independent source review. Actual exact browser native import of PNG/MP4/MP3 and synthetic Journey record reaches4/4 after explicit confirmation. Cancel blocks later steps. Reload→102139-byte export matches all3 original payload hashes and synthetic receipt. Duplicate Journey review reports0 new clears; cancelled. Acoustic playback/earned progression/large media/device not claimed. Browser found backward focus after consecutive Keep; narrow correction4f87e07 passes47 tests plus8 independently rerun, full validation pending.",
+          "commit": "4f87e07b54ad04f0e977b6b7992491837fc6746c",
+          "evidence": [
+            "44 focused checks/full source gates and independent source review. Actual exact browser native import of PNG/MP4/MP3 and synthetic Journey record reaches4/4 after explicit confirmation. Cancel blocks later steps. Reload→102139-byte export matches all3 original payload hashes and synthetic receipt. Duplicate Journey review reports0 new clears; cancelled. Acoustic playback/earned progression/large media/device not claimed. Browser found backward focus after consecutive Keep; narrow correction4f87e07 passes47 tests plus8 independently rerun, full validation pending.",
+            "Final Keep-focus correction independently reviewed:47 focused cases, eight independently rerun cases and full source gates pass. Actual browser all four sequential Keep actions now retain forward focus. Existing nonempty PNG/MP4/MP3 and synthetic unearned Journey backup equality remain the qualification scope; not earned progress, listening, large media or device acceptance."
+          ],
           "deliveryState": "draft",
           "mergeState": "CLEAN",
-          "observedRemoteHead": "4f87e07b54ad04f0e977b6b7992491837fc6746c"
+          "observedRemoteHead": "4f87e07b54ad04f0e977b6b7992491837fc6746c",
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
         }
       ],
       "deliveryState": "draft",
@@ -1372,37 +1432,48 @@
       "implementationSlices": [
         {
           "id": "native-presets",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1641",
-          "commit": "54be4c670fa2001940834b523ae04038d39bf483",
+          "commit": "bc8342a9d991e37418247f6f9bcd19d02be7242c",
           "evidence": [
             "92 focused owner/native/policy tests,93 navigation/offline tests and3 new actual-host cases pass; source gates pass. Independent source review passed. Actual Solo browser atd239: preview0writes, Apply/Undo, partial failure/Retry preserving original Undo, newer display choices preserved, Ukrainian320px. Final persisted-page Undo expiry model-tested; unrelated five legacy host failures reproduce predecessor.",
-            "Independent review clear:all14 original feature deltas identical;13blobs identical,main app additions preserved. Focused/full source gates pending. Earlier browser scope retained."
+            "Independent review clear:all14 original feature deltas identical;13blobs identical,main app additions preserved. Focused/full source gates pending. Earlier browser scope retained.",
+            "Integrated on menu858: all14 original feature deltas identical;13 blobs unchanged and current-main app additions preserved.71 focused plus three scoped actual-host cases pass; five known predecessor display assertions remain explicitly filtered, not passes. Uninterrupted full source validation/lint/changed format/projection and independent review pass. Earlier native Apply/Undo/Retry browser evidence retained."
           ],
           "deliveryState": "draft",
           "mergeState": "UNSTABLE",
-          "observedRemoteHead": "54be4c670fa2001940834b523ae04038d39bf483",
-          "candidateCommit": "bc8342a9d991e37418247f6f9bcd19d02be7242c"
+          "observedRemoteHead": "bc8342a9d991e37418247f6f9bcd19d02be7242c",
+          "candidateCommit": "bc8342a9d991e37418247f6f9bcd19d02be7242c",
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
         },
         {
           "id": "arcade-presets",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1642",
-          "commit": "b71f96122a71f90dafcfb95efa3b3adcfa7e2892",
-          "evidence": "172 focused/policy and15 offline tests; independent source review passed. Actual Snake Team preview0→Apply2→Undo4 writes; actual Survival started→Pause→Settings Apply/Undo→Back preserves Pause and Resume focus. Modeled preferences, no hardware.",
+          "commit": "7c55783226056599726f58c321535ecb8b457fb1",
+          "evidence": [
+            "172 focused/policy and15 offline tests; independent source review passed. Actual Snake Team preview0→Apply2→Undo4 writes; actual Survival started→Pause→Settings Apply/Undo→Back preserves Pause and Resume focus. Modeled preferences, no hardware.",
+            "Integrated on nativebc834: six feature blobs unchanged;172/172 focused cases and full lint/validation/changed format pass. Independent integration review clear. Earlier actual Snake Team and paused Survival Apply/Undo evidence retained."
+          ],
           "deliveryState": "draft",
-          "mergeState": "CLEAN",
-          "observedRemoteHead": "b71f96122a71f90dafcfb95efa3b3adcfa7e2892"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "7c55783226056599726f58c321535ecb8b457fb1",
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
         },
         {
           "id": "sim-presets",
           "status": "draft_review",
           "pr": "https://github.com/mekhovov/revealline/pull/1645",
           "commit": "efaea9ae198d1240d733df18479fbc98877d70b0",
-          "evidence": "179 focused/policy and15 offline tests, i18n/projection pass; independent source review passed. Actual Academy Apply/Undo and World menu-only failure→Retry→Undo preserve displayed flight mode/input/camera/FOV/tilt. No World flight started or new UK320/device claim.",
+          "evidence": [
+            "179 focused/policy and15 offline tests, i18n/projection pass; independent source review passed. Actual Academy Apply/Undo and World menu-only failure→Retry→Undo preserve displayed flight mode/input/camera/FOV/tilt. No World flight started or new UK320/device claim.",
+            "Integrated candidatece6 preserves the original seven feature deltas and current-main SIM additions. A real projection omission was reproduced, then official generation added49 canonical preset-style lines to the embedded SIM stylesheet.190/190 focused cases, lint/format and both projection checks pass; uninterrupted full validation in progress. Actual320px Academy EN and World UK preview/Apply/Undo/Back pass with zero preview writes, Apply2/Undo4 and flight controls retained. World language changed through actual Settings after a fixture-only partial switch. No flight/audio/physical or new partial-failure claim. Receipt /tmp/f06-sim-ce6-browser-receipt.json."
+          ],
           "deliveryState": "draft",
-          "mergeState": "UNSTABLE",
-          "observedRemoteHead": "efaea9ae198d1240d733df18479fbc98877d70b0"
+          "mergeState": "UNKNOWN",
+          "observedRemoteHead": "efaea9ae198d1240d733df18479fbc98877d70b0",
+          "candidateCommit": "ce6a141cbdb0328a7d901a43540f3278d8b0d6a7",
+          "next": "Candidatece6 independently reviewed; uninterrupted full validation then publish dependent draft."
         },
         {
           "id": "creator-presets",
@@ -1450,7 +1521,7 @@
       "id": "F07a",
       "priority": "P1",
       "phase": "Phase 4 — Accessibility, comfort, input and sound",
-      "description": "**a:** inventory critical cues and alternatives; **b:** fill demonstrated sensory gaps. Preserve existing captions and indicators.",
+      "description": "Inventory critical cues and existing sensory alternatives before implementing changes.",
       "impact": "H/H",
       "effort": "a **2–3d**; b **2–5d**, after a",
       "featureId": "F07",
@@ -1479,7 +1550,7 @@
       "id": "F07b",
       "priority": "P1",
       "phase": "Phase 4 — Accessibility, comfort, input and sound",
-      "description": "**a:** inventory critical cues and alternatives; **b:** fill demonstrated sensory gaps. Preserve existing captions and indicators.",
+      "description": "Fill demonstrated sensory gaps while preserving existing captions and indicators.",
       "impact": "H/H",
       "effort": "a **2–3d**; b **2–5d**, after a",
       "featureId": "F07",
@@ -1555,14 +1626,16 @@
           "status": "reviewed_stack",
           "evidence": [
             "172focused/full validate pass. Independent11binding+4host checks pass. Actual reserved-key/conflict, P1DownK/P2DownJ live steering, Pause/Resume and silent-write Retry/focus pass. Versus→Team retains mapping; Snake reset leaves Duel/Team records. Screenshot shows actual both-board movement, no earned win/per-tick/device proof.",
-            "Independent review clear;7 noncatalog blobs and parent values plus3 keys unchanged.188/188 expanded focused cases/full lint pass. Full scan intentionally stopped once to serialize load; exact uninterrupted scan now running. No interrupted pass claimed."
+            "Independent review clear;7 noncatalog blobs and parent values plus3 keys unchanged.188/188 expanded focused cases/full lint pass. Full scan intentionally stopped once to serialize load; exact uninterrupted scan now running. No interrupted pass claimed.",
+            "Integrated on Teame502: seven noncatalog feature blobs unchanged and parent locale values plus original three keys retained.188/188 focused cases and uninterrupted full source gates pass. One earlier scan deliberately stopped during serialization is excluded from passing evidence. Independent review clear; original actual two-seat steering/browser scope retained."
           ],
           "pr": "https://github.com/mekhovov/revealline/pull/1667",
-          "commit": "349cfddf600eda0ffba8db6c997b330b11de42a4",
+          "commit": "8d7ad8dbb8f1982ee0a55002e0119eab9f87f85e",
           "deliveryState": "draft",
-          "mergeState": "UNKNOWN",
-          "observedRemoteHead": "349cfddf600eda0ffba8db6c997b330b11de42a4",
-          "candidateCommit": "8d7ad8dbb8f1982ee0a55002e0119eab9f87f85e"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "8d7ad8dbb8f1982ee0a55002e0119eab9f87f85e",
+          "candidateCommit": "8d7ad8dbb8f1982ee0a55002e0119eab9f87f85e",
+          "next": "Await predecessor admission, then reconcile and run current exact-head required checks."
         }
       ]
     },
@@ -1574,17 +1647,17 @@
       "impact": "H/H",
       "effort": "**3–5d**",
       "featureId": "F09",
-      "status": "developing",
+      "status": "reviewed_stack",
       "owner": "lane-b",
       "qualification": {
         "automated": "focused_and_full_source_passed",
-        "browser": "compatibility_import_reload_scoped_passed",
+        "browser": "primary_200_percent_scoped_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
       "commit": "0fa88f0bed68de9730e8619528e712f361d73403",
-      "next": "Finish actual primary200% result reflow review and full source gates, then qualify other hosts separately.",
+      "next": "Await compatibility1668 and primary1672 admission; continue other-family layouts as F09b. No blanket all-theme/device compliance claim.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
@@ -1605,7 +1678,7 @@
         },
         {
           "id": "primary-200-percent",
-          "status": "browser_review",
+          "status": "reviewed_stack",
           "commit": "22a2c244a02bdce8632c51ca552af4ab3b51c727",
           "dependency": "PR1668 compatibility",
           "evidence": [
@@ -1613,10 +1686,11 @@
             "Actual browser review of frozen a0f at320×720 and844×390 found acceptance blockers: Home labels break midword, chooser actions/cards compress, briefing title is above the viewport and wheel scrolling cannot reveal it, and Pause keeps narrow columns with clipped actions. Primary200% remains draft until viewport scrolling and compact reflow are corrected and re-reviewed; no font-size reduction accepted as a fix.",
             "Actual Extra large selection persists in the shared record. Start and directional play worked; First return reached34.3% in7seconds and automatic Next opened Choose your share. Pause0:04 remained paused through resize. This does not qualify results layout or physical devices. Later820 adds initial-boot scaling and regenerated reaction/SIM projections; final uninterrupted validation was still pending at this snapshot.",
             "Actual f6dc review: 320×720 Extra large/theme-font pause has full-width readable actions; briefing top/title now reachable by scrolling. At 844×390, Resume and lower Sound/Settings/Home are reachable with readable columns. Actual game EN→UK at 390×844 shows readable Accessibility heading, full labels/select values/checkboxes; Back returns same paused First return 0:00/3 lives/00000 with Settings focus. Briefing still incorrectly shows Sound/Config/Full screen: hidden ownership is data-kind CSS, so an attribute-only guard was insufficient. PR remains draft; no final acceptance claim.",
-            "Actual7b browser fixes briefing Sound/Config/Fullscreen ownership and preserves pause controls. Auto-next/retry disabled through actual Settings; First return earned win34.3%,8160points,18seconds,3lives. Full-width result actions are scroll-reachable, but picture squeezes title into a narrow column.22a adds XL won-only vertical reading layout preserving hidden picture and ordinary/earned semantics; independent source review clear, actual corrected-win review pending."
+            "Actual7b browser fixes briefing Sound/Config/Fullscreen ownership and preserves pause controls. Auto-next/retry disabled through actual Settings; First return earned win34.3%,8160points,18seconds,3lives. Full-width result actions are scroll-reachable, but picture squeezes title into a narrow column.22a adds XL won-only vertical reading layout preserving hidden picture and ordinary/earned semantics; independent source review clear, actual corrected-win review pending.",
+            "Final22a:168/168 in one serial no-skip focused run; uninterrupted full validation, full lint and changed format/diff pass. Eight full-format findings are byte-identical parent baseline. Independent source review clear. Actual320×720 Extra large/theme-font run earned First return100%,23800points,14seconds,3lives; corrected picture-above-title layout keeps whole words and full-width footer actions reachable with native scrolling. Briefing/pause and EN/UK landscape scopes remain as previously recorded. Screenshot f09-primary-result-title-corrected.png; no physical or all-theme compliance claim."
           ],
           "pr": "https://github.com/mekhovov/revealline/pull/1672",
-          "next": "Repeat actual320px XL theme-font earned win after22a result reflow, then uninterrupted full source validation.",
+          "next": "Reviewed dependent draft on1668. Required exact-head admission remains; broader families and physical devices are separate.",
           "deliveryState": "draft",
           "mergeState": "UNSTABLE",
           "observedRemoteHead": "22a2c244a02bdce8632c51ca552af4ab3b51c727"
@@ -1651,7 +1725,7 @@
       "id": "F18a",
       "priority": "P1",
       "phase": "Phase 4 — Accessibility, comfort, input and sound",
-      "description": "**a:** assess real assistive-technology journeys; **b:** repair demonstrated blockers in bounded batches.",
+      "description": "Assess real assistive-technology journeys and record reproducible blockers.",
       "impact": "H/H",
       "effort": "a **3–6d**; b **2–6d**, after a",
       "featureId": "F18",
@@ -1672,7 +1746,7 @@
       "id": "F18b",
       "priority": "P1",
       "phase": "Phase 4 — Accessibility, comfort, input and sound",
-      "description": "**a:** assess real assistive-technology journeys; **b:** repair demonstrated blockers in bounded batches.",
+      "description": "Repair demonstrated assistive-technology blockers in bounded complete batches.",
       "impact": "H/H",
       "effort": "a **3–6d**; b **2–6d**, after a",
       "featureId": "F18",
@@ -2029,7 +2103,7 @@
       "id": "F38a",
       "priority": "P2",
       "phase": "Phase 5 — Practice, mastery and playing together",
-      "description": "**a:** Capture loss replay; **b:** Survival loss replay. Show the decisive event, retry/practice actions and honest compatibility handling.",
+      "description": "Add Capture loss replay with the decisive event, retry/practice actions and honest compatibility handling.",
       "impact": "H/H",
       "effort": "a **4–6d**; b **6–10d**; D",
       "featureId": "F38",
@@ -2050,7 +2124,7 @@
       "id": "F38b",
       "priority": "P2",
       "phase": "Phase 5 — Practice, mastery and playing together",
-      "description": "**a:** Capture loss replay; **b:** Survival loss replay. Show the decisive event, retry/practice actions and honest compatibility handling.",
+      "description": "Add Survival loss replay with the decisive event, retry/practice actions and honest compatibility handling.",
       "impact": "H/H",
       "effort": "a **4–6d**; b **6–10d**; D",
       "featureId": "F38",
@@ -2134,7 +2208,7 @@
       "id": "F50a",
       "priority": "P2",
       "phase": "Phase 5 — Practice, mastery and playing together",
-      "description": "**a:** couch quick pings; **b:** transport the same limited set online. Include visual alternatives and rate limits.",
+      "description": "Add a limited couch quick-ping set with visual alternatives and rate limits.",
       "impact": "H/M",
       "effort": "**3–5d each**; b follows a",
       "featureId": "F50",
@@ -2155,7 +2229,7 @@
       "id": "F50b",
       "priority": "P2",
       "phase": "Phase 5 — Practice, mastery and playing together",
-      "description": "**a:** couch quick pings; **b:** transport the same limited set online. Include visual alternatives and rate limits.",
+      "description": "Transport the same limited quick-ping set online with visual alternatives and rate limits.",
       "impact": "H/M",
       "effort": "**3–5d each**; b follows a",
       "featureId": "F50",
@@ -2386,7 +2460,7 @@
       "id": "F45a",
       "priority": "P2",
       "phase": "Phase 6 — Creator and community participation",
-      "description": "**a:** curated discovery shelf; **b:** useful metadata filters and sorting, including empty/loading/failure states.",
+      "description": "Deliver a curated discovery shelf with useful loading, empty and failure states.",
       "impact": "H/H",
       "effort": "a **3–4d**; b **4–8d**; F78, b follows a; curation extra",
       "featureId": "F45",
@@ -2407,7 +2481,7 @@
       "id": "F45b",
       "priority": "P2",
       "phase": "Phase 6 — Creator and community participation",
-      "description": "**a:** curated discovery shelf; **b:** useful metadata filters and sorting, including empty/loading/failure states.",
+      "description": "Add useful content metadata filters and sorting, including loading, empty and failure states.",
       "impact": "H/H",
       "effort": "a **3–4d**; b **4–8d**; F78, b follows a; curation extra",
       "featureId": "F45",
@@ -2617,7 +2691,7 @@
       "id": "F41a",
       "priority": "P2",
       "phase": "Phase 7 — Retention, progression and content depth",
-      "description": "**a:** featured remix archive; **b:** repeatable weekly curation workflow. Older challenges remain playable.",
+      "description": "Deliver a featured remix archive that keeps older challenges playable.",
       "impact": "H/H",
       "effort": "a **3–5d**; b **2–4d**, after a; curation ongoing",
       "featureId": "F41",
@@ -2638,7 +2712,7 @@
       "id": "F41b",
       "priority": "P2",
       "phase": "Phase 7 — Retention, progression and content depth",
-      "description": "**a:** featured remix archive; **b:** repeatable weekly curation workflow. Older challenges remain playable.",
+      "description": "Establish a repeatable weekly curation workflow for the featured remix archive.",
       "impact": "H/H",
       "effort": "a **3–5d**; b **2–4d**, after a; curation ongoing",
       "featureId": "F41",
@@ -2701,7 +2775,7 @@
       "id": "F62a",
       "priority": "P3",
       "phase": "Phase 7 — Retention, progression and content depth",
-      "description": "**a:** complete three-mission branching chapter; **b:** expand to six–eight missions after evaluation.",
+      "description": "Deliver a complete three-mission branching chapter.",
       "impact": "H/H",
       "effort": "a **6–10d**; b **4–7d**, after a; assets extra",
       "featureId": "F62",
@@ -2722,7 +2796,7 @@
       "id": "F62b",
       "priority": "P3",
       "phase": "Phase 7 — Retention, progression and content depth",
-      "description": "**a:** complete three-mission branching chapter; **b:** expand to six–eight missions after evaluation.",
+      "description": "Expand the branching chapter to six–eight missions after evaluation.",
       "impact": "H/H",
       "effort": "a **6–10d**; b **4–7d**, after a; assets extra",
       "featureId": "F62",
@@ -2785,7 +2859,7 @@
       "id": "F53a",
       "priority": "P2",
       "phase": "Phase 8 — Larger service and platform investments",
-      "description": "**a:** online connection diagnostics; **b:** targeted responsiveness/reconnection improvements based on reproduced cases.",
+      "description": "Deliver online connection diagnostics tied to observable connection behavior.",
       "impact": "H/H",
       "effort": "a **3–5d**; b **7–15d**, after a",
       "featureId": "F53",
@@ -2806,7 +2880,7 @@
       "id": "F53b",
       "priority": "P2",
       "phase": "Phase 8 — Larger service and platform investments",
-      "description": "**a:** online connection diagnostics; **b:** targeted responsiveness/reconnection improvements based on reproduced cases.",
+      "description": "Correct reproduced online responsiveness and reconnection problems.",
       "impact": "H/H",
       "effort": "a **3–5d**; b **7–15d**, after a",
       "featureId": "F53",
@@ -2827,7 +2901,7 @@
       "id": "F48b",
       "priority": "P3",
       "phase": "Phase 8 — Larger service and platform investments",
-      "description": "**b:** hosted creator follows; **c:** optional notifications and preferences. Local bookmarks remain independent.",
+      "description": "Add hosted creator follows while keeping local bookmarks independent.",
       "impact": "M/H",
       "effort": "b **6–10d**; c **4–8d**; F48a, operational service",
       "featureId": "F48",
@@ -2848,7 +2922,7 @@
       "id": "F48c",
       "priority": "P3",
       "phase": "Phase 8 — Larger service and platform investments",
-      "description": "**b:** hosted creator follows; **c:** optional notifications and preferences. Local bookmarks remain independent.",
+      "description": "Add optional notifications and preferences for hosted creator follows.",
       "impact": "M/H",
       "effort": "b **6–10d**; c **4–8d**; F48a, operational service",
       "featureId": "F48",
@@ -2890,7 +2964,7 @@
       "id": "F66a",
       "priority": "P3",
       "phase": "Phase 8 — Larger service and platform investments",
-      "description": "**a:** manual cloud transfer with conflict preview; **b:** automatic sync with explicit conflict recovery. Keep large media and device-specific graphics separate.",
+      "description": "Deliver manual cloud transfer with explicit conflict preview, keeping large media and device-specific graphics separate.",
       "impact": "H/H",
       "effort": "a **12–18d**; b **13–22d**; F11 and approved service contract",
       "featureId": "F66",
@@ -2911,7 +2985,7 @@
       "id": "F66b",
       "priority": "P3",
       "phase": "Phase 8 — Larger service and platform investments",
-      "description": "**a:** manual cloud transfer with conflict preview; **b:** automatic sync with explicit conflict recovery. Keep large media and device-specific graphics separate.",
+      "description": "Deliver automatic cloud sync with explicit conflict recovery, keeping large media and device-specific graphics separate.",
       "impact": "H/H",
       "effort": "a **12–18d**; b **13–22d**; F11 and approved service contract",
       "featureId": "F66",
@@ -3155,6 +3229,11 @@
       "date": "2026-10-19",
       "item": "Integrated foundations, stats and publication evidence",
       "reason": "Community/diagnostics ready; Snake stats1677 ready after source and actual language review. Context/keyboard/menu/preset stacks being reconciled. Primary200% briefing passes; earned result exposed title-width defect,22a correction awaits browser/full gates. Public e440 contains F83a/F81; clarify rolling980MB contract versus950MB plan target. F19 existing comparisons assessed before additions."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Primary scaling accepted and descendant integration",
+      "reason": "Primary22a passes uninterrupted source gates and actual compact earned-win review; F09b remains separate. Menu/native/arcade/keyboard/context/community descendants independently reconciled. SIM missing style projection corrected and actual compact EN/UK Apply/Undo reviewed. F19 assessment replaces generic comparison work with bounded charge/capacity and commitment consequences. Split deliverable descriptions clarified;113 tasks preserved."
     }
   ],
   "deliveryDependencies": [
