@@ -13,7 +13,7 @@
     "status": "complete",
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
-  "nextPriority": ["F81", "F82", "F16", "F05", "F14", "F11a", "F17"],
+  "nextPriority": ["F05", "F14", "F17", "F11a", "F12", "F75", "F01"],
   "release": {
     "status": "not_scheduled",
     "note": "Draft PRs only until exact-revision review, required gates and release scheduling; no arbitrary product version allocation."
@@ -42,7 +42,8 @@
         "Failure reproduced before edits on clean main 20555cda6bd44a0736aa829e64c52e455b4e770c.",
         "Fixture mock clock is replaced during soloPage bootstrap; explicit waits are not reaching the runtime.",
         "21/21 Deck cases pass Node20 and Node22; 659/659 focused controller/input/gallery cohort pass Node22.",
-        "Full ESLint, changed-file formatting, diff check and npm run validate pass. Full repository test gate and physical Deck remain pending."
+        "Full ESLint, changed-file formatting, diff check and npm run validate pass. Full repository test gate and physical Deck remain pending.",
+        "Independent diff review confirms all behavioral assertions retained. All4focused CI shards and industrial feature checks passed; company candidate check still running at last observation."
       ]
     },
     {
@@ -74,18 +75,22 @@
       "impact": "H/H",
       "effort": "**1–2d**",
       "featureId": "F81",
-      "status": "developing",
+      "status": "draft_review",
       "owner": "lane-a",
       "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
+        "automated": "focused_passed_with_documented_baseline_failure",
+        "browser": "scoped_passed",
         "physical": "not_tested"
       },
       "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Reproduce recovery availability on current clean candidate and repair dialog lifecycle.",
-      "evidence": []
+      "pr": "https://github.com/mekhovov/revealline/pull/1618",
+      "commit": "de0cecf192c6c6a2844a8f29776082cc5bc728a0",
+      "next": "Complete independent CI review; baseline recovery-display assertion failure is recorded separately.",
+      "evidence": [
+        "Red/green reproduction on clean20555cd; child close refreshes existing restrictions without changing saved flight.",
+        "Expanded focused suites159/160: unchanged recovery-display storage-listener assertion also fails on clean20555cd. Changed tests, lint, validation and changed formatting pass.",
+        "Actual IAB browser: Collection→Achievements→Records→Back→Back and Saves→Back both permit recovery. Returning preserves paused First return at0:25,3lives,0points. No physical-device claim."
+      ]
     },
     {
       "id": "F76a",
@@ -120,7 +125,7 @@
       "owner": "lane-c",
       "qualification": {
         "automated": "not_run",
-        "browser": "not_run",
+        "browser": "scoped_no_reproduction",
         "physical": "not_tested"
       },
       "blocker": "No current independent Help/About placeholder reproduced; known Studio overlap is already in PR1525.",
@@ -128,7 +133,8 @@
       "commit": null,
       "next": "Retain as unreproduced; obtain an exact remaining visible token/route before implementing.",
       "evidence": [
-        "Source scan on20555cd found no missing rich slots or plain-label interpolation tokens in checked Solo Help/About/Couch/Team surfaces. This is not a browser closure."
+        "Source scan on20555cd found no missing rich slots or plain-label interpolation tokens in checked Solo Help/About/Couch/Team surfaces. This is not a browser closure.",
+        "Current-source Solo Help EN browser shows no localization placeholders. About has build-time __REVEALLINE_VERSION__ only in source serving; exact F82 packaged About substitutes0.151.1. No shipped localization defect demonstrated by that token."
       ]
     },
     {
@@ -160,8 +166,8 @@
       "impact": "H/H",
       "effort": "**0.5–1.5d**",
       "featureId": "F05",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-a",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -170,7 +176,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
+      "next": "Expose mission/context under Start/Continue and explain paused resume versus saved verification and fresh start.",
       "evidence": []
     },
     {
@@ -202,6 +208,31 @@
       "impact": "M/M",
       "effort": "**1–2d**",
       "featureId": "F16",
+      "status": "draft_review",
+      "owner": "lane-c",
+      "qualification": {
+        "automated": "focused_passed",
+        "browser": "component_fixture_passed",
+        "physical": "not_tested"
+      },
+      "blocker": null,
+      "pr": "https://github.com/mekhovov/revealline/pull/1617",
+      "commit": "a24dcf7b86ce45a34bc7fd5d237390a9f1d51d12",
+      "next": "Review exact-head CI and qualify the real playback failure path; listening/iPhone checks remain separate.",
+      "evidence": [
+        "259 audio/player/policy tests and57 localization checks pass; full i18n,lint,changed formatting,diff checks pass.",
+        "Real browser with actual panel and modeled transport: Retry remains focused while loading, then returns to Play after success; music-only pause preserves master mute/volume and library generation.",
+        "EN/UK card and themed320px component wrapping inspected. Component width is not device emulation; no audio listening or actual iPhone media-activation claim."
+      ]
+    },
+    {
+      "id": "F17",
+      "priority": "P1",
+      "phase": "Phase 1 — Immediate reliability and clarity",
+      "description": "Before an incompatible SIM lesson, offer the matching flight mode or clearly labelled unscored practice. Preserve existing record restrictions.",
+      "impact": "H/M",
+      "effort": "**2–3d**",
+      "featureId": "F17",
       "status": "developing",
       "owner": "lane-c",
       "qualification": {
@@ -212,28 +243,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Persistent shared Audio/Music Player load-failure card with Retry, music-only pause and Dismiss.",
-      "evidence": []
-    },
-    {
-      "id": "F17",
-      "priority": "P1",
-      "phase": "Phase 1 — Immediate reliability and clarity",
-      "description": "Before an incompatible SIM lesson, offer the matching flight mode or clearly labelled unscored practice. Preserve existing record restrictions.",
-      "impact": "H/M",
-      "effort": "**2–3d**",
-      "featureId": "F17",
-      "status": "planned",
-      "owner": null,
-      "qualification": {
-        "automated": "not_run",
-        "browser": "not_run",
-        "physical": "not_tested"
-      },
-      "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
+      "next": "Offer matching lesson mode through existing safe mode-change path; retain explicitly unscored practice and record restrictions.",
       "evidence": []
     },
     {
@@ -622,18 +632,23 @@
       "impact": "H/H",
       "effort": "**3–5d**; independent of F14",
       "featureId": "F82",
-      "status": "developing",
+      "status": "draft_review",
       "owner": "lane-b",
       "qualification": {
-        "automated": "not_run",
+        "automated": "focused_and_committed_build_passed",
         "browser": "not_run",
         "physical": "not_tested"
       },
       "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Implement worker-owned missing-startup recovery and bounded checks.",
-      "evidence": []
+      "pr": "https://github.com/mekhovov/revealline/pull/1616",
+      "commit": "d706a1280248ffd61fadc1a05f92f58c91db1090",
+      "next": "Real-browser worker recovery check; review required CI and prepared Pages capacity before delivery.",
+      "evidence": [
+        "103 focused recovery/update tests and54 build/closure tests pass; lint and full content validation pass.",
+        "Exact committed build succeeds:3556files; ZIP SHA25658bc16d5d1c4fdcdf258bd3fc3fe51e7fa29bd1357b0d14ba93dafcd59ce0a50. Core1707files/73432886bytes;23startup documents.",
+        "Default output1074925070bytes exceeds950000000-byte main Pages budget; prepared deployment inventory remains unqualified. Full formatting has8unchanged baseline failures; changed formatting passes.",
+        "Startup guards detect missing static entry dependencies; they do not establish full cache integrity or survive deletion of the entire origin."
+      ]
     },
     {
       "id": "F78",
@@ -790,8 +805,8 @@
       "impact": "H/H",
       "effort": "**4–6d**",
       "featureId": "F14",
-      "status": "planned",
-      "owner": null,
+      "status": "developing",
+      "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
@@ -800,7 +815,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement the complete accepted slice after its dependencies.",
+      "next": "Present verified runtime/selected-content/optional-content/context readiness without inferring install or persistence.",
       "evidence": []
     },
     {
