@@ -1,0 +1,214 @@
+{
+  "format": "SoloGuardedReadyIntentV1",
+  "createdAt": "2026-10-18T22:13:48.693758+00:00",
+  "pr": 1620,
+  "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+  "mainRead": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "compatibilityAudit": "09dc7d7479b6bf0e89b98c5164752814d799abc4",
+  "fullAppearanceAudit": "49778719f4bf4ad88fb1a957afb47628f1e39c35",
+  "checkSnapshot": [
+    {
+      "id": 117803024912,
+      "name": "release-ready",
+      "status": "queued",
+      "conclusion": null,
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117792289295,
+      "name": "focused",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117783806906,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117782732805,
+      "name": "preview",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117775832441,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117775832023,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117775831108,
+      "name": "focused_shards (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117775831073,
+      "name": "focused_shards (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117775831007,
+      "name": "focused_shards (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117775831000,
+      "name": "focused_shards (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117774051191,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117773566664,
+      "name": "browser",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117769247725,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117769039493,
+      "name": "optional-practice",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117769039363,
+      "name": "candidate",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768882364,
+      "name": "feature (gameplay)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768882340,
+      "name": "feature (recordings)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768882328,
+      "name": "feature (presentation)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768882300,
+      "name": "feature (creator)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768882290,
+      "name": "feature (local-ux)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768882215,
+      "name": "feature (rooms)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768881909,
+      "name": "installed_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768881866,
+      "name": "demo_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768881834,
+      "name": "admission",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768881651,
+      "name": "team_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    },
+    {
+      "id": 117768879817,
+      "name": "source",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    }
+  ],
+  "reason": "Actual commands, source controls and full preview build pass. Unchanged reviewed head is ready for review; final aggregate/release-ready and fresh serialized controller admission still mandatory.",
+  "mutation": {
+    "data": {
+      "markPullRequestReadyForReview": {
+        "pullRequest": {
+          "number": 1620,
+          "isDraft": false,
+          "headRefOid": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "url": "https://github.com/mekhovov/revealline/pull/1620"
+        }
+      }
+    }
+  },
+  "after": {
+    "draft": false,
+    "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+    "state": "open",
+    "auto_merge": null
+  },
+  "nativeDispatch": false,
+  "directMerge": false
+}

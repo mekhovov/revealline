@@ -1,0 +1,629 @@
+{
+  "format": "SoloSoundtrackLatestMainCompatibilityV1",
+  "observedAt": "2026-10-18T22:11:14.548Z",
+  "pullRequest": 1619,
+  "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+  "base": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+  "main": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "mergeBase": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+  "commits": [
+    {
+      "sha": "033e048b346d7ffae7544b528d16890666b9e24a",
+      "title": "test: align Steam Deck host gesture clocks"
+    },
+    {
+      "sha": "de0cecf192c6c6a2844a8f29776082cc5bc728a0",
+      "title": "fix(settings): refresh recovery entry after child tools close"
+    },
+    {
+      "sha": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "title": "Merge pull request #1613 from mekhovov/codex/f83-controller-confirm-recovery"
+    },
+    {
+      "sha": "c9727db41983d16550f8e4bf7fb6d1546f1fc551",
+      "title": "fix(fpv): make lesson mode mismatch actionable"
+    },
+    {
+      "sha": "7f256d13d63ed51d58a898f6cc2bdacaf1320d97",
+      "title": "feat(fpv): add sourced Cetus X and Protos practice presets"
+    },
+    {
+      "sha": "998b2da6da10df494dec6cdcdb23d1f1ac140029",
+      "title": "fix(fpv): recover archive access after unexpected database closure"
+    },
+    {
+      "sha": "9e3d8d417da2ae00dbb80387822c24a8405bd112",
+      "title": "test(fpv): qualify sustained airborne flight across the catalog"
+    },
+    {
+      "sha": "a0654e26399034e9aa5ccda4287460ca69de93c0",
+      "title": "fix(fpv): retain keyboard throttle across explicit pause and resume"
+    },
+    {
+      "sha": "d475e980d218431b3a89285d086979ea17c7dbb8",
+      "title": "docs(fpv): record flight qualification and open retention gates"
+    },
+    {
+      "sha": "cc093aba1f8c4e5d309229aeff61290b8fe18f98",
+      "title": "fix(fpv): distinguish archive deletion and inventory failures"
+    },
+    {
+      "sha": "c7cafc72330271ed99ebf8f7b50b758beb8e7aa9",
+      "title": "docs(fpv): record archive feedback acceptance and refreshed base"
+    },
+    {
+      "sha": "cf13bcad9a59a387be7c31c9af8d30d74e7c1860",
+      "title": "docs(fpv): retain final catalog browser flight observations"
+    },
+    {
+      "sha": "61ddf9aaf4a18d7c57210d67f5ba1bbc670a0ed9",
+      "title": "feat(capture): explain long-flight save and recording limits"
+    },
+    {
+      "sha": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+      "title": "perf: inspect local recordings with one cache open"
+    },
+    {
+      "sha": "e203d9f1a16c02a76ac02ef9f2d74540f6697fe5",
+      "title": "ci: retire expired one-shot Solo diagnostic triggers"
+    },
+    {
+      "sha": "c9e6f0f09c427c010ba2af9ff557575ee98f96db",
+      "title": "ci: keep active diagnostic consumers unchanged"
+    },
+    {
+      "sha": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "title": "Merge pull request #1618 from mekhovov/codex/f81-recovery-entry-refresh"
+    },
+    {
+      "sha": "e4400303952d4d6dcfd6416d6d085131ce71466b",
+      "title": "Merge pull request #1626 from mekhovov/codex/fpv-sustained-flight-20261018"
+    },
+    {
+      "sha": "237b405437def3c41b01165fe057af1ab06f618c",
+      "title": "Merge pull request #1630 from mekhovov/codex/f75-capture-flight-limits"
+    },
+    {
+      "sha": "6acfa2fb639fcc4d3b20970faa0972c77d2a7e1a",
+      "title": "Merge pull request #1625 from mekhovov/codex/f17-lesson-mode-clarity"
+    },
+    {
+      "sha": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+      "title": "Merge pull request #1633 from mekhovov/codex/retire-expired-solo-diagnostics"
+    },
+    {
+      "sha": "dd337c8120fd6f875544c1479713d3aa4299c323",
+      "title": "Merge pull request #1631 from mekhovov/codex/solo-local-recording-lookup-20261018"
+    }
+  ],
+  "mainChangedFiles": [
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+      "gitBlob": "7595cd77f0354b641085f868d23770bcc86f488f",
+      "status": "modified",
+      "changes": 37
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+      "gitBlob": "8bc5b364bbb67057a2388d1463ef749e7edcab5f",
+      "status": "modified",
+      "changes": 37
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+      "gitBlob": "6514ee76451f927c6896c162192629c9361d2677",
+      "status": "modified",
+      "changes": 37
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-soak-temporary.yml",
+      "gitBlob": "ce6e6c909602e5fe18d992ca0ea059a418b30930",
+      "status": "modified",
+      "changes": 29
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+      "gitBlob": "08c832d9287b404fdbcdf738209173f02269a92f",
+      "status": "modified",
+      "changes": 37
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+      "gitBlob": "47a045d919f0408aae95061cd8714d1b59f479fb",
+      "status": "modified",
+      "changes": 29
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+      "gitBlob": "71a3dec125928e81a52f2227db17ca37ea8babf5",
+      "status": "modified",
+      "changes": 37
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+      "gitBlob": "aad4a4b3364629ef2e3abd9f8253cf0a69d6903d",
+      "status": "modified",
+      "changes": 29
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+      "gitBlob": "ec1488da3990162c20401c882a2505d95de9ef41",
+      "status": "modified",
+      "changes": 37
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+      "gitBlob": "eda340627ac8cbe36bd02d9400be7c32c2639fcd",
+      "status": "modified",
+      "changes": 29
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+      "gitBlob": "ad5a6f46a2741bde6551a8e1d89cb7b476b3438a",
+      "status": "modified",
+      "changes": 37
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+      "gitBlob": "194e9ce7e67e9dc204252d63680cf1c38294d314",
+      "status": "modified",
+      "changes": 29
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+      "gitBlob": "b9ea62c9d6cd86f83eb94c78a07b71f42a402425",
+      "status": "modified",
+      "changes": 37
+    },
+    {
+      "path": "docs/fpv-aircraft-archives.md",
+      "gitBlob": "2ccf988990048abeaa6c21e99a9b08756d873a0b",
+      "status": "modified",
+      "changes": 11
+    },
+    {
+      "path": "docs/fpv-archive-retention-followup-20261018.md",
+      "gitBlob": "edb3c47f880b469999464a88c82b10d0e0d1c360",
+      "status": "added",
+      "changes": 45
+    },
+    {
+      "path": "docs/fpv-archive-retention-memory-20261018.json",
+      "gitBlob": "6955a7641d0eea6a171cd0961fe50e0c62a74dfa",
+      "status": "added",
+      "changes": 31
+    },
+    {
+      "path": "docs/fpv-civilian-candidate-implementation.md",
+      "gitBlob": "8c51715ca4caa46c9e85803bc935c5a88c07a194",
+      "status": "added",
+      "changes": 127
+    },
+    {
+      "path": "docs/fpv-civilian-candidate-review.md",
+      "gitBlob": "dac72a59df05f71c28d1255c2d75333fd767b8a0",
+      "status": "added",
+      "changes": 57
+    },
+    {
+      "path": "docs/fpv-civilian-source-inventory.md",
+      "gitBlob": "a4cd23ab15a0c0b09f3978e90c0691cf0d40dcdb",
+      "status": "added",
+      "changes": 166
+    },
+    {
+      "path": "docs/fpv-current-completion-plan.md",
+      "gitBlob": "a751a8070cda9947ab4b5f761bdf4f950aeeea1b",
+      "status": "modified",
+      "changes": 303
+    },
+    {
+      "path": "docs/fpv-flight-continuation-20261018.md",
+      "gitBlob": "ec563775654ce405b37c9830a1a133a16a0be0da",
+      "status": "added",
+      "changes": 61
+    },
+    {
+      "path": "docs/fpv-rendered-catalog-20261018.json",
+      "gitBlob": "bd5e9943bfedefc41f562e9b6f258f643669ac81",
+      "status": "added",
+      "changes": 195
+    },
+    {
+      "path": "docs/fpv-sustained-flight-qualification.json",
+      "gitBlob": "6c520823a02e1b681943c27dfab4c261e2be678d",
+      "status": "added",
+      "changes": 2967
+    },
+    {
+      "path": "docs/performance/fixtures/solo-retired-diagnostics/source.json",
+      "gitBlob": "54e60bfba366581d9fee6fd6d6de138b495026b5",
+      "status": "added",
+      "changes": 60
+    },
+    {
+      "path": "game/app.mjs",
+      "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "status": "modified",
+      "changes": 55
+    },
+    {
+      "path": "game/capture-flight-limits.mjs",
+      "gitBlob": "0e69d910692a9c9c235630fc31706f90344a1d79",
+      "status": "added",
+      "changes": 62
+    },
+    {
+      "path": "game/i18n/catalogs.mjs",
+      "gitBlob": "da55b6ed67d125e7d86015fb3024f47bef8ddccb",
+      "status": "modified",
+      "changes": 2
+    },
+    {
+      "path": "game/index.html",
+      "gitBlob": "e52026e2c91901d09185d0e63734ab0d6f6ff475",
+      "status": "modified",
+      "changes": 36
+    },
+    {
+      "path": "game/library.mjs",
+      "gitBlob": "442ecc86d19f8286f1a62eb51776a1bdc46f0af2",
+      "status": "modified",
+      "changes": 7
+    },
+    {
+      "path": "game/locales/en/interface.json",
+      "gitBlob": "a9f2afab3a547c9f60ae20c6e6e1d62620c63c2a",
+      "status": "modified",
+      "changes": 20
+    },
+    {
+      "path": "game/locales/uk/interface.json",
+      "gitBlob": "06b881122b8fbec7e6f1423a56bc4ae1ae2af371",
+      "status": "modified",
+      "changes": 20
+    },
+    {
+      "path": "game/official-downloads.mjs",
+      "gitBlob": "66c30dce706e797f90852955daee448a05685e6d",
+      "status": "modified",
+      "changes": 25
+    },
+    {
+      "path": "game/test/capture-flight-limits-host.test.mjs",
+      "gitBlob": "eb59a23497d2d9c1650645a6ed339bf8683bc569",
+      "status": "added",
+      "changes": 171
+    },
+    {
+      "path": "game/test/capture-flight-limits.test.mjs",
+      "gitBlob": "bde1bd8e96d1e2c90950fc71c804da2b419aee8a",
+      "status": "added",
+      "changes": 70
+    },
+    {
+      "path": "game/test/fpv-aircraft-archive-controls.test.mjs",
+      "gitBlob": "be5899cf20b0c2f2bd33f965bd8e3eb2cc9e7b34",
+      "status": "modified",
+      "changes": 169
+    },
+    {
+      "path": "game/test/fpv-aircraft-archive.test.mjs",
+      "gitBlob": "3a9786d69a40b386f637b262b6edce681418904d",
+      "status": "modified",
+      "changes": 86
+    },
+    {
+      "path": "game/test/fpv-aircraft-coach.test.mjs",
+      "gitBlob": "fb15f89be39e6454bc32d44b1c00551cf5d5a978",
+      "status": "modified",
+      "changes": 136
+    },
+    {
+      "path": "game/test/fpv-aircraft-presets.test.mjs",
+      "gitBlob": "51f7893bb7b1a602df8edbfa975ddbe693d027c5",
+      "status": "modified",
+      "changes": 80
+    },
+    {
+      "path": "game/test/fpv-aircraft-renderer.test.mjs",
+      "gitBlob": "36c18e5551e1bdaf9396ea468793e8a993b14397",
+      "status": "modified",
+      "changes": 32
+    },
+    {
+      "path": "game/test/fpv-flight-ui.test.mjs",
+      "gitBlob": "e3c1957a5dd4bdef2452d607ad3c7e7770f6f090",
+      "status": "modified",
+      "changes": 199
+    },
+    {
+      "path": "game/test/fpv-tuning-ui.test.mjs",
+      "gitBlob": "05cae79b4d9f854d7d3af8efbd66f8da01388743",
+      "status": "modified",
+      "changes": 71
+    },
+    {
+      "path": "game/test/fpv-world-appearance-ui.test.mjs",
+      "gitBlob": "834bcb46deb4c05a368bc885e28f215467eed48c",
+      "status": "modified",
+      "changes": 174
+    },
+    {
+      "path": "game/test/helpers/fpv-aircraft-sustained-qualification.mjs",
+      "gitBlob": "7a3e9cca1fc37c1cb01f05e51e63f4556a6f39c5",
+      "status": "added",
+      "changes": 467
+    },
+    {
+      "path": "game/test/official-downloads.test.mjs",
+      "gitBlob": "c34bb11422823c8ad6d38c632da0b0b40d8bd792",
+      "status": "modified",
+      "changes": 193
+    },
+    {
+      "path": "game/test/profile-recovery-dialog.test.mjs",
+      "gitBlob": "a1a0fb1e4ecd436e6769a0cc8cb59eef6503b058",
+      "status": "modified",
+      "changes": 33
+    },
+    {
+      "path": "game/test/profile-recovery-settings-host.test.mjs",
+      "gitBlob": "065a3d8d49fa27799bcd337f4d369e7fe98ff71a",
+      "status": "modified",
+      "changes": 50
+    },
+    {
+      "path": "game/test/steamdeck-menu-confirm-host.test.mjs",
+      "gitBlob": "6686e9893ab1944e0f38173b8b5c76d9408c885d",
+      "status": "modified",
+      "changes": 14
+    },
+    {
+      "path": "game/test/steamdeck-menu-confirm-race-host.test.mjs",
+      "gitBlob": "6f1c8ebf18fdff55d8dc0737392ac09c1fb466fa",
+      "status": "modified",
+      "changes": 5
+    },
+    {
+      "path": "game/ui/capture-flight-limits.css",
+      "gitBlob": "1a0032622be2beb593fd4daedc74bc0d6579051b",
+      "status": "added",
+      "changes": 38
+    },
+    {
+      "path": "game/ui/profile-recovery-dialog.mjs",
+      "gitBlob": "d365bbfea3eca77a1fa6371be3158d1b37e725cd",
+      "status": "modified",
+      "changes": 9
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "gitBlob": "62c5551fa41f8ab20b65b9cd7d736ce8dc4e97ab",
+      "status": "modified",
+      "changes": 32
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-archive-controls.mjs",
+      "gitBlob": "dbe9658c5196ab75b52a545ea07fa43486165479",
+      "status": "modified",
+      "changes": 53
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-archive.mjs",
+      "gitBlob": "7ef8bfd7c0463bc8c2ce74ea9fa5bf224f7e5a2b",
+      "status": "modified",
+      "changes": 16
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-presets.mjs",
+      "gitBlob": "bd733eb328732ff4960089d5f7b9a254d3b3af4f",
+      "status": "modified",
+      "changes": 206
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "gitBlob": "27356d3639ed7c9b383da856bf4227f8d67eb5b1",
+      "status": "modified",
+      "changes": 33
+    },
+    {
+      "path": "optional-practice/civilian-fpv/beginner-coach.mjs",
+      "gitBlob": "39b859a780d8778c165b42963a17142b23b5e4f1",
+      "status": "modified",
+      "changes": 117
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "gitBlob": "1c91675f4d899c7b7c33562f7b7fa463855496b2",
+      "status": "modified",
+      "changes": 25
+    },
+    {
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "gitBlob": "5826e0339a8e39e43aa003173b2ba43c9c6d580c",
+      "status": "modified",
+      "changes": 4
+    },
+    {
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "gitBlob": "2c2e284d0cd7f75b0e8eab9567b2c2055f56a250",
+      "status": "modified",
+      "changes": 46
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "gitBlob": "f33bf1d79022d539b2994eae25c51a25d7cde6c9",
+      "status": "modified",
+      "changes": 81
+    },
+    {
+      "path": "scripts/qualify-fpv-aircraft-sustained.mjs",
+      "gitBlob": "e7d15ad5a22e9a28f93a4c37d858c67d1065eb1d",
+      "status": "added",
+      "changes": 115
+    },
+    {
+      "path": "scripts/solo-final-wave-witness.mjs",
+      "gitBlob": "17bf6e8fd2ac870d277e2e601360a20e5d445a40",
+      "status": "modified",
+      "changes": 20
+    },
+    {
+      "path": "scripts/solo-page-error-source-witness.mjs",
+      "gitBlob": "370a2e57ad42d7c2d586a17ffae514263a67b2b6",
+      "status": "modified",
+      "changes": 14
+    },
+    {
+      "path": "scripts/solo-retired-diagnostic-source.mjs",
+      "gitBlob": "ee0a5ebd601df5b7241190954569e117fd0cd0b8",
+      "status": "added",
+      "changes": 44
+    },
+    {
+      "path": "scripts/test-solo-final-timing-v2-release.mjs",
+      "gitBlob": "ea7a6e1642d8d51397b266be1f7ac3e095fcc3b8",
+      "status": "modified",
+      "changes": 5
+    },
+    {
+      "path": "scripts/test-solo-readiness-source-witness.mjs",
+      "gitBlob": "a3f290c52211da46e881ffdedb30defac932e7cd",
+      "status": "modified",
+      "changes": 5
+    },
+    {
+      "path": "scripts/test-solo-retired-diagnostic-source.mjs",
+      "gitBlob": "a2add45dd7774b1b1686ba3e6aded711ca032e1b",
+      "status": "added",
+      "changes": 144
+    }
+  ],
+  "candidateInputs": [
+    {
+      "path": "game/test/solo-soundtrack-admission-host.test.mjs",
+      "originalBaseBlob": "f26fe925daf68b52c7470e37e6e2032c7fa51c41",
+      "currentMainBlob": "f26fe925daf68b52c7470e37e6e2032c7fa51c41",
+      "unchanged": true,
+      "headBlob": "a765711f91ec813b5835539a7704909e72055b58"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "originalBaseBlob": "542454f59f5353a0ca7af1fecefe9fd542915ee4",
+      "currentMainBlob": "542454f59f5353a0ca7af1fecefe9fd542915ee4",
+      "unchanged": true,
+      "headBlob": "f8f753f9727ba3174f54a6959a916a5da412a9e1"
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "originalBaseBlob": "fff6f285dafaa68fb491db0d11a6fb98de2d0ff0",
+      "currentMainBlob": "fff6f285dafaa68fb491db0d11a6fb98de2d0ff0",
+      "unchanged": true,
+      "headBlob": "9c50de59e2f44949e4a4563374806ee3c511bbcc"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "originalBaseBlob": "6bc193e24ecbf36b9de764e6a59c8829800176cd",
+      "currentMainBlob": "6bc193e24ecbf36b9de764e6a59c8829800176cd",
+      "unchanged": true,
+      "headBlob": "e8895405a301f6279ad9968afc04c11461108f79"
+    }
+  ],
+  "overlaps": [],
+  "trustedPolicy": [
+    {
+      "path": ".github/workflows/deploy-pages.yml",
+      "headBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "mainBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+      "headBytes": 19972,
+      "mainBytes": 19972,
+      "headSha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+      "mainSha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+      "equal": true
+    },
+    {
+      "path": "publishing/admission-binding.mjs",
+      "headBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "mainBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+      "headBytes": 3561,
+      "mainBytes": 3561,
+      "headSha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214",
+      "mainSha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214",
+      "equal": true
+    },
+    {
+      "path": "publishing/admission-preflight.mjs",
+      "headBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+      "mainBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+      "headBytes": 2473,
+      "mainBytes": 2473,
+      "headSha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf",
+      "mainSha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf",
+      "equal": true
+    },
+    {
+      "path": "publishing/focused-tests.mjs",
+      "headBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "mainBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "headBytes": 33959,
+      "mainBytes": 33959,
+      "headSha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+      "mainSha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+      "equal": true
+    },
+    {
+      "path": "publishing/focused-test-map.json",
+      "headBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "mainBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+      "headBytes": 14501,
+      "mainBytes": 14501,
+      "headSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "mainSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "equal": true
+    },
+    {
+      "path": "publishing/test-policy.json",
+      "headBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+      "mainBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+      "headBytes": 578,
+      "mainBytes": 578,
+      "headSha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "mainSha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "equal": true
+    },
+    {
+      "path": "publishing/test-policy.mjs",
+      "headBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+      "mainBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+      "headBytes": 4134,
+      "mainBytes": 4134,
+      "headSha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b",
+      "mainSha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b",
+      "equal": true
+    }
+  ],
+  "runtimeReview": {
+    "soloHost": "Capture-limit notice/HUD update and save/replay button state only; no Soundtrack initialization, tab identity, catalogue owner, source-manager or gesture changes.",
+    "profileRecovery": "Capture-phase native child-dialog close refreshes existing Settings recovery constraints; ignores still-open dialogs and does not alter Soundtrack owner.",
+    "officialDownloads": "Previously independently reviewed and just merged1631 preserves the localOfficialRecordingIds interface/readiness/order/duplicates/error fallback while batching cache inspect; no demand owner or cancellation contract change.",
+    "fpv": "Flight mode UI, aircraft metadata/visuals, archive lifecycle and keyboard/input ownership changes; no Soundtrack authoring/catalogue demand interface change. Existing audio pause/resume calls occur in context, not added/removed by these diffs.",
+    "diagnostics": "Retired historical trigger/witness changes do not intersect these four Soundtrack paths or seven trusted policy files."
+  },
+  "approval": "Source-compatible for guarded ready-for-review intent on exact head; repository controller must still require all exact-head gates/fresh trusted-policy/main observations before merge.",
+  "currentGateAudit": {
+    "gitBlob": "9bd32bb83181386db05a1d33289ad5bc00bf1c8d",
+    "bytes": 8690,
+    "sha256": "6659343ae64ffa5f81dc5157d0c41ce6af30660063f736ddc2962e04fe61227a"
+  },
+  "appearanceAudit": {
+    "gitBlob": "bc99728179ecf6dd152e5d1255b0cef3dc3acbce",
+    "bytes": 467020,
+    "sha256": "32f57dbf29b33c1f8a71534cf1020f62b0d8f12ef20e0c1562cedf3469223a7d"
+  },
+  "mutations": [],
+  "limits": [
+    "No rebasing or head edits required by observed source overlaps.",
+    "No claim of post-merge runtime/browser/physical-device qualification."
+  ]
+}

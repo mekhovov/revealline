@@ -1,0 +1,200 @@
+{
+  "format": "SoloGuardedReadyIntentV1",
+  "createdAt": "2026-10-18T22:13:39.459126+00:00",
+  "pr": 1619,
+  "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+  "mainRead": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "compatibilityAudit": "69b87290e097096cf55c4a8fdbfb62ab6fd8d123",
+  "fullAppearanceAudit": "bc99728179ecf6dd152e5d1255b0cef3dc3acbce",
+  "checkSnapshot": [
+    {
+      "id": 117803379569,
+      "name": "release-ready",
+      "status": "queued",
+      "conclusion": null,
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117796521517,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117790229093,
+      "name": "focused",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117776990767,
+      "name": "preview",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117776664872,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117776664782,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117776663459,
+      "name": "focused_shards (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117776663453,
+      "name": "focused_shards (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117776663438,
+      "name": "focused_shards (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117776663378,
+      "name": "focused_shards (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117768873453,
+      "name": "installed_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117768870540,
+      "name": "demo_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117768843253,
+      "name": "team_admission",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117768841425,
+      "name": "admission",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117767869350,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117761187710,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117758188552,
+      "name": "feature (creator)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117758188488,
+      "name": "optional-practice",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117758188434,
+      "name": "feature (presentation)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117758188423,
+      "name": "feature (local-ux)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117758188405,
+      "name": "feature (gameplay)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117758188371,
+      "name": "feature (rooms)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117758188120,
+      "name": "feature (recordings)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    {
+      "id": 117758187690,
+      "name": "candidate",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    }
+  ],
+  "reason": "Actual commands, source controls and full preview build pass. Unchanged reviewed head is ready for review; final aggregate/release-ready and fresh serialized controller admission still mandatory.",
+  "mutation": {
+    "data": {
+      "markPullRequestReadyForReview": {
+        "pullRequest": {
+          "number": 1619,
+          "isDraft": false,
+          "headRefOid": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "url": "https://github.com/mekhovov/revealline/pull/1619"
+        }
+      }
+    }
+  },
+  "after": {
+    "draft": false,
+    "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "state": "open",
+    "auto_merge": null
+  },
+  "nativeDispatch": false,
+  "directMerge": false
+}

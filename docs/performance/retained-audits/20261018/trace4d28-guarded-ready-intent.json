@@ -1,0 +1,812 @@
+{
+  "format": "SoloGuardedReadyIntentV1",
+  "createdAt": "2026-10-18T22:07:58.385255+00:00",
+  "pr": 1621,
+  "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+  "mainRead": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "compatibilityAudit": "c7932b6f8c54697926f71281d37c8274faee3700",
+  "additionalMainDelta": [
+    "game/official-downloads.mjs",
+    "game/test/official-downloads.test.mjs"
+  ],
+  "checkSnapshot": [
+    {
+      "id": 117799599161,
+      "name": "release-ready",
+      "status": "queued",
+      "conclusion": null,
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117794314851,
+      "name": "focused",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117775090693,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117775090108,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117775089354,
+      "name": "focused_shards (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117775089290,
+      "name": "focused_shards (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117775089280,
+      "name": "focused_shards (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117775089247,
+      "name": "focused_shards (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117767875414,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759947499,
+      "name": "replay-portability",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759910538,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759909840,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759909644,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759908966,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759908662,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759908561,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759904728,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759904206,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759902797,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759902435,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759902054,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759902049,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759901923,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759901867,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759900864,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759900003,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759899247,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759899085,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759898766,
+      "name": "cocoa",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759898357,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759898285,
+      "name": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759897033,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759896214,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759895975,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759895593,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759895301,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759893679,
+      "name": "matrix.engine",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759892933,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759892820,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759892810,
+      "name": "touch",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873734,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873636,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873558,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873553,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873422,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873366,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873274,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873241,
+      "name": "feature (gameplay)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873229,
+      "name": "feature (recordings)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873210,
+      "name": "feature (local-ux)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873194,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873177,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873175,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873163,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873149,
+      "name": "feature (presentation)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873126,
+      "name": "feature (rooms)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873109,
+      "name": "auxiliary",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873108,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873076,
+      "name": "${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873070,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873066,
+      "name": "matrix.engine",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873045,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873042,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873012,
+      "name": "demo-resources",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873003,
+      "name": "hud-cpu",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759873001,
+      "name": "demo-recovery",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872969,
+      "name": "correctness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872938,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872923,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872920,
+      "name": "feature (creator)",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872919,
+      "name": "shared-return",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872915,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872889,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872884,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872882,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872875,
+      "name": "raster",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872874,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872872,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872864,
+      "name": "matrix.engine",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872829,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872800,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872747,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872738,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872659,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872639,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872637,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872635,
+      "name": "matrix.engine",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872604,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872599,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872566,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872563,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872539,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872459,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872421,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872398,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872358,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872353,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872297,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872292,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872259,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872082,
+      "name": "readiness",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872056,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759872018,
+      "name": "matrix.observation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759871906,
+      "name": "replay-portability-source",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759871810,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759871668,
+      "name": "candidate",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759871664,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759871653,
+      "name": "sustained",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759871465,
+      "name": "declare",
+      "status": "completed",
+      "conclusion": "skipped",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759871451,
+      "name": "optional-practice",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    },
+    {
+      "id": 117759871119,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    }
+  ],
+  "reason": "All actual source, Industrial, Company and replay commands and focused aggregation pass. Unchanged reviewed head is ready for review; controller must still require release-ready and complete fresh serialized admission.",
+  "mutation": {
+    "data": {
+      "markPullRequestReadyForReview": {
+        "pullRequest": {
+          "number": 1621,
+          "isDraft": false,
+          "headRefOid": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+          "url": "https://github.com/mekhovov/revealline/pull/1621"
+        }
+      }
+    }
+  },
+  "after": {
+    "draft": false,
+    "head": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+    "state": "open",
+    "auto_merge": null
+  },
+  "nativeDispatch": false,
+  "directMerge": false
+}

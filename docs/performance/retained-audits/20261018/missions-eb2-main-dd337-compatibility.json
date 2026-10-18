@@ -1,0 +1,85 @@
+{
+  "main": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "previous": "237b405437def3c41b01165fe057af1ab06f618c",
+  "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+  "generator": {
+    "gitBlob": "3c16fe0e7f450cde67af9d241875afdf28414d56",
+    "bytes": 10768,
+    "sha256": "b52dae963bb8894824f06ced5be9808edeb4038a66b6810d0091df223ee00d8b"
+  },
+  "sharedJsProjectionExact": true,
+  "sharedCssProjectionExact": true,
+  "jsInputs": 35,
+  "cssInputs": 6,
+  "changedDependencyIntersection": [],
+  "fullHeadMainPathIntersection": [
+    "game/app.mjs"
+  ],
+  "mainAppUnchangedSince237b": true,
+  "priorAppUnionStillExact": {
+    "gitBlob": "53e94f240326fc9005fb0fb8a6c55590bb3c8cd9",
+    "bytes": 622490,
+    "sha256": "6792d036827e881801d596690f9e78d408145f9a162701ddd674287ec529a39d"
+  },
+  "generatedJs": {
+    "gitBlob": "9499ede569fb1e9b525bb7ca5b871ce2465361d5",
+    "bytes": 324774,
+    "sha256": "54d3db054b4c2d405df6b11f77e18f00b81880989293cd3a7d95a6788d948b27"
+  },
+  "generatedCss": {
+    "gitBlob": "170d97b0b5f339769e161de4def9d27e69bdfdab",
+    "bytes": 102873,
+    "sha256": "fecc477d878b0cd28c8d9be4f531556bea8bb11888d75d3003b2171bff90ab80"
+  },
+  "policy": {
+    "paths": [
+      ".github/workflows/deploy-pages.yml",
+      "publishing/admission-binding.mjs",
+      "publishing/admission-preflight.mjs",
+      "publishing/focused-tests.mjs",
+      "publishing/focused-test-map.json",
+      "publishing/test-policy.json",
+      "publishing/test-policy.mjs"
+    ],
+    "allSevenBlobsEqual": true,
+    "digest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+    "identities": {
+      ".github/workflows/deploy-pages.yml": {
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8"
+      },
+      "publishing/admission-binding.mjs": {
+        "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+        "bytes": 3561,
+        "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214"
+      },
+      "publishing/admission-preflight.mjs": {
+        "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+        "bytes": 2473,
+        "sha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf"
+      },
+      "publishing/focused-tests.mjs": {
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "bytes": 33959,
+        "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+      },
+      "publishing/focused-test-map.json": {
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "bytes": 14501,
+        "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479"
+      },
+      "publishing/test-policy.json": {
+        "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+        "bytes": 578,
+        "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2"
+      },
+      "publishing/test-policy.mjs": {
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "bytes": 4134,
+        "sha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b"
+      }
+    }
+  },
+  "note": "RAM-only source AST/string projection and byte/hash policy comparison. No source execution, tests, local writes or branch mutation. Final controller still requires its fresh current snapshot."
+}

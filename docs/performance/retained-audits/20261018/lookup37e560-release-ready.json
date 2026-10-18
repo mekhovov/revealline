@@ -1,0 +1,455 @@
+{
+  "format": "revealline-exact-head-release-ready-audit.v1",
+  "observedAt": "2026-10-18T21:38:33.457Z",
+  "pr": {
+    "number": 1631,
+    "head": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+    "base": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "draft": false,
+    "state": "open",
+    "merged": false,
+    "mergeable": true
+  },
+  "sourceRun": {
+    "id": 39154332460,
+    "status": "completed",
+    "conclusion": "success"
+  },
+  "releaseReady": {
+    "id": 117784760040,
+    "run_id": 39154332460,
+    "workflow_name": "Validate source for continuous main",
+    "head_branch": "codex/solo-local-recording-lookup-20261018",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39154332460",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAbbITO6A",
+    "head_sha": "37e560e21602ac915b3a9cc70fc51e92f3f1a3dc",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117784760040",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117784760040",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-18T20:43:13Z",
+    "started_at": "2026-10-18T21:35:54Z",
+    "completed_at": "2026-10-18T21:35:57Z",
+    "name": "release-ready",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T21:35:55Z",
+        "completed_at": "2026-10-18T21:35:55Z"
+      },
+      {
+        "name": "Apply the selected PR gate policy",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-18T21:35:55Z",
+        "completed_at": "2026-10-18T21:35:55Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-18T21:35:55Z",
+        "completed_at": "2026-10-18T21:35:55Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117784760040",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000042879,
+    "runner_name": "GitHub Actions 1000042879",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "releaseLog": {
+    "bytes": 5053,
+    "sha256": "9877187ec099b359b4f8d845032615871dd4f0d5874e3df6a9a973d2971c9fe0",
+    "text": "﻿2026-10-18T21:35:55.2696446Z Current runner version: '2.337.0'\n2026-10-18T21:35:55.2719058Z ##[group]Runner Image Provisioner\n2026-10-18T21:35:55.2719856Z Hosted Compute Agent\n2026-10-18T21:35:55.2720342Z Version: 20261012.601\n2026-10-18T21:35:55.2720915Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d\n2026-10-18T21:35:55.2721517Z Build Date: 2026-10-12T17:48:21Z\n2026-10-18T21:35:55.2722073Z Worker ID: {3342abed-3939-4872-a70a-ca523f38fab0}\n2026-10-18T21:35:55.2722675Z Region: westus3\n2026-10-18T21:35:55.2723137Z Cloud: Azure\n2026-10-18T21:35:55.2723722Z ##[endgroup]\n2026-10-18T21:35:55.2724857Z ##[group]Operating System\n2026-10-18T21:35:55.2725393Z Ubuntu\n2026-10-18T21:35:55.2725875Z 24.04.5\n2026-10-18T21:35:55.2726328Z LTS\n2026-10-18T21:35:55.2726768Z ##[endgroup]\n2026-10-18T21:35:55.2727264Z ##[group]Runner Image\n2026-10-18T21:35:55.2727747Z Image: ubuntu-24.04\n2026-10-18T21:35:55.2728237Z Version: 20261012.334.1\n2026-10-18T21:35:55.2729290Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md\n2026-10-18T21:35:55.2730584Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334\n2026-10-18T21:35:55.2731349Z ##[endgroup]\n2026-10-18T21:35:55.2732304Z ##[group]GITHUB_TOKEN Permissions\n2026-10-18T21:35:55.2734179Z Contents: read\n2026-10-18T21:35:55.2734721Z Metadata: read\n2026-10-18T21:35:55.2735192Z ##[endgroup]\n2026-10-18T21:35:55.2737172Z Secret source: Actions\n2026-10-18T21:35:55.2737996Z Cache mode: write\n2026-10-18T21:35:55.2738719Z Prepare workflow directory\n2026-10-18T21:35:55.3027047Z Prepare all required actions\n2026-10-18T21:35:55.3118847Z Complete job name: release-ready\n2026-10-18T21:35:55.3927639Z ##[group]Run test \"$PREFLIGHT_RESULT\" = success\n2026-10-18T21:35:55.3928815Z \u001b[36;1mtest \"$PREFLIGHT_RESULT\" = success\u001b[0m\n2026-10-18T21:35:55.3929712Z \u001b[36;1mif [ \"$ADMISSION\" != hold ]; then\u001b[0m\n2026-10-18T21:35:55.3930711Z \u001b[36;1m  if [ \"$FOCUSED_REQUIRED\" = true ]; then\u001b[0m\n2026-10-18T21:35:55.3931796Z \u001b[36;1m    test \"$FOCUSED_RESULT\" = success\u001b[0m\n2026-10-18T21:35:55.3932617Z \u001b[36;1m  else\u001b[0m\n2026-10-18T21:35:55.3933546Z \u001b[36;1m    test \"$FOCUSED_REQUIRED\" = false\u001b[0m\n2026-10-18T21:35:55.3934446Z \u001b[36;1m    test \"$FOCUSED_RESULT\" = skipped\u001b[0m\n2026-10-18T21:35:55.3935400Z \u001b[36;1m  fi\u001b[0m\n2026-10-18T21:35:55.3936028Z \u001b[36;1mfi\u001b[0m\n2026-10-18T21:35:55.3936757Z \u001b[36;1mif [ \"$ADMISSION\" = maintenance ]; then\u001b[0m\n2026-10-18T21:35:55.3938727Z \u001b[36;1m  echo 'Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.'\u001b[0m\n2026-10-18T21:35:55.3940666Z \u001b[36;1m  exit 0\u001b[0m\n2026-10-18T21:35:55.3941448Z \u001b[36;1mfi\u001b[0m\n2026-10-18T21:35:55.3942237Z \u001b[36;1mif [ \"$ADMISSION\" = scheduled ]; then\u001b[0m\n2026-10-18T21:35:55.3944541Z \u001b[36;1m  echo 'Explicit milestone schedule: selected validation passed under the explicit test policy; waived suites are not passed.'\u001b[0m\n2026-10-18T21:35:55.3946146Z \u001b[36;1m  exit 0\u001b[0m\n2026-10-18T21:35:55.3946809Z \u001b[36;1mfi\u001b[0m\n2026-10-18T21:35:55.3947552Z \u001b[36;1mif [ \"$ADMISSION\" = release-evidence ]; then\u001b[0m\n2026-10-18T21:35:55.3949213Z \u001b[36;1m  echo 'Docs-only post-merge release evidence: exact-source validation is required without allocating another product version.'\u001b[0m\n2026-10-18T21:35:55.3950844Z \u001b[36;1m  test \"$BUILD_RESULT\" = success\u001b[0m\n2026-10-18T21:35:55.3951772Z \u001b[36;1m  exit 0\u001b[0m\n2026-10-18T21:35:55.3952453Z \u001b[36;1mfi\u001b[0m\n2026-10-18T21:35:55.3953174Z \u001b[36;1mif [ \"$ADMISSION\" != release ]; then\u001b[0m\n2026-10-18T21:35:55.3955085Z \u001b[36;1m  echo '::error::This product PR is not assigned an immutable release slot. Keep it draft/stacked, or promote one reviewed root by titling it Release vX.Y.Z.'\u001b[0m\n2026-10-18T21:35:55.3956746Z \u001b[36;1m  exit 1\u001b[0m\n2026-10-18T21:35:55.3957422Z \u001b[36;1mfi\u001b[0m\n2026-10-18T21:35:55.3958076Z \u001b[36;1mtest \"$BUILD_RESULT\" = success\u001b[0m\n2026-10-18T21:35:55.3959031Z \u001b[36;1mif [ \"$FULL_CI\" = true ]; then\u001b[0m\n2026-10-18T21:35:55.3959839Z \u001b[36;1m  test \"$TEST_RESULT\" = success\u001b[0m\n2026-10-18T21:35:55.3960854Z \u001b[36;1melse\u001b[0m\n2026-10-18T21:35:55.3961724Z \u001b[36;1m  echo \"Full tests are deferred and do not block this PR.\"\u001b[0m\n2026-10-18T21:35:55.3962700Z \u001b[36;1mfi\u001b[0m\n2026-10-18T21:35:55.5203062Z shell: /usr/bin/bash -e {0}\n2026-10-18T21:35:55.5203970Z env:\n2026-10-18T21:35:55.5204330Z   ADMISSION: maintenance\n2026-10-18T21:35:55.5204723Z   BUILD_RESULT: skipped\n2026-10-18T21:35:55.5205104Z   FOCUSED_RESULT: success\n2026-10-18T21:35:55.5205489Z   FOCUSED_REQUIRED: true\n2026-10-18T21:35:55.5205862Z   FULL_CI: false\n2026-10-18T21:35:55.5206215Z   PREFLIGHT_RESULT: success\n2026-10-18T21:35:55.5206616Z   TEST_RESULT: skipped\n2026-10-18T21:35:55.5207001Z ##[endgroup]\n2026-10-18T21:35:55.5396023Z Bounded documentation/controller maintenance: selected validation passed under the explicit test policy; waived suites are not passed. Product build not required.\n2026-10-18T21:35:55.5527950Z Cleaning up orphan processes\n"
+  },
+  "checks": [
+    {
+      "id": 117790814538,
+      "name": "reconcile",
+      "status": "queued",
+      "conclusion": null,
+      "startedAt": "2026-10-18T21:10:14Z",
+      "completedAt": null,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39164855088/job/117790814538"
+    },
+    {
+      "id": 117784760040,
+      "name": "release-ready",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T21:35:54Z",
+      "completedAt": "2026-10-18T21:35:57Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117784760040"
+    },
+    {
+      "id": 117780838985,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T21:10:02Z",
+      "completedAt": "2026-10-18T21:10:13Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39159510906/job/117780838985"
+    },
+    {
+      "id": 117766867300,
+      "name": "focused",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T20:42:59Z",
+      "completedAt": "2026-10-18T20:43:13Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117766867300"
+    },
+    {
+      "id": 117756014841,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "skipped",
+      "startedAt": "2026-10-18T18:36:14Z",
+      "completedAt": "2026-10-18T18:36:14Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117756014841"
+    },
+    {
+      "id": 117756014770,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "startedAt": "2026-10-18T18:36:14Z",
+      "completedAt": "2026-10-18T18:36:14Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117756014770"
+    },
+    {
+      "id": 117756013660,
+      "name": "focused_shards (2)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:21:02Z",
+      "completedAt": "2026-10-18T19:23:57Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117756013660"
+    },
+    {
+      "id": 117756013626,
+      "name": "focused_shards (4)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:16:10Z",
+      "completedAt": "2026-10-18T19:19:31Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117756013626"
+    },
+    {
+      "id": 117756013600,
+      "name": "focused_shards (1)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:06:18Z",
+      "completedAt": "2026-10-18T19:09:05Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117756013600"
+    },
+    {
+      "id": 117756013584,
+      "name": "focused_shards (3)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:08:38Z",
+      "completedAt": "2026-10-18T19:11:24Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117756013584"
+    },
+    {
+      "id": 117754312815,
+      "name": "record",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:39:50Z",
+      "completedAt": "2026-10-18T18:39:53Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332725/job/117754312815"
+    },
+    {
+      "id": 117754311566,
+      "name": "optional-practice",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:46:59Z",
+      "completedAt": "2026-10-18T19:01:23Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332603/job/117754311566"
+    },
+    {
+      "id": 117754311232,
+      "name": "candidate",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:42:09Z",
+      "completedAt": "2026-10-18T19:08:37Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332603/job/117754311232"
+    },
+    {
+      "id": 117754311093,
+      "name": "feature (local-ux)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T19:01:40Z",
+      "completedAt": "2026-10-18T19:09:44Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332491/job/117754311093"
+    },
+    {
+      "id": 117754311082,
+      "name": "feature (rooms)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:58:16Z",
+      "completedAt": "2026-10-18T19:00:52Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332491/job/117754311082"
+    },
+    {
+      "id": 117754311040,
+      "name": "feature (creator)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:38:20Z",
+      "completedAt": "2026-10-18T18:42:24Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332491/job/117754311040"
+    },
+    {
+      "id": 117754311034,
+      "name": "reconcile",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:36:45Z",
+      "completedAt": "2026-10-18T18:36:56Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332573/job/117754311034"
+    },
+    {
+      "id": 117754311010,
+      "name": "feature (recordings)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:56:00Z",
+      "completedAt": "2026-10-18T18:58:42Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332491/job/117754311010"
+    },
+    {
+      "id": 117754311009,
+      "name": "feature (presentation)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:33:00Z",
+      "completedAt": "2026-10-18T18:36:02Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332491/job/117754311009"
+    },
+    {
+      "id": 117754310909,
+      "name": "feature (gameplay)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:48:35Z",
+      "completedAt": "2026-10-18T18:53:05Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332491/job/117754310909"
+    },
+    {
+      "id": 117754310730,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-18T18:36:01Z",
+      "completedAt": "2026-10-18T18:36:14Z",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39154332460/job/117754310730"
+    }
+  ],
+  "legacyStatus": {
+    "total": 0,
+    "state": "pending",
+    "explanation": "Zero legacy contexts; pending is not a failed legacy check."
+  },
+  "main": {
+    "revision": "1df89b62b5f0ddfdad926e1bbd3474b77ed4d716",
+    "tree": "f94146931567d80e4611cfdb5a9d055895faca71",
+    "changesSince237b": [
+      {
+        "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+        "status": "modified",
+        "sha": "7595cd77f0354b641085f868d23770bcc86f488f"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+        "status": "modified",
+        "sha": "8bc5b364bbb67057a2388d1463ef749e7edcab5f"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+        "status": "modified",
+        "sha": "6514ee76451f927c6896c162192629c9361d2677"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-soak-temporary.yml",
+        "status": "modified",
+        "sha": "ce6e6c909602e5fe18d992ca0ea059a418b30930"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+        "status": "modified",
+        "sha": "08c832d9287b404fdbcdf738209173f02269a92f"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+        "status": "modified",
+        "sha": "47a045d919f0408aae95061cd8714d1b59f479fb"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+        "status": "modified",
+        "sha": "71a3dec125928e81a52f2227db17ca37ea8babf5"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+        "status": "modified",
+        "sha": "aad4a4b3364629ef2e3abd9f8253cf0a69d6903d"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+        "status": "modified",
+        "sha": "ec1488da3990162c20401c882a2505d95de9ef41"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+        "status": "modified",
+        "sha": "eda340627ac8cbe36bd02d9400be7c32c2639fcd"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+        "status": "modified",
+        "sha": "ad5a6f46a2741bde6551a8e1d89cb7b476b3438a"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+        "status": "modified",
+        "sha": "194e9ce7e67e9dc204252d63680cf1c38294d314"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+        "status": "modified",
+        "sha": "b9ea62c9d6cd86f83eb94c78a07b71f42a402425"
+      },
+      {
+        "path": "docs/performance/fixtures/solo-retired-diagnostics/source.json",
+        "status": "added",
+        "sha": "54e60bfba366581d9fee6fd6d6de138b495026b5"
+      },
+      {
+        "path": "game/test/fpv-aircraft-coach.test.mjs",
+        "status": "modified",
+        "sha": "fb15f89be39e6454bc32d44b1c00551cf5d5a978"
+      },
+      {
+        "path": "game/test/fpv-world-appearance-ui.test.mjs",
+        "status": "modified",
+        "sha": "834bcb46deb4c05a368bc885e28f215467eed48c"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/beginner-coach.mjs",
+        "status": "modified",
+        "sha": "39b859a780d8778c165b42963a17142b23b5e4f1"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "status": "modified",
+        "sha": "f33bf1d79022d539b2994eae25c51a25d7cde6c9"
+      },
+      {
+        "path": "scripts/solo-final-wave-witness.mjs",
+        "status": "modified",
+        "sha": "17bf6e8fd2ac870d277e2e601360a20e5d445a40"
+      },
+      {
+        "path": "scripts/solo-page-error-source-witness.mjs",
+        "status": "modified",
+        "sha": "370a2e57ad42d7c2d586a17ffae514263a67b2b6"
+      },
+      {
+        "path": "scripts/solo-retired-diagnostic-source.mjs",
+        "status": "added",
+        "sha": "ee0a5ebd601df5b7241190954569e117fd0cd0b8"
+      },
+      {
+        "path": "scripts/test-solo-final-timing-v2-release.mjs",
+        "status": "modified",
+        "sha": "ea7a6e1642d8d51397b266be1f7ac3e095fcc3b8"
+      },
+      {
+        "path": "scripts/test-solo-readiness-source-witness.mjs",
+        "status": "modified",
+        "sha": "a3f290c52211da46e881ffdedb30defac932e7cd"
+      },
+      {
+        "path": "scripts/test-solo-retired-diagnostic-source.mjs",
+        "status": "added",
+        "sha": "a2add45dd7774b1b1686ba3e6aded711ca032e1b"
+      }
+    ],
+    "lookupOverlap": [],
+    "trustedPolicy": [
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+        "matchesPrior": true
+      },
+      {
+        "path": "publishing/admission-binding.mjs",
+        "gitBlob": "bbc451129f21407143e4d3034d819711e5539dd2",
+        "bytes": 3561,
+        "sha256": "5728979142d6ab33bcf025a062f19f4a6fc4d02791f3d259e3b74fd9083b5214",
+        "matchesPrior": true
+      },
+      {
+        "path": "publishing/admission-preflight.mjs",
+        "gitBlob": "9750b8dc5aef171f9124563966f726c2cbe15237",
+        "bytes": 2473,
+        "sha256": "604d571efc36fe9a4930d782670e057ff10415ac8f7190354f051ac3a6090acf",
+        "matchesPrior": true
+      },
+      {
+        "path": "publishing/focused-tests.mjs",
+        "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+        "bytes": 33959,
+        "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669",
+        "matchesPrior": true
+      },
+      {
+        "path": "publishing/focused-test-map.json",
+        "gitBlob": "61dda74f9db14d20b6055e725cf5836b3b539bfe",
+        "bytes": 14501,
+        "sha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+        "matchesPrior": true
+      },
+      {
+        "path": "publishing/test-policy.json",
+        "gitBlob": "e067e704a165e16e449761989e3e1b611dc35181",
+        "bytes": 578,
+        "sha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+        "matchesPrior": true
+      },
+      {
+        "path": "publishing/test-policy.mjs",
+        "gitBlob": "aa9f1efc79301cd227dbe7eb874dcba6b601003c",
+        "bytes": 4134,
+        "sha256": "afa433a0802e7b6eb0cc679d9c888fb6218eb0d7dd5b0e58877c6737746ae95b",
+        "matchesPrior": true
+      }
+    ]
+  },
+  "priorActualTestAudits": [
+    "ab09c368951167116b393b04c2899f4e498a70f0",
+    "dcbe4fa110de6e99944f641a263d82802a9ca327",
+    "6c6576a254c233b2fa22bd60fc6c33a9a1c62221"
+  ],
+  "conclusion": "Exact-head source release-ready succeeded. All required executed source/Industrial/Company checks are green; test/build skipped under recorded policy, not claimed passed. Fresh Fastline reconcile remains queued; no merge action taken."
+}

@@ -1,0 +1,832 @@
+{
+  "format": "SoloSoundtrackAppearanceCompleteAuditV1",
+  "observedAt": "2026-10-18T21:45:58.699Z",
+  "pullRequest": 1619,
+  "head": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+  "tree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+  "run": {
+    "id": 39155641633,
+    "attempt": 2,
+    "conclusion": "success",
+    "jobId": 117776990767,
+    "startedAt": "2026-10-18T21:01:43Z",
+    "completedAt": "2026-10-18T21:36:58Z"
+  },
+  "log": {
+    "bytes": 838573,
+    "sha256": "859f4c64643de3be07a793f2ed46a376917e5a6b58e8e4543f4f0f9479927759"
+  },
+  "tap": {
+    "derivation": "Complete TAP block from GitHub job log after removing only per-line GitHub timestamp prefixes; bytes match the original focused-tests.tap checksum in authenticated metadata.",
+    "bytes": 416427,
+    "sha256": "ed6b10d651417c6dd28c230fb5cdb885acd7f7d4130929dfd4d07b90317e595e",
+    "archivedSha256": "ed6b10d651417c6dd28c230fb5cdb885acd7f7d4130929dfd4d07b90317e595e",
+    "tests": 1811,
+    "pass": 1811,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "topLevelTests": 1750,
+    "durationMs": 1503676.055349
+  },
+  "metadataArtifact": {
+    "id": 12150654362,
+    "bytes": 37136,
+    "sha256": "582675300bcc10ac58405fbea5f707f2618e755ebbfff87c11cda476526ae6fe",
+    "zipCrcValidated": true,
+    "members": [
+      {
+        "path": "preview-identity.json",
+        "sha256": "7490d9130fbc374c13ce230c8e8f79d5d2a8d279efa2eac84c9bbfb40840263d",
+        "bytes": 17473
+      },
+      {
+        "path": "main-build.json",
+        "sha256": "2a9d2b0d090a257a0cc1b1f6569404334c729ee28b2b5f76b32351adb4b37109",
+        "bytes": 263
+      },
+      {
+        "path": "SHA256SUMS",
+        "sha256": "2587b5bdc008d8ad53a1ce16c96eb3737e9cc2f0aa59bd6fa9bfad66adb548e2",
+        "bytes": 586
+      },
+      {
+        "path": "package-binding.json",
+        "sha256": "5c6bfe0b31b40d299fd73872d607b812cceec145987a03ae64c8f1ded6628a42",
+        "bytes": 17828
+      }
+    ]
+  },
+  "previewIdentity": {
+    "format": "AppearancePreview.v1",
+    "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+    "pullRequest": 1619,
+    "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+    "node": "v22.13.1",
+    "testPolicy": {
+      "policyMode": "required",
+      "mode": "required",
+      "runTests": "true",
+      "qualification": "tests-required",
+      "forced": false,
+      "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "policy": {
+        "format": "revealline-release-test-policy.v1",
+        "mode": "required",
+        "authorization": "explicit-user-request-20261004",
+        "scope": "automated-test-suites",
+        "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+        "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+      }
+    },
+    "focusedTests": {
+      "result": "passed",
+      "executed": true,
+      "command": "node --test --test-concurrency=1",
+      "files": [
+        "scripts/test-appearance-preview-policy.mjs",
+        "game/test/theme-system.test.mjs",
+        "game/test/material-state-semantics.test.mjs",
+        "game/test/theme-picker-materials.test.mjs",
+        "game/test/theme-collection-expansion.test.mjs",
+        "game/test/unified-appearance.test.mjs",
+        "game/test/theme-bootstrap.test.mjs",
+        "game/test/story-dialog.test.mjs",
+        "game/test/operation-status.test.mjs",
+        "game/test/replay-theater-navigation.test.mjs",
+        "game/test/replay-theater-display-host.test.mjs",
+        "game/test/replay-theater-actor-appearance.test.mjs",
+        "game/test/creator-player-menu.test.mjs",
+        "game/test/creator-player-victory-story.test.mjs",
+        "game/test/theme-preview.test.mjs",
+        "game/test/industrial-arcade.test.mjs",
+        "game/test/theme-family-host.test.mjs",
+        "game/test/theme-notices.test.mjs",
+        "game/test/community-appearance.test.mjs",
+        "game/test/curated-community-theme.test.mjs",
+        "game/test/curated-community-theme-host.test.mjs",
+        "game/test/edition-appearance-host.test.mjs",
+        "game/test/edition-retained-presentation.test.mjs",
+        "game/test/edition-runtime.test.mjs",
+        "game/test/editions.test.mjs",
+        "game/test/menu-audio-localization.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/fpv-acceptance-workflow.test.mjs",
+        "game/test/win-picture-host.test.mjs",
+        "game/test/solo-auto-next-preferences-host.test.mjs",
+        "game/test/demo-reward.test.mjs",
+        "game/test/solo-demo-media-admission-host.test.mjs",
+        "game/test/visual-quality-policy.test.mjs",
+        "game/test/title-visual-quality-host.test.mjs",
+        "game/test/menu-scenes.test.mjs",
+        "game/test/field-kit-surfaces.test.mjs",
+        "game/test/menu-scene-motion.test.mjs",
+        "game/test/solo-render-submission.test.mjs",
+        "game/test/solo-performance-host.test.mjs",
+        "game/test/preparation-cadence.test.mjs",
+        "game/test/hunt-feedback-layout.test.mjs",
+        "game/test/presentation-host.test.mjs",
+        "game/test/solo-cadence-readiness-host.test.mjs",
+        "game/test/edition-controller-practice.test.mjs",
+        "game/test/scenario-mastery.test.mjs",
+        "game/test/edition-solo-host.test.mjs",
+        "game/test/optional-chapters-host-copy.test.mjs",
+        "game/test/optional-world-choice-lifetime.test.mjs",
+        "game/test/optional-world-play-lifetime.test.mjs",
+        "game/test/optional-world-play-installed-host.test.mjs",
+        "game/test/solo-preparation-invalidation-host.test.mjs",
+        "game/test/solo-preparation-layout-host.test.mjs",
+        "game/test/solo-soundtrack-context-host.test.mjs",
+        "game/test/flight-information-source.test.mjs",
+        "game/test/flight-information-bridge.test.mjs",
+        "game/test/flight-information-host.test.mjs",
+        "game/test/flight-information-details-host.test.mjs",
+        "game/test/audio.test.mjs",
+        "game/test/published-audio.test.mjs",
+        "game/test/published-cue-inspection.test.mjs",
+        "game/test/published-cue-closure.test.mjs",
+        "game/test/media-preparation.test.mjs",
+        "game/test/feedback-director.test.mjs",
+        "game/test/destruction-audio.test.mjs",
+        "game/test/destruction-level.test.mjs",
+        "game/test/human-reaction-audio.test.mjs",
+        "game/test/classic-catch-audio.test.mjs",
+        "game/test/mp3.test.mjs",
+        "game/test/mp3-inspector.test.mjs",
+        "game/test/solo-soundtrack-admission-host.test.mjs",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-gain-leases.test.mjs",
+        "game/test/audio-master.test.mjs",
+        "game/test/soundtrack-master.test.mjs",
+        "game/test/modal-navigation.test.mjs",
+        "game/test/immutable-presentation-fixture.test.mjs",
+        "game/test/controller-confirm-trace.test.mjs",
+        "game/test/controller-router.test.mjs",
+        "game/test/controller-boost-settings.test.mjs",
+        "game/test/pause-menu-host.test.mjs",
+        "game/test/classic-presentation.test.mjs",
+        "game/test/controller-restore.test.mjs",
+        "game/test/demo-audio.test.mjs",
+        "game/test/demo-audio-host.test.mjs",
+        "game/test/demo-context-recovery-host.test.mjs",
+        "game/test/demo-visual-quality-host.test.mjs",
+        "game/test/title-character.test.mjs",
+        "game/test/demo-clock.test.mjs",
+        "game/test/demo-host.test.mjs",
+        "game/test/demo-retained-presentation-host.test.mjs",
+        "game/test/soundtrack-panel.test.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/enemy-guide-panel.test.mjs",
+        "game/test/enemy-body-assets.test.mjs",
+        "game/test/company-studio-ui.test.mjs",
+        "game/test/company-studio-preview.test.mjs",
+        "game/test/studio-appearance-basis.test.mjs",
+        "game/test/asset-studio-host-loading.test.mjs",
+        "scripts/test-curated-appearance-package.mjs",
+        "game/test/fpv-appearance.test.mjs",
+        "game/test/fpv-theme-family-controls.test.mjs",
+        "game/test/fpv-world-appearance-ui.test.mjs",
+        "game/test/fpv-world-editor-appearance.test.mjs",
+        "game/test/optional-installation.test.mjs",
+        "game/test/optional-practice-panel.test.mjs",
+        "game/test/mode-choice-appearance.test.mjs",
+        "game/test/fpv-world-runtime.test.mjs",
+        "game/test/fpv-world-content.test.mjs",
+        "game/test/fpv-workshop-visuals.test.mjs",
+        "game/test/fpv-objective-labels.test.mjs",
+        "game/test/fpv-world-textures.test.mjs",
+        "scripts/test-world-texture-acceptance.mjs",
+        "scripts/test-industrial-marking-kit.mjs",
+        "game/test/fpv-flight-ui.test.mjs",
+        "game/test/fpv-replay-rate.test.mjs",
+        "game/test/fpv-studio-setup.test.mjs",
+        "scripts/test-optional-fpv-package.mjs",
+        "scripts/test-sparse-publisher-imports.mjs"
+      ],
+      "output": "focused-tests.tap",
+      "additionalCohorts": [
+        {
+          "format": "AppearanceAdmissionProofV1",
+          "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+          "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+          "node": "v22.13.1",
+          "testPolicy": {
+            "policyMode": "required",
+            "mode": "required",
+            "runTests": "true",
+            "qualification": "tests-required",
+            "forced": false,
+            "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "policy": {
+              "format": "revealline-release-test-policy.v1",
+              "mode": "required",
+              "authorization": "explicit-user-request-20261004",
+              "scope": "automated-test-suites",
+              "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+              "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+            }
+          },
+          "result": "passed",
+          "executed": true,
+          "command": "node --test --test-concurrency=1",
+          "files": [
+            "game/test/journey-performance-admission.test.mjs",
+            "game/test/journey-performance-observation-admission.test.mjs",
+            "game/test/journey-profile-owned-transition.test.mjs",
+            "game/test/journey-required-progress-admission.test.mjs",
+            "game/test/solo-required-progress-preparation-host.test.mjs",
+            "game/test/owned-recorder.test.mjs",
+            "game/test/demo-library-indexeddb.test.mjs",
+            "game/test/optional-learning-admission.test.mjs",
+            "game/test/optional-replay-admission.test.mjs",
+            "game/test/solo-pending-verification-gameplay-host.test.mjs",
+            "game/test/edition-mastery-host.test.mjs",
+            "game/test/edition-lessons.test.mjs",
+            "game/test/capture-presentation-session.test.mjs",
+            "game/test/solo-dense-replay-persistence.test.mjs",
+            "game/test/library-entry.test.mjs",
+            "game/test/solo-lazy-library-host.test.mjs",
+            "game/test/solo-transition-performance-host.test.mjs"
+          ],
+          "output": {
+            "path": "admission-tests.tap",
+            "bytes": 41732,
+            "sha256": "8f059a5e03dd9c377f97051b65e3e85435c246d4fa912c8a9b66ac9b720b24db"
+          },
+          "receipt": {
+            "path": "admission-proof.json",
+            "bytes": 2328,
+            "sha256": "5ce05933b35cc321e107715c0026274754d7ccc1e77e982d7970980b9a3433c3"
+          },
+          "artifact": {
+            "id": 12148778916,
+            "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12148778916",
+            "sha256": "18f77c222e6df007c6d0d5344fa88f2dc9a63911e826daf6e7eb846d57421cb2"
+          }
+        },
+        {
+          "format": "AppearanceAdmissionProofV1",
+          "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+          "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+          "node": "v22.13.1",
+          "testPolicy": {
+            "policyMode": "required",
+            "mode": "required",
+            "runTests": "true",
+            "qualification": "tests-required",
+            "forced": false,
+            "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "policy": {
+              "format": "revealline-release-test-policy.v1",
+              "mode": "required",
+              "authorization": "explicit-user-request-20261004",
+              "scope": "automated-test-suites",
+              "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+              "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+            }
+          },
+          "result": "passed",
+          "executed": true,
+          "command": "node --test --test-concurrency=1",
+          "files": [
+            "game/test/couch-static-pictures.test.mjs",
+            "game/test/couch-static-picture-host.test.mjs",
+            "game/test/couch-shell.test.mjs",
+            "game/test/controller-navigation.test.mjs",
+            "game/test/controller-reading.test.mjs"
+          ],
+          "output": {
+            "path": "team-admission-tests.tap",
+            "bytes": 76818,
+            "sha256": "c980cccdfdafb7954ff978298826bece56686c56e6c42ad2e8da035e596f7a65"
+          },
+          "receipt": {
+            "path": "team-admission-proof.json",
+            "bytes": 1643,
+            "sha256": "e1d895fdd70e58f69c497dff014cf1f6b1e644e9d9425b5886f3396043d3dba2"
+          },
+          "artifact": {
+            "id": 12148401610,
+            "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12148401610",
+            "sha256": "67b4a030c64a894364e3479817778deb3e04ba14561116d356632163563a573f"
+          }
+        },
+        {
+          "format": "AppearanceAdmissionProofV1",
+          "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+          "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+          "node": "v22.13.1",
+          "testPolicy": {
+            "policyMode": "required",
+            "mode": "required",
+            "runTests": "true",
+            "qualification": "tests-required",
+            "forced": false,
+            "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "policy": {
+              "format": "revealline-release-test-policy.v1",
+              "mode": "required",
+              "authorization": "explicit-user-request-20261004",
+              "scope": "automated-test-suites",
+              "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+              "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+            }
+          },
+          "result": "passed",
+          "executed": true,
+          "command": "node --test --test-concurrency=1",
+          "files": [
+            "game/test/demo-scene-transition.test.mjs",
+            "game/test/victory-story-ui.test.mjs",
+            "game/test/demo-bot.test.mjs",
+            "game/test/demo-sources.test.mjs",
+            "game/test/solo-demo-resources-host.test.mjs",
+            "game/test/demo-loading-host.test.mjs"
+          ],
+          "output": {
+            "path": "demo-admission-tests.tap",
+            "bytes": 20928,
+            "sha256": "7e22bcbca0da2bcf380ad1d9b4f391698d7355d630c62b0ee29b057441ab55e8"
+          },
+          "receipt": {
+            "path": "demo-admission-proof.json",
+            "bytes": 1672,
+            "sha256": "9862223051e4cb9719f89fc3a5124014177a75f2d37f4331a7b6fd4795050c6d"
+          },
+          "artifact": {
+            "id": 12148176018,
+            "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12148176018",
+            "sha256": "b490cf08608407197f60ac4fea1ca0d35585aa7339385af6bf5808c143a659bd"
+          }
+        },
+        {
+          "format": "AppearanceAdmissionProofV1",
+          "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+          "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+          "node": "v22.13.1",
+          "testPolicy": {
+            "policyMode": "required",
+            "mode": "required",
+            "runTests": "true",
+            "qualification": "tests-required",
+            "forced": false,
+            "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "policy": {
+              "format": "revealline-release-test-policy.v1",
+              "mode": "required",
+              "authorization": "explicit-user-request-20261004",
+              "scope": "automated-test-suites",
+              "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+              "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+            }
+          },
+          "result": "passed",
+          "executed": true,
+          "command": "node --test --test-concurrency=1",
+          "files": [
+            "game/test/couch-installed-chapters.test.mjs"
+          ],
+          "output": {
+            "path": "installed-admission-tests.tap",
+            "bytes": 6813,
+            "sha256": "6244b1b33eacaad86f3422b35bda0af3882e96d08d4ca843251545dcd4d85cb6"
+          },
+          "receipt": {
+            "path": "installed-admission-proof.json",
+            "bytes": 1467,
+            "sha256": "83b395044ad33597a8ff3870b00267c2abefc5ba9d3ab407cc0749c0c6903b5a"
+          },
+          "artifact": {
+            "id": 12148435883,
+            "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12148435883",
+            "sha256": "1fc03e94f01e97499d42e87726670d462650d2985f1cb0d50e0cab2343288924"
+          }
+        }
+      ]
+    },
+    "artifacts": [
+      {
+        "path": "distribution.zip",
+        "bytes": 1075828050,
+        "sha256": "b2bc19c8c76078ed9ddff262b0059915193a8575573f2aa679bc5b6d167fdce4"
+      },
+      {
+        "path": "fpv-worlds-playtest.zip",
+        "bytes": 18406610,
+        "sha256": "883607d41207cd512db0fe35ab75b440f39b3a0a33a605778b1cfae15f50020c"
+      }
+    ],
+    "qualification": "development-preview",
+    "deployed": false,
+    "releaseQualified": false
+  },
+  "packageBinding": {
+    "format": "AppearancePreviewMetadataV1",
+    "status": "bound-to-uploaded-package",
+    "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+    "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+    "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+    "node": "v22.13.1",
+    "fullArtifact": {
+      "id": 12150534740,
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12150534740",
+      "sha256": "719fe3c88473d8ceca5ab6e5ccb2663e050450855d9923dd8dc595bbcd6a32f3"
+    },
+    "inner": {
+      "bytes": 1075828050,
+      "sha256": "b2bc19c8c76078ed9ddff262b0059915193a8575573f2aa679bc5b6d167fdce4"
+    },
+    "manifest": {
+      "bytes": 529292,
+      "sha256": "595653f89f1f04a39475ecc22907c0e988c5e5e8cc3b8043a75b9acd54706699",
+      "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+    },
+    "focusedTests": {
+      "result": "passed",
+      "executed": true,
+      "command": "node --test --test-concurrency=1",
+      "files": [
+        "scripts/test-appearance-preview-policy.mjs",
+        "game/test/theme-system.test.mjs",
+        "game/test/material-state-semantics.test.mjs",
+        "game/test/theme-picker-materials.test.mjs",
+        "game/test/theme-collection-expansion.test.mjs",
+        "game/test/unified-appearance.test.mjs",
+        "game/test/theme-bootstrap.test.mjs",
+        "game/test/story-dialog.test.mjs",
+        "game/test/operation-status.test.mjs",
+        "game/test/replay-theater-navigation.test.mjs",
+        "game/test/replay-theater-display-host.test.mjs",
+        "game/test/replay-theater-actor-appearance.test.mjs",
+        "game/test/creator-player-menu.test.mjs",
+        "game/test/creator-player-victory-story.test.mjs",
+        "game/test/theme-preview.test.mjs",
+        "game/test/industrial-arcade.test.mjs",
+        "game/test/theme-family-host.test.mjs",
+        "game/test/theme-notices.test.mjs",
+        "game/test/community-appearance.test.mjs",
+        "game/test/curated-community-theme.test.mjs",
+        "game/test/curated-community-theme-host.test.mjs",
+        "game/test/edition-appearance-host.test.mjs",
+        "game/test/edition-retained-presentation.test.mjs",
+        "game/test/edition-runtime.test.mjs",
+        "game/test/editions.test.mjs",
+        "game/test/menu-audio-localization.test.mjs",
+        "game/test/menu-style-host.test.mjs",
+        "game/test/fpv-acceptance-workflow.test.mjs",
+        "game/test/win-picture-host.test.mjs",
+        "game/test/solo-auto-next-preferences-host.test.mjs",
+        "game/test/demo-reward.test.mjs",
+        "game/test/solo-demo-media-admission-host.test.mjs",
+        "game/test/visual-quality-policy.test.mjs",
+        "game/test/title-visual-quality-host.test.mjs",
+        "game/test/menu-scenes.test.mjs",
+        "game/test/field-kit-surfaces.test.mjs",
+        "game/test/menu-scene-motion.test.mjs",
+        "game/test/solo-render-submission.test.mjs",
+        "game/test/solo-performance-host.test.mjs",
+        "game/test/preparation-cadence.test.mjs",
+        "game/test/hunt-feedback-layout.test.mjs",
+        "game/test/presentation-host.test.mjs",
+        "game/test/solo-cadence-readiness-host.test.mjs",
+        "game/test/edition-controller-practice.test.mjs",
+        "game/test/scenario-mastery.test.mjs",
+        "game/test/edition-solo-host.test.mjs",
+        "game/test/optional-chapters-host-copy.test.mjs",
+        "game/test/optional-world-choice-lifetime.test.mjs",
+        "game/test/optional-world-play-lifetime.test.mjs",
+        "game/test/optional-world-play-installed-host.test.mjs",
+        "game/test/solo-preparation-invalidation-host.test.mjs",
+        "game/test/solo-preparation-layout-host.test.mjs",
+        "game/test/solo-soundtrack-context-host.test.mjs",
+        "game/test/flight-information-source.test.mjs",
+        "game/test/flight-information-bridge.test.mjs",
+        "game/test/flight-information-host.test.mjs",
+        "game/test/flight-information-details-host.test.mjs",
+        "game/test/audio.test.mjs",
+        "game/test/published-audio.test.mjs",
+        "game/test/published-cue-inspection.test.mjs",
+        "game/test/published-cue-closure.test.mjs",
+        "game/test/media-preparation.test.mjs",
+        "game/test/feedback-director.test.mjs",
+        "game/test/destruction-audio.test.mjs",
+        "game/test/destruction-level.test.mjs",
+        "game/test/human-reaction-audio.test.mjs",
+        "game/test/classic-catch-audio.test.mjs",
+        "game/test/mp3.test.mjs",
+        "game/test/mp3-inspector.test.mjs",
+        "game/test/solo-soundtrack-admission-host.test.mjs",
+        "game/test/soundtrack-player.test.mjs",
+        "game/test/soundtrack-gain-leases.test.mjs",
+        "game/test/audio-master.test.mjs",
+        "game/test/soundtrack-master.test.mjs",
+        "game/test/modal-navigation.test.mjs",
+        "game/test/immutable-presentation-fixture.test.mjs",
+        "game/test/controller-confirm-trace.test.mjs",
+        "game/test/controller-router.test.mjs",
+        "game/test/controller-boost-settings.test.mjs",
+        "game/test/pause-menu-host.test.mjs",
+        "game/test/classic-presentation.test.mjs",
+        "game/test/controller-restore.test.mjs",
+        "game/test/demo-audio.test.mjs",
+        "game/test/demo-audio-host.test.mjs",
+        "game/test/demo-context-recovery-host.test.mjs",
+        "game/test/demo-visual-quality-host.test.mjs",
+        "game/test/title-character.test.mjs",
+        "game/test/demo-clock.test.mjs",
+        "game/test/demo-host.test.mjs",
+        "game/test/demo-retained-presentation-host.test.mjs",
+        "game/test/soundtrack-panel.test.mjs",
+        "game/test/soundtrack-host.test.mjs",
+        "game/test/enemy-guide-panel.test.mjs",
+        "game/test/enemy-body-assets.test.mjs",
+        "game/test/company-studio-ui.test.mjs",
+        "game/test/company-studio-preview.test.mjs",
+        "game/test/studio-appearance-basis.test.mjs",
+        "game/test/asset-studio-host-loading.test.mjs",
+        "scripts/test-curated-appearance-package.mjs",
+        "game/test/fpv-appearance.test.mjs",
+        "game/test/fpv-theme-family-controls.test.mjs",
+        "game/test/fpv-world-appearance-ui.test.mjs",
+        "game/test/fpv-world-editor-appearance.test.mjs",
+        "game/test/optional-installation.test.mjs",
+        "game/test/optional-practice-panel.test.mjs",
+        "game/test/mode-choice-appearance.test.mjs",
+        "game/test/fpv-world-runtime.test.mjs",
+        "game/test/fpv-world-content.test.mjs",
+        "game/test/fpv-workshop-visuals.test.mjs",
+        "game/test/fpv-objective-labels.test.mjs",
+        "game/test/fpv-world-textures.test.mjs",
+        "scripts/test-world-texture-acceptance.mjs",
+        "scripts/test-industrial-marking-kit.mjs",
+        "game/test/fpv-flight-ui.test.mjs",
+        "game/test/fpv-replay-rate.test.mjs",
+        "game/test/fpv-studio-setup.test.mjs",
+        "scripts/test-optional-fpv-package.mjs",
+        "scripts/test-sparse-publisher-imports.mjs"
+      ],
+      "output": "focused-tests.tap",
+      "additionalCohorts": [
+        {
+          "format": "AppearanceAdmissionProofV1",
+          "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+          "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+          "node": "v22.13.1",
+          "testPolicy": {
+            "policyMode": "required",
+            "mode": "required",
+            "runTests": "true",
+            "qualification": "tests-required",
+            "forced": false,
+            "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "policy": {
+              "format": "revealline-release-test-policy.v1",
+              "mode": "required",
+              "authorization": "explicit-user-request-20261004",
+              "scope": "automated-test-suites",
+              "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+              "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+            }
+          },
+          "result": "passed",
+          "executed": true,
+          "command": "node --test --test-concurrency=1",
+          "files": [
+            "game/test/journey-performance-admission.test.mjs",
+            "game/test/journey-performance-observation-admission.test.mjs",
+            "game/test/journey-profile-owned-transition.test.mjs",
+            "game/test/journey-required-progress-admission.test.mjs",
+            "game/test/solo-required-progress-preparation-host.test.mjs",
+            "game/test/owned-recorder.test.mjs",
+            "game/test/demo-library-indexeddb.test.mjs",
+            "game/test/optional-learning-admission.test.mjs",
+            "game/test/optional-replay-admission.test.mjs",
+            "game/test/solo-pending-verification-gameplay-host.test.mjs",
+            "game/test/edition-mastery-host.test.mjs",
+            "game/test/edition-lessons.test.mjs",
+            "game/test/capture-presentation-session.test.mjs",
+            "game/test/solo-dense-replay-persistence.test.mjs",
+            "game/test/library-entry.test.mjs",
+            "game/test/solo-lazy-library-host.test.mjs",
+            "game/test/solo-transition-performance-host.test.mjs"
+          ],
+          "output": {
+            "path": "admission-tests.tap",
+            "bytes": 41732,
+            "sha256": "8f059a5e03dd9c377f97051b65e3e85435c246d4fa912c8a9b66ac9b720b24db"
+          },
+          "receipt": {
+            "path": "admission-proof.json",
+            "bytes": 2328,
+            "sha256": "5ce05933b35cc321e107715c0026274754d7ccc1e77e982d7970980b9a3433c3"
+          },
+          "artifact": {
+            "id": 12148778916,
+            "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12148778916",
+            "sha256": "18f77c222e6df007c6d0d5344fa88f2dc9a63911e826daf6e7eb846d57421cb2"
+          }
+        },
+        {
+          "format": "AppearanceAdmissionProofV1",
+          "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+          "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+          "node": "v22.13.1",
+          "testPolicy": {
+            "policyMode": "required",
+            "mode": "required",
+            "runTests": "true",
+            "qualification": "tests-required",
+            "forced": false,
+            "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "policy": {
+              "format": "revealline-release-test-policy.v1",
+              "mode": "required",
+              "authorization": "explicit-user-request-20261004",
+              "scope": "automated-test-suites",
+              "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+              "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+            }
+          },
+          "result": "passed",
+          "executed": true,
+          "command": "node --test --test-concurrency=1",
+          "files": [
+            "game/test/couch-static-pictures.test.mjs",
+            "game/test/couch-static-picture-host.test.mjs",
+            "game/test/couch-shell.test.mjs",
+            "game/test/controller-navigation.test.mjs",
+            "game/test/controller-reading.test.mjs"
+          ],
+          "output": {
+            "path": "team-admission-tests.tap",
+            "bytes": 76818,
+            "sha256": "c980cccdfdafb7954ff978298826bece56686c56e6c42ad2e8da035e596f7a65"
+          },
+          "receipt": {
+            "path": "team-admission-proof.json",
+            "bytes": 1643,
+            "sha256": "e1d895fdd70e58f69c497dff014cf1f6b1e644e9d9425b5886f3396043d3dba2"
+          },
+          "artifact": {
+            "id": 12148401610,
+            "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12148401610",
+            "sha256": "67b4a030c64a894364e3479817778deb3e04ba14561116d356632163563a573f"
+          }
+        },
+        {
+          "format": "AppearanceAdmissionProofV1",
+          "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+          "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+          "node": "v22.13.1",
+          "testPolicy": {
+            "policyMode": "required",
+            "mode": "required",
+            "runTests": "true",
+            "qualification": "tests-required",
+            "forced": false,
+            "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "policy": {
+              "format": "revealline-release-test-policy.v1",
+              "mode": "required",
+              "authorization": "explicit-user-request-20261004",
+              "scope": "automated-test-suites",
+              "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+              "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+            }
+          },
+          "result": "passed",
+          "executed": true,
+          "command": "node --test --test-concurrency=1",
+          "files": [
+            "game/test/demo-scene-transition.test.mjs",
+            "game/test/victory-story-ui.test.mjs",
+            "game/test/demo-bot.test.mjs",
+            "game/test/demo-sources.test.mjs",
+            "game/test/solo-demo-resources-host.test.mjs",
+            "game/test/demo-loading-host.test.mjs"
+          ],
+          "output": {
+            "path": "demo-admission-tests.tap",
+            "bytes": 20928,
+            "sha256": "7e22bcbca0da2bcf380ad1d9b4f391698d7355d630c62b0ee29b057441ab55e8"
+          },
+          "receipt": {
+            "path": "demo-admission-proof.json",
+            "bytes": 1672,
+            "sha256": "9862223051e4cb9719f89fc3a5124014177a75f2d37f4331a7b6fd4795050c6d"
+          },
+          "artifact": {
+            "id": 12148176018,
+            "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12148176018",
+            "sha256": "b490cf08608407197f60ac4fea1ca0d35585aa7339385af6bf5808c143a659bd"
+          }
+        },
+        {
+          "format": "AppearanceAdmissionProofV1",
+          "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d",
+          "sourceTree": "bcc6145844d909668cf09fc4e1da3fc7ca76893f",
+          "workflowRun": "https://github.com/mekhovov/revealline/actions/runs/39155641633",
+          "node": "v22.13.1",
+          "testPolicy": {
+            "policyMode": "required",
+            "mode": "required",
+            "runTests": "true",
+            "qualification": "tests-required",
+            "forced": false,
+            "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+            "policy": {
+              "format": "revealline-release-test-policy.v1",
+              "mode": "required",
+              "authorization": "explicit-user-request-20261004",
+              "scope": "automated-test-suites",
+              "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+              "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+            }
+          },
+          "result": "passed",
+          "executed": true,
+          "command": "node --test --test-concurrency=1",
+          "files": [
+            "game/test/couch-installed-chapters.test.mjs"
+          ],
+          "output": {
+            "path": "installed-admission-tests.tap",
+            "bytes": 6813,
+            "sha256": "6244b1b33eacaad86f3422b35bda0af3882e96d08d4ca843251545dcd4d85cb6"
+          },
+          "receipt": {
+            "path": "installed-admission-proof.json",
+            "bytes": 1467,
+            "sha256": "83b395044ad33597a8ff3870b00267c2abefc5ba9d3ab407cc0749c0c6903b5a"
+          },
+          "artifact": {
+            "id": 12148435883,
+            "url": "https://github.com/mekhovov/revealline/actions/runs/39155641633/artifacts/12148435883",
+            "sha256": "1fc03e94f01e97499d42e87726670d462650d2985f1cb0d50e0cab2343288924"
+          }
+        }
+      ]
+    },
+    "testPolicy": {
+      "policyMode": "required",
+      "mode": "required",
+      "runTests": "true",
+      "qualification": "tests-required",
+      "forced": false,
+      "policySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "policy": {
+        "format": "revealline-release-test-policy.v1",
+        "mode": "required",
+        "authorization": "explicit-user-request-20261004",
+        "scope": "automated-test-suites",
+        "reason": "User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.",
+        "restoration": "Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."
+      }
+    },
+    "qualification": "Metadata binding only; require successful exact workflow/artifact API metadata and remote full ZIP/member/source/CSP verification before use. No test, release, offline or performance verdict added."
+  },
+  "mainBuild": {
+    "out": "/home/runner/work/revealline/revealline/.cache/appearance-game",
+    "version": "0.151.1",
+    "files": 3556,
+    "sha256": "b2bc19c8c76078ed9ddff262b0059915193a8575573f2aa679bc5b6d167fdce4",
+    "sourceRevision": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+  },
+  "metadataChecksums": "7490d9130fbc374c13ce230c8e8f79d5d2a8d279efa2eac84c9bbfb40840263d  preview-identity.json\n2a9d2b0d090a257a0cc1b1f6569404334c729ee28b2b5f76b32351adb4b37109  main-build.json\n2587b5bdc008d8ad53a1ce16c96eb3737e9cc2f0aa59bd6fa9bfad66adb548e2  SHA256SUMS\n5c6bfe0b31b40d299fd73872d607b812cceec145987a03ae64c8f1ded6628a42  package-binding.json\n",
+  "packageChecksums": "94932fc79b2bc5f22552882fe6a552b5015758a7acfdb789c4024e4ad4ba9fc7  README.md\nb2bc19c8c76078ed9ddff262b0059915193a8575573f2aa679bc5b6d167fdce4  distribution.zip\ned6b10d651417c6dd28c230fb5cdb885acd7f7d4130929dfd4d07b90317e595e  focused-tests.tap\n883607d41207cd512db0fe35ab75b440f39b3a0a33a605778b1cfae15f50020c  fpv-worlds-playtest.zip\n2a9d2b0d090a257a0cc1b1f6569404334c729ee28b2b5f76b32351adb4b37109  main-build.json\n7490d9130fbc374c13ce230c8e8f79d5d2a8d279efa2eac84c9bbfb40840263d  preview-identity.json\n204d0e318eb660773a77a13668eb391dcde0adda53f4665d5b80c2ec2d91bb56  world-build.json\n",
+  "fullArchiveApiInventory": [
+    {
+      "id": 12150534740,
+      "name": "appearance-preview-pr-1619-0eef99dfa3fef571281b32d260c1b4d00efb625d",
+      "size_in_bytes": 1094677458,
+      "digest": "sha256:719fe3c88473d8ceca5ab6e5ccb2663e050450855d9923dd8dc595bbcd6a32f3",
+      "expired": false,
+      "workflow_run": {
+        "id": 39155641633,
+        "repository_id": 1367404328,
+        "head_repository_id": 1367404328,
+        "head_branch": "codex/solo-demanded-soundtrack-catalogue",
+        "head_sha": "0eef99dfa3fef571281b32d260c1b4d00efb625d"
+      }
+    }
+  ],
+  "precedingAdmissionAudits": [
+    "d09e97b8246476f2d47b6696bcce84990a7728fa",
+    "f9e172d102180678d87462ccc5744e40d87d9421"
+  ],
+  "limits": [
+    "Full archive not downloaded locally; package binding and upstream successful build/upload are verified, full remote ZIP/member/source/CSP validation remains consumer/publication work.",
+    "Development preview only; deployed:false and releaseQualified:false are preserved. No native gameplay, iPhone, Steam Deck or performance qualification is inferred.",
+    "The original zero-test checkout failure remains retained; one authorized checkout-only retry succeeded. The 635 separate admission cases remain exact earlier evidence, not rerun here.",
+    "Eleven held authoring lazy-view tests are not part of this head or the1811 results."
+  ]
+}
