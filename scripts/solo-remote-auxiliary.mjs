@@ -7,6 +7,7 @@ import { pathToFileURL } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
 
 const SHARED_MODE_RUNTIME73_SOURCE = '73a345cec696d7789198cf295ca5c37b17ca0e71';
+const SHARED_MODE_RUNTIME797_SOURCE = '797e03f28743921842df6aa57520a72016ba3dfc';
 const SHARED_MODE_PROTOCOL = 'shared-mode-public-return-v1';
 const SHARED_MODE_FIXTURE = Object.freeze({
   bytes: 2685,
@@ -45,7 +46,24 @@ export const SHARED_RETURN_RUNTIME73_CANDIDATE = Object.freeze({
   },
   manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
 });
+export const SHARED_RETURN_RUNTIME797_CANDIDATE = Object.freeze({
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  run: 39104551453,
+  artifact: 12128990483,
+  outer: {
+    bytes: 1094639112,
+    sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+  },
+  inner: {
+    bytes: 1075807530,
+    sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+  },
+  manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+});
 const sharedCandidate = (plan) => {
+  if (plan.release?.sourceCohort === 'shared-mode-runtime797-diagnostic-v1')
+    return SHARED_RETURN_RUNTIME797_CANDIDATE;
   if (plan.release?.sourceCohort === 'shared-mode-runtime73-diagnostic-v1')
     return SHARED_RETURN_RUNTIME73_CANDIDATE;
   assert.equal(plan.release?.sourceCohort, undefined);
@@ -171,8 +189,11 @@ export function auxiliarySetupSuccessor(kind) {
   };
 }
 
-function validateRuntime73FirstEight(evidence) {
-  assert(evidence && typeof evidence === 'object', 'Actual source73 first-eight evidence required');
+function validateRuntimeFirstEight(evidence, sourceRevision = SHARED_MODE_RUNTIME73_SOURCE) {
+  assert(
+    evidence && typeof evidence === 'object',
+    'Actual same-source first-eight evidence required',
+  );
   assert.deepEqual(
     Object.keys(evidence).sort(),
     [
@@ -187,7 +208,7 @@ function validateRuntime73FirstEight(evidence) {
     ].sort(),
   );
   assert.equal(evidence.format, 'SoloFirstEightCorrectnessEvidenceV1');
-  assert.equal(evidence.sourceRevision, '73a345cec696d7789198cf295ca5c37b17ca0e71');
+  assert.equal(evidence.sourceRevision, sourceRevision);
   assert(Number.isSafeInteger(evidence.runId) && evidence.runId > 0);
   assert(Number.isSafeInteger(evidence.artifactId) && evidence.artifactId > 0);
   assert.match(evidence.artifactSHA256, /^[a-f0-9]{64}$/);
@@ -253,9 +274,13 @@ function validateRelease(plan) {
     const candidate = sharedCandidate(plan);
     assert.equal(plan.runtimeRevision, candidate.revision);
     assert.equal(plan.release.candidateRevision, candidate.revision);
-    if (candidate.revision === SHARED_MODE_RUNTIME73_SOURCE) {
+    if (candidate.revision === SHARED_MODE_RUNTIME797_SOURCE) {
+      assert.equal(plan.release.firstEightRequired, true);
+      assert.equal(plan.release.firstEightSourceRevision, SHARED_MODE_RUNTIME797_SOURCE);
+      validateRuntimeFirstEight(plan.release.firstEightEvidence, SHARED_MODE_RUNTIME797_SOURCE);
+    } else if (candidate.revision === SHARED_MODE_RUNTIME73_SOURCE) {
       assert.equal(plan.release.firstEightSourceRevision, SHARED_MODE_RUNTIME73_SOURCE);
-      validateRuntime73FirstEight(plan.release.firstEightEvidence);
+      validateRuntimeFirstEight(plan.release.firstEightEvidence);
     }
     assert.equal(plan.release.protocol, SHARED_MODE_PROTOCOL);
     assert.equal(plan.release.physicalQualification, 'unobserved');

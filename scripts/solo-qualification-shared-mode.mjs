@@ -5,6 +5,7 @@ import { createHash } from 'node:crypto';
 export const SHARED_MODE_PROTOCOL = 'shared-mode-public-return-v1';
 export const SHARED_MODE_SOURCE = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
 export const SHARED_MODE_RUNTIME73_SOURCE = '73a345cec696d7789198cf295ca5c37b17ca0e71';
+export const SHARED_MODE_RUNTIME797_SOURCE = '797e03f28743921842df6aa57520a72016ba3dfc';
 export const SHARED_MODE_FIXTURE = Object.freeze({
   bytes: 2685,
   sha256: '805b2793d4613aa67fd8e6f373c9268dd919b6cf857222bdf143cbe8fcd6311d',
@@ -23,7 +24,11 @@ export function qualificationSharedModeOptions(flags, scenario, bytes) {
   const sourceFlags = flags.filter((flag) => flag.startsWith('--source-revision'));
   assert.equal(sourceFlags.length, 1);
   const sourceRevision = sourceFlags[0].slice('--source-revision='.length);
-  assert([SHARED_MODE_SOURCE, SHARED_MODE_RUNTIME73_SOURCE].includes(sourceRevision));
+  assert(
+    [SHARED_MODE_SOURCE, SHARED_MODE_RUNTIME73_SOURCE, SHARED_MODE_RUNTIME797_SOURCE].includes(
+      sourceRevision,
+    ),
+  );
   assert.equal(sourceFlags[0], `--source-revision=${sourceRevision}`);
   assert.deepEqual(
     flags.filter((flag) => flag.startsWith('--cpu')),

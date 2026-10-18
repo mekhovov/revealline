@@ -7,23 +7,27 @@ import { validateDemoPlan } from './solo-remote-demo.mjs';
 
 const read = (path) => readFile(new URL('../' + path, import.meta.url));
 const workflow = (await read('.github/workflows/solo-native-package-consumer.yml')).toString();
-const source = '73a345cec696d7789198cf295ca5c37b17ca0e71';
-const tree = 'ea30e68636b3342f8e60664a79d425e11e27ff1e';
+const firstEightOutcome = JSON.parse(
+  await read('docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json'),
+);
+const actualProof = firstEightOutcome.proof;
+const source = '797e03f28743921842df6aa57520a72016ba3dfc';
+const tree = 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5';
 const lanes = {
   'shared-return': {
-    plan: 'solo-shared-mode-public-return-73a345-plan.json',
+    plan: 'solo-shared-mode-public-return-797e03-plan.json',
     job: 105,
     step: 63,
     seconds: 3720,
   },
   'demo-recovery': {
-    plan: 'solo-demo-recovery-73a345-plan.json',
+    plan: 'solo-demo-recovery-797e03-plan.json',
     job: 125,
     step: 79,
     seconds: 4620,
   },
   'demo-resources': {
-    plan: 'solo-demo-resources-73a345-plan.json',
+    plan: 'solo-demo-resources-797e03-plan.json',
     job: 125,
     step: 79,
     seconds: 4620,
@@ -74,11 +78,11 @@ function check(text, lane) {
         'fail-fast: false\n      max-parallel: 2\n      matrix:\n        job: [recovery-chromium, recovery-webkit]',
       ),
     );
-    assert(body.includes('scripts/test-solo-shared-mode-73a345-admission.mjs '));
+    assert(body.includes('scripts/test-solo-shared-mode-797e03-admission.mjs '));
     assert(body.includes('scripts/test-solo-shared-mode-public-return.mjs '));
   } else {
     assert(!body.includes('matrix.'));
-    assert(body.includes('scripts/test-solo-demo-73a345-admission.mjs '));
+    assert(body.includes('scripts/test-solo-demo-797e03-admission.mjs '));
     assert(body.includes('scripts/test-solo-owned-resource-assessment.mjs '));
   }
   assert(body.includes('scripts/test-solo-native-consumer-shared-demo.mjs '));
@@ -89,7 +93,7 @@ function check(text, lane) {
   assert(!/inputs\.(?:source|artifact|timeout)/.test(body));
   return body;
 }
-test('three reviewed fixed source73 lanes retain actual proof, source, engine and timeout owners', async () => {
+test('three reviewed fixed source797 lanes retain actual proof with unchanged engine and timeout owners', async () => {
   const choices = workflow
     .split('      lane:\n')[1]
     .match(/options:\s*\[([^\]]+)\]/)[1]
@@ -105,22 +109,21 @@ test('three reviewed fixed source73 lanes retain actual proof, source, engine an
     assert.equal(plan.candidate.tree, tree);
     assert.equal(plan.release.firstEightSourceRevision, source);
     assert.equal(plan.release.firstEightAllCorrectnessPassed, true);
-    assert.deepEqual(plan.release.firstEightEvidence, {
-      format: 'SoloFirstEightCorrectnessEvidenceV1',
-      sourceRevision: source,
-      runId: 39105055762,
-      artifactId: 12127359946,
-      artifactSHA256: '17665afe978ae63cfaf8d24b1a9626e1d7f607b7ee2611fc637c9e680f3d46d8',
-      summarySHA256: 'a33416a355620817896366d5312fbecb44f0c7e6b8f7220941c8447886d99762',
-      correctness: 'passed',
-      ownersClosed: true,
-    });
-    assert.deepEqual(plan.release.firstEightNumericalFailures, [
-      'baseline-first30-chromium',
-      'baseline-first30-webkit',
-      'candidate-first30-webkit',
-    ]);
+    assert.deepEqual(plan.release.firstEightEvidence, actualProof);
+    assert.equal(
+      plan.release.firstEightNumericalFailuresRetained,
+      firstEightOutcome.rawNumericalFailuresRetained,
+    );
+    assert.equal(
+      plan.release.nodePortabilityMismatchesRetained,
+      firstEightOutcome.nodePortabilityMismatchesRetained,
+    );
     const validate = lane === 'shared-return' ? auxiliaryMatrix : validateDemoPlan;
+    assert.equal(
+      plan.status,
+      lane === 'shared-return' ? 'reviewed-diagnostic-only' : 'pinned-for-execution',
+    );
+    if (lane !== 'shared-return') assert.equal(plan.release.status, 'reviewed');
     validate(plan);
     const held = structuredClone(plan);
     held.status = 'held-awaiting-source-and-dispatch-review';
@@ -130,7 +133,7 @@ test('three reviewed fixed source73 lanes retain actual proof, source, engine an
     changed.release.firstEightEvidence = null;
     assert.throws(
       () => validate(changed),
-      'Reviewed status cannot replace required source73 first-eight evidence',
+      'Reviewed status cannot replace required source797 first-eight evidence',
     );
   }
 });
