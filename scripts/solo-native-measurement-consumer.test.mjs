@@ -458,19 +458,31 @@ test('actual797 correctness receipt preserves failed numerical and portability e
   assert.equal(record.candidateWebKit.sensitivityOnly.changesAcceptanceGate, false);
 });
 
-test('readiness and touch retain the invoked source checkout script in sparse tools', async () => {
+test('every job retains its invoked shared source checkout script in sparse tools', async () => {
   const requiredSourceCheckout = (text, lane) => {
     const job = body(text, lane);
-    const command = job.match(/^          bash tools\/(scripts\/[a-z0-9-]+\.sh) [^\n]+$/m);
-    assert(command, lane + ': shared source checkout command');
-    assert.equal(command[1], 'scripts/solo-shared-source-checkout.sh');
+    const commands = [...job.matchAll(/^\s+bash tools\/(scripts\/[a-z0-9-]+\.sh)(?:\s|$)/gm)].map(
+      (match) => match[1],
+    );
+    const path = commands.find((value) => value === 'scripts/solo-shared-source-checkout.sh');
+    if (!path) return null;
     const sparse = [...job.matchAll(/^            \/(.+)$/gm)].map((match) => match[1]);
-    assert(sparse.includes(command[1]), lane + ': missing invoked sparse source checkout');
-    return command[1];
+    assert(sparse.includes(path), lane + ': missing invoked sparse source checkout');
+    return path;
   };
-  for (const lane of ['readiness', 'touch']) {
+  const jobsStart = workflow.indexOf('\njobs:\n');
+  assert(jobsStart >= 0);
+  const lanes = [...workflow.slice(jobsStart).matchAll(/^  ([a-z][a-z0-9-]*):$/gm)].map(
+    (match) => match[1],
+  );
+  assert(lanes.length > 0);
+  for (const lane of lanes) {
     const path = requiredSourceCheckout(workflow, lane);
-    assert((await read(path)).length > 0);
+    if (path) assert((await read(path)).length > 0);
+  }
+  for (const lane of ['readiness', 'touch', 'shared-return', 'demo-recovery', 'demo-resources']) {
+    const path = requiredSourceCheckout(workflow, lane);
+    assert(path, lane + ': expected source checkout invocation');
     const job = body(workflow, lane);
     const entry = '            /' + path + '\n';
     assert.equal(job.split(entry).length, 2);
