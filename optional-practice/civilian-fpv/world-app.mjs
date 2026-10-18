@@ -2025,7 +2025,11 @@ export function mountWorldApp({
       if (typeof message === 'string') status(message);
     },
   });
-  const input = createFlightInput({ window: win, document: doc, onPause: () => pauseFlight() });
+  const input = createFlightInput({
+    window: win,
+    document: doc,
+    onPause: (reason) => pauseFlight(true, reason),
+  });
   const inputDiagnostics = createFlightInputDiagnostics({ now: () => win.performance.now() });
   input.touchResponse($('flight-touch-response').value);
   input.keyboardPreset($('flight-keyboard-preset').value);
@@ -4532,7 +4536,9 @@ export function mountWorldApp({
     }
     if (savedFlightToken === flightToken) recovery = saved;
   }
-  function pauseFlight(freezeRadio = true) {
+  // Background checkpoint reads must not consume a deliberate Arm click.
+  const pendingFlightSteps = new WeakSet();
+  function pauseFlight(freezeRadio = true, reason = 'paused') {
     continuousPlay.cancel('paused');
     regionalManifestRequest?.abort();
     if (pausing) return;
@@ -4546,8 +4552,12 @@ export function mountWorldApp({
     huntReactions.suspend();
     audio.pause();
     presentation.resume();
-    input.enable(false);
-    input.clear();
+    if (reason === 'paused' && !replayProof)
+      input.pause({
+        session: flight,
+        retainKeyboardThrottle: flight?.snapshot().status === 'active',
+      });
+    else input.enable(false);
     if (freezeRadio) radio.freeze('paused');
     if (regionalPreparing && current?.regional) flight?.cancelPreparation();
     if (flight) flight.pause();
@@ -5914,7 +5924,7 @@ export function mountWorldApp({
     try {
       advanceFrame(now);
     } catch (error) {
-      pauseFlight();
+      pauseFlight(true, 'error');
       reportError(error);
     }
   }
@@ -5937,7 +5947,7 @@ export function mountWorldApp({
         accumulator = 0;
         return;
       }
-      pauseFlight();
+      pauseFlight(true, 'focus-lost');
       return;
     }
     pollGamepad(executedAt);
@@ -5956,7 +5966,7 @@ export function mountWorldApp({
     continuousPlay.advance(elapsed);
     lastTime = now;
     if (elapsed > 250) {
-      pauseFlight();
+      pauseFlight(true, 'focus-lost');
       return;
     }
     // Observe a deliberate radio OFF→ON edge while paused as well as flying.
@@ -5967,6 +5977,7 @@ export function mountWorldApp({
       !(current?.regionalAdvanced && regionalAdvancedControls?.busy) &&
       (!current.regional || flight.snapshot().reason === 'prepared') &&
       !ghostLookup &&
+      !pendingFlightSteps.has(flight) &&
       !replayProof &&
       $('flight-source').value === 'radio' &&
       ['paused', 'disarmed'].includes(flight.snapshot().status) &&
@@ -6048,6 +6059,7 @@ export function mountWorldApp({
               },
         );
         if (result && typeof result.then === 'function') {
+          pendingFlightSteps.add(selectedFlight);
           // Render the committed state while the worker owns a mission interval.
           void result
             .then((state) => {
@@ -6071,15 +6083,16 @@ export function mountWorldApp({
                   state.reason,
                 )
               )
-                pauseFlight();
+                pauseFlight(true, state.reason);
               updateHUD(state);
             })
             .catch((error) => {
               if (disposed || flight !== selectedFlight) return;
-              pauseFlight();
+              pauseFlight(true, 'error');
               updateHUD(selectedFlight.snapshot());
               reportError(error);
-            });
+            })
+            .finally(() => pendingFlightSteps.delete(selectedFlight));
           break;
         }
         if (current.regional && flight.snapshot().reason === 'terrain-required') {
@@ -6221,7 +6234,7 @@ export function mountWorldApp({
     regionalPreparationIssue = regionalPreparationFeedback({ contextLost: true });
     sceneReady = false;
     qualityPreparing = false;
-    pauseFlight();
+    pauseFlight(true, 'context-lost');
     $('flight-status').textContent = txt(
       'Graphics interrupted. Open Menu and Retry after graphics recover.',
       'Графіку перервано. Відкрийте меню й повторіть політ після її відновлення.',
@@ -6345,7 +6358,7 @@ export function mountWorldApp({
     if (regionalAdvanced && typeof win.Worker !== 'function')
       throw new Error(txt('Advanced is unavailable on this platform.', 'Advanced недоступний на цій платформі.'));
     if (regionalAdvanced) {
-      regionalNativeLifecycle ??= onNativeInactive(() => pauseFlight(), { locationRef: win.location })
+      regionalNativeLifecycle ??= onNativeInactive(() => pauseFlight(true, 'focus-lost'), { locationRef: win.location })
         .then((remove) => {
           if (disposed) return Promise.resolve(remove());
           removeRegionalNativeInactive = remove;
@@ -7690,6 +7703,13 @@ export function mountWorldApp({
       (replayProof && finished)
     )
       return;
+    if (pendingFlightSteps.has(flight)) {
+      $('flight-status').textContent = txt(
+        'Finishing the current flight step. Press Resume again when ready.',
+        'Завершується поточний крок польоту. Після цього натисніть «Продовжити» ще раз.',
+      );
+      return;
+    }
     if (!replayProof && $('flight-source').value === 'radio') {
       restoreRadio();
       radio.poll();
@@ -7709,7 +7729,10 @@ export function mountWorldApp({
         return;
       }
     }
-    input.enable(!replayProof);
+    flight.arm();
+    if (flight.snapshot().status !== 'active') return;
+    if (replayProof) input.enable(false);
+    else input.resume(flight, flight.snapshot().lastInput.throttle / 1000);
     if (checkpointSession) {
       const throttle = flight.snapshot().lastInput.throttle / 1000;
       input.seedThrottle(throttle);
@@ -7722,7 +7745,6 @@ export function mountWorldApp({
     fire = false;
     lastTime = null;
     lastExecutionTime = win.performance?.now?.() ?? null;
-    flight.arm();
     huntReactions.resume();
     appearanceSession.arm(flight.snapshot().status);
     $('flight-status').textContent = replayProof
@@ -8337,7 +8359,7 @@ export function mountWorldApp({
     if (!replayProof && $('flight-source').value === 'radio') radio.disconnect(e.gamepad.index);
   });
   on(win, 'focus', () => restoreRadio());
-  on(win, 'pagehide', () => pauseFlight());
+  on(win, 'pagehide', () => pauseFlight(true, 'focus-lost'));
   const ready = (async () => {
     const results = await Promise.allSettled([
       openWorldStore({ indexedDB: win.indexedDB }),
