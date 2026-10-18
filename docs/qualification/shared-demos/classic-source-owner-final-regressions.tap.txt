@@ -1,0 +1,80 @@
+TAP version 13
+# Subtest: clean and Journey entry contexts enumerate the complete authored union from metadata only
+ok 1 - clean and Journey entry contexts enumerate the complete authored union from metadata only # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.562666
+  ...
+# Subtest: source merge preserves personal recordings, live bots, improvisation and reviewed choices
+ok 2 - source merge preserves personal recordings, live bots, improvisation and reviewed choices # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.051666
+  ...
+# Subtest: lazy handoffs name exact ordinary missions without granting installation or progress
+ok 3 - lazy handoffs name exact ordinary missions without granting installation or progress # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.042375
+  ...
+# Subtest: selected native packed replay strictly plays to its terminal outcome and releases its entry
+ok 4 - selected native packed replay strictly plays to its terminal outcome and releases its entry # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.038209
+  ...
+# Subtest: changed indexed bytes, canonical pack identity and replay content fail before adoption
+ok 5 - changed indexed bytes, canonical pack identity and replay content fail before adoption # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.045458
+  ...
+# Subtest: cancellation releases an ignored late transport and never adopts native content
+ok 6 - cancellation releases an ignored late transport and never adopts native content # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035834
+  ...
+# Subtest: indexed metadata cannot escape the finite local authored pack paths
+ok 7 - indexed metadata cannot escape the finite local authored pack paths # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.103708
+  ...
+# Subtest: cancelling a locked pack body releases its stream before preparation
+ok 8 - cancelling a locked pack body releases its stream before preparation
+  ---
+  duration_ms: 43.090916
+  ...
+# Subtest: cancelling native pack image preparation retires its image and prevents subsequent decodes
+ok 9 - cancelling native pack image preparation retires its image and prevents subsequent decodes # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.234292
+  ...
+# Subtest: lazy entry ownership preserves frozen live getters and releases once on disposal or cancellation
+ok 10 - lazy entry ownership preserves frozen live getters and releases once on disposal or cancellation
+  ---
+  duration_ms: 1.90975
+  ...
+# Subtest: a retired earlier lease cannot erase the currently owned entry
+ok 11 - a retired earlier lease cannot erase the currently owned entry
+  ---
+  duration_ms: 0.353083
+  ...
+# Subtest: already cancelled admission disposes the native player before retaining its entry
+ok 12 - already cancelled admission disposes the native player before retaining its entry
+  ---
+  duration_ms: 0.585167
+  ...
+# Subtest: abort owns asynchronous retirement and repeated disposal preserves its exact result
+ok 13 - abort owns asynchronous retirement and repeated disposal preserves its exact result
+  ---
+  duration_ms: 7.865291
+  ...
+# Subtest: repeated disposal retains synchronous native cleanup failure without throwing from abort
+ok 14 - repeated disposal retains synchronous native cleanup failure without throwing from abort
+  ---
+  duration_ms: 0.470084
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 8
+# todo 0
+# duration_ms 447.489208

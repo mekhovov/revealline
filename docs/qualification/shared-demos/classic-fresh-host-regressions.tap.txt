@@ -1,0 +1,306 @@
+TAP version 13
+# Subtest: uninstalled authored Solo Fresh preserves exact chooser handoff from ?journey=legacy
+ok 1 - uninstalled authored Solo Fresh preserves exact chooser handoff from ?journey=legacy
+  ---
+  duration_ms: 3693.118792
+  ...
+# Subtest: uninstalled authored Solo Fresh preserves exact chooser handoff from Journey
+ok 2 - uninstalled authored Solo Fresh preserves exact chooser handoff from Journey
+  ---
+  duration_ms: 6934.608416
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 3 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 5857.141
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 4 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 4451.21925
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 5 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 2806.151334
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 6 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 17016.009875
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 7 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 6134.382
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 8 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+  ---
+  duration_ms: 2348.915042
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 9 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+  ---
+  duration_ms: 2819.182083
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 10 - controller gameplay action takes over while preserving one hardware read per frame
+  ---
+  duration_ms: 2496.544042
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 11 - a single remaining source prepares a new painter on repetition without reusing disposed media
+  ---
+  duration_ms: 4349.357542
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 12 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+  ---
+  duration_ms: 10549.490791
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 13 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+  ---
+  duration_ms: 5174.729
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 14 - a replay fork completing after blur cannot arm hidden practice or replace its current owner
+  ---
+  duration_ms: 4333.913542
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 15 - locked Fresh handoff cancelled by blur remains paused until another explicit choice
+  ---
+  duration_ms: 5181.716333
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 16 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+  ---
+  duration_ms: 3635.812917
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+ok 17 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 17415.570542
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+ok 18 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+  ---
+  duration_ms: 20684.424459
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 19 - demo control hints show the saved keyboard bindings in the actual app
+  ---
+  duration_ms: 3045.496708
+  ...
+# Subtest: spectator information and play invitation stay visible while details remain optional
+ok 20 - spectator information and play invitation stay visible while details remain optional
+  ---
+  duration_ms: 3308.796958
+  ...
+# Subtest: demo guide respects the shared character-reactions preference without hiding teaching captions
+ok 21 - demo guide respects the shared character-reactions preference without hiding teaching captions
+  ---
+  duration_ms: 2530.954334
+  ...
+# Subtest: ready Title versus is a real fixed link, has no hint storage, and Back opens Title without Start
+    # Subtest: actual Title row and keyboard activation
+    ok 1 - actual Title row and keyboard activation
+      ---
+      duration_ms: 3044.720333
+      ...
+    # Subtest: fixed receiving route with no automatic continuation
+    ok 2 - fixed receiving route with no automatic continuation
+      ---
+      duration_ms: 1861.064625
+      ...
+    1..2
+ok 22 - ready Title versus is a real fixed link, has no hint storage, and Back opens Title without Start
+  ---
+  duration_ms: 4906.608875
+  ...
+# Subtest: versus/immediate: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+ok 23 - versus/immediate: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+  ---
+  duration_ms: 3184.132667
+  ...
+# Subtest: versus/grid-center: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+ok 24 - versus/grid-center: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+  ---
+  duration_ms: 2722.910666
+  ...
+# Subtest: ready Title team is a real fixed link, has no hint storage, and Back opens Title without Start
+    # Subtest: actual Title row and keyboard activation
+    ok 1 - actual Title row and keyboard activation
+      ---
+      duration_ms: 1619.20525
+      ...
+    # Subtest: fixed receiving route with no automatic continuation
+    ok 2 - fixed receiving route with no automatic continuation
+      ---
+      duration_ms: 1557.935042
+      ...
+    1..2
+ok 25 - ready Title team is a real fixed link, has no hint storage, and Back opens Title without Start
+  ---
+  duration_ms: 3177.5155
+  ...
+# Subtest: team/immediate: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+ok 26 - team/immediate: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+  ---
+  duration_ms: 2858.936084
+  ...
+# Subtest: team/grid-center: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+ok 27 - team/grid-center: Stay preserves the exact cut and actual Title opener; explicit Leave retains a verified save without a hint
+  ---
+  duration_ms: 2750.889042
+  ...
+# Subtest: button: pending retention Stay cannot later save, navigate or resume
+ok 28 - button: pending retention Stay cannot later save, navigate or resume
+  ---
+  duration_ms: 2476.342417
+  ...
+# Subtest: Escape: pending retention Stay cannot later save, navigate or resume
+ok 29 - Escape: pending retention Stay cannot later save, navigate or resume
+  ---
+  duration_ms: 2563.975167
+  ...
+# Subtest: controller: pending retention Stay cannot later save, navigate or resume
+ok 30 - controller: pending retention Stay cannot later save, navigate or resume
+  ---
+  duration_ms: 2673.450708
+  ...
+# Subtest: blur: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 31 - blur: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 2946.652834
+  ...
+# Subtest: hidden: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 32 - hidden: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 2540.754167
+  ...
+# Subtest: pagehide: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 33 - pagehide: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 2766.932333
+  ...
+# Subtest: close-reopen: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 34 - close-reopen: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 2625.749042
+  ...
+# Subtest: newer-focus: a retired Title origin cannot navigate or reclaim focus after retention settles
+ok 35 - newer-focus: a retired Title origin cannot navigate or reclaim focus after retention settles
+  ---
+  duration_ms: 2931.807291
+  ...
+# Subtest: quota: Title departure keeps truthful save authority and preserves newer bytes
+ok 36 - quota: Title departure keeps truthful save authority and preserves newer bytes
+  ---
+  duration_ms: 2616.821791
+  ...
+# Subtest: readback: Title departure keeps truthful save authority and preserves newer bytes
+ok 37 - readback: Title departure keeps truthful save authority and preserves newer bytes
+  ---
+  duration_ms: 2386.708958
+  ...
+# Subtest: newer-before: Title departure keeps truthful save authority and preserves newer bytes
+ok 38 - newer-before: Title departure keeps truthful save authority and preserves newer bytes
+  ---
+  duration_ms: 2756.538917
+  ...
+# Subtest: newer-after: Title departure keeps truthful save authority and preserves newer bytes
+ok 39 - newer-after: Title departure keeps truthful save authority and preserves newer bytes
+  ---
+  duration_ms: 2341.518458
+  ...
+# Subtest: modified Title links retain native defaults; rejected direct navigation leaves a fresh retry available
+ok 40 - modified Title links retain native defaults; rejected direct navigation leaves a fresh retry available
+  ---
+  duration_ms: 1871.954084
+  ...
+# Subtest: pending Title Start → versus cancels launch before fixed departure; late media cannot Start or take focus
+ok 41 - pending Title Start → versus cancels launch before fixed departure; late media cannot Start or take focus
+  ---
+  duration_ms: 1135.641833
+  ...
+# Subtest: pending Title Start → team cancels launch before fixed departure; late media cannot Start or take focus
+ok 42 - pending Title Start → team cancels launch before fixed departure; late media cannot Start or take focus
+  ---
+  duration_ms: 1514.714375
+  ...
+# Subtest: pending saved Continue → versus cancels adoption, retains stored bytes and permits a fresh departure after cleanup
+    # Subtest: seed actual saved picture and cut
+    ok 1 - seed actual saved picture and cut
+      ---
+      duration_ms: 2329.690083
+      ...
+    # Subtest: cancel pending restore through the real Title anchor
+    ok 2 - cancel pending restore through the real Title anchor
+      ---
+      duration_ms: 1823.829709
+      ...
+    1..2
+ok 43 - pending saved Continue → versus cancels adoption, retains stored bytes and permits a fresh departure after cleanup
+  ---
+  duration_ms: 4385.83625
+  ...
+# Subtest: pending saved Continue → team cancels adoption, retains stored bytes and permits a fresh departure after cleanup
+    # Subtest: seed actual saved picture and cut
+    ok 1 - seed actual saved picture and cut
+      ---
+      duration_ms: 3636.041292
+      ...
+    # Subtest: cancel pending restore through the real Title anchor
+    ok 2 - cancel pending restore through the real Title anchor
+      ---
+      duration_ms: 2319.229125
+      ...
+    1..2
+ok 44 - pending saved Continue → team cancels adoption, retains stored bytes and permits a fresh departure after cleanup
+  ---
+  duration_ms: 6360.8255
+  ...
+# Subtest: saved Continue: explicit keyboard Cancel then versus preserves newer focus when the retired picture decode rejects
+    # Subtest: seed an actual saved original and unfinished cut
+    ok 1 - seed an actual saved original and unfinished cut
+      ---
+      duration_ms: 3774.444084
+      ...
+    # Subtest: Cancel, attempt mode departure, then reject only the old decode
+    ok 2 - Cancel, attempt mode departure, then reject only the old decode
+      ---
+      duration_ms: 2698.256334
+      ...
+    1..2
+ok 45 - saved Continue: explicit keyboard Cancel then versus preserves newer focus when the retired picture decode rejects
+  ---
+  duration_ms: 6859.525583
+  ...
+# Subtest: saved Continue: explicit keyboard Cancel then team preserves newer focus when the retired picture decode rejects
+    # Subtest: seed an actual saved original and unfinished cut
+    ok 1 - seed an actual saved original and unfinished cut
+      ---
+      duration_ms: 3356.95325
+      ...
+    # Subtest: Cancel, attempt mode departure, then reject only the old decode
+    ok 2 - Cancel, attempt mode departure, then reject only the old decode
+      ---
+      duration_ms: 1498.964916
+      ...
+    1..2
+ok 46 - saved Continue: explicit keyboard Cancel then team preserves newer focus when the retired picture decode rejects
+  ---
+  duration_ms: 5185.403333
+  ...
+1..46
+# tests 58
+# suites 0
+# pass 58
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 125107.85675

@@ -2,8 +2,7 @@ import { loadDemoSources } from '../demo-sources.mjs';
 import { createExecutionCatalog } from '../campaign-contexts.mjs';
 import { campaignKey } from '../library.mjs';
 import { prepareMissionLibraryIndex } from '../mission-library/classic-source.mjs';
-import { libraryMissionId } from '../mission-library/library.mjs';
-import { missionLibraryHref } from '../mission-library/handoff.mjs';
+import { soloClassicDemoLaunchURL } from './solo-classic-launch.mjs';
 import { createExternalChapterInventoryReader } from '../external-chapter-pointer.mjs';
 import { createMissionLibraryInventory } from '../mission-library/installed-inventory.mjs';
 import { loadBuiltinSoloDemoSources, mergeBuiltinSoloDemoSources } from './solo-builtins.mjs';
@@ -12,6 +11,7 @@ import { loadBuiltinSoloDemoSources, mergeBuiltinSoloDemoSources } from './solo-
  * and departure checks. No custom source can acquire an authored public URL. */
 export function soloDemoLaunchURL(source, index) {
   const entry = source.entry;
+  if (!entry) return null;
   const row = index.missions.find(
     (row) =>
       ['base', 'bundled', 'archived'].includes(row.source) &&
@@ -22,20 +22,7 @@ export function soloDemoLaunchURL(source, index) {
       row.modes.includes('solo'),
   );
   if (!row) return null;
-  return missionLibraryHref({
-    baseURL: new URL('../', import.meta.url).href,
-    currentMode: 'solo',
-    mode: 'solo',
-    journey: 'legacy',
-    ready: true,
-    missionId: libraryMissionId({
-      owner: JSON.stringify(['classic', row.source, row.packId]),
-      edition: row.sourceFile.sha256,
-      campaign: row.campaignKey,
-      mission: row.levelId,
-      revision: row.levelRevision,
-    }),
-  });
+  return soloClassicDemoLaunchURL(row);
 }
 
 /** Read-only base-game context for a demo opened from another engine. No app,
@@ -122,7 +109,7 @@ export async function loadStandaloneSoloContext({
           library: { list: async () => [] },
           fetch: fetcher,
         }),
-        loadBuiltinSoloDemoSources({ signal, fetch: fetcher }).catch((error) => {
+        loadBuiltinSoloDemoSources({ signal, fetch: fetcher, index }).catch((error) => {
           signal?.throwIfAborted();
           if (error.name === 'AbortError') throw error;
           return [];
