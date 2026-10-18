@@ -188,6 +188,47 @@ async function settleUntil(predicate, message) {
   await waitFor(predicate, { message });
 }
 
+test('World lesson mode action restarts paused in the matching mode and preserves unscored continuation', async (t) => {
+  const h = fixture(t);
+  await h.app.ready;
+  const entry = BEGINNER_CATALOGUE.find((item) => item.id === 'beginner-43');
+  const original = structuredClone(entry.course);
+  await h.app.startFlight(entry, { mode: 'self-level' });
+  assert.equal(h.app.snapshot().modePractice, true);
+  assert.equal(h.app.snapshot().state.status, 'disarmed');
+  const coach = h.$('beginner-coach');
+  assert.match(coach.querySelector('[data-coach-action="start"]').textContent, /unscored/);
+  coach.querySelector('[data-coach-action="start"]').click();
+  assert.equal(h.app.snapshot().state.status, 'active');
+  h.tick(5);
+  assert.equal(h.app.snapshot().modePractice, true);
+  assert.equal(h.$('export-flight').disabled, true);
+  assert.deepEqual(h.app.snapshot().records, []);
+  await h.app.startFlight(entry, { mode: 'self-level' });
+  const switchMode = coach.querySelector('[data-coach-action="lesson-mode"]');
+  switchMode.focus();
+  switchMode.click();
+  assert.equal(h.$('flight-mode').value, 'self-level', 'the old mode remains until adoption');
+  const pendingStart = coach.querySelector('[data-coach-action="start"]');
+  assert.equal(pendingStart.getAttribute('aria-disabled'), 'true');
+  pendingStart.click();
+  assert.equal(h.app.snapshot().state.status, 'disarmed');
+  await settleUntil(
+    () =>
+      h.$('flight-mode').value === 'acro' &&
+      !h.app.snapshot().modePractice &&
+      h.app.snapshot().state?.status === 'disarmed' &&
+      h.app.snapshot().learning?.guideOpen,
+    'matching lesson mode is prepared',
+  );
+  assert.equal(h.app.snapshot().state.status, 'disarmed');
+  assert.equal(h.app.snapshot().state.ticks, 0);
+  assert.equal(h.$('export-flight').disabled, false);
+  assert.equal(coach.querySelector('[data-coach-action="lesson-mode"]'), null);
+  assert.deepEqual(h.app.snapshot().records, []);
+  assert.deepEqual(entry.course, original);
+});
+
 test('World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats', async (t) => {
   const priorLocale = getLocale();
   const h = fixture(t);
