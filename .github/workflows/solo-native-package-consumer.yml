@@ -5733,6 +5733,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json
+            /docs/performance/solo-demo-resources-797e03-close-boundary-plan.json
             /docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json
             /scripts/solo-shared-owner-declared-source.mjs
             /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
@@ -6268,6 +6270,13 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-demo-close-declared-source.mjs
+            /docs/performance/fixtures/solo-demo-797e03/d99-close-boundary-source.json
+            /docs/performance/solo-demo-recovery-73a345-plan.json
+            /docs/performance/solo-demo-resources-73a345-plan.json
+            /docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json
+            /docs/performance/solo-demo-resources-797e03-close-boundary-plan.json
+            /scripts/test-solo-demo-trusted-close-admission.mjs
             /docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json
             /scripts/solo-shared-owner-declared-source.mjs
             /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
@@ -6747,14 +6756,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-demo.mjs scripts/test-solo-demo-797e03-admission.mjs scripts/test-solo-demo-797e03-tooling-admission.mjs scripts/test-solo-owned-resource-assessment.mjs scripts/test-solo-qualification-snapshot-store.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node --input-type=module -e 'import {readFile} from "node:fs/promises"; import {validateDemoPlan} from "./scripts/solo-remote-demo.mjs"; validateDemoPlan(JSON.parse(await readFile("docs/performance/solo-demo-recovery-797e03-tooling-plan.json", "utf8")));'
+          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-demo.mjs scripts/test-solo-demo-797e03-admission.mjs scripts/test-solo-demo-797e03-tooling-admission.mjs scripts/test-solo-demo-trusted-close-admission.mjs scripts/test-solo-owned-resource-assessment.mjs scripts/test-solo-qualification-snapshot-store.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --input-type=module -e 'import {readFile} from "node:fs/promises"; import {validateDemoPlan} from "./scripts/solo-remote-demo.mjs"; validateDemoPlan(JSON.parse(await readFile("docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json", "utf8")));'
       - name: Run the separate fixed Demo recovery observation
         timeout-minutes: 79
         working-directory: tools
         env:
           GH_TOKEN: ${{ github.token }}
-        run: timeout --signal=TERM --kill-after=30s 4620s node scripts/run-solo-remote-correctness.mjs docs/performance/solo-demo-recovery-797e03-tooling-plan.json "$OUTPUT"
+        run: timeout --signal=TERM --kill-after=30s 4620s node scripts/run-solo-remote-correctness.mjs docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json "$OUTPUT"
       - name: Describe bounded setup evidence without claiming truncated output complete
         if: ${{ always() }}
         timeout-minutes: 2
@@ -6813,6 +6822,13 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /scripts/solo-demo-close-declared-source.mjs
+            /docs/performance/fixtures/solo-demo-797e03/d99-close-boundary-source.json
+            /docs/performance/solo-demo-recovery-73a345-plan.json
+            /docs/performance/solo-demo-resources-73a345-plan.json
+            /docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json
+            /docs/performance/solo-demo-resources-797e03-close-boundary-plan.json
+            /scripts/test-solo-demo-trusted-close-admission.mjs
             /docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json
             /scripts/solo-shared-owner-declared-source.mjs
             /docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json
@@ -7292,14 +7308,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-demo.mjs scripts/test-solo-demo-797e03-admission.mjs scripts/test-solo-demo-797e03-tooling-admission.mjs scripts/test-solo-owned-resource-assessment.mjs scripts/test-solo-qualification-snapshot-store.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node --input-type=module -e 'import {readFile} from "node:fs/promises"; import {validateDemoPlan} from "./scripts/solo-remote-demo.mjs"; validateDemoPlan(JSON.parse(await readFile("docs/performance/solo-demo-resources-797e03-tooling-plan.json", "utf8")));'
+          node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-demo.mjs scripts/test-solo-demo-797e03-admission.mjs scripts/test-solo-demo-797e03-tooling-admission.mjs scripts/test-solo-demo-trusted-close-admission.mjs scripts/test-solo-owned-resource-assessment.mjs scripts/test-solo-qualification-snapshot-store.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --input-type=module -e 'import {readFile} from "node:fs/promises"; import {validateDemoPlan} from "./scripts/solo-remote-demo.mjs"; validateDemoPlan(JSON.parse(await readFile("docs/performance/solo-demo-resources-797e03-close-boundary-plan.json", "utf8")));'
       - name: Run the separate fixed Demo resources observation
         timeout-minutes: 79
         working-directory: tools
         env:
           GH_TOKEN: ${{ github.token }}
-        run: timeout --signal=TERM --kill-after=30s 4620s node scripts/run-solo-remote-correctness.mjs docs/performance/solo-demo-resources-797e03-tooling-plan.json "$OUTPUT"
+        run: timeout --signal=TERM --kill-after=30s 4620s node scripts/run-solo-remote-correctness.mjs docs/performance/solo-demo-resources-797e03-close-boundary-plan.json "$OUTPUT"
       - name: Describe bounded setup evidence without claiming truncated output complete
         if: ${{ always() }}
         timeout-minutes: 2

@@ -1,3 +1,4 @@
+import { readDeclaredDemoCloseTool } from './solo-demo-close-declared-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -62,14 +63,18 @@ test('separate observer successors retain exact runtime, complete workloads and 
     );
   }
 });
-test('actual new observer and every current dependency match the successor declaration', async () => {
-  for (const plan of plans) {
+test('executed observer successors retain their exact historical tool inputs', async () => {
+  for (const [index, plan] of plans.entries()) {
     assert.deepEqual(
       plan.demo.driver,
       plan.adapterInputs.find((ref) => ref.path === plan.demo.driver.path),
     );
     for (const ref of [...plan.adapterInputs, ...plan.frozenTools]) {
-      const bytes = await read(ref.path);
+      const bytes =
+        (await readDeclaredDemoCloseTool(
+          'docs/performance/solo-demo-' + modes[index] + '-797e03-tooling-plan.json',
+          ref,
+        )) ?? (await read(ref.path));
       assert.equal(bytes.length, ref.bytes, ref.path);
       assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, ref.path);
     }
