@@ -6,6 +6,7 @@ import { execFileSync } from 'node:child_process';
 import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parse } from '../publishing/vendor/acorn-8.18.0.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -34,6 +35,65 @@ const relevant = (name) =>
   authoringPreviewHosts.includes(name) ||
   name.startsWith('game/demo-data/') ||
   name.startsWith('optional-practice/civilian-fpv/demo-data/');
+
+/** Read the actual emitted literal without executing worker code. Both emitted
+ * transports must describe the same configuration; ambiguity fails closed. */
+export function readEmittedOfflineConfig(workerBytes, cacheBytes) {
+  const source = new TextDecoder('utf-8', { fatal: true }).decode(workerBytes);
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'script' });
+  const declarations = [];
+  const visit = (node, parent) => {
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'VariableDeclarator' && node.id?.name === 'CONFIG')
+      declarations.push({ node, parent });
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) value.forEach((item) => visit(item, node));
+      else if (value && typeof value === 'object') visit(value, node);
+    }
+  };
+  visit(ast);
+  assert.equal(declarations.length, 1, 'Worker must have exactly one CONFIG declaration.');
+  const { node, parent } = declarations[0];
+  assert.equal(parent.kind, 'const', 'Worker configuration must be constant.');
+  assert.equal(node.init?.type, 'ObjectExpression', 'Worker configuration must be literal JSON.');
+  const literal = source.slice(node.init.start, node.init.end);
+  const config = JSON.parse(literal);
+  const checkKeys = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'ObjectExpression') {
+      const keys = node.properties.map((property) => property.key.value);
+      assert.ok(
+        !keys.includes('__proto__') && new Set(keys).size === keys.length,
+        'Worker configuration cannot contain ambiguous or prototype keys.',
+      );
+    }
+    for (const value of Object.values(node)) {
+      if (Array.isArray(value)) value.forEach(checkKeys);
+      else if (value && typeof value === 'object') checkKeys(value);
+    }
+  };
+  checkKeys(node.init);
+  assert.deepEqual(
+    config,
+    JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(cacheBytes)),
+    'Worker and offline-cache configuration must match.',
+  );
+  return config;
+}
+
+export function fullReleaseOriginalPolicy(entries) {
+  const byPath = new Map(entries.map((entry) => [entry.name, entry]));
+  const config = readEmittedOfflineConfig(
+    byPath.get('service-worker.js').bytes,
+    byPath.get('offline-cache.json').bytes,
+  );
+  assert.equal(
+    Object.hasOwn(config, 'omittedSourceOriginals'),
+    false,
+    'Full releases must not publish an original-omission policy.',
+  );
+  return { workerConfigMatchesCache: true, omittedFieldAbsent: true };
+}
 
 export const isOfflineDiagnosticArtifact = (name) =>
   /(?:^|\/)scripts\/(?:demo-tick-|diagnose-demo-ticks|qualify-demo-ticks)/.test(name) ||
@@ -213,6 +273,7 @@ export async function qualifyDemoPackaging({
     sourceFingerprint: snapshotSummary(before),
     buildFingerprint: snapshotSummary(buildBefore),
     materializedBuild: false,
+    originalPolicy: fullReleaseOriginalPolicy(project.entries),
     files: project.manifest.files.length,
     bytes: project.manifest.totalBytes,
     simPerformances: simIndex.entries.length,

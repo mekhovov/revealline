@@ -1,0 +1,84 @@
+{
+  "format": "SharedDemoIncomingMainImpactV1",
+  "created": "2026-10-18T20:22:06.499354+00:00",
+  "scope": "Read-only comparison of the exact incoming-main delta only; no tests, browser, checkout, fetch, rebase, or production changes performed.",
+  "base": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+  "incoming": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "inspectedWorkingHead": "b2658ae41aeaf85a5f686185c785eebc652e214c",
+  "incomingCommits": [
+    "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465 Merge pull request #1618 from mekhovov/codex/f81-recovery-entry-refresh",
+    "de0cecf192c6c6a2844a8f29776082cc5bc728a0 fix(settings): refresh recovery entry after child tools close"
+  ],
+  "changedPaths": [
+    {
+      "path": "game/test/profile-recovery-dialog.test.mjs",
+      "baseGitBlob": "9f21caed15511186f791420d8aa377412902df2e",
+      "incomingGitBlob": "a1a0fb1e4ecd436e6769a0cc8cb59eef6503b058",
+      "baseSHA256": "81710de695a631706e6acc97daaba48cefc2a2eafd2c4c554f049eab9eea72c6",
+      "incomingSHA256": "d5ea084afe37e888aa7cf22e741fb2112f4abbddbb7e30e62856d6a80279248c",
+      "baseBytes": 10116,
+      "incomingBytes": 11295
+    },
+    {
+      "path": "game/test/profile-recovery-settings-host.test.mjs",
+      "baseGitBlob": "76aa52bd25dce756c849eb82c0f7d68b27dea68a",
+      "incomingGitBlob": "065a3d8d49fa27799bcd337f4d369e7fe98ff71a",
+      "baseSHA256": "fd872fb890ec82dc1b6a9dc64c37757f1ea7ab31670725632205936759e4555b",
+      "incomingSHA256": "0696428d6be0e7e42a0df1496f38c697d147a39c6ebc4135b6e6898658a094f6",
+      "baseBytes": 8171,
+      "incomingBytes": 10330
+    },
+    {
+      "path": "game/ui/profile-recovery-dialog.mjs",
+      "baseGitBlob": "3e1015bdaae28f181eaee9a767e6fcd2b9d60d3a",
+      "incomingGitBlob": "d365bbfea3eca77a1fa6371be3158d1b37e725cd",
+      "baseSHA256": "6ed5f55ccf0cc6c4b6f8d600fa1bb6a7efbf3dae09bad82b45582f3b7d3ab21d",
+      "incomingSHA256": "c14495e4084f3284529fa6af4f396a0d969f6667a6ded426e879061895c40c3d",
+      "baseBytes": 8225,
+      "incomingBytes": 8729
+    }
+  ],
+  "exhaustivePathAssertion": true,
+  "productionChange": {
+    "path": "game/ui/profile-recovery-dialog.mjs",
+    "summary": "Adds one document capture-phase native close listener. If Settings is open and a child dialog has closed, existing refresh recomputes the recovery opener restrictions. Dispose removes that same listener with capture=true. No reader opens and no save/store action is added.",
+    "integrationRisk": "This listener also observes Demo dialog close when Settings is underneath. It changes ordinary UI event ownership, so focused Settings/Demo return tests and final source-bound resource checks are appropriate."
+  },
+  "testChanges": "Adds native-close restriction/disposal coverage and actual collection/library return coverage. The host fixture stops forcing null canvas context and awaits ordinary run readiness/resume clock before assertions.",
+  "nativeCoverageImpact": {
+    "authoredCatalogsChanged": false,
+    "levelOrCourseDefinitionsChanged": false,
+    "nativeSimulationChanged": false,
+    "replayOrProofAdmissionChanged": false,
+    "recordingBodiesOrDiagnosticIdentitiesChanged": false,
+    "demoAdapterOrDirectorChanged": false,
+    "proof": "The complete git diff contains exactly one UI module and two UI tests; no authored/native/recording/qualification input path is present.",
+    "applicability": "Existing 890-entry native catalog qualification and three-engine native recording proofs remain applicable to this incoming-main delta. No corpus regeneration or replay compatibility relaxation is justified by it.",
+    "limits": "This is not a fresh 890-entry run and does not assert the future rebase is clean. Root must confirm final integration introduces no additional simulation/content changes. Runtime presentation identity changes, so prior whole-runtime browser receipts remain tied to their recorded old fingerprint."
+  },
+  "focusedPostRebaseChecks": [
+    {
+      "path": "game/test/profile-recovery-dialog.test.mjs",
+      "purpose": "New capturing close listener refreshes entry, keeps busy/current-reader restrictions, does not load recovery, ignores closed Settings, and is removed on disposal; existing cancellation and late-reader cleanup."
+    },
+    {
+      "path": "game/test/profile-recovery-settings-host.test.mjs",
+      "purpose": "Actual ordinary Solo Settings returns from collection/library with exact paused run and one input loop; saved-flight/writer refusal remains intact."
+    },
+    {
+      "path": "game/test/demo-confirm-settings-host.test.mjs",
+      "purpose": "Actual watching/practice Demo closes into open Settings once, preserves focus/input release ownership, and cannot reopen from controller/native tails while the new document close listener fires."
+    },
+    {
+      "path": "game/test/demo-back-host.test.mjs",
+      "purpose": "Loading/watching/practice/returned Demo Back preserves ordinary checkpoint/storage and permits a subsequent deliberate Settings gesture."
+    },
+    {
+      "path": "game/test/demo-classic-fresh-host.test.mjs",
+      "purpose": "Guarded Fresh chooser handoff from legacy/Journey and Stay retain existing paused flight under ordinary modal ownership."
+    }
+  ],
+  "suggestedCommand": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-concurrency=2 game/test/profile-recovery-dialog.test.mjs game/test/profile-recovery-settings-host.test.mjs game/test/demo-confirm-settings-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-classic-fresh-host.test.mjs",
+  "executionStatus": "NOT RUN: waiting for parent rebase and explicit CPU/browser release.",
+  "finalBrowserImpact": "Recompute runtime and all-harness hashes after rebase and worker fix. Existing final matrix must use the new frozen manifest; ordinary restoration in all three engines remains a strict acceptance gate."
+}

@@ -640,7 +640,13 @@ export function offlineIcons(sizes = [180, 192, 512]) {
 }
 
 /** Adds a content-addressed offline app only when this source has its explicit UI helper. */
-export function applyPublicationProfile(entries, catalogue, profile, optionalArtwork) {
+export function applyPublicationProfile(
+  entries,
+  catalogue,
+  profile,
+  optionalArtwork,
+  { onOmittedSourceOriginals = () => {} } = {},
+) {
   if (profile === null) return optionalArtwork;
   if (profile !== 'main-pages') fail(`Unknown publication profile: ${profile}`);
   // Main Pages is the continuously deployed production/testing channel, not an
@@ -753,6 +759,18 @@ export function applyPublicationProfile(entries, catalogue, profile, optionalArt
   catalogue.groups = retainedGroups;
   catalogue.sharedPolicy =
     'The rolling main channel keeps current gameplay and active tools. Archived playable copies remain in Git and complete release distributions.';
+  // The worker needs these exact deliberate omissions offline, where an
+  // unknown original would otherwise fail on the network before its native fallback.
+  const omittedSourceOriginals = [...originalProjection.paths].sort();
+  if (
+    omittedSourceOriginals.some(
+      (name) =>
+        entries.some((entry) => entry.name === name) ||
+        catalogue.files.some((file) => file.path === name),
+    )
+  )
+    fail('Omitted source original remains a retained file.');
+  onOmittedSourceOriginals(omittedSourceOriginals);
   // The summary promises every listed original is hosted, so optional artwork
   // metadata is omitted together with preview-only files that are not retained.
   return null;
@@ -927,11 +945,17 @@ export async function addOfflineEntries(
   const contentCatalogue = await buildOfflineContent(entries, excluded, info.version, {
     bundledPackages,
   });
+  let omittedSourceOriginals = [];
   const publishedOptionalArtwork = applyPublicationProfile(
     entries,
     contentCatalogue,
     publicationProfile,
     optionalArtwork,
+    {
+      onOmittedSourceOriginals: (paths) => {
+        omittedSourceOriginals = paths;
+      },
+    },
   );
   const { finalizeOfflineContent } = await import('./offline-finalize.mjs');
   // Derived catalogue data can be compact without changing any published
@@ -1048,6 +1072,7 @@ export async function addOfflineEntries(
       ? { packageConsent: true, navigationBootstraps: contentCatalogue.navigationBootstraps }
       : {}),
     downloadFiles: contentCatalogue.files.filter((file) => file.kind === 'gameplay'),
+    ...(omittedSourceOriginals.length ? { omittedSourceOriginals } : {}),
     ...(optionalPacks.length ? { optionalPacks } : {}),
     ...(publishedOptionalArtwork ? { optionalArtwork: publishedOptionalArtwork } : {}),
   };

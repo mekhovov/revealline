@@ -1,0 +1,68 @@
+{
+  "format": "revealline-offline-art-fallback-review.v1",
+  "recordedAt": "2026-10-18T20:25:06.641Z",
+  "sources": [
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 95836,
+      "sha256": "cce7472338d2cfbe74ed26382bb552d97ec35778691c14e4b1919767b02b2b69"
+    },
+    {
+      "path": "game/offline/service-worker.template.js",
+      "bytes": 21311,
+      "sha256": "0d475aec4a09f9347f329da219e54cf4d20c366d6d11ffea706c4d9a6c66e188"
+    },
+    {
+      "path": "scripts/test-main-pages-source-originals.mjs",
+      "bytes": 8463,
+      "sha256": "b8838ce4ec104c542a31b388c203435c31cdc5b038cf81a87b97b6132da7c494"
+    },
+    {
+      "path": "game/test/offline-art-fallback.test.mjs",
+      "bytes": 10386,
+      "sha256": "adc607405e45a1c732f4377be232f515413e028652fb7009706cabb395654d9c"
+    },
+    {
+      "path": "scripts/qualify-offline-art-fallback-browser.mjs",
+      "bytes": 18648,
+      "sha256": "9d35f1d057ee2283c59e2d8169e57e62f6a2fa94b71d09a53cc0b535bd607727"
+    }
+  ],
+  "diagnosis": "The earlier source-original omission retained exact fallback files but removed original URLs from worker metadata. Offline requests to an unknown original URL fell through to the network and rejected TypeError, so strict404-only readers could not reach the cached fallback.",
+  "fix": "The publication selector reports only actually omitted, exact-pinned paths through a local optional callback. The builder emits a nonempty omittedSourceOriginals field only for that profile. The worker rejects unsafe, oversized, duplicated or retained-path collisions and returns local404 only for same-scope GET requests on those deliberate omissions. Existing cache authorization, no-store bypass, readers, integrity checks and cancellation remain unchanged.",
+  "productionPaths": [
+    "scripts/game-cli.mjs",
+    "game/offline/service-worker.template.js"
+  ],
+  "qualification": {
+    "targeted": {
+      "path": "docs/qualification/shared-demos/offline-art-fallback-regressions.tap.txt",
+      "passed": 34,
+      "failed": 0
+    },
+    "existingWorker": {
+      "path": "docs/qualification/shared-demos/offline-worker-existing-regressions.tap.txt",
+      "passed": 64,
+      "failed": 0
+    },
+    "browser": {
+      "path": "docs/qualification/shared-demos/offline-art-fallback-browser-qualified.json",
+      "checks": 5,
+      "complete": true,
+      "browserCloseCompleted": true,
+      "serverClosed": true,
+      "errors": []
+    },
+    "lint": "Affected files passed ESLint.",
+    "format": "Affected files passed Prettier check."
+  },
+  "preservedEvidence": [
+    "docs/qualification/shared-demos/offline-art-fallback-browser-final.json"
+  ],
+  "limitations": [
+    "The actual Chromium probe uses two representative descriptors and the real worker template with a small selector-approved download inventory; it is not full emitted-site installation or navigation qualification.",
+    "Browser cache bodies/metadata and local/session storage stayed byte-identical across reads. VM tests additionally assert no worker cache.put calls. This is not a heap or exhaustive IndexedDB audit.",
+    "The complete emitted worker/config list and full-release field absence are being checked separately by the packaging owner.",
+    "Production preview already used cache:no-store for original requests before this omission change. The definite newly introduced regression is the omitted Current Art original path; this remedy also makes the shared Production fallback reachable offline without broad network-error fallback."
+  ]
+}

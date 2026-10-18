@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: the tar model reproduces the actual pinned baseline without building or materializing payloads
+ok 1 - the tar model reproduces the actual pinned baseline without building or materializing payloads
+  ---
+  duration_ms: 8.520958
+  ...
+# Subtest: tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+ok 2 - tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+  ---
+  duration_ms: 0.680667
+  ...
+# Subtest: every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+ok 3 - every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+  ---
+  duration_ms: 0.451583
+  ...
+# Subtest: CLI requires explicit fresh report path and rejects unknown or duplicated options
+ok 4 - CLI requires explicit fresh report path and rejects unknown or duplicated options
+  ---
+  duration_ms: 0.229416
+  ...
+# Subtest: existing evidence is rejected before any costly build or source snapshot
+ok 5 - existing evidence is rejected before any costly build or source snapshot
+  ---
+  duration_ms: 2.682542
+  ...
+# Subtest: only the existing mission-index compaction is admitted and semantic changes remain detectable
+ok 6 - only the existing mission-index compaction is admitted and semantic changes remain detectable
+  ---
+  duration_ms: 0.417
+  ...
+# Subtest: emitted omitted-original inventory exactly covers actual omissions and retained offline fallback bodies
+ok 7 - emitted omitted-original inventory exactly covers actual omissions and retained offline fallback bodies
+  ---
+  duration_ms: 6.509667
+  ...
+# Subtest: a profile with no original omissions requires the optional worker field to stay absent
+ok 8 - a profile with no original omissions requires the optional worker field to stay absent
+  ---
+  duration_ms: 0.362333
+  ...
+# Subtest: packaging enumerates all four modes and every body variant once, with only qualified Solo diagnostics
+ok 9 - packaging enumerates all four modes and every body variant once, with only qualified Solo diagnostics
+  ---
+  duration_ms: 1.052917
+  ...
+# Subtest: packaging rejects URL escapes, remote recordings and invalid native filenames
+ok 10 - packaging rejects URL escapes, remote recordings and invalid native filenames
+  ---
+  duration_ms: 1.097875
+  ...
+# Subtest: offline trace tools and reference bodies are distinguished from shipped sparse diagnostics
+ok 11 - offline trace tools and reference bodies are distinguished from shipped sparse diagnostics
+  ---
+  duration_ms: 0.186708
+  ...
+# Subtest: existing packaging evidence is preserved before any expensive build starts
+ok 12 - existing packaging evidence is preserved before any expensive build starts
+  ---
+  duration_ms: 4.056917
+  ...
+# Subtest: emitted source comparison excludes coverage summaries without losing native replay bodies
+ok 13 - emitted source comparison excludes coverage summaries without losing native replay bodies
+  ---
+  duration_ms: 0.35975
+  ...
+# Subtest: worker metadata parsing is non-executing, unambiguous and bound to the separate emitted configuration
+ok 14 - worker metadata parsing is non-executing, unambiguous and bound to the separate emitted configuration
+  ---
+  duration_ms: 3.939541
+  ...
+# Subtest: full release admits only workers without any omitted-original policy field
+ok 15 - full release admits only workers without any omitted-original policy field
+  ---
+  duration_ms: 1.424958
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 398.628375
