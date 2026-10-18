@@ -1202,7 +1202,7 @@ function openMissionLibrary() {
       mode,
       browsingContext: ({ mode: browsedMode }) =>
         text('browsingContext', {
-          mode: text(browsedMode),
+          mode: navigationMode(browsedMode),
           context: navigationContext(),
         }),
       availableCollectionsOnly: true,
@@ -1591,10 +1591,13 @@ function renderEncounterGuide() {
   $('encounter-summary').dataset.specialist = String(specialist);
   renderEnemyFieldGuide($('field-guide-cards'), kinds, { locale, cast: currentCast() });
 }
+function navigationMode(selectedMode) {
+  return selectedMode === 'versus' ? t('interface:versus2', { lng: locale }) : text(selectedMode);
+}
 function navigationContext() {
   return [
     text('title'),
-    text(mode),
+    navigationMode(mode),
     text(format),
     ...(format === 'endless' && mode === 'versus'
       ? [text(duel === 'score' ? 'scoreDuel' : duel)]
