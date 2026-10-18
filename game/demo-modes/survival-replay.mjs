@@ -10,6 +10,7 @@ import {
 import { OVERFLIGHT_STEP_SECONDS } from '../overflight/host-loop.mjs';
 import { survivalDemoCompiled, SURVIVAL_DEMO_OPTIONS } from './survival-catalog.mjs';
 import { SURVIVAL_DEMO_SIMULATION_IDENTITY } from './survival-simulation-identity.mjs';
+import { reportDemoPreparation } from '../demo-preparation.mjs';
 
 export const SURVIVAL_DEMO_FORMAT = 'OverflightDemonstrationV1';
 export const SURVIVAL_DEMO_MAX_TICKS = 60 * 12 * 60;
@@ -201,26 +202,38 @@ function playback(entry, source) {
   return { run, proof, step, choose, finish };
 }
 
+// Offline diagnostics reuse the exact native transcript, upgrades and verification.
+export { playback as createSurvivalDemoReplay };
+
 /** Full independent input replay; sparse checkpoints only locate divergence. */
 export async function verifySurvivalDemo(
   entry,
   source,
   {
     signal,
+    reportPreparation,
     yieldEvery = 240,
     yieldTask = () => new Promise((resolve) => setTimeout(resolve, 0)),
   } = {},
 ) {
   cancelled(signal);
   const replay = playback(entry, source);
+  const progress = () =>
+    reportDemoPreparation(reportPreparation, 'progress', {
+      tick: replay.run.tick,
+      totalTicks: replay.proof.ticks,
+    });
+  progress();
   while (replay.run.tick < replay.proof.ticks && !terminal(replay.run)) {
     replay.step();
     if (replay.run.tick % yieldEvery === 0) {
+      progress();
       cancelled(signal);
       await yieldTask();
     }
   }
   cancelled(signal);
+  progress();
   return replay.finish();
 }
 

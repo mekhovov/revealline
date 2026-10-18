@@ -659,3 +659,53 @@ test('retirement that exhausts recovery cannot begin another source or quarantin
   assert.equal(clock.pending, 0);
   director.dispose();
 });
+
+for (const exit of ['timeout', 'cancel'])
+  test(`preparation evidence survives ${exit} and ignores late diagnostic updates`, async () => {
+    const clock = demoLoadingClock();
+    const gate = deferred(),
+      late = adapter(),
+      fallback = adapter();
+    let report;
+    const director = createDemoDirector({
+      sources: [
+        { id: 'slow', levelId: 'slow', approachable: true },
+        { id: 'fallback', levelId: 'fallback' },
+      ],
+      loading: clock.options,
+      prepare: (source, { reportPreparation }) => {
+        if (source.id !== 'slow') return fallback;
+        report = reportPreparation;
+        report('candidate', { variant: 'chromium', engineHint: 'chromium' });
+        report('verification');
+        report('progress', { tick: 2400, totalTicks: 19020 });
+        return gate.promise;
+      },
+    });
+    const pending = director.start();
+    if (exit === 'timeout') clock.advance(15000);
+    else {
+      clock.elapse(100);
+      director.suspend();
+    }
+    assert.equal(await pending, exit === 'timeout');
+    const row = director.diagnostics.find((item) => item.sourceId === 'slow');
+    assert.equal(row.event, exit === 'timeout' ? 'failed' : 'cancelled');
+    assert.equal(row.preparation.status, row.event);
+    assert.equal(row.preparation.stage, 'verification');
+    assert.equal(row.preparation.elapsedMs, exit === 'timeout' ? 15000 : 100);
+    assert.equal(row.preparation.candidates[0].tick, 2400);
+    const original = JSON.stringify(row);
+    clock.elapse(90000);
+    report('renderer');
+    report('progress', { tick: 19020, totalTicks: 19020 });
+    gate.resolve(late);
+    await settleDemoLoading();
+    assert.equal(late.disposals, 1);
+    assert.equal(
+      JSON.stringify(director.diagnostics.find((item) => item.sourceId === 'slow')),
+      original,
+    );
+    assert.equal(clock.pending, 0);
+    director.dispose();
+  });

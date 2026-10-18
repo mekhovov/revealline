@@ -1,0 +1,349 @@
+{
+  "format": "IntegratedSurvivalPreparationProbeV1",
+  "started": "2026-10-18T17:39:02.971Z",
+  "head": "bbd7c6a064dd1bd9920d30d20da0ee252b297238",
+  "baseURL": "http://127.0.0.1:8769",
+  "sources": [
+    {
+      "path": "game/demo-preparation.mjs",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268"
+    },
+    {
+      "path": "game/demo-loading.mjs",
+      "sha256": "2f9ab4efe38398cfe08dba89c328cacec2cae559c591d6e85770f5bfce744ba4"
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "sha256": "d443705445734492a01a76466cd2f9f8ba3f18904c57c6612fe86f7801654dfc"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "sha256": "d6d57b78d4a04ac91df0e19d4a340b8e73d2c526e85d8ab5a37a4951112e2a99"
+    },
+    {
+      "path": "game/demo-modes/survival.mjs",
+      "sha256": "44fa423bb6e154d196cf17fd29fc812180f2bca9f4648fb08763f5b4c16b49b1"
+    },
+    {
+      "path": "game/demo-modes/survival-replay.mjs",
+      "sha256": "4a2bbdc38fcd55551c7a9221b3d7bf05bb87896a140efcd870107f8bebb3ac0e"
+    },
+    {
+      "path": "game/demo-modes/survival-catalog.mjs",
+      "sha256": "367696d7f800bf098bab9013f5273443b06c7b3109679816d44bc758d12047f3"
+    },
+    {
+      "path": "game/demo-runtime.mjs",
+      "sha256": "dcdb1039b0ec43342a7c4e0d671c395820cfbfffddfd7fa4ffff219f064550df"
+    },
+    {
+      "path": "game/demo-data/survival/river-port-floodgate-yard.chromium.replay.json",
+      "sha256": "de2811bfb1539fb7eeb528c1a6ee2a837cca7be1031060862a8e2593387dcf23"
+    },
+    {
+      "path": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.chromium.replay.json",
+      "sha256": "6afa4424cb06dc391865bb692cb9dccbad7c9cdd5b739972feddfa2d2a3828c4"
+    },
+    {
+      "path": "game/demo-data/survival/relay-ruins-receiver-gardens.chromium.replay.json",
+      "sha256": "3f76baf6f4de4a7ac72e9b4758ac1563e66b7a20e09aad8b53e93f67d9ee5a32"
+    },
+    {
+      "path": "game/demo-data/survival/freight-depot-loading-loop.chromium.replay.json",
+      "sha256": "2be493ca86d6a4c8685707c0ae5aff6c8ae7a74ffa96d437f4dbbe8bcfd961bb"
+    }
+  ],
+  "context": "One new Chromium context uses the ordinary Survival entry and complete shared demo host. Test-only document credentials and a response-only Survival metadata inventory filter restrict rotation to the four previous timeout missions. Simulation, recordings, preparation stages and renderers are unchanged. One browser and one demo scene at a time, no video, no parallel browser job. This is a short integrated probe, not endurance qualification.",
+  "levels": [
+    "river-port-floodgate-yard",
+    "orchard-strongpoint-glasshouse-ruins",
+    "relay-ruins-receiver-gardens",
+    "freight-depot-loading-loop"
+  ],
+  "results": [
+    {
+      "source": "survival:relay-ruins-receiver-gardens:standard",
+      "phase": "playing",
+      "preparation": {
+        "event": "ready",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792345149157,
+        "loadingMs": 3665.5,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 3665.5,
+          "durationsMs": {
+            "preparation": 0.10000000009313226,
+            "prefetch": 0,
+            "retirement": 0.39999999990686774,
+            "adapter": 0,
+            "source": 0.10000000009313226,
+            "payload": 4.899999999906868,
+            "verification": 3501.899999999907,
+            "scene-import": 1.8000000002793968,
+            "artwork": 119.1999999997206,
+            "renderer": 37,
+            "mount": 0.10000000009313226
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": false,
+              "status": "verified",
+              "code": null,
+              "tick": 19598,
+              "totalTicks": 19598,
+              "elapsedMs": 3506.7
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "failure": null,
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      },
+      "nativeSurfaces": 1
+    },
+    {
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "preparation": {
+        "event": "ready",
+        "sourceId": "survival:freight-depot-loading-loop:standard",
+        "modeId": "survival",
+        "at": 1792345152379,
+        "loadingMs": 3160,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 3160,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0.20000000018626451,
+            "retirement": 0,
+            "adapter": 0.10000000009313226,
+            "source": 0,
+            "payload": 0,
+            "verification": 3009.600000000093,
+            "scene-import": 1.5,
+            "artwork": 113,
+            "renderer": 35.6,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19877,
+              "totalTicks": 19877,
+              "elapsedMs": 3009.6
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "failure": null,
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      },
+      "nativeSurfaces": 1
+    },
+    {
+      "source": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+      "phase": "playing",
+      "preparation": {
+        "event": "ready",
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "at": 1792345157572,
+        "loadingMs": 5139.0999999996275,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 5139.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 0.10000000009313226,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 4917.5,
+            "scene-import": 1.3999999999068677,
+            "artwork": 186,
+            "renderer": 34,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19454,
+              "totalTicks": 19454,
+              "elapsedMs": 4917.4
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "failure": null,
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      },
+      "nativeSurfaces": 1
+    },
+    {
+      "source": "survival:river-port-floodgate-yard:standard",
+      "phase": "playing",
+      "preparation": {
+        "event": "ready",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792345162337,
+        "loadingMs": 4688.5,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 4688.5,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0.20000000018626451,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 4538,
+            "scene-import": 1.2999999998137355,
+            "artwork": 115.5,
+            "renderer": 33.5,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "verified",
+              "code": null,
+              "tick": 19478,
+              "totalTicks": 19478,
+              "elapsedMs": 4538
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "failure": null,
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 32,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      },
+      "nativeSurfaces": 1
+    }
+  ],
+  "requests": [
+    "/game/demo-data/survival/relay-ruins-receiver-gardens.chromium.replay.json",
+    "/game/demo-data/survival/freight-depot-loading-loop.chromium.replay.json",
+    "/game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.chromium.replay.json",
+    "/game/demo-data/survival/river-port-floodgate-yard.chromium.replay.json",
+    "/game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.chromium.replay.json"
+  ],
+  "errors": [],
+  "complete": true,
+  "browserVersion": "155.0.8059.85",
+  "retired": {
+    "source": "survival:river-port-floodgate-yard:standard",
+    "phase": "playing",
+    "preparation": {
+      "event": "ready",
+      "sourceId": "survival:river-port-floodgate-yard:standard",
+      "modeId": "survival",
+      "at": 1792345162337,
+      "loadingMs": 4688.5,
+      "preparation": {
+        "status": "ready",
+        "stage": "renderer",
+        "elapsedMs": 4688.5,
+        "durationsMs": {
+          "preparation": 0,
+          "prefetch": 0.20000000018626451,
+          "retirement": 0,
+          "adapter": 0,
+          "source": 0,
+          "payload": 0,
+          "verification": 4538,
+          "scene-import": 1.2999999998137355,
+          "artwork": 115.5,
+          "renderer": 33.5,
+          "mount": 0
+        },
+        "candidates": [
+          {
+            "variant": "chromium",
+            "engineHint": "chromium",
+            "prefetched": true,
+            "status": "verified",
+            "code": null,
+            "tick": 19478,
+            "totalTicks": 19478,
+            "elapsedMs": 4538
+          }
+        ]
+      },
+      "code": null,
+      "message": null,
+      "stack": null
+    },
+    "failure": null,
+    "resources": {
+      "ownedNativeScenes": 0,
+      "practiceWorlds": 0,
+      "ownedHostListeners": 32,
+      "renderer": {}
+    },
+    "nativeSurfaces": 0
+  },
+  "persistenceUnchanged": true,
+  "workers": {
+    "before": 0,
+    "after": 0
+  },
+  "finished": "2026-10-18T17:39:22.912Z"
+}

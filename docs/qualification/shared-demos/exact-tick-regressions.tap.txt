@@ -1,0 +1,245 @@
+TAP version 13
+# Subtest: SIM emits each native tick for civilian-quad-fixed.v1 / self-level
+ok 1 - SIM emits each native tick for civilian-quad-fixed.v1 / self-level
+  ---
+  duration_ms: 169.916542
+  ...
+# Subtest: SIM emits each native tick for civilian-quad-fixed.v1 / acro
+ok 2 - SIM emits each native tick for civilian-quad-fixed.v1 / acro
+  ---
+  duration_ms: 131.542709
+  ...
+# Subtest: SIM emits each native tick for civilian-world-fixed.v2 / self-level
+ok 3 - SIM emits each native tick for civilian-world-fixed.v2 / self-level
+  ---
+  duration_ms: 256.858167
+  ...
+# Subtest: SIM emits each native tick for civilian-world-fixed.v2 / acro
+ok 4 - SIM emits each native tick for civilian-world-fixed.v2 / acro
+  ---
+  duration_ms: 557.25925
+  ...
+# Subtest: SIM emits each native tick for civilian-world-hunt.v1 / self-level
+ok 5 - SIM emits each native tick for civilian-world-hunt.v1 / self-level
+  ---
+  duration_ms: 687.600834
+  ...
+# Subtest: SIM emits each native tick for civilian-world-hunt.v1 / acro
+ok 6 - SIM emits each native tick for civilian-world-hunt.v1 / acro
+  ---
+  duration_ms: 798.106334
+  ...
+# Subtest: SIM emits each native tick for civilian-world-pursuit.v1 / self-level
+ok 7 - SIM emits each native tick for civilian-world-pursuit.v1 / self-level
+  ---
+  duration_ms: 286.730375
+  ...
+# Subtest: SIM emits each native tick for civilian-world-pursuit.v1 / acro
+ok 8 - SIM emits each native tick for civilian-world-pursuit.v1 / acro
+  ---
+  duration_ms: 252.390917
+  ...
+# Subtest: SIM emits each native tick for civilian-world-pursuit.v2 / self-level
+ok 9 - SIM emits each native tick for civilian-world-pursuit.v2 / self-level
+  ---
+  duration_ms: 681.423125
+  ...
+# Subtest: SIM emits each native tick for civilian-world-pursuit.v2 / acro
+ok 10 - SIM emits each native tick for civilian-world-pursuit.v2 / acro
+  ---
+  duration_ms: 554.567375
+  ...
+# Subtest: SIM capture and comparison pin the full recording, authored course and flight mode
+ok 11 - SIM capture and comparison pin the full recording, authored course and flight mode
+  ---
+  duration_ms: 252.997834
+  ...
+# Subtest: SIM failed native verification cannot create a trusted reference but stays observable
+ok 12 - SIM failed native verification cannot create a trusted reference but stays observable
+  ---
+  duration_ms: 173.881958
+  ...
+# Subtest: SIM abort and observer failure release their physics world before a fresh successful replay
+ok 13 - SIM abort and observer failure release their physics world before a fresh successful replay
+  ---
+  duration_ms: 122.588416
+  ...
+# Subtest: Snake exact observations match every native replay checkpoint: classic-snake-open-loop
+ok 14 - Snake exact observations match every native replay checkpoint: classic-snake-open-loop
+  ---
+  duration_ms: 39.138667
+  ...
+# Subtest: Snake exact observations match every native replay checkpoint: classic-pursuit-oval-intercept
+ok 15 - Snake exact observations match every native replay checkpoint: classic-pursuit-oval-intercept
+  ---
+  duration_ms: 65.308833
+  ...
+# Subtest: Snake exact observations match every native replay checkpoint: classic-living-refuge-bays
+ok 16 - Snake exact observations match every native replay checkpoint: classic-living-refuge-bays
+  ---
+  duration_ms: 76.527292
+  ...
+# Subtest: Snake exact observations match every native replay checkpoint: classic-field-signal-check
+ok 17 - Snake exact observations match every native replay checkpoint: classic-field-signal-check
+  ---
+  duration_ms: 67.519542
+  ...
+# Subtest: Snake exact observations match every native replay checkpoint: classic-operation-first-dispatch
+ok 18 - Snake exact observations match every native replay checkpoint: classic-operation-first-dispatch
+  ---
+  duration_ms: 63.589167
+  ...
+# Subtest: Snake exact observations match every native replay checkpoint: classic-operation-pressure-elbow
+ok 19 - Snake exact observations match every native replay checkpoint: classic-operation-pressure-elbow
+  ---
+  duration_ms: 102.737042
+  ...
+# Subtest: Snake reference capture and exact comparison use canonical recording identity
+ok 20 - Snake reference capture and exact comparison use canonical recording identity
+  ---
+  duration_ms: 16.069041
+  ...
+# Subtest: Snake observation supports diagnostics without granting failed replay admission
+ok 21 - Snake observation supports diagnostics without granting failed replay admission
+  ---
+  duration_ms: 9.147
+  ...
+# Subtest: Snake diagnostics reject changed content, unsupported variants and rejected native inputs
+ok 22 - Snake diagnostics reject changed content, unsupported variants and rejected native inputs
+  ---
+  duration_ms: 4.115792
+  ...
+# Subtest: Snake diagnostic cancellation stops before the next native event or callback
+ok 23 - Snake diagnostic cancellation stops before the next native event or callback
+  ---
+  duration_ms: 5.545708
+  ...
+# Subtest: Snake observation cap permits extra native ticks beyond the recorded terminal declaration
+ok 24 - Snake observation cap permits extra native ticks beyond the recorded terminal declaration
+  ---
+  duration_ms: 7.595083
+  ...
+# Subtest: Solo exact trace reaches the independently verified native terminal state
+ok 25 - Solo exact trace reaches the independently verified native terminal state
+  ---
+  duration_ms: 727.284542
+  ...
+# Subtest: Solo diagnosis locates an early transient mismatch between sparse checkpoints
+ok 26 - Solo diagnosis locates an early transient mismatch between sparse checkpoints
+  ---
+  duration_ms: 250.403375
+  ...
+# Subtest: Solo observation awaits callbacks and cancellation stops further native ticks
+ok 27 - Solo observation awaits callbacks and cancellation stops further native ticks
+  ---
+  duration_ms: 7.708875
+  ...
+# Subtest: Solo final release uses the native terminal boundary and a mismatched entry is rejected
+ok 28 - Solo final release uses the native terminal boundary and a mismatched entry is rejected
+  ---
+  duration_ms: 189.518333
+  ...
+# Subtest: canonical recording bindings ignore object key order but retain exact values
+ok 29 - canonical recording bindings ignore object key order but retain exact values
+  ---
+  duration_ms: 6.285833
+  ...
+# Subtest: capture independently verifies and observes the whole native terminal performance
+ok 30 - capture independently verifies and observes the whole native terminal performance
+  ---
+  duration_ms: 3.888291
+  ...
+# Subtest: first divergent tick is exact even when later ticks and terminal state reconverge
+ok 31 - first divergent tick is exact even when later ticks and terminal state reconverge
+  ---
+  duration_ms: 1.462958
+  ...
+# Subtest: initial state divergence is tick zero, with no invented prior matching tick
+ok 32 - initial state divergence is tick zero, with no invented prior matching tick
+  ---
+  duration_ms: 3.416958
+  ...
+# Subtest: native verification failure remains a failure even if all diagnostic hashes match
+ok 33 - native verification failure remains a failure even if all diagnostic hashes match
+  ---
+  duration_ms: 1.849
+  ...
+# Subtest: reference capture rejects failed verification before observing anything
+ok 34 - reference capture rejects failed verification before observing anything
+  ---
+  duration_ms: 0.148667
+  ...
+# Subtest: reference observation must reach the exact independently verified outcome, tick and hash
+ok 35 - reference observation must reach the exact independently verified outcome, tick and hash
+  ---
+  duration_ms: 1.093958
+  ...
+# Subtest: wrong recording, content, simulation, level, mode or variant rejects before candidate work
+ok 36 - wrong recording, content, simulation, level, mode or variant rejects before candidate work
+  ---
+  duration_ms: 1.795292
+  ...
+# Subtest: retained reference receipt detects changed trace hashes and runtime provenance
+ok 37 - retained reference receipt detects changed trace hashes and runtime provenance
+  ---
+  duration_ms: 2.277458
+  ...
+# Subtest: malformed or incomplete references are rejected before candidate execution
+ok 38 - malformed or incomplete references are rejected before candidate execution
+  ---
+  duration_ms: 5.105042
+  ...
+# Subtest: missing and extra native ticks are distinct from measured state divergence
+ok 39 - missing and extra native ticks are distinct from measured state divergence
+  ---
+  duration_ms: 0.959542
+  ...
+# Subtest: observation faults do not invent an exact divergent tick
+ok 40 - observation faults do not invent an exact divergent tick
+  ---
+  duration_ms: 0.696667
+  ...
+# Subtest: cancellation interrupts reference and candidate observation with cleanup
+ok 41 - cancellation interrupts reference and candidate observation with cleanup
+  ---
+  duration_ms: 1.075833
+  ...
+# Subtest: absolute tick cap and invalid verification identities fail closed
+ok 42 - absolute tick cap and invalid verification identities fail closed
+  ---
+  duration_ms: 0.259
+  ...
+# Subtest: admitted reference and receipt are owned while asynchronous hashing is pending
+ok 43 - admitted reference and receipt are owned while asynchronous hashing is pending
+  ---
+  duration_ms: 1.328791
+  ...
+# Subtest: binding mutation during reference or candidate observation rejects its result
+ok 44 - binding mutation during reference or candidate observation rejects its result
+  ---
+  duration_ms: 0.897084
+  ...
+# Subtest: diagnostic CLI captures, compares, rejects damaged receipts, and reports exact mismatch with failing exit status
+ok 45 - diagnostic CLI captures, compares, rejects damaged receipts, and reports exact mismatch with failing exit status
+  ---
+  duration_ms: 2617.254125
+  ...
+# Subtest: diagnostic CLI rejects outputs in shipped roots, including through a symlink
+ok 46 - diagnostic CLI rejects outputs in shipped roots, including through a symlink
+  ---
+  duration_ms: 946.0485
+  ...
+# Subtest: diagnostic CLI rejects ambiguous or misspelled commands before writing
+ok 47 - diagnostic CLI rejects ambiguous or misspelled commands before writing
+  ---
+  duration_ms: 170.038792
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5356.947167

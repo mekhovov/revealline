@@ -2,6 +2,7 @@ import { survivalDemoInventory, survivalDemoLaunchURL } from './survival-catalog
 import { prepareSurvivalDemoPlayer, createSurvivalDemoPractice } from './survival-replay.mjs';
 import { SURVIVAL_DEMO_RUNTIME_VARIANTS } from './survival-runtime-variants.mjs';
 import { demoRuntimeEngineHint, preferDemoRuntimeCandidates } from '../demo-runtime.mjs';
+import { reportDemoPreparation } from '../demo-preparation.mjs';
 
 const cancelled = (signal) => {
   if (signal?.aborted) throw signal.reason ?? new DOMException('Cancelled', 'AbortError');
@@ -107,22 +108,31 @@ export function createSurvivalDemoAdapter({
           cancelled(signal);
           return body;
         },
-        async create({ signal, payload } = {}) {
+        async create({ signal, payload, reportPreparation } = {}) {
           let firstFailure;
           // Native Math implementations differ between engines. Each candidate
           // is a separately authored full performance, and must pass every
           // exact checkpoint plus full terminal verification on this device.
           for (const [index, variant] of variants.entries()) {
             cancelled(signal);
+            const prefetched = index === 0 && payload !== undefined;
+            reportDemoPreparation(reportPreparation, 'candidate', {
+              variant: variant || 'default',
+              engineHint,
+              prefetched,
+            });
             try {
-              return await prepareSurvivalDemoPlayer(
-                entry,
-                index === 0 && payload !== undefined
-                  ? payload
-                  : await this.load({ signal, variant }),
-                { signal },
-              );
+              reportDemoPreparation(reportPreparation, 'payload');
+              const recording = prefetched ? payload : await this.load({ signal, variant });
+              reportDemoPreparation(reportPreparation, 'verification');
+              const player = await prepareSurvivalDemoPlayer(entry, recording, {
+                signal,
+                reportPreparation,
+              });
+              reportDemoPreparation(reportPreparation, 'candidate-verified');
+              return player;
             } catch (error) {
+              reportDemoPreparation(reportPreparation, 'candidate-failed', { code: error.code });
               cancelled(signal);
               if (!['demo-content-mismatch', 'demo-content-unavailable'].includes(error.code))
                 throw error;
@@ -162,8 +172,16 @@ export function createSurvivalDemoAdapter({
     },
     createPractice: createSurvivalDemoPractice,
     attachInput: attachSurvivalDemoInput,
-    async mountScene({ player, parent, document = parent.ownerDocument, signal, reduced = false }) {
+    async mountScene({
+      player,
+      parent,
+      document = parent.ownerDocument,
+      signal,
+      reduced = false,
+      reportPreparation,
+    }) {
       cancelled(signal);
+      reportDemoPreparation(reportPreparation, 'scene-import');
       const [
         { createOverflightRenderer },
         { createPresentationHost },
@@ -213,6 +231,7 @@ export function createSurvivalDemoAdapter({
       };
       try {
         const compiled = player.state.compiled;
+        reportDemoPreparation(reportPreparation, 'artwork');
         await artwork.load({
           signal: controller.signal,
           worldImageSlots: overflightWorldImageSlots(compiled.presentation),
@@ -225,6 +244,7 @@ export function createSurvivalDemoAdapter({
           presentation: compiled.presentation,
           arena: compiled.arena,
         };
+        reportDemoPreparation(reportPreparation, 'renderer');
         renderer = await createOverflightRenderer({
           parent: surface,
           appearance,

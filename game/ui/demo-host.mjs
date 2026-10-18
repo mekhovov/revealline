@@ -430,7 +430,11 @@ export function attachDemoHost({
     dialog.dataset.demoPhase =
       practice?.phase ?? director?.phase ?? (error && !busy ? 'unavailable' : 'loading');
     dialog.dataset.demoTick = String(state?.tick ?? state?.ticks ?? state?.time ?? 0);
-    const lastFailure = director?.diagnostics?.findLast((item) => item.event.endsWith('failed'));
+    const diagnostics = director?.diagnostics ?? [];
+    const lastPreparation = diagnostics.findLast((item) => item.preparation);
+    if (lastPreparation) dialog.dataset.demoPreparationDetails = JSON.stringify(lastPreparation);
+    else delete dialog.dataset.demoPreparationDetails;
+    const lastFailure = diagnostics.findLast((item) => item.event.endsWith('failed'));
     if (lastFailure) {
       dialog.dataset.demoFailure = `${lastFailure.sourceId ?? ''} ${lastFailure.code ?? ''}: ${lastFailure.message ?? ''}`;
       dialog.dataset.demoFailureDetails = JSON.stringify(lastFailure);
@@ -799,11 +803,17 @@ export function attachDemoHost({
       pendingPreparations--;
     }
   }
-  async function prepareScene(source, { signal, payload }) {
+  async function prepareScene(source, { signal, payload, reportPreparation }) {
+    reportPreparation?.('retirement');
     await withDemoLoadingDeadline(() => retirement, { signal, timeoutMs: 5000 });
-    if ((source.modeId ?? 'solo') === 'solo') return soloAdapter.prepare(source, { signal });
+    if ((source.modeId ?? 'solo') === 'solo') {
+      reportPreparation?.('source');
+      return soloAdapter.prepare(source, { signal });
+    }
+    reportPreparation?.('adapter');
     const adapter = await registry.adapter(source.modeId, { signal });
-    const player = await source.create({ signal, payload });
+    reportPreparation?.('source');
+    const player = await source.create({ signal, payload, reportPreparation });
     let scene, ownership;
     const surface = doc.createElement('div');
     surface.className = 'demo-native-surface';
@@ -835,7 +845,14 @@ export function attachDemoHost({
     signal.addEventListener('abort', cancel, { once: true });
     try {
       if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
-      scene = await adapter.mountScene({ player, parent: surface, document: doc, signal });
+      reportPreparation?.('mount');
+      scene = await adapter.mountScene({
+        player,
+        parent: surface,
+        document: doc,
+        signal,
+        reportPreparation,
+      });
       if (signal.aborted || released) {
         await Promise.resolve()
           .then(() => scene?.dispose?.())
