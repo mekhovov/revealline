@@ -24,10 +24,10 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'e02752554b2651b19713c4039e31b4570c480bb0fad3c1093b953edfdfee1113',
+'fa9e22e3f18a9542f8939cab78f248c0903519ddeaf3c95cceefedb9dca6f7b2',
 'game/ui/hunt-feedback-layout.mjs':
 '54f9755b9fb40953d106b3c0d181948b5eb0983f6b360dba1a1435cf69808a53',
-'game/ui/reaction-caption.mjs':'5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890',
+'game/ui/reaction-caption.mjs':'00ee83d348bfdf1b3b6d6c6f0a5922fa470c78d140bd86d6eaa75c20a4291470',
 'game/journey/reaction-portraits.mjs':
 '39cbf1428dca4e3d6f71e71fed4b41e280b3c0bc284e3bcacf580fca5552952f',
 'game/ui/art/reactions/guide-idle.svg':
@@ -4286,7 +4286,7 @@ if(node.textContent!==text)node.textContent=text;
 // Result surfaces also have legacy footnote rules; the explicit caption
 // preference takes precedence without exposing a hidden parent surface.
 node.style.display=node.hidden?'none':'block';
-node.style.fontSize=`${options.scale}rem`;
+node.style.fontSize=`calc(${options.scale}rem * var(--primary-text-scale, 1))`;
 node.style.lineHeight='1.45';
 node.style.color='var(--fk-text, #f1f5fa)';
 node.style.background=options.background?'var(--fk-panel, #172126)':'transparent';
@@ -7800,7 +7800,7 @@ status.hidden=state.durable;
 }
 panel.style.background=state.background?'var(--panel-bg, #172126)':'transparent';
 panel.style.color='var(--text-color, #fff)';
-caption.style.fontSize=`${state.scale}rem`;
+caption.style.fontSize=`calc(${state.scale}rem * var(--primary-text-scale, 1))`;
 if(current){
 const localized=
 (current.line.resultContext
