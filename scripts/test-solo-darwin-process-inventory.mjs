@@ -1405,3 +1405,250 @@ test('actual owner opts in only to the exact identity evidence protocol when the
     assert.equal(choose(value), false);
   assert.equal(choose({ SOLO_DARWIN_AMBIGUITY_EVIDENCE: 'identity-maps-v1' }), true);
 });
+
+const compactMaps = (m) => captureIdentityMaps(m, true, 'identity-maps-v2');
+const nestedIdentityBytes = (snapshot) =>
+  Buffer.byteLength(JSON.stringify(snapshot, null, 2).replace(/^/gm, ' '.repeat(24)));
+
+test('compact evidence preserves every V1 scalar, order and hash without changing ambiguity or ownership', () => {
+  const original = shellAmbiguityModel(),
+    compact = shellAmbiguityModel();
+  for (const m of [original, compact]) {
+    m.all.set(3457, {
+      ...m.row,
+      pid: 3457,
+      pgid: 1,
+      birth: '00000000000000003457',
+      version: 7239,
+      argv: '/usr/libexec/xpcproxy',
+    });
+    m.all.set(3458, {
+      ...m.row,
+      pid: 3458,
+      birth: '00000000000000003458',
+      state: 'Z',
+      euid: 501,
+      ruid: 501,
+      argv: '/owned/WebKitWebProcess',
+    });
+  }
+  assert.deepEqual(compactMaps(compact), captureIdentityMaps(original));
+  assert.deepEqual(compact.owned, original.owned);
+  assert.deepEqual(compact.record.firstAmbiguousInventory, original.record.firstAmbiguousInventory);
+  const actual = compact.record.firstAmbiguousIdentityMaps;
+  assert.equal(actual.format, 'SoloFirstAmbiguousIdentityMapsV2');
+  for (const key of ['before', 'current', 'owned']) {
+    const old = original.record.firstAmbiguousIdentityMaps[key],
+      next = actual[key];
+    assert.equal(next.status, 'complete');
+    assert.equal(next.encoding, 'compact-json-array');
+    assert.deepEqual(JSON.parse(next.rowsJSON), old.rows);
+    assert.equal(next.bytes, old.bytes);
+    assert.equal(next.sha256, old.sha256);
+    assert.equal(next.encodedRowsBytes, Buffer.byteLength(JSON.stringify(next.rowsJSON)));
+    assert(nestedIdentityBytes(next) <= next.maximumBytes);
+  }
+  const rows = JSON.parse(actual.current.rowsJSON);
+  assert.equal(rows.find((r) => r.pid === 3457).executable, '/usr/libexec/xpcproxy');
+  assert.equal(rows.find((r) => r.pid === 3457).ownerTagged, null);
+  assert.equal(rows.find((r) => r.pid === 3457).rss, null);
+  assert.equal(rows.find((r) => r.pid === 3458).state, 'Z');
+});
+
+test('compact 445/454-row modeled maps fit unchanged bounds and the actual enclosing Cocoa receipt', () => {
+  // Counts match the failed native inventory, but these row contents are a model.
+  // The discarded native before/current maps cannot be reconstructed.
+  const m = shellAmbiguityModel();
+  let pid = 20000;
+  const add = () => {
+    const row = {
+      ...m.row,
+      pid,
+      birth: String(pid).padStart(20, '0'),
+      pgid: pid,
+      argv: pid % 2 ? '/owned/WebKitWebProcess' : '/System/Library/Frameworks/example-service',
+      state: pid % 5 ? 'R' : 'Z',
+      euid: pid % 3 ? 501 : 0,
+      ruid: pid % 3 ? 501 : 0,
+    };
+    pid++;
+    return row;
+  };
+  while (m.before.size < 445) {
+    const row = add();
+    m.before.set(row.pid, row);
+    m.all.set(row.pid, { ...row });
+  }
+  while (m.all.size < 454) {
+    const row = add();
+    m.all.set(row.pid, row);
+  }
+  const legacy = structuredClone(m);
+  assert.deepEqual(compactMaps(m), captureIdentityMaps(legacy));
+  for (const name of ['before', 'current']) {
+    assert.equal(legacy.record.firstAmbiguousIdentityMaps[name].status, 'overflow');
+    assert.equal(legacy.record.firstAmbiguousIdentityMaps[name].reason, 'byte-cap');
+  }
+  const proof = m.record.firstAmbiguousIdentityMaps;
+  assert.equal(proof.before.totalRows, 445);
+  assert.equal(proof.current.totalRows, 454);
+  for (const [name, map] of [
+    ['before', m.before],
+    ['current', m.all],
+    ['owned', m.owned],
+  ]) {
+    assert.equal(proof[name].status, 'complete');
+    assert.equal(JSON.parse(proof[name].rowsJSON).length, map.size);
+    assert(nestedIdentityBytes(proof[name]) <= proof[name].maximumBytes);
+  }
+  assert(Buffer.byteLength(JSON.stringify(m.record, null, 2) + '\n') <= 1024 * 1024);
+  assert(
+    Buffer.byteLength(JSON.stringify({ case: 'deadline', result: m.record }, null, 2) + '\n') <=
+      1024 * 1024,
+  );
+});
+
+test('compact cap counts escaped outer bytes and containing indentation at the exact byte boundary', async () => {
+  const source = await readFile(
+    new URL('./run-solo-remote-correctness.mjs', import.meta.url),
+    'utf8',
+  );
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const node = ast.body.find(
+    (n) => n.type === 'FunctionDeclaration' && n.id.name === 'compactIdentitySnapshot',
+  );
+  assert(node, 'Actual compact serializer exists');
+  const encode = new Function('hash', `return (${source.slice(node.start, node.end)})`)((bytes) =>
+    createHash('sha256').update(bytes).digest('hex'),
+  );
+  const payload = JSON.stringify([
+    { executable: '/"\\é\n'.repeat(100), rss: null, ownerTagged: null },
+  ]);
+  let cap = 256 * 1024;
+  for (let i = 0; i < 4; i++) {
+    const next = encode(payload, 1, cap);
+    cap = next.status === 'complete' ? nestedIdentityBytes(next) : next.minimumSerializationBytes;
+  }
+  for (const delta of [-1, 0, 1]) {
+    const result = encode(payload, 1, cap + delta);
+    assert.equal(result.status, delta < 0 ? 'overflow' : 'complete');
+    if (delta < 0) {
+      assert.equal(result.rowsJSON, null);
+      assert.equal(result.sha256, undefined);
+      assert.equal(result.minimumSerializationBytes, cap);
+    } else {
+      assert.equal(nestedIdentityBytes(result), cap);
+      assert.equal(result.encodedRowsBytes, Buffer.byteLength(JSON.stringify(payload)));
+      assert(result.encodedRowsBytes > result.bytes);
+      assert.equal(JSON.parse(result.rowsJSON)[0].ownerTagged, null);
+    }
+  }
+});
+
+test('compact overflow, invalid rows and row cap never retain a partial identity map', () => {
+  const long = shellAmbiguityModel();
+  for (let i = 0; i < 100; i++)
+    long.all.set(10000 + i, {
+      ...long.row,
+      pid: 10000 + i,
+      birth: String(10000 + i).padStart(20, '0'),
+      argv: '/' + '"'.repeat(4094),
+    });
+  assert.equal(compactMaps(long).length, 101);
+  const snapshot = long.record.firstAmbiguousIdentityMaps.current;
+  assert.equal(snapshot.status, 'overflow');
+  assert.equal(snapshot.reason, 'byte-cap');
+  assert(snapshot.minimumEncodedRowsBytes > snapshot.maximumBytes);
+  assert.equal(snapshot.rowsJSON, null);
+  assert.equal(snapshot.sha256, undefined);
+  const many = shellAmbiguityModel();
+  for (let i = 0; i < 16384; i++) many.before.set(20000 + i, {});
+  compactMaps(many);
+  assert.equal(many.record.firstAmbiguousIdentityMaps.before.reason, 'row-cap');
+  assert.equal(many.record.firstAmbiguousIdentityMaps.before.rows, null);
+  const invalid = shellAmbiguityModel();
+  invalid.before.get(900).version = -1;
+  assert.deepEqual(compactMaps(invalid), [invalid.row]);
+  assert.equal(invalid.record.firstAmbiguousIdentityMaps.before.status, 'unavailable');
+  assert.equal(invalid.record.firstAmbiguousIdentityMaps.before.rows, null);
+});
+
+test('compact latch owns its data and excludes unreadable guesses, argument text and arbitrary fields', () => {
+  const m = shellAmbiguityModel();
+  m.row.pathInspection = 'unavailable';
+  m.row.argv = 'secret-argument';
+  m.row.extra = 'secret-argument';
+  m.owned.set(m.leader, { ...m.owned.get(m.leader), argv: 'secret-argument' });
+  compactMaps(m);
+  const retained = structuredClone(m.record.firstAmbiguousIdentityMaps);
+  assert(!JSON.stringify(retained).includes('secret-argument'));
+  assert.equal(
+    JSON.parse(retained.current.rowsJSON).find((r) => r.pid === m.row.pid).executable,
+    null,
+  );
+  m.row.pathInspection = 'complete';
+  m.row.argv = '/changed';
+  m.row.version++;
+  m.before.get(900).version++;
+  m.owned.get(m.leader).ppid++;
+  m.all.delete(m.row.pid);
+  assert.deepEqual(compactMaps(m), []);
+  m.all.set(m.row.pid, { ...m.row, birth: '00000000000000009999' });
+  assert.equal(compactMaps(m).length, 1);
+  assert.deepEqual(m.record.firstAmbiguousIdentityMaps, retained);
+  const linux = shellAmbiguityModel();
+  assert.equal(captureIdentityMaps(linux, false, 'identity-maps-v2').length, 1);
+  assert.equal(linux.record.firstAmbiguousIdentityMaps, undefined);
+});
+
+test('only the actual Cocoa owner boundary explicitly selects V2; common and ordinary preflight defaults stay V1', async () => {
+  const source = await readFile(new URL('./solo-native-mp3-control.mjs', import.meta.url), 'utf8');
+  const ast = parse(source, { ecmaVersion: 'latest', sourceType: 'module' });
+  const calls = [];
+  const visit = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'CallExpression' && node.callee?.name === 'ownedCommand') calls.push(node);
+    for (const value of Object.values(node))
+      if (Array.isArray(value)) value.forEach(visit);
+      else if (value && typeof value === 'object') visit(value);
+  };
+  visit(ast);
+  const optIns = calls.filter((n) =>
+    source.slice(n.arguments[1].start, n.arguments[1].end).includes('identity-maps-v2'),
+  );
+  assert.equal(optIns.length, 1);
+  const call = optIns[0];
+  assert.equal(call.arguments[0].elements[2].value, 'child-cocoa-owner');
+  const options = source.slice(call.arguments[1].start, call.arguments[1].end);
+  const choose = new Function(
+    'cocoaEnvironment',
+    'options',
+    'plan',
+    'join',
+    'output',
+    `return (${options})`,
+  );
+  for (const value of [undefined, 'identity-maps-v1', 'identity-maps-v2', 'identity-maps-v3']) {
+    const actual = choose(
+      { SOLO_DARWIN_AMBIGUITY_EVIDENCE: value },
+      {},
+      { ownerPreflightTimeoutMs: 120000 },
+      join,
+      '/output',
+    );
+    assert.equal(
+      actual.retainAmbiguityInventories,
+      value === 'identity-maps-v2' ? value : undefined,
+    );
+    assert.equal(actual.timeoutMs, 120000);
+    assert.equal(actual.receipt, '/output/owner-preflight-command.json');
+  }
+  // The existing actual common-owner AST control above still rejects V2 env
+  // alone. Ordinary preflight has no explicit V2 selector or override.
+  const preflight = await readFile(
+    new URL('./solo-darwin-owner-preflight.mjs', import.meta.url),
+    'utf8',
+  );
+  assert(!preflight.includes('identity-maps-v2'));
+  assert(!preflight.includes('retainAmbiguityInventories'));
+});
