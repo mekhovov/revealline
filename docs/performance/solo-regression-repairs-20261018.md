@@ -23,3 +23,9 @@ Scoped lint and formatting pass for these groups, and independent peer reviews f
 7. Physical iPhone 17 Pro Safari and Steam Deck OLED Chrome checks remain unavailable. Desktop evidence cannot close that requirement.
 
 The [living plan](solo-performance-followup-plan.md) is the current priority record; each completed lane must link its exact source and result.
+
+## Current verification checkpoint
+
+At runtime head `73a345cec696d7789198cf295ca5c37b17ca0e71`, source validation and all four focused shards, Industrial features and Company candidates pass. Independent readback verifies all 624 cases across the four Appearance prerequisites, with no skips; the full Appearance test/build job remains pending at this checkpoint. Its exact small evidence is retained under `.cache/solo-followup/regression-ci-73/`. This is not a full-suite or final-package verdict.
+
+A separate published-browser check on main `4f68b924ee74c1a02fa340b1d17ddadf5ffa2c3f` follows Home → FPV Survivals → Start → keyboard input → Pause → Settings → Back → explicit Resume → Pause. The public clock reaches 00:05 with hull 100/100; no warning/error console entries were reported. The check did not quantify movement, replay, timing or sustained behavior and does not qualify unpublished runtime73. Both public metadata files returned the exact main revision over HTTPS. The temporary test tab was closed after pausing, leaving user tabs untouched.

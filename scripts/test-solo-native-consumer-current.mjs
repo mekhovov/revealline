@@ -203,7 +203,10 @@ function manualAdmission(text, name, jobMinutes, stepMinutes) {
   return guard;
 }
 test('new fixed lanes require deliberate main dispatch and preserve native, retention and setup bounds', () => {
-  assert.match(workflow, /options: \[first-eight, next, cocoa, raster, hud-cpu\]/);
+  assert.match(
+    workflow,
+    /options: \[first-eight, next, cocoa, raster, hud-cpu, readiness, touch\]/,
+  );
   assert.match(workflow, /cancel-in-progress: false/);
   for (const [name, jobMinutes, stepMinutes] of [
     ['raster', 125, 79],
@@ -242,8 +245,11 @@ test('new fixed lanes require deliberate main dispatch and preserve native, rete
     assert.throws(() =>
       manualAdmission(
         workflow.replace(
-          `    timeout-minutes: ${jobMinutes}\n`,
-          `    timeout-minutes: ${jobMinutes + 1}\n`,
+          job(workflow, name),
+          job(workflow, name).replace(
+            `    timeout-minutes: ${jobMinutes}\n`,
+            `    timeout-minutes: ${jobMinutes + 1}\n`,
+          ),
         ),
         name,
         jobMinutes,

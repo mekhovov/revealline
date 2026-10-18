@@ -337,7 +337,8 @@ test('successor preserves actual serialized assessment and journal failure bound
 
 test('historical font witness cannot authorize changed current tools before package or native work', async () => {
   const repository = await realpath(new URL('../', import.meta.url));
-  const target = 'scripts/run-solo-remote-correctness.mjs';
+  // The first changed current adapter must fail before any package continuation.
+  const target = 'scripts/solo-remote-readiness.mjs';
   const calls = [];
   let admitted = 0;
   await assert.rejects(
