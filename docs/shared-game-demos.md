@@ -100,3 +100,6 @@ These examples informed the agreed design; the numeric timing, inventory, and ac
 - [Factorio's determinism testing](https://factorio.com/blog/post/fff-55) combines inexpensive checks with deeper mismatch investigation. Here, sparse diagnostic checkpoints supplement full replay verification and never relax its acceptance criteria.
 - [MDN's WebGL guidance](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/WebGL_best_practices#delete_objects_eagerly) recommends explicit resource retirement. Each adapter releases its owned scene before a replacement can mount.
 - [Chrome's lifecycle guidance](https://developer.chrome.com/docs/web-platform/page-lifecycle-api) distinguishes hidden, frozen, and discarded pages. The shared clock handles visibility and freezing separately, and ordinary boot handles a discarded page's reload.
+
+
+Solo Fresh preserves the existing progression and installation rules, as confirmed during qualification: locked missions keep the isolated-practice fallback, and uninstalled exact missions open the normal mission chooser. Demo watching and takeover do not install packs or unlock progress. Eligible installed missions use guarded ordinary preparation to Ready.

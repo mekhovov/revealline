@@ -1,0 +1,23 @@
+{
+  "sourceRevision": "5c69d1d932815d44a5ceec87b74a119f0cd21d61",
+  "validatedAt": "2026-10-18T19:18:15.032907+00:00",
+  "scope": "Share exact Classic demo native source dependencies with the optional demo group. No archive discovery, automatic installation, source pack bytes, replay corpus or limits changed.",
+  "files": {
+    "scripts/demo-native-dependencies.mjs": "6cf6672321d3e1c2ea25b9e4cd330fa3ffabc7850fe62361803400df6ad4f48b",
+    "scripts/offline-content.mjs": "951c0736b7a9042161d8530df75bbad23a7daa1dd2e71e47e18d613e258d86f6",
+    "scripts/test-demo-native-dependencies.mjs": "f11ceb640f64054d98f3cb830739435595b28d5ccb07d21b3732d11f09550187"
+  },
+  "tests": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "tap": "demo-native-dependencies-regressions.tap.txt"
+  },
+  "lintPassed": true,
+  "formatPassed": true,
+  "preFixProfileEvidence": "main-pages-demo-inspection-af3ec1934.json",
+  "remaining": [
+    "A fresh emitted profile must confirm the retained dependency set.",
+    "Corrected profile capacity remains blocked pending a lossless transport or other proven reduction."
+  ]
+}
