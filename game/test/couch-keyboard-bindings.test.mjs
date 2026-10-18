@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { KeyboardLocks, keyboardTurn } from './helpers/keyboard-locks.mjs';
 import assert from 'node:assert/strict';
 import { resolveCouchKeyboard, replaceCouchKey, couchKeyMap } from '../couch/keyboard-bindings.mjs';
 import {
@@ -89,12 +90,15 @@ test('cross-seat/action conflicts and browser/menu shortcuts are rejected before
     assert.throws(() => resolveCouchKeyboard(value));
 });
 
-test('failed writes retain explicit session keys and merge nonconflicting newer seat fields on Retry', () => {
+test('failed writes retain explicit session keys and merge nonconflicting newer seat fields on Retry', async () => {
   const store = storage(),
-    owner = createCouchKeyboardPreferences({ getStorage: () => store });
+    owner = createCouchKeyboardPreferences({
+      getStorage: () => store,
+      getLockManager: () => new KeyboardLocks(),
+    });
   assert.equal(store.writes, 0);
   store.fail(true);
-  owner.set(0, 'up', 'KeyI');
+  await owner.set(0, 'up', 'KeyI');
   assert.equal(owner.snapshot().bindings.seats[0].up, 'KeyI');
   assert.equal(owner.snapshot().status, 'session');
   assert.equal(owner.snapshot().reason, 'full');
@@ -103,45 +107,51 @@ test('failed writes retain explicit session keys and merge nonconflicting newer 
   owner.refresh();
   assert.equal(owner.snapshot().bindings.seats[0].up, 'KeyI');
   store.fail(false);
-  owner.retry();
+  await owner.retry();
   assert.equal(owner.snapshot().status, 'saved');
   assert.equal(owner.snapshot().reason, '');
   assert.equal(owner.snapshot().bindings.seats[1].down, 'KeyK');
   assert.equal(JSON.parse(store.getItem(COUCH_KEYBOARD_KEY)).seats[0].up, 'KeyI');
   owner.dispose();
-  owner.set(0, 'up', 'KeyU');
-  owner.retry();
+  await owner.set(0, 'up', 'KeyU');
+  await owner.retry();
   assert.equal(store.writes, 2);
 });
 
-test('a cross-tab key collision cannot silently change accepted session controls or overwrite storage', () => {
+test('a cross-tab key collision cannot silently change accepted session controls or overwrite storage', async () => {
   const store = storage(),
-    owner = createCouchKeyboardPreferences({ getStorage: () => store });
+    owner = createCouchKeyboardPreferences({
+      getStorage: () => store,
+      getLockManager: () => new KeyboardLocks(),
+    });
   store.fail(true);
-  owner.set(0, 'up', 'KeyI');
+  await owner.set(0, 'up', 'KeyI');
   const newer = JSON.stringify(replaceCouchKey(null, 1, 'down', 'KeyI'));
   store.values.set(COUCH_KEYBOARD_KEY, newer);
   store.fail(false);
-  owner.retry();
+  await owner.retry();
   assert.equal(store.writes, 1, 'Conflict prevents the second write.');
   assert.equal(store.getItem(COUCH_KEYBOARD_KEY), newer);
   assert.equal(owner.snapshot().bindings.seats[0].up, 'KeyI');
   assert.equal(owner.snapshot().bindings.seats[1].down, 'ArrowDown');
   assert.equal(owner.snapshot().reason, 'conflict');
-  owner.set(0, 'up', 'KeyU');
+  await owner.set(0, 'up', 'KeyU');
   assert.equal(owner.snapshot().status, 'saved');
   assert.equal(owner.snapshot().bindings.seats[1].down, 'KeyI');
 });
 
-test('silent writes remain unconfirmed and other tabs are adopted only on an explicit refresh', () => {
+test('silent writes remain unconfirmed and other tabs are adopted only on an explicit refresh', async () => {
   const store = storage(),
-    owner = createCouchKeyboardPreferences({ getStorage: () => store });
+    owner = createCouchKeyboardPreferences({
+      getStorage: () => store,
+      getLockManager: () => new KeyboardLocks(),
+    });
   store.silent(true);
-  owner.set(0, 'up', 'KeyI');
+  await owner.set(0, 'up', 'KeyI');
   assert.equal(owner.snapshot().status, 'session');
   assert.equal(owner.snapshot().reason, 'unconfirmed');
   store.silent(false);
-  owner.retry();
+  await owner.retry();
   const newer = replaceCouchKey(owner.snapshot().bindings, 1, 'up', 'KeyU');
   store.values.set(COUCH_KEYBOARD_KEY, JSON.stringify(newer));
   assert.equal(owner.snapshot().bindings.seats[1].up, 'ArrowUp');
@@ -150,19 +160,91 @@ test('silent writes remain unconfirmed and other tabs are adopted only on an exp
   assert.equal(owner.snapshot().status, 'external');
 });
 
-test('a reentrant newer choice cannot be acknowledged by an older write', () => {
+test('a reentrant newer choice cannot be acknowledged by an older write', async () => {
   const store = storage(),
-    owner = createCouchKeyboardPreferences({ getStorage: () => store });
+    owner = createCouchKeyboardPreferences({
+      getStorage: () => store,
+      getLockManager: () => new KeyboardLocks(),
+    });
   const write = store.setItem.bind(store);
   store.setItem = (key, value) => {
     write(key, value);
-    owner.set(0, 'up', 'KeyU');
+    void owner.set(0, 'up', 'KeyU');
   };
-  owner.set(0, 'up', 'KeyI');
+  await owner.set(0, 'up', 'KeyI');
   assert.equal(owner.snapshot().bindings.seats[0].up, 'KeyU');
   assert.equal(owner.snapshot().status, 'session');
   store.setItem = write;
-  owner.retry();
+  await owner.retry();
   assert.equal(owner.snapshot().status, 'saved');
   assert.equal(JSON.parse(store.getItem(COUCH_KEYBOARD_KEY)).seats[0].up, 'KeyU');
+});
+
+test('two owners serialize distinct edits; a contended save stays session-only until Retry merges both', async () => {
+  const locks = new KeyboardLocks(),
+    store = storage();
+  const options = { getStorage: () => store, getLockManager: () => locks };
+  const a = createCouchKeyboardPreferences(options),
+    b = createCouchKeyboardPreferences(options);
+  const read = store.getItem.bind(store);
+  let overlap;
+  store.getItem = (key) => {
+    const raw = read(key);
+    if (!overlap) overlap = b.set(1, 'down', 'KeyK');
+    return raw;
+  };
+  await a.set(0, 'up', 'KeyI');
+  await overlap;
+  assert.equal(a.snapshot().status, 'saved');
+  assert.equal(b.snapshot().status, 'session');
+  assert.equal(b.snapshot().reason, 'occupied');
+  assert.equal(b.snapshot().bindings.seats[1].down, 'KeyK');
+  assert.equal(JSON.parse(read(COUCH_KEYBOARD_KEY)).seats[0].up, 'KeyI');
+  assert.equal(JSON.parse(read(COUCH_KEYBOARD_KEY)).seats[1].down, 'ArrowDown');
+  store.getItem = read;
+  await keyboardTurn();
+  await b.retry();
+  const saved = JSON.parse(read(COUCH_KEYBOARD_KEY));
+  assert.equal(saved.seats[0].up, 'KeyI');
+  assert.equal(saved.seats[1].down, 'KeyK');
+  assert.equal(b.snapshot().status, 'saved');
+  assert.ok(
+    locks.calls.every(
+      ({ key, options }) => key === `${COUCH_KEYBOARD_KEY}:writer` && options.ifAvailable,
+    ),
+  );
+  await keyboardTurn();
+  assert.equal(locks.held.size, 0);
+});
+
+test('unavailable locks never write, and leaving Settings or disposal retires delayed admission', async () => {
+  const store = storage(),
+    unavailable = createCouchKeyboardPreferences({
+      getStorage: () => store,
+      getLockManager: () => null,
+    });
+  await unavailable.set(0, 'up', 'KeyI');
+  assert.equal(unavailable.snapshot().reason, 'lockUnavailable');
+  assert.equal(store.writes, 0);
+  for (const retire of ['suspend', 'dispose']) {
+    let admit;
+    const locks = {
+      request(_key, _options, callback) {
+        return new Promise((resolve) => {
+          admit = () => resolve(callback({}));
+        });
+      },
+    };
+    const owner = createCouchKeyboardPreferences({
+      getStorage: () => store,
+      getLockManager: () => locks,
+    });
+    const saving = owner.set(0, 'up', 'KeyI');
+    owner[retire]();
+    admit();
+    await saving;
+    assert.equal(store.writes, 0);
+    assert.equal(owner.snapshot().bindings.seats[0].up, 'KeyI');
+    assert.notEqual(owner.snapshot().status, 'saved');
+  }
 });

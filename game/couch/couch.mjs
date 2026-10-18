@@ -2841,6 +2841,7 @@ try {
     onTransition: ({ to, back = false } = {}) => {
       keyboardSettings?.cancel();
       if (to === 'options') keyboardSettings?.refresh();
+      else keyboardPreferences.suspend();
       globalSettingsVisit++;
       ++libraryOpenEpoch;
       cancelLibraryDecision();

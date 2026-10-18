@@ -5940,5 +5940,8 @@
   "couchKeyboard.save.write": "The browser could not save these keys.",
   "couchKeyboard.save.verify": "The saved keys could not be read back.",
   "couchKeyboard.save.unconfirmed": "The save could not be confirmed.",
-  "couchKeyboard.save.conflict": "Another tab assigned a conflicting key. Review or reset the mappings before retrying."
+  "couchKeyboard.save.conflict": "Another tab assigned a conflicting key. Review or reset the mappings before retrying.",
+  "couchKeyboard.save.saving": "Saving…",
+  "couchKeyboard.save.occupied": "Another tab is saving these keys. Retry when it finishes.",
+  "couchKeyboard.save.lockUnavailable": "This browser cannot reserve a safe save. These keys remain session only."
 }
