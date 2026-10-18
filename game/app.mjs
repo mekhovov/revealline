@@ -388,6 +388,7 @@ import {
 } from './ui/offline-tool-navigation.mjs';
 import { offlineAvailability } from './offline.mjs';
 import { attachStorageRetention } from './ui/storage-retention.mjs';
+import { attachLocalSupportSummary } from './ui/local-support-summary.mjs';
 import { emptyProgress, loadProgress, saveProgress, awardCompletion } from './progress.mjs';
 import {
   downloadJSON,
@@ -2948,6 +2949,9 @@ try {
     controllerStatus = '',
     controllerPreviousScope = '',
     controllerInactive = false;
+  // One latest observation, with no device identity, input values or history.
+  // Input clearing can retire its actionable frame after a disconnect.
+  const supportController = {};
   let lastControllerModality = '';
   document.body.dataset.inputMode =
     navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
@@ -3913,6 +3917,30 @@ try {
     button: $('storage-retention-button'),
     status: $('storage-retention-status'),
     isOpen: () => $('settings-dialog').open,
+  });
+  attachLocalSupportSummary({
+    getHost: () => {
+      const offline = offlineAvailability();
+      return {
+        version: buildVersion,
+        sourceRevision: buildSourceRevision,
+        packaged: isRelease,
+        kind: practice
+          ? 'practice'
+          : runtimeContent
+            ? 'installed-edition'
+            : journeyEnabled
+              ? 'journey'
+              : 'solo',
+        state: !started ? 'idle' : paused ? 'paused' : run?.status,
+        locale: getLocale(),
+        writable: writer.writable,
+        writerReason: practice ? 'practice' : writer.writable ? 'owned' : writer.reasonCode,
+        platform: nativePlatform() ?? 'browser',
+        offline: offline.available ? 'configured' : offline.messageCode,
+        controller: supportController,
+      };
+    },
   });
   window.addEventListener('pagehide', (event) => {
     storageRetention.close();
@@ -11704,6 +11732,12 @@ try {
         ? demoHost.toggleBoostEligible
         : run?.status === 'running',
     });
+    supportController.sampledAt = controllerTime;
+    supportController.status = controllerFrame.status.code;
+    supportController.assigned = Boolean(controllerFrame.assigned);
+    supportController.neutral = controllerFrame.confirmSnapshot.neutral;
+    supportController.blocked = controllerFrame.confirmSnapshot.blocked;
+    supportController.reason = controllerFrame.confirmSnapshot.reason;
     if (controllerFrame.assigned && !paused && started) observeInput('controller');
     soloRadioSetup.refresh();
     refreshControllerBoostCue();
