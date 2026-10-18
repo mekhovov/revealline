@@ -37,7 +37,6 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
     showModal.call(this);
   });
   let time = 1000;
-  t.mock.method(performance, 'now', () => time);
   const pad = {
       index: 0,
       id: 'Steam Deck',
@@ -50,6 +49,9 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
       titleScreen: true,
       readPads: () => [pad],
       initialReadyTimeoutMs: 30000,
+      browserSetup: ({ globals, window }) => {
+        globals.performance = window.performance = { now: () => time };
+      },
     });
   const frame = (milliseconds = 20) => {
       time += milliseconds;
@@ -137,6 +139,7 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
 
   reach('shell-sound');
   time += 1300;
+  assert.equal(performance.now(), time, 'native events and render frames share the modeled clock');
   frame();
   const beforeNativeFirst = page.$('shell-sound').textContent;
   const nativeFirst = page.doc.activeElement.emit('click', {
@@ -159,7 +162,6 @@ test('Steam Deck A owns its delayed Chrome activation across quick actions and d
 
 test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', async (t) => {
   let time = 4000;
-  t.mock.method(performance, 'now', () => time);
   const pad = {
       index: 0,
       id: 'Steam Deck',
@@ -168,7 +170,13 @@ test('Steam Deck trusted click tails cannot undo Start or paused-menu actions', 
       axes: [0, 0, 0, 0],
       buttons: Array.from({ length: 17 }, () => ({ pressed: false, value: 0 })),
     },
-    page = await soloPage(t, { readPads: () => [pad], initialReadyTimeoutMs: 30000 });
+    page = await soloPage(t, {
+      readPads: () => [pad],
+      initialReadyTimeoutMs: 30000,
+      browserSetup: ({ globals, window }) => {
+        globals.performance = window.performance = { now: () => time };
+      },
+    });
   const frame = (milliseconds = 20) => {
       time += milliseconds;
       page.frame(milliseconds);
