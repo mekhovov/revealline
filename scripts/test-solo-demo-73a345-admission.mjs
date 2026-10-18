@@ -1,3 +1,4 @@
+import { readDeclaredDemoCloseTool } from './solo-demo-close-declared-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -254,13 +255,18 @@ test('changed driver bytes reject before display/browser effects', async () => {
     assert.equal(effects, 0);
   }
 });
-test('historical declarations retain exact original observer bytes and other current inputs', async () => {
-  for (const p of plans)
+test('historical declarations retain exact original observer and immutable tool bytes', async () => {
+  for (const [index, p] of plans.entries())
     for (const ref of p.adapterInputs) {
       const b =
         ref.path === 'scripts/observe-solo-demo-recovery.mjs'
           ? original.source
-          : await read(ref.path);
+          : ((await readDeclaredDemoCloseTool(
+              'docs/performance/solo-demo-' +
+                (index ? 'resources' : 'recovery') +
+                '-73a345-plan.json',
+              ref,
+            )) ?? (await read(ref.path)));
       assert.equal(b.length, ref.bytes);
       assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256);
     }

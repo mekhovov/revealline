@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import {
   DEMO_ARMS,
   DEMO_RESOURCE_MODE,
+  DEMO_CLOSE_BOUNDARY_POLICY,
   DEMO_RESOURCE_SOURCE_PATHS,
   validateDemoResourceContract,
   assessDemoResourceCycles,
@@ -735,7 +736,14 @@ test('probe adds owned resources only under explicit contract and successful pau
   assert.equal(probe.state('still-passive').resources, undefined);
 });
 
-function publicCycleFixture({ failAfterClose = 0 } = {}) {
+function publicCycleFixture({
+  failAfterClose = 0,
+  closeBoundary = false,
+  resizeBeforeClose = false,
+  paintAfterClose = false,
+  failCloseClick = false,
+  failDisarm = false,
+} = {}) {
   const f = pausedExportFixture(),
     probe = f.env.demoRecoveryProbe;
   probe.configureResources(cycleContract().resources);
@@ -748,6 +756,14 @@ function publicCycleFixture({ failAfterClose = 0 } = {}) {
   const actions = [],
     stored = new Map();
   const doc = f.env.document;
+  const closeEvents = closeBoundary ? closeEventFixture(f) : null;
+  if (failDisarm) {
+    const disarm = probe.disarmCloseBoundary;
+    probe.disarmCloseBoundary = () => {
+      disarm();
+      throw Error('modeled disarm transport failure');
+    };
+  }
   doc.getElementById('demo-dialog').classList.contains = () => practice;
   f.env.crypto = globalThis.crypto;
   for (const name of ['localStorage', 'sessionStorage'])
@@ -758,11 +774,11 @@ function publicCycleFixture({ failAfterClose = 0 } = {}) {
       key: (i) => [...stored.keys()][i],
       getItem: (key) => stored.get(key),
     };
-  const draw = (paused) =>
+  const draw = (paused, width = 640) =>
     f.painter.draw({ canvas: f.display }, current, 0, {
       quality: 'full',
       paused,
-      displayCSSWidth: 640,
+      displayCSSWidth: width,
     });
   f.env.RevealLineSoloPerformance.export = () => {
     assert(!active || !running, 'Active play must not request resources');
@@ -792,6 +808,12 @@ function publicCycleFixture({ failAfterClose = 0 } = {}) {
     actions.push(selector);
     if (selector === '#demo-back') {
       assert(!running);
+      if (closeEvents?.listeners.size) {
+        if (resizeBeforeClose) draw(true, 565);
+        if (failCloseClick) throw Error('modeled public click timeout');
+        closeEvents.fire();
+        if (paintAfterClose) draw(true, 565);
+      }
       active = false;
       practice = false;
       doc.getElementById('demo-dialog').open = false;
@@ -838,7 +860,7 @@ function publicCycleFixture({ failAfterClose = 0 } = {}) {
   });
   const cycles = actualDriverFunction('resourceCycles', {
     ...common,
-    plan: { resourceCycles: cycleContract() },
+    plan: { resourceCycles: closeBoundary ? closeCycleContract() : cycleContract() },
     snap,
     click,
     openDemo,
@@ -857,7 +879,7 @@ function publicCycleFixture({ failAfterClose = 0 } = {}) {
     ordinaryBefore,
     save: async () => {},
   });
-  return { cycles, report, actions, exports: () => exports };
+  return { cycles, report, actions, snap, closeEvents, exports: () => exports };
 }
 test('actual repeat driver performs all twenty public cycles and exports only after Pause or Close', async () => {
   const f = publicCycleFixture();
@@ -1340,4 +1362,297 @@ test('actual initial observation binds its baseline before any Demo activation',
     openDemo,
   );
   assert.deepEqual(actions, ['#shell-options', '#settings-tab-extras', '#shell-demo']);
+});
+
+const closeCycleContract = () => ({
+  ...cycleContract(),
+  closeBoundaryPolicy: DEMO_CLOSE_BOUNDARY_POLICY,
+});
+
+// The Node control explicitly models event trust; hosted evidence still requires
+// the browser's actual isTrusted value and the real public locator click.
+function closeEventFixture(f) {
+  const doc = f.env.document,
+    oldLookup = doc.getElementById,
+    listeners = new Set(),
+    button = { id: 'demo-back', contains: (target) => target?.parent === button };
+  doc.getElementById = (id) => (id === 'demo-back' ? button : oldLookup(id));
+  doc.addEventListener = (type, listener, capture) => {
+    assert.equal(type, 'click');
+    assert.equal(capture, true);
+    listeners.add(listener);
+  };
+  doc.removeEventListener = (type, listener, capture) => {
+    assert.equal(type, 'click');
+    assert.equal(capture, true);
+    listeners.delete(listener);
+  };
+  return {
+    button,
+    listeners,
+    fire: (event = {}) => {
+      for (const listener of [...listeners])
+        listener({ target: button, isTrusted: true, ...event });
+    },
+  };
+}
+
+function closeProbeFixture() {
+  const f = pausedExportFixture(),
+    events = closeEventFixture(f),
+    probe = f.env.demoRecoveryProbe;
+  probe.configureResources(cycleContract().resources);
+  const before = probe.state('before');
+  return {
+    ...f,
+    events,
+    probe,
+    arm: () =>
+      probe.armCloseBoundary({
+        label: 'spectator-1-close-click',
+        runId: before.demo.id,
+        painterId: before.painterId,
+      }),
+  };
+}
+
+test('trusted Close capture is an explicit contract extension with unchanged historical default', () => {
+  validateDemoResourceContract(cycleContract(), source);
+  validateDemoResourceContract(closeCycleContract(), source);
+  for (const value of [null, false, 'width-change-exemption', 'trusted-click-capture-v2'])
+    assert.throws(() =>
+      validateDemoResourceContract({ ...cycleContract(), closeBoundaryPolicy: value }, source),
+    );
+  const old = resourceReport();
+  old.snapshots[old.cycles[0].closed].drawCount++;
+  assert.throws(() => assessDemoResourceCycles(old, source, cycleContract()));
+});
+
+test('actual probe captures the trusted Back boundary without export and releases its listener', () => {
+  const f = closeProbeFixture();
+  let exports = 0;
+  f.env.RevealLineSoloPerformance.export = () => {
+    exports++;
+    throw Error('No public export allowed inside Close capture');
+  };
+  f.arm();
+  assert.equal(f.events.listeners.size, 1);
+  f.events.fire({ target: { parent: f.events.button } });
+  const capture = f.probe.takeCloseBoundary();
+  assert.equal(capture.closeClick.isTrusted, true);
+  assert.equal(capture.diagnosticsSource, 'not-requested');
+  assert.equal(capture.resources, undefined);
+  assert.equal(capture.resourceContract, undefined);
+  assert.equal(exports, 0);
+  f.probe.disarmCloseBoundary();
+  assert.equal(f.events.listeners.size, 0);
+  assert.throws(() => f.probe.takeCloseBoundary(), /missing/);
+  f.probe.disarmCloseBoundary();
+});
+
+test('actual Close probe rejects missing, synthetic, duplicate and stale-owner events', () => {
+  for (const mutate of [
+    () => {},
+    (f) => f.events.fire({ target: {} }),
+    (f) => f.events.fire({ isTrusted: false }),
+    (f) => {
+      f.events.fire();
+      f.events.fire();
+    },
+    (f) => {
+      f.painter.draw({ canvas: f.display }, { ...f.run }, 0, {
+        quality: 'full',
+        paused: true,
+        displayCSSWidth: 640,
+      });
+      f.events.fire();
+    },
+    (f) => {
+      f.env.document.getElementById('demo-dialog').open = false;
+      f.events.fire();
+    },
+  ]) {
+    const f = closeProbeFixture();
+    f.arm();
+    mutate(f);
+    assert.throws(() => f.probe.takeCloseBoundary());
+    f.probe.disarmCloseBoundary();
+    assert.equal(f.events.listeners.size, 0);
+  }
+  const f = closeProbeFixture();
+  for (let i = 0; i < 20; i++) {
+    f.arm();
+    f.events.fire();
+    f.probe.takeCloseBoundary();
+    f.probe.disarmCloseBoundary();
+  }
+  assert.throws(f.arm, /Bounded/);
+  assert.equal(f.events.listeners.size, 0);
+});
+
+test('actual resource driver retains paused resize and all 64 setup/click/final boundaries', async () => {
+  const f = publicCycleFixture({ closeBoundary: true, resizeBeforeClose: true });
+  await f.snap('prepared-first-source');
+  await f.cycles();
+  await f.snap('ordinary-after');
+  assert.equal(f.report.snapshots.length, 64);
+  assert.equal(f.exports(), 44, 'Trusted capture must not add public exports');
+  assert.equal(f.report.cycles.length, 20);
+  assert.equal(f.closeEvents.listeners.size, 0);
+  for (const row of f.report.cycles) {
+    const paused = f.report.snapshots[row.paused],
+      click = f.report.snapshots[row.closeClick],
+      closed = f.report.snapshots[row.closed];
+    assert.equal(paused.lastDraw.width, 640);
+    assert.equal(click.lastDraw.width, 565);
+    assert.equal(click.drawCount, paused.drawCount + 1);
+    assert.equal(closed.drawCount, click.drawCount);
+  }
+  assessDemoResourceCycles({ ...f.report, sourceRevision: source }, source, closeCycleContract());
+  await assert.rejects(f.snap('overflow'), /false|overflow|assert/i);
+  assert.equal(f.report.snapshots.length, 64);
+});
+
+test('actual resource driver disarms on click failure and retains the pending cycle', async () => {
+  const f = publicCycleFixture({ closeBoundary: true, failCloseClick: true });
+  await assert.rejects(f.cycles(), /modeled public click timeout/);
+  assert.equal(f.report.cycles.length, 1);
+  assert.equal(f.report.cycles[0].status, 'pending');
+  assert.equal(f.report.cycles[0].closeClick, undefined);
+  assert.equal(f.closeEvents.listeners.size, 0);
+});
+
+test('actual resource assessor rejects any extra paint after the trusted Close boundary', async () => {
+  const f = publicCycleFixture({ closeBoundary: true, paintAfterClose: true });
+  await f.cycles();
+  assert.throws(
+    () =>
+      assessDemoResourceCycles(
+        { ...f.report, sourceRevision: source },
+        source,
+        closeCycleContract(),
+      ),
+    /painted after/,
+  );
+});
+
+test('actual resource assessor rejects missing, reused, wrong-owner and invalid trusted boundaries', async () => {
+  const f = publicCycleFixture({ closeBoundary: true, resizeBeforeClose: true });
+  await f.cycles();
+  const raw = { ...f.report, sourceRevision: source };
+  for (const mutate of [
+    (r) => delete r.cycles[0].closeClick,
+    (r) => (r.cycles[1].closeClick = r.cycles[0].closeClick),
+    (r, click) => (click.closeClick.isTrusted = false),
+    (r, click) => (click.closeClick.target = 'demo-resume'),
+    (r, click) => (click.demo.id += 1),
+    (r, click) => (click.demo.tick += 1),
+    (r, click) => (click.demo.checkpoint.hash = 'changed'),
+    (r, click) => (click.painterId += 1),
+    (r, click) => (click.atMs = -1),
+    (r, click) => (click.lastDraw.paused = false),
+    (r, click) => (click.resources = {}),
+    (r, click) => (click.diagnosticsSource = 'public-paused-export'),
+    (r, click) => (click.ordinary.checkpoint.hash = 'changed'),
+    (r, click) => (click.drawCount = 0),
+  ]) {
+    const changed = structuredClone(raw),
+      click = changed.snapshots[changed.cycles[0].closeClick];
+    mutate(changed, click);
+    assert.throws(() => assessDemoResourceCycles(changed, source, closeCycleContract()));
+  }
+});
+
+function actualDemoHostFunction(name) {
+  const found = [];
+  const visit = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (node.type === 'FunctionDeclaration' && node.id?.name === name) found.push(node);
+    if (
+      node.type === 'VariableDeclarator' &&
+      node.id?.name === name &&
+      node.init?.type === 'ArrowFunctionExpression'
+    )
+      found.push(node);
+    for (const value of Object.values(node))
+      if (Array.isArray(value)) value.forEach(visit);
+      else if (value && typeof value === 'object') visit(value);
+  };
+  visit(parse(demoHostSource, { ecmaVersion: 'latest', sourceType: 'module' }));
+  assert.equal(found.length, 1, name);
+  const node = found[0];
+  return node.type === 'VariableDeclarator'
+    ? `const ${demoHostSource.slice(node.start, node.end)};`
+    : demoHostSource.slice(node.start, node.end);
+}
+
+test('actual host permits paused resize before Close but retires paint before every disposal callback', () => {
+  const fixture = Function(
+    'assert',
+    [
+      'let active=true,displayRevision=0,displayCSSWidth=null,lastPaint=null;',
+      'let draws=0,reads=0,context=null,picture=null,source=null,practice=null,detailsOpen=false;',
+      'let publishedPreparationPhase=null,handoffPending=false,epoch=0,handoffGeneration=0;',
+      'let adoptedPlayer=null,paintOwner={},armed=false,busy=false,rewardAge=0,transitionAge=0;',
+      'const interrupted=false,lifecycleSuspended=false,origin=null,doc={hidden:false},state={tick:33,status:"running"};',
+      'const canvas={width:640,height:480,clientWidth:640,clientHeight:480,getContext:()=>({})};',
+      'const dialog={dataset:{},close:()=>{assert.equal(active,false);paint(0);}};',
+      'const sceneTransition={paint(){},clear(){paint(0);}},reward={reset(){paint(0);}};',
+      'const clock={stop(){paint(0);}},audio=null,audioControls={reset(){paint(0);}};',
+      'const controller={abort(){paint(0);}},idle={activity(){paint(0);}},fullscreen={release(){paint(0);}};',
+      'const owners=new Map(),getContext=()=>({reduced:false,quality:"full"});',
+      'const currentRun=()=>{reads++;return state;},renderingLost=()=>false;',
+      'const pictureVisibility=()=>"blurred",renderControls=()=>{},clear=()=>{paint(0);};',
+      'const onQualityTransition=()=>{assert.equal(active,false);paint(0);},onExit=()=>{paint(0);};',
+      'let painter={preparationGeneration:1,paintRevision:0,draw(){draws++;}};',
+      'let director={phase:"paused",player:{},dispose(){assert.equal(active,false);paint(0);}};',
+      actualDemoHostFunction('invalidateDisplay'),
+      actualDemoHostFunction('paint'),
+      actualDemoHostFunction('close'),
+      'return {paint,close,resize(width){canvas.clientWidth=width;invalidateDisplay();},',
+      'facts:()=>({active,draws,reads,tick:state.tick})};',
+    ].join('\n'),
+  )(assert);
+  fixture.paint(0);
+  assert.equal(fixture.facts().draws, 1);
+  fixture.paint(0);
+  assert.equal(fixture.facts().draws, 1, 'Unchanged paused frame remains suppressed');
+  fixture.resize(565);
+  fixture.paint(0);
+  assert.equal(fixture.facts().draws, 2, 'Paused resize legitimately redraws before Close');
+  const before = fixture.facts();
+  fixture.close();
+  fixture.resize(320);
+  fixture.paint(0);
+  fixture.close();
+  assert.deepEqual(fixture.facts(), { ...before, active: false });
+});
+
+test('actual resource driver disarms the capture if the fixed snapshot cap is exhausted', async () => {
+  const f = publicCycleFixture({ closeBoundary: true });
+  while (f.report.snapshots.length < 62) await f.snap('modeled-existing-boundary');
+  await assert.rejects(f.cycles());
+  assert.equal(f.report.snapshots.length, 64);
+  assert.equal(f.report.cycles.length, 1);
+  assert.equal(f.report.cycles[0].status, 'pending');
+  assert.equal(f.report.cycles[0].closeClick, undefined);
+  assert.equal(f.closeEvents.listeners.size, 0);
+});
+
+test('actual resource driver retains primary Close failure if disarming also rejects', async () => {
+  const f = publicCycleFixture({ closeBoundary: true, failCloseClick: true, failDisarm: true });
+  await assert.rejects(f.cycles(), /modeled public click timeout/);
+  const row = f.report.cycles[0];
+  assert.equal(row.status, 'pending');
+  assert.equal(row.closeCaptureFailure, 'modeled public click timeout');
+  assert.equal(row.closeCaptureCleanupFailure, 'modeled disarm transport failure');
+  assert.equal(f.closeEvents.listeners.size, 0);
+});
+
+test('actual resource driver still fails when only capture cleanup rejects', async () => {
+  const f = publicCycleFixture({ closeBoundary: true, failDisarm: true });
+  await assert.rejects(f.cycles(), /modeled disarm transport failure/);
+  assert.equal(f.report.cycles[0].closeCaptureFailure, undefined);
+  assert.equal(f.report.cycles[0].closeCaptureCleanupFailure, 'modeled disarm transport failure');
+  assert.equal(f.report.cycles[0].status, 'pending');
 });

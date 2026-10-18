@@ -97,8 +97,11 @@ export const DEMO_RESOURCE_SOURCE_PATHS = Object.freeze([
   'game/demo-director.mjs',
 ]);
 export const DEMO_RESOURCE_MODE = 'close-reopen-resources-v1';
+export const DEMO_CLOSE_BOUNDARY_POLICY = 'trusted-click-capture-v1';
 export function validateDemoResourceContract(contract, source) {
   assert.match(source, /^[a-f0-9]{40}$/);
+  const closeBoundary = contract?.closeBoundaryPolicy !== undefined;
+  if (closeBoundary) assert.equal(contract.closeBoundaryPolicy, DEMO_CLOSE_BOUNDARY_POLICY);
   assert.deepEqual(contract, {
     mode: DEMO_RESOURCE_MODE,
     sourceRevision: source,
@@ -106,6 +109,7 @@ export function validateDemoResourceContract(contract, source) {
     cyclesPerMode: 10,
     modes: ['spectator', 'practice'],
     snapshotLimit: 64,
+    ...(closeBoundary ? { closeBoundaryPolicy: DEMO_CLOSE_BOUNDARY_POLICY } : {}),
   });
 }
 
@@ -476,8 +480,54 @@ export function assessDemoResourceCycles(raw, source, contract) {
       snapshots.push({ group: `${mode}-${boundary}`, application: { resources: value.resources } });
     }
     const paused = raw.snapshots[row.paused];
-    unchanged(paused, raw.snapshots[row.closed]);
-    assert.equal(paused.drawCount, raw.snapshots[row.closed].drawCount);
+    const closed = raw.snapshots[row.closed];
+    unchanged(paused, closed);
+    if (contract.closeBoundaryPolicy) {
+      assert.equal(
+        row.closeCaptureFailure,
+        undefined,
+        'Close capture failure remains authoritative',
+      );
+      assert.equal(
+        row.closeCaptureCleanupFailure,
+        undefined,
+        'Close capture cleanup failure remains authoritative',
+      );
+      const index = row.closeClick;
+      assert(Number.isSafeInteger(index) && index > row.paused && index < row.closed);
+      assert(!used.has(index), 'Close boundary may not be reused');
+      used.add(index);
+      const click = raw.snapshots[index];
+      assert.equal(click.label, `${mode}-${row.cycle}-close-click`);
+      assert.deepEqual(click.closeClick, {
+        format: 'DemoTrustedCloseBoundaryV1',
+        isTrusted: true,
+        target: 'demo-back',
+      });
+      assert.equal(click.diagnosticsSource, 'not-requested');
+      assert.equal(click.resources, undefined);
+      assert.equal(click.resourceContract, undefined);
+      assert(click.visible && click.focused && click.open);
+      assert.deepEqual(click.viewport, paused.viewport);
+      assert.equal(click.phase, paused.phase);
+      assert.equal(click.practice, paused.practice);
+      assert.equal(click.painterId, paused.painterId);
+      assert.equal(click.lastDraw.paused, true);
+      assert.equal(click.lastDraw.quality, paused.lastDraw.quality);
+      assert.equal(click.reducedPreference, paused.reducedPreference);
+      assert(Number.isFinite(click.lastDraw.width) && click.lastDraw.width > 0);
+      for (const value of [paused, click, closed]) {
+        assert(Number.isFinite(value.atMs) && value.atMs >= 0);
+        assert(Number.isSafeInteger(value.drawCount) && value.drawCount >= 0);
+      }
+      assert(paused.atMs <= click.atMs && click.atMs <= closed.atMs);
+      assert(click.drawCount >= paused.drawCount, 'Draw counter moved backwards before Close');
+      unchanged(paused, click);
+      unchanged(paused, click, 'ordinary');
+      assert.equal(click.drawCount, closed.drawCount, 'Demo painted after the trusted Close click');
+    } else {
+      assert.equal(paused.drawCount, closed.drawCount);
+    }
     assert.equal(paused.lastDraw.paused, true);
     assert.equal(paused.practice, mode === 'practice');
     validQuality(paused);
