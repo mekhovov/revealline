@@ -1,25 +1,25 @@
 {
   "format": "SoloHostedSustainedManifestV1",
-  "cohort": "73-soak-lifecycle-diagnostic-v1",
-  "phase": "soak",
+  "cohort": "797-retry-lifecycle-diagnostic-v1",
+  "phase": "retry",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
   "playwright": "1.62.1",
   "candidate": {
-    "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
-    "tree": "ea30e68636b3342f8e60664a79d425e11e27ff1e",
-    "run": 39099979283,
-    "artifact": 12127570566,
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "run": 39104551453,
+    "artifact": 12128990483,
     "outer": {
-      "bytes": 1094639407,
-      "sha256": "6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64"
+      "bytes": 1094639112,
+      "sha256": "76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897"
     },
     "inner": {
-      "bytes": 1075807617,
-      "sha256": "17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54"
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
     },
-    "manifestSHA256": "d16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93",
-    "producer": "Exact successful Appearance39099979283, Node22.13.1. Full hosted archive/member/source/CSP verification remains mandatory."
+    "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+    "producer": "Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer."
   },
   "baseline": {
     "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
@@ -232,7 +232,7 @@
     {
       "path": "scripts/solo-qualification-hitch-journal.mjs",
       "bytes": 35102,
-      "sha256": "eb2ef67ccf2b7ac8a592e5837a840b579c374ed6cfbbdf93fa46842768dcb3ee"
+      "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3"
     },
     {
       "path": "scripts/solo-qualification-native-replay.mjs",
@@ -297,42 +297,30 @@
   ],
   "release": {
     "format": "SoloHostedPhaseReleaseV1",
-    "status": "reviewed-diagnostic-only",
-    "phase": "soak",
-    "previousPhase": "first8",
-    "candidateRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+    "status": "held-for-review",
+    "phase": "retry",
+    "previousPhase": "next",
+    "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
     "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
-    "noUnclosedOwners": true,
-    "allPriorPlannedJobsClosed": true,
-    "priorProofInspected": true,
-    "evidence": [
-      {
-        "runId": 39105055762,
-        "artifactId": 12127359946,
-        "artifactSHA256": "17665afe978ae63cfaf8d24b1a9626e1d7f607b7ee2611fc637c9e680f3d46d8",
-        "summarySHA256": "a33416a355620817896366d5312fbecb44f0c7e6b8f7220941c8447886d99762",
-        "disposition": "passed",
-        "scope": "first-eight-correctness-only",
-        "numericalFailures": [
-          "baseline-first30-chromium",
-          "baseline-first30-webkit",
-          "candidate-first30-webkit"
-        ]
-      }
-    ],
+    "noUnclosedOwners": false,
+    "allPriorPlannedJobsClosed": false,
+    "priorProofInspected": false,
+    "evidence": [],
     "scope": "independent-comparison-diagnostics",
-    "predecessorRun": 39105055762,
+    "predecessorRun": null,
     "automaticRetries": 0,
     "automaticPhaseContinuation": false,
     "performanceQualification": "not-qualified-diagnostic-only",
-    "sourceCohort": "soak-main8b-candidate73-v1",
-    "firstEightRequired": false,
+    "sourceCohort": "retry-main8b-candidate797-v1",
+    "firstEightRequired": true,
     "dispatch": {
       "workflow": ".github/workflows/solo-native-package-consumer.yml",
       "ref": "refs/heads/main",
       "lane": "lifecycle",
-      "phase": "soak"
-    }
+      "phase": "retry"
+    },
+    "firstEightAllCorrectnessPassed": false,
+    "firstEightEvidence": null
   },
   "resources": {
     "serial": true,
@@ -344,45 +332,25 @@
     "minimumInitialMemoryBytes": 12884901888,
     "minimumInitialDiskBytes": 8589934592,
     "minimumRemainingDiskBytes": 1073741824,
-    "setupBounds": "Existing 192-minute job and 145-minute helper. Full verified baseline and candidate sources/packages remain independent; no timeout increase or observation restart.",
+    "setupBounds": "Existing 142-minute job and 95-minute helper. Full verified baseline and candidate sources/packages remain independent; no timeout increase or observation restart.",
     "ownership": "Fresh RUNNER_TEMP subtree; Linux process birth+owner token/ancestry, bounded TERM/KILL cleanup and fresh process checks before next row. No blanket browser killing.",
     "finalizationReserveBytes": 4194304,
     "setupEvidenceMaximumBytes": 25165824
   },
-  "scope": "Exact 73/normal8b 30-minute elapsed anchored First Return lifecycle diagnostic. Preserve actual active/result/Retry duty, chunked full owner evidence and raw gates; this is not uninterrupted30-minute active recording or physical/thermal qualification.",
-  "phaseOrder": [
-    "soak"
-  ],
+  "scope": "Exact 797/normal8b twenty-Retry anchored First Return diagnostic. All twenty results and Retry actions, original three canvas rules and Chromium memory profiling remain. Excluded retention profiling, no timing qualification or automatic all-owner plateau verdict.",
+  "phaseOrder": ["retry"],
   "remainingDistinctScope": [
     "Every failed/partial/numerical observation remains retained.",
     "Explicit source/owner/prior-phase review required before this held declaration can execute.",
     "Actual native evidence remains required; these source controls do not complete lifecycle or long-recording qualification."
   ],
   "jobs": [
-    {
-      "engine": "chromium",
-      "repetition": 1
-    },
-    {
-      "engine": "chromium",
-      "repetition": 2
-    },
-    {
-      "engine": "chromium",
-      "repetition": 3
-    },
-    {
-      "engine": "webkit",
-      "repetition": 1
-    },
-    {
-      "engine": "webkit",
-      "repetition": 2
-    },
-    {
-      "engine": "webkit",
-      "repetition": 3
-    }
+    { "engine": "chromium", "repetition": 1 },
+    { "engine": "chromium", "repetition": 2 },
+    { "engine": "chromium", "repetition": 3 },
+    { "engine": "webkit", "repetition": 1 },
+    { "engine": "webkit", "repetition": 2 },
+    { "engine": "webkit", "repetition": 3 }
   ],
   "deadlines": {
     "outsideHelper": {
@@ -397,12 +365,12 @@
       "artifactPreparationMinutes": 40,
       "calibrationMinutes": 5,
       "phases": {
-        "soak": {
-          "perArmMinutes": 44,
+        "retry": {
+          "perArmMinutes": 19,
           "armCount": 2,
           "rowBoundaryAndFinalizationReserveMinutes": 12,
-          "helperMinutes": 145,
-          "wholeJobMinutes": 192
+          "helperMinutes": 95,
+          "wholeJobMinutes": 142
         }
       },
       "baselineBuildScope": "No fresh baseline build is admitted. The exact verified normal 8b artifact is reused within the existing 40-minute combined artifact-preparation cap."
@@ -414,8 +382,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 103574,
-      "sha256": "ddfec248b76941fed837f552af95bea5fca98683e1682d0b64acc8bad0679458"
+      "bytes": 107252,
+      "sha256": "4ab9c2532e317c590e8c1fd6090c57f22cfdd437d4099941d98a15d39295e00c"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -424,12 +392,11 @@
     }
   ],
   "performanceExclusion": true,
-  "sourceCohort": "soak-main8b-candidate73-v1",
-  "latestSourceRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
-  "latestRuntimeRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+  "sourceCohort": "retry-main8b-candidate797-v1",
+  "latestSourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+  "latestRuntimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
   "hitchJournal": "bounded-v1",
-  "executionAdmission": "Held cache-only proposal; current source/package/CSP and prior-phase/owner evidence remain mandatory. No automatic dispatch or retry.",
-  "ownedResources": "source-bounds-v1",
+  "executionAdmission": "Held until an actual source797 first-eight correctness/closed-owner receipt and every declared predecessor are independently reviewed. No source73 correctness or numerical result transfers; no automatic dispatch, continuation or retry.",
   "toolingClosure": {
     "status": "dynamic-verifier-smoke-required",
     "dynamicSourceValidation": [

@@ -1481,10 +1481,10 @@ test('heavy preparation policy cannot be applied to altered or unrelated recipe 
   assert.throws(() => qualificationHitchJournalOptions(flags, JSON.parse(bytes), bytes));
 });
 
-for (const sourceLabel of ['de332', '73']) {
+for (const sourceLabel of ['de332', '797']) {
   const sourceRevision =
-    sourceLabel === '73'
-      ? '73a345cec696d7789198cf295ca5c37b17ca0e71'
+    sourceLabel === '797'
+      ? '797e03f28743921842df6aa57520a72016ba3dfc'
       : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
   const representativePhases = [
     'cold-first30',
@@ -1503,7 +1503,7 @@ for (const sourceLabel of ['de332', '73']) {
         ),
       ),
     );
-    if (reviewed && !(sourceLabel === '73' && phase === 'cold-first30')) {
+    if (reviewed) {
       // Synthetic model-only evidence for phases whose actual declarations remain held.
       m.release.status = 'reviewed-and-released';
       for (const key of [
@@ -1523,25 +1523,28 @@ for (const sourceLabel of ['de332', '73']) {
         },
       ];
     }
+    if (reviewed && sourceLabel === '797') {
+      m.release.firstEightAllCorrectnessPassed = true;
+      m.release.firstEightEvidence = {
+        format: 'SoloFirstEightCorrectnessEvidenceV1',
+        sourceRevision,
+        runId: 1,
+        artifactId: 2,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        correctness: 'passed',
+        ownersClosed: true,
+      };
+    }
     return m;
   }
   test(`${sourceLabel}: prospective six-phase map retains all72 declared roles, three AB/BA/AB pairs, package and ordinary gates`, async () => {
     let rows = 0;
     for (const phase of representativePhases) {
       const held = await representative(phase, false);
-      const actualReleased = sourceLabel === '73' && phase === 'cold-first30';
-      assert.equal(
-        held.release.status,
-        actualReleased ? 'reviewed-and-released' : 'held-for-review',
-      );
-      assert.equal(held.release.firstEightAllCorrectnessPassed, actualReleased);
-      if (actualReleased) {
-        assert.equal(held.release.evidence[0].runId, 39105055762);
-        assert.equal(held.release.evidence[0].scope, 'first-eight-correctness-only');
-        const unreleased = structuredClone(held);
-        unreleased.release.status = 'held-for-review';
-        assert.throws(() => timingMatrix(unreleased));
-      }
+      assert.equal(held.release.status, 'held-for-review');
+      assert.equal(held.release.firstEightAllCorrectnessPassed, false);
+      if (sourceLabel === '797') assert.equal(held.release.firstEightEvidence, null);
       assert.deepEqual(held.phaseOrder, representativePhases);
       assert.equal(held.cohort, `${sourceLabel}-${phase}-matched-timing-v1`);
       assert.equal(held.performanceExclusion, false);
@@ -1551,7 +1554,7 @@ for (const sourceLabel of ['de332', '73']) {
           representativePhases.map((name) => [name, name === 'warm-first30' ? 360000 : 240000]),
         ),
       );
-      if (!actualReleased) assert.throws(() => timingMatrix(held));
+      assert.throws(() => timingMatrix(held));
       const m = await representative(phase);
       const matrix = timingMatrix(m);
       assert.equal(matrix.include.length, 6);
@@ -1600,6 +1603,20 @@ for (const sourceLabel of ['de332', '73']) {
       }
       const p = bindTimingJob(m, 'webkit', 1);
       for (const mutate of [
+        ...(sourceLabel === '797'
+          ? [
+              (p) => (p.release.firstEightRequired = false),
+              (p) => (p.release.firstEightEvidence = null),
+              (p) =>
+                (p.release.firstEightEvidence.sourceRevision =
+                  '73a345cec696d7789198cf295ca5c37b17ca0e71'),
+              (p) => (p.release.firstEightEvidence.correctness = 'failed'),
+              (p) => (p.release.firstEightEvidence.ownersClosed = false),
+              (p) => (p.release.firstEightEvidence.artifactSHA256 = 'invalid'),
+              (p) => (p.release.firstEightEvidence.runId = 0),
+              (p) => (p.release.firstEightEvidence.unreviewed = true),
+            ]
+          : []),
         (x) => x.candidate.artifact++,
         (x) => (x.candidate.inner.sha256 = 'f'.repeat(64)),
         (x) => x.baseline.reusableArtifact.artifact++,

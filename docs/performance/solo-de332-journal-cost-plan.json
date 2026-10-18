@@ -78,8 +78,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-diagnostics.mjs",
-      "bytes": 30902,
-      "sha256": "41320b2fc499f91186712539b415a7e4dca49a66ea32b1afdbace85386464d8a"
+      "bytes": 32157,
+      "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97"
     }
   ],
   "frozenTools": [
@@ -241,7 +241,7 @@
     {
       "path": "scripts/solo-qualification-hitch-journal.mjs",
       "bytes": 35102,
-      "sha256": "eb2ef67ccf2b7ac8a592e5837a840b579c374ed6cfbbdf93fa46842768dcb3ee"
+      "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3"
     },
     {
       "path": "scripts/solo-qualification-journal-cost.mjs",
@@ -285,8 +285,8 @@
     },
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 103574,
-      "sha256": "ddfec248b76941fed837f552af95bea5fca98683e1682d0b64acc8bad0679458"
+      "bytes": 107252,
+      "sha256": "4ab9c2532e317c590e8c1fd6090c57f22cfdd437d4099941d98a15d39295e00c"
     },
     {
       "path": "scripts/soundtrack-archive-admissions.mjs",

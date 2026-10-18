@@ -22,6 +22,33 @@ const read = (p) => readFile(new URL(p, root));
 const sha = (b) => createHash('sha256').update(b).digest('hex');
 const path = 'docs/performance/solo-first-victory-cpu-de332-plan.json';
 const manifest = JSON.parse(await read(path));
+const priorDeclaredSourcePath =
+  'docs/performance/fixtures/solo-first-victory-cpu/de332-prior-declared-source.json';
+function priorDeclaredSource(bytes, declarationBytes) {
+  assert.equal(bytes.length, 1415);
+  assert.equal(sha(bytes), '882ceb674329e9ad1892e8f3bf0893cc17f57766fd2017d26a3f1ff1a9028d14');
+  const value = JSON.parse(bytes);
+  assert.equal(value.format, 'SoloDe332CpuDeclaredSourceV1');
+  assert.equal(value.revision, '2e7947f4ec802314978748c0310c3eabbd5d82da');
+  assert.equal(value.tree, '709f86a9771aa03e4daaf2bb964aea01f9889ff7');
+  assert.equal(value.postHocExactGitReadback, true);
+  assert.equal(value.declaration, path);
+  assert.deepEqual(
+    value.records.map((r) => r.path),
+    [
+      'docs/performance/solo-first-victory-cpu-de332-plan.json',
+      'scripts/solo-remote-cpu-profile.mjs',
+      'scripts/solo-qualification-next-route.mjs',
+      'scripts/solo-qualification-hitch-journal.mjs',
+    ],
+  );
+  const refs = new Map(value.records.map((r) => [r.path, r]));
+  assert.equal(declarationBytes.length, refs.get(path).bytes);
+  assert.equal(sha(declarationBytes), refs.get(path).sha256);
+  refs.delete(path);
+  return refs;
+}
+
 const bytes = await read(manifest.recipe.path);
 const recipe = JSON.parse(bytes);
 const plan = () => bindCpuProfileJob(manifest);
@@ -216,12 +243,31 @@ test('standalone binder preserves manifest identity without browser or build exe
   assert.deepEqual(actual, plan());
 });
 
-test('prospective CPU tooling inputs match their explicit declaration', async () => {
+test('prior CPU declaration retains exact Git-bound tools while unchanged inputs stay current', async () => {
+  const historical = priorDeclaredSource(await read(priorDeclaredSourcePath), await read(path));
   const refs = [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools];
   assert.equal(new Set(refs.map((x) => x.path)).size, refs.length);
   for (const ref of refs) {
-    const b = await read(ref.path);
-    assert.equal(b.length, ref.bytes, ref.path);
-    assert.equal(sha(b), ref.sha256, ref.path);
+    const old = historical.get(ref.path);
+    if (old) {
+      assert.equal(old.bytes, ref.bytes, ref.path);
+      assert.equal(old.sha256, ref.sha256, ref.path);
+    } else {
+      const b = await read(ref.path);
+      assert.equal(b.length, ref.bytes, ref.path);
+      assert.equal(sha(b), ref.sha256, ref.path);
+    }
   }
+});
+test('prior CPU source cannot accept altered witness, declaration or invented authority', async () => {
+  const bytes = await read(priorDeclaredSourcePath),
+    declaration = await read(path);
+  assert.equal(priorDeclaredSource(bytes, declaration).size, 3);
+  for (const [w, d] of [
+    [Buffer.concat([bytes, Buffer.from(' ')]), declaration],
+    [bytes, Buffer.concat([declaration, Buffer.from(' ')])],
+    [Buffer.from(JSON.stringify({ ...JSON.parse(bytes), revision: '0'.repeat(40) })), declaration],
+    [Buffer.from(JSON.stringify({ ...JSON.parse(bytes), records: [] })), declaration],
+  ])
+    assert.throws(() => priorDeclaredSource(w, d));
 });

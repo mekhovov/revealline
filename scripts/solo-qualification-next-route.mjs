@@ -6,11 +6,13 @@ export const NEXT_ROUTE_SOURCE = 'c696af41857840359ae473558b90682f3d71f2db';
 export const NEXT_ROUTE_FINAL_SOURCE = 'e1cc5dd7656bab349715cd1c3ce6e9f783508c17';
 export const NEXT_ROUTE_39774_SOURCE = '39774cce8697d412d138ef4da11ac547a5f8e535';
 export const NEXT_ROUTE_DE332_SOURCE = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+export const NEXT_ROUTE_797E03_SOURCE = '797e03f28743921842df6aa57520a72016ba3dfc';
 const nextRouteSources = Object.freeze([
   NEXT_ROUTE_SOURCE,
   NEXT_ROUTE_FINAL_SOURCE,
   NEXT_ROUTE_39774_SOURCE,
   NEXT_ROUTE_DE332_SOURCE,
+  NEXT_ROUTE_797E03_SOURCE,
 ]);
 export const NEXT_ROUTE_IDENTITIES = [
   {
@@ -922,6 +924,10 @@ export const FIRST_VICTORY_DE332_CPU_FIXTURE = Object.freeze({
   bytes: 3545,
   sha256: 'b1f50b274862dbe09237011e40f5fced6042095e745f488c44d72933906ef5ba',
 });
+export const FIRST_VICTORY_797E03_CPU_FIXTURE = Object.freeze({
+  bytes: 3547,
+  sha256: '0c279175bbc49ae0426dcf628b3fb7607031d3943cde56f9c6ea3d7420f2ddf3',
+});
 export function qualificationNextRouteOptions(flags, scenario, bytes) {
   const selected = flags.filter((value) => value.startsWith('--authored-next-route'));
   const declared =
@@ -939,21 +945,29 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
   if (scenario.nativeRouteCpuProfile !== undefined) {
     const current = scenario.nativeRouteCpuProfile === 'first-victory-239-v1';
     const de332 = scenario.nativeRouteCpuProfile === 'first-victory-de332-v1';
+    const latest797 = scenario.nativeRouteCpuProfile === 'first-victory-797e03-v1';
     assert(
-      ['first-victory-e1cc-v1', 'first-victory-239-v1', 'first-victory-de332-v1'].includes(
-        scenario.nativeRouteCpuProfile,
-      ),
+      [
+        'first-victory-e1cc-v1',
+        'first-victory-239-v1',
+        'first-victory-de332-v1',
+        'first-victory-797e03-v1',
+      ].includes(scenario.nativeRouteCpuProfile),
     );
-    const profileSource = de332
-      ? NEXT_ROUTE_DE332_SOURCE
-      : current
-        ? '239c574ecddd5bb6d5896e621d9edc53e7f6a313'
-        : NEXT_ROUTE_FINAL_SOURCE;
-    const profileFixture = de332
-      ? FIRST_VICTORY_DE332_CPU_FIXTURE
-      : current
-        ? FIRST_VICTORY_239_CPU_FIXTURE
-        : FIRST_VICTORY_CPU_FIXTURE;
+    const profileSource = latest797
+      ? NEXT_ROUTE_797E03_SOURCE
+      : de332
+        ? NEXT_ROUTE_DE332_SOURCE
+        : current
+          ? '239c574ecddd5bb6d5896e621d9edc53e7f6a313'
+          : NEXT_ROUTE_FINAL_SOURCE;
+    const profileFixture = latest797
+      ? FIRST_VICTORY_797E03_CPU_FIXTURE
+      : de332
+        ? FIRST_VICTORY_DE332_CPU_FIXTURE
+        : current
+          ? FIRST_VICTORY_239_CPU_FIXTURE
+          : FIRST_VICTORY_CPU_FIXTURE;
     assert.equal(scenario.kind, 'performance');
     assert.equal(scenario.timeoutMs, 240000);
     assert.equal(scenario.requiredProfile, 'cpu');
@@ -962,7 +976,7 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
     assert.deepEqual(scenario, JSON.parse(bytes), 'Profile recipe differs from admitted bytes');
     for (const [name, value] of [
       ['source-revision', profileSource],
-      ['cpu', de332 ? '3.88' : '2.42'],
+      ['cpu', de332 || latest797 ? '3.88' : '2.42'],
       ['browser', 'chromium'],
       ['cadence', 'settled120'],
     ])

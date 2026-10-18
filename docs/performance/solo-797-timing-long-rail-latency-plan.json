@@ -1,25 +1,25 @@
 {
   "format": "SoloHostedTimingManifestV1",
-  "cohort": "73-cold-first30-matched-timing-v1",
-  "phase": "cold-first30",
+  "cohort": "797-long-rail-latency-matched-timing-v1",
+  "phase": "long-rail-latency",
   "repository": "mekhovov/revealline",
   "node": "22.13.1",
   "playwright": "1.62.1",
   "candidate": {
-    "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
-    "tree": "ea30e68636b3342f8e60664a79d425e11e27ff1e",
-    "run": 39099979283,
-    "artifact": 12127570566,
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "run": 39104551453,
+    "artifact": 12128990483,
     "outer": {
-      "bytes": 1094639407,
-      "sha256": "6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64"
+      "bytes": 1094639112,
+      "sha256": "76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897"
     },
     "inner": {
-      "bytes": 1075807617,
-      "sha256": "17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54"
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
     },
-    "manifestSHA256": "d16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93",
-    "producer": "Exact successful Appearance39099979283, Node22.13.1. Full hosted archive/member/source/CSP verification remains mandatory."
+    "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+    "producer": "Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer."
   },
   "baseline": {
     "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
@@ -256,7 +256,7 @@
     {
       "path": "scripts/solo-qualification-hitch-journal.mjs",
       "bytes": 35102,
-      "sha256": "eb2ef67ccf2b7ac8a592e5837a840b579c374ed6cfbbdf93fa46842768dcb3ee"
+      "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3"
     },
     {
       "path": "scripts/solo-qualification-native-replay.mjs",
@@ -320,30 +320,12 @@
     }
   ],
   "jobs": [
-    {
-      "engine": "chromium",
-      "repetition": 1
-    },
-    {
-      "engine": "chromium",
-      "repetition": 2
-    },
-    {
-      "engine": "chromium",
-      "repetition": 3
-    },
-    {
-      "engine": "webkit",
-      "repetition": 1
-    },
-    {
-      "engine": "webkit",
-      "repetition": 2
-    },
-    {
-      "engine": "webkit",
-      "repetition": 3
-    }
+    { "engine": "chromium", "repetition": 1 },
+    { "engine": "chromium", "repetition": 2 },
+    { "engine": "chromium", "repetition": 3 },
+    { "engine": "webkit", "repetition": 1 },
+    { "engine": "webkit", "repetition": 2 },
+    { "engine": "webkit", "repetition": 3 }
   ],
   "phaseOrder": [
     "cold-first30",
@@ -353,47 +335,35 @@
     "large-capture-erosion",
     "jammer-steering"
   ],
-  "latestSourceRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
-  "latestRuntimeRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+  "latestSourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+  "latestRuntimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
   "release": {
     "format": "SoloHostedTimingReleaseV1",
-    "status": "reviewed-and-released",
-    "phase": "cold-first30",
-    "previousPhase": "latest-first8",
-    "candidateRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+    "status": "held-for-review",
+    "phase": "long-rail-latency",
+    "previousPhase": "sentry-latency",
+    "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
     "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
-    "latestRuntimeRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
-    "noUnclosedOwners": true,
-    "allPriorPlannedJobsClosed": true,
-    "priorProofInspected": true,
-    "firstEightAllCorrectnessPassed": true,
+    "latestRuntimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "noUnclosedOwners": false,
+    "allPriorPlannedJobsClosed": false,
+    "priorProofInspected": false,
+    "firstEightAllCorrectnessPassed": false,
     "latestProductionPackageVerified": true,
-    "evidence": [
-      {
-        "runId": 39105055762,
-        "artifactId": 12127359946,
-        "artifactSHA256": "17665afe978ae63cfaf8d24b1a9626e1d7f607b7ee2611fc637c9e680f3d46d8",
-        "summarySHA256": "a33416a355620817896366d5312fbecb44f0c7e6b8f7220941c8447886d99762",
-        "disposition": "passed",
-        "scope": "first-eight-correctness-only",
-        "numericalFailures": [
-          "baseline-first30-chromium",
-          "baseline-first30-webkit",
-          "candidate-first30-webkit"
-        ]
-      }
-    ],
+    "evidence": [],
     "automaticRetries": 0,
     "automaticPhaseContinuation": false,
-    "sourceCohort": "timing-main8b-candidate73-v1",
+    "sourceCohort": "timing-main8b-candidate797-v1",
     "dispatch": {
       "workflow": ".github/workflows/solo-native-package-consumer.yml",
       "ref": "refs/heads/main",
       "lane": "timing",
-      "phase": "cold-first30"
-    }
+      "phase": "long-rail-latency"
+    },
+    "firstEightRequired": true,
+    "firstEightEvidence": null
   },
-  "scope": "Prospective matched main8b/73 timing: three counterbalanced source pairs per engine for this separately retained phase. Existing exact recipes, native protocol, calibration, replay, numerical and owner gates remain. No pooling, automatic retry/continuation or physical qualification.",
+  "scope": "Prospective matched main8b/797 timing: three counterbalanced source pairs per engine for this separately retained phase. Existing exact recipes, native protocol, calibration, replay, numerical and owner gates remain. No pooling, automatic retry/continuation or physical qualification.",
   "resources": {
     "maxParallelJobs": 6,
     "rowsSerialWithinJob": true,
@@ -425,7 +395,7 @@
     }
   },
   "measurementScope": {
-    "lightweight": "Existing fixed-size rAF/phase/audio API and PRE_STEP\u2192POST_RENDER work probe only. Same settled120 pre-navigation fixedB, internal appB remains independently admitted/provisional; no replacing missing internalcalibration. Owner/RSS/disk supervisor remains part of hostedstratum. All raw startup/failed/inconclusive observations retained.",
+    "lightweight": "Existing fixed-size rAF/phase/audio API and PRE_STEP→POST_RENDER work probe only. Same settled120 pre-navigation fixedB, internal appB remains independently admitted/provisional; no replacing missing internalcalibration. Owner/RSS/disk supervisor remains part of hostedstratum. All raw startup/failed/inconclusive observations retained.",
     "excluded": "No CPU/heap profiler, forcedGC, synthetic recovery/contextloss, audio identity instrumentation, diagnostics-on/off pairing or trace in timingrows. Those remain separate released lanes.",
     "remaining": [
       "Demo30s whole-window work/cadence qualification",
@@ -438,8 +408,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 103574,
-      "sha256": "ddfec248b76941fed837f552af95bea5fca98683e1682d0b64acc8bad0679458"
+      "bytes": 107252,
+      "sha256": "4ab9c2532e317c590e8c1fd6090c57f22cfdd437d4099941d98a15d39295e00c"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",
@@ -448,7 +418,7 @@
     }
   ],
   "performanceExclusion": false,
-  "sourceCohort": "timing-main8b-candidate73-v1",
+  "sourceCohort": "timing-main8b-candidate797-v1",
   "hitchJournal": "bounded-v1",
-  "executionAdmission": "Held cache-only declaration; reviewed first-eight and prior-phase/owner evidence must be explicitly bound before release. Verified package metadata alone does not authorize execution. Full package/source/CSP readback remains mandatory."
+  "executionAdmission": "Held until an actual source797 first-eight correctness/closed-owner receipt and every declared predecessor are independently reviewed. No source73 correctness or numerical result transfers; no automatic dispatch, continuation or retry."
 }
