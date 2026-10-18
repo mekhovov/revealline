@@ -5929,14 +5929,10 @@ export function mountWorldApp({
       $('flight-dialog').open &&
       (executionDelta > 250 || (lastTime !== null && now - lastTime > 250))
     ) {
-      // Cold source/graphics preparation may delay a callback while flight is
-      // already disarmed. Discard that elapsed time without cancelling staging.
-      // Active flight and every explicit pause/blur/context-loss path still freeze.
-      if (
-        current?.regional &&
-        regionalPreparing &&
-        ['paused', 'disarmed'].includes(flight.snapshot().status)
-      ) {
+      // A paused flight cannot consume elapsed time. Checkpoint/terrain work
+      // may delay this callback; pausing again would cancel its recovery.
+      // Explicit pause, blur and context-loss handlers still clear ownership.
+      if (['paused', 'disarmed'].includes(flight.snapshot().status)) {
         lastTime = null;
         accumulator = 0;
         return;
