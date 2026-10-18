@@ -1,6 +1,9 @@
 import { exportJSONFile } from '../../game/platform.mjs';
 import { createAircraftArchiveStore } from './aircraft-archive.mjs';
-import { verifyAircraftArchiveInWorker } from './aircraft-archive-verifier.mjs';
+import {
+  verifyAircraftArchiveInWorker,
+  verifyAircraftCourseArchiveInWorker,
+} from './aircraft-archive-verifier.mjs';
 
 const PACKAGE_BYTES = 32 * 1024 * 1024;
 const cancelled = () => new DOMException('Archive operation cancelled', 'AbortError');
@@ -24,6 +27,7 @@ export function mountAircraftArchiveControls({
   store: suppliedStore,
   exportFile = exportJSONFile,
   verify = verifyAircraftArchiveInWorker,
+  verifyCourse = verifyAircraftCourseArchiveInWorker,
   makeId = () => globalThis.crypto.randomUUID(),
 } = {}) {
   const doc = parent.ownerDocument;
@@ -35,13 +39,14 @@ export function mountAircraftArchiveControls({
     status = doc.createElement('p'),
     inventoryStatus = doc.createElement('p'),
     result = doc.createElement('p'),
+    courseHelp = doc.createElement('p'),
     explanation = doc.createElement('p'),
     select = doc.createElement('select');
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   result.setAttribute('role', 'status');
   inventoryStatus.setAttribute('role', 'status');
-  root.append(heading, status, explanation, inventoryStatus, select, result);
+  root.append(heading, status, explanation, inventoryStatus, select, courseHelp, result);
   parent.append(root);
   const removers = [],
     buttons = [];
@@ -55,7 +60,9 @@ export function mountAircraftArchiveControls({
     rows = [],
     inventoryError = null,
     lastPollTick = -1,
-    listLoaded = false;
+    listLoaded = false,
+    activeCourse = null,
+    courseView = null;
   const t = (en, uk) => (locale() === 'uk' ? uk : en);
   const listen = (node, event, fn) => {
     node.addEventListener(event, fn);
@@ -72,6 +79,56 @@ export function mountAircraftArchiveControls({
     return node;
   };
   const current = (session) => !disposed && getSession() === session && owner === session;
+  const generation = () =>
+    (state?.archiveStatus ?? state?.advancedTelemetry?.archiveStatus)?.generation;
+  const courseTitle = (course) =>
+    course?.locales?.[locale()]?.title ?? course?.locales?.en?.title ?? course?.id ?? '';
+  const setResult = (text) => {
+    if (result.textContent !== text) result.textContent = text;
+  };
+  function clearCourse() {
+    if (!courseView) return;
+    operation?.controller.abort();
+    courseView = null;
+    setResult('');
+  }
+  function renderCourse() {
+    if (!courseView) return;
+    const { name, course, mode, phase, report, error } = courseView;
+    const subject = `${name} · ${courseTitle(course)}${mode ? ` · ${mode === 'acro' ? 'Acro' : mode === 'angle' || mode === 'self-level' ? t('Self-level', 'Самовирівнювання') : mode}` : ''}. `;
+    let text;
+    if (error)
+      text =
+        error.name === 'AbortError'
+          ? t('Course verification cancelled.', 'Перевірку курсу скасовано.')
+          : `${t('Could not verify course', 'Не вдалося перевірити курс')}: ${error.message}`;
+    else if (!report)
+      text =
+        phase === 'course'
+          ? t('Checking recorded course objectives…', 'Перевірка записаних завдань курсу…')
+          : t('Verifying recorded physics…', 'Перевірка записаної фізики…');
+    else if (report.course.verified)
+      text = `${t('Recorded course completion verified', 'Завершення курсу в записі перевірено')}: ${(report.course.completedAtTick / report.course.missionHz).toFixed(2)} ${t('s', 'с')}. ${t('Unscored. The current flight is unchanged.', 'Без заліку. Поточний політ не змінено.')}`;
+    else {
+      const reason = report.course.reason;
+      text = `${t('Recorded physics verified. Course completion not verified.', 'Записану фізику перевірено. Завершення курсу не підтверджено.')} ${
+        reason === 'incomplete-course'
+          ? t('The course was not completed in this archive.', 'Курс не завершено в цьому архіві.')
+          : reason === 'course-needs-complete-reset-session'
+            ? t(
+                'A complete session from reset is required; this archive is a clip.',
+                'Потрібна повна сесія від початку; цей архів є фрагментом.',
+              )
+            : reason === 'course-identity-mismatch'
+              ? t(
+                  'This archive belongs to a different course or revision.',
+                  'Цей архів належить до іншого курсу або його версії.',
+                )
+              : `${t('Unsupported course or recording', 'Непідтримуваний курс або запис')}: ${reason}`
+      } ${t('Unscored.', 'Без заліку.')}`;
+    }
+    setResult(subject + text);
+  }
   function renderRows() {
     const selected = select.value;
     select.replaceChildren();
@@ -118,6 +175,13 @@ export function mountAircraftArchiveControls({
     refresh.textContent = t('Refresh saved sessions', 'Оновити збережені сесії');
     download.textContent = t('Export selected archive', 'Експортувати вибраний архів');
     verifyButton.textContent = t('Verify selected archive', 'Перевірити вибраний архів');
+    courseButton.textContent = t('Verify course completion', 'Перевірити завершення курсу');
+    courseHelp.textContent = activeCourse
+      ? `${t('Check the selected archive against this frozen course', 'Перевірити вибраний архів за цією версією курсу')}: ${courseTitle(activeCourse)}. ${t('Uses the recorded aircraft, settings and mode. Static hold, gate and landing objectives only; unscored.', 'Використовує записані дрон, налаштування та режим. Лише статичні завдання утримання, воріт і посадки; без заліку.')}`
+      : t(
+          'Course completion checks are available in Academy and World course practice. Physics verification remains available here.',
+          'Перевірка завершення курсу доступна у практиці курсів Академії та Світу. Перевірка фізики тут доступна.',
+        );
     remove.textContent = t('Delete selected local archive', 'Видалити вибраний локальний архів');
     importText.textContent = t('Import session archive', 'Імпортувати архів сесії');
     file.setAttribute('aria-label', importText.textContent);
@@ -126,8 +190,10 @@ export function mountAircraftArchiveControls({
     for (const node of buttons) node.disabled = Boolean(operation);
     finish.disabled ||= !context?.manifest || Boolean(context?.stopped);
     for (const node of [download, verifyButton, remove]) node.disabled ||= !select.value;
+    courseButton.disabled ||= !select.value || !activeCourse;
     select.disabled = Boolean(operation);
     file.disabled = Boolean(operation);
+    renderCourse();
   }
   async function refreshRows(signal) {
     let next;
@@ -265,22 +331,27 @@ export function mountAircraftArchiveControls({
         if (!disposed) paint();
       });
   }
-  async function run(action) {
+  async function run(action, valid = null) {
     if (disposed || operation || root.hidden) return;
     const job = { controller: new AbortController() };
     operation = job;
+    if (!valid) courseView = null;
     result.textContent = t('Preparing…', 'Підготовка…');
     paint();
     try {
       await work?.promise;
       job.controller.signal.throwIfAborted();
+      if (valid && !valid()) throw cancelled();
       await action(job.controller.signal);
     } catch (error) {
-      if (!disposed && operation === job)
-        result.textContent =
-          error.name === 'AbortError'
-            ? t('Archive operation cancelled.', 'Операцію з архівом скасовано.')
-            : `${t('Could not complete', 'Не вдалося завершити')}: ${error.message}`;
+      if (!disposed && operation === job && (!valid || valid())) {
+        if (valid) courseView.error = error;
+        else
+          result.textContent =
+            error.name === 'AbortError'
+              ? t('Archive operation cancelled.', 'Операцію з архівом скасовано.')
+              : `${t('Could not complete', 'Не вдалося завершити')}: ${error.message}`;
+      }
     } finally {
       if (operation === job) operation = null;
       if (!disposed) paint();
@@ -373,6 +444,45 @@ export function mountAircraftArchiveControls({
         }`;
     }),
   );
+  const courseButton = button(() => {
+    if (!activeCourse || !select.value) return;
+    const session = owner,
+      archiveGeneration = generation(),
+      id = select.value;
+    const view = {
+      name: rows.find((row) => row.id === id)?.name ?? id,
+      course: structuredClone(activeCourse),
+      valid: () =>
+        courseView === view &&
+        current(session) &&
+        generation() === archiveGeneration &&
+        select.value === id,
+    };
+    courseView = view;
+    return run(async (signal) => {
+      await onPause();
+      signal.throwIfAborted();
+      if (!view.valid()) throw cancelled();
+      const packet = await store.exportPackage(id, { signal });
+      signal.throwIfAborted();
+      if (!view.valid()) throw cancelled();
+      view.mode = packet.manifest.config?.response?.mode;
+      const report = await verifyCourse(packet, view.course, {
+        signal,
+        Worker: win?.Worker,
+        ...(workerURL ? { workerURL } : {}),
+        onProgress: ({ phase }) => {
+          if (!signal.aborted && view.valid() && courseView === view) {
+            view.phase = phase;
+            renderCourse();
+          }
+        },
+      });
+      signal.throwIfAborted();
+      if (!view.valid() || courseView !== view) throw cancelled();
+      view.report = report;
+    }, view.valid);
+  });
   const remove = button(() =>
     run(async (signal) => {
       const row = rows.find((entry) => entry.id === select.value);
@@ -447,7 +557,10 @@ export function mountAircraftArchiveControls({
   cancel.type = 'button';
   root.append(cancel);
   listen(cancel, 'click', () => operation?.controller.abort());
-  listen(select, 'change', paint);
+  listen(select, 'change', () => {
+    clearCourse();
+    paint();
+  });
   paint();
   return {
     root,
@@ -459,10 +572,16 @@ export function mountAircraftArchiveControls({
         operation?.controller.abort();
         retire(context, work);
         owner = session;
+        try {
+          activeCourse = session?.course?.() ?? null;
+        } catch {
+          activeCourse = null;
+        }
         context = null;
         lastPollTick = -1;
       }
       state = next;
+      if (courseView && !courseView.valid()) clearCourse();
       const archive = state?.archiveStatus ?? state?.advancedTelemetry?.archiveStatus;
       root.hidden =
         typeof session?.readSealedSegment !== 'function' ||
