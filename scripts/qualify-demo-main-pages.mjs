@@ -7,7 +7,13 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { classicDemoSourcePaths } from './demo-native-dependencies.mjs';
+import {
+  classicDemoSourcePaths,
+  journeyDemoSourcePaths,
+  simDemoSourcePaths,
+  SIM_DEMO_INDEX,
+} from './demo-native-dependencies.mjs';
+import { downloadFiles } from '../game/download-catalogue.mjs';
 import { projectDefaultRuntimeMetadata } from './default-runtime-metadata.mjs';
 import { prepareBuildProject, collectBuildFiles, readBuildConfig } from './game-cli.mjs';
 import { parse } from '../publishing/vendor/acorn-8.18.0.mjs';
@@ -117,9 +123,129 @@ export function omittedOriginalWorkerProof(entries, originals) {
   };
 }
 
+function literalModuleClosure(items, roots) {
+  const entries = new Map(items.map((entry) => [entry.name, entry]));
+  const visited = new Set(),
+    missingModules = [],
+    queue = [...roots];
+  while (queue.length) {
+    const name = queue.shift();
+    if (visited.has(name)) continue;
+    visited.add(name);
+    const item = entries.get(name);
+    if (!item) {
+      missingModules.push(name);
+      continue;
+    }
+    if (!/\.(mjs|js)$/.test(name)) continue;
+    const ast = parse(item.bytes.toString(), { ecmaVersion: 'latest', sourceType: 'module' });
+    const literals = [];
+    function walk(node) {
+      if (!node || typeof node !== 'object') return;
+      if (
+        [
+          'ImportDeclaration',
+          'ExportNamedDeclaration',
+          'ExportAllDeclaration',
+          'ImportExpression',
+        ].includes(node.type) &&
+        node.source?.type === 'Literal' &&
+        typeof node.source.value === 'string'
+      )
+        literals.push(node.source.value);
+      for (const v of Object.values(node)) {
+        if (Array.isArray(v)) v.forEach(walk);
+        else if (v && typeof v === 'object') walk(v);
+      }
+    }
+    walk(ast);
+    for (const spec of literals)
+      if (spec.startsWith('.'))
+        queue.push(path.posix.normalize(path.posix.join(path.posix.dirname(name), spec)));
+  }
+  return { paths: [...visited].sort(), missingModules };
+}
+
+/** Check the selected, installed dependency closure, not merely hosted files.
+ * All hash/size comparisons use final emitted bytes and actual worker metadata. */
+export async function demoOfflineSelectionProof(entries, { requiredPaths = [], roots = [] } = {}) {
+  const byPath = new Map(entries.map((entry) => [entry.name, entry]));
+  const catalogue = JSON.parse(byPath.get('offline-content.json').bytes);
+  const config = readEmittedOfflineConfig(
+    byPath.get('service-worker.js').bytes,
+    byPath.get('offline-cache.json').bytes,
+  );
+  const demo = catalogue.groups.find((group) => group.id === 'extras:demo');
+  assert.ok(demo && !demo.hidden, 'Demo recordings must be a visible selectable download.');
+  const simPaths = simDemoSourcePaths(entries);
+  if (simPaths.size)
+    assert.ok(
+      demo.requires.includes('extras:sim-fpv'),
+      'Demo recordings must require the existing named simulator package.',
+    );
+  const selected = downloadFiles(catalogue, ['extras:demo']);
+  const selectedHashes = new Map(selected.map((file) => [file.sha256, file.bytes]));
+  const registered = new Map();
+  for (const file of [...config.files, ...config.downloadFiles]) {
+    assert.ok(!registered.has(file.path), `Duplicate worker registration: ${file.path}`);
+    registered.set(file.path, file);
+  }
+  const core = new Map(config.files.map((file) => [file.path, file]));
+  const closure = literalModuleClosure(entries, roots);
+  assert.deepEqual(closure.missingModules, [], 'All demo module imports must be emitted.');
+  const required = new Set([
+    ...requiredPaths,
+    ...classicDemoSourcePaths(entries),
+    ...(await journeyDemoSourcePaths(entries)),
+    ...simPaths,
+    ...closure.paths,
+  ]);
+  for (const name of required) {
+    const entry = byPath.get(name),
+      file = registered.get(name);
+    assert.ok(entry && file, `Demo dependency is not registered for offline use: ${name}`);
+    assert.equal(file.bytes, entry.bytes.length, `Offline demo byte count differs: ${name}`);
+    assert.equal(file.sha256, sha(entry.bytes), `Offline demo identity differs: ${name}`);
+    assert.ok(
+      core.has(name) || selectedHashes.get(file.sha256) === file.bytes,
+      `Demo dependency is outside the selected offline closure: ${name}`,
+    );
+  }
+  // Independently verify all selected body pins, including the native package's
+  // non-module assets, rather than assuming its name proves ownership.
+  for (const file of selected) {
+    const entry = byPath.get(file.path),
+      registration = registered.get(file.path);
+    assert.ok(entry && registration, `Selected demo body is unavailable: ${file.path}`);
+    assert.equal(file.bytes, entry.bytes.length, `Selected demo size differs: ${file.path}`);
+    assert.equal(file.sha256, sha(entry.bytes), `Selected demo hash differs: ${file.path}`);
+    assert.equal(registration.bytes, file.bytes);
+    assert.equal(registration.sha256, file.sha256);
+  }
+  return {
+    complete: true,
+    selection: ['extras:demo'],
+    requiredPaths: [...required].sort(),
+    literalModuleRoots: roots,
+    literalModuleCount: closure.paths.length,
+    simRecordings: simPaths.size ? JSON.parse(byPath.get(SIM_DEMO_INDEX).bytes).entries.length : 0,
+    groups: catalogue.groups
+      .filter((group) => ['extras:demo', 'extras:sim-fpv'].includes(group.id))
+      .map(({ id, requires, files }) => ({ id, requires, files })),
+    selectedFiles: selected.map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })),
+    selectedBytes: selected.reduce((sum, file) => sum + file.bytes, 0),
+    coreFiles: config.files.length,
+    coreDescriptors: config.files.map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })),
+    workerConfigMatchesCache: true,
+    browserInstallationVerified: false,
+  };
+}
+
 export function mainPagesAuditFailures(report) {
   const errors = [];
   if (report.omittedOriginalWorker?.error) errors.push(report.omittedOriginalWorker.error);
+  if (!report.demoOfflineSelection?.complete)
+    errors.push(report.demoOfflineSelection?.error || 'Demo offline selection was not verified.');
   if (!report.headStable || !report.sourceStable)
     errors.push('Source or HEAD changed during qualification.');
   for (const [key, label] of [
@@ -305,44 +431,7 @@ export async function qualifyDemoMainPages({
     'game/demo-modes/sim.mjs',
     'game/demo-modes/survival.mjs',
   ];
-  const visited = new Set(),
-    missingModules = [],
-    queue = [...roots];
-  while (queue.length) {
-    const name = queue.shift();
-    if (visited.has(name)) continue;
-    visited.add(name);
-    const item = entries.get(name);
-    if (!item) {
-      missingModules.push(name);
-      continue;
-    }
-    if (!/\.(mjs|js)$/.test(name)) continue;
-    const ast = parse(item.bytes.toString(), { ecmaVersion: 'latest', sourceType: 'module' });
-    const literals = [];
-    function walk(node) {
-      if (!node || typeof node !== 'object') return;
-      if (
-        [
-          'ImportDeclaration',
-          'ExportNamedDeclaration',
-          'ExportAllDeclaration',
-          'ImportExpression',
-        ].includes(node.type) &&
-        node.source?.type === 'Literal' &&
-        typeof node.source.value === 'string'
-      )
-        literals.push(node.source.value);
-      for (const v of Object.values(node)) {
-        if (Array.isArray(v)) v.forEach(walk);
-        else if (v && typeof v === 'object') walk(v);
-      }
-    }
-    walk(ast);
-    for (const spec of literals)
-      if (spec.startsWith('.'))
-        queue.push(path.posix.normalize(path.posix.join(path.posix.dirname(name), spec)));
-  }
+  const { paths: modulePaths, missingModules } = literalModuleClosure(project.entries, roots);
   const missingNative = requiredNative.filter((r) => !entries.has(r.path));
   const mismatchedNative = [];
   for (const name of new Set(requiredNative.map((row) => row.path))) {
@@ -484,6 +573,25 @@ export async function qualifyDemoMainPages({
   } catch (error) {
     omittedOriginalWorker = { error: String(error.message) };
   }
+  let demoOfflineSelection;
+  try {
+    demoOfflineSelection = await demoOfflineSelectionProof(project.entries, {
+      requiredPaths: [
+        ...required.filter((name) => !name.endsWith('.diagnostics.json')),
+        ...requiredNative.map((row) => row.path),
+        ...[
+          'catalog.json',
+          'catalog.journey-current.json',
+          'catalog.journey-archive.json',
+          'snake/catalog.json',
+          'survival/catalog.json',
+        ].map((name) => `game/demo-data/${name}`),
+      ],
+      roots: ['game/ui/demo-entry.mjs', ...roots.filter((name) => name.startsWith('game/'))],
+    });
+  } catch (error) {
+    demoOfflineSelection = { complete: false, error: String(error.message) };
+  }
   const after = await fingerprint(),
     buildAfter = await fingerprint(['scripts', 'authoring']);
   const report = {
@@ -516,7 +624,7 @@ export async function qualifyDemoMainPages({
     requiredPayloadsAndDiagnostics: required.length,
     missingPayloads: required.filter((p) => !entries.has(p)),
     mismatchedPayloads,
-    literalDemoModuleClosure: { roots, files: visited.size, missingModules },
+    literalDemoModuleClosure: { roots, files: modulePaths.length, missingModules },
     requiredNativePaths: [...new Set(requiredNative.map((r) => r.path))].length,
     missingNative,
     mismatchedNative,
@@ -563,6 +671,7 @@ export async function qualifyDemoMainPages({
     },
     sourceOriginals: originals,
     omittedOriginalWorker,
+    demoOfflineSelection,
     limitations: [
       'This is a complete in-memory staged-file candidate with actual metadata producers, not upload or deployment admission. The archive figure is a baseline-calibrated GNU tar size model.',
       'Native dependency audit covers catalog-selected authored Classic source bodies and base artwork, exact Journey full-source snapshots and selected backgrounds, plus literal demo module imports; dynamic data-driven asset transport remains independently qualified.',
