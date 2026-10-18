@@ -322,3 +322,85 @@ test('disabled terminal HUD substages do not read the clock or retain event data
   assert.equal(reads, before);
   assert.equal(session.export({ paused: true }).eventWitnesses.total, 0);
 });
+
+test('pause substages retain bounded prefixes without rewriting raw frame or failure evidence', () => {
+  let now = 0;
+  const observed = createPerformanceSession({ now: () => now });
+  const ordinary = createPerformanceSession({ now: () => now });
+  for (const value of [observed, ordinary]) value.setPhase('playing', 0);
+  const kinds = [
+    'pause-begin',
+    'pause-phase',
+    'pause-input',
+    'pause-audio',
+    'pause-snapshot-begin',
+    'pause-snapshot-end',
+    'pause-snapshot-failed',
+    'pause-save-begin',
+    'pause-save-end',
+    'pause-save-failed',
+    'pause-readback-begin',
+    'pause-readback-end',
+    'pause-readback-failed',
+    'pause-persist-failed',
+    'pause-save-skipped',
+    'pause-overlay',
+    'pause-hud',
+    'pause-link',
+    'pause-end',
+  ];
+  for (let generation = 1; generation <= 20; generation++)
+    for (const kind of kinds) observed.markEvent(kind, generation, 600, ++now);
+  observed.markEvent('pause-begin', 21, 600, ++now);
+  observed.markEvent('pause-save-failed', 21, 600, ++now);
+  for (const value of [observed, ordinary]) {
+    value.setPhase('paused', now);
+    value.reportFailure('Original save failure', now);
+    value.recordFrame(now + 16, 214, 0, 13, 0);
+  }
+  const actual = observed.export({ paused: true });
+  const expected = ordinary.export({ paused: true });
+  assert.equal(actual.eventWitnesses.capacity, 256);
+  assert.equal(actual.eventWitnesses.total, 382);
+  assert.equal(actual.eventWitnesses.retained, 256);
+  assert.equal(actual.eventWitnesses.omitted, 126);
+  assert.equal(actual.eventWitnesses.byKind['pause-end'].total, 20);
+  assert.equal(actual.eventWitnesses.recent.at(-1).kind, 'pause-save-failed');
+  assert.equal(actual.eventWitnesses.recent.at(-1).runGeneration, 21);
+  delete actual.eventWitnesses;
+  delete expected.eventWitnesses;
+  assert.deepEqual(
+    actual,
+    expected,
+    'Pause stamps cannot alter original frame attribution or failure evidence.',
+  );
+});
+test('disabled pause markers read no clock and retain no event rows', () => {
+  let reads = 0;
+  const session = createPerformanceSession({ enabled: false, now: () => ++reads });
+  const before = reads;
+  for (const kind of [
+    'pause-begin',
+    'pause-phase',
+    'pause-input',
+    'pause-audio',
+    'pause-snapshot-begin',
+    'pause-snapshot-end',
+    'pause-snapshot-failed',
+    'pause-save-begin',
+    'pause-save-end',
+    'pause-save-failed',
+    'pause-readback-begin',
+    'pause-readback-end',
+    'pause-readback-failed',
+    'pause-persist-failed',
+    'pause-save-skipped',
+    'pause-overlay',
+    'pause-hud',
+    'pause-link',
+    'pause-end',
+  ])
+    session.markEvent(kind, 1, 0);
+  assert.equal(reads, before);
+  assert.equal(session.export({ paused: true }).eventWitnesses.total, 0);
+});
