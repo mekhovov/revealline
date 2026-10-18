@@ -52,6 +52,7 @@ test('current raster binds the exact verified package and unchanged legal native
 
 test('current raster refuses mixed package identities, authority, modified workload and limits', () => {
   for (const change of [
+    (p) => (p.release.status = 'reviewed-diagnostic-only'),
     (p) => (p.release.firstEightRequired = false),
     (p) => (p.release.firstEightAllCorrectnessPassed = false),
     (p) => (p.release.firstEightEvidence = null),
@@ -109,7 +110,8 @@ test('previous raster declaration still binds to its original source and exact p
 });
 
 test('exact797 raster keeps held/proof refusals and unchanged source assets without native claims', async () => {
-  assert.equal(plan.release.status, 'reviewed-diagnostic-only');
+  assert.equal(plan.status, 'reviewed-diagnostic-only');
+  assert.equal(plan.release.status, 'reviewed');
   assert.deepEqual(plan.release.firstEightEvidence, actualFirstEight);
   assert.equal(plan.release.firstEightAllCorrectnessPassed, true);
   assert.deepEqual(plan.release.evidence, [
