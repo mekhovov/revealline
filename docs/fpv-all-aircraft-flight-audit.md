@@ -165,3 +165,31 @@ successfully restored it while remaining paused. No console errors occurred.
 node --test game/test/fpv-aircraft-regional-matrix.test.mjs
 node --test game/test/fpv-aircraft-regional.test.mjs game/test/fpv-advanced-regional.test.mjs game/test/fpv-advanced-terrain.test.mjs game/test/fpv-advanced-terrain-storage.test.mjs
 ```
+
+## Deployed-browser follow-up
+
+The first release was verified on GitHub Pages at `7e9575053aa5`, including exact
+published source-byte checks. The selected-aircraft learning entry and takeoff
+worked. A further live check exposed an intermittent cancellation while restoring
+a paused Regional checkpoint: a browser callback delayed by more than 250 ms
+called the flight's pause method again, which cancelled the detached recovery.
+
+The World host now discards elapsed time for an already paused or disarmed
+session without invoking pause again. Running flight still freezes after a
+stall. Explicit cancellation, blur, visibility loss and graphics interruption
+retain their existing ownership. Academy's deferred-launch safeguards remain
+unchanged; its course-session pause does not cancel the recovery verifier.
+
+The Canal highwalk is an **air start**, not a ground takeoff: Meteor75 starts at
+approximately 11 m above the world's datum, with the canal floor at −3 m.
+Keyboard throttle rises by 35 percentage points per second, while this preset's
+calculated hover is about 49.7%. A slow ramp therefore permits a substantial
+initial fall. Reproduction with real terrain distinguishes this from a missing
+aircraft configuration: immediate 60% throttle climbs upright; continuing the
+keyboard ramp above hover arrests the fall. The deployed Meteor75 draft also
+climbed upright at 71% throttle and responded to steering. No automatic throttle
+or physical-constant changes were introduced to hide gravity or input behavior.
+
+```sh
+node --test game/test/fpv-world-recovery-stall.test.mjs
+```
