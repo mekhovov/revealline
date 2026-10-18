@@ -24,9 +24,16 @@ export const TOUCH_RUNTIME73_SOURCE = Object.freeze({
   tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
   runtime: '73a345cec696d7789198cf295ca5c37b17ca0e71',
 });
+export const TOUCH_RUNTIME797_COHORT = 'native-touch-candidate797';
+export const TOUCH_RUNTIME797_SOURCE = Object.freeze({
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  runtime: '797e03f28743921842df6aa57520a72016ba3dfc',
+});
 const sourceBoundTouch = (sourceCohort) =>
-  [TOUCH_DE332_COHORT, TOUCH_RUNTIME73_COHORT].includes(sourceCohort);
+  [TOUCH_DE332_COHORT, TOUCH_RUNTIME73_COHORT, TOUCH_RUNTIME797_COHORT].includes(sourceCohort);
 export function touchSource(sourceCohort) {
+  if (sourceCohort === TOUCH_RUNTIME797_COHORT) return TOUCH_RUNTIME797_SOURCE;
   if (sourceCohort === TOUCH_RUNTIME73_COHORT) return TOUCH_RUNTIME73_SOURCE;
   if (sourceCohort === undefined) return TOUCH_SOURCE;
   assert.equal(sourceCohort, TOUCH_DE332_COHORT, 'Undeclared touch source');
@@ -71,8 +78,57 @@ export function touchCase(job, repetition) {
     },
   };
 }
+function validate797FirstEight(release) {
+  assert.equal(release.firstEightRequired, true);
+  assert.equal(release.firstEightAllCorrectnessPassed, true);
+  const proof = release.firstEightEvidence;
+  assert(proof && typeof proof === 'object' && !Array.isArray(proof));
+  assert.deepEqual(
+    Object.keys(proof).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(proof.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(proof.sourceRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  for (const key of ['runId', 'artifactId'])
+    assert(Number.isSafeInteger(proof[key]) && proof[key] > 0);
+  for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(proof[key], /^[a-f0-9]{64}$/);
+  assert.equal(proof.correctness, 'passed');
+  assert.equal(proof.ownersClosed, true);
+}
+
 export function assertTouchCandidate(candidate, sourceCohort) {
   touchSource(sourceCohort);
+  if (sourceCohort === TOUCH_RUNTIME797_COHORT) {
+    const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
+    assert.deepEqual(
+      { revision, tree, run, artifact, outer, inner, manifestSHA256 },
+      {
+        revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+        tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+        run: 39104551453,
+        artifact: 12128990483,
+        outer: {
+          bytes: 1094639112,
+          sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+        },
+        inner: {
+          bytes: 1075807530,
+          sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+        },
+        manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+      },
+    );
+    return;
+  }
   if (sourceCohort === TOUCH_RUNTIME73_COHORT) {
     const { revision, tree, run, artifact, outer, inner, manifestSHA256 } = candidate;
     assert.deepEqual(
@@ -167,8 +223,11 @@ export function validateTouchPlan(plan) {
   assert.equal(plan.release.scope, 'native-touch-submission-only');
   assert.equal(plan.release.candidateRevision, source.revision);
   if (sourceBoundTouch(plan.sourceCohort)) {
-    assert.equal(plan.release.firstEightRequired, false);
-    assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    if (plan.sourceCohort === TOUCH_RUNTIME797_COHORT) validate797FirstEight(plan.release);
+    else {
+      assert.equal(plan.release.firstEightRequired, false);
+      assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
+    }
     assert.deepEqual(plan.release.dispatch, {
       workflow: '.github/workflows/solo-native-package-consumer.yml',
       lane: 'touch',
@@ -321,7 +380,10 @@ export async function prepareTouchMode(ctx) {
     30000,
   );
   ctx.report.performanceExclusion = true;
-  if (sourceBoundTouch(ctx.plan.sourceCohort)) ctx.report.firstEightRequired = false;
+  if (ctx.plan.sourceCohort === TOUCH_RUNTIME797_COHORT) {
+    ctx.report.firstEightRequired = true;
+    ctx.report.firstEightAllCorrectnessPassed = true;
+  } else if (sourceBoundTouch(ctx.plan.sourceCohort)) ctx.report.firstEightRequired = false;
   else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
     executables,

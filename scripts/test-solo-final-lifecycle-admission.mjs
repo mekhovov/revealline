@@ -533,10 +533,10 @@ test('final lifecycle assessment keeps complete route checks, raw failures and m
   }
 });
 
-for (const sourceLabel of ['de332', '73']) {
+for (const sourceLabel of ['de332', '797']) {
   const sourceRevision =
-    sourceLabel === '73'
-      ? '73a345cec696d7789198cf295ca5c37b17ca0e71'
+    sourceLabel === '797'
+      ? '797e03f28743921842df6aa57520a72016ba3dfc'
       : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
   async function de332Manifest(phase) {
     const m = JSON.parse(
@@ -561,6 +561,19 @@ for (const sourceLabel of ['de332', '73']) {
         },
       ],
     });
+    if (sourceLabel === '797') {
+      m.release.firstEightAllCorrectnessPassed = true;
+      m.release.firstEightEvidence = {
+        format: 'SoloFirstEightCorrectnessEvidenceV1',
+        sourceRevision,
+        runId: 1,
+        artifactId: 2,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        correctness: 'passed',
+        ownersClosed: true,
+      };
+    }
     return m;
   }
 
@@ -570,7 +583,7 @@ for (const sourceLabel of ['de332', '73']) {
         spec = phaseValues[phase];
       assert.equal(m.sourceCohort, `${phase}-main8b-candidate${sourceLabel}-v1`);
       assert.equal(m.candidate.revision, sourceRevision);
-      assert.equal(m.candidate.artifact, sourceLabel === '73' ? 12127570566 : 12123463810);
+      assert.equal(m.candidate.artifact, sourceLabel === '797' ? 12128990483 : 12123463810);
       assert.equal(m.baseline.reusableArtifact.artifact, 12088541389);
       for (const ref of [...m.frozenTools, ...m.adapterInputs, ...Object.values(m.recipes)]) {
         const bytes = await load(ref.path);
@@ -602,9 +615,26 @@ for (const sourceLabel of ['de332', '73']) {
           assert.equal(p.evidenceBytes, 512 * 1024 ** 2);
           assert.equal(p.setupTimeoutMs, 40 * 60000);
           assert.equal(p.calibrationTimeoutMs, 300000);
-          assert.equal(p.release.firstEightRequired, false);
-          assert.equal(p.release.firstEightAllCorrectnessPassed, undefined);
+          assert.equal(p.release.firstEightRequired, sourceLabel === '797');
+          assert.equal(
+            p.release.firstEightAllCorrectnessPassed,
+            sourceLabel === '797' ? true : undefined,
+          );
           for (const mutate of [
+            ...(sourceLabel === '797'
+              ? [
+                  (p) => (p.release.firstEightRequired = false),
+                  (p) => (p.release.firstEightEvidence = null),
+                  (p) =>
+                    (p.release.firstEightEvidence.sourceRevision =
+                      '73a345cec696d7789198cf295ca5c37b17ca0e71'),
+                  (p) => (p.release.firstEightEvidence.correctness = 'failed'),
+                  (p) => (p.release.firstEightEvidence.ownersClosed = false),
+                  (p) => (p.release.firstEightEvidence.artifactSHA256 = 'invalid'),
+                  (p) => (p.release.firstEightEvidence.runId = 0),
+                  (p) => (p.release.firstEightEvidence.unreviewed = true),
+                ]
+              : []),
             (p) => {
               p.phase = 'next';
             },
@@ -633,7 +663,7 @@ for (const sourceLabel of ['de332', '73']) {
               p.release.onceOnlyBefore = p.candidate.revision;
             },
             (p) => {
-              p.release.firstEightAllCorrectnessPassed = true;
+              p.release.firstEightAllCorrectnessPassed = sourceLabel !== '797';
             },
             (p) => {
               p.rows[0].timeoutMs++;
@@ -745,7 +775,8 @@ for (const sourceLabel of ['de332', '73']) {
       assert.equal(result.protocolStatus, 'pass');
       assert.equal(result.status, phase === 'retry' ? 'passed' : 'failed');
       assert.equal(result.performanceQualification, 'not-qualified-diagnostic-only');
-      assert.equal(result.firstEightRequired, false);
+      assert.equal(result.firstEightRequired, sourceLabel === '797');
+      assert.equal(result.firstEightAllCorrectnessPassed, sourceLabel === '797' ? true : undefined);
       if (phase === 'long29') assert.equal(result.preReloadPerformance.status, 'inconclusive');
       for (const mutate of [
         (r) => {

@@ -76,8 +76,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-diagnostics.mjs",
-      "bytes": 30902,
-      "sha256": "41320b2fc499f91186712539b415a7e4dca49a66ea32b1afdbace85386464d8a"
+      "bytes": 32157,
+      "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97"
     }
   ],
   "frozenTools": [

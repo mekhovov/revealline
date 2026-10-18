@@ -232,7 +232,7 @@
     {
       "path": "scripts/solo-qualification-hitch-journal.mjs",
       "bytes": 35102,
-      "sha256": "eb2ef67ccf2b7ac8a592e5837a840b579c374ed6cfbbdf93fa46842768dcb3ee"
+      "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3"
     },
     {
       "path": "scripts/solo-qualification-native-replay.mjs",
@@ -336,39 +336,19 @@
     "setupEvidenceMaximumBytes": 25165824
   },
   "scope": "Exact de332/normal8b original continuous29-minute recording, exact public replay export, reload, paused Load and equal second export. First active document supplies timing; restored paused document stays separate. No30-minute active or OS-flush/browser-restart/power-loss claim.",
-  "phaseOrder": [
-    "long29"
-  ],
+  "phaseOrder": ["long29"],
   "remainingDistinctScope": [
     "Every failed/partial/numerical observation remains retained.",
     "Explicit source/owner/prior-phase review required before this held declaration can execute.",
     "Actual native evidence remains required; these source controls do not complete lifecycle or long-recording qualification."
   ],
   "jobs": [
-    {
-      "engine": "chromium",
-      "repetition": 1
-    },
-    {
-      "engine": "chromium",
-      "repetition": 2
-    },
-    {
-      "engine": "chromium",
-      "repetition": 3
-    },
-    {
-      "engine": "webkit",
-      "repetition": 1
-    },
-    {
-      "engine": "webkit",
-      "repetition": 2
-    },
-    {
-      "engine": "webkit",
-      "repetition": 3
-    }
+    { "engine": "chromium", "repetition": 1 },
+    { "engine": "chromium", "repetition": 2 },
+    { "engine": "chromium", "repetition": 3 },
+    { "engine": "webkit", "repetition": 1 },
+    { "engine": "webkit", "repetition": 2 },
+    { "engine": "webkit", "repetition": 3 }
   ],
   "deadlines": {
     "outsideHelper": {
@@ -400,8 +380,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 103574,
-      "sha256": "ddfec248b76941fed837f552af95bea5fca98683e1682d0b64acc8bad0679458"
+      "bytes": 107356,
+      "sha256": "ba1d2ee933ff00cea34108c10eb757e036ef63ed8c3eb2cf39f7d1997428d400"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",

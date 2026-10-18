@@ -66,7 +66,7 @@ export function qualificationHitchJournalOptions(flags, scenario, scenarioBytes)
         [
           '--source-revision=8b01991942dc764b8aa4726851699ce1985e53ae',
           '--source-revision=de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
-          '--source-revision=73a345cec696d7789198cf295ca5c37b17ca0e71',
+          '--source-revision=797e03f28743921842df6aa57520a72016ba3dfc',
         ].includes(revisions[0]),
       );
       const ids = {

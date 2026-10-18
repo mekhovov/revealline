@@ -142,6 +142,56 @@ export const GEOMETRIC_NEXT_DE332_SOURCE = Object.freeze({
   candidateTree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
   runtime: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
 });
+export const GEOMETRIC_NEXT_797E03_SOURCE = Object.freeze({
+  ...GEOMETRIC_NEXT_SOURCE,
+  name: 'next-candidate797e03-geometric-v1',
+  candidate: '797e03f28743921842df6aa57520a72016ba3dfc',
+  candidateTree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  runtime: '797e03f28743921842df6aa57520a72016ba3dfc',
+});
+const GEOMETRIC_NEXT_797E03_CANDIDATE = Object.freeze({
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  run: 39104551453,
+  artifact: 12128990483,
+  outer: {
+    bytes: 1094639112,
+    sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+  },
+  inner: {
+    bytes: 1075807530,
+    sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+  },
+  manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+  producer:
+    'Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer.',
+});
+function validate797FirstEight(release) {
+  assert.equal(release.firstEightRequired, true);
+  assert.equal(release.firstEightAllCorrectnessPassed, true);
+  const proof = release.firstEightEvidence;
+  assert(proof && typeof proof === 'object' && !Array.isArray(proof));
+  assert.deepEqual(
+    Object.keys(proof).sort(),
+    [
+      'format',
+      'sourceRevision',
+      'runId',
+      'artifactId',
+      'artifactSHA256',
+      'summarySHA256',
+      'correctness',
+      'ownersClosed',
+    ].sort(),
+  );
+  assert.equal(proof.format, 'SoloFirstEightCorrectnessEvidenceV1');
+  assert.equal(proof.sourceRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  for (const key of ['runId', 'artifactId'])
+    assert(Number.isSafeInteger(proof[key]) && proof[key] > 0);
+  for (const key of ['artifactSHA256', 'summarySHA256']) assert.match(proof[key], /^[a-f0-9]{64}$/);
+  assert.equal(proof.correctness, 'passed');
+  assert.equal(proof.ownersClosed, true);
+}
 const geometricNextSource = (plan) =>
   plan.sourceCohort === GEOMETRIC_NEXT_SOURCE.name
     ? GEOMETRIC_NEXT_SOURCE
@@ -151,7 +201,9 @@ const geometricNextSource = (plan) =>
         ? GEOMETRIC_NEXT_39774_SOURCE
         : plan.sourceCohort === GEOMETRIC_NEXT_DE332_SOURCE.name
           ? GEOMETRIC_NEXT_DE332_SOURCE
-          : null;
+          : plan.sourceCohort === GEOMETRIC_NEXT_797E03_SOURCE.name
+            ? GEOMETRIC_NEXT_797E03_SOURCE
+            : null;
 const geometricNextPlan = (plan) => geometricNextSource(plan) !== null;
 const finalSoakCohort = 'soak-main8b-candidatea6e';
 const anchoredSoakHash = '079d4dd76fbd914ddd4da7311f8e6cee4a0ff4fc3bc951842b2921c94c53b8ff';
@@ -174,18 +226,19 @@ export const DE332_LIFECYCLE_COHORTS = Object.freeze({
   soak: 'soak-main8b-candidatede332-v1',
   long29: 'long29-main8b-candidatede332-v1',
 });
-export const RUNTIME73_LIFECYCLE_COHORTS = Object.freeze({
-  retry: 'retry-main8b-candidate73-v1',
-  soak: 'soak-main8b-candidate73-v1',
-  long29: 'long29-main8b-candidate73-v1',
+export const RUNTIME797_LIFECYCLE_COHORTS = Object.freeze({
+  retry: 'retry-main8b-candidate797-v1',
+  soak: 'soak-main8b-candidate797-v1',
+  long29: 'long29-main8b-candidate797-v1',
 });
-const runtime73LifecyclePlan = (plan) =>
-  Object.hasOwn(RUNTIME73_LIFECYCLE_COHORTS, plan.phase) &&
-  plan.sourceCohort === RUNTIME73_LIFECYCLE_COHORTS[plan.phase];
+const runtime797LifecyclePlan = (plan) =>
+  Object.hasOwn(RUNTIME797_LIFECYCLE_COHORTS, plan.phase) &&
+  plan.sourceCohort === RUNTIME797_LIFECYCLE_COHORTS[plan.phase];
 const de332LifecyclePlan = (plan) =>
   Object.hasOwn(DE332_LIFECYCLE_COHORTS, plan.phase) &&
   plan.sourceCohort === DE332_LIFECYCLE_COHORTS[plan.phase];
-const prospectiveLifecyclePlan = (plan) => de332LifecyclePlan(plan) || runtime73LifecyclePlan(plan);
+const prospectiveLifecyclePlan = (plan) =>
+  de332LifecyclePlan(plan) || runtime797LifecyclePlan(plan);
 const anchoredSoakPlan = (plan) =>
   plan.sourceCohort === finalSoakCohort ||
   (prospectiveLifecyclePlan(plan) && plan.phase === 'soak');
@@ -198,7 +251,7 @@ const finalSustainedPlan = (plan) =>
 
 function selectedSustainedSource(plan) {
   if (plan.sourceCohort === undefined) return null;
-  if (runtime73LifecyclePlan(plan)) return runtime73LifecycleSource;
+  if (runtime797LifecyclePlan(plan)) return runtime797LifecycleSource;
   if (de332LifecyclePlan(plan)) return de332LifecycleSource;
   if (geometricNextPlan(plan)) {
     assert.equal(plan.phase, 'next');
@@ -212,8 +265,8 @@ function selectedTimingSource(plan) {
   if (plan.sourceCohort === undefined) return null;
   if (prospectiveTimingPlan(plan)) {
     assert(Object.hasOwn(DE332_TIMING_PHASES, plan.phase), 'Unreviewed de332 timing phase');
-    return plan.sourceCohort === RUNTIME73_TIMING_COHORT
-      ? runtime73TimingSource
+    return plan.sourceCohort === RUNTIME797_TIMING_COHORT
+      ? runtime797TimingSource
       : de332TimingSource;
   }
   if (plan.sourceCohort === coldSourceCohort.name) {
@@ -294,31 +347,31 @@ const de332TimingSource = Object.freeze({
   ...GEOMETRIC_NEXT_DE332_SOURCE,
   name: DE332_TIMING_COHORT,
 });
-export const RUNTIME73_TIMING_COHORT = 'timing-main8b-candidate73-v1';
-const runtime73TimingSource = Object.freeze({
+export const RUNTIME797_TIMING_COHORT = 'timing-main8b-candidate797-v1';
+const runtime797TimingSource = Object.freeze({
   ...de332TimingSource,
-  name: RUNTIME73_TIMING_COHORT,
-  candidate: '73a345cec696d7789198cf295ca5c37b17ca0e71',
-  candidateTree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
-  runtime: '73a345cec696d7789198cf295ca5c37b17ca0e71',
+  name: RUNTIME797_TIMING_COHORT,
+  candidate: '797e03f28743921842df6aa57520a72016ba3dfc',
+  candidateTree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  runtime: '797e03f28743921842df6aa57520a72016ba3dfc',
 });
-const runtime73LifecycleSource = Object.freeze({ ...runtime73TimingSource });
-const runtime73TimingCandidate = {
-  revision: '73a345cec696d7789198cf295ca5c37b17ca0e71',
-  tree: 'ea30e68636b3342f8e60664a79d425e11e27ff1e',
-  run: 39099979283,
-  artifact: 12127570566,
+const runtime797LifecycleSource = Object.freeze({ ...runtime797TimingSource });
+const runtime797TimingCandidate = {
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  run: 39104551453,
+  artifact: 12128990483,
   outer: {
-    bytes: 1094639407,
-    sha256: '6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64',
+    bytes: 1094639112,
+    sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
   },
   inner: {
-    bytes: 1075807617,
-    sha256: '17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54',
+    bytes: 1075807530,
+    sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
   },
-  manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
+  manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
   producer:
-    'Exact successful Appearance39099979283, Node22.13.1. Full hosted archive/member/source/CSP verification remains mandatory.',
+    'Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer.',
 };
 export const DE332_TIMING_PHASES = Object.freeze({
   'cold-first30': {
@@ -483,7 +536,7 @@ const de332LifecycleRecipes = {
 };
 const de332TimingPlan = (plan) => plan.sourceCohort === DE332_TIMING_COHORT;
 const prospectiveTimingPlan = (plan) =>
-  de332TimingPlan(plan) || plan.sourceCohort === RUNTIME73_TIMING_COHORT;
+  de332TimingPlan(plan) || plan.sourceCohort === RUNTIME797_TIMING_COHORT;
 const timingPhases = (plan) => (prospectiveTimingPlan(plan) ? DE332_TIMING_PHASES : TIMING_PHASES);
 const timingPreparation = (plan) =>
   prospectiveTimingPlan(plan)
@@ -506,8 +559,14 @@ function validateDiagnosticComparison(release, candidate = source.candidate) {
   );
   if (prospectiveLifecyclePlan(release)) {
     assert(Number.isSafeInteger(release.predecessorRun) && release.predecessorRun > 0);
-    assert.equal(release.firstEightRequired, false);
-    assert.equal(release.firstEightAllCorrectnessPassed, undefined);
+    if (runtime797LifecyclePlan(release)) validate797FirstEight(release);
+    else {
+      assert.equal(release.firstEightRequired, false);
+      assert.equal(release.firstEightAllCorrectnessPassed, undefined);
+    }
+  } else if (candidate === GEOMETRIC_NEXT_797E03_SOURCE.candidate) {
+    assert.equal(release.predecessorRun, 39073210040);
+    validate797FirstEight(release);
   } else if (candidate === GEOMETRIC_NEXT_DE332_SOURCE.candidate) {
     assert.equal(release.predecessorRun, 39073210040);
     assert.equal(release.firstEightRequired, false);
@@ -526,10 +585,13 @@ function comparisonLabels(plan) {
     ? {
         comparisonAdmission: 'independent-diagnostic',
         performanceQualification: 'not-qualified-diagnostic-only',
-        ...(geometricNextSource(plan) === GEOMETRIC_NEXT_DE332_SOURCE ||
-        prospectiveLifecyclePlan(plan)
-          ? { firstEightRequired: false }
-          : { firstEightAllCorrectnessPassed: false }),
+        ...(geometricNextSource(plan) === GEOMETRIC_NEXT_797E03_SOURCE ||
+        runtime797LifecyclePlan(plan)
+          ? { firstEightRequired: true, firstEightAllCorrectnessPassed: true }
+          : geometricNextSource(plan) === GEOMETRIC_NEXT_DE332_SOURCE ||
+              prospectiveLifecyclePlan(plan)
+            ? { firstEightRequired: false }
+            : { firstEightAllCorrectnessPassed: false }),
         ...(plan.sourceCohort ? { sourceCohort: plan.sourceCohort } : {}),
       }
     : {};
@@ -543,13 +605,15 @@ function validateSourceCohort(plan, selected) {
     return null;
   }
   assert.equal(plan.release.sourceCohort, plan.sourceCohort);
-  if ([de332LifecycleSource, runtime73LifecycleSource].includes(selected)) {
+  if (selected === runtime797LifecycleSource || selected === runtime797TimingSource)
+    validate797FirstEight(plan.release);
+  if ([de332LifecycleSource, runtime797LifecycleSource].includes(selected)) {
     assert(prospectiveLifecyclePlan(plan));
     assert.equal(plan.release.status, 'reviewed-diagnostic-only');
     assert.deepEqual(
       plan.candidate,
-      selected.candidate === runtime73TimingCandidate.revision
-        ? runtime73TimingCandidate
+      selected.candidate === runtime797TimingCandidate.revision
+        ? runtime797TimingCandidate
         : de332TimingCandidate,
     );
     assert.deepEqual(plan.baseline, de332TimingBaseline);
@@ -562,12 +626,12 @@ function validateSourceCohort(plan, selected) {
       lane: 'lifecycle',
       phase: plan.phase,
     });
-  } else if ([de332TimingSource, runtime73TimingSource].includes(selected)) {
+  } else if ([de332TimingSource, runtime797TimingSource].includes(selected)) {
     assert.equal(plan.release.status, 'reviewed-and-released');
     assert.deepEqual(
       plan.candidate,
-      selected.candidate === runtime73TimingCandidate.revision
-        ? runtime73TimingCandidate
+      selected.candidate === runtime797TimingCandidate.revision
+        ? runtime797TimingCandidate
         : de332TimingCandidate,
     );
     assert.deepEqual(plan.baseline, de332TimingBaseline);
@@ -595,7 +659,17 @@ function validateSourceCohort(plan, selected) {
     assert.equal(plan.baseline.scope, 'source-only-no-observation');
     assert.equal(plan.candidateOnly, true);
     assert.equal(plan.release.scope, 'independent-candidate-transition-diagnostics');
-    if (selected === GEOMETRIC_NEXT_DE332_SOURCE) {
+    if (selected === GEOMETRIC_NEXT_797E03_SOURCE) {
+      assert.equal(plan.release.onceOnlyBefore, undefined);
+      assert.deepEqual(plan.candidate, GEOMETRIC_NEXT_797E03_CANDIDATE);
+      assert.deepEqual(plan.release.dispatch, {
+        workflow: '.github/workflows/solo-native-package-consumer.yml',
+        lane: 'next',
+        source: GEOMETRIC_NEXT_797E03_SOURCE.candidate,
+        reviewOrder: 'manual-only-after-first-eight-result-review',
+      });
+      validate797FirstEight(plan.release);
+    } else if (selected === GEOMETRIC_NEXT_DE332_SOURCE) {
       assert.equal(plan.release.onceOnlyBefore, undefined);
       assert.deepEqual(plan.release.dispatch, {
         workflow: '.github/workflows/solo-native-package-consumer.yml',
@@ -703,6 +777,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
       ) ||
         ([
           'readiness-preparation-row-candidate73',
+          'readiness-preparation-row-candidate797',
           'readiness-preparation-row-candidatede332',
           'readiness-geometry-corrected-package',
           'readiness-preparation-row-candidatee1cc',
@@ -716,6 +791,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         [
           'readiness-preparation-row-candidatede332',
           'readiness-preparation-row-candidate73',
+          'readiness-preparation-row-candidate797',
         ].includes(plan.sourceCohort)
       ) {
         const { preparationReadinessSelection } = await import('./solo-remote-readiness.mjs');
@@ -1264,7 +1340,7 @@ export function validateTimingPlan(plan) {
     assert.equal(row.timeoutMs, 480000);
     assert.equal(row.performanceExclusion, diagnostic);
   }
-  if ([de332TimingSource, runtime73TimingSource].includes(selected)) {
+  if ([de332TimingSource, runtime797TimingSource].includes(selected)) {
     assert.deepEqual(
       plan.recipes,
       de332TimingRecipes,
@@ -1342,7 +1418,7 @@ export function timingMatrix(manifest) {
         phase: plan.phase,
         engine,
         repetition,
-        jobMinutes: [finalTimingSource, de332TimingSource, runtime73TimingSource].includes(
+        jobMinutes: [finalTimingSource, de332TimingSource, runtime797TimingSource].includes(
           selectedTimingSource(plan),
         )
           ? 122
@@ -1390,7 +1466,8 @@ export function validateRelease(release, phase, selected = null) {
   if (
     (diagnostic || ['soak', 'long29'].includes(phase)) &&
     selected !== GEOMETRIC_NEXT_DE332_SOURCE &&
-    ![de332LifecycleSource, runtime73LifecycleSource].includes(selected)
+    selected !== GEOMETRIC_NEXT_797E03_SOURCE &&
+    ![de332LifecycleSource, runtime797LifecycleSource].includes(selected)
   )
     assert.equal(release.firstEightAllCorrectnessPassed, !diagnostic);
   return release;
@@ -2237,13 +2314,15 @@ export async function geometricNextAssessment(plan, row, raw, command, browserVe
     status: !protocolFailure && complete ? inherited.status : 'failed',
     candidateOnly: true,
     scope:
-      geometricNextSource(plan) === GEOMETRIC_NEXT_DE332_SOURCE
-        ? 'Exactly eleven authored missions and ten manual Next transitions on de332. Existing HUD markers and bounded journal retain attribution evidence; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
-        : geometricNextSource(plan) === GEOMETRIC_NEXT_39774_SOURCE
-          ? 'Exactly eleven authored missions and ten manual Next transitions on 39774. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
-          : geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
-            ? 'Exactly eleven authored missions and ten manual Next transitions on e1cc. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
-            : 'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
+      geometricNextSource(plan) === GEOMETRIC_NEXT_797E03_SOURCE
+        ? 'Exactly eleven authored missions and ten manual Next transitions on797e03. Existing HUD markers and bounded journal retain attribution evidence; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+        : geometricNextSource(plan) === GEOMETRIC_NEXT_DE332_SOURCE
+          ? 'Exactly eleven authored missions and ten manual Next transitions on de332. Existing HUD markers and bounded journal retain attribution evidence; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+          : geometricNextSource(plan) === GEOMETRIC_NEXT_39774_SOURCE
+            ? 'Exactly eleven authored missions and ten manual Next transitions on 39774. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+            : geometricNextSource(plan) === GEOMETRIC_NEXT_FINAL_SOURCE
+              ? 'Exactly eleven authored missions and ten manual Next transitions on e1cc. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, uninstrumented geometry or native-memory qualification.'
+              : 'Exactly eleven authored missions and ten manual Next transitions on c696. Trusted input plus bounded rendered-state polling; excluded from timing comparison. Native final replay remains required. No baseline, later-layout or native-memory qualification.',
   };
 }
 

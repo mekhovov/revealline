@@ -1,24 +1,24 @@
 {
   "format": "SoloHostedDiagnosticsManifestV1",
-  "status": "reviewed-app-diagnostics-only",
+  "status": "reviewed-journal-hook-cost-only",
   "repository": "mekhovov/revealline",
-  "sourceCohort": "diagnostics-candidate73-endpoint-box-v1",
-  "runtimeRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+  "sourceCohort": "diagnostics-candidate797-endpoint-box-v1",
+  "runtimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
   "candidate": {
-    "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
-    "tree": "ea30e68636b3342f8e60664a79d425e11e27ff1e",
-    "run": 39099979283,
-    "artifact": 12127570566,
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "run": 39104551453,
+    "artifact": 12128990483,
     "outer": {
-      "bytes": 1094639407,
-      "sha256": "6d93e34b3372e24f1f010bb630d7d7b688fdbc8a1280b3f3a9945e99ac171e64"
+      "bytes": 1094639112,
+      "sha256": "76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897"
     },
     "inner": {
-      "bytes": 1075807617,
-      "sha256": "17d7135c4d16693f0ddb5ee655d6552fdedc18ef7add72aefa7d8e39a7b24a54"
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
     },
-    "manifestSHA256": "d16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93",
-    "producer": "Exact successful Appearance39099979283, Node22.13.1. Full hosted archive/member/source/CSP verification remains mandatory."
+    "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+    "producer": "Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer."
   },
   "baseline": {
     "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
@@ -38,7 +38,7 @@
     "pairs": 10,
     "seed": 1544,
     "activeMs": 30000,
-    "armTimeoutMs": 360000,
+    "armTimeoutMs": 240000,
     "timerTimeoutMs": 180000,
     "cpuRate": 1,
     "reportBytes": 4194304,
@@ -47,51 +47,58 @@
     "overheadLimit": 0.05,
     "profile": "fresh profile",
     "fixtureAccess": "server",
-    "hitchJournal": false,
+    "hitchJournal": "matched-on-off",
     "cpuProfile": false,
     "heap": false,
     "screenshots": false,
     "crossOriginIsolationOverride": false
   },
   "release": {
-    "scope": "app-diagnostics-overhead-only",
-    "sourceCohort": "diagnostics-candidate73-endpoint-box-v1",
-    "candidateRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+    "scope": "journal-hook-cost-only",
+    "sourceCohort": "diagnostics-candidate797-endpoint-box-v1",
+    "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
     "gameplayPerformanceQualification": false,
     "hitchJournalOverheadQualification": false,
     "priorProofInspected": true,
     "noUnclosedOwners": true,
     "allPriorPlannedJobsClosed": true,
+    "fullJournalOverheadQualification": false,
+    "measurementScope": "synchronous-hook-envelope-only",
     "status": "reviewed-diagnostic-only",
     "dispatch": {
       "workflow": ".github/workflows/solo-native-package-consumer.yml",
       "ref": "refs/heads/main",
-      "lane": "app-overhead"
+      "lane": "journal-cost"
     },
-    "firstEightRequired": false,
+    "firstEightRequired": true,
     "clockErrorAssumption": "observed-minimum-step-bounds-duration-error",
     "unconditionalClockGuarantee": false,
     "evidence": [
       {
-        "runId": 39105055762,
-        "artifactId": 12127359946,
-        "artifactSHA256": "17665afe978ae63cfaf8d24b1a9626e1d7f607b7ee2611fc637c9e680f3d46d8",
-        "summarySHA256": "a33416a355620817896366d5312fbecb44f0c7e6b8f7220941c8447886d99762",
-        "disposition": "passed",
-        "scope": "first-eight-correctness-only",
-        "numericalFailures": [
-          "baseline-first30-chromium",
-          "baseline-first30-webkit",
-          "candidate-first30-webkit"
-        ]
+        "runId": 39109911286,
+        "artifactId": 12130067688,
+        "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+        "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+        "disposition": "failed-reviewed"
       }
-    ]
+    ],
+    "firstEightAllCorrectnessPassed": true,
+    "firstEightEvidence": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    }
   },
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-diagnostics.mjs",
-      "bytes": 30902,
-      "sha256": "41320b2fc499f91186712539b415a7e4dca49a66ea32b1afdbace85386464d8a"
+      "bytes": 32157,
+      "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97"
     }
   ],
   "frozenTools": [
@@ -181,6 +188,11 @@
       "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f"
     },
     {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 92172,
+      "sha256": "99e9bfad90efb6315558f035815f7b345780dc1e54446ecc404680d0382583c4"
+    },
+    {
       "path": "scripts/reviewed-soundtrack-batches.mjs",
       "bytes": 16280,
       "sha256": "3041fa50772034f4666d67c8f9cfad231de963a09d5d40132def422779a9daaa"
@@ -211,14 +223,89 @@
       "sha256": "0c0a9686868ee58febf27c47f207aa1d99c37513c2a9d5cefa4a5392a31387ae"
     },
     {
+      "path": "scripts/solo-journal-cost-analysis.mjs",
+      "bytes": 16599,
+      "sha256": "f74b8577a4a9fd116e60e882132962e5eebc7e0c20053154041f290a1109b2e7"
+    },
+    {
       "path": "scripts/solo-observation-lifecycle.mjs",
       "bytes": 1313,
       "sha256": "3b94fa9c52f4356a0fcaded21863bb47c1e26c031e4a59efb38a3216aea14554"
     },
     {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+    },
+    {
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "bytes": 3270,
+      "sha256": "26d125133b4448248918b9ae69350c18db4506bb9ea045053d33325679e5a1d7"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-hitch-journal.mjs",
+      "bytes": 35102,
+      "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3"
+    },
+    {
+      "path": "scripts/solo-qualification-journal-cost.mjs",
+      "bytes": 13023,
+      "sha256": "8589b149d8d1588cd326d30ac1b0370d8a9b30b7d86578781974642511a62cda"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 24474,
+      "sha256": "fc8d6b03d49d44e2010acebb4f89188334503ef2a01316e0a9bdd4406e3b3d94"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-core.mjs",
+      "bytes": 6588,
+      "sha256": "410efba766a4afd11062e43345d7503a4d49d468a8b0496a3303b333b58bb1cd"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 28205,
+      "sha256": "448f8467573b75960453381a810b388a9650d73ee7faf813ec07f40dd37a6f24"
+    },
+    {
       "path": "scripts/solo-remote-archive.py",
       "bytes": 22756,
       "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/solo-remote-sustained.mjs",
+      "bytes": 107356,
+      "sha256": "ba1d2ee933ff00cea34108c10eb757e036ef63ed8c3eb2cf39f7d1997428d400"
     },
     {
       "path": "scripts/soundtrack-archive-admissions.mjs",
@@ -241,5 +328,17 @@
       "sha256": "bd9a53ab4b52169289b3d31b9217690e7cc41b07cff3966b4619c84328508f34"
     }
   ],
-  "analysisMethod": "paired-p95-endpoint-box-v1"
+  "probe": "journal-hook-cost-v1",
+  "recipe": {
+    "path": "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+    "bytes": 6387,
+    "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5"
+  },
+  "analysisMethod": "paired-p95-endpoint-box-v1",
+  "executionAdmission": "Actual exact797 first-eight correctness and closed-owner proof independently reviewed. This fixed manual lane is eligible after current source CI/review and merge; its own native scenario remains unobserved. All raw numerical and portability failures remain. No automatic dispatch, continuation or retry.",
+  "firstEightReview": {
+    "path": "docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json",
+    "bytes": 2213,
+    "sha256": "3bedb1f0cc889e21ea2937addd936cbfd7ec78824434b37571d84dbdc1b65f9f"
+  }
 }
