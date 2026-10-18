@@ -26,7 +26,8 @@ confirmed their bytes still match the verified PR #1583 release.
 
 Work is isolated on `codex/fpv-sustained-flight-20261018`, based on refreshed
 main `e3a20a2a342757444775c0c261131da168280b58`. Unrelated local demo/UI edits
-remain untouched. The following work is **local, not yet published**:
+remain untouched. The reviewed six-commit candidate was subsequently rebased
+cleanly onto main `461ace72e78f8cbd77c26549381d9e21d0a65e91`. The following work is **local, not yet published**:
 
 | Priority                                  | Current result                                                                                                                                                                                                                                                                                                                                                                                                                                       | Next gate                                                                                                                                                                                                                               |
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -43,6 +44,13 @@ The public long-flight attempt reached 5:44.60 but encountered the pause bug;
 it is **not** a completed twelve-minute rendered flight. It also confirmed
 continued flight and durable checkpoints with the sixteen-entry archive store
 full. The user authorized deletion of ten identified test archives. The first attempt reported a closed connection; all sixteen were still listed immediately afterward. After reload, the older inventory was absent. No successful cleanup or preservation claim is made; no further deletions were attempted.
+
+Archive feedback now distinguishes a confirmed single deletion from a failed or
+cancelled follow-up refresh, and initial list errors are visible. **19/19**
+controls/integration checks pass, including EN/UK failure paths. This corrects
+outcome reporting without changing storage algorithms or explaining the missing
+public inventory. A new local 50.78-second Regional archive saved and verified
+from reset; that positive result does not close retention R13.
 
 ## Delivered and retained
 
