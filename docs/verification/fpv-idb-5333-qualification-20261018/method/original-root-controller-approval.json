@@ -1,0 +1,18 @@
+{
+  "UTC": "2026-10-18T00:08:32.426039+00:00",
+  "decision": "APPROVE_EXACT_ONCE_EXTERNAL_STORAGE_CURRENT_HEAD_QUALIFICATION",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "run": 39081155120,
+  "planSHA256": "9c44805e3a72bf101a8230fcb10d588d689f931dbbee32454509d38efd76890c",
+  "controllerSHA256": "44c4f96e86784fc90d879f509e7c9e1a2815accd67a7ac936dd0b68e2c13715a",
+  "peerSHA256": "d85e384f9a377ac5c2a7eb4ef96a672ed3b1a9319b6b5d1d1e8aebf266de7700",
+  "rootReview": "Fullv2 plan/controller/three diffs and peer review read. All helper/current-parent/diff and five source pins verified; strict outer inventory writer semantics independently reviewed.",
+  "scope": "Exactly one optional-original then Company-original qualification for current5333. Existing cloud jobs only. No Library family suite or old7842 qualification replay.",
+  "constraints": [
+    "Exclusive actual intents/session/terminals, one controller, stop first failure; no automatic retry.",
+    "All bulk work external with3GiB plus remaining reserve. Internal small receipt allowance is not renderer/heavy-work authority.",
+    "No native fixture, renderer/server, product changes or evidence publication from this controller.",
+    "Retain every original and negative, including uninvoked v1 preparation.",
+    "No causal storage repair or original affected-context acceptance inferred."
+  ]
+}

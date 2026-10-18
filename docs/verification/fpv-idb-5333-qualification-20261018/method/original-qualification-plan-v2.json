@@ -1,0 +1,148 @@
+{
+  "UTC": "2026-10-18T00:02:59.685266+00:00",
+  "status": "PREPARED_NOT_AUTHORIZED_TO_INVOKE",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "tree": "7b1cb82c32146448ef4d6b6710233a73b88f74f4",
+  "base": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+  "run": 39081155120,
+  "externalRoot": "[STORAGE_5333_EXTERNAL_STAGE]",
+  "helpers": [
+    {
+      "path": "[STORAGE_5333_PREPARATION]/qualify-storage-optional-v2.py",
+      "bytes": 9206,
+      "SHA256": "f23606a146bb316c22d687cbadd223e861183fc404c5c5fac1f56928232f250f",
+      "parentHelper": "[LIBRARY_METHOD_REFERENCE]/combined-a3db-20261017-001/qualify-combined-optional.py",
+      "parentSHA256": "e27fae32eb8a4603780e3b771eef2b4b399fe412d454520b4e49c7bec7629bd9",
+      "guardDiff": {
+        "path": "[STORAGE_5333_PREPARATION]/qualify-storage-optional-v2.guard.diff",
+        "bytes": 6362,
+        "SHA256": "f44d3cb829026f161e16e19f88fb3d18c0c55748956c1cda6484fd4ecfda9138"
+      }
+    },
+    {
+      "path": "[STORAGE_5333_PREPARATION]/qualify-storage-company-v2.py",
+      "bytes": 7100,
+      "SHA256": "1fcb60493fd87e61a92d1d280aecf5594572a981865114623e4178188291afba",
+      "parentHelper": "[LIBRARY_METHOD_REFERENCE]/combined-a3db-20261017-001/qualify-combined-company.py",
+      "parentSHA256": "5cd93e4230e82f3228a3b641fa374efbe89341ebb23c9ff04f17364980d1a101",
+      "guardDiff": {
+        "path": "[STORAGE_5333_PREPARATION]/qualify-storage-company-v2.guard.diff",
+        "bytes": 6838,
+        "SHA256": "9cf10c7852ca4a7e4864655576436a1929cd9e88ed809d6c99984a4a7f27fc03"
+      }
+    }
+  ],
+  "controller": {
+    "path": "[STORAGE_5333_PREPARATION]/run-storage-combined-once-v2.py",
+    "bytes": 4307,
+    "SHA256": "44c4f96e86784fc90d879f509e7c9e1a2815accd67a7ac936dd0b68e2c13715a",
+    "parentHelper": "[LIBRARY_METHOD_REFERENCE]/combined-a3db-20261017-001/run-new-combined-once.py",
+    "parentSHA256": "55ceb9fa81a6a078d9702fc41ce4a963d5e51496aa22e1976864f6970b97ea65",
+    "guardDiff": {
+      "path": "[STORAGE_5333_PREPARATION]/run-storage-combined-once-v2.guard.diff",
+      "bytes": 4428,
+      "SHA256": "d36abccf2e98d24f519a66874badc47dcbe160e03616080f40e84bb9dada285f"
+    }
+  },
+  "currentPolicySources": [
+    {
+      "sourcePath": "publishing/optional-package-policy.mjs",
+      "sourceCommit": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+      "path": "[STORAGE_5333_PREPARATION]/source-optional-package-policy.mjs",
+      "bytes": 31419,
+      "sha256": "b1afd3ccb30d9af2c3527e94ce458f95662e619626ca424636ec3add80e194e3",
+      "gitBlob": "1e211c134f658d09d93b3d8c3a0517965a3e6557"
+    },
+    {
+      "sourcePath": "game/editions/package-budget.mjs",
+      "sourceCommit": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+      "path": "[STORAGE_5333_PREPARATION]/source-package-budget.mjs",
+      "bytes": 1259,
+      "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+      "gitBlob": "1709c3dc71a4c2282e378db940dac2c899669323"
+    },
+    {
+      "sourcePath": ".github/workflows/company-edition-candidate.yml",
+      "sourceCommit": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+      "path": "[STORAGE_5333_PREPARATION]/source-company-edition-candidate.yml",
+      "bytes": 8471,
+      "sha256": "9f9e77e7994b4eedff63dbac48c53c6d8746f4bf6e0848a3851ddd4ade889570",
+      "gitBlob": "f6f23c753f21267442300579d2cae31041a3e809"
+    }
+  ],
+  "requiredAircraftModuleSources": [
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "local": "[STORAGE_5333_PREPARATION]/source-aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "local": "[STORAGE_5333_PREPARATION]/source-aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    }
+  ],
+  "newRequiredAircraftModules": {
+    "optional-practice/civilian-fpv/aircraft-appearance.mjs": {
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    "optional-practice/civilian-fpv/aircraft-preview.mjs": {
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    }
+  },
+  "expectedLimits": {
+    "civilian-flight": {
+      "files": 98,
+      "bytes": 8388608
+    },
+    "civilian-fpv": {
+      "files": 141,
+      "bytes": 12845056
+    },
+    "fpv-worlds": {
+      "files": 200,
+      "bytes": 20971520
+    },
+    "companyRuntime": {
+      "files": 2000,
+      "bytes": 83886080,
+      "additionalObservedGuardBytes": 75497472
+    }
+  },
+  "scope": "One storage5333 optional original and one Company original from focused39081155120, each once, preserve17 observer deltas. No Library family suite or shared actual receipts. No old qualification replay. No renderer/server/native stage/fixture/publication.",
+  "limits": {
+    "optionalArtifactBytes": 67108864,
+    "companyArtifactBytes": 268435456,
+    "optionalOuterDecodedBytes": 536870912,
+    "companyOuterDecodedBytes": 1073741824,
+    "externalReserveBytes": 3221225472,
+    "noInternalHeavyWork": true,
+    "noNativeRenderer": true,
+    "noSourceFix": true
+  },
+  "changedGuards": [
+    "Exact storage53338dc7 commit/tree, focused39081155120 run and fresh external destination replace Library12c identities",
+    "Exact current committed policy hash and141/200 file limits; unchanged optional byte ceilings",
+    "Pin workflow_dispatch event/path and fixed source tree",
+    "Outer archive names must exactly match unique declared checksum files plus checksum document",
+    "Company metadata requires exact name/nonexpiry/positive bounded length/SHA256 digest and exact fpv-learning edition set",
+    "Reuse current Library aircraft-appearance/preview byte/SHA/Gitblob checks in eight optional and four Company original module memberships",
+    "Controller binds exact root approval hash/head/run, creates exclusive actual-once, invokes two stages only and stops on failure; cooperative75min ceiling cannot prove termination of blocked filesystem calls"
+  ],
+  "previousUninvokedPreparation": {
+    "path": "[STORAGE_5333_PREPARATION]/PACKAGE-QUALIFICATION-PLAN.json",
+    "bytes": 5333,
+    "SHA256": "4194ae2448e2df36b11468c989a47d55f2082ccf552e92d8cf85d96660bae644"
+  },
+  "rootApprovalRequired": true,
+  "artifactsDownloaded": false,
+  "controllerInvoked": false
+}

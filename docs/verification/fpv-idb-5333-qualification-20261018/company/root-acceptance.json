@@ -1,0 +1,17 @@
+{
+  "UTC": "2026-10-18T00:43:49.464740+00:00",
+  "decision": "ACCEPT_CURRENT_5333_COMPANY_ORIGINALS_SCOPED",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "actualToolSession": 35498,
+  "actualToolExitCode": 0,
+  "receiptPins": {
+    "actual-once/company-only-intent.json": "b12e9d6f9027181a593d19296cde1f0c8b9bf0e4e12906cfea2a66f819d73a39",
+    "actual-once/company-original-members-receipt.json": "3cff0fa7e1d415be437ca9da11974a22b8d280e65490386dd90113633e04b4cd",
+    "actual-once/company-only-terminal.json": "1cc13dc1237cdd7bbc1a2e4fddd3286f4de18d67861935b7870e837aa79d49d5",
+    "COMPANY-ONLY-ACTUAL-TOOL-TERMINAL.json": "5899ae73765d15bc931b2d07cdbb92a4af77e7e3207f9ffd365207f293174108"
+  },
+  "basis": "Root fully read actual intent, Company receipt, child terminal and tool terminal after exact source/diff/independent review. Own artifact12119800965 passed full size and GitHub digest, seven top-level hashes, two1141-member inventories with all body lengths/hashes/CRC and embedded metadata, fixed source head/tree and unchanged runtime budgets. Required five Company/core paths passed each role.",
+  "separateAcceptedOptional": "Receipt53c8d06d and terminalb091ca30 remain separately accepted and were not replayed.",
+  "originalFailuresRemain": "Controller64169 actual toolEXIT1 due ENOSPC is preserved with attribution; absent original terminal/negative stay absent. No old controller restart.",
+  "remaining": "Only current5333 Company originals close here. Native nonempty/skipped cursor, explicit close/abort/pagehide/current full-player, original affected public cause and other delivery gates stay open. This is not a causal storage repair. Publication requires exact reviewed plan."
+}

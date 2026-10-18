@@ -1,0 +1,22 @@
+{
+  "recordType": "Attributed preparation-only orchestration parse failure",
+  "tool": "functions.exec",
+  "output": "Script error:\nSyntaxError: Invalid or unexpected token",
+  "shellOrPythonStarted": false,
+  "filesystemMutation": false,
+  "CompanyOperationRepeated": false,
+  "projectionPathGuard": {
+    "toolChunk": "b9d308",
+    "actualToolExitCode": 1,
+    "error": "AssertionError: ('unhandled private path', 'method/optional-helper-v2.py')",
+    "publicationFilesWritten": false,
+    "additionalPathGuardFailure": {
+      "toolChunk": "c27404",
+      "actualToolExitCode": 1,
+      "error": "AssertionError: ('unhandled private path', 'method/company-only-plan.json')",
+      "publicationFilesWritten": false,
+      "correction": "Add observed Python runtime alias prefix to redaction map."
+    },
+    "correction": "Add exact known external qualification-base prefix to redaction map; original method bytes unchanged."
+  }
+}

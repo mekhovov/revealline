@@ -1,0 +1,138 @@
+{
+  "createdAt": "2026-10-17T23:57:52.224453+00:00",
+  "status": "SOURCE_REVIEW_COMPLETE_NO_SOURCE_FIX_JUSTIFIED_ROOT_REVIEW_REQUIRED_BEFORE_MERGE_OR_DISPATCH",
+  "productPR": 1545,
+  "productBranch": "codex/fpv-library-lifecycle-audit-20261016",
+  "productHead": "7842d6249217eade6d4ea5f7220b6dd8d4ff01af",
+  "productBase": "3c5011f1908bc1fb5d322e07e445373e4cb59321",
+  "reviewedMain": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+  "existingHandoff": "[STORAGE_7842_PREPARATION]/QUALIFICATION-HANDOFF.json",
+  "unchangedFromBaseThroughMain": [
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "bytes": 17516,
+      "gitBlob": "81fcfb872f2d13e9b8c74f2a057cfd8cc47d0b57",
+      "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "bytes": 11475,
+      "gitBlob": "1fb632f11e8db0ace7423c392230d5aa4ed8d872",
+      "sha256": "8fb720ec1a1a1e5cbc7ec5b253d14b6d76d680e6c03dc5f2c92b3e2e407d4c27"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-locations.mjs",
+      "bytes": 7936,
+      "gitBlob": "6a4c970ded375a8e80ab0ea15e50d42afdb54de3",
+      "sha256": "acf37b9a20ac955e49c3bad30822d909ab4db5fa6a7f85a35de4bab512f99902"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "bytes": 63555,
+      "gitBlob": "ecc2ff11d27940be93f150c109b3692e23e3d45c",
+      "sha256": "02e95765c68d7aeb809d5cc49f441e0247064e198dca3b04d79eac3bc2bfc199"
+    }
+  ],
+  "draftAuthoringModules": [
+    {
+      "path": "host.mjs",
+      "bytes": 4895,
+      "gitBlob": "b2996c6b706afd3cd221091e3b01ee049600c49b",
+      "sha256": "cd8ce972275d6e4a9af26429edac44eabcc242ea18633506290122b3bf402a36"
+    },
+    {
+      "path": "observe.mjs",
+      "bytes": 11901,
+      "gitBlob": "0ebd84223e006468f8f9901899d99bacea9bba95",
+      "sha256": "7d83d64aaad96f00b9d53287090394bc6c6b2c6c32830c6fed645d5f8fc88721"
+    },
+    {
+      "path": "transactions.mjs",
+      "bytes": 12852,
+      "gitBlob": "0723b60ae2ddac652384e3ed11889e9cd527aaa4",
+      "sha256": "d611006d8a3018043faca7246224578467a827608dfb74349ebc43aa1d54839a"
+    },
+    {
+      "path": "access.mjs",
+      "bytes": 2664,
+      "gitBlob": "e9486f39755011e121efe471e7f545353054ed93",
+      "sha256": "addae5fb9d3458611e560ac65ec496db31a441b445f451a15f4f2acc55b2e30b"
+    },
+    {
+      "path": "prepare.mjs",
+      "bytes": 3202,
+      "gitBlob": "8edc78a5adb84b5dfb35858f519dc6341239e085",
+      "sha256": "fc9bdbb4e8cd1cc729efd3e24caee054bc75cbee62a41e5f22572bc139862fd0"
+    }
+  ],
+  "currentWorldApp": {
+    "path": "optional-practice/civilian-fpv/world-app.mjs",
+    "bytes": 412091,
+    "gitBlob": "c4ff8c4110a5f075d790b70fc5e8b6caed7179cd",
+    "sha256": "9e4374bc374e39d1b6e36726a1e24ef231165492adae3fefe5d6c161b742e6c2",
+    "baseBlob": "0623f8e5afa8bc77ffa5fdb2def47e3b0f4a747a",
+    "delta": {
+      "addedLines": 241,
+      "removedLines": 57
+    }
+  },
+  "currentOptionalBuilder": {
+    "path": "scripts/build-optional-practice.mjs",
+    "bytes": 18680,
+    "gitBlob": "0d7d39c338b13595ab00de7425085a48cb1a3b08",
+    "sha256": "4ac4eda6c7ce9fb025833ed5c70f2b5e7378a340e21bf4ba25b265c5303d5e27",
+    "scopedDiff": "Two error messages now include actual file/byte budgets; no limit change in this file."
+  },
+  "findings": [
+    "Main does not modify authoring/fpv-worlds/idb-ownership from base3c5011. Draft transaction/lower-bound changes are separate and unmerged.",
+    "WorldStore, WorldRecords, RegionalLocations and RegionalLibrary bodies match exactly among draft, base and current main. Metadata listing from1537 is already included; do not reimplement it.",
+    "Current WorldApp still passes win.indexedDB into WorldStore, WorldRecords, FlightNotebook and RegionalLocations; RegionalLibrary independently passes win.indexedDB to its openLibrary dependency. Existing P0 factory boundary remains applicable.",
+    "WorldApp retains ordinary pagehide pause and explicit disposal closes; changed aircraft/challenge/settings/control paths require a new combined player qualification, not a storage repair inferred from source.",
+    "The observer captures only World/region/record transaction domains. Additional aircraft archive storage is outside this P0 scope; no all-storage coverage claim or speculative allowlist expansion is justified.",
+    "No concrete defect was established in the named observer or original storage lifecycle paths. No product source edits are justified by this review."
+  ],
+  "nextSequence": [
+    "Root reviews this bounded recommendation and separately authorizes one normal merge of exact a3db2c95 into exact7842 Draft1545. Reconcile both refs immediately before mutation and stop on drift; no force push/rebase/new checkout.",
+    "Verify resulting commit parents, tree, branch ref and PR head. Preserve all17 existing PR delta files exactly against original7842; confirm normal incoming main production blobs including WorldApp. Record one actual intent/terminal; do not retry a mutation from wrapper failure.",
+    "Reuse automatic current-head PR checks. If a retained current combined Company archive is not produced by an existing suitable run, dispatch company-edition-candidate.yml exactly once at the product branch with editions=fpv-learning. Record exact resulting head/run; keep policy skips explicit.",
+    "Qualify only newly produced current-head optional/Company originals on external storage with required reserves, using current admitted budgets/import closure. Bind the actual original inventories/checksums/CRC and preserve failures. Historical7842 packages and21-group software evidence remain accepted only for their exact scope.",
+    "After actual package acceptance and renewed stable internal3GiB, stage a new separately identified authoring fixture from the accepted new original Worlds package plus unchanged five observer modules. Do not overwrite or reuse the stopped7842 origin.",
+    "Use one renderer for only remaining native gates. Prioritize genuine caller-owned nonempty listing through normal safe UI and lifecycle observation; then explicit close-call capture if an ordinary supported application close occurs, Stop/pagehide restoration, and honest failed/aborted paths if naturally encountered. Never manufacture a cause via forced storage mutation.",
+    "Root accepts current combined native results before merge/readiness. Original affected public connection owner, contents and cause remain open until direct evidence in a permitted workflow; fresh-context success is not a production repair."
+  ],
+  "notRepeated": [
+    "21 accepted synthetic groups",
+    "old original artifact download/qualification",
+    "7842 fixture preparation",
+    "accepted zero-row native observation/Stop exports",
+    "existing evidence publication"
+  ],
+  "mutations": {
+    "sourceFilesChanged": [],
+    "productGitWrites": false,
+    "workflowDispatches": false,
+    "renderersOrServersStarted": false,
+    "storageReadsOrWrites": false,
+    "cleanup": false
+  },
+  "readOnlyToolNegatives": [
+    {
+      "action": "local git cat-file and git show on7842",
+      "observation": "Both initially yielded after10s; each later returned actualEXIT0. No retry."
+    },
+    {
+      "action": "attempt to terminate two delayed owned read processes",
+      "exitCode": 2,
+      "observation": "Both processes had already exited; kill reported no such process. No process was signalled."
+    },
+    {
+      "action": "unquoted gh contents endpoint attempt",
+      "exitCode": 1,
+      "observation": "zsh no matches found before any HTTP call. No API request, source change or mutation occurred."
+    },
+    {
+      "action": "combined source output",
+      "observation": "One aggregate tool output was truncated; relevant named source identities and factory/close boundaries were independently read in smaller bounded calls. No test or operation was rerun."
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "UTC": "2026-10-18T00:00:31.984265+00:00",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "branch": "codex/fpv-library-lifecycle-audit-20261016",
+  "editions": "fpv-learning",
+  "existingRuns": [
+    {
+      "id": 39081099153,
+      "name": "Industrial feature verification",
+      "event": "pull_request"
+    },
+    {
+      "id": 39081099223,
+      "name": "Appearance preview",
+      "event": "pull_request"
+    },
+    {
+      "id": 39081099190,
+      "name": "Fastline exact-head auto-merge",
+      "event": "pull_request"
+    },
+    {
+      "id": 39081099222,
+      "name": "Validate source for continuous main",
+      "event": "pull_request"
+    }
+  ],
+  "matchingCurrentCompanyArtifacts": 0,
+  "reason": "No current-head retained Company originals; automatic current-head runs do not include Company candidate. One focused run is root authorized.",
+  "retry": false
+}

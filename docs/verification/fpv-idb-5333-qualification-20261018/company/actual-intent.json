@@ -1,0 +1,17 @@
+{
+  "UTC": "2026-10-18T00:40:54.996380+00:00",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "run": 39081155120,
+  "planSHA256": "315e36ce5d7e1ac87bfd6aa70056b0363ffe8bb43d7b94cb0fc4392dafa32f28",
+  "runnerSHA256": "00d591dbb9d9b4c0437f31006cff1a6499bc6d5f43849b61b40e4fc48ae7f1e2",
+  "helper": {
+    "path": "[COMPANY_CONTINUATION]/qualify-company-only.py",
+    "bytes": 7060,
+    "SHA256": "38fe2cc4966f383633fa784efa5f7f1bc4daffb19ea82cfe3b9dbc8c724cda1b"
+  },
+  "rootApprovalSHA256": "bb0194929622a2295432a8a0c65cb8c2b159b6a97dbc08935eb63f874a7a148e",
+  "peerReviewSHA256": "c954b3882ffda8d4a536e52bf79bfae50c6d79e102962d2ed0b80ba123183169",
+  "externalFreeBytes": 67174400000,
+  "scope": "One fresh Company original operation; no old controller restart, optional replay, native or publication",
+  "noAutomaticRetry": true
+}

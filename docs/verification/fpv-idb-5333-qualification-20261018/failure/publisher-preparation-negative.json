@@ -1,0 +1,10 @@
+{
+  "recordType": "Attributed publication-preparation-only Python parse failure",
+  "toolChunk": "920343",
+  "actualToolExitCode": 1,
+  "error": "SyntaxError: '{' was never closed",
+  "pythonBodyExecuted": false,
+  "filesystemMutation": false,
+  "publicationInvoked": false,
+  "correction": "Build plan structure separately; no qualification or publication repeated."
+}

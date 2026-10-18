@@ -1,0 +1,8 @@
+{
+  "UTC": "2026-10-18T00:00:33.479987+00:00",
+  "exitCode": 0,
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "stdout": "https://github.com/mekhovov/revealline/actions/runs/39081155120\n",
+  "stderr": "",
+  "meaning": "Dispatch command result only, not job completion"
+}

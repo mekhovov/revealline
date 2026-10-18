@@ -1,0 +1,14 @@
+{
+  "UTC": "2026-10-18T00:43:06.029991+00:00",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "run": 39081155120,
+  "actualChildExitCode": 0,
+  "stdoutSHA256": "3cff0fa7e1d415be437ca9da11974a22b8d280e65490386dd90113633e04b4cd",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "noAutomaticRetry": true,
+  "receipt": {
+    "path": "[COMPANY_CONTINUATION]/actual-once/company-original-members-receipt.json",
+    "bytes": 1907,
+    "SHA256": "3cff0fa7e1d415be437ca9da11974a22b8d280e65490386dd90113633e04b4cd"
+  }
+}

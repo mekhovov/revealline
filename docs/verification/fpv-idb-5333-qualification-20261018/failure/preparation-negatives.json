@@ -1,0 +1,15 @@
+{
+  "interpreterShim": {
+    "toolChunk": "eb9459",
+    "actualToolExitCode": 1,
+    "pythonPreparationStarted": false,
+    "operationalCompanyStarted": false,
+    "output": "mise ERROR error parsing config file: [EXTERNAL_TOOL_CONFIG]\nmise ERROR Config files in [EXTERNAL_TOOL_CONFIG] are not trusted.\nTrust them with `mise trust`. See https://mise.jdx.dev/cli/trust.html for more information.\nmise ERROR Version: 2026.9.1 macos-arm64 (2026-09-02)\nmise ERROR Run with --verbose or MISE_VERBOSE=1 for more information\n",
+    "resolution": "Existing absolute Python interpreter from cwd /; no trust/config change."
+  },
+  "orchestratorParse": {
+    "output": "Script error:\nSyntaxError: Unexpected identifier 'mise'",
+    "shellOrPythonStarted": false,
+    "filesystemMutation": false
+  }
+}

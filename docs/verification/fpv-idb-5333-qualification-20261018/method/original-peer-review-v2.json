@@ -1,0 +1,99 @@
+{
+  "UTC": "2026-10-18T00:07:50.920731+00:00",
+  "status": "PASS_STATIC_STORAGE_CURRENT_HEAD_QUALIFICATION_GUARDS_NOT_EXECUTED",
+  "scope": "Finite independent review of storage v2 adaptation of accepted Library5b9 methods; no package or runtime qualification credited.",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "tree": "7b1cb82c32146448ef4d6b6710233a73b88f74f4",
+  "run": 39081155120,
+  "externalRoot": "[STORAGE_5333_EXTERNAL_STAGE]",
+  "plan": {
+    "file": "PACKAGE-QUALIFICATION-PLAN-v2.json",
+    "bytes": 7022,
+    "sha256": "9c44805e3a72bf101a8230fcb10d588d689f931dbbee32454509d38efd76890c"
+  },
+  "handoff": {
+    "file": "ROOT-REVIEW-HANDOFF-v2.json",
+    "bytes": 1513,
+    "sha256": "272c08a2cab0cc5738f327ab725faa81ab7981a69ea8c92728779005a7df4e2f"
+  },
+  "helpers": [
+    {
+      "file": "qualify-storage-optional-v2.py",
+      "bytes": 9206,
+      "sha256": "f23606a146bb316c22d687cbadd223e861183fc404c5c5fac1f56928232f250f"
+    },
+    {
+      "file": "qualify-storage-company-v2.py",
+      "bytes": 7100,
+      "sha256": "1fcb60493fd87e61a92d1d280aecf5594572a981865114623e4178188291afba"
+    }
+  ],
+  "controller": {
+    "file": "run-storage-combined-once-v2.py",
+    "bytes": 4307,
+    "sha256": "44c4f96e86784fc90d879f509e7c9e1a2815accd67a7ac936dd0b68e2c13715a"
+  },
+  "guardDiffs": [
+    {
+      "file": "qualify-storage-optional-v2.guard.diff",
+      "bytes": 6362,
+      "sha256": "f44d3cb829026f161e16e19f88fb3d18c0c55748956c1cda6484fd4ecfda9138"
+    },
+    {
+      "file": "qualify-storage-company-v2.guard.diff",
+      "bytes": 6838,
+      "sha256": "9cf10c7852ca4a7e4864655576436a1929cd9e88ed809d6c99984a4a7f27fc03"
+    },
+    {
+      "file": "run-storage-combined-once-v2.guard.diff",
+      "bytes": 4428,
+      "sha256": "d36abccf2e98d24f519a66874badc47dcbe160e03616080f40e84bb9dada285f"
+    }
+  ],
+  "checks": [
+    "Full helpers/controller and plan read. All current, parent and diff pins match, and all three unified diffs regenerate exactly against accepted Library5b9 methods. No unreviewed guard weakening is present in those differences.",
+    "Exact storage53338dc7/run39081155120/tree7b1c binding is consistent with retained canonical merge and dispatch receipts. Main a3db parent and 17 prior observer delta identities remain separately recorded. Workflow event/path and exact artifact names/head/run/nonexpiry/size/digest guards are enforced.",
+    "Five local policy/workflow/module bodies match length, SHA-256 and Git blob pins. Optional 98/141/200 file ceilings and original byte ceilings, Company2000/80MiB plus72MiB guard, all original archive member/hash/metadata checks and closure method remain unchanged.",
+    "Two new aircraft bodies remain pinned by bytes, SHA-256 and Git blob in eight optional and four Company original memberships. No Library family stage or historical result substitution remains in the storage controller.",
+    "New exact outer-member guards match current writer semantics: each writer populates a unique files Map, adds envelope/review or capacity/verification metadata, then computes descriptors from the complete pre-checksum Map and adds only the checksum document. Both write exactly that Map into a new output directory, and the workflow uploads that whole directory. Company capacityPacket constructs a separate Map and does not append files to the candidate Map.",
+    "Root approval must match exact plan/controller hashes, head and run before exclusive actual-once creation. Helpers are hash/length checked before their intent; only optional then Company run once. Existing exclusive external destination and outputs prevent duplicate bodies; child nonzero exits are preserved and stop the sequence without retry.",
+    "External3GiB-plus-stage reserve, original artifact digest/member ceilings, local small-report guard and cooperative75-minute wait ceiling are retained. These are execution guards, not already observed reserve or completion evidence.",
+    "No publication, source/product/branch write, renderer/server/native stage or application-data access is introduced. Local raw logs/paths remain internal; no public projection is authorized by this plan."
+  ],
+  "writerContractSources": [
+    {
+      "file": "peer-source-bundle-optional-practice.mjs",
+      "bytes": 8964,
+      "sha256": "db18cd00aaab6d7badb93e3fbd0e78d0859c5b9ae3256da5fe1632dad963c942",
+      "sourcePath": "scripts/bundle-optional-practice.mjs",
+      "gitBlob": "1b3c152994bb778bc2544b0775406d24756ba534"
+    },
+    {
+      "file": "peer-source-bundle-editions.mjs",
+      "bytes": 8168,
+      "sha256": "6d61c9f1368eca3779561a8583ac0bc911fec037fa54a095d555150ef5b7302a",
+      "sourcePath": "scripts/bundle-editions.mjs",
+      "gitBlob": "20cbd23acff950a4b352cf08d9cb812650ab42eb"
+    },
+    {
+      "file": "peer-source-edition-capacity.mjs",
+      "bytes": 10300,
+      "sha256": "77778e2e7b84f8b5236d331727bf328ea998042c26450ca7ccf28e74992fd726",
+      "sourcePath": "publishing/edition-capacity.mjs",
+      "gitBlob": "4818f1ef76c23d25ab08e3962ba39febbbec91af"
+    }
+  ],
+  "writerSourceReadAuthority": "Root explicitly authorized small bounded exact-current53338dc7 workflow-referenced writer source reads to resolve this new outer-set guard. GitHub content bodies and Git blob identities were checked; no artifact endpoint was fetched.",
+  "preservedNegative": {
+    "file": "PACKAGE-QUALIFICATION-PLAN.json",
+    "bytes": 5333,
+    "sha256": "4194ae2448e2df36b11468c989a47d55f2082ccf552e92d8cf85d96660bae644"
+  },
+  "blockers": [],
+  "limitations": [
+    "Peer static PASS is not root invocation approval or actual package/result acceptance. Both original new-head stages still require their actual intents, terminals and independently accepted result bodies.",
+    "Cooperative deadline and pre-stage free-space samples do not prove termination of blocked filesystem/subprocess operations or sustained reserve.",
+    "No native observer teardown/interception, original persistence cause, full player, public delivery, physical device or endurance acceptance is established.",
+    "Review performed only static local reads/hashes/diff comparison, three explicitly authorized small source reads, and this small local receipt; no helper invocation, test/build, artifact download, retry, renderer/server, publication or Git mutation."
+  ]
+}

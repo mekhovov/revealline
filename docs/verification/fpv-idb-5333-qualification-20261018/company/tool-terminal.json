@@ -1,0 +1,19 @@
+{
+  "UTCRecorded": "2026-10-18T00:43:19.084343+00:00",
+  "sessionId": 35498,
+  "actualToolExitCode": 0,
+  "finalToolChunk": "51c496",
+  "actualChildExitCode": 0,
+  "receipt": {
+    "path": "[COMPANY_CONTINUATION]/actual-once/company-original-members-receipt.json",
+    "bytes": 1907,
+    "SHA256": "3cff0fa7e1d415be437ca9da11974a22b8d280e65490386dd90113633e04b4cd"
+  },
+  "childTerminal": {
+    "path": "[COMPANY_CONTINUATION]/actual-once/company-only-terminal.json",
+    "bytes": 687,
+    "SHA256": "1cc13dc1237cdd7bbc1a2e4fddd3286f4de18d67861935b7870e837aa79d49d5"
+  },
+  "noRetry": true,
+  "scope": "Current5333 Company original package validation only; no native/player/public or causal storage acceptance"
+}

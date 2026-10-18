@@ -1,0 +1,128 @@
+{
+  "UTC": "2026-10-18T00:39:36.617672+00:00",
+  "status": "PASS_STATIC_COMPANY_ONLY_CONTINUATION_NOT_EXECUTED",
+  "reviewer": "fpv_library_guard_review",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "tree": "7b1cb82c32146448ef4d6b6710233a73b88f74f4",
+  "run": 39081155120,
+  "reviewedPins": [
+    {
+      "name": "COMPANY-ONLY-CONTINUATION-PLAN.json",
+      "bytes": 8238,
+      "SHA256": "315e36ce5d7e1ac87bfd6aa70056b0363ffe8bb43d7b94cb0fc4392dafa32f28"
+    },
+    {
+      "role": "helper",
+      "name": "qualify-company-only.py",
+      "bytes": 7060,
+      "SHA256": "38fe2cc4966f383633fa784efa5f7f1bc4daffb19ea82cfe3b9dbc8c724cda1b"
+    },
+    {
+      "role": "runner",
+      "name": "run-company-only-once.py",
+      "bytes": 3459,
+      "SHA256": "00d591dbb9d9b4c0437f31006cff1a6499bc6d5f43849b61b40e4fc48ae7f1e2"
+    },
+    {
+      "role": "guardDiff",
+      "name": "qualify-company-only.guard.diff",
+      "bytes": 6247,
+      "SHA256": "44915b609a52726ad57b5289ae7c7541d59d88729cc173707b6d8d9642fd1ac7"
+    },
+    {
+      "role": "priorHelper",
+      "name": "prior-company-helper-v2.py",
+      "bytes": 7100,
+      "SHA256": "1fcb60493fd87e61a92d1d280aecf5594572a981865114623e4178188291afba"
+    },
+    {
+      "role": "acceptedOptionalReceipt",
+      "name": "accepted-optional-receipt.json",
+      "bytes": 5685,
+      "SHA256": "53c8d06d589ff8467d139c8d5ffdba06676db87d2d981ca7671023feac088506"
+    },
+    {
+      "role": "acceptedOptionalTerminal",
+      "name": "accepted-optional-terminal.json",
+      "bytes": 1396,
+      "SHA256": "b091ca302c968a59ad36f592d9854d417793c4ccdf04099ef3a42d6ffdc4824f"
+    },
+    {
+      "role": "retainedControllerToolOutput",
+      "name": "controller64169-retained-tool-output.txt",
+      "bytes": 2703,
+      "SHA256": "d45d2ae1c3293e3d39dc3b5552aa07b4495114ea5617e75d437717537f76d325"
+    },
+    {
+      "role": "retainedControllerAttribution",
+      "name": "controller64169-tool-output-attribution.json",
+      "bytes": 1296,
+      "SHA256": "530812495bca58c832bf2a713be3be37ea55dbca97a49d20457718489ff5f82c"
+    },
+    {
+      "role": "preparationNegatives",
+      "name": "preparation-negatives.json",
+      "bytes": 828,
+      "SHA256": "f112bc3aadf591bbfb16c60088d4e707b723b573a64b7188c05e5134d988515a"
+    }
+  ],
+  "method": "Full static plan/helper/runner/diff reads, exact local prepared input hashes, regenerated diff equality, and bounded existing optional/negative metadata reads. No helper/runner execution, artifact/network request, Git call, new source discovery, tests, or internal filesystem write during this review.",
+  "findings": [
+    "Exact diff retains all previous v2 workflow/head/run/artifact, checksum-set, source/tree, inventory, member hash/CRC, embedded metadata and budget guards. It changes the external output root and required temporary environment, removes unsupported Company NEW_MODULES/four-proof expectations, adds five positive Company/core paths in both roles, and narrows receipt scope.",
+    "Company uses its own fixed53338dc7/run39081155120/tree7b1cb82c metadata and fresh original. No Library5b9 artifact/body hashes or actual results are inherited. The five path names are method references only; projected bodies must pass their own current manifest/source inventory.",
+    "The accepted optional receipt and actual EXIT0 terminal bind the same5333 source/tree/run and exact receipt53c8d06d. Six originals and eight aircraft identities are recorded there; this review verified only the existing metadata linkage and does not repeat their body qualification.",
+    "The helper requires exact workflow_dispatch path, current run and candidate success; one unique nonexpired exact-name artifact with matching source/run and bounded size/digest precedes one Company GET. No retry loop or old-controller invocation exists.",
+    "Outer and inner ZIP uniqueness/path/symlink/encryption/decoded-size guards, exact declared checksum outer set, every original member length/SHA and ZIP CRC, embedded metadata equality, fixed tree, reproducibleBuilds2, publicEligiblefalse and fpv-learning-only scope remain.",
+    "Runtime max2000 members/80MiB plus72MiB guard remains. Source is separately hashed without assigning runtime budget. Exact committed package-budget source length/Git blob/SHA and literals remain. No new Company metadata schema expectation is introduced beyond the five positive member-presence assertions.",
+    "Runner requires separate root decision, exact plan/runner/helper hashes, and the peer receipt hash before exclusive actual-once creation. It rechecks the operational input pins and external3GiB+1GiB reserve; child TMPDIR/TMP/TEMP and all helper/runner output paths are under the fresh external root. Bytecode is disabled and no Git operation is present.",
+    "Exclusive intent, stdout, stderr and terminal preserve actual child exit; post-child exceptions preserve known child exit in the negative record, with secondary recording errors printed. No automatic retry. The previous controller64169 EXIT1 and absent original terminal are retained rather than replaced.",
+    "The runner does not rehash review-only guardDiff/preparationNegatives at invocation. Their exact current hashes were checked by this peer and are bound in the root-approved plan; operational files and retained controller evidence are rehashed. This is not a blocker for the finite immutable plan.",
+    "This is private preparation evidence with retained local paths. The code has read-only GitHub API operations and no upload/publish path. No native, player, storage-cause, public delivery, full-suite or overall product acceptance is credited."
+  ],
+  "requiredCompanyCoreMembers": [
+    "game/company.html",
+    "game/fpv-entry.mjs",
+    "game/optional-practice-catalog.mjs",
+    "game/ui/optional-practice-panel.mjs",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs"
+  ],
+  "negativeEvidence": {
+    "storagePriorController": {
+      "sessionId": 64169,
+      "reportedToolExitCode": 1,
+      "companyStageEntered": false,
+      "firstFailure": "ENOSPC writing cloud-state-3.json during wait(candidate)",
+      "secondaryFailure": "ENOSPC writing controller-negative.json",
+      "absentOriginalTerminalRetainedAsAbsent": true,
+      "attributionSHA256": "530812495bca58c832bf2a713be3be37ea55dbca97a49d20457718489ff5f82c",
+      "rawToolOutputSHA256": "d45d2ae1c3293e3d39dc3b5552aa07b4495114ea5617e75d437717537f76d325"
+    },
+    "storagePreparation": {
+      "recordSHA256": "f112bc3aadf591bbfb16c60088d4e707b723b573a64b7188c05e5134d988515a",
+      "summary": "Untrusted mise configuration shim denial and orchestrator syntax error are retained. Neither started the Company operation. No trust/config change was made."
+    },
+    "reviewFilenameNegative": {
+      "summary": "A bounded read appended the wrong guessed diff filename after successfully reading helper/runner, producing cat missing-file EXIT1. Correct plan-named qualify-company-only.guard.diff was subsequently read and verified; no operation executed.",
+      "missingBasename": "company-only-guard.diff"
+    },
+    "earlierReviewerTransportNegatives": [
+      {
+        "attribution": "Earlier diagnostic exec_command tool output, chunkfd4b55, actual exit1; retained as tool-output text, not a new command",
+        "output": "zsh:1: can't create temp file for here document: no space left on device"
+      },
+      {
+        "attribution": "Earlier exact-source Git identity read, session44772, final chunk9eb644, reported tool exit0 despite the following diagnostics and returned IDs; retained as tool-output text, not a new Git call",
+        "output": "fatal: sha1 file '.git/objects/pack/tmp_pack_l3QULn' write error. Out of diskspace\nfatal: could not finish pack-objects to repack local links\nfatal: index-pack failed\n20cbd23acff950a4b352cf08d9cb812650ab42eb\n1e211c134f658d09d93b3d8c3a0517965a3e6557\n1709c3dc71a4c2282e378db940dac2c899669323\nf6f23c753f21267442300579d2cae31041a3e809",
+        "limitation": "Returned IDs and toolEXIT0 do not establish a clean write-free Git read. Underlying trigger not inferred; partial packs left in place, not searched or cleaned; no repeated Git call."
+      }
+    ]
+  },
+  "blockers": [],
+  "operationAuthorizedByThisReview": false,
+  "rootDecisionStillRequired": "APPROVE_ONE_COMPANY_ONLY_OPERATION with exact current plan/runner/helper/peer hashes",
+  "openGates": [
+    "Actual own5333 Company artifact download and all original checks have not been performed by this review.",
+    "Native/player/original affected storage/public/endurance gates remain open.",
+    "Stable internal headroom is not established; this review authorizes no renderer or internal heavy work."
+  ]
+}

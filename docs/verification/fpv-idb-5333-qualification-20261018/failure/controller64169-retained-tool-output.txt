@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "[STORAGE_5333_PREPARATION]/run-storage-combined-once-v2.py", line 36, in <module>
+    wait('optional-practice');stage('optional','qualify-storage-optional-v2.py','qualification-original-members-and-closure.json');wait('candidate');stage('company','qualify-storage-company-v2.py','company-original-members-receipt.json')
+                                                                                                                                   ~~~~^^^^^^^^^^^^^
+  File "[STORAGE_5333_PREPARATION]/run-storage-combined-once-v2.py", line 17, in wait
+    counter+=1;put(OUT/('cloud-state-'+str(counter)+'.json'),{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),**state});last=state
+               ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "[STORAGE_5333_PREPARATION]/run-storage-combined-once-v2.py", line 7, in put
+    with p.open('xb')as f:f.write(b);f.flush();os.fsync(f.fileno())
+         ~~~~~~^^^^^^
+  File "[PYTHON_RUNTIME]/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '[STORAGE_5333_PREPARATION]/actual-once/cloud-state-3.json'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "[STORAGE_5333_PREPARATION]/run-storage-combined-once-v2.py", line 39, in <module>
+    put(OUT/'controller-negative.json',{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'type':type(e).__name__,'message':str(e),'noAutomaticRetry':True});raise
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "[STORAGE_5333_PREPARATION]/run-storage-combined-once-v2.py", line 7, in put
+    with p.open('xb')as f:f.write(b);f.flush();os.fsync(f.fileno())
+         ~~~~~~^^^^^^
+  File "[PYTHON_RUNTIME]/Frameworks/Python.framework/Versions/3.14/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: [Errno 28] No space left on device: '[STORAGE_5333_PREPARATION]/actual-once/controller-negative.json'

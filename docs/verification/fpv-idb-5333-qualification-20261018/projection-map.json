@@ -1,0 +1,374 @@
+{
+  "scope": "Exact local path-prefix substitutions only; raw hashes describe raw originals, public hashes describe projected copies.",
+  "records": [
+    {
+      "path": "source/integration-review.json",
+      "sourceBytes": 7979,
+      "sourceSHA256": "eed675d013c53e9b401d1a4689ff37c9c760f4b228ccb4a7cce473cc58b79db3",
+      "bytes": 7960,
+      "sha256": "517349a9c9f4eeee7b714aa3eba46831b877003bb6b5ff2448614a2d842a43ae",
+      "projectionChanges": [
+        {
+          "label": "[STORAGE_7842_PREPARATION]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "source/merge-canonical-acceptance.json",
+      "sourceBytes": 5196,
+      "sourceSHA256": "9fc7876e581cab29b93664a224aaaa424ec0a79458a1dcd50661980007085ce0",
+      "bytes": 5196,
+      "sha256": "9fc7876e581cab29b93664a224aaaa424ec0a79458a1dcd50661980007085ce0",
+      "projectionChanges": []
+    },
+    {
+      "path": "source/merge-terminal.json",
+      "sourceBytes": 181,
+      "sourceSHA256": "826dfea1b34bd1858bfb990113758d61f0cf38b787cbd9b927c92e51027c39f3",
+      "bytes": 181,
+      "sha256": "826dfea1b34bd1858bfb990113758d61f0cf38b787cbd9b927c92e51027c39f3",
+      "projectionChanges": []
+    },
+    {
+      "path": "source/dispatch-intent.json",
+      "sourceBytes": 887,
+      "sourceSHA256": "fd8b732d23d3ea98e3d752505cc5a8e1ffddae1f04f09c6d18c7efa848d618b5",
+      "bytes": 887,
+      "sha256": "fd8b732d23d3ea98e3d752505cc5a8e1ffddae1f04f09c6d18c7efa848d618b5",
+      "projectionChanges": []
+    },
+    {
+      "path": "source/dispatch-terminal.json",
+      "sourceBytes": 281,
+      "sourceSHA256": "e24ff3f990ace75df3f889a4ae1c5f2f1bde564d3145e99918e4e4b0adc178b8",
+      "bytes": 281,
+      "sha256": "e24ff3f990ace75df3f889a4ae1c5f2f1bde564d3145e99918e4e4b0adc178b8",
+      "projectionChanges": []
+    },
+    {
+      "path": "method/original-qualification-plan-v2.json",
+      "sourceBytes": 7022,
+      "sourceSHA256": "9c44805e3a72bf101a8230fcb10d588d689f931dbbee32454509d38efd76890c",
+      "bytes": 6710,
+      "sha256": "822d158c98c8701237a8f4660ffb3c96ffa8149a41683909ebb33f7e31ce07ef",
+      "projectionChanges": [
+        {
+          "label": "[STORAGE_5333_EXTERNAL_STAGE]",
+          "count": 1
+        },
+        {
+          "label": "[STORAGE_5333_PREPARATION]",
+          "count": 12
+        },
+        {
+          "label": "[LIBRARY_METHOD_REFERENCE]",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "path": "method/optional-helper-v2.py",
+      "sourceBytes": 9206,
+      "sourceSHA256": "f23606a146bb316c22d687cbadd223e861183fc404c5c5fac1f56928232f250f",
+      "bytes": 9165,
+      "sha256": "23bf2347795a68f7fbb032e4f02d99d506ade3f21579904d752bab1f3310f1e6",
+      "projectionChanges": [
+        {
+          "label": "[EXTERNAL_QUALIFICATION_BASE]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "method/original-controller-v2.py",
+      "sourceBytes": 4307,
+      "sourceSHA256": "44c4f96e86784fc90d879f509e7c9e1a2815accd67a7ac936dd0b68e2c13715a",
+      "bytes": 4290,
+      "sha256": "09805b84aade63f41a3fc01672b04aa7a296c780542a17f206c3fd9b39874420",
+      "projectionChanges": [
+        {
+          "label": "[STORAGE_5333_PREPARATION]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "method/original-peer-review-v2.json",
+      "sourceBytes": 6420,
+      "sourceSHA256": "d85e384f9a377ac5c2a7eb4ef96a672ed3b1a9319b6b5d1d1e8aebf266de7700",
+      "bytes": 6330,
+      "sha256": "41e7c9d23b39ed3c7bb64388d1519008de96e897e59a999d296eca0dd8fe92be",
+      "projectionChanges": [
+        {
+          "label": "[STORAGE_5333_EXTERNAL_STAGE]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "method/original-root-controller-approval.json",
+      "sourceBytes": 1374,
+      "sourceSHA256": "19915b1e83435d51dc97b5f9a7bada856bea7a1b231e49187ba42044f1ccadae",
+      "bytes": 1374,
+      "sha256": "19915b1e83435d51dc97b5f9a7bada856bea7a1b231e49187ba42044f1ccadae",
+      "projectionChanges": []
+    },
+    {
+      "path": "failure/original-controller-launch-intent.json",
+      "sourceBytes": 364,
+      "sourceSHA256": "fa78650b4b7936ed3d51f8682cb424b1fde1959d24558a0ebbdc6cba6bd88cd7",
+      "bytes": 364,
+      "sha256": "fa78650b4b7936ed3d51f8682cb424b1fde1959d24558a0ebbdc6cba6bd88cd7",
+      "projectionChanges": []
+    },
+    {
+      "path": "failure/original-owned-controller-session.json",
+      "sourceBytes": 264,
+      "sourceSHA256": "c582db27784c98844fb4626d6cb65f1a0e6d373213adfba9b708db86e6201cda",
+      "bytes": 264,
+      "sha256": "c582db27784c98844fb4626d6cb65f1a0e6d373213adfba9b708db86e6201cda",
+      "projectionChanges": []
+    },
+    {
+      "path": "optional/artifact-metadata.json",
+      "sourceBytes": 855,
+      "sourceSHA256": "a4f4623c6858ee4c735acb51716e7005b034d558594b0cbd8f1cd57dcbce71a1",
+      "bytes": 855,
+      "sha256": "a4f4623c6858ee4c735acb51716e7005b034d558594b0cbd8f1cd57dcbce71a1",
+      "projectionChanges": []
+    },
+    {
+      "path": "optional/qualification-receipt.json",
+      "sourceBytes": 5685,
+      "sourceSHA256": "53c8d06d589ff8467d139c8d5ffdba06676db87d2d981ca7671023feac088506",
+      "bytes": 5685,
+      "sha256": "53c8d06d589ff8467d139c8d5ffdba06676db87d2d981ca7671023feac088506",
+      "projectionChanges": []
+    },
+    {
+      "path": "optional/actual-terminal.json",
+      "sourceBytes": 1396,
+      "sourceSHA256": "b091ca302c968a59ad36f592d9854d417793c4ccdf04099ef3a42d6ffdc4824f",
+      "bytes": 1249,
+      "sha256": "76633f805a325d8bcd894187093dc11cfb907a9716fd74a2b08978cd15b99000",
+      "projectionChanges": [
+        {
+          "label": "[STORAGE_5333_EXTERNAL_STAGE]",
+          "count": 1
+        },
+        {
+          "label": "[STORAGE_5333_PREPARATION]",
+          "count": 3
+        },
+        {
+          "label": "[LIBRARY_METHOD_REFERENCE]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "method/uninvoked-company-helper-v2.py",
+      "sourceBytes": 7100,
+      "sourceSHA256": "1fcb60493fd87e61a92d1d280aecf5594572a981865114623e4178188291afba",
+      "bytes": 7010,
+      "sha256": "8d8a8e85b4235290191bce48935565c8ed2d47357179a05f8351bddda0b281bf",
+      "projectionChanges": [
+        {
+          "label": "[STORAGE_5333_EXTERNAL_STAGE]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "failure/controller64169-retained-tool-output.txt",
+      "sourceBytes": 2703,
+      "sourceSHA256": "d45d2ae1c3293e3d39dc3b5552aa07b4495114ea5617e75d437717537f76d325",
+      "bytes": 2534,
+      "sha256": "cb556d97099b39a2051a288e94ffab228d916bfbb2af3e0e2fa66fcc33e97ec1",
+      "projectionChanges": [
+        {
+          "label": "[STORAGE_5333_PREPARATION]",
+          "count": 7
+        },
+        {
+          "label": "[PYTHON_RUNTIME]",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "path": "failure/controller64169-output-attribution.json",
+      "sourceBytes": 1296,
+      "sourceSHA256": "530812495bca58c832bf2a713be3be37ea55dbca97a49d20457718489ff5f82c",
+      "bytes": 1169,
+      "sha256": "1480001a2f512570f52ab7d2994b510b35072773f9c3885a59919812a0a5ae52",
+      "projectionChanges": [
+        {
+          "label": "[COMPANY_CONTINUATION]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "failure/preparation-negatives.json",
+      "sourceBytes": 828,
+      "sourceSHA256": "f112bc3aadf591bbfb16c60088d4e707b723b573a64b7188c05e5134d988515a",
+      "bytes": 796,
+      "sha256": "8a07fd8a84705e8ece0d38307f367e0dc4f64c8ed70fcc8d7b08060fa7253eb0",
+      "projectionChanges": [
+        {
+          "label": "[EXTERNAL_TOOL_CONFIG]",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "path": "method/company-only-plan.json",
+      "sourceBytes": 8238,
+      "sourceSHA256": "315e36ce5d7e1ac87bfd6aa70056b0363ffe8bb43d7b94cb0fc4392dafa32f28",
+      "bytes": 6072,
+      "sha256": "b42b41bc814719186f9189e469353a7d4f3448a2f20df8b292c358725407af08",
+      "projectionChanges": [
+        {
+          "label": "[COMPANY_CONTINUATION]",
+          "count": 17
+        },
+        {
+          "label": "[PYTHON_RUNTIME_ALIAS]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "method/company-only-helper.py",
+      "sourceBytes": 7060,
+      "sourceSHA256": "38fe2cc4966f383633fa784efa5f7f1bc4daffb19ea82cfe3b9dbc8c724cda1b",
+      "bytes": 6933,
+      "sha256": "26990b77f034e6855aad7090233c2e61908cbf5490c6fb190da327bf928c3274",
+      "projectionChanges": [
+        {
+          "label": "[COMPANY_CONTINUATION]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "method/company-only-runner.py",
+      "sourceBytes": 3459,
+      "sourceSHA256": "00d591dbb9d9b4c0437f31006cff1a6499bc6d5f43849b61b40e4fc48ae7f1e2",
+      "bytes": 3459,
+      "sha256": "00d591dbb9d9b4c0437f31006cff1a6499bc6d5f43849b61b40e4fc48ae7f1e2",
+      "projectionChanges": []
+    },
+    {
+      "path": "method/company-only-guard.diff",
+      "sourceBytes": 6247,
+      "sourceSHA256": "44915b609a52726ad57b5289ae7c7541d59d88729cc173707b6d8d9642fd1ac7",
+      "bytes": 6030,
+      "sha256": "b01e460609b76690923244e8ba8d2095f378f15bcbe0c9d1d111aa2bd1aa4f74",
+      "projectionChanges": [
+        {
+          "label": "[COMPANY_CONTINUATION]",
+          "count": 1
+        },
+        {
+          "label": "[STORAGE_5333_EXTERNAL_STAGE]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "method/company-only-peer-review.json",
+      "sourceBytes": 8723,
+      "sourceSHA256": "c954b3882ffda8d4a536e52bf79bfae50c6d79e102962d2ed0b80ba123183169",
+      "bytes": 8723,
+      "sha256": "c954b3882ffda8d4a536e52bf79bfae50c6d79e102962d2ed0b80ba123183169",
+      "projectionChanges": []
+    },
+    {
+      "path": "method/company-only-root-approval.json",
+      "sourceBytes": 1627,
+      "sourceSHA256": "bb0194929622a2295432a8a0c65cb8c2b159b6a97dbc08935eb63f874a7a148e",
+      "bytes": 1620,
+      "sha256": "8bd0749aba6a286c6458a03f02c24ca5e910eaa89ca535eb95186c6f3c633b3a",
+      "projectionChanges": [
+        {
+          "label": "[PYTHON_RUNTIME_ALIAS]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "company/actual-intent.json",
+      "sourceBytes": 966,
+      "sourceSHA256": "b12e9d6f9027181a593d19296cde1f0c8b9bf0e4e12906cfea2a66f819d73a39",
+      "bytes": 839,
+      "sha256": "b0ff7d4ffa2a079c2712ef9cdca269d7ff8d8473c49bd8f7b2772a232639e2cc",
+      "projectionChanges": [
+        {
+          "label": "[COMPANY_CONTINUATION]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "company/artifact-metadata.json",
+      "sourceBytes": 847,
+      "sourceSHA256": "66ba8c919cd04496910d2eb1a9deb7db4cbbf730f13023711b4dbbc062f0a08d",
+      "bytes": 847,
+      "sha256": "66ba8c919cd04496910d2eb1a9deb7db4cbbf730f13023711b4dbbc062f0a08d",
+      "projectionChanges": []
+    },
+    {
+      "path": "company/download-terminal.json",
+      "sourceBytes": 81,
+      "sourceSHA256": "f6dbe3563db696a12dee5963cb6e2c6ed6b548403ee230bc86b85155614339c3",
+      "bytes": 81,
+      "sha256": "f6dbe3563db696a12dee5963cb6e2c6ed6b548403ee230bc86b85155614339c3",
+      "projectionChanges": []
+    },
+    {
+      "path": "company/qualification-receipt.json",
+      "sourceBytes": 1907,
+      "sourceSHA256": "3cff0fa7e1d415be437ca9da11974a22b8d280e65490386dd90113633e04b4cd",
+      "bytes": 1907,
+      "sha256": "3cff0fa7e1d415be437ca9da11974a22b8d280e65490386dd90113633e04b4cd",
+      "projectionChanges": []
+    },
+    {
+      "path": "company/child-terminal.json",
+      "sourceBytes": 687,
+      "sourceSHA256": "1cc13dc1237cdd7bbc1a2e4fddd3286f4de18d67861935b7870e837aa79d49d5",
+      "bytes": 560,
+      "sha256": "d2f4e0014d8e2397d2d54e5a76399ff554598e91042a7f2e448c7877fa52df1d",
+      "projectionChanges": [
+        {
+          "label": "[COMPANY_CONTINUATION]",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "path": "company/tool-terminal.json",
+      "sourceBytes": 967,
+      "sourceSHA256": "5899ae73765d15bc931b2d07cdbb92a4af77e7e3207f9ffd365207f293174108",
+      "bytes": 713,
+      "sha256": "aad279e1463776e93b2c15649604b580dc3f558975705d2619cde61737c782c6",
+      "projectionChanges": [
+        {
+          "label": "[COMPANY_CONTINUATION]",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "path": "company/root-acceptance.json",
+      "sourceBytes": 1714,
+      "sourceSHA256": "237368ea405e83fc9b8004f106c22ab53de835bba3325e78e6a45c3ecaae4bec",
+      "bytes": 1714,
+      "sha256": "237368ea405e83fc9b8004f106c22ab53de835bba3325e78e6a45c3ecaae4bec",
+      "projectionChanges": []
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "UTC": "2026-10-18T00:36:01.867054+00:00",
+  "status": "PREPARED_NOT_AUTHORIZED_TO_INVOKE",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "tree": "7b1cb82c32146448ef4d6b6710233a73b88f74f4",
+  "base": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+  "run": 39081155120,
+  "externalRoot": "[COMPANY_CONTINUATION]",
+  "freshActualRoot": "[COMPANY_CONTINUATION]/actual-once",
+  "helper": {
+    "path": "[COMPANY_CONTINUATION]/qualify-company-only.py",
+    "bytes": 7060,
+    "SHA256": "38fe2cc4966f383633fa784efa5f7f1bc4daffb19ea82cfe3b9dbc8c724cda1b"
+  },
+  "runner": {
+    "path": "[COMPANY_CONTINUATION]/run-company-only-once.py",
+    "bytes": 3459,
+    "SHA256": "00d591dbb9d9b4c0437f31006cff1a6499bc6d5f43849b61b40e4fc48ae7f1e2"
+  },
+  "guardDiff": {
+    "path": "[COMPANY_CONTINUATION]/qualify-company-only.guard.diff",
+    "bytes": 6247,
+    "SHA256": "44915b609a52726ad57b5289ae7c7541d59d88729cc173707b6d8d9642fd1ac7"
+  },
+  "priorHelper": {
+    "path": "[COMPANY_CONTINUATION]/prior-company-helper-v2.py",
+    "bytes": 7100,
+    "SHA256": "1fcb60493fd87e61a92d1d280aecf5594572a981865114623e4178188291afba"
+  },
+  "acceptedOptionalReceipt": {
+    "path": "[COMPANY_CONTINUATION]/accepted-optional-receipt.json",
+    "bytes": 5685,
+    "SHA256": "53c8d06d589ff8467d139c8d5ffdba06676db87d2d981ca7671023feac088506"
+  },
+  "acceptedOptionalTerminal": {
+    "path": "[COMPANY_CONTINUATION]/accepted-optional-terminal.json",
+    "bytes": 1396,
+    "SHA256": "b091ca302c968a59ad36f592d9854d417793c4ccdf04099ef3a42d6ffdc4824f"
+  },
+  "retainedControllerToolOutput": {
+    "path": "[COMPANY_CONTINUATION]/controller64169-retained-tool-output.txt",
+    "bytes": 2703,
+    "SHA256": "d45d2ae1c3293e3d39dc3b5552aa07b4495114ea5617e75d437717537f76d325"
+  },
+  "retainedControllerAttribution": {
+    "path": "[COMPANY_CONTINUATION]/controller64169-tool-output-attribution.json",
+    "bytes": 1296,
+    "SHA256": "530812495bca58c832bf2a713be3be37ea55dbca97a49d20457718489ff5f82c"
+  },
+  "preparationNegatives": {
+    "path": "[COMPANY_CONTINUATION]/preparation-negatives.json",
+    "bytes": 828,
+    "SHA256": "f112bc3aadf591bbfb16c60088d4e707b723b573a64b7188c05e5134d988515a"
+  },
+  "previousController": {
+    "sessionId": 64169,
+    "reportedToolExitCode": 1,
+    "firstFailure": "ENOSPC writing cloud-state-3.json during wait(candidate)",
+    "secondaryFailure": "ENOSPC writing controller-negative.json",
+    "companyStageEntered": false,
+    "absentOriginalTerminalRetainedAsAbsent": true,
+    "doNotRestart": true
+  },
+  "diagnosis": {
+    "source": "Root instruction and existing fpv_library_guard_review messages establish Library5b9 Company projected membership and optional-only aircraft policy. These are method references, not actual5333 Company observations.",
+    "defect": "The uninvoked v2 Company helper incorrectly required two optional aircraft modules in both Company runtime/source originals.",
+    "correction": "Remove unsupported NEW_MODULES/four-proof expectation. Require five positive Company/core members in both inventories; check every actual body against its own manifest/source-inventory length/SHA and ZIP CRC.",
+    "noRawSourceEqualityForProjectedFiles": true,
+    "noLibraryActualReceiptsInherited": true
+  },
+  "positiveCompanyCoreMembers": [
+    "game/company.html",
+    "game/fpv-entry.mjs",
+    "game/optional-practice-catalog.mjs",
+    "game/ui/optional-practice-panel.mjs",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs"
+  ],
+  "preservedGuards": [
+    "Exact existing run workflow_dispatch event/path/head and success conclusion; candidate success before one artifact GET",
+    "Unique exact company-candidate-head nonexpired artifact with positive bounded size/SHA256 digest and matching run/head",
+    "Outer unique inventory/path/type/link/encryption/decoded-size guards; exact unique checksum declared-file set; all declared lengths and hashes",
+    "Exact current source revision/tree in candidate-verification/editions, reproducibleBuilds2, publicEligiblefalse and fpv-learning-only edition set",
+    "Full runtime and source original member inventories, all member lengths/SHA/CRC, embedded metadata equality and fixed source tree",
+    "Runtime max2000 members/80MiB policy plus stricter72MiB observed guard; source separately hashed without assigning runtime budget",
+    "Exact committed package-budget body/Gitblob verification and SHA0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e"
+  ],
+  "limits": {
+    "artifactMaxBytesExclusive": 268435456,
+    "outerDecodedMaxBytes": 1073741824,
+    "innerDecodedMaxBytes": 536870912,
+    "externalReserveBytes": 3221225472,
+    "remainingCompanyAllowanceBytes": 1073741824
+  },
+  "invocation": {
+    "rootApprovalRequired": true,
+    "peerApprovalRequired": true,
+    "rootApprovalFile": "[COMPANY_CONTINUATION]/ROOT-COMPANY-ONLY-ONCE-APPROVAL.json",
+    "peerReviewFile": "[COMPANY_CONTINUATION]/COMPANY-ONLY-PEER-REVIEW.json",
+    "rootDecisionValue": "APPROVE_ONE_COMPANY_ONLY_OPERATION",
+    "requiredRootApprovalFields": [
+      "decision",
+      "head",
+      "run",
+      "planSHA256",
+      "runnerSHA256",
+      "helperSHA256",
+      "peerReviewSHA256"
+    ],
+    "commandArgv": [
+      "[PYTHON_RUNTIME_ALIAS]/bin/python3.14",
+      "-B",
+      "[COMPANY_CONTINUATION]/run-company-only-once.py"
+    ],
+    "environment": {
+      "TMPDIR": "[COMPANY_CONTINUATION]",
+      "TMP": "[COMPANY_CONTINUATION]",
+      "TEMP": "[COMPANY_CONTINUATION]"
+    },
+    "cwd": "/",
+    "actualOutputExclusive": true,
+    "oneFreshCompanyGETAfterCurrentRunSuccess": true,
+    "noAutomaticRetry": true
+  },
+  "scope": "One Company-only external qualification after exact root+peer approval. No old controller restart, optional replay, local Git, native fixture/server/renderer, source mutation or publication.",
+  "preparation": {
+    "externalAvailableBytes": 67174400000,
+    "pythonCompileInMemoryOnly": true,
+    "operationalHelperInvoked": false,
+    "githubQueried": false,
+    "companyDownloaded": false,
+    "internalFilesWritten": false
+  }
+}

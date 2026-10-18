@@ -1,0 +1,27 @@
+{
+  "UTCRecorded": "2026-10-18T00:36:01.728597+00:00",
+  "recordType": "Attributed transcription of retained historical tool output; not a replacement terminal",
+  "tool": "write_stdin",
+  "sessionId": 64169,
+  "chunkId": "0490ca",
+  "reportedToolExitCode": 1,
+  "reportedWallTimeSeconds": 2.0292e-05,
+  "reportedOriginalTokenCount": 680,
+  "firstFailure": "ENOSPC creating cloud-state-3.json during wait(candidate)",
+  "secondaryFailure": "ENOSPC creating controller-negative.json in exception handler",
+  "companyStageEntered": false,
+  "absentFilesFromAlreadyCompletedBoundedReconciliation": [
+    "company-intent.json",
+    "company-terminal.json",
+    "cloud-state-3.json",
+    "controller-negative.json",
+    "controller-result.json"
+  ],
+  "noNewReconciliationOrExecution": true,
+  "retainedToolOutput": {
+    "path": "[COMPANY_CONTINUATION]/controller64169-retained-tool-output.txt",
+    "bytes": 2703,
+    "SHA256": "d45d2ae1c3293e3d39dc3b5552aa07b4495114ea5617e75d437717537f76d325"
+  },
+  "limitation": "Absent original terminal/negative files are not fabricated. This records retained tool output and the already completed bounded read observations only."
+}

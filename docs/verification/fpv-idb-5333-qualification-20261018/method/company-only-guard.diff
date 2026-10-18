@@ -1,0 +1,43 @@
+--- prior-company-helper-v2.py
++++ qualify-company-only.py
+@@ -1,6 +1,7 @@
+ from pathlib import Path,PurePosixPath
+ import subprocess,json,hashlib,zipfile,io,base64,os,datetime
+-HEAD='53338dc73469f866e9289b2b5f74555c68e8231e';RUN=39081155120;ROOT=Path('[STORAGE_5333_EXTERNAL_STAGE]');sha=lambda b:hashlib.sha256(b).hexdigest()
++HEAD='53338dc73469f866e9289b2b5f74555c68e8231e';RUN=39081155120;ROOT=Path('[COMPANY_CONTINUATION]/actual-once');sha=lambda b:hashlib.sha256(b).hexdigest()
++assert ROOT.is_dir() and all(os.environ.get(k)==str(ROOT) for k in ('TMPDIR','TMP','TEMP')),'external-only operation environment required'
+ def api(p):return json.loads(subprocess.check_output(['gh','api','repos/mekhovov/revealline/'+p]))
+ def put(p,b):
+  with p.open('xb')as f:f.write(b);f.flush();os.fsync(f.fileno())
+@@ -19,8 +20,6 @@
+ with partial.open('xb')as f:
+  r=subprocess.run(['gh','api','--allow-escape-sequences','repos/mekhovov/revealline/actions/artifacts/'+str(meta['id'])+'/zip'],stdout=f,stderr=subprocess.PIPE,env=env);f.flush();os.fsync(f.fileno())
+ put(ROOT/'company-download-terminal.json',(json.dumps({'exitCode':r.returncode,'stderr':r.stderr.decode(),'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat()},indent=2)+'\n').encode());assert r.returncode==0
+-NEW_MODULES={'optional-practice/civilian-fpv/aircraft-appearance.mjs': {'bytes': 1018, 'sha256': 'eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e', 'gitBlob': '74b2be0436d3aaec04ef1707e4c95f5ac4f1040b'}, 'optional-practice/civilian-fpv/aircraft-preview.mjs': {'bytes': 7063, 'sha256': '07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c', 'gitBlob': 'f5aa83735433d1bee11649dc9d75920e658fc87a'}}
+-new_module_proofs=[]
+ raw=partial.read_bytes();assert len(raw)==meta['size_in_bytes']and'sha256:'+sha(raw)==meta['digest'];archive=ROOT/'company-original-artifact.zip';partial.rename(archive);receipts=[]
+ with zipfile.ZipFile(archive)as z:
+  inventory(z,1024**3);checks=json.loads(z.read('checksums.json'));declared=[r['path'] for r in checks['files']];assert len(declared)==len(set(declared)) and set(z.namelist())==set(declared)|{'checksums.json'}
+@@ -37,19 +36,15 @@
+    embeddedName=next(iter(extra));assert embeddedName in[embedded,'company-manifest.json','manifest.json','source-inventory.json']and json.loads(q.read(embeddedName))==table
+    for f in table['files']:
+     v=q.read(f['path']);assert len(v)==f['bytes']and sha(v)==f['sha256']
+-   for module,pin in NEW_MODULES.items():
+-    assert module in expected
+-    body=q.read(module);blob=hashlib.sha1(b'blob '+str(len(body)).encode()+b'\0'+body).hexdigest()
+-    assert len(body)==pin['bytes'] and sha(body)==pin['sha256'] and blob==pin['gitBlob'],(role,module)
+-    new_module_proofs.append({'role':role,'path':module,**pin})
++   required=['game/company.html', 'game/fpv-entry.mjs', 'game/optional-practice-catalog.mjs', 'game/ui/optional-practice-panel.mjs', 'optional-practice/civilian-fpv/snake-hunt-catalogue.mjs']
++   assert set(required)<=expected,(role,'missing required Company/core members')
+    total=sum(x.file_size for x in actual)
+    if role=='runtime':assert len(actual)<=2000 and total<=80*1024**2 and total<=72*1024**2
+    receipts.append({'role':role,'files':len(actual),'contentBytesIncludingMetadata':total,'archiveBytes':len(b),'archiveSHA256':sha(b)})
+  for n in z.namelist():
+   if not n.endswith('.zip'):put(ROOT/('company-'+n),z.read(n))
+-assert len(new_module_proofs)==4
+ p='game/editions/package-budget.mjs';d=api('contents/'+p+'?ref='+HEAD);policy=base64.b64decode(d['content']);assert len(policy)==d['size']and hashlib.sha1(b'blob '+str(len(policy)).encode()+b'\0'+policy).hexdigest()==d['sha'];put(ROOT/'company-package-budget-source.mjs',policy)
+ assert sha(policy)=='0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e'
+ assert b'maxFiles: 2000'in policy and b'maxBytes: 80 * 1024 * 1024'in policy
+-receipt={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':HEAD,'sourceTree':tree,'run':RUN,'artifactId':meta['id'],'githubArtifactBytes':len(raw),'githubArtifactSHA256':sha(raw),'topLevelChecksums':len(checks['files']),'allMemberHashes':True,'archives':receipts,'newAircraftModuleIdentities':new_module_proofs,'existingCompanyRuntimeLimits':{'files':2000,'bytes':80*1024**2,'policySHA256':sha(policy),'gitBlob':d['sha']},'runtimeAlsoUnder72MiB':True,'cloudReproducibleBuilds':2,'publicEligible':False,'scope':'Current exact 53338dc7 original Company runtime/source member sets,lengths,hashes and unchanged existing runtime budget. Source inventory separately hashed, not assigned runtime budget. No native/player/public/later-main integration acceptance. Optional originals have their own receipt.'}
++receipt={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':HEAD,'sourceTree':tree,'run':RUN,'artifactId':meta['id'],'githubArtifactBytes':len(raw),'githubArtifactSHA256':sha(raw),'topLevelChecksums':len(checks['files']),'allMemberHashes':True,'archives':receipts,'requiredCompanyCoreMembers':['game/company.html', 'game/fpv-entry.mjs', 'game/optional-practice-catalog.mjs', 'game/ui/optional-practice-panel.mjs', 'optional-practice/civilian-fpv/snake-hunt-catalogue.mjs'],'existingCompanyRuntimeLimits':{'files':2000,'bytes':80*1024**2,'policySHA256':sha(policy),'gitBlob':d['sha']},'runtimeAlsoUnder72MiB':True,'cloudReproducibleBuilds':2,'publicEligible':False,'scope':'Current exact 53338dc7 original Company runtime/source member sets,lengths,hashes and unchanged existing runtime budget. Source inventory separately hashed, not assigned runtime budget. No native/player/public/later-main integration acceptance. Optional originals are already accepted under receipt53c8d06d and terminal b091ca30 and are not repeated. Company projected bodies are checked against its own manifest/source inventory, not raw Git source.'}
+ put(ROOT/'company-original-members-receipt.json',(json.dumps(receipt,indent=2)+'\n').encode());print(json.dumps(receipt,indent=2))

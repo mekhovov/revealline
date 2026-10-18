@@ -1,0 +1,26 @@
+{
+  "UTC": "2026-10-18T00:12:09.284852+00:00",
+  "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "run": 39081155120,
+  "helper": {
+    "path": "[STORAGE_5333_PREPARATION]/qualify-storage-optional-v2.py",
+    "bytes": 9206,
+    "SHA256": "f23606a146bb316c22d687cbadd223e861183fc404c5c5fac1f56928232f250f",
+    "parentHelper": "[LIBRARY_METHOD_REFERENCE]/combined-a3db-20261017-001/qualify-combined-optional.py",
+    "parentSHA256": "e27fae32eb8a4603780e3b771eef2b4b399fe412d454520b4e49c7bec7629bd9",
+    "guardDiff": {
+      "path": "[STORAGE_5333_PREPARATION]/qualify-storage-optional-v2.guard.diff",
+      "bytes": 6362,
+      "SHA256": "f44d3cb829026f161e16e19f88fb3d18c0c55748956c1cda6484fd4ecfda9138"
+    }
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "91248092e600754a1d454e7bd2b3c26d662d819559f16d2abaff311509fb6f11",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "originalPath": "[STORAGE_5333_EXTERNAL_STAGE]/qualification-original-members-and-closure.json",
+    "internalCopy": "[STORAGE_5333_PREPARATION]/actual-once/qualification-original-members-and-closure.json",
+    "bytes": 5685,
+    "SHA256": "53c8d06d589ff8467d139c8d5ffdba06676db87d2d981ca7671023feac088506"
+  }
+}
