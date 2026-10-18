@@ -145,3 +145,74 @@ large media within device capacity, cancellation, background/foreground, denied
 downloads, narrow layout, large text and Ukrainian. Confirm restrictions and
 partial-evidence warnings remain visible. Do not overwrite the user's primary
 profile for a qualification test.
+
+## Nonempty restore qualification
+
+The prior browser receipt used an archive with no saved originals or Journey
+clears. It does not qualify nonempty media import. The bounded fixture below
+contains one unchanged PNG, one owned six-second silent MP4, one synthetic coded-
+silence MP3 and one **synthetic, unearned** Journey receipt. Test identities are
+never registered as playable content or shipped as production art. Use only a
+fresh isolated test origin/profile; importing this fixture into a personal
+profile would add diagnostic media and synthetic progress. Music restore retains
+its ordinary replacement warning. No tool below reads or writes browser storage.
+
+Run from the exact committed candidate containing the guided flow. Choose the
+profile key from that destination's ordinary Journey export; do not infer it from
+the release version. For example, the `whole-spatial-v38` route in this candidate
+uses `journey-whole-spatial-v38`:
+
+```sh
+node scripts/prepare-backup-restore-fixture.mjs \
+  --output /tmp/revealline-nonempty-restore-new-attempt \
+  --profile-key journey-whole-spatial-v38
+```
+
+The output directory must not exist. `nonempty-restore.zip` contains the normal
+archive and `receipt.json` pins its source revision, component hashes, exact
+original payload hashes and synthetic receipt identity. Preparation uses finite
+IndexedDB and decoder models; its receipt deliberately leaves native codecs,
+browser persistence and hardware pending. The source originals remain unchanged;
+no downloading, media generation or transcoding occurs. The fixture and its
+comparison export are limited to 2 MiB, separately from product archive limits.
+
+Perform this bounded acceptance on the exact served candidate:
+
+1. Record source revision, browser version, isolated origin and profile key. Open
+   Home → Settings → Progress & Collection → Saves & recovery. Choose the fixture
+   using **Inspect and restore an archive**. Verify five checked components and
+   the explicit authored Legacy/unfinished-flight exclusions. The different-edition
+   warning is expected for the labelled qualification fixture.
+2. Review pictures, then Cancel. Confirm later steps remain blocked, no successful
+   receipt is added and focus returns to Review again. Repeat the review and
+   explicitly confirm its one PNG original. Confirm the story's one MP4 original,
+   the music replacement's one MP3 original, then the single synthetic Journey
+   receipt in that order. Never infer completion from a download or preview.
+3. Record actual native import success/failure separately for the PNG, MP4 and
+   MP3. Import uses the product's normal native media checks; this is not an
+   audible mix or full video-playback qualification. Verify the summary reaches
+   4/4 only after the owners report saved. Close, reload the isolated app, then
+   export a fresh portable archive through the normal UI.
+4. Compare that actual downloaded export with the original fixture receipt:
+
+   ```sh
+   node scripts/prepare-backup-restore-fixture.mjs \
+     --verify /absolute/path/to/downloaded-export.zip \
+     --receipt /tmp/revealline-nonempty-restore-new-attempt/receipt.json
+   ```
+
+   The read-only comparison requires the exact original media payloads and the
+   scoped synthetic Journey receipt. Whole component/ZIP bytes may differ after
+   destination metadata normalization, current-assignment preservation or a new
+   export timestamp. A matching comparison plus observed reload establishes only
+   this desktop profile's tested round trip, not physical-device durability.
+
+5. Reinspect the original fixture and review Journey again. It should report no
+   new synthetic clear. Cancel or keep unchanged. Preserve the actual downloaded
+   archive, receipt, comparison output and screenshots outside the repository;
+   record failures without overwriting the earlier attempt.
+
+The earlier automated partial-failure, stale-writer and quota cases remain
+separate evidence. This procedure does not add an atomic restore, qualify large
+media, prove earned-gameplay correctness, establish offline cold launch or
+replace Safari/Home Screen/Files tests on a physical iPhone.
