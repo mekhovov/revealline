@@ -232,9 +232,21 @@ export function createAircraftCourseSession(
     checkpointing = null,
     checkpointKind = null,
     telemetry = null,
+    reference = null,
     error = null,
     archiveGeneration = 0,
     sequence = -1;
+  // The reset class covers frozen aircraft/response conditions; terrain is
+  // admitted separately. These diagnostics never enter recordings or identities.
+  const referenceFor = (initialized, next) => {
+    const configurationClass = initialized?.comparison?.comparisonClass,
+      terrainIdentity = next?.terrain?.frameIdentity;
+    return initialized?.comparison?.terrainIdentity === null &&
+      /^[0-9a-f]{16}$/.test(configurationClass) &&
+      /^[0-9a-f]{16}$/.test(terrainIdentity)
+      ? Object.freeze({ configurationClass, terrainIdentity })
+      : null;
+  };
   const archiveEnvelope = (value) => ({
     ...value,
     generation: `${archiveGeneration}:${value.generation}`,
@@ -290,7 +302,10 @@ export function createAircraftCourseSession(
         accepted: true,
       });
       telemetry = committed.telemetry;
-      if (!disposed) ready = true;
+      if (!disposed) {
+        reference = referenceFor(result, telemetry);
+        ready = true;
+      }
       return snapshot();
     })().catch((failure) => {
       error = failure.message;
@@ -473,7 +488,7 @@ export function createAircraftCourseSession(
         // A recovery resumes its published solver, while every other option
         // still comes from this session. Worker identity checks reject any
         // unrelated aircraft, rates, terrain mode or controller configuration.
-        await candidate.initialize({
+        const initialized = await candidate.initialize({
           ...optionsFor(restoredModel),
           backend: saved.physical?.config?.backend,
         });
@@ -528,6 +543,7 @@ export function createAircraftCourseSession(
         archiveGeneration++;
         adopted = true;
         telemetry = restored;
+        reference = referenceFor(initialized, restored);
         sequence = saved.sequence;
         error = null;
         previousClient.dispose();
@@ -551,6 +567,7 @@ export function createAircraftCourseSession(
       return identityFor(activeModel);
     },
     snapshot,
+    referenceIdentity: () => (ready && !error && !disposed ? reference : null),
     prepare,
     step,
     stepPending: () => Boolean(stepping || checkpointing),

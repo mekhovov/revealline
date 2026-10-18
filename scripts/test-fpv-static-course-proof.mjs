@@ -87,7 +87,7 @@ async function record({
         ...alterOptions(options),
         recordingOptions: { segmentBytes: 5000 },
       });
-      return { telemetry: simulation.telemetry() };
+      return { telemetry: simulation.telemetry(), comparison: simulation.comparison() };
     },
     async stageTerrainFrame(frame) {
       return simulation.stageTerrainFrame(alterFrame(frame));
@@ -149,6 +149,7 @@ async function record({
       archive,
       course,
       state,
+      referenceIdentity: session.referenceIdentity(),
       transitions,
       sidecar: createStaticCourseSidecar(archive, course),
     };
@@ -170,6 +171,7 @@ test('every aircraft and both modes independently reconstruct static lesson comp
         assert.equal(result.physics.verificationScope, 'complete-session');
         assert.equal(result.course.verified, true, JSON.stringify(result.course));
         assert.equal(result.course.completedAtTick, f.state.ticks);
+        assert.deepEqual(result.course.referenceIdentity, f.referenceIdentity);
         assert.deepEqual(
           result.course.splits.map(({ index, endTick }) => ({ index, endTick })),
           f.transitions,
