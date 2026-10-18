@@ -14,6 +14,12 @@ const bounds = {
 };
 const abortError = () => new DOMException('Recovery operation cancelled', 'AbortError');
 const tickValid = (tick) => Number.isSafeInteger(tick) && tick >= 0;
+const recoveryStages = new WeakMap();
+function recoveryFailure(error, stage) {
+  if (error && typeof error === 'object' && error.name !== 'AbortError')
+    recoveryStages.set(error, stage);
+  return error;
+}
 export function aircraftRecoveryTick(data) {
   if (data?.format === 'AircraftChallengeRecovery.v1') {
     required(
@@ -47,6 +53,11 @@ export function createAircraftRecoveryStore({
     database = null,
     closed = false;
   const active = new Set();
+  function forget(connection) {
+    if (database !== connection) return;
+    database = null;
+    opening = null;
+  }
   function open() {
     if (closed) return Promise.reject(abortError());
     if (!indexedDB) return Promise.reject(new Error('Checkpoint storage is unavailable'));
@@ -73,13 +84,14 @@ export function createAircraftRecoveryStore({
             reject(abortError());
             return;
           }
-          database = request.result;
-          database.onversionchange = () => {
-            database?.close();
-            database = null;
-            opening = null;
+          const connection = request.result;
+          database = connection;
+          connection.onversionchange = () => {
+            connection.close();
+            forget(connection);
           };
-          resolve(database);
+          connection.onclose = () => forget(connection);
+          resolve(connection);
         };
       }).catch((error) => {
         opening = null;
@@ -88,13 +100,31 @@ export function createAircraftRecoveryStore({
     return opening;
   }
   async function transaction(mode, operation, signal) {
-    signal?.throwIfAborted();
-    const db = await open();
-    signal?.throwIfAborted();
-    if (closed) throw abortError();
+    let tx;
+    for (let attempt = 0; ; attempt++) {
+      signal?.throwIfAborted();
+      const db = await open();
+      signal?.throwIfAborted();
+      if (closed) throw abortError();
+      try {
+        tx = db.transaction(STORE, mode);
+        break;
+      } catch (error) {
+        if (error.name !== 'InvalidStateError') throw error;
+        forget(db);
+        try {
+          db.close();
+        } catch {}
+        signal?.throwIfAborted();
+        if (closed) throw abortError();
+        // Only admission failed: no request or write has been issued. Once a
+        // transaction exists, its outcome is never retried automatically.
+        if (attempt) throw error;
+      }
+    }
     return new Promise((resolve, reject) => {
-      let tx,
-        value,
+      let value,
+        requestError = null,
         complete = false;
       const finish = (failure) => {
         if (complete) return;
@@ -111,13 +141,20 @@ export function createAircraftRecoveryStore({
         finish(abortError());
       };
       try {
-        tx = db.transaction(STORE, mode);
         active.add(cancel);
         signal?.addEventListener('abort', cancel, { once: true });
         tx.oncomplete = () => finish();
-        tx.onabort = tx.onerror = () =>
-          finish(tx.error ?? new Error('Checkpoint storage transaction failed'));
+        tx.onabort = tx.onerror = (event) =>
+          finish(
+            requestError ??
+              tx.error ??
+              event?.target?.error ??
+              new Error('Checkpoint storage transaction failed'),
+          );
         const request = operation(tx.objectStore(STORE));
+        request.onerror = () => {
+          requestError = request.error;
+        };
         request.onsuccess = () => {
           value = request.result;
         };
@@ -132,15 +169,22 @@ export function createAircraftRecoveryStore({
   return {
     async save(source, { signal } = {}) {
       signal?.throwIfAborted();
-      const data = boundedJSON(source, bounds),
+      let missionTick, payload;
+      try {
+        const data = boundedJSON(source, bounds);
         missionTick = aircraftRecoveryTick(data);
-      const payload = JSON.stringify(data);
+        payload = JSON.stringify(data);
+      } catch (error) {
+        throw recoveryFailure(error, 'validation');
+      }
       await transaction(
         'readwrite',
         (store) =>
           store.put({ format: 'AircraftRecoverySlot.v1', host: key, missionTick, payload }, key),
         signal,
-      );
+      ).catch((error) => {
+        throw recoveryFailure(error, 'storage');
+      });
       return { missionTick, bytes: new TextEncoder().encode(payload).byteLength };
     },
     async load({ signal } = {}) {
@@ -264,7 +308,17 @@ export function mountAircraftPracticeControls({
         : t('unavailable', 'недоступно');
     const recoverable = durableTick === null ? recording?.lastRecoverableSeconds : durableTick / 50;
     const storage = storageError
-      ? t('Storage unavailable; flying continues.', 'Сховище недоступне; політ триває.')
+      ? `${
+          storageError.stage === 'storage'
+            ? t('Storage unavailable; flying continues.', 'Сховище недоступне; політ триває.')
+            : t('Checkpoint unavailable; flying continues.', 'Точка недоступна; політ триває.')
+        } ${
+          storageError.stage === 'capture'
+            ? t('Checkpoint capture', 'Створення точки')
+            : storageError.stage === 'validation'
+              ? t('Checkpoint validation', 'Перевірка точки')
+              : t('Storage', 'Сховище')
+        }: ${storageError.name}: ${storageError.detail}`
       : pendingSave
         ? t('Saving checkpoint…', 'Збереження точки…')
         : Number.isFinite(recoverable)
@@ -419,10 +473,12 @@ export function mountAircraftPracticeControls({
     pendingSave = job;
     lastAttempt = ticks;
     paint();
+    let stage = 'capture';
     try {
       const data = await session.exportRecovery();
       job.controller.signal.throwIfAborted();
       if (!same(session)) throw abortError();
+      stage = 'storage';
       const saved = await store.save(data, { signal: job.controller.signal });
       if (!same(session)) return;
       durableTick = saved.missionTick;
@@ -430,7 +486,11 @@ export function mountAircraftPracticeControls({
       await report(session, { savedThroughMission: saved.missionTick });
     } catch (error) {
       if (same(session) && error.name !== 'AbortError') {
-        storageError = error.message;
+        storageError = {
+          stage: recoveryStages.get(error) === 'validation' ? 'validation' : stage,
+          name: String(error.name ?? 'Error').slice(0, 80),
+          detail: String(error.message ?? error).slice(0, 300),
+        };
         await report(session, { error: error.message });
       }
     } finally {

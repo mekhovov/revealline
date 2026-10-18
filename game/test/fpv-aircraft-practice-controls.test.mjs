@@ -511,3 +511,247 @@ test('controls remain hidden for legacy flights and translate status for Ukraini
   f.update(1000, { aircraftRadiusMm: undefined });
   assert.equal(f.ui.root.hidden, true);
 });
+
+function recoveryConnections(t, { admitted = (tx) => tx, opened = () => {} } = {}) {
+  const memory = managedIndexedDB(),
+    connections = [];
+  const store = createAircraftRecoveryStore({
+    indexedDB: {
+      open(...args) {
+        const request = memory.indexedDB.open(...args);
+        return new Proxy(request, {
+          set(target, name, value) {
+            target[name] =
+              name === 'onsuccess'
+                ? (...event) => {
+                    const db = target.result,
+                      transaction = db.transaction.bind(db);
+                    db.transaction = (...args) => admitted(transaction(...args));
+                    connections.push(db);
+                    opened(db);
+                    value(...event);
+                  }
+                : value;
+            return true;
+          },
+        });
+      },
+    },
+  });
+  t.after(() => store.close());
+  return {
+    memory,
+    connections,
+    store,
+    close(notify = true) {
+      const db = connections.at(-1);
+      db.close();
+      if (notify) db.onclose?.({ target: db });
+      return db;
+    },
+  };
+}
+
+test('recovery reopens after unexpected close and ignores late old-connection events', async (t) => {
+  const f = recoveryConnections(t);
+  await f.store.save(checkpoint(250));
+  const old = f.close();
+  assert.equal((await f.store.load()).missionTick, 250);
+  assert.equal(f.memory.openCount, 2);
+  old.onclose?.({ target: old });
+  old.onversionchange?.({ target: old });
+  assert.equal((await f.store.load()).missionTick, 250);
+  assert.equal(f.memory.openCount, 2);
+  assert.equal(f.memory.allPuts.length, 1);
+  f.store.close();
+  f.connections.at(-1).onclose?.();
+  await assert.rejects(f.store.load(), { name: 'AbortError' });
+  assert.equal(f.memory.openCount, 2);
+});
+
+test('recovery retries only a rejected transaction admission once, before issuing a write', async (t) => {
+  let closeNew = false;
+  const f = recoveryConnections(t, {
+    opened: (db) => {
+      if (closeNew) db.close();
+    },
+  });
+  await f.store.save(checkpoint(250));
+  f.close(false);
+  await f.store.save(checkpoint(500));
+  assert.equal(f.memory.openCount, 2);
+  assert.equal(f.memory.allPuts.length, 2, 'one committed put per explicit save');
+  assert.equal((await f.store.load()).missionTick, 500);
+  f.close(false);
+  closeNew = true;
+  await assert.rejects(f.store.save(checkpoint(750)), { name: 'InvalidStateError' });
+  assert.equal(f.memory.openCount, 3, 'one replacement admission, not a retry loop');
+  assert.equal(f.memory.allPuts.length, 2);
+  closeNew = false;
+  assert.equal((await f.store.load()).missionTick, 500);
+  assert.equal(f.memory.openCount, 4);
+});
+
+test('recovery never retries an admitted failed request or an ambiguously acknowledged commit', async (t) => {
+  let loseAcknowledgement = false;
+  const f = recoveryConnections(t, {
+    admitted: (tx) =>
+      new Proxy(tx, {
+        set(target, name, value) {
+          target[name] =
+            name === 'oncomplete'
+              ? () => {
+                  if (!loseAcknowledgement) return value();
+                  target.error = new DOMException('Commit acknowledgement lost', 'UnknownError');
+                  target.onabort?.();
+                }
+              : value;
+          return true;
+        },
+      }),
+  });
+  await f.store.save(checkpoint(250));
+  f.memory.onAnyPut = () => {
+    throw new DOMException('Admitted request failed', 'InvalidStateError');
+  };
+  await assert.rejects(f.store.save(checkpoint(500)), /Admitted request failed/);
+  assert.equal(f.memory.openCount, 1);
+  assert.equal(f.memory.allPuts.length, 2);
+  f.memory.onAnyPut = null;
+  assert.equal((await f.store.load()).missionTick, 250);
+  loseAcknowledgement = true;
+  await assert.rejects(f.store.save(checkpoint(750)), /acknowledgement lost/);
+  assert.equal(f.memory.openCount, 1);
+  assert.equal(f.memory.allPuts.length, 3);
+  loseAcknowledgement = false;
+  assert.equal(
+    (await f.store.load()).missionTick,
+    750,
+    'a failed acknowledgement is not proof of rollback',
+  );
+});
+
+test('cancelling between stale admission and reopening never starts a replacement request', async (t) => {
+  const f = recoveryConnections(t),
+    controller = new AbortController();
+  await f.store.save(checkpoint(250));
+  f.connections[0].transaction = () => {
+    controller.abort();
+    throw new DOMException('Closing connection', 'InvalidStateError');
+  };
+  await assert.rejects(f.store.save(checkpoint(500), { signal: controller.signal }), {
+    name: 'AbortError',
+  });
+  assert.equal(f.memory.openCount, 1);
+  assert.equal(f.memory.allPuts.length, 1);
+});
+
+test('autosave distinguishes capture, validation and storage failures with bounded inert EN/UK details', async (t) => {
+  const memory = managedIndexedDB(),
+    store = createAircraftRecoveryStore({ indexedDB: memory.indexedDB }),
+    f = fixture(t, { store });
+  const original = f.active.exportRecovery;
+  f.active.exportRecovery = async () => {
+    throw new Error('<img onerror=bad> ' + 'x'.repeat(500));
+  };
+  f.update(250);
+  await settle();
+  assert.match(f.ui.root.textContent, /Checkpoint capture.*Error.*<img onerror=bad>/);
+  assert.doesNotMatch(f.ui.root.textContent, new RegExp('x'.repeat(400)));
+  assert.equal(f.ui.root.querySelector('img'), null);
+  f.locale('uk');
+  assert.match(f.ui.root.textContent, /Створення точки.*Error.*<img onerror=bad>/);
+  assert.equal(memory.openCount, 0);
+  f.active.exportRecovery = async () => ({ ...checkpoint(500), mission: { state: { ticks: 1 } } });
+  f.update(500);
+  await settle();
+  assert.match(f.ui.root.textContent, /Перевірка точки.*Recovery mission and physics do not match/);
+  assert.equal(memory.openCount, 0);
+  f.active.exportRecovery = original;
+  memory.failAnyPutAt = 1;
+  f.update(750);
+  await settle();
+  assert.match(f.ui.root.textContent, /Сховище.*QuotaExceededError.*storage write failure/);
+  assert.equal(f.pauses, 0);
+  memory.failAnyPutAt = null;
+  f.update(1000);
+  await settle();
+  assert.doesNotMatch(f.ui.root.textContent, /QuotaExceededError|<img/);
+  assert.match(f.ui.root.textContent, /Точку збережено/);
+});
+
+test('recovery request error details survive a transaction error before tx.error is populated', async () => {
+  let pending;
+  const store = createAircraftRecoveryStore({
+    indexedDB: {
+      open() {
+        const request = {};
+        queueMicrotask(() => {
+          request.result = {
+            close() {},
+            transaction() {
+              const tx = {
+                error: null,
+                abort() {},
+                objectStore() {
+                  return {
+                    put() {
+                      pending = {
+                        error: new DOMException(
+                          'Origin quota rejected this write',
+                          'QuotaExceededError',
+                        ),
+                      };
+                      queueMicrotask(() => {
+                        pending.onerror?.();
+                        tx.onerror?.({ target: pending });
+                      });
+                      return pending;
+                    },
+                  };
+                },
+              };
+              return tx;
+            },
+          };
+          request.onsuccess();
+        });
+        return request;
+      },
+    },
+  });
+  try {
+    await assert.rejects(store.save(checkpoint(250)), (error) => {
+      assert.equal(error, pending.error, 'the original native error identity/type is preserved');
+      assert.equal(error.name, 'QuotaExceededError');
+      assert.equal(error.message, 'Origin quota rejected this write');
+      return true;
+    });
+  } finally {
+    store.close();
+  }
+});
+
+test('concurrent stale-handle operations share one reopen and never invent a missing recovery slot', async (t) => {
+  const f = recoveryConnections(t);
+  await f.store.save(checkpoint(250));
+  f.close(false);
+  const [first, second] = await Promise.all([f.store.load(), f.store.load()]);
+  assert.equal(first.missionTick, 250);
+  assert.deepEqual(first, second);
+  assert.equal(f.memory.openCount, 2);
+  await new Promise((resolve, reject) => {
+    const tx = f.connections.at(-1).transaction('recovery', 'readwrite');
+    tx.oncomplete = resolve;
+    tx.onerror = tx.onabort = () => reject(tx.error);
+    tx.objectStore('recovery').delete('academy');
+  });
+  const writes = f.memory.allPuts.length;
+  f.close();
+  assert.equal(await f.store.load(), null);
+  assert.equal(
+    f.memory.allPuts.length,
+    writes,
+    'absence is reported, never replaced or repaired by a write',
+  );
+});
