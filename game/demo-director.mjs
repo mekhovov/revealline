@@ -59,6 +59,7 @@ export function createDemoDirector({
   const prefetch = createDemoPrefetch();
   const setTimer = loading.setTimer ?? globalThis.setTimeout;
   const clearTimer = loading.clearTimer ?? globalThis.clearTimeout;
+  const now = loading.now ?? (() => performance.now());
   let retirement = null;
   let recoveryTimer = null;
   let lastVerified = null;
@@ -113,9 +114,14 @@ export function createDemoDirector({
   }
   async function next({ play: resume = false } = {}) {
     if (disposed) return false;
+    // Synchronous retirement belongs to the same recovery budget as loading.
+    const recoveryDeadline =
+      now() +
+      Math.min(DEMO_RECOVERY_TIMEOUT_MS, loading.recoveryTimeoutMs ?? DEMO_RECOVERY_TIMEOUT_MS);
     if (resume) desired = true;
     cancel();
     const ticket = generation;
+    preparingCandidate = null;
     release(player);
     player = null;
     source = null;
@@ -129,21 +135,25 @@ export function createDemoDirector({
       recoveryTimer = null;
       pending = null;
     };
-    recoveryTimer = setTimer(
-      () => {
-        if (!current()) return;
-        if (preparingCandidate) failed.add(preparingCandidate.id);
-        error = 'Demo recovery exceeded its 30-second budget.';
-        controller.abort(Object.assign(new Error(error), { code: 'demo-recovery-timeout' }));
-        finishLoading();
-        phase = 'unavailable';
-        emit();
-      },
-      Math.min(DEMO_RECOVERY_TIMEOUT_MS, loading.recoveryTimeoutMs ?? DEMO_RECOVERY_TIMEOUT_MS),
-    );
+    const stopRecovery = () => {
+      if (!current()) return;
+      if (preparingCandidate) failed.add(preparingCandidate.id);
+      error = 'Demo recovery exceeded its 30-second budget.';
+      controller.abort(Object.assign(new Error(error), { code: 'demo-recovery-timeout' }));
+      finishLoading();
+      phase = 'unavailable';
+      emit();
+    };
+    const expired = () => {
+      if (now() < recoveryDeadline) return false;
+      stopRecovery();
+      return true;
+    };
+    recoveryTimer = setTimer(stopRecovery, Math.max(0, recoveryDeadline - now()));
     phase = 'loading';
     emit();
     while (current()) {
+      if (expired()) return false;
       // Failed preparation can also return an owned player. Retire it before
       // trying another source, just as for an ordinary Next transition.
       if (retirement) {
@@ -154,6 +164,7 @@ export function createDemoDirector({
             signal: controller.signal,
           });
         } catch (failure) {
+          if (!current() || expired()) return false;
           if (current()) {
             error = String(failure?.message || failure);
             finishLoading();
@@ -163,6 +174,7 @@ export function createDemoDirector({
           return false;
         }
       }
+      if (!current() || expired()) return false;
       const candidate = choose();
       preparingCandidate = candidate;
       if (!candidate) {
@@ -190,7 +202,7 @@ export function createDemoDirector({
             onLateResult: release,
           },
         );
-        if (!current()) {
+        if (!current() || expired()) {
           release(prepared);
           return false;
         }
@@ -225,7 +237,7 @@ export function createDemoDirector({
           player = null;
           source = null;
         }
-        if (!current()) return false;
+        if (!current() || expired()) return false;
         if (unavailableMode(failure)) suspendedModes.add(candidate.modeId);
         if (candidate.kind === 'bot') requiredNextKind = 'replay';
         if (candidate.kind !== 'bot' || failure?.code !== 'no-safe-macro') failed.add(candidate.id);

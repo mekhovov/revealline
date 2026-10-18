@@ -1,0 +1,1309 @@
+TAP version 13
+# Subtest: an accessible demo on an idle Legacy host prepares the same level without automatic Start
+ok 1 - an accessible demo on an idle Legacy host prepares the same level without automatic Start
+  ---
+  duration_ms: 11673.114375
+  ...
+# Subtest: an authored Journey demo starts normal play through its exact Ready handoff
+    # Subtest: the Legacy host leaves its paused game untouched
+    ok 1 - the Legacy host leaves its paused game untouched
+      ---
+      duration_ms: 2937.485417
+      ...
+    # Subtest: the native Journey owner prepares the requested mission at tick zero
+    ok 2 - the native Journey owner prepares the requested mission at tick zero
+      ---
+      duration_ms: 9604.170459
+      ...
+    1..2
+ok 2 - an authored Journey demo starts normal play through its exact Ready handoff
+  ---
+  duration_ms: 12542.0695
+  ...
+# Subtest: default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+    # Subtest: the Journey host requests its verified destination without adopting a Legacy run
+    ok 1 - the Journey host requests its verified destination without adopting a Legacy run
+      ---
+      duration_ms: 10641.775125
+      ...
+    # Subtest: the receiving Legacy host prepares exact art and remains at tick zero
+    ok 2 - the receiving Legacy host prepares exact art and remains at tick zero
+      ---
+      duration_ms: 10037.935334
+      ...
+    # Subtest: a Ready hint cannot authorize an unearned locked Legacy mission
+    ok 3 - a Ready hint cannot authorize an unearned locked Legacy mission
+      ---
+      duration_ms: 9821.911458
+      ...
+    1..3
+ok 3 - default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+  ---
+  duration_ms: 30502.108417
+  ...
+# Subtest: shared archive file chooser stays visible when mounted directly in the Advanced arena
+ok 4 - shared archive file chooser stays visible when mounted directly in the Advanced arena
+  ---
+  duration_ms: 3.112958
+  ...
+# Subtest: archive capture waits for prepared worker telemetry before requesting a segment
+ok 5 - archive capture waits for prepared worker telemetry before requesting a segment
+  ---
+  duration_ms: 2.210666
+  ...
+# Subtest: preparing and replacing paused aircraft never consumes archive capacity
+ok 6 - preparing and replacing paused aircraft never consumes archive capacity
+  ---
+  duration_ms: 3.193458
+  ...
+# Subtest: first accepted flight progress opens an archive before segment rotation so short flights can finish
+ok 7 - first accepted flight progress opens an archive before segment rotation so short flights can finish
+  ---
+  duration_ms: 2.591375
+  ...
+# Subtest: refreshing saved sessions replaces preparation feedback with success in both languages
+ok 8 - refreshing saved sessions replaces preparation feedback with success in both languages
+  ---
+  duration_ms: 1.519167
+  ...
+# Subtest: archive verification distinguishes challenge outcomes from physics-only clip verification
+ok 9 - archive verification distinguishes challenge outcomes from physics-only clip verification
+  ---
+  duration_ms: 2.106375
+  ...
+# Subtest: archive controls save closed segments, capture the paused final tail and verify complete physics explicitly
+ok 10 - archive controls save closed segments, capture the paused final tail and verify complete physics explicitly
+  ---
+  duration_ms: 1.579167
+  ...
+# Subtest: quota failure stops only archives, retains the durable point and does not retry on every paint
+ok 11 - quota failure stops only archives, retains the durable point and does not retry on every paint
+  ---
+  duration_ms: 1.343375
+  ...
+# Subtest: a full archive store is not consulted until flight begins and cannot stop flight progress
+ok 12 - a full archive store is not consulted until flight begins and cannot stop flight progress
+  ---
+  duration_ms: 1.065917
+  ...
+# Subtest: pending segment writes remain bounded and the final write uses the durable revision
+ok 13 - pending segment writes remain bounded and the final write uses the durable revision
+  ---
+  duration_ms: 0.677417
+  ...
+# Subtest: recovery generation closes the previous archive and creates an independent checkpoint-origin archive
+ok 14 - recovery generation closes the previous archive and creates an independent checkpoint-origin archive
+  ---
+  duration_ms: 0.445208
+  ...
+# Subtest: verification cancellation has no flight mutation and checkpoint clips are labeled without whole-session claims
+ok 15 - verification cancellation has no flight mutation and checkpoint clips are labeled without whole-session claims
+  ---
+  duration_ms: 0.988833
+  ...
+# Subtest: archive names identify the real host in English and Ukrainian
+ok 16 - archive names identify the real host in English and Ukrainian
+  ---
+  duration_ms: 1.1395
+  ...
+# Subtest: academy archive controls persist real sealed physics, restore an evicted checkpoint range and finish its tail
+ok 17 - academy archive controls persist real sealed physics, restore an evicted checkpoint range and finish its tail
+  ---
+  duration_ms: 272.781291
+  ...
+# Subtest: regional archive controls persist real sealed physics, restore an evicted checkpoint range and finish its tail
+ok 18 - regional archive controls persist real sealed physics, restore an evicted checkpoint range and finish its tail
+  ---
+  duration_ms: 1017.014417
+  ...
+# Subtest: aircraft picker creates an independent editable setup with starter rates and applies it only on restart
+ok 19 - aircraft picker creates an independent editable setup with starter rates and applies it only on restart
+  ---
+  duration_ms: 109.470666
+  ...
+# Subtest: browsing aircraft replaces the preview without saving changes and refreshes its language
+ok 20 - browsing aircraft replaces the preview without saving changes and refreshes its language
+  ---
+  duration_ms: 12.442084
+  ...
+# Subtest: Mobula8 shows its installed components as text with Ukrainian field labels
+ok 21 - Mobula8 shows its installed components as text with Ukrainian field labels
+  ---
+  duration_ms: 11.145708
+  ...
+# Subtest: aircraft picker keeps complete current Legacy rates and restores saved custom aircraft after navigation
+ok 22 - aircraft picker keeps complete current Legacy rates and restores saved custom aircraft after navigation
+  ---
+  duration_ms: 84.561583
+  ...
+# Subtest: physical aircraft with retained Legacy feel can open Advanced without converting its response
+ok 23 - physical aircraft with retained Legacy feel can open Advanced without converting its response
+  ---
+  duration_ms: 38.280834
+  ...
+# Subtest: returning from an Advanced save reloads the saved component inventory without adding an unsaved payload twice
+ok 24 - returning from an Advanced save reloads the saved component inventory without adding an unsaved payload twice
+  ---
+  duration_ms: 127.077625
+  ...
+# Subtest: aircraft selection reports storage failure without changing the active setup or draft
+ok 25 - aircraft selection reports storage failure without changing the active setup or draft
+  ---
+  duration_ms: 18.527917
+  ...
+# Subtest: optional depletion stays in the draft until saved and reaches Test and Advanced without changing the current flight
+ok 26 - optional depletion stays in the draft until saved and reaches Test and Advanced without changing the current flight
+  ---
+  duration_ms: 87.136916
+  ...
+# Subtest: fresh-battery restart saves the complete draft and invokes a new flight only after successful validation
+ok 27 - fresh-battery restart saves the complete draft and invokes a new flight only after successful validation
+  ---
+  duration_ms: 88.322708
+  ...
+# Subtest: depletion drafts survive locale and setup navigation; preset reset restores its explicitly off default
+ok 28 - depletion drafts survive locale and setup navigation; preset reset restores its explicitly off default
+  ---
+  duration_ms: 106.885459
+  ...
+# Subtest: aircraft controls and evidence refresh in Ukrainian without changing the selected preset
+ok 29 - aircraft controls and evidence refresh in Ukrainian without changing the selected preset
+  ---
+  duration_ms: 35.426584
+  ...
+# Subtest: battery and physical-camera drafts change the tested physics without changing a saved or current flight
+ok 30 - battery and physical-camera drafts change the tested physics without changing a saved or current flight
+  ---
+  duration_ms: 126.990292
+  ...
+# Subtest: incomplete component drafts survive navigation, reject saves and refresh their labels in Ukrainian
+ok 31 - incomplete component drafts survive navigation, reject saves and refresh their labels in Ukrainian
+  ---
+  duration_ms: 74.697334
+  ...
+# Subtest: pointer opening restores focus to its trigger even when the browser did not focus it
+ok 32 - pointer opening restores focus to its trigger even when the browser did not focus it
+  ---
+  duration_ms: 6.4595
+  ...
+# Subtest: native tuning downloads use JSON and inert CLI shares and retain text after cancellation
+ok 33 - native tuning downloads use JSON and inert CLI shares and retain text after cancellation
+  ---
+  duration_ms: 20.676417
+  ...
+# Subtest: a pending export cannot duplicate or report its late failure into a reopened editor
+ok 34 - a pending export cannot duplicate or report its late failure into a reopened editor
+  ---
+  duration_ms: 9.937583
+  ...
+# Subtest: algorithm drafts retain native values and linked roll/pitch edits keep yaw independent
+ok 35 - algorithm drafts retain native values and linked roll/pitch edits keep yaw independent
+  ---
+  duration_ms: 59.877666
+  ...
+# Subtest: curve overlays, axis visibility and diagnostics show actual available measurements
+ok 36 - curve overlays, axis visibility and diagnostics show actual available measurements
+  ---
+  duration_ms: 9.703667
+  ...
+# Subtest: save for next flight never invokes restart; apply and restart is a distinct explicit action
+ok 37 - save for next flight never invokes restart; apply and restart is a distinct explicit action
+  ---
+  duration_ms: 36.057125
+  ...
+# Subtest: unscored draft test returns to the same numeric and camera draft, then reverts without saving
+ok 38 - unscored draft test returns to the same numeric and camera draft, then reverts without saving
+  ---
+  duration_ms: 30.788666
+  ...
+# Subtest: drone drafts survive rate-profile changes, reopening and independent setup selection
+ok 39 - drone drafts survive rate-profile changes, reopening and independent setup selection
+  ---
+  duration_ms: 92.096375
+  ...
+# Subtest: a retained drone draft cannot overwrite another tab and explicit refresh discards it
+ok 40 - a retained drone draft cannot overwrite another tab and explicit refresh discards it
+  ---
+  duration_ms: 15.836291
+  ...
+# Subtest: Save for next flight rejects incomplete or out-of-range camera values before changing a flight or library
+ok 41 - Save for next flight rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 73.606916
+  ...
+# Subtest: Apply & restart rejects incomplete or out-of-range camera values before changing a flight or library
+ok 42 - Apply & restart rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 58.308458
+  ...
+# Subtest: Duplicate drone setup rejects incomplete or out-of-range camera values before changing a flight or library
+ok 43 - Duplicate drone setup rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 22.699292
+  ...
+# Subtest: Test draft · unscored rejects incomplete or out-of-range camera values before changing a flight or library
+ok 44 - Test draft · unscored rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 53.140208
+  ...
+# Subtest: Advanced reference quad · experimental rejects incomplete or out-of-range camera values before changing a flight or library
+ok 45 - Advanced reference quad · experimental rejects incomplete or out-of-range camera values before changing a flight or library
+  ---
+  duration_ms: 33.278291
+  ...
+# Subtest: incomplete camera text survives independent draft navigation and leaves rate exports available
+ok 46 - incomplete camera text survives independent draft navigation and leaves rate exports available
+  ---
+  duration_ms: 48.01
+  ...
+# Subtest: valid fractional camera migration, editing, testing and Advanced preview retain exact degrees
+ok 47 - valid fractional camera migration, editing, testing and Advanced preview retain exact degrees
+  ---
+  duration_ms: 50.23275
+  ...
+# Subtest: actual numeric editing keeps partial text and commits representable units
+ok 48 - actual numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 23.298458
+  ...
+# Subtest: quick numeric editing keeps partial text and commits representable units
+ok 49 - quick numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 27.940041
+  ...
+# Subtest: betaflight numeric editing keeps partial text and commits representable units
+ok 50 - betaflight numeric editing keeps partial text and commits representable units
+  ---
+  duration_ms: 23.178542
+  ...
+# Subtest: Save and Test commit pending numeric text, while blank values block stale-value saves
+ok 51 - Save and Test commit pending numeric text, while blank values block stale-value saves
+  ---
+  duration_ms: 31.300083
+  ...
+# Subtest: unfinished rates survive algorithm navigation and still block stale-value saves
+ok 52 - unfinished rates survive algorithm navigation and still block stale-value saves
+  ---
+  duration_ms: 40.958458
+  ...
+# Subtest: unfinished rates survive profile navigation and still block stale-value saves
+ok 53 - unfinished rates survive profile navigation and still block stale-value saves
+  ---
+  duration_ms: 33.355833
+  ...
+# Subtest: unfinished rates survive close navigation and still block stale-value saves
+ok 54 - unfinished rates survive close navigation and still block stale-value saves
+  ---
+  duration_ms: 29.263417
+  ...
+# Subtest: unfinished rates survive locale navigation and still block stale-value saves
+ok 55 - unfinished rates survive locale navigation and still block stale-value saves
+  ---
+  duration_ms: 33.672125
+  ...
+# Subtest: unfinished rates survive throttle version navigation and still block stale-value saves
+ok 56 - unfinished rates survive throttle version navigation and still block stale-value saves
+  ---
+  duration_ms: 32.103666
+  ...
+# Subtest: algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms
+ok 57 - algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms
+  ---
+  duration_ms: 39.599833
+  ...
+# Subtest: unfinished throttle and assistance fields survive repaint while linked edits replace their peer text
+ok 58 - unfinished throttle and assistance fields survive repaint while linked edits replace their peer text
+  ---
+  duration_ms: 49.754416
+  ...
+# Subtest: Revert draft explicitly replaces unfinished numeric drafts
+ok 59 - Revert draft explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 48.203167
+  ...
+# Subtest: Restore revision to draft explicitly replaces unfinished numeric drafts
+ok 60 - Restore revision to draft explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 47.040416
+  ...
+# Subtest: Preview import explicitly replaces unfinished numeric drafts
+ok 61 - Preview import explicitly replaces unfinished numeric drafts
+  ---
+  duration_ms: 49.849792
+  ...
+# Subtest: committing untouched linked axes preserves unequal rates and a pending pitch edit wins
+ok 62 - committing untouched linked axes preserves unequal rates and a pending pitch edit wins
+  ---
+  duration_ms: 44.412916
+  ...
+# Subtest: import preview creates a new profile only on save and assignment remains explicit
+ok 63 - import preview creates a new profile only on save and assignment remains explicit
+  ---
+  duration_ms: 56.780291
+  ...
+# Subtest: malformed import or changed input invalidates an earlier preview and cannot create a profile
+ok 64 - malformed import or changed input invalidates an earlier preview and cannot create a profile
+  ---
+  duration_ms: 16.308209
+  ...
+# Subtest: headerless CLI version selection and firmware-default baseline support deliberate imports
+ok 65 - headerless CLI version selection and firmware-default baseline support deliberate imports
+  ---
+  duration_ms: 40.137708
+  ...
+# Subtest: CLI review compares the unsaved patch baseline and clearly separates ignored controller values
+ok 66 - CLI review compares the unsaved patch baseline and clearly separates ignored controller values
+  ---
+  duration_ms: 32.320083
+  ...
+# Subtest: accepted import preview updates the draft header immediately and undo restores the saved baseline
+ok 67 - accepted import preview updates the draft header immediately and undo restores the saved baseline
+  ---
+  duration_ms: 29.648625
+  ...
+# Subtest: firmware-default reviews use the selected source defaults and show inferred and normalized values
+ok 68 - firmware-default reviews use the selected source defaults and show inferred and normalized values
+  ---
+  duration_ms: 26.058209
+  ...
+# Subtest: native import review freezes the pre-import draft across locale refresh and remains unsaved
+ok 69 - native import review freezes the pre-import draft across locale refresh and remains unsaved
+  ---
+  duration_ms: 20.885584
+  ...
+# Subtest: unsupported firmware headers invalidate a prior preview and cannot save against another version
+ok 70 - unsupported firmware headers invalidate a prior preview and cannot save against another version
+  ---
+  duration_ms: 45.048083
+  ...
+# Subtest: shared profile users, name history and per-drone vertical camera values remain visible
+ok 71 - shared profile users, name history and per-drone vertical camera values remain visible
+  ---
+  duration_ms: 56.226167
+  ...
+# Subtest: stale tab notification preserves the draft and a save cannot overwrite newer stored settings
+ok 72 - stale tab notification preserves the draft and a save cannot overwrite newer stored settings
+  ---
+  duration_ms: 22.626375
+  ...
+# Subtest: Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation
+ok 73 - Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation
+  ---
+  duration_ms: 3.202334
+  ...
+# Subtest: Apply and restart explicitly assigns an otherwise unassigned new profile to the current drone
+ok 74 - Apply and restart explicitly assigns an otherwise unassigned new profile to the current drone
+  ---
+  duration_ms: 41.001541
+  ...
+# Subtest: local preset folder upload resolves official paths from firmware-presets and refreshes selected options
+ok 75 - local preset folder upload resolves official paths from firmware-presets and refreshes selected options
+  ---
+  duration_ms: 37.971375
+  ...
+# Subtest: local preset folder upload resolves official paths from presets and refreshes selected options
+ok 76 - local preset folder upload resolves official paths from presets and refreshes selected options
+  ---
+  duration_ms: 35.483167
+  ...
+# Subtest: changed preset options require resolution before preview/save (resolved text)
+ok 77 - changed preset options require resolution before preview/save (resolved text)
+  ---
+  duration_ms: 28.291709
+  ...
+# Subtest: changed preset options require resolution before preview/save (existing preview)
+ok 78 - changed preset options require resolution before preview/save (existing preview)
+  ---
+  duration_ms: 34.081666
+  ...
+# Subtest: choosing a different preset entry discards old option choices and controls
+ok 79 - choosing a different preset entry discards old option choices and controls
+  ---
+  duration_ms: 28.495083
+  ...
+# Subtest: failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset
+ok 80 - failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset
+  ---
+  duration_ms: 27.476667
+  ...
+# Subtest: browsing drones is independent of storage and failed saves retain the complete draft (quota)
+ok 81 - browsing drones is independent of storage and failed saves retain the complete draft (quota)
+  ---
+  duration_ms: 19.497125
+  ...
+# Subtest: browsing drones is independent of storage and failed saves retain the complete draft (stale tab)
+ok 82 - browsing drones is independent of storage and failed saves retain the complete draft (stale tab)
+  ---
+  duration_ms: 21.858167
+  ...
+# Subtest: duplicating a drone creates an unsaved draft, then saves its complete copy in one write
+ok 83 - duplicating a drone creates an unsaved draft, then saves its complete copy in one write
+  ---
+  duration_ms: 14.776125
+  ...
+# Subtest: failed duplicate save preserves the library and editable draft (quota)
+ok 84 - failed duplicate save preserves the library and editable draft (quota)
+  ---
+  duration_ms: 17.9315
+  ...
+# Subtest: failed duplicate save preserves the library and editable draft (stale tab)
+ok 85 - failed duplicate save preserves the library and editable draft (stale tab)
+  ---
+  duration_ms: 12.920167
+  ...
+# Subtest: failed duplicate save preserves the library and editable draft (invalid camera)
+ok 86 - failed duplicate save preserves the library and editable draft (invalid camera)
+  ---
+  duration_ms: 9.645583
+  ...
+# Subtest: ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller
+ok 87 - ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller
+  ---
+  duration_ms: 38.03325
+  ...
+# Subtest: a retained draft reopened after another tab edits the same profile cannot overwrite the newer revision
+ok 88 - a retained draft reopened after another tab edits the same profile cannot overwrite the newer revision
+  ---
+  duration_ms: 36.514334
+  ...
+# Subtest: a save waiting for a browser lock keeps its click-time values and disables editing until completion
+ok 89 - a save waiting for a browser lock keeps its click-time values and disables editing until completion
+  ---
+  duration_ms: 19.470417
+  ...
+# Subtest: an oversized upload invalidates an earlier successful import preview
+ok 90 - an oversized upload invalidates an earlier successful import preview
+  ---
+  duration_ms: 13.634417
+  ...
+# Subtest: an unreadable upload invalidates an earlier successful import preview
+ok 91 - an unreadable upload invalidates an earlier successful import preview
+  ---
+  duration_ms: 14.74275
+  ...
+# Subtest: an earlier upload completing after a newer selection cannot replace its text
+ok 92 - an earlier upload completing after a newer selection cannot replace its text
+  ---
+  duration_ms: 15.415916
+  ...
+# Subtest: an invalid preset folder selection clears an existing import preview immediately
+ok 93 - an invalid preset folder selection clears an existing import preview immediately
+  ---
+  duration_ms: 14.709583
+  ...
+# Subtest: overlapping preset folder reads publish only the newest complete bundle
+ok 94 - overlapping preset folder reads publish only the newest complete bundle
+  ---
+  duration_ms: 21.697375
+  ...
+# Subtest: switching locale updates accessible controls without changing numeric, name, camera or assignment drafts
+ok 95 - switching locale updates accessible controls without changing numeric, name, camera or assignment drafts
+  ---
+  duration_ms: 31.206542
+  ...
+# Subtest: cancel while Apply waits for a browser lock never restarts a flight afterward
+ok 96 - cancel while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 17.887
+  ...
+# Subtest: close while Apply waits for a browser lock never restarts a flight afterward
+ok 97 - close while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 18.382417
+  ...
+# Subtest: close-and-reopen while Apply waits for a browser lock never restarts a flight afterward
+ok 98 - close-and-reopen while Apply waits for a browser lock never restarts a flight afterward
+  ---
+  duration_ms: 17.263917
+  ...
+# Subtest: closing a draft comparison retains the unscored return affordance until a normal flight starts
+ok 99 - closing a draft comparison retains the unscored return affordance until a normal flight starts
+  ---
+  duration_ms: 6.019917
+  ...
+# Subtest: import receipt stays visible through save, duplicate, manual edit and revision restoration
+ok 100 - import receipt stays visible through save, duplicate, manual edit and revision restoration
+  ---
+  duration_ms: 64.993584
+  ...
+# Subtest: restoring same-rate history cancels an earlier pending native import
+ok 101 - restoring same-rate history cancels an earlier pending native import
+  ---
+  duration_ms: 43.683334
+  ...
+# Subtest: restoring same-rate history cancels an earlier pending CLI import
+ok 102 - restoring same-rate history cancels an earlier pending CLI import
+  ---
+  duration_ms: 40.867084
+  ...
+# Subtest: restoring history invalidates a completed same-rate preview and retains the restored receipt
+ok 103 - restoring history invalidates a completed same-rate preview and retains the restored receipt
+  ---
+  duration_ms: 66.037
+  ...
+# Subtest: uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization
+ok 104 - uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization
+  ---
+  duration_ms: 22.899625
+  ...
+# Subtest: a delayed import source hash cannot publish after edit
+ok 105 - a delayed import source hash cannot publish after edit
+  ---
+  duration_ms: 5.374916
+  ...
+# Subtest: a delayed import source hash cannot publish after reopen
+ok 106 - a delayed import source hash cannot publish after reopen
+  ---
+  duration_ms: 7.138625
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (blank)
+ok 107 - a pending native import cannot replace a newer numeric draft (blank)
+  ---
+  duration_ms: 27.930916
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (905)
+ok 108 - a pending native import cannot replace a newer numeric draft (905)
+  ---
+  duration_ms: 26.528666
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (920)
+ok 109 - a pending native import cannot replace a newer numeric draft (920)
+  ---
+  duration_ms: 26.200792
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (blank)
+ok 110 - a pending CLI import cannot replace a newer numeric draft (blank)
+  ---
+  duration_ms: 25.49
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (905)
+ok 111 - a pending CLI import cannot replace a newer numeric draft (905)
+  ---
+  duration_ms: 25.165834
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (920)
+ok 112 - a pending CLI import cannot replace a newer numeric draft (920)
+  ---
+  duration_ms: 26.858
+  ...
+# Subtest: a cancelled pending import stays cancelled after algorithm round trip
+ok 113 - a cancelled pending import stays cancelled after algorithm round trip
+  ---
+  duration_ms: 26.924959
+  ...
+# Subtest: a cancelled pending import stays cancelled after edit back to saved value
+ok 114 - a cancelled pending import stays cancelled after edit back to saved value
+  ---
+  duration_ms: 22.256166
+  ...
+# Subtest: a cancelled pending import stays cancelled after revert
+ok 115 - a cancelled pending import stays cancelled after revert
+  ---
+  duration_ms: 24.363083
+  ...
+# Subtest: saving an import rejects changed preview rates instead of replacing visible edits
+ok 116 - saving an import rejects changed preview rates instead of replacing visible edits
+  ---
+  duration_ms: 25.689292
+  ...
+# Subtest: firmware-default patch preview accepts a verified file header without a manual version
+ok 117 - firmware-default patch preview accepts a verified file header without a manual version
+  ---
+  duration_ms: 23.343792
+  ...
+# Subtest: rotation-only CLI export crosses throttle versions only after an explicit choice
+ok 118 - rotation-only CLI export crosses throttle versions only after an explicit choice
+  ---
+  duration_ms: 31.018541
+  ...
+# Subtest: workbench starts in Basic with six sections and a clean saved setup
+ok 119 - workbench starts in Basic with six sections and a clean saved setup
+  ---
+  duration_ms: 5.736875
+  ...
+# Subtest: Basic and Expert retain incomplete text, native algorithms and customized PID values
+ok 120 - Basic and Expert retain incomplete text, native algorithms and customized PID values
+  ---
+  duration_ms: 26.817125
+  ...
+# Subtest: settings search reveals expert fields without changing Basic preference and supports Ukrainian aliases
+ok 121 - settings search reveals expert fields without changing Basic preference and supports Ukrainian aliases
+  ---
+  duration_ms: 21.920333
+  ...
+# Subtest: direct PID editing enters the tested draft with exact units and invalid text blocks saving
+ok 122 - direct PID editing enters the tested draft with exact units and invalid text blocks saving
+  ---
+  duration_ms: 55.181417
+  ...
+# Subtest: draft camera framing updates precisely and invalid text retains the last valid preview
+ok 123 - draft camera framing updates precisely and invalid text retains the last valid preview
+  ---
+  duration_ms: 6.688417
+  ...
+# Subtest: shared edits default to independent copies and unchanged saves add neither profiles nor revisions
+ok 124 - shared edits default to independent copies and unchanged saves add neither profiles nor revisions
+  ---
+  duration_ms: 27.95775
+  ...
+# Subtest: workbench undo restores one valid edit and leaves the saved baseline untouched
+ok 125 - workbench undo restores one valid edit and leaves the saved baseline untouched
+  ---
+  duration_ms: 8.588959
+  ...
+# Subtest: calibration returns to the unchanged draft and input editing keys stay within the workbench
+ok 126 - calibration returns to the unchanged draft and input editing keys stay within the workbench
+  ---
+  duration_ms: 5.91525
+  ...
+# Subtest: animated rotation pauses outside Rates, when backgrounded and for reduced motion
+ok 127 - animated rotation pauses outside Rates, when backgrounded and for reduced motion
+  ---
+  duration_ms: 3.670666
+  ...
+# Subtest: changing the rate assignment loads the chosen profile and player-default inheritance remains explicit
+ok 128 - changing the rate assignment loads the chosen profile and player-default inheritance remains explicit
+  ---
+  duration_ms: 31.476167
+  ...
+# Subtest: fixing one incomplete PID value after reopening preserves other valid gain edits in the tested configuration
+ok 129 - fixing one incomplete PID value after reopening preserves other valid gain edits in the tested configuration
+  ---
+  duration_ms: 54.687792
+  ...
+# Subtest: testing a Legacy setup draft cannot inherit the selected physical aircraft backend
+ok 130 - testing a Legacy setup draft cannot inherit the selected physical aircraft backend
+  ---
+  duration_ms: 38.543583
+  ...
+# Subtest: saved aircraft remain editable when their catalog reference is no longer bundled
+ok 131 - saved aircraft remain editable when their catalog reference is no longer bundled
+  ---
+  duration_ms: 12.464292
+  ...
+# Subtest: workbench can test air65-ii-racing-2026 without saving or changing its physical coefficients
+ok 132 - workbench can test air65-ii-racing-2026 without saving or changing its physical coefficients
+  ---
+  duration_ms: 20.661583
+  ...
+# Subtest: workbench can test meteor75-analog-2022 without saving or changing its physical coefficients
+ok 133 - workbench can test meteor75-analog-2022 without saving or changing its physical coefficients
+  ---
+  duration_ms: 19.802042
+  ...
+# Subtest: workbench can test meteor75-pro-matrix without saving or changing its physical coefficients
+ok 134 - workbench can test meteor75-pro-matrix without saving or changing its physical coefficients
+  ---
+  duration_ms: 20.256333
+  ...
+# Subtest: workbench can test meteor85-analog without saving or changing its physical coefficients
+ok 135 - workbench can test meteor85-analog without saving or changing its physical coefficients
+  ---
+  duration_ms: 20.100875
+  ...
+# Subtest: workbench can test mobula8-analog-2023 without saving or changing its physical coefficients
+ok 136 - workbench can test mobula8-analog-2023 without saving or changing its physical coefficients
+  ---
+  duration_ms: 27.198333
+  ...
+# Subtest: workbench can test pavo20-pro-ii-o4-4s without saving or changing its physical coefficients
+ok 137 - workbench can test pavo20-pro-ii-o4-4s without saving or changing its physical coefficients
+  ---
+  duration_ms: 25.875542
+  ...
+# Subtest: workbench can test smart35-analog without saving or changing its physical coefficients
+ok 138 - workbench can test smart35-analog without saving or changing its physical coefficients
+  ---
+  duration_ms: 20.887542
+  ...
+# Subtest: workbench can test nazgul-eco-xl5-v11 without saving or changing its physical coefficients
+ok 139 - workbench can test nazgul-eco-xl5-v11 without saving or changing its physical coefficients
+  ---
+  duration_ms: 19.393208
+  ...
+# Subtest: workbench can test mach-r5-sport-2050 without saving or changing its physical coefficients
+ok 140 - workbench can test mach-r5-sport-2050 without saving or changing its physical coefficients
+  ---
+  duration_ms: 19.263459
+  ...
+# Subtest: workbench can test rekon7-pro-o3 without saving or changing its physical coefficients
+ok 141 - workbench can test rekon7-pro-o3 without saving or changing its physical coefficients
+  ---
+  duration_ms: 20.896542
+  ...
+# Subtest: workbench can test chimera7-pro-v2-o4 without saving or changing its physical coefficients
+ok 142 - workbench can test chimera7-pro-v2-o4 without saving or changing its physical coefficients
+  ---
+  duration_ms: 19.443084
+  ...
+# Subtest: workbench can test helion-pro-o4 without saving or changing its physical coefficients
+ok 143 - workbench can test helion-pro-o4 without saving or changing its physical coefficients
+  ---
+  duration_ms: 19.1925
+  ...
+# Subtest: workbench can test holybro-x650-v2 without saving or changing its physical coefficients
+ok 144 - workbench can test holybro-x650-v2 without saving or changing its physical coefficients
+  ---
+  duration_ms: 19.24375
+  ...
+# Subtest: Library browsing previews each native algorithm without applying it or discarding raw draft text
+ok 145 - Library browsing previews each native algorithm without applying it or discarding raw draft text
+  ---
+  duration_ms: 24.285167
+  ...
+# Subtest: saved setup browsing shows its own aircraft, camera and assigned rates before explicit application
+ok 146 - saved setup browsing shows its own aircraft, camera and assigned rates before explicit application
+  ---
+  duration_ms: 28.567959
+  ...
+# Subtest: inspected commanded rate refreshes for exact stick, axis, algorithm and edited rates
+ok 147 - inspected commanded rate refreshes for exact stick, axis, algorithm and edited rates
+  ---
+  duration_ms: 11.420583
+  ...
+# Subtest: workbench undo restores each incomplete rate edit without converting the last valid command
+ok 148 - workbench undo restores each incomplete rate edit without converting the last valid command
+  ---
+  duration_ms: 45.93
+  ...
+# Subtest: camera raw undo survives returnable calibration and never saves the draft
+ok 149 - camera raw undo survives returnable calibration and never saves the draft
+  ---
+  duration_ms: 14.346
+  ...
+# Subtest: physical raw undo restores independent gain text and valid changes after reopening
+ok 150 - physical raw undo restores independent gain text and valid changes after reopening
+  ---
+  duration_ms: 48.178542
+  ...
+# Subtest: native units and algorithm drafts survive invalid-number undo
+ok 151 - native units and algorithm drafts survive invalid-number undo
+  ---
+  duration_ms: 26.699417
+  ...
+# Subtest: commanded rotation respects the aircraft top view and releases sticks outside Rates
+ok 152 - commanded rotation respects the aircraft top view and releases sticks outside Rates
+  ---
+  duration_ms: 22.89175
+  ...
+# Subtest: restoring a saved custom controller keeps its customized gains visible in Basic
+ok 153 - restoring a saved custom controller keeps its customized gains visible in Basic
+  ---
+  duration_ms: 30.096958
+  ...
+# Subtest: installed battery capacity owns the Expert mirror and the tested configuration
+ok 154 - installed battery capacity owns the Expert mirror and the tested configuration
+  ---
+  duration_ms: 44.819667
+  ...
+# Subtest: commanded rotation geometry refreshes for geometry edits on the same aircraft
+ok 155 - commanded rotation geometry refreshes for geometry edits on the same aircraft
+  ---
+  duration_ms: 24.958875
+  ...
+# Subtest: calibration returns preserve the original workbench opener
+ok 156 - calibration returns preserve the original workbench opener
+  ---
+  duration_ms: 6.937625
+  ...
+# Subtest: Legacy commanded rotation has an illustrative fallback and never retains a previous aircraft
+ok 157 - Legacy commanded rotation has an illustrative fallback and never retains a previous aircraft
+  ---
+  duration_ms: 17.897125
+  ...
+# Subtest: reusable controller tunes copy explicitly into an undoable draft without saving a setup
+ok 158 - reusable controller tunes copy explicitly into an undoable draft without saving a setup
+  ---
+  duration_ms: 78.974917
+  ...
+# Subtest: workbench comparison snapshots stay immutable and only configuration edits cancel their worker
+ok 159 - workbench comparison snapshots stay immutable and only configuration edits cancel their worker
+  ---
+  duration_ms: 32.628083
+  ...
+# Subtest: unfinished physical text cancels comparison and cannot enter a new worker snapshot
+ok 160 - unfinished physical text cancels comparison and cannot enter a new worker snapshot
+  ---
+  duration_ms: 24.486292
+  ...
+# Subtest: saving a shared rate baseline cancels pending comparisons and clears completed results even when the draft is unchanged
+ok 161 - saving a shared rate baseline cancels pending comparisons and clears completed results even when the draft is unchanged
+  ---
+  duration_ms: 57.448417
+  ...
+# Subtest: SIM suggestions require input review for the current input conditions
+ok 162 - SIM suggestions require input review for the current input conditions
+  ---
+  duration_ms: 19.448958
+  ...
+# Subtest: manual A/B flies the frozen saved and draft pair and returns to the latest unsaved editor
+ok 163 - manual A/B flies the frozen saved and draft pair and returns to the latest unsaved editor
+  ---
+  duration_ms: 30.987708
+  ...
+# Subtest: manual PID-only comparison rejects camera changes until complete-setup comparison is selected
+ok 164 - manual PID-only comparison rejects camera changes until complete-setup comparison is selected
+  ---
+  duration_ms: 17.932292
+  ...
+# Subtest: SIM reduced effects and system reduced motion each pause commanded rotation without changing rates
+ok 165 - SIM reduced effects and system reduced motion each pause commanded rotation without changing rates
+  ---
+  duration_ms: 12.333041
+  ...
+# Subtest: Airmode-only customizations remain visible in Basic after save and can be undone to defaults
+ok 166 - Airmode-only customizations remain visible in Basic after save and can be undone to defaults
+  ---
+  duration_ms: 62.64225
+  ...
+# Subtest: Basic never hides a focused customized control while it is being restored to its default
+ok 167 - Basic never hides a focused customized control while it is being restored to its default
+  ---
+  duration_ms: 29.680625
+  ...
+# Subtest: saved configuration stays next-flight-only until Apply & restart uses it
+ok 168 - saved configuration stays next-flight-only until Apply & restart uses it
+  ---
+  duration_ms: 136.996292
+  ...
+# Subtest: no-op saves and later launches report the actual frozen flight configuration
+ok 169 - no-op saves and later launches report the actual frozen flight configuration
+  ---
+  duration_ms: 74.942416
+  ...
+# Subtest: rate curve pointer inspection compares saved and draft values at the responsive plot position
+ok 170 - rate curve pointer inspection compares saved and draft values at the responsive plot position
+  ---
+  duration_ms: 13.184083
+  ...
+# Subtest: touch curve inspection owns one pointer and releases it on cancellation, hiding and close
+ok 171 - touch curve inspection owns one pointer and releases it on cancellation, hiding and close
+  ---
+  duration_ms: 23.342417
+  ...
+# Subtest: the actual Journey standard execution labels its saved identity
+ok 172 - the actual Journey standard execution labels its saved identity
+  ---
+  duration_ms: 209.459625
+  ...
+# Subtest: the actual Journey gentle execution labels its saved identity
+ok 173 - the actual Journey gentle execution labels its saved identity
+  ---
+  duration_ms: 135.405042
+  ...
+# Subtest: the actual Journey expert execution labels its saved identity
+ok 174 - the actual Journey expert execution labels its saved identity
+  ---
+  duration_ms: 131.717708
+  ...
+# Subtest: current Journey variants share their exact picture with Standard first in any saved order
+ok 175 - current Journey variants share their exact picture with Standard first in any saved order
+  ---
+  duration_ms: 132.942334
+  ...
+# Subtest: Journey label ownership rejects altered wrappers and copied campaigns
+ok 176 - Journey label ownership rejects altered wrappers and copied campaigns
+  ---
+  duration_ms: 147.32375
+  ...
+# Subtest: removed or replaced Journey executions stay archived despite matching mission IDs
+ok 177 - removed or replaced Journey executions stay archived despite matching mission IDs
+  ---
+  duration_ms: 273.206833
+  ...
+# Subtest: the public encounter host retains the same owned Journey difficulty and locale behavior
+ok 178 - the public encounter host retains the same owned Journey difficulty and locale behavior
+  ---
+  duration_ms: 130.494459
+  ...
+# Subtest: both stored modes share one exact picture card with Standard default and untouched records
+ok 179 - both stored modes share one exact picture card with Standard default and untouched records
+  ---
+  duration_ms: 0.837291
+  ...
+# Subtest: difficulty labels resolve from semantic contexts whenever the locale changes
+ok 180 - difficulty labels resolve from semantic contexts whenever the locale changes
+  ---
+  duration_ms: 1.004583
+  ...
+# Subtest: Gentle-only pictures resolve their own context and never invent a Standard row
+ok 181 - Gentle-only pictures resolve their own context and never invent a Standard row
+  ---
+  duration_ms: 0.640959
+  ...
+# Subtest: different themes, maps and canonical base identities stay separate
+ok 182 - different themes, maps and canonical base identities stay separate
+  ---
+  duration_ms: 3.134916
+  ...
+# Subtest: pack removal or physics replacement archives both rows without inferring ID prefixes
+ok 183 - pack removal or physics replacement archives both rows without inferring ID prefixes
+  ---
+  duration_ms: 3.239625
+  ...
+# Subtest: asset-only replacements keep grouping and resolve the replacement visual for each mode
+ok 184 - asset-only replacements keep grouping and resolve the replacement visual for each mode
+  ---
+  duration_ms: 1.634917
+  ...
+# Subtest: invalid wrapper ownership cannot label or coalesce a saved identity
+ok 185 - invalid wrapper ownership cannot label or coalesce a saved identity
+  ---
+  duration_ms: 1.211458
+  ...
+# Subtest: a legacy authored campaign with a Gentle-looking ID remains exact Standard content
+ok 186 - a legacy authored campaign with a Gentle-looking ID remains exact Standard content
+  ---
+  duration_ms: 0.329541
+  ...
+# Subtest: trusted challenge activity has its own label without a campaign difficulty or prefix inference
+ok 187 - trusted challenge activity has its own label without a campaign difficulty or prefix inference
+  ---
+  duration_ms: 0.446625
+  ...
+# Subtest: actual WIN optional snapshot waits for safe admission and then a real task
+ok 188 - actual WIN optional snapshot waits for safe admission and then a real task
+  ---
+  duration_ms: 12.948916
+  ...
+# Subtest: Next preserves the old accepted durable best while a new active flight holds work
+ok 189 - Next preserves the old accepted durable best while a new active flight holds work
+  ---
+  duration_ms: 20.788917
+  ...
+# Subtest: page disposal queued prevents deferred export without new work
+ok 190 - page disposal queued prevents deferred export without new work
+  ---
+  duration_ms: 1.4215
+  ...
+# Subtest: page disposal after-admission prevents deferred export without new work
+ok 191 - page disposal after-admission prevents deferred export without new work
+  ---
+  duration_ms: 0.848583
+  ...
+# Subtest: page disposal task prevents deferred export without new work
+ok 192 - page disposal task prevents deferred export without new work
+  ---
+  duration_ms: 0.503584
+  ...
+# Subtest: replaced accepted clear runId is refused before copying the old run
+ok 193 - replaced accepted clear runId is refused before copying the old run
+  ---
+  duration_ms: 0.543
+  ...
+# Subtest: replaced accepted clear gameplayId is refused before copying the old run
+ok 194 - replaced accepted clear gameplayId is refused before copying the old run
+  ---
+  duration_ms: 0.395625
+  ...
+# Subtest: replaced accepted clear difficulty is refused before copying the old run
+ok 195 - replaced accepted clear difficulty is refused before copying the old run
+  ---
+  duration_ms: 0.320958
+  ...
+# Subtest: nested export releases the main slot and later disposal forbids its remaining work
+ok 196 - nested export releases the main slot and later disposal forbids its remaining work
+  ---
+  duration_ms: 1.651125
+  ...
+# Subtest: reentrant disposal inside export is observed before inner work or capture
+ok 197 - reentrant disposal inside export is observed before inner work or capture
+  ---
+  duration_ms: 1.033667
+  ...
+# Subtest: disposal after export completion is checked before optional capture
+ok 198 - disposal after export completion is checked before optional capture
+  ---
+  duration_ms: 0.423458
+  ...
+# Subtest: replaced clear after projection cannot persist through the actual capture controller
+ok 199 - replaced clear after projection cannot persist through the actual capture controller
+  ---
+  duration_ms: 1.33625
+  ...
+# Subtest: valid capture finishing after replacement retains its result without painting the new run
+ok 200 - valid capture finishing after replacement retains its result without painting the new run
+  ---
+  duration_ms: 1.955083
+  ...
+# Subtest: export rejection settles without a nested main-owner deadlock
+ok 201 - export rejection settles without a nested main-owner deadlock
+  ---
+  duration_ms: 0.433292
+  ...
+# Subtest: owner rejection settles without a nested main-owner deadlock
+ok 202 - owner rejection settles without a nested main-owner deadlock
+  ---
+  duration_ms: 0.332958
+  ...
+# Subtest: twenty accepted terminal references queue once each without dropping old results
+ok 203 - twenty accepted terminal references queue once each without dropping old results
+  ---
+  duration_ms: 22.960333
+  ...
+# Subtest: repeated forced Pause keeps the chosen menu action after Settings closes
+ok 204 - repeated forced Pause keeps the chosen menu action after Settings closes
+  ---
+  duration_ms: 2272.611834
+  ...
+# Subtest: practice controller Return commits on release through the registered parent boundary
+ok 205 - practice controller Return commits on release through the registered parent boundary
+  ---
+  duration_ms: 1610.040834
+  ...
+# Subtest: practice Return preserves stale-session rejection and the shell uses the same checked action
+ok 206 - practice Return preserves stale-session rejection and the shell uses the same checked action
+  ---
+  duration_ms: 1134.925833
+  ...
+# Subtest: paused Controller practice exits both boundaries through the real app blur handler
+ok 207 - paused Controller practice exits both boundaries through the real app blur handler
+  ---
+  duration_ms: 1304.146042
+  ...
+# Subtest: first iframe blur pauses a moving cut without focusing its new Resume action
+ok 208 - first iframe blur pauses a moving cut without focusing its new Resume action
+  ---
+  duration_ms: 1100.7595
+  ...
+# Subtest: actual pause/persist path stamps synchronous substages without deferring save or changing ownership
+ok 209 - actual pause/persist path stamps synchronous substages without deferring save or changing ownership
+  ---
+  duration_ms: 1.116791
+  ...
+# Subtest: actual pause preserves failed writerThrows as an incomplete span without suppressing UI
+ok 210 - actual pause preserves failed writerThrows as an incomplete span without suppressing UI
+  ---
+  duration_ms: 0.371042
+  ...
+# Subtest: actual pause preserves failed snapshotThrows as an incomplete span without suppressing UI
+ok 211 - actual pause preserves failed snapshotThrows as an incomplete span without suppressing UI
+  ---
+  duration_ms: 0.217375
+  ...
+# Subtest: actual pause preserves failed saveThrows as an incomplete span without suppressing UI
+ok 212 - actual pause preserves failed saveThrows as an incomplete span without suppressing UI
+  ---
+  duration_ms: 0.261792
+  ...
+# Subtest: actual pause preserves failed saveFails as an incomplete span without suppressing UI
+ok 213 - actual pause preserves failed saveFails as an incomplete span without suppressing UI
+  ---
+  duration_ms: 0.375917
+  ...
+# Subtest: actual pause preserves failed readbackThrows as an incomplete span without suppressing UI
+ok 214 - actual pause preserves failed readbackThrows as an incomplete span without suppressing UI
+  ---
+  duration_ms: 0.32575
+  ...
+# Subtest: actual pause preserves failed mismatch as an incomplete span without suppressing UI
+ok 215 - actual pause preserves failed mismatch as an incomplete span without suppressing UI
+  ---
+  duration_ms: 0.2525
+  ...
+# Subtest: actual overlay exception propagates and cannot gain a fabricated end
+ok 216 - actual overlay exception propagates and cannot gain a fabricated end
+  ---
+  duration_ms: 0.347208
+  ...
+# Subtest: actual hud exception propagates and cannot gain a fabricated end
+ok 217 - actual hud exception propagates and cannot gain a fabricated end
+  ---
+  duration_ms: 0.377917
+  ...
+# Subtest: actual link exception propagates and cannot gain a fabricated end
+ok 218 - actual link exception propagates and cannot gain a fabricated end
+  ---
+  duration_ms: 0.293709
+  ...
+# Subtest: no current run with a prior generation preserves the original early return
+ok 219 - no current run with a prior generation preserves the original early return
+  ---
+  duration_ms: 0.302125
+  ...
+# Subtest: skipped persistence is explicit; earlier return branches stay incomplete prefixes
+ok 220 - skipped persistence is explicit; earlier return branches stay incomplete prefixes
+  ---
+  duration_ms: 0.330208
+  ...
+# Subtest: default persistence emits no pause row and retains its synchronous return value
+ok 221 - default persistence emits no pause row and retains its synchronous return value
+  ---
+  duration_ms: 0.161416
+  ...
+# Subtest: absent, disabled and throwing optional markers never change pause side effects
+ok 222 - absent, disabled and throwing optional markers never change pause side effects
+  ---
+  duration_ms: 1.624166
+  ...
+# Subtest: bounded samples preserve startup, pause-causing stalls and session totals after eviction
+ok 223 - bounded samples preserve startup, pause-causing stalls and session totals after eviction
+  ---
+  duration_ms: 3.745583
+  ...
+# Subtest: hidden intervals remain visible without being attributed to active gameplay
+ok 224 - hidden intervals remain visible without being attributed to active gameplay
+  ---
+  duration_ms: 0.805959
+  ...
+# Subtest: input timing is once-per-token, bounded and measures submitted draws only after ticks
+ok 225 - input timing is once-per-token, bounded and measures submitted draws only after ticks
+  ---
+  duration_ms: 0.376083
+  ...
+# Subtest: exports require an explicit paused caller and unsupported counters stay unavailable
+ok 226 - exports require an explicit paused caller and unsupported counters stay unavailable
+  ---
+  duration_ms: 0.976625
+  ...
+# Subtest: discarding input on lifecycle changes retires unfinished latency observations
+ok 227 - discarding input on lifecycle changes retires unfinished latency observations
+  ---
+  duration_ms: 0.351
+  ...
+# Subtest: failure evidence retains bounded messages, phase and totals only when enabled
+ok 228 - failure evidence retains bounded messages, phase and totals only when enabled
+  ---
+  duration_ms: 0.28325
+  ...
+# Subtest: explicit cadence baseline counts missed opportunities and consecutive misses without changing during play
+ok 229 - explicit cadence baseline counts missed opportunities and consecutive misses without changing during play
+  ---
+  duration_ms: 0.515583
+  ...
+# Subtest: worst foreground hitches survive recent-ring eviction and hidden suspension
+ok 230 - worst foreground hitches survive recent-ring eviction and hidden suspension
+  ---
+  duration_ms: 0.523
+  ...
+# Subtest: disabled collection is inert and resource inspection runs only on explicit paused export
+ok 231 - disabled collection is inert and resource inspection runs only on explicit paused export
+  ---
+  duration_ms: 0.653959
+  ...
+# Subtest: event witnesses keep chronological bounded rows and explicit omitted counts by kind
+ok 232 - event witnesses keep chronological bounded rows and explicit omitted counts by kind
+  ---
+  duration_ms: 0.765209
+  ...
+# Subtest: event witnesses reject invalid observations and disabled collection reads no clock
+ok 233 - event witnesses reject invalid observations and disabled collection reads no clock
+  ---
+  duration_ms: 0.490584
+  ...
+# Subtest: terminal witnesses do not reclassify prior-playing hitches or manufacture successful work
+ok 234 - terminal witnesses do not reclassify prior-playing hitches or manufacture successful work
+  ---
+  duration_ms: 1.230292
+  ...
+# Subtest: terminal HUD substages share bounded numeric event storage without changing frame attribution
+ok 235 - terminal HUD substages share bounded numeric event storage without changing frame attribution
+  ---
+  duration_ms: 1.527833
+  ...
+# Subtest: disabled terminal HUD substages do not read the clock or retain event data
+ok 236 - disabled terminal HUD substages do not read the clock or retain event data
+  ---
+  duration_ms: 0.740083
+  ...
+# Subtest: pause substages retain bounded prefixes without rewriting raw frame or failure evidence
+ok 237 - pause substages retain bounded prefixes without rewriting raw frame or failure evidence
+  ---
+  duration_ms: 1.090667
+  ...
+# Subtest: disabled pause markers read no clock and retain no event rows
+ok 238 - disabled pause markers read no clock and retain no event rows
+  ---
+  duration_ms: 0.315625
+  ...
+# Subtest: actual Solo controller Menu Resume cannot spend the paused callback interval
+ok 239 - actual Solo controller Menu Resume cannot spend the paused callback interval
+  ---
+  duration_ms: 2478.231625
+  ...
+# Subtest: actual Solo controller Confirm Resume cannot spend the paused callback interval
+ok 240 - actual Solo controller Confirm Resume cannot spend the paused callback interval
+  ---
+  duration_ms: 2347.71375
+  ...
+# Subtest: actual Solo keyboard movement and discrete edges survive simulated display cadence and catch-up
+ok 241 - actual Solo keyboard movement and discrete edges survive simulated display cadence and catch-up
+  ---
+  duration_ms: 26809.046334
+  ...
+# {"source":"keyboard","phases":[{"phase":"fixture:open","elapsedMs":0.152792},{"phase":"fixture:class","elapsedMs":1139.3625},{"phase":"start:activate","elapsedMs":1186.549667},{"phase":"start:running-wait","elapsedMs":1881.067625},{"phase":"start:ready","elapsedMs":1894.721792},{"phase":"pause:save","elapsedMs":3044.922792},{"phase":"pause:saved","elapsedMs":3074.226042},{"phase":"restart:request","elapsedMs":3085.524292},{"phase":"restart:confirm","elapsedMs":3105.163209},{"phase":"restart:running-wait","elapsedMs":3234.581209},{"phase":"restart:ready","elapsedMs":3270.220667},{"phase":"pause:save","elapsedMs":4988.989417},{"phase":"pause:saved","elapsedMs":5017.117292},{"phase":"restart:request","elapsedMs":5027.785834},{"phase":"restart:confirm","elapsedMs":5047.170792},{"phase":"restart:running-wait","elapsedMs":5179.234084},{"phase":"restart:ready","elapsedMs":5216.446709},{"phase":"pause:save","elapsedMs":6976.267417},{"phase":"pause:saved","elapsedMs":7004.286542},{"phase":"restart:request","elapsedMs":7013.247375},{"phase":"restart:confirm","elapsedMs":7033.363542},{"phase":"restart:running-wait","elapsedMs":7166.770167},{"phase":"restart:ready","elapsedMs":7201.43925},{"phase":"pause:save","elapsedMs":9369.098292},{"phase":"pause:saved","elapsedMs":9397.091417},{"phase":"restart:request","elapsedMs":9405.388917},{"phase":"restart:confirm","elapsedMs":9425.931167},{"phase":"restart:running-wait","elapsedMs":9554.247584},{"phase":"restart:ready","elapsedMs":9589.929375},{"phase":"pause:save","elapsedMs":12942.771292},{"phase":"pause:saved","elapsedMs":12970.852417},{"phase":"restart:request","elapsedMs":12978.801834},{"phase":"restart:confirm","elapsedMs":13011.028625},{"phase":"restart:running-wait","elapsedMs":13149.061917},{"phase":"restart:ready","elapsedMs":13194.679167},{"phase":"pause:save","elapsedMs":17724.096417},{"phase":"pause:saved","elapsedMs":17752.845292},{"phase":"restart:request","elapsedMs":17759.979625},{"phase":"restart:confirm","elapsedMs":17782.160334},{"phase":"restart:running-wait","elapsedMs":17917.289709},{"phase":"restart:ready","elapsedMs":17950.930917},{"phase":"pause:save","elapsedMs":23875.5475},{"phase":"pause:saved","elapsedMs":23920.796625},{"phase":"restart:request","elapsedMs":23928.18025},{"phase":"restart:confirm","elapsedMs":23950.73575},{"phase":"restart:running-wait","elapsedMs":24080.093292},{"phase":"restart:ready","elapsedMs":24115.516292},{"phase":"pause:save","elapsedMs":26289.76},{"phase":"pause:saved","elapsedMs":26327.861334},{"phase":"restart:request","elapsedMs":26334.767417},{"phase":"restart:confirm","elapsedMs":26355.817917},{"phase":"restart:running-wait","elapsedMs":26495.936834},{"phase":"restart:ready","elapsedMs":26536.220625},{"phase":"pause:save","elapsedMs":26754.73475},{"phase":"pause:saved","elapsedMs":26787.895834}]}
+# {"source":"keyboard","scope":"simulated cadence correctness only","plannedSchedules":["30Hz","40Hz","45Hz","60Hz","90Hz","120Hz","144Hz","changing-cadence","exact-250ms-catch-up"],"observations":[{"schedule":"30Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":8,"pickup":8,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"40Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":6,"pickup":6,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"45Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":4,"pickup":4,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"60Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":4,"pickup":4,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"90Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":2,"pickup":2,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"120Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":2,"pickup":2,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"144Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":2,"pickup":2,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"changing-cadence","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":8,"pickup":8,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"exact-250ms-catch-up","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":60,"pickup":60,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}}]}
+# Subtest: actual Solo keyboard interruption discards stale discrete input and resumes with a fresh edge
+ok 242 - actual Solo keyboard interruption discards stale discrete input and resumes with a fresh edge
+  ---
+  duration_ms: 2872.026167
+  ...
+# {"source":"keyboard","scope":"independent simulated interruption correctness only","phases":[{"phase":"fixture:open","elapsedMs":0.08875},{"phase":"fixture:class","elapsedMs":1382.99175},{"phase":"start:activate","elapsedMs":1444.836541},{"phase":"start:running-wait","elapsedMs":2183.94225},{"phase":"start:ready","elapsedMs":2199.183083},{"phase":"start:activate","elapsedMs":2714.157166},{"phase":"start:running-wait","elapsedMs":2752.924625},{"phase":"start:ready","elapsedMs":2769.9095},{"phase":"pause:save","elapsedMs":2813.857875},{"phase":"pause:saved","elapsedMs":2848.061375}],"interruption":{"gapMs":251,"acceptedCatchUpMs":250,"ticks":210,"counts":{"action":30,"pickup":30,"boost":0,"right":0,"left":0},"edges":{"action":[151],"pickup":[151]},"effects":{"used":[151],"collected":[151],"rejected":[],"failed":[]}}}
+# Subtest: actual Solo gamepad movement and discrete edges survive simulated display cadence and catch-up
+ok 243 - actual Solo gamepad movement and discrete edges survive simulated display cadence and catch-up
+  ---
+  duration_ms: 30917.289042
+  ...
+# {"source":"gamepad","phases":[{"phase":"fixture:open","elapsedMs":0.102458},{"phase":"fixture:class","elapsedMs":1442.20275},{"phase":"start:activate","elapsedMs":1499.437875},{"phase":"start:running-wait","elapsedMs":2347.758583},{"phase":"start:ready","elapsedMs":2363.148416},{"phase":"pause:save","elapsedMs":3989.225833},{"phase":"pause:saved","elapsedMs":4045.717625},{"phase":"restart:request","elapsedMs":4052.68775},{"phase":"restart:confirm","elapsedMs":4074.78775},{"phase":"restart:running-wait","elapsedMs":4233.793458},{"phase":"restart:ready","elapsedMs":4276.010541},{"phase":"pause:save","elapsedMs":6168.535291},{"phase":"pause:saved","elapsedMs":6230.906708},{"phase":"restart:request","elapsedMs":6241.527208},{"phase":"restart:confirm","elapsedMs":6273.067541},{"phase":"restart:running-wait","elapsedMs":6479.47175},{"phase":"restart:ready","elapsedMs":6516.114083},{"phase":"pause:save","elapsedMs":8641.681791},{"phase":"pause:saved","elapsedMs":8698.660291},{"phase":"restart:request","elapsedMs":8705.596166},{"phase":"restart:confirm","elapsedMs":8727.681958},{"phase":"restart:running-wait","elapsedMs":8887.224708},{"phase":"restart:ready","elapsedMs":8924.14575},{"phase":"pause:save","elapsedMs":11526.376125},{"phase":"pause:saved","elapsedMs":11584.604125},{"phase":"restart:request","elapsedMs":11591.39625},{"phase":"restart:confirm","elapsedMs":11613.382833},{"phase":"restart:running-wait","elapsedMs":11772.896125},{"phase":"restart:ready","elapsedMs":11813.420208},{"phase":"pause:save","elapsedMs":15804.444125},{"phase":"pause:saved","elapsedMs":15861.110625},{"phase":"restart:request","elapsedMs":15867.939083},{"phase":"restart:confirm","elapsedMs":15889.877958},{"phase":"restart:running-wait","elapsedMs":16048.940291},{"phase":"restart:ready","elapsedMs":16086.166375},{"phase":"pause:save","elapsedMs":21253.155083},{"phase":"pause:saved","elapsedMs":21321.299291},{"phase":"restart:request","elapsedMs":21327.949625},{"phase":"restart:confirm","elapsedMs":21351.76325},{"phase":"restart:running-wait","elapsedMs":21529.271875},{"phase":"restart:ready","elapsedMs":21572.417083},{"phase":"pause:save","elapsedMs":27285.499583},{"phase":"pause:saved","elapsedMs":27354.442291},{"phase":"restart:request","elapsedMs":27363.79},{"phase":"restart:confirm","elapsedMs":27386.956708},{"phase":"restart:running-wait","elapsedMs":27542.619208},{"phase":"restart:ready","elapsedMs":27582.479541},{"phase":"pause:save","elapsedMs":30101.91825},{"phase":"pause:saved","elapsedMs":30158.242083},{"phase":"restart:request","elapsedMs":30164.510458},{"phase":"restart:confirm","elapsedMs":30185.760041},{"phase":"restart:running-wait","elapsedMs":30345.094125},{"phase":"restart:ready","elapsedMs":30384.910458},{"phase":"pause:save","elapsedMs":30840.554208},{"phase":"pause:saved","elapsedMs":30898.977875}]}
+# {"source":"gamepad","scope":"simulated cadence correctness only","plannedSchedules":["30Hz","40Hz","45Hz","60Hz","90Hz","120Hz","144Hz","changing-cadence","exact-250ms-catch-up"],"observations":[{"schedule":"30Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"40Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"45Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"60Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"90Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"120Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"144Hz","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"changing-cadence","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}},{"schedule":"exact-250ms-catch-up","ticks":600,"checkpoint":"5893107c0a897798","counts":{"action":240,"pickup":240,"boost":240,"right":240,"left":240},"edges":{"action":[121,361],"pickup":[121,361]},"effects":{"used":[121,361],"collected":[121,361],"rejected":[],"failed":[]}}]}
+# Subtest: actual Solo gamepad interruption discards stale discrete input and resumes with a fresh edge
+ok 244 - actual Solo gamepad interruption discards stale discrete input and resumes with a fresh edge
+  ---
+  duration_ms: 2733.072875
+  ...
+# {"source":"gamepad","scope":"independent simulated interruption correctness only","phases":[{"phase":"fixture:open","elapsedMs":0.076375},{"phase":"fixture:class","elapsedMs":1175.103333},{"phase":"start:activate","elapsedMs":1230.991625},{"phase":"start:running-wait","elapsedMs":1956.993958},{"phase":"start:ready","elapsedMs":1973.085625},{"phase":"start:activate","elapsedMs":2546.679125},{"phase":"start:running-wait","elapsedMs":2575.22975},{"phase":"start:ready","elapsedMs":2590.879833},{"phase":"pause:save","elapsedMs":2661.802666},{"phase":"pause:saved","elapsedMs":2717.770833}],"interruption":{"gapMs":251,"acceptedCatchUpMs":250,"ticks":210,"counts":{"action":30,"pickup":30,"boost":0,"right":0,"left":0},"edges":{"action":[151],"pickup":[151]},"effects":{"used":[151],"collected":[151],"rejected":[],"failed":[]}}}
+# Subtest: ordinary Solo can load the edition entry without evaluating optional edition panels
+ok 245 - ordinary Solo can load the edition entry without evaluating optional edition panels
+  ---
+  duration_ms: 218.474625
+  ...
+# Subtest: ordinary Solo Start and Resume do not evaluate the optional Missions chooser
+ok 246 - ordinary Solo Start and Resume do not evaluate the optional Missions chooser
+  ---
+  duration_ms: 2536.235125
+  ...
+# Subtest: Classic Start and Resume never wait for optional sharing, and paused discovery keeps the exact public URL
+ok 247 - Classic Start and Resume never wait for optional sharing, and paused discovery keeps the exact public URL
+  ---
+  duration_ms: 2125.742208
+  ...
+# Subtest: retiring the page while optional sharing reads its body prevents stale parsing and publication
+ok 248 - retiring the page while optional sharing reads its body prevents stale parsing and publication
+  ---
+  duration_ms: 1698.920833
+  ...
+# Subtest: opening paused settings before the first Start can publish the Classic link without advancing the run
+ok 249 - opening paused settings before the first Start can publish the Classic link without advancing the run
+  ---
+  duration_ms: 1130.004708
+  ...
+# Subtest: the accepted current Journey exposes its exact link immediately at Start without the Classic index
+ok 250 - the accepted current Journey exposes its exact link immediately at Start without the Classic index
+  ---
+  duration_ms: 4451.988875
+  ...
+# Subtest: an incoming Journey briefing retains its exact share link through a fresh page load before Start
+    # Subtest: incoming share
+    ok 1 - incoming share
+      ---
+      duration_ms: 11466.048667
+      ...
+    # Subtest: reload accepted share
+    ok 2 - reload accepted share
+      ---
+      duration_ms: 9505.957667
+      ...
+    1..2
+ok 251 - an incoming Journey briefing retains its exact share link through a fresh page load before Start
+  ---
+  duration_ms: 20972.378083
+  ...
+1..251
+# tests 258
+# suites 0
+# pass 258
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 88957.239625
