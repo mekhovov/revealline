@@ -3,7 +3,8 @@ import { attitude, atan2, Q } from './math.mjs';
 import { dataIdentity } from '../../game/data-json.mjs';
 import { createRateProfile, validateRateProfile } from './rates.mjs';
 import { createAdvancedWorkerClient } from './advanced-worker-client.mjs';
-import { createAdvancedTerrainFrame } from './advanced-terrain.mjs';
+import { createAdvancedTerrainFrame, ADVANCED_TERRAIN_LIMITS } from './advanced-terrain.mjs';
+import { createAircraftTerrainFrame } from './aircraft-terrain.mjs';
 import {
   ADVANCED_MAX_SECONDS,
   ADVANCED_MISSION_HZ,
@@ -55,10 +56,14 @@ export function createAdvancedRegionalSession(
   const heading =
     saved?.heading ??
     (configuration.initialHeading === 'region-centre'
-      ? atan2(
+      ? // atan2 is signed; the saved heading contract is an unsigned full turn.
+        // Starts on either side of the centre must be equally launchable.
+        (atan2(
           (manifest.grid.minX + manifest.grid.width / 2) * manifest.grid.cellSizeMm - frame.x,
           frame.z - (manifest.grid.minZ + manifest.grid.depth / 2) * manifest.grid.cellSizeMm,
-        )
+        ) +
+          36000) %
+        36000
       : (configuration.initialHeading ?? 0));
   requireValue(
     Number.isSafeInteger(heading) && heading >= 0 && heading < 36000,
@@ -300,7 +305,17 @@ export function createAdvancedRegionalSession(
     );
     const cosine = Math.cos(angle),
       sine = Math.sin(angle);
-    return createAdvancedTerrainFrame({
+    // Preserve the identity of previously admitted frames. Denser aircraft
+    // scenery uses the same bounded format already supported by course flight,
+    // instead of incorrectly inheriting the old reference quad's smaller cap.
+    const expanded =
+      aircraftPhysics &&
+      (verified.colliders.length > ADVANCED_TERRAIN_LIMITS.colliders ||
+        verified.colliders.reduce((total, collider) => total + collider.vertices.length / 3, 0) >
+          ADVANCED_TERRAIN_LIMITS.vertices ||
+        verified.colliders.reduce((total, collider) => total + collider.indices.length / 3, 0) >
+          ADVANCED_TERRAIN_LIMITS.triangles);
+    return (expanded ? createAircraftTerrainFrame : createAdvancedTerrainFrame)({
       sourceIdentity: verified.sourceIdentity,
       colliders: verified.colliders.map(({ id, vertices, indices, translation }) => {
         const result = [];
@@ -335,7 +350,7 @@ export function createAdvancedRegionalSession(
   }
   async function transitionFrame(
     target,
-    { signal, current, pose = supportPose, targetClient = client },
+    { signal, current, pose = supportPose, targetClient = client, expectedFrameIdentity },
   ) {
     const previousOrigin = origin,
       previousRecentres = recentres,
@@ -358,6 +373,10 @@ export function createAdvancedRegionalSession(
           );
           staged = await targetClient.stageTerrainFrame(workerFrame(collisionFrame()));
           current();
+          requireValue(
+            expectedFrameIdentity === undefined || staged.identity === expectedFrameIdentity,
+            'Regional recovery terrain window changed',
+          );
         },
         ...(!aircraftPhysics
           ? {
@@ -455,6 +474,24 @@ export function createAdvancedRegionalSession(
     if (status === 'active') {
       status = 'paused';
       reason = 'prepared';
+    }
+  }
+  async function drainCommittedFrame(operation) {
+    try {
+      await operation;
+    } catch (error) {
+      // Pause cancels speculative prefetch, then transitionFrame finishes its
+      // commit/rollback before rejecting. The admitted state is still safe to
+      // save; a worker failure or mismatched source must never be suppressed.
+      if (
+        error?.name !== 'AbortError' ||
+        !initialized ||
+        reason === 'worker-error' ||
+        frameCommitOwner ||
+        !terrain.snapshot().terrainReady ||
+        sourceFrameIdentity !== telemetry.terrain?.frameIdentity
+      )
+        throw error;
     }
   }
   async function prepare() {
@@ -623,7 +660,7 @@ export function createAdvancedRegionalSession(
     checkpointKind = finalize ? 'archive-finalize' : 'archive';
     const operation = (async () => {
       await pendingStep;
-      await pendingFrame;
+      await drainCommittedFrame(pendingFrame);
       live();
       requireValue(!finalize || status !== 'active', 'Pause before ending the session archive');
       const result = await (finalize
@@ -699,7 +736,7 @@ export function createAdvancedRegionalSession(
     async recording() {
       live();
       await stepJob;
-      await frameJob;
+      await drainCommittedFrame(frameJob);
       live();
       return client.recording();
     },
@@ -721,11 +758,12 @@ export function createAdvancedRegionalSession(
         pendingFrame = frameJob;
       const operation = (async () => {
         await pendingStep;
-        await pendingFrame;
+        await drainCommittedFrame(pendingFrame);
         live();
         return {
           format: 'AdvancedRegionalRecovery.v2',
           environment: clone(environment),
+          terrainOriginMm: clone(origin),
           simulation: await client.snapshot(),
         };
       })();
@@ -752,11 +790,12 @@ export function createAdvancedRegionalSession(
       live();
       requireValue(status !== 'active', 'Pause before capturing Regional Advanced recovery');
       await stepJob;
-      await frameJob;
+      await drainCommittedFrame(frameJob);
       live();
       return {
         format: aircraftPhysics ? 'AdvancedRegionalRecovery.v2' : 'AdvancedRegionalRecovery.v1',
         environment: clone(environment),
+        ...(aircraftPhysics ? { terrainOriginMm: clone(origin) } : {}),
         simulation: await client.snapshot(),
       };
     },
@@ -773,6 +812,31 @@ export function createAdvancedRegionalSession(
           dataIdentity(saved.environment) === dataIdentity(environment),
         'Regional Advanced recovery belongs to another region or start',
       );
+      // A paused prefetch may leave the last admitted window centred behind
+      // the aircraft. Recover that exact window, not a newly selected one that
+      // changes collider handles, contact ordering and the continuation hash.
+      const savedOrigin = saved.terrainOriginMm;
+      if (savedOrigin !== undefined) {
+        const grid = manifest.grid;
+        requireValue(
+          aircraftPhysics &&
+            savedOrigin &&
+            !Array.isArray(savedOrigin) &&
+            Object.keys(savedOrigin).length === 3 &&
+            axes.every((axis) => Number.isSafeInteger(savedOrigin[axis])) &&
+            savedOrigin.y === 0 &&
+            ['x', 'z'].every((axis) => {
+              const cell = (savedOrigin[axis] - grid.cellSizeMm / 2) / grid.cellSizeMm;
+              const min = grid[axis === 'x' ? 'minX' : 'minZ'];
+              return (
+                Number.isSafeInteger(cell) &&
+                cell >= min &&
+                cell < min + grid[axis === 'x' ? 'width' : 'depth']
+              );
+            }),
+          'Invalid Regional recovery terrain origin',
+        );
+      }
       requireValue(initialized, 'Prepare Regional Advanced before recovery');
       pause();
       const token = generation,
@@ -808,12 +872,19 @@ export function createAdvancedRegionalSession(
           // cleanup. Cancellation during replay instead terminates its CPU owner.
           controller.signal.removeEventListener('abort', cancelVerification);
           if (recoveryVerification === controller) recoveryVerification = null;
-          const adopted = await transition(globalPoint(restored.position), {
-            signal: controller.signal,
-            current,
-            pose: () => supportPose(restored),
-            targetClient: candidate,
-          });
+          const restoredPoint = globalPoint(restored.position);
+          const adopted = await transition(
+            savedOrigin ? { ...savedOrigin, y: restoredPoint.y } : restoredPoint,
+            {
+              signal: controller.signal,
+              current,
+              pose: () => supportPose(restored),
+              targetClient: candidate,
+              ...(savedOrigin
+                ? { expectedFrameIdentity: saved.simulation.checkpoint.terrain.identity }
+                : {}),
+            },
+          );
           current();
           const previous = client;
           client = candidate;
