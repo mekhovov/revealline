@@ -213,6 +213,7 @@
     "optional-practice/civilian-fpv/advanced-ghost-path.mjs",
     "optional-practice/civilian-fpv/propulsion-evidence.mjs",
     "optional-practice/civilian-fpv/propulsion-evidence-ui.mjs",
+    "optional-practice/civilian-fpv/propulsion-load.mjs",
     "optional-practice/civilian-fpv/aircraft-challenge.mjs",
     "optional-practice/civilian-fpv/aircraft-challenge-ui.mjs",
     "optional-practice/civilian-fpv/advanced-worker.mjs",
