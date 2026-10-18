@@ -76,6 +76,12 @@ changing or restarting the active flight to make the label agree.
   The active setup header correctly reported Used by this flight after restart.
 - Browser zoom remains unverified: the selected browser automation exposes no
   actual page-zoom control. Existing narrow-viewport checks remain separate.
+- The first full hosted flight run passed **1,182/1,183** checks and exposed an
+  obsolete Advanced-arena test that expected an archive before flying. Its
+  revised coverage requires no idle archive, canonical short-flight verification,
+  continued flight, and interruption of a genuinely flown replacement session.
+  Runtime code is unchanged by this test correction; the final head must pass
+  the full hosted run before publication.
 - Full hosted integration and public delivery are tracked independently below;
   these local results do not claim a deployed release. No stored archive was deleted.
 
