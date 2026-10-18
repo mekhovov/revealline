@@ -1076,7 +1076,8 @@ if(store.get(row)?.size===0)store.delete(row);
 let rows=Object.freeze([]),
 byId=new Map(),
 rowsByMode=new Map(LIBRARY_MODES.map((mode)=>[mode,Object.freeze([])])),
-disposed=false;
+disposed=false,
+constructing=true;
 const emit=()=>{
 for(const listener of listeners)listener();
 };
@@ -1088,6 +1089,19 @@ if(mode!==undefined&&(!LIBRARY_MODES.includes(mode)|| !row.modes.includes(mode))
 throw new Error(t('errors:missionLibrary.unsupportedMode'));
 return binding;
 }
+function*ownerRows(){
+for(const owner of owners.values())yield*owner.rows;
+}
+function validateNumbering(candidateRows){
+const numbered=new Map();
+for(const row of candidateRows){
+if(row.globalLevelNumber===null)continue;
+const previous=numbered.get(row.globalLevelNumber);
+if(previous&&previous!==row.canonicalLevelKey)
+throw new TypeError('Official level number belongs to more than one mission.');
+numbered.set(row.globalLevelNumber,row.canonicalLevelKey);
+}
+}
 function rebuild(){
 rows=Object.freeze(
 [...owners.values()]
@@ -1098,14 +1112,7 @@ LIBRARY_COLLECTIONS.indexOf(a.collection)-
 LIBRARY_COLLECTIONS.indexOf(b.collection),
 ),
 );
-const numbered=new Map();
-for(const row of rows){
-if(row.globalLevelNumber===null)continue;
-const previous=numbered.get(row.globalLevelNumber);
-if(previous&&previous!==row.canonicalLevelKey)
-throw new TypeError('Official level number belongs to more than one mission.');
-numbered.set(row.globalLevelNumber,row.canonicalLevelKey);
-}
+validateNumbering(rows);
 // The unified selector asks for exact identities repeatedly while it
 // reconciles focus, availability and lazy previews. Keep those lookups
 // linear in the number of rendered cards, not quadratic in the complete
@@ -1241,8 +1248,14 @@ if(count>4096)throw new TypeError(t('errors:missionLibrary.tooManyMissions'));
 const previous=owners.get(source.id);
 if(previous)cancelOwner(previous);
 owners.set(source.id,owner);
+if(constructing){
+// Preserve rejection at each source boundary, before later describe calls.
+// No subscriber can observe derived indexes until construction returns.
+validateNumbering(ownerRows());
+}else{
 rebuild();
 emit();
+}
 return Object.freeze([...owner.rows]);
 }
 function availability(row,mode='solo'){
@@ -1265,6 +1278,8 @@ translated[field]=typeof value?.[field]==='string'?value[field]:row[field];
 return Object.freeze(translated);
 }
 for(const source of sources)register(source);
+constructing=false;
+if(owners.size)rebuild();
 return Object.freeze({
 get missions(){
 return rows;
