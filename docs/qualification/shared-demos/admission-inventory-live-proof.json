@@ -1,0 +1,17 @@
+{
+  "complete": true,
+  "pr": 1615,
+  "head": "ea2c2fce7d4c4ae9750f3aa796253c309196cc24",
+  "base": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+  "mergeBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+  "changedFiles": 3079,
+  "pathCount": 3079,
+  "localGitPathCount": 3079,
+  "pathsSha256": "2afc8e8c50cdbb102d3e0aed9e3191ac737645a4cbd8557b7509ca16b286fbf0",
+  "classification": "maintenance",
+  "focusedCommands": 43,
+  "noSourceCheckout": true,
+  "noBlobDownloads": true,
+  "noTokenEnvironment": true,
+  "capturedAt": "2026-10-18T18:44:49.858Z"
+}

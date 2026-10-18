@@ -1,0 +1,248 @@
+{
+  "format": "PresentationNativePromiseOwnershipAuditV1",
+  "created": "2026-10-18T18:54:00.296391+00:00",
+  "scope": "Minimal production promise-ownership repair after explicit parent freeze release; initial frozen production review and cached differential proof are retained.",
+  "observation": {
+    "report": "docs/qualification/shared-demos/restoration-webkit-461ace.json",
+    "engine": "webkit",
+    "stage": "ordinary-control-reload",
+    "mode": "solo",
+    "demoStarted": false,
+    "reloadAssertionsPassed": 12,
+    "pageerrorCount": 1,
+    "error": "Cannot load blob:http://127.0.0.1:8769/274ac698-b90c-40ba-b491-866b0fb8e4a3 due to access control checks.",
+    "stack": [
+      "game/presentation/host.mjs:156:38 browserDecode",
+      "game/presentation/host.mjs:581:28 main work callback"
+    ],
+    "limitation": "The original report did not record window unhandledrejection/error, error timestamps, or an error document ID. It cannot distinguish escaped JavaScript rejection from native teardown reporting."
+  },
+  "upstream": {
+    "base": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "hostGitBlob": "a431e181bb3f332818df527c746bc6eb7d24598e",
+    "introducedBy": "6a42084c9fb83becff59326197b582397a9c5bbe",
+    "introducedSubject": "perf(solo): stop optional page presentation stages during play",
+    "hostSha256": "b13a7d44a136550fc74bc12fff19555586b4f36143f22b493a599b398b1d0d64",
+    "nativeAdmissionModuleAlsoUnchanged": true,
+    "hostEqualToBaseBeforeFix": true
+  },
+  "findings": [
+    "The ordinary app immediately handles host.load rejection and closes its host on non-persisted pagehide. Actor-art ownership also keeps native work owned until retirement.",
+    "main(work) stores the returned native promise before its preparation admission promise settles. No rejection handler is installed on that result until the admission .then adopts it.",
+    "The actual createMediaPreparation scheduler normally resolves this admission in the same microtask checkpoint; ordinary rejection and synchronous throw tests produce zero unhandled events.",
+    "A controlled scheduler that delays admission after real native submission exposes a transient unhandled rejection before later handling. Cancellation still returns AbortError, but the unobserved native result also rejects transiently.",
+    "Normalizing exactly once with Promise.resolve(work()), observing result.catch immediately, and still returning that same result preserves primary rejection, cancellation, thenable execution count and late bitmap ownership."
+  ],
+  "classification": {
+    "ownershipGap": "Confirmed in controlled delayed-admission case; originates in upstream code.",
+    "webKitObservedCause": "Unconfirmed. No claim that the cached patch fixes the observed navigation event.",
+    "sharedDemoCausation": "No evidence: the affected module equals upstream and the observation occurred during ordinary-control reload before Demo.",
+    "browserTeardownArtifact": "Plausible, not established by the original receipt."
+  },
+  "proposal": {
+    "source": "game/presentation/host.mjs",
+    "sourceSha256": "b13a7d44a136550fc74bc12fff19555586b4f36143f22b493a599b398b1d0d64",
+    "sourceBytes": 38020,
+    "candidateSha256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+    "patchSha256": "69c61b5034085c50d1e66af8387b780a22fa213e52ae47cd9a603a02f070d1b7",
+    "testSource": "game/test/presentation-host.test.mjs",
+    "testSourceSha256": "84d839f76117711b346277d6359f6f9cbbd78018d800e3ec9cff9239b2cecd6e",
+    "note": "Cached proposal only. Production and active harness are unchanged.",
+    "browserCandidate": ".cache/presentation-promise-ownership/host.browser-candidate.mjs",
+    "productionPatch": "game/presentation/host.mjs:581",
+    "testPatch": "game/test/presentation-host.test.mjs:240",
+    "appliedToProduction": true,
+    "actualHostSha256": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+    "normalization": "Promise.resolve(work()) once; immediate non-throwing rejection observer; original normalized promise retained for result/error adoption."
+  },
+  "verification": {
+    "childMatrix": {
+      "tests": 2,
+      "scenariosPerVariant": 5,
+      "baselineTransientUnhandled": 2,
+      "proposalTransientUnhandled": 0,
+      "results": [
+        "baseline-result.json",
+        "proposal-result.json"
+      ],
+      "actualTAP": "presentation-ownership-isolated-regressions-461ace.tap.txt"
+    },
+    "durableBaseline": {
+      "expectedFailure": "unhandledRejection on delayed native result",
+      "actualTAP": "presentation-ownership-baseline-regression-461ace.tap.txt"
+    },
+    "durableProposal": {
+      "passed": 9,
+      "failed": 0,
+      "newCases": 3,
+      "existingOptionalCases": 6,
+      "actualTAP": "presentation-ownership-cached-regressions-461ace.tap.txt"
+    },
+    "newCases": [
+      "delayed native rejection preserves original error",
+      "delayed native rejection after cancellation preserves AbortError",
+      "thenable decoder assimilated once and bitmap closes once"
+    ],
+    "observations": {
+      "baseline": {
+        "mode": "baseline",
+        "observations": [
+          {
+            "scenario": "real-owner-reject",
+            "earlyUnhandled": 0,
+            "totalUnhandled": 0,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 0
+          },
+          {
+            "scenario": "delayed-owner-reject",
+            "earlyUnhandled": 1,
+            "totalUnhandled": 1,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 0
+          },
+          {
+            "scenario": "delayed-owner-cancel-reject",
+            "earlyUnhandled": 1,
+            "totalUnhandled": 1,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 0
+          },
+          {
+            "scenario": "delayed-owner-cancel-resolve",
+            "earlyUnhandled": 0,
+            "totalUnhandled": 0,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 1
+          },
+          {
+            "scenario": "real-owner-sync-throw",
+            "earlyUnhandled": 0,
+            "totalUnhandled": 0,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 0
+          }
+        ],
+        "unhandledCount": 2,
+        "handledCount": 2
+      },
+      "proposal": {
+        "mode": "proposal",
+        "observations": [
+          {
+            "scenario": "real-owner-reject",
+            "earlyUnhandled": 0,
+            "totalUnhandled": 0,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 0
+          },
+          {
+            "scenario": "delayed-owner-reject",
+            "earlyUnhandled": 0,
+            "totalUnhandled": 0,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 0
+          },
+          {
+            "scenario": "delayed-owner-cancel-reject",
+            "earlyUnhandled": 0,
+            "totalUnhandled": 0,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 0
+          },
+          {
+            "scenario": "delayed-owner-cancel-resolve",
+            "earlyUnhandled": 0,
+            "totalUnhandled": 0,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 1
+          },
+          {
+            "scenario": "real-owner-sync-throw",
+            "earlyUnhandled": 0,
+            "totalUnhandled": 0,
+            "primaryErrorPreserved": true,
+            "reservationBytes": 0,
+            "imageCloses": 0
+          }
+        ],
+        "unhandledCount": 0,
+        "handledCount": 0
+      }
+    },
+    "affectedFullSuites": {
+      "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-concurrency=2 game/test/presentation-host.test.mjs game/test/media-preparation.test.mjs game/test/actor-animation-budget.test.mjs game/test/presentation-host-manifest-pin.test.mjs game/test/presentation-adoption.test.mjs game/test/presentation-readiness.test.mjs game/test/presentation-main-reconciliation.test.mjs game/test/demo-retained-presentation-host.test.mjs game/test/solo-demo-resources-host.test.mjs game/test/presentation-retained-output.test.mjs",
+      "tests": 114,
+      "passed": 113,
+      "failed": 1,
+      "durationMs": 23099.489,
+      "actualTAP": "presentation-ownership-regressions-461ace.tap.txt",
+      "failure": "Unchanged readiness test expected335 catalog slots; actual511. That test does not import presentation/host.mjs. The initial failed receipt is preserved."
+    },
+    "readinessRepair": {
+      "changedFile": "game/test/presentation-readiness.test.mjs",
+      "behavior": "Required/optional totals come from authored ASSET_SLOTS; optional Team identities must exactly match TEAM_RUNTIME_IMAGE_SLOTS; zero missing/produced slots and full reviewed/source coverage remain required.",
+      "inventory": {
+        "total": 511,
+        "required": 194,
+        "optional": 317
+      },
+      "upstreamTestAndCatalogUnchangedBeforeRepair": true,
+      "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test game/test/presentation-readiness.test.mjs",
+      "tests": 5,
+      "passed": 5,
+      "failed": 0,
+      "durationMs": 5863.543667,
+      "actualTAP": "presentation-readiness-inventory-461ace.tap.txt",
+      "interpretation": "The corrected5test readiness suite covers the sole initial failure; the other109 affected cases passed in the original combined run. No claim of a second114test run."
+    },
+    "staticChecks": {
+      "eslint": "pass, zero warnings",
+      "prettier": "pass",
+      "diffCheck": "pass",
+      "files": [
+        "game/presentation/host.mjs",
+        "game/test/presentation-host.test.mjs",
+        "game/test/presentation-readiness.test.mjs"
+      ]
+    }
+  },
+  "runtimeIntegrity": {
+    "productionHostMatchesApprovedCandidate": true,
+    "browsersLaunchedByThisAgentForAudit": 0,
+    "heavyReplayRuns": 0,
+    "harnessEdits": false,
+    "nativeSimulationOrRecordingsChanged": false
+  },
+  "pending": "Parent commit, final browser/packaging checks and a new complete120minute wall-clock soak; prior interrupted26minute run is superseded and receives no endurance credit.",
+  "updated": "2026-10-18T18:57:46.742457+00:00",
+  "browserFollowup": {
+    "baselineReceipt": "webkit-ordinary-reload-repetition-baseline-461ace.json",
+    "candidateReceipt": "webkit-ordinary-reload-candidate-461ace.json",
+    "reportedBy": "snake_adapter",
+    "baseline": {
+      "reloadChecksPassed": 8,
+      "pageerrors": 2,
+      "windowErrorEvents": 0,
+      "windowUnhandledRejectionEvents": 0,
+      "windowRejectionHandledEvents": 0
+    },
+    "candidate": {
+      "reloadChecksPassed": 8,
+      "pageerrors": 3,
+      "windowErrorEvents": 0,
+      "windowUnhandledRejectionEvents": 0,
+      "windowRejectionHandledEvents": 0
+    },
+    "conclusion": "The patch did not eliminate observed WebKit reload pageerrors. Their cause remains unconfirmed and separate from the independently reproduced ownership gap."
+  }
+}

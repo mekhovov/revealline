@@ -4,7 +4,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { ASSET_SLOTS, createDefaultThemeBundle } from '../presentation/catalog.mjs';
+import { TEAM_RUNTIME_IMAGE_SLOTS } from '../presentation/team-runtime-slots.mjs';
 import { resolvePresentation } from '../presentation/model.mjs';
 import { reviseStudioTheme } from '../presentation/studio-session.mjs';
 import { exportThemeBundle, hashPresentationBytes } from '../presentation/bundle.mjs';
@@ -32,15 +33,25 @@ test('readiness accepts declared required revisions and retains optional histori
   const document = declaredFixture(),
     before = structuredClone(document),
     ledger = await exportThemeBundle(document);
-  const result = await checkFieldKitReadiness(ledger);
-  assert.equal(result.requiredReviewed, 194);
-  assert.equal(document.slots.length, 335);
-  assert.equal(
-    document.slots.filter((slot) => slot.id.startsWith('team.') && !slot.required).length,
-    42,
+  const result = await checkFieldKitReadiness(ledger),
+    requiredSlots = ASSET_SLOTS.filter((slot) => slot.required),
+    optionalSlots = ASSET_SLOTS.filter((slot) => !slot.required);
+  assert.equal(result.requiredReviewed, requiredSlots.length);
+  assert.equal(document.slots.length, ASSET_SLOTS.length);
+  assert.deepEqual(
+    optionalSlots
+      .filter((slot) => slot.id.startsWith('team.'))
+      .map((slot) => slot.id)
+      .sort(),
+    [...TEAM_RUNTIME_IMAGE_SLOTS].sort(),
   );
-  assert.equal(result.optionalSlots, 141);
-  assert.deepEqual(result.coverage, { missing: 0, source: 141, produced: 0, reviewed: 194 });
+  assert.equal(result.optionalSlots, optionalSlots.length);
+  assert.deepEqual(result.coverage, {
+    missing: 0,
+    source: optionalSlots.length,
+    produced: 0,
+    reviewed: requiredSlots.length,
+  });
   assert.equal(result.declarationOnly, true);
   assert.match(result.limitation, /no visual acceptance inferred/);
   assert.deepEqual(document, before);

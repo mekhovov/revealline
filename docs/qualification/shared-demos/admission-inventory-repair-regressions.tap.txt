@@ -1,0 +1,435 @@
+TAP version 13
+# Subtest: admission is bound to source, dependencies and policy, not queue metadata
+ok 1 - admission is bound to source, dependencies and policy, not queue metadata
+  ---
+  duration_ms: 1.081167
+  ...
+# Subtest: title, labels, milestone and draft state do not change source admission
+ok 2 - title, labels, milestone and draft state do not change source admission
+  ---
+  duration_ms: 0.37675
+  ...
+# Subtest: only the four canonical values constitute a version-only diff
+ok 3 - only the four canonical values constitute a version-only diff
+  ---
+  duration_ms: 0.515791
+  ...
+# Subtest: ordinary complete inventories retain exact row-count equality at pagination boundaries
+ok 4 - ordinary complete inventories retain exact row-count equality at pagination boundaries
+  ---
+  duration_ms: 18.000208
+  ...
+# Subtest: ordinary inventories preserve both renamed paths and deleted paths
+ok 5 - ordinary inventories preserve both renamed paths and deleted paths
+  ---
+  duration_ms: 0.495583
+  ...
+# Subtest: ordinary incomplete, duplicate, unsafe and malformed inventory responses fail closed
+ok 6 - ordinary incomplete, duplicate, unsafe and malformed inventory responses fail closed
+  ---
+  duration_ms: 0.847375
+  ...
+# Subtest: recursive tree verification matches Git ordering, symlink and gitlink leaves
+ok 7 - recursive tree verification matches Git ordering, symlink and gitlink leaves
+  ---
+  duration_ms: 111.826667
+  ...
+# Subtest: tree completeness is cryptographic, not just a truncated:false assertion
+ok 8 - tree completeness is cryptographic, not just a truncated:false assertion
+  ---
+  duration_ms: 86.064292
+  ...
+# Subtest: large inventories retain rename endpoints without claiming equality with rename-paired rows
+ok 9 - large inventories retain rename endpoints without claiming equality with rename-paired rows
+  ---
+  duration_ms: 442.250292
+  ...
+# Subtest: large inventories cover deletions, file modes, symlinks and gitlinks
+ok 10 - large inventories cover deletions, file modes, symlinks and gitlinks
+  ---
+  duration_ms: 142.468208
+  ...
+# Subtest: large count consistency is exact where rename pairing cannot occur
+ok 11 - large count consistency is exact where rename pairing cannot occur
+  ---
+  duration_ms: 434.305708
+  ...
+# Subtest: large count mismatches outside possible rename pairing fail closed
+ok 12 - large count mismatches outside possible rename pairing fail closed
+  ---
+  duration_ms: 311.602167
+  ...
+# Subtest: merge-base and commit reads are bound to the exact base/head and reject stale metadata
+ok 13 - merge-base and commit reads are bound to the exact base/head and reject stale metadata
+  ---
+  duration_ms: 933.463334
+  ...
+# Subtest: a genuinely diverged PR compares its common ancestor rather than the newer base tip
+ok 14 - a genuinely diverged PR compares its common ancestor rather than the newer base tip
+  ---
+  duration_ms: 215.941084
+  ...
+# Subtest: API failures, truncated trees and invalid inventory counts never return a partial result
+ok 15 - API failures, truncated trees and invalid inventory counts never return a partial result
+  ---
+  duration_ms: 136.13025
+  ...
+# Subtest: preflight retains exact before and after source/dependency binding
+ok 16 - preflight retains exact before and after source/dependency binding
+  ---
+  duration_ms: 19.153125
+  ...
+# Subtest: successful preflight still produces the existing policy-bound receipt and focused plan
+ok 17 - successful preflight still produces the existing policy-bound receipt and focused plan
+  ---
+  duration_ms: 2.144542
+  ...
+# Subtest: a full ordinary page must not conceal undeclared files on its next page
+ok 18 - a full ordinary page must not conceal undeclared files on its next page
+  ---
+  duration_ms: 0.453292
+  ...
+# Subtest: API transport is bounded and rejects failed, malformed and non-UTF8 responses
+ok 19 - API transport is bounded and rejects failed, malformed and non-UTF8 responses
+  ---
+  duration_ms: 14.075334
+  ...
+# Subtest: stream read failures propagate and release owned reader resources
+ok 20 - stream read failures propagate and release owned reader resources
+  ---
+  duration_ms: 0.149041
+  ...
+# Subtest: one-commit large PRs use page-two metadata even when its commits array is empty
+ok 21 - one-commit large PRs use page-two metadata even when its commits array is empty
+  ---
+  duration_ms: 137.406375
+  ...
+# Subtest: every merge-capable action requires a fresh complete admitted snapshot
+ok 22 - every merge-capable action requires a fresh complete admitted snapshot
+  ---
+  duration_ms: 26.773125
+  ...
+# Subtest: a stack-only rejection requires another full snapshot before fallback
+ok 23 - a stack-only rejection requires another full snapshot before fallback
+  ---
+  duration_ms: 2.629709
+  ...
+# Subtest: ordinary merge rejection never retries or switches merge methods
+ok 24 - ordinary merge rejection never retries or switches merge methods
+  ---
+  duration_ms: 1.6355
+  ...
+# Subtest: snapshot reader verifies PR and main bookends and reuses only same-source admission
+ok 25 - snapshot reader verifies PR and main bookends and reuses only same-source admission
+  ---
+  duration_ms: 12.321833
+  ...
+# Subtest: trusted job provenance binds policy skips, admission and only this controller invocation
+ok 26 - trusted job provenance binds policy skips, admission and only this controller invocation
+  ---
+  duration_ms: 1.285
+  ...
+# Subtest: spoofed workflow, app, job and invocation identities never grant exceptions
+ok 27 - spoofed workflow, app, job and invocation identities never grant exceptions
+  ---
+  duration_ms: 5.581875
+  ...
+# Subtest: metadata identities and states are re-read in both budgeted sweeps
+ok 28 - metadata identities and states are re-read in both budgeted sweeps
+  ---
+  duration_ms: 5.320125
+  ...
+# Subtest: conflicting app slugs cannot form a trusted suite/run identity
+ok 29 - conflicting app slugs cannot form a trusted suite/run identity
+  ---
+  duration_ms: 0.204
+  ...
+# Subtest: distinct failed IDs, legacy gates and ambiguous admission stay blocked
+ok 30 - distinct failed IDs, legacy gates and ambiguous admission stay blocked
+  ---
+  duration_ms: 0.736459
+  ...
+# Subtest: job pagination is complete and duplicate current controller names are not exempt
+ok 31 - job pagination is complete and duplicate current controller names are not exempt
+  ---
+  duration_ms: 8.009708
+  ...
+# Subtest: job metadata honors its own 1000-row bound and unsupported context folding fails closed
+ok 32 - job metadata honors its own 1000-row bound and unsupported context folding fails closed
+  ---
+  duration_ms: 14.595792
+  ...
+# Subtest: ambiguous runs, overlapping jobs, foreign metadata and API failures reject inventory
+ok 33 - ambiguous runs, overlapping jobs, foreign metadata and API failures reject inventory
+  ---
+  duration_ms: 3.854667
+  ...
+# Subtest: actual initial and final collectors each sweep all 144 records before an action
+ok 34 - actual initial and final collectors each sweep all 144 records before an action
+  ---
+  duration_ms: 40.197834
+  ...
+# Subtest: HTTP adapter preserves pagination headers, propagates abort and never hides API failure
+ok 35 - HTTP adapter preserves pagination headers, propagates abort and never hides API failure
+  ---
+  duration_ms: 16.931917
+  ...
+# Subtest: complete inventory rereads every page at bounded boundary counts
+ok 36 - complete inventory rereads every page at bounded boundary counts
+  ---
+  duration_ms: 42.500667
+  ...
+# Subtest: inventory rejects oversized, duplicate, incomplete, foreign and malformed rows
+ok 37 - inventory rejects oversized, duplicate, incomplete, foreign and malformed rows
+  ---
+  duration_ms: 11.610042
+  ...
+# Subtest: later-page state or identities cannot change between full sweeps
+ok 38 - later-page state or identities cannot change between full sweeps
+  ---
+  duration_ms: 11.107542
+  ...
+# Subtest: same-name jobs stay distinct and zero-run suites do not become gates
+ok 39 - same-name jobs stay distinct and zero-run suites do not become gates
+  ---
+  duration_ms: 0.659625
+  ...
+# Subtest: legacy contexts use newest-first order, not greatest ID or case
+ok 40 - legacy contexts use newest-first order, not greatest ID or case
+  ---
+  duration_ms: 1.304083
+  ...
+# Subtest: suite and legacy bounds include complete terminal pages
+ok 41 - suite and legacy bounds include complete terminal pages
+  ---
+  duration_ms: 45.6795
+  ...
+# Subtest: legacy mutations and foreign or premature pagination links fail closed
+ok 42 - legacy mutations and foreign or premature pagination links fail closed
+  ---
+  duration_ms: 1.683416
+  ...
+# Subtest: full legacy terminal pages with prev/first headers still require the empty probe
+ok 43 - full legacy terminal pages with prev/first headers still require the empty probe
+  ---
+  duration_ms: 16.238958
+  ...
+# Subtest: suite repositories are required, trusted and included in repeated identity
+ok 44 - suite repositories are required, trusted and included in repeated identity
+  ---
+  duration_ms: 1.117083
+  ...
+# Subtest: legacy short-page next links and counted premature ends remain invalid
+ok 45 - legacy short-page next links and counted premature ends remain invalid
+  ---
+  duration_ms: 4.272667
+  ...
+# Subtest: a timed-out read is aborted and cannot return partial success
+ok 46 - a timed-out read is aborted and cannot return partial success
+  ---
+  duration_ms: 23.48375
+  ...
+# Subtest: GitHub numeric repository pagination is accepted only for the proven same repository
+ok 47 - GitHub numeric repository pagination is accepted only for the proven same repository
+  ---
+  duration_ms: 12.944584
+  ...
+# Subtest: duplicate pagination page parameters never become a trusted next page
+ok 48 - duplicate pagination page parameters never become a trusted next page
+  ---
+  duration_ms: 1.871125
+  ...
+# Subtest: the numeric alias also preserves complete Actions-job pagination and repository bookends
+ok 49 - the numeric alias also preserves complete Actions-job pagination and repository bookends
+  ---
+  duration_ms: 5.968291
+  ...
+# Subtest: inventory fails closed on API, request budget and elapsed budget
+ok 50 - inventory fails closed on API, request budget and elapsed budget
+  ---
+  duration_ms: 0.942625
+  ...
+# Subtest: merges an admitted clean exact head through branch protection
+ok 51 - merges an admitted clean exact head through branch protection
+  ---
+  duration_ms: 0.519208
+  ...
+# Subtest: pending and failed exact-head checks block a merge even when GitHub calls it unstable
+ok 52 - pending and failed exact-head checks block a merge even when GitHub calls it unstable
+  ---
+  duration_ms: 0.3
+  ...
+# Subtest: only policy-selected source jobs may be skipped without claiming a pass
+ok 53 - only policy-selected source jobs may be skipped without claiming a pass
+  ---
+  duration_ms: 0.169542
+  ...
+# Subtest: all distinct attempts gate and only a provenance-bound own controller is excluded
+ok 54 - all distinct attempts gate and only a provenance-bound own controller is excluded
+  ---
+  duration_ms: 0.266834
+  ...
+# Subtest: a truncated exact-head check inventory fails closed
+ok 55 - a truncated exact-head check inventory fails closed
+  ---
+  duration_ms: 0.0745
+  ...
+# Subtest: pending protected hooks arm auto-merge for the exact head
+ok 56 - pending protected hooks arm auto-merge for the exact head
+  ---
+  duration_ms: 0.057541
+  ...
+# Subtest: unknown mergeability never inherits a stale clean-state permission
+ok 57 - unknown mergeability never inherits a stale clean-state permission
+  ---
+  duration_ms: 8.510125
+  ...
+# Subtest: updates a behind conflict-free branch before auto-merge
+ok 58 - updates a behind conflict-free branch before auto-merge
+  ---
+  duration_ms: 0.152167
+  ...
+# Subtest: changed heads invalidate admission and disarm an existing request
+ok 59 - changed heads invalidate admission and disarm an existing request
+  ---
+  duration_ms: 0.083792
+  ...
+# Subtest: a failed required rerun disarms an already admitted exact head
+ok 60 - a failed required rerun disarms an already admitted exact head
+  ---
+  duration_ms: 0.046417
+  ...
+# Subtest: missing or stale admission receipts disarm even a successful exact head
+ok 61 - missing or stale admission receipts disarm even a successful exact head
+  ---
+  duration_ms: 0.064458
+  ...
+# Subtest: draft and closed PRs fail closed and disarm existing auto-merge
+ok 62 - draft and closed PRs fail closed and disarm existing auto-merge
+  ---
+  duration_ms: 0.054084
+  ...
+# Subtest: labels, milestones and review state do not change exact-head admission
+ok 63 - labels, milestones and review state do not change exact-head admission
+  ---
+  duration_ms: 0.079709
+  ...
+# Subtest: actual receipt verification retains trusted policy, provenance and complete-path gates
+ok 64 - actual receipt verification retains trusted policy, provenance and complete-path gates
+  ---
+  duration_ms: 358.579167
+  ...
+# Subtest: only the exact reviewed source, complete policy and actual changed paths are approved
+ok 65 - only the exact reviewed source, complete policy and actual changed paths are approved
+  ---
+  duration_ms: 2.240083
+  ...
+# Subtest: manual stack workflow exception is confined to its immutable reviewed identity
+ok 66 - manual stack workflow exception is confined to its immutable reviewed identity
+  ---
+  duration_ms: 1.201333
+  ...
+# Subtest: approval inventory is strict, unique and cannot come from candidate input
+ok 67 - approval inventory is strict, unique and cannot come from candidate input
+  ---
+  duration_ms: 0.473459
+  ...
+# Subtest: main freshness requires exact valid checkout and live branch identities
+ok 68 - main freshness requires exact valid checkout and live branch identities
+  ---
+  duration_ms: 0.140291
+  ...
+# Subtest: final mutation snapshot rechecks exact approval identities, main, checks and dependencies
+ok 69 - final mutation snapshot rechecks exact approval identities, main, checks and dependencies
+  ---
+  duration_ms: 2.137292
+  ...
+# Subtest: declared dependencies must already be merged
+ok 70 - declared dependencies must already be merged
+  ---
+  duration_ms: 0.171417
+  ...
+# Subtest: only explicitly labeled GitHub stacks use the asynchronous merge endpoint
+ok 71 - only explicitly labeled GitHub stacks use the asynchronous merge endpoint
+  ---
+  duration_ms: 0.129
+  ...
+# Subtest: stacked merge payload and polling results remain exact and fail closed
+ok 72 - stacked merge payload and polling results remain exact and fail closed
+  ---
+  duration_ms: 0.216125
+  ...
+# Subtest: only GitHub's stack-only endpoint rejection switches merge APIs
+ok 73 - only GitHub's stack-only endpoint rejection switches merge APIs
+  ---
+  duration_ms: 0.055916
+  ...
+# Subtest: a controller-owned merge dispatches the rolling Pages workflow from main
+ok 74 - a controller-owned merge dispatches the rolling Pages workflow from main
+  ---
+  duration_ms: 0.034666
+  ...
+# Subtest: dependency references are explicit and deduplicated by the caller
+ok 75 - dependency references are explicit and deduplicated by the caller
+  ---
+  duration_ms: 0.043333
+  ...
+# Subtest: the privileged workflow is a safe no-op until the trusted controller reaches main
+ok 76 - the privileged workflow is a safe no-op until the trusted controller reaches main
+  ---
+  duration_ms: 0.337
+  ...
+# Subtest: pull-request admission workflows do not require GitHub Pages
+ok 77 - pull-request admission workflows do not require GitHub Pages
+  ---
+  duration_ms: 155.563208
+  ...
+# Subtest: the optional Pages publisher cannot run for a pull request
+ok 78 - the optional Pages publisher cannot run for a pull request
+  ---
+  duration_ms: 1.077292
+  ...
+# Subtest: the required exact-head source gate remains independent of hosted deployment
+ok 79 - the required exact-head source gate remains independent of hosted deployment
+  ---
+  duration_ms: 3.464042
+  ...
+# Subtest: auto-merge wakes from PR validation, never hosted deployment
+ok 80 - auto-merge wakes from PR validation, never hosted deployment
+  ---
+  duration_ms: 0.80975
+  ...
+# Subtest: the package interface exposes no Pages build command
+ok 81 - the package interface exposes no Pages build command
+  ---
+  duration_ms: 1.167666
+  ...
+# Subtest: the retired Pages playbook cannot prescribe a deployment path
+ok 82 - the retired Pages playbook cannot prescribe a deployment path
+  ---
+  duration_ms: 2.099042
+  ...
+# Subtest: optional practice integrates the event workflow source while company admission retains the PR head
+ok 83 - optional practice integrates the event workflow source while company admission retains the PR head
+  ---
+  duration_ms: 2.118125
+  ...
+# Subtest: focused matrix retains trusted automation, two workers per host, limits and failure evidence
+ok 84 - focused matrix retains trusted automation, two workers per host, limits and failure evidence
+  ---
+  duration_ms: 4.997708
+  ...
+# Subtest: aggregate preserves the required focused status and rejects any nonsuccess matrix result
+ok 85 - aggregate preserves the required focused status and rejects any nonsuccess matrix result
+  ---
+  duration_ms: 458.985708
+  ...
+1..85
+# tests 85
+# suites 0
+# pass 85
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3089.902792

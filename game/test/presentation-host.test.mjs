@@ -237,6 +237,112 @@ test('cancellation racing native submission cannot orphan the late optional bitm
   assert.equal(e.urls.length, 0);
 });
 
+for (const cancel of [false, true])
+  test(`a rejected optional codec is owned before delayed admission settles${cancel ? ' after cancellation' : ''}`, async (t) => {
+    const actual = createMediaPreparation(),
+      document = {},
+      controller = new AbortController(),
+      failure = new Error('Native artwork decoding failed.');
+    let submission = 0,
+      rejectCodec,
+      releaseAdmission,
+      announce;
+    const began = new Promise((resolve) => {
+        announce = resolve;
+      }),
+      admission = new Promise((resolve) => {
+        releaseAdmission = resolve;
+      });
+    const e = environment(await fixture(), {
+      document,
+      preparation: {
+        run(kind, work, options) {
+          let submittedCodec = false;
+          return actual
+            .run(
+              kind,
+              () => {
+                const prior = submission,
+                  value = work();
+                submittedCodec = submission !== prior;
+                return value;
+              },
+              options,
+            )
+            .then(async (value) => {
+              if (submittedCodec) {
+                announce();
+                await admission;
+              }
+              return value;
+            });
+        },
+      },
+      decodeImage: () => {
+        submission++;
+        return new Promise((_, reject) => {
+          rejectCodec = reject;
+        });
+      },
+    });
+    let rejected;
+    t.after(async () => {
+      releaseAdmission();
+      await rejected;
+      e.host.close();
+      actual.close();
+    });
+    rejected = assert.rejects(e.host.load({ signal: controller.signal }), (error) =>
+      cancel ? error.name === 'AbortError' : error === failure,
+    );
+    await began;
+    assert.equal(actual.snapshot().active.main, 0, 'native work does not retain JS admission');
+    if (cancel) controller.abort();
+    rejectCodec(failure);
+    // A complete turn detects an unowned native rejection before the deliberately
+    // delayed admission promise is allowed to adopt it. The primary load still fails.
+    await tick();
+    releaseAdmission();
+    await rejected;
+    await tick();
+    assert.equal(pageActorArtPool(document).stats().reservedBytes, 0);
+    assert.equal(e.host.current(), null);
+    assert.equal(e.urls.length, 0);
+  });
+
+test('optional codec thenables are assimilated once and retain their bitmap owner', async (t) => {
+  const preparation = createMediaPreparation(),
+    image = {
+      width: 32,
+      height: 32,
+      closes: 0,
+      close() {
+        this.closes++;
+      },
+    };
+  let calls = 0;
+  const e = environment(await fixture(), {
+    preparation,
+    document: {},
+    decodeImage: () => ({
+      then(resolve) {
+        calls++;
+        resolve(image);
+      },
+    }),
+  });
+  t.after(() => {
+    e.host.close();
+    preparation.close();
+  });
+  const accepted = await e.host.load();
+  assert.equal(calls, 1);
+  assert.equal(accepted.image('player.scout.compact').image, image);
+  assert.equal(image.closes, 0);
+  e.host.close();
+  assert.equal(image.closes, 1);
+});
+
 test('optional crop completion cannot submit a canvas encoding after play begins', async (t) => {
   const f = await fixture(),
     manifest = structuredClone(f.manifest),
