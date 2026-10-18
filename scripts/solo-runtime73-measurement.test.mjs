@@ -48,3 +48,5 @@ import './test-solo-797e03-correctness.mjs';
 import './test-solo-final-lifecycle-admission.mjs';
 import './test-solo-final-soak-admission.mjs';
 import './test-solo-remote-timing.mjs';
+// Complete Demo observer repair and immutable executed-input controls.
+import './test-solo-demo-797e03-tooling-admission.mjs';

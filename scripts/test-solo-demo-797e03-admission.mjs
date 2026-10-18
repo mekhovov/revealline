@@ -5,10 +5,56 @@ import { createHash } from 'node:crypto';
 import { parse } from 'acorn';
 import { validateDemoPlan, prepareDemoMode, DEMO_ARMS } from './solo-remote-demo.mjs';
 const read = (path) => readFile(new URL('../' + path, import.meta.url));
+
+// Test-only original source witness. Production admission always hashes current bytes.
+const historyPath = 'docs/performance/fixtures/solo-demo-797e03/ee9-observer-source.json';
+function originalObserver(bytes) {
+  assert.equal(bytes.length, 39865);
+  assert.equal(
+    createHash('sha256').update(bytes).digest('hex'),
+    '2061dcc83c49d0157691f3dacece73c47da0d70ae37b27d2e27f40c93c2c9605',
+  );
+  const value = JSON.parse(bytes);
+  assert.equal(value.format, 'SoloDemoObserverHistoricalSourceV1');
+  assert.equal(value.revision, 'ee9ece54bc9f484bc4179a20f8fd915d7933680b');
+  assert.equal(value.tree, 'a449f7425a95ef867dd0b695f819d9e2c9a1cef2');
+  const original = Buffer.from(value.observerSource);
+  const ref = value.records.find((item) => item.path === 'scripts/observe-solo-demo-recovery.mjs');
+  assert.equal(original.length, ref.bytes);
+  assert.equal(createHash('sha256').update(original).digest('hex'), ref.sha256);
+  assert.equal(
+    createHash('sha1')
+      .update(Buffer.from('blob ' + original.length + '\0'))
+      .update(original)
+      .digest('hex'),
+    ref.blob,
+  );
+  return { source: original, records: value.records };
+}
+const historyBytes = await read(historyPath);
+const original = originalObserver(historyBytes);
+function assertHistoricalDeclaration(path, bytes) {
+  const ref = original.records.find((item) => item.path === path);
+  assert(ref, path);
+  assert.equal(bytes.length, ref.bytes, path);
+  assert.equal(createHash('sha256').update(bytes).digest('hex'), ref.sha256, path);
+  assert.equal(
+    createHash('sha1')
+      .update(Buffer.from('blob ' + bytes.length + '\0'))
+      .update(bytes)
+      .digest('hex'),
+    ref.blob,
+    path,
+  );
+}
+
 const plans = await Promise.all(
-  ['recovery', 'resources'].map(async (mode) =>
-    JSON.parse(await read('docs/performance/solo-demo-' + mode + '-797e03-plan.json')),
-  ),
+  ['recovery', 'resources'].map(async (mode) => {
+    const path = 'docs/performance/solo-demo-' + mode + '-797e03-plan.json';
+    const bytes = await read(path);
+    assertHistoricalDeclaration(path, bytes);
+    return JSON.parse(bytes);
+  }),
 );
 // Scoped correctness only; raw numerical and portability failures remain retained.
 const firstEightOutcome = JSON.parse(
@@ -205,11 +251,27 @@ test('changed driver bytes reject before display/browser effects', async () => {
     assert.equal(effects, 0);
   }
 });
-test('all declared observer source references are exact current candidate bytes', async () => {
+test('historical declarations retain exact original observer bytes and other current inputs', async () => {
   for (const p of plans)
     for (const ref of p.adapterInputs) {
-      const b = await read(ref.path);
+      const b =
+        ref.path === 'scripts/observe-solo-demo-recovery.mjs'
+          ? original.source
+          : await read(ref.path);
       assert.equal(b.length, ref.bytes);
       assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256);
     }
+});
+test('historical witness and declaration mutations cannot supply current-tool authority', async () => {
+  const changed = Buffer.from(historyBytes);
+  changed[changed.length - 1] ^= 1;
+  assert.throws(() => originalObserver(changed));
+  for (const mode of ['recovery', 'resources']) {
+    const path = 'docs/performance/solo-demo-' + mode + '-797e03-plan.json';
+    const changedPlan = JSON.parse(await read(path));
+    changedPlan.demo.driver.sha256 = '0'.repeat(64);
+    assert.throws(() =>
+      assertHistoricalDeclaration(path, Buffer.from(JSON.stringify(changedPlan))),
+    );
+  }
 });
