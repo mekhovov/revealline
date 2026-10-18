@@ -1511,7 +1511,7 @@
     /* Ignore damaged local data. */
   }
   const studio = doc.currentScript?.dataset.themeDensity === 'studio';
-  const large = display?.textSize === 'large';
+  const large = display?.textSize === 'large' || display?.textSize === 'extra-large';
   const plain = display?.textFace === 'plain';
   let coarse = false,
     reduced = display?.reducedEffects === true;

@@ -682,3 +682,15 @@ test('Theater adopts global remains without rewriting recordings or advancing a 
   assert.deepEqual(p.writes, []);
   noPlayerAccess(p);
 });
+
+test('Theater preserves desired extra-large while keeping recorded bytes and playback unchanged', async (t) => {
+  const p = fixture(t, { stored: encode({ textSize: 'extra-large' }) });
+  await p.loading;
+  const before = JSON.stringify(p.original);
+  assert.equal(p.$('replay-text-size').value, 'extra-large');
+  assert.equal(p.$('replay-text-size').querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(p.doc.body.dataset.textSize, 'large');
+  p.change('replay-text-face', 'plain');
+  assert.equal(JSON.parse(p.data.get(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
+  assert.equal(JSON.stringify(p.original), before);
+});

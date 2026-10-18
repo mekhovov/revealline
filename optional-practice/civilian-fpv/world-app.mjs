@@ -1636,7 +1636,7 @@ export function mountWorldApp({
   listeners.push(
     displayPreferences.subscribe((state) => {
       doc.body.dataset.textFace = state.textFace;
-      doc.body.dataset.textSize = state.textSize;
+      doc.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
       doc.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
       $('sim-text-face').value = state.textFace;
       $('sim-motion').value = state.reducedEffects ? 'reduced' : 'system';

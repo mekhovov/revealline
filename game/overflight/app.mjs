@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { OVERFLIGHT_BATTLEFIELDS } from './battlefields.mjs';
 import { updateOverflightSurvivalHUD } from './survival-hud.mjs';
 import { createOverflightRecords } from './records.mjs';
@@ -2187,9 +2188,9 @@ cleanup.push(onLocaleChange(refreshCopy));
 cleanup.push(
   display.subscribe((value) => {
     $('text-face').value = value.textFace;
-    $('text-size').value = value.textSize;
+    renderTextSizeControl($('text-size'), value.textSize);
     $('reduced-effects').checked = value.reducedEffects;
-    doc.body.dataset.textSize = value.textSize;
+    doc.body.dataset.textSize = value.effectiveTextSize ?? value.textSize;
     doc.body.dataset.textFace = value.textFace;
     doc.body.dataset.effects = value.effectiveReducedEffects ? 'reduced' : 'full';
     if (appearance) appearance.reducedEffects = value.effectiveReducedEffects;
