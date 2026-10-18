@@ -58,6 +58,8 @@ const sourceFiles = [
     'advanced-aircraft-runtime',
     'advanced-simulation',
     'aircraft-archive-verifier',
+    'advanced-ghost-path',
+    'aircraft-physics',
     'aircraft-terrain',
     'flight-sectors',
   ].map((name) => `optional-practice/civilian-fpv/${name}.mjs`),
