@@ -1,4 +1,4 @@
-/* global document, location, getComputedStyle */
+/* global document, location, getComputedStyle, window, MutationObserver */
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
@@ -101,6 +101,177 @@ export function encodePagesReport(value, password, maximum = 262144) {
   assert(Buffer.byteLength(result) <= maximum, 'Pages smoke report byte cap');
   return result;
 }
+// Passive public evidence only. No input, storage, timing qualification or
+// application callbacks are changed. Mutation delivery timestamps are not RAF
+// timestamps; several attribute changes may be delivered in one callback.
+export function installPagesLifecycleObserver() {
+  if (window.top !== window || Object.hasOwn(globalThis, '__revealLinePagesLifecycle')) return;
+  const first = [],
+    tail = [];
+  let firstStart = null,
+    firstPause = null,
+    total = 0,
+    omitted = 0,
+    lastAt = 0,
+    body = null,
+    observer = null;
+  const label = (value) =>
+    value === null || value === undefined
+      ? null
+      : typeof value === 'string' && value.length <= 64
+        ? value
+        : '[over-limit public label]';
+  const state = () => ({
+    hidden: document.hidden,
+    focused: document.hasFocus(),
+    visibility: document.visibilityState,
+    flightState: label(document.body?.dataset.flightState),
+  });
+  const add = (kind, detail = {}) => {
+    const atMs = performance.now();
+    const event = { sequence: ++total, atMs, kind, ...state(), ...detail };
+    if (!Number.isFinite(atMs) || atMs < lastAt) event.clockInvalid = true;
+    lastAt = atMs;
+    // Reserve two slots for the first started/paused labels even when a
+    // long preparation produces many earlier lifecycle events.
+    if (kind === 'flight-state' && detail.to === 'running' && !firstStart) firstStart = event;
+    else if (
+      kind === 'flight-state' &&
+      detail.from === 'running' &&
+      detail.to === 'paused' &&
+      !firstPause
+    )
+      firstPause = event;
+    else if (first.length < 14) first.push(event);
+    else {
+      if (tail.length === 48) {
+        tail.shift();
+        omitted++;
+      }
+      tail.push(event);
+    }
+  };
+  const attach = () => {
+    if (!document.body || body) return;
+    body = document.body;
+    add('body-observed');
+    observer = new MutationObserver((records) => {
+      const changes = records.filter(
+        (item) => item.target === body && item.attributeName === 'data-flight-state',
+      );
+      for (let i = 0; i < changes.length; i++) {
+        const from = changes[i].oldValue;
+        const to =
+          i + 1 < changes.length ? changes[i + 1].oldValue : body.getAttribute('data-flight-state');
+        if (from !== to)
+          add('flight-state', {
+            from: label(from),
+            to: label(to),
+            delivery: 'mutation-observer',
+          });
+      }
+    });
+    observer.observe(body, {
+      attributes: true,
+      attributeFilter: ['data-flight-state'],
+      attributeOldValue: true,
+    });
+  };
+  for (const kind of ['focus', 'blur', 'pageshow', 'pagehide'])
+    window.addEventListener(
+      kind,
+      (event) => {
+        // Element focus does not establish a window lifecycle interruption.
+        if (event.target !== window) return;
+        add(kind, {
+          ...(['pageshow', 'pagehide'].includes(kind)
+            ? { persisted: event.persisted === true }
+            : {}),
+        });
+      },
+      { passive: true },
+    );
+  document.addEventListener('visibilitychange', () => add('visibilitychange'), { passive: true });
+  document.addEventListener('DOMContentLoaded', attach, { once: true });
+  Object.defineProperty(globalThis, '__revealLinePagesLifecycle', {
+    value: Object.freeze({
+      read() {
+        return {
+          format: 'PagesPublicLifecycleV1',
+          timeBasis: 'document-performance.now',
+          timeOrigin: performance.timeOrigin,
+          total,
+          omitted,
+          overflow: omitted > 0,
+          retained: [...first, firstStart, firstPause, ...tail]
+            .filter(Boolean)
+            .sort((a, b) => a.sequence - b.sequence),
+          limitations: [
+            'Attribute transitions are public labels, not private run state.',
+            'Mutation timestamps describe observer delivery, not exact transition time.',
+            'Events after the final read and retiring-document delivery are unobserved.',
+          ],
+        };
+      },
+    }),
+  });
+  add('installed');
+  attach();
+}
+export function readPagesDiagnosticState() {
+  const text = (id) => {
+    const value = (document.getElementById(id)?.textContent ?? '').trim();
+    // Never return a secret prefix created by truncating before host redaction.
+    return value.length <= 1024 ? value : '[public text exceeds 1024 characters]';
+  };
+  return {
+    hidden: document.hidden,
+    focused: document.hasFocus(),
+    visibility: document.visibilityState,
+    flightState: document.body?.dataset.flightState ?? null,
+    runMessage: text('run-message'),
+    runMessageCue: (() => {
+      const value = document.getElementById('run-message')?.dataset.cue ?? null;
+      return value === null || value.length <= 64 ? value : '[over-limit public label]';
+    })(),
+    preparation: text('flight-preparation-status'),
+    presentation: text('presentation-preparation-status'),
+    lifecycle: globalThis.__revealLinePagesLifecycle?.read() ?? null,
+  };
+}
+export async function retainPagesPublicEvidence(
+  observers,
+  password,
+  timeoutMs = 5000,
+  isCurrent = () => true,
+) {
+  assert(timeoutMs > 0 && timeoutMs <= 5000, 'Public evidence cleanup budget');
+  let timer,
+    expired = false;
+  try {
+    await Promise.race([
+      (async () => {
+        for (const observer of observers) {
+          assert(!expired && isCurrent(), 'Public evidence read deadline');
+          if (observer.page.isClosed()) continue;
+          await observer.capturePublic({ isCurrent: () => !expired && isCurrent() });
+        }
+      })(),
+      new Promise((_, reject) => {
+        timer = setTimeout(() => {
+          expired = true;
+          reject(new Error('Public evidence read deadline'));
+        }, timeoutMs);
+      }),
+    ]);
+    return null;
+  } catch (error) {
+    return redactPagesText(error?.message ?? error, password);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export function createPagesDiagnostics(page, password, maximum = 128) {
   const result = { events: [], total: 0, overflow: false };
   const add = (event) => {
@@ -115,9 +286,24 @@ export function createPagesDiagnostics(page, password, maximum = 128) {
     pageerror: (error) =>
       add({ kind: 'pageerror', message: redactPagesText(error?.message, password, 1024) }),
     console: (message) => {
-      if (['error', 'warning'].includes(message.type()))
-        // Console arguments/text can contain arbitrary user state; retain only the type.
-        add({ kind: 'console', type: message.type() });
+      if (['error', 'warning'].includes(message.type())) {
+        try {
+          // Read only Playwright's text string, never argument objects/handles.
+          // Redaction precedes the byte-independent character cap.
+          add({
+            kind: 'console',
+            type: message.type(),
+            message: redactPagesText(message.text(), password, 1024),
+          });
+        } catch {
+          add({
+            kind: 'console',
+            type: message.type(),
+            message: '[console text unavailable]',
+            textReadFailure: true,
+          });
+        }
+      }
     },
     requestfailed: (request) =>
       add({
@@ -137,7 +323,24 @@ export function createPagesDiagnostics(page, password, maximum = 128) {
   };
   for (const [name, handler] of Object.entries(handlers)) page.on(name, handler);
   return {
+    page,
     result,
+    async capturePublic({ isCurrent = () => true } = {}) {
+      assert(isCurrent(), 'Public evidence read deadline');
+      const value = await page.evaluate(readPagesDiagnosticState);
+      assert(isCurrent(), 'Public evidence read deadline');
+      result.publicEvidence = JSON.parse(encodePagesReport(value, password, 32768));
+      const lifecycle = value?.lifecycle;
+      assert(lifecycle?.format === 'PagesPublicLifecycleV1', 'Public lifecycle observer missing');
+      assert(
+        lifecycle.omitted === 0 && lifecycle.overflow === false,
+        'Public lifecycle evidence overflow',
+      );
+      assert(
+        !lifecycle.retained.some((event) => event.clockInvalid),
+        'Public lifecycle clock invalid',
+      );
+    },
     detach() {
       for (const [name, handler] of Object.entries(handlers)) page.off(name, handler);
     },
@@ -253,6 +456,10 @@ export function readPagesPublicState() {
         element.getClientRects().length,
     );
   const text = (id) => (document.getElementById(id)?.textContent ?? '').trim().slice(0, 256);
+  const boundedDiagnosticText = (id) => {
+    const value = (document.getElementById(id)?.textContent ?? '').trim();
+    return value.length <= 1024 ? value : '[public text exceeds 1024 characters]';
+  };
   const control = (id) => {
     const element = document.getElementById(id);
     return {
@@ -292,6 +499,9 @@ export function readPagesPublicState() {
     bootHidden: document.getElementById('boot-screen')?.hidden === true,
     access: document.documentElement.dataset.accessState,
     flightState: document.body.dataset.flightState,
+    runMessage: boundedDiagnosticText('run-message'),
+    preparation: boundedDiagnosticText('flight-preparation-status'),
+    presentation: boundedDiagnosticText('presentation-preparation-status'),
     time: text('time'),
     lives: text('lives'),
     coverage: text('coverage'),
@@ -555,6 +765,9 @@ export async function observePagesSmoke({
       }),
     );
     report.cleanup.context = 'pending';
+    await budget.step('passive public lifecycle observer', () =>
+      context.addInitScript(installPagesLifecycleObserver),
+    );
     assert.equal(context.pages().length, 0, 'Fresh context unexpectedly contains a page');
     const page = await budget.step('new Solo page', () => context.newPage());
     assert.deepEqual(context.pages(), [page], 'Solo page ownership is ambiguous');
@@ -608,6 +821,26 @@ export async function observePagesSmoke({
     await soloFlows(page, budget, report.solo);
     report.stages.push(...plan.flows.slice(0, 3));
     await retain();
+    await budget.step(
+      'retain Solo public evidence',
+      async (timeout) => {
+        const failure = await retainPagesPublicEvidence(
+          [diagnostic],
+          password,
+          Math.min(5000, timeout),
+          () => {
+            try {
+              budget.remaining();
+              return true;
+            } catch {
+              return false;
+            }
+          },
+        );
+        assert.equal(failure, null, failure ?? 'Public evidence incomplete');
+      },
+      5000,
+    );
     await budget.step('close Solo page', () => page.close());
     assert.equal(context.pages().length, 0, 'Solo page did not close');
     const sharedPage = await budget.step('new shared-route page', () => context.newPage());
@@ -648,6 +881,13 @@ export async function observePagesSmoke({
   } catch (error) {
     report.failure = redactPagesText(error?.message ?? error, password);
   } finally {
+    // Flow 570s + final public read 5s + two cleanup slots 10s each remains
+    // inside the unchanged 600s owned child. Failure never authorizes more actions.
+    const evidenceFailure = await retainPagesPublicEvidence(observers, password);
+    if (evidenceFailure) {
+      report.publicEvidenceFailure = evidenceFailure;
+      report.failure ??= 'Public evidence incomplete';
+    }
     if (context) await cleanup('context', () => context.close());
     if (browser) await cleanup('browser', () => browser.close());
     for (const observer of observers) observer.detach();

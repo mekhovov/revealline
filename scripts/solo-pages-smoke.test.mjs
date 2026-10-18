@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
+import { runInNewContext } from 'node:vm';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import { mkdtemp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
@@ -17,6 +18,9 @@ import {
   encodePagesReport,
   safePagesURL,
   createPagesDiagnostics,
+  installPagesLifecycleObserver,
+  readPagesDiagnosticState,
+  retainPagesPublicEvidence,
   pagesBudget,
   readPagesBinding,
   observePagesSmoke,
@@ -139,8 +143,9 @@ test('diagnostics retain bounded redacted failures and never serialize console a
   page.emit('pageerror', new Error('Call log ' + secret));
   page.emit('console', {
     type: () => 'error',
-    text: () => {
-      throw new Error('must not read console values');
+    text: () => 'safe diagnostic ' + secret,
+    args: () => {
+      throw new Error('must not inspect console argument objects');
     },
   });
   page.emit('requestfailed', {
@@ -240,7 +245,12 @@ test('global operation deadline cannot renew or authorize later work', async () 
 function browserModel(options = {}) {
   const calls = [];
   const pages = [];
+  let releaseEarly = null;
   const context = {
+    async addInitScript(callback) {
+      assert.equal(callback, installPagesLifecycleObserver);
+      calls.push('passive-init');
+    },
     pages: () =>
       options.extraPage
         ? [new EventEmitter(), ...pages.filter((p) => !p.closed)]
@@ -249,6 +259,40 @@ function browserModel(options = {}) {
       const page = new EventEmitter();
       let pageURL = '';
       page.url = () => pageURL;
+      page.isClosed = () => Boolean(page.closed);
+      page.evaluate = async (callback) => {
+        assert.equal(callback, readPagesDiagnosticState);
+        calls.push('public-evidence');
+        if (options.evidenceFailure) throw new Error('evidence failed ' + secret);
+        const value = {
+          flightState: options.soloFailure ? 'paused' : 'briefing',
+          runMessage: 'warning ' + secret,
+          lifecycle: options.missingLifecycle
+            ? null
+            : {
+                format: 'PagesPublicLifecycleV1',
+                timeBasis: 'document-performance.now',
+                timeOrigin: 1000,
+                total: 2,
+                omitted: options.evidenceOverflow ? 1 : 0,
+                overflow: options.evidenceOverflow === true,
+                retained: [
+                  {
+                    sequence: 1,
+                    atMs: 0,
+                    kind: 'installed',
+                    clockInvalid: options.evidenceClockInvalid === true,
+                  },
+                ],
+              },
+        };
+        if (options.earlyEvidenceLate && !releaseEarly) {
+          return new Promise((resolve) => {
+            releaseEarly = () => resolve({ ...value, runMessage: 'late earlier observation' });
+          });
+        }
+        return value;
+      };
       page.goto = async (url) => {
         pageURL = options.redirect ? 'https://example.org/game/' : url;
         calls.push('goto');
@@ -295,6 +339,7 @@ function browserModel(options = {}) {
   return {
     calls,
     pages,
+    releaseEarly: () => releaseEarly?.(),
     browserType: {
       async launch(settings) {
         assert.equal(settings.env.REVEALLINE_PAGES_TEST_PASSWORD, undefined);
@@ -308,7 +353,8 @@ function browserModel(options = {}) {
 async function observeModel(options = {}) {
   const model = browserModel(options);
   const retained = [];
-  let bindings = 0;
+  let bindings = 0,
+    clock = 0;
   let soloCalls = 0,
     sharedCalls = 0;
   const report = await observePagesSmoke({
@@ -316,6 +362,7 @@ async function observeModel(options = {}) {
     engine: options.engine ?? 'chromium',
     password: secret,
     browserType: model.browserType,
+    ...(options.earlyEvidenceLate ? { now: () => clock } : {}),
     checkpoint: async (value) => retained.push(value),
     binding: async () => {
       bindings++;
@@ -325,6 +372,7 @@ async function observeModel(options = {}) {
     },
     soloFlows: async () => {
       soloCalls++;
+      if (options.earlyEvidenceLate) clock = 569999;
       if (options.soloFailure) throw new Error('public flow failed ' + secret);
     },
     sharedFlows: async ({ record, deadline, now }) => {
@@ -491,8 +539,9 @@ function soloPageModel(options = {}) {
           calls.push(selector);
           if (selector === '#shell-featured') {
             controls['shell-home'].open = false;
-            state.flightState = 'running';
-            controls['start-button'].visible = false;
+            state.flightState = options.directStartPaused ? 'paused' : 'running';
+            controls['start-button'].visible = options.directStartPaused === true;
+            if (options.directStartPaused) state.runMessage = 'Paused after a long frame';
           } else if (selector === '#shell-play') {
             controls['shell-home'].open = false;
             controls['journey-chooser'] = { visible: true, enabled: true, open: true };
@@ -759,14 +808,12 @@ test('fixed workflow separates PR source checks from secret-bearing main-only br
   assert(!browser.includes('trace.zip'));
   assert(browser.includes('failure-envelope.json'));
   const source = await readFile(new URL('./solo-pages-smoke.mjs', import.meta.url), 'utf8');
-  for (const forbidden of [
-    'storageState:',
-    'addInitScript(',
-    '.route(',
-    'tracing.start(',
-    'recordVideo:',
-  ])
+  for (const forbidden of ['storageState:', '.route(', 'tracing.start(', 'recordVideo:'])
     assert(!source.includes(forbidden));
+  assert.equal((source.match(/\.addInitScript\(/g) ?? []).length, 1);
+  assert(source.includes('context.addInitScript(installPagesLifecycleObserver)'));
+  assert(!installPagesLifecycleObserver.toString().includes('setTimeout'));
+  assert(!installPagesLifecycleObserver.toString().includes('requestAnimationFrame'));
 });
 
 test('both exact jobs contain the actual Linux owner import and direct-read closure', async () => {
@@ -847,4 +894,302 @@ test('both exact jobs contain the actual Linux owner import and direct-read clos
       /dependencies/,
     );
   }
+});
+
+function lifecycleModel({ bodyInitially = true } = {}) {
+  const win = new EventEmitter(),
+    doc = new EventEmitter();
+  const body = {
+    dataset: { flightState: 'briefing' },
+    getAttribute: (name) => (name === 'data-flight-state' ? body.dataset.flightState : null),
+  };
+  const nodes = new Map([
+    [
+      'run-message',
+      { textContent: 'Paused after a long frame', dataset: { cue: 'paused-resume' } },
+    ],
+    ['flight-preparation-status', { textContent: '', dataset: {} }],
+    ['presentation-preparation-status', { textContent: 'Ready', dataset: {} }],
+  ]);
+  let now = 0,
+    mutation,
+    observations = 0;
+  win.top = win;
+  win.addEventListener = (name, handler) => win.on(name, handler);
+  doc.addEventListener = (name, handler) => doc.on(name, handler);
+  doc.hidden = false;
+  doc.visibilityState = 'visible';
+  doc.hasFocus = () => !doc.hidden;
+  doc.body = bodyInitially ? body : null;
+  doc.getElementById = (id) => nodes.get(id) ?? null;
+  const environment = {
+    window: win,
+    document: doc,
+    performance: { now: () => now, timeOrigin: 123456 },
+    MutationObserver: class {
+      constructor(callback) {
+        mutation = callback;
+      }
+      observe(target, options) {
+        assert.equal(target, body);
+        assert.deepEqual(JSON.parse(JSON.stringify(options)), {
+          attributes: true,
+          attributeFilter: ['data-flight-state'],
+          attributeOldValue: true,
+        });
+        observations++;
+      }
+    },
+  };
+  runInNewContext('(' + installPagesLifecycleObserver.toString() + ')()', environment);
+  return {
+    environment,
+    win,
+    doc,
+    body,
+    nodes,
+    observations: () => observations,
+    read: () => JSON.parse(JSON.stringify(environment.__revealLinePagesLifecycle.read())),
+    diagnostic: () =>
+      JSON.parse(
+        JSON.stringify(
+          runInNewContext('(' + readPagesDiagnosticState.toString() + ')()', environment),
+        ),
+      ),
+    at(value) {
+      now = value;
+    },
+    event(kind, extra = {}) {
+      win.emit(kind, { target: win, ...extra });
+    },
+    change(states) {
+      const records = states.slice(0, -1).map((oldValue) => ({
+        target: body,
+        attributeName: 'data-flight-state',
+        oldValue,
+      }));
+      body.dataset.flightState = states.at(-1);
+      mutation(records);
+    },
+  };
+}
+test('serialized passive observer retains coalesced Start and Pause plus real window lifecycle', () => {
+  const model = lifecycleModel({ bodyInitially: false });
+  assert.equal(model.observations(), 0);
+  model.doc.body = model.body;
+  model.doc.emit('DOMContentLoaded');
+  assert.equal(model.observations(), 1);
+  model.at(12);
+  model.change(['briefing', 'running', 'paused']);
+  model.win.emit('blur', { target: model.body });
+  model.at(13);
+  model.event('blur');
+  model.doc.hidden = true;
+  model.doc.visibilityState = 'hidden';
+  model.doc.emit('visibilitychange');
+  model.at(15);
+  model.doc.hidden = false;
+  model.doc.visibilityState = 'visible';
+  model.event('focus');
+  const observed = model.read();
+  assert.deepEqual(
+    observed.retained
+      .filter((event) => event.kind === 'flight-state')
+      .map(({ from, to, atMs }) => ({ from, to, atMs })),
+    [
+      { from: 'briefing', to: 'running', atMs: 12 },
+      { from: 'running', to: 'paused', atMs: 12 },
+    ],
+  );
+  assert.equal(observed.retained.filter((event) => event.kind === 'blur').length, 1);
+  assert.equal(observed.retained.find((event) => event.kind === 'visibilitychange').hidden, true);
+  assert.equal(observed.retained.at(-1).focused, true);
+  assert.equal(observed.timeBasis, 'document-performance.now');
+  assert.equal(observed.timeOrigin, 123456);
+  assert.equal(observed.omitted, 0);
+});
+test('passive ring preserves initial Start/Pause and latest events with explicit bounded omission', () => {
+  const model = lifecycleModel();
+  model.change(['briefing', 'running', 'paused']);
+  for (let i = 0; i < 100; i++) {
+    model.at(i + 1);
+    model.event(i % 2 ? 'focus' : 'blur');
+  }
+  const observed = model.read();
+  assert.equal(observed.retained.length, 64);
+  assert.equal(observed.omitted, observed.total - 64);
+  assert.equal(observed.overflow, true);
+  assert.equal(observed.retained[0].sequence, 1);
+  assert.equal(observed.retained[15].sequence, 16);
+  assert.equal(observed.retained[16].sequence, observed.total - 47);
+  assert.equal(observed.retained.at(-1).sequence, observed.total);
+  assert.deepEqual(
+    observed.retained.filter((event) => event.kind === 'flight-state').map((event) => event.to),
+    ['running', 'paused'],
+  );
+});
+test('observer ignores unchanged labels and records invalid clock without inventing timing', () => {
+  const model = lifecycleModel();
+  const before = model.read().total;
+  model.change(['briefing', 'briefing', 'briefing']);
+  assert.equal(model.read().total, before);
+  model.at(10);
+  model.event('pageshow', { persisted: true });
+  model.at(9);
+  model.event('pagehide');
+  assert.equal(model.read().retained.at(-1).clockInvalid, true);
+  assert.equal(model.read().retained.at(-2).persisted, true);
+  model.change(['briefing', 'x'.repeat(10000)]);
+  assert.equal(model.read().retained.at(-1).to, '[over-limit public label]');
+});
+test('actual public diagnostic getter reads warning/preparation only and never keeps a truncated secret prefix', async () => {
+  const model = lifecycleModel();
+  model.nodes.get('run-message').textContent = 'notice ' + secret;
+  model.nodes.get('flight-preparation-status').textContent = 'Getting ready';
+  model.nodes.get('presentation-preparation-status').textContent = 'x'.repeat(1020) + secret;
+  const value = model.diagnostic();
+  assert.equal(value.runMessage, 'notice ' + secret);
+  assert.equal(value.runMessageCue, 'paused-resume');
+  assert.equal(value.preparation, 'Getting ready');
+  assert.equal(value.presentation, '[public text exceeds 1024 characters]');
+  const page = new EventEmitter();
+  page.evaluate = async () => value;
+  const observed = createPagesDiagnostics(page, secret);
+  await observed.capturePublic();
+  const encoded = JSON.stringify(observed.result.publicEvidence);
+  assert(!encoded.includes(secret));
+  assert(encoded.includes('[redacted]'));
+  assert.equal(observed.result.publicEvidence.lifecycle.format, 'PagesPublicLifecycleV1');
+});
+test('console diagnostic text is redacted before truncation and inaccessible text does not throw', () => {
+  const page = new EventEmitter();
+  const observed = createPagesDiagnostics(page, secret);
+  for (const value of [
+    secret,
+    JSON.stringify(secret).slice(1, -1),
+    encodeURIComponent(secret),
+    Buffer.from(secret).toString('base64'),
+  ]) {
+    page.emit('console', {
+      type: () => 'warning',
+      text: () => 'x'.repeat(1000) + value + 'tail',
+      args: () => {
+        throw new Error('argument objects must never be inspected');
+      },
+    });
+    const retained = observed.result.events.at(-1).message;
+    assert(retained.includes('[redacted]'));
+    assert(!retained.includes(value.slice(0, 12)));
+    assert(retained.length <= 1024);
+  }
+  assert.doesNotThrow(() =>
+    page.emit('console', {
+      type: () => 'error',
+      text: () => {
+        throw new Error(secret);
+      },
+    }),
+  );
+  assert.equal(observed.result.events.at(-1).textReadFailure, true);
+});
+test('failed Solo flow retains final public warning before cleanup without replacing its primary failure', async () => {
+  const result = await observeModel({ soloFailure: true });
+  assert.match(result.report.failure, /^public flow failed/);
+  assert.equal(result.sharedCalls, 0);
+  assert.equal(result.report.pages[0].publicEvidence.flightState, 'paused');
+  assert.equal(result.report.pages[0].publicEvidence.runMessage, 'warning [redacted]');
+  assert(result.calls.indexOf('public-evidence') < result.calls.indexOf('context.close'));
+  const both = await observeModel({ soloFailure: true, evidenceFailure: true });
+  assert.match(both.report.failure, /^public flow failed/);
+  assert.match(both.report.publicEvidenceFailure, /^evidence failed/);
+  assert(!JSON.stringify(both.retained).includes(secret));
+  assert.deepEqual(both.calls.slice(-2), ['context.close', 'browser.close']);
+});
+test('missing, overflowed or clock-invalid public evidence cannot pass otherwise complete controls', async () => {
+  for (const options of [
+    { missingLifecycle: true },
+    { evidenceOverflow: true },
+    { evidenceClockInvalid: true },
+  ]) {
+    const result = await observeModel(options);
+    assert.equal(result.report.status, 'failed');
+    assert(result.report.failure);
+    assert.deepEqual(result.calls.slice(-2), ['context.close', 'browser.close']);
+  }
+});
+test('final evidence deadline stops later reads and rejects late result retention', async () => {
+  const page = new EventEmitter();
+  let resolve,
+    laterCalls = 0;
+  page.isClosed = () => false;
+  page.evaluate = () =>
+    new Promise((ready) => {
+      resolve = ready;
+    });
+  const observed = createPagesDiagnostics(page, secret);
+  const failure = await retainPagesPublicEvidence(
+    [observed, { page: { isClosed: () => false }, capturePublic: async () => laterCalls++ }],
+    secret,
+    1,
+  );
+  assert.equal(failure, 'Public evidence read deadline');
+  resolve({
+    lifecycle: { format: 'PagesPublicLifecycleV1', omitted: 0, overflow: false, retained: [] },
+  });
+  await new Promise((ready) => setImmediate(ready));
+  assert.equal(observed.result.publicEvidence, undefined);
+  assert.equal(laterCalls, 0);
+  await assert.rejects(retainPagesPublicEvidence([], secret, 5001), /budget/);
+});
+test('a Direct Start returning to paused remains failure without automatic Resume or extra public actions', async () => {
+  const model = soloPageModel({ directStartPaused: true });
+  const record = { actions: [], samples: [] };
+  await assert.rejects(
+    executePagesSoloFlows(model.page, pagesBudget(570000, model.now), record),
+    /Solo running/,
+  );
+  assert.deepEqual(model.calls, ['#shell-featured']);
+  assert.equal(record.lastPublicState.flightState, 'paused');
+  assert.equal(record.lastPublicState.runMessage, 'Paused after a long frame');
+});
+
+test('late first Start and Pause retain reserved slots after earlier lifecycle overflow', () => {
+  const model = lifecycleModel();
+  for (let i = 0; i < 100; i++) {
+    model.at(i + 1);
+    model.event('blur');
+  }
+  model.change(['briefing', 'running', 'paused']);
+  for (let i = 0; i < 100; i++) {
+    model.at(i + 101);
+    model.event('focus');
+  }
+  const observed = model.read();
+  assert.equal(observed.retained.length, 64);
+  assert.equal(observed.omitted, observed.total - 64);
+  assert.deepEqual(
+    observed.retained
+      .filter((event) => event.kind === 'flight-state')
+      .map(({ from, to }) => ({ from, to })),
+    [
+      { from: 'briefing', to: 'running' },
+      { from: 'running', to: 'paused' },
+    ],
+  );
+  assert.equal(observed.retained.at(-1).sequence, observed.total);
+});
+
+test('actual early-success evidence timeout cannot overwrite the final failed-flow observation', async () => {
+  // The unchanged global flow budget leaves 1ms for the normal early capture.
+  // Its evaluate remains pending through the final read and both cleanup calls.
+  const result = await observeModel({ earlyEvidenceLate: true });
+  assert.equal(result.report.status, 'failed');
+  assert.match(result.report.failure, /retain Solo public evidence|Pages smoke deadline expired/);
+  assert.equal(result.sharedCalls, 0);
+  assert.equal(result.report.pages[0].publicEvidence.runMessage, 'warning [redacted]');
+  assert.deepEqual(result.calls.slice(-2), ['context.close', 'browser.close']);
+  const before = JSON.stringify(result.report.pages[0].publicEvidence);
+  result.releaseEarly();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(JSON.stringify(result.report.pages[0].publicEvidence), before);
 });
