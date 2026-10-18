@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
 import { soloPage } from './helpers/solo-dom.mjs';
+import { PNGImage } from './helpers/png-image.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 
@@ -34,7 +36,14 @@ async function host(t, { enabled = true, fetchResponse, throwingSink = false } =
   const page = await soloPage(t, {
     titleScreen: true,
     search: enabled ? '?performance=1' : '',
-    fetchResponse,
+    pictures: { Image: PNGImage },
+    fetchResponse: async (path, options) => {
+      const response = await fetchResponse?.(path, options);
+      if (response !== undefined && response !== null) return response;
+      if (String(path).includes('/content-design/assets/'))
+        return new Response(await readFile(path));
+      return undefined;
+    },
     browserSetup: ({ globals }) => {
       globals.innerWidth = 1280;
       globals.innerHeight = 720;
