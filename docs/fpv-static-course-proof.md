@@ -22,7 +22,7 @@ The dependency is separate from the unchanged production archive. It freezes the
 1. **Physical recording verification:** call the existing `verifyAircraftArchive` unchanged. Its complete-session, interrupted-session and checkpoint-clip scopes retain their original meanings. A physical success alone never establishes course completion.
 2. **Static course reconstruction:** require a complete session beginning at canonical reset. Recreate the ordinary `createAircraftCourseSession` with the supplied course, recorded mode/configuration, historical mission adapter and known physical backend. Generate spawn state and terrain from that course; compare them against the recording rather than trusting recorded terrain as course authority. Feed the ordinary session one canonical accepted input sample per 50 Hz mission interval. Check every recorded periodic hash, segment final hash, next segment's complete checkpoint and the final session hash. Continue checking the tail after objective completion.
 
-Only the second pass's ordinary mission predicates determine completion and objective boundaries. Reported objective durations are at 50 Hz mission resolution, not 500 Hz physics-step timing. At most 64 objective rows are retained. The existing observed pause-panel rows are not accepted as proof or imported into the verifier.
+Only the second pass's ordinary mission predicates determine completion and objective boundaries. Reported objective durations are at 50 Hz mission resolution, not the finer recorded physics-step timing. At most 64 objective rows are retained. The existing observed pause-panel rows are not accepted as proof or imported into the verifier.
 
 The report keeps `physics` and `course` separate. A physically valid but unsupported or incomplete course can return `physics.verified: true` with `course.verified: false` and an explicit reason. A successful CLI report says `toolingOnly: true` and `scored: false`. Browser reports also remain `scored: false`; they do not carry the CLI-only provenance wrapper.
 
@@ -30,14 +30,14 @@ In-process consumers may call `isVerifiedStaticCourseProof` only on the exact fr
 
 ## Supported and rejected cases
 
-The first slice supports static `FlightCourse.v1` and `FlightCourse.v2` documents with only hold, gate and land objectives, known `aircraft-course-practice.v1`/`v2` mission adapters, the existing 500 Hz aircraft backend, and its explicitly supported regional-v1/regional-v2 numerical identities. Academy and World archive hosts are supported. The archived course family is checked separately because World can launch an Academy course.
+The current kernel supports static `FlightCourse.v1` and `FlightCourse.v2` documents with only hold, gate and land objectives, known `aircraft-course-practice.v1`/`v2` mission adapters, explicit fixed 500 or 1,000 Hz timing, and its supported regional-v1/v2/v3 numerical identities. Historical recordings reconstruct their recorded backend and frequency; they are never upgraded to the current default. Academy and World archive hosts are supported. The archived course family is checked separately because World can launch an Academy course.
 
 The tool fails closed for:
 
 - Missing, mismatched, oversized or malformed dependencies; unknown course/evaluator/mission versions.
 - Checkpoint-origin clips, interrupted sessions, noncanonical spawn/configuration, missing/reordered segments or inconsistent hashes/checkpoints.
 - Actors, dynamic colliders, action-dependent or other unsupported objectives, additional motion/terrain events, or optional challenge wrappers.
-- Regional/free-flight courses, unknown backends, or different simulation frequencies.
+- Regional/free-flight courses, unknown backends, or unsupported simulation frequencies.
 - Missing, duplicated, reordered, noncanonical or unsafe recorded input clocks and sequences.
 
 Aircraft archives contain four stick channels, not an action-button history. Actor-free hold/gate/land objectives in the current model do not depend on those omitted actions. The tool does not claim to detect past unrecorded action presses; it rejects action-dependent objectives and unknown recorded event rows.
@@ -48,7 +48,7 @@ Input traversal is lazy and bounded by the existing archive limit of 256 segment
 
 ## Source provenance and evidence limits
 
-Reports record nine **selected** source-file SHA-256 values, repository revision/tree and whether the working tree has changes. These values are diagnostic reproducibility metadata. They do not establish a complete transitive dependency closure, loaded-module integrity or trusted source authority. Reading a source file after a module was loaded cannot itself attest the loaded code. The tool checks that these selected values and repository metadata remain unchanged during a run, but only a clean, committed qualification run should be cited as frozen source evidence.
+Reports record eleven **selected** source-file SHA-256 values, repository revision/tree and whether the working tree has changes. These values are diagnostic reproducibility metadata. They do not establish a complete transitive dependency closure, loaded-module integrity or trusted source authority. Reading a source file after a module was loaded cannot itself attest the loaded code. The tool checks that these selected values and repository metadata remain unchanged during a run, but only a clean, committed qualification run should be cited as frozen source evidence.
 
 The tests exercise all 15 current catalog aircraft in Acro and self-level on one static introductory course, using normal input-driven ground, lift and gentle-landing progression. They compare every reconstructed objective boundary with the recorded ordinary session, including multiple recording segments. This is not all-course, browser, device, network, native-wrapper or real-aircraft qualification.
 
@@ -60,4 +60,4 @@ Run the focused suite:
 node --test scripts/test-fpv-static-course-proof.mjs
 ```
 
-The Node CLI wrapper and its tests/docs remain outside the shipped runtime. R11C moves the reconstruction kernel into the existing archive verifier, with host-owned adapters installed in dedicated workers. Academy does not import the World model. The browser freezes the selected archive/course, pauses flight, and cancels stale operations on session replacement, recovery or selection changes. It labels the archive, course and recorded mode; verification never completes the current live attempt or activates scoring. See the [browser acceptance and package receipt](fpv-browser-course-verification-20261018.md). Dynamic-course support, reference/ghost selection and scored promotion remain separate reviewed increments.
+The Node CLI wrapper and its tests/docs remain outside the shipped runtime. R11C moves the reconstruction kernel into the existing archive verifier, with host-owned adapters installed in dedicated workers. Academy does not import the World model. The browser freezes the selected archive/course, pauses flight, and cancels stale operations on session replacement, recovery or selection changes. It labels the archive, course and recorded mode; verification never completes the current live attempt or activates scoring. See the [browser acceptance and package receipt](fpv-browser-course-verification-20261018.md). Dynamic-course support and scored promotion remain separate gates. Explicit unscored split references and optional bounded recorded-aircraft visuals are locally implemented in [R11D](fpv-practice-reference-20261018.md) and [R11E](fpv-practice-ghost-20261018.md); they do not grant competitive eligibility.
