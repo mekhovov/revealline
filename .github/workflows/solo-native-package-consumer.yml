@@ -1839,38 +1839,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            /docs/performance/solo-first-victory-cpu-de332-plan.json
-            /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
-            /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
-            /docs/performance/solo-797-journal-cost-plan.json
-            /docs/performance/solo-797-lifecycle-long29-plan.json
-            /docs/performance/solo-797-lifecycle-retry-plan.json
-            /docs/performance/solo-797-lifecycle-soak-plan.json
-            /docs/performance/solo-797-timing-cold-first30-plan.json
-            /docs/performance/solo-797-timing-jammer-steering-plan.json
-            /docs/performance/solo-797-timing-large-capture-erosion-plan.json
-            /docs/performance/solo-797-timing-long-rail-latency-plan.json
-            /docs/performance/solo-797-timing-sentry-latency-plan.json
-            /docs/performance/solo-797-timing-warm-first30-plan.json
-            /docs/performance/solo-de332-journal-cost-plan.json
-            /docs/performance/solo-de332-lifecycle-long29-plan.json
-            /docs/performance/solo-de332-lifecycle-retry-plan.json
-            /docs/performance/solo-de332-lifecycle-soak-plan.json
-            /docs/performance/solo-de332-timing-cold-first30-plan.json
-            /docs/performance/solo-de332-timing-jammer-steering-plan.json
-            /docs/performance/solo-de332-timing-large-capture-erosion-plan.json
-            /docs/performance/solo-de332-timing-long-rail-latency-plan.json
-            /docs/performance/solo-de332-timing-sentry-latency-plan.json
-            /docs/performance/solo-de332-timing-warm-first30-plan.json
-            /docs/performance/solo-first-victory-cpu-797e03-plan.json
-            /docs/performance/solo-next-geometric-797e03-plan.json
-            /docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json
-            /docs/performance/solo-remote-797e03-correctness-plan.json
-            /docs/performance/solo-shared-mode-public-return-797e03-plan.json
-            /scripts/solo-readiness-rejoin-declared-source.mjs
-            /scripts/test-solo-readiness-rejoin-797e03.mjs
             /.github/workflows/solo-native-package-consumer.yml
-            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /.github/workflows/solo-remote-auxiliary-temporary.yml
             /.github/workflows/solo-remote-final-audio-temporary.yml
             /.github/workflows/solo-remote-final-audio-v2-temporary.yml
@@ -1889,6 +1858,7 @@ jobs:
             /.github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml
             /.github/workflows/solo-remote-readiness-preparation-e1cc-v2-temporary.yml
             /authoring/library/licensed-audio/provenance/expansion-downloads.json
+            /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /docs/performance/fixtures/solo-final-recovery/historical-a6-source.json
             /docs/performance/fixtures/solo-native-lifecycle/696-execution-source.json
             /docs/performance/fixtures/solo-native-lifecycle/696-runner-source.json
@@ -1899,6 +1869,11 @@ jobs:
             /docs/performance/fixtures/solo-readiness-73a345/required-original-cancel-start-v2.qualification.fixture
             /docs/performance/fixtures/solo-readiness-73a345/selected-font-request-settlement-v4.qualification.fixture
             /docs/performance/fixtures/solo-readiness-73a345/source-compatibility.json
+            /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
+            /docs/performance/fixtures/solo-readiness-797e03/optional-icon-missing-v1.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-797e03/required-original-cancel-start-v2.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-797e03/selected-font-request-settlement-v4.qualification.fixture
+            /docs/performance/fixtures/solo-readiness-797e03/source-compatibility.json
             /docs/performance/fixtures/solo-readiness-de332/optional-icon-missing-v1.qualification.fixture
             /docs/performance/fixtures/solo-readiness-de332/required-original-cancel-start-v2.qualification.fixture
             /docs/performance/fixtures/solo-readiness-de332/selected-font-request-settlement-v4.qualification.fixture
@@ -1956,6 +1931,26 @@ jobs:
             /docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture
             /docs/performance/fixtures/solo-remote-timing/public-effects-full-first30.qualification.fixture
             /docs/performance/fixtures/solo-remote-timing/public-effects-reduced-first30.qualification.fixture
+            /docs/performance/solo-797-journal-cost-plan.json
+            /docs/performance/solo-797-lifecycle-long29-plan.json
+            /docs/performance/solo-797-lifecycle-retry-plan.json
+            /docs/performance/solo-797-lifecycle-soak-plan.json
+            /docs/performance/solo-797-timing-cold-first30-plan.json
+            /docs/performance/solo-797-timing-jammer-steering-plan.json
+            /docs/performance/solo-797-timing-large-capture-erosion-plan.json
+            /docs/performance/solo-797-timing-long-rail-latency-plan.json
+            /docs/performance/solo-797-timing-sentry-latency-plan.json
+            /docs/performance/solo-797-timing-warm-first30-plan.json
+            /docs/performance/solo-de332-journal-cost-plan.json
+            /docs/performance/solo-de332-lifecycle-long29-plan.json
+            /docs/performance/solo-de332-lifecycle-retry-plan.json
+            /docs/performance/solo-de332-lifecycle-soak-plan.json
+            /docs/performance/solo-de332-timing-cold-first30-plan.json
+            /docs/performance/solo-de332-timing-jammer-steering-plan.json
+            /docs/performance/solo-de332-timing-large-capture-erosion-plan.json
+            /docs/performance/solo-de332-timing-long-rail-latency-plan.json
+            /docs/performance/solo-de332-timing-sentry-latency-plan.json
+            /docs/performance/solo-de332-timing-warm-first30-plan.json
             /docs/performance/solo-final-audio-plan.json
             /docs/performance/solo-final-audio-v2-plan.json
             /docs/performance/solo-final-long29-plan.json
@@ -1963,6 +1958,8 @@ jobs:
             /docs/performance/solo-final-recovery-plan.json
             /docs/performance/solo-final-retry-plan.json
             /docs/performance/solo-final-soak-plan.json
+            /docs/performance/solo-first-victory-cpu-797e03-plan.json
+            /docs/performance/solo-first-victory-cpu-de332-plan.json
             /docs/performance/solo-joined-font-dpr-outcomes-20261017.md
             /docs/performance/solo-native-lifecycle-e1cc-plan.json
             /docs/performance/solo-native-lifecycle-plan.json
@@ -1970,6 +1967,7 @@ jobs:
             /docs/performance/solo-native-touch-73a345-plan.json
             /docs/performance/solo-native-touch-797e03-plan.json
             /docs/performance/solo-native-touch-de332-plan.json
+            /docs/performance/solo-next-geometric-797e03-plan.json
             /docs/performance/solo-next-geometric-c696-plan.json
             /docs/performance/solo-next-geometric-e1cc-plan.json
             /docs/performance/solo-optional-start-audio-e1cc-plan.json
@@ -1985,13 +1983,19 @@ jobs:
             /docs/performance/solo-readiness-preparation-de332-plan.json
             /docs/performance/solo-readiness-preparation-e1cc-plan.json
             /docs/performance/solo-readiness-preparation-e1cc-v2-plan.json
+            /docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json
+            /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
+            /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-auxiliary-plan.json
             /docs/performance/solo-remote-correctness-plan.json
+            /docs/performance/solo-remote-cpu-profile-plan.json
             /docs/performance/solo-remote-offline-candidate-plan.json
             /docs/performance/solo-remote-offline-candidate-v2-plan.json
             /docs/performance/solo-remote-offline-candidate-v3-plan.json
             /docs/performance/solo-remote-offline-current-plan.json
             /docs/performance/solo-remote-offline-plan.json
+            /docs/performance/solo-shared-mode-public-return-797e03-plan.json
+            /docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json
             /game/audio/effects/start.wav
             /game/audio/reactions/guide-capture-0-en.m4a
             /game/audio/reactions/pilot.mjs
@@ -2147,16 +2151,11 @@ jobs:
             /game/ui/menu-navigation-groups.mjs
             /game/ui/music.mjs
             /game/ui/settings-panels.mjs
+            /game/vendor/LZ-STRING-LICENSE.txt
             /game/vendor/i18next-26.4.2.min.js
             /game/vendor/lz-string-1.5.0.min.js
-            /game/vendor/LZ-STRING-LICENSE.txt
             /game/victory-story.mjs
             /game/video-poster.mjs
-            /docs/performance/fixtures/solo-readiness-797e03/source-compatibility.json
-            /scripts/test-solo-readiness-797e03-admission.mjs
-            /docs/performance/fixtures/solo-readiness-797e03/required-original-cancel-start-v2.qualification.fixture
-            /docs/performance/fixtures/solo-readiness-797e03/optional-icon-missing-v1.qualification.fixture
-            /docs/performance/fixtures/solo-readiness-797e03/selected-font-request-settlement-v4.qualification.fixture
             /package-lock.json
             /package.json
             /publishing/vendor/acorn-8.18.0.mjs
@@ -2206,6 +2205,7 @@ jobs:
             /scripts/solo-qualification-snapshot-store.mjs
             /scripts/solo-qualification.mjs
             /scripts/solo-readiness-gpu.mjs
+            /scripts/solo-readiness-rejoin-declared-source.mjs
             /scripts/solo-remote-archive.py
             /scripts/solo-remote-auxiliary.mjs
             /scripts/solo-remote-baseline.mjs
@@ -2253,12 +2253,14 @@ jobs:
             /scripts/test-solo-quality-comparison.mjs
             /scripts/test-solo-readiness-4bf-release.mjs
             /scripts/test-solo-readiness-73a345-admission.mjs
+            /scripts/test-solo-readiness-797e03-admission.mjs
             /scripts/test-solo-readiness-cancel-boundary.mjs
             /scripts/test-solo-readiness-de332-admission.mjs
             /scripts/test-solo-readiness-dispatch.mjs
             /scripts/test-solo-readiness-geometry-integration.mjs
             /scripts/test-solo-readiness-geometry.mjs
             /scripts/test-solo-readiness-gpu.mjs
+            /scripts/test-solo-readiness-rejoin-797e03.mjs
             /scripts/test-solo-readiness-release.mjs
             /scripts/test-solo-readiness-resume.mjs
             /scripts/test-solo-remote-auxiliary.mjs
