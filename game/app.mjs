@@ -2235,7 +2235,9 @@ try {
       if (typeof audioElement.play !== 'function')
         throw new Error(t('interface:thisBrowserDoesNotProvideFileAudioPlaybackBuiltIn'));
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
-      const localRecordingIds = await localOfficialRecordingIds(catalogue);
+      const localRecordingIds = await localOfficialRecordingIds(catalogue, {
+        signal: soundtrackLoad.signal,
+      });
       await sound.mediaPreparation.run(
         'main',
         () => {

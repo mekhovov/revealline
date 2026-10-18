@@ -1,0 +1,98 @@
+{
+  "format": "OfficialCacheScanOwnershipFixV1",
+  "created": "2026-10-18T22:35:49.389165+00:00",
+  "baseHead": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+  "sourceScope": "Five approved production owners/shared store plus their focused regression suites; hashes captured after successful tests. This is not a new whole-runtime source freeze.",
+  "sourceFiles": [
+    {
+      "path": "game/official-downloads.mjs",
+      "baseSHA256": "777563cccc42e7f41f36d3848012f93d6fdf48687e672fc30191624f5a42927e",
+      "testedSHA256": "0174b21c350dcfa49ba32f0373f4ba97d1b509fe95cf2d287e1f616c0654b204"
+    },
+    {
+      "path": "game/app.mjs",
+      "baseSHA256": "04c1a8594312923bb7ed4eae173e4d87d142464f1cff2675671173b169ef1c35",
+      "testedSHA256": "f55498d8c0d05543153019815b5fa01fa7e0982360a95d36c71a1074ca5f7db2"
+    },
+    {
+      "path": "game/ui/install-offline-panel.mjs",
+      "baseSHA256": "86eaff72b76f91feac037435c6925e4541c12b6267c15ec7d9ff3a17a9ab49b2",
+      "testedSHA256": "fe4e4b4e7f9b047b601764bc6af38ee420b564a290498a09d792ebabda2c8429"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.mjs",
+      "baseSHA256": "d77fc9461fcb1ba7f5ea98f18216d71b4eebb644a596656c345e7d660661c69c",
+      "testedSHA256": "4ac8ecbcb4a92cde91a2809da93880e0b541bdf6d7368958f9b2a7b0baaa2ef3"
+    },
+    {
+      "path": "game/couch/couch-music-host.mjs",
+      "baseSHA256": "20e5e4585e7eaf81791cc0b2d489f8031965391a5fcbceb1e22e6e18de2a4c97",
+      "testedSHA256": "afad333a342660c1611346f73b77329b6901a546680072323b03d57517538ec3"
+    }
+  ],
+  "testFiles": [
+    {
+      "path": "game/test/official-downloads.test.mjs",
+      "sha256": "ff4cacd03feb51c12f0d2adfd44561d2788936180ecf0890611207e36b0cfbd4"
+    },
+    {
+      "path": "game/test/install-offline-panel.test.mjs",
+      "sha256": "4f8c3bd80fdf8aec6ecb46661e3bb874f8fc73424485b08292d0b4c13afe6f54"
+    },
+    {
+      "path": "game/test/soundtrack-host.test.mjs",
+      "sha256": "407207fc27ff4683662ffacc64404961f5ed57528ee0d193c7ec7dc3ebb700a1"
+    },
+    {
+      "path": "game/test/couch-menu-music.test.mjs",
+      "sha256": "f9d2d3a2fff71082ba63ac6a792949164f1acd000bb5b98b9943f1bf6ae3ebe5"
+    },
+    {
+      "path": "game/test/soundtrack-panel.test.mjs",
+      "sha256": "86096e466457a2542de33ad3e9e8fd2e08ca5037123ac1fd0021f36f5b8afef0"
+    }
+  ],
+  "validation": {
+    "tests": 240,
+    "pass": 240,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "durationMs": 83698.63925,
+    "newFocusedCases": 16,
+    "lintExitCode": 0,
+    "formatExitCode": 0,
+    "diffCheckExitCode": 0,
+    "logs": [
+      {
+        "path": "docs/qualification/shared-demos/cache-ownership-regressions-final-237-f970.tap.txt",
+        "sha256": "744c4f0e9f760f6d609d49f6a1fa82dbb570e077090843b5e604764d38302597",
+        "bytes": 54945
+      },
+      {
+        "path": "docs/qualification/shared-demos/cache-ownership-lint-final-237-f970.log.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "docs/qualification/shared-demos/cache-ownership-format-final-237-f970.log.txt",
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+        "bytes": 66
+      }
+    ]
+  },
+  "behavior": [
+    "Already-retired callers submit no native Cache API requests.",
+    "After an already-started open, keys, match, body read or digest settles, owner cancellation prevents subsequent work or result adoption.",
+    "Best-effort cache-unavailable and malformed browse-metadata handling remain unchanged for active callers; abort reason propagates instead of becoming a false empty availability result.",
+    "Solo, native music host and soundtrack panel reuse their existing lifetime signals; the offline status panel aborts its one owned metadata scan on dispose.",
+    "Persisted history navigation behavior and optional downloads remain under existing owners.",
+    "No cache contents are deleted, no beforeunload listener is introduced, and no diagnostics are suppressed."
+  ],
+  "causalEvidence": "docs/qualification/shared-demos/webkit-cache-review-final-237-f970.json",
+  "limitations": [
+    "Native Cache API does not accept AbortSignal. This fix cannot cancel native requests already in flight or guarantee elimination of WebKit native context-stop diagnostics.",
+    "The earlier four-reload diagnostic remains a strict failure with two native cache messages and one separate presentation blob message.",
+    "No post-fix browser acceptance run is claimed by this receipt; the next batch waits for the final production/source freeze."
+  ]
+}

@@ -1,0 +1,59 @@
+export function installCacheObserver() {
+  const id = `${Date.now()}-${Math.random()}`;
+  const sink = console.debug.bind(console);
+  const initialPath = location.pathname;
+  let sequence = 0, beforeUnload = false, hidden = false;
+  const trace = (kind, data = {}) => {
+    if (sequence >= 8000) {
+      if (sequence++ === 8000) { try { sink('CACHE_OWNER_TRACE:' + JSON.stringify({ id, kind: 'observer-overflow', at: Date.now() })); } catch {} }
+      return;
+    }
+    try {
+      sink('CACHE_OWNER_TRACE:' + JSON.stringify({ id, path: initialPath, sequence: ++sequence, at: Date.now(), kind, beforeUnload, hidden, ...data }));
+    } catch {}
+  };
+  // Existing module callbacks retain this document's sink and identity.
+  window.__cacheProbeTrace = trace;
+  const frameIdentity = () => {
+    let frame = null;
+    try { frame = window.frameElement; } catch {}
+    return { topLevel: window === window.top, href: location.href,
+      frameId: frame?.id ?? null, frameTag: frame?.tagName ?? null,
+      frameSrc: frame?.getAttribute?.('src') ?? null,
+      frameTitle: frame?.getAttribute?.('title') ?? null };
+  };
+  trace('document-start', frameIdentity());
+  window.addEventListener('DOMContentLoaded', () => trace('document-dom-ready', frameIdentity()));
+  const worker = navigator.serviceWorker;
+  trace('service-worker-controller', { ...frameIdentity(), controller: worker?.controller?.scriptURL ?? null });
+  if (worker) {
+    // A separate read-only observation; no cache promise is chained or caught.
+    void worker.getRegistrations().then(
+      registrations => trace('service-worker-registrations', { registrations: registrations.map(r => ({ scope: r.scope, active: r.active?.scriptURL ?? null, waiting: r.waiting?.scriptURL ?? null, installing: r.installing?.scriptURL ?? null })) }),
+      error => trace('service-worker-registration-observation-error', { name: error?.name, message: error?.message }),
+    );
+    worker.addEventListener('controllerchange', () => trace('service-worker-controllerchange', { controller: worker.controller?.scriptURL ?? null }));
+  }
+  window.addEventListener('beforeunload', () => { beforeUnload = true; trace('beforeunload'); });
+  window.addEventListener('pagehide', (event) => { hidden = true; trace('pagehide', { persisted: event.persisted }); });
+  window.addEventListener('pageshow', (event) => trace('pageshow', { persisted: event.persisted }));
+  for (const [api, prototype, methods] of [
+    ['CacheStorage', globalThis.CacheStorage?.prototype, ['open', 'match', 'keys', 'has', 'delete']],
+    ['Cache', globalThis.Cache?.prototype, ['match', 'matchAll', 'keys', 'put', 'delete', 'add', 'addAll']],
+  ]) {
+    if (!prototype) continue;
+    for (const method of methods) {
+      const descriptor = Object.getOwnPropertyDescriptor(prototype, method);
+      if (typeof descriptor?.value !== 'function') continue;
+      const original = descriptor.value;
+      let calls = 0;
+      Object.defineProperty(prototype, method, { ...descriptor, value: function (...args) {
+        const first = args[0];
+        const key = typeof first === 'string' ? first : first instanceof Request ? first.url : null;
+        trace('native-cache-call', { api, method, key, stack: ++calls <= 8 ? String(new Error().stack ?? '').slice(0, 1800) : null });
+        // Return the same native promise; do not add settlement/rejection handlers.
+        return Reflect.apply(original, this, args);
+      } });
+    }
+  }
+}
