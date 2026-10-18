@@ -2169,6 +2169,15 @@ export function mountWorldApp({
       if (flight) updateHUD(flight.snapshot());
       $('world-arm').click();
     },
+    onLessonMode: async (mode) => {
+      if (!current?.beginner || !['self-level', 'acro'].includes(mode)) return;
+      try {
+        await changeFlightMode(mode);
+      } catch (error) {
+        reportError(error);
+        throw error;
+      }
+    },
     onPause: () => pauseFlight(),
     onRetry: () => $('world-retry').click(),
     onNext: () => nextLearningFlight(),
@@ -8073,8 +8082,8 @@ export function mountWorldApp({
     restoreRadio();
     paintInput(flight?.snapshot());
   });
-  on($('flight-mode'), 'change', () => {
-    const selectedMode = $('flight-mode').value;
+  function changeFlightMode(requestedMode) {
+    const selectedMode = typeof requestedMode === 'string' ? requestedMode : $('flight-mode').value;
     const preserveFocus = Boolean(playShell?.elements.dialogs.pause.open);
     // Selecting another flight mode starts a new attempt. Only this explicit
     // action releases the mode-specific overlay; Retry keeps its accepted pin.
@@ -8090,6 +8099,7 @@ export function mountWorldApp({
       const hasSection = checkpointRequest.index < current.course.steps[selectedMode].length;
       const proof = hasSection ? demonstrationFor(current, selectedMode) : null;
       return startFlight(proof ? demonstrationEntry(modeEntry) : modeEntry, {
+        mode: selectedMode,
         paused: true,
         preserveFocus,
         checkpoint: {
@@ -8105,20 +8115,29 @@ export function mountWorldApp({
       return startFlight(
         proof ? demonstrationEntry(modeEntry) : modeEntry,
         proof
-          ? { preview: true, replayProof: proof, demonstration: true, paused: true, preserveFocus }
-          : { paused: true, preserveFocus },
+          ? {
+              mode: selectedMode,
+              preview: true,
+              replayProof: proof,
+              demonstration: true,
+              paused: true,
+              preserveFocus,
+            }
+          : { mode: selectedMode, paused: true, preserveFocus },
       );
     }
     if (current && $('flight-dialog').open)
       return startFlight(modeEntry, {
         ...retainedDraftOptions(),
+        mode: selectedMode,
         preview: preview && !modePractice,
         paused: true,
         preserveFocus,
         playlist: playingPlaylist,
         index: playlistIndex,
       });
-  });
+  }
+  on($('flight-mode'), 'change', changeFlightMode);
   on($('flight-touch-response'), 'change', () => {
     pauseFlight();
     input.touchResponse($('flight-touch-response').value);
