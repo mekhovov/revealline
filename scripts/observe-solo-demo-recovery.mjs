@@ -407,7 +407,31 @@ const resourceCycles = async () => {
       assert.equal(paused.practice, mode === 'practice');
       unchanged(ordinaryBefore, paused, 'ordinary');
       validQuality(paused);
-      await click('#demo-back');
+      if (plan.resourceCycles.closeBoundaryPolicy) {
+        let closeFailed = false;
+        try {
+          await page.evaluate((owner) => window.demoRecoveryProbe.armCloseBoundary(owner), {
+            label: `${mode}-${cycle}-close-click`,
+            runId: paused.demo.id,
+            painterId: paused.painterId,
+          });
+          await click('#demo-back');
+          const boundary = await page.evaluate(() => window.demoRecoveryProbe.takeCloseBoundary());
+          retain(report.snapshots, boundary, 64);
+          row.closeClick = report.snapshots.length - 1;
+        } catch (error) {
+          closeFailed = true;
+          row.closeCaptureFailure = String(error?.message ?? error).slice(0, 1024);
+          throw error;
+        } finally {
+          try {
+            await page.evaluate(() => window.demoRecoveryProbe.disarmCloseBoundary());
+          } catch (error) {
+            row.closeCaptureCleanupFailure = String(error?.message ?? error).slice(0, 1024);
+            if (!closeFailed) throw error;
+          }
+        }
+      } else await click('#demo-back');
       row.actions.push('back');
       const closed = await snap(`${mode}-${cycle}-closed`);
       row.closed = report.snapshots.length - 1;

@@ -8,7 +8,9 @@ export function installDemoRecoveryProbe(env = globalThis) {
     drawCount = 0,
     last = null,
     nextId = 1,
-    resourceContract = null;
+    resourceContract = null,
+    closeCapture = null,
+    closeCaptureCount = 0;
   const ids = new WeakMap(),
     namespaces = new WeakSet(),
     surfaces = new Map();
@@ -102,6 +104,65 @@ export function installDemoRecoveryProbe(env = globalThis) {
       )
         throw Error('Exact one-time Demo resource contract required');
       resourceContract = { ...contract };
+    },
+    armCloseBoundary({ label, runId, painterId }) {
+      if (
+        !resourceContract ||
+        closeCapture ||
+        closeCaptureCount >= 20 ||
+        !/^(spectator|practice)-(?:[1-9]|10)-close-click$/.test(label) ||
+        !Number.isSafeInteger(runId) ||
+        !Number.isSafeInteger(painterId)
+      )
+        throw Error('Bounded resource Close capture required');
+      const doc = env.document,
+        button = doc.getElementById('demo-back');
+      if (!button || typeof doc.addEventListener !== 'function')
+        throw Error('Actual Demo Back control required');
+      const capture = { button, listener: null, value: null, count: 0, failure: null };
+      capture.listener = (event) => {
+        if (event.target !== button && !button.contains?.(event.target)) return;
+        capture.count++;
+        if (capture.count !== 1 || event.isTrusted !== true) {
+          capture.failure = 'Exactly one trusted Demo Back click required';
+          return;
+        }
+        try {
+          const value = snapshot(label);
+          if (
+            !value.open ||
+            !value.visible ||
+            !value.focused ||
+            !value.lastDraw?.paused ||
+            value.demo?.id !== runId ||
+            value.painterId !== painterId
+          ) {
+            capture.failure = 'Paused Demo Close owner changed';
+            return;
+          }
+          value.closeClick = {
+            format: 'DemoTrustedCloseBoundaryV1',
+            isTrusted: true,
+            target: 'demo-back',
+          };
+          capture.value = value;
+        } catch {
+          capture.failure = 'Demo Close boundary snapshot failed';
+        }
+      };
+      doc.addEventListener('click', capture.listener, true);
+      closeCapture = capture;
+      closeCaptureCount++;
+    },
+    takeCloseBoundary() {
+      if (!closeCapture || closeCapture.failure || closeCapture.count !== 1 || !closeCapture.value)
+        throw Error(closeCapture?.failure || 'Trusted Demo Close boundary missing');
+      return structuredClone(closeCapture.value);
+    },
+    disarmCloseBoundary() {
+      if (!closeCapture) return;
+      env.document.removeEventListener('click', closeCapture.listener, true);
+      closeCapture = null;
     },
     install(Painter, checkpoint) {
       if (check) throw Error('Observer installed twice');
