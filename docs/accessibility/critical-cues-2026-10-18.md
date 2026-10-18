@@ -6,7 +6,7 @@ Assessment source revision: `cb8dddd3d3c11d24c56b014fa48ac0e6417d6465` (fresh ma
 
 - **Source:** inspected event-to-audio and state/event-to-visual presentation paths at this revision. A source pair means both paths exist; it does not establish perceptual equivalence.
 - **Model:** separately recorded executed tests must name their source revision and finite DOM/canvas/audio boundaries. Merely finding a test is not a pass.
-- **Browser:** actual muted play must name the admitted content, mode, viewport, reduced-effects choice and observed cue. Controlled scenarios must be labelled fixtures. Not yet run for this assessment.
+- **Browser:** actual muted play must name the admitted content, mode, viewport, reduced-effects choice and observed cue. Controlled scenarios must be labelled fixtures. Two scoped fixture receipts are recorded below; they do not qualify every row.
 - **Listening:** not performed. F13 remains a distinct listening review. Speaker/headphone output, mix intelligibility and mobile interruption behavior cannot be inferred from oscillator calls or audio doubles.
 - **AT/device:** no new screen-reader, switch-control, iPhone/PWA, controller or physical-device evidence. F18 and F57 retain these gaps independently.
 
@@ -51,7 +51,20 @@ F03 owns broad art/readability changes; F09 owns scaling; F31 owns caption dwell
 
 The [machine-readable inventory](critical-cues-2026-10-18.json) contains 22 cue-category rows, 51 source anchors with blob/hash identities, and exact model commands/test-file identities. On the assessment revision, the cue/model/policy group passed 105/105 with no skips. A separate filtered SIM run passed 3 tests with 124 name-filter skips: Academy/World HUD settings reachability and World detail retention across focus/blur. Those three tests do not prove every SIM gate/contact/health cue. Older documentation includes explicit unrun-suite statements; those are historical claims, not current test results.
 
-Browser silent-play review and listening remain pending. No F07b defect has been demonstrated yet. The absence of a demonstrated defect in this scoped assessment is not a claim that every cue is usable. The optional assisted gym remains a separate pending F06 preset-owner assessment; it is included here rather than silently inheriting 3D SIM evidence.
+Remaining browser scenarios and listening remain pending. No F07b defect has been demonstrated yet. The absence of a demonstrated defect in this scoped assessment is not a claim that every cue is usable. The optional assisted gym has its own separate F06 draft (#1660); that comfort-preset evidence does not qualify its sound-off cues or inherit 3D SIM evidence.
+
+## Scoped actual-browser receipts
+
+Root independently exercised two controlled fixtures through ordinary game input. The task-owned review server served production files from exact `e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1` Git objects; its runtime is unchanged from the `cb8dddd3` assessment revision. Fixture content and modeled browser storage are distinct from production code. The JSON inventory records screenshot hashes and the exact admitted guard-pack identity.
+
+| Rows | Observed in the actual browser | Limits and remaining work |
+| --- | --- | --- |
+| C01/C02, Capture self-contact | With master mute on, reactions off, Reduced effects and Ukrainian, legal Down → Up produced self-contact. At an actual inner viewport of **316 × 776**, the active screenshot visibly shows the **0.8s recovery countdown** and bottom cause **“Твоя лінія перетнула себе. Обери новий маршрут.”** The separate DOM receipt records 2 lives and the visible fixed `run-message` at x12/y735.609, width292/height36.391, within the viewport. Screenshot: `f07-active-compact-self-contact.png`. | This qualifies this self-contact/recovery path only. Earlier paused/cropped screenshots and AX-only text did not establish active visibility; the later active image resolves that specific concern. No shield, dense-cue or whole-row pass. |
+| C03, optional sentry warning | Normal Library → Expansion packs file import validated the exact v6 fixture pack, then Play → Start → legal Right held about 2s/released. At 0:02 the screenshot visibly shows a **dashed diagonal aim ray and bracketed shooter**, with 3 lives / LIVE LINE. At 0:07 the player completed 50% / 11900 score with 3 lives. Screenshots: `f07-guard-silent-contact.png`, `f07-guard-silent-result.png`. | Warning geometry is visible without depending on sound or captions. No projectile hit, damage cause, manual evasion, timing usability, reduced-effects comparison or recorded viewport qualification. The `contact` filename is not evidence of impact. |
+
+The guard fixture's “release → stationary hit” instruction was incorrect because accepted continuous movement continues after release. Its initial incompatible-version attempt, hidden-Home staging-helper failure and fixture MutationObserver errors are excluded from product findings. The successful receipt used normal file import; the reviewed pack is 5784 bytes, SHA256 `043d12c1664f10405ef0a99c6a42f1b506d7abe87927657b09aa3a32910f06f5`.
+
+These observations do not demonstrate an F07b defect. They add no listening, real AT, physical-device, controller-hardware, production-art or other-family qualification.
 
 ## Source anchors
 
