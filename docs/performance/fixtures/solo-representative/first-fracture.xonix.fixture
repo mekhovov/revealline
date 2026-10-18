@@ -1,0 +1,147 @@
+{
+  "format": "xonix-playground.v6",
+  "masteryDefinition": null,
+  "level": {
+    "version": "xonix-level.v5",
+    "id": "first-fracture",
+    "revision": "greybox-1",
+    "name": "First fracture",
+    "width": 72,
+    "height": 36,
+    "spawn": {
+      "x": 35.5,
+      "y": 0.5
+    },
+    "walls": [],
+    "foundations": [
+      {
+        "x": 29,
+        "y": 13,
+        "w": 13,
+        "h": 5
+      }
+    ],
+    "goal": {
+      "coverage": 0.76
+    },
+    "encounter": null,
+    "classic": {
+      "version": "classic.v1",
+      "terrain": [],
+      "powerups": [],
+      "arcadeActions": {
+        "version": "arcade-actions.v1"
+      }
+    },
+    "enemies": [
+      {
+        "id": "cutter",
+        "type": "eroder",
+        "x": 60.5,
+        "y": 8.5,
+        "vx": -2.4,
+        "vy": 0
+      },
+      {
+        "id": "keeper",
+        "type": "bouncer",
+        "x": 12.5,
+        "y": 26.5,
+        "vx": 1.6970562748477138,
+        "vy": -1.6970562748477138
+      },
+      {
+        "id": "outer",
+        "type": "border-patrol",
+        "speed": 1.8,
+        "clockwise": true,
+        "x": 71.5,
+        "y": 27.5
+      }
+    ],
+    "objectives": [],
+    "supplies": [],
+    "rules": {
+      "lives": 3,
+      "moveSpeed": 10,
+      "boostMultiplier": 1.5,
+      "respawnSeconds": 0.65,
+      "graceSeconds": 1,
+      "playerRadius": 0.18,
+      "pointsPerCell": 10,
+      "objectivePoints": 500,
+      "timeMedals": [
+        90,
+        150
+      ],
+      "switchCooldownSeconds": 2,
+      "timeLimitSeconds": 0,
+      "cutTimeLimitSeconds": 0,
+      "maxTrailCells": 0,
+      "stopOnCapture": true
+    },
+    "signalZones": [],
+    "hangars": [
+      {
+        "id": "home-hangar",
+        "x": 35.5,
+        "y": 0.5,
+        "radius": 2
+      }
+    ]
+  },
+  "theme": {
+    "id": "horizon",
+    "name": "Horizon School",
+    "subtitle": "Find a shore. Make a path.",
+    "family": "retro",
+    "player": "retro-craft",
+    "enemyShape": "orb",
+    "patrolShape": "spark",
+    "bossShape": "core",
+    "scene": "dawn",
+    "labels": {
+      "objective": "Relay",
+      "supply": "Supply",
+      "enemy": "Field keeper",
+      "boss": "Sentinel",
+      "currency": "Score",
+      "ability": "Ability"
+    },
+    "palette": {
+      "ink": "#142b3a",
+      "paper": "#f7efe0",
+      "muted": "#a5bab8",
+      "accent": "#ffd27b",
+      "safe": "#65dcc5",
+      "danger": "#ff7795",
+      "field": "#102c3a",
+      "grid": "#294754",
+      "sky": "#f5c68b",
+      "land": "#638d91"
+    },
+    "classBodies": {
+      "scout": "retro-craft",
+      "bomber": "retro-craft",
+      "carrier": "retro-craft",
+      "interceptor": "retro-craft",
+      "fiber": "retro-craft",
+      "impact": "retro-craft",
+      "trapper": "retro-craft"
+    }
+  },
+  "visualOverrides": {},
+  "settings": {
+    "seed": 1,
+    "classId": "scout",
+    "turnPolicy": "immediate"
+  },
+  "presentation": {
+    "style": "microtile",
+    "showGrid": true
+  },
+  "metadata": {
+    "title": "Qualification: first-fracture",
+    "description": "Unchanged gameplay definition; public Playground import for bounded qualification. Decorative authored backdrop is absent from this explicit greybox fixture."
+  }
+}

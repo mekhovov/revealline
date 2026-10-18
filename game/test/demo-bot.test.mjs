@@ -534,3 +534,55 @@ test('full live admission rejects an exhausted route before display and resets a
   }
   assert.equal(ThreadWorker.owners, 0);
 });
+
+test('resource diagnostic observes Worker lifetime before initial preparation resolves', async () => {
+  let owned = 0,
+    created = 0,
+    retired = 0;
+  const controller = new AbortController();
+  const pending = prepareBotPlayer(maps[0], options(), {
+    WorkerClass: SilentWorker,
+    signal: controller.signal,
+    onWorker() {
+      owned++;
+      created++;
+      return () => {
+        owned--;
+        retired++;
+      };
+    },
+  });
+  try {
+    assert.equal(owned, 1);
+    assert.equal(created, 1);
+    controller.abort();
+    await assert.rejects(pending, { name: 'AbortError' });
+    assert.equal(owned, 0);
+    assert.equal(retired, 1);
+    assert.equal(SilentWorker.owners, 0);
+  } finally {
+    controller.abort();
+    await pending.catch(() => {});
+  }
+});
+
+test('resource diagnostic callbacks cannot alter Worker watchdog or cleanup', async () => {
+  for (const onWorker of [
+    () => {
+      throw new Error('diagnostic create');
+    },
+    () => () => {
+      throw new Error('diagnostic release');
+    },
+  ]) {
+    await assert.rejects(
+      prepareBotPlayer(maps[0], options(), {
+        WorkerClass: SilentWorker,
+        watchdogMs: 5,
+        onWorker,
+      }),
+      /deadline/,
+    );
+    assert.equal(SilentWorker.owners, 0);
+  }
+});

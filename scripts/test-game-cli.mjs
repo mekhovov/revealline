@@ -230,10 +230,18 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
     'scripts/pack-indexes.mjs',
     'scripts/brand-icons.mjs',
     'scripts/build-entry-writer.mjs',
+    'scripts/published-content-ownership.mjs',
+    'game/editions/model.mjs',
+    'game/edition-context.mjs',
+    'game/presentation/theme-system.mjs',
+    'publishing/vendor/acorn-8.18.0.mjs',
+    'publishing/vendor/acorn-LICENSE.txt',
     'game/data-json.mjs',
     'game/content-launch.mjs',
-  ])
+  ]) {
+    await fs.mkdir(path.dirname(path.join(root, relative)), { recursive: true });
     await fs.copyFile(new URL(`../${relative}`, import.meta.url), path.join(root, relative));
+  }
   await fs.writeFile(
     path.join(root, 'scripts/offline-core-closure.mjs'),
     'export function isOptionalSpatialAudioBody() { return false; }\nexport function isOptionalReactionVoiceBody() { return false; }\n',
@@ -251,7 +259,7 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   await fs.writeFile(path.join(scripts, 'game-cli.mjs'), historicalEntry);
   await fs.writeFile(path.join(root, '.gitignore'), 'releases/\n');
   git('init', '--quiet');
-  git('add', 'game', 'scripts', '.gitignore');
+  git('add', 'game', 'scripts', 'publishing', '.gitignore');
   git(
     '-c',
     'commit.gpgsign=false',
@@ -307,6 +315,11 @@ test('real Git snapshot runs an older frozen entry through an aliased temp root 
   const sourceEntries = new Map(readTarEntries(archive).map((entry) => [entry.name, entry.bytes]));
   assert.deepEqual(sourceEntries.get('game/core.mjs'), oldCore);
   assert.equal(sourceEntries.get('scripts/game-cli.mjs').toString(), historicalEntry);
+  assert.deepEqual(
+    sourceEntries.get('publishing/vendor/acorn-8.18.0.mjs'),
+    await fs.readFile(new URL('../publishing/vendor/acorn-8.18.0.mjs', import.meta.url)),
+    'The frozen build uses its archived parser bytes without resolving host node_modules.',
+  );
   assert.ok(
     ![...sourceEntries.keys()].some(
       (name) => name.startsWith('releases/') || name.startsWith('.git/'),
@@ -566,6 +579,86 @@ test('portable resource checks resolve nested relative imports and reject root-o
   ]);
   await fs.writeFile(path.join(root, 'game/index.html'), '<script src="/game/app.mjs"></script>');
   await assert.rejects(validateBuildReferences(root, files), /not portable/);
+});
+
+test('deferred module references and worker dependency closure are required before replacing a build', async (t) => {
+  const { root, out } = await fixture(t);
+  const result = await buildProject({ root, out });
+  await fs.mkdir(path.join(root, 'game/ui'));
+  await fs.writeFile(
+    path.join(root, 'game/app.mjs'),
+    'export const open = () => import( /* deferred */ "./ui/lazy.mjs");',
+  );
+  await assert.rejects(inspectBuildProject({ root }), /game\/app\.mjs → \.\/ui\/lazy\.mjs/);
+  await fs.writeFile(
+    path.join(root, 'game/ui/lazy.mjs'),
+    'export const inspect = () => new Worker(new URL("../inspection-worker.mjs", import.meta.url), { type: "module" });',
+  );
+  await assert.rejects(
+    buildProject({ root, out }),
+    /game\/ui\/lazy\.mjs → \.\.\/inspection-worker\.mjs/,
+  );
+  await fs.writeFile(
+    path.join(root, 'game/inspection-worker.mjs'),
+    'import { value } from "./worker-helper.mjs"; postMessage(value);',
+  );
+  await assert.rejects(
+    buildProject({ root, out }),
+    /game\/inspection-worker\.mjs → \.\/worker-helper\.mjs/,
+  );
+  assert.equal(hash(await fs.readFile(path.join(out, 'distribution.zip'))), result.sha256);
+  await fs.writeFile(path.join(root, 'game/worker-helper.mjs'), 'export const value = 1;');
+  await buildProject({ root, out });
+  for (const name of ['ui/lazy.mjs', 'inspection-worker.mjs', 'worker-helper.mjs'])
+    await fs.access(path.join(out, 'game', name));
+});
+
+test('module references use syntax rather than commented examples and support static template imports', async (t) => {
+  const { root } = await fixture(t);
+  await fs.writeFile(
+    path.join(root, 'game/app.mjs'),
+    [
+      '// import "./commented-missing.mjs";',
+      'const example = `import("./example-missing.mjs")`;',
+      'export const load = () => import(`./core.mjs`);',
+      'export const computed = value => import(value);',
+      'export { value } from "./core.mjs";',
+    ].join('\n'),
+  );
+  const files = await collectBuildFiles(root);
+  assert.equal((await validateBuildReferences(root, files)).literalReferencesValid, true);
+  await fs.writeFile(
+    path.join(root, 'game/app.mjs'),
+    'export const load = () => import("unbundled-package");',
+  );
+  await assert.rejects(validateBuildReferences(root, files), /bare import/);
+  await fs.writeFile(
+    path.join(root, 'game/app.mjs'),
+    'export const load = () => import("/game/core.mjs");',
+  );
+  await assert.rejects(validateBuildReferences(root, files), /not portable/);
+});
+
+test('literal worker URLs must be admitted even when files exist outside the build include', async (t) => {
+  const { root } = await fixture(t);
+  await fs.mkdir(path.join(root, 'tools'));
+  await fs.writeFile(path.join(root, 'tools/worker.mjs'), 'export {};');
+  const files = await collectBuildFiles(root);
+  for (const constructor of ['Worker', 'SharedWorker', 'globalThis.Worker', 'WorkerClass']) {
+    await fs.writeFile(
+      path.join(root, 'game/app.mjs'),
+      `new ${constructor}(new URL("../tools/worker.mjs", import.meta.url), { type: "module" });`,
+    );
+    await assert.rejects(
+      validateBuildReferences(root, files),
+      /game\/app\.mjs → \.\.\/tools\/worker\.mjs/,
+    );
+  }
+  await fs.writeFile(
+    path.join(root, 'game/app.mjs'),
+    'new Worker(new URL("./core.mjs?worker=1", import.meta.url));',
+  );
+  assert.equal((await validateBuildReferences(root, files)).literalReferencesValid, true);
 });
 
 test('ZIP uses standard CRC, sorted names, fixed timestamps and stored data', () => {

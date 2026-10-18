@@ -1,0 +1,1026 @@
+{
+  "format": "SoloQualificationReportV1",
+  "sourceRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected public result did not become visible before deadline\n    at execute (file:///home/runner/work/revealline/revealline/tools/scripts/qualify-solo-runtime.mjs:981:11)\n    at async execute (file:///home/runner/work/revealline/revealline/tools/scripts/qualify-solo-runtime.mjs:782:13)\n    at async file:///home/runner/work/revealline/revealline/tools/scripts/qualify-solo-runtime.mjs:1124:3",
+  "performanceGateStatus": "fail",
+  "provenance": {
+    "rawPath": ".cache/solo-followup/remote-soak-successor-bffcbd838/chromium-r2-terminal/retained/members/solo-linux-sustained-soak-chromium-2/evidence/soak-chromium-r2-candidate/report.json",
+    "rawBytes": 1435039,
+    "rawSHA256": "d6ae979e5b6b9c6ba7c8ea5074b7a4001bf90e4e6bbd1c8fb08d9160d059622d",
+    "selection": "Every original snapshot, retaining its original group and exact resource object; other snapshot fields omitted."
+  },
+  "snapshots": [
+    {
+      "group": "prepared",
+      "application": {
+        "resources": {
+          "renderer": {
+            "layers": {
+              "layers": 4,
+              "pixels": 2654208
+            },
+            "ownedCanvases": {
+              "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+              "categories": {
+                "staticLayers": {
+                  "canvases": 4,
+                  "pixels": 2654208,
+                  "rgbaBytesEstimate": 10616832
+                },
+                "sourceArt": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368
+                },
+                "battlefieldGround": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false
+                },
+                "adaptedSprites": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": 0
+                },
+                "signalNoise": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false
+                },
+                "jammerSurface": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false
+                },
+                "jammerNoise": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false
+                },
+                "demoConcealment": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false,
+                  "pixelBufferBytes": 0
+                }
+              },
+              "canvases": 5,
+              "pixels": 2764800,
+              "rgbaBytesEstimate": 11059200,
+              "retainedPixelBufferBytes": 0,
+              "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+            },
+            "enemyImages": {
+              "scope": "page",
+              "entries": 0,
+              "active": 0,
+              "queued": 0,
+              "reservedBytes": 0,
+              "decodedBytes": 0,
+              "ownedLeases": 0
+            },
+            "legacyImages": {
+              "scope": "page",
+              "pending": 0,
+              "active": 0,
+              "reservedPixels": 0,
+              "retainedPixels": 1572778,
+              "pixelLimit": 16777216
+            }
+          },
+          "phaser": {
+            "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+            "displayed": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "detachedBoard": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "uniqueCanvases": 2,
+            "pixels": 1327104,
+            "rgbaBytesEstimate": 5308416,
+            "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+          },
+          "sharedPresentationImages": {
+            "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+            "categories": {
+              "pagePresentation": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              },
+              "activePresentation": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              },
+              "actorAppearance": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              },
+              "activeBackdrop": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              }
+            },
+            "uniqueObserved": {
+              "images": 0,
+              "pixels": 0,
+              "rgbaBytesEstimate": 0,
+              "unknownDimensions": 0
+            },
+            "sharedCategoryReferences": 0,
+            "unavailableSnapshots": 0,
+            "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+            "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+          },
+          "pcm": {
+            "effects": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "buffers": 0,
+              "loading": 0
+            },
+            "published": null,
+            "proceduralNoise": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "durationLimitSeconds": 0.25
+            },
+            "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+            "reactions": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "decodedBytesLimit": 12582912,
+              "buffersLimit": 24,
+              "perDecodeBytesLimit": 6291456,
+              "loading": 0,
+              "generation": 2,
+              "closed": false
+            }
+          },
+          "media": {
+            "phase": "menu",
+            "queued": 0,
+            "active": {
+              "fetch": 0,
+              "decode": 0,
+              "inspect": 0,
+              "main": 0
+            },
+            "reservedDecodeBytes": 0,
+            "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+          }
+        }
+      }
+    },
+    {
+      "group": "completed",
+      "application": {
+        "resources": {
+          "renderer": {
+            "layers": {
+              "layers": 4,
+              "pixels": 2654208
+            },
+            "ownedCanvases": {
+              "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+              "categories": {
+                "staticLayers": {
+                  "canvases": 4,
+                  "pixels": 2654208,
+                  "rgbaBytesEstimate": 10616832
+                },
+                "sourceArt": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368
+                },
+                "battlefieldGround": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false
+                },
+                "adaptedSprites": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": 0
+                },
+                "signalNoise": {
+                  "canvases": 1,
+                  "pixels": 16384,
+                  "rgbaBytesEstimate": 65536,
+                  "lost": false
+                },
+                "jammerSurface": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368,
+                  "lost": false
+                },
+                "jammerNoise": {
+                  "canvases": 1,
+                  "pixels": 16384,
+                  "rgbaBytesEstimate": 65536,
+                  "lost": false
+                },
+                "demoConcealment": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false,
+                  "pixelBufferBytes": 0
+                }
+              },
+              "canvases": 8,
+              "pixels": 2908160,
+              "rgbaBytesEstimate": 11632640,
+              "retainedPixelBufferBytes": 0,
+              "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+            },
+            "enemyImages": {
+              "scope": "page",
+              "entries": 0,
+              "active": 0,
+              "queued": 0,
+              "reservedBytes": 0,
+              "decodedBytes": 0,
+              "ownedLeases": 0
+            },
+            "legacyImages": {
+              "scope": "page",
+              "pending": 0,
+              "active": 0,
+              "reservedPixels": 0,
+              "retainedPixels": 1572778,
+              "pixelLimit": 16777216
+            }
+          },
+          "phaser": {
+            "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+            "displayed": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "detachedBoard": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "uniqueCanvases": 2,
+            "pixels": 1327104,
+            "rgbaBytesEstimate": 5308416,
+            "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+          },
+          "sharedPresentationImages": {
+            "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+            "categories": {
+              "pagePresentation": {
+                "images": 80,
+                "pixels": 92416,
+                "rgbaBytesEstimate": 369664,
+                "unknownDimensions": 0
+              },
+              "activePresentation": {
+                "images": 80,
+                "pixels": 92416,
+                "rgbaBytesEstimate": 369664,
+                "unknownDimensions": 0
+              },
+              "actorAppearance": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              },
+              "activeBackdrop": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              }
+            },
+            "uniqueObserved": {
+              "images": 80,
+              "pixels": 92416,
+              "rgbaBytesEstimate": 369664,
+              "unknownDimensions": 0
+            },
+            "sharedCategoryReferences": 80,
+            "unavailableSnapshots": 0,
+            "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+            "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+          },
+          "pcm": {
+            "effects": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "buffers": 0,
+              "loading": 0
+            },
+            "published": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "cacheEntries": 0,
+              "loading": 0
+            },
+            "proceduralNoise": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "durationLimitSeconds": 0.25
+            },
+            "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+            "reactions": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "decodedBytesLimit": 12582912,
+              "buffersLimit": 24,
+              "perDecodeBytesLimit": 6291456,
+              "loading": 0,
+              "generation": 2,
+              "closed": false
+            }
+          },
+          "media": {
+            "phase": "paused",
+            "queued": 0,
+            "active": {
+              "fetch": 0,
+              "decode": 0,
+              "inspect": 0,
+              "main": 0
+            },
+            "reservedDecodeBytes": 0,
+            "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+          },
+          "soundtrack": {
+            "admission": {
+              "phase": "paused",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0
+            },
+            "inspection": {
+              "workerActive": false,
+              "workerOwnedBytes": 0,
+              "pendingRequests": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "group": "completed",
+      "application": {
+        "resources": {
+          "renderer": {
+            "layers": {
+              "layers": 4,
+              "pixels": 2654208
+            },
+            "ownedCanvases": {
+              "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+              "categories": {
+                "staticLayers": {
+                  "canvases": 4,
+                  "pixels": 2654208,
+                  "rgbaBytesEstimate": 10616832
+                },
+                "sourceArt": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368
+                },
+                "battlefieldGround": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false
+                },
+                "adaptedSprites": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": 0
+                },
+                "signalNoise": {
+                  "canvases": 1,
+                  "pixels": 16384,
+                  "rgbaBytesEstimate": 65536,
+                  "lost": false
+                },
+                "jammerSurface": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368,
+                  "lost": false
+                },
+                "jammerNoise": {
+                  "canvases": 1,
+                  "pixels": 16384,
+                  "rgbaBytesEstimate": 65536,
+                  "lost": false
+                },
+                "demoConcealment": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false,
+                  "pixelBufferBytes": 0
+                }
+              },
+              "canvases": 8,
+              "pixels": 2908160,
+              "rgbaBytesEstimate": 11632640,
+              "retainedPixelBufferBytes": 0,
+              "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+            },
+            "enemyImages": {
+              "scope": "page",
+              "entries": 0,
+              "active": 0,
+              "queued": 0,
+              "reservedBytes": 0,
+              "decodedBytes": 0,
+              "ownedLeases": 0
+            },
+            "legacyImages": {
+              "scope": "page",
+              "pending": 0,
+              "active": 0,
+              "reservedPixels": 0,
+              "retainedPixels": 1572778,
+              "pixelLimit": 16777216
+            }
+          },
+          "phaser": {
+            "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+            "displayed": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "detachedBoard": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "uniqueCanvases": 2,
+            "pixels": 1327104,
+            "rgbaBytesEstimate": 5308416,
+            "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+          },
+          "sharedPresentationImages": {
+            "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+            "categories": {
+              "pagePresentation": {
+                "images": 80,
+                "pixels": 92416,
+                "rgbaBytesEstimate": 369664,
+                "unknownDimensions": 0
+              },
+              "activePresentation": {
+                "images": 80,
+                "pixels": 92416,
+                "rgbaBytesEstimate": 369664,
+                "unknownDimensions": 0
+              },
+              "actorAppearance": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              },
+              "activeBackdrop": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              }
+            },
+            "uniqueObserved": {
+              "images": 80,
+              "pixels": 92416,
+              "rgbaBytesEstimate": 369664,
+              "unknownDimensions": 0
+            },
+            "sharedCategoryReferences": 80,
+            "unavailableSnapshots": 0,
+            "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+            "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+          },
+          "pcm": {
+            "effects": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "buffers": 0,
+              "loading": 0
+            },
+            "published": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "cacheEntries": 0,
+              "loading": 0
+            },
+            "proceduralNoise": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "durationLimitSeconds": 0.25
+            },
+            "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+            "reactions": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "decodedBytesLimit": 12582912,
+              "buffersLimit": 24,
+              "perDecodeBytesLimit": 6291456,
+              "loading": 0,
+              "generation": 2,
+              "closed": false
+            }
+          },
+          "media": {
+            "phase": "paused",
+            "queued": 0,
+            "active": {
+              "fetch": 0,
+              "decode": 0,
+              "inspect": 0,
+              "main": 0
+            },
+            "reservedDecodeBytes": 0,
+            "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+          },
+          "soundtrack": {
+            "admission": {
+              "phase": "paused",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0
+            },
+            "inspection": {
+              "workerActive": false,
+              "workerOwnedBytes": 0,
+              "pendingRequests": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "group": "completed",
+      "application": {
+        "resources": {
+          "renderer": {
+            "layers": {
+              "layers": 4,
+              "pixels": 2654208
+            },
+            "ownedCanvases": {
+              "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+              "categories": {
+                "staticLayers": {
+                  "canvases": 4,
+                  "pixels": 2654208,
+                  "rgbaBytesEstimate": 10616832
+                },
+                "sourceArt": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368
+                },
+                "battlefieldGround": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false
+                },
+                "adaptedSprites": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": 0
+                },
+                "signalNoise": {
+                  "canvases": 1,
+                  "pixels": 16384,
+                  "rgbaBytesEstimate": 65536,
+                  "lost": false
+                },
+                "jammerSurface": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368,
+                  "lost": false
+                },
+                "jammerNoise": {
+                  "canvases": 1,
+                  "pixels": 16384,
+                  "rgbaBytesEstimate": 65536,
+                  "lost": false
+                },
+                "demoConcealment": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false,
+                  "pixelBufferBytes": 0
+                }
+              },
+              "canvases": 8,
+              "pixels": 2908160,
+              "rgbaBytesEstimate": 11632640,
+              "retainedPixelBufferBytes": 0,
+              "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+            },
+            "enemyImages": {
+              "scope": "page",
+              "entries": 0,
+              "active": 0,
+              "queued": 0,
+              "reservedBytes": 0,
+              "decodedBytes": 0,
+              "ownedLeases": 0
+            },
+            "legacyImages": {
+              "scope": "page",
+              "pending": 0,
+              "active": 0,
+              "reservedPixels": 0,
+              "retainedPixels": 1572778,
+              "pixelLimit": 16777216
+            }
+          },
+          "phaser": {
+            "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+            "displayed": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "detachedBoard": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "uniqueCanvases": 2,
+            "pixels": 1327104,
+            "rgbaBytesEstimate": 5308416,
+            "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+          },
+          "sharedPresentationImages": {
+            "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+            "categories": {
+              "pagePresentation": {
+                "images": 80,
+                "pixels": 92416,
+                "rgbaBytesEstimate": 369664,
+                "unknownDimensions": 0
+              },
+              "activePresentation": {
+                "images": 80,
+                "pixels": 92416,
+                "rgbaBytesEstimate": 369664,
+                "unknownDimensions": 0
+              },
+              "actorAppearance": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              },
+              "activeBackdrop": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              }
+            },
+            "uniqueObserved": {
+              "images": 80,
+              "pixels": 92416,
+              "rgbaBytesEstimate": 369664,
+              "unknownDimensions": 0
+            },
+            "sharedCategoryReferences": 80,
+            "unavailableSnapshots": 0,
+            "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+            "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+          },
+          "pcm": {
+            "effects": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "buffers": 0,
+              "loading": 0
+            },
+            "published": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "cacheEntries": 0,
+              "loading": 0
+            },
+            "proceduralNoise": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "durationLimitSeconds": 0.25
+            },
+            "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+            "reactions": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "decodedBytesLimit": 12582912,
+              "buffersLimit": 24,
+              "perDecodeBytesLimit": 6291456,
+              "loading": 0,
+              "generation": 2,
+              "closed": false
+            }
+          },
+          "media": {
+            "phase": "paused",
+            "queued": 0,
+            "active": {
+              "fetch": 0,
+              "decode": 0,
+              "inspect": 0,
+              "main": 0
+            },
+            "reservedDecodeBytes": 0,
+            "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+          },
+          "soundtrack": {
+            "admission": {
+              "phase": "paused",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0
+            },
+            "inspection": {
+              "workerActive": false,
+              "workerOwnedBytes": 0,
+              "pendingRequests": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "group": "failed-attempt-partial",
+      "application": {
+        "resources": {
+          "renderer": {
+            "layers": {
+              "layers": 4,
+              "pixels": 2654208
+            },
+            "ownedCanvases": {
+              "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+              "categories": {
+                "staticLayers": {
+                  "canvases": 4,
+                  "pixels": 2654208,
+                  "rgbaBytesEstimate": 10616832
+                },
+                "sourceArt": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368
+                },
+                "battlefieldGround": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false
+                },
+                "adaptedSprites": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": 0
+                },
+                "signalNoise": {
+                  "canvases": 1,
+                  "pixels": 16384,
+                  "rgbaBytesEstimate": 65536,
+                  "lost": false
+                },
+                "jammerSurface": {
+                  "canvases": 1,
+                  "pixels": 110592,
+                  "rgbaBytesEstimate": 442368,
+                  "lost": false
+                },
+                "jammerNoise": {
+                  "canvases": 1,
+                  "pixels": 16384,
+                  "rgbaBytesEstimate": 65536,
+                  "lost": false
+                },
+                "demoConcealment": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "lost": false,
+                  "pixelBufferBytes": 0
+                }
+              },
+              "canvases": 8,
+              "pixels": 2908160,
+              "rgbaBytesEstimate": 11632640,
+              "retainedPixelBufferBytes": 0,
+              "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+            },
+            "enemyImages": {
+              "scope": "page",
+              "entries": 0,
+              "active": 0,
+              "queued": 0,
+              "reservedBytes": 0,
+              "decodedBytes": 0,
+              "ownedLeases": 0
+            },
+            "legacyImages": {
+              "scope": "page",
+              "pending": 0,
+              "active": 0,
+              "reservedPixels": 0,
+              "retainedPixels": 1572778,
+              "pixelLimit": 16777216
+            }
+          },
+          "phaser": {
+            "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+            "displayed": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "detachedBoard": {
+              "canvases": 1,
+              "width": 1152,
+              "height": 576,
+              "pixels": 663552,
+              "rgbaBytesEstimate": 2654208
+            },
+            "uniqueCanvases": 2,
+            "pixels": 1327104,
+            "rgbaBytesEstimate": 5308416,
+            "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+          },
+          "sharedPresentationImages": {
+            "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+            "categories": {
+              "pagePresentation": {
+                "images": 80,
+                "pixels": 92416,
+                "rgbaBytesEstimate": 369664,
+                "unknownDimensions": 0
+              },
+              "activePresentation": {
+                "images": 80,
+                "pixels": 92416,
+                "rgbaBytesEstimate": 369664,
+                "unknownDimensions": 0
+              },
+              "actorAppearance": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              },
+              "activeBackdrop": {
+                "images": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "unknownDimensions": 0
+              }
+            },
+            "uniqueObserved": {
+              "images": 80,
+              "pixels": 92416,
+              "rgbaBytesEstimate": 369664,
+              "unknownDimensions": 0
+            },
+            "sharedCategoryReferences": 80,
+            "unavailableSnapshots": 0,
+            "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+            "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+          },
+          "pcm": {
+            "effects": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "buffers": 0,
+              "loading": 0
+            },
+            "published": {
+              "decodedBytes": 0,
+              "decodedBytesLimit": 33554432,
+              "cacheEntries": 0,
+              "loading": 0
+            },
+            "proceduralNoise": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "durationLimitSeconds": 0.25
+            },
+            "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+            "reactions": {
+              "buffers": 0,
+              "decodedBytes": 0,
+              "decodedBytesLimit": 12582912,
+              "buffersLimit": 24,
+              "perDecodeBytesLimit": 6291456,
+              "loading": 0,
+              "generation": 2,
+              "closed": false
+            }
+          },
+          "media": {
+            "phase": "paused",
+            "queued": 0,
+            "active": {
+              "fetch": 0,
+              "decode": 0,
+              "inspect": 0,
+              "main": 0
+            },
+            "reservedDecodeBytes": 0,
+            "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+          },
+          "soundtrack": {
+            "admission": {
+              "phase": "paused",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0
+            },
+            "inspection": {
+              "workerActive": false,
+              "workerOwnedBytes": 0,
+              "pendingRequests": 0
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -803,6 +803,12 @@ export function attachGameShell({
   surfaces.refreshGlobalSettings();
   if (initial) openHome({ focus: initialFocus });
   return {
+    get qualityObservationOwner() {
+      return destroyed ? null : surfaces.qualityObservationOwner;
+    },
+    setQuality: (tier) => {
+      if (!destroyed) surfaces.setQuality(tier);
+    },
     primary,
     openHome,
     openMissions,

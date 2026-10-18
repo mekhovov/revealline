@@ -1,3 +1,4 @@
+import { createMediaPreparation } from './media-preparation.mjs';
 import { actorPhaseSound } from './encounter-audio.mjs';
 import { dialogueChannel } from './dialogue-channel.mjs';
 import { playerMovementBody } from './movement-profiles.mjs';
@@ -16,12 +17,88 @@ import {
 import { directionalSpeedFactor } from '../core/directional-fields.mjs';
 import { terrainTransitionCaption } from './terrain-feedback.mjs';
 
+export const GAMEPLAY_EFFECTS = Object.freeze([
+  'start',
+  'retry',
+  'warning',
+  'loss',
+  'respawn',
+  'win',
+  'closure',
+  'reveal-small',
+  'reveal-medium',
+  'reveal-large',
+]);
+const EFFECT_CACHE_BYTES = 32 * 1024 * 1024;
+
+function effectDecodeReservation(bytes, sampleRate = 48000) {
+  const header = new DataView(bytes);
+  if (
+    bytes.byteLength >= 44 &&
+    header.getUint32(0) === 0x52494646 &&
+    header.getUint32(8) === 0x57415645 &&
+    header.getUint32(12) === 0x666d7420 &&
+    header.getUint32(16, true) === 16 &&
+    header.getUint32(36) === 0x64617461
+  ) {
+    const channels = header.getUint16(22, true),
+      rate = header.getUint32(24, true),
+      alignment = header.getUint16(32, true),
+      bits = header.getUint16(34, true),
+      length = header.getUint32(40, true);
+    if (
+      header.getUint16(20, true) === 1 &&
+      [1, 2].includes(channels) &&
+      rate >= 8000 &&
+      [8, 16, 24, 32].includes(bits) &&
+      alignment === (channels * bits) / 8 &&
+      length === bytes.byteLength - 44
+    )
+      return Math.ceil(((length / alignment) * sampleRate) / rate) * channels * 4;
+  }
+  // The bank is fixed and byte-bounded. Non-canonical WAVs still go through
+  // the native decoder, with a conservative minimum source-rate reservation.
+  return Math.ceil(bytes.byteLength * 2 * Math.max(1, sampleRate / 8000));
+}
+
+async function readEffectOriginal(response, expected, signal) {
+  if (!response.body?.getReader) {
+    const bytes = await response.arrayBuffer();
+    return bytes.byteLength === expected ? bytes : null;
+  }
+  const reader = response.body.getReader(),
+    bytes = new Uint8Array(expected);
+  let offset = 0;
+  try {
+    for (;;) {
+      signal.throwIfAborted();
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (offset + value.byteLength > expected)
+        throw new RangeError('Effect original exceeds its byte budget.');
+      bytes.set(value, offset);
+      offset += value.byteLength;
+    }
+    return offset === expected ? bytes.buffer : null;
+  } catch (error) {
+    await reader.cancel().catch(() => {});
+    throw error;
+  } finally {
+    reader.releaseLock();
+  }
+}
+
 /** Owns only presentation objects. Decoding never schedules an old event. */
 export class FeedbackDirector {
   constructor(sound, { now = () => performance.now() } = {}) {
     this.sound = sound;
+    this.preparation = sound.mediaPreparation ?? createMediaPreparation();
+    this.ownsPreparation = !sound.mediaPreparation;
+    this.controllers = new Set();
+    this.decodedBytes = 0;
     this.buffers = new Map();
     this.pending = new Map();
+    this.pendingRequests = new Map();
     this.retryAfter = new Map();
     this.now = now;
     this.boards = new Map();
@@ -33,37 +110,104 @@ export class FeedbackDirector {
     this.generation = 0;
     this.closed = false;
   }
-  prepare() {
-    if (!this.sound.context || this.closed || typeof globalThis.fetch !== 'function') return;
-    // Explicit audio activation may follow installation or reconnection.
+  prepare(names = GAMEPLAY_EFFECTS) {
+    if (
+      !this.sound.context ||
+      this.closed ||
+      this.sound.audioMaster?.muted ||
+      this.sound.audioMaster?.volume === 0 ||
+      this.sound.settings?.master === 0 ||
+      this.sound.settings?.sfx === 0 ||
+      typeof globalThis.fetch !== 'function'
+    )
+      return Promise.resolve();
     this.retryAfter.clear();
-    for (const name of Object.keys(EFFECT_BANK)) this.load(name);
+    return Promise.allSettled(
+      [...new Set(names)].map((name) => this.load(name, { priority: 'background' })),
+    );
   }
-  load(name) {
+  load(name, { priority = 'demand' } = {}) {
     if (this.closed || this.buffers.has(name)) return;
-    if (this.pending.has(name)) return this.pending.get(name);
+    if (this.pending.has(name)) {
+      const request = this.pendingRequests.get(name);
+      if (request?.priority === 'background' && priority === 'demand') {
+        request.priority = 'demand';
+        this.preparation.promote?.(request.controller.signal, 'demand');
+      }
+      return this.pending.get(name);
+    }
     if (this.now() < (this.retryAfter.get(name) ?? -Infinity)) return;
     const entry = EFFECT_BANK[name];
     if (!entry) return;
+    const controller = new AbortController(),
+      context = this.sound.context;
+    const eligible = () =>
+      !this.closed &&
+      context === this.sound.context &&
+      !this.sound.audioMaster?.muted &&
+      this.sound.audioMaster?.volume !== 0 &&
+      this.sound.settings?.master !== 0;
+    const request = { priority, controller };
+    const options = { priority, signal: controller.signal, eligible };
+    this.pendingRequests.set(name, request);
+    this.controllers.add(controller);
+    const timer = setTimeout(() => controller.abort(), 10000);
+    let cancelled = false;
     const promise = (async () => {
-      const response = await fetch(new URL(`../audio/effects/${entry.file}`, import.meta.url));
-      if (!response.ok) return;
-      const bytes = await response.arrayBuffer();
-      if (bytes.byteLength !== entry.bytes || this.closed) return;
-      const context = this.sound.context;
-      if (!context?.decodeAudioData) return;
-      const buffer = await context.decodeAudioData(bytes);
-      if (!this.closed && context === this.sound.context) this.buffers.set(name, buffer);
+      const bytes = await this.preparation.run(
+        'fetch',
+        async () => {
+          const response = await fetch(new URL(`../audio/effects/${entry.file}`, import.meta.url), {
+            signal: controller.signal,
+          });
+          if (!response.ok) return null;
+          return readEffectOriginal(response, entry.bytes, controller.signal);
+        },
+        options,
+      );
+      if (!bytes || !eligible() || !context?.decodeAudioData) return;
+      // Originals are short 16-bit WAVs. Reserve conservatively for resampling;
+      // the native decoder owns this reservation until its promise settles.
+      const reservation = effectDecodeReservation(bytes, context.sampleRate);
+      const buffer = await this.preparation.run('decode', () => context.decodeAudioData(bytes), {
+        ...options,
+        priority: request.priority,
+        bytes: reservation,
+      });
+      if (!eligible() || controller.signal.aborted) return;
+      const size = (buffer.length ?? 0) * (buffer.numberOfChannels ?? 0) * 4;
+      if (size > EFFECT_CACHE_BYTES) return;
+      while (this.buffers.size && this.decodedBytes + size > EFFECT_CACHE_BYTES) {
+        const oldest = this.buffers.keys().next().value;
+        const previous = this.buffers.get(oldest);
+        this.decodedBytes -= (previous.length ?? 0) * (previous.numberOfChannels ?? 0) * 4;
+        this.buffers.delete(oldest);
+      }
+      this.buffers.set(name, buffer);
+      this.decodedBytes += size;
     })()
-      .catch(() => {})
+      .catch((error) => {
+        cancelled = error?.name === 'AbortError';
+      })
       .finally(() => {
+        clearTimeout(timer);
+        this.controllers.delete(controller);
         this.pending.delete(name);
-        // Optional offline recordings may be absent. Do not retry each render frame.
-        if (!this.closed && !this.buffers.has(name)) this.retryAfter.set(name, this.now() + 5000);
+        this.pendingRequests.delete(name);
+        if (!this.closed && !cancelled && !this.buffers.has(name))
+          this.retryAfter.set(name, this.now() + 5000);
         else this.retryAfter.delete(name);
       });
     this.pending.set(name, promise);
     return promise;
+  }
+  resourceSnapshot() {
+    return {
+      decodedBytes: this.decodedBytes,
+      decodedBytesLimit: EFFECT_CACHE_BYTES,
+      buffers: this.buffers.size,
+      loading: this.pending.size,
+    };
   }
   play(
     name,
@@ -107,6 +251,8 @@ export class FeedbackDirector {
       s.paused ||
       s.audioMaster.muted ||
       s.audioMaster.volume === 0 ||
+      s.settings?.master === 0 ||
+      (!ui && !radio && !movement && s.settings?.sfx === 0) ||
       !c ||
       c.state !== 'running' ||
       (!ui && s.gameplayPaused)
@@ -118,7 +264,7 @@ export class FeedbackDirector {
       (!s.movementSettings.enabled || s.movementSettings.volume === 0)
     )
       return null;
-    if (ui && !s.menuSettings.enabled) return null;
+    if (ui && (!s.menuSettings.enabled || s.menuSettings.volume === 0)) return null;
     if (
       radio &&
       (!s.radioSettings?.enabled || s.radioSettings.volume === 0 || dialogueChannel.active)
@@ -819,8 +965,11 @@ export class FeedbackDirector {
   }
   close() {
     this.closed = true;
+    for (const controller of this.controllers) controller.abort();
+    if (this.ownsPreparation) this.preparation.close();
     this.reset();
     this.buffers.clear();
+    this.decodedBytes = 0;
     this.retryAfter.clear();
   }
 }

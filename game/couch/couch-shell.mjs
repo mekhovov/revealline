@@ -154,6 +154,10 @@ export function createCouchShell({
     revealingResize = false,
     equipment = [];
   const returnScreens = new Map();
+  const preparationNodes = ['race-preparation', 'race-picture-cancel'].map((id) => {
+    const element = $(id);
+    return { element, home: element.parentNode, next: element.nextSibling };
+  });
   const setText = (id, text) => {
     localizedText($(id), text);
   };
@@ -260,7 +264,21 @@ export function createCouchShell({
       revealingResize = false;
     }
   }
+  function placePreparation(inSetup) {
+    // Keep the existing status and its Cancel action in the screen that can
+    // change the mission. Reparenting begins no work and transfers no focus.
+    for (let index = preparationNodes.length - 1; index >= 0; index--) {
+      const { element, home, next } = preparationNodes[index];
+      const parent = inSetup ? $('race-setup') : home;
+      if (element.parentNode !== parent)
+        parent.insertBefore(
+          element,
+          parent === home ? (next?.parentNode === home ? next : null) : parent.firstChild,
+        );
+    }
+  }
   function renderScreens() {
+    placePreparation(screen === 'setup');
     const running = status === 'running' || screen === 'review';
     $('race-shell').hidden = running;
     $('race-shell').inert = running;
@@ -746,8 +764,10 @@ export function createCouchShell({
     controllerHint: () => $('race-controller-help').textContent,
     cancelDeparture,
     destroy() {
+      if (destroyed) return;
       departure = null;
       destroyed = true;
+      placePreparation(false);
       settings.destroy();
       modeChoices.dispose();
       pauseMenu?.destroy();

@@ -16,6 +16,596 @@ const STACK_MERGE_LABEL = "fastline-stack-merge";
 // skipped when that policy waives a full suite; a skip is never a test pass.
 const POLICY_SKIPPED_JOBS = new Set(["focused", "test", "build"]);
 
+// Every accepted observation includes two full bounded sweeps. This remains
+// local implementation until hosted gates and independent review qualify it.
+export async function collectExactHeadCheckInventory({
+  repository,
+  repositoryId,
+  headSha,
+  api,
+  invocation,
+  now = Date.now,
+  maxRequests = 64,
+  sweepTimeoutMs = 120_000,
+  requestTimeoutMs = 30_000,
+}) {
+  const require = (condition, message) => {
+    if (!condition) throw new Error(`Exact-head inventory: ${message}`);
+  };
+  require(/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(
+    repository,
+  ), "invalid repository");
+  require(/^[a-f0-9]{40}$/u.test(headSha), "invalid head");
+  require(typeof api === "function" &&
+    typeof now === "function", "missing reader or clock");
+  require(Number.isSafeInteger(maxRequests) &&
+    maxRequests > 0 &&
+    maxRequests <= 64, "invalid request budget");
+  require(Number.isSafeInteger(sweepTimeoutMs) &&
+    sweepTimeoutMs > 0 &&
+    sweepTimeoutMs <= 120_000, "invalid time budget");
+  require(Number.isSafeInteger(requestTimeoutMs) &&
+    requestTimeoutMs > 0 &&
+    requestTimeoutMs <= 30_000, "invalid request timeout");
+  const prefix = `/repos/${repository}/commits/${headSha}`;
+  const statuses = new Set([
+    "queued",
+    "in_progress",
+    "completed",
+    "waiting",
+    "requested",
+    "pending",
+  ]);
+  const conclusions = new Set([
+    "action_required",
+    "cancelled",
+    "failure",
+    "neutral",
+    "success",
+    "skipped",
+    "stale",
+    "timed_out",
+  ]);
+  const positive = (value) => Number.isSafeInteger(value) && value > 0;
+  require(repositoryId === undefined ||
+    positive(repositoryId), "invalid numeric repository identity");
+  require(invocation === undefined ||
+    (positive(invocation?.runId) &&
+      positive(invocation?.runAttempt) &&
+      invocation?.jobName === "reconcile"), "invalid controller invocation");
+  const timestamp = (value) =>
+    value === null ||
+    (typeof value === "string" &&
+      /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?Z$/u.test(value) &&
+      Number.isFinite(Date.parse(value)));
+  const phase = (row) => {
+    require(statuses.has(row.status), "invalid status");
+    require(row.status === "completed"
+      ? conclusions.has(row.conclusion)
+      : row.conclusion === null, "invalid conclusion");
+  };
+  const identity = (row) => {
+    require(positive(row?.id) &&
+      positive(row?.app?.id), "invalid run or app identity");
+    require(row.head_sha === headSha, "foreign head");
+    phase(row);
+  };
+  const linksMatch = (link, route, hasNext) => {
+    if (link === undefined || link === null || link === "") return;
+    require(typeof link === "string", "invalid pagination link");
+    const parts = link.split(/,\s*(?=<)/u);
+    const relations = new Set();
+    let next = false;
+    for (const part of parts) {
+      const match = /^<([^>]+)>;\s*rel="(next|prev|first|last)"$/u.exec(
+        part.trim(),
+      );
+      require(match &&
+        !relations.has(match[2]), "malformed pagination relation");
+      relations.add(match[2]);
+      const target = new URL(match[1]);
+      const current = new URL(route, "https://api.github.com");
+      const resourcePath = (pathname) => {
+        const named = `/repos/${repository}/`;
+        const numeric =
+          repositoryId === undefined ? null : `/repositories/${repositoryId}/`;
+        if (pathname.startsWith(named)) return pathname.slice(named.length);
+        if (numeric && pathname.startsWith(numeric))
+          return pathname.slice(numeric.length);
+        return null;
+      };
+      // GitHub canonicalizes Link URLs to /repositories/{immutable id}/.
+      // Accept that alias ONLY for the proven same repository. Requests remain
+      // constructed from the literal trusted owner/name, never from this URL.
+      require(target.origin === current.origin &&
+        !target.username &&
+        !target.password &&
+        !target.hash &&
+        resourcePath(target.pathname) !== null &&
+        resourcePath(target.pathname) ===
+          resourcePath(current.pathname), "foreign pagination resource");
+      const pageValues = target.searchParams.getAll("page");
+      require(pageValues.length === 1 &&
+        /^[1-9][0-9]*$/u.test(
+          pageValues[0],
+        ), "invalid pagination page parameter");
+      const targetPage = Number(pageValues[0]);
+      require(positive(targetPage), "invalid linked page");
+      target.searchParams.delete("page");
+      current.searchParams.delete("page");
+      require([...target.searchParams].sort().toString() ===
+        [...current.searchParams]
+          .sort()
+          .toString(), "changed pagination filters");
+      if (match[2] === "next") {
+        next = true;
+        require(targetPage ===
+          Number(
+            new URL(route, "https://api.github.com").searchParams.get("page"),
+          ) +
+            1, "skipped pagination page");
+      }
+    }
+    // A full uncounted legacy page cannot prove whether it is the last page.
+    // Validate any links, but always probe the next bounded page even when a
+    // valid terminal header supplies only prev/first. Counted endpoints still
+    // require exact next-link agreement with their independently checked total.
+    require(hasNext === null ||
+      next === hasNext, "incomplete pagination links");
+  };
+  const sweep = async () => {
+    const started = now();
+    require(Number.isFinite(started), "invalid clock");
+    let requests = 0;
+    const read = async (route) => {
+      require(++requests <= maxRequests, "request budget exceeded");
+      const elapsed = now() - started;
+      require(Number.isFinite(elapsed) &&
+        elapsed >= 0 &&
+        elapsed < sweepTimeoutMs, "time budget exceeded");
+      const abort = new AbortController();
+      let timer;
+      try {
+        const response = await Promise.race([
+          Promise.resolve().then(() => api(route, { signal: abort.signal })),
+          new Promise((_, reject) => {
+            timer = setTimeout(
+              () => {
+                abort.abort();
+                reject(new Error("Exact-head inventory: request timeout"));
+              },
+              Math.min(requestTimeoutMs, sweepTimeoutMs - elapsed),
+            );
+          }),
+        ]);
+        const after = now() - started;
+        require(Number.isFinite(after) &&
+          after >= 0 &&
+          after < sweepTimeoutMs, "time budget exceeded");
+        // A trusted HTTP adapter may expose a Link header without mixing it
+        // into GitHub's JSON body. Raw injected JSON fixtures are also supported.
+        return response &&
+          Object.hasOwn(response, "body") &&
+          Object.hasOwn(response, "link")
+          ? response
+          : { body: response, link: null };
+      } finally {
+        clearTimeout(timer);
+      }
+    };
+    const counted = async (
+      resource,
+      key,
+      validate,
+      base = prefix,
+      query = "",
+    ) => {
+      const rows = [],
+        ids = new Set();
+      let expected;
+      for (let page = 1; page <= 10; page++) {
+        const route = `${base}/${resource}?${query}${resource === "check-runs" ? "filter=all&" : ""}per_page=100&page=${page}`;
+        const { body, link } = await read(route);
+        require(Number.isSafeInteger(body?.total_count) &&
+          body.total_count >= 0 &&
+          body.total_count <= 1000, "count outside bound");
+        expected ??= body.total_count;
+        require(body.total_count === expected, "count changed during sweep");
+        require(Array.isArray(body[key]) &&
+          body[key].length ===
+            Math.min(100, expected - rows.length), "incomplete page");
+        for (const row of body[key]) {
+          validate(row);
+          require(!ids.has(row.id), "duplicate identity");
+          ids.add(row.id);
+          rows.push(structuredClone(row));
+        }
+        linksMatch(link, route, rows.length < expected);
+        if (rows.length === expected) return rows;
+      }
+      throw new Error("Exact-head inventory: pagination bound exceeded");
+    };
+    let suiteRepositoryId = repositoryId;
+    const suites = await counted("check-suites", "check_suites", (row) => {
+      identity(row);
+      require(positive(row.repository?.id) &&
+        row.repository.full_name ===
+          repository, "invalid suite repository identity");
+      suiteRepositoryId ??= row.repository.id;
+      require(row.repository.id ===
+        suiteRepositoryId, "foreign suite repository identity");
+    });
+    const suiteById = new Map(suites.map((row) => [row.id, row]));
+    const checkRuns = await counted("check-runs", "check_runs", (row) => {
+      identity(row);
+      require(typeof row.name === "string" &&
+        row.name.length > 0 &&
+        row.name.length <= 1024, "invalid check name");
+      const suite = suiteById.get(row.check_suite?.id);
+      require(suite &&
+        suite.app.id === row.app.id &&
+        (suite.app.slug ?? null) ===
+          (row.app.slug ?? null), "unlisted or foreign suite");
+      require(timestamp(row.started_at ?? null) &&
+        timestamp(row.completed_at ?? null), "invalid check timestamp");
+      require(row.status !== "completed" ||
+        typeof row.completed_at === "string", "missing completion timestamp");
+    });
+    const legacy = [],
+      legacyIds = new Set();
+    let ended = false,
+      previousTime = Infinity;
+    for (let page = 1; page <= 11; page++) {
+      const route = `${prefix}/statuses?per_page=100&page=${page}`;
+      const { body, link } = await read(route);
+      require(Array.isArray(body) &&
+        body.length <= 100 &&
+        legacy.length + body.length <= 1000, "legacy count outside bound");
+      for (const row of body) {
+        require(positive(row?.id) &&
+          !legacyIds.has(row.id), "duplicate or invalid legacy identity");
+        require(typeof row.context === "string" &&
+          row.context.length > 0 &&
+          row.context.length <= 1024, "invalid legacy context");
+        // GitHub documents case-insensitive contexts, but does not define a
+        // Unicode folding algorithm. Do not guess whether two non-ASCII names
+        // are one gate or two: unsupported normalization fails closed.
+        require(/^[\x20-\x7e]+$/u.test(
+          row.context,
+        ), "unsupported legacy context normalization");
+        require(["success", "failure", "error", "pending"].includes(
+          row.state,
+        ), "invalid legacy state");
+        require(typeof row.created_at === "string" &&
+          timestamp(row.created_at) &&
+          timestamp(row.updated_at ?? null), "invalid legacy timestamp");
+        const created = Date.parse(row.created_at);
+        require(created <= previousTime, "legacy order is not newest first");
+        previousTime = created;
+        legacyIds.add(row.id);
+        legacy.push(structuredClone(row));
+      }
+      linksMatch(link, route, body.length === 100 ? null : false);
+      if (body.length < 100) {
+        ended = true;
+        break;
+      }
+    }
+    require(ended, "incomplete legacy pagination");
+    const effective = new Map();
+    for (const row of legacy) {
+      const context = row.context.toLowerCase();
+      if (!effective.has(context)) effective.set(context, row);
+    }
+    // Only a GitHub-owned suite -> run -> exact attempt -> job/check URL join
+    // can prove an exception. Never derive a read URL from details_url, infer
+    // a job ID from a check ID, or collapse different historical check IDs.
+    const provenance = [],
+      metadata = [],
+      workflowCache = new Map(),
+      jobCache = new Map();
+    const actionsPrefix = `/repos/${repository}/actions`;
+    const workflow = async (filename) => {
+      if (!workflowCache.has(filename)) {
+        const { body } = await read(`${actionsPrefix}/workflows/${filename}`);
+        require(positive(body?.id) &&
+          typeof body.path === "string" &&
+          typeof body.state === "string", "invalid trusted workflow metadata");
+        const record = { id: body.id, path: body.path, state: body.state };
+        workflowCache.set(filename, record);
+        metadata.push({ kind: "workflow", ...record });
+      }
+      return workflowCache.get(filename);
+    };
+    const jobsForSuite = async (suiteId) => {
+      if (!jobCache.has(suiteId)) {
+        const runs = await counted(
+          "runs",
+          "workflow_runs",
+          (row) => {
+            require(positive(row?.id) &&
+              positive(row.run_attempt) &&
+              positive(row.workflow_id) &&
+              row.head_sha === headSha &&
+              row.check_suite_id === suiteId &&
+              row.repository?.full_name === repository &&
+              row.head_repository?.full_name === repository &&
+              positive(row.repository.id) &&
+              (repositoryId === undefined ||
+                row.repository.id === repositoryId) &&
+              row.repository.id === row.head_repository.id &&
+              typeof row.path === "string" &&
+              typeof row.event === "string", "invalid Actions run identity");
+            phase(row);
+          },
+          actionsPrefix,
+          `check_suite_id=${suiteId}&`,
+        );
+        require(runs.length === 1, "ambiguous Actions suite/run join");
+        const run = runs[0];
+        metadata.push({
+          kind: "run",
+          id: run.id,
+          attempt: run.run_attempt,
+          workflowId: run.workflow_id,
+          path: run.path,
+          head: run.head_sha,
+          suiteId: run.check_suite_id,
+          event: run.event,
+          repositoryId: run.repository.id,
+          headRepositoryId: run.head_repository.id,
+          status: run.status,
+          conclusion: run.conclusion,
+        });
+        const jobs = await counted(
+          `runs/${run.id}/attempts/${run.run_attempt}/jobs`,
+          "jobs",
+          (job) => {
+            require(positive(job?.id) &&
+              job.run_id === run.id &&
+              job.run_attempt === run.run_attempt &&
+              job.head_sha === headSha &&
+              typeof job.name === "string" &&
+              typeof job.check_run_url === "string" &&
+              timestamp(job.started_at ?? null) &&
+              timestamp(
+                job.completed_at ?? null,
+              ), "invalid Actions job identity");
+            phase(job);
+          },
+          actionsPrefix,
+        );
+        metadata.push({
+          kind: "jobs",
+          runId: run.id,
+          attempt: run.run_attempt,
+          jobs: jobs
+            .map((job) => ({
+              id: job.id,
+              runId: job.run_id,
+              attempt: job.run_attempt,
+              head: job.head_sha,
+              name: job.name,
+              checkUrl: job.check_run_url,
+              status: job.status,
+              conclusion: job.conclusion,
+              startedAt: job.started_at ?? null,
+              completedAt: job.completed_at ?? null,
+            }))
+            .sort((a, b) => a.id - b.id),
+        });
+        jobCache.set(suiteId, { run, jobs });
+      }
+      return jobCache.get(suiteId);
+    };
+    for (const check of [...checkRuns].sort((a, b) => a.id - b.id)) {
+      if (
+        !(
+          check.name === "release-ready" ||
+          check.name === "reconcile" ||
+          (check.conclusion === "skipped" &&
+            POLICY_SKIPPED_JOBS.has(check.name))
+        )
+      )
+        continue;
+      const binding = { checkId: check.id, role: "ordinary" };
+      if (check.app.id === 15368 && check.app.slug === "github-actions") {
+        const { run, jobs } = await jobsForSuite(check.check_suite.id);
+        const matches = jobs.filter(
+          (job) =>
+            job.check_run_url ===
+            `https://api.github.com/repos/${repository}/check-runs/${check.id}`,
+        );
+        require(matches.length <= 1, "ambiguous check/job join");
+        const job = matches[0];
+        if (
+          job &&
+          job.name === check.name &&
+          job.status === check.status &&
+          job.conclusion === check.conclusion &&
+          job.started_at === check.started_at &&
+          job.completed_at === check.completed_at
+        ) {
+          Object.assign(binding, {
+            jobId: job.id,
+            runId: run.id,
+            runAttempt: run.run_attempt,
+            workflowId: run.workflow_id,
+            workflowPath: run.path,
+            suiteId: run.check_suite_id,
+          });
+          const controller = check.name === "reconcile";
+          const filename = controller
+            ? "fastline-auto-merge.yml"
+            : "deploy-pages.yml";
+          const trusted = await workflow(filename);
+          if (
+            trusted.state === "active" &&
+            trusted.path === `.github/workflows/${filename}` &&
+            run.workflow_id === trusted.id &&
+            run.path === trusted.path
+          ) {
+            if (
+              controller &&
+              invocation?.runId === run.id &&
+              invocation.runAttempt === run.run_attempt &&
+              invocation.jobName === job.name &&
+              jobs.filter((candidate) => candidate.name === invocation.jobName)
+                .length === 1
+            )
+              binding.role = "self-reconcile";
+            else if (!controller && run.event === "pull_request")
+              binding.role =
+                check.name === "release-ready"
+                  ? "release-ready"
+                  : "policy-skip";
+          }
+        }
+      }
+      provenance.push(binding);
+    }
+    const suiteRecord = (row) => ({
+      id: row.id,
+      appId: row.app.id,
+      appSlug: row.app.slug ?? null,
+      head: row.head_sha,
+      status: row.status,
+      conclusion: row.conclusion,
+      createdAt: row.created_at ?? null,
+      updatedAt: row.updated_at ?? null,
+    });
+    const runRecord = (row) => ({
+      ...suiteRecord(row),
+      name: row.name,
+      suiteId: row.check_suite.id,
+      detailsUrl: row.details_url ?? null,
+      externalId: row.external_id ?? null,
+      startedAt: row.started_at ?? null,
+      completedAt: row.completed_at ?? null,
+    });
+    const legacyRecord = (row) => ({
+      id: row.id,
+      context: row.context,
+      state: row.state,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at ?? null,
+      creatorId: row.creator?.id ?? null,
+      targetUrl: row.target_url ?? null,
+    });
+    const byId = (a, b) => a.id - b.id;
+    const canonical = JSON.stringify({
+      repository,
+      repositoryId: repositoryId ?? null,
+      headSha,
+      suites: suites
+        .map((row) => ({
+          ...suiteRecord(row),
+          repositoryId: row.repository.id,
+          repository: row.repository.full_name,
+        }))
+        .sort(byId),
+      checkRuns: checkRuns.map(runRecord).sort(byId),
+      statuses: legacy.map(legacyRecord),
+      effectiveStatuses: [...effective.values()].map(legacyRecord),
+      provenance,
+      metadata,
+    });
+    return {
+      suites,
+      checkRuns,
+      statuses: legacy,
+      effectiveStatuses: [...effective.values()],
+      canonical,
+      requests,
+      provenance,
+      metadata,
+    };
+  };
+  const startedAt = new Date().toISOString();
+  const first = await sweep();
+  const second = await sweep();
+  require(first.canonical ===
+    second.canonical, "inventory changed between complete sweeps");
+  return {
+    repository,
+    repositoryId: repositoryId ?? null,
+    headSha,
+    suites: second.suites,
+    checkRuns: second.checkRuns,
+    statuses: second.statuses,
+    effectiveStatuses: second.effectiveStatuses,
+    provenance: second.provenance,
+    metadata: second.metadata,
+    startedAt,
+    completedAt: new Date().toISOString(),
+    requestCounts: [first.requests, second.requests],
+    complete: true,
+    atomicSnapshot: false,
+    mergeAuthority: false,
+  };
+}
+
+// These evaluators accept only a complete exact-head collector result.
+export function inventoryCheckBlocker(inventory, headSha) {
+  if (
+    inventory?.complete !== true ||
+    inventory.headSha !== headSha ||
+    !Array.isArray(inventory.provenance) ||
+    !Array.isArray(inventory.effectiveStatuses)
+  )
+    return "exact-head check inventory is incomplete";
+  const bindings = new Map(inventory.provenance.map((p) => [p.checkId, p]));
+  for (const check of inventory.checkRuns) {
+    const binding = bindings.get(check.id);
+    if (check.head_sha !== headSha)
+      return `${check.name} belongs to a different head`;
+    if (binding?.role === "self-reconcile") continue;
+    if (check.status !== "completed")
+      return `${check.name} is ${check.status} on the exact head`;
+    if (
+      check.conclusion !== "success" &&
+      !(
+        check.conclusion === "skipped" &&
+        POLICY_SKIPPED_JOBS.has(check.name) &&
+        binding?.role === "policy-skip"
+      )
+    )
+      return `${check.name} concluded ${check.conclusion} on the exact head`;
+  }
+  for (const status of inventory.effectiveStatuses)
+    if (status.state !== "success")
+      return `legacy ${status.context} is ${status.state} on the exact head`;
+  return null;
+}
+
+export function inventoryReleaseReady(inventory, headSha) {
+  if (
+    inventory?.complete !== true ||
+    inventory.headSha !== headSha ||
+    !Array.isArray(inventory.provenance)
+  )
+    return null;
+  const ids = new Set(
+    inventory.provenance
+      .filter((p) => p.role === "release-ready")
+      .map((p) => p.checkId),
+  );
+  const matches = inventory.checkRuns.filter(
+    (check) =>
+      ids.has(check.id) &&
+      check.head_sha === headSha &&
+      check.name === "release-ready",
+  );
+  return matches.length === 1
+    ? {
+        ...matches[0],
+        actionsProvenance: inventory.provenance.find(
+          (p) => p.checkId === matches[0].id,
+        ),
+      }
+    : null;
+}
+
 // Reviewed, exact-source exceptions are trusted only because this module is
 // loaded from main. Never load approvals from a pull request or an artifact.
 const TRUSTED_POLICY_1558 = [
@@ -133,14 +723,22 @@ export function mutationSnapshotMatches({
   freshChecks,
   observedHeadSha,
   dependencies,
+  initialPullRequest,
 }) {
   if (!trustedMainMatches(controllerMainSha, liveMainSha)) return false;
-  const latest = freshChecks.check_runs
-    .filter((check) => check.name === "release-ready")
-    .sort((left, right) => right.id - left.id)[0];
+  if (
+    !initialPullRequest ||
+    !equal(
+      pullMutationIdentity(initialPullRequest),
+      pullMutationIdentity(pullRequest),
+    )
+  )
+    return false;
+  const latest = inventoryReleaseReady(freshChecks, observedHeadSha);
   if (
     !latest ||
     latest.id !== requiredCheck?.id ||
+    !equal(latest.actionsProvenance, requiredCheck.actionsProvenance) ||
     !freshAdmissionMatches(requiredCheck, pullRequest)
   )
     return false;
@@ -149,15 +747,213 @@ export function mutationSnapshotMatches({
     pullRequest,
     observedHeadSha,
     requiredCheck: freshRequired,
-    checkRuns: freshChecks.check_runs,
-    checkInventoryComplete:
-      freshChecks.total_count <= freshChecks.check_runs.length,
+    checkInventory: freshChecks,
     dependencies,
   });
   return (
     ["update", "stack", "merge", "arm"].includes(previousDecision.action) &&
     freshDecision.action === previousDecision.action
   );
+}
+
+const pullMutationIdentity = (pull) => ({
+  number: pull.number,
+  nodeId: pull.node_id,
+  state: pull.state,
+  draft: pull.draft,
+  head: {
+    sha: pull.head?.sha,
+    ref: pull.head?.ref,
+    repository: pull.head?.repo?.full_name,
+    repositoryId: pull.head?.repo?.id,
+  },
+  base: {
+    sha: pull.base?.sha,
+    ref: pull.base?.ref,
+    repository: pull.base?.repo?.full_name,
+    repositoryId: pull.base?.repo?.id,
+  },
+  dependencies: [...new Set(dependencyNumbers(pull.body))].sort(
+    (a, b) => a - b,
+  ),
+  labels: (pull.labels || []).map((label) => label.name || label).sort(),
+  stack: pull.stack?.number ?? null,
+  autoMerge: Boolean(pull.auto_merge),
+  mergeable: pull.mergeable,
+  mergeableState: pull.mergeable_state,
+});
+
+export async function collectControllerSnapshot({
+  repository,
+  number,
+  observedHeadSha,
+  controllerMainSha,
+  invocation,
+  api = github,
+  admit,
+  admittedCheck,
+}) {
+  if (
+    !/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/u.test(repository) ||
+    !Number.isSafeInteger(number) ||
+    number < 1
+  )
+    throw new Error("Invalid controller identity.");
+  const prefix = `/repos/${repository}`;
+  const mainBefore = await api(`${prefix}/git/ref/heads/main`);
+  const first = await api(`${prefix}/pulls/${number}`);
+  // The rejected-merge fallback must recognize an already completed merge
+  // without another mutation or a duplicate production dispatch.
+  if (first.state !== "open")
+    return {
+      pullRequest: first,
+      observedHeadSha,
+      controllerMainSha,
+      liveMainSha: mainBefore.object?.sha,
+      decision: { action: "wait", reason: "pull request is not open" },
+    };
+  if (!trustedMainMatches(controllerMainSha, mainBefore.object?.sha))
+    throw new Error("Trusted main changed before snapshot.");
+  if (
+    first.number !== number ||
+    first.head?.repo?.full_name !== repository ||
+    first.base?.repo?.full_name !== repository ||
+    !Number.isSafeInteger(first.base?.repo?.id) ||
+    first.base.repo.id < 1 ||
+    first.head?.repo?.id !== first.base.repo.id
+  )
+    throw new Error("Foreign pull request identity.");
+  const checkInventory = await collectExactHeadCheckInventory({
+    repository,
+    repositoryId: first.base.repo.id,
+    headSha: first.head.sha,
+    invocation,
+    api: (route, options) =>
+      api(route, { ...options, includePagination: true }),
+  });
+  const requiredCheck = inventoryReleaseReady(checkInventory, first.head.sha);
+  if (
+    requiredCheck?.status === "completed" &&
+    requiredCheck.conclusion === "success"
+  ) {
+    if (
+      admittedCheck &&
+      requiredCheck.id === admittedCheck.id &&
+      equal(requiredCheck.actionsProvenance, admittedCheck.actionsProvenance)
+    ) {
+      for (const key of [
+        "admissionReceipt",
+        "policyDigest",
+        "approvedPolicyContext",
+      ])
+        if (Object.hasOwn(admittedCheck, key))
+          requiredCheck[key] = structuredClone(admittedCheck[key]);
+      requiredCheck.admissionMatches = freshAdmissionMatches(
+        requiredCheck,
+        first,
+      );
+    } else if (!admittedCheck) {
+      const [owner, name] = repository.split("/");
+      requiredCheck.admissionMatches = await (
+        admit || ((check, pull) => checkedAdmission(owner, name, check, pull))
+      )(requiredCheck, first);
+    }
+  }
+  const dependencies = [];
+  for (const dependency of [...new Set(dependencyNumbers(first.body))])
+    if (dependency !== number)
+      dependencies.push(await api(`${prefix}/pulls/${dependency}`));
+  const last = await api(`${prefix}/pulls/${number}`);
+  const mainAfter = await api(`${prefix}/git/ref/heads/main`);
+  if (
+    !equal(pullMutationIdentity(first), pullMutationIdentity(last)) ||
+    !trustedMainMatches(controllerMainSha, mainAfter.object?.sha)
+  )
+    throw new Error("PR or trusted main changed during snapshot.");
+  const decision = decideMergeAction({
+    pullRequest: last,
+    observedHeadSha,
+    requiredCheck,
+    checkInventory,
+    dependencies,
+  });
+  return {
+    controllerMainSha,
+    liveMainSha: mainAfter.object.sha,
+    pullRequest: last,
+    observedHeadSha,
+    requiredCheck,
+    checkInventory,
+    dependencies,
+    decision,
+  };
+}
+
+export async function executeVerifiedMergeAction({
+  snapshot,
+  refresh,
+  actions,
+}) {
+  const action = snapshot.decision.action;
+  if (action === "disarm") {
+    await actions.disarm(snapshot.pullRequest, snapshot.observedHeadSha);
+    return false;
+  }
+  if (!["update", "stack", "merge", "arm"].includes(action)) return false;
+  const verify = async () => {
+    const fresh = await refresh();
+    if (
+      fresh.pullRequest.state === "closed" &&
+      fresh.pullRequest.merged === true &&
+      fresh.pullRequest.head?.sha === snapshot.observedHeadSha
+    )
+      return null;
+    if (
+      !mutationSnapshotMatches({
+        controllerMainSha: snapshot.controllerMainSha,
+        liveMainSha: fresh.liveMainSha,
+        previousDecision: snapshot.decision,
+        pullRequest: fresh.pullRequest,
+        initialPullRequest: snapshot.pullRequest,
+        requiredCheck: snapshot.requiredCheck,
+        freshChecks: fresh.checkInventory,
+        observedHeadSha: snapshot.observedHeadSha,
+        dependencies: fresh.dependencies,
+      })
+    ) {
+      if (fresh.pullRequest.auto_merge && actions.disarm)
+        await actions.disarm(fresh.pullRequest, snapshot.observedHeadSha);
+      throw new Error(
+        "Admission changed before mutation; no merge-capable request submitted.",
+      );
+    }
+    return fresh;
+  };
+  const fresh = await verify();
+  if (!fresh) return false;
+  const perform = (name) =>
+    actions[name](fresh.pullRequest, snapshot.observedHeadSha);
+  if (action === "update" || action === "arm") {
+    await perform(action);
+    return false;
+  }
+  if (action === "stack") {
+    if (!(await perform("stack")))
+      throw new Error("GitHub did not accept the declared stack merge.");
+    return true;
+  }
+  try {
+    if (!(await perform("merge")))
+      throw new Error("GitHub rejected the exact-head merge.");
+    return true;
+  } catch (error) {
+    if (!isStackOnlyMergeError(error)) throw error;
+    const fallback = await verify();
+    if (!fallback) return false;
+    if (!(await actions.stack(fallback.pullRequest, snapshot.observedHeadSha)))
+      throw new Error("GitHub did not accept the exact-head stack merge.");
+    return true;
+  }
 }
 
 export function reviewedPolicyChangeMatches(
@@ -247,26 +1043,16 @@ export function reviewedPolicyChangeMatches(
   );
 }
 
-export function exactHeadCheckBlocker(checkRuns = [], headSha) {
-  const latest = new Map();
-  for (const check of checkRuns) {
-    // The controller cannot wait for its own currently running reconcile job.
-    if (check.name === "reconcile") continue;
-    if (check.head_sha && check.head_sha !== headSha)
-      return `${check.name} belongs to a different head`;
-    const previous = latest.get(check.name);
-    if (!previous || check.id > previous.id) latest.set(check.name, check);
-  }
-  for (const check of latest.values()) {
-    if (check.status !== "completed")
-      return `${check.name} is ${check.status || "pending"} on the exact head`;
-    if (
-      check.conclusion !== "success" &&
-      !(check.conclusion === "skipped" && POLICY_SKIPPED_JOBS.has(check.name))
-    )
-      return `${check.name} concluded ${check.conclusion || "without a result"} on the exact head`;
-  }
-  return null;
+export function exactHeadCheckBlocker(
+  checkRuns = [],
+  headSha,
+  provenance = [],
+  effectiveStatuses = [],
+) {
+  return inventoryCheckBlocker(
+    { complete: true, headSha, checkRuns, provenance, effectiveStatuses },
+    headSha,
+  );
 }
 
 export function dependencyNumbers(body = "") {
@@ -279,7 +1065,7 @@ export function decideMergeAction({
   pullRequest,
   observedHeadSha,
   requiredCheck,
-  checkRuns = [],
+  checkInventory,
   checkInventoryComplete = true,
   dependencies = [],
 }) {
@@ -306,15 +1092,23 @@ export function decideMergeAction({
       return "release-ready is not successful on the exact head";
     if (requiredCheck.admissionMatches !== true)
       return "source or admission metadata changed since the successful gate";
-    if (!checkInventoryComplete)
+    if (!checkInventoryComplete || checkInventory?.complete !== true)
       return "exact-head check inventory is incomplete";
-    const checkBlocker = exactHeadCheckBlocker(checkRuns, observedHeadSha);
+    const selected = inventoryReleaseReady(checkInventory, observedHeadSha);
+    if (
+      !selected ||
+      selected.id !== requiredCheck.id ||
+      !equal(selected.actionsProvenance, requiredCheck.actionsProvenance)
+    )
+      return "release-ready identity is not uniquely verified on the exact head";
+    const checkBlocker = inventoryCheckBlocker(checkInventory, observedHeadSha);
     if (checkBlocker) return checkBlocker;
     if (
       pullRequest.mergeable === false ||
       pullRequest.mergeable_state === "dirty"
     )
       return "pull request has conflicts";
+    if (pullRequest.mergeable !== true) return "mergeability is unknown";
     if (pullRequest.mergeable_state === "behind") return null;
     if (
       !["clean", "has_hooks", "unstable"].includes(pullRequest.mergeable_state)
@@ -344,7 +1138,7 @@ export function decideMergeAction({
       reason:
         pullRequest.mergeable_state === "clean"
           ? "exact head is admitted and immediately mergeable"
-          : "exact head is admitted; only nonblocking checks are failing",
+          : "exact head is admitted; platform reports unstable merge state",
     };
   if (autoMergeEnabled)
     return { action: "none", reason: "exact-head auto-merge is already armed" };
@@ -393,9 +1187,17 @@ export function asynchronousMergeResult(value) {
   };
 }
 
-async function github(pathname, options = {}) {
-  const response = await fetch(`https://api.github.com${pathname}`, {
+export async function github(
+  pathname,
+  { includePagination = false, transport = fetch, ...options } = {},
+) {
+  const timeout = AbortSignal.timeout(30_000);
+  const signal = options.signal
+    ? AbortSignal.any([options.signal, timeout])
+    : timeout;
+  const response = await transport(`https://api.github.com${pathname}`, {
     ...options,
+    signal,
     headers: {
       accept: "application/vnd.github+json",
       authorization: `Bearer ${process.env.GH_TOKEN}`,
@@ -418,7 +1220,10 @@ async function github(pathname, options = {}) {
     }
     throw error;
   }
-  return text ? JSON.parse(text) : null;
+  const body = text ? JSON.parse(text) : null;
+  return includePagination
+    ? { body, link: response.headers.get("link") }
+    : body;
 }
 
 async function mergeStack(owner, repository, pullRequest, headSha) {
@@ -628,46 +1433,35 @@ async function main() {
     number = candidates[0].number;
   }
   if (!Number.isSafeInteger(number)) return;
-  const pullRequest = await github(
-    `/repos/${owner}/${repository}/pulls/${number}`,
-  );
-  const checks = await github(
-    `/repos/${owner}/${repository}/commits/${pullRequest.head.sha}/check-runs?per_page=100`,
-  );
-  const requiredCheck = checks.check_runs
-    .filter((check) => check.name === "release-ready")
-    // A new queued/in-progress gate supersedes an older successful one too.
-    .sort((left, right) => right.id - left.id)[0];
-  // Never relabel a check from another commit as an exact-head success.
-  if (requiredCheck?.conclusion === "success") {
-    try {
-      requiredCheck.admissionMatches = await checkedAdmission(
-        owner,
-        repository,
-        requiredCheck,
-        pullRequest,
-      );
-    } catch (error) {
-      requiredCheck.admissionMatches = false;
-      await appendSummary([`Admission receipt rejected: ${error.message}`]);
-    }
-  }
-  const dependencyIds = [
-    ...new Set(dependencyNumbers(pullRequest.body)),
-  ].filter((dependency) => dependency !== number);
-  const dependencies = [];
-  for (const dependency of dependencyIds)
-    dependencies.push(
-      await github(`/repos/${owner}/${repository}/pulls/${dependency}`),
-    );
-  const decision = decideMergeAction({
-    pullRequest,
+  const snapshotOptions = {
+    repository: `${owner}/${repository}`,
+    number,
     observedHeadSha,
-    requiredCheck,
-    checkRuns: checks.check_runs,
-    checkInventoryComplete: checks.total_count <= checks.check_runs.length,
-    dependencies,
-  });
+    controllerMainSha,
+    invocation: {
+      runId: Number(process.env.GITHUB_RUN_ID),
+      runAttempt: Number(process.env.GITHUB_RUN_ATTEMPT),
+      jobName: process.env.GITHUB_JOB,
+    },
+  };
+  let snapshot;
+  try {
+    snapshot = await collectControllerSnapshot(snapshotOptions);
+  } catch (error) {
+    // An operational/incomplete observation cannot authorize a mutation. Keep
+    // protective disarming available, without fabricating a CI code failure.
+    const pull = await github(`/repos/${owner}/${repository}/pulls/${number}`);
+    snapshot = {
+      pullRequest: pull,
+      observedHeadSha,
+      controllerMainSha,
+      decision: {
+        action: pull.auto_merge ? "disarm" : "wait",
+        reason: `Operational observation rejected: ${error.message}`,
+      },
+    };
+  }
+  const { pullRequest, decision } = snapshot;
   await appendSummary([
     "### Fastline merge controller",
     "",
@@ -682,85 +1476,46 @@ async function main() {
     decision,
     observedHeadSha,
   );
-  if (["update", "stack", "merge", "arm"].includes(decision.action)) {
-    const fresh = await github(`/repos/${owner}/${repository}/pulls/${number}`);
-    const freshChecks = await github(
-      `/repos/${owner}/${repository}/commits/${fresh.head.sha}/check-runs?per_page=100`,
-    );
-    const freshDependencies = [];
-    for (const dependency of [...new Set(dependencyNumbers(fresh.body))]) {
-      if (dependency !== number)
-        freshDependencies.push(
-          await github(`/repos/${owner}/${repository}/pulls/${dependency}`),
+  const merged = await executeVerifiedMergeAction({
+    snapshot,
+    refresh: () =>
+      collectControllerSnapshot({
+        ...snapshotOptions,
+        admittedCheck: snapshot.requiredCheck,
+      }),
+    actions: {
+      update: async (pull, head) =>
+        github(
+          `/repos/${owner}/${repository}/pulls/${pull.number}/update-branch`,
+          {
+            method: "PUT",
+            body: JSON.stringify({ expected_head_sha: head }),
+            headers: { "content-type": "application/json" },
+          },
+        ),
+      stack: (pull, head) => mergeStack(owner, repository, pull, head),
+      merge: async (pull, head) => {
+        const result = await github(
+          `/repos/${owner}/${repository}/pulls/${pull.number}/merge`,
+          {
+            method: "PUT",
+            body: JSON.stringify({
+              sha: head,
+              merge_method: "merge",
+            }),
+            headers: { "content-type": "application/json" },
+          },
         );
-    }
-    const liveMain = await github(
-      `/repos/${owner}/${repository}/git/ref/heads/main`,
-    );
-    if (
-      !mutationSnapshotMatches({
-        controllerMainSha,
-        liveMainSha: liveMain.object?.sha,
-        previousDecision: decision,
-        pullRequest: fresh,
-        requiredCheck,
-        freshChecks,
-        observedHeadSha,
-        dependencies: freshDependencies,
-      })
-    ) {
-      if (fresh.auto_merge)
-        await setAutoMerge(fresh, "disarm", observedHeadSha);
-      throw new Error(
-        "Admission changed before mutation; no merge was submitted.",
-      );
-    }
-  }
-  let merged = false;
-  if (decision.action === "update") {
-    await github(
-      `/repos/${owner}/${repository}/pulls/${number}/update-branch`,
-      {
-        method: "PUT",
-        body: JSON.stringify({ expected_head_sha: observedHeadSha }),
-        headers: { "content-type": "application/json" },
+        if (!result?.merged)
+          throw new Error(
+            result?.message || "GitHub rejected the exact-head merge.",
+          );
+        return true;
       },
-    );
-  } else if (decision.action === "stack") {
-    merged = await mergeStack(owner, repository, pullRequest, observedHeadSha);
-    if (!merged)
-      throw new Error("GitHub did not accept the declared stack merge.");
-  } else if (decision.action === "merge") {
-    try {
-      const result = await github(
-        `/repos/${owner}/${repository}/pulls/${number}/merge`,
-        {
-          method: "PUT",
-          body: JSON.stringify({
-            sha: observedHeadSha,
-            merge_method: "merge",
-          }),
-          headers: { "content-type": "application/json" },
-        },
-      );
-      if (!result?.merged)
-        throw new Error(
-          result?.message || "GitHub rejected the exact-head merge.",
-        );
-      merged = true;
-    } catch (error) {
-      if (!isStackOnlyMergeError(error)) throw error;
-      merged = await mergeStack(
-        owner,
-        repository,
-        pullRequest,
-        observedHeadSha,
-      );
-      if (!merged)
-        throw new Error("GitHub did not accept the exact-head stack merge.");
-    }
-  } else if (decision.action === "arm" || decision.action === "disarm")
-    await setAutoMerge(pullRequest, decision.action, observedHeadSha);
+      arm: (pull, head) => setAutoMerge(pull, "arm", head),
+      disarm: (pull, head) => setAutoMerge(pull, "disarm", head),
+    },
+  });
   if (merged) {
     await dispatchMainPages(owner, repository);
     await appendSummary([
@@ -782,13 +1537,31 @@ export async function checkedAdmission(
     approvals = REVIEWED_POLICY_CHANGES,
   } = {},
 ) {
-  const match = new URL(check.details_url).pathname.match(
-    /\/actions\/runs\/(\d+)\//,
-  );
-  if (check.app?.slug !== "github-actions" || !match) return false;
-  const prefix = `/repos/${owner}/${repository}`;
-  const run = await api(`${prefix}/actions/runs/${match[1]}`);
+  const proof = check.actionsProvenance;
   if (
+    check.app?.id !== 15368 ||
+    check.app?.slug !== "github-actions" ||
+    check.name !== "release-ready" ||
+    check.head_sha !== pullRequest.head.sha ||
+    proof?.role !== "release-ready" ||
+    proof.checkId !== check.id ||
+    proof.workflowPath !== ".github/workflows/deploy-pages.yml" ||
+    ![
+      proof.runId,
+      proof.runAttempt,
+      proof.workflowId,
+      proof.jobId,
+      proof.suiteId,
+    ].every((value) => Number.isSafeInteger(value) && value > 0)
+  )
+    return false;
+  const prefix = `/repos/${owner}/${repository}`;
+  const run = await api(`${prefix}/actions/runs/${proof.runId}`);
+  if (
+    run.id !== proof.runId ||
+    run.run_attempt !== proof.runAttempt ||
+    run.workflow_id !== proof.workflowId ||
+    run.check_suite_id !== proof.suiteId ||
     run.event !== "pull_request" ||
     run.path !== ".github/workflows/deploy-pages.yml" ||
     run.head_sha !== pullRequest.head.sha
@@ -831,6 +1604,7 @@ export async function checkedAdmission(
   const response = await download(
     `https://api.github.com${prefix}/actions/artifacts/${artifacts[0].id}/zip`,
     {
+      signal: AbortSignal.timeout(30_000),
       headers: {
         authorization: `Bearer ${process.env.GH_TOKEN}`,
         accept: "application/vnd.github+json",

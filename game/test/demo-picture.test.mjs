@@ -667,7 +667,14 @@ test('concealment supports tiny and nondivisible images and rejects invalid pixe
 
 function canvasFactory(created = []) {
   return () => {
-    const canvas = { width: 0, height: 0 };
+    const listeners = new Map();
+    const canvas = {
+      width: 0,
+      height: 0,
+      listeners,
+      addEventListener: (name, callback) => listeners.set(name, callback),
+      removeEventListener: (name) => listeners.delete(name),
+    };
     const context = {
       drawImage(image) {
         canvas.original = image;
@@ -998,12 +1005,15 @@ test('disposing a painter clears its blur cache and rejects late setLook asset a
   });
   assert.ok(pendingImages.length > 0);
   const filtered = painter.pictureFilter.select(painter.background, 'blurred');
+  const queuedLoads = pendingImages.map((image) => image.onload);
   assert.ok(filtered.width > 0);
   painter.dispose();
   painter.dispose();
   const statusAtDisposal = statusCallbacks;
   assert.equal(filtered.width, 0);
-  for (const image of pendingImages) image.onload();
+  for (const image of pendingImages) assert.equal(image.onload, null);
+  // Browser work queued before cancellation may still deliver its old callback.
+  for (const onload of queuedLoads) onload();
   await pending;
   assert.equal(assetCallbacks, 0);
   assert.equal(statusCallbacks, statusAtDisposal);
@@ -1049,4 +1059,47 @@ test('demo offers only the story receipt for its exact already-earned picture', 
     f.store.close();
     f.manager.close();
   }
+});
+
+test('lost demo concealment fails closed and reconstructs identical protected pixels after restoration', () => {
+  const created = [],
+    lost = new Set();
+  const painter = new BoardPainter(
+    {},
+    {
+      pictureCanvasFactory: canvasFactory(created),
+      onContextLoss: ({ owner }) => lost.add(owner),
+      onContextRestored: ({ owner }) => {
+        lost.delete(owner);
+        if (!lost.size) painter.invalidate();
+      },
+    },
+  );
+  const filter = painter.pictureFilter,
+    original = { width: 32, height: 16, pixels: landmarkPixels(32, 16) },
+    first = filter.select(original, 'blurred'),
+    pixels = first.pixels.slice();
+  first.listeners.get('contextlost')();
+  assert.equal(lost.size, 1);
+  assert.equal(filter.select(original, 'blurred'), null);
+  first.listeners.get('contextrestored')();
+  assert.equal(lost.size, 0);
+  assert.equal(first.width, 0);
+  assert.equal(first.listeners.size, 0);
+  const restored = filter.select(original, 'blurred');
+  assert.notEqual(restored, first);
+  assert.notEqual(restored, original);
+  assert.deepEqual(restored.pixels, pixels);
+  const resources = painter.resourceSnapshot().ownedCanvases;
+  assert.equal(resources.categories.demoConcealment.rgbaBytesEstimate, 32 * 16 * 4);
+  assert.equal(resources.retainedPixelBufferBytes, 2 * 32 * 16 * 4);
+  assert.equal(created.length, 2, 'Export observes already prepared surfaces');
+  restored.listeners.get('contextlost')();
+  painter.dispose();
+  assert.equal(lost.size, 0);
+  assert.equal(restored.width, 0);
+  assert.equal(restored.listeners.size, 0);
+  assert.equal(painter.resourceSnapshot().ownedCanvases.retainedPixelBufferBytes, 0);
+  assert.equal(painter.resourceSnapshot().ownedCanvases.rgbaBytesEstimate, 0);
+  assert.equal(original.width, 32);
 });

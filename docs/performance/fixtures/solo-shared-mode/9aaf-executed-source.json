@@ -1,0 +1,40 @@
+{
+  "format": "SoloSharedReturn797ExecutedSourceV1",
+  "sourceRevision": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
+  "sourceTree": "7e64a66f9eb309b692719b163ca00fbe78146ad5",
+  "postHocExactGitReadback": true,
+  "runId": 39119128642,
+  "scope": "Immutable test-only record of the failed executed shared-return declaration and adapter. No production admission fallback and no scenario success.",
+  "records": [
+    {
+      "path": "docs/performance/solo-shared-mode-public-return-797e03-plan.json",
+      "bytes": 10343,
+      "sha256": "e9114308e934c7f19ab35b3ae486592c70b28de40896a394702d2ce83c492079",
+      "blob": "6354f6edeaa398df14fac9b8b55dda5f2da89390"
+    },
+    {
+      "path": "scripts/solo-remote-auxiliary.mjs",
+      "bytes": 33833,
+      "sha256": "e8c4643047135099db345c416e103ff229780ec93018eeeebb54c0fe1f20f9a4",
+      "blob": "3c870f727603eb3650732db2a72d8b0fd3fefd17"
+    }
+  ],
+  "evidence": [
+    {
+      "artifactId": 12133562894,
+      "artifactBytes": 269080,
+      "artifactSHA256": "db3786e7e657db0e9e9bc1936aa82d9eab85f71656074453b64953dda7b17c60",
+      "summarySHA256": "1da9c24f4519c936a76c27fd71b2ea9811a9acca2303c85b81c682c066260576",
+      "status": "failed-before-browser",
+      "ownersClosed": true
+    },
+    {
+      "artifactId": 12133159680,
+      "artifactBytes": 269137,
+      "artifactSHA256": "9945a5764e6b9ba59fcc3c3e8f1c1a025751aeace63ba37f2272eac2a4ab3430",
+      "summarySHA256": "b613ba52f7887e0c94e3ba83900d08980b472b49e606826a906c3516bc488a1c",
+      "status": "failed-before-browser",
+      "ownersClosed": true
+    }
+  ]
+}

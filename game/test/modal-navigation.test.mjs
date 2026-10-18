@@ -12,6 +12,8 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { audioHarness } from './helpers/soundtrack-audio.mjs';
 import { memoryIndexedDB } from './helpers/soundtrack-fixtures.mjs';
+import { createImmutablePresentationFixture } from './helpers/immutable-presentation-fixture.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 function surface() {
   const doc = new Document();
@@ -119,6 +121,96 @@ test('fallback failure, hidden targets and reentrant modal opening never steal f
   }
 });
 
+function queueNativeClose(h, dialog, origin = h.doc.body) {
+  dialog.open = false;
+  dialog.hidden = true;
+  dialog.removeAttribute('open');
+  origin.focus();
+  queueMicrotask(() => dialog.emit('close', { bubbles: false }));
+}
+
+test('scope polling before a queued native close preserves the hidden opener fallback', async () => {
+  const h = surface(),
+    dialog = h.dialogs[0],
+    fallback = h.add('button', 'fallback'),
+    stack = attachModalNavigation({ document: h.doc, getFallbackFocus: () => fallback });
+  h.open(dialog);
+  h.opener.style.display = 'none';
+  queueNativeClose(h, dialog, h.opener);
+  for (let i = 0; i < 3; i++) assert.equal(stack.topDialog(), null);
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement, fallback);
+  stack.destroy();
+});
+
+test('scope polling before queued nested closes preserves each opening order and origin', async () => {
+  for (const closeBoth of [false, true]) {
+    const h = surface(),
+      [earlier, later] = h.dialogs,
+      stack = attachModalNavigation({ document: h.doc });
+    h.open(earlier);
+    earlier.children[1].focus();
+    h.open(later);
+    queueNativeClose(h, later);
+    assert.equal(stack.topDialog(), earlier);
+    if (closeBoth) {
+      queueNativeClose(h, earlier);
+      assert.equal(stack.topDialog(), null);
+    }
+    await Promise.resolve();
+    await Promise.resolve();
+    assert.equal(h.doc.activeElement, closeBoth ? h.opener : earlier.children[1]);
+    stack.destroy();
+  }
+});
+
+test('a queued closed origin cannot override a newer dialog, deliberate focus, reopen or destruction', async () => {
+  for (const replacement of ['dialog', 'focus', 'reopen', 'destroy']) {
+    const h = surface(),
+      [earlier, later] = h.dialogs,
+      replacementOpener = h.add('button', 'replacement-opener'),
+      stack = attachModalNavigation({ document: h.doc });
+    h.open(earlier);
+    queueNativeClose(h, earlier);
+    assert.equal(stack.topDialog(), null);
+    if (replacement === 'dialog') h.open(later);
+    else if (replacement === 'focus') replacementOpener.focus();
+    else if (replacement === 'reopen') {
+      replacementOpener.focus();
+      h.open(earlier);
+    } else stack.destroy();
+    const expected = h.doc.activeElement;
+    await Promise.resolve();
+    await Promise.resolve();
+    assert.equal(h.doc.activeElement, expected, replacement);
+    if (replacement === 'reopen') {
+      queueNativeClose(h, earlier);
+      assert.equal(stack.topDialog(), null);
+      await Promise.resolve();
+      await Promise.resolve();
+      assert.equal(h.doc.activeElement, replacementOpener, 'A fresh opening owns its new origin');
+    }
+    stack.destroy();
+  }
+});
+
+test('an older queued close cannot replace focus inside a newer active dialog', async () => {
+  const h = surface(),
+    [earlier, later] = h.dialogs,
+    stack = attachModalNavigation({ document: h.doc });
+  h.open(earlier);
+  h.open(later);
+  queueNativeClose(h, earlier);
+  assert.equal(stack.topDialog(), later);
+  later.children[1].focus();
+  await Promise.resolve();
+  await Promise.resolve();
+  assert.equal(h.doc.activeElement, later.children[1]);
+  assert.equal(stack.topDialog(), later);
+  stack.destroy();
+});
+
 test('opening order owns controller scope across reversed DOM order, Back and fresh reopen', async () => {
   const h = surface(),
     [earlier, later] = h.dialogs;
@@ -191,6 +283,210 @@ test('ordered mutation records cover older engines and same-task close/reopen wi
   assert.equal(stack.topDialog(), later);
   stack.destroy();
   assert.equal(observer.disconnected, true);
+});
+
+function observedSurface(beforeAttach = () => {}) {
+  const h = surface();
+  beforeAttach(h);
+  let observer,
+    scans = 0;
+  const query = h.doc.querySelectorAll.bind(h.doc);
+  h.doc.querySelectorAll = (selector) => {
+    if (selector === 'dialog[open]') scans++;
+    return query(selector);
+  };
+  h.doc.defaultView.MutationObserver = class {
+    pending = [];
+    constructor(callback) {
+      observer = this;
+      this.callback = callback;
+    }
+    observe(target, options) {
+      assert.equal(target, h.doc);
+      this.options = options;
+    }
+    takeRecords() {
+      return this.pending.splice(0);
+    }
+    disconnect() {
+      this.disconnected = true;
+    }
+  };
+  const stack = attachModalNavigation({ document: h.doc });
+  return { ...h, stack, observer, scans: () => scans };
+}
+const openWithoutEvents = (dialog) => {
+  dialog.open = true;
+  dialog.hidden = false;
+  dialog.setAttribute('open', '');
+};
+
+test('modal empty discovery is cached across unchanged polls and unrelated DOM updates', () => {
+  const h = observedSurface();
+  assert.equal(h.observer.options.childList, true);
+  for (let i = 0; i < 120; i++) assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.scans(), 1);
+  const hud = h.add('div', 'hud');
+  h.add('span', 'clock', hud);
+  h.observer.pending.push({ type: 'childList', addedNodes: [hud], removedNodes: [] });
+  assert.equal(h.stack.topDialog(), null);
+  h.observer.callback([{ target: hud, attributeName: 'open', oldValue: null }]);
+  assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.scans(), 1, 'Unrelated content must not invalidate known empty modal state');
+  h.stack.destroy();
+});
+
+test('modal empty discovery observes queued open attributes before their callback', () => {
+  const h = observedSurface(),
+    [earlier, later] = h.dialogs;
+  assert.equal(h.stack.topDialog(), null);
+  openWithoutEvents(later);
+  openWithoutEvents(earlier);
+  h.observer.pending.push(
+    ...[later, earlier].map((target) => ({ target, attributeName: 'open', oldValue: null })),
+  );
+  assert.equal(h.stack.topDialog(), earlier, 'Queued mutation order remains top-layer order');
+  earlier.open = false;
+  earlier.removeAttribute('open');
+  h.observer.pending.push({ target: earlier, attributeName: 'open', oldValue: '' });
+  assert.equal(h.stack.topDialog(), later);
+  later.open = false;
+  later.removeAttribute('open');
+  h.observer.pending.push({ target: later, attributeName: 'open', oldValue: '' });
+  assert.equal(h.stack.topDialog(), null);
+  for (let i = 0; i < 120; i++) assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.scans(), 2);
+  h.stack.destroy();
+});
+
+for (const nested of [false, true])
+  test(`modal empty discovery finds an already-open inserted ${nested ? 'subtree' : 'dialog'}`, () => {
+    const h = observedSurface();
+    assert.equal(h.stack.topDialog(), null);
+    const dialog = h.doc.createElement('dialog');
+    openWithoutEvents(dialog);
+    const added = nested ? h.doc.createElement('section') : dialog;
+    if (nested) added.append(dialog);
+    h.doc.body.append(added);
+    h.observer.pending.push({ type: 'childList', addedNodes: [added], removedNodes: [] });
+    assert.equal(h.stack.topDialog(), dialog);
+    assert.equal(h.scans(), 2);
+    added.remove();
+    h.observer.callback([{ type: 'childList', addedNodes: [], removedNodes: [added] }]);
+    assert.equal(h.stack.topDialog(), null);
+    assert.equal(h.scans(), 3);
+    h.stack.destroy();
+  });
+
+test('modal empty discovery preserves ambiguous pre-existing opens and removal recovery', () => {
+  const h = observedSurface(({ dialogs }) => dialogs.forEach(openWithoutEvents));
+  assert.equal(h.stack.topDialog(), null, 'DOM order cannot establish two pre-existing openings');
+  const wrapper = h.add('section', 'wrapper');
+  wrapper.append(h.dialogs[0]);
+  wrapper.remove();
+  h.observer.pending.push({ type: 'childList', addedNodes: [], removedNodes: [wrapper] });
+  assert.equal(h.stack.topDialog(), h.dialogs[1]);
+  h.stack.destroy();
+  h.observer.callback([{ target: h.dialogs[0], attributeName: 'open', oldValue: null }]);
+  assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.observer.disconnected, true);
+});
+
+test('modal empty discovery adopts a single pre-existing open without focus or events', () => {
+  const h = observedSurface(({ dialogs }) => openWithoutEvents(dialogs[0]));
+  assert.equal(h.doc.activeElement, h.opener);
+  assert.equal(h.stack.topDialog(), h.dialogs[0]);
+  assert.equal(h.scans(), 1);
+  h.stack.destroy();
+});
+
+test('modal empty discovery retains polling when observation is unavailable', () => {
+  const h = surface();
+  const stack = attachModalNavigation({ document: h.doc });
+  let scans = 0;
+  const query = h.doc.querySelectorAll.bind(h.doc);
+  h.doc.querySelectorAll = (selector) => {
+    if (selector === 'dialog[open]') scans++;
+    return query(selector);
+  };
+  for (let i = 0; i < 3; i++) assert.equal(stack.topDialog(), null);
+  assert.equal(scans, 3);
+  openWithoutEvents(h.dialogs[0]);
+  assert.equal(stack.topDialog(), h.dialogs[0]);
+  assert.equal(scans, 4);
+  stack.destroy();
+  assert.equal(stack.topDialog(), null);
+  assert.equal(scans, 4);
+});
+
+test('modal presence and top lookup share one empty discovery across unchanged frame polls', () => {
+  const h = observedSurface();
+  for (let i = 0; i < 120; i++) {
+    assert.equal(h.stack.hasOpenDialog(), false);
+    assert.equal(h.stack.topDialog(), null);
+  }
+  assert.equal(h.scans(), 1);
+  h.stack.destroy();
+  assert.equal(h.stack.hasOpenDialog(), false);
+  assert.equal(h.scans(), 1);
+});
+
+test('modal presence reports ambiguous pre-existing opens without inventing their order', () => {
+  const h = observedSurface(({ dialogs }) => dialogs.forEach(openWithoutEvents));
+  assert.equal(h.stack.hasOpenDialog(), true);
+  assert.equal(h.stack.topDialog(), null);
+  assert.equal(h.stack.hasOpenDialog(), true);
+  for (const dialog of h.dialogs) {
+    dialog.open = false;
+    dialog.removeAttribute('open');
+    h.observer.pending.push({ target: dialog, attributeName: 'open', oldValue: '' });
+  }
+  assert.equal(h.stack.hasOpenDialog(), false);
+  const emptyScans = h.scans();
+  for (let i = 0; i < 120; i++) assert.equal(h.stack.hasOpenDialog(), false);
+  assert.equal(h.scans(), emptyScans);
+  h.stack.destroy();
+});
+
+test('modal presence drains queued open and subtree changes before observer delivery', () => {
+  const h = observedSurface();
+  assert.equal(h.stack.hasOpenDialog(), false);
+  const dialog = h.dialogs[0];
+  openWithoutEvents(dialog);
+  h.observer.pending.push({ target: dialog, attributeName: 'open', oldValue: null });
+  assert.equal(h.stack.hasOpenDialog(), true);
+  dialog.open = false;
+  dialog.removeAttribute('open');
+  h.observer.pending.push({ target: dialog, attributeName: 'open', oldValue: '' });
+  assert.equal(h.stack.hasOpenDialog(), false);
+  const subtree = h.doc.createElement('section'),
+    inserted = h.doc.createElement('dialog');
+  openWithoutEvents(inserted);
+  subtree.append(inserted);
+  h.doc.body.append(subtree);
+  h.observer.pending.push({ type: 'childList', addedNodes: [subtree], removedNodes: [] });
+  assert.equal(h.stack.hasOpenDialog(), true);
+  subtree.remove();
+  h.observer.pending.push({ type: 'childList', addedNodes: [], removedNodes: [subtree] });
+  assert.equal(h.stack.hasOpenDialog(), false);
+  h.stack.destroy();
+});
+
+test('modal presence retains polling without an observer and after a dialog closes', () => {
+  const h = surface(),
+    stack = attachModalNavigation({ document: h.doc });
+  assert.equal(stack.hasOpenDialog(), false);
+  for (const dialog of h.dialogs) openWithoutEvents(dialog);
+  assert.equal(stack.hasOpenDialog(), true);
+  assert.equal(stack.topDialog(), null);
+  h.dialogs[0].open = false;
+  h.dialogs[0].removeAttribute('open');
+  assert.equal(stack.hasOpenDialog(), true);
+  assert.equal(stack.topDialog(), h.dialogs[1]);
+  h.dialogs[1].open = false;
+  h.dialogs[1].removeAttribute('open');
+  assert.equal(stack.hasOpenDialog(), false);
+  stack.destroy();
 });
 
 for (const inactive of ['hidden', 'blur'])
@@ -277,10 +573,32 @@ function nativeDialogs(t) {
   });
 }
 
+// These two input assertions revisit the same immutable source images in one
+// process. Reuse only verified transport bytes; each page still runs the real
+// manifest, image/header/hash and readiness paths within its unchanged deadline.
+const collectionPresentationFixture = createImmutablePresentationFixture();
 for (const activation of ['keyboard', 'touch'])
   test(`Collection ${activation} disclosure activation toggles exactly once and preserves the paused attempt`, async (t) => {
     nativeDialogs(t);
-    const h = await soloPage(t, { titleScreen: false, initialReadyTimeoutMs: 15000 });
+    const before = collectionPresentationFixture.snapshot();
+    const h = await soloPage(t, {
+      titleScreen: false,
+      initialReadyTimeoutMs: 15000,
+      presentationFixture: collectionPresentationFixture,
+    });
+    const provenance = collectionPresentationFixture.snapshot();
+    t.diagnostic(
+      `Collection fixture transport: ${JSON.stringify({
+        activation,
+        reads: provenance.reads - before.reads,
+        hits: provenance.hits - before.hits,
+        joined: provenance.joined - before.joined,
+        retainedBytes: provenance.retainedBytes,
+        retainedEntries: provenance.retainedEntries,
+        pending: provenance.pending.length,
+        firstRead: provenance.sources[0],
+      })}`,
+    );
     h.$('collection-button').click();
     const details = h.$('collection-progress'),
       summary = details.querySelector('summary'),
@@ -900,6 +1218,10 @@ function openTitleCollection(h) {
   assert.equal(collectionBack(h).textContent, 'Back to Settings');
 }
 async function openFirstPicture(h) {
+  await settle(() => {
+    const card = h.$('gallery-grid').querySelector('button');
+    return card && !card.disabled && h.$('collection-dialog-entry-status')?.hidden;
+  }, 'The public Collection visit must finish preparing its earned picture.');
   const card = h.$('gallery-grid').querySelector('button');
   assert.ok(card && !card.disabled, 'The actual earned picture must be available.');
   card.focus();
@@ -1292,7 +1614,7 @@ for (const origin of ['title', 'paused flight'])
     h.$('shell-workshop').click();
     h.$('shell-library').focus();
     h.$('shell-library').click();
-    h.doc.querySelector('[data-library-panel="challenges"]').click();
+    await activateHostAction(h.doc.querySelector('[data-library-panel="challenges"]'));
     h.$('challenge-date').value = '2026-09-15';
     h.$('challenge-kind').value = 'daily';
     assert.equal(h.$('shell-workshop-dialog').open, true);
@@ -1335,7 +1657,7 @@ for (const action of ['resume-save', 'import-save'])
     h.$('shell-workshop').click();
     h.$('shell-library').focus();
     h.$('shell-library').click();
-    h.doc.querySelector('[data-library-panel="saves"]').click();
+    await activateHostAction(h.doc.querySelector('[data-library-panel="saves"]'));
     const saved = h.storage.getItem('revealline.suspended.dev.v1');
     assert.ok(saved);
     if (action === 'import-save') {

@@ -41,8 +41,15 @@ async function fixture(t, { prepared = true } = {}) {
     queue = [];
   let blocked = false,
     lockRequests = 0;
+  const lockNames = [];
   const locks = {
-    async request(_name, _options, work) {
+    async request(name, options, work) {
+      lockNames.push(name);
+      if (name === 'revealline.team.enemy-stats-continue.v1') {
+        assert.deepEqual(options, { mode: 'exclusive', ifAvailable: true });
+        return work({ name }); // The real page owner releases this held lease on teardown.
+      }
+      assert.equal(name, 'revealline.official-downloads.v1');
       lockRequests++;
       if (blocked) await new Promise((resolve) => queue.push(resolve));
       return work();
@@ -104,6 +111,7 @@ async function fixture(t, { prepared = true } = {}) {
       });
     },
   });
+  assert.deepEqual(lockNames, ['revealline.team.enemy-stats-continue.v1']);
   return {
     ...f,
     store: createOfficialDownloads({ caches, locks, origin: 'http://localhost' }),

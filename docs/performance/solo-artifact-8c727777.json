@@ -1,0 +1,898 @@
+{
+  "format": "SoloArtifactVerificationV1",
+  "status": "artifact-and-scoped-native-core-verified-performance-pending",
+  "createdAt": "2026-10-16T13:24:58.630771+00:00",
+  "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+  "expectedVersion": "0.151.1",
+  "sourceChecks": {
+    "receipt": {
+      "path": ".cache/solo-followup/final-source-checks-20261016T121849Z-8c727777/receipt.json",
+      "bytes": 5890,
+      "sha256": "14141b1d0857d6c1f024ba282b0e559fba6cfd89923fa596e447f5c5eb1f5a96"
+    },
+    "environment": {
+      "node": "v22.22.2",
+      "npm": "10.9.7",
+      "PATHPrefix": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin",
+      "CI": null,
+      "NODE_OPTIONS": null
+    },
+    "sourceIdentityStable": true,
+    "checks": [
+      {
+        "script": "lint",
+        "exitCode": 0,
+        "elapsedSeconds": 14.276930041000014,
+        "log": ".cache/solo-followup/final-source-checks-20261016T121849Z-8c727777/lint.log",
+        "logSha256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+      },
+      {
+        "script": "validate",
+        "exitCode": 0,
+        "elapsedSeconds": 163.41329133399995,
+        "log": ".cache/solo-followup/final-source-checks-20261016T121849Z-8c727777/validate.log",
+        "logSha256": "5b08e5e23343919c857891c2b1b0b92832fc483bcce11f454877f2481c2a429d"
+      },
+      {
+        "script": "format:check",
+        "exitCode": 1,
+        "elapsedSeconds": 25.988955624998198,
+        "log": ".cache/solo-followup/final-source-checks-20261016T121849Z-8c727777/format-check.log",
+        "logSha256": "03228f9fce4671a928b5cf35eaf39b957269ecc944a80e306f551dc2c2372d06"
+      }
+    ],
+    "formatWarnings": [
+      {
+        "path": "game/test/fixtures/classic-snake-v4-proofs.json",
+        "currentSha256": "4b21b832853ed6734dce435e37aea831d813dea2f732c6873c0f9dbde917027e",
+        "baselineExists": true,
+        "baselineSha256": "4b21b832853ed6734dce435e37aea831d813dea2f732c6873c0f9dbde917027e",
+        "byteIdenticalToB117": true
+      },
+      {
+        "path": "game/test/fpv-regional-preparation-clock.test.mjs",
+        "currentSha256": "f96b662d52ba8cf678446ff2de12223dffb11c60dc0f4c1fba51c4795410172c",
+        "baselineExists": true,
+        "baselineSha256": "f96b662d52ba8cf678446ff2de12223dffb11c60dc0f4c1fba51c4795410172c",
+        "byteIdenticalToB117": true
+      },
+      {
+        "path": "game/test/fpv-regional-preparation-controls.test.mjs",
+        "currentSha256": "1570f42b9b670ce1c93fece59e8fcd180b36c1b4410db61976a1af9e74613b69",
+        "baselineExists": true,
+        "baselineSha256": "1570f42b9b670ce1c93fece59e8fcd180b36c1b4410db61976a1af9e74613b69",
+        "byteIdenticalToB117": true
+      },
+      {
+        "path": "game/test/fpv-world-appearance-ui.test.mjs",
+        "currentSha256": "b05b624ad14c47403ebc764397a7b0d19650f4d1f8bbc3a1f2cbf2d1fb6057d7",
+        "baselineExists": true,
+        "baselineSha256": "b05b624ad14c47403ebc764397a7b0d19650f4d1f8bbc3a1f2cbf2d1fb6057d7",
+        "byteIdenticalToB117": true
+      },
+      {
+        "path": "game/test/journey-performance-host.test.mjs",
+        "currentSha256": "fabf7ac1719edd3e635983d65fa2210bec1df32e587f388c411f88b7c472e8b7",
+        "baselineExists": true,
+        "baselineSha256": "fabf7ac1719edd3e635983d65fa2210bec1df32e587f388c411f88b7c472e8b7",
+        "byteIdenticalToB117": true
+      },
+      {
+        "path": "game/test/menu-style-host.test.mjs",
+        "currentSha256": "d0c88b0b7ab73ef83745e86171dfb58d83dfd1509882ea7a5976ce5ec91e7b5a",
+        "baselineExists": true,
+        "baselineSha256": "d0c88b0b7ab73ef83745e86171dfb58d83dfd1509882ea7a5976ce5ec91e7b5a",
+        "byteIdenticalToB117": true
+      },
+      {
+        "path": "game/test/mission-library-solo-host.test.mjs",
+        "currentSha256": "8a7801ab3b62613a45fb9fd78224933a4075b5cafc89d1dd474f03c89e267d46",
+        "baselineExists": true,
+        "baselineSha256": "8a7801ab3b62613a45fb9fd78224933a4075b5cafc89d1dd474f03c89e267d46",
+        "byteIdenticalToB117": true
+      },
+      {
+        "path": "game/test/overflight-battlefield-progression.test.mjs",
+        "currentSha256": "a59a638fb355cbd052444644c6f07ba2241823bebfe8db48202cd23ec1f74878",
+        "baselineExists": true,
+        "baselineSha256": "a59a638fb355cbd052444644c6f07ba2241823bebfe8db48202cd23ec1f74878",
+        "byteIdenticalToB117": true
+      },
+      {
+        "path": "game/test/team-installed-host.test.mjs",
+        "currentSha256": "aaa063026692a7fff1d1d0e7427af26422acdb0beeb7692dbe9e8bd32d68a222",
+        "baselineExists": true,
+        "baselineSha256": "aaa063026692a7fff1d1d0e7427af26422acdb0beeb7692dbe9e8bd32d68a222",
+        "byteIdenticalToB117": true
+      }
+    ],
+    "scope": "Exact frozen source only. Formatting remains failed; no full-suite claim."
+  },
+  "localBuildAttempts": [
+    {
+      "receipt": {
+        "path": ".cache/solo-followup/artifact-solo-final-8c727777-ram-v3/receipt.json",
+        "bytes": 13186,
+        "sha256": "78f6362228f715c5e8d071ed4e8949a5ef264f0f6779df0ebc30716eb9262c87"
+      },
+      "status": "failed",
+      "reason": "owned local build stopped at unchanged 1 GiB local reserve",
+      "exitCode": -15,
+      "startedAt": "2026-10-16T12:44:23.699615+00:00",
+      "completedAt": "2026-10-16T12:45:11.063415+00:00",
+      "minimumObservedLocalFreeBytes": 1067188224,
+      "ownedProcessGroupAfterStop": [],
+      "artifactQualified": false
+    },
+    {
+      "receipt": {
+        "path": ".cache/solo-followup/artifact-solo-final-8c727777-ram-v4/receipt.json",
+        "bytes": 13186,
+        "sha256": "6e6f530cf7bfef58554b1b4f1a17b3f3306f079cf91a3e3cb3741e3e660f4f3a"
+      },
+      "status": "failed",
+      "reason": "owned local build stopped at unchanged 1 GiB local reserve",
+      "exitCode": -15,
+      "startedAt": "2026-10-16T12:57:30.095409+00:00",
+      "completedAt": "2026-10-16T13:02:04.301251+00:00",
+      "minimumObservedLocalFreeBytes": 1071669248,
+      "ownedProcessGroupAfterStop": [],
+      "artifactQualified": false
+    }
+  ],
+  "ciAcquisition": {
+    "status": "passed",
+    "workflowRun": 38901373460,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/38901373460",
+    "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+    "producer": {
+      "node": "v22.13.1",
+      "platform": "Linux",
+      "localBuild": false
+    },
+    "artifactId": 12046438212,
+    "outerDigest": {
+      "path": "/Volumes/alex/solo-performance-b1174522/evidence/ci-artifact-8c727777-38901373460/artifact.zip",
+      "bytes": 1090836148,
+      "sha256": "2aebf761499864218fee15618609f26f9c83d0d2910e3c3d44201d3b7a3f49eb"
+    },
+    "archiveSHA256": "f4cc3d51219aa0f9b6cc5d1e60a4c2bc3bfea8d3022328326f92927b6fec7c47",
+    "manifestSHA256": "a6c944b975c584a945d53267a9ec492df9b7de91b321a2f921ee9c03e4ff9154",
+    "buildInfoSHA256": "21251c33974e6ec1288a190cb7d87d9074e9b7e58604622814934452b5c5a4e0",
+    "boundReceipt": {
+      "path": ".cache/solo-followup/artifact-solo-final-8c727777-ci-ram-v1/receipt.json",
+      "bytes": 27739,
+      "sha256": "39f9390b9f51d666ff50dcdbd80e0b1f764f817e083f3910ccf23887606b70c7"
+    },
+    "scope": "Completed exact-source CI acquisition, full package/member/source/offline/static-worker/CSP verification and durable readback; not native, timing, device or release qualification.",
+    "acquisitionReceipt": {
+      "path": "/Volumes/alex/solo-performance-b1174522/evidence/ci-artifact-8c727777-38901373460/acquisition.json",
+      "bytes": 6662,
+      "sha256": "d6c0b797891c7ad103e9ff0dd87fe4d5c9364216aa21b183ff36066c52c1e693"
+    },
+    "sourceTree": "54b60f9b3e6732545e2940c20f3d8ccf917cd1c7",
+    "previewIdentity": {
+      "bytes": 4412,
+      "sha256": "8bad7532ff52d953c455bde85cc123f5ab963bbf1ae712fb85955ecc64a5dfdb"
+    }
+  },
+  "nativeQualification": {
+    "status": "scoped-core-and-demo-correctness-passed-other-qualification-pending",
+    "physicalDevices": "unobserved",
+    "receipt": {
+      "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/receipt.json",
+      "bytes": 43812,
+      "sha256": "7b63433a8db78f03cec1843e1436c0f0081bbfdeeb4a0182118bc46a342aac61"
+    },
+    "preservation": {
+      "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/preservation.json",
+      "bytes": 4529,
+      "sha256": "1db6917f5a3f33b8596da2739ece0c8207941cd019f1f224ee637329088fa20f"
+    },
+    "reports": [
+      {
+        "engine": "chromium",
+        "browser": "155.0.8059.85",
+        "script": "scripts/verify-solo-mp3-worker.mjs",
+        "scriptSHA256": "d0815e3e053ae905cadf8db3069f83127ed084e0350357ec73b036a787590524",
+        "status": "passed",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:38:14.567877+00:00",
+        "completedAt": "2026-10-16T13:38:23.412199+00:00",
+        "report": {
+          "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/chromium-mp3-worker.json",
+          "bytes": 2451,
+          "sha256": "dd8470d2f4b07142badf3be8b0f86d0dfc8144c7fa319c02eb6c79b2247642d1"
+        },
+        "log": {
+          "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/chromium-mp3-worker.log",
+          "sha256": "e3b62ff6ed5bde6b30c1dd15385d3334fde4fac0289651484e18457191f5a976"
+        },
+        "pageErrors": [],
+        "policyErrors": [
+          "Connecting to 'https://mekhovov.github.io/revealline-soundtracks/catalogue.json' violates the following Content Security Policy directive: \"connect-src 'self'\". The action has been blocked.",
+          "Fetch API cannot load https://mekhovov.github.io/revealline-soundtracks/catalogue.json. Refused to connect because it violates the document's Content Security Policy."
+        ],
+        "ownedCleanup": {
+          "forcedTermination": false,
+          "survivors": [],
+          "closedAt": "2026-10-16T13:38:23.411909+00:00"
+        }
+      },
+      {
+        "engine": "chromium",
+        "browser": "155.0.8059.85",
+        "script": "scripts/verify-solo-paused-render.mjs",
+        "scriptSHA256": "4d07139b1e20fef9615e1325d9c8ff95631205e18a7f2dc311106eb0c5c7940d",
+        "status": "passed",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:38:23.540444+00:00",
+        "completedAt": "2026-10-16T13:38:29.969373+00:00",
+        "report": {
+          "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/chromium-paused-render.json",
+          "bytes": 2892,
+          "sha256": "8fff674ce712a38c74ea29055bad7ff67e4acbc640c1e7223e8d8bd839232cf5"
+        },
+        "log": {
+          "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/chromium-paused-render.log",
+          "sha256": "a04767366d0231b7b25ad6617ecf114416e9d53123b9a1255a4dbd2a5266ec6c"
+        },
+        "pageErrors": [],
+        "policyErrors": [],
+        "ownedCleanup": {
+          "forcedTermination": false,
+          "survivors": [],
+          "closedAt": "2026-10-16T13:38:29.969027+00:00"
+        }
+      },
+      {
+        "engine": "webkit",
+        "browser": "26.5",
+        "script": "scripts/verify-solo-mp3-worker.mjs",
+        "scriptSHA256": "d0815e3e053ae905cadf8db3069f83127ed084e0350357ec73b036a787590524",
+        "status": "passed",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:38:30.094127+00:00",
+        "completedAt": "2026-10-16T13:38:35.606689+00:00",
+        "report": {
+          "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/webkit-mp3-worker.json",
+          "bytes": 2249,
+          "sha256": "4435218c5e9eabb31f2b6dec6dab9ea6214b59fdb5404070370a38e3e36c40dc"
+        },
+        "log": {
+          "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/webkit-mp3-worker.log",
+          "sha256": "3cdcf1064445af12d1229b68181732a00b36ca6810ae421ec7e4c7e94878f129"
+        },
+        "pageErrors": [],
+        "policyErrors": [
+          "Refused to connect to https://mekhovov.github.io/revealline-soundtracks/catalogue.json because it does not appear in the connect-src directive of the Content Security Policy."
+        ],
+        "ownedCleanup": {
+          "forcedTermination": false,
+          "survivors": [],
+          "closedAt": "2026-10-16T13:38:35.606126+00:00"
+        }
+      },
+      {
+        "engine": "webkit",
+        "browser": "26.5",
+        "script": "scripts/verify-solo-paused-render.mjs",
+        "scriptSHA256": "4d07139b1e20fef9615e1325d9c8ff95631205e18a7f2dc311106eb0c5c7940d",
+        "status": "passed",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:38:35.734327+00:00",
+        "completedAt": "2026-10-16T13:38:43.886639+00:00",
+        "report": {
+          "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/webkit-paused-render.json",
+          "bytes": 2865,
+          "sha256": "200c7d1f5786625e343a1f15374688d52b37e1e9f6839fcf17ef796c8122e87c"
+        },
+        "log": {
+          "path": "/Volumes/alex/solo-performance-b1174522/evidence/native-core-8c727777-attempt01/webkit-paused-render.log",
+          "sha256": "ee4a7587f38e5a16980b05ee33eb586b32d64c958aaff168e5400651240ea410"
+        },
+        "pageErrors": [],
+        "policyErrors": [],
+        "ownedCleanup": {
+          "forcedTermination": false,
+          "survivors": [],
+          "closedAt": "2026-10-16T13:38:43.934921+00:00"
+        }
+      }
+    ],
+    "scope": "Four excluded correctness checks: real static MP3 worker acceptance/rejections during running flight, and paused/settings pixel retention plus resize/resume in Chrome 155.0.8059.85 and desktop WebKit 26.5. No context-loss, timing, temperature or full gameplay claim. Optional remote soundtrack catalogue CSP refusals remain in the MP3 reports; policy was not relaxed.",
+    "limitations": [
+      "Correctness only; explicit local access fixture with exact public production CSP and unchanged packaged modules.",
+      "Chrome paused-render software Canvas2D; desktop WebKit is not physical iPhone Safari.",
+      "Exact-source CI producer Linux/Node22.13.1, separately source/archive/CSP verified locally. No local build claim.",
+      "Worker/paused checks only; recovery, sustained gameplay, timing and power are separate.",
+      "Optional remote catalogue CSP refusals remain visible; every failure/partial outcome retained."
+    ],
+    "demo": {
+      "status": "pass",
+      "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "browser": "155.0.8059.85",
+      "report": {
+        "path": "/Volumes/alex/solo-performance-b1174522/evidence/demo-final-8c727777-attempt01/attempt01.json",
+        "bytes": 745548,
+        "sha256": "98f7c45b90266561aedb6c4d895293360be1f951518c7f4fa34db5fe4566cc26"
+      },
+      "preservation": {
+        "path": "/Volumes/alex/solo-performance-b1174522/evidence/demo-final-8c727777-attempt01/preservation.json",
+        "sha256": "19f903d8e6f468d8da316b5e41d89f99d05c5685bd7b0c21fb34c95ed1247df0",
+        "bytes": 4563
+      },
+      "plan": {
+        "path": "/Volumes/alex/solo-performance-b1174522/evidence/demo-final-8c727777-attempt01/plan-8c727777.json",
+        "sha256": "fad75e71c9e51e6b964e92f48a864f18f157f7a6215ef954d3dc5d2d58a92b5e"
+      },
+      "driverSHA256": "d4ff3190433567aeae2905f915ad98fd1ced2e85cccc99abac6288695c09b487",
+      "performanceGateStatus": "excluded-instrumented-functional-counters-under-development-load",
+      "completedAt": "2026-10-16T13:40:35.938Z",
+      "observationClosedAt": "2026-10-16T13:40:33.772Z",
+      "windows": [
+        {
+          "label": "home-menu-before-demo",
+          "observedMilliseconds": 1005.7000000029802,
+          "counts": {
+            "label": "home-menu-before-demo",
+            "startedAtMs": 1805,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "raf.applicationCallbacks": 227,
+            "phaser.preStep": 109,
+            "canvas2d.other-connected.clearRect": 25,
+            "canvas2d.other-connected.fillRect": 50,
+            "canvas2d.other-connected.drawImage": 25,
+            "phaser.postRender": 109,
+            "webgl.menu.drawArrays": 25,
+            "demo.dom.attributes": 54,
+            "demo.dom.childList": 326,
+            "painter.detached.draw": 1,
+            "canvas2d.detached.clearRect": 1,
+            "canvas2d.detached.fillRect": 37,
+            "canvas2d.detached.drawImage": 5,
+            "canvas2d.displayed-game.clearRect": 1,
+            "canvas2d.displayed-game.fillRect": 1,
+            "canvas2d.displayed-game.drawImage": 1,
+            "endedAtMs": 2814.7999999970198
+          }
+        },
+        {
+          "label": "watching-parent-covered",
+          "observedMilliseconds": 3002.39999999851,
+          "counts": {
+            "label": "watching-parent-covered",
+            "startedAtMs": 4995.20000000298,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "raf.applicationCallbacks": 720,
+            "phaser.preStep": 360,
+            "phaser.postRender": 360,
+            "painter.demo.draw": 360,
+            "canvas2d.demo.clearRect": 360,
+            "canvas2d.detached.clearRect": 26,
+            "canvas2d.detached.drawImage": 72,
+            "canvas2d.detached.fillRect": 63,
+            "canvas2d.demo.fillRect": 19456,
+            "canvas2d.demo.drawImage": 2544,
+            "demo.dom.attributes": 94,
+            "demo.dom.childList": 12,
+            "demo.dataSceneWrites": 4,
+            "demo.readout.demo-level": 4,
+            "demo.readout.demo-status": 4,
+            "demo.readout.demo-panel-status": 4,
+            "endedAtMs": 7999.89999999851
+          }
+        },
+        {
+          "label": "spectator-paused-parent-covered",
+          "observedMilliseconds": 3003.89999999851,
+          "counts": {
+            "label": "spectator-paused-parent-covered",
+            "startedAtMs": 8290.70000000298,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "raf.applicationCallbacks": 722,
+            "phaser.preStep": 361,
+            "phaser.postRender": 361,
+            "endedAtMs": 11299.10000000149
+          }
+        },
+        {
+          "label": "spectator-paused-details-open",
+          "observedMilliseconds": 2004.3999999985099,
+          "counts": {
+            "label": "spectator-paused-details-open",
+            "startedAtMs": 12194.29999999702,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "raf.applicationCallbacks": 480,
+            "phaser.preStep": 240,
+            "phaser.postRender": 240,
+            "endedAtMs": 14202.39999999851
+          }
+        },
+        {
+          "label": "practice-awaiting-fresh-steer",
+          "observedMilliseconds": 1504.3000000044703,
+          "counts": {
+            "label": "practice-awaiting-fresh-steer",
+            "startedAtMs": 14445.5,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "raf.applicationCallbacks": 181,
+            "phaser.preStep": 181,
+            "phaser.postRender": 181,
+            "endedAtMs": 15953.39999999851
+          }
+        },
+        {
+          "label": "practice-paused",
+          "observedMilliseconds": 2004.2000000029802,
+          "counts": {
+            "label": "practice-paused",
+            "startedAtMs": 16508.89999999851,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "raf.applicationCallbacks": 241,
+            "phaser.preStep": 241,
+            "phaser.postRender": 241,
+            "endedAtMs": 18516.89999999851
+          }
+        },
+        {
+          "label": "practice-native-hidden",
+          "observedMilliseconds": 10003.80000000447,
+          "counts": {
+            "label": "practice-native-hidden",
+            "startedAtMs": 18831.10000000149,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "endedAtMs": 28839.79999999702
+          }
+        },
+        {
+          "label": "practice-returned-before-explicit-resume",
+          "observedMilliseconds": 1504.7999999970198,
+          "counts": {
+            "label": "practice-returned-before-explicit-resume",
+            "startedAtMs": 29151,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "raf.applicationCallbacks": 182,
+            "phaser.preStep": 182,
+            "phaser.postRender": 182,
+            "endedAtMs": 30662.20000000298
+          }
+        },
+        {
+          "label": "spectator-after-return",
+          "observedMilliseconds": 2001.8999999985099,
+          "counts": {
+            "label": "spectator-after-return",
+            "startedAtMs": 31418.60000000149,
+            "scope": "Counters start at zero for this window; audio snapshots are explicitly lifetime totals.",
+            "raf.applicationCallbacks": 482,
+            "phaser.preStep": 241,
+            "phaser.postRender": 241,
+            "painter.demo.draw": 241,
+            "canvas2d.demo.clearRect": 241,
+            "canvas2d.demo.fillRect": 10960,
+            "canvas2d.demo.drawImage": 1687,
+            "demo.dom.childList": 9,
+            "demo.dom.attributes": 48,
+            "demo.dataSceneWrites": 3,
+            "demo.readout.demo-level": 3,
+            "demo.readout.demo-status": 2,
+            "demo.readout.demo-panel-status": 2,
+            "demo.readout.demo-caption": 1,
+            "demo.readout.demo-panel-caption": 1,
+            "endedAtMs": 33422.79999999702
+          }
+        }
+      ],
+      "background": {
+        "status": "observed",
+        "hiddenMilliseconds": 10003.80000000447
+      },
+      "originalBefore": {
+        "file": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/demo-final/attempt01.json.before.replay.json",
+        "sha256": "1d965b03cfd8e849c741f3d58ccca827a25fe444684d855c5f92f736da957cb3",
+        "bytes": 5294
+      },
+      "originalAfter": {
+        "file": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/demo-final/attempt01.json.after.replay.json",
+        "sha256": "1d965b03cfd8e849c741f3d58ccca827a25fe444684d855c5f92f736da957cb3",
+        "bytes": 5294
+      },
+      "fresh": {
+        "file": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/demo-final/attempt01.json.fresh.replay.json",
+        "sha256": "96e9065c6c7716e286937d1c0fbf7b26c71cf08d7db894282f0d295122428891",
+        "bytes": 4713
+      },
+      "nativeOriginalReplay": {
+        "status": "pass",
+        "completedAt": "2026-10-16T13:40:35.018Z"
+      },
+      "nativeFreshReplay": {
+        "status": "pass",
+        "completedAt": "2026-10-16T13:40:35.938Z"
+      },
+      "freshAccepted": {
+        "id": 1,
+        "levelId": "signal-01",
+        "tick": 18,
+        "status": "running",
+        "lives": 3,
+        "time": 0.15,
+        "coverage": 0,
+        "player": {
+          "x": 24.5,
+          "y": 0.5,
+          "direction": "down"
+        },
+        "checkpoint": {
+          "algorithm": "fnv1a64-state-v2",
+          "hash": "92b35149991bf7df",
+          "sections": {
+            "identity": "a87f904112d2e052",
+            "configuration": "67780a210840e2ad",
+            "board": "fdfff9d1d17aa722",
+            "player": "24fef299027edf2c",
+            "trail": "f0ca473df9efdcc8",
+            "enemies": "3aabebe37661b8e1",
+            "objectives": "09612b07b5ecb5a5",
+            "supplies": "e1b45854413ff5f8",
+            "ability": "f6b5aef539d929bb",
+            "clock": "2d8a5353adba5199",
+            "continuation": "a1e7286b42b404e7",
+            "result": "5b9bc4ba528108e4"
+          }
+        }
+      },
+      "errors": [],
+      "failedRequests": [],
+      "preparationFailures": [],
+      "scope": "Nine declared public Demo counter/correctness windows, original Solo replay preservation and complete Play from beginning consent/Start/full-definition replay. Native functional operation counts only; no timing, CPU, power, GPU or physical-device claim. No debugger breakpoint or application state injection."
+    }
+  },
+  "currentSourceEvidence": [
+    {
+      "path": "docs/performance/solo-preparation-invalidation.json",
+      "bytes": 6877,
+      "sha256": "0d215ad3684feb0cc5a9d504ebd9ba9459ae94eeeaef05eff9e095ebe80d4f67"
+    },
+    {
+      "path": "docs/performance/solo-noise-loop.json",
+      "bytes": 11015,
+      "sha256": "72c80176ac94b943d869bafd4082da1dae0d0a15572447b36972f1b9ce0e12a5"
+    },
+    {
+      "path": ".cache/solo-followup/demo-quality-audit-8c727777-01/audit.json",
+      "bytes": 2414,
+      "sha256": "65eaeb617c38d4dc39676db68d67d64c2125cf5b97f57124726607c48cf44fc2"
+    }
+  ],
+  "historicalEvidence": [
+    {
+      "path": "docs/performance/solo-artifact-14ac29e2.json",
+      "bytes": 14816,
+      "sha256": "fc84c5cb869eff54758a684ab640d0c1414ef865582cc2e0ffcea22932c4c76f"
+    },
+    {
+      "path": "docs/performance/solo-qualification-e025.json",
+      "bytes": 691654,
+      "sha256": "a608471dfa42524017fa60a346d750f0469ae28ab2215ffe708e7a36c754e566"
+    },
+    {
+      "path": "docs/performance/solo-demo-correctness.json",
+      "bytes": 13197,
+      "sha256": "30edc0c302b8b29b0bf7e3b0175a0e4910bf6b78075aa7b761d11365576101ac"
+    }
+  ],
+  "remaining": [
+    "regression closure",
+    "new-artifact recovery and remaining scenario qualification",
+    "WebKit/DPR and independently calibrated stress observations",
+    "repeated Next, audio and touch observations",
+    "matched diagnostics overhead at unchanged 5% gate",
+    "retention and final-runtime sustained session",
+    "physical iPhone/Steam Deck performance and heat"
+  ],
+  "constraints": [
+    "No historical B recalculation or cross-cohort pooling.",
+    "Settled120 is prospective.",
+    "RAM service is a separate storage stratum.",
+    "No automatic Demo policy requirement or blanket frame cap.",
+    "Prior failed/partial reports and local builds remain failed/partial."
+  ],
+  "updatedAt": "2026-10-16T13:40:35.938Z",
+  "artifact": {
+    "archive": {
+      "path": "distribution.zip",
+      "bytes": 1073289211,
+      "sha256": "f4cc3d51219aa0f9b6cc5d1e60a4c2bc3bfea8d3022328326f92927b6fec7c47",
+      "readbackVerified": true
+    },
+    "manifest": {
+      "bytes": 520901,
+      "sha256": "a6c944b975c584a945d53267a9ec492df9b7de91b321a2f921ee9c03e4ff9154"
+    },
+    "buildInfo": {
+      "path": "game/build-info.json",
+      "bytes": 143,
+      "sha256": "21251c33974e6ec1288a190cb7d87d9074e9b7e58604622814934452b5c5a4e0",
+      "readbackVerified": true
+    },
+    "payloadFiles": 3501,
+    "payloadBytes": 1072172900,
+    "zipMembers": 3502,
+    "durableDirectory": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460",
+    "producer": {
+      "kind": "existing GitHub Actions package",
+      "workflowRun": 38901373460,
+      "artifactId": 12046438212,
+      "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "node": "v22.13.1",
+      "platform": "Linux",
+      "localBuild": false,
+      "qualification": "development preview; qualification is separately measured, never inferred from CI packaging"
+    },
+    "durableProofs": [
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-zip-verification.json",
+        "bytes": 1129,
+        "sha256": "db4d2ae530a63eb7a7caa9302baf8355c4d9e5a6667e8de1441b36a610814054",
+        "status": "passed"
+      },
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-source-verification.json",
+        "bytes": 30314,
+        "sha256": "c2538f7067692ae945fe1479372fca2dac175854c787ae141cef7a37d7af1882",
+        "status": "passed"
+      },
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-csp.json",
+        "bytes": 1174,
+        "sha256": "8645269d328bb4f47363c390069d4105f1791979812ba12941029ba73a6c8c06",
+        "status": "passed"
+      },
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-preservation.json",
+        "bytes": 1505,
+        "sha256": "e32a9f63554821f43b8f98949d1810ebb298169e76b6e8acbaf1b3e1ede2e877",
+        "status": "passed"
+      },
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-preview-members.json",
+        "bytes": 1360,
+        "sha256": "bbafef84fc68e1c5f4cfd558b14fdbb204ed2653fb1c64334ece0f5794226d04",
+        "status": "passed"
+      },
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-preview-verification.json",
+        "bytes": 31272,
+        "sha256": "757a0392a8267ae675b3539c810a5d2460ced4bb15953b0edb01d89fc485b384",
+        "status": "passed"
+      },
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-preview-csp.json",
+        "bytes": 1219,
+        "sha256": "0030879bbda8d09d17ef7e96cb4c55aa6a3294045f905f6dd5b8177e74f4fe74",
+        "status": "passed"
+      },
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-baseline-copy.json",
+        "bytes": 5349,
+        "sha256": "6067884ba56e55fd1db958581fd18e70a0263dc3a54c6f256073dda6650f77b8",
+        "status": "passed"
+      },
+      {
+        "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460/proof-baseline-csp.json",
+        "bytes": 1173,
+        "sha256": "9000eea742149cf918a9035298cb42403a7d7312ac7e1be702aa827d548ebd36",
+        "status": "passed"
+      }
+    ],
+    "verificationSteps": [
+      {
+        "name": "source-verification",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:30:37.253316+00:00",
+        "completedAt": "2026-10-16T13:30:43.788950+00:00",
+        "log": {
+          "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/ci-ingestion-v1/source-verification.log",
+          "bytes": 143,
+          "sha256": "7c821043f27be05f0f07b5cf5b74994ef34e1032c3bf2f3c3e25be36b8280de9"
+        }
+      },
+      {
+        "name": "csp-verification",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:30:44.054564+00:00",
+        "completedAt": "2026-10-16T13:30:44.560602+00:00",
+        "log": {
+          "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/ci-ingestion-v1/csp-verification.log",
+          "bytes": 1077,
+          "sha256": "d2b82a3c3df1f66ef6bbaf356309ee6d441b964657446c5e6192aced7bf49047"
+        }
+      },
+      {
+        "name": "preservation",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:30:44.821476+00:00",
+        "completedAt": "2026-10-16T13:31:35.133979+00:00",
+        "log": {
+          "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/ci-ingestion-v1/preservation.log",
+          "bytes": 1281,
+          "sha256": "4e251a76b2f17342789f07d8f3c061a532081bb29c31808b26882627d53b4ac7"
+        }
+      },
+      {
+        "name": "verify-preview-members",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:31:35.450005+00:00",
+        "completedAt": "2026-10-16T13:31:39.476294+00:00",
+        "log": {
+          "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/ci-ingestion-v1/verify-preview-members.log",
+          "bytes": 1294,
+          "sha256": "b443dae9862ae9b7a7e81d0865e4a8714cc8e4e3d98161118e51352963fda27b"
+        }
+      },
+      {
+        "name": "preview-verification",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:31:39.750488+00:00",
+        "completedAt": "2026-10-16T13:31:46.298074+00:00",
+        "log": {
+          "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/ci-ingestion-v1/preview-verification.log",
+          "bytes": 144,
+          "sha256": "43e1af13d154e76504e56ee24f50a589a0a05418d315914abfcee9088d74f194"
+        }
+      },
+      {
+        "name": "preview-csp-verification",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:31:46.592291+00:00",
+        "completedAt": "2026-10-16T13:31:47.094831+00:00",
+        "log": {
+          "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/ci-ingestion-v1/preview-csp-verification.log",
+          "bytes": 1122,
+          "sha256": "0f454c82bbbe00acdb0c9f62d4cfd10eccc54ccaee785644892fbea41d205832"
+        }
+      },
+      {
+        "name": "copy-verify-baseline",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:31:47.545690+00:00",
+        "completedAt": "2026-10-16T13:32:41.420439+00:00",
+        "log": {
+          "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/ci-ingestion-v1/copy-verify-baseline.log",
+          "bytes": 4893,
+          "sha256": "ecb0d543cc9f6ad3ea596f2317a4be7256ed611062c47b20c0f02b973935e125"
+        }
+      },
+      {
+        "name": "baseline-csp-verification",
+        "exitCode": 0,
+        "startedAt": "2026-10-16T13:32:41.717944+00:00",
+        "completedAt": "2026-10-16T13:32:42.223339+00:00",
+        "log": {
+          "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/ci-ingestion-v1/baseline-csp-verification.log",
+          "bytes": 1076,
+          "sha256": "5e36e6d74db3b3cf3ae7389a029df8d8cdbfa7cea16cca3f6a1429b08c4579f8"
+        }
+      }
+    ],
+    "markerReconstruction": {
+      "status": "explicit-local-acquisition-metadata",
+      "bytes": 53,
+      "sha256": "d11b193572cbfd5bb927650a35bd1a5387a376160f1177b522ab69f5799177fa",
+      "reason": "Production ZIP has no marker member. This known builder marker enables existing read-only verifiers/preview; it is not source integrity or evidence of a local build."
+    },
+    "sourceFreezeAfterAllProofs": {
+      "head": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+      "porcelain": "",
+      "scope": "Clean exact current source used for strict comparison, not a claim of local build production."
+    },
+    "storage": {
+      "scope": "Both artifacts and browser/raw evidence on the same retained owned RAM filesystem; new storage stratum. CI producer Linux/Node22.13.1; no local build claim.",
+      "cleanup": {
+        "status": "pending",
+        "reason": "Existing exact owned RAM device remains mounted; never detach on partial acquisition or before all evidence/consumers close.",
+        "ownedDevice": "/dev/disk4",
+        "ownedVolumeUUID": "5C30BD0C-6C7D-3620-B092-7DE39786C6B2",
+        "mount": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4",
+        "candidateAlias": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/build-8c727777"
+      },
+      "admission": {
+        "kind": "metadata-only-CI-acquisition-v1",
+        "minimumLocalFreeBytes": 268435456,
+        "maximumLocalMetadataBytes": 16777216,
+        "minimumRAMScratchBytesBeforeBrowser": 536870912,
+        "unchangedLocalBuildGuardBytes": 1073741824,
+        "scope": "Separate no-build/no-local-payload acquisition. All command logs/proofs and expanded/ZIP/browser outputs are RAM or external; only bounded receipt/metadata is local. Existing build guards remain unchanged."
+      }
+    }
+  },
+  "focusedCI": {
+    "status": "passed",
+    "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+    "workflowRun": 38901373460,
+    "node": "v22.13.1",
+    "platform": "Linux",
+    "declaredFiles": [
+      "scripts/test-appearance-preview-policy.mjs",
+      "game/test/theme-system.test.mjs",
+      "game/test/material-state-semantics.test.mjs",
+      "game/test/theme-picker-materials.test.mjs",
+      "game/test/theme-collection-expansion.test.mjs",
+      "game/test/unified-appearance.test.mjs",
+      "game/test/theme-bootstrap.test.mjs",
+      "game/test/story-dialog.test.mjs",
+      "game/test/operation-status.test.mjs",
+      "game/test/replay-theater-navigation.test.mjs",
+      "game/test/replay-theater-display-host.test.mjs",
+      "game/test/replay-theater-actor-appearance.test.mjs",
+      "game/test/creator-player-menu.test.mjs",
+      "game/test/creator-player-victory-story.test.mjs",
+      "game/test/theme-preview.test.mjs",
+      "game/test/industrial-arcade.test.mjs",
+      "game/test/theme-family-host.test.mjs",
+      "game/test/theme-notices.test.mjs",
+      "game/test/community-appearance.test.mjs",
+      "game/test/curated-community-theme.test.mjs",
+      "game/test/curated-community-theme-host.test.mjs",
+      "game/test/edition-appearance-host.test.mjs",
+      "game/test/edition-retained-presentation.test.mjs",
+      "game/test/edition-runtime.test.mjs",
+      "game/test/editions.test.mjs",
+      "game/test/menu-audio-localization.test.mjs",
+      "game/test/menu-style-host.test.mjs",
+      "game/test/fpv-acceptance-workflow.test.mjs",
+      "game/test/win-picture-host.test.mjs",
+      "game/test/demo-reward.test.mjs",
+      "game/test/company-studio-ui.test.mjs",
+      "game/test/company-studio-preview.test.mjs",
+      "game/test/studio-appearance-basis.test.mjs",
+      "game/test/asset-studio-host-loading.test.mjs",
+      "scripts/test-curated-appearance-package.mjs",
+      "game/test/fpv-appearance.test.mjs",
+      "game/test/fpv-theme-family-controls.test.mjs",
+      "game/test/fpv-world-appearance-ui.test.mjs",
+      "game/test/fpv-world-editor-appearance.test.mjs",
+      "game/test/optional-installation.test.mjs",
+      "game/test/optional-practice-panel.test.mjs",
+      "game/test/mode-choice-appearance.test.mjs",
+      "game/test/fpv-world-runtime.test.mjs",
+      "game/test/fpv-world-content.test.mjs",
+      "game/test/fpv-workshop-visuals.test.mjs",
+      "game/test/fpv-objective-labels.test.mjs",
+      "game/test/fpv-world-textures.test.mjs",
+      "scripts/test-world-texture-acceptance.mjs",
+      "scripts/test-industrial-marking-kit.mjs",
+      "game/test/fpv-flight-ui.test.mjs",
+      "game/test/fpv-replay-rate.test.mjs",
+      "game/test/fpv-studio-setup.test.mjs",
+      "scripts/test-optional-fpv-package.mjs",
+      "scripts/test-sparse-publisher-imports.mjs"
+    ],
+    "counts": {
+      "tests": 535,
+      "suites": 0,
+      "pass": 535,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 420748.975071
+    },
+    "rawTAP": {
+      "path": "/Volumes/alex/solo-performance-b1174522/evidence/ci-artifact-8c727777-38901373460/supporting/focused-tests.tap",
+      "bytes": 128707,
+      "sha256": "d50822bdde7f4570029daa15b126d6cdd63a8234af970d38e8a86debffd7e9ee"
+    },
+    "producerIdentity": {
+      "bytes": 4412,
+      "sha256": "8bad7532ff52d953c455bde85cc123f5ab963bbf1ae712fb85955ecc64a5dfdb"
+    },
+    "supportingRetentionReceipt": {
+      "path": "/Volumes/alex/solo-performance-b1174522/evidence/ci-artifact-8c727777-38901373460/supporting/receipt.json",
+      "sha256": "3b3348eb5394cb11e23848470e6dd5fd542cd8041da136d5b9ad592ac0ebaa5e"
+    },
+    "scope": "Separate focused 54-file CI job; 535/535 tests. Not the full repository inventory, an aggregate suite pass or physical/native performance evidence."
+  }
+}

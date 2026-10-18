@@ -210,6 +210,11 @@ for (const host of ['content', 'company']) {
             suspend: call('discovery.suspend'),
             dispose: call('discovery.dispose'),
           },
+          reactionVoiceEditor: {
+            suspend: call('reaction.suspend'),
+            dispose: call('reaction.dispose'),
+          },
+          huntEditor: { dispose: call('hunt.dispose') },
           lessonEditor: { suspend: call('lesson.suspend'), dispose: call('lesson.dispose') },
           previewController: { abort: call('preview.abort') },
           retirePreview: call('preview.retire'),
@@ -230,6 +235,11 @@ for (const host of ['content', 'company']) {
         )({ persisted });
         assert.equal(calls.filter((value) => value === 'discovery.suspend').length, 1);
         assert.equal(calls.includes('discovery.dispose'), !persisted);
+        if (host === 'content') {
+          assert.equal(calls.filter((value) => value === 'reaction.suspend').length, 1);
+          assert.equal(calls.includes('reaction.dispose'), !persisted);
+          assert.equal(calls.includes('hunt.dispose'), !persisted);
+        }
         if (host === 'company') {
           assert.equal(context.previewController, null);
           assert.equal(calls.includes('lesson.suspend'), persisted);

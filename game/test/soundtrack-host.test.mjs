@@ -100,6 +100,7 @@ async function setup(
     fetchResponse,
     publicStyles,
     creatorSource,
+    browserSetup,
   } = {},
 ) {
   const original = await fixture(),
@@ -142,11 +143,72 @@ async function setup(
     audio,
     soundtrackIndexedDB: db.indexedDB,
     fetchResponse,
+    browserSetup,
   });
   if (filePlayback)
     await settle(() => !page.$('soundtrack-open').disabled, 'Real soundtrack host initialized');
   return { page, audio, db, original };
 }
+
+for (const zeroVolume of [false, true]) {
+  test(`silent Solo Start defers native audio until ${zeroVolume ? 'volume rises' : 'unmute'} in its control gesture`, async (t) => {
+    let constructions = 0;
+    const { page, audio } = await setup(t, {
+      audioPreferences: { musicEnabled: zeroVolume, masterVolume: zeroVolume ? 0 : 0.8 },
+      browserSetup({ globals }) {
+        const create = globals.AudioContext;
+        globals.AudioContext = function () {
+          constructions++;
+          return create();
+        };
+      },
+    });
+    assert.equal(constructions, 0);
+    page.$('start-button').click();
+    await settle(() => page.doc.body.dataset.flightState === 'running', 'Silent flight starts');
+    assert.equal(constructions, 0, 'Muted gameplay never opens a native audio device.');
+    if (zeroVolume) page.change('master-volume', '0.5');
+    else page.$('sound-button').click();
+    assert.equal(
+      constructions,
+      1,
+      'Native activation occurs synchronously in the control gesture.',
+    );
+    await settle(() => audio.context.state === 'running', 'Unmuted audio resumes');
+    assert.equal(page.doc.body.dataset.flightState, 'running');
+    assert.deepEqual(page.errors, []);
+  });
+}
+
+test('deferred Solo activation preserves an explicit music Pause when master sound is restored', async (t) => {
+  let constructions = 0;
+  const { page, audio } = await setup(t, {
+    browserSetup({ globals }) {
+      const create = globals.AudioContext;
+      globals.AudioContext = function () {
+        constructions++;
+        return create();
+      };
+    },
+  });
+  page.$('start-button').click();
+  await settle(() => page.doc.body.dataset.flightState === 'running', 'Silent flight starts');
+  assert.equal(constructions, 0);
+  await openStudio(page);
+  await page.$('soundtrack-pause').onclick();
+  const plays = page.audioElements.map((media) => media.plays);
+  assert.equal(constructions, 0);
+  page.$('soundtrack-master-mute').click();
+  assert.equal(constructions, 1);
+  await settle(() => audio.context.state === 'running', 'Effects activate');
+  assert.deepEqual(
+    page.audioElements.map((media) => media.plays),
+    plays,
+  );
+  assert.equal(musicMedia(page).paused, true);
+  assert.equal(page.$('solo-quick-music-settings-toggle').textContent, 'Play music');
+  assert.deepEqual(page.errors, []);
+});
 
 const onlineRecordingHash = 'a'.repeat(64);
 function onlineCatalogueResponse(status = 200) {
@@ -498,6 +560,8 @@ test('actual Settings → Studio uses stored MP3 selection, Next/Pause/Play and 
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, flightTick);
   await startFlight(page);
+  page.frame(0);
+  assert.equal(page.rendered.run.tick, flightTick, 'Resume anchors the clock without a step.');
   ticks(page, 2);
   assert.equal(page.rendered.paused, false);
   assert.equal(page.rendered.run.tick, flightTick + 2);
@@ -614,23 +678,33 @@ test('actual hide/focus restores listening on the same stream while flight stays
   const media = musicMedia(page),
     url = media.src;
   media.currentTime = 0.015;
+  const lastVisiblePaint = page.rendered,
+    lastVisibleTick = page.rendered.run.tick;
   page.doc.hidden = true;
   page.doc.emit('visibilitychange');
   page.win.emit('blur');
   page.frame(0);
   const before = page.rendered.run.tick;
   assert.equal(media.paused, true);
-  assert.equal(page.rendered.paused, true);
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.ok(page.rendered === lastVisiblePaint, 'A hidden page retains its last visible paint.');
+  assert.equal(page.rendered.run.tick, lastVisibleTick);
   page.doc.hidden = false;
   page.doc.emit('visibilitychange');
   page.win.emit('focus');
   await waitFor(() => !media.paused, 'Prior audio desire resumes on visible focus');
+  page.frame(0);
+  assert.ok(page.rendered !== lastVisiblePaint, 'Foreground return repaints the paused flight.');
+  assert.equal(page.rendered.paused, true);
+  assert.equal(page.rendered.run.tick, before);
   ticks(page, 12);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, before);
   assert.equal(media.src, url);
   assert.equal(media.currentTime, 0.015);
   await startFlight(page);
+  page.frame(0);
+  assert.equal(page.rendered.run.tick, before, 'Resume anchors the clock without a step.');
   ticks(page, 2);
   assert.equal(page.rendered.run.tick, before + 2);
   assert.deepEqual(page.errors, []);

@@ -11,7 +11,8 @@ let serial = 0;
 function host(t) {
   const document = new Document(),
     window = new Events(),
-    nodes = new Map();
+    nodes = new Map(),
+    pixelWrites = [];
   const create = document.createElement.bind(document);
   document.createElement = (tag) => {
     const element = create(tag);
@@ -24,7 +25,22 @@ function host(t) {
         return this._markup || '';
       },
     });
-    element.getContext = () => new Proxy({}, { get: () => () => {} });
+    element.getContext = () =>
+      new Proxy(
+        {
+          canvas: element,
+          createImageData(width, height) {
+            assert.ok(Number.isInteger(width) && width > 0 && width <= 512);
+            assert.ok(Number.isInteger(height) && height > 0 && height <= 512);
+            return { width, height, data: new Uint8ClampedArray(width * height * 4) };
+          },
+          putImageData(pixels) {
+            assert.equal(pixels.data.length, pixels.width * pixels.height * 4);
+            pixelWrites.push(pixels);
+          },
+        },
+        { get: (target, key) => (key in target ? target[key] : () => {}) },
+      );
     return element;
   };
   Object.assign(window, {
@@ -80,7 +96,7 @@ function host(t) {
     getItem: () => assert.fail('Loading must not access player storage.'),
     setItem: () => assert.fail('Loading must not write player storage.'),
   });
-  return { document, window, $, install };
+  return { document, window, $, install, pixelWrites };
 }
 
 test('reserve presentation labels delayed metadata and disposes stale selected image completion', async (t) => {
@@ -215,6 +231,7 @@ test('motion study reports initial dependency wait and a retryable startup failu
   });
   await import(`../../authoring/motion-lab/app.js?loading=${++serial}`);
   assert.equal(reads, 3);
+  assert.ok(h.pixelWrites.length > 0, 'The actual bounded Overflight preview must mount.');
   assert.equal(h.$('motion-load-status').dataset.state, 'busy');
   assert.match(h.$('motion-load-status').textContent, /presentation, collection and ability/);
   gate.reject(new Error('Study files unavailable'));
