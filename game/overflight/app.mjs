@@ -1494,6 +1494,7 @@ function onFrame(now) {
       ...controls,
       gamepads: controller?.gamepads ?? [],
       sharedController: controller?.sharedFrame,
+      sharedRawProfile: controller?.rawProfile,
       now,
       flight: controls,
       ui: { ...controls.ui, confirm: controls.ui?.confirmCommit },

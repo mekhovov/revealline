@@ -6,6 +6,8 @@ import { attachDemoInput } from '../ui/demo-input.mjs';
 import { attachSurvivalDemoInput } from '../demo-modes/survival.mjs';
 import { createOverflightController } from '../overflight/controller.mjs';
 import { resolveControllerBindings } from '../controller-bindings.mjs';
+import { emptyProfile } from '../couch/controller-profiles.mjs';
+import { SOLO_RESTORE_KEY } from '../couch/controller-restore.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
 const gamepad = () => ({
@@ -185,7 +187,9 @@ test('Survival-origin frames share exact bindings while retaining analog movemen
       return [pad];
     },
   });
-  const normalizer = createDemoControllerFrame();
+  const normalizer = createDemoControllerFrame({
+    getPreferences: () => ({ controllerBindings: bindings }),
+  });
   const sample = (modeId, scope = 'flight') => {
     samples++;
     const controls = controller.sample({ scope, spectator: true, timeMs: samples * 20 });
@@ -195,6 +199,7 @@ test('Survival-origin frames share exact bindings while retaining analog movemen
         flight: controls,
         ui: { ...controls.ui, confirm: controls.ui.confirmCommit },
         sharedController: controller.sharedFrame,
+        sharedRawProfile: controller.rawProfile,
         gamepads: controller.gamepads,
         now: samples * 20,
       },
@@ -226,6 +231,148 @@ test('Survival-origin frames share exact bindings while retaining analog movemen
   assert.equal(reads, samples, 'normalization performs no additional hardware poll');
   normalizer.dispose();
   controller.destroy();
+});
+
+for (const modeId of ['solo', 'snake']) {
+  test(`Survival-origin ${modeId} practice honors shared RB and toggle boost while native Survival keeps its momentary RT dash`, (t) => {
+    const pad = gamepad(),
+      document = new Document();
+    let reads = 0,
+      samples = 0;
+    const controller = createOverflightController({
+      window: document.defaultView,
+      readPads: () => {
+        reads++;
+        return [pad];
+      },
+    });
+    const preferences = Object.freeze({ controllerBoostMode: 'toggle', controllerBindings: null });
+    const normalizer = createDemoControllerFrame({ getPreferences: () => preferences });
+    t.after(() => {
+      normalizer.dispose();
+      controller.destroy();
+    });
+    const sample = (mode = modeId) => {
+      samples++;
+      const controls = controller.sample({
+        scope: 'flight',
+        spectator: false,
+        timeMs: samples * 20,
+      });
+      return normalizer.sample(
+        {
+          flight: controls,
+          ui: controls.ui,
+          sharedController: controller.sharedFrame,
+          sharedRawProfile: controller.rawProfile,
+          gamepads: controller.gamepads,
+          now: samples * 20,
+        },
+        { modeId: mode, scope: 'flight', spectator: false, toggleBoostEligible: true },
+      );
+    };
+    sample();
+    sample();
+    pad.buttons[7].pressed = true;
+    assert.equal(sample().flight.boost, false, 'native RT default is not the shared Boost action');
+    pad.buttons[7].pressed = false;
+    sample();
+    pad.buttons[5].pressed = true;
+    assert.equal(sample().flight.boost, true);
+    pad.buttons[5].pressed = false;
+    assert.equal(sample().flight.boost, true, 'saved toggle remains on after release');
+    normalizer.clear();
+    assert.equal(sample().flight.boost, false, 'return/scene changes disarm the toggle');
+    sample('survival');
+    sample('survival');
+    pad.buttons[7].pressed = true;
+    assert.equal(sample('survival').flight.boost, true);
+    pad.buttons[7].pressed = false;
+    assert.equal(sample('survival').flight.boost, false, 'native Survival remains momentary');
+    assert.equal(reads, samples, 'only the originating owner polls hardware');
+    assert.deepEqual(preferences, { controllerBoostMode: 'toggle', controllerBindings: null });
+  });
+}
+
+test('Survival-origin shared flight retains admitted raw radio calibration and rejects other captured devices', (t) => {
+  const pad = gamepad(),
+    document = new Document();
+  pad.mapping = '';
+  pad.id = 'Configured shared radio';
+  pad.axes[2] = -1;
+  const profile = emptyProfile(pad, 'radio', 'Radio'),
+    axis = (index, end) => ({ kind: 'axis', index, center: 0, end, press: 0.35, release: 0.25 });
+  profile.flight.right = [axis(0, 1)];
+  profile.flight.left = [axis(0, -1)];
+  profile.flight.up = [axis(3, -1)];
+  profile.flight.down = [axis(3, 1)];
+  profile.flight.boost = [{ kind: 'button', index: 22, threshold: 0.5, invert: false }];
+  profile.menu.confirm = [{ kind: 'button', index: 20, threshold: 0.5, invert: false }];
+  const saved = JSON.stringify({
+    format: 'RadioSetup.v1',
+    entries: [{ profiles: [profile], seats: [null] }],
+  });
+  let writes = 0,
+    reads = 0,
+    samples = 0;
+  document.defaultView.localStorage = {
+    getItem: (key) => (key === SOLO_RESTORE_KEY ? saved : null),
+    setItem() {
+      writes++;
+    },
+  };
+  const controller = createOverflightController({
+    window: document.defaultView,
+    readPads: () => {
+      reads++;
+      return [pad];
+    },
+  });
+  const normalizer = createDemoControllerFrame({
+    getPreferences: () => ({ controllerBoostMode: 'toggle' }),
+  });
+  t.after(() => {
+    normalizer.dispose();
+    controller.destroy();
+  });
+  const extra = { ...gamepad(), index: 1 };
+  const sample = (scope = 'flight') => {
+    samples++;
+    const controls = controller.sample({ scope, spectator: false, timeMs: samples * 20 });
+    return normalizer.sample(
+      {
+        flight: controls,
+        ui: { ...controls.ui, confirm: controls.ui.confirmCommit },
+        sharedController: controller.sharedFrame,
+        sharedRawProfile: controller.rawProfile,
+        gamepads: [...controller.gamepads, extra],
+        now: samples * 20,
+      },
+      { modeId: 'solo', scope, spectator: false, toggleBoostEligible: true },
+    );
+  };
+  sample();
+  sample();
+  extra.axes[0] = 0.9;
+  assert.equal(sample().flight.direction, null, 'unassigned captured pad cannot steer');
+  pad.axes[0] = 0.7;
+  assert.equal(sample().flight.direction, 'right');
+  pad.axes[0] = 0;
+  sample();
+  pad.buttons[22].value = 1;
+  assert.equal(sample().flight.boost, true);
+  pad.buttons[22].value = 0;
+  assert.equal(sample().flight.boost, true, 'radio Boost also uses saved shared toggle policy');
+  sample('menu:demo');
+  pad.buttons[20].value = 1;
+  assert.equal(sample('menu:demo').ui.confirm, false, 'native press still waits for release');
+  pad.buttons[20].value = 0;
+  assert.equal(sample('menu:demo').ui.confirm, true);
+  pad.id = 'Unknown radio with same counts';
+  assert.equal(sample().flight.direction, null);
+  assert.equal(sample().assigned, null, 'raw calibration is never reused for a different identity');
+  assert.equal(reads, samples);
+  assert.equal(writes, 0);
 });
 
 test('SIM receives its original raw frame for native throttle and verified radio handling', () => {

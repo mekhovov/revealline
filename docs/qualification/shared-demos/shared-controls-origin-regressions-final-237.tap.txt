@@ -1,0 +1,1370 @@
+TAP version 13
+# Subtest: controller Boost has two immutable modes and an explicit Hold default
+ok 1 - controller Boost has two immutable modes and an explicit Hold default
+  ---
+  duration_ms: 2.920209
+  ...
+# Subtest: mode validation rejects malformed values without evaluating coercion or getters
+ok 2 - mode validation rejects malformed values without evaluating coercion or getters
+  ---
+  duration_ms: 1.909625
+  ...
+# Subtest: default and explicit Hold preserve held commands when Toggle eligibility or cancellation changes
+ok 3 - default and explicit Hold preserve held commands when Toggle eligibility or cancellation changes
+  ---
+  duration_ms: 6.634667
+  ...
+# Subtest: Toggle changes once per fresh press, survives physical release, and turns off on a second press
+ok 4 - Toggle changes once per fresh press, survives physical release, and turns off on a second press
+  ---
+  duration_ms: 1.719292
+  ...
+# Subtest: Boost uses the configured physical button and existing analog pressed threshold
+ok 5 - Boost uses the configured physical button and existing analog pressed threshold
+  ---
+  duration_ms: 1.135417
+  ...
+# Subtest: the fixed join press remains consumed when its button is also mapped to Boost
+ok 6 - the fixed join press remains consumed when its button is also mapped to Boost
+  ---
+  duration_ms: 0.462583
+  ...
+# Subtest: pause wins over a fresh Boost press and clears an active toggle
+ok 7 - pause wins over a fresh Boost press and clears an active toggle
+  ---
+  duration_ms: 0.860041
+  ...
+# Subtest: hangar wins over a fresh Boost press and clears an active toggle
+ok 8 - hangar wins over a fresh Boost press and clears an active toggle
+  ---
+  duration_ms: 4.374292
+  ...
+# Subtest: stop wins over a fresh Boost press and clears an active toggle
+ok 9 - stop wins over a fresh Boost press and clears an active toggle
+  ---
+  duration_ms: 1.669167
+  ...
+# Subtest: Boost-only cancellation preserves assignment, held direction hysteresis and action behavior
+ok 10 - Boost-only cancellation preserves assignment, held direction hysteresis and action behavior
+  ---
+  duration_ms: 0.538875
+  ...
+# Subtest: recovery rejects toggle presses until an eligible neutral sample without suppressing other actions
+ok 11 - recovery rejects toggle presses until an eligible neutral sample without suppressing other actions
+  ---
+  duration_ms: 0.331334
+  ...
+# Subtest: recovery neutrality uses both stick contexts, release equality and fixed join buttons
+ok 12 - recovery neutrality uses both stick contexts, release equality and fixed join buttons
+  ---
+  duration_ms: 0.936583
+  ...
+# Subtest: clear adoption clears Toggle and gates a button held across the boundary
+ok 13 - clear adoption clears Toggle and gates a button held across the boundary
+  ---
+  duration_ms: 0.28275
+  ...
+# Subtest: bindings adoption clears Toggle and gates a button held across the boundary
+ok 14 - bindings adoption clears Toggle and gates a button held across the boundary
+  ---
+  duration_ms: 0.238167
+  ...
+# Subtest: mode adoption clears Toggle and gates a button held across the boundary
+ok 15 - mode adoption clears Toggle and gates a button held across the boundary
+  ---
+  duration_ms: 0.192833
+  ...
+# Subtest: scope adoption clears Toggle and gates a button held across the boundary
+ok 16 - scope adoption clears Toggle and gates a button held across the boundary
+  ---
+  duration_ms: 0.210209
+  ...
+# Subtest: invalid mode, bindings and eligibility leave active state and hardware reads unchanged
+ok 17 - invalid mode, bindings and eligibility leave active state and hardware reads unchanged
+  ---
+  duration_ms: 0.350583
+  ...
+# Subtest: Hold-to-Toggle adoption requires release rather than interpreting the existing hold as a fresh press
+ok 18 - Hold-to-Toggle adoption requires release rather than interpreting the existing hold as a fresh press
+  ---
+  duration_ms: 0.216125
+  ...
+# Subtest: repeated inactive cancellation preserves menu joining, confirming and directional repeats
+ok 19 - repeated inactive cancellation preserves menu joining, confirming and directional repeats
+  ---
+  duration_ms: 0.283541
+  ...
+# Subtest: disconnect clears the active toggle and cannot transfer it to a rejoined pad
+ok 20 - disconnect clears the active toggle and cannot transfer it to a rejoined pad
+  ---
+  duration_ms: 0.631459
+  ...
+# Subtest: replacement clears the active toggle and cannot transfer it to a rejoined pad
+ok 21 - replacement clears the active toggle and cannot transfer it to a rejoined pad
+  ---
+  duration_ms: 0.671708
+  ...
+# Subtest: read-failure clears the active toggle and cannot transfer it to a rejoined pad
+ok 22 - read-failure clears the active toggle and cannot transfer it to a rejoined pad
+  ---
+  duration_ms: 1.144792
+  ...
+# Subtest: state snapshots cannot mutate the latch and destroy makes cancellation harmless without reads
+ok 23 - state snapshots cannot mutate the latch and destroy makes cancellation harmless without reads
+  ---
+  duration_ms: 0.859375
+  ...
+# Subtest: all remapped flight buttons emit the existing normalized command fields
+ok 24 - all remapped flight buttons emit the existing normalized command fields
+  ---
+  duration_ms: 19.67125
+  ...
+# Subtest: all remapped menu actions remain scoped and edge-triggered with original priority
+ok 25 - all remapped menu actions remain scoped and edge-triggered with original priority
+  ---
+  duration_ms: 4.390333
+  ...
+# Subtest: fixed physical join controls remain available even when none is a mapped menu action
+ok 26 - fixed physical join controls remain available even when none is a mapped menu action
+  ---
+  duration_ms: 6.87375
+  ...
+# Subtest: custom analog axes/inversion are context-specific and digital directions still win
+ok 27 - custom analog axes/inversion are context-specific and digital directions still win
+  ---
+  duration_ms: 1.221417
+  ...
+# Subtest: configured stick hysteresis resists threshold chatter and releases at equality
+ok 28 - configured stick hysteresis resists threshold chatter and releases at equality
+  ---
+  duration_ms: 0.853166
+  ...
+# Subtest: pause clears stick history and requires physical release before the next command
+ok 29 - pause clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.78725
+  ...
+# Subtest: hangar clears stick history and requires physical release before the next command
+ok 30 - hangar clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.676875
+  ...
+# Subtest: stop clears stick history and requires physical release before the next command
+ok 31 - stop clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 0.693792
+  ...
+# Subtest: clear clears stick history and requires physical release before the next command
+ok 32 - clear clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 1.235583
+  ...
+# Subtest: scope clears stick history and requires physical release before the next command
+ok 33 - scope clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 1.003416
+  ...
+# Subtest: remap clears stick history and requires physical release before the next command
+ok 34 - remap clears stick history and requires physical release before the next command
+  ---
+  duration_ms: 1.17
+  ...
+# Subtest: neutral gating includes both contexts and fixed join buttons before a remapped action can fire
+ok 35 - neutral gating includes both contexts and fixed join buttons before a remapped action can fire
+  ---
+  duration_ms: 1.583541
+  ...
+# Subtest: buttons-only configurations ignore analog drift while keeping mapped movement available
+ok 36 - buttons-only configurations ignore analog drift while keeping mapped movement available
+  ---
+  duration_ms: 0.31
+  ...
+# Subtest: successful adoption retains ownership and blocks a held newly mapped input without reading hardware
+ok 37 - successful adoption retains ownership and blocks a held newly mapped input without reading hardware
+  ---
+  duration_ms: 0.304875
+  ...
+# Subtest: invalid adoption preserves bindings, held UI edges, repeat deadlines and active hysteresis
+ok 38 - invalid adoption preserves bindings, held UI edges, repeat deadlines and active hysteresis
+  ---
+  duration_ms: 0.9
+  ...
+# Subtest: successful adoption clears repeat timing and consumes a fresh neutral frame before UI resumes
+ok 39 - successful adoption clears repeat timing and consumes a fresh neutral frame before UI resumes
+  ---
+  duration_ms: 0.514583
+  ...
+# Subtest: adoption owns its maps and sampling does not revisit caller configuration getters
+ok 40 - adoption owns its maps and sampling does not revisit caller configuration getters
+  ---
+  duration_ms: 0.572708
+  ...
+# Subtest: legacy constructor deadZone stays compatible while explicit documents and later reset own thresholds
+ok 41 - legacy constructor deadZone stays compatible while explicit documents and later reset own thresholds
+  ---
+  duration_ms: 1.062958
+  ...
+# Subtest: remapped flight emergency priority suppresses equipment and analog triggers retain threshold semantics
+ok 42 - remapped flight emergency priority suppresses equipment and analog triggers retain threshold semantics
+  ---
+  duration_ms: 1.081542
+  ...
+# Subtest: hysteresis is per connection and loss requires neutral plus an explicit new join
+ok 43 - hysteresis is per connection and loss requires neutral plus an explicit new join
+  ---
+  duration_ms: 1.002541
+  ...
+# Subtest: invalid initial bindings install no listener and a destroyed router cannot be revived by adoption
+ok 44 - invalid initial bindings install no listener and a destroyed router cannot be revived by adoption
+  ---
+  duration_ms: 0.503166
+  ...
+# Subtest: joining needs an observed neutral then a deliberate button; join never activates UI or flight
+ok 45 - joining needs an observed neutral then a deliberate button; join never activates UI or flight
+  ---
+  duration_ms: 5.120375
+  ...
+# Subtest: one sample reads hardware once, uses the latest object, and never retains mutable snapshots
+ok 46 - one sample reads hardware once, uses the latest object, and never retains mutable snapshots
+  ---
+  duration_ms: 1.419416
+  ...
+# Subtest: only exact flight scope emits held gameplay actions; other scopes emit UI edges
+ok 47 - only exact flight scope emits held gameplay actions; other scopes emit UI edges
+  ---
+  duration_ms: 1.781708
+  ...
+# Subtest: scope changes and clear suppress held directions/buttons until a neutral sample
+ok 48 - scope changes and clear suppress held directions/buttons until a neutral sample
+  ---
+  duration_ms: 2.482084
+  ...
+# Subtest: special flight buttons are single actions with priority and cannot leak held equipment
+ok 49 - special flight buttons are single actions with priority and cannot leak held equipment
+  ---
+  duration_ms: 1.471125
+  ...
+# Subtest: UI activation/back/menu never repeat and suppress same-sample direction changes
+ok 50 - UI activation/back/menu never repeat and suppress same-sample direction changes
+  ---
+  duration_ms: 0.528375
+  ...
+# Subtest: overlapping South and West aliases form one menu Confirm gesture
+ok 51 - overlapping South and West aliases form one menu Confirm gesture
+  ---
+  duration_ms: 0.888458
+  ...
+# Subtest: menu frames expose exact Confirm indexes and the Gamepad timestamp
+ok 52 - menu frames expose exact Confirm indexes and the Gamepad timestamp
+  ---
+  duration_ms: 1.872916
+  ...
+# Subtest: native Confirm probes expose live assigned input without adopting or consuming its edge
+ok 53 - native Confirm probes expose live assigned input without adopting or consuming its edge
+  ---
+  duration_ms: 0.730584
+  ...
+# Subtest: Confirm probes cannot lift neutral gates or change the active scope
+ok 54 - Confirm probes cannot lift neutral gates or change the active scope
+  ---
+  duration_ms: 2.771708
+  ...
+# Subtest: repeated native probes leave direction, Back, Menu, and flight edges for the host
+ok 55 - repeated native probes leave direction, Back, Menu, and flight edges for the host
+  ---
+  duration_ms: 2.846125
+  ...
+# Subtest: Confirm probes respect custom bindings and do not advance stick hysteresis
+ok 56 - Confirm probes respect custom bindings and do not advance stick hysteresis
+  ---
+  duration_ms: 1.107333
+  ...
+# Subtest: Confirm probes report assignment loss without stealing router disconnect handling
+ok 57 - Confirm probes report assignment loss without stealing router disconnect handling
+  ---
+  duration_ms: 1.389666
+  ...
+# Subtest: Confirm probes follow the assigned device when another pad exposes the same button
+ok 58 - Confirm probes follow the assigned device when another pad exposes the same button
+  ---
+  duration_ms: 1.102375
+  ...
+# Subtest: a failed native Confirm read does not invalidate a healthy router assignment
+ok 59 - a failed native Confirm read does not invalidate a healthy router assignment
+  ---
+  duration_ms: 0.384584
+  ...
+# Subtest: opt-in Confirm diagnostics describe raw devices from the existing read and can be disabled
+ok 60 - opt-in Confirm diagnostics describe raw devices from the existing read and can be disabled
+  ---
+  duration_ms: 0.410833
+  ...
+# Subtest: unassigned diagnostic probes report bounded raw pads without adopting any device
+ok 61 - unassigned diagnostic probes report bounded raw pads without adopting any device
+  ---
+  duration_ms: 1.9115
+  ...
+# Subtest: UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst
+ok 62 - UI repeat uses elapsed time, resets on reversal, and produces no catch-up burst
+  ---
+  duration_ms: 4.861541
+  ...
+# Subtest: direction repeat remains bounded at slow and fast sampling rates
+ok 63 - direction repeat remains bounded at slow and fast sampling rates
+  ---
+  duration_ms: 6.885833
+  ...
+# Subtest: finite axes, threshold and digital priority yield reliable cardinal input
+ok 64 - finite axes, threshold and digital priority yield reliable cardinal input
+  ---
+  duration_ms: 0.643917
+  ...
+# Subtest: assignment follows the deliberate joining pad and ignores later lower-index arrivals
+ok 65 - assignment follows the deliberate joining pad and ignores later lower-index arrivals
+  ---
+  duration_ms: 0.449625
+  ...
+# Subtest: selected pad loss pauses ownership even while another pad remains; rejoin is explicit
+ok 66 - selected pad loss pauses ownership even while another pad remains; rejoin is explicit
+  ---
+  duration_ms: 0.95975
+  ...
+# Subtest: descriptor replacement and same-model explicit disconnect invalidate a reused slot
+ok 67 - descriptor replacement and same-model explicit disconnect invalidate a reused slot
+  ---
+  duration_ms: 1.069083
+  ...
+# Subtest: disconnecting an unassigned second pad never disrupts the assigned controller
+ok 68 - disconnecting an unassigned second pad never disrupts the assigned controller
+  ---
+  duration_ms: 0.557292
+  ...
+# Subtest: API denial clears assignment once and distinguishes unsupported from absent controllers
+ok 69 - API denial clears assignment once and distinguishes unsupported from absent controllers
+  ---
+  duration_ms: 2.486666
+  ...
+# Subtest: invalidate requires rejoin; destroyed router removes its listener and performs no more reads
+ok 70 - invalidate requires rejoin; destroyed router removes its listener and performs no more reads
+  ---
+  duration_ms: 0.590333
+  ...
+# Subtest: invalid configuration rejects and malformed clocks never cause repeating activations
+ok 71 - invalid configuration rejects and malformed clocks never cause repeating activations
+  ---
+  duration_ms: 0.423167
+  ...
+# Subtest: solo auto-join accepts the first action after neutral without consuming a join press
+ok 72 - solo auto-join accepts the first action after neutral without consuming a join press
+  ---
+  duration_ms: 0.180541
+  ...
+# Subtest: solo cannot start from held discovery input, scope changes, or a reconnected controller
+ok 73 - solo cannot start from held discovery input, scope changes, or a reconnected controller
+  ---
+  duration_ms: 0.168125
+  ...
+# Subtest: Xbox Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 74 - Xbox Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.545458
+  ...
+# Subtest: DualSense Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 75 - DualSense Wireless Controller: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.515834
+  ...
+# Subtest: DualShock 4: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 76 - DualShock 4: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.341834
+  ...
+# Subtest: Steam Deck (standard gamepad): both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 77 - Steam Deck (standard gamepad): both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.460625
+  ...
+# Subtest: Generic USB Gamepad: both sticks, all D-pad directions, face actions and pause use standard physical positions
+ok 78 - Generic USB Gamepad: both sticks, all D-pad directions, face actions and pause use standard physical positions
+  ---
+  duration_ms: 0.950583
+  ...
+# Subtest: menu face aliases and shoulders/triggers work with edge detection and repeat
+ok 79 - menu face aliases and shoulders/triggers work with edge detection and repeat
+  ---
+  duration_ms: 0.382916
+  ...
+# Subtest: saved defaults and label/dead-zone choices keep both sticks; explicit remaps take priority
+ok 80 - saved defaults and label/dead-zone choices keep both sticks; explicit remaps take priority
+  ---
+  duration_ms: 0.510708
+  ...
+# Subtest: unchanged controller status translates once while every native sample remains fresh
+ok 81 - unchanged controller status translates once while every native sample remains fresh
+  ---
+  duration_ms: 600.025958
+  ...
+# Subtest: watching Demo Back commits a pure Gamepad tap or five-second hold only on release
+ok 82 - watching Demo Back commits a pure Gamepad tap or five-second hold only on release
+  ---
+  duration_ms: 7255.313625
+  ...
+# Subtest: watching Demo Back release does not send a simultaneous UI edge into Home
+ok 83 - watching Demo Back release does not send a simultaneous UI edge into Home
+  ---
+  duration_ms: 5414.859583
+  ...
+# Subtest: practice Demo Back commits a pure Gamepad tap or five-second hold only on release
+ok 84 - practice Demo Back commits a pure Gamepad tap or five-second hold only on release
+  ---
+  duration_ms: 7701.260083
+  ...
+# Subtest: practice Demo Back release does not send a simultaneous UI edge into Home
+ok 85 - practice Demo Back release does not send a simultaneous UI edge into Home
+  ---
+  duration_ms: 5154.227
+  ...
+# Subtest: watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 86 - watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 6709.908291
+  ...
+# Subtest: watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 87 - watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 8262.944625
+  ...
+# Subtest: practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 88 - practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 9595.781333
+  ...
+# Subtest: practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 89 - practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 10019.669084
+  ...
+# Subtest: native-first watching Demo Back stays the winner after Home restores and A is held for five seconds
+ok 90 - native-first watching Demo Back stays the winner after Home restores and A is held for five seconds
+  ---
+  duration_ms: 6507.947333
+  ...
+# Subtest: native-first practice Demo Back stays the winner after Home restores and A is held for five seconds
+ok 91 - native-first practice Demo Back stays the winner after Home restores and A is held for five seconds
+  ---
+  duration_ms: 5031.702709
+  ...
+# Subtest: touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+ok 92 - touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+  ---
+  duration_ms: 6258.749209
+  ...
+# Subtest: watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 93 - watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 9696.290958
+  ...
+# Subtest: watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 94 - watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 9551.390458
+  ...
+# Subtest: practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 95 - practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 7345.337292
+  ...
+# Subtest: practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 96 - practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 7476.92525
+  ...
+# Subtest: native-first watching Demo Back stays the winner after Settings restores and A is held for five seconds
+ok 97 - native-first watching Demo Back stays the winner after Settings restores and A is held for five seconds
+  ---
+  duration_ms: 6207.142875
+  ...
+# Subtest: native-first practice Demo Back stays the winner after Settings restores and A is held for five seconds
+ok 98 - native-first practice Demo Back stays the winner after Settings restores and A is held for five seconds
+  ---
+  duration_ms: 6396.6205
+  ...
+# Subtest: touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+ok 99 - touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+  ---
+  duration_ms: 6415.4905
+  ...
+# Subtest: sim-origin captured pads enter solo practice only after fresh movement
+ok 100 - sim-origin captured pads enter solo practice only after fresh movement
+  ---
+  duration_ms: 5.284917
+  ...
+# Subtest: sim-origin captured pads enter snake practice only after fresh movement
+ok 101 - sim-origin captured pads enter snake practice only after fresh movement
+  ---
+  duration_ms: 2.393708
+  ...
+# Subtest: sim-origin captured pads enter survival practice only after fresh movement
+ok 102 - sim-origin captured pads enter survival practice only after fresh movement
+  ---
+  duration_ms: 4.620166
+  ...
+# Subtest: snake-origin captured pads enter solo practice only after fresh movement
+ok 103 - snake-origin captured pads enter solo practice only after fresh movement
+  ---
+  duration_ms: 1.056042
+  ...
+# Subtest: snake-origin captured pads enter snake practice only after fresh movement
+ok 104 - snake-origin captured pads enter snake practice only after fresh movement
+  ---
+  duration_ms: 0.951583
+  ...
+# Subtest: snake-origin captured pads enter survival practice only after fresh movement
+ok 105 - snake-origin captured pads enter survival practice only after fresh movement
+  ---
+  duration_ms: 4.824583
+  ...
+# Subtest: raw samples retain configured actions, menu edges, and clear their release gate without persistence
+ok 106 - raw samples retain configured actions, menu edges, and clear their release gate without persistence
+  ---
+  duration_ms: 2.026791
+  ...
+# Subtest: authoritative Solo frames retain mapped controls and the native Confirm owner
+ok 107 - authoritative Solo frames retain mapped controls and the native Confirm owner
+  ---
+  duration_ms: 0.622791
+  ...
+# Subtest: Survival-origin frames share exact bindings while retaining analog movement and Confirm release
+ok 108 - Survival-origin frames share exact bindings while retaining analog movement and Confirm release
+  ---
+  duration_ms: 2.621083
+  ...
+# Subtest: Survival-origin solo practice honors shared RB and toggle boost while native Survival keeps its momentary RT dash
+ok 109 - Survival-origin solo practice honors shared RB and toggle boost while native Survival keeps its momentary RT dash
+  ---
+  duration_ms: 6.279666
+  ...
+# Subtest: Survival-origin snake practice honors shared RB and toggle boost while native Survival keeps its momentary RT dash
+ok 110 - Survival-origin snake practice honors shared RB and toggle boost while native Survival keeps its momentary RT dash
+  ---
+  duration_ms: 1.632083
+  ...
+# Subtest: Survival-origin shared flight retains admitted raw radio calibration and rejects other captured devices
+ok 111 - Survival-origin shared flight retains admitted raw radio calibration and rejects other captured devices
+  ---
+  duration_ms: 5.69975
+  ...
+# Subtest: SIM receives its original raw frame for native throttle and verified radio handling
+ok 112 - SIM receives its original raw frame for native throttle and verified radio handling
+  ---
+  duration_ms: 0.913208
+  ...
+# Subtest: practice handoff requires every observed keyboard key to become neutral before fresh steering
+ok 113 - practice handoff requires every observed keyboard key to become neutral before fresh steering
+  ---
+  duration_ms: 3.739916
+  ...
+# Subtest: blur: an unobservable outside key release cannot permanently block practice
+ok 114 - blur: an unobservable outside key release cannot permanently block practice
+  ---
+  duration_ms: 1.375792
+  ...
+# Subtest: hidden: an unobservable outside key release cannot permanently block practice
+ok 115 - hidden: an unobservable outside key release cannot permanently block practice
+  ---
+  duration_ms: 0.423042
+  ...
+# Subtest: ability: a quick keyboard or pointer impulse survives release until consumed once
+ok 116 - ability: a quick keyboard or pointer impulse survives release until consumed once
+  ---
+  duration_ms: 0.838166
+  ...
+# Subtest: pickup: a quick keyboard or pointer impulse survives release until consumed once
+ok 117 - pickup: a quick keyboard or pointer impulse survives release until consumed once
+  ---
+  duration_ms: 0.345834
+  ...
+# Subtest: releasing either Boost key or a separate touch cannot release another physical Boost owner
+ok 118 - releasing either Boost key or a separate touch cannot release another physical Boost owner
+  ---
+  duration_ms: 0.201459
+  ...
+# Subtest: tap-steering toggles pointer Boost while keyboard Boost stays Hold, and lifecycle clear retires the latch
+ok 119 - tap-steering toggles pointer Boost while keyboard Boost stays Hold, and lifecycle clear retires the latch
+  ---
+  duration_ms: 0.255625
+  ...
+# Subtest: click-only assistive Boost toggles without a release event and preserves independent keyboard Hold
+ok 120 - click-only assistive Boost toggles without a release event and preserves independent keyboard Hold
+  ---
+  duration_ms: 0.534625
+  ...
+# Subtest: cancelling the active touch Boost toggle clears it while an unrelated finger cannot
+ok 121 - cancelling the active touch Boost toggle clears it while an unrelated finger cannot
+  ---
+  duration_ms: 0.247
+  ...
+# Subtest: stick: capture failure, outside release, cancellation and stale moves preserve one touch owner
+ok 122 - stick: capture failure, outside release, cancellation and stale moves preserve one touch owner
+  ---
+  duration_ms: 3.047667
+  ...
+# Subtest: swipe: capture failure, outside release, cancellation and stale moves preserve one touch owner
+ok 123 - swipe: capture failure, outside release, cancellation and stale moves preserve one touch owner
+  ---
+  duration_ms: 0.459584
+  ...
+# Subtest: deliberate clear retires a captured steering finger before late capture notifications
+ok 124 - deliberate clear retires a captured steering finger before late capture notifications
+  ---
+  duration_ms: 0.239208
+  ...
+# Subtest: a fresh configured keyboard direction takes over once, survives async clear, and never leaks to ordinary input
+ok 125 - a fresh configured keyboard direction takes over once, survives async clear, and never leaks to ordinary input
+  ---
+  duration_ms: 2.488167
+  ...
+# Subtest: Back exits watching on pointerdown and consumes its trailing PointerEvent click after Home restores
+ok 126 - Back exits watching on pointerdown and consumes its trailing PointerEvent click after Home restores
+  ---
+  duration_ms: 0.535667
+  ...
+# Subtest: Back exits watching on pointerdown and consumes its trailing MouseEvent click after Home restores
+ok 127 - Back exits watching on pointerdown and consumes its trailing MouseEvent click after Home restores
+  ---
+  duration_ms: 0.268708
+  ...
+# Subtest: Back inside Demo UI exits watching on Enter and consumes repeats, release and click after focus moves Home
+ok 128 - Back inside Demo UI exits watching on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.241792
+  ...
+# Subtest: Back inside Demo UI exits loading on Enter and consumes repeats, release and click after focus moves Home
+ok 129 - Back inside Demo UI exits loading on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.185375
+  ...
+# Subtest: Back inside Demo UI exits practice on Enter and consumes repeats, release and click after focus moves Home
+ok 130 - Back inside Demo UI exits practice on Enter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.605333
+  ...
+# Subtest: Back inside Demo UI exits watching on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 131 - Back inside Demo UI exits watching on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.390834
+  ...
+# Subtest: Back inside Demo UI exits loading on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 132 - Back inside Demo UI exits loading on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.147958
+  ...
+# Subtest: Back inside Demo UI exits practice on NumpadEnter and consumes repeats, release and click after focus moves Home
+ok 133 - Back inside Demo UI exits practice on NumpadEnter and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.10625
+  ...
+# Subtest: Back inside Demo UI exits watching on Space and consumes repeats, release and click after focus moves Home
+ok 134 - Back inside Demo UI exits watching on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.192584
+  ...
+# Subtest: Back inside Demo UI exits loading on Space and consumes repeats, release and click after focus moves Home
+ok 135 - Back inside Demo UI exits loading on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.093375
+  ...
+# Subtest: Back inside Demo UI exits practice on Space and consumes repeats, release and click after focus moves Home
+ok 136 - Back inside Demo UI exits practice on Space and consumes repeats, release and click after focus moves Home
+  ---
+  duration_ms: 0.187334
+  ...
+# Subtest: Back reports only an actual fresh unmodified native activation to the Confirm owner
+ok 137 - Back reports only an actual fresh unmodified native activation to the Confirm owner
+  ---
+  duration_ms: 0.177416
+  ...
+# Subtest: teardown removes keyboard, pointer and lifecycle observers
+ok 138 - teardown removes keyboard, pointer and lifecycle observers
+  ---
+  duration_ms: 0.116625
+  ...
+# Subtest: PointerEvent click: another finger cannot duplicate the first play action
+ok 139 - PointerEvent click: another finger cannot duplicate the first play action
+  ---
+  duration_ms: 1.811084
+  ...
+# Subtest: MouseEvent click: another finger cannot duplicate the first play action
+ok 140 - MouseEvent click: another finger cannot duplicate the first play action
+  ---
+  duration_ms: 0.479709
+  ...
+# Subtest: fresh keyboard ability takes over with exactly one retained semantic action
+ok 141 - fresh keyboard ability takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.24325
+  ...
+# Subtest: fresh keyboard pickup takes over with exactly one retained semantic action
+ok 142 - fresh keyboard pickup takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.121
+  ...
+# Subtest: fresh keyboard boost takes over with exactly one retained semantic action
+ok 143 - fresh keyboard boost takes over with exactly one retained semantic action
+  ---
+  duration_ms: 1.406041
+  ...
+# Subtest: fresh keyboard hangar takes over with exactly one retained semantic action
+ok 144 - fresh keyboard hangar takes over with exactly one retained semantic action
+  ---
+  duration_ms: 0.176542
+  ...
+# Subtest: keyboard auto-repeat, held entry keys, IME and modified shortcuts cannot take over
+ok 145 - keyboard auto-repeat, held entry keys, IME and modified shortcuts cannot take over
+  ---
+  duration_ms: 0.291
+  ...
+# Subtest: stick: watch touch waits for a recognized direction and forwards it once
+ok 146 - stick: watch touch waits for a recognized direction and forwards it once
+  ---
+  duration_ms: 0.261667
+  ...
+# Subtest: swipe: watch touch waits for a recognized direction and forwards it once
+ok 147 - swipe: watch touch waits for a recognized direction and forwards it once
+  ---
+  duration_ms: 0.201792
+  ...
+# Subtest: a deliberate canvas tap takes over without inventing a direction; cancellation and dragging do not
+ok 148 - a deliberate canvas tap takes over without inventing a direction; cancellation and dragging do not
+  ---
+  duration_ms: 1.643
+  ...
+# Subtest: pointer: explicit movement and action buttons take over once
+ok 149 - pointer: explicit movement and action buttons take over once
+  ---
+  duration_ms: 0.642292
+  ...
+# Subtest: assistive: explicit movement and action buttons take over once
+ok 150 - assistive: explicit movement and action buttons take over once
+  ---
+  duration_ms: 0.545667
+  ...
+# Subtest: fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks
+ok 151 - fullscreen, next and menu buttons activate normally through pointer, keyboard and assistive clicks
+  ---
+  duration_ms: 1.117583
+  ...
+# Subtest: KeyP opens the watching menu while Escape exits
+ok 152 - KeyP opens the watching menu while Escape exits
+  ---
+  duration_ms: 0.323584
+  ...
+# Subtest: KeyX opens the watching menu while Escape exits
+ok 153 - KeyX opens the watching menu while Escape exits
+  ---
+  duration_ms: 0.154167
+  ...
+# Subtest: controller menu/back remain separate from gameplay takeover and pending preparation cannot navigate
+ok 154 - controller menu/back remain separate from gameplay takeover and pending preparation cannot navigate
+  ---
+  duration_ms: 0.574417
+  ...
+# Subtest: real controller router: analog takes over only after join/neutral and a fresh deliberate edge
+ok 155 - real controller router: analog takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 11.015166
+  ...
+# Subtest: real controller router: dpad takes over only after join/neutral and a fresh deliberate edge
+ok 156 - real controller router: dpad takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 1.008541
+  ...
+# Subtest: real controller router: ability takes over only after join/neutral and a fresh deliberate edge
+ok 157 - real controller router: ability takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.653375
+  ...
+# Subtest: real controller router: pickup takes over only after join/neutral and a fresh deliberate edge
+ok 158 - real controller router: pickup takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 1.175417
+  ...
+# Subtest: real controller router: boost takes over only after join/neutral and a fresh deliberate edge
+ok 159 - real controller router: boost takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 1.424791
+  ...
+# Subtest: real controller router: hangar takes over only after join/neutral and a fresh deliberate edge
+ok 160 - real controller router: hangar takes over only after join/neutral and a fresh deliberate edge
+  ---
+  duration_ms: 0.604708
+  ...
+# Subtest: controller disconnect/reconnect and held controls do not interrupt watching or auto-takeover
+ok 161 - controller disconnect/reconnect and held controls do not interrupt watching or auto-takeover
+  ---
+  duration_ms: 0.190333
+  ...
+# Subtest: spectator menu canvas gameplay keys take over; owned UI and lifecycle suspension do not
+ok 162 - spectator menu canvas gameplay keys take over; owned UI and lifecycle suspension do not
+  ---
+  duration_ms: 0.505584
+  ...
+# Subtest: watching: audio controls and source links keep native activation and editing
+ok 163 - watching: audio controls and source links keep native activation and editing
+  ---
+  duration_ms: 0.658292
+  ...
+# Subtest: practice: audio controls and source links keep native activation and editing
+ok 164 - practice: audio controls and source links keep native activation and editing
+  ---
+  duration_ms: 0.829917
+  ...
+# Subtest: focused audio UI owns controller navigation until a new gameplay edge after leaving it
+ok 165 - focused audio UI owns controller navigation until a new gameplay edge after leaving it
+  ---
+  duration_ms: 0.367
+  ...
+# Subtest: practice audio focus retires held keyboard and multi-touch actions before the next frame
+ok 166 - practice audio focus retires held keyboard and multi-touch actions before the next frame
+  ---
+  duration_ms: 0.25875
+  ...
+# Subtest: audio ownership clears queued practice impulses even before a focus or controller event
+ok 167 - audio ownership clears queued practice impulses even before a focus or controller event
+  ---
+  duration_ms: 0.117542
+  ...
+# Subtest: touching audio UI retires a held practice action even when the browser keeps canvas focus
+ok 168 - touching audio UI retires a held practice action even when the browser keeps canvas focus
+  ---
+  duration_ms: 0.272667
+  ...
+# Subtest: held controller boost cannot return from audio navigation as a practice action
+ok 169 - held controller boost cannot return from audio navigation as a practice action
+  ---
+  duration_ms: 0.235583
+  ...
+# Subtest: spectator router preserves configured back with flight input and no duplicate gameplay action
+ok 170 - spectator router preserves configured back with flight input and no duplicate gameplay action
+  ---
+  duration_ms: 0.563166
+  ...
+# Subtest: spectator router preserves configured menu with flight input and no duplicate gameplay action
+ok 171 - spectator router preserves configured menu with flight input and no duplicate gameplay action
+  ---
+  duration_ms: 0.35425
+  ...
+# Subtest: spectator Back follows remapped menu binding, while ordinary flight retains its original pickup
+ok 172 - spectator Back follows remapped menu binding, while ordinary flight retains its original pickup
+  ---
+  duration_ms: 0.646875
+  ...
+# Subtest: spectator hold Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+ok 173 - spectator hold Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+  ---
+  duration_ms: 0.592292
+  ...
+# Subtest: spectator toggle Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+ok 174 - spectator toggle Boost joins once from a fresh physical edge despite ineligible gameplay Boost
+  ---
+  duration_ms: 0.27725
+  ...
+# Subtest: native watching advances without Solo effects and practice resumes on its visible surface
+ok 175 - native watching advances without Solo effects and practice resumes on its visible surface
+  ---
+  duration_ms: 46.3315
+  ...
+# Subtest: native readouts use shared playback time when the engine exposes no time field
+ok 176 - native readouts use shared playback time when the engine exposes no time field
+  ---
+  duration_ms: 11.370583
+  ...
+# Subtest: raw SIM-origin controller samples reach Snake practice through the mounted shared host
+ok 177 - raw SIM-origin controller samples reach Snake practice through the mounted shared host
+  ---
+  duration_ms: 32.701
+  ...
+# Subtest: a quick close and reopen awaits asynchronous scene disposal
+ok 178 - a quick close and reopen awaits asynchronous scene disposal
+  ---
+  duration_ms: 24.912916
+  ...
+# Subtest: renderer disposal failure still retires physics and removes the owned surface
+ok 179 - renderer disposal failure still retires physics and removes the owned surface
+  ---
+  duration_ms: 39.701792
+  ...
+# Subtest: a practice world returned after cancellation is disposed exactly once
+ok 180 - a practice world returned after cancellation is disposed exactly once
+  ---
+  duration_ms: 5.752042
+  ...
+# Subtest: graphics loss retires the native engine and publishes its bounded diagnostic
+ok 181 - graphics loss retires the native engine and publishes its bounded diagnostic
+  ---
+  duration_ms: 19.903125
+  ...
+# Subtest: native preparation forwards one bounded reporter through source and renderer ownership
+ok 182 - native preparation forwards one bounded reporter through source and renderer ownership
+  ---
+  duration_ms: 10.053875
+  ...
+# Subtest: native demo entry reads canonical touch choices and refreshes its read-only snapshot on reopen
+ok 183 - native demo entry reads canonical touch choices and refreshes its read-only snapshot on reopen
+  ---
+  duration_ms: 46.657167
+  ...
+# Subtest: read-only touch admission rejects malformed, oversized and unavailable values without changing caller defaults
+ok 184 - read-only touch admission rejects malformed, oversized and unavailable values without changing caller defaults
+  ---
+  duration_ms: 0.185834
+  ...
+# Subtest: native mixed entry reads saved shared controls without writes (legacy profile)
+ok 185 - native mixed entry reads saved shared controls without writes (legacy profile)
+  ---
+  duration_ms: 35.1715
+  ...
+# Subtest: native mixed entry reads saved shared controls without writes (generation profile)
+ok 186 - native mixed entry reads saved shared controls without writes (generation profile)
+  ---
+  duration_ms: 37.0445
+  ...
+# Subtest: shared demo control snapshots reject malformed or inaccessible profiles without writes
+ok 187 - shared demo control snapshots reject malformed or inaccessible profiles without writes
+  ---
+  duration_ms: 0.467459
+  ...
+# Subtest: native device guidance replaces generic pad mappings and updates while paused
+ok 188 - native device guidance replaces generic pad mappings and updates while paused
+  ---
+  duration_ms: 10.232708
+  ...
+# Subtest: Solo and native entries share dev settings without writes until an explicit change
+ok 189 - Solo and native entries share dev settings without writes until an explicit change
+  ---
+  duration_ms: 18.071583
+  ...
+# Subtest: Solo and native entries share release-0.145.0 settings without writes until an explicit change
+ok 190 - Solo and native entries share release-0.145.0 settings without writes until an explicit change
+  ---
+  duration_ms: 27.774834
+  ...
+# Subtest: native small metadata agrees with Solo edition and release channel isolation
+ok 191 - native small metadata agrees with Solo edition and release channel isolation
+  ---
+  duration_ms: 3.232542
+  ...
+# Subtest: legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+ok 192 - legacy shared preferences are a read-only fallback, with canonical and malformed documents authoritative
+  ---
+  duration_ms: 0.323167
+  ...
+# Subtest: denied storage uses reduced-motion defaults and explicit changes stay session-only
+ok 193 - denied storage uses reduced-motion defaults and explicit changes stay session-only
+  ---
+  duration_ms: 1.82125
+  ...
+# Subtest: stalled and oversized metadata cannot hold startup or change the settings channel
+ok 194 - stalled and oversized metadata cannot hold startup or change the settings channel
+  ---
+  duration_ms: 8.959792
+  ...
+# Subtest: SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+ok 195 - SIM uses saved keyboard mappings, ignores pre-held repeats, and consumes a fresh takeover once
+  ---
+  duration_ms: 17.002291
+  ...
+# Subtest: SIM foreground loss pauses practice and requires a fresh keyboard edge
+ok 196 - SIM foreground loss pauses practice and requires a fresh keyboard edge
+  ---
+  duration_ms: 6.194
+  ...
+# Subtest: SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+ok 197 - SIM controller ignores held sticks and drift, then retains accepted throttle through takeover
+  ---
+  duration_ms: 7.749417
+  ...
+# Subtest: SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+ok 198 - SIM paused controller practice needs neutral pickup and resumes with its displayed throttle
+  ---
+  duration_ms: 7.322583
+  ...
+# Subtest: SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+ok 199 - SIM radio needs displayed-throttle pickup and a fresh arm edge, including after pause
+  ---
+  duration_ms: 15.287458
+  ...
+# Subtest: mode RT default applies only when shared controller bindings are absent
+ok 200 - mode RT default applies only when shared controller bindings are absent
+  ---
+  duration_ms: 9.779542
+  ...
+# Subtest: saved axes, inversions, dead-zone hysteresis and button directions preserve 2D analog flight
+ok 201 - saved axes, inversions, dead-zone hysteresis and button directions preserve 2D analog flight
+  ---
+  duration_ms: 1.3635
+  ...
+# Subtest: mapped menu confirm is a paired press/release and cannot boost through a modal transition
+ok 202 - mapped menu confirm is a paired press/release and cannot boost through a modal transition
+  ---
+  duration_ms: 1.485792
+  ...
+# Subtest: pause remapping, disconnect and same-slot identity replacement require fresh neutral
+ok 203 - pause remapping, disconnect and same-slot identity replacement require fresh neutral
+  ---
+  duration_ms: 5.045292
+  ...
+# Subtest: unknown raw devices never steer or block keyboard; exact saved radio profile keeps analog calibration
+ok 204 - unknown raw devices never steer or block keyboard; exact saved radio profile keeps analog calibration
+  ---
+  duration_ms: 3.714833
+  ...
+# Subtest: preference loading uses the native release/edition key without writes and rejects corrupt settings
+ok 205 - preference loading uses the native release/edition key without writes and rejects corrupt settings
+  ---
+  duration_ms: 5.740792
+  ...
+# Subtest: adopting changed preferences and clearing input do not turn held controls into actions; disposal releases listeners
+ok 206 - adopting changed preferences and clearing input do not turn held controls into actions; disposal releases listeners
+  ---
+  duration_ms: 5.31775
+  ...
+# Subtest: Riy focus follows the remapped shared Ability button and requires fresh presses after menus
+ok 207 - Riy focus follows the remapped shared Ability button and requires fresh presses after menus
+  ---
+  duration_ms: 4.069542
+  ...
+# Subtest: held stick resumes immediately but Boost and Focus need fresh releases after a menu
+ok 208 - held stick resumes immediately but Boost and Focus need fresh releases after a menu
+  ---
+  duration_ms: 3.8765
+  ...
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 209 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 2.416542
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 210 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 134.375791
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 211 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 174.096167
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 212 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 54.323625
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 213 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 993.548667
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 214 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.904666
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 215 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 1.641375
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 216 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.567666
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 217 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 1.445375
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 218 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 5.828125
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 219 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 3.124667
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 220 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.303667
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 221 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 1.04425
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 222 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 27.856917
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 223 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 14.4735
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 224 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 5.7525
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 225 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.242875
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 226 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 1.125541
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 227 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 4.7155
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 228 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 5.058958
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 229 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.202208
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 230 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.055
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 231 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 4.509416
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 232 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 7.118542
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 233 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 119.183834
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 234 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.184417
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 235 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.389125
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 236 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 76.57675
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 237 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.318958
+  ...
+# Subtest: opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+ok 238 - opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+  ---
+  duration_ms: 214.718167
+  ...
+# Subtest: finished review download captures terminal state instead of an older inspector snapshot
+ok 239 - finished review download captures terminal state instead of an older inspector snapshot
+  ---
+  duration_ms: 27.513333
+  ...
+# Subtest: Solo choices are read unchanged by each new mode; no profile is written
+ok 240 - Solo choices are read unchanged by each new mode; no profile is written
+  ---
+  duration_ms: 1.100083
+  ...
+# Subtest: invalid storage is preserved; valid legacy touch settings are used until explicit change
+ok 241 - invalid storage is preserved; valid legacy touch settings are used until explicit change
+  ---
+  duration_ms: 0.200375
+  ...
+# Subtest: denied writes retain session choice and expose truthful feedback
+ok 242 - denied writes retain session choice and expose truthful feedback
+  ---
+  duration_ms: 0.145166
+  ...
+# Subtest: external explicit choices notify once and terminal disposal stops observation
+ok 243 - external explicit choices notify once and terminal disposal stops observation
+  ---
+  duration_ms: 0.163917
+  ...
+# Subtest: isolated practice can adjust this visit without writing the shared choice
+ok 244 - isolated practice can adjust this visit without writing the shared choice
+  ---
+  duration_ms: 0.083458
+  ...
+# Subtest: legacy reconciliation applies before a shared choice, never over later explicit intent
+ok 245 - legacy reconciliation applies before a shared choice, never over later explicit intent
+  ---
+  duration_ms: 0.188208
+  ...
+# Subtest: returning from a frozen page reads newer shared settings, but keeps isolated practice choices
+ok 246 - returning from a frozen page reads newer shared settings, but keeps isolated practice choices
+  ---
+  duration_ms: 0.165458
+  ...
+# Subtest: stick: outside release recovers steering when pointer capture is unavailable
+ok 247 - stick: outside release recovers steering when pointer capture is unavailable
+  ---
+  duration_ms: 3.86025
+  ...
+# Subtest: stick: outside cancellation retires only the matching steering gesture
+ok 248 - stick: outside cancellation retires only the matching steering gesture
+  ---
+  duration_ms: 1.391042
+  ...
+# Subtest: swipe: outside release recovers steering when pointer capture is unavailable
+ok 249 - swipe: outside release recovers steering when pointer capture is unavailable
+  ---
+  duration_ms: 1.794333
+  ...
+# Subtest: swipe: outside cancellation retires only the matching steering gesture
+ok 250 - swipe: outside cancellation retires only the matching steering gesture
+  ---
+  duration_ms: 1.0155
+  ...
+# Subtest: dpad: outside release recovers steering when pointer capture is unavailable
+ok 251 - dpad: outside release recovers steering when pointer capture is unavailable
+  ---
+  duration_ms: 13.151042
+  ...
+# Subtest: dpad: outside cancellation retires only the matching steering gesture
+ok 252 - dpad: outside cancellation retires only the matching steering gesture
+  ---
+  duration_ms: 1.032291
+  ...
+# Subtest: cardinal touch directions reject jitter and retain heading at diagonal boundaries
+ok 253 - cardinal touch directions reject jitter and retain heading at diagonal boundaries
+  ---
+  duration_ms: 0.101917
+  ...
+# Subtest: floating stick starts where the finger lands, turns through four directions, releases capture
+ok 254 - floating stick starts where the finger lands, turns through four directions, releases capture
+  ---
+  duration_ms: 0.4895
+  ...
+# Subtest: floating stick follows a drifting thumb and can reverse without returning to original contact
+ok 255 - floating stick follows a drifting thumb and can reverse without returning to original contact
+  ---
+  duration_ms: 0.321459
+  ...
+# Subtest: continuous stick preserves diagonals, scales travel and stops inside its dead zone
+ok 256 - continuous stick preserves diagonals, scales travel and stops inside its dead zone
+  ---
+  duration_ms: 0.452292
+  ...
+# Subtest: continuous stick reverses around the drifting anchor and releases exactly once
+ok 257 - continuous stick reverses around the drifting anchor and releases exactly once
+  ---
+  duration_ms: 0.369959
+  ...
+# Subtest: swipe vectors hold the last accepted direction until another turn or release
+ok 258 - swipe vectors hold the last accepted direction until another turn or release
+  ---
+  duration_ms: 0.254916
+  ...
+# Subtest: D-pad vectors follow cardinal sectors and stop at the center
+ok 259 - D-pad vectors follow cardinal sectors and stop at the center
+  ---
+  duration_ms: 0.183458
+  ...
+# Subtest: pointercancel zeroes continuous steering without a stale release affecting its next owner
+ok 260 - pointercancel zeroes continuous steering without a stale release affecting its next owner
+  ---
+  duration_ms: 0.262417
+  ...
+# Subtest: lostpointercapture zeroes continuous steering without a stale release affecting its next owner
+ok 261 - lostpointercapture zeroes continuous steering without a stale release affecting its next owner
+  ---
+  duration_ms: 0.155542
+  ...
+# Subtest: a continuous-only host can synchronously clear during its vector callback
+ok 262 - a continuous-only host can synchronously clear during its vector callback
+  ---
+  duration_ms: 0.12925
+  ...
+# Subtest: swipe uses recent travel so a short reverse flick turns immediately
+ok 263 - swipe uses recent travel so a short reverse flick turns immediately
+  ---
+  duration_ms: 0.177833
+  ...
+# Subtest: sliding D-pad fills gaps and accepts direction changes without lifting
+ok 264 - sliding D-pad fills gaps and accepts direction changes without lifting
+  ---
+  duration_ms: 0.664791
+  ...
+# Subtest: D-pad mode does not intercept board touches or scrolling
+ok 265 - D-pad mode does not intercept board touches or scrolling
+  ---
+  duration_ms: 1.561209
+  ...
+# Subtest: one steering finger cannot be stolen by a second finger
+ok 266 - one steering finger cannot be stolen by a second finger
+  ---
+  duration_ms: 0.656208
+  ...
+# Subtest: pointercancel ends steering; stale moves cannot turn the craft
+ok 267 - pointercancel ends steering; stale moves cannot turn the craft
+  ---
+  duration_ms: 0.399916
+  ...
+# Subtest: lostpointercapture ends steering; stale moves cannot turn the craft
+ok 268 - lostpointercapture ends steering; stale moves cannot turn the craft
+  ---
+  duration_ms: 5.73525
+  ...
+# Subtest: capture-loss notifications without an owned gesture cannot cancel another input owner
+ok 269 - capture-loss notifications without an owned gesture cannot cancel another input owner
+  ---
+  duration_ms: 0.377417
+  ...
+# Subtest: pause and modality reset require a new gesture
+ok 270 - pause and modality reset require a new gesture
+  ---
+  duration_ms: 0.23625
+  ...
+# Subtest: mouse can use the visible stick but does not capture ordinary board clicks
+ok 271 - mouse can use the visible stick but does not capture ordinary board clicks
+  ---
+  duration_ms: 0.112291
+  ...
+# Subtest: touch preferences survive export/import; old libraries migrate without losing other preferences
+ok 272 - touch preferences survive export/import; old libraries migrate without losing other preferences
+  ---
+  duration_ms: 6.472541
+  ...
+1..272
+# tests 272
+# suites 0
+# pass 272
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 79409.161208

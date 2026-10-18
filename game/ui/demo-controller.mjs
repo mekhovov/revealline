@@ -12,19 +12,40 @@ const completeFrame = (frame) =>
  * hardware, writes preferences, or installs a second disconnect listener. */
 export function createDemoControllerFrame({ getPreferences = () => ({}) } = {}) {
   let pads = [],
+    rawProfile = null,
     configuration = '',
     previousMode = null,
     needsNeutral = true,
     disposed = false;
   const router = createControllerRouter({
     readPads: () => pads,
+    rawProfile: (index) => rawProfile?.(index) ?? null,
     eventTarget: null,
     autoJoin: true,
   });
   const clear = () => {
     pads = [];
+    rawProfile = null;
     needsNeutral = true;
     router.clear();
+  };
+  const normalize = (frame, options, assigned = undefined) => {
+    pads = frame.gamepads ?? [];
+    // A native owner has already admitted its device. Reusing its calibration
+    // must not auto-join another captured device or perform another hardware read.
+    if (assigned !== undefined)
+      pads = Array.from(pads).filter((pad) => pad?.index === assigned?.index);
+    rawProfile = frame.sharedRawProfile ?? null;
+    const preferences = getPreferences(),
+      bindings = preferences.controllerBindings ?? null,
+      boostMode = preferences.controllerBoostMode ?? 'hold',
+      next = JSON.stringify([bindings, boostMode]);
+    if (configuration !== next) {
+      router.setBindings(bindings);
+      router.setBoostMode(boostMode);
+      configuration = next;
+    }
+    return router.sample(options);
   };
   return {
     clear,
@@ -42,6 +63,14 @@ export function createDemoControllerFrame({ getPreferences = () => ({}) } = {}) 
           ? frame.sharedController
           : null;
       if (authoritative) {
+        const sharedFlight =
+          frame.sharedController && ['solo', 'snake'].includes(modeId)
+            ? normalize(
+                frame,
+                { scope, timeMs: frame.now, spectator, toggleBoostEligible },
+                authoritative.assigned ?? null,
+              ).flight
+            : null;
         if (needsNeutral && authoritative.confirmSnapshot.neutral === true) needsNeutral = false;
         const result = {
           ...frame,
@@ -52,6 +81,9 @@ export function createDemoControllerFrame({ getPreferences = () => ({}) } = {}) 
           ui: frame.sharedController
             ? { ...authoritative.ui, confirm: frame.ui?.confirm ?? authoritative.ui.confirm }
             : (frame.ui ?? authoritative.ui),
+          // Survival has a momentary native dash. Other modes use their saved
+          // shared flight bindings/boost policy, while native UI edges stay owned.
+          ...(sharedFlight ? { flight: sharedFlight } : {}),
         };
         if (disposed || needsNeutral)
           return {
@@ -73,17 +105,7 @@ export function createDemoControllerFrame({ getPreferences = () => ({}) } = {}) 
           };
         return result;
       }
-      pads = frame.gamepads ?? [];
-      const preferences = getPreferences(),
-        bindings = preferences.controllerBindings ?? null,
-        boostMode = preferences.controllerBoostMode ?? 'hold',
-        next = JSON.stringify([bindings, boostMode]);
-      if (configuration !== next) {
-        router.setBindings(bindings);
-        router.setBoostMode(boostMode);
-        configuration = next;
-      }
-      const normalized = router.sample({
+      const normalized = normalize(frame, {
         scope,
         timeMs: frame.now,
         spectator,

@@ -3,6 +3,7 @@ import {
   keyboardFlightKey,
   keyboardFlightValues,
   keyboardFlightHelp,
+  gamepadFlightHelp,
   touchStickValues,
   createFlightGamepad,
   KEYBOARD_PRESET_KEY,
@@ -302,12 +303,39 @@ export function attachSimDemoInput({
     controls.append(stick);
   }
   canvas.parentElement?.append(controls);
+  let hintKey = null,
+    padHint = null;
+  const updateControllerHint = () => {
+    const status = radio.status(),
+      locale = getContext().locale ?? getLocale(),
+      connected = pad.status().connected,
+      key = JSON.stringify([
+        locale,
+        connected,
+        status.profile,
+        status.verified,
+        status.connectionLost,
+      ]);
+    if (key === hintKey) return;
+    hintKey = key;
+    if (status.verified && status.profile && !status.connectionLost) {
+      const profile = JSON.parse(status.profile),
+        names = uk() ? ['крен', 'тангаж', 'поворот', 'газ'] : axes,
+        channel = (value) => `${uk() ? 'вісь' : 'axis'} ${value.axis}${value.invert ? ' −' : ''}`,
+        arm = profile.switches.arm,
+        armLabel = arm
+          ? `${uk() ? 'увімкнення' : 'arm'}: ${Number.isInteger(arm.axis) ? channel(arm) : `${uk() ? 'кнопка' : 'button'} ${arm.button}`}`
+          : radioButton.textContent;
+      padHint = `${profile.device.id} · ${axes.map((name, index) => `${names[index]}: ${channel(profile.channels[name])}`).join(' · ')} · ${armLabel}. ${uk() ? 'Узгодьте положення стіків і газу з паузою, потім увімкніть пульт.' : 'Match the paused sticks and throttle, then arm the radio.'}`;
+    } else padHint = connected ? gamepadFlightHelp(locale, { replayControls: false }) : null;
+  };
   return {
     hint: () =>
       keyboardFlightHelp(preset().id, getContext().locale ?? getLocale(), {
         actions: false,
         combat: true,
       }),
+    controllerHint: () => padHint,
     controller(frame = {}) {
       if (disposed || !visible()) return;
       bindPractice();
@@ -349,6 +377,7 @@ export function attachSimDemoInput({
         scope: practice()?.phase === 'playing' ? 'flight' : 'ready',
         excludeIndex: status?.verified ? status.selected?.index : null,
       });
+      updateControllerHint();
       if (state.actions.some((action) => ['pause', 'back'].includes(action))) {
         release();
         onPause();

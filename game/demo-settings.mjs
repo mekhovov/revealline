@@ -1,6 +1,15 @@
 import { editionIdentityId, resolveEditionContext } from './edition-context.mjs';
+import { DEFAULT_PREFERENCES, loadLibrary } from './library.mjs';
 
 export const LEGACY_DEMO_SETTINGS_KEY = 'revealline.demo.shared.v1';
+
+/** Read the same validated profile as Solo, without migrating or writing it.
+ * Native entries take this snapshot when opened, never once per render frame. */
+export function readDemoPreferences(storage, settingsKey) {
+  if (!/^revealline\.demo\..+\.v1$/.test(settingsKey ?? '')) return DEFAULT_PREFERENCES;
+  const key = settingsKey.replace('revealline.demo.', 'revealline.library.');
+  return loadLibrary(storage, key).library.preferences;
+}
 
 /** Every entry in one build shares Solo's existing, isolated preference key. */
 export function demoSettingsKey({ channel, buildInfo = null, editionId } = {}) {

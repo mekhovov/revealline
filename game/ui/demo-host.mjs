@@ -118,6 +118,7 @@ export function attachDemoHost({
     controlsStatus = null,
     controlsCaption = null,
     controlsController = null,
+    controlsNativeHint = null,
     controllerIdentity = null,
     controlsAudio = null,
     controlsReduced = null,
@@ -619,8 +620,12 @@ export function attachDemoHost({
             .join(' / ') || t('common:actions.pause'),
       }),
     );
-    $('demo-pad-controls').hidden = !connectedController;
-    if (connectedController) {
+    controlsNativeHint = look?.input?.controllerHint?.() ?? null;
+    $('demo-pad-controls').hidden = look?.input?.controllerHint
+      ? !controlsNativeHint
+      : !connectedController;
+    if (look?.input?.controllerHint) text('demo-pad-controls', controlsNativeHint ?? '');
+    else if (connectedController) {
       const pad = controllerBindingLabels(
         current.preferences.controllerBindings,
         connectedController.id,
@@ -1592,7 +1597,11 @@ export function attachDemoHost({
         const controls = nativeLook().input;
         (controls.controller ?? controls.sample)?.(frame);
       } else input.controller(frame);
-      if ((frame.assigned?.id ?? null) !== controlsController) renderControls();
+      if (
+        (frame.assigned?.id ?? null) !== controlsController ||
+        (nativeLook()?.input?.controllerHint?.() ?? null) !== controlsNativeHint
+      )
+        renderControls();
     },
     update(seconds) {
       if (!active) {

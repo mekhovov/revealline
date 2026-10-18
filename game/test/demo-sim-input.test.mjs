@@ -159,6 +159,9 @@ test('SIM controller ignores held sticks and drift, then retains accepted thrott
   };
   try {
     f.input.controller({ gamepads: [pad], now: 1000 });
+    assert.match(f.input.controllerHint(), /Left stick: yaw and throttle/);
+    assert.match(f.input.controllerHint(), /X\/Square: fire/);
+    assert.doesNotMatch(f.input.controllerHint(), /reset|camera/);
     await settle();
     assert.equal(f.joins, 0);
     pad.axes[2] = 0;
@@ -246,6 +249,10 @@ test('SIM radio needs displayed-throttle pickup and a fresh arm edge, including 
   try {
     f.input.controller({ gamepads: [pad], now: 1000 });
     await settle();
+    assert.match(f.input.controllerHint(), /roll: axis 0/);
+    assert.match(f.input.controllerHint(), /throttle: axis 2/);
+    assert.match(f.input.controllerHint(), /arm: axis 4/);
+    assert.doesNotMatch(f.input.controllerHint(), /Left stick|X\/Square/);
     assert.equal(f.joins, 0, 'held arm cannot take over');
     pad.axes[4] = -1;
     f.input.controller({ gamepads: [pad], now: 1016 });

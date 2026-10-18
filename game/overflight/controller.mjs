@@ -244,6 +244,7 @@ export function createOverflightController({
     get gamepads() {
       return sampledPads;
     },
+    rawProfile: radio.rawProfile,
     sample,
     clear,
     setPreferences(next) {
