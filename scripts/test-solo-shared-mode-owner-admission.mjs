@@ -1,3 +1,4 @@
+import { createExecutedFrameReader } from './solo-frame-trace-executed-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -10,8 +11,16 @@ import {
 import {
   SHARED_OWNER_WITNESS,
   sharedOwnerDeclaredRefs,
+  assertSharedOwnerDeclaredTool,
 } from './solo-shared-owner-declared-source.mjs';
 const read = (path) => readFile(new URL('../' + path, import.meta.url));
+const historicalFrameRead = createExecutedFrameReader(read);
+// These exact qualifier and recorder bytes precede the additive v2 protocol.
+// Production still rejects stale input; no declaration or execution result changes.
+const declaredRead = (path) =>
+  ['scripts/qualify-solo-runtime.mjs', 'scripts/solo-qualification-cpu-profile.mjs'].includes(path)
+    ? historicalFrameRead(path)
+    : read(path);
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const path = 'docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json';
 const priorPath = 'docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json';
@@ -62,9 +71,9 @@ test('named owner successor retains exact797 package, proof, public actions and 
     assert.throws(() => auxiliaryMatrix(p));
   }
 });
-test('new owner declaration requires every actual current byte before native work', async () => {
+test('owner declaration retains exact prior qualifier bytes and stale tooling cannot reach native work', async () => {
   for (const ref of [...plan.adapterInputs, ...plan.frozenTools, plan.recipes.recovery]) {
-    const b = await read(ref.path);
+    const b = await declaredRead(ref.path);
     assert.equal(b.length, ref.bytes, ref.path);
     assert.equal(hash(b), ref.sha256, ref.path);
   }
@@ -132,5 +141,25 @@ test('exact executed source witness rejects changed bytes, declaration or invent
       [Buffer.from(JSON.stringify({ ...JSON.parse(w), revision: '0'.repeat(40) })), declaration, m],
     ])
       assert.throws(() => sharedOwnerDeclaredRefs(b, p, d));
+  }
+});
+
+test('retained recorder readback binds the original declaration and refuses changed references', async () => {
+  for (const declaration of [
+    'docs/performance/solo-remote-9d5139b-correctness-plan.json',
+    'docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json',
+  ]) {
+    const saved = JSON.parse(await read(declaration));
+    const ref = saved.frozenTools.find(
+      (entry) => entry.path === 'scripts/solo-qualification-cpu-profile.mjs',
+    );
+    assert(ref);
+    assert.equal(await assertSharedOwnerDeclaredTool(declaration, ref), true);
+    for (const changed of [
+      { ...ref, bytes: ref.bytes + 1 },
+      { ...ref, sha256: '0'.repeat(64) },
+    ])
+      await assert.rejects(() => assertSharedOwnerDeclaredTool(declaration, changed));
+    await assert.rejects(() => assertSharedOwnerDeclaredTool(path, ref), /Unwitnessed declaration/);
   }
 });
