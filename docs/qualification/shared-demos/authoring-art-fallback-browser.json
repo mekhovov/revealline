@@ -1,0 +1,114 @@
+{
+  "format": "revealline-authoring-art-fallback-browser.v1",
+  "started": "2026-10-18T19:44:20.673Z",
+  "scope": "Real Chromium authoring pages on task-owned production-policy fixture server. Exact original PNG404 injected at HTTP server, native retained pack/media served from exact producer payloads. Owned URL attribution uses the actual production-preview allocation stack; unrelated page-presentation URLs are reported separately. Synthetic pagehide exercises owned gallery cleanup; no pixel aesthetic approval.",
+  "checks": [
+    {
+      "name": "Production UI prefers exact source PNG and releases displayed URL",
+      "slotId": "picture.pressure-orchard.ukraine"
+    },
+    {
+      "name": "Production UI fallback displays byte-identical original and releases URL",
+      "requested": [
+        "game/presentation/compiled/assets/9ad64ed82783ba763f61fe954e3cdc8c360df472c8d035ef74579670d2649bba.png",
+        "game/presentation/compiled/assets/8d445857cc63417a2b4a9468c854e4ffed3828b3cd1a90cdd8d4f8c951be88f4.png",
+        "game/presentation/compiled/assets/150ebf2c0817461fda33425c885488da7f4566b16a83947e94799d8da2df05e5.png",
+        "game/presentation/compiled/assets/c0f4e7ca9de3a9f06637dbc8d5972b69b7e804f1bbd9579f5724d99a02c5c86b.png",
+        "game/presentation/compiled/assets/72b6c93f47090f3a3724223477e22cbc461132329768e70b82cdb87d85a72052.png",
+        "game/presentation/compiled/assets/8fe3df81db48bf682862a06c8f7434365ff49151a2a72a94c0a85ea85a3adf27.png",
+        "game/presentation/compiled/assets/88e541375c56d4627b80cf6921ca64ed12d5b77d43dcae256177b8577250d9b3.png",
+        "authoring/library/ukraine-atlas-art/originals/carpathian-woven-dawn.png",
+        "authoring/library/four-worlds-chapters/packs/original-ukraine-atlas.json",
+        "game/presentation/compiled/assets/a66511c77322beea458be918f6eb35f1ca6acc9f980afa44bc4756162896f466.png",
+        "game/presentation/compiled/assets/6abc4a68192b4d517b22690c43126de34a1c403caf4a24ec57aa8b2ff68f079a.png",
+        "game/presentation/compiled/assets/28e58f70c759b20798fac07e6f9d1b336e936ee23beea26bb4be30fd5528311d.png",
+        "game/presentation/compiled/assets/009d14748f943002091255caebd32e4df1c886569575f512ab0d55d7a3ff637a.png",
+        "game/presentation/compiled/assets/963bdc61942194177b4d0dac32ba560c0200f55c83f21d939356b8680b6f644c.png",
+        "game/presentation/compiled/assets/544551f875b2fd52c41dbbd384d6710a80fb23d744ae8a9bca3353cd23752a48.png",
+        "game/presentation/compiled/assets/326d159fab7ab655e40c493e5e3ae27713157b419788134f23363ef222ad27db.png"
+      ]
+    },
+    {
+      "name": "Production cancellation fences late native fallback and releases all URLs"
+    },
+    {
+      "name": "Production preview leaves local/session storage unchanged"
+    },
+    {
+      "name": "Reveal Audit lazily displays exact retained artwork after original404",
+      "loaded": 4,
+      "total": 21
+    },
+    {
+      "name": "Reveal source viewer uses same exact bytes and retires its image on Back"
+    },
+    {
+      "name": "Reveal gallery final departure aborts pending loads and retires every owned object URL",
+      "urls": {
+        "owned": 0,
+        "allPageOwners": 0,
+        "created": 17,
+        "revoked": 17
+      }
+    }
+  ],
+  "errors": [],
+  "browserClosed": true,
+  "serverClosed": true,
+  "sourceBefore": {
+    "authoring/production/preview.mjs": "ed87903a7466f94f1cf4e26afd05296775642a14e0cac9e13f6d5eaeb97de733",
+    "authoring/design-atlas/reveal-audit.mjs": "62a09cbd23fd4a8b1ce404f46c5d2d11b13114c30a19eec9071aad7e4355782f",
+    "authoring/design-atlas/reveal-audit-thumbnails.mjs": "f4bf0be703f8fac98261a2af5eb725b839b8d90bfffec46ae2ad83e0aecb32ad",
+    "authoring/design-atlas/reveal-audit-viewer.mjs": "55921be8c4bb686ce77ab9929fdd778647326cbcd02f83a8f2474d970da34744",
+    "game/presentation/current-art.mjs": "a687bfd589db1bdb1375c5b940ae719ef33d7fe785471224f9628b482e96beab",
+    "game/presentation/current-art-sources.mjs": "85ebf1bc2762e3a9363173569ab0623cfc273f52bdd53aea5c8bb16e441b665b"
+  },
+  "urlObservations": [
+    {
+      "label": "Production initialized",
+      "owned": 0,
+      "globalActive": 34,
+      "globalCreated": 34,
+      "globalRevoked": 0
+    },
+    {
+      "label": "Production direct preview cleared",
+      "owned": 0,
+      "globalActive": 67,
+      "globalCreated": 68,
+      "globalRevoked": 1
+    },
+    {
+      "label": "Production fallback preview cleared",
+      "owned": 0,
+      "globalActive": 82,
+      "globalCreated": 84,
+      "globalRevoked": 2
+    },
+    {
+      "label": "Reveal initialized",
+      "owned": 2,
+      "globalActive": 2,
+      "globalCreated": 2,
+      "globalRevoked": 0
+    },
+    {
+      "label": "Reveal final synthetic pagehide",
+      "owned": 0,
+      "globalActive": 0,
+      "globalCreated": 17,
+      "globalRevoked": 17
+    }
+  ],
+  "complete": true,
+  "sourceAfter": {
+    "authoring/production/preview.mjs": "ed87903a7466f94f1cf4e26afd05296775642a14e0cac9e13f6d5eaeb97de733",
+    "authoring/design-atlas/reveal-audit.mjs": "62a09cbd23fd4a8b1ce404f46c5d2d11b13114c30a19eec9071aad7e4355782f",
+    "authoring/design-atlas/reveal-audit-thumbnails.mjs": "f4bf0be703f8fac98261a2af5eb725b839b8d90bfffec46ae2ad83e0aecb32ad",
+    "authoring/design-atlas/reveal-audit-viewer.mjs": "55921be8c4bb686ce77ab9929fdd778647326cbcd02f83a8f2474d970da34744",
+    "game/presentation/current-art.mjs": "a687bfd589db1bdb1375c5b940ae719ef33d7fe785471224f9628b482e96beab",
+    "game/presentation/current-art-sources.mjs": "85ebf1bc2762e3a9363173569ab0623cfc273f52bdd53aea5c8bb16e441b665b"
+  },
+  "sourceUnchanged": true,
+  "finished": "2026-10-18T19:44:31.149Z"
+}

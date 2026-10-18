@@ -1,0 +1,110 @@
+{
+  "format": "revealline-authoring-art-consumer-review.v1",
+  "created": "2026-10-18T19:53:31.080Z",
+  "result": "passed",
+  "behavior": {
+    "originalPreference": "Declared PNG is read first; only exact-path nonredirected404 may use a current code-owned matching path/bytes/SHA256 descriptor.",
+    "refusal": "Unavailable503, redirected responses, wrong locators/pins, corrupt original bytes and corrupt fallback pack pins cannot acquire a broader fallback.",
+    "identity": "Native source/pack/media resolution remains unchanged. Display bytes are rechecked for length, SHA256, PNG dimensions and browser decode; no installation or assessment is written.",
+    "ownership": "Temporary native decodes and final displayed previews own their object URLs. Reveal gallery is lazy and sequential; hidden/BFCache departure cancels pending work, replacement/final departure disposes adopted images, late completion cannot adopt."
+  },
+  "unit": {
+    "tests": 84,
+    "passed": 84,
+    "failed": 0,
+    "log": "docs/qualification/shared-demos/authoring-art-consumer-regressions.tap.txt",
+    "sha256": "10f649ffdd99fe6f1f4e0ed177f0ca8f05e9385297cf65bb85c71e739894a833"
+  },
+  "checks": {
+    "eslint": "Affected scripts/tests passed repository rules; authoring modules passed browser-global no-undef/no-unreachable rules.",
+    "prettier": "All affected source, HTML, locale and test files passed.",
+    "localization": "Existing localization build completed; both EN/UK copy and generated catalogs were refreshed; content registry unchanged."
+  },
+  "browser": {
+    "report": "docs/qualification/shared-demos/authoring-art-fallback-browser-final.json",
+    "sha256": "bd0a71212a55edce4d7091268e36a431e0a21c1c36578410e362d994b0ec1fb2",
+    "checks": 7,
+    "pageErrors": 0,
+    "browserCloseCompleted": true,
+    "serverClosed": true,
+    "listedSourcesUnchanged": true,
+    "urlObservations": [
+      {
+        "label": "Production initialized",
+        "owned": 0,
+        "globalActive": 70,
+        "globalCreated": 70,
+        "globalRevoked": 0
+      },
+      {
+        "label": "Production direct preview cleared",
+        "owned": 0,
+        "globalActive": 82,
+        "globalCreated": 83,
+        "globalRevoked": 1
+      },
+      {
+        "label": "Production fallback preview cleared",
+        "owned": 0,
+        "globalActive": 82,
+        "globalCreated": 84,
+        "globalRevoked": 2
+      },
+      {
+        "label": "Reveal initialized",
+        "owned": 2,
+        "globalActive": 2,
+        "globalCreated": 2,
+        "globalRevoked": 0
+      },
+      {
+        "label": "Reveal final synthetic pagehide",
+        "owned": 0,
+        "globalActive": 0,
+        "globalCreated": 17,
+        "globalRevoked": 17
+      }
+    ],
+    "scope": [
+      "Representative production embedded original and selected external gallery/viewer original; not every omitted image receives browser pixel qualification.",
+      "Only lazy in-view gallery images are loaded; this is not all21 thumbnails.",
+      "Final pagehide is dispatched by the probe; actual navigation/BFCache has separate qualification.",
+      "URL instrumentation retains active Blob references for hashing and records global counts separately from preview allocation-stack ownership.",
+      "Source hashes cover the listed consumer/resolver/locale/tool files, not the whole repository.",
+      "Storage comparison covers localStorage/sessionStorage; this probe does not inspect all IndexedDB records."
+    ]
+  },
+  "coverage": {
+    "nativeAllOriginals": "docs/qualification/shared-demos/current-art-fallback-proof-final.json",
+    "browser": "Representative Production optional embedded PNG and external Sentinel Reveal image/viewer; four lazy gallery images observed out of21. This is not all33 browser renderings.",
+    "finalDeparture": "Synthetic pagehide exercises real registered cleanup handlers; no actual BFCache or physical device claim."
+  },
+  "historicalReceipts": {
+    "sourceBoundPriorPass": "docs/qualification/shared-demos/authoring-art-fallback-browser.json",
+    "failedAndRetained": [
+      {
+        "path": "docs/qualification/shared-demos/authoring-art-fallback-browser-observer-failure.json",
+        "reason": "Observer fetch(blobURL) refused under public CSP. Final observer hashes allocation Blob keyed by displayed live src instead."
+      },
+      {
+        "path": "docs/qualification/shared-demos/authoring-art-fallback-browser-owner-observer-failure.json",
+        "reason": "Initial zero-global-URL assertion included legitimate unrelated page presentation URLs. Final probe checks preview allocation-stack ownership and reports global counts independently."
+      },
+      {
+        "path": "docs/qualification/shared-demos/authoring-art-fallback-browser-fixture-failure.json",
+        "reason": "Generic source preview server did not admit retained optional native pack paths. Final task-owned fixture serves only exact code-owned pinned originals/pack/media."
+      },
+      {
+        "path": "docs/qualification/shared-demos/authoring-art-fallback-browser-atlas-fixture-failure.json",
+        "reason": "Generic source preview server likewise refused retained historical source PNGs. Finite pinned original serving fixed the fixture; no consumer permission was widened."
+      }
+    ]
+  },
+  "reproduce": "node scripts/qualify-authoring-art-fallback-browser.mjs --runtime=/absolute/playwright/index.mjs --executable=/absolute/chromium --report=/existing/directory/new-receipt.json",
+  "limitations": [
+    "Source hash bindings are limited to the explicit consumer/resolver/locale/tool files in the browser receipt, not a full emitted-build fingerprint.",
+    "The fixture is not a generated main-pages or offline workshop installation proof; packaging has separate evidence.",
+    "URL-stack attribution is scoped ownership instrumentation and retains live Blob references for hashing; it is not exhaustive page heap, GPU or detached-node accounting.",
+    "Local/session storage snapshots are exact; this probe does not compare every IndexedDB record."
+  ]
+}

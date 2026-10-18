@@ -11,6 +11,12 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const git = (...args) => execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim();
 const json = async (name) => JSON.parse(await readFile(path.join(root, name)));
+const authoringPreviewHosts = [
+  'authoring/production/preview.mjs',
+  'authoring/design-atlas/reveal-audit.mjs',
+  'authoring/design-atlas/reveal-audit-thumbnails.mjs',
+  'authoring/design-atlas/reveal-audit-viewer.mjs',
+];
 const relevant = (name) =>
   /^(game\/(demo[^/]*|demo-modes\/[^/]+|ui\/demo-[^/]+)|optional-practice\/civilian-fpv\/(demo-[^/]+|demonstration-resolver\.mjs|world-app\.mjs)|game\/(main|snake\/classic-app|overflight\/app)\.mjs)$/.test(
     name,
@@ -22,8 +28,10 @@ const relevant = (name) =>
     'game/ui/mode-play-shell.css',
     'game/ui/owned-phaser-game.mjs',
     'game/overflight/renderer.mjs',
+    'game/presentation/current-art.mjs',
     'optional-practice/civilian-fpv/flight-fullscreen.mjs',
   ].includes(name) ||
+  authoringPreviewHosts.includes(name) ||
   name.startsWith('game/demo-data/') ||
   name.startsWith('optional-practice/civilian-fpv/demo-data/');
 
@@ -134,7 +142,7 @@ export async function qualifyDemoPackaging({
     productionSource,
   );
   const buildBefore = await sourceSnapshot(
-    ['scripts'],
+    ['scripts', ...authoringPreviewHosts],
     (name) => /\.mjs$/.test(name) && !path.basename(name).startsWith('test-'),
   );
   console.log(
@@ -161,6 +169,8 @@ export async function qualifyDemoPackaging({
     'game/ui/demo-entry.mjs',
     'game/ui/owned-phaser-game.mjs',
     'game/overflight/renderer.mjs',
+    'game/presentation/current-art.mjs',
+    ...authoringPreviewHosts,
   ])
     assert.ok(names.has(name), `Missing shared runtime dependency: ${name}`);
   const catalogNames = [
@@ -243,7 +253,10 @@ export async function qualifyDemoPackaging({
   report.sourceDigests = [];
   for (const entry of emitted) {
     const body = await readFile(path.join(root, entry.name));
-    assert.ok(before.digests.has(entry.name), `Source snapshot omitted ${entry.name}`);
+    assert.ok(
+      before.digests.has(entry.name) || buildBefore.digests.has(entry.name),
+      `Source snapshot omitted ${entry.name}`,
+    );
     report.sourceDigests.push({
       path: entry.name,
       sourceSha256: digest(body),
@@ -259,11 +272,15 @@ export async function qualifyDemoPackaging({
     .filter((entry) => !entry.bytes.equals(expectedByName.get(entry.name).bytes))
     .map((entry) => entry.name);
   report.intentionalDistributionProjections = emitted
-    .filter((entry) => digest(entry.bytes) !== before.digests.get(entry.name))
+    .filter(
+      (entry) =>
+        digest(entry.bytes) !==
+        (before.digests.get(entry.name) ?? buildBefore.digests.get(entry.name)),
+    )
     .map((entry) => entry.name);
   const after = await sourceSnapshot(['game', 'optional-practice', 'publishing'], productionSource);
   const buildAfter = await sourceSnapshot(
-    ['scripts'],
+    ['scripts', ...authoringPreviewHosts],
     (name) => /\.mjs$/.test(name) && !path.basename(name).startsWith('test-'),
   );
   report.finalSourceFingerprint = snapshotSummary(after);

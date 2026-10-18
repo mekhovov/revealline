@@ -1,0 +1,70 @@
+{
+  "format": "revealline-current-art-resolver-regressions.v1",
+  "finished": "2026-10-18T19:51:36.942354+00:00",
+  "scope": "Shared exact native original-byte resolver and finite main-pages projection, with catalog-derived dependencies. All 33 eligible originals independently decode to the original exact bytes through the final resolver. Representative Production/Reveal Audit browser consumer coverage is separate; the final full emitted profile and capacity audit remain pending. No authored PNG or replay data changed.",
+  "tests": {
+    "exactBytes": 4,
+    "currentArtPreview": 9,
+    "profileNativeAndAuditHelpers": 19,
+    "fullPackagingHelpers": 5
+  },
+  "files": [
+    {
+      "path": "game/presentation/current-art.mjs",
+      "bytes": 15518,
+      "sha256": "a687bfd589db1bdb1375c5b940ae719ef33d7fe785471224f9628b482e96beab"
+    },
+    {
+      "path": "game/presentation/current-art-sources.mjs",
+      "bytes": 1723748,
+      "sha256": "85ebf1bc2762e3a9363173569ab0623cfc273f52bdd53aea5c8bb16e441b665b"
+    },
+    {
+      "path": "game/test/current-art.test.mjs",
+      "bytes": 10921,
+      "sha256": "86aac27972378436e53558ede3781ccc916bce2df180569baefc6100ed5d9565"
+    },
+    {
+      "path": "game/test/current-art-bytes.test.mjs",
+      "bytes": 3761,
+      "sha256": "ba3d31b0c41cd1d1d42f3c8c3f4cdebe828215787d80cfd133d4a16e63685d7f"
+    },
+    {
+      "path": "scripts/main-pages-source-originals.mjs",
+      "bytes": 9168,
+      "sha256": "c1392805cac2cd13b4c34ad463eae7e748b6eaeabd2e09036aca11e8af0b95be"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 95035,
+      "sha256": "f2cd50cdc44c6a39ecdfa803e79c88ccfb048040d74776ce0f17045a02b48519"
+    },
+    {
+      "path": "scripts/test-main-pages-source-originals.mjs",
+      "bytes": 7287,
+      "sha256": "30808d6f952cc774182a2b11fab3df66f9a7cc30aaf5b45d9e7688168a91d197"
+    },
+    {
+      "path": "scripts/qualify-demo-main-pages.mjs",
+      "bytes": 23622,
+      "sha256": "0d205661b00f0ce1ef1d8e3850013c2126a3f635cbfcac6929212204a06cad7a"
+    },
+    {
+      "path": "scripts/test-qualify-demo-main-pages.mjs",
+      "bytes": 4233,
+      "sha256": "3bc9b0d92f2bb11401c4a80bf47b5af63cc3419e4f3939664bb620e4480a1ef6"
+    },
+    {
+      "path": "scripts/qualify-demo-packaging.mjs",
+      "bytes": 12908,
+      "sha256": "f016fbd68d68b2fb5639ac0634ebca5e9b835994313b3f116a8bee0484d419b6"
+    }
+  ],
+  "evidence": {
+    "nativeAllOriginals": "current-art-fallback-proof-final.json",
+    "representativeConsumerBrowser": "authoring-art-fallback-browser.json",
+    "profileNativeAndAuditHelpers": "main-pages-final-helper-regressions.tap.txt",
+    "baselineInventory": "main-pages-baseline-inventory-461ace.json",
+    "baselineArchiveReceipt": "main-pages-baseline-archive-receipt-461ace.json"
+  }
+}

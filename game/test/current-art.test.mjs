@@ -19,7 +19,30 @@ const embedded = CURRENT_ART_SOURCES.find(
   (row) => row.kind === 'embedded' && row.source.kind === 'built-in',
 );
 const external = CURRENT_ART_SOURCES.find((row) => row.kind === 'external');
-const procedural = CURRENT_ART_SOURCES.find((row) => row.kind === 'procedural');
+// Current authored owners are raster originals. Keep the supported procedural
+// branch covered with an explicit test-only catalog, without inventing a live owner.
+const procedural = {
+  ...embedded,
+  id: 'test.procedural',
+  kind: 'procedural',
+  fit: 'cover',
+  sourceImagePath: null,
+  image: null,
+};
+const moduleURL = new URL('../presentation/current-art.mjs', import.meta.url);
+const fixtureModule = (await fs.readFile(moduleURL, 'utf8'))
+  .replaceAll('import.meta.url', JSON.stringify(moduleURL.href))
+  .replace(
+    "import { CURRENT_ART_SOURCES } from './current-art-sources.mjs';",
+    `const CURRENT_ART_SOURCES = ${JSON.stringify([embedded, procedural])};`,
+  )
+  .replace(
+    /from (['"])(\.[^'"]+)\1/g,
+    (_, quote, specifier) => `from ${quote}${new URL(specifier, moduleURL).href}${quote}`,
+  );
+const proceduralAPI = await import(
+  `data:text/javascript;base64,${Buffer.from(fixtureModule).toString('base64')}`
+);
 const file = (relative) => fs.readFile(path.join(root, relative));
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 function canvasFixture() {
@@ -64,13 +87,13 @@ test('lookup and construction are lazy and never accept URLs or uploaded owner l
   assert.equal(describeCurrentArt({ id: embedded.id, path: 'https://outside.invalid' }), null);
   await assert.rejects(loader.load('picture.unknown'), /registered exact/);
   assert.equal(describeCurrentArt(embedded.id).availability.status, 'request-required');
-  assert.equal(describeCurrentArt(procedural.id).availability.distributionBytes, 0);
+  assert.equal(proceduralAPI.describeCurrentArt(procedural.id).availability.distributionBytes, 0);
   assert.ok(Object.isFrozen(describeCurrentArt(embedded.id).owner));
   loader.close();
   await assert.rejects(loader.load(embedded.id), /closed/);
 });
 test('procedural previews use the exact registered scene renderer, theme, level and labelled seed', async () => {
-  const loader = createCurrentArtPreview({
+  const loader = proceduralAPI.createCurrentArtPreview({
     fetch: () => assert.fail('Procedural previews do not fetch.'),
     canvasFactory: canvasFixture,
   });
@@ -207,7 +230,7 @@ test('newer requests cancel and dispose late decoded originals without affecting
   let finish,
     decodeStarted = false,
     closed = 0;
-  const loader = createCurrentArtPreview({
+  const loader = proceduralAPI.createCurrentArtPreview({
     baseURL,
     fetch: async () => new Response(bytes),
     canvasFactory: canvasFixture,
