@@ -13846,7 +13846,18 @@ try {
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
     };
     assertIntent();
-    if ((source.modeId && source.modeId !== 'solo') || source.journeyContext) {
+    const entry = source.entry?.campaign
+      ? executionEntries().find(
+          (item) => campaignKey(item.campaign) === campaignKey(source.entry.campaign),
+        )
+      : null;
+    if (
+      (source.modeId && source.modeId !== 'solo') ||
+      source.journeyContext ||
+      (!entry && source.modeId === 'solo' && source.launchURL)
+    ) {
+      // Built-in demos may read an authored pack without installing it. Its
+      // exact ordinary chooser owns installation and progression on departure.
       let handedOff = false;
       const current = () => handedOff || isCurrent();
       const result = await requestModeDeparture('demo', { preventDefault() {} }, $('shell-demo'), {
@@ -13857,9 +13868,6 @@ try {
       handedOff = result !== false && modeDeparture?.kind === 'demo';
       return handedOff;
     }
-    const entry = executionEntries().find(
-      (item) => campaignKey(item.campaign) === campaignKey(source.entry.campaign),
-    );
     const level = entry?.campaign.levels.find((item) => item.id === source.levelId);
     if (!level || demoIdentity(level, entry.classRecipes) !== source.identity)
       throw new Error(t('interface:thatExactInstalledCampaignIsNoLongerAvailable'));

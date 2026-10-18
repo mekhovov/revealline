@@ -1,0 +1,35 @@
+TAP version 13
+# Subtest: lazy entry ownership preserves frozen live getters and releases once on disposal or cancellation
+ok 1 - lazy entry ownership preserves frozen live getters and releases once on disposal or cancellation
+  ---
+  duration_ms: 1.45575
+  ...
+# Subtest: a retired earlier lease cannot erase the currently owned entry
+ok 2 - a retired earlier lease cannot erase the currently owned entry
+  ---
+  duration_ms: 0.089708
+  ...
+# Subtest: already cancelled admission disposes the native player before retaining its entry
+ok 3 - already cancelled admission disposes the native player before retaining its entry
+  ---
+  duration_ms: 0.374458
+  ...
+# Subtest: abort owns asynchronous retirement and repeated disposal preserves its exact result
+ok 4 - abort owns asynchronous retirement and repeated disposal preserves its exact result
+  ---
+  duration_ms: 3.357709
+  ...
+# Subtest: repeated disposal retains synchronous native cleanup failure without throwing from abort
+ok 5 - repeated disposal retains synchronous native cleanup failure without throwing from abort
+  ---
+  duration_ms: 0.226709
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 89.002292

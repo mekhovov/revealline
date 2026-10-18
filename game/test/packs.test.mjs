@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { validateScenario } from '../content.mjs';
+import { validateScenario, inspectImageDataUrl } from '../content.mjs';
 import { RULESET } from '../core/registry.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
 import {
@@ -22,7 +22,11 @@ const readPack = (name = 'night-shift') =>
 const png =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=';
 const dimensions = { naturalWidth: 1, naturalHeight: 1 };
-const decode = async () => dimensions;
+const decode = async (dataUrl) => {
+  const header = inspectImageDataUrl(dataUrl);
+  assert.equal(header.valid, true);
+  return { naturalWidth: header.width, naturalHeight: header.height };
+};
 const ready = async (value = readPack()) =>
   (await preparePack(value, { decodeImage: decode })).pack;
 test('both built-in expansion packs validate and every map resolves to a compatible runtime scenario', async () => {
@@ -84,6 +88,7 @@ test('unsupported engine versions, remote media, executable fields and unknown r
 test('dependency pins reject missing versions, unsafe replacements, removals and cycles atomically', async () => {
   const source = readPack();
   source.id = 'foundation';
+  source.version = '1.0.0';
   source.name = 'Foundation';
   const foundation = await ready(source),
     current = installPack(emptyPackLibrary(), foundation);
@@ -177,7 +182,7 @@ test('decoder failure, mismatched dimensions and caller edits during decode cann
   );
   let release;
   const pending = preparePack(
-    { ...source, visualOverrides: { player: { dataUrl: png } } },
+    { ...source, visualOverrides: { player: { dataUrl: png } }, levelVisuals: [] },
     { decodeImage: () => new Promise((resolve) => (release = resolve)) },
   );
   source.name = 'Modified later';

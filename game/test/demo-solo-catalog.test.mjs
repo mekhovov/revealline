@@ -10,7 +10,7 @@ import {
 import { createMissionLibrary } from '../mission-library/library.mjs';
 import { readMissionLibraryHandoff, readMissionLibraryReady } from '../mission-library/handoff.mjs';
 import { demoLaunchURL } from '../demo-launch.mjs';
-import { loadBuiltinSoloDemoSources } from '../demo-modes/solo-builtins.mjs';
+import { loadBuiltinJourneySoloDemoSources } from '../demo-modes/solo-builtins.mjs';
 import { SOLO_BUILTIN_DEMO_INDEX } from '../demo-modes/solo-builtins-index.mjs';
 import { resolveDemoTheme } from '../demo-modes/solo.mjs';
 
@@ -58,7 +58,7 @@ test('cross-mode Solo enumerates exact installed authored packs without download
       assert.equal(demoLaunchURL(source), source.launchURL);
       const url = new URL(source.launchURL);
       assert.equal(readMissionLibraryReady(url.searchParams), true);
-      if (source.journeyContext || !source.entry) {
+      if (url.searchParams.get('journey') !== 'legacy') {
         assert.ok(
           SOLO_BUILTIN_DEMO_INDEX.some(
             (row) =>
@@ -69,8 +69,10 @@ test('cross-mode Solo enumerates exact installed authored packs without download
         continue;
       }
       assert.ok(library.find(readMissionLibraryHandoff(url.searchParams)));
-      const forged = { ...source, level: { ...source.level, revision: 'stale' } };
-      assert.equal(soloDemoLaunchURL(forged, index), null);
+      if (source.entry) {
+        const forged = { ...source, level: { ...source.level, revision: 'stale' } };
+        assert.equal(soloDemoLaunchURL(forged, index), null);
+      }
     }
   } finally {
     library.dispose();
@@ -79,7 +81,7 @@ test('cross-mode Solo enumerates exact installed authored packs without download
 
 test('built-in Journey sources enumerate bounded metadata and prepare only the selected native owner', async () => {
   const requests = [];
-  const sources = await loadBuiltinSoloDemoSources({
+  const sources = await loadBuiltinJourneySoloDemoSources({
     fetch: async (url) => {
       requests.push(url.pathname);
       const text = await readFile(url, 'utf8');
@@ -119,6 +121,14 @@ test('built-in Journey sources enumerate bounded metadata and prepare only the s
   } finally {
     player.dispose();
   }
+  assert.equal(source.entry, null);
+  assert.equal(source.journeyContext, null);
+  const controller = new AbortController();
+  const second = await source.create({ signal: controller.signal });
+  controller.abort();
+  assert.equal(source.entry, null);
+  assert.equal(source.journeyContext, null);
+  assert.equal(second.phase, 'disposed');
 });
 
 test('locked or unavailable installed inventory retains base Solo without repairing storage', async () => {

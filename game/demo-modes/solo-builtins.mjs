@@ -5,12 +5,27 @@ import { campaignKey } from '../library.mjs';
 import { missionLibraryHref } from '../mission-library/handoff.mjs';
 import { journeyActorThemeCandidates } from '../presentation/journey-actor-materials.mjs';
 import { authoredJourneyUsesActorMaterials } from '../content-design/mode-href.mjs';
+import { loadBuiltinClassicSoloDemoSources } from './solo-classic-builtins.mjs';
+import { createSoloDemoSourceOwner } from './solo-source-owner.mjs';
 
 const catalogPaths = ['journey-current', 'journey-archive'];
 
 /** These are finite authored chooser identities, not new pack installation
  * authority. Compilation and recording bodies are deferred until selection. */
 export async function loadBuiltinSoloDemoSources({
+  signal,
+  fetch: fetcher = globalThis.fetch,
+  index,
+} = {}) {
+  const results = await Promise.allSettled([
+    loadBuiltinClassicSoloDemoSources({ signal, fetch: fetcher, index }),
+    loadBuiltinJourneySoloDemoSources({ signal, fetch: fetcher }),
+  ]);
+  signal?.throwIfAborted();
+  return results.flatMap((result) => (result.status === 'fulfilled' ? result.value : []));
+}
+
+export async function loadBuiltinJourneySoloDemoSources({
   signal,
   fetch: fetcher = globalThis.fetch,
 } = {}) {
@@ -39,8 +54,9 @@ export async function loadBuiltinSoloDemoSources({
           row.levelId === clip.levelId,
       );
       if (!metadata) return [];
-      let entry = null,
-        level = { id: clip.levelId, name: clip.title };
+      const owner = createSoloDemoSourceOwner(
+        Object.freeze({ id: clip.levelId, name: clip.title }),
+      );
       return [
         {
           ...clip,
@@ -50,17 +66,17 @@ export async function loadBuiltinSoloDemoSources({
           variantId: 'standard',
           approachable: metadata === SOLO_BUILTIN_DEMO_INDEX[0],
           get entry() {
-            return entry;
+            return owner.entry;
           },
           get level() {
-            return level;
+            return owner.level;
           },
           get journeyContext() {
-            return entry
+            return owner.entry
               ? {
                   editionId: metadata.routeId,
                   missionId: metadata.missionId,
-                  entries: [entry],
+                  entries: [owner.entry],
                   profile: null,
                   pictures: null,
                 }
@@ -126,9 +142,11 @@ export async function loadBuiltinSoloDemoSources({
                 player.dispose();
                 throw error;
               }
-              entry = candidate;
-              level = resolved.level;
-              return player;
+              return owner.adopt(player, {
+                entry: candidate,
+                level: resolved.level,
+                signals: [signal],
+              });
             } finally {
               host.preparer.dispose();
             }
@@ -139,8 +157,9 @@ export async function loadBuiltinSoloDemoSources({
   );
 }
 
-/** Prefer the exact lazily admitted authored source for each level. */
+/** Existing recordings and live variety retain their ordinary owners. A lazy
+ * authored replay only fills a missing source ID, never replaces a whole level. */
 export function mergeBuiltinSoloDemoSources(existing, builtin) {
-  const keys = new Set(builtin.map((source) => source.levelKey));
-  return [...existing.filter((source) => !keys.has(source.levelKey)), ...builtin];
+  const ids = new Set(existing.map((source) => source.id));
+  return [...existing, ...builtin.filter((source) => !ids.has(source.id))];
 }

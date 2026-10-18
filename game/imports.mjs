@@ -15,7 +15,8 @@ export class ScenarioImportError extends TypeError {
  * The header guard also makes this exported helper safe to call on its own.
  * No canvas, resampling, format conversion, storage or image-byte changes occur.
  */
-export async function browserDecodeImage(dataUrl) {
+export async function browserDecodeImage(dataUrl, { signal } = {}) {
+  signal?.throwIfAborted();
   const header = inspectImageDataUrl(dataUrl);
   if (!header.valid)
     throw new ScenarioImportError(
@@ -27,18 +28,25 @@ export async function browserDecodeImage(dataUrl) {
   return new Promise((resolve, reject) => {
     const image = new Image();
     let settled = false;
-    const finish = (error, dimensions) => {
+    const finish = (error, dimensions, failed = true) => {
       if (settled) return;
       settled = true;
       image.onload = null;
       image.onerror = null;
+      signal?.removeEventListener('abort', cancel);
       // Drop this temporary decode surface; the accepted pack retains its bytes.
       try {
         image.removeAttribute?.('src');
       } catch {}
-      if (error) reject(error);
+      if (failed) reject(error);
       else resolve(dimensions);
     };
+    const cancel = () => finish(signal.reason ?? new DOMException('Cancelled', 'AbortError'));
+    signal?.addEventListener('abort', cancel, { once: true });
+    if (signal?.aborted) {
+      cancel();
+      return;
+    }
     image.onerror = () =>
       finish(
         new ScenarioImportError(t('errors:imports.browserDecodeFailed'), 'image-decode-failed'),
@@ -56,7 +64,7 @@ export async function browserDecodeImage(dataUrl) {
           naturalHeight <= 0
         )
           throw new Error(t('errors:imports.emptyImageDimensions'));
-        finish(null, { naturalWidth, naturalHeight });
+        finish(null, { naturalWidth, naturalHeight }, false);
       } catch {
         finish(
           new ScenarioImportError(t('errors:imports.completeDecodeFailed'), 'image-decode-failed'),

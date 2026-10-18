@@ -1,0 +1,403 @@
+TAP version 13
+# Subtest: cross-mode Solo enumerates exact installed authored packs without downloading or writing
+ok 1 - cross-mode Solo enumerates exact installed authored packs without downloading or writing
+  ---
+  duration_ms: 2209.475208
+  ...
+# Subtest: built-in Journey sources enumerate bounded metadata and prepare only the selected native owner
+ok 2 - built-in Journey sources enumerate bounded metadata and prepare only the selected native owner
+  ---
+  duration_ms: 3694.062542
+  ...
+# Subtest: locked or unavailable installed inventory retains base Solo without repairing storage
+ok 3 - locked or unavailable installed inventory retains base Solo without repairing storage
+  ---
+  duration_ms: 52.695709
+  ...
+# Subtest: clean and Journey entry contexts enumerate the complete authored union from metadata only
+ok 4 - clean and Journey entry contexts enumerate the complete authored union from metadata only
+  ---
+  duration_ms: 130.253917
+  ...
+# Subtest: source merge preserves personal recordings, live bots, improvisation and reviewed choices
+ok 5 - source merge preserves personal recordings, live bots, improvisation and reviewed choices
+  ---
+  duration_ms: 0.155708
+  ...
+# Subtest: lazy handoffs name exact ordinary missions without granting installation or progress
+ok 6 - lazy handoffs name exact ordinary missions without granting installation or progress
+  ---
+  duration_ms: 18.140917
+  ...
+# Subtest: selected native packed replay strictly plays to its terminal outcome and releases its entry
+ok 7 - selected native packed replay strictly plays to its terminal outcome and releases its entry
+  ---
+  duration_ms: 117.811083
+  ...
+# Subtest: changed indexed bytes, canonical pack identity and replay content fail before adoption
+ok 8 - changed indexed bytes, canonical pack identity and replay content fail before adoption
+  ---
+  duration_ms: 74.323834
+  ...
+# Subtest: cancellation releases an ignored late transport and never adopts native content
+ok 9 - cancellation releases an ignored late transport and never adopts native content
+  ---
+  duration_ms: 12.703583
+  ...
+# Subtest: indexed metadata cannot escape the finite local authored pack paths
+ok 10 - indexed metadata cannot escape the finite local authored pack paths
+  ---
+  duration_ms: 10.464459
+  ...
+# Subtest: cancelling native pack image preparation retires its image and prevents subsequent decodes
+ok 11 - cancelling native pack image preparation retires its image and prevents subsequent decodes
+  ---
+  duration_ms: 155.828916
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 12 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 3724.547458
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 13 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 101.043166
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 14 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 5715.899333
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 15 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 4261.12675
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 16 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 56.787125
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 17 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 208.975708
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 18 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 408.38025
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 19 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 29.9855
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 20 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.580875
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 21 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 651.638
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 22 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 3163.993667
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 23 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 37.031875
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 24 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 1.006708
+  ...
+# Subtest: resource diagnostic reaches live source rehearsal before its player can be returned
+ok 25 - resource diagnostic reaches live source rehearsal before its player can be returned
+  ---
+  duration_ms: 28.114083
+  ...
+# Subtest: runtime indentation preserves executable tokens, comments, line breaks and literal values
+ok 26 - runtime indentation preserves executable tokens, comments, line breaks and literal values
+  ---
+  duration_ms: 24.120334
+  ...
+# Subtest: all admitted engine JavaScript retains lexical and line-termination parity when compacted
+ok 27 - all admitted engine JavaScript retains lexical and line-termination parity when compacted
+  ---
+  duration_ms: 8955.869584
+  ...
+# Subtest: standalone branding projects only the image fallback to an approved selected logo
+ok 28 - standalone branding projects only the image fallback to an approved selected logo
+  ---
+  duration_ms: 14.674875
+  ...
+# Subtest: support page closure retains navigation without authoring sample media or manual fixtures
+ok 29 - support page closure retains navigation without authoring sample media or manual fixtures
+  ---
+  duration_ms: 5335.220084
+  ...
+# Subtest: edition recording inventory follows validated catalogue additions and runtime variants
+ok 30 - edition recording inventory follows validated catalogue additions and runtime variants
+  ---
+  duration_ms: 36.431417
+  ...
+# Subtest: compiled edition rotation skips absent engines without fetching or installing a package
+ok 31 - compiled edition rotation skips absent engines without fetching or installing a package
+  ---
+  duration_ms: 11.221791
+  ...
+# Subtest: standalone and public offline menus retain every dynamically attached panel stylesheet
+ok 32 - standalone and public offline menus retain every dynamically attached panel stylesheet
+  ---
+  duration_ms: 563.522542
+  ...
+# Subtest: the shared Snake launcher delivers the complete shared board-art provider offline
+ok 33 - the shared Snake launcher delivers the complete shared board-art provider offline
+  ---
+  duration_ms: 4174.448125
+  ...
+# Subtest: actual company host closure retains explicit Demo dependencies and preserves optional artwork
+ok 34 - actual company host closure retains explicit Demo dependencies and preserves optional artwork
+  ---
+  duration_ms: 5928.923083
+  ...
+# Subtest: standalone menu projection preserves selected profile data and fallback without unrelated images
+ok 35 - standalone menu projection preserves selected profile data and fallback without unrelated images
+  ---
+  duration_ms: 44.207416
+  ...
+# Subtest: multi-edition menu builds retain their neutral FPV fallback and every selected scene
+ok 36 - multi-edition menu builds retain their neutral FPV fallback and every selected scene
+  ---
+  duration_ms: 3.128459
+  ...
+# Subtest: DroneAid aggregate uses only its lossless derivative while retaining original source files
+ok 37 - DroneAid aggregate uses only its lossless derivative while retaining original source files
+  ---
+  duration_ms: 8.308959
+  ...
+# Subtest: shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+ok 38 - shared guide scenario projects selected appearance without changing a mechanic or recipe parameter
+  ---
+  duration_ms: 4.370417
+  ...
+# Subtest: common host import projection closes over committed adapters without visiting historical registries
+ok 39 - common host import projection closes over committed adapters without visiting historical registries
+  ---
+  duration_ms: 40.490708
+  ...
+# Subtest: dynamic boot entry is explicit and unknown host JSON requests fail closed
+ok 40 - dynamic boot entry is explicit and unknown host JSON requests fail closed
+  ---
+  duration_ms: 0.507833
+  ...
+# Subtest: declared canonical navigation and data requests must exist in the artifact
+ok 41 - declared canonical navigation and data requests must exist in the artifact
+  ---
+  duration_ms: 0.302083
+  ...
+# Subtest: shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+ok 42 - shared runtime media ledger binds current font licenses, shell textures and licensed soundtrack bytes
+  ---
+  duration_ms: 46.843459
+  ...
+# Subtest: optional level arrays and registry normalize on a separate copy without browser allocation
+ok 43 - optional level arrays and registry normalize on a separate copy without browser allocation
+  ---
+  duration_ms: 3.458834
+  ...
+# Subtest: explicit and default fetched class recipes are independently copied
+ok 44 - explicit and default fetched class recipes are independently copied
+  ---
+  duration_ms: 1.136
+  ...
+# Subtest: the original is validated before clone can invoke getters or discard forbidden data
+ok 45 - the original is validated before clone can invoke getters or discard forbidden data
+  ---
+  duration_ms: 1.843542
+  ...
+# Subtest: all image headers and aggregate budgets pass before any decoder is called
+ok 46 - all image headers and aggregate budgets pass before any decoder is called
+  ---
+  duration_ms: 2.3975
+  ...
+# Subtest: decoders run one at a time and bytes, metadata, warnings and presentation survive
+ok 47 - decoders run one at a time and bytes, metadata, warnings and presentation survive
+  ---
+  duration_ms: 1.052917
+  ...
+# Subtest: caller edits during decoding cannot modify the in-flight validated snapshot
+ok 48 - caller edits during decoding cannot modify the in-flight validated snapshot
+  ---
+  duration_ms: 1.414209
+  ...
+# Subtest: a failure stops subsequent decodes and leaves the caller current configuration intact
+ok 49 - a failure stops subsequent decodes and leaves the caller current configuration intact
+  ---
+  duration_ms: 0.831834
+  ...
+# Subtest: decoded natural dimensions must be finite integer dimensions matching the bounded header
+ok 50 - decoded natural dimensions must be finite integer dimensions matching the bounded header
+  ---
+  duration_ms: 15.2255
+  ...
+# Subtest: malformed decoder options and explicitly null arrays reject without normalization
+ok 51 - malformed decoder options and explicitly null arrays reject without normalization
+  ---
+  duration_ms: 0.618125
+  ...
+# Subtest: browser decoder validates headers before allocating Image and clears its temporary surface
+ok 52 - browser decoder validates headers before allocating Image and clears its temporary surface
+  ---
+  duration_ms: 2.47225
+  ...
+# Subtest: browser decode cancellation clears pending Image work and preserves abort identity
+ok 53 - browser decode cancellation clears pending Image work and preserves abort identity
+  ---
+  duration_ms: 0.965083
+  ...
+# Subtest: browser cancellation rejects even when the abort reason is falsy
+ok 54 - browser cancellation rejects even when the abort reason is falsy
+  ---
+  duration_ms: 0.478458
+  ...
+# Subtest: browser load failure rejects and cleans callbacks
+ok 55 - browser load failure rejects and cleans callbacks
+  ---
+  duration_ms: 0.25375
+  ...
+# Subtest: browser complete-decode failure rejects after load
+ok 56 - browser complete-decode failure rejects after load
+  ---
+  duration_ms: 0.686042
+  ...
+# Subtest: browser load still works without the optional Image.decode API
+ok 57 - browser load still works without the optional Image.decode API
+  ---
+  duration_ms: 0.24725
+  ...
+# Subtest: a non-browser environment receives a clear decoder-unavailable error
+ok 58 - a non-browser environment receives a clear decoder-unavailable error
+  ---
+  duration_ms: 0.264292
+  ...
+# Subtest: prepared scenarios preserve optional original procedural music descriptors
+ok 59 - prepared scenarios preserve optional original procedural music descriptors
+  ---
+  duration_ms: 0.652291
+  ...
+# Subtest: both built-in expansion packs validate and every map resolves to a compatible runtime scenario
+not ok 60 - both built-in expansion packs validate and every map resolves to a compatible runtime scenario
+  ---
+  duration_ms: 137.012208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:28:1'
+  failureType: 'testCodeFailure'
+  error: 'night-shift-01/background: decoded dimensions do not match the image header.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/data-json.mjs:120:25)
+    decodeCheckedPack (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/packs.mjs:575:5)
+  ...
+# Subtest: prepared pack installs, exports, roundtrips and removes without mutating previous library
+not ok 61 - prepared pack installs, exports, roundtrips and removes without mutating previous library
+  ---
+  duration_ms: 124.055208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:47:1'
+  failureType: 'testCodeFailure'
+  error: 'night-shift-01/background: decoded dimensions do not match the image header.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/data-json.mjs:120:25)
+    decodeCheckedPack (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/packs.mjs:575:5)
+  ...
+# Subtest: unsupported engine versions, remote media, executable fields and unknown references reject
+ok 62 - unsupported engine versions, remote media, executable fields and unknown references reject
+  ---
+  duration_ms: 151.269625
+  ...
+# Subtest: dependency pins reject missing versions, unsafe replacements, removals and cycles atomically
+not ok 63 - dependency pins reject missing versions, unsafe replacements, removals and cycles atomically
+  ---
+  duration_ms: 113.656167
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:84:1'
+  failureType: 'testCodeFailure'
+  error: 'night-shift-01/background: decoded dimensions do not match the image header.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/data-json.mjs:120:25)
+    decodeCheckedPack (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/packs.mjs:575:5)
+  ...
+# Subtest: per-map role overrides merge over shared art and remain independently replaceable
+ok 64 - per-map role overrides merge over shared art and remain independently replaceable
+  ---
+  duration_ms: 10.120417
+  ...
+# Subtest: all headers, aggregate budgets and all pack dependencies pass before any image decoder runs
+ok 65 - all headers, aggregate budgets and all pack dependencies pass before any image decoder runs
+  ---
+  duration_ms: 292.482625
+  ...
+# Subtest: decoder failure, mismatched dimensions and caller edits during decode cannot partially install a pack
+not ok 66 - decoder failure, mismatched dimensions and caller edits during decode cannot partially install a pack
+  ---
+  duration_ms: 353.720375
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:155:1'
+  failureType: 'cancelledByParent'
+  error: 'Promise resolution is still pending but the event loop has already resolved'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    process.emit (node:events:524:28)
+  ...
+# Subtest: malicious object shapes never execute getters and files are bounded before parsing/decoding
+not ok 67 - malicious object shapes never execute getters and files are bounded before parsing/decoding
+  ---
+  duration_ms: 0
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:188:1'
+  failureType: 'cancelledByParent'
+  error: 'Promise resolution is still pending but the event loop has already resolved'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    process.emit (node:events:524:28)
+  ...
+# Subtest: music descriptors accept the five procedural styles, reject payloads, invalid scales and extreme values
+not ok 68 - music descriptors accept the five procedural styles, reject payloads, invalid scales and extreme values
+  ---
+  duration_ms: 0
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:215:1'
+  failureType: 'cancelledByParent'
+  error: 'Promise resolution is still pending but the event loop has already resolved'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    process.emit (node:events:524:28)
+  ...
+# Subtest: pack and library validation follows the active locale
+not ok 69 - pack and library validation follows the active locale
+  ---
+  duration_ms: 0
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:230:1'
+  failureType: 'cancelledByParent'
+  error: 'Promise resolution is still pending but the event loop has already resolved'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    process.emit (node:events:524:28)
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 62
+# fail 3
+# cancelled 4
+# skipped 0
+# todo 0
+# duration_ms 32465.928542

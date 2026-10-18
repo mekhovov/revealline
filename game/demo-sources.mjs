@@ -52,6 +52,7 @@ export async function loadDemoSources({
   const sources = clips.map((clip, index) => ({
     ...clip,
     kind: 'replay',
+    variantId: clip.entry?.difficulty ?? 'standard',
     levelKey: `${clip.campaignKey}/${clip.levelId}`,
     approachable: index === 0,
     async create({ signal }) {
@@ -148,6 +149,7 @@ export async function loadDemoSources({
           sources.push({
             id: `live-${campaignKey(entry.campaign)}-${level.id}-${seed}`,
             kind: 'bot',
+            variantId: entry.difficulty ?? 'standard',
             levelId: level.id,
             level,
             entry,
@@ -179,6 +181,7 @@ export async function loadDemoSources({
       sources.push({
         id: `improv-${campaignKey(entry.campaign)}-${level.id}`,
         kind: 'improv',
+        variantId: entry.difficulty ?? 'standard',
         levelId: level.id,
         level,
         entry,

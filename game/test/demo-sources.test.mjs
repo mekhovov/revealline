@@ -67,6 +67,7 @@ test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and
   assert.equal(requests.length, 1, 'Only the bundled catalogue loads before a scene is chosen.');
   assert.ok(requests[0].endsWith('/game/demo-data/catalog.json'));
   assert.equal(sources.filter((source) => source.approachable).length, 1);
+  assert.ok(sources.every((source) => source.variantId === 'standard'));
   for (const source of sources.filter((candidate) => candidate.kind === 'replay')) {
     const player = await source.create({ signal: new AbortController().signal });
     assert.equal(player.info.levelId, source.levelId);
@@ -257,6 +258,31 @@ test('manually kept local recordings join the catalogue without enabling automat
     source.ticks,
   );
   library.dispose();
+});
+
+test('personal recording rotation metadata preserves its admitted difficulty identity', async () => {
+  const entry = entries.find((entry) => entry.difficulty === 'gentle');
+  const level = entry.campaign.levels[0];
+  const [source] = await loadDemoSources({
+    entries: [entry],
+    catalogs: [],
+    WorkerClass: null,
+    library: {
+      list: async () => [
+        {
+          id: 'local-gentle',
+          source: 'local',
+          entry,
+          level,
+          campaignKey: campaignKey(entry.campaign),
+          levelId: level.id,
+        },
+      ],
+    },
+  });
+  assert.equal(source.variantId, 'gentle');
+  assert.equal(source.entry, entry);
+  assert.equal(source.levelKey, `${campaignKey(entry.campaign)}/${level.id}`);
 });
 
 test('uncached optional bundled replays fall back to a retained recording or stay unavailable offline', async () => {
