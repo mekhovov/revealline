@@ -14380,9 +14380,15 @@ try {
             ? {
                 supportedModes: runtimeContent.selection.edition.modes,
                 availableCollectionsOnly: true,
-                description: runtimeContent.selection.edition.name,
               }
             : {}),
+          description: () =>
+            `${runtimeContent?.selection.edition.name ?? t('interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir')} ${t('interface:captureNavigation.browseHint')}`,
+          browsingContext: ({ label }) =>
+            t('interface:captureNavigation.browsing', {
+              mode: label,
+              context: t('interface:captureNavigation.context', { mode: t('interface:solo2') }),
+            }),
           getCurrentId: () => {
             const mission = candidateHost && journeyMission();
             if (mission)
