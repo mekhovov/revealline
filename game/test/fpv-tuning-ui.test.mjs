@@ -206,6 +206,39 @@ test('Mobula8 shows its installed components as text with Ukrainian field labels
   assert.match(f.ui.root.textContent, /Примітка джерела \(мовою оригіналу\).*conflicting 51 mm/);
 });
 
+test('civilian candidate provenance and unsupported stock modes remain visible in EN and UK', (t) => {
+  const f = fixture(t),
+    before = f.store.snapshot();
+  f.edit('Aircraft preset', 'cetus-x-betaflight-2022', { tag: 'select', event: 'change' });
+  const notice = f.ui.root.querySelector('[data-aircraft-notice="true"]');
+  assert.equal(notice.hidden, false);
+  assert.match(notice.textContent, /Historical 2022.*reviewer dry weight/);
+  assert.equal(
+    notice.closest('details'),
+    null,
+    'material limitations must be visible before opening evidence',
+  );
+  assert.match(f.ui.root.textContent, /Assembled mass: Published reviewer measurement/);
+  assert.match(f.ui.root.textContent, /Flying mass: Calculated/);
+  assert.match(f.ui.root.textContent, /Series connection doubles voltage, not amp-hour capacity/);
+  f.edit('Aircraft preset', 'protos-16-aio-1-0', { tag: 'select', event: 'change' });
+  assert.match(notice.textContent, /104.4 g battery-inclusive mass is inferred/);
+  assert.match(notice.textContent, /Stock Protos position\/height hold.*not reproduced/);
+  assert.match(f.ui.root.textContent, /Flying mass: Inferred from sources/);
+  assert.match(f.ui.root.textContent, /Battery mass: Manufacturer specification/);
+  assert.match(f.ui.root.textContent, /8.70 V upper operating limit/);
+  assert.match(f.ui.root.textContent, /factory curves, latency and PID behavior are unsupported/);
+  f.setLocale('uk');
+  assert.match(notice.textContent, /Маса 104,4 г із батареєю є припущенням/);
+  assert.match(f.ui.root.textContent, /Польотна маса: Припущення за джерелами/);
+  assert.match(f.ui.root.textContent, /Маса батареї: Характеристика виробника/);
+  assert.deepEqual(
+    f.store.snapshot(),
+    before,
+    'browsing evidence cannot change saved configuration',
+  );
+});
+
 test('aircraft picker keeps complete current Legacy rates and restores saved custom aircraft after navigation', async (t) => {
   const f = fixture(t),
     legacy = f.store.effective().response;
@@ -2211,6 +2244,44 @@ test('direct PID editing enters the tested draft with exact units and invalid te
     'controller',
   );
 });
+
+for (const locale of ['en', 'uk'])
+  test(`camera numeric, slider and framing stay synchronized without clamping invalid text (${locale})`, async (t) => {
+    const f = fixture(t, { locale }),
+      before = f.store.export();
+    const camera = locale === 'uk' ? 'Камера' : 'Camera';
+    const label = locale === 'uk' ? 'Вертикальне поле зору (градуси)' : 'Vertical FOV (degrees)';
+    const framing =
+      locale === 'uk' ? 'Попередній перегляд камери 16:9' : 'Camera framing preview at 16:9';
+    await f.click(camera);
+    const exact = f.find(label, 'input', f.ui.root, 'number');
+    const slider = f.find(label, 'input', f.ui.root, 'range');
+    const preview = f.ui.root.querySelector(`[aria-label="${framing}"]`);
+    exact.focus();
+    f.edit(label, '86', { type: 'number' });
+    assert.equal(slider.value, '86');
+    assert.match(preview.textContent, /86°/);
+    assert.equal(f.document.activeElement, exact);
+    const validFrame = preview.textContent;
+    for (const invalid of ['4', '', '150']) {
+      f.edit(label, invalid, { type: 'number' });
+      assert.equal(exact.value, invalid, 'retain the unfinished numeric text');
+      assert.equal(exact.getAttribute('aria-invalid'), 'true');
+      assert.equal(slider.value, '86', 'invalid text must not clamp or move the valid slider');
+      assert.equal(preview.textContent, validFrame);
+      assert.equal(f.document.activeElement, exact);
+    }
+    f.edit(label, '103', { type: 'number', event: 'change' });
+    assert.equal(slider.value, '103', 'committed numeric changes also synchronize');
+    assert.match(preview.textContent, /103°/);
+    assert.equal(exact.getAttribute('aria-invalid'), null);
+    slider.focus();
+    f.edit(label, '92.5', { type: 'range' });
+    assert.equal(exact.value, '92.5');
+    assert.match(preview.textContent, /92.5°/);
+    assert.equal(f.document.activeElement, slider);
+    assert.equal(f.store.export(), before, 'preview changes remain an unsaved draft');
+  });
 
 test('draft camera framing updates precisely and invalid text retains the last valid preview', async (t) => {
   const f = fixture(t),
