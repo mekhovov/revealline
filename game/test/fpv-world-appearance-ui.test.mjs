@@ -3413,3 +3413,21 @@ for (const kind of [
     assert.deepEqual(JSON.parse(data.get('revealline.flight-profiles.v1')).response, response);
   });
 }
+
+test('World preserves incoming extra-large through generated controls and an unrelated display change', async (t) => {
+  const storage = new Map([
+    [
+      'revealline.display.v1',
+      JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false }),
+    ],
+  ]);
+  const h = fixture(t, { storage });
+  await h.app.ready;
+  const control = h.$('worlds-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(h.doc.body.dataset.textSize, 'large');
+  h.$('worlds-global-reducedEffects').checked = true;
+  h.$('worlds-global-reducedEffects').emit('change');
+  assert.equal(JSON.parse(storage.get('revealline.display.v1')).textSize, 'extra-large');
+});

@@ -2565,3 +2565,24 @@ test('keyboard resume never grants another input owner throttle or changes check
     }
   }
 });
+
+test('Academy retains extra-large desired size without exposing an unqualified selectable setting', async (t) => {
+  let raw = JSON.stringify({ textFace: 'plain', textSize: 'extra-large', reducedEffects: false });
+  const writes = [];
+  const storage = {
+    getItem: (key) => (key === 'revealline.display.v1' ? raw : null),
+    setItem(key, value) {
+      writes.push(key);
+      if (key === 'revealline.display.v1') raw = value;
+    },
+  };
+  const f = await fixture(t, { home: true, storage });
+  const control = f.$('academy-global-textSize');
+  assert.equal(control.value, 'extra-large');
+  assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(f.doc.body.dataset.textSize, 'large');
+  assert.equal(writes.includes('revealline.display.v1'), false);
+  f.$('academy-global-reducedEffects').checked = true;
+  f.$('academy-global-reducedEffects').emit('change');
+  assert.equal(JSON.parse(raw).textSize, 'extra-large');
+});

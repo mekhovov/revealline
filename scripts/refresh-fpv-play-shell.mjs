@@ -57,6 +57,7 @@ async function projectGlobalServices() {
     ...Object.keys(entries),
     'game/text-face.mjs',
     'game/text-size.mjs',
+    'game/ui/text-size-control.mjs',
     'game/ui/theme-material-preview.mjs',
     'game/ui/movement-audio.mjs',
     'game/ui/radio-audio.mjs',

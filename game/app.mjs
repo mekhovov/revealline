@@ -1,3 +1,4 @@
+import { renderTextSizeControl } from './ui/text-size-control.mjs';
 import { loadBaseArtwork } from './base-artwork.mjs';
 import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
@@ -8823,11 +8824,11 @@ try {
   function applyDisplayPreferences(state) {
     const effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     const boardChanged =
-      document.body.dataset.textSize !== state.textSize ||
+      document.body.dataset.textSize !== (state.effectiveTextSize ?? state.textSize) ||
       document.body.dataset.textFace !== state.textFace ||
       document.body.dataset.effects !== effects;
-    $('text-size').value = state.textSize;
-    document.body.dataset.textSize = state.textSize;
+    renderTextSizeControl($('text-size'), state.textSize);
+    document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     $('text-face').value = state.textFace;
     document.body.dataset.textFace = state.textFace;
     $('reduced-effects').checked = state.reducedEffects;

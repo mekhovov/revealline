@@ -1,3 +1,5 @@
+import { effectiveTextSize } from '../text-size.mjs';
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../snake/classic-campaign.mjs';
 const SAVE_KEY = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
 import { classicOperationStatus } from '../snake/classic-operation-status.mjs';
@@ -137,6 +139,7 @@ async function harness({
   legacySavedRound = null,
   recordReceipt = { verified: true, saved: true },
   catalogue = CLASSIC_SNAKE_LEVELS,
+  initialTextSize = 'standard',
 } = {}) {
   const document = new Document();
   let harnessLocale = 'en';
@@ -185,7 +188,8 @@ async function harness({
     optionalEntries = [];
   const display = {
     textFace: 'pixel',
-    textSize: 'standard',
+    textSize: initialTextSize,
+    effectiveTextSize: effectiveTextSize(initialTextSize),
     reducedEffects: false,
     effectiveReducedEffects: false,
   };
@@ -439,9 +443,11 @@ async function harness({
       },
       set(patch) {
         Object.assign(display, patch);
+        display.effectiveTextSize = effectiveTextSize(display.textSize);
         for (const listener of displayListeners) listener(display);
       },
     }),
+    renderTextSizeControl,
     nextInputModality,
     showScreenControls,
     attachTouchSteering,
@@ -2600,3 +2606,22 @@ test('transient status wrapping never inherits the operation-only rule that hide
     'only staged operation objectives replace the ordinary quota',
   );
 });
+
+for (const mode of ['solo', 'versus', 'team'])
+  test(`${mode}: Snake retains extra-large selected with a Large fallback while the attempt stays paused`, async () => {
+    const h = await harness({ mode, initialTextSize: 'extra-large' });
+    h.shell.open('settings');
+    const before = h.created.map((run) => core.exportClassicSnakeReplay(run));
+    const control = h.$('snake-text-size');
+    assert.equal(control.value, 'extra-large');
+    assert.equal(control.querySelector('[data-text-size-retained]').disabled, true);
+    assert.equal(h.document.body.dataset.textSize, 'large');
+    h.$('snake-text-face').value = 'plain';
+    h.$('snake-text-face').emit('change');
+    assert.equal(h.display.textSize, 'extra-large');
+    assert.deepEqual(
+      h.created.map((run) => core.exportClassicSnakeReplay(run)),
+      before,
+    );
+    assert.equal(h.shell.blocksPlay(), true);
+  });
