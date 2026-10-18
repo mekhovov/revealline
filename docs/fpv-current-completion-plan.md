@@ -1,6 +1,6 @@
 # SIM completion plan — current status and remaining work
 
-Reviewed **18 October 2026, 21:11 CEST (Europe/Berlin)**. This is the current
+Reviewed **18 October 2026, 21:20 CEST (Europe/Berlin)**. This is the current
 execution index for the accepted rates, aircraft and Setup Workbench plans.
 It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
@@ -102,14 +102,31 @@ request the authored `$floor` landing surface, while aircraft contacts supply
 only after changing that support identifier; the original stays at 2/3. This
 does not mean all those courses were flown or that every failure has one cause.
 
-**R14 / P1: selected-aircraft mission completion** now precedes additional
-assurance work. A separate versioned mission adapter is being implemented after
-the Nazgul correction, preserving physical state/contacts and old recovery
-identities. It must pass full simulated ground/lift/landing progression, named
-platform and boundary negatives, historical recovery, independent review and
-rendered acceptance. Allow **1–2 engineering days**, including release gates,
-subject to newly found failures; no completion claim yet. PR #1626's independently
-verified pause/archive corrections remain on their unchanged release path.
+**R14 / P1: selected-aircraft mission completion** is corrected locally in
+`55a5eefd1f02dec493fd80a5da53aabd301cedbf`, preserving physical state/contacts and
+verified historical v1 recovery. Independent review and the original 31-check
+adapter/course/recovery/challenge suite passed. The later
+`1c7354bebc5349c90a7f99190654ca098fedb4fc` receipt covers **all fifteen aircraft in
+both modes** completing one original ground/lift/landing lesson, continuing
+practice and recovering with exact aircraft/controller/rate configurations.
+Completion was 6.04–6.26 seconds. The matrix run reported 31 TAP passes including
+its parent and four unselected tests; a separate run passed those four. These
+are overlapping targeted checks, not a sum of unique tests.
+
+The rendered World teaching route now completes on Meteor75 at **13.66 seconds**,
+allows a second takeoff and finishes at **16.34 seconds**. Its archive verifies
+from reset. This is local keyboard/Self-level evidence, not public acceptance or
+all-course coverage. **Release checks and deployed acceptance remain**, usually
+several hours after integration but dependent on CI capacity. PR #1626's separate
+pause/archive corrections remain on their unchanged release path.
+
+Restoring the original test library exposed **R15 / P1: post-restore editor
+selection**. The library committed successfully, but the editor attempted to use
+the removed active setup and reported a `profileId` error. Refreshing recovered
+the view; the exported contents match the pre-test backup apart from its expected
+revision increment. A focused selection/reset fix and regression check are in
+progress; allow **less than one engineering day plus release checks**. The
+immutable paused flight was unaffected. No archive deletion occurred.
 
 ## Delivered and retained
 
@@ -173,6 +190,8 @@ qualification; P3 depends on a qualified physical/platform baseline.
 | ID / priority                     | Remaining item and current status                                                                                                                                                                                                                                                                                                         | Estimate / dependency                                                                                                                                                                                            | Done when                                                                                                                                                                                                                                                                                                                                                                                    |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | R1 / P1                           | Refresh browser evidence on a frozen current release: all fifteen current catalog aircraft plus longer representative learning/course/Regional flights and pause/recovery under rendering/streaming load. **In progress; a reproduced keyboard pause/resume defect is now locally corrected.**                                            | **1–2 working days** for one available desktop/browser pass, excluding fixes. Requires a stable release snapshot and bounded, recorded route selection.                                                          | Each aircraft launches and steers; representative small/large aircraft complete selected maneuvers/routes in both flight modes; setup/PID/rate identity, contacts, pause/recovery and continued practice are recorded. Include a flight beyond twelve minutes and clearly list untested combinations. This does not promise exhaustive completion of all 6,480 current startup combinations. |
+| R14 / P1                          | Selected-aircraft lesson completion: **implemented, independently reviewed and locally accepted**. The versioned floor adapter preserves physical state and historical recovery. All 15 aircraft × both modes complete one original lesson in simulation; rendered Meteor75 World completion and continued flight pass.                   | **Hosted integration and deployed acceptance remain**; usually several hours, subject to runners and failures.                                                                                                   | Publish the versioned adapter, repeat the representative public lesson and retain explicit limits: this is not exhaustive course or real-aircraft qualification.                                                                                                                                                                                                                             |
+| R15 / P1                          | Backup restore commits but the editor can retain a now-absent setup and report a `profileId` error. **Reproduced; fix in progress.** Refresh recovered the view and the exported original settings are confirmed restored.                                                                                                                | **Less than one engineering day plus release checks.**                                                                                                                                                           | One-step restore chooses a valid restored setup, clears stale draft state and preserves the active attempt; regression and rendered acceptance pass.                                                                                                                                                                                                                                         |
 | R13 / P1                          | Diagnose missing archive inventory and establish retention across reopen. **Open:** sixteen cached public entries became one refreshed new session; the six protected entries are unconfirmed. Reconnect is corrected, and transaction-level tests retain unrelated archives, but native loss is unexplained.                             | **1–2 engineering days for instrumented reproduction after an appropriate diagnostic context is available; recovery ETA unknown.** No further destructive cleanup.                                               | Source-bound native database/context evidence identifies the failure; unrelated archives survive confirmed single deletions, writes, interruption and reopen. Recover or explicitly account for the six protected records. See [incident](fpv-archive-retention-followup-20261018.md).                                                                                                       |
 | R2 / P1                           | Complete a page-by-page / sheet-tab **civilian source-kit disposition inventory**. **Completed bounded inventory:** 41 returned Swarm records and ten sheet tabs dispositioned in [the inventory](fpv-civilian-source-inventory.md). Only the explicit civilian indoor kit maps to Mobula8; excluded/ambiguous items are not implemented. | **Complete for the accessible catalog snapshot.** Refresh only when sources change or a specific civilian reference is clarified.                                                                                | Every accessible source entry has its exact name, supported civilian aircraft mapping, implemented/research/non-aircraft/excluded status and evidence gaps. Military-specific configurations remain excluded from this recreational scope.                                                                                                                                                   |
 | R3 / P2                           | Actual **200% browser zoom** accessibility check. **Completed on Chrome Guest in EN/UK at verified 200%; corrected camera fields also pass final-source DOM acceptance.** Prior 640 × 360 remains only a separate layout proxy.                                                                                                           | **Local acceptance complete.** The [receipt](fpv-flight-continuation-20261018.md) distinguishes actual zoom and final-source DOM checks; deployed acceptance follows publication.                                | Numeric fields/actions remain reachable and focus unobscured in EN/UK; zoom is restored. Keep narrow viewport and actual zoom evidence separate.                                                                                                                                                                                                                                             |
@@ -192,8 +211,9 @@ The [inventory](fpv-civilian-source-inventory.md) records each public record and
 tab, its exact title and disposition, along with the first-party feed/loading-shell
 and bounded sheet-header inspection limits.
 
-Current sequence: **pause/resume fix and archive investigation → source-frozen
-sustained receipt → local rendered acceptance → hosted release**. R2 inventory and R3 local paired-control acceptance
+Current sequence: **publish the verified pause/resume and archive-feedback corrections →
+release the versioned lesson adapter and backup-restore repair → deployed lesson
+acceptance**, while the archive-retention investigation remains open. R2 inventory and R3 local paired-control acceptance
 are complete; R5 candidates await hosted release checks.
 R4 is now tied to the open archive-retention incident; approval is no longer missing.
 R6 software preparation proceeds independently; measured activation and R7–R9
