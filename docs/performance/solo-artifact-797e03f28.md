@@ -30,3 +30,17 @@ Exact candidate pins:
 ```
 
 [Pages run 39106581010](https://github.com/mekhovov/revealline/actions/runs/39106581010) passed on exact merge c8b607dba8b55ee752bcfd4de2cef80074ae4bee: build completed at 07:21:43 UTC, deployment at 07:22:15 and public verification at 07:23:08. Independent public metadata and browser observation are tracked separately. The repaired source73 browser results remain identified as source73; they are not silently relabeled as this later build. Final native qualification must bind this package and retain all prior failed numerical and portability observations.
+
+## Independent public readback and smoke
+
+The main deployment metadata returned exact c8b607dba8b55ee752bcfd4de2cef80074ae4bee with HTTP200. The public game/build-info.json and game/app.mjs independently match the deployed inventory:143 bytes/SHA256 8d3aea446e9b0a93d9b46bd1764d43389805c8f577a1053717459f6a0b2ea85b and482579 bytes/SHA256 a64aee0215a01d0dc95aa6ecae2b57cb6c11e9ada5e03547e27acdb70ad589c0 respectively.
+
+The three compact Pages receipts were acquired and independently checked against live API sizes/digests and all ZIP member CRCs/hashes. The complete inventory has3469 files,962565808 staged bytes within the980000000-byte limit, and SHA256656212fdff79321b9f907f7bc9ce9305f68ad18b2d2080d3e910eb9c283210d5. No full Pages archive was downloaded locally. Receipts and readbacks are retained under .cache/solo-followup/797-package/pages-c8/.
+
+A fresh task-owned in-app browser tab reached the main menu without a reload, opened the existing saved Solo flight and paused successfully. Choose mission showed its preparation state and loaded240 Solo missions; searching Two bays returned the correct single mission. Back to game retained the paused flight at7:06 with3 lives,0%coverage and score0. Resume then Pause advanced to7:09. Sound stayed off and no progress reset or mission replacement occurred. Captured warn/error messages were empty. The tab was closed after saving published-c8-paused.png (1422×800).
+
+This is visible functional evidence under the verified public deployment. Browser-loaded module identities were not independently instrumented; this is not a measured cold Start, replay verification, audio test or performance qualification. The earlier bbd first-launch module-fetch failure remains unexplained and retained.
+
+## Current native successor
+
+The separately reviewed five-path797 first-eight declaration and existing manual selector preserve all eight workloads, baseline and bounds. Four complete affected control files pass22/22 with227 stable sparse inputs; lint/format and source-identity checks pass. The patch is43895 bytes/SHA25682f15f8b46d0639ec26bf888d66ed36a981bef874e4f1b42ad9e4624b1b204db. No797 native outcome is claimed until its actual hosted run and complete artifact review.
