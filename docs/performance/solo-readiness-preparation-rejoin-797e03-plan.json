@@ -450,8 +450,8 @@
     "historicalTooling": "9aaf4ea6ee9ebe23821552e59851f2e3e817a15b",
     "sourceWitness": {
       "path": "docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json",
-      "bytes": 22598,
-      "sha256": "e95472900720744990ce451743d7ef220646fee8657114c039762a896c529d9c"
+      "bytes": 23983,
+      "sha256": "5626a41e29c66ebad2e45ac1ebff4b6c943ec7370838697b3e3dff136401965e"
     },
     "originalFailedObservation": {
       "runId": 39119124191,
