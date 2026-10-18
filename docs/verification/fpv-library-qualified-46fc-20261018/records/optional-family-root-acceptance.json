@@ -1,0 +1,43 @@
+{
+  "status": "ACCEPTED_SCOPED_OPTIONAL_AND_FAMILY",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "ownedController": 13073,
+  "optionalReceiptSHA256": "59bb5f08cebff54febce18ce5121071a82672bd86600309495b6b206d73f0c00",
+  "optionalTerminalSHA256": "5db5c041800fe08cf1fd876645784855f690a2e7901006eba8107303c54da942",
+  "familyReceiptSHA256": "d197e99d2777920ee5acb651cb29a10f08676834eab144e6fcf9d15839fcd420",
+  "familyTerminalSHA256": "1b8d81948b3045b3cfb581efae53c6d4c2d3e86b8bd2e557345c51fd9c19b0eb",
+  "rootFullReceiptRead": true,
+  "actualExits": [
+    0,
+    0
+  ],
+  "optional": {
+    "artifact": 12124259664,
+    "bytes": 27494065,
+    "sha256": "c17c616c1987b565c7a86061d676266caa11b019ab24abe5ca9e29e778298d78",
+    "checksums": 15,
+    "originalInventories": 6,
+    "tuningRoleIdentities": 38,
+    "aircraftRoleIdentities": 8,
+    "closures": [
+      70,
+      125,
+      179
+    ]
+  },
+  "family": {
+    "tests": 24,
+    "pass": 24,
+    "fail": 0,
+    "skipped": 0,
+    "runtimeFilesUnchanged": 208,
+    "runtimeBytesUnchanged": 18551362
+  },
+  "limitations": [
+    "Finished ZIP budgets independently checked; raw13303808B source input is policy/producer metadata only, not measured usage",
+    "Company/controller terminal pending; no overall acceptance",
+    "Software only, no native/public/storage repair. No payload verification or GET repeated by root."
+  ],
+  "UTC": "2026-10-18T04:38:23.122529+00:00"
+}

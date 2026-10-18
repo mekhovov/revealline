@@ -1,0 +1,190 @@
+{
+  "UTC": "2026-10-18T04:42:30.270896+00:00",
+  "sourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "sourceTree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096655323,
+  "event": "workflow_dispatch",
+  "artifactId": 12125720258,
+  "githubArtifactBytes": 78548564,
+  "githubArtifactSHA256": "223181f02cd1ee2b278a8cc58d9c1bce0f3fd5bff7aab2ae020f206328409376",
+  "artifactExpiresAt": "2026-11-01T04:40:09Z",
+  "topLevelChecksums": 7,
+  "allMemberHashes": true,
+  "archives": [
+    {
+      "role": "runtime",
+      "files": 1152,
+      "declaredFiles": 1151,
+      "contentBytesIncludingMetadata": 41465588,
+      "archiveBytes": 41638734,
+      "archiveSHA256": "4f192ab3eb1e64e5247fcef2e2cfa90e45ab3af76b52e1a02aaf852de31b00c3",
+      "embeddedMetadata": "manifest.json",
+      "allDeclaredMemberHashesAndCRC": true,
+      "exactInventory": true
+    },
+    {
+      "role": "source",
+      "files": 1152,
+      "declaredFiles": 1151,
+      "contentBytesIncludingMetadata": 65556909,
+      "archiveBytes": 65731773,
+      "archiveSHA256": "69abca09fada3bcea528d88b7347a2f809d08476fab158f8aa38289ae196ad97",
+      "embeddedMetadata": "source-inventory.json",
+      "allDeclaredMemberHashesAndCRC": true,
+      "exactInventory": true
+    }
+  ],
+  "positiveCompanyProjectedIdentities": [
+    {
+      "role": "runtime",
+      "bytes": 3977,
+      "path": "game/company.html",
+      "sha256": "72ecd2249cf9cdddfc975c3d27ea5ec70cd553f48a432abc38cc1caa37fd94cc"
+    },
+    {
+      "role": "runtime",
+      "bytes": 7042,
+      "path": "game/fpv-entry.mjs",
+      "sha256": "5bba98897d36403109a12f3640beb3b124fc2e258bce071957f9d87007a27188"
+    },
+    {
+      "role": "runtime",
+      "bytes": 3716,
+      "path": "game/optional-practice-catalog.mjs",
+      "sha256": "d4f41d63e1fa1834cd89f3f137e8ba8aeddcedac906fc1d515a84cc9236e2a85"
+    },
+    {
+      "role": "runtime",
+      "bytes": 12372,
+      "path": "game/ui/optional-practice-panel.mjs",
+      "sha256": "5f233190d1690b654c15cd354b8266f34091c3245c66c05dbc5037af22341a22"
+    },
+    {
+      "role": "runtime",
+      "bytes": 10628,
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "sha256": "704e70dbfb0b7bdce62a9532525241f608f7e02e021f7eca8b7e7d6193f0cb4b"
+    },
+    {
+      "role": "source",
+      "bytes": 3977,
+      "path": "game/company.html",
+      "sha256": "72ecd2249cf9cdddfc975c3d27ea5ec70cd553f48a432abc38cc1caa37fd94cc"
+    },
+    {
+      "role": "source",
+      "bytes": 7042,
+      "path": "game/fpv-entry.mjs",
+      "sha256": "5bba98897d36403109a12f3640beb3b124fc2e258bce071957f9d87007a27188"
+    },
+    {
+      "role": "source",
+      "bytes": 3716,
+      "path": "game/optional-practice-catalog.mjs",
+      "sha256": "d4f41d63e1fa1834cd89f3f137e8ba8aeddcedac906fc1d515a84cc9236e2a85"
+    },
+    {
+      "role": "source",
+      "bytes": 12372,
+      "path": "game/ui/optional-practice-panel.mjs",
+      "sha256": "5f233190d1690b654c15cd354b8266f34091c3245c66c05dbc5037af22341a22"
+    },
+    {
+      "role": "source",
+      "bytes": 10628,
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "sha256": "704e70dbfb0b7bdce62a9532525241f608f7e02e021f7eca8b7e7d6193f0cb4b"
+    }
+  ],
+  "separateOptionalReceiptSHA256": "59bb5f08cebff54febce18ce5121071a82672bd86600309495b6b206d73f0c00",
+  "separateOptionalProofCounts": {
+    "aircraft": 8,
+    "tuning": 38
+  },
+  "existingCompanyRuntimeLimits": {
+    "files": 2000,
+    "bytes": 83886080,
+    "policySHA256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e"
+  },
+  "runtimeAlsoUnder72MiB": true,
+  "cloudReproducibleBuilds": 2,
+  "publicEligible": false,
+  "cloudTestStepStates": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Read explicit automated-suite policy",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run npm ci",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify generated source and public media eligibility",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run focused company, persistence, offline and artifact tests",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Verify both source release formats and edition admission",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Compile twice and inspect original candidate ZIP members",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Save small capacity metadata for review",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Save immutable candidates for review",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Report qualification boundary",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "scope": "Exact current Company original projected runtime/source inventories and CRC/hash/budgets. Positive Company entry/launcher/catalogue/panel identities use actual projected metadata, never raw source SHA. Optional aircraft/tuning identities remain separate. Old failed Company guard and all earlier records remain unchanged. No native/player/public or later-main acceptance."
+}

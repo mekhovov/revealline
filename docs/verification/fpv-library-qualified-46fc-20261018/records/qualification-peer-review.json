@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "UTC": "2026-10-18T04:32:25.496243+00:00",
+  "reviewer": "fpv_library_guard_review",
+  "status": "PASS_STATIC_REVIEW_WITH_EXPLICIT_SOURCE_INPUT_SCOPE",
+  "scope": "Independent review of the exact prepared Library46fc package qualification plan, current helper guards and aggregate-reserve controller correction. This is not execution approval or an actual package result.",
+  "candidate": {
+    "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+    "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+    "parents": [
+      "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+      "56e29fd264f77df191b75b3425cc6e7bb0ce9e13"
+    ],
+    "run": 39096655323
+  },
+  "reviewedPins": {
+    "qualification-plan.json": {
+      "bytes": 31963,
+      "SHA256": "84597080e77e9c51ccdd95b12baed3f698fb008eb3b9b47c83298b6a7322fd4c"
+    },
+    "run-new-combined-once.py": {
+      "bytes": 7396,
+      "SHA256": "9bac888bfd67b1b3e14f280f6a5308b2f1425b293aafbc966ce45c8d1d8d6b82"
+    },
+    "qualify-combined-optional.py": {
+      "bytes": 9765,
+      "SHA256": "e049633f4220720abaeefdf3ba6f0cb34947bb0d943bda373a875b94788fbc6d"
+    },
+    "qualify-combined-family-labels.py": {
+      "bytes": 3983,
+      "SHA256": "3fa643574551b3a95e508ee814f5002523b6372f4439acf6259c88da3f917d99"
+    },
+    "qualify-combined-company.py": {
+      "bytes": 8860,
+      "SHA256": "728b58cb45aca8b56d1a0cb144ab250c496eae6d058000d465490fcbdb060fc3"
+    },
+    "CURRENT-QUALIFICATION-SOURCE-PINS.json": {
+      "bytes": 13867,
+      "SHA256": "96bece1168e58a5b541380e90a94c292fcd1241f400650ea56df7161cd661e93"
+    },
+    "qualification-helper-diff.patch": {
+      "bytes": 42661,
+      "SHA256": "85b466808622fe7927ec872e899912241354ba27ed92a96ab3a927c6db0291bf"
+    },
+    "aggregate-reserve-v2-diff.patch": {
+      "bytes": 12665,
+      "SHA256": "14e99b34b680394f89c75bf426876ec55fef65d17d5271b85397459ec62ecceb"
+    },
+    "HELPER-GENERATION-INITIAL-PREPARATION-NEGATIVE.json": {
+      "bytes": 518,
+      "SHA256": "895d560348114addfed54983b96266fcf61a316749cbcccc4b79237f964772ad"
+    }
+  },
+  "evidenceBasis": {
+    "fullRead": "The original sealed plan, all three qualification helpers, controller, source pins and helper diff were read. The corrected full controller and complete reserve-v2 diff were then read.",
+    "sourcePins": "All 26 current named source body lengths, SHA-256 and Git blob identities were independently checked against the pinned canonical candidate metadata; 568188 body bytes total.",
+    "diffs": "All four original helper diff sections reproduced exactly. The two v1-to-v2 aggregate-reserve sections also reproduced exactly from the eight hash-verified sealed v1 copies.",
+    "unchangedBindings": "All three qualification helpers and plan sourcePins, head/tree/parents/run, externalRoot, parentHelpers and approvalProtocol are byte/object-equivalent to the reviewed v1 fields.",
+    "staticOnly": "Controller syntax was parsed, never imported or invoked. No artifact download, archive access, remote/source read, qualification, tests, browser, server, Git mutation or native work was performed by this review.",
+    "toolResults": [
+      "484613 EXIT0: original diff and all source pins",
+      "6dfc0c EXIT0: full helpers",
+      "6cef34 EXIT0: source pins, negative and test registrations",
+      "10954e EXIT0: full corrected controller and diff",
+      "8c71b2 EXIT0: exact v1/v2 reproduction, unchanged helpers, sealed copies and syntax",
+      "12b728 EXIT0: final candidate, limits, policy and scope fields"
+    ]
+  },
+  "checks": {
+    "identity": "Exact workflow_dispatch run39096655323, candidate46fc/tree5ca8 and ordered5b9+56 parents are bound. Optional event/head artifact naming and Company head artifact naming are not conflated with ordinary PR synthetic merge-tree artifacts.",
+    "originalOptional": "Strict exact outer/checksum sets, digest and size bound, safe duplicate-free inventories, embedded metadata, member SHA/CRC/total bytes, canonical source identity, committed-input verification and all three finished import closures are retained.",
+    "optionalRoles": "38 tuning and 8 aircraft role identities are checked against the correct Academy/World finished package contexts. Policy caps are not substituted for observed counts.",
+    "policy": "Academy150 files and13107200 finished archive bytes; World210 and20971520; Flight98 and8388608; Company runtime2000 and83886080 plus72MiB check. Core72MiB, regional512MiB, Worldpack256MiB and retained revisions256COUNT remain unchanged.",
+    "family": "Actual accepted optional receipt and finished World archive hash are required. Runtime membership and bytes are dynamic within committed limits. Current18 family plus6 label tests are pinned; all24 must pass, no failure/skip/cancel/todo, and production bytes remain unchanged after the fixture.",
+    "company": "Own exact run/head/tree/version and original checksum/metadata/inventory/CRC/hash/budget guards are retained. The actual accepted optional receipt and terminal are separately bound. Five positive Company-projected members per role replace the unsupported optional-aircraft presence assertion; no raw-source equality is falsely required for projected content.",
+    "companyPositiveMembers": [
+      "game/company.html",
+      "game/fpv-entry.mjs",
+      "game/optional-practice-catalog.mjs",
+      "game/ui/optional-practice-panel.mjs",
+      "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs"
+    ],
+    "onceProtocol": "Exact plan and root approval hashes, approved controller/head/run fields, pinned helpers/source bodies, exclusive fresh outputs, one stage invocation each, first-failure stop and no automatic retry remain enforced.",
+    "externalOnly": "Temporary variables and working outputs stay in the pinned external root. Current helper phase reserves remain unchanged; corrected controller adds aggregate remaining-work checks.",
+    "aggregateReserve": {
+      "floorBytes": 3221225472,
+      "recordReserveBytes": 68157440,
+      "phaseAllowancesBytes": {
+        "optional": 536870912,
+        "packaged": 134217728,
+        "company": 1073741824
+      },
+      "initialRemainingOperationBytes": 1744830464,
+      "initialRequiredBytes": 5034213376,
+      "checkpoints": "Before actual directory creation, each metadata API poll, each stage, and controller record/log/receipt writes.",
+      "release": "A phase allowance is removed only after actual helper EXIT0, receipt copy and actual terminal have been written; the accepted-reserve record follows.",
+      "v1Disposition": "The uninvoked v1 initial4GiB/per-phase-only reserve gap is resolved only by the exact v2 plan/controller pins. Sealed v1 remains preserved."
+    }
+  },
+  "requiredAcceptanceLimitations": [
+    "The13303808-byte raw source-input allowance is committed policy metadata/producer claim, not independently measured raw source-input usage. Finished source/runtime Academy ZIP content remains independently enforced at13107200 bytes; the larger cap is not a fallback. Root approval and later publication must preserve this limitation.",
+    "This receipt approves static design scope only. Root once-only execution approval remains separate. Actual outputs, counts, hashes, exit status and acceptance must come from the future operation.",
+    "Presentation qualification is a separate gate. Any future four-shard union must bind the canonical candidate tree, not merely agreement among shards.",
+    "The75-minute deadline is cooperative and cannot establish termination of blocked filesystem calls. A failed reserve check can prevent later record writes; absence of a terminal is not success.",
+    "No native, full-player, public gameplay, original affected-storage repair, later-main, physical-device, two-hour endurance or all-plan acceptance is implied.",
+    "Artifact expiry and all historical negatives remain; preparation and temporary Actions archives are not permanent preservation."
+  ],
+  "preservedNegatives": [
+    "Initial helper generator header AssertionError895d5603 happened before helper writes or execution and remains preserved.",
+    "Sealed preparation v1 planb97806aa/controller25f9a6dd and original diff/helper copies remain exact; the insufficient aggregate controller reserve is not relabelled as acceptable.",
+    "No historical wrong Company-scope assertion, ENOSPC, wrapper or native limitation is removed or superseded by this static review."
+  ],
+  "blockers": [],
+  "executionAuthorizedByPeer": false
+}

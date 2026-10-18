@@ -1,0 +1,760 @@
+{
+  "preparedAt": "2026-10-18T04:10:15.265441+00:00",
+  "status": "BOUNDED_ASSESSMENT_COMPLETE_AWAIT_ROOT_INTEGRATION_DECISION",
+  "scope": "Incremental b7 to 56 source metadata and explicitly named source-body review only. No merge,dispatch,build,test,artifact download,archive validation,native/server,publication,local Git or internal write.",
+  "currentMain": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "currentMainTree": "bca8a38f92b58a1619337d0e293f9d00c72cf816",
+  "productHead": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "productState": "Open Draft clean as freshly reconciled by root at04:04; this assessment made no branch mutation.",
+  "expectedNormalMergeParents": [
+    "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+    "56e29fd264f77df191b75b3425cc6e7bb0ce9e13"
+  ],
+  "compareLimit": {
+    "actualReceipt": {
+      "utc": "2026-10-18T04:05:52.606726+00:00",
+      "returncode": 0,
+      "bytes": 2045007,
+      "sha256": "aad0fc761f81986a17ffb84a040b2bfbf8f635b66432c25f112b718266736a39",
+      "stderrBytes": 0
+    },
+    "reportedReachableCommits": 502,
+    "returnedCommitRows": 250,
+    "returnedChangedFiles": 300,
+    "completeChangedPathClaim": false,
+    "scopeLimitationPreserved": true,
+    "noCompareRetry": true
+  },
+  "completeTreeComparison": {
+    "trees": [
+      {
+        "label": "b7",
+        "tree": "e43d61214c9205106c379bd40fd9a89c00453394",
+        "rows": 47098,
+        "truncated": false,
+        "receipt": {
+          "utc": "2026-10-18T04:07:15.916828+00:00",
+          "endpoint": "repos/mekhovov/revealline/git/trees/e43d61214c9205106c379bd40fd9a89c00453394?recursive=1",
+          "exit": 0,
+          "bytes": 13532158,
+          "sha256": "ef37a35bbeac5653c512574e342a35404c03e18ccb1a79c5fbd8f58162cb2af3",
+          "stderrBytes": 0
+        }
+      },
+      {
+        "label": "56",
+        "tree": "bca8a38f92b58a1619337d0e293f9d00c72cf816",
+        "rows": 47921,
+        "truncated": false,
+        "receipt": {
+          "utc": "2026-10-18T04:07:15.497169+00:00",
+          "endpoint": "repos/mekhovov/revealline/git/trees/bca8a38f92b58a1619337d0e293f9d00c72cf816?recursive=1",
+          "exit": 0,
+          "bytes": 13750029,
+          "sha256": "ac8fc2935ea4a176100c5f4c0924659dceb0f75375155c876156e9434d6d97aa",
+          "stderrBytes": 0
+        }
+      }
+    ],
+    "changedAllEntries": 1158,
+    "changedNonTreeEntries": 1098,
+    "receipt": {
+      "path": "[MAIN56_ASSESSMENT]/COMPLETE-PATH-IDENTITY-DIFF.json",
+      "bytes": 1198548,
+      "sha256": "bf89f0a2f7e44d5ee61bac7d486ec85f08dac926ae2e64e00a21a4f3e349fc19"
+    },
+    "interpretation": "Complete current path/mode/type/blob comparison, not a full commit-history review or body sweep."
+  },
+  "featurePaths": [
+    {
+      "path": "docs/fpv-regional-family-library-20261016.md",
+      "baseB7": null,
+      "main56": null,
+      "expectedPostMergeLibraryBlob": "bbccbe8547901435b0b27cc2774dfd54a1279d0a",
+      "incomingPathChanged": false
+    },
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "baseB7": null,
+      "main56": null,
+      "expectedPostMergeLibraryBlob": "5d32059b6ef03211d4998b0e83112be30614c018",
+      "incomingPathChanged": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "baseB7": {
+        "path": "optional-practice/civilian-fpv/regional-library.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecc2ff11d27940be93f150c109b3692e23e3d45c",
+        "size": 63555,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/ecc2ff11d27940be93f150c109b3692e23e3d45c"
+      },
+      "main56": {
+        "path": "optional-practice/civilian-fpv/regional-library.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecc2ff11d27940be93f150c109b3692e23e3d45c",
+        "size": 63555,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/ecc2ff11d27940be93f150c109b3692e23e3d45c"
+      },
+      "expectedPostMergeLibraryBlob": "74100dd421dfe7d23d4c80c1b748552c330b7902",
+      "incomingPathChanged": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "baseB7": {
+        "path": "optional-practice/civilian-fpv/world-style.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ad05d02d393206ba97389f95c4fe06a377a02f66",
+        "size": 118767,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/ad05d02d393206ba97389f95c4fe06a377a02f66"
+      },
+      "main56": {
+        "path": "optional-practice/civilian-fpv/world-style.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ad05d02d393206ba97389f95c4fe06a377a02f66",
+        "size": 118767,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/ad05d02d393206ba97389f95c4fe06a377a02f66"
+      },
+      "expectedPostMergeLibraryBlob": "320028f3c02d16f36a644c18525995faa5cd7102",
+      "incomingPathChanged": false
+    },
+    {
+      "path": "publishing/industrial-feature-tests.json",
+      "baseB7": {
+        "path": "publishing/industrial-feature-tests.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0788cd1f29c0fd35bad0287bf1452125a9edd50d",
+        "size": 8927,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/0788cd1f29c0fd35bad0287bf1452125a9edd50d"
+      },
+      "main56": {
+        "path": "publishing/industrial-feature-tests.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0788cd1f29c0fd35bad0287bf1452125a9edd50d",
+        "size": 8927,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/0788cd1f29c0fd35bad0287bf1452125a9edd50d"
+      },
+      "expectedPostMergeLibraryBlob": "37c8269b0cefb7db383c35b9032ccf9e3453f5c7",
+      "incomingPathChanged": false
+    }
+  ],
+  "incrementalFeatureOverlap": [],
+  "guidancePathChanges": [],
+  "namedUnchangedIdentityChecks": {
+    "publishing/optional-package-policy.mjs": {
+      "unchanged": true,
+      "b7": {
+        "path": "publishing/optional-package-policy.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e1a1c565023a9fa522cdddb56e522a253b5282b2",
+        "size": 31710,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/e1a1c565023a9fa522cdddb56e522a253b5282b2"
+      },
+      "head56": {
+        "path": "publishing/optional-package-policy.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e1a1c565023a9fa522cdddb56e522a253b5282b2",
+        "size": 31710,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/e1a1c565023a9fa522cdddb56e522a253b5282b2"
+      }
+    },
+    "scripts/compile-edition.mjs": {
+      "unchanged": true,
+      "b7": {
+        "path": "scripts/compile-edition.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "be2b64aadf15b7c239dd799cfc51011a4c45ca31",
+        "size": 44846,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/be2b64aadf15b7c239dd799cfc51011a4c45ca31"
+      },
+      "head56": {
+        "path": "scripts/compile-edition.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "be2b64aadf15b7c239dd799cfc51011a4c45ca31",
+        "size": 44846,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/be2b64aadf15b7c239dd799cfc51011a4c45ca31"
+      }
+    },
+    "scripts/bundle-editions.mjs": {
+      "unchanged": true,
+      "b7": {
+        "path": "scripts/bundle-editions.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "20cbd23acff950a4b352cf08d9cb812650ab42eb",
+        "size": 8168,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/20cbd23acff950a4b352cf08d9cb812650ab42eb"
+      },
+      "head56": {
+        "path": "scripts/bundle-editions.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "20cbd23acff950a4b352cf08d9cb812650ab42eb",
+        "size": 8168,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/20cbd23acff950a4b352cf08d9cb812650ab42eb"
+      }
+    },
+    "game/fpv-entry.mjs": {
+      "unchanged": true,
+      "b7": {
+        "path": "game/fpv-entry.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3197d1943f0c73e63a4d7b7d809f9dd72cee843b",
+        "size": 8132,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/3197d1943f0c73e63a4d7b7d809f9dd72cee843b"
+      },
+      "head56": {
+        "path": "game/fpv-entry.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "3197d1943f0c73e63a4d7b7d809f9dd72cee843b",
+        "size": 8132,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/3197d1943f0c73e63a4d7b7d809f9dd72cee843b"
+      }
+    },
+    "game/optional-practice-catalog.mjs": {
+      "unchanged": true,
+      "b7": {
+        "path": "game/optional-practice-catalog.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "26123370e8e55f6da8452bcacfe712e57c0b4704",
+        "size": 4227,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/26123370e8e55f6da8452bcacfe712e57c0b4704"
+      },
+      "head56": {
+        "path": "game/optional-practice-catalog.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "26123370e8e55f6da8452bcacfe712e57c0b4704",
+        "size": 4227,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/26123370e8e55f6da8452bcacfe712e57c0b4704"
+      }
+    },
+    "package.json": {
+      "unchanged": true,
+      "b7": {
+        "path": "package.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "03292ddd5d31da1722f32bed186d9127f6628c85",
+        "size": 9969,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/03292ddd5d31da1722f32bed186d9127f6628c85"
+      },
+      "head56": {
+        "path": "package.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "03292ddd5d31da1722f32bed186d9127f6628c85",
+        "size": 9969,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/03292ddd5d31da1722f32bed186d9127f6628c85"
+      }
+    },
+    "game/build-config.json": {
+      "unchanged": true,
+      "b7": {
+        "path": "game/build-config.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "64a3cfd9f1049d0972e11874892beed24d893b97",
+        "size": 24439,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/64a3cfd9f1049d0972e11874892beed24d893b97"
+      },
+      "head56": {
+        "path": "game/build-config.json",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "64a3cfd9f1049d0972e11874892beed24d893b97",
+        "size": 24439,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/64a3cfd9f1049d0972e11874892beed24d893b97"
+      }
+    }
+  },
+  "optionalPolicy": {
+    "path": "publishing/optional-package-policy.mjs",
+    "source": {
+      "path": "[EXTERNAL_QUALIFICATION_ROOT]/regional-family-library-b7-assessment-20261018-001/source-policy-b7.mjs",
+      "bytes": 31710,
+      "sha256": "21622f40aba00736d1cd3424fe880fc33522ca6e541cb8bce3e36d3beeadbd72"
+    },
+    "gitBlob": "e1a1c565023a9fa522cdddb56e522a253b5282b2",
+    "Academy": {
+      "filesBefore": 141,
+      "filesAfter": 150,
+      "bytesBefore": 12845056,
+      "bytesAfter": 13107200,
+      "byteIncrease": 262144,
+      "sourceInputBefore": 13041664,
+      "sourceInputAfter": 13303808,
+      "sourceInputIncrease": 262144,
+      "standaloneUnder12MiBExpectationUnchanged": true,
+      "sourceTestExpectedRuntimeMembers": 148,
+      "sourceTestExpectedSourceMembers": 150
+    },
+    "Worlds": {
+      "filesBefore": 200,
+      "filesAfter": 210,
+      "bytesBefore": 20971520,
+      "bytesAfter": 20971520,
+      "actualNewArtifactMemberCount": "not observed; do not substitute cap210 for runtime count"
+    },
+    "civilianFlight": {
+      "files": 98,
+      "bytes": 8388608,
+      "unchanged": true
+    },
+    "distinctUnchangedLimits": {
+      "coreOfflineBytes": 75497472,
+      "regionalRetentionBytes": 536870912,
+      "worldpackRetentionBytes": 268435456,
+      "retainedRevisionCount": 256,
+      "CompanyRuntimeFiles": 2000,
+      "CompanyRuntimeBytes": 83886080,
+      "CompanyAdditionalObservedCheckBytes": 75497472
+    },
+    "reviewRequirement": "The inherited Academy +256KiB envelope/source allowance is a real committed budget increase. Root must deliberately review it; never label all byte budgets unchanged or silently generalize it to player retention/other packages."
+  },
+  "optionalPolicyIncremental56Change": false,
+  "optionalRuntimeChangedPaths": [
+    {
+      "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "05857caf83433efd53036901b72f37f6a7a77d9c",
+        "size": 51137,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/05857caf83433efd53036901b72f37f6a7a77d9c"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "97b66f12712a4e99da792dda37d744fb72b73b0d",
+        "size": 52048,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/97b66f12712a4e99da792dda37d744fb72b73b0d"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "df8de367cb2f5ccb8f4be0903b2cb9e9d71d63e3",
+        "size": 32530,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/df8de367cb2f5ccb8f4be0903b2cb9e9d71d63e3"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/advanced-regional.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "c5bd6e13db26377a151d65988f29588398cebec1",
+        "size": 32648,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/c5bd6e13db26377a151d65988f29588398cebec1"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8e6d5e7e26a81eaa9222e4adffc0b710683ab20f",
+        "size": 65943,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/8e6d5e7e26a81eaa9222e4adffc0b710683ab20f"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fa254c168037003881a41f881f270465a09d8f05",
+        "size": 65908,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/fa254c168037003881a41f881f270465a09d8f05"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b2e4a4998adaf0bc9de71826104c4c66d06cc819",
+        "size": 8586,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/b2e4a4998adaf0bc9de71826104c4c66d06cc819"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4f5279cab2f1684393494b6fa34998ff593b1bd7",
+        "size": 8669,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/4f5279cab2f1684393494b6fa34998ff593b1bd7"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "0428fd1bd096266b22ed0c03e0c1f6be275ed49c",
+        "size": 19485,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/0428fd1bd096266b22ed0c03e0c1f6be275ed49c"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b052ef8e2e5723a42e94391439a688a7e853552f",
+        "size": 19767,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/b052ef8e2e5723a42e94391439a688a7e853552f"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f1251759f3f1478830689db534d536c5a4385cc7",
+        "size": 27687,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/f1251759f3f1478830689db534d536c5a4385cc7"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e9ee1383ebe909ce7993da499f07b33d486c9605",
+        "size": 28637,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/e9ee1383ebe909ce7993da499f07b33d486c9605"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9b41fa559d80a596dd2afbb3fe74a04d7c54e599",
+        "size": 104321,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/9b41fa559d80a596dd2afbb3fe74a04d7c54e599"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9e9bc47504a7e32a13938b89aa6a06f9c65baea8",
+        "size": 104983,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/9e9bc47504a7e32a13938b89aa6a06f9c65baea8"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+      "before": {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "7d4d9a78bdeee83f384fe10b6a3f50358bdc2a8a",
+        "size": 102834,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/7d4d9a78bdeee83f384fe10b6a3f50358bdc2a8a"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "170d97b0b5f339769e161de4def9d27e69bdfdab",
+        "size": 102873,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/170d97b0b5f339769e161de4def9d27e69bdfdab"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "4237e34c0d6e62fd621227a5bfef230aa1a8c737",
+        "size": 324711,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/4237e34c0d6e62fd621227a5bfef230aa1a8c737"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "9499ede569fb1e9b525bb7ca5b871ce2465361d5",
+        "size": 324774,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/9499ede569fb1e9b525bb7ca5b871ce2465361d5"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/style.css",
+      "before": {
+        "path": "optional-practice/civilian-fpv/style.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "317b3a94937075e209ada97d02d5a818cfdc4c5d",
+        "size": 175643,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/317b3a94937075e209ada97d02d5a818cfdc4c5d"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/style.css",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "b15081f84dd07689c8c117b498e0821557d01c0f",
+        "size": 175682,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/b15081f84dd07689c8c117b498e0821557d01c0f"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "fa77b6dc9158bb6aabde2c22cf5aa29778585ada",
+        "size": 412965,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/fa77b6dc9158bb6aabde2c22cf5aa29778585ada"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e12bb8e82ae3a0465a76dea3f0b4eddd3c86aabe",
+        "size": 414662,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/e12bb8e82ae3a0465a76dea3f0b4eddd3c86aabe"
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "before": {
+        "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "8a465d8140304ffb98d3aef024a23c5514869c04",
+        "size": 914137,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/8a465d8140304ffb98d3aef024a23c5514869c04"
+      },
+      "after": {
+        "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "mode": "100644",
+        "type": "blob",
+        "sha": "83e5c1248a24e6d7e73173cdfa6bdbe097c4fb1c",
+        "size": 920458,
+        "url": "https://api.github.com/repos/mekhovov/revealline/git/blobs/83e5c1248a24e6d7e73173cdfa6bdbe097c4fb1c"
+      }
+    }
+  ],
+  "retainedB7IntegrationRequirements": [
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-tuning-fields.mjs",
+      "gitBlob": "df49837b5f0c72d2c0a733fea45515bff6c1195e",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/civilian-fpv/controller-tune-library.mjs",
+      "gitBlob": "19d9d3529de485ef4f4b36ac6e3b2c216d18704a",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/civilian-fpv/controller-tune-panel.mjs",
+      "gitBlob": "34174c79e341ad2dbc4c2dd8f7491f0742340696",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/civilian-fpv/response-bench-client.mjs",
+      "gitBlob": "1f57edb0a342fdfafc003cbcca01626822c9863b",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/civilian-fpv/response-bench-panel.mjs",
+      "gitBlob": "00a370c65be80cb52e9c5d0beb6abeb552bfcff5",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/civilian-fpv/response-bench-worker.mjs",
+      "gitBlob": "7ca492ef154e510ba9aa6e2911d1482e2e4a170b",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/civilian-fpv/response-bench.mjs",
+      "gitBlob": "3a3e3e158ffde1910522e549331e085448f54443",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/civilian-fpv/setup-draft.mjs",
+      "gitBlob": "f896c5de065d0ea24d717c263a0b9786fcdc5f8f",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/civilian-fpv/setup-workbench.mjs",
+      "gitBlob": "91ae524a9e0b9c89cba7180fa8cb54d56a86e0b5",
+      "expectedPackages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    },
+    {
+      "path": "optional-practice/fpv-worlds/response-bench-worker.mjs",
+      "gitBlob": "20aca5efc973b9cc3990524dbfbaa04a4f77192e",
+      "expectedPackages": [
+        "fpv-worlds"
+      ],
+      "expectedRoles": [
+        "runtime",
+        "source"
+      ]
+    }
+  ],
+  "retainedB7NewScopedModuleChecks": 38,
+  "workflowChange": {
+    "path": ".github/workflows/company-edition-candidate.yml",
+    "body": {
+      "path": "[MAIN56_ASSESSMENT]/56-.github__workflows__company-edition-candidate.yml.source",
+      "bytes": 9279,
+      "sha256": "3e6d628e666da710053b5fa8ce6dbb35d70400670a51f5cd4d30d2f4df31e97c"
+    },
+    "gitBlob": "db727b0e861106b5da5edad8434d4b80281dcc5d",
+    "optionalCheckout": "github.sha; on pull_request this is the event merge integration source",
+    "optionalArtifactName": "optional-flight-integration-<event SHA>-head-<PR head SHA>",
+    "CompanyCheckout": "github.event.pull_request.head.sha || github.sha",
+    "CompanyOriginalUpload": "Only non-pull_request events; PR retains capacity metadata",
+    "futurePlan": "Use automatic jobs for their actual scope. If new exact candidate requires focused originals, at most one workflow_dispatch editions=fpv-learning at the pinned product branch; verify event source, actual checkout/tree and candidate head all equal the approved combined head. Update artifact selector naming; never relabel PR merge-tree optional output as isolated head."
+  },
+  "focusedExecutorChange": {
+    "source": {
+      "path": "[MAIN56_ASSESSMENT]/56-publishing__focused-tests.mjs.source",
+      "bytes": 33959,
+      "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+    },
+    "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+    "review": "Changed command deadline preserves timedOut even when child exits1 without signal. Optional four-shard path requires all four complete receipts, same exact source/tree/workflow/policy/manifest/changed-path identity, same complete plan, full disjoint command union, zero failure/timeout. Selection before execution remains unchanged in inspected diff.",
+    "futureAcceptance": "Read actual new-head execution/waiver/selection and any used shard receipts. Do not carry forward405test count or call waived/skipped/timeouts successful."
+  },
+  "nativeDependencies": [
+    "Library fivefeature source remains unchanged but the future combined player/package is new: repeat only current candidate acceptance, not old accepted archive/source checks.",
+    "Exact World and Academy host diffs retain active temporary tuning configuration through retry/reset/input/mode/camera changes. New explicit flights/reviews end that draft; World close restores saved camera after owned dispose and current-token guard. Verify unsaved trial values do not leak into saved setup.",
+    "mountFlightComfort now gates camera FOV/tilt localStorage save with canPersistCamera; current hosts deny it during active draft. Verify pause/return/disarmed transitions and saved camera restoration.",
+    "Current flight fullscreen CSS exposes the existing save-status badge during preparing as well as running; verify visible feedback in relevant responsive/theme samples.",
+    "Advanced aircraft default backend is v2 with supported-ground integral reset; v1 remains accepted for historical identity/replay, and worker ghost comparison accepts legacy. Verify actual new practice regression, relevant stored recording/replay identity and current new-aircraft behavior before gameplay claim.",
+    "Remaining optional changes include physics, course sessions, regional/simulation/world-reaction runtime. Their current identities are mapped, but no broad semantic audit, package execution or native pass is claimed.",
+    "Core app/presentation/media/controller modules changed; installed-core settings/navigation and return paths need current full-player checks. Unchanged entry/catalog/compiler source does not imply the projected Company archive is unchanged.",
+    "Preserve original affected public storage context. Storage owner independently found zero observer-path overlap and unchanged named stores; this is not a cause or repair."
+  ],
+  "storageCoordinatedEvidence": {
+    "path": "[EXTERNAL_QUALIFICATION_ROOT]/storage-observer-56-assessment-20261018-001/SOURCE-BODY-READBACK.json",
+    "bytes": 4903,
+    "sha256": "79da8f62cd2c6dad94f10b66234a51d2b43e9f197de65789ec0831a0de787335"
+  },
+  "namedOwnSourceEvidence": [
+    {
+      "path": "[MAIN56_ASSESSMENT]/EXACT-NAMED-SOURCE-IDENTITIES.json",
+      "bytes": 5626,
+      "sha256": "00e0646314bc804344f68e4d4372031000a025a4647422033e3bfb0bc761217e"
+    },
+    {
+      "path": "[MAIN56_ASSESSMENT]/NAMED-COVERAGE-AND-FULLSCREEN-SOURCE-IDENTITIES.json",
+      "bytes": 1495,
+      "sha256": "ba08be64e13caf7c3a01295516f2c1a414377f68b7105503f7ad2eee62bc2b7b"
+    }
+  ],
+  "proposedFiniteSequence": [
+    "Root establishes sustained safe headroom and selects this56 integration cut; do not chase later main automatically.",
+    "Immediately reconcile main=56 and product=5b9 plus relevant existing new runs. Stop if refs race or conflict. One normal merge only after root authorization; canonical parents/tree/ref and all five exact Library feature blobs must match, no force or automatic uncertain-outcome retry.",
+    "Reuse automatic new-head checks and their actual source scopes. At most one necessary focused fpv-learning dispatch binds optional+Company originals to approved candidate; ordinary optional merge-tree output cannot substitute.",
+    "Prepare fresh external guard adaptation only after actual new-head/run pins; root+peer review policy150/210, actual Academy+256KiB,38b7module checks, worker/import closures, oldaircraft identities onnewhead, and corrected Company projected scope. Keep all checksum/hash/CRC/inventory/budget/reserve guards.",
+    "One approved current optional/family/Company sequence and current Industrial/presentation/actual practice coverage; no accepted5b9 or12c replay, no repeated GET.",
+    "If package acceptance and sustained headroom continue, one fresh current native stage and root-owned renderer cover Library plus named draft/camera/backend/full-player dependencies. Keep physical/original-public-storage/endurance/public-delivery gates separate.",
+    "One cohesive durable evidence/report update after meaningful results; keep Draft until applicable gates. Preserve all prior failures and exact-head distinctions."
+  ],
+  "resourceRequirements": {
+    "externalReserveBytes": 3221225472,
+    "maximumSequentialRemainingAllowanceBytes": 1073741824,
+    "minimumExternalBeforeBulk": 4294967296,
+    "stableInternalFloor": 3221225472,
+    "latestRootInitialSamples": [
+      6285570048,
+      6300037120
+    ],
+    "samplesDoNotEstablishSustainedWindow": true,
+    "nativeAuthorizedByThisAssessment": false,
+    "metadataExternalOnly": true
+  },
+  "reuseLimits": [
+    "Prior5b9 accepted original packages,24family groups,405presentation and correctedCompany remain exact5b9; all jobs/publishers/comments are complete and must not repeat.",
+    "Historical12c native/responsive evidence retains its headroom limitation and cannot qualify future combined56candidate.",
+    "Main/PR1544 source or CI claims do not qualify new Library combined package or native behavior. No existing artifact was downloaded or claimed as combined."
+  ],
+  "stopCondition": "Prepared assessment only; await root integration decision. No new polling,executor preparation or product mutation."
+}

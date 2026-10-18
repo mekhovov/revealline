@@ -1,0 +1,215 @@
+{
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "rows": [
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-tuning-fields.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__aircraft-tuning-fields.mjs.source",
+      "bytes": 5669,
+      "sha256": "ad4c2d297c2a29d3a2cc65a820ab5a1e58ec9625b9ca09e0fd2494d0613cd59b",
+      "gitBlob": "df49837b5f0c72d2c0a733fea45515bff6c1195e",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/controller-tune-library.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__controller-tune-library.mjs.source",
+      "bytes": 13958,
+      "sha256": "ee5ab5386e560ae783f55dc2bf02e9961e92596a824a2969d51ca3d3eafa6021",
+      "gitBlob": "19d9d3529de485ef4f4b36ac6e3b2c216d18704a",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/controller-tune-panel.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__controller-tune-panel.mjs.source",
+      "bytes": 23441,
+      "sha256": "579e5fc86483ad7546c94510447d1e21480fa0bff7157a8a6777a2b388ebea26",
+      "gitBlob": "34174c79e341ad2dbc4c2dd8f7491f0742340696",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/response-bench-client.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__response-bench-client.mjs.source",
+      "bytes": 3516,
+      "sha256": "7233f50f2fc77470fc9080ac08f49bb1df0f50452f91a355b38d497eb0431942",
+      "gitBlob": "1f57edb0a342fdfafc003cbcca01626822c9863b",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/response-bench-panel.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__response-bench-panel.mjs.source",
+      "bytes": 36107,
+      "sha256": "b801209b271c7a24fa6c17817f64c336cbdbd9a27d7ff80b21e34c113c02b358",
+      "gitBlob": "00a370c65be80cb52e9c5d0beb6abeb552bfcff5",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/response-bench-worker.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__response-bench-worker.mjs.source",
+      "bytes": 2205,
+      "sha256": "b21283025f7912be36e0f26e59b09cc2e49e0748208d9c07648dda6352e0ac6e",
+      "gitBlob": "7ca492ef154e510ba9aa6e2911d1482e2e4a170b",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/response-bench.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__response-bench.mjs.source",
+      "bytes": 24561,
+      "sha256": "09ee0de8e7ffc5c787a4113f99d985fa334b6f8ed663744b1b3fa0017d1d2ad9",
+      "gitBlob": "3a3e3e158ffde1910522e549331e085448f54443",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/setup-draft.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__setup-draft.mjs.source",
+      "bytes": 13550,
+      "sha256": "3695eab0f10c77224c5de2b6c86f899922f67361e4fbad0fa9fd6ba9673693fa",
+      "gitBlob": "f896c5de065d0ea24d717c263a0b9786fcdc5f8f",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/setup-workbench.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__setup-workbench.mjs.source",
+      "bytes": 19906,
+      "sha256": "7d2fcf5945f9a4a78b97f2e39ae12e36375af260311cc443be20fcfa686bb26f",
+      "gitBlob": "91ae524a9e0b9c89cba7180fa8cb54d56a86e0b5",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/fpv-worlds/response-bench-worker.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__fpv-worlds__response-bench-worker.mjs.source",
+      "bytes": 208,
+      "sha256": "608fd23e0bc62c6d2e56874f26e86a9ea0012929ea69d155ed1290ed48484f10",
+      "gitBlob": "20aca5efc973b9cc3990524dbfbaa04a4f77192e",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__aircraft-appearance.mjs.source",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/optional-practice__civilian-fpv__aircraft-preview.mjs.source",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/publishing__optional-package-policy.mjs.source",
+      "bytes": 31710,
+      "sha256": "21622f40aba00736d1cd3424fe880fc33522ca6e541cb8bce3e36d3beeadbd72",
+      "gitBlob": "e1a1c565023a9fa522cdddb56e522a253b5282b2",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "publishing/edition-zip.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/publishing__edition-zip.mjs.source",
+      "bytes": 6736,
+      "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4",
+      "gitBlob": "43481d0324ed84112f892dd2c0b1f816110cd0f9",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "publishing/optional-module-closure.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/publishing__optional-module-closure.mjs.source",
+      "bytes": 2419,
+      "sha256": "dd88effb1ab7f754866a87410f5fd125db7234e22176eaeba393eafaac578d4c",
+      "gitBlob": "374be1fd9080769baf1bb0d7b1d8d832aa5c4d2d",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "publishing/optional-import-capabilities.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/publishing__optional-import-capabilities.mjs.source",
+      "bytes": 1459,
+      "sha256": "d336481a02ef0fe4a3203fecc74fe8f1739c4df035b6d921ee886a0290f0d28d",
+      "gitBlob": "55c9a4a006aa55100f028e80c73d66d8a8c0adc1",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "publishing/vendor/acorn-8.18.0.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/publishing__vendor__acorn-8.18.0.mjs.source",
+      "bytes": 233301,
+      "sha256": "953573b8fdab71599749ea5f2b33d3e760c2116178f9423ee7458dbe39d59453",
+      "gitBlob": "3f4fc2f4df981df3c5e086297f778c91b0b7e4db",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "game/editions/package-budget.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/game__editions__package-budget.mjs.source",
+      "bytes": 1259,
+      "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+      "gitBlob": "1709c3dc71a4c2282e378db940dac2c899669323",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/.github__workflows__company-edition-candidate.yml.source",
+      "bytes": 9279,
+      "sha256": "3e6d628e666da710053b5fa8ce6dbb35d70400670a51f5cd4d30d2f4df31e97c",
+      "gitBlob": "db727b0e861106b5da5edad8434d4b80281dcc5d",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": ".github/workflows/industrial-feature-tests.yml",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/.github__workflows__industrial-feature-tests.yml.source",
+      "bytes": 2192,
+      "sha256": "08a0d45b61439eac811424e3b0616ee24e89dbd62ab2a8e7ff6de050a74c0cd0",
+      "gitBlob": "30c75fd6d2a961f4eb1e2bf3fee9ced4284c4fc2",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "scripts/compile-edition.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/scripts__compile-edition.mjs.source",
+      "bytes": 44846,
+      "sha256": "f836063d1ac4412e5a957ba682fadb9fd316cf205ff3176250bd4ff9a9a1fa23",
+      "gitBlob": "be2b64aadf15b7c239dd799cfc51011a4c45ca31",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "scripts/bundle-editions.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/scripts__bundle-editions.mjs.source",
+      "bytes": 8168,
+      "sha256": "6d61c9f1368eca3779561a8583ac0bc911fec037fa54a095d555150ef5b7302a",
+      "gitBlob": "20cbd23acff950a4b352cf08d9cb812650ab42eb",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "game/test/fpv-regional-library-labels.test.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/game__test__fpv-regional-library-labels.test.mjs.source",
+      "bytes": 9706,
+      "sha256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272",
+      "gitBlob": "680e09cb5496bb152d6bc6ac4b14f7aa7c48bd1b",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/game__test__helpers__couch-dom.mjs.source",
+      "bytes": 20230,
+      "sha256": "63e5281b573f58da58c87708f0477bc92b51dfae701dafd6e187b6a5a99a34c9",
+      "gitBlob": "c58b151c995f375dc404bb37e0124fee1c3c336e",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "game/test/fixtures/fpv-regional-labels-metadata.json",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/game__test__fixtures__fpv-regional-labels-metadata.json.source",
+      "bytes": 14757,
+      "sha256": "d19d86f670febf58924cabb169cf93f7e22358ab8ddde493fe68da5fae75046c",
+      "gitBlob": "43dde6034da40f19c7013b868b61fb150968bd60",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    },
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/game__test__fpv-regional-library-families.test.mjs.source",
+      "bytes": 30924,
+      "sha256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394",
+      "gitBlob": "5d32059b6ef03211d4998b0e83112be30614c018",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "reuse": "already fetched same-head canonical feature bytes"
+    }
+  ]
+}

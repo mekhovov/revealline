@@ -1,0 +1,57 @@
+{
+  "UTC": "2026-10-18T04:35:20.933839+00:00",
+  "sourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "sourceTree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096655323,
+  "artifactId": 12124259664,
+  "runtimeArchiveSHA256": "afc2f07a9b1b286ebbf703a23e4ecea743e7934637e82669d241772953ebbe87",
+  "tests": [
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "bytes": 30924,
+      "SHA256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394"
+    },
+    {
+      "path": "game/test/fpv-regional-library-labels.test.mjs",
+      "bytes": 9706,
+      "SHA256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272"
+    },
+    {
+      "path": "game/test/helpers/couch-dom.mjs",
+      "bytes": 20230,
+      "SHA256": "63e5281b573f58da58c87708f0477bc92b51dfae701dafd6e187b6a5a99a34c9"
+    },
+    {
+      "path": "game/test/fixtures/fpv-regional-labels-metadata.json",
+      "bytes": 14757,
+      "SHA256": "d19d86f670febf58924cabb169cf93f7e22358ab8ddde493fe68da5fae75046c"
+    }
+  ],
+  "command": [
+    "[NODE_RUNTIME]/bin/node",
+    "--import",
+    "[CURRENT_QUALIFICATION]/qualified-originals/functional-family-label-check/fixture-node-prelude.mjs",
+    "--test",
+    "[CURRENT_QUALIFICATION]/qualified-originals/functional-family-label-check/game/test/fpv-regional-library-families.test.mjs",
+    "[CURRENT_QUALIFICATION]/qualified-originals/functional-family-label-check/game/test/fpv-regional-library-labels.test.mjs"
+  ],
+  "actualExitCode": 0,
+  "summary": {
+    "tests": 24,
+    "pass": 24,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "logSHA256": "50d51a7357f88b8c96a4c2bbd9dd76eb53d2c174c55a2d4fe694f74511c2df07",
+  "runtimeBytesUnchanged": true,
+  "runtimeVerifiedMembers": 208,
+  "runtimeDecodedBytes": 18551362,
+  "committedRuntimeLimits": {
+    "files": 210,
+    "bytes": 20971520
+  },
+  "hostSetup": "Shipped i18next engine loaded before generated bootstrap; original package modules and exact source tests unchanged.",
+  "scope": "Packaged family/label software tests using isolated deterministic DOM and metadata callbacks; no database, rendering, flight, native input, storage repair or public claim."
+}

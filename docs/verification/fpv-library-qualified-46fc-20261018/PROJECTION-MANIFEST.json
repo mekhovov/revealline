@@ -1,0 +1,692 @@
+{
+  "format": "fpv-library-public-evidence-projection.v1",
+  "productHead": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "rawOriginalsUnchanged": true,
+  "publicCopiesOnly": true,
+  "rows": [
+    {
+      "publicPath": "records/merge-canonical-acceptance.json",
+      "rawLabel": "MERGE-CANONICAL-ACCEPTANCE.json",
+      "rawBytes": 1800,
+      "rawSHA256": "fa00cdea75778afd4b66b695a6a88056328620fd42ee158494a98a723c47fc1a",
+      "publicBytes": 1800,
+      "publicSHA256": "fa00cdea75778afd4b66b695a6a88056328620fd42ee158494a98a723c47fc1a",
+      "publicGitBlob": "e9a5fd55158cab7b410f7e993bedaf5efdb33db8",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/merge-actual-terminal.json",
+      "rawLabel": "MERGE-ACTUAL-TERMINAL.json",
+      "rawBytes": 131,
+      "rawSHA256": "c3ef3946745307d6447313242c27d62d7c4910a33049b3ac2ecb49af7abcc529",
+      "publicBytes": 131,
+      "publicSHA256": "c3ef3946745307d6447313242c27d62d7c4910a33049b3ac2ecb49af7abcc529",
+      "publicGitBlob": "7637c851b181a78a22a6fdc776403f73e0096b37",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/canonical-merge-commit.json",
+      "rawLabel": "canonical-merge-commit.json",
+      "rawBytes": 2602,
+      "rawSHA256": "53c3be849be4b100e64a8ecef524b99efe53e42d3c246e73906233fc010dc2c3",
+      "publicBytes": 2602,
+      "publicSHA256": "53c3be849be4b100e64a8ecef524b99efe53e42d3c246e73906233fc010dc2c3",
+      "publicGitBlob": "6fb1dbe0c03b1c3465793d4c7a74c12d66c26051",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/focused-run-identity.json",
+      "rawLabel": "FOCUSED-RUN-IDENTITY.json",
+      "rawBytes": 443,
+      "rawSHA256": "84e58ea2b7a140e69d4c7b03fd518f59f63a23b1f58496714e7c494f28a064bf",
+      "publicBytes": 443,
+      "publicSHA256": "84e58ea2b7a140e69d4c7b03fd518f59f63a23b1f58496714e7c494f28a064bf",
+      "publicGitBlob": "86fbcdddf03a2bb0d259435b349c9343e23739fd",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/current-source-pins.json",
+      "rawLabel": "CURRENT-QUALIFICATION-SOURCE-PINS.json",
+      "rawBytes": 13867,
+      "rawSHA256": "96bece1168e58a5b541380e90a94c292fcd1241f400650ea56df7161cd661e93",
+      "publicBytes": 11371,
+      "publicSHA256": "0f800bc2b1acea55ef8cbc1a8691796dda912a475b554fad0b93264c5ad5f420",
+      "publicGitBlob": "383f5b91e0918be7556bd93ecd170e4d8db65105",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 26
+        }
+      ]
+    },
+    {
+      "publicPath": "records/qualification-plan.json",
+      "rawLabel": "qualification-plan.json",
+      "rawBytes": 31963,
+      "rawSHA256": "84597080e77e9c51ccdd95b12baed3f698fb008eb3b9b47c83298b6a7322fd4c",
+      "publicBytes": 27549,
+      "publicSHA256": "19a6119393f20a52e9dfc450f494e717e3f4de282f4dd1349c26c8a0462bdd27",
+      "publicGitBlob": "7cf289cef5ecbc3275249e069a8094f873d96f42",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 44
+        },
+        {
+          "privatePrefixSHA256": "7cf0f616061df7ad2a095b51d2ab4aa4b0545d1d46fbf97f5776819dd01ecb06",
+          "replacement": "[PRIOR_EXTERNAL_QUALIFICATION]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[PRIOR_LIBRARY_METADATA]",
+          "occurrences": 3
+        },
+        {
+          "privatePrefixSHA256": "ea33578495fb1bf2537812c158e2601e718fec0f13e2fd2b914147d6059955c2",
+          "replacement": "[PRIOR_STORAGE_METADATA]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "4709dad0ab0dbc59de083dda1fcf35ad6789d542f7e3d77fa80f34529b70df26",
+          "replacement": "[NODE_RUNTIME]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/qualify-optional-method.py",
+      "rawLabel": "qualify-combined-optional.py",
+      "rawBytes": 9765,
+      "rawSHA256": "e049633f4220720abaeefdf3ba6f0cb34947bb0d943bda373a875b94788fbc6d",
+      "publicBytes": 9765,
+      "publicSHA256": "e049633f4220720abaeefdf3ba6f0cb34947bb0d943bda373a875b94788fbc6d",
+      "publicGitBlob": "e9ea9978f3af33fad405fcdec5260f068ea21abf",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/qualify-family-method.py",
+      "rawLabel": "qualify-combined-family-labels.py",
+      "rawBytes": 3983,
+      "rawSHA256": "3fa643574551b3a95e508ee814f5002523b6372f4439acf6259c88da3f917d99",
+      "publicBytes": 3983,
+      "publicSHA256": "3fa643574551b3a95e508ee814f5002523b6372f4439acf6259c88da3f917d99",
+      "publicGitBlob": "1dc0179ffa9eec6868b321682cdd3e6bf168fc0f",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/qualify-company-method.py",
+      "rawLabel": "qualify-combined-company.py",
+      "rawBytes": 8860,
+      "rawSHA256": "728b58cb45aca8b56d1a0cb144ab250c496eae6d058000d465490fcbdb060fc3",
+      "publicBytes": 8860,
+      "publicSHA256": "728b58cb45aca8b56d1a0cb144ab250c496eae6d058000d465490fcbdb060fc3",
+      "publicGitBlob": "43d72119c579039f7ca664cdac00f4096a1614fb",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/controller-method.py",
+      "rawLabel": "run-new-combined-once.py",
+      "rawBytes": 7396,
+      "rawSHA256": "9bac888bfd67b1b3e14f280f6a5308b2f1425b293aafbc966ce45c8d1d8d6b82",
+      "publicBytes": 7396,
+      "publicSHA256": "9bac888bfd67b1b3e14f280f6a5308b2f1425b293aafbc966ce45c8d1d8d6b82",
+      "publicGitBlob": "af2f613835a065867027d15acd77ea3fafa92739",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/initial-preparation-negative.json",
+      "rawLabel": "HELPER-GENERATION-INITIAL-PREPARATION-NEGATIVE.json",
+      "rawBytes": 518,
+      "rawSHA256": "895d560348114addfed54983b96266fcf61a316749cbcccc4b79237f964772ad",
+      "publicBytes": 518,
+      "publicSHA256": "895d560348114addfed54983b96266fcf61a316749cbcccc4b79237f964772ad",
+      "publicGitBlob": "1784a92d9f3acf0af569f11f0fd1b1cd523f212f",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/qualification-plan-v1-preserved.json",
+      "rawLabel": "qualification-plan.json",
+      "rawBytes": 28004,
+      "rawSHA256": "b97806aa7ff195ae678636b74702ca8bec2a0c5bd83883a91d7df7f7f65a826b",
+      "publicBytes": 24358,
+      "publicSHA256": "571e693ca7bfbdc42510d3a2a54b98f7b331ed81c99310bcbcefaf5aafeea46d",
+      "publicGitBlob": "41020aa6e76714ee87f1b41ebce51012607fbfdf",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 36
+        },
+        {
+          "privatePrefixSHA256": "7cf0f616061df7ad2a095b51d2ab4aa4b0545d1d46fbf97f5776819dd01ecb06",
+          "replacement": "[PRIOR_EXTERNAL_QUALIFICATION]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[PRIOR_LIBRARY_METADATA]",
+          "occurrences": 3
+        },
+        {
+          "privatePrefixSHA256": "ea33578495fb1bf2537812c158e2601e718fec0f13e2fd2b914147d6059955c2",
+          "replacement": "[PRIOR_STORAGE_METADATA]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "4709dad0ab0dbc59de083dda1fcf35ad6789d542f7e3d77fa80f34529b70df26",
+          "replacement": "[NODE_RUNTIME]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/controller-v1-preserved.py",
+      "rawLabel": "run-new-combined-once.py",
+      "rawBytes": 6266,
+      "rawSHA256": "25f9a6ddd59d08006287574751bc953c2b3beafee7cd2799d196d1fa7f00f003",
+      "publicBytes": 6266,
+      "publicSHA256": "25f9a6ddd59d08006287574751bc953c2b3beafee7cd2799d196d1fa7f00f003",
+      "publicGitBlob": "39f01eeed98e84c4c2c3be6978893873d4b7e064",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/aggregate-reserve-v2-diff.patch",
+      "rawLabel": "aggregate-reserve-v2-diff.patch",
+      "rawBytes": 12665,
+      "rawSHA256": "14e99b34b680394f89c75bf426876ec55fef65d17d5271b85397459ec62ecceb",
+      "publicBytes": 11321,
+      "publicSHA256": "77752cbbbd90166ccc2d7c2d37969e938bdc73f82739eac448fa831a0ee03b92",
+      "publicGitBlob": "a4491e81a82c66f8765c78208f747a5b8a1d5943",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 14
+        }
+      ]
+    },
+    {
+      "publicPath": "records/aggregate-reserve-v2-preparation.json",
+      "rawLabel": "AGGREGATE-RESERVE-V2-PREPARATION-RECEIPT.json",
+      "rawBytes": 4548,
+      "rawSHA256": "b4f6282e1bdbe3767a706f526fa02da112b5bb5e5238234e7d01bb53ab1ff01b",
+      "publicBytes": 3204,
+      "publicSHA256": "5964989878dbeda16c6e48fc5de2e9bb5f25eef9ed0a42f2f0d247684e109a37",
+      "publicGitBlob": "e16e79e941f77de5cc3729e026f4e4dd949f6ee5",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 14
+        }
+      ]
+    },
+    {
+      "publicPath": "records/qualification-peer-review.json",
+      "rawLabel": "QUALIFICATION-PEER-REVIEW.json",
+      "rawBytes": 8498,
+      "rawSHA256": "985e2f5198db031fe624cfd6375d61554730a42920b836a478eba22a41507378",
+      "publicBytes": 8498,
+      "publicSHA256": "985e2f5198db031fe624cfd6375d61554730a42920b836a478eba22a41507378",
+      "publicGitBlob": "3f24bedc7fadf79e569f490cbab7c59911710563",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/controller-root-approval.json",
+      "rawLabel": "ROOT-ONCE-CONTROLLER-APPROVAL.json",
+      "rawBytes": 1909,
+      "rawSHA256": "317779f4d3ad4f65088392d73947f338bcd122772c06d51af7e9c8c6cc4895bf",
+      "publicBytes": 1909,
+      "publicSHA256": "317779f4d3ad4f65088392d73947f338bcd122772c06d51af7e9c8c6cc4895bf",
+      "publicGitBlob": "f666b85ac04da542ae9318fc01600be342522aeb",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/controller-actual-intent.json",
+      "rawLabel": "controller-intent.json",
+      "rawBytes": 570,
+      "rawSHA256": "2239cbc904c16d35279d072ad692e0c91eebff880399e4e655645272f3761235",
+      "publicBytes": 570,
+      "publicSHA256": "2239cbc904c16d35279d072ad692e0c91eebff880399e4e655645272f3761235",
+      "publicGitBlob": "320d2074b012a07605dff159dcf38ef5e89a5b04",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/controller-actual-result.json",
+      "rawLabel": "controller-result.json",
+      "rawBytes": 263,
+      "rawSHA256": "1bc4816de9be4c2b9e677e3be89659da943d3af46bbef15a47bb4201db1ce1c2",
+      "publicBytes": 263,
+      "publicSHA256": "1bc4816de9be4c2b9e677e3be89659da943d3af46bbef15a47bb4201db1ce1c2",
+      "publicGitBlob": "7f6049fff9bc7893b269e2552780216a43d9cbae",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/controller-actual-terminal.json",
+      "rawLabel": "controller-terminal.json",
+      "rawBytes": 65,
+      "rawSHA256": "9c62fc1eede2c073b442d16d938940decdf3b8bb837157c0341ae2d0aac04063",
+      "publicBytes": 65,
+      "publicSHA256": "9c62fc1eede2c073b442d16d938940decdf3b8bb837157c0341ae2d0aac04063",
+      "publicGitBlob": "74a4c75130b20568f189b5dbdc1c5f5792c9ec76",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/optional-original-receipt.json",
+      "rawLabel": "qualification-original-members-and-closure.json",
+      "rawBytes": 22341,
+      "rawSHA256": "59bb5f08cebff54febce18ce5121071a82672bd86600309495b6b206d73f0c00",
+      "publicBytes": 22341,
+      "publicSHA256": "59bb5f08cebff54febce18ce5121071a82672bd86600309495b6b206d73f0c00",
+      "publicGitBlob": "08cde169182b1e77ddf3f07ec5519d3ad3861fc0",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/optional-actual-terminal.json",
+      "rawLabel": "optional-terminal.json",
+      "rawBytes": 1191,
+      "rawSHA256": "5db5c041800fe08cf1fd876645784855f690a2e7901006eba8107303c54da942",
+      "publicBytes": 903,
+      "publicSHA256": "68c2efd6338f569e0276e2d582e18f1758e9c2ac90850be51bc3217c70d8f9c7",
+      "publicGitBlob": "ccf66e313fc351bc699f4e0da9980a4892035725",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/optional-accepted-reserve.json",
+      "rawLabel": "optional-accepted-reserve.json",
+      "rawBytes": 362,
+      "rawSHA256": "3a3b0e3acd73a7ccca9b28b11bf4d2c04b026d50a82a748f764eb1f9f0c35c50",
+      "publicBytes": 362,
+      "publicSHA256": "3a3b0e3acd73a7ccca9b28b11bf4d2c04b026d50a82a748f764eb1f9f0c35c50",
+      "publicGitBlob": "2dba7ee63111e6a582908186dcdd48470f04b0c1",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/optional-artifact-metadata.json",
+      "rawLabel": "github-artifact-metadata.json",
+      "rawBytes": 903,
+      "rawSHA256": "5fc208ef4f5e135d63dc5ac3fed44d1b830bca3092eb4ae4b33e5b99e49c8fbc",
+      "publicBytes": 903,
+      "publicSHA256": "5fc208ef4f5e135d63dc5ac3fed44d1b830bca3092eb4ae4b33e5b99e49c8fbc",
+      "publicGitBlob": "d37584a17d17a37fe26608bd1fadc6028fff9778",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/optional-download-terminal.json",
+      "rawLabel": "download-terminal.json",
+      "rawBytes": 81,
+      "rawSHA256": "fc1efdea0ffda2ce61562684d5ff470f098ab5f1e2f4775db0c8c8f396571a93",
+      "publicBytes": 81,
+      "publicSHA256": "fc1efdea0ffda2ce61562684d5ff470f098ab5f1e2f4775db0c8c8f396571a93",
+      "publicGitBlob": "2a2f716c3233c71733ee4dcf52b0d82b31fd11c7",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/packaged-family-label-receipt.json",
+      "rawLabel": "packaged-family-label-receipt.json",
+      "rawBytes": 2560,
+      "rawSHA256": "d197e99d2777920ee5acb651cb29a10f08676834eab144e6fcf9d15839fcd420",
+      "publicBytes": 2221,
+      "publicSHA256": "71e380d3967fb3f9c65aaba302e44eeaeea9235e23baa3bcb7014e223aab55da",
+      "publicGitBlob": "ae398db96d48e556675b1ddf817910d5f669c144",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 3
+        },
+        {
+          "privatePrefixSHA256": "4709dad0ab0dbc59de083dda1fcf35ad6789d542f7e3d77fa80f34529b70df26",
+          "replacement": "[NODE_RUNTIME]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/packaged-actual-terminal.json",
+      "rawLabel": "packaged-terminal.json",
+      "rawBytes": 1169,
+      "rawSHA256": "1b8d81948b3045b3cfb581efae53c6d4c2d3e86b8bd2e557345c51fd9c19b0eb",
+      "publicBytes": 881,
+      "publicSHA256": "3c601995fe57add5313ec0b06a63077b25d011d4c0ffe8f9d2bfcdba27e84301",
+      "publicGitBlob": "e5860ccd8749dfb4bd039518b8d3c735ccb752b3",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/packaged-accepted-reserve.json",
+      "rawLabel": "packaged-accepted-reserve.json",
+      "rawBytes": 333,
+      "rawSHA256": "a65040ba3f87d53de15bb1467341d7b3301a805772aa4efdbf4976cf2c2b6b23",
+      "publicBytes": 333,
+      "publicSHA256": "a65040ba3f87d53de15bb1467341d7b3301a805772aa4efdbf4976cf2c2b6b23",
+      "publicGitBlob": "5dee50cb034cfe9353b08701ec651399ffe1ced8",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/optional-family-root-acceptance.json",
+      "rawLabel": "ROOT-OPTIONAL-FAMILY-ACCEPTANCE.json",
+      "rawBytes": 1487,
+      "rawSHA256": "a06422c9123359834619928e6e4339d0103e942e23d755849924724e2c097681",
+      "publicBytes": 1487,
+      "publicSHA256": "a06422c9123359834619928e6e4339d0103e942e23d755849924724e2c097681",
+      "publicGitBlob": "3e9111a0cb9b0ed936b0ea5ad4c02ddc36b3cd5a",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-original-receipt.json",
+      "rawLabel": "company-original-members-receipt.json",
+      "rawBytes": 6090,
+      "rawSHA256": "cd0fea2e8525d40199abeb0302734b0c442ecd817b76c989d94a0988d749bffb",
+      "publicBytes": 6090,
+      "publicSHA256": "cd0fea2e8525d40199abeb0302734b0c442ecd817b76c989d94a0988d749bffb",
+      "publicGitBlob": "f8b61d9a3b4f94b45f2df9eddc6454070ab4fc66",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-actual-terminal.json",
+      "rawLabel": "company-terminal.json",
+      "rawBytes": 1169,
+      "rawSHA256": "1dfa933481c892fb388d5aa7406afb6b0aa351ee7ece15f6d9e7c36c1366f30b",
+      "publicBytes": 881,
+      "publicSHA256": "268a1d65e64c1469a8d0b2f31d104cc22a9ea79cf3d823ce2f869bad6c5a99b5",
+      "publicGitBlob": "2b18dee26e0b3345109435ed2592f47dbf9a032c",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-accepted-reserve.json",
+      "rawLabel": "company-accepted-reserve.json",
+      "rawBytes": 299,
+      "rawSHA256": "3a98c0beeefa2b5336a7c8905ae953063b6ae11326ba0c32212649b211cee49a",
+      "publicBytes": 299,
+      "publicSHA256": "3a98c0beeefa2b5336a7c8905ae953063b6ae11326ba0c32212649b211cee49a",
+      "publicGitBlob": "bf23f2487c5ccfc3ed6d502ef288f666cd3aa5a3",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-artifact-metadata.json",
+      "rawLabel": "github-company-artifact-metadata.json",
+      "rawBytes": 847,
+      "rawSHA256": "1d05d016145b3e6e79ba552d494ba622f211e21f08bb5d5b485e857993c4661b",
+      "publicBytes": 847,
+      "publicSHA256": "1d05d016145b3e6e79ba552d494ba622f211e21f08bb5d5b485e857993c4661b",
+      "publicGitBlob": "af12b8fdf8d39118871c6eb3c8ec462699db76cd",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-download-terminal.json",
+      "rawLabel": "company-download-terminal.json",
+      "rawBytes": 81,
+      "rawSHA256": "5005018496a13be35904bde9d6321e2e5b8b20a81c10a24289a5394f45e0ae6c",
+      "publicBytes": 81,
+      "publicSHA256": "5005018496a13be35904bde9d6321e2e5b8b20a81c10a24289a5394f45e0ae6c",
+      "publicGitBlob": "0e844c1d52e16418a336ffc12dbc700be15d81be",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-plan.json",
+      "rawLabel": "presentation-verification-plan.json",
+      "rawBytes": 7910,
+      "rawSHA256": "ec068b2bfcfb05574f751894f5fc6b12fff68fd7025782074b9615e5557e920a",
+      "publicBytes": 6846,
+      "publicSHA256": "f7e6b34878d5ba82087df1707cc4b7d3ac91a243cf2e8b74d592028e939a49be",
+      "publicGitBlob": "594737ee7a76dcb77896ee9d5fde3b92d926b4e7",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 11
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[PRIOR_LIBRARY_METADATA]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/presentation-method.py",
+      "rawLabel": "verify-presentation-once.py",
+      "rawBytes": 6752,
+      "rawSHA256": "9538f9c1c29dd7da07b3d99f440097b9d8449b59e55c1dc2c5c3855fc79ecb30",
+      "publicBytes": 6752,
+      "publicSHA256": "9538f9c1c29dd7da07b3d99f440097b9d8449b59e55c1dc2c5c3855fc79ecb30",
+      "publicGitBlob": "182725c4bb9d432a8140ea1e9fc1686bbd46a66e",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-peer-review.json",
+      "rawLabel": "PRESENTATION-PEER-REVIEW.json",
+      "rawBytes": 6873,
+      "rawSHA256": "81465c2b5a717952853393fec55ee7709d03d0d198fef770273ebe72ee7acadb",
+      "publicBytes": 6289,
+      "publicSHA256": "945fac9a8ac433c494ebf5188898ab769a2408ad3b4f1511fa75c225562ae4dd",
+      "publicGitBlob": "09dc980b717465cf9749b161350491c92a4c9f19",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 6
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[PRIOR_LIBRARY_METADATA]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/presentation-root-approval.json",
+      "rawLabel": "ROOT-ONCE-PRESENTATION-APPROVAL.json",
+      "rawBytes": 1427,
+      "rawSHA256": "73efb222a21170abf528d2e806ac770971c895d28356cea1f4faa082e5b1f5e5",
+      "publicBytes": 1427,
+      "publicSHA256": "73efb222a21170abf528d2e806ac770971c895d28356cea1f4faa082e5b1f5e5",
+      "publicGitBlob": "dfa60140c61f0d9b04c5921019b72aee50767bb8",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-actual-intent.json",
+      "rawLabel": "actual-intent.json",
+      "rawBytes": 594,
+      "rawSHA256": "93798e39b2046a52a814a27f127fe02c0b46292c94327d6c3719532cc7004d0f",
+      "publicBytes": 594,
+      "publicSHA256": "93798e39b2046a52a814a27f127fe02c0b46292c94327d6c3719532cc7004d0f",
+      "publicGitBlob": "b3913e9ddb9f78ebb4a93b1d8e382b6553f9d420",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-actual-terminal.json",
+      "rawLabel": "actual-terminal.json",
+      "rawBytes": 234,
+      "rawSHA256": "ef16b677dfcbf5d432a2d54a77954377a3282f11ef9ab277efbebba7c48fbfb8",
+      "publicBytes": 234,
+      "publicSHA256": "ef16b677dfcbf5d432a2d54a77954377a3282f11ef9ab277efbebba7c48fbfb8",
+      "publicGitBlob": "80c121f84f4a32ca578bd39301aee78090683f12",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-exact-head-verification.json",
+      "rawLabel": "presentation-exact-head-verification.json",
+      "rawBytes": 11647,
+      "rawSHA256": "60f694ef10b5820303fa78ba5a72e650c70943105b95fb5ab43660f3e0acbf6b",
+      "publicBytes": 11647,
+      "publicSHA256": "60f694ef10b5820303fa78ba5a72e650c70943105b95fb5ab43660f3e0acbf6b",
+      "publicGitBlob": "ee54900f254cd8cf24f31489984bd2fb4fd254c7",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-artifact-metadata.json",
+      "rawLabel": "presentation-original-artifact-metadata.json",
+      "rawBytes": 850,
+      "rawSHA256": "595dc62c7089b0ca6fc56001c91ad652f11b833270f19e7ee007d51bd1087471",
+      "publicBytes": 850,
+      "publicSHA256": "595dc62c7089b0ca6fc56001c91ad652f11b833270f19e7ee007d51bd1087471",
+      "publicGitBlob": "a6b4ac2343f898fe07a43ccabce5deb39bf4c0fd",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-download-terminal.json",
+      "rawLabel": "presentation-download-terminal.json",
+      "rawBytes": 81,
+      "rawSHA256": "b847b24b91067fe2ff736958a585a2d554fe77dc55a5253a45189a4ea6c71ce3",
+      "publicBytes": 81,
+      "publicSHA256": "b847b24b91067fe2ff736958a585a2d554fe77dc55a5253a45189a4ea6c71ce3",
+      "publicGitBlob": "1abc70485c8a9d1e0a973dcbe6ca3cebdb1293dd",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-root-acceptance.json",
+      "rawLabel": "ROOT-PRESENTATION-ACCEPTANCE.json",
+      "rawBytes": 1733,
+      "rawSHA256": "c76405adc7760fdb79455200d8730c745f71a1a2d67805e36a23eca407452f8c",
+      "publicBytes": 1445,
+      "publicSHA256": "a2a46842c65e7d79fb5d56adb0c21285e8ca047db4155df050acfbbe99a1e9d0",
+      "publicGitBlob": "d260157d07afc9121a7d932925bd3a43afb75669",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/presentation-current-manifest.json",
+      "rawLabel": "presentation-current-manifest.json",
+      "rawBytes": 8987,
+      "rawSHA256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2",
+      "publicBytes": 8987,
+      "publicSHA256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2",
+      "publicGitBlob": "37c8269b0cefb7db383c35b9032ccf9e3453f5c7",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/ordinary-industrial-metadata-observation.json",
+      "rawLabel": "CURRENT-PRESENTATION-METADATA-OBSERVATION.json",
+      "rawBytes": 3649,
+      "rawSHA256": "fbdac148541812a87af4a798dd2ce540a58b5c2cdb5f04ff987b113224595990",
+      "publicBytes": 3361,
+      "publicSHA256": "2a4afb1768a80f0fc3687792617baf30e36b845f2a9f6055e9103ac2ee23ded0",
+      "publicGitBlob": "d110ef731220ecaf1f0457eea970d0eb711f48a6",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "5abf2825decaa562252e75e58f46030fcbe16572a310d974dd9d7b59b05fcb8d",
+          "replacement": "[CURRENT_QUALIFICATION]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/pinned-main56-integration-assessment.json",
+      "rawLabel": "INCREMENTAL-56-INTEGRATION-ASSESSMENT.json",
+      "rawBytes": 32777,
+      "rawSHA256": "c06e84de8b3b0d81df136ae7eabc46d681bc267f58e3b01c5d05b6fee710d01a",
+      "publicBytes": 32185,
+      "publicSHA256": "3c1994cc0b6027ff00213197357ce3dced8c226a83b4e33a3eacc396d485f9a3",
+      "publicGitBlob": "3d27d18bcad0ba4e417850bb2df8246ea1fd59f5",
+      "transformation": "literal private-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "2d318a2a3a66ff00bd8a18dea679b8b17ec82a9a0987deef22e2dc58d7ced5f5",
+          "replacement": "[MAIN56_ASSESSMENT]",
+          "occurrences": 5
+        },
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_QUALIFICATION_ROOT]",
+          "occurrences": 2
+        }
+      ]
+    },
+    {
+      "publicPath": "records/pinned-main56-integration-plan.md",
+      "rawLabel": "NEXT-INTEGRATION-PLAN.md",
+      "rawBytes": 3457,
+      "rawSHA256": "385aede4a9fd83fc4cd383f363e9b89de6422d3cb1cb417f4d464f01f9ae67eb",
+      "publicBytes": 3457,
+      "publicSHA256": "385aede4a9fd83fc4cd383f363e9b89de6422d3cb1cb417f4d464f01f9ae67eb",
+      "publicGitBlob": "6c8b1073f9bcab61bc961408fa896386972ff7f4",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/pinned-main56-integration-root-approval.json",
+      "rawLabel": "ROOT-PINNED-56-INTEGRATION-APPROVAL-20261018.json",
+      "rawBytes": 3095,
+      "rawSHA256": "a9b4ac1bb5408e071e4d888f2a27f06d5377a7f6d0447901fbe2ea97ed263259",
+      "publicBytes": 3095,
+      "publicSHA256": "a9b4ac1bb5408e071e4d888f2a27f06d5377a7f6d0447901fbe2ea97ed263259",
+      "publicGitBlob": "061cf7881b8ab99dc321d8a9f7c70b3a3e6653e3",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    }
+  ],
+  "limits": "Private prefix originals are represented only bySHA256. Exact raw fullpath mapping remains local. Raw hashes refer to original bytes; public hashes refer to explicitly transformed copies."
+}

@@ -1,0 +1,111 @@
+{
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "run": 39096605399,
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 117584271499,
+      "name": "feature (presentation)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117584271609,
+      "name": "feature (creator)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117584271641,
+      "name": "feature (gameplay)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117584271694,
+      "name": "feature (local-ux)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117584271873,
+      "name": "feature (recordings)",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 117584272155,
+      "name": "feature (rooms)",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 12125475241,
+      "name": "industrial-creator-46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "bytes": 16106,
+      "digest": "sha256:84ba413c6307c13da64c776fce6efa98cb1811ca3ec6973f1f57a3cc841bb6d8",
+      "expired": false,
+      "expires_at": "2026-11-01T04:21:55Z"
+    },
+    {
+      "id": 12125167398,
+      "name": "industrial-local-ux-46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "bytes": 35472,
+      "digest": "sha256:651439155159a03f556863ad6470a640a723314a38adde3085f51bbed9211a12",
+      "expired": false,
+      "expires_at": "2026-11-01T04:32:25Z"
+    },
+    {
+      "id": 12124902489,
+      "name": "industrial-recordings-46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "bytes": 5944,
+      "digest": "sha256:e2d2cf62c662e6353ead3ae1b7db44b77a9bb033333af77d8d6eef1fb1fcde64",
+      "expired": false,
+      "expires_at": "2026-11-01T04:24:39Z"
+    },
+    {
+      "id": 12124753135,
+      "name": "industrial-rooms-46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "bytes": 6937,
+      "digest": "sha256:d98ad38673f3288fa27d3c06cc0e19fda411b5c8ea2097461db2b222a16b28e3",
+      "expired": false,
+      "expires_at": "2026-11-01T04:24:18Z"
+    },
+    {
+      "id": 12124718102,
+      "name": "industrial-presentation-46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "bytes": 25531,
+      "digest": "sha256:72985d01a393d251e8b0a5175c53c04d65c37f238789620327038eec46722bea",
+      "expired": false,
+      "expires_at": "2026-11-01T04:21:51Z"
+    },
+    {
+      "id": 12124014590,
+      "name": "industrial-gameplay-46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "bytes": 19873,
+      "digest": "sha256:85c001f31d87b37331482fed7c808142ab6cb7218bb4a7b2ae0b8df536efa66f",
+      "expired": false,
+      "expires_at": "2026-11-01T04:22:26Z"
+    }
+  ],
+  "pins": {
+    "run": {
+      "path": "[CURRENT_QUALIFICATION]/industrial-current-run.json",
+      "bytes": 12664,
+      "SHA256": "f4c9adcb1368bfec6afa53c3ca20c0d1c55378f0ce07e6f851a81f06eb32cdf1"
+    },
+    "jobs": {
+      "path": "[CURRENT_QUALIFICATION]/industrial-current-jobs.json",
+      "bytes": 19048,
+      "SHA256": "1d6376a55b194fb175f8945c0fc28017c3e504651432138cfa56467c33430279"
+    },
+    "artifacts": {
+      "path": "[CURRENT_QUALIFICATION]/industrial-current-artifacts.json",
+      "bytes": 4615,
+      "SHA256": "220ba1cc71084505f3440486d73331ac88a44358ee5456eba81cd20475495445"
+    }
+  }
+}

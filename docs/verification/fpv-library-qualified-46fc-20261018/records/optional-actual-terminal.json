@@ -1,0 +1,20 @@
+{
+  "UTC": "2026-10-18T04:34:14.999546+00:00",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096655323,
+  "helper": {
+    "path": "[CURRENT_QUALIFICATION]/qualify-combined-optional.py",
+    "bytes": 9765,
+    "SHA256": "e049633f4220720abaeefdf3ba6f0cb34947bb0d943bda373a875b94788fbc6d"
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "973844aa438a5c9da4740b359a4b24322dae3a4778f20565a3a5112854e6e766",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "originalPath": "[CURRENT_QUALIFICATION]/qualified-originals/qualification-original-members-and-closure.json",
+    "externalCopy": "[CURRENT_QUALIFICATION]/actual-once/qualification-original-members-and-closure.json",
+    "bytes": 22341,
+    "SHA256": "59bb5f08cebff54febce18ce5121071a82672bd86600309495b6b206d73f0c00"
+  }
+}

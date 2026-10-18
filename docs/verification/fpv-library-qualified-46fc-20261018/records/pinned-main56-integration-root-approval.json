@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "APPROVED_ONCE_PINNED_INTEGRATION_AND_IF_NEEDED_FOCUSED_DISPATCH",
+  "pinnedMain": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "mainCanonicalTree": "bca8a38f92b58a1619337d0e293f9d00c72cf816",
+  "library": {
+    "pr": 1540,
+    "expectedHead": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+    "branch": "codex/fpv-regional-family-library-20261016",
+    "preserveFeatureIdentities": 5,
+    "assessmentSHA256": "c06e84de8b3b0d81df136ae7eabc46d681bc267f58e3b01c5d05b6fee710d01a",
+    "planSHA256": "385aede4a9fd83fc4cd383f363e9b89de6422d3cb1cb417f4d464f01f9ae67eb"
+  },
+  "storage": {
+    "pr": 1545,
+    "expectedHead": "53338dc73469f866e9289b2b5f74555c68e8231e",
+    "branch": "codex/fpv-library-lifecycle-audit-20261016",
+    "preserveFeatureIdentities": 17,
+    "assessmentSHA256": "a2b5acb64ac6e3471f1127e95107b0ce31cdf7d3bcd9709c9addc81133c03a1e",
+    "planSHA256": "4a13517980c70e954ba0c94f4311e06821a68f4e69a99ca5af8d4671c9b89488"
+  },
+  "headroomReceiptSHA256": "812212c2da20211c2d69e432b53182413e77de232c91125bef692720e78f2f57",
+  "independentReview": {
+    "owner": "/root/fpv_library_guard_review",
+    "result": "PASS for proposed integration decision; no bounded review blocker",
+    "scope": "Complete diff, both assessments, Library plan, committed workflow and policy, seven focused diffs. No runtime acceptance."
+  },
+  "operationGuards": [
+    "Reconcile product ref immediately before one normal merge POST. If expected head differs, stop dependent mutation and report.",
+    "Choose exact pinned 56 even if main later advances; record drift, do not chase it.",
+    "After mutation verify canonical two parents, tree, ref and five or seventeen preserved feature identities. Never retry uncertain mutation; bounded canonical reconciliation first.",
+    "Keep both PRs Draft. No feature merge to main, rebase, force push, new checkout or local Git.",
+    "Inspect existing new-head own runs once. Reuse only actually suitable exact candidate originals; otherwise one focused workflow_dispatch editions=fpv-learning per combined candidate.",
+    "PR optional uses synthetic event merge; Company PR head artifacts are compact metadata. Verify event/checkout/tree/artifact identity rather than relabeling.",
+    "No package controller/download/extraction until separate exact new-head/run/helper root and peer review."
+  ],
+  "packageGuardRequirements": [
+    "Committed Academy150files/13107200bytes, source13303808; Worlds210files/20MiB; unchanged other budgets and 256 retained revision COUNT.",
+    "Original outer hashes, full original inventories/member hashes/CRC/budgets/closures, corrected Company core-only projection, 38 scoped tuning-module identity checks.",
+    "Observe actual counts; current test selection and all four shard union if used must bind independently to canonical combined tree."
+  ],
+  "nativeHold": "No new renderer until current combined package acceptance, exact stage decision and renewed headroom check. Prior historical native evidence is not current acceptance.",
+  "UTC": "2026-10-18T04:16:55.439261+00:00"
+}

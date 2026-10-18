@@ -1,0 +1,48 @@
+{
+  "utc": "2026-10-18T04:18:03.704326+00:00",
+  "status": "PASS_NORMAL_MERGE_CANONICAL_IDENTITY_ONLY",
+  "postExit": 0,
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "parents": [
+    "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+    "56e29fd264f77df191b75b3425cc6e7bb0ce9e13"
+  ],
+  "branch": "codex/fpv-regional-family-library-20261016",
+  "fiveFeatureIdentities": [
+    {
+      "path": "docs/fpv-regional-family-library-20261016.md",
+      "gitBlob": "bbccbe8547901435b0b27cc2774dfd54a1279d0a",
+      "bytes": 5441,
+      "sha256": "c87c9a5a9ddadcfe7218355a19178f72b1aa7b48c4be46adb2811adc395319a7"
+    },
+    {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "gitBlob": "5d32059b6ef03211d4998b0e83112be30614c018",
+      "bytes": 30924,
+      "sha256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "gitBlob": "74100dd421dfe7d23d4c80c1b748552c330b7902",
+      "bytes": 74392,
+      "sha256": "4e414ab01cd63b8feaaeda1f141a76a7cd85d738084a92b25e1ea4f8eb0f918e"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-style.css",
+      "gitBlob": "320028f3c02d16f36a644c18525995faa5cd7102",
+      "bytes": 119168,
+      "sha256": "e75fe38f7a339e844376c9ca2eb35ef6d7f84202b395e0c8d2c491ba915e1529"
+    },
+    {
+      "path": "publishing/industrial-feature-tests.json",
+      "gitBlob": "37c8269b0cefb7db383c35b9032ccf9e3453f5c7",
+      "bytes": 8987,
+      "sha256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2"
+    }
+  ],
+  "draft": true,
+  "observedMain": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "laterMainAdopted": false,
+  "testsPackagesNativePublicClaim": false
+}

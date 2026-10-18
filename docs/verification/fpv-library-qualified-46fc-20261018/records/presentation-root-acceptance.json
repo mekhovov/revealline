@@ -1,0 +1,36 @@
+{
+  "UTC": "2026-10-18T04:40:00.335984+00:00",
+  "status": "ACCEPTED_SCOPED_CURRENT_PRESENTATION",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "session": 40341,
+  "actualExit": 0,
+  "receipt": {
+    "path": "[CURRENT_QUALIFICATION]/presentation-actual-once/presentation-exact-head-verification.json",
+    "bytes": 11647,
+    "sha256": "60f694ef10b5820303fa78ba5a72e650c70943105b95fb5ab43660f3e0acbf6b"
+  },
+  "terminal": {
+    "path": "[CURRENT_QUALIFICATION]/presentation-actual-once/actual-terminal.json",
+    "bytes": 234,
+    "sha256": "ef16b677dfcbf5d432a2d54a77954377a3282f11ef9ab277efbebba7c48fbfb8"
+  },
+  "intent": {
+    "path": "[CURRENT_QUALIFICATION]/presentation-actual-once/actual-intent.json",
+    "bytes": 594,
+    "sha256": "93798e39b2046a52a814a27f127fe02c0b46292c94327d6c3719532cc7004d0f"
+  },
+  "rootFullReceiptRead": true,
+  "tests": 420,
+  "passed": 420,
+  "fail": 0,
+  "skipped": 0,
+  "cancelled": 0,
+  "todo": 0,
+  "manifestFileCount": 41,
+  "allThreeMembersCRC": true,
+  "artifact": 12124718102,
+  "artifactBytes": 25531,
+  "artifactSHA256": "72985d01a393d251e8b0a5175c53c04d65c37f238789620327038eec46722bea",
+  "limits": "Exact software receipt/TAP and canonical tree only. Other39 test bodies remain source-bound producer evidence. No package completion, native, physical, public or original storage repair. Historical405 not inherited; no repeats."
+}

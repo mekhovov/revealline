@@ -1,0 +1,19 @@
+{
+  "status": "APPROVED_ONCE",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096655323,
+  "planSHA256": "84597080e77e9c51ccdd95b12baed3f698fb008eb3b9b47c83298b6a7322fd4c",
+  "controllerSHA256": "9bac888bfd67b1b3e14f280f6a5308b2f1425b293aafbc966ce45c8d1d8d6b82",
+  "peerSHA256": "985e2f5198db031fe624cfd6375d61554730a42920b836a478eba22a41507378",
+  "rootReview": "Full sealed original plan and three helpers, complete corrected controller and full v1-to-v2 diff, exact4helper/controller pins and26source lengths/SHA/GitIDs, and complete final peer receipt read. Native and all-plan acceptance remain open.",
+  "scope": "One current optional original, packaged family/label software check, then one current Company original from the existing exact run. No redispatch, source/product mutation, prior stage replay, presentation GET, publication, native fixture/server/renderer.",
+  "aggregateExternalReserve": {
+    "initialBytes": 5034213376,
+    "release": "Only after actual EXIT0 receipt and terminal; guard before polling/stages/controller writes. Lower-capacity failures remain failures, no automatic retry."
+  },
+  "sourceInputLimitation": "13303808-byte raw source-input allowance is committed policy/producer metadata, not independently measured raw-input usage. Finished Academy source and runtime ZIPs stay independently capped13107200 bytes. Carry into acceptance/publication.",
+  "internalGate": "CLOSED again after04:29:49 actual internal2893398016 bytes. This only authorizes external/cloud work; no internal record writes/local Git/heavy work/native until renewed safe capacity.",
+  "cooperativeDeadlineLimitation": "75-minute cap is cooperative. Blocked calls are not proof of termination; missing terminal is never success. Keep all original negative evidence and partials.",
+  "UTC": "2026-10-18T04:33:02.083908+00:00"
+}

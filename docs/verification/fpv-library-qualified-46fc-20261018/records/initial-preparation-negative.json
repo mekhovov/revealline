@@ -1,0 +1,12 @@
+{
+  "UTC": "2026-10-18T04:27:25.357356+00:00",
+  "actualExitCode": 1,
+  "phase": "helper text preparation only",
+  "failure": "AssertionError at assert \"53338dc7\" not in optional[:600]",
+  "diagnosis": "Header replacement used literal backslash-n rather than newline, so stale parent identity remained and preparation correctly stopped before helper writes.",
+  "packageExecution": false,
+  "artifactGET": false,
+  "productMutation": false,
+  "newHelpersWritten": false,
+  "sourceInputsAndOriginalsRetained": true
+}

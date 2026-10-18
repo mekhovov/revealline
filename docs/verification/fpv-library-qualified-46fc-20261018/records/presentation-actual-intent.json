@@ -1,0 +1,12 @@
+{
+  "UTC": "2026-10-18T04:38:35.720179+00:00",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096605399,
+  "artifact": 12124718102,
+  "planSHA256": "ec068b2bfcfb05574f751894f5fc6b12fff68fd7025782074b9615e5557e920a",
+  "approvalSHA256": "73efb222a21170abf528d2e806ac770971c895d28356cea1f4faa082e5b1f5e5",
+  "helperSHA256": "9538f9c1c29dd7da07b3d99f440097b9d8449b59e55c1dc2c5c3855fc79ecb30",
+  "oneInvocation": true,
+  "scope": "One original current presentation artifact read and receipt/TAP validation; no tests rerun."
+}

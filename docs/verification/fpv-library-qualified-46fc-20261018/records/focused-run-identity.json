@@ -1,0 +1,12 @@
+{
+  "id": 39096655323,
+  "event": "workflow_dispatch",
+  "head_sha": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "head_branch": "codex/fpv-regional-family-library-20261016",
+  "name": "Company edition candidates",
+  "path": ".github/workflows/company-edition-candidate.yml",
+  "status": "queued",
+  "conclusion": null,
+  "created_at": "2026-10-18T04:18:53Z",
+  "html_url": "https://github.com/mekhovov/revealline/actions/runs/39096655323"
+}

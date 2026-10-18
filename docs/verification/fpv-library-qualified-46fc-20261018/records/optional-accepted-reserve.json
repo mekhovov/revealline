@@ -1,0 +1,13 @@
+{
+  "UTC": "2026-10-18T04:34:15.220531+00:00",
+  "actualAcceptedStage": "optional",
+  "terminalSHA256": "5db5c041800fe08cf1fd876645784855f690a2e7901006eba8107303c54da942",
+  "aggregateReserve": {
+    "availableBytes": 64716800000,
+    "requiredBytes": 4497342464,
+    "remainingOperations": {
+      "packaged": 134217728,
+      "company": 1073741824
+    }
+  }
+}

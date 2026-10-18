@@ -1,0 +1,141 @@
+{
+  "status": "PREPARED_AWAITING_ROOT_PEER_REVIEW_NOT_INVOKED",
+  "UTC": "2026-10-18T04:35:24.894890+00:00",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "parents": [
+    "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+    "56e29fd264f77df191b75b3425cc6e7bb0ce9e13"
+  ],
+  "run": 39096605399,
+  "job": 117584271499,
+  "artifact": 12124718102,
+  "artifactBytes": 25531,
+  "artifactSHA256": "72985d01a393d251e8b0a5175c53c04d65c37f238789620327038eec46722bea",
+  "artifactExpiresAt": "2026-11-01T04:21:51Z",
+  "canonicalCommit": {
+    "path": "[CURRENT_QUALIFICATION]/canonical-merge-commit.json",
+    "bytes": 2602,
+    "SHA256": "53c3be849be4b100e64a8ecef524b99efe53e42d3c246e73906233fc010dc2c3"
+  },
+  "manifest": {
+    "path": "[CURRENT_QUALIFICATION]/presentation-current-manifest.json",
+    "bytes": 8987,
+    "SHA256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2",
+    "gitBlob": "37c8269b0cefb7db383c35b9032ccf9e3453f5c7"
+  },
+  "expectedFiles": [
+    "game/test/actor-animation-budget.test.mjs",
+    "game/test/industrial-arcade.test.mjs",
+    "game/test/industrial-material-sample.test.mjs",
+    "game/test/industrial-review-motion.test.mjs",
+    "game/test/industrial-encounter-audio.test.mjs",
+    "game/test/shared-encounter-audio.test.mjs",
+    "game/test/hunt-overhead-art.test.mjs",
+    "game/test/classic-snake-presentation.test.mjs",
+    "game/test/defeat-presentation-host.test.mjs",
+    "game/test/field-kit-adoption.test.mjs",
+    "game/test/presentation-host.test.mjs",
+    "game/test/actor-atlas-runtime.test.mjs",
+    "game/test/actor-appearance-lease.test.mjs",
+    "game/test/industrial-soldier-roster.test.mjs",
+    "game/test/industrial-machinery.test.mjs",
+    "game/test/industrial-native-vehicles.test.mjs",
+    "game/test/industrial-environment-production.test.mjs",
+    "game/test/industrial-native-soldiers.test.mjs",
+    "game/test/industrial-soldier-debris.test.mjs",
+    "game/test/classic-catch-audio.test.mjs",
+    "game/test/enemy-artwork-preferences.test.mjs",
+    "game/test/classic-presentation.test.mjs",
+    "game/test/combat-presentation.test.mjs",
+    "game/test/audio.test.mjs",
+    "game/test/published-audio.test.mjs",
+    "game/test/coop-view-presentation.test.mjs",
+    "game/test/fpv-world-textures.test.mjs",
+    "game/test/fpv-objective-labels.test.mjs",
+    "game/test/fpv-regional-library-families.test.mjs",
+    "game/test/fpv-regional-library-labels.test.mjs",
+    "game/test/industrial-environments.test.mjs",
+    "game/test/attempt-appearance.test.mjs",
+    "game/test/capture-presentation-session.test.mjs",
+    "game/test/team-presentation-attempt.test.mjs",
+    "game/test/classic-environment-renderer.test.mjs",
+    "game/test/fpv-industrial-environments.test.mjs",
+    "game/test/capture-environment-painter.test.mjs",
+    "game/test/actor-defeat-presentation.test.mjs",
+    "game/test/overflight-renderer.test.mjs",
+    "game/test/overflight-trial-report.test.mjs",
+    "game/test/team-duel-audio-qualification.test.mjs"
+  ],
+  "libraryTests": {
+    "game/test/fpv-regional-library-families.test.mjs": {
+      "path": "game/test/fpv-regional-library-families.test.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/game__test__fpv-regional-library-families.test.mjs.source",
+      "bytes": 30924,
+      "sha256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394",
+      "gitBlob": "5d32059b6ef03211d4998b0e83112be30614c018",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "reuse": "already fetched same-head canonical feature bytes"
+    },
+    "game/test/fpv-regional-library-labels.test.mjs": {
+      "path": "game/test/fpv-regional-library-labels.test.mjs",
+      "local": "[CURRENT_QUALIFICATION]/source-inputs/game__test__fpv-regional-library-labels.test.mjs.source",
+      "bytes": 9706,
+      "sha256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272",
+      "gitBlob": "680e09cb5496bb152d6bc6ac4b14f7aa7c48bd1b",
+      "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+    }
+  },
+  "currentWorkflow": {
+    "path": ".github/workflows/industrial-feature-tests.yml",
+    "local": "[CURRENT_QUALIFICATION]/source-inputs/.github__workflows__industrial-feature-tests.yml.source",
+    "bytes": 2192,
+    "sha256": "08a0d45b61439eac811424e3b0616ee24e89dbd62ab2a8e7ff6de050a74c0cd0",
+    "gitBlob": "30c75fd6d2a961f4eb1e2bf3fee9ced4284c4fc2",
+    "canonicalSourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4"
+  },
+  "helper": {
+    "path": "[CURRENT_QUALIFICATION]/verify-presentation-once.py",
+    "bytes": 6752,
+    "SHA256": "9538f9c1c29dd7da07b3d99f440097b9d8449b59e55c1dc2c5c3855fc79ecb30"
+  },
+  "diff": {
+    "path": "[CURRENT_QUALIFICATION]/presentation-helper-static-diff.patch",
+    "bytes": 11230,
+    "SHA256": "ee28172ff16e83261afa090db435043d202a08c2a822ee2c9b6ce512d1de8474"
+  },
+  "parentHelper": {
+    "path": "[PRIOR_LIBRARY_METADATA]/combined-a3db-20261017-001/verify-presentation-once.py",
+    "bytes": 4186,
+    "SHA256": "c211852673719bbd1230c18b50b57949849eaa0de63321cabd680863d9c27ddc"
+  },
+  "observedMetadata": {
+    "path": "[CURRENT_QUALIFICATION]/CURRENT-PRESENTATION-METADATA-OBSERVATION.json",
+    "SHA256": "fbdac148541812a87af4a798dd2ce540a58b5c2cdb5f04ff987b113224595990"
+  },
+  "selection": "All41 current presentation files/command and current family/label hashes; actual original TAP tests=pass>0 with zero fail/cancelled/skipped/todo. No inherited405 count.",
+  "canonicalBinding": "Existing actual canonical merge Git API readback bound independently by exactbodySHA, head/tree/parents. Receipt must match this exact candidate tree, not just a common shard tree.",
+  "artifactGuards": "Exact original current25531B digest and metadata;3 unique safe members<256KiB; all member CRC; no extraction/test rerun.",
+  "reserve": "External3GiB+65MiB records+256KiB bounded output, before metadata/GET/each record; no internalwrites. Existing package controller keeps own aggregate remaining reserve.",
+  "actualProtocol": {
+    "approvalFile": "[CURRENT_QUALIFICATION]/ROOT-ONCE-PRESENTATION-APPROVAL.json",
+    "requiredFields": [
+      "status=APPROVED_ONCE",
+      "planSHA256",
+      "helperSHA256",
+      "head",
+      "artifact"
+    ],
+    "arguments": [
+      "exactPlanSHA256",
+      "exactApprovalSHA256"
+    ],
+    "exclusiveOutput": "[CURRENT_QUALIFICATION]/presentation-actual-once",
+    "absolutePython": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "cwd": "/",
+    "TMPDIR_TMP_TEMP": "[CURRENT_QUALIFICATION]",
+    "stopFirstFailureNoRetry": true
+  },
+  "scope": "One current receipt artifact qualification only. No package/oldGET repetition, native/player/public acceptance, source/product mutation or new tests.",
+  "noInvocation": true
+}

@@ -1,0 +1,283 @@
+{
+  "UTC": "2026-10-18T04:38:38.587367+00:00",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096605399,
+  "job": 117584271499,
+  "artifactId": 12124718102,
+  "archiveBytes": 25531,
+  "archiveSHA256": "72985d01a393d251e8b0a5175c53c04d65c37f238789620327038eec46722bea",
+  "artifactExpiresAt": "2026-11-01T04:21:51Z",
+  "canonicalCommitReadbackSHA256": "53c3be849be4b100e64a8ecef524b99efe53e42d3c246e73906233fc010dc2c3",
+  "allThreeMembersCRC": true,
+  "sourceBoundReceipt": {
+    "format": "revealline-industrial-test-receipt.v1",
+    "phase": "presentation",
+    "startedAt": "2026-10-18T04:20:08.554Z",
+    "finishedAt": "2026-10-18T04:21:51.795Z",
+    "deadlineMs": 600000,
+    "timedOut": false,
+    "interrupted": false,
+    "executionError": null,
+    "source": {
+      "revision": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+      "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+      "dirty": false,
+      "node": "v22.22.2",
+      "platform": "linux",
+      "arch": "x64",
+      "raw": {
+        "format": "revealline-source-identity.v1",
+        "root": "/home/runner/work/revealline/revealline",
+        "sourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+        "sourceTree": "5ca892b6a765a07834543e935d459c83883ba8be",
+        "files": 44580,
+        "bytes": 3404008829,
+        "aggregateSha256": "59a0102e851e7ffbad60bc1df30efa9576656acbe3dfa7ab870868c30ba3b4f9",
+        "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+        "allTrackedSourceContentsAndModesMatch": true
+      }
+    },
+    "manifestSha256": "c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2",
+    "command": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "--test-concurrency=2",
+      "game/test/actor-animation-budget.test.mjs",
+      "game/test/industrial-arcade.test.mjs",
+      "game/test/industrial-material-sample.test.mjs",
+      "game/test/industrial-review-motion.test.mjs",
+      "game/test/industrial-encounter-audio.test.mjs",
+      "game/test/shared-encounter-audio.test.mjs",
+      "game/test/hunt-overhead-art.test.mjs",
+      "game/test/classic-snake-presentation.test.mjs",
+      "game/test/defeat-presentation-host.test.mjs",
+      "game/test/field-kit-adoption.test.mjs",
+      "game/test/presentation-host.test.mjs",
+      "game/test/actor-atlas-runtime.test.mjs",
+      "game/test/actor-appearance-lease.test.mjs",
+      "game/test/industrial-soldier-roster.test.mjs",
+      "game/test/industrial-machinery.test.mjs",
+      "game/test/industrial-native-vehicles.test.mjs",
+      "game/test/industrial-environment-production.test.mjs",
+      "game/test/industrial-native-soldiers.test.mjs",
+      "game/test/industrial-soldier-debris.test.mjs",
+      "game/test/classic-catch-audio.test.mjs",
+      "game/test/enemy-artwork-preferences.test.mjs",
+      "game/test/classic-presentation.test.mjs",
+      "game/test/combat-presentation.test.mjs",
+      "game/test/audio.test.mjs",
+      "game/test/published-audio.test.mjs",
+      "game/test/coop-view-presentation.test.mjs",
+      "game/test/fpv-world-textures.test.mjs",
+      "game/test/fpv-objective-labels.test.mjs",
+      "game/test/fpv-regional-library-families.test.mjs",
+      "game/test/fpv-regional-library-labels.test.mjs",
+      "game/test/industrial-environments.test.mjs",
+      "game/test/attempt-appearance.test.mjs",
+      "game/test/capture-presentation-session.test.mjs",
+      "game/test/team-presentation-attempt.test.mjs",
+      "game/test/classic-environment-renderer.test.mjs",
+      "game/test/fpv-industrial-environments.test.mjs",
+      "game/test/capture-environment-painter.test.mjs",
+      "game/test/actor-defeat-presentation.test.mjs",
+      "game/test/overflight-renderer.test.mjs",
+      "game/test/overflight-trial-report.test.mjs",
+      "game/test/team-duel-audio-qualification.test.mjs"
+    ],
+    "files": [
+      {
+        "file": "game/test/actor-animation-budget.test.mjs",
+        "sha256": "3f50c0741bf1ace0f527ee2dd78fdbfbb848ba227c16ec6abc597515a028e10c"
+      },
+      {
+        "file": "game/test/industrial-arcade.test.mjs",
+        "sha256": "28a0de60076066c81938cfcacc63d2ae3f07ff6667cafecce137daae2bc49e0f"
+      },
+      {
+        "file": "game/test/industrial-material-sample.test.mjs",
+        "sha256": "abf6527296e13abe51794fe94f4c22639d220e44b0aab82db93c2cacd8496c65"
+      },
+      {
+        "file": "game/test/industrial-review-motion.test.mjs",
+        "sha256": "b08bcba06164389dbe3fbababf029e8addcdf6f36faa250b287e3e2e70943e87"
+      },
+      {
+        "file": "game/test/industrial-encounter-audio.test.mjs",
+        "sha256": "15f740da3e69e823234004e43fdf4eabfd2f46b4df7134c9debde5d2f0039a5f"
+      },
+      {
+        "file": "game/test/shared-encounter-audio.test.mjs",
+        "sha256": "d199f8cd98ff0b9bc2778850b6a5bb04fd88fa1c63ee3e42e158951fef817fc5"
+      },
+      {
+        "file": "game/test/hunt-overhead-art.test.mjs",
+        "sha256": "c692ac5e42a86ee263d3c8cc47b0db1c0f65e9547f3906be463f0b6d9b39c0b0"
+      },
+      {
+        "file": "game/test/classic-snake-presentation.test.mjs",
+        "sha256": "66eadfbe2b6041899e8427ec5d117a5e8c8483439943b2671926505623264505"
+      },
+      {
+        "file": "game/test/defeat-presentation-host.test.mjs",
+        "sha256": "c14df7b5a50958eeef7fc461aedbc01b22f0179a96897cf5f6c2b08157148b2e"
+      },
+      {
+        "file": "game/test/field-kit-adoption.test.mjs",
+        "sha256": "0bc9fdbc254d42b5c7a7cb18622e3f06e77e28953b7d709221e4c696195dc2bc"
+      },
+      {
+        "file": "game/test/presentation-host.test.mjs",
+        "sha256": "84d839f76117711b346277d6359f6f9cbbd78018d800e3ec9cff9239b2cecd6e"
+      },
+      {
+        "file": "game/test/actor-atlas-runtime.test.mjs",
+        "sha256": "58a928727573fab4c8d654dafa3c0750b776cdaa4610a5907e35ddd3eb454677"
+      },
+      {
+        "file": "game/test/actor-appearance-lease.test.mjs",
+        "sha256": "eaecf2f911c71a2eb6149e26a22a107be65ece016f4efb013123b4fe5cea2a32"
+      },
+      {
+        "file": "game/test/industrial-soldier-roster.test.mjs",
+        "sha256": "ec45627627843b71ab7e11b2fcaaadf40355131c7c0754ad305f774c66d4441f"
+      },
+      {
+        "file": "game/test/industrial-machinery.test.mjs",
+        "sha256": "a0267e21afff1bf990caa8aa448bfdd0f21b9f569c124be176c257327ab796bc"
+      },
+      {
+        "file": "game/test/industrial-native-vehicles.test.mjs",
+        "sha256": "ab25b735f27e2f8da8707419569d826e73c9a1a1b7a241473be8c3902f34deb6"
+      },
+      {
+        "file": "game/test/industrial-environment-production.test.mjs",
+        "sha256": "aa2d8f0e96d9d9bc14990a33acc34f3ef07b43f1194acce788b490bd2ed2bd47"
+      },
+      {
+        "file": "game/test/industrial-native-soldiers.test.mjs",
+        "sha256": "b0fdadd6f7d596bc1351de7ad9994acb8be6e49bff1c4a8edd571ef581ea62d5"
+      },
+      {
+        "file": "game/test/industrial-soldier-debris.test.mjs",
+        "sha256": "338157f0796864631877f86265481335787d81885644c7c80b13142994dbbe68"
+      },
+      {
+        "file": "game/test/classic-catch-audio.test.mjs",
+        "sha256": "8e68f9559a6d0e002b3fed0eab643632c4950ae6cc2aa0cda09299c56454ae99"
+      },
+      {
+        "file": "game/test/enemy-artwork-preferences.test.mjs",
+        "sha256": "212ad8b5a419cce8d32602f1ea56c41cc32a12c9018ece02002d9c62fcb86a94"
+      },
+      {
+        "file": "game/test/classic-presentation.test.mjs",
+        "sha256": "09be6567dcf9f7c2b1317032f5fa7f294b3ac8eeae5de4d00a17cce9aa5e0ef0"
+      },
+      {
+        "file": "game/test/combat-presentation.test.mjs",
+        "sha256": "95f4acbc7564b9e31d667e8bc42a564fd59157678c2026f4be142be18f720d95"
+      },
+      {
+        "file": "game/test/audio.test.mjs",
+        "sha256": "11aa9d355eda746fe0505e48c19d18b6af31002ae89c0c51880e6a180528852e"
+      },
+      {
+        "file": "game/test/published-audio.test.mjs",
+        "sha256": "d7b8101f4823e2bb91b5ec1f28ec743ac541b9921db5c33bb31f272992d8a677"
+      },
+      {
+        "file": "game/test/coop-view-presentation.test.mjs",
+        "sha256": "fa210593f20f280d0fa70e99fb8e29abb895b06c114eee21ed41fab4ff47eec8"
+      },
+      {
+        "file": "game/test/fpv-world-textures.test.mjs",
+        "sha256": "53a9c43ea86e02bac74ae297d40d410293946ff2e598732e92d2eeed373425a9"
+      },
+      {
+        "file": "game/test/fpv-objective-labels.test.mjs",
+        "sha256": "28f553bfcc7e19f98c741d982caf968ded673ab89bac09cd4bc331bfc1f417a5"
+      },
+      {
+        "file": "game/test/fpv-regional-library-families.test.mjs",
+        "sha256": "62845cdedd1cd83a229b8ca17d69f719f4adba1e538f6e1fddb2fbc811d56394"
+      },
+      {
+        "file": "game/test/fpv-regional-library-labels.test.mjs",
+        "sha256": "baed55bab40d0fd6487f40e1fdaddb524e8a6eb07037a7305a542cb4195de272"
+      },
+      {
+        "file": "game/test/industrial-environments.test.mjs",
+        "sha256": "0b52bc492b1ea6d104935143587a33b79dc558ab3659d03dde873e1fb206917e"
+      },
+      {
+        "file": "game/test/attempt-appearance.test.mjs",
+        "sha256": "6b049409d61e87190199018f83839ebd2b783f3424a635b5e2c4ef9b1dc12206"
+      },
+      {
+        "file": "game/test/capture-presentation-session.test.mjs",
+        "sha256": "9ee4dcec64e1a3452882aa56ad5973e8d58aa74786e1ce358f12eeee5aff596f"
+      },
+      {
+        "file": "game/test/team-presentation-attempt.test.mjs",
+        "sha256": "7f398ece644d396ea302b44396935e57c79141c2ca0da06635422b61ced5b8c2"
+      },
+      {
+        "file": "game/test/classic-environment-renderer.test.mjs",
+        "sha256": "c7c85a751876afb28a8eaa09e98936a81895cfe88b595566aaf9f15626570229"
+      },
+      {
+        "file": "game/test/fpv-industrial-environments.test.mjs",
+        "sha256": "dd5686cc12cf8c30e8fa5a1cc956015cb90766df8bf00994f85702d4a330c495"
+      },
+      {
+        "file": "game/test/capture-environment-painter.test.mjs",
+        "sha256": "95c220d6bbafe0873708d9a930e137b06f84b5c8dda7936d5c3d401912b81427"
+      },
+      {
+        "file": "game/test/actor-defeat-presentation.test.mjs",
+        "sha256": "e94a7acb426689dedf78523e99d24066b120bb6723a8cb5cce6111cb741543f5"
+      },
+      {
+        "file": "game/test/overflight-renderer.test.mjs",
+        "sha256": "280fd06eda5bb1525c1c860496cb238714312d5764bcd3c6dbe2b934ea18ad49"
+      },
+      {
+        "file": "game/test/overflight-trial-report.test.mjs",
+        "sha256": "88b39b0be4b0587e45d3fa82d5dc38896393dceab235c25ddfe40e6943c2b673"
+      },
+      {
+        "file": "game/test/team-duel-audio-qualification.test.mjs",
+        "sha256": "44dc0184c5f98e50ca8cf6ac492e2af2721ffc7e4bdfa5618e1615366840e4e6"
+      }
+    ],
+    "logSha256": "7a1afa2c55a1352647b34efd5288be15c2bfb8be954cd9f20ecab69cb3820727",
+    "logReadError": null,
+    "summary": {
+      "tests": 420,
+      "pass": 420,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "exitCode": 0,
+      "signal": null,
+      "passed": true
+    },
+    "sourceUnchanged": true,
+    "sourceVerificationError": null,
+    "testedFilesUnchanged": true,
+    "passed": true,
+    "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+  },
+  "summary": {
+    "tests": 420,
+    "pass": 420,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "scope": "Actual current isolated-head presentation software execution with canonical source tree, exact manifest/files/command and original TAP hash. Actual counts only, no inherited405, no synthetic or common-tree-only relabeling. No native/player/public or later-main acceptance."
+}

@@ -1,0 +1,20 @@
+{
+  "UTC": "2026-10-18T04:42:30.583194+00:00",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096655323,
+  "helper": {
+    "path": "[CURRENT_QUALIFICATION]/qualify-combined-company.py",
+    "bytes": 8860,
+    "SHA256": "728b58cb45aca8b56d1a0cb144ab250c496eae6d058000d465490fcbdb060fc3"
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "cd0fea2e8525d40199abeb0302734b0c442ecd817b76c989d94a0988d749bffb",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "originalPath": "[CURRENT_QUALIFICATION]/qualified-originals/company-original-members-receipt.json",
+    "externalCopy": "[CURRENT_QUALIFICATION]/actual-once/company-original-members-receipt.json",
+    "bytes": 6090,
+    "SHA256": "cd0fea2e8525d40199abeb0302734b0c442ecd817b76c989d94a0988d749bffb"
+  }
+}

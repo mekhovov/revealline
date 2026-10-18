@@ -1,0 +1,20 @@
+{
+  "UTC": "2026-10-18T04:35:21.210811+00:00",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096655323,
+  "helper": {
+    "path": "[CURRENT_QUALIFICATION]/qualify-combined-family-labels.py",
+    "bytes": 3983,
+    "SHA256": "3fa643574551b3a95e508ee814f5002523b6372f4439acf6259c88da3f917d99"
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "d197e99d2777920ee5acb651cb29a10f08676834eab144e6fcf9d15839fcd420",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "originalPath": "[CURRENT_QUALIFICATION]/qualified-originals/packaged-family-label-receipt.json",
+    "externalCopy": "[CURRENT_QUALIFICATION]/actual-once/packaged-family-label-receipt.json",
+    "bytes": 2560,
+    "SHA256": "d197e99d2777920ee5acb651cb29a10f08676834eab144e6fcf9d15839fcd420"
+  }
+}

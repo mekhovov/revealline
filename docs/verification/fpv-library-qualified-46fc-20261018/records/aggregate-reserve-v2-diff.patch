@@ -1,0 +1,175 @@
+--- [CURRENT_QUALIFICATION]/sealed-preparation-v1/run-new-combined-once.py
++++ [CURRENT_QUALIFICATION]/run-new-combined-once.py
+@@ -9,21 +9,32 @@
+ assert E==N/'qualified-originals' and not E.exists()
+ assert sys.executable=='/opt/homebrew/opt/python@3.14/bin/python3.14' or Path(sys.executable).resolve()==Path('/opt/homebrew/opt/python@3.14/bin/python3.14').resolve()
+ for key in ['TMPDIR','TMP','TEMP']:assert os.environ[key]==str(N)
+-s=os.statvfs(N);assert s.f_bavail*s.f_frsize>=4*1024**3
++remaining={'optional':P['limits']['optionalRemainingAllowanceBytes'],'packaged':P['limits']['familyRemainingAllowanceBytes'],'company':P['limits']['companyRemainingAllowanceBytes']}
++assert remaining=={'optional':512*1024**2,'packaged':128*1024**2,'company':1024**3}
++assert P['limits']['externalFloorBytes']==3*1024**3 and P['limits']['smallReportReserveBytes']==65*1024**2
++def reserve(additional=0):
++ s=os.statvfs(N);free=s.f_bavail*s.f_frsize
++ required=P['limits']['externalFloorBytes']+sum(remaining.values())+P['limits']['smallReportReserveBytes']+additional
++ assert free>=required,{'externalAvailableBytes':free,'requiredBytes':required,'remainingOperations':dict(remaining),'recordReserveBytes':P['limits']['smallReportReserveBytes']}
++ return {'availableBytes':free,'requiredBytes':required,'remainingOperations':dict(remaining)}
++reserve()
+ for pin in P['helpers']:
+  path=Path(pin['path']);body=path.read_bytes();assert path.parent==N and not path.is_symlink() and len(body)==pin['bytes'] and sha(body)==pin['SHA256']
+ for path,pin in P['sourcePins'].items():
+  f=Path(pin['local']);b=f.read_bytes();assert f.parent==N/'source-inputs' and not f.is_symlink()
+  assert len(b)==pin['bytes'] and sha(b)==pin['sha256'] and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==pin['gitBlob'] and pin['canonicalSourceRevision']==HEAD
+-OUT=N/'actual-once';OUT.mkdir(exist_ok=False);start=time.monotonic();counter=0;last=None
++reserve();OUT=N/'actual-once';OUT.mkdir(exist_ok=False);start=time.monotonic();counter=0;last=None
+ env={**os.environ,'FPV_APPROVED_PLAN_SHA256':sys.argv[1],'PYTHONDONTWRITEBYTECODE':'1'}
+ def put(p,obj):
+- b=(json.dumps(obj,indent=2)+'\n').encode();assert len(b)<2*1024**2;s=os.statvfs(N);assert s.f_bavail*s.f_frsize>=65*1024**2+len(b)
++ b=(json.dumps(obj,indent=2)+'\n').encode();assert len(b)<2*1024**2;reserve(len(b))
+  with p.open('xb')as f:f.write(b);f.flush();os.fsync(f.fileno())
+-def api(p):return json.loads(subprocess.check_output(['/opt/homebrew/bin/gh','api','repos/mekhovov/revealline/'+p],cwd='/',env=env))
++def api(p):
++ reserve()
++ return json.loads(subprocess.check_output(['/opt/homebrew/bin/gh','api','repos/mekhovov/revealline/'+p],cwd='/',env=env))
+ def wait(job):
+  global counter,last
+  while True:
++  reserve()
+   assert time.monotonic()-start<75*60,'cooperative deadline exceeded; blocked syscalls are not interrupted; no retry'
+   run=api('actions/runs/'+str(RUN));assert run['head_sha']==HEAD and run['event']=='workflow_dispatch' and run['path']=='.github/workflows/company-edition-candidate.yml'
+   jobs=api('actions/runs/'+str(RUN)+'/jobs')['jobs'];j=next((x for x in jobs if x['name']==job),None)
+@@ -38,18 +49,22 @@
+   if run['status']=='completed':raise RuntimeError('run completed without required successful job')
+   time.sleep(30)
+ def stage(name,helper,receipt):
++ reserve();assert name in remaining
+  pin=next(x for x in P['helpers']if Path(x['path']).name==helper);h=Path(pin['path']);body=h.read_bytes();assert len(body)==pin['bytes'] and sha(body)==pin['SHA256']
+- put(OUT/(name+'-intent.json'),{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'tree':TREE,'run':RUN,'helper':pin,'oneInvocation':True})
++ put(OUT/(name+'-intent.json'),{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'tree':TREE,'run':RUN,'helper':pin,'oneInvocation':True,'aggregateReserve':reserve()})
+  result=subprocess.run([sys.executable,'-B',str(h)],capture_output=True,cwd='/',env=env)
+  for suffix,content in [('stdout',result.stdout),('stderr',result.stderr)]:
++  reserve(len(content))
+   with (OUT/(name+'.'+suffix+'.log')).open('xb')as f:f.write(content);f.flush();os.fsync(f.fileno())
+  record={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'tree':TREE,'run':RUN,'helper':pin,'actualExitCode':result.returncode,'stdoutSHA256':sha(result.stdout),'stderrSHA256':sha(result.stderr)}
+  if result.returncode==0:
+-  p=E/receipt;b=p.read_bytes();assert len(b)<2*1024**2
++  p=E/receipt;b=p.read_bytes();assert len(b)<2*1024**2;reserve(len(b))
+   with (OUT/receipt).open('xb')as f:f.write(b);f.flush();os.fsync(f.fileno())
+   record['receipt']={'originalPath':str(p),'externalCopy':str(OUT/receipt),'bytes':len(b),'SHA256':sha(b)}
+  put(OUT/(name+'-terminal.json'),record);print(json.dumps({'stage':name,**record}),flush=True)
+  assert result.returncode==0,'stage failure retained; no retry'
++ del remaining[name]
++ put(OUT/(name+'-accepted-reserve.json'),{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'actualAcceptedStage':name,'terminalSHA256':sha((OUT/(name+'-terminal.json')).read_bytes()),'aggregateReserve':reserve()})
+ put(OUT/'controller-intent.json',{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'tree':TREE,'run':RUN,'planSHA256':sys.argv[1],'approvalSHA256':sys.argv[2],'controllerSHA256':sha(Path(__file__).read_bytes()),'scope':'One current optional original then packaged family then Company original; external only; no retry/old replay/native'})
+ try:
+  commit=api('git/commits/'+HEAD);assert commit['sha']==HEAD and commit['tree']['sha']==TREE and [x['sha']for x in commit['parents']]==P['parents']
+--- [CURRENT_QUALIFICATION]/sealed-preparation-v1/qualification-plan.json
++++ [CURRENT_QUALIFICATION]/qualification-plan.json
+@@ -33,8 +33,8 @@
+   ],
+   "controller": {
+     "path": "[CURRENT_QUALIFICATION]/run-new-combined-once.py",
+-    "bytes": 6266,
+-    "SHA256": "25f9a6ddd59d08006287574751bc953c2b3beafee7cd2799d196d1fa7f00f003"
++    "bytes": 7396,
++    "SHA256": "9bac888bfd67b1b3e14f280f6a5308b2f1425b293aafbc966ce45c8d1d8d6b82"
+   },
+   "sourcePins": {
+     "optional-practice/civilian-fpv/aircraft-tuning-fields.mjs": {
+@@ -400,7 +400,8 @@
+       "runtimeAndSourceArchiveBytesCap": 13107200,
+       "sourceInputBytes": 13303808,
+       "sourceInputNotArchiveCapFallback": true,
+-      "increaseVsA3EachBytes": 262144
++      "increaseVsA3EachBytes": 262144,
++      "sourceInputMeasurementLimitation": "13,303,808 bytes is committed policy/producer metadata allowance, not an independently measured raw source-input total. Finished source/runtime ZIP content stays strictly capped at13,107,200 bytes."
+     },
+     "Worlds": {
+       "fileCap": 210,
+@@ -433,7 +434,18 @@
+     "familyRemainingAllowanceBytes": 134217728,
+     "smallReportReserveBytes": 68157440,
+     "cooperativeSeconds": 4500,
+-    "cooperativeDeadlineNotBlockedSyscallTerminal": true
++    "cooperativeDeadlineNotBlockedSyscallTerminal": true,
++    "aggregateReserve": {
++      "initialRemainingOperationBytes": 1744830464,
++      "initialTotalRequiredBytes": 5034213376,
++      "checkpoints": [
++        "before controller actual directory",
++        "before every metadata poll/API call",
++        "before each stage",
++        "before all controller record/log/receipt writes"
++      ],
++      "release": "Only after actual helper EXIT0, receipt copy and actual terminal have been written; phase allowance removed then separate accepted-reserve record."
++    }
+   },
+   "parentHelpers": [
+     {
+@@ -475,7 +487,8 @@
+     "Company original projected content validated using actual metadata and five positive paths per role; no optional aircraft/tuning inclusion assumption or raw-source SHA comparison.",
+     "All outer digest/checksum/unique safe inventory/member hash/CRC/metadata/totalBytes and finished import-closure guards retained.",
+     "Existing family24 software fixture from currentsource uses new current packagedWorlds.",
+-    "Observed archive/member counts are never replaced with policy cap numbers."
++    "Observed archive/member counts are never replaced with policy cap numbers.",
++    "Aggregate external reserve is3GiB + all remaining optional512MiB/family128MiB/Company1GiB allowances +65MiB records, checked before polling/stages/writes and reduced only after each actual accepted phase."
+   ],
+   "approvalProtocol": {
+     "requiredFile": "[CURRENT_QUALIFICATION]/ROOT-ONCE-CONTROLLER-APPROVAL.json",
+@@ -511,7 +524,55 @@
+     "No source/product mutation; Draft unchanged.",
+     "No native/fullplayer/public/originalstorage or latermain acceptance.",
+     "Artifact expiry retained; temporaryGitHubActions artifacts are not permanent preservation.",
+-    "No artifact downloads, package verifier execution or controller invocation has occurred in this preparation."
++    "No artifact downloads, package verifier execution or controller invocation has occurred in this preparation.",
++    "Raw source-input13,303,808B is policy/producer metadata, not independent raw-input measurement. No larger fallback cap is applied to finished source/runtime ZIP contents."
+   ],
+-  "noExecutionYet": true
++  "noExecutionYet": true,
++  "preparationVersion": 2,
++  "supersedesSealedPreparation": {
++    "planSHA256": "b97806aa7ff195ae678636b74702ca8bec2a0c5bd83883a91d7df7f7f65a826b",
++    "controllerSHA256": "25f9a6ddd59d08006287574751bc953c2b3beafee7cd2799d196d1fa7f00f003",
++    "exactCopies": [
++      {
++        "path": "[CURRENT_QUALIFICATION]/sealed-preparation-v1/qualification-plan.json",
++        "bytes": 28004,
++        "SHA256": "b97806aa7ff195ae678636b74702ca8bec2a0c5bd83883a91d7df7f7f65a826b"
++      },
++      {
++        "path": "[CURRENT_QUALIFICATION]/sealed-preparation-v1/run-new-combined-once.py",
++        "bytes": 6266,
++        "SHA256": "25f9a6ddd59d08006287574751bc953c2b3beafee7cd2799d196d1fa7f00f003"
++      },
++      {
++        "path": "[CURRENT_QUALIFICATION]/sealed-preparation-v1/qualify-combined-optional.py",
++        "bytes": 9765,
++        "SHA256": "e049633f4220720abaeefdf3ba6f0cb34947bb0d943bda373a875b94788fbc6d"
++      },
++      {
++        "path": "[CURRENT_QUALIFICATION]/sealed-preparation-v1/qualify-combined-family-labels.py",
++        "bytes": 3983,
++        "SHA256": "3fa643574551b3a95e508ee814f5002523b6372f4439acf6259c88da3f917d99"
++      },
++      {
++        "path": "[CURRENT_QUALIFICATION]/sealed-preparation-v1/qualify-combined-company.py",
++        "bytes": 8860,
++        "SHA256": "728b58cb45aca8b56d1a0cb144ab250c496eae6d058000d465490fcbdb060fc3"
++      },
++      {
++        "path": "[CURRENT_QUALIFICATION]/sealed-preparation-v1/qualification-helper-diff.patch",
++        "bytes": 42661,
++        "SHA256": "85b466808622fe7927ec872e899912241354ba27ed92a96ab3a927c6db0291bf"
++      },
++      {
++        "path": "[CURRENT_QUALIFICATION]/sealed-preparation-v1/HELPER-PREPARATION-RECEIPT.json",
++        "bytes": 2637,
++        "SHA256": "7b4fb8b890259646cbc76f1116d4756ad7efa4b1330394c08505dcffed9c2ca3"
++      },
++      {
++        "path": "[CURRENT_QUALIFICATION]/sealed-preparation-v1/HELPER-GENERATION-INITIAL-PREPARATION-NEGATIVE.json",
++        "bytes": 518,
++        "SHA256": "895d560348114addfed54983b96266fcf61a316749cbcccc4b79237f964772ad"
++      }
++    ]
++  }
+ }

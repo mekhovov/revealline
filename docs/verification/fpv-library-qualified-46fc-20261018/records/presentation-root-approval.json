@@ -1,0 +1,19 @@
+{
+  "status": "APPROVED_ONCE",
+  "planSHA256": "ec068b2bfcfb05574f751894f5fc6b12fff68fd7025782074b9615e5557e920a",
+  "helperSHA256": "9538f9c1c29dd7da07b3d99f440097b9d8449b59e55c1dc2c5c3855fc79ecb30",
+  "head": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "tree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "artifact": 12124718102,
+  "peerSHA256": "81465c2b5a717952853393fec55ee7709d03d0d198fef770273ebe72ee7acadb",
+  "rootReview": "Full plan, helper, peer, canonical commit, workflow and metadata read; source manifest/helper/two Library tests exact length/SHA/Git-ID pins verified. Positive observed TAP count only, exact41-file command, all3CRC, source tree and clean-source checks.",
+  "scope": "One external original current Industrial presentation artifact qualification only; no test execution, native/player/public or new product changes.",
+  "constraints": [
+    "Absolute Python -B from /, TMPDIR/TMP/TEMP exact N46",
+    "External3GiB plus bounded output and65MiB records reserve. Package controller keeps its own separate remaining aggregate reserve.",
+    "Exclusive output, actual intent/terminal, stop first failure; never retry uncertain GET/mutation",
+    "Internal writes/native/renderer held; latest04:37:34 internal2259402752B",
+    "Other39 test bodies are source-bound producer evidence, not independent root body reads; no whole-suite/native claim"
+  ],
+  "UTC": "2026-10-18T04:38:23.050846+00:00"
+}

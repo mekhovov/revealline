@@ -1,0 +1,709 @@
+{
+  "UTC": "2026-10-18T04:34:14.579430+00:00",
+  "sourceRevision": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "sourceTree": "5ca892b6a765a07834543e935d459c83883ba8be",
+  "run": 39096655323,
+  "artifactId": 12124259664,
+  "archiveBytes": 27494065,
+  "archiveSHA256": "c17c616c1987b565c7a86061d676266caa11b019ab24abe5ca9e29e778298d78",
+  "topLevelChecksums": 15,
+  "archives": [
+    {
+      "id": "civilian-flight",
+      "kind": "distribution",
+      "verifiedMembers": 96,
+      "uncompressedBytes": 3776994,
+      "limits": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3791010,
+      "archiveSHA256": "33f484fce38f6467a5396041229c84a86eea89677c4b8fc89a3c6d07af2da707"
+    },
+    {
+      "id": "civilian-flight",
+      "kind": "source",
+      "verifiedMembers": 98,
+      "uncompressedBytes": 3811970,
+      "limits": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3826322,
+      "archiveSHA256": "b8a79a30f3d45c20905a4cb783868e1e44190ada2e8d43ed8f125bea93fbbc63"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "distribution",
+      "verifiedMembers": 148,
+      "uncompressedBytes": 12040712,
+      "limits": {
+        "files": 150,
+        "bytes": 13107200
+      },
+      "archiveBytes": 12064222,
+      "archiveSHA256": "aaee90ea8b37c562b28425b62dfa7240f7f64ccd28cb2a8425c206149d732eda"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "source",
+      "verifiedMembers": 150,
+      "uncompressedBytes": 12082967,
+      "limits": {
+        "files": 150,
+        "bytes": 13107200
+      },
+      "archiveBytes": 12106781,
+      "archiveSHA256": "2344c080cea1fa93de08db0896c124da3fdd23dfea646ddc4ac4bd95fcfb255e"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "distribution",
+      "verifiedMembers": 208,
+      "uncompressedBytes": 18551362,
+      "limits": {
+        "files": 210,
+        "bytes": 20971520
+      },
+      "archiveBytes": 18586080,
+      "archiveSHA256": "afc2f07a9b1b286ebbf703a23e4ecea743e7934637e82669d241772953ebbe87"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "source",
+      "verifiedMembers": 210,
+      "uncompressedBytes": 18601589,
+      "limits": {
+        "files": 210,
+        "bytes": 20971520
+      },
+      "archiveBytes": 18636611,
+      "archiveSHA256": "6b0f3957d873908c63c09c1c79893abb89db83ef9b06e00494e1784439ca0f99"
+    }
+  ],
+  "newAircraftModuleIdentities": [
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "aircraft"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "aircraft"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "aircraft"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "aircraft"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "aircraft"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "aircraft"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "aircraft"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "aircraft"
+    }
+  ],
+  "newTuningModuleIdentities": [
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-tuning-fields.mjs",
+      "bytes": 5669,
+      "sha256": "ad4c2d297c2a29d3a2cc65a820ab5a1e58ec9625b9ca09e0fd2494d0613cd59b",
+      "gitBlob": "df49837b5f0c72d2c0a733fea45515bff6c1195e",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/controller-tune-library.mjs",
+      "bytes": 13958,
+      "sha256": "ee5ab5386e560ae783f55dc2bf02e9961e92596a824a2969d51ca3d3eafa6021",
+      "gitBlob": "19d9d3529de485ef4f4b36ac6e3b2c216d18704a",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/controller-tune-panel.mjs",
+      "bytes": 23441,
+      "sha256": "579e5fc86483ad7546c94510447d1e21480fa0bff7157a8a6777a2b388ebea26",
+      "gitBlob": "34174c79e341ad2dbc4c2dd8f7491f0742340696",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/response-bench-client.mjs",
+      "bytes": 3516,
+      "sha256": "7233f50f2fc77470fc9080ac08f49bb1df0f50452f91a355b38d497eb0431942",
+      "gitBlob": "1f57edb0a342fdfafc003cbcca01626822c9863b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/response-bench-panel.mjs",
+      "bytes": 36107,
+      "sha256": "b801209b271c7a24fa6c17817f64c336cbdbd9a27d7ff80b21e34c113c02b358",
+      "gitBlob": "00a370c65be80cb52e9c5d0beb6abeb552bfcff5",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/response-bench-worker.mjs",
+      "bytes": 2205,
+      "sha256": "b21283025f7912be36e0f26e59b09cc2e49e0748208d9c07648dda6352e0ac6e",
+      "gitBlob": "7ca492ef154e510ba9aa6e2911d1482e2e4a170b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/response-bench.mjs",
+      "bytes": 24561,
+      "sha256": "09ee0de8e7ffc5c787a4113f99d985fa334b6f8ed663744b1b3fa0017d1d2ad9",
+      "gitBlob": "3a3e3e158ffde1910522e549331e085448f54443",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/setup-draft.mjs",
+      "bytes": 13550,
+      "sha256": "3695eab0f10c77224c5de2b6c86f899922f67361e4fbad0fa9fd6ba9673693fa",
+      "gitBlob": "f896c5de065d0ea24d717c263a0b9786fcdc5f8f",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/setup-workbench.mjs",
+      "bytes": 19906,
+      "sha256": "7d2fcf5945f9a4a78b97f2e39ae12e36375af260311cc443be20fcfa686bb26f",
+      "gitBlob": "91ae524a9e0b9c89cba7180fa8cb54d56a86e0b5",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-tuning-fields.mjs",
+      "bytes": 5669,
+      "sha256": "ad4c2d297c2a29d3a2cc65a820ab5a1e58ec9625b9ca09e0fd2494d0613cd59b",
+      "gitBlob": "df49837b5f0c72d2c0a733fea45515bff6c1195e",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/controller-tune-library.mjs",
+      "bytes": 13958,
+      "sha256": "ee5ab5386e560ae783f55dc2bf02e9961e92596a824a2969d51ca3d3eafa6021",
+      "gitBlob": "19d9d3529de485ef4f4b36ac6e3b2c216d18704a",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/controller-tune-panel.mjs",
+      "bytes": 23441,
+      "sha256": "579e5fc86483ad7546c94510447d1e21480fa0bff7157a8a6777a2b388ebea26",
+      "gitBlob": "34174c79e341ad2dbc4c2dd8f7491f0742340696",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/response-bench-client.mjs",
+      "bytes": 3516,
+      "sha256": "7233f50f2fc77470fc9080ac08f49bb1df0f50452f91a355b38d497eb0431942",
+      "gitBlob": "1f57edb0a342fdfafc003cbcca01626822c9863b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/response-bench-panel.mjs",
+      "bytes": 36107,
+      "sha256": "b801209b271c7a24fa6c17817f64c336cbdbd9a27d7ff80b21e34c113c02b358",
+      "gitBlob": "00a370c65be80cb52e9c5d0beb6abeb552bfcff5",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/response-bench-worker.mjs",
+      "bytes": 2205,
+      "sha256": "b21283025f7912be36e0f26e59b09cc2e49e0748208d9c07648dda6352e0ac6e",
+      "gitBlob": "7ca492ef154e510ba9aa6e2911d1482e2e4a170b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/response-bench.mjs",
+      "bytes": 24561,
+      "sha256": "09ee0de8e7ffc5c787a4113f99d985fa334b6f8ed663744b1b3fa0017d1d2ad9",
+      "gitBlob": "3a3e3e158ffde1910522e549331e085448f54443",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/setup-draft.mjs",
+      "bytes": 13550,
+      "sha256": "3695eab0f10c77224c5de2b6c86f899922f67361e4fbad0fa9fd6ba9673693fa",
+      "gitBlob": "f896c5de065d0ea24d717c263a0b9786fcdc5f8f",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/setup-workbench.mjs",
+      "bytes": 19906,
+      "sha256": "7d2fcf5945f9a4a78b97f2e39ae12e36375af260311cc443be20fcfa686bb26f",
+      "gitBlob": "91ae524a9e0b9c89cba7180fa8cb54d56a86e0b5",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-tuning-fields.mjs",
+      "bytes": 5669,
+      "sha256": "ad4c2d297c2a29d3a2cc65a820ab5a1e58ec9625b9ca09e0fd2494d0613cd59b",
+      "gitBlob": "df49837b5f0c72d2c0a733fea45515bff6c1195e",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/controller-tune-library.mjs",
+      "bytes": 13958,
+      "sha256": "ee5ab5386e560ae783f55dc2bf02e9961e92596a824a2969d51ca3d3eafa6021",
+      "gitBlob": "19d9d3529de485ef4f4b36ac6e3b2c216d18704a",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/controller-tune-panel.mjs",
+      "bytes": 23441,
+      "sha256": "579e5fc86483ad7546c94510447d1e21480fa0bff7157a8a6777a2b388ebea26",
+      "gitBlob": "34174c79e341ad2dbc4c2dd8f7491f0742340696",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/response-bench-client.mjs",
+      "bytes": 3516,
+      "sha256": "7233f50f2fc77470fc9080ac08f49bb1df0f50452f91a355b38d497eb0431942",
+      "gitBlob": "1f57edb0a342fdfafc003cbcca01626822c9863b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/response-bench-panel.mjs",
+      "bytes": 36107,
+      "sha256": "b801209b271c7a24fa6c17817f64c336cbdbd9a27d7ff80b21e34c113c02b358",
+      "gitBlob": "00a370c65be80cb52e9c5d0beb6abeb552bfcff5",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/response-bench-worker.mjs",
+      "bytes": 2205,
+      "sha256": "b21283025f7912be36e0f26e59b09cc2e49e0748208d9c07648dda6352e0ac6e",
+      "gitBlob": "7ca492ef154e510ba9aa6e2911d1482e2e4a170b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/response-bench.mjs",
+      "bytes": 24561,
+      "sha256": "09ee0de8e7ffc5c787a4113f99d985fa334b6f8ed663744b1b3fa0017d1d2ad9",
+      "gitBlob": "3a3e3e158ffde1910522e549331e085448f54443",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/setup-draft.mjs",
+      "bytes": 13550,
+      "sha256": "3695eab0f10c77224c5de2b6c86f899922f67361e4fbad0fa9fd6ba9673693fa",
+      "gitBlob": "f896c5de065d0ea24d717c263a0b9786fcdc5f8f",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/setup-workbench.mjs",
+      "bytes": 19906,
+      "sha256": "7d2fcf5945f9a4a78b97f2e39ae12e36375af260311cc443be20fcfa686bb26f",
+      "gitBlob": "91ae524a9e0b9c89cba7180fa8cb54d56a86e0b5",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/fpv-worlds/response-bench-worker.mjs",
+      "bytes": 208,
+      "sha256": "608fd23e0bc62c6d2e56874f26e86a9ea0012929ea69d155ed1290ed48484f10",
+      "gitBlob": "20aca5efc973b9cc3990524dbfbaa04a4f77192e",
+      "packages": [
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-tuning-fields.mjs",
+      "bytes": 5669,
+      "sha256": "ad4c2d297c2a29d3a2cc65a820ab5a1e58ec9625b9ca09e0fd2494d0613cd59b",
+      "gitBlob": "df49837b5f0c72d2c0a733fea45515bff6c1195e",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/controller-tune-library.mjs",
+      "bytes": 13958,
+      "sha256": "ee5ab5386e560ae783f55dc2bf02e9961e92596a824a2969d51ca3d3eafa6021",
+      "gitBlob": "19d9d3529de485ef4f4b36ac6e3b2c216d18704a",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/controller-tune-panel.mjs",
+      "bytes": 23441,
+      "sha256": "579e5fc86483ad7546c94510447d1e21480fa0bff7157a8a6777a2b388ebea26",
+      "gitBlob": "34174c79e341ad2dbc4c2dd8f7491f0742340696",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/response-bench-client.mjs",
+      "bytes": 3516,
+      "sha256": "7233f50f2fc77470fc9080ac08f49bb1df0f50452f91a355b38d497eb0431942",
+      "gitBlob": "1f57edb0a342fdfafc003cbcca01626822c9863b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/response-bench-panel.mjs",
+      "bytes": 36107,
+      "sha256": "b801209b271c7a24fa6c17817f64c336cbdbd9a27d7ff80b21e34c113c02b358",
+      "gitBlob": "00a370c65be80cb52e9c5d0beb6abeb552bfcff5",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/response-bench-worker.mjs",
+      "bytes": 2205,
+      "sha256": "b21283025f7912be36e0f26e59b09cc2e49e0748208d9c07648dda6352e0ac6e",
+      "gitBlob": "7ca492ef154e510ba9aa6e2911d1482e2e4a170b",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/response-bench.mjs",
+      "bytes": 24561,
+      "sha256": "09ee0de8e7ffc5c787a4113f99d985fa334b6f8ed663744b1b3fa0017d1d2ad9",
+      "gitBlob": "3a3e3e158ffde1910522e549331e085448f54443",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/setup-draft.mjs",
+      "bytes": 13550,
+      "sha256": "3695eab0f10c77224c5de2b6c86f899922f67361e4fbad0fa9fd6ba9673693fa",
+      "gitBlob": "f896c5de065d0ea24d717c263a0b9786fcdc5f8f",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/setup-workbench.mjs",
+      "bytes": 19906,
+      "sha256": "7d2fcf5945f9a4a78b97f2e39ae12e36375af260311cc443be20fcfa686bb26f",
+      "gitBlob": "91ae524a9e0b9c89cba7180fa8cb54d56a86e0b5",
+      "packages": [
+        "civilian-fpv",
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/fpv-worlds/response-bench-worker.mjs",
+      "bytes": 208,
+      "sha256": "608fd23e0bc62c6d2e56874f26e86a9ea0012929ea69d155ed1290ed48484f10",
+      "gitBlob": "20aca5efc973b9cc3990524dbfbaa04a4f77192e",
+      "packages": [
+        "fpv-worlds"
+      ],
+      "group": "tuning"
+    }
+  ],
+  "artifactExpiresAt": "2026-11-01T04:29:45Z",
+  "event": "workflow_dispatch",
+  "artifactName": "optional-flight-integration-46fc4f23de313c253a1d5d937d224abd7d5487f4-head-46fc4f23de313c253a1d5d937d224abd7d5487f4",
+  "moduleClosure": {
+    "validatorSource": "46fc4f23de313c253a1d5d937d224abd7d5487f4",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "modules": 70,
+        "imports": 100
+      },
+      {
+        "id": "civilian-fpv",
+        "modules": 125,
+        "imports": 306
+      },
+      {
+        "id": "fpv-worlds",
+        "modules": 179,
+        "imports": 516
+      }
+    ],
+    "scope": "Finished original archive imports only; no checkout source fallback or execution"
+  },
+  "scope": "Exact optional original artifact, all six original source/runtime inventories and member hashes/budgets, finished import closures. No native/player/public acceptance. Combined source includes pinned main56e29fd2; actual canonical candidate tree is independently bound. Academy sourceInput budget is distinct and is not used to loosen source/runtime archive caps. New current Library evidence; no prior package/native evidence is inherited."
+}
