@@ -14,15 +14,14 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "Exact-head checks and merge admission",
-    "F04b production Survival suspend/resume",
-    "Reconcile reviewed archive restore stack",
-    "F07a scoped visible evidence and remaining demonstrated gaps",
-    "F08 Versus keyboard bindings",
-    "F58a local support summary",
+    "Exact-head checks and merge reconciliation",
+    "F04b full-capacity recovery and exact-package qualification",
+    "F08 concurrent-owner correction and final browser review",
+    "F58a Snake adapter after primary-shell review",
     "Reconcile reviewed F01/F06/F11/F79 stacks",
-    "F09 measured text/HUD scaling assessment",
-    "Demo-dependent work after D; physical checks remain unavailable"
+    "F09 shared reader compatibility and measured scaling",
+    "Remaining critical-cue evidence and demonstrated gaps",
+    "Demo-dependent work after D; hardware unavailable"
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -906,19 +905,23 @@
       "impact": "H/H",
       "effort": "**8–15d**; F04a",
       "featureId": "F04",
-      "status": "developing",
+      "status": "draft_review",
       "owner": "lane-a",
       "qualification": {
-        "automated": "not_run",
+        "automated": "focused_passed_successor_required",
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": null,
-      "pr": null,
-      "commit": null,
-      "next": "Implement explicit bounded typed state, exact admitted-project binding, atomic recoverable slot, paused adoption and durable result deduplication; production UI not yet exposed.",
+      "blocker": "Successor capacity/controller corrections implemented; independent review, exact validation/package/browser pending.",
+      "pr": "https://github.com/mekhovov/revealline/pull/1663",
+      "commit": "c1f56c90529613c95376a92aa74e758cdff4de87",
+      "next": "Independently review bounded retention correction; final full validation, one expanded-package build and actual saved-flight browser review.",
       "evidence": [
-        "Assessment replay feasibility: legal earned run 19,856 ticks yields about1MiB command tuples; legitimate runs have no total duration cap. Favor bounded typed state over unbounded replay; keep trusted graph oracle test-only. Initial production codec/round-trip work underway."
+        "Assessment replay feasibility: legal earned run 19,856 ticks yields about1MiB command tuples; legitimate runs have no total duration cap. Favor bounded typed state over unbounded replay; keep trusted graph oracle test-only. Initial production codec/round-trip work underway.",
+        "Typed bounded production decoder, exact package closure, atomic slot, paused adoption and durable records/mastery receipts implemented;113 focused+98 shared tests pass on initial candidate.",
+        "Independent28 storage/process/records/mastery tests pass. A valid full256-context record profile rejects context257 and leaves recovery permanently finishing; preserve journal and fix bounded retention. Existing controller Home action must include Saved flight.",
+        "Full validation found a real generated SIM dependency closure omission; regenerate and validate successor before package admission. No actual package or hardware claim.",
+        "Successorc1f56c fixes bounded records retention and shared Home controller action.116 focused and198 shared/generated-SIM tests pass, full lint/changed format pass; final full validate and independent retention review pending."
       ]
     },
     {
@@ -1062,8 +1065,25 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement primary Solo/Journey local support summary with bounded allowlisted preview/export, existing sampled-controller freshness and read-only capability checks; no endpoint or transmission.",
-      "evidence": []
+      "next": "Primary shell slice ready; implement separate Snake adapter using its existing sampled two-seat state, then review remaining host adapters.",
+      "evidence": [
+        "Actual support-summary download SHA2562fcee4423c5b773d67105ec0eaf21e6401bfc4eb1529df1b1913b9f3767eb339 matches exact preview; fixed allowlist excludes credentials, URLs, player data and raw controller identity. Offline files explicitly unverified."
+      ],
+      "implementationSlices": [
+        {
+          "id": "primary-shell",
+          "status": "ready_for_checks",
+          "pr": "https://github.com/mekhovov/revealline/pull/1661",
+          "commit": "47c8693a8283842788aefa1e870346fd3ca34bce",
+          "evidence": "62 focused/full source gates plus10 independent owner/component/host checks pass. Actual desktop EN/UK preview, refresh, close clearing and929-byte downloaded JSON equality pass. No native export, real controller, paused-flight or hardware browser claim."
+        },
+        {
+          "id": "snake-host",
+          "status": "developing",
+          "dependency": "PR1661 exact47c8693a",
+          "evidence": "Reuse shared preview/export; aggregate only latest controller fields observed by Snake polling. Unobserved neutral/Confirm states stay unavailable; no extra polling."
+        }
+      ]
     },
     {
       "id": "F58b",
@@ -1166,21 +1186,22 @@
       "impact": "H/H",
       "effort": "a **2–3d**; b **2–5d**, after a",
       "featureId": "F07",
-      "status": "draft_review",
+      "status": "ready_for_checks",
       "owner": "lane-c",
       "qualification": {
         "automated": "source_inventory_and_models_passed",
-        "browser": "scoped_review_in_progress",
+        "browser": "scoped_visible_play_passed",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1656",
-      "commit": "e64c9c08cdf6cc9c41a0026a0ec7d4d7a517ede1",
-      "next": "Record scoped visible C01/C02 cause and C03 warning evidence in the inventory; remaining impact/cross-host/listening/device checks stay explicit.",
+      "commit": "6918bc84901dfc0267ed1c39d3dbd95f3e560627",
+      "next": "Exact-head required checks and merge admission. Inventory is complete within its declared source/visible scope; remaining silent-play/listening/device observations stay explicit.",
       "evidence": [
         "Source audit on cb8dddd3 includes Capture, Team, Snake, Survival, SIM and optional 2D gym. Source/model/browser/listening evidence remains distinct.",
         "Revision-bound inventory: 22 cue categories / 51 source anchors independently checked. 105 model/policy checks plus 3 filtered SIM cases pass. Capture mute/reactions-off legal self-contact yields life loss and explicit cause in AX/DOM, including reduced/UK/320. Visible compact cause remains under review; invalid guard fixture admission was excluded and corrected, not counted as a product defect.",
-        "Exact e64 source/runtime cb8 browser: active muted reactions-off Reduced UK inner316×776 self-contact shows visible recovery/cause text inside viewport; valid optional sentry pack normal import/Play→Start→Right2s exposes a visible dashed aiming ray and completes at0:07/50%/11900 with3lives. No sentry-hit cause, listening, assistive-technology or physical claim. Earlier invalid fixture/staging-helper errors excluded."
+        "Exact e64 source/runtime cb8 browser: active muted reactions-off Reduced UK inner316×776 self-contact shows visible recovery/cause text inside viewport; valid optional sentry pack normal import/Play→Start→Right2s exposes a visible dashed aiming ray and completes at0:07/50%/11900 with3lives. No sentry-hit cause, listening, assistive-technology or physical claim. Earlier invalid fixture/staging-helper errors excluded.",
+        "Final6918 records actual immutable runtime browser receipts and exact screenshot hashes; independently reviewed and promoted PR1656 ready. Runtime is unchanged from cb8."
       ]
     },
     {
@@ -1219,11 +1240,33 @@
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": null,
+      "blocker": "Final async save-lock/Retry browser review and exact-head CI pending.",
       "pr": null,
       "commit": null,
-      "next": "Implement Versus two-seat keyboard map/settings as first complete host slice, reusing key extraction/labels and preserving menu activation; remaining Team/Snake separate.",
-      "evidence": []
+      "next": "Finish Duel concurrent-owner Web Lock fix and async departure/Retry review; then Team six-action policy with its own preference record. Snake separate.",
+      "evidence": [
+        "Actual3143 desktop UI: independent capture, conflict names other seat, Escape cancellation, modeled silent write Session only and Retry Saved/focus; Ukrainian316px wrapping inspected. This does not close cross-owner persistence or actual flight/device evidence.",
+        "Independent concurrent writers both report Saved while one change is lost. Dedicated short Web Lock lease fix includes delayed Settings departure protection;95 focused checks pass on localfffcc404 successor, full localization and publication pending."
+      ],
+      "implementationSlices": [
+        {
+          "id": "duel-keyboard",
+          "status": "draft_review",
+          "pr": "https://github.com/mekhovov/revealline/pull/1662",
+          "commit": "fffcc404cd44a1f55720881c0281102acd8c0388",
+          "evidence": "84 focused+4 host+14 offline/i18n checks initially pass; independent review reproduces cross-owner lost update. Successor with short dedicated Web Lock and session-only fallback in validation. Publishedfffcc404 corrects serialization and delayed departure;95 focused, full localization and lint/format pass. Final root async browser review pending."
+        },
+        {
+          "id": "team-keyboard",
+          "status": "planned",
+          "dependency": "Reviewed Duel shared owners",
+          "evidence": "Separate six-action Team policy; do not expose an ignored Supply action or overwrite Duel bindings."
+        },
+        {
+          "id": "snake-keyboard",
+          "status": "planned"
+        }
+      ]
     },
     {
       "id": "F09a",
@@ -1237,15 +1280,16 @@
       "owner": "integration",
       "qualification": {
         "automated": "not_run",
-        "browser": "not_run",
+        "browser": "baseline_measurement_only",
         "physical": "not_tested"
       },
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Measure existing Standard/Large typography and 200% coverage before choosing bounded shared/Solo changes; retain caption/reduced-motion controls and avoid incompatible profile changes.",
+      "next": "Implement reader compatibility and one desired text-size owner before exposing extra-large in qualified Solo surfaces. Unsupported hosts retain desired setting and show explicit effective-Large fallback; no silent reset.",
       "evidence": [
-        "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed."
+        "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
+        "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim."
       ]
     },
     {
@@ -2732,6 +2776,11 @@
       "date": "2026-10-18",
       "item": "Review batch: F01/F02/F07/F79/F80",
       "reason": "First Flight promoted; local retained recovery passes actual scoped browser; Team verbose caption corrected; SIM chooser follow-up and critical visual-cue review retained as explicit remaining work."
+    },
+    {
+      "date": "2026-10-18",
+      "item": "F04/F07/F08/F09/F58 and merge queue",
+      "reason": "F07 inventory and primary support summary promoted ready. Independent review found keyboard lost update and full-record-capacity suspend dead-end; both corrections precede promotion. Readability baseline measured. All113 deliverables retained;2 merged,15 ready feature PRs,23 draft feature PRs,0 verified live."
     }
   ],
   "deliveryDependencies": [
@@ -2742,12 +2791,12 @@
       "pr": "https://github.com/mekhovov/revealline/pull/1633",
       "commit": "c9e6f0f09",
       "scope": "Retire13expiredPR1544automatic diagnostic triggers; preserve exact original jobs and historical evidence. Active workflows unchanged; merge-controller and check policy unchanged.",
-      "evidence": "136focused tests pass; independent review, changedlint/format,YAMLsyntax. Isolated nonretired helper calls work without new module/fixture. Remote final-head registration remains to qualify."
+      "evidence": "136 focused and independent review pass; all4 exact-head focused shards pass. Aggregate focused remains queued without an assigned runner; general test/build scope-skipped, not passes."
     }
   ],
   "deliverySnapshot": {
-    "featurePRsReady": 13,
-    "featurePRsDraft": 22,
+    "featurePRsReady": 15,
+    "featurePRsDraft": 23,
     "deliverablesMerged": 2,
     "verifiedLive": 0,
     "hardware": "unavailable"
