@@ -490,7 +490,7 @@ export async function smokeFPVPublicUpdate({
         await page
           .locator('.fpv-tuning details')
           .filter({ has: page.locator('textarea') })
-          .locator('summary')
+          .locator(':scope > summary')
           .click();
         await page
           .getByLabel('Source / export firmware version', { exact: true })

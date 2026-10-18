@@ -8963,6 +8963,14 @@ export function mountWorldApp({
     locale: () => locale,
     onOpen: () => pauseFlight(),
     getFlightConfiguration: () => workbenchAttemptConfiguration,
+    responseBenchWorkerURL: new URL('../fpv-worlds/response-bench-worker.mjs', import.meta.url),
+    getPracticeConditions: () => {
+      const entry = tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
+      if (!entry) return null;
+      return { host: entry.regional ? 'Regional' : 'World', courseId: entry.id, mode: $('flight-mode').value, courseIdentity: dataIdentity(entry.regional ? entry.configuration : entry.course),
+        label: `${entry.regional ? 'Regional' : 'World'} · ${entry.id} · ${$('flight-mode').value}`,
+        input: { source: $('flight-source').value, keyboard: $('flight-keyboard-preset').value, touch: $('flight-touch-response').value, radio: radio.status().profile, radioDevice: radio.status().selected?.key ?? null, controller: { id: gamepad.status().id, index: gamepad.status().index } } };
+    },
     canCalibrate: () => !$('radio-setup-button').disabled,
     onCalibration(done) { tuningCalibrationReturn = done; $('radio-setup-button').click(); },
     onApply() {

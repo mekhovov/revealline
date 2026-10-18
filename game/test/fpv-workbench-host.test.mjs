@@ -3,14 +3,19 @@ import assert from 'node:assert/strict';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountFlightTuning } from '../../optional-practice/civilian-fpv/tuning-ui.mjs';
 import { createTuningLibraryStore } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
+import { CONTROLLER_TUNE_LIBRARY_KEY } from '../../optional-practice/civilian-fpv/controller-tune-library.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
-async function fixture(t, { physical = false, prepare } = {}) {
+async function fixture(
+  t,
+  { physical = false, prepare, enableBench = false, conditions = null, workerURL } = {},
+) {
   const document = new Document(),
     window = new Events(),
     data = new Map(),
     tested = [],
-    frames = new Map();
+    frames = new Map(),
+    workers = [];
   let frameId = 0;
   document.createElementNS = (_namespace, tag) => document.createElement(tag);
   const storage = {
@@ -28,6 +33,26 @@ async function fixture(t, { physical = false, prepare } = {}) {
     },
     matchMedia: () => ({ matches: false }),
   });
+  if (enableBench)
+    window.Worker = class extends Events {
+      constructor(url, options) {
+        super();
+        this.url = url;
+        this.options = options;
+        this.messages = [];
+        this.terminated = false;
+        workers.push(this);
+      }
+      postMessage(message) {
+        this.messages.push(message);
+      }
+      terminate() {
+        this.terminated = true;
+      }
+      reply(data) {
+        this.emit('message', { data });
+      }
+    };
   const store = createTuningLibraryStore({ storage });
   if (physical)
     await store.createPresetSetup({
@@ -42,6 +67,8 @@ async function fixture(t, { physical = false, prepare } = {}) {
     document,
     window,
     store,
+    getPracticeConditions: () => conditions,
+    responseBenchWorkerURL: workerURL,
     onCalibration: (done) => {
       returnFromCalibration = done;
     },
@@ -64,8 +91,8 @@ async function fixture(t, { physical = false, prepare } = {}) {
     node.emit(tag === 'select' ? 'change' : 'input');
     return node;
   };
-  const click = async (label) => {
-    const button = ui.root.querySelectorAll('button').find((node) => node.textContent === label);
+  const click = async (label, scope = ui.root) => {
+    const button = scope.querySelectorAll('button').find((node) => node.textContent === label);
     assert.ok(button, `Missing ${label}`);
     button.click();
     await settle();
@@ -73,6 +100,9 @@ async function fixture(t, { physical = false, prepare } = {}) {
   return {
     ui,
     document,
+    window,
+    data,
+    workers,
     store,
     tested,
     field,
@@ -284,4 +314,354 @@ test('Legacy commanded rotation has an illustrative fallback and never retains a
   await f.click('Use saved setup in draft');
   assert.notEqual(quad.firstChild, physical);
   assert.match(quad.firstChild.getAttribute('aria-label'), /Generic commanded rotation/);
+});
+
+const gainLabel = 'Roll P (N·m/(rad/s))';
+const inputReviewLabel = 'I checked my input connection, mapping and stick centres';
+const practiceConditions = () => ({
+  host: 'Regional',
+  courseId: 'regional-comparison-course',
+  mode: 'acro',
+  label: 'Regional · saved launch · Acro',
+  input: { source: 'controller', mapping: 'standard-mode-2' },
+});
+function panelControl(panel, label, tag = 'select') {
+  const node = panel
+    .querySelectorAll(tag)
+    .find((element) => element.parentNode.firstChild?.textContent === label);
+  assert.ok(node, `Missing panel control ${label}`);
+  return node;
+}
+
+test('reusable controller tunes copy explicitly into an undoable draft without saving a setup', async (t) => {
+  const f = await fixture(t, { physical: true });
+  const tunes = f.ui.root.querySelector('.controller-tune-panel');
+  const saved = f.store.export(),
+    original = Number(f.field(gainLabel).value),
+    tuned = original * 1.1,
+    alternate = original * 1.2;
+  f.edit(gainLabel, tuned);
+  f.edit('New controller tune name', 'Meteor smooth controller', 'input', tunes);
+  await f.click('Save draft as controller tune', tunes);
+  const tuneLibrary = JSON.parse(f.data.get(CONTROLLER_TUNE_LIBRARY_KEY));
+  assert.equal(tuneLibrary.tunes.length, 1);
+  assert.equal(tuneLibrary.tunes[0].controller.gains.roll.p, tuned);
+  assert.equal(f.store.export(), saved, 'saving a reusable tune cannot save the setup');
+  f.edit(gainLabel, alternate);
+  f.edit('Saved controller tune', tuneLibrary.tunes[0].id, 'select', tunes);
+  assert.equal(Number(f.field(gainLabel).value), alternate, 'browsing cannot apply a tune');
+  await f.click('Use in draft', tunes);
+  assert.equal(Number(f.field(gainLabel).value), tuned);
+  assert.equal(f.store.export(), saved, 'copying cannot save the setup');
+  await f.click('Use in draft', tunes);
+  await f.click('Undo last edit');
+  assert.equal(Number(f.field(gainLabel).value), alternate, 'same-value copying adds no undo step');
+  await f.click('Use in draft', tunes);
+  f.edit(gainLabel, original * 0.9);
+  assert.deepEqual(JSON.parse(f.data.get(CONTROLLER_TUNE_LIBRARY_KEY)), tuneLibrary);
+  await f.click('Undo last edit');
+  assert.equal(Number(f.field(gainLabel).value), tuned);
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().advanced.controller.gains.roll.p, tuned);
+  assert.deepEqual(JSON.parse(f.data.get(CONTROLLER_TUNE_LIBRARY_KEY)), tuneLibrary);
+});
+
+test('workbench comparison snapshots stay immutable and only configuration edits cancel their worker', async (t) => {
+  const workerURL = new URL('https://example.test/worlds/response-bench-worker.mjs');
+  const f = await fixture(t, { physical: true, enableBench: true, workerURL });
+  const bench = f.ui.root.querySelector('.tuning-bench'),
+    tunes = f.ui.root.querySelector('.controller-tune-panel'),
+    saved = f.store.export(),
+    original = Number(f.field(gainLabel).value);
+  f.edit(gainLabel, original * 1.1);
+  await f.click('Run simulation bench', bench);
+  assert.equal(f.workers.length, 1);
+  const first = f.workers[0],
+    request = first.messages[0],
+    frozen = structuredClone(request);
+  assert.equal(first.url.href, workerURL.href);
+  assert.equal(first.options.type, 'module');
+  assert.equal(request.type, 'compare');
+  assert.equal(request.request.saved.advanced.controller.gains.roll.p, original);
+  assert.equal(request.request.draft.advanced.controller.gains.roll.p, original * 1.1);
+  const lateMessage = [...first.listeners.get('message')][0];
+  const notes = panelControl(bench, 'Draft setup: control and comfort', 'textarea');
+  notes.value = 'Manual feedback is independent of the running bench.';
+  notes.emit('input');
+  f.edit('New controller tune name', 'An unsaved library title', 'input', tunes);
+  f.edit('Rate profile', 'meteor-rates', 'select');
+  f.edit('Aircraft preset', 'air65-ii-racing-2026', 'select');
+  assert.equal(
+    first.terminated,
+    false,
+    'notes and browsing cannot cancel the flight configuration',
+  );
+  assert.deepEqual(first.messages[0], frozen);
+  f.edit(gainLabel, original * 1.2);
+  assert.equal(first.terminated, true);
+  assert.deepEqual(first.messages[0], frozen, 'draft edits cannot mutate a sent worker snapshot');
+  lateMessage({ data: { id: request.id, progress: { stage: 'draft', completed: 99, total: 99 } } });
+  lateMessage({ data: { id: request.id, result: { status: 'no-clear-improvement' } } });
+  await settle();
+  assert.doesNotMatch(bench.textContent, /99\/99|No clear improvement/);
+  await f.click('Run simulation bench', bench);
+  assert.equal(f.workers.length, 2);
+  const second = f.workers[1];
+  assert.equal(second.messages[0].request.draft.advanced.controller.gains.roll.p, original * 1.2);
+  f.ui.close();
+  assert.equal(second.terminated, true);
+  assert.equal(f.store.export(), saved);
+});
+
+test('unfinished physical text cancels comparison and cannot enter a new worker snapshot', async (t) => {
+  const f = await fixture(t, { physical: true, enableBench: true });
+  const bench = f.ui.root.querySelector('.tuning-bench'),
+    original = f.field(gainLabel).value;
+  await f.click('Run simulation bench', bench);
+  f.edit(gainLabel, '');
+  assert.equal(f.workers[0].terminated, true);
+  await f.click('Run simulation bench', bench);
+  assert.equal(f.workers.length, 1);
+  assert.equal(f.field(gainLabel).value, '');
+  f.edit(gainLabel, original);
+  await f.click('Run simulation bench', bench);
+  assert.equal(f.workers.length, 2);
+  const axis = panelControl(bench, 'Response axis');
+  axis.value = 'yaw';
+  axis.emit('change');
+  assert.equal(f.workers[1].terminated, true, 'changing bench conditions cancels the old job');
+  await f.click('Run simulation bench', bench);
+  assert.equal(f.workers[2].messages[0].request.axis, 'yaw');
+});
+
+test('saving a shared rate baseline cancels pending comparisons and clears completed results even when the draft is unchanged', async (t) => {
+  const f = await fixture(t, {
+    physical: true,
+    enableBench: true,
+    prepare: async (store) => {
+      // Complete numerical setups do not require optional catalog/component metadata.
+      // Keep the editor signature stable rather than relying on inventory key order.
+      const setup = store.snapshot().setups.find((item) => item.id === 'meteor');
+      delete setup.preset;
+      delete setup.components;
+      await store.saveSetup(setup);
+    },
+  });
+  const bench = f.ui.root.querySelector('.tuning-bench');
+  f.edit('When saving edited rates', 'update', 'select');
+  f.edit('Comparison scope', 'setup', 'select', bench);
+  f.edit('Maximum rate (°/s)', '700');
+  await f.click('Run simulation bench', bench);
+  const pending = f.workers[0],
+    oldRequest = pending.messages[0],
+    lateMessage = [...pending.listeners.get('message')][0];
+  assert.equal(oldRequest.request.saved.response.rates.axes.roll.rate, 60);
+  assert.equal(oldRequest.request.draft.response.rates.axes.roll.rate, 70);
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().response.rates.axes.roll.rate, 70);
+  assert.equal(f.field('Maximum rate (°/s)').value, '700');
+  assert.equal(pending.terminated, true, 'saving replaced the baseline of the pending comparison');
+  lateMessage({
+    data: { id: oldRequest.id, progress: { stage: 'draft', completed: 99, total: 99 } },
+  });
+  await settle();
+  assert.doesNotMatch(bench.textContent, /99\/99/);
+
+  f.edit('Maximum rate (°/s)', '800');
+  await f.click('Run simulation bench', bench);
+  const completed = f.workers[1],
+    request = completed.messages[0];
+  assert.equal(request.request.saved.response.rates.axes.roll.rate, 70);
+  completed.reply({
+    id: request.id,
+    result: {
+      kind: 'comparison',
+      axis: 'roll',
+      changedGroups: ['rates'],
+      baseline: {
+        metrics: { trackingError: 2 },
+        trace: [
+          { seconds: 0, requested: 0, achieved: 0 },
+          { seconds: 3, requested: 70, achieved: 68 },
+        ],
+      },
+      candidate: {
+        metrics: { trackingError: 1 },
+        trace: [
+          { seconds: 0, requested: 0, achieved: 0 },
+          { seconds: 3, requested: 80, achieved: 79 },
+        ],
+      },
+    },
+  });
+  await settle();
+  assert.match(bench.textContent, /Comparison complete/);
+  assert.ok(bench.querySelector('.tuning-bench-results').children.length);
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().response.rates.axes.roll.rate, 80);
+  assert.equal(f.field('Maximum rate (°/s)').value, '800');
+  assert.doesNotMatch(bench.textContent, /Comparison complete/);
+  assert.equal(bench.querySelector('.tuning-bench-results').children.length, 0);
+});
+
+test('SIM suggestions require input review for the current input conditions', async (t) => {
+  const conditions = practiceConditions();
+  const f = await fixture(t, { physical: true, enableBench: true, conditions });
+  const bench = f.ui.root.querySelector('.tuning-bench');
+  await f.click('Find a SIM tuning suggestion', bench);
+  assert.equal(f.workers.length, 0);
+  const reviewed = f.field(inputReviewLabel);
+  reviewed.checked = true;
+  reviewed.emit('change');
+  await f.click('Find a SIM tuning suggestion', bench);
+  assert.equal(f.workers.length, 1);
+  assert.equal(f.workers[0].messages[0].type, 'suggest');
+  assert.equal(f.workers[0].messages[0].request.inputReady, true);
+  await f.click('Cancel comparison', bench);
+  conditions.input.mapping = 'changed-mapping';
+  await f.click('Find a SIM tuning suggestion', bench);
+  assert.equal(
+    f.workers.length,
+    1,
+    'prior mapping review cannot authorize a new input configuration',
+  );
+  assert.match(bench.textContent, /Complete the input check first/);
+  reviewed.checked = true;
+  reviewed.emit('change');
+  await f.click('Find a SIM tuning suggestion', bench);
+  assert.equal(f.workers.length, 2);
+});
+
+test('manual A/B flies the frozen saved and draft pair and returns to the latest unsaved editor', async (t) => {
+  const conditions = practiceConditions();
+  const f = await fixture(t, { physical: true, conditions });
+  const bench = f.ui.root.querySelector('.tuning-bench'),
+    saved = f.store.export(),
+    original = Number(f.field(gainLabel).value),
+    prepared = original * 1.1,
+    later = original * 1.2;
+  await f.click('Flight response / PID');
+  f.edit(gainLabel, prepared);
+  await f.click('Prepare A/B practice', bench);
+  assert.match(bench.textContent, /Regional · saved launch · Acro/);
+  f.edit(gainLabel, later);
+  await f.click('Fly saved setup', bench);
+  assert.equal(f.tested.length, 1);
+  assert.equal(f.tested[0].advanced.controller.gains.roll.p, original);
+  assert.equal(f.ui.root.open, false);
+  assert.equal(f.ui.returnButton.hidden, false);
+  f.ui.returnButton.click();
+  await settle();
+  assert.equal(Number(f.field(gainLabel).value), later);
+  assert.equal(f.ui.root.querySelector('[data-section="controller"]').hidden, false);
+  await f.click('Fly draft setup', bench);
+  assert.equal(f.tested.length, 2);
+  assert.equal(f.tested[1].advanced.controller.gains.roll.p, prepared);
+  f.tested[1].advanced.controller.gains.roll.p = 99;
+  f.ui.returnButton.click();
+  await settle();
+  await f.click('Fly draft setup', bench);
+  assert.equal(f.tested[2].advanced.controller.gains.roll.p, prepared);
+  f.ui.returnButton.click();
+  await settle();
+  conditions.mode = 'self-level';
+  await f.click('Fly draft setup', bench);
+  assert.equal(f.tested.length, 3);
+  assert.match(bench.textContent, /Practice or input conditions changed/);
+  assert.equal(Number(f.field(gainLabel).value), later);
+  assert.equal(f.store.export(), saved);
+});
+
+test('manual PID-only comparison rejects camera changes until complete-setup comparison is selected', async (t) => {
+  const f = await fixture(t, { physical: true, conditions: practiceConditions() });
+  const bench = f.ui.root.querySelector('.tuning-bench');
+  f.edit('Camera tilt (degrees)', 27);
+  await f.click('Prepare A/B practice', bench);
+  assert.match(bench.textContent, /PID comparison changes controller settings only/);
+  await f.click('Fly draft setup', bench);
+  assert.equal(f.tested.length, 0);
+  const scope = panelControl(bench, 'Comparison scope');
+  scope.value = 'setup';
+  scope.emit('change');
+  await f.click('Prepare A/B practice', bench);
+  assert.match(bench.textContent, /Changed groups: camera/);
+  await f.click('Fly draft setup', bench);
+  assert.equal(f.tested[0].camera.tilt, 27);
+});
+
+test('SIM reduced effects and system reduced motion each pause commanded rotation without changing rates', async (t) => {
+  const f = await fixture(t, { physical: true });
+  await f.click('Rates & throttle');
+  const motion = f.field('Animate rotation preview');
+  motion.checked = true;
+  motion.emit('change');
+  const quad = f.ui.root.querySelector('.tuning-quad'),
+    saved = f.store.export();
+  f.frame(0);
+  f.frame(50);
+  const running = quad.style.transform;
+  assert.notEqual(running, 'rotateY(0deg)');
+  f.document.body.dataset.effects = 'reduced';
+  f.frame(100);
+  f.frame(150);
+  assert.equal(quad.style.transform, running, 'SIM preference stops frame-driven rotation');
+  f.document.body.dataset.effects = 'full';
+  f.window.matchMedia = () => ({ matches: true });
+  f.frame(200);
+  assert.equal(quad.style.transform, running, 'system preference independently stops rotation');
+  f.window.matchMedia = () => ({ matches: false });
+  f.frame(250);
+  assert.notEqual(quad.style.transform, running);
+  assert.equal(f.store.export(), saved);
+});
+
+test('Airmode-only customizations remain visible in Basic after save and can be undone to defaults', async (t) => {
+  const f = await fixture(t, { physical: true });
+  await f.click('Aircraft');
+  const airmode = f.field('Airmode · retain rotation authority at low throttle'),
+    physical = airmode.closest('fieldset'),
+    original = airmode.checked;
+  assert.equal(physical.hidden, true);
+  await f.click('Expert');
+  airmode.checked = !original;
+  airmode.emit('change');
+  await f.click('Basic');
+  assert.equal(airmode.parentNode.dataset.customized, 'true');
+  assert.equal(physical.hidden, false, 'a checkbox-only customization discloses its group');
+  await f.click('Undo last edit');
+  assert.equal(airmode.checked, original);
+  assert.equal(physical.hidden, true, 'undo clears customization disclosure');
+  await f.click('Expert');
+  airmode.checked = !original;
+  airmode.emit('change');
+  await f.click('Basic');
+  await f.click('Save for next flight');
+  assert.equal(f.store.effective().advanced.aircraft.propulsion.airmode, !original);
+  f.ui.close();
+  f.ui.open();
+  await f.click('Aircraft');
+  assert.equal(airmode.checked, !original);
+  assert.equal(physical.hidden, false, 'saved customization remains discoverable on reopening');
+  airmode.checked = original;
+  airmode.emit('change');
+  assert.equal(physical.hidden, true, 'returning to aircraft defaults removes stale disclosure');
+});
+
+test('Basic never hides a focused customized control while it is being restored to its default', async (t) => {
+  const f = await fixture(t, { physical: true });
+  await f.click('Flight response / PID');
+  await f.click('Expert');
+  const gain = f.field('Roll P (N·m/(rad/s))'),
+    row = gain.closest('.workbench-physical-field'),
+    original = gain.value;
+  f.edit('Roll P (N·m/(rad/s))', Number(original) * 1.1);
+  await f.click('Basic');
+  gain.focus();
+  f.edit('Roll P (N·m/(rad/s))', original);
+  assert.equal(row.dataset.customized, 'false');
+  assert.equal(row.hidden, false, 'editing to the default cannot remove the focused field');
+  assert.equal(f.document.activeElement, gain);
+  f.field('Search all settings').focus();
+  f.ui.refresh();
+  assert.equal(row.hidden, true, 'ordinary refresh conceals it after focus moves elsewhere');
 });

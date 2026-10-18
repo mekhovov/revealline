@@ -577,3 +577,50 @@ test('controller library refresh switches language without resetting user text',
   assert.ok(f.action('Використати в чернетці'));
   assert.match(f.panel.root.textContent, /Коефіцієнти контролера в одиницях SIM/);
 });
+
+test('controller library controls remain searchable in both languages without replacement on refresh', async (t) => {
+  const f = panelFixture(t);
+  await f.store.saveTune(tune());
+  f.panel.refresh();
+  const fields = f.panel.root.querySelectorAll('input,select,textarea');
+  for (const field of fields) {
+    assert.ok(field.getAttribute('aria-label'));
+    assert.match(field.dataset.search, /PID P I D FF feedforward filters/);
+    assert.match(field.dataset.search, /контролер.*випередження фільтри/);
+  }
+  const name = f.find('New controller tune name');
+  const text = f.find('Controller tune JSON', 'textarea');
+  name.value = 'Unsaved name';
+  text.value = 'Unfinished JSON';
+  f.setLocale('uk');
+  assert.deepEqual(f.panel.root.querySelectorAll('input,select,textarea'), fields);
+  assert.equal(f.find('Назва нового налаштування контролера'), name);
+  assert.equal(f.find('JSON налаштувань контролера', 'textarea'), text);
+  assert.equal(name.value, 'Unsaved name');
+  assert.equal(text.value, 'Unfinished JSON');
+  f.setLocale('en');
+  assert.equal(f.find('New controller tune name'), name);
+});
+
+test('closing a retained controller panel cancels queued use and late file reads without losing text', async (t) => {
+  const f = panelFixture(t);
+  await f.store.saveTune(tune());
+  f.panel.refresh();
+  f.action('Use in draft').emit('click');
+  f.panel.invalidate();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(f.used.length, 0);
+  assert.equal(f.action('Use in draft').disabled, false);
+  const file = f.find('Controller tune file');
+  const text = f.find('Controller tune JSON', 'textarea');
+  text.value = 'Retained text';
+  let finish;
+  file.files = [{ size: 10, text: () => new Promise((resolve) => (finish = resolve)) }];
+  file.emit('change');
+  f.panel.invalidate();
+  finish('Late file contents');
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.equal(text.value, 'Retained text');
+  assert.equal(f.action('Save reviewed controller import').disabled, true);
+  assert.equal(f.failures.length, 0);
+});
