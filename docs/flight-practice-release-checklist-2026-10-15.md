@@ -1,5 +1,15 @@
 # Flight practice: non-hosting release checklist — 15 October 2026
 
+## Latest execution checkpoint — 18 October 2026
+
+Use the [integrated execution checkpoint](flight-practice-execution-2026-10-18.md)
+for current completion, exact sources and remaining work. The rebase and current
+production build now pass locally; historical Worlds automatic first-Arm setup
+does not. R2–R9 retain their explicit acceptance gaps. No public release, human
+approval, hardware pass or all-app active-update pass follows from local tests.
+The read-only and source-specific snapshots below are historical, not today's
+integration/disk status.
+
 ## Current planning checkpoint — 18 October 2026
 
 Use the [current status and estimates](flight-practice-status-2026-10-18.md)

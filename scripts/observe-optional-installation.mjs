@@ -62,6 +62,8 @@ import {
 } from './practice-historical-ui.mjs';
 import {
   selectHistoricalActiveSession,
+  historicalSessionPackage,
+  prepareHistoricalPracticeSession,
   prepareHistoricalAcademySession,
   snapshotPausedAfterTransfer,
   verifyHistoricalSessionAfterUpdate,
@@ -240,6 +242,10 @@ const migrationEnabled = selectHistoricalMigration(process.env.OPTIONAL_INSTALLA
   activeSession: process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION,
   activeWindow: process.env.OPTIONAL_INSTALLATION_ACTIVE_WINDOW,
 });
+const migrationSessionPackage =
+  migrationEnabled && process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION !== undefined
+    ? historicalSessionPackage(process.env.OPTIONAL_INSTALLATION_ACTIVE_SESSION)
+    : null;
 const migrationAuthorityNames = migrationEnabled
   ? [
       'optional-installation-migration.mjs',
@@ -368,12 +374,17 @@ assert(
       'OPTIONAL_INSTALLATION_DOWNLOAD_FAULTS',
       'OPTIONAL_INSTALLATION_QUOTA_PROBE',
       'OPTIONAL_INSTALLATION_QUOTA_PACKAGES',
-      'OPTIONAL_INSTALLATION_MIGRATION',
       'OPTIONAL_INSTALLATION_VERIFICATION_CANCEL',
       'OPTIONAL_INSTALLATION_IMPORTED_WORLD',
       'OPTIONAL_INSTALLATION_OFFLINE_FLIGHT',
     ].every((name) => process.env[name] === undefined),
   'PWA activation requires a separate fault-free run.',
+);
+assert(
+  !pwaActivationEnabled ||
+    process.env.OPTIONAL_INSTALLATION_MIGRATION === undefined ||
+    (migrationEnabled && migrationSessionPackage),
+  'PWA activation requires a separate fault-free run unless its explicit extra-package migration session is selected.',
 );
 const activeWindowEnabled = pwaActivationEnabled || selectHistoricalWindowMode(activeWindowMode);
 const ordinaryWindowEnabled = activeWindowMode === ORDINARY_WINDOW_MODE;
@@ -443,6 +454,12 @@ assert(
   'Active-session observation requires pinned historical admission and a separate fault-free run.',
 );
 const activeSessionURL = new URL('./optional-installation-active-session.mjs', import.meta.url);
+assert(
+  !activeSessionEnabled ||
+    historicalSessionPackage(activeSessionMode) === fpv ||
+    (migrationEnabled && pwaActivationEnabled),
+  'Gym and Worlds active sessions require the admitted migration and native PWA activation lane.',
+);
 const activeSession = activeSessionEnabled
   ? {
       sourceSha256: sha(await readFile(activeSessionURL)),
@@ -1347,26 +1364,121 @@ try {
           });
           return state;
         }
+        if (migrationSessionPackage)
+          await openMigrationLauncher(migrationSessionPackage, priorVersion);
         let baseline = await retained('historical-baseline');
         for (const id of MIGRATION_IDS) {
-          await stageLauncher(id);
-          await pointer(id, version);
-          await openMigrationLauncher(id, version);
-          await prepare(id);
-          const item = envelope.packages.find((row) => row.id === id);
-          const workerScope = url(site(id) + `optional-practice/${id}/`);
-          references[id] = {
-            previous: references[id].active,
-            active: {
-              version,
-              scope: url(site(id)),
-              workerScope,
-              cacheName: `revealline.optional.${id === gym ? 'civilian-flight' : 'package'}.v1:${new URL(workerScope).pathname}:${item.revision}`,
-            },
-          };
-          const state = await retained(`after-upgrade:${id}`);
-          assertMigrationUnrelated(baseline, state, id, keyFor);
-          baseline = state;
+          let sessionGuard, activationGuard, historicalWindow;
+          try {
+            if (id === migrationSessionPackage) {
+              currentStep = `install owned historical ${id} window before session timing`;
+              const manifestId = url(manifests.get(id).id),
+                installUrlOrBundleUrl = url(relativeRoot(id) + 'app/');
+              await page.goto(installUrlOrBundleUrl);
+              await unlockObservedPage(page, password);
+              await page.locator('#prepare').waitFor({ state: 'visible' });
+              const app = { id, manifestId, installed: false, migrationInstallAttempted: true };
+              osApps.push(app);
+              await send('PWA.install', { manifestId, installUrlOrBundleUrl });
+              app.installed = true;
+              await send('PWA.changeAppUserSettings', { manifestId, displayMode: 'standalone' });
+              const pendingWindow = context
+                .waitForEvent('page', { timeout: 10000 })
+                .catch(() => null);
+              app.launch = await send('PWA.launch', { manifestId });
+              historicalWindow = await pendingWindow;
+              assert(historicalWindow, 'Require a new owned installed historical window.');
+              await historicalWindow.waitForLoadState('domcontentloaded');
+              await unlockObservedPage(historicalWindow, password);
+              await historicalWindow.locator('#prepare').waitFor({ state: 'visible' });
+              await historicalWindow.locator('#prepare').press('Enter');
+              await historicalWindow.waitForURL((observed) =>
+                matchesLaunchedAppURL(observed, url(entry(id, priorVersion))),
+              );
+              await unlockObservedPage(historicalWindow, password);
+              await historicalWindow
+                .locator(OBSERVED_PACKAGES[id].mounted)
+                .waitFor({ state: 'visible' });
+              app.window = await historicalWindow.evaluate(() => ({
+                standalone: globalThis.matchMedia('(display-mode: standalone)').matches,
+                url: globalThis.location.href,
+              }));
+              assert.equal(app.window.standalone, true);
+              await open(id, priorVersion);
+              const expectedURL = url(entry(id, priorVersion)) + '?lang=en';
+              activationGuard = await configureHistoricalPWAActivation({
+                context,
+                previousPage: historicalWindow,
+                updatePage: page,
+                expectedPreviousURL: expectedURL,
+                expectedUpdateURL: page.url(),
+                mode: activeWindowMode,
+                packageId: id,
+                playwrightSourceSha256: activeWindow.focusSourceSha256,
+                receipt: activeWindow,
+              });
+              currentStep = `prepare actual historical ${id} flight`;
+              sessionGuard = await prepareHistoricalPracticeSession(historicalWindow, {
+                expectedURL,
+                receipt: activeSession,
+                mode: activeSessionMode,
+              });
+              await activateHistoricalPWAUpdater(activationGuard, {
+                sessionDeadlineAt: sessionGuard.deadline,
+                observePaused: () => snapshotPausedAfterTransfer(sessionGuard),
+              });
+            }
+            await stageLauncher(id);
+            await pointer(id, version);
+            await openMigrationLauncher(id, version);
+            await prepare(id);
+            const item = envelope.packages.find((row) => row.id === id);
+            const workerScope = url(site(id) + `optional-practice/${id}/`);
+            references[id] = {
+              previous: references[id].active,
+              active: {
+                version,
+                scope: url(site(id)),
+                workerScope,
+                cacheName: `revealline.optional.${id === gym ? 'civilian-flight' : 'package'}.v1:${new URL(workerScope).pathname}:${item.revision}`,
+              },
+            };
+            const state = await retained(`after-upgrade:${id}`);
+            assertMigrationUnrelated(baseline, state, id, keyFor);
+            if (sessionGuard) {
+              activeSession.update = {
+                activeVersion: installed(state, id).active.version,
+                previousVersion: installed(state, id).previous.version,
+                checkpoint: `migration:after-upgrade:${id}`,
+                exactRetention: migration.checks.at(-1),
+              };
+              await returnHistoricalPWAWindow(activationGuard);
+              await verifyHistoricalSessionAfterUpdate(sessionGuard);
+              const file = `${output}.active-session-${id}-paused-menu.png`;
+              const image = await historicalWindow.screenshot({ timeout: 5000 });
+              await writeFile(file, image, { flag: 'wx' });
+              activeSession.screenshot = {
+                path: file,
+                bytes: image.length,
+                sha256: sha(image),
+                scope: 'Final explicit native pause menu, not an unobscured flight measurement.',
+              };
+            }
+            baseline = state;
+          } finally {
+            try {
+              if (sessionGuard) await disposeHistoricalAcademySession(sessionGuard);
+            } finally {
+              try {
+                if (activationGuard) await disposeHistoricalPWAActivation(activationGuard);
+              } finally {
+                if (historicalWindow)
+                  await boundedOperation('Close owned migration flight window', () =>
+                    historicalWindow.close(),
+                  );
+              }
+            }
+          }
         }
         for (const id of MIGRATION_IDS) {
           await open(id);
@@ -1434,7 +1546,10 @@ try {
           checkpoints,
           errors,
           scope:
-            'All three exact pinned historical runtimes upgraded to admitted current bytes and rolled back through public app-shell removal. Historical World template projects/revisions are nonempty and fingerprinted; shared Academy synthetic proof/profile are preserved. Gym has no populated persistent flight records. Browser-context offline historical launcher relaunch only; no process restart, OS installation, offline flight, populated world assets/recordings, physical devices, human review or public deployment qualification.',
+            'All three exact pinned historical runtimes upgraded to admitted current bytes and rolled back through public app-shell removal. Historical World template projects/revisions are nonempty and fingerprinted; shared Academy synthetic proof/profile are preserved. Gym has no populated persistent flight records. Browser-context offline historical launcher relaunch only; no process restart, offline flight, populated world assets/recordings, physical devices, human review or public deployment qualification.' +
+            (migrationSessionPackage
+              ? ` One owned installed historical ${migrationSessionPackage} window additionally witnesses bounded vertical motion, trusted native focus-loss pause, retained document/time origin through its own upgrade, stable paused height and explicit resumed upward control; see activeSession. No uninterrupted background-flight or exact-tick claim.`
+              : ' OS installation and active-flight continuity are not observed in this migration-only run.'),
         };
         return;
       }
@@ -2271,7 +2386,9 @@ try {
 } finally {
   const cleanupErrors = [];
   try {
-    for (const app of osApps.filter((row) => row.installed && !row.uninstalled)) {
+    for (const app of osApps.filter(
+      (row) => (row.installed || row.migrationInstallAttempted) && !row.uninstalled,
+    )) {
       try {
         await boundedOperation('PWA.uninstall cleanup', () =>
           cdp.send('PWA.uninstall', { manifestId: app.manifestId }),

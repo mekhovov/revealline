@@ -229,6 +229,33 @@ test('strict opt-in preserves omitted/default selection and rejects combined lan
       assert.throws(() => selectHistoricalMigration(MIGRATION_MODE, { ...options, [key]: value }));
 });
 
+test('only pinned Gym or Worlds session activation may accompany the complete migration matrix', () => {
+  for (const mode of ['gym-v0.142.4-98ad851', 'worlds-v0.142.4-98ad851']) {
+    const active = { activeSession: mode, activeWindow: 'owned-pwa-target-activation-98ad851' };
+    assert.equal(selectHistoricalMigration(MIGRATION_MODE, { ...options, ...active }), true);
+    assert.throws(() =>
+      selectHistoricalMigration(MIGRATION_MODE, { ...options, activeSession: mode }),
+    );
+    assert.throws(() =>
+      selectHistoricalMigration(MIGRATION_MODE, {
+        ...options,
+        ...active,
+        activeWindow: 'owned-window-minimize-98ad851',
+      }),
+    );
+    assert.throws(() =>
+      selectHistoricalMigration(MIGRATION_MODE, { ...options, ...active, download: 'all-short' }),
+    );
+  }
+  assert.throws(() =>
+    selectHistoricalMigration(MIGRATION_MODE, {
+      ...options,
+      activeSession: 'academy-v0.142.4-98ad851',
+      activeWindow: 'owned-pwa-target-activation-98ad851',
+    }),
+  );
+});
+
 const keyFor = (id) => `key:${id}`;
 function ownership() {
   const references = Object.fromEntries(

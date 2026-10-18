@@ -136,12 +136,13 @@ export async function configureHistoricalPWAActivation({
   mode,
   playwrightSourceSha256,
   receipt,
+  packageId = 'civilian-fpv',
   timeoutMs = 5000,
 }) {
   assert.equal(mode, PWA_ACTIVATION_MODE);
   assert.equal(playwrightSourceSha256, FOCUS_SOURCE_SHA256);
   assert(Number.isInteger(timeoutMs) && timeoutMs > 0 && timeoutMs <= 5000);
-  validateHistoricalSessionURL(expectedPreviousURL);
+  validateHistoricalSessionURL(expectedPreviousURL, packageId);
   const a = new URL(expectedPreviousURL),
     b = new URL(expectedUpdateURL);
   assert(
@@ -179,6 +180,7 @@ export async function configureHistoricalPWAActivation({
   Object.assign(receipt, {
     format: 'HistoricalPWAActivation.v1',
     mode,
+    packageId,
     configured: false,
     activated: false,
     returned: false,
@@ -187,8 +189,7 @@ export async function configureHistoricalPWAActivation({
     minimizationQualified: false,
     operations: [],
     commands: [],
-    scope:
-      'One owned installed historical Academy window, native target activation only; no synthetic blur, minimization, OS reboot or physical-device qualification.',
+    scope: `One owned installed historical ${packageId} window, native target activation only; no synthetic blur, minimization, OS reboot or physical-device qualification.`,
   });
   try {
     assert.equal(

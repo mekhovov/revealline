@@ -1,5 +1,18 @@
 # Flight practice: completion plan and priority review
 
+## Latest execution checkpoint — 18 October 2026
+
+The [integrated execution checkpoint](flight-practice-execution-2026-10-18.md)
+is authoritative for completion and remaining work. Rebase onto main `cb8dddd3d`
+is complete; current packages/build are source `3c6ac5ee0`. Practice passes
+1,232 tests, all six restarted-offline short-flight routes pass, and EN/UK guides
+plus actual populated tuning-library backup restores pass. The production build
+now passes at the unchanged deadline. R2 Worlds preparation still fails first
+Arm and is paused for test-approach review; no all-app safety pass is claimed.
+Continue independent R5 journeys, then remaining R3/R4 and acceptance work.
+Hosting and real hardware stay deferred. The read-only and older checkpoints
+below preserve history, not current blockers or completion claims.
+
 ## Current status and execution order — 18 October 2026
 
 The [current status, completed work, detailed remaining items, estimates and

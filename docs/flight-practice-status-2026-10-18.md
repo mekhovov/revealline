@@ -1,5 +1,12 @@
 # Flight practice: status, remaining work and estimates — 18 October 2026
 
+> **Superseded execution status:** the [integrated execution checkpoint](flight-practice-execution-2026-10-18.md)
+> records the completed rebase, 1,232 Practice passes, current production build,
+> six restarted-offline routes, corrected backup guides and native tuning restores.
+> It also records the still-failing historical Worlds preparation and updated
+> remaining work. The read-only review below is retained as history; its stale
+> source, disk readings and integration blockers are not today's execution state.
+
 This is the current planning checkpoint. It supersedes historical “next” and
 priority statements in the completion plan, continuation and release checklist;
 it does not supersede or re-label their original evidence. This review changes
