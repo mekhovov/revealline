@@ -3,6 +3,15 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Document } from './helpers/couch-dom.mjs';
 import {
+  ACTOR_FAMILIES,
+  ACTOR_CASTS,
+  ACTOR_VISUALS,
+  actorDefinition,
+  actorVisual,
+  actorFieldGuide,
+  actorCapability,
+} from '../hunt/actor-catalog.mjs';
+import {
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
 } from '../../optional-practice/civilian-fpv/flight-fullscreen.mjs';
@@ -190,6 +199,41 @@ test('SIM selector projection stays inside existing optional executable and styl
       bytes.toString().includes(`simGlobalData['${name}']`),
       `${name} uses the same canonical export as the remaining runtime.`,
     );
+  assert.match(
+    bytes.toString(),
+    /import\s*\*\s*as simGlobalActorCatalog from\s*['"]\.\.\/\.\.\/game\/hunt\/actor-catalog\.mjs['"]/,
+    'Projected presentation reuses the already shipped immutable actor catalog.',
+  );
+  assert.doesNotMatch(bytes.toString(), /modules\[['"]game\/hunt\/actor-catalog\.mjs['"]\]/);
+  for (const name of ['ACTOR_CASTS', 'resolveActorFamily', 'actorDefinition', 'actorVisual'])
+    assert.ok(bytes.toString().includes(`simGlobalActorCatalog['${name}']`));
+});
+
+test('shared presentation catalog values stay deeply immutable and retain exact lookup capabilities', () => {
+  const frozen = (value) => {
+    if (!value || typeof value !== 'object') return;
+    assert.ok(Object.isFrozen(value));
+    Object.values(value).forEach(frozen);
+  };
+  for (const values of [ACTOR_FAMILIES, ACTOR_CASTS, ACTOR_VISUALS]) frozen(values);
+  for (const family of ACTOR_FAMILIES) {
+    assert.equal(actorDefinition(family.id), family);
+    for (const cast of ACTOR_CASTS) {
+      const visual = actorVisual(family.id, cast.id);
+      assert.ok(ACTOR_VISUALS.includes(visual));
+      assert.equal(actorVisual(visual.id), visual);
+      assert.throws(() => (visual.palette.coat = '#ffffff'), TypeError);
+    }
+    for (const locale of ['en', 'uk']) frozen(actorFieldGuide(family.id, locale));
+  }
+  assert.equal(actorDefinition('still'), actorDefinition('lookout'));
+  for (const family of ['guard', 'relay-warden'])
+    assert.equal(actorCapability(family, 'flight'), null);
+  for (const invalid of [null, {}, '__proto__', 'constructor', 'unregistered']) {
+    assert.equal(actorDefinition(invalid), null);
+    assert.equal(actorVisual(invalid), null);
+    assert.equal(actorFieldGuide(invalid), null);
+  }
 });
 
 test('offline selector locale admission covers both languages, plural counts and exact-owner errors', async () => {
