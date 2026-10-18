@@ -80,6 +80,7 @@ test('direct Start prepares a paused board without browsing other mission owners
       requests.push(String(path));
     },
   });
+  assert.equal(page.win.RevealLineSoloPerformance, undefined);
   const run = page.rendered.run;
   await start(page);
   assert.equal(page.rendered.run, run);
@@ -95,6 +96,7 @@ test('direct Start prepares a paused board without browsing other mission owners
     await start(page);
     assert.equal(page.rendered.run, run);
   }
+  assert.equal(page.win.RevealLineSoloPerformance, undefined);
   assert.deepEqual(page.errors, []);
 });
 test(
@@ -713,3 +715,127 @@ test('the actual public diagnostic export rejects active play before inspecting 
   );
   assert.equal(ownerReads, 0);
 });
+
+test('actual frame entry distinguishes asynchronous Start, external Pause and interruption work', async (t) => {
+  const page = await soloPage(t, {
+    pictures,
+    fetchResponse,
+    search: '?journey=opening&performance=1',
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+  });
+  await start(page);
+  page.$('pause-button').click();
+  const first = page.win.RevealLineSoloPerformance.export();
+  // settle() can submit the first active callback before start() returns.
+  const firstActive = first.recentFrames.find((row) => row.workPhase === 'playing');
+  assert(firstActive, 'The first active callback must remain in the bounded recent ring');
+  assert.equal(firstActive.phase, 'preparing');
+  assert.equal(first.recentFrames.at(-1).workPhase, 'playing');
+  const playingFrames = first.callbackWork.phases.playing.work.count;
+  assert(playingFrames >= 1);
+  page.frame(16);
+  const external = page.win.RevealLineSoloPerformance.export();
+  assert.equal(external.recentFrames.at(-1).phase, 'playing');
+  assert.equal(external.recentFrames.at(-1).workPhase, 'paused');
+  assert.equal(external.callbackWork.phases.playing.work.count, playingFrames);
+  await start(page);
+  const tick = page.rendered.run.tick;
+  page.frame(251);
+  const interrupted = page.win.RevealLineSoloPerformance.export();
+  assert.equal(page.doc.body.dataset.flightState, 'paused');
+  assert.equal(page.rendered.run.tick, tick);
+  assert.equal(interrupted.recentFrames.at(-1).phase, 'playing');
+  assert.equal(interrupted.recentFrames.at(-1).workPhase, 'playing');
+  assert.equal(interrupted.recentFrames.at(-1).intervalMs, 251);
+  assert.equal(interrupted.interruptions.count, 1);
+  assert.equal(interrupted.phases.playing.frames.maxMs, 251);
+  assert.equal(interrupted.callbackWork.attributedFrameCount, interrupted.frames.count);
+  assert.equal(interrupted.callbackWork.unattributedFrameCount, 0);
+  assert.deepEqual(page.errors, []);
+});
+
+test('actual POST_RENDER keeps its entry phase and does not publish an abandoned partial callback', async (t) => {
+  const page = await soloPage(t, {
+    pictures,
+    fetchResponse,
+    search: '?journey=opening&performance=1',
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+  });
+  await start(page);
+  page.frame(16, { beforeRender: () => page.$('pause-button').click() });
+  const pausedDuringRender = page.win.RevealLineSoloPerformance.export();
+  assert.equal(pausedDuringRender.recentFrames.at(-1).workPhase, 'playing');
+  assert.equal(pausedDuringRender.phase, 'paused');
+  const count = pausedDuringRender.frames.count;
+  page.frame(16, { dispatchRender: false });
+  assert.equal(page.win.RevealLineSoloPerformance.export().frames.count, count);
+  page.frame(16);
+  const complete = page.win.RevealLineSoloPerformance.export();
+  assert.equal(complete.frames.count, count + 1);
+  assert.equal(complete.recentFrames.at(-1).workPhase, 'paused');
+  assert.equal(complete.callbackWork.attributedFrameCount, complete.frames.count);
+  assert.deepEqual(page.errors, []);
+});
+
+test(
+  'earned victory keeps its playing callback work separate from the first result callback',
+  { timeout: 60000 },
+  async (t) => {
+    const { rows } = JSON.parse(
+      await readFile(new URL('./fixtures/candidate-solo-tuned-host-routes.json', import.meta.url)),
+    );
+    const [levelId, , , , segments] = rows[0];
+    const page = await soloPage(t, {
+      pictures,
+      fetchResponse,
+      search: '?journey=opening&performance=1',
+      storage: memoryStorage({
+        [JOURNEY_PREFERENCES_KEY]: JSON.stringify({
+          format: 'JourneyPreferencesV1',
+          difficulty: 'standard',
+        }),
+      }),
+      journeyIndexedDB: managedIndexedDB().indexedDB,
+    });
+    await start(page);
+    const run = page.rendered.run;
+    assert.equal(run.levelId, levelId);
+    const reference = structuredClone(run);
+    const keys = { up: 'ArrowUp', right: 'ArrowRight', down: 'ArrowDown', left: 'ArrowLeft' };
+    earned: for (const [direction, ticks] of segments) {
+      if (direction !== null) {
+        page.key(keys[direction]);
+        page.key(keys[direction], false);
+      }
+      let pending = 0;
+      for (let tick = 0; tick < ticks; tick++) {
+        stepRun(reference, { direction }, FIXED_DT);
+        pending++;
+        const closure = reference.events.some((event) => event.type === 'capture.stopped');
+        if (closure || pending === 12 || tick === ticks - 1) {
+          page.frame(pending * FIXED_DT * 1000);
+          pending = 0;
+          if (run.status === 'won') break earned;
+          if (closure && tick < ticks - 1) {
+            page.key(keys[direction]);
+            page.key(keys[direction], false);
+          }
+        }
+      }
+    }
+    assert.equal(run.status, 'won');
+    assert.deepEqual(authoritativeCheckpoint(run), authoritativeCheckpoint(reference));
+    const won = page.win.RevealLineSoloPerformance.export();
+    assert.equal(won.recentFrames.at(-1).phase, 'playing');
+    assert.equal(won.recentFrames.at(-1).workPhase, 'playing');
+    assert.equal(won.callbackWork.phases.result.work.count, 0);
+    const checkpoint = authoritativeCheckpoint(run);
+    page.frame(16);
+    const result = page.win.RevealLineSoloPerformance.export();
+    assert.equal(result.recentFrames.at(-1).phase, 'playing');
+    assert.equal(result.recentFrames.at(-1).workPhase, 'result');
+    assert.equal(result.callbackWork.phases.result.work.count, 1);
+    assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
+    assert.deepEqual(page.errors, []);
+  },
+);
