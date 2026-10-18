@@ -564,3 +564,62 @@ test('warm and Retry retain the complete failed-reviewed predecessor cohorts wit
     }
   }
 });
+
+test('every invoked native display adapter installs and verifies its Ubuntu display tools before use', () => {
+  const displaySetup = (text, lane) => {
+    const job = body(text, lane);
+    // A sparse entry alone is not an invocation of this adapter.
+    const commands = job.replace(/^            \/.*\n/gm, '');
+    if (!/scripts\/solo-remote-(?:touch|demo|lifecycle|offline)\.mjs/.test(commands)) return null;
+    const steps = job.split(/\n      - name: /).slice(1);
+    const install = steps.find((step) => step.includes('playwright" install --with-deps '));
+    assert(install, lane + ': missing browser dependency step');
+    const required = [
+      'timeout --signal=TERM --kill-after=10s 120s sudo env DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y x11-utils',
+      'for tool in xvfb-run Xvfb xauth xdpyinfo; do test -x "/usr/bin/$tool"; done',
+      'timeout 10s /usr/bin/xdpyinfo -version',
+    ];
+    for (const command of required)
+      assert(install.includes(command), lane + ': missing display dependency ' + command);
+    assert(install.indexOf(required[0]) < install.indexOf(required[1]));
+    assert(install.indexOf(required[1]) < install.indexOf(required[2]));
+    assert.match(
+      install,
+      /\} 2>&1 \| head -c 4194304 > "\$RUNNER_TEMP\/solo-linux-setup\/browser-dependencies\.log"/,
+    );
+    const use = steps.findIndex((step) =>
+      /node scripts\/run-solo-remote-correctness\.mjs/.test(step),
+    );
+    assert(use > steps.indexOf(install), lane + ': display dependency must precede native use');
+    return required;
+  };
+  const jobsStart = workflow.indexOf('\njobs:\n');
+  assert(jobsStart >= 0);
+  const lanes = [...workflow.slice(jobsStart).matchAll(/^  ([A-Za-z_][A-Za-z0-9_-]*):$/gm)].map(
+    (match) => match[1],
+  );
+  const observed = [];
+  for (const lane of lanes) {
+    const required = displaySetup(workflow, lane);
+    if (!required) continue;
+    observed.push(lane);
+    const job = body(workflow, lane);
+    for (const command of required) {
+      assert.equal(job.split(command).length, 2);
+      assert.throws(
+        () => displaySetup(workflow.replace(job, job.replace(command, '')), lane),
+        /missing display dependency/,
+      );
+    }
+    const late = job
+      .replace(required[0], '')
+      .replace(required[2], required[2] + '\n' + required[0]);
+    assert.throws(() => displaySetup(workflow.replace(job, late), lane));
+  }
+  for (const lane of ['touch', 'demo-recovery', 'demo-resources'])
+    assert(observed.includes(lane), lane + ': expected display adapter invocation');
+  assert(
+    !observed.includes('lifecycle'),
+    'Current lifecycle uses sustained, not the legacy display adapter',
+  );
+});
