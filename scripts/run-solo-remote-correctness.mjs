@@ -215,7 +215,8 @@ export function darwinKnownNonBrowserProcessWitness(row, before, all, owned, lea
     (row?.argv === '/bin/ps' && row.ppid > 1) ||
     ((row?.argv === '/usr/libexec/thermald' ||
       row?.argv ===
-        '/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService') &&
+        '/System/Library/Frameworks/Metal.framework/Versions/A/XPCServices/MTLCompilerService.xpc/Contents/MacOS/MTLCompilerService' ||
+      row?.argv === '/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/CVMServer') &&
       row.ppid === 1 &&
       row.parentUniqueId === '1' &&
       row.pgid === row.pid);
@@ -984,7 +985,9 @@ async function main() {
             ? 'auxiliary'
             : plan.format === 'SoloHostedDemoActivePlanV1'
               ? 'demo-active'
-              : plan.format === 'SoloHostedDemoRecoveryPlanV1'
+              : ['SoloHostedDemoRecoveryPlanV1', 'SoloHostedDemoResourcePlanV1'].includes(
+                    plan.format,
+                  )
                 ? 'demo'
                 : plan.format === 'SoloHostedRasterPlanV1'
                   ? 'raster'
@@ -1060,7 +1063,9 @@ async function main() {
             : extension === 'demo-active'
               ? 'SoloHostedDemoScopedRafCohortV1'
               : extension === 'demo'
-                ? 'SoloHostedDemoRecoveryCohortV1'
+                ? plan.format === 'SoloHostedDemoResourcePlanV1'
+                  ? 'SoloHostedDemoResourceCohortV1'
+                  : 'SoloHostedDemoRecoveryCohortV1'
                 : extension === 'raster'
                   ? 'SoloHostedNativeRasterCohortV1'
                   : extension === 'worker-diagnostic'

@@ -1,0 +1,108 @@
+{
+  "format": "SoloRuntime73EarnedRasterSourceCompatibilityV1",
+  "candidate": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+  "tree": "ea30e68636b3342f8e60664a79d425e11e27ff1e",
+  "records": [
+    {
+      "path": "game/core",
+      "equal": true,
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+          "type": "tree",
+          "bytes": 1387,
+          "sha256": "98799192e18457c8d049de8bbfd56277883ac04cc390503d85d90cdcf34c64d1"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+          "type": "tree",
+          "bytes": 1387,
+          "sha256": "98799192e18457c8d049de8bbfd56277883ac04cc390503d85d90cdcf34c64d1"
+        }
+      ]
+    },
+    {
+      "path": "game/replay.mjs",
+      "equal": true,
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "fa473c568bec333395636541cc82fe3dd8b597f6",
+          "type": "blob",
+          "bytes": 33108,
+          "sha256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "fa473c568bec333395636541cc82fe3dd8b597f6",
+          "type": "blob",
+          "bytes": 33108,
+          "sha256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "equal": true,
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+          "type": "blob",
+          "bytes": 64882,
+          "sha256": "ce86a96a38d9fc636ef11bd4cb7ff469b7592d8b25f0c695f646ebfbcb9f1798"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+          "type": "blob",
+          "bytes": 64882,
+          "sha256": "ce86a96a38d9fc636ef11bd4cb7ff469b7592d8b25f0c695f646ebfbcb9f1798"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/input.mjs",
+      "equal": true,
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "0fa14480cab5c615165f8cc432bf0d34a2189733",
+          "type": "blob",
+          "bytes": 18973,
+          "sha256": "cc86bb1180e5138fe43308d55ce4d08fda38a25b6fe5e0f10f7b337f60877c49"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "0fa14480cab5c615165f8cc432bf0d34a2189733",
+          "type": "blob",
+          "bytes": 18973,
+          "sha256": "cc86bb1180e5138fe43308d55ce4d08fda38a25b6fe5e0f10f7b337f60877c49"
+        }
+      ]
+    },
+    {
+      "path": "docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture",
+      "equal": true,
+      "sources": [
+        {
+          "revision": "de3324607c82787c1a1fec9c13d4f8b5cb74cee4",
+          "object": "9c85154e05e84f70a28f7ea6a9705c9530991810",
+          "type": "blob",
+          "bytes": 3425,
+          "sha256": "f645e2f2d07571e0a5423ab15ec72f365e5658fea6dc844bb30934411daf119d"
+        },
+        {
+          "revision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+          "object": "9c85154e05e84f70a28f7ea6a9705c9530991810",
+          "type": "blob",
+          "bytes": 3425,
+          "sha256": "f645e2f2d07571e0a5423ab15ec72f365e5658fea6dc844bb30934411daf119d"
+        }
+      ]
+    }
+  ],
+  "scope": "Exact unchanged core/replay/render/input and legal raster recipe. App/gallery/access changes require fresh native execution; no inferred raster result."
+}

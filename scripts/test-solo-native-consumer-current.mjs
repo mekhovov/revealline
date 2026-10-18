@@ -17,9 +17,9 @@ const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const workflow = (await read(workflowPath)).toString();
 const plans = {
-  correctness: 'docs/performance/solo-remote-73a345-correctness-plan.json',
+  correctness: 'docs/performance/solo-remote-73a345-correctness-tooling-plan.json',
   sustained: 'docs/performance/solo-next-geometric-de332-tooling-plan.json',
-  raster: 'docs/performance/solo-remote-de332-earned-raster-plan.json',
+  raster: 'docs/performance/solo-remote-73a345-earned-raster-plan.json',
   'hud-cpu': 'docs/performance/solo-first-victory-cpu-de332-plan.json',
 };
 const historicalToolingPlans = {
@@ -195,9 +195,15 @@ function manualAdmission(text, name, jobMinutes, stepMinutes) {
   );
   assert.match(body, /4620s node scripts\/run-solo-remote-correctness\.mjs/);
   assert.match(body, /SOLO_TOOLING_REVISION: \$\{\{ github.sha \}\}/);
-  assert.match(
-    body,
-    /solo-shared-source-checkout\.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 de3324607c82787c1a1fec9c13d4f8b5cb74cee4 2954fef5b0f1293ff2e6a97ce978a673dddaa7db/,
+  const candidate =
+    name === 'raster'
+      ? '73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e'
+      : 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4 2954fef5b0f1293ff2e6a97ce978a673dddaa7db';
+  assert(
+    body.includes(
+      'solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 ' +
+        candidate,
+    ),
   );
   assert.equal((body.match(/if: \$\{\{ always\(\) \}\}/g) ?? []).length, 2);
   assert(body.includes(`bind-plan ${plans[name]}`));
@@ -213,7 +219,7 @@ function manualAdmission(text, name, jobMinutes, stepMinutes) {
 test('new fixed lanes require deliberate main dispatch and preserve native, retention and setup bounds', () => {
   assert.match(
     workflow,
-    /options: \[first-eight, next, cocoa, raster, hud-cpu, readiness, touch\]/,
+    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,?\s*\]/,
   );
   assert.match(workflow, /cancel-in-progress: false/);
   for (const [name, jobMinutes, stepMinutes] of [

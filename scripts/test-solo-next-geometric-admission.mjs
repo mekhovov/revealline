@@ -33,6 +33,7 @@ const historicalChangedPaths = new Set([
   'scripts/solo-qualification-next-route.mjs',
   'scripts/qualify-solo-runtime.mjs',
   'scripts/solo-owned-resource-assessment.mjs',
+  'scripts/solo-qualification-hitch-journal.mjs',
 ]);
 const witnessPath = 'docs/performance/fixtures/solo-next-geometric/e1cc-execution-source.json';
 const validateExecutionWitness = (bytes, manifestBytes, workflowBytes) => {
@@ -371,7 +372,7 @@ test('concrete package, tools and one-shot workflow retain exact independent ide
   );
   const witnessBytes = await readFile(join(root, witnessPath));
   const witnessed = validateExecutionWitness(witnessBytes, manifestBytes, workflowBytes);
-  assert.equal(witnessed.size, 7);
+  assert.equal(witnessed.size, 8);
   for (const ref of refs) {
     const prior = witnessed.get(ref.path);
     assert.deepEqual(
