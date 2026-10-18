@@ -943,6 +943,9 @@ export function attachSoundtrackPanel({
     ),
   );
   onlineArchive.classList.add('soundtrack-online-card');
+  const playButton = button('play', localizedMessage('interface:playMusic2'), () =>
+    controlMusic(() => (musicSession ? musicSession.play() : player.play()), true),
+  );
   const transport = section(
     localizedMessage('interface:nowPlaying'),
     now,
@@ -952,9 +955,7 @@ export function attachSoundtrackPanel({
       button('previous', localizedMessage('common:actions.previous'), () =>
         controlMusic(() => player.previous()),
       ),
-      button('play', localizedMessage('interface:playMusic2'), () =>
-        controlMusic(() => (musicSession ? musicSession.play() : player.play()), true),
-      ),
+      playButton,
       button('pause', localizedMessage('interface:pauseMusic'), () =>
         controlMusic(() => (musicSession ? musicSession.pause() : player.pause())),
       ),
@@ -966,6 +967,127 @@ export function attachSoundtrackPanel({
     volume.field,
   );
   transport.classList.add('soundtrack-now-card');
+  // Playback recovery owns its own caption: library/save feedback must not
+  // replace a failure before the player resolves or dismisses it.
+  let playbackFailure = null,
+    observedFailure = null,
+    retryingPlayback = false;
+  const recoveryViews = [];
+  function recoveryView(id, parent, returnTarget) {
+    const root = node('section', id, null, {
+      class: 'soundtrack-recovery',
+      'aria-labelledby': `soundtrack-${id}-title`,
+    });
+    root.hidden = true;
+    const title = node('h3', `${id}-title`, localizedMessage('interface:musicRecovery.title'));
+    const detail = node('p', `${id}-detail`, null, { role: 'status', 'aria-live': 'polite' });
+    const retry = button(
+      `${id}-retry`,
+      localizedMessage('interface:musicRecovery.retry'),
+      async () => {
+        if (disposed || retryingPlayback || !playbackFailure) return;
+        retryingPlayback = true;
+        renderRecovery();
+        // controlMusic invokes play before awaiting so Retry retains browser activation.
+        try {
+          await controlMusic(() => (musicSession ? musicSession.play() : player.play()), true);
+        } finally {
+          retryingPlayback = false;
+          if (!disposed) {
+            update();
+            renderRecovery();
+          }
+        }
+      },
+    );
+    const quiet = button(
+      `${id}-quiet`,
+      localizedMessage('interface:musicRecovery.quiet'),
+      async () => {
+        await controlMusic(() => (musicSession ? musicSession.pause() : player.pause()));
+        if (!disposed && !player.snapshot().desired) clearPlaybackFailure();
+      },
+    );
+    const dismiss = button(
+      `${id}-dismiss`,
+      localizedMessage('interface:musicRecovery.dismiss'),
+      () => clearPlaybackFailure(),
+    );
+    root.append(title, detail, row(retry, quiet, dismiss));
+    parent.append(root);
+    recoveryViews.push({ root, detail, retry, returnTarget });
+  }
+  function clearPlaybackFailure() {
+    playbackFailure = null;
+    renderRecovery();
+  }
+  function renderRecovery() {
+    for (const view of recoveryViews) {
+      // Capture before hiding: a native browser can immediately blur the button.
+      const focused = doc.activeElement;
+      const ownedFocus = view.root.contains(focused);
+      view.root.hidden = !playbackFailure;
+      const failure = playbackFailure;
+      localizedText(view.detail, () =>
+        failure
+          ? t('interface:musicRecovery.detail', {
+              error: message(failure.error),
+            })
+          : '',
+      );
+      // Keep Retry focused while pending; duplicate activation is guarded above.
+      view.retry.setAttribute('aria-disabled', String(retryingPlayback));
+      localizedText(view.retry, () =>
+        t(retryingPlayback ? 'interface:musicRecovery.retrying' : 'interface:musicRecovery.retry'),
+      );
+      if (
+        !playbackFailure &&
+        ownedFocus &&
+        !doc.hidden &&
+        doc.hasFocus?.() !== false &&
+        (doc.activeElement === focused || doc.activeElement === doc.body)
+      ) {
+        const target = view.returnTarget();
+        if (target && !target.disabled && !target.closest?.('[hidden],[inert]'))
+          target.focus({ preventScroll: true });
+      }
+    }
+  }
+  function updateRecovery(snapshot) {
+    const previous = playbackFailure;
+    const failure =
+      snapshot.status === 'error'
+        ? {
+            error: snapshot.error || t('interface:thisTrackCouldNotBePlayed'),
+            track: snapshot.track?.id,
+          }
+        : null;
+    if (
+      failure &&
+      (!observedFailure ||
+        failure.error !== observedFailure.error ||
+        failure.track !== observedFailure.track)
+    )
+      playbackFailure = failure;
+    observedFailure = failure;
+    if (snapshot.playing && snapshot.status === 'playing') playbackFailure = null;
+    if (playbackFailure !== previous) renderRecovery();
+  }
+  recoveryView('playback-recovery', transport, () => (dialog.open ? playButton : null));
+  if (settingsRoot)
+    recoveryView('settings-playback-recovery', settingsRoot, () =>
+      dialog.open
+        ? null
+        : [...settingsRoot.querySelectorAll('button')].find(
+            (control) =>
+              !control.disabled &&
+              !control.hidden &&
+              !control.closest?.('[hidden],[inert]') &&
+              (typeof control.getClientRects !== 'function' ||
+                control.getClientRects().length > 0) &&
+              !recoveryViews.some(({ root }) => root.contains(control)),
+          ),
+    );
   // Hosts without the catalogue still expose built-in and imported playlists.
   if (!catalogue) transport.append(selection.field, useSelection);
   const tracksSelect = input('tracks', localizedMessage('interface:tracks'), {
@@ -3686,11 +3808,12 @@ export function attachSoundtrackPanel({
   }
   function update(snapshot) {
     if (disposed) return;
+    if (snapshot === undefined) snapshot = player.snapshot();
+    updateRecovery(snapshot);
     if (!dialog.open || doc.hidden) {
       clearTransportPresentation();
       return;
     }
-    if (snapshot === undefined) snapshot = player.snapshot();
     localizedText(now, () =>
       t('interface:soundtrack.nowPlaying', {
         track: snapshot.track?.title ?? t('interface:noTrackSelected'),
@@ -3929,6 +4052,7 @@ export function attachSoundtrackPanel({
     for (const unbind of bindings) unbind();
     invalidateBackup();
     dialog.remove();
+    for (const { root } of recoveryViews) root.remove();
     settingsStylesSection?.remove();
     style.remove();
   }

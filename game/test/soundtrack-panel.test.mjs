@@ -400,6 +400,214 @@ async function setup(
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
   new File([value], name, { type: 'audio/mpeg' });
 
+test('playback recovery persists through saved-setting feedback and language changes until playback succeeds', async (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  const master = createAudioMaster({ muted: true, volume: 0.4 });
+  const app = await setup(t, { settings: true, callbacks: { audioMaster: master } });
+  const saved = await app.store.read();
+  Object.assign(app.state, {
+    status: 'error',
+    playing: false,
+    desired: false,
+    error: 'This track could not be played.',
+  });
+  app.panel.update();
+  const recovery = app.node('playback-recovery');
+  assert.equal(recovery.hidden, false);
+  assert.equal(app.node('settings-playback-recovery').hidden, false);
+  app.node('master-volume').focus();
+  app.node('master-volume').value = '0.7';
+  app.node('master-volume').onchange();
+  await app.click('reload');
+  assert.match(app.node('status').textContent, /Saved library loaded/);
+  assert.equal(
+    recovery.hidden,
+    false,
+    'unrelated library success cannot erase the playback failure',
+  );
+  const focus = app.doc.activeElement;
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.match(
+      app.node('playback-recovery-detail').textContent,
+      locale === 'uk' ? /Продовж|продовжуй/ : /continue without music/,
+    );
+    assert.equal(app.doc.activeElement, focus);
+    assert.equal(recovery.hidden, false);
+  }
+  Object.assign(app.state, { status: 'loading' });
+  app.panel.update();
+  assert.equal(recovery.hidden, false, 'a retry starting is not proof of playback');
+  Object.assign(app.state, { status: 'playing', playing: true, error: null });
+  app.panel.update();
+  assert.equal(recovery.hidden, true);
+  assert.equal(app.node('settings-playback-recovery').hidden, true);
+  assert.deepEqual(await app.store.read(), saved);
+  assert.equal(master.snapshot().muted, true);
+});
+
+test('playback recovery Retry invokes the owner synchronously and restores focus after actual success', async (t) => {
+  const app = await setup(t);
+  Object.assign(app.state, {
+    status: 'error',
+    playing: false,
+    desired: false,
+    error: 'This track could not be played.',
+  });
+  app.panel.update();
+  const retry = app.node('playback-recovery-retry');
+  const recovery = app.node('playback-recovery');
+  let hidden = recovery.hidden;
+  Object.defineProperty(recovery, 'hidden', {
+    get: () => hidden,
+    set(value) {
+      hidden = value;
+      if (value && recovery.contains(app.doc.activeElement)) app.doc.activeElement.blur();
+    },
+  });
+  retry.focus();
+  let finish,
+    calls = 0;
+  app.player.play = () => {
+    calls++;
+    Object.assign(app.state, { status: 'loading', desired: true });
+    return new Promise((resolve) => {
+      finish = resolve;
+    });
+  };
+  const pending = retry.click();
+  assert.equal(calls, 1, 'play must be called before the activation handler returns');
+  assert.equal(app.node('playback-recovery').hidden, false);
+  assert.equal(app.doc.activeElement, retry);
+  assert.equal(retry.getAttribute('aria-disabled'), 'true');
+  await retry.click();
+  assert.equal(calls, 1, 'repeated retry must not replace the pending request');
+  Object.assign(app.state, { status: 'playing', playing: true, error: null });
+  finish(true);
+  await pending;
+  assert.equal(app.node('playback-recovery').hidden, true);
+  assert.equal(app.doc.activeElement, app.node('play'));
+});
+
+test('playback recovery silence is music-only and dismissal permits a later failure', async (t) => {
+  const master = createAudioMaster({ muted: false, volume: 0.4 });
+  const app = await setup(t, { settings: true, callbacks: { audioMaster: master } });
+  const saved = await app.store.read();
+  const failure = {
+    status: 'error',
+    playing: false,
+    desired: true,
+    error: 'This track could not be played.',
+  };
+  Object.assign(app.state, failure);
+  app.panel.update();
+  app.node('playback-recovery-quiet').focus();
+  await app.click('playback-recovery-quiet');
+  assert.equal(app.state.desired, false);
+  assert.deepEqual(
+    app.calls.filter(([name]) => ['pause', 'play', 'select', 'listening'].includes(name)),
+    [['pause']],
+  );
+  assert.equal(app.node('playback-recovery').hidden, true);
+  assert.equal(app.doc.activeElement, app.node('play'));
+  assert.equal(master.snapshot().muted, false);
+  assert.equal(master.snapshot().volume, 0.4);
+  assert.deepEqual(await app.store.read(), saved);
+  Object.assign(app.state, failure);
+  app.panel.update();
+  app.node('volume').focus();
+  await app.click('playback-recovery-dismiss');
+  app.panel.update();
+  assert.equal(
+    app.node('playback-recovery').hidden,
+    true,
+    'dismissed failure must not reappear on a normal update',
+  );
+  assert.equal(
+    app.doc.activeElement,
+    app.node('volume'),
+    'dismissing must not steal unrelated focus',
+  );
+  Object.assign(app.state, { status: 'loading' });
+  app.panel.update();
+  Object.assign(app.state, failure);
+  app.panel.update();
+  assert.equal(
+    app.node('playback-recovery').hidden,
+    false,
+    'a new failed attempt is actionable again',
+  );
+});
+
+test('playback recovery reaches Audio settings while the Music Player is closed and honors session ownership', async (t) => {
+  let played = 0,
+    paused = 0;
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    callbacks: {
+      musicSession: {
+        play() {
+          played++;
+          return false;
+        },
+        pause() {
+          paused++;
+          app.state.desired = false;
+          app.state.status = 'paused';
+        },
+      },
+    },
+  });
+  Object.assign(app.state, {
+    status: 'error',
+    playing: false,
+    desired: false,
+    error: 'This track could not be played.',
+  });
+  app.panel.update();
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(app.node('settings-playback-recovery').hidden, false);
+  await app.click('settings-playback-recovery-retry');
+  assert.equal(played, 1);
+  assert.equal(
+    app.node('settings-playback-recovery').hidden,
+    false,
+    'an unsuccessful retry retains the error',
+  );
+  await app.click('settings-playback-recovery-quiet');
+  assert.equal(paused, 1);
+  assert.equal(app.node('settings-playback-recovery').hidden, true);
+  assert.equal(
+    app.calls.some(([name]) => ['play', 'pause'].includes(name)),
+    false,
+  );
+});
+
+test('playback recovery preserves a deliberate focus destination during native hiding', async (t) => {
+  const app = await setup(t);
+  Object.assign(app.state, {
+    status: 'error',
+    playing: false,
+    desired: false,
+    error: 'This track could not be played.',
+  });
+  app.panel.update();
+  const recovery = app.node('playback-recovery');
+  app.node('playback-recovery-dismiss').focus();
+  let hidden = recovery.hidden;
+  Object.defineProperty(recovery, 'hidden', {
+    get: () => hidden,
+    set(value) {
+      hidden = value;
+      if (value) app.node('volume').focus();
+    },
+  });
+  await app.click('playback-recovery-dismiss');
+  assert.equal(recovery.hidden, true);
+  assert.equal(app.doc.activeElement, app.node('volume'));
+});
+
 function onlineCatalogueFixture() {
   const definitions = [
     ['1'.repeat(64), 'Night Circuit', 'Signal Artist', 'Synth collection', ['synth', 'electronic']],
@@ -2363,7 +2571,10 @@ test('Audio settings expose streamed styles and play a selected style without op
       !app.node('settings-play-styles').disabled,
     'the settings catalogue preload',
   );
-  assert.equal(app.settingsRoot.children.length, 1);
+  assert.equal(app.settingsRoot.children.length, 2);
+  assert.ok(app.settingsRoot.children[0].contains(app.node('settings-play-styles')));
+  assert.equal(app.settingsRoot.children[1], app.node('settings-playback-recovery'));
+  assert.equal(app.node('settings-playback-recovery').hidden, true);
   assert.match(app.settingsRoot.textContent, /Music styles/);
   assert.match(app.settingsRoot.textContent, /Ukrainian · UA/);
   assert.match(app.settingsRoot.textContent, /ФПВ/);
