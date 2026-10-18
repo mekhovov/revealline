@@ -5906,5 +5906,11 @@
   "flightLimits.recordingWarning": "Recording and new recoverable saves end at 30 minutes of play. Pause and check Flight saves before leaving the game.",
   "flightLimits.collectionWarning": "Approaching two hours of play: a later completion cannot be kept in the Classic collection. Pause and check Flight saves.",
   "flightLimits.collectionExpired": "The two-hour Classic collection limit has passed. This flight can continue, but its completion cannot be kept in the Classic collection. Earlier progress is unchanged.",
+  "musicRecovery.title": "Music could not load",
+  "musicRecovery.detail": "{{error}} Retry, or continue without music. Sound effects and your saved music choices stay unchanged.",
+  "musicRecovery.retry": "Retry music",
+  "musicRecovery.retrying": "Retrying music…",
+  "musicRecovery.quiet": "Continue without music",
+  "musicRecovery.dismiss": "Dismiss message",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }

@@ -49,6 +49,26 @@
     gap: 8px;
     align-items: center;
   }
+  .soundtrack-recovery {
+    min-width: 0;
+    margin-block: 12px;
+    padding: 12px;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+  }
+  .soundtrack-recovery[hidden] {
+    display: none;
+  }
+  .soundtrack-recovery h3 {
+    margin: 0 0 8px;
+  }
+  .soundtrack-recovery p {
+    overflow-wrap: anywhere;
+  }
+  .soundtrack-recovery button {
+    min-height: 44px;
+    white-space: normal;
+  }
   .soundtrack-columns {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
