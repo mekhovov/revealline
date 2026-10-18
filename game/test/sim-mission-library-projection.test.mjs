@@ -25,7 +25,7 @@ const entries = Array.from({ length: 24 }, (_, index) => ({
   diagram: { width: 24, height: 16, course: index },
 }));
 
-function fixture(t) {
+function fixture(t, storage = null) {
   const document = new Document(),
     launched = [],
     painted = [],
@@ -52,7 +52,7 @@ function fixture(t) {
     document,
     library,
     supportedModes: ['solo'],
-    goalPreferenceOptions: { editionId: 'sim-worlds', getStorage: () => null },
+    goalPreferenceOptions: { editionId: 'sim-worlds', getStorage: () => storage },
     renderPreview({ container, diagram, row, mode, document: doc }) {
       assert.equal(doc, document);
       assert.equal(mode, 'solo');
@@ -112,6 +112,41 @@ test('projected preview services are lazy, disposable and retire stale filtered 
   assert.equal(f.document.activeElement, f.opener);
 });
 
+for (const initial of [null, '{"format":"future","missionId":"keep-me"}'])
+  test(`projected goal preference ${initial === null ? 'round-trips its exact owner' : 'preserves unsupported saved data'}`, (t) => {
+    let raw = initial,
+      writes = 0;
+    const storage = {
+      getItem: () => raw,
+      setItem(key, value) {
+        assert.equal(key, 'revealline.mission-goal.v1.sim-worlds.solo');
+        raw = value;
+        writes++;
+      },
+    };
+    const f = fixture(t, storage),
+      row = f.chooser.elements.list.children[0];
+    row.focus();
+    f.document.getElementById('journey-goal-pin').click();
+    assert.deepEqual(f.launched, [], 'Saving a preference never launches a mission.');
+    if (initial === null) {
+      assert.equal(writes, 1);
+      assert.deepEqual(JSON.parse(raw), {
+        format: 'revealline-mission-goal.v1',
+        editionId: 'sim-worlds',
+        mode: 'solo',
+        missionId: row.dataset.missionId,
+      });
+      f.chooser.close();
+      f.chooser.open(f.opener);
+      assert.equal(f.document.getElementById('journey-goal-find').disabled, false);
+      assert.equal(writes, 1, 'Reopening reads the same preference without rewriting it.');
+    } else {
+      assert.equal(raw, initial);
+      assert.equal(writes, 0);
+    }
+  });
+
 test('SIM selector projection stays inside existing optional executable and stylesheet slots', async () => {
   const file = 'optional-practice/civilian-fpv/flight-fullscreen.mjs',
     bytes = await readFile(new URL('../../' + file, import.meta.url));
@@ -140,6 +175,21 @@ test('SIM selector projection stays inside existing optional executable and styl
     /modules\[['"]game\/ui\/mission-library-browser\.mjs['"]\]/.test(bytes.toString()),
     'SIM uses the projected canonical browser implementation.',
   );
+  assert.match(
+    bytes.toString(),
+    /import\s*\*\s*as simGlobalData from\s*['"]\.\.\/\.\.\/game\/data-json\.mjs['"]/,
+    'Projected preferences share the already shipped canonical JSON boundary.',
+  );
+  assert.doesNotMatch(
+    bytes.toString(),
+    /modules\[['"]game\/data-json\.mjs['"]\]/,
+    'No second validator implementation is embedded in the finite source budget.',
+  );
+  for (const name of ['boundedJSON', 'dataIdentity', 'exactKeys', 'required', 'stableId'])
+    assert.ok(
+      bytes.toString().includes(`simGlobalData['${name}']`),
+      `${name} uses the same canonical export as the remaining runtime.`,
+    );
 });
 
 test('offline selector locale admission covers both languages, plural counts and exact-owner errors', async () => {

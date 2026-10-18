@@ -12,8 +12,8 @@ const check = process.argv.includes('--check');
 if (process.argv.slice(2).some((arg) => arg !== '--check')) throw new Error('Use [--check].');
 const read = (file) => readFile(path.join(root, file), 'utf8');
 // Project canonical preference/view modules into an existing optional package slot.
-// Module closures preserve private state; shared i18n, themes and actor
-// preferences stay external so appearance controls and renderers share one owner.
+// Module closures preserve private state; shared i18n, themes, actor preferences
+// and the already shipped JSON boundary remain external rather than duplicated.
 async function projectGlobalServices() {
   const entries = {
     'game/mission-library/library.mjs': {
@@ -61,7 +61,6 @@ async function projectGlobalServices() {
     'game/ui/movement-audio.mjs',
     'game/ui/radio-audio.mjs',
     'game/ui/celebration.mjs',
-    'game/data-json.mjs',
     'game/profile-storage.mjs',
     'game/profile-database.mjs',
     'game/hunt/actor-art.mjs',
@@ -77,6 +76,7 @@ async function projectGlobalServices() {
     'game/ui/level-card.mjs',
   ]);
   const external = new Map([
+    ['game/data-json.mjs', 'simGlobalData'],
     ['game/i18n/index.mjs', 'simGlobalI18n'],
     ['game/presentation/theme-system.mjs', 'simGlobalThemes'],
     ['game/hunt/preferences.mjs', 'simGlobalActorPreferences'],
