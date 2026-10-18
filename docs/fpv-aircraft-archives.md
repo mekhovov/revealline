@@ -6,11 +6,16 @@ recording identities, or the physical trajectory of a flight.
 
 ## Player behavior
 
-Aircraft practice starts a local archive after its worker and terrain are ready.
+A fresh aircraft practice session starts a local archive after its first accepted
+flight progress.
+Preparing a session, switching aircraft or restarting without flying creates no
+persistent archive.
 The pause screen lists saved sessions and their durable time range. **Finish current
 archive** pauses flight, captures the accepted final segment, and closes the archive.
-Resuming continues the flight without silently opening a second archive. Starting
-another flight or recovering a checkpoint creates a separate archive.
+Resuming continues the flight without silently opening a second archive. A new
+flight creates its separate archive after accepted progress. Recovery with
+retained flown history can immediately create a separate checkpoint-origin
+archive; restoring an exact starting checkpoint alone does not.
 
 Players can export, import, verify, or explicitly delete a selected local archive.
 Verification runs in a separate worker, reports progress, and can be cancelled.
