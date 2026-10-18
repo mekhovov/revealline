@@ -180,13 +180,13 @@ test('PR1578 is admitted on only the reviewed before edge; manual inputs cannot 
     ref: 'refs/heads/main',
   };
   assert.equal(evaluate(manual, { lane: 'first-eight' }), true);
-  for (const lane of ['next', 'arbitrary', '', undefined])
+  for (const lane of ['next', 'cocoa', 'arbitrary', '', undefined])
     assert.equal(evaluate(manual, { lane }), false);
   assert.equal(
     evaluate({ ...manual, ref: 'refs/heads/arbitrary' }, { lane: 'first-eight' }),
     false,
   );
-  assert.match(workflow, /options: \[first-eight, next\]/);
+  assert.match(workflow, /options: \[first-eight, next, cocoa\]/);
   const inputBlock = workflow.split('  workflow_dispatch:\n')[1].split('\npermissions:')[0];
   assert.deepEqual(
     [...inputBlock.matchAll(/^      ([a-z_-]+):$/gm)].map((x) => x[1]),

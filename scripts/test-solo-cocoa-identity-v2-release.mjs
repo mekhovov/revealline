@@ -19,35 +19,107 @@ const { MP3_COCOA_CONTROL, nativeOwnerPreflightComplete } = await import(
   pathToFileURL(resolve(root, 'scripts/solo-native-mp3-control.mjs'))
 );
 const expectedPaths = original.currentInputs.map((row) => row.path);
-function currentInputs(plan, inputs) {
+const executedWitnessPath =
+  'docs/performance/fixtures/solo-cocoa-identity/3e640-executed-source.json';
+const executedWitnessBytes = await read(executedWitnessPath);
+const declarationBytes = await read(planPath);
+const workflowBytes = await read(workflowPath);
+const executedInventoryPath = 'scripts/test-solo-darwin-process-inventory.mjs';
+// Only this already executed declaration is read through its immutable source
+// witness. A prospective consumer must still admit its actual current inputs.
+function executedInputs(
+  plan,
+  bytes = executedWitnessBytes,
+  declaration = declarationBytes,
+  workflow = workflowBytes,
+) {
+  assert.equal(bytes.length, 4360);
+  assert.equal(sha(bytes), '46c931d1e997e22ff66a7022196687b35a60453c108a98876c416c792bad5cdb');
+  const witness = JSON.parse(bytes);
+  assert.equal(witness.format, 'SoloCocoaExecutedSourceV1');
+  assert.equal(witness.sourceRevision, '3e640259d0b39b5d00c044f541208bd56260ab6c');
+  assert.equal(witness.sourceTree, '0d8e6535ac6a2a458d7a1080ce1f8a81ba130da2');
+  assert.equal(witness.run, 39096176027);
+  assert.equal(witness.artifact, 12125060656);
+  assert.equal(witness.status, 'failed-hosted-owner-contract-browser-media-withheld');
+  assert.deepEqual(witness.contracts, { tests: 97, pass: 92, fail: 1, skipped: 4 });
+  assert.equal(witness.fullBeforeAndAllInventoriesRetained, false);
+  assert.equal(witness.retrospectiveOwnershipPass, false);
+  assert.equal(witness.records.length, 11);
+  const refs = new Map(witness.records.map((row) => [row.path, row]));
+  assert.equal(refs.size, 11);
   assert.equal(plan.format, 'SoloNativeCocoaIdentityReleaseV2');
   assert.deepEqual(
     plan.currentInputs.map((row) => row.path),
     expectedPaths,
   );
   for (const ref of plan.currentInputs) {
-    const bytes = inputs.get(ref.path);
-    assert(bytes, ref.path);
-    assert.equal(bytes.length, ref.bytes, ref.path);
-    assert.equal(sha(bytes), ref.sha256, ref.path);
+    const original = refs.get(ref.path);
+    assert(original, ref.path);
+    assert.match(original.gitBlob, /^[a-f0-9]{40}$/);
+    assert.deepEqual(ref, { path: original.path, bytes: original.bytes, sha256: original.sha256 });
   }
+  for (const [path, input] of [
+    [planPath, declaration],
+    [workflowPath, workflow],
+  ]) {
+    const ref = refs.get(path);
+    assert(ref, path);
+    assert.equal(input.length, ref.bytes, path);
+    assert.equal(sha(input), ref.sha256, path);
+  }
+  assert.deepEqual(refs.get(executedInventoryPath), {
+    path: 'scripts/test-solo-darwin-process-inventory.mjs',
+    gitBlob: '6bdbf9e43e49ca2e75b8c31d2f510f85523c01cb',
+    bytes: 63461,
+    sha256: '17ac5d2319db177e4c04b0d26f89fe6bfae0c62f91ddcba35a931187776aabf9',
+  });
+  return witness;
 }
-test('V2 separately freezes every actual current Cocoa input without rebinding the executed V1', async () => {
-  const inputs = new Map(
-    await Promise.all(expectedPaths.map(async (path) => [path, await read(path)])),
-  );
-  currentInputs(manifest, inputs);
+test('executed3e640 V2 preserves actual source inputs and missing-map failure without rebinding', () => {
+  executedInputs(manifest);
   for (const path of expectedPaths) {
-    const missing = new Map(inputs);
-    missing.delete(path);
-    assert.throws(() => currentInputs(manifest, missing));
-    const changed = new Map(inputs);
-    changed.set(path, Buffer.concat([inputs.get(path), Buffer.from(' ')]));
-    assert.throws(() => currentInputs(manifest, changed));
-    const plan = structuredClone(manifest);
-    plan.currentInputs.find((ref) => ref.path === path).sha256 = '0'.repeat(64);
-    assert.throws(() => currentInputs(plan, inputs));
+    const changed = structuredClone(manifest);
+    changed.currentInputs.find((row) => row.path === path).sha256 = '0'.repeat(64);
+    assert.throws(() => executedInputs(changed));
+    const missing = structuredClone(manifest);
+    missing.currentInputs = missing.currentInputs.filter((row) => row.path !== path);
+    assert.throws(() => executedInputs(missing));
   }
+  for (const mutate of [
+    (w) => (w.sourceRevision = '0'.repeat(40)),
+    (w) => (w.sourceTree = '0'.repeat(40)),
+    (w) => w.run++,
+    (w) => (w.retrospectiveOwnershipPass = true),
+    (w) => (w.fullBeforeAndAllInventoriesRetained = true),
+    (w) => (w.contracts.fail = 0),
+    (w) =>
+      w.records.splice(
+        w.records.findIndex((row) => row.path === executedInventoryPath),
+        1,
+      ),
+    (w) => (w.records.find((row) => row.path === executedInventoryPath).sha256 = '0'.repeat(64)),
+  ]) {
+    const witness = JSON.parse(executedWitnessBytes);
+    mutate(witness);
+    assert.throws(() => executedInputs(manifest, Buffer.from(JSON.stringify(witness))));
+  }
+  assert.throws(() => executedInputs(manifest, Buffer.from('{}')));
+  assert.throws(() =>
+    executedInputs(
+      manifest,
+      executedWitnessBytes,
+      Buffer.concat([declarationBytes, Buffer.from(' ')]),
+    ),
+  );
+  assert.throws(() =>
+    executedInputs(
+      manifest,
+      executedWitnessBytes,
+      declarationBytes,
+      Buffer.concat([workflowBytes, Buffer.from(' ')]),
+    ),
+  );
 });
 function previousAttempt(plan) {
   const previous = plan.previousAttempt;
