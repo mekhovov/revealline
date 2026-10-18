@@ -234,3 +234,59 @@ test('actual preparation adapters reject changed current bytes before package ad
     assert.equal(effects, 0);
   }
 });
+
+test('every job executing shared preparation controls retains the complete cross-lane read set', async () => {
+  const required = new Set([
+    workflowPath,
+    'scripts/test-solo-native-consumer-preparation.mjs',
+    'docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json',
+  ]);
+  for (const lane of Object.keys(lanes)) {
+    const value = await manifest(lane);
+    required.add(lanes[lane].path);
+    for (const ref of [
+      ...value.adapterInputs,
+      ...value.frozenTools,
+      value.fixture,
+      ...(value.additionalFixtures ?? []),
+    ])
+      required.add(ref.path);
+  }
+  const check = (text, lane) => {
+    const body = text.split('\n  ' + lane + ':\n')[1]?.split(/\n  [A-Za-z_][A-Za-z0-9_-]*:\n/)[0];
+    assert(body, lane);
+    const commands = [...body.matchAll(/^\s*node (--test [^\n]+)$/gm)];
+    if (
+      !commands.some((match) =>
+        match[1].trim().split(/\s+/).includes('scripts/test-solo-native-consumer-preparation.mjs'),
+      )
+    )
+      return false;
+    const sparse = new Set([...body.matchAll(/^            \/(.+)$/gm)].map((match) => match[1]));
+    for (const path of required)
+      assert(sparse.has(path), lane + ': missing shared preparation read ' + path);
+    return true;
+  };
+  const jobsStart = workflow.indexOf('\njobs:\n');
+  assert(jobsStart >= 0);
+  const jobNames = [...workflow.slice(jobsStart).matchAll(/^  ([A-Za-z_][A-Za-z0-9_-]*):$/gm)].map(
+    (match) => match[1],
+  );
+  const observed = [];
+  for (const lane of jobNames) {
+    if (!check(workflow, lane)) continue;
+    observed.push(lane);
+    const body = workflow
+      .split('\n  ' + lane + ':\n')[1]
+      .split(/\n  [A-Za-z_][A-Za-z0-9_-]*:\n/)[0];
+    for (const path of required) {
+      const entry = '            /' + path + '\n';
+      assert.equal(body.split(entry).length, 2);
+      assert.throws(
+        () => check(workflow.replace(body, body.replace(entry, '')), lane),
+        /missing shared preparation read/,
+      );
+    }
+  }
+  for (const lane of Object.keys(lanes)) assert(observed.includes(lane));
+});
