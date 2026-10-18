@@ -10,6 +10,14 @@ This plan replaces the earlier roadmap, retains **F01–F81**, and incorporates 
 
 **Execution authorized: 18 October 2026.** Current implementation, evidence, priorities and remaining work are recorded in [the live progress board](progress.md) and [structured tracker](progress.json). Existing local work remains preserved. Physical-device qualification is pending because no iPhone or Steam Deck is available.
 
+**Implementation review update:** F83a is merged; six feature PRs are in review. F75, F11a and the core F15b slice are next. The detailed board distinguishes source delivery, browser evidence, deployed acceptance and hardware qualification.
+
+- **F75:** the 30-minute recording cap and the two-hour legacy collection validator have different owners. Authored Journey completion uses separate events; do not imply that every Journey loses progress at two hours.
+- **F82/F14:** the committed package passes desktop missing-module recovery, explicit repair and offline Home startup after full worker activation. Core-only preparation leaves selected Journey artwork unavailable, so full offline gameplay remains unqualified. Readiness must report these separately. A test that removed files during worker activation was invalid and is excluded.
+- **F11a:** include actual backup members and exclusions, using the current Journey export owner added by merged PR #1608. The older domain backup set alone does not cover Journey.
+- **F15b:** current display/input owners already handle several save failures. The first independent fix targets continuous-play settings, where a failed write is silent and an unrelated tab change can erase unsaved intent. Wider and Demo-dependent integration remains tracked.
+- **Delivery:** default package size exceeds the main Pages budget; the prepared deployment inventory must be measured separately. Do not relax limits or delete historical assets to turn this into a pass.
+
 ### Changes from the previous plan
 
 | Change                                                              | Reason                                                                                                                                                                                                    |
@@ -23,7 +31,9 @@ This plan replaces the earlier roadmap, retains **F01–F81**, and incorporates 
 | Clarify **F28** coverage                                            | Shared touch placement and FPV’s separate dual-stick controls are different deliverables.                                                                                                                 |
 | Clarify **F68** native scope                                        | The current bounded native candidate is simulator-only. Full-game distribution needs a separate content-delivery assessment.                                                                              |
 
-### Evidence and limits
+### Audit evidence and limits
+
+This table records the initial audit. Subsequent implementation evidence and exact candidate identities are maintained on the live progress board.
 
 | Area                     | Current evidence                                                                                                                              | Interpretation                                                                                             |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
