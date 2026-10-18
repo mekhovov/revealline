@@ -510,9 +510,9 @@ export async function runFocusedCommandsParallel(
         if (
           !Number.isSafeInteger(commandTimeoutMs) ||
           commandTimeoutMs < 1 ||
-          commandTimeoutMs > 0xffffffff
+          commandTimeoutMs > 0x7fffffff
         )
-          throw new RangeError('Focused command timeout must be a positive 32-bit integer.');
+          throw new RangeError('Focused command timeout must be a positive signed 32-bit integer.');
         const child = spawnChild(command.command, command.args, {
           cwd: root,
           stdio: 'inherit',
