@@ -1,0 +1,202 @@
+{
+  "format": "revealline-exact-source-milestone-audit.v1",
+  "observedAt": "2026-10-18T21:30:38.748104+00:00",
+  "source": {
+    "revision": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+    "tree": "4bd51f0d0b846063e030372d6873ca029852e697"
+  },
+  "scope": {
+    "completed": "All four actual source command shards now succeeded; this last shard retains full npm validation and 22 replay diagnostic passes.",
+    "skip": "One existing exact-Node-patch reproduction control is skipped by its unchanged explicit process.version !== 'v22.13.1' guard in this source lane. It is not a pass. Earlier exact-head replay-source29/29 is separate evidence.",
+    "pending": [
+      "Focused aggregate117794314851",
+      "release-ready",
+      "native trace execution"
+    ],
+    "noClaims": [
+      "No native or performance qualification",
+      "Overlapping inherited test executions are not unique totals"
+    ]
+  },
+  "integrity": {
+    "allApiSizesAndDigestsMatched": true,
+    "allZipMemberCRCsVerified": true,
+    "exactHeadTreeAndPolicyManifestReceiptsVerified": true
+  },
+  "priorRetainedAudits": [
+    "3306985fba57853eed04f2e49cb5c1d78c32b457",
+    "3cbce96bdd860e3ea35a6deb58741fcc260c844f"
+  ],
+  "records": [
+    {
+      "run": 39156220119,
+      "job": {
+        "id": 117775089354,
+        "name": "focused_shards (2)",
+        "status": "completed",
+        "conclusion": "success",
+        "started_at": "2026-10-18T21:16:58Z",
+        "completed_at": "2026-10-18T21:25:49Z"
+      },
+      "artifact": {
+        "id": 12151187007,
+        "name": "focused-shard-39156220119-1-2",
+        "size_in_bytes": 4602,
+        "digest": "sha256:1e096984865ed679e890447ffcd35a7da753aacf06ad1543959cca453864bcf7",
+        "expired": false,
+        "expires_at": "2026-10-25T21:25:47Z"
+      },
+      "members": [
+        {
+          "name": "output.log",
+          "bytes": 10461,
+          "sha256": "c5910e47e5084610d0aaad6df3f7c37864864921434f6169041c59297a2430e0"
+        },
+        {
+          "name": "receipt.json",
+          "bytes": 2682,
+          "sha256": "977747f9c67ec7a843bee4158b3f9590af832eddef33f906629d14c7022c442e"
+        }
+      ],
+      "receipt": {
+        "format": "revealline-focused-shard.v1",
+        "state": "complete",
+        "shard": {
+          "index": 2,
+          "total": 4
+        },
+        "identity": {
+          "sourceRevision": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+          "workflowRevision": "46c917d2f52cf59140f3eaee327ba9238709b0a6",
+          "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+          "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+          "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+          "changedPathsSha256": "a5f22daf56e46a748560aa673a6c7522d073ebb2e9f4fccd76088b25176c3b22",
+          "fallbackHandled": false,
+          "sourceTree": "4bd51f0d0b846063e030372d6873ca029852e697"
+        },
+        "plan": {
+          "commands": [
+            {
+              "id": "publishing-controller",
+              "command": "node",
+              "args": [
+                "--test",
+                "publishing/focused-tests.test.mjs",
+                "publishing/fastline-merge-controller.test.mjs",
+                "publishing/fastline-release-inputs.test.mjs",
+                "publishing/fastline-release-objects.test.mjs",
+                "publishing/fastline-release-publisher.test.mjs",
+                "publishing/source-workflow.test.mjs",
+                "scripts/test-pages-capacity-evidence.mjs",
+                "scripts/test-pages-archive-evidence.mjs",
+                "scripts/test-pages-recovery.mjs",
+                "scripts/test-pages-capacity-report.mjs",
+                "scripts/test-main-pages-metadata.mjs",
+                "scripts/test-pages-candidate-contract.mjs",
+                "scripts/test-pages-candidate-overlay.mjs",
+                "scripts/test-pages-candidate-archive.mjs",
+                "scripts/test-pages-candidate-measurement.mjs",
+                "scripts/test-pages-candidate-stack.mjs",
+                "scripts/test-pages-stack-contract.mjs",
+                "scripts/test-pages-stack-source.mjs",
+                "scripts/test-pages-stack-packet.mjs",
+                "scripts/test-pages-stack-measurement.mjs",
+                "scripts/test-pages-stack-artifacts.mjs",
+                "scripts/test-pages-stack-e2e.mjs",
+                "publishing/test-policy.test.mjs"
+              ]
+            },
+            {
+              "id": "unknown-runtime-validate",
+              "command": "npm",
+              "args": [
+                "run",
+                "validate"
+              ],
+              "timeoutMs": 1800000
+            },
+            {
+              "id": "changed-test:scripts/solo-frame-trace-failure-admission.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "scripts/solo-frame-trace-failure-admission.test.mjs"
+              ]
+            },
+            {
+              "id": "changed-test:scripts/solo-frame-trace-tasks-admission.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "scripts/solo-frame-trace-tasks-admission.test.mjs"
+              ]
+            },
+            {
+              "id": "changed-test:scripts/solo-frame-trace.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "scripts/solo-frame-trace.test.mjs"
+              ]
+            },
+            {
+              "id": "changed-test:scripts/solo-replay-portability-diagnostic.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "scripts/solo-replay-portability-diagnostic.test.mjs"
+              ]
+            },
+            {
+              "id": "changed-test:scripts/solo-runtime73-measurement.test.mjs",
+              "command": "node",
+              "args": [
+                "--test",
+                "scripts/solo-runtime73-measurement.test.mjs"
+              ]
+            }
+          ],
+          "sha256": "b00f73a83b65bc480d6d92449e5a8b4af4653c6f497c9e0641cb4258a45516be"
+        },
+        "indices": [
+          1,
+          5
+        ],
+        "result": {
+          "attempted": 2,
+          "failures": [],
+          "exitCode": 0
+        }
+      },
+      "counts": {
+        "tests": [
+          23
+        ],
+        "pass": [
+          22
+        ],
+        "fail": [
+          0
+        ],
+        "cancelled": [
+          0
+        ],
+        "skipped": [
+          1
+        ],
+        "todo": [
+          0
+        ]
+      },
+      "fullOutput": "### Focused release gate\n\nCategories: publishing\nCommands: 7\nFallback validation: scripts/qualify-solo-runtime.mjs, scripts/solo-frame-trace-executed-source.mjs, scripts/solo-frame-trace-failure-admission.test.mjs, scripts/solo-frame-trace-tasks-admission.test.mjs, scripts/solo-frame-trace.test.mjs, scripts/solo-qualification-cpu-profile.mjs, scripts/solo-remote-cpu-profile.mjs, scripts/solo-replay-portability-diagnostic.mjs, scripts/solo-replay-portability-diagnostic.test.mjs, scripts/solo-runtime73-measurement.test.mjs, scripts/solo-shared-owner-declared-source.mjs, scripts/test-solo-frame-trace-admission.mjs, scripts/test-solo-native-consumer-preparation.mjs, scripts/test-solo-native-consumer-shared-demo.mjs, scripts/test-solo-readiness-rejoin-797e03.mjs, scripts/test-solo-remote-cpu-profile.mjs, scripts/test-solo-replay-portability-hook.mjs, scripts/test-solo-shared-mode-owner-admission.mjs\nFocused shard 2/4: 2/7 commands; plan b00f73a83b65bc480d6d92449e5a8b4af4653c6f497c9e0641cb4258a45516be\n\n[focused:unknown-runtime-validate] npm run validate\n\n[focused:changed-test:scripts/solo-replay-portability-diagnostic.test.mjs] node --test scripts/solo-replay-portability-diagnostic.test.mjs\nTAP version 13\n\n> revealline@0.151.1 validate\n> npm run i18n:check && node scripts/game-cli.mjs validate && node scripts/check-presentation-metadata.mjs && node scripts/refresh-fpv-reaction-runtime.mjs --check && node scripts/refresh-fpv-academy-audio.mjs --check && node scripts/refresh-fpv-play-shell.mjs --check && node scripts/refresh-fpv-presentation-assets.mjs --check && node scripts/refresh-optional-worker.mjs --check && node scripts/refresh-fpv-world-visuals.mjs --check && node scripts/produce-industrial-environments.mjs --check\n\n\n> revealline@0.151.1 i18n:check\n> node scripts/localization.mjs check\n\n# Subtest: all 31 canonical player/enemy columns are complete, with classic explicitly excluded\nok 1 - all 31 canonical player/enemy columns are complete, with classic explicitly excluded\n  ---\n  duration_ms: 6.069496\n  ...\n# Subtest: initial and late differences report the first exact sample and every changed selected field\nok 2 - initial and late differences report the first exact sample and every changed selected field\n  ---\n  duration_ms: 1.924117\n  ...\n# Subtest: sequential sampling detects transient divergence that reconverges before the final checkpoint\nok 3 - sequential sampling detects transient divergence that reconverges before the final checkpoint\n  ---\n  duration_ms: 0.991759\n  ...\n# Subtest: release-before and release-after changes are distinct from tick changes\nok 4 - release-before and release-after changes are distinct from tick changes\n  ---\n  duration_ms: 1.456415\n  ...\n# Subtest: signed zero differs in bits but not canonical checkpoint scalars; one ULP is preserved\nok 5 - signed zero differs in bits but not canonical checkpoint scalars; one ULP is preserved\n  ---\n  duration_ms: 0.792819\n  ...\n# Subtest: absent and undefined match authoritative pick semantics; null and type changes do not\nok 6 - absent and undefined match authoritative pick semantics; null and type changes do not\n  ---\n  duration_ms: 2.357236\n  ...\n# Subtest: string dictionary numbering is not mistaken for a scalar difference\nok 7 - string dictionary numbering is not mistaken for a scalar difference\n  ---\n  duration_ms: 1.087688\n  ...\n# Subtest: recording, tick, segment, actor, scalar, dictionary and reconstruction bounds fail closed\nok 8 - recording, tick, segment, actor, scalar, dictionary and reconstruction bounds fail closed\n  ---\n  duration_ms: 4.939568\n  ...\n# Subtest: reference truncation, malformed tags/payloads, frame identity and metadata overflow are rejected\nok 9 - reference truncation, malformed tags/payloads, frame identity and metadata overflow are rejected\n  ---\n  duration_ms: 2.365721\n  ...\n# Subtest: largest admitted trace remains below two MiB with all release samples and full columns\nok 10 - largest admitted trace remains below two MiB with all release samples and full columns\n  ---\n  duration_ms: 298.020807\n  ...\n# Subtest: fixed evidence contains all four exact recordings and honest retained mismatch sections\nok 11 - fixed evidence contains all four exact recordings and honest retained mismatch sections\n  ---\n  duration_ms: 29.837308\n  ...\n# Subtest: opt-in admission binds fixed recording/source/browser/Node/checkpoint and rejects changed or oversized input\nok 12 - opt-in admission binds fixed recording/source/browser/Node/checkpoint and rejects changed or oversized input\n  ---\n  duration_ms: 167.95015\n  ...\n# Subtest: native source readback and original strict checkpoint are mandatory, not diagnostic success substitutes\nok 13 - native source readback and original strict checkpoint are mandatory, not diagnostic success substitutes\n  ---\n  duration_ms: 11.400887\n  ...\n# Subtest: historical Node mirror executes its checked modules and removes all owned files\nok 14 - historical Node mirror executes its checked modules and removes all owned files\n  ---\n  duration_ms: 468.703993\n  ...\n# Subtest: changed owned Node bytes are refused after execution and still removed\nok 15 - changed owned Node bytes are refused after execution and still removed\n  ---\n  duration_ms: 72.784957\n  ...\n# Subtest: owned Node source cannot borrow a symlink to the tooling checkout\nok 16 - owned Node source cannot borrow a symlink to the tooling checkout\n  ---\n  duration_ms: 96.302562\n  ...\n# Subtest: Node reference failure removes the owned mirror without importing a fallback\nok 17 - Node reference failure removes the owned mirror without importing a fallback\n  ---\n  duration_ms: 163.865694\n  ...\n# Subtest: historical Node catalog, borrowed modules, closure and source identity cannot be repinned\nok 18 - historical Node catalog, borrowed modules, closure and source identity cannot be repinned\n  ---\n  duration_ms: 53.107939\n  ...\n# Subtest: exact original Node patch reproduces all four retained final mismatches before any trace comparison\nok 19 - exact original Node patch reproduces all four retained final mismatches before any trace comparison # SKIP\n  ---\n  duration_ms: 0.309728\n  ...\n# Subtest: companion leaves the exact executed native verifier byte-identical\nok 20 - companion leaves the exact executed native verifier byte-identical\n  ---\n  duration_ms: 2.90711\n  ...\n# Subtest: companion rejects malformed opt-in before native effects and never resets the owner budget\nok 21 - companion rejects malformed opt-in before native effects and never resets the owner budget\n  ---\n  duration_ms: 8.551525\n  ...\n# Subtest: actual companion body keeps strict failure and diagnostic errors/timeouts separate and closes trace owner\nok 22 - actual companion body keeps strict failure and diagnostic errors/timeouts separate and closes trace owner\n  ---\n  duration_ms: 6.777376\n  ...\n# Subtest: cleanup failure or whole-envelope overflow cannot become a completed diagnostic\nok 23 - cleanup failure or whole-envelope overflow cannot become a completed diagnostic\n  ---\n  duration_ms: 14.852191\n  ...\n1..23\n# tests 23\n# suites 0\n# pass 22\n# fail 0\n# cancelled 0\n# skipped 1\n# todo 0\n# duration_ms 1490.276453\n{\n  \"localization\": {\n    \"locales\": [\n      \"en\",\n      \"uk\"\n    ],\n    \"messages\": 13654,\n    \"references\": 9052\n  }\n}\n{\n  \"version\": \"0.151.1\",\n  \"files\": 3373,\n  \"literalReferencesValid\": true,\n  \"navigationWarnings\": [\n    \"game/downloads.html → ../app/update.html\",\n    \"game/downloads.html → ../app/\",\n    \"game/index.html → ../app/update.html\",\n    \"game/index.html → ../diagnostics/\",\n    \"site/about.html → ../releases/\",\n    \"site/about.html → ../privacy.html\",\n    \"site/about.html → ../credits.html\"\n  ],\n  \"contentSnapshots\": [\n    {\n      \"file\": \"game/content-design/whole-spatial-data.mjs\",\n      \"bytes\": 528831,\n      \"sha256\": \"e62ef45089df1bbaea04cceb932949fbe8d29377a4eeefcac8280125006495b3\"\n    }\n  ],\n  \"campaign\": \"first-signal\",\n  \"levels\": 12,\n  \"themes\": 4,\n  \"classes\": 7,\n  \"packs\": 14,\n  \"packLevels\": 89,\n  \"packGoals\": 6,\n  \"coopPacks\": 1,\n  \"coopLevels\": 2\n}\n{\"source\":{\"id\":\"field-kit\",\"revision\":104},\"bytes\":4729041,\"sha256\":\"c905cab9ce4519379d57bdecf3ef02146b44d5a2ad82430a3939b2d2fc00f617\",\"formatting\":\"bounded-canonical\"}\n{\"status\":\"verified-byte-identical\",\"modules\":32,\"recordings\":24,\"bytes\":920458}\n{\"status\":\"verified-byte-identical\",\"modules\":13,\"externalModules\":1,\"bytes\":122545,\"target\":\"optional-practice/civilian-fpv/sim-presentation.mjs\"}\n{\"status\":\"verified-byte-identical\",\"sourceSha256\":\"c72c76aff2abf1bb486d89a7377176e11c5c6d1f6de191b5a672d6e9f1fc55c2\",\"bytes\":287136,\"packageSlotsAdded\":0}\n{\"status\":\"verified-byte-identical\",\"assets\":{\"ui\":{\"source\":\"game/ui/fonts/field-kit/exo2-ui-400-600.woff2\",\"bytes\":76652,\"sha256\":\"fce2dc8f15375b66d336c1defbca23dfb2310301b62c822206a0a013d19601ef\",\"license\":\"OFL-1.1\"},\"pixel\":{\"source\":\"game/ui/fonts/departure-mono/DepartureMono-Regular.woff2\",\"bytes\":22496,\"sha256\":\"5b4fed1daa90708aa9c6ee1190abca9dc22164a1c1def0020386e46b61038cfb\",\"license\":\"OFL-1.1\"},\"mono\":{\"source\":\"game/ui/fonts/field-kit/ibm-plex-mono-500.woff2\",\"bytes\":40080,\"sha256\":\"0498bcb48294756b5ac9062290e1639e907b1ec69b5dc2e8cfdec3fab58e0bc8\",\"license\":\"OFL-1.1\"},\"display\":{\"source\":\"game/ui/fonts/field-kit/handjet-display-600.woff2\",\"bytes\":38120,\"sha256\":\"4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145\",\"license\":\"OFL-1.1\"},\"focus\":{\"source\":\"game/audio/effects/focus.wav\",\"bytes\":2924,\"sha256\":\"0eb2a24d7e17e79c6d2b4dc4c1be57ba0622d2e3e8e177999c12eb18c54d3256\",\"license\":\"CC0-1.0\"},\"confirm\":{\"source\":\"game/audio/effects/confirm.wav\",\"bytes\":5864,\"sha256\":\"52f084b9648ccd970891996c7ccdabb796dcd33c0a6d4a420bb70e51daef9bf1\",\"license\":\"CC0-1.0\"},\"cancel\":{\"source\":\"game/audio/effects/cancel.wav\",\"bytes\":3948,\"sha256\":\"d59b933dbe794b9d36f962c8505513f3a85a30a6c2c3e2ed1d6895769d0a2616\",\"license\":\"CC0-1.0\"}}}\n{\"status\":\"verified-byte-identical\",\"source\":\"optional-practice/worker-source.mjs\",\"sourceSha256\":\"1ca98dcf144a3faea89f15ae158ed17dce522b319cd82fdff7890d6ebf6ef095\",\"bytes\":7243,\"packageSlotsAdded\":0}\n{\"status\":\"verified-byte-identical\",\"source\":\"optional-practice/civilian-fpv/world-visuals-source.mjs\",\"sourceSha256\":\"3902d7308e38f1b776b8799ad0640ec60461a6137b06a1ed059f001079ea94fc\",\"bytes\":122616,\"packageSlotsAdded\":0}\n{\"files\":16,\"sourceRows\":852,\"roomRows\":276,\"roomPreparations\":756,\"moduleBytes\":422824,\"packageBytes\":13837091,\"decodedBytesPerChapterMax\":3072}\n"
+    }
+  ],
+  "skipGuardSource": {
+    "path": "scripts/solo-replay-portability-diagnostic.test.mjs",
+    "bytes": 26201,
+    "sha256": "34b9c33fc9f68560234b1ee7603307dc4653ad4506eece33dff264c5e2abe0a9",
+    "guard": "process.version !== 'v22.13.1'"
+  },
+  "metadataClarifies": "78f4ff93afd7476e75908341e6234c2f3dc118eb"
+}

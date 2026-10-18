@@ -1,0 +1,359 @@
+{
+  "format": "RevealLineFocusedSourceShardAuditV1",
+  "observedAt": "2026-10-18T21:20:00.504937+00:00",
+  "scope": "Exact-head source shard4 only; other source shards and full Appearance/build/native acceptance remain separate.",
+  "artifact": {
+    "id": 12150847067,
+    "node_id": "MDg6QXJ0aWZhY3QxMjE1MDg0NzA2Nw==",
+    "name": "focused-shard-39159253296-1-4",
+    "size_in_bytes": 3036,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150847067",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150847067/zip",
+    "expired": false,
+    "digest": "sha256:3b3be17ddcc07782107c222260a20c7d776042883cb54b773f41d477cd89fa82",
+    "created_at": "2026-10-18T21:16:48Z",
+    "updated_at": "2026-10-18T21:16:48Z",
+    "expires_at": "2026-10-25T21:16:47Z",
+    "workflow_run": {
+      "id": 39159253296,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "codex/solo-missions-stage-observation",
+      "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+    }
+  },
+  "crcVerified": true,
+  "job": {
+    "id": 117775831108,
+    "run_id": 39159253296,
+    "workflow_name": "Validate source for continuous main",
+    "head_branch": "codex/solo-missions-stage-observation",
+    "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159253296",
+    "run_attempt": 1,
+    "node_id": "CR_kwDOUYDvKM8AAAAba_yQRA",
+    "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117775831108",
+    "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159253296/job/117775831108",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-10-18T20:03:53Z",
+    "started_at": "2026-10-18T21:13:52Z",
+    "completed_at": "2026-10-18T21:16:51Z",
+    "name": "focused_shards (4)",
+    "steps": [
+      {
+        "name": "Set up job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 1,
+        "started_at": "2026-10-18T21:13:52Z",
+        "completed_at": "2026-10-18T21:13:54Z"
+      },
+      {
+        "name": "Check out exact pull-request source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 2,
+        "started_at": "2026-10-18T21:13:54Z",
+        "completed_at": "2026-10-18T21:15:16Z"
+      },
+      {
+        "name": "Check out trusted focused-gate automation",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 3,
+        "started_at": "2026-10-18T21:15:16Z",
+        "completed_at": "2026-10-18T21:15:20Z"
+      },
+      {
+        "name": "Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 4,
+        "started_at": "2026-10-18T21:15:20Z",
+        "completed_at": "2026-10-18T21:15:26Z"
+      },
+      {
+        "name": "Download the immutable preflight path inventory",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 5,
+        "started_at": "2026-10-18T21:15:26Z",
+        "completed_at": "2026-10-18T21:15:27Z"
+      },
+      {
+        "name": "Capture the reviewed changed-path set",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 6,
+        "started_at": "2026-10-18T21:15:27Z",
+        "completed_at": "2026-10-18T21:15:27Z"
+      },
+      {
+        "name": "Select the fail-closed focused gate",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 7,
+        "started_at": "2026-10-18T21:15:27Z",
+        "completed_at": "2026-10-18T21:15:27Z"
+      },
+      {
+        "name": "Verify exact tracked source before commands",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 8,
+        "started_at": "2026-10-18T21:15:27Z",
+        "completed_at": "2026-10-18T21:15:47Z"
+      },
+      {
+        "name": "Install dependencies once for selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 9,
+        "started_at": "2026-10-18T21:15:47Z",
+        "completed_at": "2026-10-18T21:15:49Z"
+      },
+      {
+        "name": "Install pinned authoring dependencies for selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 10,
+        "started_at": "2026-10-18T21:15:49Z",
+        "completed_at": "2026-10-18T21:15:49Z"
+      },
+      {
+        "name": "Run selected focused gates",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 11,
+        "started_at": "2026-10-18T21:15:49Z",
+        "completed_at": "2026-10-18T21:16:27Z"
+      },
+      {
+        "name": "Verify exact tracked source after commands",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 12,
+        "started_at": "2026-10-18T21:16:27Z",
+        "completed_at": "2026-10-18T21:16:47Z"
+      },
+      {
+        "name": "Retain available focused shard evidence",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 13,
+        "started_at": "2026-10-18T21:16:47Z",
+        "completed_at": "2026-10-18T21:16:48Z"
+      },
+      {
+        "name": "Post Set up Node.js",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 24,
+        "started_at": "2026-10-18T21:16:48Z",
+        "completed_at": "2026-10-18T21:16:48Z"
+      },
+      {
+        "name": "Post Check out trusted focused-gate automation",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 25,
+        "started_at": "2026-10-18T21:16:48Z",
+        "completed_at": "2026-10-18T21:16:48Z"
+      },
+      {
+        "name": "Post Check out exact pull-request source",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 26,
+        "started_at": "2026-10-18T21:16:48Z",
+        "completed_at": "2026-10-18T21:16:48Z"
+      },
+      {
+        "name": "Complete job",
+        "status": "completed",
+        "conclusion": "success",
+        "number": 27,
+        "started_at": "2026-10-18T21:16:48Z",
+        "completed_at": "2026-10-18T21:16:48Z"
+      }
+    ],
+    "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117775831108",
+    "labels": [
+      "ubuntu-latest"
+    ],
+    "runner_id": 1000042797,
+    "runner_name": "GitHub Actions 1000042797",
+    "runner_group_id": 0,
+    "runner_group_name": "GitHub Actions"
+  },
+  "receipt": {
+    "format": "revealline-focused-shard.v1",
+    "state": "complete",
+    "shard": {
+      "index": 4,
+      "total": 4
+    },
+    "identity": {
+      "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+      "workflowRevision": "513669732b51e55eafe734a431156057a4e6c5a9",
+      "policyDigest": "bcf086e4c2b0afdd22172d0b0611b902cea3a5f693da0788b836a9de141c2142",
+      "testPolicySha256": "ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2",
+      "manifestSha256": "d1a31d978ed26e2d7ee16492eef01d862fcf81a06658e581be7261cdde5f9479",
+      "changedPathsSha256": "951e8622285fe187e62710684d8813c05a16ce13d8eb3467bb09bfa8367a00c7",
+      "fallbackHandled": false,
+      "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48"
+    },
+    "plan": {
+      "commands": [
+        {
+          "id": "publishing-controller",
+          "command": "node",
+          "args": [
+            "--test",
+            "publishing/focused-tests.test.mjs",
+            "publishing/fastline-merge-controller.test.mjs",
+            "publishing/fastline-release-inputs.test.mjs",
+            "publishing/fastline-release-objects.test.mjs",
+            "publishing/fastline-release-publisher.test.mjs",
+            "publishing/source-workflow.test.mjs",
+            "scripts/test-pages-capacity-evidence.mjs",
+            "scripts/test-pages-archive-evidence.mjs",
+            "scripts/test-pages-recovery.mjs",
+            "scripts/test-pages-capacity-report.mjs",
+            "scripts/test-main-pages-metadata.mjs",
+            "scripts/test-pages-candidate-contract.mjs",
+            "scripts/test-pages-candidate-overlay.mjs",
+            "scripts/test-pages-candidate-archive.mjs",
+            "scripts/test-pages-candidate-measurement.mjs",
+            "scripts/test-pages-candidate-stack.mjs",
+            "scripts/test-pages-stack-contract.mjs",
+            "scripts/test-pages-stack-source.mjs",
+            "scripts/test-pages-stack-packet.mjs",
+            "scripts/test-pages-stack-measurement.mjs",
+            "scripts/test-pages-stack-artifacts.mjs",
+            "scripts/test-pages-stack-e2e.mjs",
+            "publishing/test-policy.test.mjs"
+          ]
+        },
+        {
+          "id": "company-generated-source-and-media",
+          "command": "npm",
+          "args": [
+            "run",
+            "company:check"
+          ]
+        },
+        {
+          "id": "company-runtime-and-publication",
+          "command": "npm",
+          "args": [
+            "run",
+            "company:test"
+          ],
+          "timeoutMs": 2700000
+        },
+        {
+          "id": "company-review-measurements",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-company-review.mjs"
+          ]
+        },
+        {
+          "id": "edition-appearance-contracts",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/actor-appearance-pin.test.mjs",
+            "game/test/actor-appearance-lease.test.mjs",
+            "game/test/replay-presentation.test.mjs",
+            "game/test/replay-actor-context.test.mjs"
+          ]
+        },
+        {
+          "id": "edition-persistence-compatibility",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/installed-app.test.mjs",
+            "game/test/profile-transfer.test.mjs",
+            "game/test/profile-channel-reader.test.mjs",
+            "scripts/test-offline-publication.mjs"
+          ]
+        },
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": [
+            "run",
+            "validate"
+          ],
+          "timeoutMs": 1800000
+        },
+        {
+          "id": "changed-test:game/test/mission-library-stage-observation.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/mission-library-stage-observation.test.mjs"
+          ]
+        },
+        {
+          "id": "changed-test:game/test/performance-session.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/performance-session.test.mjs"
+          ]
+        },
+        {
+          "id": "changed-test:scripts/solo-pages-smoke.test.mjs",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/solo-pages-smoke.test.mjs"
+          ]
+        }
+      ],
+      "sha256": "ce21cad841913feed6f0a68411fc87ff1b9e870cc8d509ba0168be8ac3904639"
+    },
+    "indices": [
+      3,
+      7
+    ],
+    "result": {
+      "attempted": 2,
+      "failures": [],
+      "exitCode": 0
+    }
+  },
+  "output": "### Focused release gate\n\nCategories: publishing, company-editions\nCommands: 10\nFallback validation: game/mission-library/multiplayer-expeditions.mjs, game/test/mission-library-stage-observation.test.mjs, game/test/performance-session.test.mjs, game/ui/mission-library-browser.mjs, game/ui/performance-session.mjs, scripts/run-solo-pages-smoke.mjs, scripts/solo-pages-smoke.mjs, scripts/solo-pages-smoke.test.mjs, scripts/test-appearance-preview-policy.mjs\nFocused shard 4/4: 2/10 commands; plan ce21cad841913feed6f0a68411fc87ff1b9e870cc8d509ba0168be8ac3904639\n\n[focused:company-review-measurements] node --test scripts/test-company-review.mjs\n\n[focused:changed-test:game/test/mission-library-stage-observation.test.mjs] node --test game/test/mission-library-stage-observation.test.mjs\nTAP version 13\nTAP version 13\n# Subtest: review targets stay on the same server and never navigate outside a company player\nok 1 - review targets stay on the same server and never navigate outside a company player\n  ---\n  duration_ms: 1.017568\n  ...\n# Subtest: review viewport has independent bounded width and height\nok 2 - review viewport has independent bounded width and height\n  ---\n  duration_ms: 0.454407\n  ...\n# Subtest: frame summaries retain slow frames, reject invalid samples and do not fabricate empty measurements\nok 3 - frame summaries retain slow frames, reject invalid samples and do not fabricate empty measurements\n  ---\n  duration_ms: 0.150577\n  ...\n# Subtest: resource counts retain cached/zero-transfer entries without presenting them as network downloads\nok 4 - resource counts retain cached/zero-transfer entries without presenting them as network downloads\n  ---\n  duration_ms: 0.106141\n  ...\n# Subtest: observer requires enabled successful bootstrap and consecutive visible ready frames; slow readiness is not a passing timing\nok 5 - observer requires enabled successful bootstrap and consecutive visible ready frames; slow readiness is not a passing timing\n  ---\n  duration_ms: 1.734121\n  ...\n# Subtest: 20-second observations retain the original label and identify animation callbacks without granting qualification\nok 6 - 20-second observations retain the original label and identify animation callbacks without granting qualification\n  ---\n  duration_ms: 6.618226\n  ...\n# Subtest: shared Solo redirect observes real boot, pictures, activation and flight state without legacy nodes\nok 7 - shared Solo redirect observes real boot, pictures, activation and flight state without legacy nodes\n  ---\n  duration_ms: 4.325729\n  ...\n# Subtest: measurement can be armed while Solo is paused and never starts or resumes the game itself\nok 8 - measurement can be armed while Solo is paused and never starts or resumes the game itself\n  ---\n  duration_ms: 6.421197\n  ...\n# Subtest: focus interruption discards an active sample even when the game resumes before the next RAF\nok 9 - focus interruption discards an active sample even when the game resumes before the next RAF\n  ---\n  duration_ms: 1.929577\n  ...\n# Subtest: arming excludes an activation RAF timestamp from before preparation but retains later long frames\nok 10 - arming excludes an activation RAF timestamp from before preparation but retains later long frames\n  ---\n  duration_ms: 2.525377\n  ...\n# Subtest: review layout reports vertical overflow and applies the selected landscape height\nok 11 - review layout reports vertical overflow and applies the selected landscape height\n  ---\n  duration_ms: 0.71445\n  ...\n# Subtest: review layout distinguishes native scroll access from unreachable overflow and fixed descendants\nok 12 - review layout distinguishes native scroll access from unreachable overflow and fixed descendants\n  ---\n  duration_ms: 0.855373\n  ...\n# Subtest: paused, hidden and navigated samples are discarded and a full reload detaches the old observer\nok 13 - paused, hidden and navigated samples are discarded and a full reload detaches the old observer\n  ---\n  duration_ms: 0.890556\n  ...\n# Subtest: same-origin redirects are revalidated and old controls stay disabled for inaccessible documents\nok 14 - same-origin redirects are revalidated and old controls stay disabled for inaccessible documents\n  ---\n  duration_ms: 0.438583\n  ...\n# Subtest: frame arrays, retained observations and layout detail stay bounded\nok 15 - frame arrays, retained observations and layout detail stay bounded\n  ---\n  duration_ms: 41.2713\n  ...\n# Subtest: hidden mission preparation and Resource Timing resets cannot become invented successful request counts\nok 16 - hidden mission preparation and Resource Timing resets cannot become invented successful request counts\n  ---\n  duration_ms: 0.553436\n  ...\n1..16\n# tests 16\n# suites 0\n# pass 16\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 126.6665\n# Subtest: actual ordinary Missions remains uninstrumented with the same paused run and no diagnostic sink\nok 1 - actual ordinary Missions remains uninstrumented with the same paused run and no diagnostic sink\n  ---\n  duration_ms: 11548.283464\n  ...\n# Subtest: actual first-open sources, render and reopen produce bounded stage records without granting runtime authority\nok 2 - actual first-open sources, render and reopen produce bounded stage records without granting runtime authority\n  ---\n  duration_ms: 8764.990002\n  ...\n# Subtest: actual cancelled first-open cannot stamp a newer overlapping open when its held fetch resolves\nok 3 - actual cancelled first-open cannot stamp a newer overlapping open when its held fetch resolves\n  ---\n  duration_ms: 8300.677349\n  ...\n# Subtest: actual metadata failure retains a failed prefix and the existing public Retry path\nok 4 - actual metadata failure retains a failed prefix and the existing public Retry path\n  ---\n  duration_ms: 8554.272368\n  ...\n1..4\n# tests 4\n# suites 0\n# pass 4\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 37651.429436\n",
+  "members": [
+    {
+      "name": "output.log",
+      "bytes": 5879,
+      "sha256": "8e09395325a8ef777c9590e2503e68b20c94bc6ce18c9541e30474b140fd10de"
+    },
+    {
+      "name": "receipt.json",
+      "bytes": 3132,
+      "sha256": "30d4123e8265c0ba81f0738575de3261710ed36e6ada1fe3f262d71d6f293adc"
+    }
+  ],
+  "results": [
+    {
+      "index": 3,
+      "commandId": "company-review-measurements",
+      "tests": 16,
+      "pass": 16
+    },
+    {
+      "index": 7,
+      "commandId": "changed-test:game/test/mission-library-stage-observation.test.mjs",
+      "tests": 4,
+      "pass": 4
+    }
+  ]
+}

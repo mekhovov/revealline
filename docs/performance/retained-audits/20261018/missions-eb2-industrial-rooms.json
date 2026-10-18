@@ -1,0 +1,314 @@
+{
+  "at": "2026-10-18T21:16:02.875317+00:00",
+  "runId": 39159252989,
+  "head": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+  "scope": "Completed exact-head software regressions only; remaining cohorts and all native/performance gates are separate.",
+  "cohorts": [
+    {
+      "phase": "rooms",
+      "artifact": {
+        "id": 12150736713,
+        "node_id": "MDg6QXJ0aWZhY3QxMjE1MDczNjcxMw==",
+        "name": "industrial-rooms-eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "size_in_bytes": 6945,
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150736713",
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12150736713/zip",
+        "expired": false,
+        "digest": "sha256:229cfd04385be0b36cfeeb02730e3614635099e08c59b9e87c3ea16f28376aeb",
+        "created_at": "2026-10-18T21:09:22Z",
+        "updated_at": "2026-10-18T21:09:22Z",
+        "expires_at": "2026-11-01T21:09:21Z",
+        "workflow_run": {
+          "id": 39159252989,
+          "repository_id": 1367404328,
+          "head_repository_id": 1367404328,
+          "head_branch": "codex/solo-missions-stage-observation",
+          "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18"
+        }
+      },
+      "job": {
+        "id": 117768882215,
+        "run_id": 39159252989,
+        "workflow_name": "Industrial feature verification",
+        "head_branch": "codex/solo-missions-stage-observation",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159252989",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAba5KIJw",
+        "head_sha": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117768882215",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159252989/job/117768882215",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-18T19:32:46Z",
+        "started_at": "2026-10-18T21:06:48Z",
+        "completed_at": "2026-10-18T21:09:24Z",
+        "name": "feature (rooms)",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T21:06:49Z",
+            "completed_at": "2026-10-18T21:06:49Z"
+          },
+          {
+            "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T21:06:49Z",
+            "completed_at": "2026-10-18T21:07:38Z"
+          },
+          {
+            "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T21:07:38Z",
+            "completed_at": "2026-10-18T21:07:44Z"
+          },
+          {
+            "name": "Run npm ci --ignore-scripts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T21:07:44Z",
+            "completed_at": "2026-10-18T21:07:47Z"
+          },
+          {
+            "name": "Install pinned SIM host-test dependencies",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 5,
+            "started_at": "2026-10-18T21:07:47Z",
+            "completed_at": "2026-10-18T21:07:47Z"
+          },
+          {
+            "name": "Verify the phase runner and restored policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T21:07:47Z",
+            "completed_at": "2026-10-18T21:07:51Z"
+          },
+          {
+            "name": "Verify multiplayer delivery and observation tools",
+            "status": "completed",
+            "conclusion": "skipped",
+            "number": 7,
+            "started_at": "2026-10-18T21:07:51Z",
+            "completed_at": "2026-10-18T21:07:51Z"
+          },
+          {
+            "name": "Execute the feature phase on the exact PR head",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8,
+            "started_at": "2026-10-18T21:07:51Z",
+            "completed_at": "2026-10-18T21:09:21Z"
+          },
+          {
+            "name": "Retain TAP and source-bound receipts",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9,
+            "started_at": "2026-10-18T21:09:21Z",
+            "completed_at": "2026-10-18T21:09:22Z"
+          },
+          {
+            "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 17,
+            "started_at": "2026-10-18T21:09:22Z",
+            "completed_at": "2026-10-18T21:09:22Z"
+          },
+          {
+            "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 18,
+            "started_at": "2026-10-18T21:09:22Z",
+            "completed_at": "2026-10-18T21:09:22Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 19,
+            "started_at": "2026-10-18T21:09:22Z",
+            "completed_at": "2026-10-18T21:09:22Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117768882215",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000042764,
+        "runner_name": "GitHub Actions 1000042764",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      "crcVerified": true,
+      "runReceipt": {
+        "format": "revealline-industrial-test-run.v1",
+        "source": {
+          "revision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "tree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+            "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+            "files": 44776,
+            "bytes": 3407721337,
+            "aggregateSha256": "70138943a3aa182f9a64a7db31ef06ac6e6b73339c5c560c144b27d878e1c106",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "selected": "rooms",
+        "phases": [
+          "rooms"
+        ],
+        "startedAt": "2026-10-18T21:08:26.447Z",
+        "finishedAt": "2026-10-18T21:09:21.789Z",
+        "status": "passed"
+      },
+      "phaseReceipt": {
+        "format": "revealline-industrial-test-receipt.v1",
+        "phase": "rooms",
+        "startedAt": "2026-10-18T21:08:26.449Z",
+        "finishedAt": "2026-10-18T21:09:21.788Z",
+        "deadlineMs": 600000,
+        "timedOut": false,
+        "interrupted": false,
+        "executionError": null,
+        "source": {
+          "revision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+          "tree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+          "dirty": false,
+          "node": "v22.22.2",
+          "platform": "linux",
+          "arch": "x64",
+          "raw": {
+            "format": "revealline-source-identity.v1",
+            "root": "/home/runner/work/revealline/revealline",
+            "sourceRevision": "eb2a71273125eaaf0f523f74bbdb1dd299a1dc18",
+            "sourceTree": "759392eaf439256adeb19e521cac5c3585a1cc48",
+            "files": 44776,
+            "bytes": 3407721337,
+            "aggregateSha256": "70138943a3aa182f9a64a7db31ef06ac6e6b73339c5c560c144b27d878e1c106",
+            "aggregateFormat": "UTF-8 path sorted JSONL [path, Git mode, raw content SHA-256]",
+            "allTrackedSourceContentsAndModesMatch": true
+          }
+        },
+        "manifestSha256": "7fca5069d5168e75b77f2dd7051e7b99f0ab1edf7851bedfd844f10a7e0d7306",
+        "command": [
+          "node",
+          "--test",
+          "--test-reporter=tap",
+          "--test-concurrency=2",
+          "game/test/online-room-artwork.test.mjs",
+          "game/test/online-room-client.test.mjs",
+          "game/test/online-room-content.test.mjs",
+          "game/test/online-room-input.test.mjs",
+          "game/test/online-room-presentation.test.mjs",
+          "game/test/online-room-registry.test.mjs",
+          "game/test/online-room-service.test.mjs",
+          "game/test/online-room-v2.test.mjs",
+          "game/test/online-room.test.mjs",
+          "game/test/online-room-http-qualification.test.mjs",
+          "game/test/room-environment.test.mjs"
+        ],
+        "files": [
+          {
+            "file": "game/test/online-room-artwork.test.mjs",
+            "sha256": "88c15be71bb86a35b4b5815369bd5ec2d297942404e08e252a3a280eb138972d"
+          },
+          {
+            "file": "game/test/online-room-client.test.mjs",
+            "sha256": "76c40294e1289f618c47242616e2517571f2d23d9ef0e5452c935699f4e8bfb5"
+          },
+          {
+            "file": "game/test/online-room-content.test.mjs",
+            "sha256": "199d111e64765797ccf57fd704e80ac3e73c0d8f1bc9827174d2e8737d442f85"
+          },
+          {
+            "file": "game/test/online-room-input.test.mjs",
+            "sha256": "22339fb06fb9424026ea285417cb3903c1451c10440011d9d4bc378c22a994aa"
+          },
+          {
+            "file": "game/test/online-room-presentation.test.mjs",
+            "sha256": "24822ed13576d489691edb7dc3b30d05be8493b4d662367e52d903ce295ec307"
+          },
+          {
+            "file": "game/test/online-room-registry.test.mjs",
+            "sha256": "c83578b2942e5f49dabfacdeea12768b53e0f9216b65af77333bd73bf2629fb3"
+          },
+          {
+            "file": "game/test/online-room-service.test.mjs",
+            "sha256": "09f52955ed9bda862c8997ba1e8e75960b00e9cb874e75f3e5ca4f8ab9749782"
+          },
+          {
+            "file": "game/test/online-room-v2.test.mjs",
+            "sha256": "acd5bb3ee4387b6b613f740e0993b81de0e7373a4e238909d127278961d3ca0b"
+          },
+          {
+            "file": "game/test/online-room.test.mjs",
+            "sha256": "feb859efad27bb614b6ac55a68fbea7e0ca315e5940ea31bb52deea114258a8d"
+          },
+          {
+            "file": "game/test/online-room-http-qualification.test.mjs",
+            "sha256": "85f2e7ccaa66e88d4d7cc1341dd3ec4c52cdcbea75d1a25fbcc990c50ee42d7c"
+          },
+          {
+            "file": "game/test/room-environment.test.mjs",
+            "sha256": "5740a71c2bf3d4ac1403ce3c04d393e4f1669e7dd045c431fabd454b8858d293"
+          }
+        ],
+        "logSha256": "f7de5c047f4fcff09248f4ee95fb4b4702bc515853ea6daff889d566369fb821",
+        "logReadError": null,
+        "summary": {
+          "tests": 80,
+          "pass": 80,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0,
+          "exitCode": 0,
+          "signal": null,
+          "passed": true
+        },
+        "sourceUnchanged": true,
+        "sourceVerificationError": null,
+        "testedFilesUnchanged": true,
+        "passed": true,
+        "scope": "Executed software regressions only; not physical-device, artistic, human-play or public-release qualification."
+      },
+      "tap": "TAP version 13\n# Subtest: suspension retires both preparing boards without waiting for an image decode\nok 1 - suspension retires both preparing boards without waiting for an image decode\n  ---\n  duration_ms: 2.608804\n  type: 'test'\n  ...\n# Subtest: preparation deadline retires assets and rejects late construction while a new room succeeds\nok 2 - preparation deadline retires assets and rejects late construction while a new room succeeds\n  ---\n  duration_ms: 3.781449\n  type: 'test'\n  ...\n# Subtest: partial construction failure aborts sibling work and disposes every owned painter\nok 3 - partial construction failure aborts sibling work and disposes every owned painter\n  ---\n  duration_ms: 0.875626\n  type: 'test'\n  ...\n# Subtest: native room board preparation cancels raw artwork fetches and never mounts stale boards\nok 4 - native room board preparation cancels raw artwork fetches and never mounts stale boards\n  ---\n  duration_ms: 46.88288\n  type: 'test'\n  ...\n# Subtest: suspending a room releases the poll slot before the retired request settles\nok 5 - suspending a room releases the poll slot before the retired request settles\n  ---\n  duration_ms: 21.311656\n  type: 'test'\n  ...\n# Subtest: room artwork rejection releases newly allocated boards and preserves the previous owner\n    # Subtest: restore\n    ok 1 - restore\n      ---\n      duration_ms: 41.729513\n      type: 'test'\n      ...\n    # Subtest: accept\n    ok 2 - accept\n      ---\n      duration_ms: 17.097121\n      type: 'test'\n      ...\n    # Subtest: bind\n    ok 3 - bind\n      ---\n      duration_ms: 10.203194\n      type: 'test'\n      ...\n    1..3\nok 6 - room artwork rejection releases newly allocated boards and preserves the previous owner\n  ---\n  duration_ms: 70.23884\n  type: 'test'\n  ...\n# Subtest: same-page invitation navigation retires the previous room before normal pinned boot\nok 7 - same-page invitation navigation retires the previous room before normal pinned boot\n  ---\n  duration_ms: 66.759423\n  type: 'test'\n  ...\n# Subtest: late action failures preserve the terminal unavailable notice until a new seat is owned\nok 8 - late action failures preserve the terminal unavailable notice until a new seat is owned\n  ---\n  duration_ms: 24.87781\n  type: 'test'\n  ...\n# Subtest: native localhost and unapproved origins never acquire a development room endpoint\nok 9 - native localhost and unapproved origins never acquire a development room endpoint\n  ---\n  duration_ms: 0.480593\n  type: 'test'\n  ...\n# Subtest: late poll and action failures from a retired epoch cannot suspend accepted readiness\nok 10 - late poll and action failures from a retired epoch cannot suspend accepted readiness\n  ---\n  duration_ms: 25.149342\n  type: 'test'\n  ...\n# Subtest: restored seats and connection recovery need shared Pause then fresh readiness\nok 11 - restored seats and connection recovery need shared Pause then fresh readiness\n  ---\n  duration_ms: 2.569105\n  type: 'test'\n  ...\n# Subtest: pause retires queued turns and aborts in-flight input without leaking into a new activation\nok 12 - pause retires queued turns and aborts in-flight input without leaking into a new activation\n  ---\n  duration_ms: 0.940839\n  type: 'test'\n  ...\n# Subtest: queue pressure has a hard bound and pauses rather than dropping a held-button release\nok 13 - queue pressure has a hard bound and pauses rather than dropping a held-button release\n  ---\n  duration_ms: 0.52641\n  type: 'test'\n  ...\n# Subtest: timed-out accepted controls preserve server acknowledgement while obsolete responses cannot affect a new seat\nok 14 - timed-out accepted controls preserve server acknowledgement while obsolete responses cannot affect a new seat\n  ---\n  duration_ms: 0.589177\n  type: 'test'\n  ...\n# Subtest: abandoned seats cannot reconnect implicitly and finished snapshots never enable input\nok 15 - abandoned seats cannot reconnect implicitly and finished snapshots never enable input\n  ---\n  duration_ms: 0.349638\n  type: 'test'\n  ...\n# Subtest: an old seat response cannot suspend or submit controls for a newly joined seat\nok 16 - an old seat response cannot suspend or submit controls for a newly joined seat\n  ---\n  duration_ms: 0.88303\n  type: 'test'\n  ...\n# Subtest: room content is bounded data and public projection does not disclose registry internals\nok 17 - room content is bounded data and public projection does not disclose registry internals\n  ---\n  duration_ms: 4.214493\n  type: 'test'\n  ...\n# Subtest: full canonical SHA256 binds accepted geometry and provenance even when titles and native IDs match\nok 18 - full canonical SHA256 binds accepted geometry and provenance even when titles and native IDs match\n  ---\n  duration_ms: 11.44487\n  type: 'test'\n  ...\n# Subtest: imported source pins survive full snapshots, checkpoints, rematches and replay receipts\nok 19 - imported source pins survive full snapshots, checkpoints, rematches and replay receipts\n  ---\n  duration_ms: 42.831734\n  type: 'test'\n  ...\n# Subtest: mission links and invitations retain only server keys and immutable pins, never alternate endpoints or payload URLs\nok 20 - mission links and invitations retain only server keys and immutable pins, never alternate endpoints or payload URLs\n  ---\n  duration_ms: 2.035978\n  type: 'test'\n  ...\n# Subtest: accepted mission UI uses snapshot provenance while an unavailable link never selects a replacement silently\nok 21 - accepted mission UI uses snapshot provenance while an unavailable link never selects a replacement silently\n  ---\n  duration_ms: 51.231002\n  type: 'test'\n  ...\n# Subtest: saving a result rejects a changed recipe and a late result from a previous rematch\nok 22 - saving a result rejects a changed recipe and a late result from a previous rematch\n  ---\n  duration_ms: 21.876506\n  type: 'test'\n  ...\n# (node:2736) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: real HTTP versus: duplicate/lost/late delivery preserves native completion and once-only catch events\nok 23 - real HTTP versus: duplicate/lost/late delivery preserves native completion and once-only catch events\n  ---\n  duration_ms: 4353.315375\n  type: 'test'\n  ...\n# Subtest: real HTTP team: duplicate/lost/late delivery preserves native completion and once-only catch events\nok 24 - real HTTP team: duplicate/lost/late delivery preserves native completion and once-only catch events\n  ---\n  duration_ms: 1975.39018\n  type: 'test'\n  ...\n# Subtest: real HTTP Capture versus: duplicated controls preserve native interceptions, cooperation and verified results\nok 25 - real HTTP Capture versus: duplicated controls preserve native interceptions, cooperation and verified results\n  ---\n  duration_ms: 11791.281766\n  type: 'test'\n  ...\n# Subtest: real HTTP Capture team: duplicated controls preserve native interceptions, cooperation and verified results\nok 26 - real HTTP Capture team: duplicated controls preserve native interceptions, cooperation and verified results\n  ---\n  duration_ms: 1689.593656\n  type: 'test'\n  ...\n# Subtest: moving room controls across the landscape boundary releases holds and requires fresh Ready input\nok 27 - moving room controls across the landscape boundary releases holds and requires fresh Ready input\n  ---\n  duration_ms: 9.32446\n  type: 'test'\n  ...\n# Subtest: room layout changes leave an inactive picker alone and retire their listener on disposal\nok 28 - room layout changes leave an inactive picker alone and retire their listener on disposal\n  ---\n  duration_ms: 0.628412\n  type: 'test'\n  ...\n# Subtest: one room poll owns menu and flight hardware without a newly connected pad stealing either\nok 29 - one room poll owns menu and flight hardware without a newly connected pad stealing either\n  ---\n  duration_ms: 1.780146\n  type: 'test'\n  ...\n# Subtest: replacement controller held Confirm cannot Ready a room after loss or background recovery\nok 30 - replacement controller held Confirm cannot Ready a room after loss or background recovery\n  ---\n  duration_ms: 2.02077\n  type: 'test'\n  ...\n# Subtest: room native steering, Boost and Team Support have independent sources and require fresh recovery input\nok 31 - room native steering, Boost and Team Support have independent sources and require fresh recovery input\n  ---\n  duration_ms: 2.166032\n  type: 'test'\n  ...\n# Subtest: controller read failure retires room control ownership instead of breaking the frame loop\nok 32 - controller read failure retires room control ownership instead of breaking the frame loop\n  ---\n  duration_ms: 0.944125\n  type: 'test'\n  ...\n# Subtest: the room picker needs a fresh controller press after foreground loss before ownership exists\nok 33 - the room picker needs a fresh controller press after foreground loss before ownership exists\n  ---\n  duration_ms: 0.927443\n  type: 'test'\n  ...\n# Subtest: private-room title shows the stored mute before joining and follows later shared changes\nok 34 - private-room title shows the stored mute before joining and follows later shared changes\n  ---\n  duration_ms: 48.567348\n  type: 'test'\n  ...\n# Subtest: overlapping room Support sources release independently, including pointer cancellation\nok 35 - overlapping room Support sources release independently, including pointer cancellation\n  ---\n  duration_ms: 0.686992\n  type: 'test'\n  ...\n# Subtest: background/menu recovery needs a fresh Support edge and releases captured pointers\nok 36 - background/menu recovery needs a fresh Support edge and releases captured pointers\n  ---\n  duration_ms: 0.273444\n  type: 'test'\n  ...\n# Subtest: room Support respects native menu editing and non-Team Space pause ownership\nok 37 - room Support respects native menu editing and non-Team Space pause ownership\n  ---\n  duration_ms: 0.229\n  type: 'test'\n  ...\n# Subtest: a delayed room audio unlock cannot silence a newer Ready activation\nok 38 - a delayed room audio unlock cannot silence a newer Ready activation\n  ---\n  duration_ms: 0.995341\n  type: 'test'\n  ...\n# Subtest: room activation keeps audio paused while the second Ready is pending\nok 39 - room activation keeps audio paused while the second Ready is pending\n  ---\n  duration_ms: 0.22894\n  type: 'test'\n  ...\n# Subtest: reconnected paired boards discard frozen destruction while keeping settled remains and future catches\nok 40 - reconnected paired boards discard frozen destruction while keeping settled remains and future catches\n  ---\n  duration_ms: 2.491855\n  type: 'test'\n  ...\n# Subtest: initial and rematched presentation runs receive independent ownership even at identical ticks\nok 41 - initial and rematched presentation runs receive independent ownership even at identical ticks\n  ---\n  duration_ms: 0.232306\n  type: 'test'\n  ...\n# Subtest: Team room recovery primes native capture/outcome feedback silently without altering authoritative state\nok 42 - Team room recovery primes native capture/outcome feedback silently without altering authoritative state\n  ---\n  duration_ms: 1.785106\n  type: 'test'\n  ...\n# Subtest: a new room presentation owner clears old effects while paused snapshots cannot leak on resume\nok 43 - a new room presentation owner clears old effects while paused snapshots cannot leak on resume\n  ---\n  duration_ms: 0.720624\n  type: 'test'\n  ...\n# Subtest: registry configuration is bounded, data-only and rejects network/traversal paths\nok 44 - registry configuration is bounded, data-only and rejects network/traversal paths\n  ---\n  duration_ms: 4.58012\n  type: 'test'\n  ...\n# Subtest: native Classic entries retain raw publication pins and namespace both multiplayer modes\nok 45 - native Classic entries retain raw publication pins and namespace both multiplayer modes\n  ---\n  duration_ms: 36.707374\n  type: 'test'\n  ...\n# Subtest: native source-backed Team keeps its exact authored rules without inventing other modes\nok 46 - native source-backed Team keeps its exact authored rules without inventing other modes\n  ---\n  duration_ms: 506.766898\n  type: 'test'\n  ...\n# Subtest: changed bytes, self-attested policies and media packages cannot enter gameplay\nok 47 - changed bytes, self-attested policies and media packages cannot enter gameplay\n  ---\n  duration_ms: 2.681521\n  type: 'test'\n  ...\n# Subtest: a hash-pinned Company catalogue reports Solo capability without authorizing a room\nok 48 - a hash-pinned Company catalogue reports Solo capability without authorizing a room\n  ---\n  duration_ms: 31.246013\n  type: 'test'\n  ...\n# Subtest: filesystem admission refuses an external symlink and preserves a loaded immutable snapshot\nok 49 - filesystem admission refuses an external symlink and preserves a loaded immutable snapshot\n  ---\n  duration_ms: 18.502205\n  type: 'test'\n  ...\n# Subtest: HTTP admission serves exact registry recipes and rejects client-supplied levels or owners\nok 50 - HTTP admission serves exact registry recipes and rejects client-supplied levels or owners\n  ---\n  duration_ms: 291.280744\n  type: 'test'\n  ...\n# (node:2788) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time\n# (Use `node --trace-warnings ...` to show where the warning was created)\n# Subtest: delayed HTTP input and Ready bodies cannot cross pause/resume activation boundaries\nok 51 - delayed HTTP input and Ready bodies cannot cross pause/resume activation boundaries\n  ---\n  duration_ms: 363.765149\n  type: 'test'\n  ...\n# Subtest: restoring a waiting room cancels prior Ready and requires both seats again\nok 52 - restoring a waiting room cancels prior Ready and requires both seats again\n  ---\n  duration_ms: 209.857646\n  type: 'test'\n  ...\n# Subtest: missing seat credentials have a terminal code instead of an ambiguous reconnect response\nok 53 - missing seat credentials have a terminal code instead of an ambiguous reconnect response\n  ---\n  duration_ms: 196.091683\n  type: 'test'\n  ...\n# Subtest: service-stall pause rotates input ownership before readiness can resume\nok 54 - service-stall pause rotates input ownership before readiness can resume\n  ---\n  duration_ms: 226.638205\n  type: 'test'\n  ...\n# Subtest: a heartbeat after the reconnect deadline cannot revive a room during a service stall\nok 55 - a heartbeat after the reconnect deadline cannot revive a room during a service stall\n  ---\n  duration_ms: 195.952153\n  type: 'test'\n  ...\n# Subtest: a disconnected waiting seat loses earlier Ready even without a simulation step\nok 56 - a disconnected waiting seat loses earlier Ready even without a simulation step\n  ---\n  duration_ms: 211.691269\n  type: 'test'\n  ...\n# Subtest: a slow action body cannot act on a room after its reconnect deadline\nok 57 - a slow action body cannot act on a room after its reconnect deadline\n  ---\n  duration_ms: 204.088969\n  type: 'test'\n  ...\n# Subtest: recovery within sixty seconds needs both Ready choices without advancing the paused match\nok 58 - recovery within sixty seconds needs both Ready choices without advancing the paused match\n  ---\n  duration_ms: 221.70566\n  type: 'test'\n  ...\n# Subtest: successor controls retain equipment and fresh steering without leaking native vocabularies\nok 59 - successor controls retain equipment and fresh steering without leaking native vocabularies\n  ---\n  duration_ms: 1.736545\n  type: 'test'\n  ...\n# Subtest: native untimed Capture duel owns coverage, lives and score tie breaks only in v2\nok 60 - native untimed Capture duel owns coverage, lives and score tie breaks only in v2\n  ---\n  duration_ms: 8.625556\n  type: 'test'\n  ...\n# Subtest: v2 equipment pulses are admitted once even when a release shares the same server tick\nok 61 - v2 equipment pulses are admitted once even when a release shares the same server tick\n  ---\n  duration_ms: 5.472699\n  type: 'test'\n  ...\n# Subtest: held direction updates never duplicate a Snake turn; legacy interpretation stays available\nok 62 - held direction updates never duplicate a Snake turn; legacy interpretation stays available\n  ---\n  duration_ms: 7.045165\n  type: 'test'\n  ...\n# Subtest: v1 receipts/snapshots and v2 native checkpoint aliases retain their own interpretation\nok 63 - v1 receipts/snapshots and v2 native checkpoint aliases retain their own interpretation\n  ---\n  duration_ms: 69.700087\n  type: 'test'\n  ...\n# Subtest: accepted effect windows deduplicate retries and prime reconnect, lost windows and rematches silently\nok 64 - accepted effect windows deduplicate retries and prime reconnect, lost windows and rematches silently\n  ---\n  duration_ms: 0.609716\n  type: 'test'\n  ...\n# Subtest: capture event projection preserves the audible capture tier without copying topology arrays\nok 65 - capture event projection preserves the audible capture tier without copying topology arrays\n  ---\n  duration_ms: 0.649432\n  type: 'test'\n  ...\n# Subtest: client serializes successor one-shot gestures rather than reducing them to movement holds\nok 66 - client serializes successor one-shot gestures rather than reducing them to movement holds\n  ---\n  duration_ms: 0.906073\n  type: 'test'\n  ...\n# Subtest: deep optional event details preserve JSON wire identity after projection\nok 67 - deep optional event details preserve JSON wire identity after projection\n  ---\n  duration_ms: 0.658538\n  type: 'test'\n  ...\n# Subtest: ready requires both seats and pause stops the entire native match clock\nok 68 - ready requires both seats and pause stops the entire native match clock\n  ---\n  duration_ms: 9.613731\n  type: 'test'\n  ...\n# Subtest: duplicate controls are acknowledged once and old rematch generations fail\nok 69 - duplicate controls are acknowledged once and old rematch generations fail\n  ---\n  duration_ms: 2.707541\n  type: 'test'\n  ...\n# Subtest: full snapshots retain target phases, RNG, bodies, queued controls and exact typed cells\nok 70 - full snapshots retain target phases, RNG, bodies, queued controls and exact typed cells\n  ---\n  duration_ms: 8.141758\n  type: 'test'\n  ...\n# Subtest: a missing player pauses after five seconds and abandons after sixty\nok 71 - a missing player pauses after five seconds and abandons after sixty\n  ---\n  duration_ms: 3.982323\n  type: 'test'\n  ...\n# Subtest: server replay reproduces a simultaneous terminal duel, including shared pause releases\nok 72 - server replay reproduces a simultaneous terminal duel, including shared pause releases\n  ---\n  duration_ms: 33.674983\n  type: 'test'\n  ...\n# Subtest: pause receipts retain discarded acknowledgement numbers without replaying their controls\nok 73 - pause receipts retain discarded acknowledgement numbers without replaying their controls\n  ---\n  duration_ms: 22.797601\n  type: 'test'\n  ...\n# Subtest: trusted server checkpoints retain history and alias the native match boards\nok 74 - trusted server checkpoints retain history and alias the native match boards\n  ---\n  duration_ms: 9.631908\n  type: 'test'\n  ...\n# Subtest: all 84 official room entries authenticate authored and moving/varied native recipes\nok 75 - all 84 official room entries authenticate authored and moving/varied native recipes\n  ---\n  duration_ms: 623.708088\n  type: 'test'\n  ...\n# Subtest: room artwork rejects changed geometry, changed owner, community aliases and retired operations\nok 76 - room artwork rejects changed geometry, changed owner, community aliases and retired operations\n  ---\n  duration_ms: 1.998006\n  type: 'test'\n  ...\n# Subtest: room page restoration retains exact artwork but another endpoint, generation or content cannot inherit it\nok 77 - room page restoration retains exact artwork but another endpoint, generation or content cannot inherit it\n  ---\n  duration_ms: 2.039545\n  type: 'test'\n  ...\n1..77\n# tests 80\n# suites 0\n# pass 80\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 21074.826096\n",
+      "memberReceipts": [
+        {
+          "name": "rooms.json",
+          "bytes": 3924,
+          "sha256": "604f1d30b5411d5a338a9b40be28969f20c12a7d65ba76f05e3fb79045d62187"
+        },
+        {
+          "name": "rooms.tap",
+          "bytes": 19775,
+          "sha256": "f7de5c047f4fcff09248f4ee95fb4b4702bc515853ea6daff889d566369fb821"
+        },
+        {
+          "name": "run.json",
+          "bytes": 979,
+          "sha256": "bb25e185be0ea358a743d1915a9e301c9ae84200db3c1d63e4aabfdd8ac9fdff"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,183 @@
+{
+  "format": "SoloOverheadAcceptancePreparedBranchV1",
+  "createdAt": "2026-10-18T21:32:58.042783+00:00",
+  "base": "6acfa2fb639fcc4d3b20970faa0972c77d2a7e1a",
+  "baseTree": "ce1ac2dfe9e1a504913550d15643c9f7068dcb8b",
+  "branch": "codex/solo-empirical-overhead-acceptance",
+  "head": "19b574eb4c57415def724156a75ac7e9b0c23e37",
+  "tree": "58fee50cb6e4821efdfa7a173d2197e7789ebb64",
+  "sourceProposal": {
+    "gitBlob": "c5659d5ef501dbb535c84244cf9a1e4f0f24f479",
+    "bytes": 794658,
+    "sha256": "3227694541c56b894b0da4b0556b43915accbb5b26731210f4716b300f30ec64"
+  },
+  "peerReview": "739d1472712f977f9a046f6de56dcfef736b2820",
+  "rootReview": "All actual changes,14 output digests, baseline tree identity and exact changed-path set reviewed; latest main FPV-only delta disjoint.",
+  "paths": [
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "before": {
+        "bytes": 18407,
+        "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f",
+        "gitBlob": "954d79349078934e4c22ee0f3e26156a9da0196c"
+      },
+      "after": {
+        "bytes": 18831,
+        "sha256": "b044e21f33fa8b75c99c9907fde34e8c711307ea318f5ca92be66064ca26b5d3",
+        "gitBlob": "1d8b129a3e643332e93ed393ec39b39f87e450ae"
+      }
+    },
+    {
+      "path": "scripts/solo-remote-diagnostics.mjs",
+      "before": {
+        "bytes": 32157,
+        "sha256": "f027f6ef0136210fa549ad32d9f9fd82d5ac082a5af32df3d13a89ce80922f97",
+        "gitBlob": "93903085fc95fbfa793d84edd53a48cc0d9a469a"
+      },
+      "after": {
+        "bytes": 32267,
+        "sha256": "700d711935ccf1f44aebd64c4695586418705bc56b52f0826e7205bcf5b06b47",
+        "gitBlob": "e3b2b2ee35164a17152cb69098d77b5e1be0bb7d"
+      }
+    },
+    {
+      "path": "scripts/test-solo-diagnostics-analysis.mjs",
+      "before": {
+        "bytes": 19007,
+        "sha256": "0b0e8436df3e2852d1b6e41e6cedb03d0dd37b5be9dfd5690ca327b1e303084a",
+        "gitBlob": "42034bf9c1afb24dc4be8009b6af2c5ecc511f49"
+      },
+      "after": {
+        "bytes": 22249,
+        "sha256": "d44a5c095620b79dac1db38b3f42270f9330b2f0bf21e8fa2eb785d56046ee30",
+        "gitBlob": "2feb26b495845f97ee74a508ab3ccba26f4de15a"
+      }
+    },
+    {
+      "path": "scripts/test-solo-journal-cost-analysis.mjs",
+      "before": {
+        "bytes": 13814,
+        "sha256": "a0dfeef4af6f3c1f4509fea47c547eec079107b464a9fb4030ce2351dc91f453",
+        "gitBlob": "75fdaae296b0fc713b81d63f106161aaeb0a4862"
+      },
+      "after": {
+        "bytes": 14852,
+        "sha256": "7f385bf8d084f676a7a1d9402a3e23426168cbdca310b9d7278d6a53dc42fe97",
+        "gitBlob": "3a82111a78548e86f2b0794292c3b52ee5b70369"
+      }
+    },
+    {
+      "path": "scripts/test-solo-remote-diagnostics.mjs",
+      "before": {
+        "bytes": 32269,
+        "sha256": "3dbdc8fd86141aa0e7ecbf782d147db2631b94eaefd36effdab17e47311a2165",
+        "gitBlob": "676125ac6dc239e4fe135b3dc819cf84d4ebf791"
+      },
+      "after": {
+        "bytes": 32844,
+        "sha256": "934bf4efff69f00248d1d3e96170b6a411a83d1a81d89700d2677a5a089e5f78",
+        "gitBlob": "d7d29304ac88f2e75152e33b805582996ce1b238"
+      }
+    },
+    {
+      "path": "scripts/solo-overhead-acceptance.mjs",
+      "before": null,
+      "after": {
+        "bytes": 1341,
+        "sha256": "b508ea89e7dccda4ecd638f1e5bd06588a3ccab892b55473eb0b610e0d74fc53",
+        "gitBlob": "79eec3717c5c5c416053f93412fa24272cc394a2"
+      }
+    },
+    {
+      "path": "scripts/solo-overhead-acceptance.test.mjs",
+      "before": null,
+      "after": {
+        "bytes": 6170,
+        "sha256": "aa1f3976fa7fc4f84cd921b25c65d34d8296a14d2b321c48633dff080dd3cbd7",
+        "gitBlob": "3daa44fae18f00b6b20d04ed6d23b93b30f35a8e"
+      }
+    },
+    {
+      "path": "docs/performance/solo-overhead-acceptance-20261018.md",
+      "before": null,
+      "after": {
+        "bytes": 3207,
+        "sha256": "fa3da66b0a172d684f976f397f3b02c4b2ad51698626c30dc44fed94bb35d324",
+        "gitBlob": "6db9e784e0cf28fdacb313035db3009d71eef646"
+      }
+    },
+    {
+      "path": "scripts/test-solo-journal-cost-admission.mjs",
+      "before": {
+        "bytes": 12526,
+        "sha256": "39b329f0373ff8375fea5d65a05e98baffd3d66e594cfbd95ef73e8ced8a35da",
+        "gitBlob": "6e766415b9d7a3d20561c3c895ddc971b505ce08"
+      },
+      "after": {
+        "bytes": 12792,
+        "sha256": "d1fdb10303d7f8eda411473bebe50b887f364a66249305b9352cd6302d006044",
+        "gitBlob": "07508313196ae894e88b088f23640fe130dfbd35"
+      }
+    },
+    {
+      "path": "docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json",
+      "before": null,
+      "after": {
+        "bytes": 58143,
+        "sha256": "053b815fbc0b0936a756b3b447f94e47f834220eb45ca3cffb7df8b11dfbef9a",
+        "gitBlob": "f4db3ee085da60b4210158af7c6445718350b494"
+      }
+    },
+    {
+      "path": "scripts/solo-overhead-declared-source.mjs",
+      "before": null,
+      "after": {
+        "bytes": 2525,
+        "sha256": "1672019df2a808052849bd5afb220f01e8170e48555f9163a6ddccc215075867",
+        "gitBlob": "cd74aa4dc4e338ea09c78a3d5a03f5a13206dbe5"
+      }
+    },
+    {
+      "path": "scripts/test-solo-native-consumer-overhead.mjs",
+      "before": {
+        "bytes": 8706,
+        "sha256": "c0c8a0c184ec5b2eaff6bb117fc89fc031479e97a48b317ed576b917131d446c",
+        "gitBlob": "a518a83fd388bacdd3656e7d928ebca6dd1cc929"
+      },
+      "after": {
+        "bytes": 9761,
+        "sha256": "a21429896db4803cd30e969460e1a911dd0fce7a8fc07422170dd6cfe229316e",
+        "gitBlob": "309944ece0a8c0560905aa94fe9297a31c680047"
+      }
+    },
+    {
+      "path": "scripts/solo-native-measurement-consumer.test.mjs",
+      "before": {
+        "bytes": 25189,
+        "sha256": "17421bf9c481b9d4ae174a1949c3a465fedae55fb0dab4faaa08a2083cb861af",
+        "gitBlob": "d4578b4f1d0ddef7cf7c92a649f2269ae44aa79a"
+      },
+      "after": {
+        "bytes": 25354,
+        "sha256": "c6cf29ba019c2abfdf401aea9c2edd88f2102d12ec0d054bb7817c3d3b6582fd",
+        "gitBlob": "0fd59e6020ead2b3a7ad851e917e0ca8632f3ff2"
+      }
+    },
+    {
+      "path": ".github/workflows/solo-native-package-consumer.yml",
+      "before": {
+        "bytes": 436631,
+        "sha256": "0d2230c71ec56f256412aefe1fc76a2096f65f666ad7d322d72897ce724af86a",
+        "gitBlob": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6"
+      },
+      "after": {
+        "bytes": 437706,
+        "sha256": "01efd28e7eaca7940b8e6acea08475554d52f8c9b1d6c23a9f5de987a696dd60",
+        "gitBlob": "f87c0b5858b4196181175d443fda295423ac1dbc"
+      }
+    }
+  ],
+  "functionalTests": "unexecuted",
+  "status": "prepared branch only; no PR, merge or native dispatch",
+  "ordering": "Original #1621 frame-trace-v2 outcome precedes integration of this changed shared adapter"
+}

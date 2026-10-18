@@ -1,0 +1,1003 @@
+{
+  "format": "revealline-overhead-sparse-source-audit.v1",
+  "observedAt": "2026-10-18T21:24:21.730Z",
+  "source": "237b405437def3c41b01165fe057af1ab06f618c",
+  "scope": "Read-only exact workflow census and additive dependency recommendations; no mutations or tests",
+  "inventory": {
+    "workflows": 105,
+    "totalBytes": 1992595,
+    "checkoutBlocks": 340,
+    "matchedLocal": 103,
+    "remote": 2,
+    "files": [
+      {
+        "path": ".github/workflows/appearance-preview.yml",
+        "gitBlob": "3eba59c40de952d8353ee0ac487cf2382b88abde",
+        "bytes": 59546,
+        "sha256": "cbdb72e7c93bc3ce268caa5641f87c94f566e3297b74a8dff6a8ed02dd44fa6f",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/assemble-full-release-evidence.yml",
+        "gitBlob": "453e11743a042175f3d412eb49b25eec2d26ba2b",
+        "bytes": 4599,
+        "sha256": "fcab4545b8d7163e7aeec40f5b285056c4a20af9c36c734035c60f8a5147c0c6",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/assemble-v097-small-package-v2.yml",
+        "gitBlob": "74a834b9c0504aa57aac83b5425c1c476520d633",
+        "bytes": 4930,
+        "sha256": "f2d5780f2e3d2c36e0b6aae5ae66a031cd6a8988694b20999b5bc912f72e60f9",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/assemble-v097-small-package-v3.yml",
+        "gitBlob": "4180f86bf8eda7ecc7de2cd72e4f872ca1dff90e",
+        "bytes": 4930,
+        "sha256": "dc865e4b465eba264350bda207b8148d64e101a6e2bdf991f02ee98a7ba73073",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/assemble-v097-small-package.yml",
+        "gitBlob": "f4bb37bc81d3f9c52043def8fdcd4262419553f5",
+        "bytes": 4892,
+        "sha256": "517001eecd55967d058dce4b0c8ce4b74c45032c910f2ceeb68447d332fe7f2b",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/assemble-waived-release-evidence.yml",
+        "gitBlob": "b17823cca088144e499acf8e23348792c8e16c08",
+        "bytes": 9932,
+        "sha256": "42d25cc114b2425d2baa7ecbc968ff663f3f71dfdce16a450b06f24be4d57a9c",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/community-hosted-acceptance.yml",
+        "gitBlob": "f3d778b533a62ca124eb720629831789342dd153",
+        "bytes": 6332,
+        "sha256": "18e41606f11d5fa194d56cc7d6efbd95c0b981dcae34e78347926cf482e62e72",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/community-minio-recovery.yml",
+        "gitBlob": "13e58f3b25e46ee71f8cb93823b458d851837321",
+        "bytes": 3114,
+        "sha256": "06237f95e4dc2f1d6bf8fefb022dac91d3f1a223fe9716b77ed82738185bdf90",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/company-edition-candidate.yml",
+        "gitBlob": "e3578b3b6b18984d0d3af21956a04fdd7aba9ead",
+        "bytes": 9366,
+        "sha256": "8a0398db57717f2fc0109d4b9ec8f11ef14f3f448e1f30fd408dac9f5923d19e",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/deploy-pages.yml",
+        "gitBlob": "cc7a92a2875d8b7e29021e3a22ed2b47987c8f98",
+        "bytes": 19972,
+        "sha256": "779432ef13e214cf851cb062279aec111421d8b7e9aeb3df68bca2f3bf0ca1a8",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/fastline-auto-merge.yml",
+        "gitBlob": "231cf239370fb69919ffbb3e09e0cbf5f5c0f8b3",
+        "bytes": 3061,
+        "sha256": "be28689f2eef8a104f37a85cee0858f3b45ec0c68455e261600b43a5c8264068",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/fastline-release.yml",
+        "gitBlob": "385c275032145eb88f3cac5ea77a75e1c1ccfb1a",
+        "bytes": 20794,
+        "sha256": "47cffc25ae57d5c4d55e2003cbca26c92e0971fd2fb3376b377eda3439a69b63",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/industrial-feature-tests.yml",
+        "gitBlob": "30c75fd6d2a961f4eb1e2bf3fee9ced4284c4fc2",
+        "bytes": 2192,
+        "sha256": "08a0d45b61439eac811424e3b0616ee24e89dbd62ab2a8e7ff6de050a74c0cd0",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/measure-pages-candidate.yml",
+        "gitBlob": "033ff674ad852c1e4c735b94c1ef300e1d6dcd42",
+        "bytes": 9527,
+        "sha256": "89cdf42221be73e05bf694311de67f60cd854961ace55c46ab5d7e75e232cf56",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/measure-pages-stack.yml",
+        "gitBlob": "230d5f4070f4e69773885b80c4184652c7be772b",
+        "bytes": 8505,
+        "sha256": "a5aaa9fd4a2f021132d19cc6cad64c794058ae9fd65b553540282bb0b4a59c15",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/preserve-pages-recovery.yml",
+        "gitBlob": "acfcb0f19208a04601d85ee3a12a5d11105d5916",
+        "bytes": 6548,
+        "sha256": "d8b81cdaa14fe7a6e04d4c2922846155a766feb5b9caf608de1c6ab75461d369",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/publish-main-pages.yml",
+        "gitBlob": "86328152696e5f5951f45c0e2b3407267b05366c",
+        "bytes": 9967,
+        "sha256": "d503592aad75dda3d1bc01afef00a33ef44b2ed2880f673975cab14920679f54",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/published-pages-smoke.yml",
+        "gitBlob": "155b08d1f7d353b30244da019afa0234087fec61",
+        "bytes": 19213,
+        "sha256": "cac41781df50d8a187de9173e4fa940fd82f7d94dc1b15ad622e480322479364",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/qualify-release-source.yml",
+        "gitBlob": "6e475250787754aff2854f8fb5f46a636e5c1622",
+        "bytes": 17391,
+        "sha256": "3f7fa933aea5f6291b0674efbfe911fe5305eed5373d0bf63cd56346d9722253",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-darwin-exec-observation-temporary.yml",
+        "gitBlob": "f1099f5e4e874b307879c4738a539a780e00b2b3",
+        "bytes": 11373,
+        "sha256": "742f5aa02d6493c531d8e0fa4fbd30a7522027ca83810ceb58d561f174e27259",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-darwin-identity-availability-temporary.yml",
+        "gitBlob": "10d2b7664a7a9198467b9708a84e099a47fc24ba",
+        "bytes": 2820,
+        "sha256": "0c6586a3658f0eeed2c86d1e0b34c4b8dc426beea1a363d31f281a9ab487dbe9",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-darwin-inventory-diagnostic-temporary.yml",
+        "gitBlob": "f6e378ae7e67eb1c09f3bae1ec8dd96af91e3b31",
+        "bytes": 5604,
+        "sha256": "a5ab9ea37dd34b05d68ce86f6ec14253935ec9969a8e848f41750565e48fc48e",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-darwin-owner-preflight-kernel-ps-temporary.yml",
+        "gitBlob": "2228c4e58c9500595fe2c1edd8a392fdf3731027",
+        "bytes": 25376,
+        "sha256": "087ab3aeb77625dc860517fae36c17ac5b2ac89328056e798eb6a90cd8c6581c",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-darwin-owner-preflight-temporary.yml",
+        "gitBlob": "099a626501e562f0b413564e876f51f4b947d58a",
+        "bytes": 24926,
+        "sha256": "10232e04a9f6f7b3399ed983a52f47432782660b22d9fecf6bbfcf67cdfa772f",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-darwin-owner-preflight-thermald-temporary.yml",
+        "gitBlob": "bf5bcf19482cc22cd614eab31089156f73d00c42",
+        "bytes": 26048,
+        "sha256": "7c477f2367cf0706ec8d5e8434f78f5b3c41ad4c873fa7948402603ba55c51f7",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-native-mp3-backend-temporary.yml",
+        "gitBlob": "499a8f00126f05d99e6182f6f63d7fb79726bff1",
+        "bytes": 2981,
+        "sha256": "1ff0a0bf14f81478ad6c9f2005d7128fd3a438766010e6a6c774311e6796ff07",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-native-mp3-cocoa-identity-temporary.yml",
+        "gitBlob": "578fabc5321ba61af55df5d8da673b2636fc7f17",
+        "bytes": 12769,
+        "sha256": "85e6093e3ff5cca164b262408a3a90f15f811c904898ff5e883273a3e0ba7340",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-native-mp3-cocoa-identity-v2-temporary.yml",
+        "gitBlob": "f7c1b63f3a9c1ad0fe76c670aefbee3264dd5c60",
+        "bytes": 13120,
+        "sha256": "482063a223a5f3f2ae3b965c90e4380fa5a5559e92f6933fc42fce4842761541",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-native-mp3-cocoa-metal-temporary.yml",
+        "gitBlob": "0a89998b99596e54e0363351ea15117967039a94",
+        "bytes": 12368,
+        "sha256": "077836bb2545390be5deb0e7c8abd754176dec75e7a633eea59591eaf654b417",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-native-mp3-cocoa-owner397-temporary.yml",
+        "gitBlob": "49acf28e751f1d18643e7225d6fb6fce57629b18",
+        "bytes": 11874,
+        "sha256": "f0372262ab134ad5f06b01f1934e11d9d77a52deae0aebf04c86dd5f14a7cc80",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-native-mp3-cocoa-temporary.yml",
+        "gitBlob": "b70677f56881e7909593c2ad80a4af9266556a6d",
+        "bytes": 10105,
+        "sha256": "8f323efed52a9dd848519b57b9f2a1f7868379df535937e416678a30d291b998",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-native-mp3-control-temporary.yml",
+        "gitBlob": "ab981912694c9e1824d3dda2acea116fc903d8ac",
+        "bytes": 2973,
+        "sha256": "8db2aa0eb2eb6c3906f24a7571c4db0dbee8a465bd53fb2407970cc5b9718c7e",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-offline-emulation-self-test-temporary.yml",
+        "gitBlob": "702f72bf647b7ca5a34810208d94deb28495c90c",
+        "bytes": 3167,
+        "sha256": "821f82000acd49266adb1a8c41764d3bf06bcf34be3f3114a45727a156d0189d",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-39774-correctness-temporary.yml",
+        "gitBlob": "40befae4f906d50019bde7612156908ef2b21f23",
+        "bytes": 14565,
+        "sha256": "fd76890f3a45e51f321e9f32b014c123eb3039bf939e9db7a6b791681b7f1c78",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-auxiliary-temporary.yml",
+        "gitBlob": "b5a2fa1aa18e9867eb83246a7bcdf245f0801d08",
+        "bytes": 7937,
+        "sha256": "13c5a76b86a7547df5fed9ed50c98157ce95045302d77c97ae9bd204410bbbce",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-baseline-temporary.yml",
+        "gitBlob": "3bd46526e9f02e315dc08bb54390c9e146549835",
+        "bytes": 6116,
+        "sha256": "3310827323c6ccbd4e535e4d173842096c4a7e1949d994fc3fc21db98d581ab9",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-correctness-temporary.yml",
+        "gitBlob": "eb4b99f5683c27de7e17d186279666411215f31d",
+        "bytes": 6664,
+        "sha256": "6c850e6f3b1217d272b1c38c1b0c6484b523ecdc638ea4ff0260a5c05c435bb6",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-cpu-profile-temporary.yml",
+        "gitBlob": "3c1a3edbf220526ad1bd75c49d36ef9f3f234780",
+        "bytes": 8180,
+        "sha256": "dd2d6ad15c025e8489257700103c009efa56f99410c3c7938942502c05f74b13",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-current-correctness-temporary.yml",
+        "gitBlob": "17a9778c53e940b0014197618742a7dc7df8907e",
+        "bytes": 6834,
+        "sha256": "0fd144ee0a2662350ff590f78e59dde6a1e37ac28b4acdcea8465fa57251f4b2",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-current-transitions-temporary.yml",
+        "gitBlob": "6a067e11d40d43cb7a0ae1efc55071e084f159b1",
+        "bytes": 9845,
+        "sha256": "69b58eef1987785234433a35230a378975fbf153af47efb27bf888ff46aa5fed",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-demo-active-temporary.yml",
+        "gitBlob": "3c4d34445a7f7515103db69b85118c2daa85b5e8",
+        "bytes": 6421,
+        "sha256": "5732e852efa234bba16b7b6c0822e2b43753bf1b23f644b9e8b54d40466be5b3",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-demo-temporary.yml",
+        "gitBlob": "8a53354b1de74d899a506c1cd4ace573524aa8c1",
+        "bytes": 6291,
+        "sha256": "2b9f8dde2c9741b45988b8993382d6e3875833f80d5d511f803def71815a00ba",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-app-diagnostics-temporary.yml",
+        "gitBlob": "5a75aa583e0a669c3cce857227009783c8388af8",
+        "bytes": 14421,
+        "sha256": "a643c3082b40cd0ddb8f755bd291bff35b6916575714ad6eca35ac98446c44a8",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-app-diagnostics-v2-temporary.yml",
+        "gitBlob": "961091b908849b08eb4b7e905f56d5569d1c58c5",
+        "bytes": 15528,
+        "sha256": "d657ed66ec61bcea3142d4b6009fbd387de03c251edbde7209337dfb83a9def4",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-audio-temporary.yml",
+        "gitBlob": "d28486d18176cbcf74d9c4cadb323a8f8b53fc44",
+        "bytes": 16745,
+        "sha256": "ed37c2093c2c6d35bc9afa0055d9b13f0c875e3ac4b1449358f0532602f50a13",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-audio-v2-temporary.yml",
+        "gitBlob": "a0e9f5c6db0f62fe9f9976e01d8624a93256f362",
+        "bytes": 18624,
+        "sha256": "2466aad51a6c6d1e9318d2a5f140264fe8e96078200224309f8d74d944d63cfc",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-correctness-temporary.yml",
+        "gitBlob": "5357fe791214641f126056c0421194f008842182",
+        "bytes": 15700,
+        "sha256": "1ade8159bfe676d1282a81b6ee9b1510253d76e7027080664402f165231d8ffa",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-earned-raster-temporary.yml",
+        "gitBlob": "060610a8cf4bfa9e02ecdf20e03a4ddc78bd0a74",
+        "bytes": 18614,
+        "sha256": "7e08a5f758bedf86e400b3e2b2c31d5e77838b1157d420f8cc7da309298b4802",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-earned-raster-v2-temporary.yml",
+        "gitBlob": "5c9398f5fcca772b32922ba0156db8282879c454",
+        "bytes": 19337,
+        "sha256": "7b3fd1bba99e99054ff593fee3f1dba43d1462928a16a193335bcf473a868d52",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-journal-cost-temporary.yml",
+        "gitBlob": "68f0c030626fbcf1a2f8937d76fb06cb16e71c92",
+        "bytes": 16549,
+        "sha256": "ca4959a1c5e5a779ed6ecdc61309624b60886a37c42cdf1c429f1a8d74645eae",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-journal-cost-v2-temporary.yml",
+        "gitBlob": "584312eaaac8c6edfe6760fe62a2317d1914fab3",
+        "bytes": 17653,
+        "sha256": "c985a1b0d98e1b29762d504ceed3c33cc665be26249c84b1193c67e0665ad0ef",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-large-profile-temporary.yml",
+        "gitBlob": "d233cce03ed34c22fb5f2244df641c8aca32e33e",
+        "bytes": 17702,
+        "sha256": "a61204e5a4b7a7afd2cd7582de1a43e12c0217f002fea785321b04ee19155e95",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+        "gitBlob": "d04f40b53c016423297693708f18a0c4aef5234c",
+        "bytes": 21960,
+        "sha256": "cf0b8d00b6435b7d9a4ec4fd5b228ef56184298ea19c718b57449e7910673295",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+        "gitBlob": "e688235da830c34a3ff6b8231db0ed19fd8c73aa",
+        "bytes": 21940,
+        "sha256": "d4a9babb6adf2e4647fc2b04fc47694b66e7d0465af57b98292def78b8284faa",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+        "gitBlob": "70cd69fc56ac08d74fc38dc314b34fba4511f57d",
+        "bytes": 21950,
+        "sha256": "d303da3dc4489837a6de56ad453e1eee43a903eb844651087fe8e6bdbda57302",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+        "gitBlob": "30ddc92c7fc317d36fe1a2e0622605bdf511912e",
+        "bytes": 17167,
+        "sha256": "6f9d747656b958232743af7b26ebdeeb7d1dd941744edb0d47b93fd2124349a4",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-recovery-temporary.yml",
+        "gitBlob": "fafc84c4d20364b2f1602795e89ec30b74858034",
+        "bytes": 15950,
+        "sha256": "8f0c10d5d21930e4eb3bcd3fc18cddf77ae93f5ec015b7b8b7e043252c49faf6",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-recovery-v2-temporary.yml",
+        "gitBlob": "d1a3533a00fa32d5b941186db53dd24dac08126b",
+        "bytes": 16979,
+        "sha256": "847ea04861db51ca6bd41b5a4e0a5aef702b5e4840f6ce862b6b1cc9269e4a36",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-soak-temporary.yml",
+        "gitBlob": "b716aede274f916c9f7343981fa972990886fca4",
+        "bytes": 19030,
+        "sha256": "81857c210068ee882d707f0cbb023c143b0ddce8b79a391e090d664daaa353d9",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+        "gitBlob": "3c99ac990a78f3a5d41108e9ed3c09f58c6c09b0",
+        "bytes": 21910,
+        "sha256": "d7f6babb03f79c62266883f1a1978c9eed8027a9b199c8e061ed981ea09e986f",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+        "gitBlob": "f0be72d23c9fc5fae2e12b29ecb0ae9b0f8863ae",
+        "bytes": 19188,
+        "sha256": "a986f08922a045a6845a0b9673641ea2f242716fe534e883450271585607b484",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+        "gitBlob": "2d8ab144ada9fda79c827f1d8b64d01d2940aac4",
+        "bytes": 22068,
+        "sha256": "a76e4901080d86ee7c9374eee258a4f226188f98ff1f80be00ca2c04841049cc",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+        "gitBlob": "672e5d03381b47f176f164ae86fb150135b9c460",
+        "bytes": 19158,
+        "sha256": "3dcd0211edf0f713d7b716e6502d6c40900a0a44b2e96cf978f3b61c274bb248",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+        "gitBlob": "69e61852143cabb78236a691c6f70b2fc1dd78a2",
+        "bytes": 22038,
+        "sha256": "1c2d1c46e0c0552769863f0ab3dd103d41520c79f279aec5cc2f6a62cff35b5f",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+        "gitBlob": "eadfe16c2c74cd61937c655a4b0cea01db5e5fa0",
+        "bytes": 19128,
+        "sha256": "45b84da3c046c0ed8adeb13b2d6871a12985622b04f2ede47d968054eb02fd89",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+        "gitBlob": "d4a6df7d930810703e6d055c2b9d970d2b6d8b5b",
+        "bytes": 22008,
+        "sha256": "7eafb28768c05c81aba2dc7529ce778df171f14adcd847d7c77dcd8349e63b8f",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+        "gitBlob": "78f3c1dc30f43ac04cd040d0da7889a74f735a0b",
+        "bytes": 19188,
+        "sha256": "ff0409dd602c7c34f00fce31349691d2e730b266e84917e324828fb8288b2e60",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+        "gitBlob": "2f59560f7ff85c3d50fdd03ce651faec42a37593",
+        "bytes": 22068,
+        "sha256": "5698bf79a9b096ed232b9ae28cebfb9abc15b67865bdfcbb33a399d7a8893566",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-final-worker-diagnostic-temporary.yml",
+        "gitBlob": "8bf6de66f7e811fc8af49010eb080be62c12b9fc",
+        "bytes": 14827,
+        "sha256": "f01a1ad6114f20c256793a5bbc7531449de7b3cba496020855a3291be12930a9",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-first-victory-cpu-239-temporary.yml",
+        "gitBlob": "b6340986804272b8241af6db5b657c38e18f9a7c",
+        "bytes": 18718,
+        "sha256": "499295dfb303887401ad849b04dac40b55c941bf9f3783f014d635f98becc06b",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml",
+        "gitBlob": "2d61de4b4a08d8001d93a926a208e9dbbc4ba2c9",
+        "bytes": 18287,
+        "sha256": "9eb0cd0bf3300a77c01e1f1b17bdeacd10293daf1e2c95bdbef97145ff5828ec",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-native-lifecycle-e1cc-temporary.yml",
+        "gitBlob": "258528908d7dd856e9ea0bfa4ca00cf59e756e99",
+        "bytes": 16439,
+        "sha256": "d7efd58103e3130c40caa862ef7b9a054f0db7ca30669147e6336a028901f263",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-native-lifecycle-temporary.yml",
+        "gitBlob": "77c36424ead2d9973c38b9b1f58199300583177f",
+        "bytes": 14323,
+        "sha256": "578c6e1cb16332d3d296310cee9de3faad54b15aec9c915192f737ea31164fb2",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-native-lifecycle-v2-temporary.yml",
+        "gitBlob": "9df09a2a7cfcb2b3ef1f150bab19ddda40c0cd03",
+        "bytes": 15675,
+        "sha256": "22d43548f27d5be3a8ade702bc0f14bf42db23f1bc0bd8ba2e0bd5254a02a3bf",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-native-touch-temporary.yml",
+        "gitBlob": "761b8ccac3fb82e563a6b60221ffccc1f86cf414",
+        "bytes": 14806,
+        "sha256": "2201784f3549a6995cce205eb3b2233078059ddc47ba9e7c224c49c68cba79b5",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-native-touch-v2-temporary.yml",
+        "gitBlob": "3a1e9e27189a0dcb17ded31604385c5c0bde6ad2",
+        "bytes": 15885,
+        "sha256": "cd6df3ae33d36f366f6a9ce756e0c70a29f6bd2c6959b66328123902153f6e8a",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-next-geometric-39774-temporary.yml",
+        "gitBlob": "cbd4bef3123157cc78d9530e0b91c1d75ed8c6a7",
+        "bytes": 28068,
+        "sha256": "f3291d565e9855e8a0e28e39bda47fff1b024496849942ace3c661113a176957",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-next-geometric-c696-temporary.yml",
+        "gitBlob": "18277d01e7d92caa8d699d5f9413ebff267500c8",
+        "bytes": 17234,
+        "sha256": "b2071becacdd008ab088f7df5c8b410aca92de3d826354910a25ad7ccb268aa4",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-next-geometric-e1cc-temporary.yml",
+        "gitBlob": "d47c3a0feffbfc4923d9e358b653b7a1cb232ee6",
+        "bytes": 18000,
+        "sha256": "02e00c52e02ee51441c129b6c8305cfce56854eaf9a3d0e93773ba2dddbace7a",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-offline-candidate-temporary.yml",
+        "gitBlob": "a68d7e53be3813edbcfec2fd52458d426bebaaef",
+        "bytes": 16120,
+        "sha256": "8b84b6ba765d8908bb2ccbc34ed305884942463fc14dd294abb2c6aed745c967",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-offline-candidate-v2-temporary.yml",
+        "gitBlob": "f26bb03509803d71143db890360e1354febbcf81",
+        "bytes": 18262,
+        "sha256": "24e0662e0bcd38f914b3efdaf786bbe27e55096dd309bfa3ff75cb393fe67183",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-offline-candidate-v3-temporary.yml",
+        "gitBlob": "e7218a9e646bc6ec9656c4a9b7c743ee0dad897d",
+        "bytes": 19878,
+        "sha256": "4f126c4adb5f5891c91d312c150f62a560dfc81917741ba76f3f2f3b3f6828da",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-offline-current-temporary.yml",
+        "gitBlob": "e249fe25bd610aac3e94448ef74df2620b9091eb",
+        "bytes": 7579,
+        "sha256": "eda2a84579837b2d201ade78b75325eb85f1ef0a0c6a5bc5e3a599cbaae76221",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-offline-temporary.yml",
+        "gitBlob": "4d2b822ecc228bd9c4b17387261690cd93503c58",
+        "bytes": 7487,
+        "sha256": "2f7a5209ef0a8ba020830c031efdb81b4c2c3be167511f345a0bbb4f7b80fe2b",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-temporary.yml",
+        "gitBlob": "4dbb9a21927c508a407f700fd8455a4707f538b7",
+        "bytes": 25580,
+        "sha256": "9f6b00ac45693194fc026069d5ea7e748c95ec364a699f340cfb700703dfbe39",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v2-temporary.yml",
+        "gitBlob": "9f8baa68144f1b7f68cd3933abb8834776821df2",
+        "bytes": 26348,
+        "sha256": "a495105d3ad12a4fa8b8a59b678f5a1aa0c3b11287807eff640345d08062e2cb",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v3-temporary.yml",
+        "gitBlob": "0e05e069db17c5bced9d50307c3db3325581a3a9",
+        "bytes": 26949,
+        "sha256": "0a50990d3b6021d5e9894c25876742a1cb5d63952c893670dfa6520c27698274",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-optional-start-audio-e1cc-v4-temporary.yml",
+        "gitBlob": "3049a4221f411863a56b79e191a1ea8b9aa92f54",
+        "bytes": 27480,
+        "sha256": "9ac0f743ad4c7c8bffb2bb1d2b466b7c3ea7512ba0d1f54d1bf012dd4d0ceff7",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-preparation-temporary.yml",
+        "gitBlob": "f187163ba1e2f8909cce2cab7f30cf2ed2a30416",
+        "bytes": 7988,
+        "sha256": "a54160cfb9be186b7d336cc3eedebf59fd0fb014352644c537e7218a88ba6ad9",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-raster-temporary.yml",
+        "gitBlob": "9548e46d663fd431948e9fac8c1b523ac0a938db",
+        "bytes": 6529,
+        "sha256": "339e145d7f651a3aaf59e4939bbeb70c11012c7f47f534d1ad1b9332781e8748",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-readiness-ab45-temporary.yml",
+        "gitBlob": "32b88f42e0bf0e035ddf23577e9ec9b90ba7eaa1",
+        "bytes": 24473,
+        "sha256": "b6a035098b7ebf371c5faf4476ac6b4a26c41be9f885178314dc253056d82bfa",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-readiness-diagnosed-239-temporary.yml",
+        "gitBlob": "6a51a292abc66d7999a33fca4138b320c9f8004c",
+        "bytes": 26105,
+        "sha256": "ddad751bd28f6c43f5400c3dd345c26654117a9e648f87cde124736e6b4f476f",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-readiness-diagnosed-239-v2-temporary.yml",
+        "gitBlob": "c47c63995682afdc2051fc16e7647d77eaa7da60",
+        "bytes": 27196,
+        "sha256": "40cf8255667931305fb32a45204479cf6fe895cf003fda37242c48e83c3e1144",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-readiness-preparation-e1cc-v2-temporary.yml",
+        "gitBlob": "f29d68f7835ca61e4d351e0913f6348ed803d156",
+        "bytes": 25625,
+        "sha256": "dda2e618e92fb77c3f39c07a02a76db3adfafcca68eec7d0f298b926c1e85b38",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-selected-font-direct-sheet-e1cc-temporary.yml",
+        "gitBlob": "a8f4993e4ddaf0d4625f31400d8ef8223936f0b9",
+        "bytes": 27305,
+        "sha256": "55aae4ab2d2d1c3b1eab83f940873b78ae43d0f625c6d4ba569b60a8ae934f6c",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-selected-font-settlement-e1cc-temporary.yml",
+        "gitBlob": "e8488591fcdff2d231a81df02a03c0f622eb8730",
+        "bytes": 26621,
+        "sha256": "0d574e3352d0d91898d439cedd8dd3a7da45e4845cc963439a352c69bbaca3c0",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-supplemental-temporary.yml",
+        "gitBlob": "ee081ffc1b86ec1a11e562a36154c6748b060686",
+        "bytes": 8435,
+        "sha256": "b4dbd48a6c39237414b407e9e33f28ed9a12dac8c5b7f530783d1de53c2960c7",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-sustained-temporary.yml",
+        "gitBlob": "e00a5860353636ef9af3147376f497df55f27859",
+        "bytes": 8203,
+        "sha256": "ca9e5c7677c9bd6a6815454fdce6a727dc9b01e52c24816b1b3780444dff7bcb",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-timing-temporary.yml",
+        "gitBlob": "f167445de4e242ce80871f8ee975d86dd02b4819",
+        "bytes": 8256,
+        "sha256": "a2b82942df2410b17a0830e92c21743a5adbf08e16617479c596b1768dbfe52e",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-worker-confirmation-temporary.yml",
+        "gitBlob": "7de51d6f6fbb1fc2ef4a483b961532d338fa7617",
+        "bytes": 6476,
+        "sha256": "cf291df57bd8f300eee472cb2621d7af11e38e6c621c240eb531941c48675139",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-remote-worker-diagnostic-temporary.yml",
+        "gitBlob": "6e5145136a2748a1670bb567b40a7fac10b5fbc7",
+        "bytes": 6397,
+        "sha256": "49e0e2b4dfaed20c92b05d543572639367f6da18636bfea88e441536fcc27f73",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/stage-unallocated-pr.yml",
+        "gitBlob": "e0da8fd66d54fcb0befb65830650cad3aab5524d",
+        "bytes": 536,
+        "sha256": "9dfc2fbc3b4913f2cf66d380b1c8da01b553e4dfd05516d76616fbb2a841bef1",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/upload-release-originals.yml",
+        "gitBlob": "ab68caf9a57d0e7481ebb50458f32406d1fce2a1",
+        "bytes": 3411,
+        "sha256": "4d4745ae746d6449d968c862b36e4f01b0909939cad868a83f395cab3c1413c4",
+        "origin": "hash-verified-local-read"
+      },
+      {
+        "path": ".github/workflows/solo-native-package-consumer.yml",
+        "gitBlob": "4a003cf2a23ad416d1e1fff86b932c16e2067dc6",
+        "bytes": 436631,
+        "sha256": "0d2230c71ec56f256412aefe1fc76a2096f65f666ad7d322d72897ce724af86a",
+        "origin": "exact-remote-git-blob"
+      },
+      {
+        "path": ".github/workflows/solo-worker-idle-diagnostic.yml",
+        "gitBlob": "0f6b576d6942150edfa6545428182f043d6579cf",
+        "bytes": 18692,
+        "sha256": "461e2e81955b1533609800ebf0a27d36d0d3dd790c91eefd2ff8093671469f9a",
+        "origin": "exact-remote-git-blob"
+      }
+    ]
+  },
+  "directImportSparseOwners": [
+    {
+      "workflow": ".github/workflows/solo-remote-final-app-diagnostics-temporary.yml",
+      "job": "declare",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-final-app-diagnostics-temporary.yml",
+      "job": "auxiliary",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-final-app-diagnostics-v2-temporary.yml",
+      "job": "declare",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-final-app-diagnostics-v2-temporary.yml",
+      "job": "auxiliary",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-final-journal-cost-temporary.yml",
+      "job": "declare",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-final-journal-cost-temporary.yml",
+      "job": "auxiliary",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-final-journal-cost-v2-temporary.yml",
+      "job": "declare",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-final-journal-cost-v2-temporary.yml",
+      "job": "auxiliary",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+      "job": "preflight",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-first-victory-cpu-239-temporary.yml",
+      "job": "preflight",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml",
+      "job": "preflight",
+      "checkoutIndex": 1,
+      "ref": "${{ github.event.pull_request.head.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "readiness",
+      "checkoutIndex": 1,
+      "ref": "${{ github.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "touch",
+      "checkoutIndex": 1,
+      "ref": "${{ github.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "hud-cpu",
+      "checkoutIndex": 1,
+      "ref": "${{ github.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "app-overhead",
+      "checkoutIndex": 1,
+      "ref": "${{ github.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "journal-cost",
+      "checkoutIndex": 1,
+      "ref": "${{ github.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "timing",
+      "checkoutIndex": 1,
+      "ref": "${{ github.sha }}"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "lifecycle",
+      "checkoutIndex": 1,
+      "ref": "${{ github.sha }}"
+    }
+  ],
+  "archivalWorkflows": [
+    {
+      "path": ".github/workflows/solo-remote-final-app-diagnostics-temporary.yml",
+      "gitBlob": "5a75aa583e0a669c3cce857227009783c8388af8",
+      "guards": [
+        "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4'"
+      ],
+      "change": false,
+      "reason": "Exact historical PR1544 event edge; preserve executed source and declaration identities. At least v1 app/journal plus three CPU files also have exact workflow-byte witness assertions."
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-app-diagnostics-v2-temporary.yml",
+      "gitBlob": "961091b908849b08eb4b7e905f56d5569d1c58c5",
+      "guards": [
+        "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'a7e0219818842f02399317ca6d2a14bdd506da3d'"
+      ],
+      "change": false,
+      "reason": "Exact historical PR1544 event edge; preserve executed source and declaration identities. At least v1 app/journal plus three CPU files also have exact workflow-byte witness assertions."
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-journal-cost-temporary.yml",
+      "gitBlob": "68f0c030626fbcf1a2f8937d76fb06cb16e71c92",
+      "guards": [
+        "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4'"
+      ],
+      "change": false,
+      "reason": "Exact historical PR1544 event edge; preserve executed source and declaration identities. At least v1 app/journal plus three CPU files also have exact workflow-byte witness assertions."
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-journal-cost-v2-temporary.yml",
+      "gitBlob": "584312eaaac8c6edfe6760fe62a2317d1914fab3",
+      "guards": [
+        "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'a7e0219818842f02399317ca6d2a14bdd506da3d'"
+      ],
+      "change": false,
+      "reason": "Exact historical PR1544 event edge; preserve executed source and declaration identities. At least v1 app/journal plus three CPU files also have exact workflow-byte witness assertions."
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-long-rail-cpu-profile-temporary.yml",
+      "gitBlob": "30ddc92c7fc317d36fe1a2e0622605bdf511912e",
+      "guards": [
+        "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c41a02216c0811952232a387fd1743e09452c269'"
+      ],
+      "change": false,
+      "reason": "Exact historical PR1544 event edge; preserve executed source and declaration identities. At least v1 app/journal plus three CPU files also have exact workflow-byte witness assertions."
+    },
+    {
+      "path": ".github/workflows/solo-remote-first-victory-cpu-239-temporary.yml",
+      "gitBlob": "b6340986804272b8241af6db5b657c38e18f9a7c",
+      "guards": [
+        "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '239c574ecddd5bb6d5896e621d9edc53e7f6a313'"
+      ],
+      "change": false,
+      "reason": "Exact historical PR1544 event edge; preserve executed source and declaration identities. At least v1 app/journal plus three CPU files also have exact workflow-byte witness assertions."
+    },
+    {
+      "path": ".github/workflows/solo-remote-first-victory-cpu-e1cc-temporary.yml",
+      "gitBlob": "2d61de4b4a08d8001d93a926a208e9dbbc4ba2c9",
+      "guards": [
+        "    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == '7c7cc2648331870683ac7b76850bbeff859f802e'"
+      ],
+      "change": false,
+      "reason": "Exact historical PR1544 event edge; preserve executed source and declaration identities. At least v1 app/journal plus three CPU files also have exact workflow-byte witness assertions."
+    }
+  ],
+  "productionHelperAdditions": [
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "readiness",
+      "add": "/scripts/solo-overhead-acceptance.mjs"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "touch",
+      "add": "/scripts/solo-overhead-acceptance.mjs"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "hud-cpu",
+      "add": "/scripts/solo-overhead-acceptance.mjs"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "app-overhead",
+      "add": "/scripts/solo-overhead-acceptance.mjs"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "journal-cost",
+      "add": "/scripts/solo-overhead-acceptance.mjs"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "timing",
+      "add": "/scripts/solo-overhead-acceptance.mjs"
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "lifecycle",
+      "add": "/scripts/solo-overhead-acceptance.mjs"
+    }
+  ],
+  "historicalReaderAdditions": [
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "app-overhead",
+      "add": "The new test-only immutable reader helper and its fixture; names owned by proposal author."
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "journal-cost",
+      "add": "The new test-only immutable reader helper and its fixture; names owned by proposal author."
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "timing",
+      "add": "The new test-only immutable reader helper and its fixture; names owned by proposal author."
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "lifecycle",
+      "add": "The new test-only immutable reader helper and its fixture; names owned by proposal author."
+    },
+    {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "job": "replay-portability-source",
+      "add": "The new test-only immutable reader helper and its fixture; names owned by proposal author."
+    }
+  ],
+  "sourceEntry": {
+    "path": "scripts/solo-overhead-acceptance.test.mjs",
+    "admission": "publishing/focused-tests.mjs lines98–120 automatically schedules changed scripts/*.test.mjs. Source checkout is complete. Entry imports all four existing complete test modules, so no new trusted policy mapping is required for this PR.",
+    "evidence": {
+      "gitBlob": "d21dc682fe9c928d6345843195a39ed0e2e160ac",
+      "sha256": "c605bd165135a325628c0b6d22fe5134a31ecadcd8fe49ae23cc773c7991f669"
+    },
+    "nativeEntry": "Keep existing native commands unchanged; adding the whole new entry there would require extra test/fixture closure and duplicate source execution."
+  },
+  "limitations": [
+    "Source-level closure review only; all new controls remain unexecuted.",
+    "Pending #1621 replay mirror repair must be composed when main changes; replay-portability-source imports are partly static style/controlled-mirror ownership.",
+    "No archival workflow/declaration is relabeled as prospective runnable source."
+  ]
+}
