@@ -8,6 +8,8 @@ import { deferred } from './helpers/media-fixtures.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { getLocale, setLocale } from '../i18n/index.mjs';
+import { readFile } from 'node:fs/promises';
+import { managedIndexedDB } from './helpers/managed-idb.mjs';
 const fetchBlob = globalThis.fetch;
 
 async function panel() {
@@ -177,6 +179,65 @@ test('actual Journey host includes its current progress in an archive without ch
     h.$('backup-set-status').textContent,
   );
   assert.match(h.$('backup-set-status').textContent, /Journey: current profile/);
+  assert.deepEqual(h.storage.map, stored);
+  assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
+  assert.deepEqual(h.errors, []);
+  h.$('library-dialog').close();
+});
+
+test('ordinary authored Home exports an archive with truthful exclusions while legacy game-data remains guarded', async (t) => {
+  class Picture {
+    width = 1774;
+    height = 887;
+    naturalWidth = 1774;
+    naturalHeight = 887;
+    set src(value) {
+      this.source = value;
+      queueMicrotask(() => this.onload?.());
+    }
+    async decode() {}
+    removeAttribute() {
+      this.source = '';
+    }
+  }
+  const h = await soloPage(t, {
+    search: '',
+    titleScreen: true,
+    journeyIndexedDB: managedIndexedDB().indexedDB,
+    pictures: { Image: Picture },
+    fetchResponse: async (path) =>
+      String(path).includes('/content-design/assets/')
+        ? new Response(await readFile(path))
+        : undefined,
+  });
+  h.$('shell-settings').click();
+  h.$('settings-tab-data').click();
+  h.$('settings-saves').click();
+  await settle(() => !!h.$('prepare-backup-archive') && !h.$('library-saves').hidden);
+  const stored = new Map(h.storage.map),
+    before = authoritativeCheckpoint(h.rendered.run);
+  assert.equal(await h.$('prepare-backup-set').onclick(), false);
+  assert.match(h.$('backup-set-status').textContent, /Authored test flights use separate storage/);
+  assert.equal(
+    await h.$('prepare-backup-archive').onclick(),
+    true,
+    h.$('backup-set-status').textContent,
+  );
+  assert.match(h.$('backup-set-status').textContent, /unfinished authored flight are excluded/);
+  assert.match(h.$('backup-set-status').textContent, /Journey: current profile/);
+  const blob = await (await fetchBlob(h.$('download-backup-archive').href)).blob(),
+    bytes = new Uint8Array(await blob.arrayBuffer()),
+    header = new DataView(bytes.buffer),
+    start = 30 + header.getUint16(26, true) + header.getUint16(28, true),
+    report = JSON.parse(
+      new TextDecoder().decode(bytes.slice(start, start + header.getUint32(18, true))),
+    );
+  assert.equal(report.gameData, 'excluded-authored');
+  assert.deepEqual(
+    report.files.map((file) => file.id),
+    ['media', 'story', 'audio', 'coverage', 'journey'],
+  );
+  assert.ok(report.exclusions.some((value) => /unfinished authored flight/.test(value)));
   assert.deepEqual(h.storage.map, stored);
   assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
   assert.deepEqual(h.errors, []);

@@ -31,9 +31,20 @@ const generations = (value) => {
  * the current writer are borrowed. No store is committed, closed or replaced.
  * Metadata fences establish a stable observation, not a cross-store lock.
  */
-export async function prepareBackupSet(
+export function prepareBackupSet(source, options) {
+  return prepareInventories(source, options, true);
+}
+
+/** The authored Journey archive has its own progress owner. Export only shared
+ * originals here; never invent a legacy profile/session or swallow its errors. */
+export function prepareMediaBackupSet(source, options) {
+  return prepareInventories(source, options, false);
+}
+
+async function prepareInventories(
   source,
   { signal, onProgress = () => {}, maxBytes = BACKUP_SET_MAX_BYTES } = {},
+  includeGame,
 ) {
   abort(signal);
   required(
@@ -48,10 +59,10 @@ export async function prepareBackupSet(
     metadata = await source.readMetadata({ signal }),
     generationIdentity = generations(metadata);
   abort(signal);
-  onProgress('Reading game data and the saved flight…');
-  const game = await source.readGame({ savedAt, signal });
+  if (includeGame) onProgress('Reading game data and the saved flight…');
+  const game = includeGame ? await source.readGame({ savedAt, signal }) : null;
   abort(signal);
-  const gameContents = canonicalJSON(game.contents);
+  const gameContents = game ? canonicalJSON(game.contents) : null;
   const assertGameCurrent = () => {
     required(
       source.gameIdentity() === gameIdentity,
@@ -72,14 +83,16 @@ export async function prepareBackupSet(
     assertGameCurrent();
     files.push(Object.freeze({ id, filename, blob, bytes: blob.size, sha256 }));
   }
-  onProgress('Checking game data and the saved flight…');
-  await add(
-    'game',
-    `${filenamePrefix}-game-data.json`,
-    new Blob([await exportBackup(game.contents, { ...game.options, signal })], {
-      type: 'application/json',
-    }),
-  );
+  if (includeGame) {
+    onProgress('Checking game data and the saved flight…');
+    await add(
+      'game',
+      `${filenamePrefix}-game-data.json`,
+      new Blob([await exportBackup(game.contents, { ...game.options, signal })], {
+        type: 'application/json',
+      }),
+    );
+  }
   onProgress('Checking picture and poster originals…');
   const still = await source.readStill({ signal });
   required(
@@ -166,7 +179,9 @@ export async function prepareBackupSet(
       sourceRevision: source.edition.sourceRevision ?? null,
     },
     generations: { ...metadata },
-    mediaScope: 'Saved shared-origin media, paired with this one game profile channel',
+    mediaScope: includeGame
+      ? 'Saved shared-origin media, paired with this one game profile channel'
+      : 'Saved shared-origin media only; legacy game data and authored flights excluded',
     domains: await Promise.all(
       [
         ['media', still.document, still.assets],
@@ -195,6 +210,9 @@ export async function prepareBackupSet(
       'Other profile channels',
       'Unreferenced blobs and browser caches',
       'Unavailable or detached originals',
+      ...(!includeGame
+        ? ['Legacy game-data JSON and unfinished authored flight; export the attempt separately']
+        : []),
       ...(audioPlan.omittedCatalogueTrackIds.length
         ? ['Unused, uninstalled online catalogue recordings']
         : []),
@@ -204,7 +222,7 @@ export async function prepareBackupSet(
       'Restore .rlmedia picture/poster originals',
       'Restore .rlstory stories',
       'Restore .rlsound saved music',
-      'Review and import game-data JSON',
+      ...(includeGame ? ['Review and import game-data JSON'] : []),
     ],
     files: files.map(({ id, filename, bytes, sha256 }) => ({
       id,
@@ -224,12 +242,14 @@ export async function prepareBackupSet(
   );
   // Re-read full game metadata with the SAME export timestamp. A newly generated
   // savedAt must not mask a changed replay or falsely invalidate an idle flight.
-  onProgress('Rechecking game data for a consistent backup set…');
-  const finalGame = await source.readGame({ savedAt, signal });
-  required(
-    canonicalJSON(finalGame.contents) === gameContents,
-    'Game data changed. Prepare the backup set again.',
-  );
+  if (includeGame) {
+    onProgress('Rechecking game data for a consistent backup set…');
+    const finalGame = await source.readGame({ savedAt, signal });
+    required(
+      canonicalJSON(finalGame.contents) === gameContents,
+      'Game data changed. Prepare the backup set again.',
+    );
+  }
   onProgress('Rechecking saved original inventories…');
   required(
     generations(await source.readMetadata({ signal })) === generationIdentity,

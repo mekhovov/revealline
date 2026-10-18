@@ -5,6 +5,10 @@ game-data, picture, story and music exports and their original coverage report.
 When this game screen owns a Journey profile, the archive also uses that owner's
 asynchronous export, including saved evidence through its current admission path.
 The existing separate-file preparation and import controls remain available.
+In authored Journey editions, the archive explicitly omits incompatible Legacy
+game-data JSON and the unfinished authored flight. It still exports the supported
+shared originals and current Journey progress. Use the separate attempt export
+for an unfinished flight. The Legacy save/export guards remain enforced.
 
 **Download portable archive** is a native link to a prepared ZIP. It reports a
 download request, not a successful disk write. Check the resulting file in the
@@ -33,6 +37,9 @@ The manifest explicitly records:
   visibly warns that unread performance comparisons or replays may be missing.
 - Other game profiles, browser/device settings, download caches and separately
   stored simulator records, which are excluded.
+- Whether Legacy game-data JSON is included or excluded for an authored Journey
+  owner. The latter also excludes the unfinished authored flight; no substitute
+  Legacy profile or empty saved flight is manufactured.
 
 Member counts come from the actual exports. No fixed five-file count means that
 the entire game is covered. A Journey export conflict, cancellation or changed
@@ -64,8 +71,10 @@ Focused tests cover unchanged component hashes, explicit exclusions, borrowed
 Journey async export, partial evidence, cancellation and ownership fencing,
 bounded ZIP reads, CRC32, and native-link lifecycle. The system `unzip` reader
 also verifies and extracts a fixture, with every extracted component hash checked.
-An actual game-host test checks that preparing an archive does not change saved
-game data or resume play. Those are source/fixture results, not physical-device
+Actual game-host tests cover both the ordinary authored Home and Legacy Journey:
+preparing an archive does not change saved game data or resume play. The authored
+case preserves the existing Legacy export rejection and checks actual archive
+members and exclusions. Those are source/fixture results, not physical-device
 qualification.
 
 Pending device checks: build an exact committed revision; save an archive from

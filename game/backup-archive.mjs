@@ -1,5 +1,5 @@
 import { required } from './data-json.mjs';
-import { BACKUP_SET_MAX_BYTES, prepareBackupSet } from './backup-set.mjs';
+import { BACKUP_SET_MAX_BYTES, prepareBackupSet, prepareMediaBackupSet } from './backup-set.mjs';
 import { t } from './i18n/index.mjs';
 
 export const BACKUP_ARCHIVE_FORMAT = 'revealline-backup-archive.v1';
@@ -111,7 +111,9 @@ Journey evidence and excluded profiles cannot be recovered from this archive.
 2. Extract the ZIP using your device's archive tool. On iPhone or iPad, find it in
    Files and tap it to create a folder. Keep all the extracted filenames intact.
 3. Restore pictures (.rlmedia), stories (.rlstory) and music (.rlsound) through
-   their existing import reviews. Then review the game-data JSON in Saves & loads.
+   their existing import reviews. If listed, review game-data JSON in Saves & loads.
+   Authored Journey archives exclude Legacy game data and the unfinished flight;
+   export that attempt separately if needed.
 4. If a Journey JSON is listed in the manifest, open the same edition's Keep your
    Journey screen, inspect the file and explicitly restore that progress.
 5. Each restore has its own review. This is not an automatic, atomic multi-store
@@ -133,7 +135,9 @@ checks accidental transport damage and is not proof of a trusted source.
 2. Розпакуйте ZIP засобами пристрою. На iPhone або iPad знайдіть його у «Файлах»
    і торкніться, щоб створити папку. Не змінюйте назви розпакованих файлів.
 3. Через наявні екрани перевірки імпорту відновіть зображення (.rlmedia), історії
-   (.rlstory) та музику (.rlsound), потім JSON даних гри у «Збереження й завантаження».
+   (.rlstory) та музику (.rlsound). Якщо є JSON даних гри, перевірте його у
+   «Збереження й завантаження». Архів авторського Journey не містить даних Legacy
+   та незавершеного польоту; за потреби експортуйте цю спробу окремо.
 4. Якщо маніфест містить JSON Journey, відкрийте екран збереження Journey у тому
    самому виданні, перевірте файл і явно відновіть поступ.
 5. Кожне відновлення перевіряється окремо. Це не автоматична спільна транзакція.
@@ -147,8 +151,22 @@ checks accidental transport damage and is not proof of a trusted source.
 /** Wrap existing reviewed exports, borrowing the live Journey owner when present.
  * No store is written, initialized, closed, migrated or replaced by this module. */
 export async function prepareBackupArchive(source, { signal, onProgress = () => {} } = {}) {
+  const authored = source.archiveProfile != null;
+  required(
+    !authored ||
+      (source.archiveProfile.kind === 'authored-journey' &&
+        typeof source.archiveProfile.identity === 'function' &&
+        !!source.journey),
+    'Unsupported archive profile owner.',
+  );
   const journeyIdentity = source.journey?.identity(),
-    set = await prepareBackupSet(source, { signal, onProgress }),
+    inventorySource = authored
+      ? { ...source, gameIdentity: source.archiveProfile.identity }
+      : source,
+    set = await (authored ? prepareMediaBackupSet : prepareBackupSet)(inventorySource, {
+      signal,
+      onProgress,
+    }),
     files = [...set.files],
     prefix = set.files
       .find((file) => file.id === 'coverage')
@@ -189,7 +207,10 @@ export async function prepareBackupArchive(source, { signal, onProgress = () => 
     format: BACKUP_ARCHIVE_FORMAT,
     preparedAt: set.coverage.preparedAt,
     edition: set.coverage.edition,
-    scope: 'Current game profile, saved shared media and the current Journey owner when present',
+    scope: authored
+      ? 'Saved shared media and the current authored Journey owner; no legacy game-data JSON or unfinished flight'
+      : 'Current game profile, saved shared media and the current Journey owner when present',
+    gameData: authored ? 'excluded-authored' : 'included',
     journey,
     coverageReport: set.files.find((file) => file.id === 'coverage').filename,
     files: files.map(({ id, filename, bytes, sha256 }) => ({ id, filename, bytes, sha256 })),
