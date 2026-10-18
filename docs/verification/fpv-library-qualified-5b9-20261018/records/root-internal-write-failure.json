@@ -1,0 +1,22 @@
+{
+  "recordedAt": "2026-10-18T00:31:09.902580+00:00",
+  "status": "NEWER_EXTERNAL_STATE_OVERRIDES_STALE_INTERNAL_CHECKPOINT",
+  "internalCheckpointUpdate": {
+    "attempt": "Atomic create of a new pending checkpoint file after reported free-space guard",
+    "result": "Failed with OSError28 ENOSPC at open(xb); original checkpoint was not replaced; log append code was not reached.",
+    "pendingPath": "[INTERNAL_PRESERVATION_RECORDS]/FPV-RESUMPTION-CHECKPOINT-20261017.json.failure-reconciliation-pending-0025"
+  },
+  "controllers": {
+    "library57502": "TERMINATED actualEXIT1 Company expected-module assertion; never restart.",
+    "storage64169": "TERMINATED actual toolEXIT1 ENOSPC before Company helper; never restart."
+  },
+  "newWork": "Independent review establishes wrong Company/core guard scope. Exact external-only Company continuation plans are being prepared by existing Library and storage owners. No corrected helper invocation yet. Root+peer exact approval required. Library must reuse original12119292608 without GET; storage Company has not been fetched/invoked.",
+  "internalIO": "All further writes and Git object calls held after repeated ENOSPC. Guard observed pack/index ENOSPC during exact Git object lookup despite returned IDs; partials preserved and no clean Git-success inference.",
+  "automation": "Heartbeat updated successfully in app, remains ACTIVE at existing30-minute interval, with actual stopped controllers and external receipt precedence.",
+  "limits": "No native/renderer/endurance, cleanup, source deletion, public mutation or Company acceptance. Accepted optional/family/presentation scopes unchanged.",
+  "priorExternalReceipt": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/ROOT-CONTROLLER-FAILURE-RECONCILIATION-20261018T0025Z.json",
+    "bytes": 2650,
+    "sha256": "83fa33579a81bf5a75723c579f3dfb9c2eb6dcf9179b8542b1b9f8649882f0e0"
+  }
+}

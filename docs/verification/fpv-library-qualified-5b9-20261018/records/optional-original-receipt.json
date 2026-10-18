@@ -1,0 +1,172 @@
+{
+  "UTC": "2026-10-18T00:09:17.961947+00:00",
+  "sourceRevision": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "sourceTree": "36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9",
+  "run": 39081073861,
+  "artifactId": 12119016711,
+  "archiveBytes": 27259916,
+  "archiveSHA256": "c1d73f5f8d07e5409c0bdbfb1bbc7c1e2b69fe970ecb01271a9209b84190c4d6",
+  "topLevelChecksums": 15,
+  "archives": [
+    {
+      "id": "civilian-flight",
+      "kind": "distribution",
+      "verifiedMembers": 96,
+      "uncompressedBytes": 3771978,
+      "limits": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3785994,
+      "archiveSHA256": "008b87ce01438cf1873f7aa526aa7724eed09060634aa2edb755629270c4f45a"
+    },
+    {
+      "id": "civilian-flight",
+      "kind": "source",
+      "verifiedMembers": 98,
+      "uncompressedBytes": 3806954,
+      "limits": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "archiveBytes": 3821306,
+      "archiveSHA256": "1ffc9b2c06c75f1b2d56b88c94400aeea3ef60c931c08fc2711cf6938f17716c"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "distribution",
+      "verifiedMembers": 139,
+      "uncompressedBytes": 11826094,
+      "limits": {
+        "files": 141,
+        "bytes": 12845056
+      },
+      "archiveBytes": 11847954,
+      "archiveSHA256": "eedd76218a3a102c7b49edf09ec1cf70788080c726b54df925ce686882fdcb22"
+    },
+    {
+      "id": "civilian-fpv",
+      "kind": "source",
+      "verifiedMembers": 141,
+      "uncompressedBytes": 11867255,
+      "limits": {
+        "files": 141,
+        "bytes": 12845056
+      },
+      "archiveBytes": 11889419,
+      "archiveSHA256": "83ff0369eea2ad465535a906633722e02b525c4c5d7854d2168bc2e6f3d344aa"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "distribution",
+      "verifiedMembers": 198,
+      "uncompressedBytes": 18328378,
+      "limits": {
+        "files": 200,
+        "bytes": 20971520
+      },
+      "archiveBytes": 18361262,
+      "archiveSHA256": "7f6e2402ffcb75bf47557978287e78d1016295c38c5eba27540fee8b3bc95433"
+    },
+    {
+      "id": "fpv-worlds",
+      "kind": "source",
+      "verifiedMembers": 200,
+      "uncompressedBytes": 18377391,
+      "limits": {
+        "files": 200,
+        "bytes": 20971520
+      },
+      "archiveBytes": 18410579,
+      "archiveSHA256": "ae15ba01f499e6c9e80ce119093271e230af0527e15a4f9816578750b6f1d296"
+    }
+  ],
+  "newAircraftModuleIdentities": [
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    {
+      "package": "civilian-fpv",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "distribution",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    {
+      "package": "fpv-worlds",
+      "role": "source",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    }
+  ],
+  "moduleClosure": {
+    "validatorSource": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+    "packages": [
+      {
+        "id": "civilian-flight",
+        "modules": 70,
+        "imports": 100
+      },
+      {
+        "id": "civilian-fpv",
+        "modules": 116,
+        "imports": 278
+      },
+      {
+        "id": "fpv-worlds",
+        "modules": 169,
+        "imports": 488
+      }
+    ],
+    "scope": "Finished original archive imports only; no checkout source fallback or execution"
+  },
+  "scope": "Exact optional original artifact, all six original source/runtime inventories and member hashes/budgets, finished import closures. No native/player/public acceptance. Combined source includes exact main a3db2c95. This is new 5b9e2a8b evidence; 12c3101e and older evidence are not inherited."
+}

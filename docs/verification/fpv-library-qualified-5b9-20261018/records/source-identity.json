@@ -1,0 +1,26 @@
+{
+  "UTC": "2026-10-17T23:58:37.193644+00:00",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "tree": "36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9",
+  "parents": [
+    "12c3101e7e38bd1a8314da6428bf3c36a4cd85af",
+    "a3db2c95b4ce446f2232b829f9551b73e0f51514"
+  ],
+  "base": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+  "branch": "codex/fpv-regional-family-library-20261016",
+  "draft": true,
+  "unchangedLibraryBlobs": {
+    "docs/fpv-regional-family-library-20261016.md": "bbccbe8547901435b0b27cc2774dfd54a1279d0a",
+    "game/test/fpv-regional-library-families.test.mjs": "5d32059b6ef03211d4998b0e83112be30614c018",
+    "optional-practice/civilian-fpv/regional-library.mjs": "74100dd421dfe7d23d4c80c1b748552c330b7902",
+    "optional-practice/civilian-fpv/world-style.css": "320028f3c02d16f36a644c18525995faa5cd7102",
+    "publishing/industrial-feature-tests.json": "37c8269b0cefb7db383c35b9032ccf9e3453f5c7"
+  },
+  "fiveFileDeltaExact": true,
+  "canonicalRefParentsTreeVerified": true,
+  "mergePOSTExitCode": 0,
+  "originalWrapperExitCode": 1,
+  "originalFailedConjunct": "unknown; immediate compound branch/PR assertion did not persist each value",
+  "reconciliation": "one bounded read-only canonical reconciliation; no mutation retry",
+  "scope": "Canonical normal merge/source identity only; no inherited source/package/native qualification"
+}

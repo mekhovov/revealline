@@ -1,0 +1,116 @@
+{
+  "UTC": "2026-10-18T00:39:00.331947+00:00",
+  "status": "PASS_CORRECTED_COMPANY_SCOPE_ORIGINAL_ARCHIVE_ONLY",
+  "sourceRevision": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "sourceTree": "36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9",
+  "run": 39081073861,
+  "artifactId": 12119292608,
+  "githubArtifactBytes": 78427399,
+  "githubArtifactSHA256": "528c1748e2105086c022cb33f2046cc4cd0d1315474423ac767dd800571d00fc",
+  "artifactExpiresAt": "2026-11-01T00:19:54Z",
+  "topLevelChecksums": 7,
+  "allMemberHashes": true,
+  "archives": [
+    {
+      "role": "runtime",
+      "files": 1141,
+      "contentBytesIncludingMetadata": 41260835,
+      "archiveBytes": 41432497,
+      "archiveSHA256": "7bcc846094f8113c5d1e2c9652dbe1d1b8699d82638af7108deebe3366d1a9c2",
+      "embeddedMetadata": "manifest.json",
+      "allDeclaredMemberHashesAndCRC": true,
+      "exactInventory": true
+    },
+    {
+      "role": "source",
+      "files": 1141,
+      "contentBytesIncludingMetadata": 65355975,
+      "archiveBytes": 65529355,
+      "archiveSHA256": "01c5549eb64f6e4033a62b4d5a313ddfe5ae75e1b473658234e62d608f7093eb",
+      "embeddedMetadata": "source-inventory.json",
+      "allDeclaredMemberHashesAndCRC": true,
+      "exactInventory": true
+    }
+  ],
+  "positiveCompanyProjectedIdentities": [
+    {
+      "role": "runtime",
+      "bytes": 3977,
+      "path": "game/company.html",
+      "sha256": "72ecd2249cf9cdddfc975c3d27ea5ec70cd553f48a432abc38cc1caa37fd94cc"
+    },
+    {
+      "role": "runtime",
+      "bytes": 7042,
+      "path": "game/fpv-entry.mjs",
+      "sha256": "5bba98897d36403109a12f3640beb3b124fc2e258bce071957f9d87007a27188"
+    },
+    {
+      "role": "runtime",
+      "bytes": 3716,
+      "path": "game/optional-practice-catalog.mjs",
+      "sha256": "d4f41d63e1fa1834cd89f3f137e8ba8aeddcedac906fc1d515a84cc9236e2a85"
+    },
+    {
+      "role": "runtime",
+      "bytes": 12372,
+      "path": "game/ui/optional-practice-panel.mjs",
+      "sha256": "5f233190d1690b654c15cd354b8266f34091c3245c66c05dbc5037af22341a22"
+    },
+    {
+      "role": "runtime",
+      "bytes": 10628,
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "sha256": "704e70dbfb0b7bdce62a9532525241f608f7e02e021f7eca8b7e7d6193f0cb4b"
+    },
+    {
+      "role": "source",
+      "bytes": 3977,
+      "path": "game/company.html",
+      "sha256": "72ecd2249cf9cdddfc975c3d27ea5ec70cd553f48a432abc38cc1caa37fd94cc"
+    },
+    {
+      "role": "source",
+      "bytes": 7042,
+      "path": "game/fpv-entry.mjs",
+      "sha256": "5bba98897d36403109a12f3640beb3b124fc2e258bce071957f9d87007a27188"
+    },
+    {
+      "role": "source",
+      "bytes": 3716,
+      "path": "game/optional-practice-catalog.mjs",
+      "sha256": "d4f41d63e1fa1834cd89f3f137e8ba8aeddcedac906fc1d515a84cc9236e2a85"
+    },
+    {
+      "role": "source",
+      "bytes": 12372,
+      "path": "game/ui/optional-practice-panel.mjs",
+      "sha256": "5f233190d1690b654c15cd354b8266f34091c3245c66c05dbc5037af22341a22"
+    },
+    {
+      "role": "source",
+      "bytes": 10628,
+      "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+      "sha256": "704e70dbfb0b7bdce62a9532525241f608f7e02e021f7eca8b7e7d6193f0cb4b"
+    }
+  ],
+  "separateOptionalEightProofs": {
+    "receiptSHA256": "87e6a6ef3f51819a1ae15e522968db2e011ff7e7b0746239ef516910b16bb444",
+    "terminalSHA256": "de9bcd11277d51451c3b46c7904400692e37dc16ff0f9075ebaa341f79b8d853",
+    "scope": "Reused already accepted eight optional module identities only; no optional archive replay"
+  },
+  "originalCompanyFailurePreserved": {
+    "terminalSHA256": "59e0a7458c33b428d63fab16dad6cc311737f5f263f6b544579cbe2ac0fa5c6d",
+    "stderrSHA256": "0ffa141d9bcd8da3578700e52d068eec6937a9fcffdfba5c9c3d700bd8b58c74"
+  },
+  "existingCompanyRuntimeLimits": {
+    "files": 2000,
+    "bytes": 83886080,
+    "policySHA256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e"
+  },
+  "runtimeAlsoUnder72MiB": true,
+  "cloudReproducibleBuilds": 2,
+  "publicEligible": false,
+  "externalAvailableBytesAtStart": 67174400000,
+  "scope": "One corrected Company-only validation of existing original runtime/source archives. No GET, build, extraction, controller restart, optional replay, product mutation, native/player/public or later-main acceptance. Source inventory uses projected hashes and is not assigned runtime budget."
+}

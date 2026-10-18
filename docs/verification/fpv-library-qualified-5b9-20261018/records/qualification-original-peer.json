@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-18T00:02:17.108748+00:00",
+  "reviewer": "fpv_library_guard_review",
+  "status": "PASS_NEW_HEAD_QUALIFICATION_GUARD_REVIEW_NOT_EXECUTED",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "tree": "36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9",
+  "base": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+  "run": 39081073861,
+  "plan": {
+    "file": "qualification-plan.json",
+    "bytes": 6838,
+    "sha256": "63e3fea2880d142daabdb1ae7a8291a18d3a9b4189bc65fd70b10e54f7bd61f8"
+  },
+  "diff": {
+    "file": "qualification-helper-diff.patch",
+    "bytes": 16671,
+    "sha256": "7549978f18c413169500e4605da0d72fb21ccd31f5d2f928a37077bcf667f67f"
+  },
+  "sourcePins": {
+    "file": "current-source-and-run-pins.json",
+    "bytes": 2252,
+    "sha256": "55b3ff15e12af1beb4f4715e765216e817158215ac9b345693e995963a1003fb"
+  },
+  "helpers": [
+    {
+      "file": "qualify-combined-optional.py",
+      "bytes": 8876,
+      "sha256": "e27fae32eb8a4603780e3b771eef2b4b399fe412d454520b4e49c7bec7629bd9"
+    },
+    {
+      "file": "qualify-combined-company.py",
+      "bytes": 6561,
+      "sha256": "5cd93e4230e82f3228a3b641fa374efbe89341ebb23c9ff04f17364980d1a101"
+    },
+    {
+      "file": "qualify-combined-family-labels.py",
+      "bytes": 3770,
+      "sha256": "d414c62ff2d571a1691198e8edd5affd251a4639387b143cf8666123c11396d2"
+    },
+    {
+      "file": "run-new-combined-once.py",
+      "bytes": 3949,
+      "sha256": "55ceb9fa81a6a078d9702fc41ce4a963d5e51496aa22e1976864f6970b97ea65"
+    }
+  ],
+  "checks": [
+    "Full new helper/controller bodies, plan and prepared diff read. Each helper matches its exact plan pin; each parent helper matches its recorded pin. Generated four-helper diff exactly equals the supplied patch, with no hidden additional changes.",
+    "All six local source-policy/workflow/module files match recorded byte length, SHA-256 and Git blob ID. Both helper NEW_MODULES dictionaries equal the plan source pins.",
+    "Policy diff is precisely the two aircraft appearance/preview module additions and Academy139->141 / Worlds198->200 count ceilings. Byte limits remain 8MiB, 12MiB+256KiB and 20MiB; Company2000/80MiB and stricter observed72MiB runtime gate remain.",
+    "New source head and focused run bind metadata, artifacts, current source/tree and receipts. Optional policy hash is checked before archive download. Both new modules require exact length/SHA/GitID and membership across Academy/World runtime/source archives (8 identities) and Company runtime/source archives (4 identities).",
+    "Existing original outer digest, unique safe archive inventory, every declared member hash, embedded manifest/inventory equality and finished optional import-closure checks remain. Family validation binds the newly accepted exact archive count/decoded bytes under200/20MiB and exact24 focused groups, then checks runtime bytes unchanged.",
+    "Fresh external root and exclusive writes, one optional plus one Company original download, existing-job waits, ordered one-invocation stages and stop-on-first-failure remain. No dispatch/build/native path was added.",
+    "External reserves remain3GiB plus512MiB optional /128MiB family /1GiB Company allowances. Small internal receipt handling retains65MiB guard and2MiB bound; it is not a general internal-heavy-work exemption.",
+    "Actual intent, download terminal, helper stdout/stderr and per-stage actual exit/receipt records are retained. Initial merge wrapper EXIT1 remains distinct from later canonical reconciliation PASS; no new qualification is credited by this static review."
+  ],
+  "limitations": [
+    "Controller75-minute deadline is cooperative between calls; it does not guarantee termination of blocked subprocess/filesystem calls. Reconcile actual sessions/terminals later, never infer completion from elapsed time.",
+    "Artifact IDs and outcomes must come from the pinned run when available; this review performs no network check or artifact acceptance.",
+    "Prior12c native/responsive evidence remains historical with its headroom limit. No current native/full-player/public/original-storage/physical/aircraft-renderer acceptance is inherited."
+  ],
+  "blockingIssues": [],
+  "controllerInvoked": false,
+  "artifactDownloaded": false,
+  "testExecuted": false,
+  "branchOrSourceMutated": false,
+  "scope": "Only new identity, committed policy and new module membership guard changes reviewed. No accepted historical qualification repeated. Root once-only invocation decision remains separate."
+}

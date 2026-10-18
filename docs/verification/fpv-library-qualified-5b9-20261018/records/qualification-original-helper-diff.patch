@@ -1,0 +1,135 @@
+--- accepted-12c/qualify-combined-optional.py
++++ new-5b9/qualify-combined-optional.py
+@@ -1,8 +1,8 @@
+ from pathlib import Path, PurePosixPath
+ import subprocess,json,hashlib,zipfile,io,os,datetime,base64
+-HEAD='12c3101e7e38bd1a8314da6428bf3c36a4cd85af';RUN=39069936864
++HEAD='5b9e2a8bcee3b379840a0f76af8284d95b390834';RUN=39081073861
+ BASE=Path('[EXTERNAL_PACKAGE_STAGING]')
+-ROOT=BASE/'regional-family-library-12c3101e-combined-fe1-20261017'
++ROOT=BASE/'regional-family-library-5b9e2a8b-combined-a3db-20261018'
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+ def api(p): return json.loads(subprocess.check_output(['gh','api','repos/mekhovov/revealline/'+p]))
+ def reserve():
+@@ -23,8 +23,8 @@
+  d=api('contents/'+path+'?ref='+HEAD);b=base64.b64decode(d['content'])
+  assert len(b)==d['size'] and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==d['sha']
+  return b
+-policy_source=source('publishing/optional-package-policy.mjs');assert sha(policy_source)=='aa37d204f94c2592967c64813864647b5b84d65979d50c3abbf90314146ab6bc'
+-expected_limits={'civilian-flight':{'files':98,'bytes':8*1024**2},'civilian-fpv':{'files':139,'bytes':12*1024**2+256*1024},'fpv-worlds':{'files':198,'bytes':20*1024**2}}
++policy_source=source('publishing/optional-package-policy.mjs');assert sha(policy_source)=='b1afd3ccb30d9af2c3527e94ce458f95662e619626ca424636ec3add80e194e3'
++expected_limits={'civilian-flight':{'files':98,'bytes':8*1024**2},'civilian-fpv':{'files':141,'bytes':12*1024**2+256*1024},'fpv-worlds':{'files':200,'bytes':20*1024**2}}
+ run=api('actions/runs/'+str(RUN));assert run['head_sha']==HEAD
+ jobs=api('actions/runs/'+str(RUN)+'/jobs')['jobs'];assert next(x for x in jobs if x['name']=='optional-practice')['conclusion']=='success'
+ available=api('actions/runs/'+str(RUN)+'/artifacts')['artifacts'];selected=[x for x in available if x['name']=='optional-flight-candidate-'+HEAD and not x['expired']];assert len(selected)==1;AID=selected[0]['id'];meta=api('actions/artifacts/'+str(AID));assert meta['workflow_run']['head_sha']==HEAD and meta['workflow_run']['id']==RUN and not meta['expired']
+@@ -38,7 +38,8 @@
+  f.flush();os.fsync(f.fileno())
+ put(ROOT/'download-terminal.json',(json.dumps({'exitCode':result.returncode,'stderr':result.stderr.decode(),'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat()},indent=2)+'\n').encode());assert result.returncode==0
+ b=partial.read_bytes();assert len(b)==meta['size_in_bytes'] and 'sha256:'+sha(b)==meta['digest'];archive=ROOT/'github-artifact.zip';partial.rename(archive)
+-rows=[]
++NEW_MODULES={'optional-practice/civilian-fpv/aircraft-appearance.mjs': {'bytes': 1018, 'sha256': 'eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e', 'gitBlob': '74b2be0436d3aaec04ef1707e4c95f5ac4f1040b'}, 'optional-practice/civilian-fpv/aircraft-preview.mjs': {'bytes': 7063, 'sha256': '07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c', 'gitBlob': 'f5aa83735433d1bee11649dc9d75920e658fc87a'}}
++rows=[];new_module_proofs=[]
+ with zipfile.ZipFile(archive) as outer:
+  inventory(outer,512*1024**2)
+  checks=json.loads(outer.read('optional-checksums.json'))
+@@ -60,14 +61,21 @@
+     for f in table['files']:
+      data=z.read(f['path']);assert len(data)==f['bytes'] and sha(data)==f['sha256'],(name,f['path'])
+     assert json.loads(z.read(metadata))==table
++    if ident in ['civilian-fpv','fpv-worlds']:
++     for module,pin in NEW_MODULES.items():
++      assert module in expected
++      body=z.read(module);blob=hashlib.sha1(b'blob '+str(len(body)).encode()+b'\0'+body).hexdigest()
++      assert len(body)==pin['bytes'] and sha(body)==pin['sha256'] and blob==pin['gitBlob'],(ident,kind,module)
++      new_module_proofs.append({'package':ident,'role':kind,'path':module,**pin})
+     total=sum(x.file_size for x in actual);assert total<=manifest['limits']['bytes'] and len(actual)<=manifest['limits']['files']
+     rows.append({'id':ident,'kind':kind,'verifiedMembers':len(actual),'uncompressedBytes':total,'limits':manifest['limits'],'archiveBytes':len(raw),'archiveSHA256':sha(raw)})
+    put(ROOT/name,raw)
+  for item in outer.infolist():
+   if not item.filename.endswith('.zip'):put(ROOT/item.filename,outer.read(item))
++assert len(new_module_proofs)==8
+ validator=ROOT/'validator'
+ for name in ['publishing/edition-zip.mjs','publishing/optional-module-closure.mjs','publishing/optional-package-policy.mjs','publishing/optional-import-capabilities.mjs','publishing/vendor/acorn-8.18.0.mjs']:put(validator/name,policy_source if name=='publishing/optional-package-policy.mjs' else source(name))
+ program="import {readFile,writeFile} from 'node:fs/promises';import {readEditionZip} from './publishing/edition-zip.mjs';import {validateOptionalModuleClosure} from './publishing/optional-module-closure.mjs';import {OPTIONAL_PACKAGE_POLICIES} from './publishing/optional-package-policy.mjs';const root=process.argv[2],rows=[];for(const id of ['civilian-flight','civilian-fpv','fpv-worlds']){const files=readEditionZip(await readFile(root+'/distribution-optional-'+id+'.zip'));rows.push({id,...validateOptionalModuleClosure(files,OPTIONAL_PACKAGE_POLICIES[id])});}await writeFile(root+'/archive-import-closure-receipt.json',JSON.stringify({validatorSource:'"+HEAD+"',packages:rows,scope:'Finished original archive imports only; no checkout source fallback or execution'},null,2)+'\\n',{flag:'wx'});console.log(JSON.stringify(rows));"
+ put(validator/'verify.mjs',program.encode());run=subprocess.run(['node',str(validator/'verify.mjs'),str(ROOT)],capture_output=True,env=env);put(ROOT/'import-closure.log',run.stdout+run.stderr);assert run.returncode==0,'closure failure retained'
+-receipt={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':HEAD,'sourceTree':tree,'run':RUN,'artifactId':AID,'archiveBytes':meta['size_in_bytes'],'archiveSHA256':sha(b),'topLevelChecksums':len(checks['files']),'archives':rows,'moduleClosure':json.loads((ROOT/'archive-import-closure-receipt.json').read_text()),'scope':'Exact optional original artifact, all six original source/runtime inventories and member hashes/budgets, finished import closures. No native/player/public acceptance. Combined source includes exact main fe1bb1. This is new 12c3101e evidence; a105 and older evidence are not inherited.'}
++receipt={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':HEAD,'sourceTree':tree,'run':RUN,'artifactId':AID,'archiveBytes':meta['size_in_bytes'],'archiveSHA256':sha(b),'topLevelChecksums':len(checks['files']),'archives':rows,'newAircraftModuleIdentities':new_module_proofs,'moduleClosure':json.loads((ROOT/'archive-import-closure-receipt.json').read_text()),'scope':'Exact optional original artifact, all six original source/runtime inventories and member hashes/budgets, finished import closures. No native/player/public acceptance. Combined source includes exact main a3db2c95. This is new 5b9e2a8b evidence; 12c3101e and older evidence are not inherited.'}
+ put(ROOT/'qualification-original-members-and-closure.json',(json.dumps(receipt,indent=2)+'\n').encode());print(json.dumps({'root':str(ROOT),'receipt':receipt},indent=2))
+--- accepted-12c/qualify-combined-company.py
++++ new-5b9/qualify-combined-company.py
+@@ -1,6 +1,6 @@
+ from pathlib import Path,PurePosixPath
+ import subprocess,json,hashlib,zipfile,io,base64,os,datetime
+-HEAD='12c3101e7e38bd1a8314da6428bf3c36a4cd85af';RUN=39069936864;ROOT=Path('[EXTERNAL_PACKAGE_STAGING]/regional-family-library-12c3101e-combined-fe1-20261017');sha=lambda b:hashlib.sha256(b).hexdigest()
++HEAD='5b9e2a8bcee3b379840a0f76af8284d95b390834';RUN=39081073861;ROOT=Path('[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018');sha=lambda b:hashlib.sha256(b).hexdigest()
+ def api(p):return json.loads(subprocess.check_output(['gh','api','repos/mekhovov/revealline/'+p]))
+ def put(p,b):
+  with p.open('xb')as f:f.write(b);f.flush();os.fsync(f.fileno())
+@@ -19,6 +19,8 @@
+ with partial.open('xb')as f:
+  r=subprocess.run(['gh','api','--allow-escape-sequences','repos/mekhovov/revealline/actions/artifacts/'+str(meta['id'])+'/zip'],stdout=f,stderr=subprocess.PIPE,env=env);f.flush();os.fsync(f.fileno())
+ put(ROOT/'company-download-terminal.json',(json.dumps({'exitCode':r.returncode,'stderr':r.stderr.decode(),'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat()},indent=2)+'\n').encode());assert r.returncode==0
++NEW_MODULES={'optional-practice/civilian-fpv/aircraft-appearance.mjs': {'bytes': 1018, 'sha256': 'eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e', 'gitBlob': '74b2be0436d3aaec04ef1707e4c95f5ac4f1040b'}, 'optional-practice/civilian-fpv/aircraft-preview.mjs': {'bytes': 7063, 'sha256': '07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c', 'gitBlob': 'f5aa83735433d1bee11649dc9d75920e658fc87a'}}
++new_module_proofs=[]
+ raw=partial.read_bytes();assert len(raw)==meta['size_in_bytes']and'sha256:'+sha(raw)==meta['digest'];archive=ROOT/'company-original-artifact.zip';partial.rename(archive);receipts=[]
+ with zipfile.ZipFile(archive)as z:
+  inventory(z,1024**3);checks=json.loads(z.read('checksums.json'))
+@@ -35,13 +37,19 @@
+    embeddedName=next(iter(extra));assert embeddedName in[embedded,'company-manifest.json','manifest.json','source-inventory.json']and json.loads(q.read(embeddedName))==table
+    for f in table['files']:
+     v=q.read(f['path']);assert len(v)==f['bytes']and sha(v)==f['sha256']
++   for module,pin in NEW_MODULES.items():
++    assert module in expected
++    body=q.read(module);blob=hashlib.sha1(b'blob '+str(len(body)).encode()+b'\0'+body).hexdigest()
++    assert len(body)==pin['bytes'] and sha(body)==pin['sha256'] and blob==pin['gitBlob'],(role,module)
++    new_module_proofs.append({'role':role,'path':module,**pin})
+    total=sum(x.file_size for x in actual)
+    if role=='runtime':assert len(actual)<=2000 and total<=80*1024**2 and total<=72*1024**2
+    receipts.append({'role':role,'files':len(actual),'contentBytesIncludingMetadata':total,'archiveBytes':len(b),'archiveSHA256':sha(b)})
+  for n in z.namelist():
+   if not n.endswith('.zip'):put(ROOT/('company-'+n),z.read(n))
++assert len(new_module_proofs)==4
+ p='game/editions/package-budget.mjs';d=api('contents/'+p+'?ref='+HEAD);policy=base64.b64decode(d['content']);assert len(policy)==d['size']and hashlib.sha1(b'blob '+str(len(policy)).encode()+b'\0'+policy).hexdigest()==d['sha'];put(ROOT/'company-package-budget-source.mjs',policy)
+ assert sha(policy)=='0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e'
+ assert b'maxFiles: 2000'in policy and b'maxBytes: 80 * 1024 * 1024'in policy
+-receipt={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':HEAD,'sourceTree':tree,'run':RUN,'artifactId':meta['id'],'githubArtifactBytes':len(raw),'githubArtifactSHA256':sha(raw),'topLevelChecksums':len(checks['files']),'allMemberHashes':True,'archives':receipts,'existingCompanyRuntimeLimits':{'files':2000,'bytes':80*1024**2,'policySHA256':sha(policy),'gitBlob':d['sha']},'runtimeAlsoUnder72MiB':True,'cloudReproducibleBuilds':2,'publicEligible':False,'scope':'Current exact 12c3101e original Company runtime/source member sets,lengths,hashes and unchanged existing runtime budget. Source inventory separately hashed, not assigned runtime budget. No native/player/public/later-main integration acceptance. Optional originals have their own receipt.'}
++receipt={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':HEAD,'sourceTree':tree,'run':RUN,'artifactId':meta['id'],'githubArtifactBytes':len(raw),'githubArtifactSHA256':sha(raw),'topLevelChecksums':len(checks['files']),'allMemberHashes':True,'archives':receipts,'newAircraftModuleIdentities':new_module_proofs,'existingCompanyRuntimeLimits':{'files':2000,'bytes':80*1024**2,'policySHA256':sha(policy),'gitBlob':d['sha']},'runtimeAlsoUnder72MiB':True,'cloudReproducibleBuilds':2,'publicEligible':False,'scope':'Current exact 5b9e2a8b original Company runtime/source member sets,lengths,hashes and unchanged existing runtime budget. Source inventory separately hashed, not assigned runtime budget. No native/player/public/later-main integration acceptance. Optional originals have their own receipt.'}
+ put(ROOT/'company-original-members-receipt.json',(json.dumps(receipt,indent=2)+'\n').encode());print(json.dumps(receipt,indent=2))
+--- accepted-12c/qualify-combined-family-labels.py
++++ new-5b9/qualify-combined-family-labels.py
+@@ -1,6 +1,6 @@
+ from pathlib import Path, PurePosixPath
+ import subprocess,json,zipfile,hashlib,base64,os,datetime,re
+-HEAD='12c3101e7e38bd1a8314da6428bf3c36a4cd85af';ROOT=Path('[EXTERNAL_PACKAGE_STAGING]/regional-family-library-12c3101e-combined-fe1-20261017');STAGE=ROOT/'functional-family-label-check';sha=lambda b:hashlib.sha256(b).hexdigest()
++HEAD='5b9e2a8bcee3b379840a0f76af8284d95b390834';ROOT=Path('[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018');STAGE=ROOT/'functional-family-label-check';sha=lambda b:hashlib.sha256(b).hexdigest()
+ def put(p,b):
+  p.parent.mkdir(parents=True,exist_ok=True)
+  with p.open('xb')as f:f.write(b);f.flush();os.fsync(f.fileno())
+@@ -11,7 +11,7 @@
+ archive=ROOT/'distribution-optional-fpv-worlds.zip';expected=next(x for x in accepted['archives']if x['id']=='fpv-worlds'and x['kind']=='distribution');assert sha(archive.read_bytes())==expected['archiveSHA256']
+ STAGE.mkdir(exist_ok=False)
+ with zipfile.ZipFile(archive)as z:
+- assert expected['limits']=={'files':198,'bytes':20*1024**2}
++ assert expected['limits']=={'files':200,'bytes':20*1024**2}
+  assert 0<len(z.infolist())==expected['verifiedMembers']<=expected['limits']['files']
+  assert sum(x.file_size for x in z.infolist())==expected['uncompressedBytes']<=expected['limits']['bytes']
+  for item in z.infolist():
+--- accepted-12c/run-new-combined-once.py
++++ new-5b9/run-new-combined-once.py
+@@ -1,6 +1,6 @@
+ from pathlib import Path
+ import subprocess,json,datetime,time,hashlib,sys,os
+-N=Path('[OWNED_LIBRARY_METADATA]/combined-fe1bb1-20261017-001');PLAN=json.loads((N/'qualification-plan.json').read_text());HEAD=PLAN['head'];RUN=PLAN['run'];E=Path(PLAN['externalRoot']);OUT=N/'actual-once';OUT.mkdir(exist_ok=False);start=time.monotonic();counter=0;last=None
++N=Path('[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001');PLAN=json.loads((N/'qualification-plan.json').read_text());HEAD=PLAN['head'];RUN=PLAN['run'];E=Path(PLAN['externalRoot']);OUT=N/'actual-once';OUT.mkdir(exist_ok=False);start=time.monotonic();counter=0;last=None
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+ def put(p,obj):
+  b=(json.dumps(obj,indent=2)+'\n').encode();assert len(b)<2*1024**2;s=os.statvfs(N);assert s.f_bavail*s.f_frsize>=65*1024**2+len(b)
+@@ -31,7 +31,7 @@
+   with (OUT/receipt).open('xb')as f:f.write(raw)
+   record['receipt']={'originalPath':str(p),'internalCopy':str(OUT/receipt),'bytes':len(raw),'SHA256':sha(raw)}
+  put(OUT/(name+'-terminal.json'),record);print(json.dumps({'stage':name,**record}),flush=True);assert result.returncode==0,'stage failure preserved; no retry'
+-put(OUT/'controller-intent.json',{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'planSHA256':sha((N/'qualification-plan.json').read_bytes()),'controllerSHA256':sha(Path(__file__).read_bytes()),'scope':'Exactly optional original then packaged family labels then Company original. No duplicate dispatch/download/build or old qualification.'})
++put(OUT/'controller-intent.json',{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'planSHA256':sha((N/'qualification-plan.json').read_bytes()),'controllerSHA256':sha(Path(__file__).read_bytes()),'scope':'Exactly optional original then packaged family labels then Company original. No duplicate dispatch/download/build or old 12c qualification.'})
+ try:
+  wait('optional-practice');stage('optional','qualify-combined-optional.py','qualification-original-members-and-closure.json');stage('packaged','qualify-combined-family-labels.py','packaged-family-label-receipt.json');wait('candidate');stage('company','qualify-combined-company.py','company-original-members-receipt.json')
+  put(OUT/'controller-result.json',{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'allThreeStagesPassed':True,'scope':'Exact source artifact/software gates only; no native/player/public or future-main acceptance'})

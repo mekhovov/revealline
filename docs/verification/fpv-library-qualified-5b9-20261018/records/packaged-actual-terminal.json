@@ -1,0 +1,21 @@
+{
+  "UTC": "2026-10-18T00:10:22.464485+00:00",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "run": 39081073861,
+  "helper": {
+    "path": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/qualify-combined-family-labels.py",
+    "bytes": 3770,
+    "SHA256": "d414c62ff2d571a1691198e8edd5affd251a4639387b143cf8666123c11396d2",
+    "parentHelper": "[OWNED_LIBRARY_METADATA]/combined-fe1bb1-20261017-001/qualify-combined-family-labels.py",
+    "parentSHA256": "f9f5bb7c19d5b3fc260a2fb3069c8906fff22d62dc97de6d174f74ccb69283f6"
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "ea139d6762811ae297e402d304b26e3b73b5e407e2d17bc05b599983e31c3517",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "originalPath": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/packaged-family-label-receipt.json",
+    "internalCopy": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/actual-once/packaged-family-label-receipt.json",
+    "bytes": 2429,
+    "SHA256": "ea139d6762811ae297e402d304b26e3b73b5e407e2d17bc05b599983e31c3517"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "UTC": "2026-10-18T00:22:01.773736+00:00",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "run": 39081073861,
+  "type": "AssertionError",
+  "message": "stage failure preserved; no retry",
+  "noAutomaticRetry": true
+}

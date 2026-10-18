@@ -1,0 +1,17 @@
+{
+  "UTC": "2026-10-18T00:38:41.188092+00:00",
+  "decision": "APPROVE_ONE_EXISTING_COMPANY_ORIGINAL_CORRECTION",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "run": 39081073861,
+  "pins": {
+    "company-correction-plan.json": "ec7d89faecd38802ace2e03b30e85ef61fbe9de1f5f2a6cae423c05421a4f136",
+    "qualify-existing-company-corrected-once.py": "dd9fd4c22d0bde6a83285af4beda7e37c89ba7e5cebac30bebd5eb48f578aa60",
+    "run-company-correction-once.py": "edc0ac63d3442431246a469ab22a97256add21dfef39f18e14b3769173689ce0",
+    "COMPANY-CORRECTION-PEER-REVIEW.json": "3f401cac364bfdaf6837fd9d55ba70b9a2a216ab7b08bd20e5eab62a9e2422af"
+  },
+  "externalAvailableBytes": 67174400000,
+  "review": "Root fully read plan, helper, launcher, all sixteen exact input bindings, and independent review. Correction removes only the unsupported optional-aircraft-in-Company assumption; exact five Company paths and separate accepted optional proofs remain. Independent actual metadata schema and limits reviewed.",
+  "authorizedScope": "One external invocation of the exact launcher and helper, using the existing original artifact12119292608 without network, download, build or extraction. Preserve original controller57502 and Company EXIT1 failures unchanged. No optional, packaged, presentation or native replay, product write or publication.",
+  "execution": "Use absolute /opt/homebrew/opt/python@3.14/bin/python3.14 -B from / with TMPDIR/TMP/TEMP on this external correction directory. Record actual intent/session/terminal. Never retry automatically; reconcile any unknown outcome.",
+  "acceptance": "This approves execution only. Root must inspect actual receipt and terminal before accepting corrected Company scope. No full-player, native, public, persistence-cause, endurance or later-main acceptance."
+}

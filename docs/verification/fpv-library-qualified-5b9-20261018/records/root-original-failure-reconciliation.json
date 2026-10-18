@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-10-18T00:26:23.883819+00:00",
+  "status": "EXISTING_CONTROLLERS_TERMINATED_DIAGNOSIS_ONLY_NO_RETRY",
+  "library": {
+    "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+    "session": 57502,
+    "actualExitCode": 1,
+    "companyActualExitCode": 1,
+    "companyAssertion": "qualify-combined-company.py line41: assert module in expected",
+    "stderrSHA256": "0ffa141d9bcd8da3578700e52d068eec6937a9fcffdfba5c9c3d700bd8b58c74",
+    "companyTerminalSHA256": "59e0a7458c33b428d63fab16dad6cc311737f5f263f6b544579cbe2ac0fa5c6d",
+    "controllerTerminalSHA256": "82cef4e42266f5370133fcbd4d92ff2aeafd3fbbf65dded83a69763fc9ff493e",
+    "rootFullFailureRecordsRead": true,
+    "companyAcceptanceReceiptExists": false,
+    "acceptedOptionalPackagedAndPresentationUnchanged": true
+  },
+  "storage": {
+    "head": "53338dc73469f866e9289b2b5f74555c68e8231e",
+    "session": 64169,
+    "ownerReportedActualToolExitCode": 1,
+    "ownerRetainedToolChunk": "0490ca",
+    "failure": "OSError28 creating actual-once/cloud-state-3.json in wait(candidate), then OSError28 creating controller-negative.json in exception handler. Reported traceback stops before stage(company).",
+    "ownerNoTempReconciliation": "optional terminal1396B actualExitCode0 exists; company-intent, company-terminal, cloud-state-3, controller-negative and controller-result absent. No new operational execution.",
+    "companyHelperInvocationRecorded": false,
+    "companyOutcome": "Not established; no Company pass or product failure inferred.",
+    "acceptedOptionalUnchanged": true,
+    "attribution": "Owner relayed retained actual tool output; no generated terminal is substituted for the failed filesystem writes."
+  },
+  "headroom": {
+    "rootHereDocumentFailure": "zsh could not create temporary here-document file: no space left on device, before Python execution.",
+    "observations": [
+      {
+        "UTC": "2026-10-18T00:23:28.395506+00:00",
+        "internalAvailableBytes": 153305088
+      },
+      {
+        "UTC": "2026-10-18T00:24:58.099529+00:00",
+        "internalAvailableBytes": 192466944,
+        "externalAvailableBytes": 67174400000
+      }
+    ],
+    "stableInternal3GiB": false,
+    "causeOfCapacityChangesUnknown": true,
+    "newCleanup": false
+  },
+  "diagnosisInProgress": "Bounded read-only Company module-scope diagnosis; no correction helper, rerun, artifact GET, build, extraction, native stage or publication authorized.",
+  "preservation": "Originals, failed artifact, negative records, player/browser data and unresolved unknown patch untouched.",
+  "receiptDurability": "External owned staging file; not yet GitHub-published."
+}

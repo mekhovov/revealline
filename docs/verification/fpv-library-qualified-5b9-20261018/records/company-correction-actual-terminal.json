@@ -1,0 +1,20 @@
+{
+  "UTC": "2026-10-18T00:39:00.521174+00:00",
+  "actualExitCode": 0,
+  "childPid": 47907,
+  "noAutomaticRetry": true,
+  "ACTUAL.stdout.log": {
+    "bytes": 4361,
+    "sha256": "1ab1af692aebfcfc416b6dfd63a96ab295c28c3cd8ae5a8f45ef2793232f2817"
+  },
+  "ACTUAL.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "receiptExists": true,
+  "receipt": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/actual-once/company-corrected-original-members-receipt.json",
+    "bytes": 4361,
+    "sha256": "1ab1af692aebfcfc416b6dfd63a96ab295c28c3cd8ae5a8f45ef2793232f2817"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "UTC": "2026-10-18T00:39:46.412691+00:00",
+  "decision": "ACCEPT_CORRECTED_COMPANY_ORIGINALS_SCOPED",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "actualToolSession": 59473,
+  "actualToolExitCode": 0,
+  "receiptPins": {
+    "ACTUAL-INTENT.json": "94ece04d69b60fd7d44a4658937dcf84891e1105a21f7b523474253bb7a73312",
+    "ACTUAL-TERMINAL.json": "f1b85f64001d28ca6a784a9b723893dff2e9bf3478b17535b29bb2dbc45561b7",
+    "company-corrected-original-members-receipt.json": "1ab1af692aebfcfc416b6dfd63a96ab295c28c3cd8ae5a8f45ef2793232f2817"
+  },
+  "basis": "Root fully read actual intent, terminal and receipt after full source and independent static review. Existing exact original artifact12119292608 passed full GitHub digest, seven checksums, both1141-member original inventories and hashes/CRC, embedded metadata, source head/tree/edition and unchanged runtime budgets. Ten Company projected identities and separate accepted optional proofs are bound.",
+  "originalFailuresRemain": "Old Company and controller57502 remain EXIT1; no relabeling. No repeat GET or prior successful qualification.",
+  "remaining": "This closes only corrected current-head Company originals. Native current-head/full-player/public/persistence-cause/physical/endurance/whole-share gates remain open. Evidence publication requires its own reviewed exact plan."
+}

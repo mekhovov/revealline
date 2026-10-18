@@ -1,0 +1,30 @@
+# FPV Library qualification at 5b9e2a8b
+This packet records the exact Draft #1540 candidate 5b9e2a8bcee3b379840a0f76af8284d95b390834, tree 36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9, after a normal merge of main a3db2c95. The five Library feature blobs are unchanged. The initial merge wrapper exited 1 after its successful POST; its failed conjunct is unknown. Separate canonical parent/tree/ref/blob reconciliation passed. No mutation retry occurred.
+
+## Completed current-head checks
+- Optional original artifact 12119016711 (27,259,916 bytes, SHA-256 c1d73f5f8d07e5409c0bdbfb1bbc7c1e2b69fe970ecb01271a9209b84190c4d6) passed 15 top-level checksums, six original runtime/source inventories and hashes, package budgets and three import closures. Eight aircraft appearance/preview identities passed across Academy/Worlds runtime/source. Academy's source cap is 141 files and Worlds' 200; byte budgets are unchanged. Worlds has 198 actual runtime members and 200 source members.
+- The packaged family/label suite passed 24/24, with no failures or skips. This is software DOM/metadata evidence, without a renderer or player database.
+- Ordinary Industrial artifact 12119011256 passed exact command/selection/source/TAP verification: 405/405 presentation tests, no failures or skips. The later peer review remains identified as static review after the root-authorized run.
+- Corrected Company-only validation passed at 00:39:00Z, actual session 59473 EXIT0. Retained original artifact 12119292608 is 78,427,399 bytes, SHA-256 528c1748e2105086c022cb33f2046cc4cd0d1315474423ac767dd800571d00fc. Seven checksums and both exact inventories/member hashes/CRCs passed: 1,141 members each including embedded metadata; runtime 41,260,835 decoded bytes and source 65,355,975. Five Company entry/launcher/catalog/panel/snake-hunt identities passed in each role against the projected package bytes. Runtime limits remain 2,000 files/80 MiB, and the stricter 72 MiB check also passed.
+- A single exact-head run collection at 00:41:35Z found all six workflows successful, including ordinary Company 39080996139. Ordinary run status is separate from the focused original-package and presentation receipts.
+
+## Preserved failure and correction
+The original Company validator and controller 57502 exited 1 on the assertion requiring aircraft-appearance.mjs in Company. That requirement was scoped incorrectly: the aircraft modules belong to the separately bundled optional Academy/World packages, while Company collects its own core entry dependency set. The original helper, stderr, terminals and negative reports are retained here. Their failures were not converted into passes.
+
+The reviewed correction removed only the unsupported Company aircraft-module/four-proof condition, retained all integrity and budget guards, and positively verified Company-specific paths. It reused the eight accepted optional identities by receipt, without rerunning optional validation. It read the same retained Company original in memory; no GET, build, extraction, controller restart or product mutation occurred. Independent collector implementation provenance is explicitly a memory-only reviewer observation, not a locally retained new source body.
+
+Internal storage also produced ENOSPC, including a shell failure before Python and a failed atomic checkpoint creation. Those actual negatives are preserved. No capacity-change cause or product fault is inferred. The corrected run, its logs and this preparation used external staging; a stable internal 3 GiB floor has not been established.
+
+## Separate base-main public delivery
+The two included HTTP receipts bind observed public main a3db2c95 marker/manifest and eight changed bodies totalling 767,380 bytes to immutable source and manifest identities. Six bodies were checked first; a separate supplement checked world-app.mjs and advanced-practice.mjs. The original receipt's narrower scope remains intact. Generated runtime evidence is unchanged-manifest identity only. PR #1573 browser claims are reported claims, not independently repeated here.
+
+This does not publish the Draft Library candidate or establish gameplay, persistence, all-site response coverage or rollout stability. The original public saved-map visibility/closing-database failures remain unresolved.
+
+## Open gates and retention
+Current 5b9 native/full-player integration, responsive/physical controls, School/HUD, original affected storage, offline/restart/eviction, all-24 native coexistence and actual two-hour endurance remain open. Earlier 12c native and responsive observations are historical and have their own limits, including unestablished continuous headroom compliance. No older native acceptance is inherited by this new combined head. PR #1540 stays Draft.
+
+The optional artifact expires 2026-11-01T00:08:03Z; the Company artifact expires 2026-11-01T00:19:54Z. Action artifact retention is finite. This Git packet preserves receipts/methods and hashes, not durable copies of those original archives. The existing originals remain externally retained and unchanged; no permanent GitHub archive-backup claim is made. The artifact IDs and digests support retrieval while available, but a rebuild must not be represented as the same original bytes.
+
+PROJECTION-MANIFEST.json binds every included original small record to its public copy by length/SHA-256, with explicit private-path-prefix substitutions. Raw originals remain unchanged. Sanitized helper/plan copies are evidence records; path aliases must be deliberately restored for any later execution, which requires a new reviewed scope. The local exact path mapping and raw cloud response are not published. This packet includes no source/body bulk, credentials, browser/player storage or private-origin recovery data.
+
+Earlier immutable evidence: [12c native](https://github.com/mekhovov/revealline/tree/0b665334e5d91ae7c96abe84033f8e6eda38ff66/docs/verification/fpv-library-native-12c-20261017) and [12c responsive](https://github.com/mekhovov/revealline/tree/9e919ef9193a6c3d44b644b14c172fd74e7c0fd4/docs/verification/fpv-library-responsive-12c-20261017).

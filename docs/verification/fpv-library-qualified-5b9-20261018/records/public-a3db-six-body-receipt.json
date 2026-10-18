@@ -1,0 +1,401 @@
+{
+  "preparedAt": "2026-10-18T00:15:31.589897+00:00",
+  "status": "PASS_BOUNDED_CHANGED_PUBLIC_BODY_DELIVERY_ONLY",
+  "observationStartedAt": "2026-10-18T00:13:58.433765+00:00",
+  "observationFinishedAt": "2026-10-18T00:14:47.562707+00:00",
+  "currentMainRefReadBeforeObservation": {
+    "ref": "refs/heads/main",
+    "sha": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+    "type": "commit",
+    "method": "GitHub read-only git/ref/heads/main; no branch mutation"
+  },
+  "priorFullBodyAcceptanceRevision": "3c5011f1908bc1fb5d322e07e445373e4cb59321",
+  "priorMetadataOnlyPublicRevision": "eea1d62a0320d7795391fbf70e3e3c0f6079d213",
+  "priorReceipt": {
+    "path": "[INTERNAL_PRESERVATION_RECORDS]/PUBLIC-HEAD-BOUNDED-RECONCILIATION-20261017T2110Z.json",
+    "bytes": 21567,
+    "sha256": "bb9e7c719f01042c43b249266797dbb0c87bb3806b7f551c524a30f9721b69d8"
+  },
+  "actualPublicMarker": {
+    "format": "revealline-main-deployment.v1",
+    "channel": "main",
+    "sourceRevision": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+    "sourceCommittedAt": "2026-10-18T01:23:44+02:00",
+    "buildVersion": "main-a3db2c95b4ce",
+    "play": "game/",
+    "releases": "https://github.com/mekhovov/revealline/releases"
+  },
+  "actualPublicManifestIdentity": {
+    "formatVersion": 1,
+    "version": "0.151.1",
+    "sourceRevision": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+    "entry": "game/index.html",
+    "totalBytes": 960301980
+  },
+  "manifestFileCount": 3436,
+  "metadataHTTP": [
+    {
+      "url": "https://mekhovov.github.io/revealline/main-deployment.json",
+      "status": 200,
+      "observedAt": "2026-10-18T00:13:58.433765+00:00",
+      "bytes": 308,
+      "sha256": "78b2a8b60c82a22a145a3ba934fdc7e3cd9a3a4b6d58db7be986b9c3cc238871",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:04 GMT",
+        "ETag": "\"6ad40628-134\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:13:58 GMT"
+      }
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline/manifest.json",
+      "status": 200,
+      "observedAt": "2026-10-18T00:13:59.143063+00:00",
+      "bytes": 510221,
+      "sha256": "dfd17f91afed86a26e43b41b29a231777776d756e07c810ee052f823f5e74760",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:04 GMT",
+        "ETag": "\"6ad40628-7c90d\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:13:58 GMT"
+      }
+    }
+  ],
+  "changedSourceResponses": [
+    {
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "startedAt": "2026-10-18T00:14:46.472056+00:00",
+      "oneRequestNoRetry": true,
+      "finishedAt": "2026-10-18T00:14:46.721087+00:00",
+      "status": 200,
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "headers": {
+        "Content-Type": "text/javascript; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:05 GMT",
+        "ETag": "\"6ad40629-3fa\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:14:46 GMT"
+      },
+      "sourceBodyEqual": true,
+      "sourcePinEqual": true,
+      "manifestBodyEqual": true,
+      "localBody": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/aircraft-appearance.mjs",
+      "sourceGitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b",
+      "changedInPR1573": true
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "startedAt": "2026-10-18T00:14:46.472441+00:00",
+      "oneRequestNoRetry": true,
+      "finishedAt": "2026-10-18T00:14:46.721365+00:00",
+      "status": 200,
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "headers": {
+        "Content-Type": "text/javascript; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:05 GMT",
+        "ETag": "\"6ad40629-1b97\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:14:46 GMT"
+      },
+      "sourceBodyEqual": true,
+      "sourcePinEqual": true,
+      "manifestBodyEqual": true,
+      "localBody": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/aircraft-preview.mjs",
+      "sourceGitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a",
+      "changedInPR1573": true
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/aircraft-presets.mjs",
+      "path": "optional-practice/civilian-fpv/aircraft-presets.mjs",
+      "startedAt": "2026-10-18T00:14:46.473348+00:00",
+      "oneRequestNoRetry": true,
+      "finishedAt": "2026-10-18T00:14:46.757617+00:00",
+      "status": 200,
+      "bytes": 28524,
+      "sha256": "358a4b0bf7b57790b407a3649fd8672d3b2c4d2ff8d1c1c009b62f815a946495",
+      "headers": {
+        "Content-Type": "text/javascript; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:05 GMT",
+        "ETag": "\"6ad40629-6f6c\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:14:46 GMT"
+      },
+      "sourceBodyEqual": true,
+      "sourcePinEqual": true,
+      "manifestBodyEqual": true,
+      "localBody": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/aircraft-presets.mjs",
+      "sourceGitBlob": "e924b275d00aedb9633f0a7ac45c1c0e203178a1",
+      "changedInPR1573": true
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/renderer.mjs",
+      "path": "optional-practice/civilian-fpv/renderer.mjs",
+      "startedAt": "2026-10-18T00:14:46.721171+00:00",
+      "oneRequestNoRetry": true,
+      "finishedAt": "2026-10-18T00:14:47.562707+00:00",
+      "status": 200,
+      "bytes": 164871,
+      "sha256": "4309077ce7cdf033e1e79bb07c9e93817fc5bd11226807aa64c50f7f74743075",
+      "headers": {
+        "Content-Type": "text/javascript; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:04 GMT",
+        "ETag": "\"6ad40628-28407\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:14:47 GMT"
+      },
+      "sourceBodyEqual": true,
+      "sourcePinEqual": true,
+      "manifestBodyEqual": true,
+      "localBody": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/renderer.mjs",
+      "sourceGitBlob": "7c9277013e24a109fb135ed7c9791711a36a2e57",
+      "changedInPR1573": true
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/tuning-ui.mjs",
+      "path": "optional-practice/civilian-fpv/tuning-ui.mjs",
+      "startedAt": "2026-10-18T00:14:46.721396+00:00",
+      "oneRequestNoRetry": true,
+      "finishedAt": "2026-10-18T00:14:47.174874+00:00",
+      "status": 200,
+      "bytes": 84264,
+      "sha256": "fba9a696cd82778d996418663c91ae36ba06af52b5e27d9bf663257b615757a3",
+      "headers": {
+        "Content-Type": "text/javascript; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:04 GMT",
+        "ETag": "\"6ad40628-14928\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:14:47 GMT"
+      },
+      "sourceBodyEqual": true,
+      "sourcePinEqual": true,
+      "manifestBodyEqual": true,
+      "localBody": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/tuning-ui.mjs",
+      "sourceGitBlob": "798404ca9be1558c419b26e425a2f7088707ba38",
+      "changedInPR1573": true
+    },
+    {
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/tuning.css",
+      "path": "optional-practice/civilian-fpv/tuning.css",
+      "startedAt": "2026-10-18T00:14:46.757725+00:00",
+      "oneRequestNoRetry": true,
+      "finishedAt": "2026-10-18T00:14:47.001131+00:00",
+      "status": 200,
+      "bytes": 5591,
+      "sha256": "b5c70fa2d41f34bbcdc8d05bb250735d76dae8b62ee800a84430a3dbe52d6ac2",
+      "headers": {
+        "Content-Type": "text/css; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:04 GMT",
+        "ETag": "\"6ad40628-15d7\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:14:47 GMT"
+      },
+      "sourceBodyEqual": true,
+      "sourcePinEqual": true,
+      "manifestBodyEqual": true,
+      "localBody": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/tuning.css",
+      "sourceGitBlob": "a90cab85bd5b79bd195717dd16248f3433aeaede",
+      "changedInPR1573": true
+    }
+  ],
+  "completedScope": {
+    "actualMetadataResponses": 2,
+    "actualChangedSourceResponses": 6,
+    "changedSourceBodyBytes": 291331,
+    "allEightHTTPStatus200": true,
+    "allSixDirectlyEqualPinnedGitSourceBodies": true,
+    "allSixMatchCurrentManifestLengthAndSHA256": true,
+    "pinnedSourceCommit": "a3db2c95b4ce446f2232b829f9551b73e0f51514"
+  },
+  "manifestOnlyComparisons": [
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "current": {
+        "path": "optional-practice/civilian-fpv/regional-library.mjs",
+        "bytes": 63555,
+        "sha256": "02e95765c68d7aeb809d5cc49f441e0247064e198dca3b04d79eac3bc2bfc199"
+      },
+      "matchesPrior3cBodyHash": true,
+      "matchesPriorEeaMetadataHash": true,
+      "freshResponseBodyFetched": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+      "current": {
+        "path": "optional-practice/civilian-fpv/regional/region-manifest.mjs",
+        "bytes": 12708,
+        "sha256": "c07631c6661450b7a59e1ce069e2ce100064327c1e76c2e422f3ff29eea1cc68"
+      },
+      "matchesPrior3cBodyHash": true,
+      "matchesPriorEeaMetadataHash": true,
+      "freshResponseBodyFetched": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+      "current": {
+        "path": "optional-practice/civilian-fpv/regional-delivery.mjs",
+        "bytes": 17560,
+        "sha256": "7276ecdcf7798741bda92c361da8e417bbff1fa0fbf7885f8e9005f78a0b5997"
+      },
+      "matchesPrior3cBodyHash": true,
+      "matchesPriorEeaMetadataHash": true,
+      "freshResponseBodyFetched": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "current": {
+        "path": "optional-practice/civilian-fpv/world-store.mjs",
+        "bytes": 17516,
+        "sha256": "6050ac77adf52c2b757b851c444a4b1430a8cbca34a9048713e540601ebcca22"
+      },
+      "matchesPrior3cBodyHash": true,
+      "matchesPriorEeaMetadataHash": true,
+      "freshResponseBodyFetched": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "current": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 412091,
+        "sha256": "9e4374bc374e39d1b6e36726a1e24ef231165492adae3fefe5d6c161b742e6c2"
+      },
+      "matchesPrior3cBodyHash": false,
+      "matchesPriorEeaMetadataHash": false,
+      "freshResponseBodyFetched": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "current": {
+        "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+        "bytes": 914137,
+        "sha256": "50244c9b2d469be8cb68dcd50b1b6b5bc9b6b25c5a72f3db087dc99aab9aabdd"
+      },
+      "matchesPrior3cBodyHash": true,
+      "matchesPriorEeaMetadataHash": true,
+      "freshResponseBodyFetched": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "current": {
+        "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+        "bytes": 241971,
+        "sha256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611"
+      },
+      "matchesPrior3cBodyHash": true,
+      "matchesPriorEeaMetadataHash": true,
+      "freshResponseBodyFetched": false
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "current": {
+        "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+        "bytes": 63958,
+        "sha256": "65b400bd5b2410518b0b33bf6a4e6d46b48369599de7ed5bed82c0a95aec41f7"
+      },
+      "matchesPrior3cBodyHash": false,
+      "matchesPriorEeaMetadataHash": true,
+      "freshResponseBodyFetched": false
+    }
+  ],
+  "generatedRuntimeScope": {
+    "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+    "currentManifest": {
+      "path": "optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+      "bytes": 914137,
+      "sha256": "50244c9b2d469be8cb68dcd50b1b6b5bc9b6b25c5a72f3db087dc99aab9aabdd"
+    },
+    "priorAcceptedHash": "50244c9b2d469be8cb68dcd50b1b6b5bc9b6b25c5a72f3db087dc99aab9aabdd",
+    "sameManifestIdentity": true,
+    "freshBodyFetched": false,
+    "meaning": "Manifest identity equals the prior accepted generated runtime identity; this turn does not establish a new response body or source-only-file identity."
+  },
+  "reportedPREvidence": {
+    "url": "https://github.com/mekhovov/revealline/pull/1573",
+    "merged": true,
+    "mergeCommit": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+    "head": "f145bcc4bb258763bbdaeff479147eb290859932",
+    "base": "fe1bb1cecbfcead7edaad24e802242d62b4e3b99",
+    "reportedPagesRun": 39078855779,
+    "classification": "PR description read as reported evidence, not a new root browser/runtime observation. Its browser persistence, takeoff, recording and console claims are not independently repeated or accepted by this HTTP check."
+  },
+  "negativeEvidence": {
+    "newHTTPFailures": [],
+    "newMissingManifestPaths": [],
+    "historicalSourceOnlyPath404": "Preserved as historical negative; not repeated, overwritten or relabeled as a current pass. No generated source-only URL was requested.",
+    "priorEeaMetadataOnlyLimitationRetained": true
+  },
+  "openScope": [
+    "Current original affected public saved-map visibility/connection owner and cause remain unresolved. No browser/player storage was read or changed.",
+    "No UI, flight, Arm, service-worker activation, offline/restart/eviction/quota behavior, native or physical device acceptance was performed.",
+    "No full-site or all-runtime body acceptance is claimed. The eight prior audited paths above have only current manifest comparisons in this turn; changed world-app/advanced identities are not newly full-body verified here.",
+    "One bounded observation window does not prove rollout stability over time, all CDN nodes, a browser cache update or future/newer main revisions.",
+    "No endurance qualification, performance cause, final art or all-plan completion follows from response byte equality."
+  ],
+  "ownedSmallEvidence": {
+    "root": "[OWNED_PUBLIC_A3DB_RECORDS]",
+    "files": [
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/main-deployment.json",
+        "bytes": 308,
+        "sha256": "78b2a8b60c82a22a145a3ba934fdc7e3cd9a3a4b6d58db7be986b9c3cc238871"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/manifest.json",
+        "bytes": 510221,
+        "sha256": "dfd17f91afed86a26e43b41b29a231777776d756e07c810ee052f823f5e74760"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/metadata-observation.json",
+        "bytes": 1018,
+        "sha256": "b2b7eaeeae002d59134a3d8896a20c95a94c71f8492badd857d77bf97f42886e"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/source-and-manifest-pins.json",
+        "bytes": 3600,
+        "sha256": "80fa48483107b665fc33b773a20af9ce6b1b4c7240d76bddb9a2ffd508731841"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/http-body-observation.json",
+        "bytes": 5082,
+        "sha256": "db4b0df49b2ae4f0da83275fcee09a2ea41cf0f0414539cbb43269e70da1e478"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/aircraft-appearance.mjs",
+        "bytes": 1018,
+        "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/aircraft-preview.mjs",
+        "bytes": 7063,
+        "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/aircraft-presets.mjs",
+        "bytes": 28524,
+        "sha256": "358a4b0bf7b57790b407a3649fd8672d3b2c4d2ff8d1c1c009b62f815a946495"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/renderer.mjs",
+        "bytes": 164871,
+        "sha256": "4309077ce7cdf033e1e79bb07c9e93817fc5bd11226807aa64c50f7f74743075"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/tuning-ui.mjs",
+        "bytes": 84264,
+        "sha256": "fba9a696cd82778d996418663c91ae36ba06af52b5e27d9bf663257b615757a3"
+      },
+      {
+        "path": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/tuning.css",
+        "bytes": 5591,
+        "sha256": "b5c70fa2d41f34bbcdc8d05bb250735d76dae8b62ee800a84430a3dbe52d6ac2"
+      }
+    ],
+    "totalBytes": 811560
+  },
+  "actions": "One GitHub current-main ref read, one PR1573 description read, bounded immutable local Git source/object reads, two public metadata GETs and six named changed public body GETs. No retries, browser/renderer/server, artifact GET/rebuild, checkout, broad scan, original storage access, cleanup, public write or Git mutation."
+}

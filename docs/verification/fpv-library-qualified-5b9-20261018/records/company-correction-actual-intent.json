@@ -1,0 +1,14 @@
+{
+  "UTC": "2026-10-18T00:38:56.265874+00:00",
+  "planSHA256": "ec7d89faecd38802ace2e03b30e85ef61fbe9de1f5f2a6cae423c05421a4f136",
+  "approvalSHA256": "8a4dba7d0cd9a4d41d77500551c8f00c6c8f9cb24f406c3c6ef72bbfb6c0d7de",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "artifactId": 12119292608,
+  "command": [
+    "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "-B",
+    "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/qualify-existing-company-corrected-once.py"
+  ],
+  "launcherPid": 47904,
+  "noAutomaticRetry": true
+}

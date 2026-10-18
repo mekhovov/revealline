@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: 24 exact current offers form ten explicit families without changing pins or choosing by title/hash order
+ok 1 - 24 exact current offers form ten explicit families without changing pins or choosing by title/hash order
+  ---
+  duration_ms: 1.26175
+  ...
+# Subtest: active saved editions win defaults, unoffered revisions remain exact, and unfamiliar retained IDs stay visible
+ok 2 - active saved editions win defaults, unoffered revisions remain exact, and unfamiliar retained IDs stay visible
+  ---
+  duration_ms: 0.210917
+  ...
+# Subtest: one family card retains every exact version and performs no mutation during open/refresh/locale changes
+ok 3 - one family card retains every exact version and performs no mutation during open/refresh/locale changes
+  ---
+  duration_ms: 68.934791
+  ...
+# Subtest: primary Fly keeps the active saved identity; explicit version download is separate and focus stays in its drawer
+ok 4 - primary Fly keeps the active saved identity; explicit version download is separate and focus stays in its drawer
+  ---
+  duration_ms: 36.492083
+  ...
+# Subtest: failed primary Fly exposes exact repair, and destructive actions still require a reviewed confirmation
+ok 5 - failed primary Fly exposes exact repair, and destructive actions still require a reviewed confirmation
+  ---
+  duration_ms: 49.413458
+  ...
+# Subtest: a revealed Repair action does not force Versions open again after the player closes it
+ok 6 - a revealed Repair action does not force Versions open again after the player closes it
+  ---
+  duration_ms: 28.52825
+  ...
+# Subtest: unoffered saved worlds keep localized labels and explicit Fly/removal controls inside Versions
+ok 7 - unoffered saved worlds keep localized labels and explicit Fly/removal controls inside Versions
+  ---
+  duration_ms: 29.559084
+  ...
+# Subtest: remove-all confirmation stays scoped to its exact world ID, including families with multiple IDs
+ok 8 - remove-all confirmation stays scoped to its exact world ID, including families with multiple IDs
+  ---
+  duration_ms: 27.570958
+  ...
+# Subtest: finishing an explicit download does not reopen Versions or steal focus after the player closes its drawer
+ok 9 - finishing an explicit download does not reopen Versions or steal focus after the player closes its drawer
+  ---
+  duration_ms: 34.637667
+  ...
+# Subtest: a deferred saved-region refresh preserves the exact focused Fly edition across an active-version change
+ok 10 - a deferred saved-region refresh preserves the exact focused Fly edition across an active-version change
+  ---
+  duration_ms: 38.574708
+  ...
+# Subtest: idempotent Library reopen keeps focus before refresh while genuinely required host moves remain intact
+ok 11 - idempotent Library reopen keeps focus before refresh while genuinely required host moves remain intact
+  ---
+  duration_ms: 65.411834
+  ...
+# Subtest: refresh keeps a pre-existing radio focus lease through body blur, with full world ID plus hash identity
+ok 12 - refresh keeps a pre-existing radio focus lease through body blur, with full world ID plus hash identity
+  ---
+  duration_ms: 38.385917
+  ...
+# Subtest: refresh never changes a vanished Fly action into Download or a different primary Fly, in EN and UK
+ok 13 - refresh never changes a vanished Fly action into Download or a different primary Fly, in EN and UK
+  ---
+  duration_ms: 77.314083
+  ...
+# Subtest: refresh keeps Versions as the safe confirmation target when the same displayed edition no longer has Fly
+ok 14 - refresh keeps Versions as the safe confirmation target when the same displayed edition no longer has Fly
+  ---
+  duration_ms: 29.798583
+  ...
+# Subtest: refresh of a no-longer-listed retained family returns connected focus without implying removal or taking action
+ok 15 - refresh of a no-longer-listed retained family returns connected focus without implying removal or taking action
+  ---
+  duration_ms: 27.037416
+  ...
+# Subtest: a pending metadata refresh respects later disclosure and navigation choices instead of restoring stale primary intent
+ok 16 - a pending metadata refresh respects later disclosure and navigation choices instead of restoring stale primary intent
+  ---
+  duration_ms: 54.811541
+  ...
+# Subtest: SIM controller navigation opens Versions and reaches exact actions without activating on join or traversing hidden editions
+ok 17 - SIM controller navigation opens Versions and reaches exact actions without activating on join or traversing hidden editions
+  ---
+  duration_ms: 20.926042
+  ...
+# Subtest: calibrated-radio menu gestures open Versions and focus an edition without flying or writing on disclosure
+ok 18 - calibrated-radio menu gestures open Versions and focus an edition without flying or writing on disclosure
+  ---
+  duration_ms: 8.9895
+  ...
+# Subtest: all previously offered immutable pins stay identical and advertised download totals include descriptor bytes
+ok 19 - all previously offered immutable pins stay identical and advertised download totals include descriptor bytes
+  ---
+  duration_ms: 1.276709
+  ...
+# Subtest: each exact offered title is also the installed flight presentation in both languages without changing identity
+ok 20 - each exact offered title is also the installed flight presentation in both languages without changing identity
+  ---
+  duration_ms: 3.535334
+  ...
+# Subtest: same-ID editions bind separate copied labels and an unknown hash clears stale catalogue presentation
+ok 21 - same-ID editions bind separate copied labels and an unknown hash clears stale catalogue presentation
+  ---
+  duration_ms: 0.166292
+  ...
+# Subtest: real Library handlers preserve offered card and Fly labels after install, refresh and locale changes
+ok 22 - real Library handlers preserve offered card and Fly labels after install, refresh and locale changes
+  ---
+  duration_ms: 98.918666
+  ...
+# Subtest: unoffered retained versions keep their immutable descriptor title rather than a same-ID current alias
+ok 23 - unoffered retained versions keep their immutable descriptor title rather than a same-ID current alias
+  ---
+  duration_ms: 30.041708
+  ...
+# Subtest: catalogue display labels cannot bypass installed descriptor identity validation
+ok 24 - catalogue display labels cannot bypass installed descriptor identity validation
+  ---
+  duration_ms: 0.650875
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1712.908084

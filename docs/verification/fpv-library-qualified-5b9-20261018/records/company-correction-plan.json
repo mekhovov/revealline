@@ -1,0 +1,290 @@
+{
+  "preparedAt": "2026-10-18T00:32:50.947634+00:00",
+  "status": "PREPARED_NOT_AUTHORIZED_TO_INVOKE",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "tree": "36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9",
+  "run": 39081073861,
+  "artifactId": 12119292608,
+  "scope": "One Company-only corrected-scope validation on the retained failed original. No network/API/Git/build/extraction, no original mutation, no optional/family/presentation replay, no controller restart.",
+  "externalRoot": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001",
+  "externalAvailableBytesAtPreparation": 67174400000,
+  "externalReserveBytes": 3221225472,
+  "remainingAllowanceBytes": 1073741824,
+  "existingOriginalArchive": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-original-artifact.zip",
+    "bytes": 78427399,
+    "sha256": "528c1748e2105086c022cb33f2046cc4cd0d1315474423ac767dd800571d00fc",
+    "expectedDigestSource": "Previously downloaded exact GitHub artifact metadata; full hash guard runs only in authorized correction"
+  },
+  "inputs": {
+    "github-company-artifact-metadata.json": {
+      "originalPath": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/github-company-artifact-metadata.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/github-company-artifact-metadata.json",
+      "bytes": 847,
+      "sha256": "7d36bc7a9d6905e7199e428a17fd5902a7c76a9e52a1adb0bda0fe80b260574a"
+    },
+    "company-download-terminal.json": {
+      "originalPath": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-download-terminal.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/company-download-terminal.json",
+      "bytes": 81,
+      "sha256": "f328c1db35c01b4c3eccf794acf5dd8c375a2af2fade308458f6b96d6b852237"
+    },
+    "optional-accepted-receipt.json": {
+      "originalPath": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/qualification-original-members-and-closure.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/optional-accepted-receipt.json",
+      "bytes": 5668,
+      "sha256": "87e6a6ef3f51819a1ae15e522968db2e011ff7e7b0746239ef516910b16bb444"
+    },
+    "root-failure-reconciliation.json": {
+      "originalPath": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/ROOT-CONTROLLER-FAILURE-RECONCILIATION-20261018T0025Z.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/root-failure-reconciliation.json",
+      "bytes": 2650,
+      "sha256": "83fa33579a81bf5a75723c579f3dfb9c2eb6dcf9179b8542b1b9f8649882f0e0"
+    },
+    "optional-actual-terminal.json": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/actual-once/optional-terminal.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/optional-actual-terminal.json",
+      "bytes": 1205,
+      "sha256": "de9bcd11277d51451c3b46c7904400692e37dc16ff0f9075ebaa341f79b8d853"
+    },
+    "original-company-terminal.json": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/actual-once/company-terminal.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/original-company-terminal.json",
+      "bytes": 742,
+      "sha256": "59e0a7458c33b428d63fab16dad6cc311737f5f263f6b544579cbe2ac0fa5c6d"
+    },
+    "original-company.stderr.log": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/actual-once/company.stderr.log",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/original-company.stderr.log",
+      "bytes": 229,
+      "sha256": "0ffa141d9bcd8da3578700e52d068eec6937a9fcffdfba5c9c3d700bd8b58c74"
+    },
+    "original-controller-terminal.json": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/CONTROLLER-ACTUAL-TERMINAL.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/original-controller-terminal.json",
+      "bytes": 239,
+      "sha256": "82cef4e42266f5370133fcbd4d92ff2aeafd3fbbf65dded83a69763fc9ff493e"
+    },
+    "original-controller-negative.json": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/actual-once/controller-negative.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/original-controller-negative.json",
+      "bytes": 230,
+      "sha256": "c92ceb451213c37211cbb59bf9372a139dbc69017bb41f8bb40a05ecf818b26e"
+    },
+    "completed-candidate-cloud-state.json": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/actual-once/cloud-state-4.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/completed-candidate-cloud-state.json",
+      "bytes": 186,
+      "sha256": "498cebb9281e790cc5e6a7e98b91ceb2fa5d9b57c5461309eea7b95b69f52884"
+    },
+    "canonical-source-identity.json": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-identity-canonical-reconciliation.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/canonical-source-identity.json",
+      "bytes": 1356,
+      "sha256": "74a6a816bfa04174700056703957c4b37c71db2204b67c6109d345a8d135c49e"
+    },
+    "source-package-budget.mjs": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-package-budget.mjs",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/source-package-budget.mjs",
+      "bytes": 1259,
+      "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e"
+    },
+    "source-optional-package-policy.mjs": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-optional-package-policy.mjs",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/source-optional-package-policy.mjs",
+      "bytes": 31419,
+      "sha256": "b1afd3ccb30d9af2c3527e94ce458f95662e619626ca424636ec3add80e194e3"
+    },
+    "source-company-edition-candidate.yml": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-company-edition-candidate.yml",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/source-company-edition-candidate.yml",
+      "bytes": 8471,
+      "sha256": "9f9e77e7994b4eedff63dbac48c53c6d8746f4bf6e0848a3851ddd4ade889570"
+    },
+    "original-company-helper.py": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/qualify-combined-company.py",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/original-company-helper.py",
+      "bytes": 6561,
+      "sha256": "5cd93e4230e82f3228a3b641fa374efbe89341ebb23c9ff04f17364980d1a101"
+    },
+    "original-qualification-plan.json": {
+      "originalPath": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/qualification-plan.json",
+      "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/inputs/original-qualification-plan.json",
+      "bytes": 6838,
+      "sha256": "63e3fea2880d142daabdb1ae7a8291a18d3a9b4189bc65fd70b10e54f7bd61f8"
+    }
+  },
+  "helper": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/qualify-existing-company-corrected-once.py",
+    "bytes": 9012,
+    "sha256": "dd9fd4c22d0bde6a83285af4beda7e37c89ba7e5cebac30bebd5eb48f578aa60"
+  },
+  "launcher": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/run-company-correction-once.py",
+    "bytes": 2572,
+    "sha256": "edc0ac63d3442431246a469ab22a97256add21dfef39f18e14b3769173689ce0"
+  },
+  "diff": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/company-correction-helper.diff",
+    "bytes": 15621,
+    "sha256": "accd61be9b26f7d55ef9e7c248f9cd4188135f1d6c6ccc6660a12c590611cb5e"
+  },
+  "outerMembers": [
+    "candidate-verification.json",
+    "capacity-inventory.json",
+    "checksums.json",
+    "distribution-fpv-learning.zip",
+    "editions.json",
+    "manifest-fpv-learning.json",
+    "source-fpv-learning.zip",
+    "source-inventory-fpv-learning.json"
+  ],
+  "namedMetadataPins": {
+    "manifest-fpv-learning.json": {
+      "bytes": 158321,
+      "sha256": "c31e4b2f0fd86ff3411fcf5b4a5552446f7eadb1cc77b10495ef9f89d4c55643",
+      "positiveProjectedRows": [
+        {
+          "bytes": 3977,
+          "path": "game/company.html",
+          "sha256": "72ecd2249cf9cdddfc975c3d27ea5ec70cd553f48a432abc38cc1caa37fd94cc"
+        },
+        {
+          "bytes": 7042,
+          "path": "game/fpv-entry.mjs",
+          "sha256": "5bba98897d36403109a12f3640beb3b124fc2e258bce071957f9d87007a27188"
+        },
+        {
+          "bytes": 3716,
+          "path": "game/optional-practice-catalog.mjs",
+          "sha256": "d4f41d63e1fa1834cd89f3f137e8ba8aeddcedac906fc1d515a84cc9236e2a85"
+        },
+        {
+          "bytes": 12372,
+          "path": "game/ui/optional-practice-panel.mjs",
+          "sha256": "5f233190d1690b654c15cd354b8266f34091c3245c66c05dbc5037af22341a22"
+        },
+        {
+          "bytes": 10628,
+          "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+          "sha256": "704e70dbfb0b7bdce62a9532525241f608f7e02e021f7eca8b7e7d6193f0cb4b"
+        }
+      ],
+      "inventoryCount": 1140
+    },
+    "source-inventory-fpv-learning.json": {
+      "bytes": 462835,
+      "sha256": "da0658fc46f4d7f7943647cb9bf0f056ea22f2d9504e9f95ec82670b6fcc1bb8",
+      "positiveProjectedRows": [
+        {
+          "bytes": 3977,
+          "path": "game/company.html",
+          "sha256": "72ecd2249cf9cdddfc975c3d27ea5ec70cd553f48a432abc38cc1caa37fd94cc"
+        },
+        {
+          "bytes": 7042,
+          "path": "game/fpv-entry.mjs",
+          "sha256": "5bba98897d36403109a12f3640beb3b124fc2e258bce071957f9d87007a27188"
+        },
+        {
+          "bytes": 3716,
+          "path": "game/optional-practice-catalog.mjs",
+          "sha256": "d4f41d63e1fa1834cd89f3f137e8ba8aeddcedac906fc1d515a84cc9236e2a85"
+        },
+        {
+          "bytes": 12372,
+          "path": "game/ui/optional-practice-panel.mjs",
+          "sha256": "5f233190d1690b654c15cd354b8266f34091c3245c66c05dbc5037af22341a22"
+        },
+        {
+          "bytes": 10628,
+          "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+          "sha256": "704e70dbfb0b7bdce62a9532525241f608f7e02e021f7eca8b7e7d6193f0cb4b"
+        }
+      ],
+      "inventoryCount": 1140
+    },
+    "checksums.json": {
+      "bytes": 949,
+      "sha256": "5b11ec18873efc36a920b56019bccc824b1966628b545f813d5d3b99bfe0bea2"
+    },
+    "editions.json": {
+      "bytes": 1835,
+      "sha256": "13d40e7e3bc58d5b9f9116079fe05a22cbc6b260650a67cedd403312d6ce0131"
+    },
+    "candidate-verification.json": {
+      "bytes": 2143,
+      "sha256": "3477bb548d3a0675c76b7c324b84c31335027c1c8c8ade9fbe2a0a9469e1e611"
+    }
+  },
+  "separatelyAcceptedOptionalModules": {
+    "optional-practice/civilian-fpv/aircraft-appearance.mjs": {
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    "optional-practice/civilian-fpv/aircraft-preview.mjs": {
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    }
+  },
+  "preservedGuards": [
+    "Outer exact size/SHA and safe unique ZIP paths/no links/encryption plus decoded ceilings",
+    "All seven outer checksums and CRC reads; exact eight outer names",
+    "Unique exact 1140-row current-head/tree/edition runtime and source inventories, one equal embedded metadata member",
+    "Every original runtime/source member length/SHA/CRC, unchanged Company runtime2000files/80MiB plus72MiB",
+    "Cloud reproducibleBuilds2/publicEligiblefalse from retained exact metadata; no current-status poll",
+    "Positive five Company projected identities in BOTH roles, without raw-source comparisons"
+  ],
+  "correctionOnly": "Remove unsupported Company appearance/preview membership and four-proof assumption; keep their eight accepted Academy/World runtime/source proofs separately bound.",
+  "sourceScopePins": {
+    "retainedSources": [
+      {
+        "path": "publishing/optional-package-policy.mjs",
+        "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-optional-package-policy.mjs",
+        "bytes": 31419,
+        "sha256": "b1afd3ccb30d9af2c3527e94ce458f95662e619626ca424636ec3add80e194e3",
+        "gitBlob": "1e211c134f658d09d93b3d8c3a0517965a3e6557"
+      },
+      {
+        "path": "game/editions/package-budget.mjs",
+        "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-package-budget.mjs",
+        "bytes": 1259,
+        "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+        "gitBlob": "1709c3dc71a4c2282e378db940dac2c899669323"
+      },
+      {
+        "path": ".github/workflows/company-edition-candidate.yml",
+        "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-company-edition-candidate.yml",
+        "bytes": 8471,
+        "sha256": "9f9e77e7994b4eedff63dbac48c53c6d8746f4bf6e0848a3851ddd4ade889570",
+        "gitBlob": "f6f23c753f21267442300579d2cae31041a3e809"
+      }
+    ],
+    "independentCollectorRead": {
+      "path": "scripts/compile-edition.mjs",
+      "revision": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+      "bytes": 44846,
+      "sha256": "f836063d1ac4412e5a957ba682fadb9fd316cf205ff3176250bd4ff9a9a1fa23",
+      "gitBlob": "be2b64aadf15b7c239dd799cfc51011a4c45ca31",
+      "evidence": "Independent reviewer memory-only exact GitHub read, reported to root; no retained local body and no new fetch here",
+      "scope": "collectEditionEngineFiles lines366\u2013400 starts game/company.html dependency closure"
+    }
+  },
+  "actualProtocol": {
+    "rootAndPeerReviewRequired": true,
+    "approvalFile": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/ROOT-ONCE-COMPANY-CORRECTION-APPROVAL.json",
+    "commandAfterApproval": "python3 -B [EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/run-company-correction-once.py PLAN_SHA256 ROOT_APPROVAL_SHA256",
+    "exclusiveDirectory": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/actual-once",
+    "intent": "ACTUAL-INTENT.json",
+    "terminal": "ACTUAL-TERMINAL.json",
+    "negative": "WRAPPER-NEGATIVE.json",
+    "noAutomaticRetry": true,
+    "unknownOutcome": "Inspect only existing intent/session/terminal; do not relaunch",
+    "allWritesExternal": true,
+    "environment": "TMPDIR/TMP/TEMP external; Python -B"
+  },
+  "limitations": "No overall gate pass before actual corrected terminal/receipt. Original controller57502 and Company EXIT1 remain failures. Exact5b9 only, Draft; no native/player/public/new-main acceptance. Original GitHub action artifact expires2026-11-01T00:19:54Z; retained archive remains external and no new durable publication is claimed.",
+  "preparationObservation": "A diagnostic metadata display printed source projection metadata too broadly and tool output was truncated; raw files unchanged. Exact final positive rows and pins are sealed here; no validation run occurred."
+}

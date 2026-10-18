@@ -1,0 +1,42 @@
+{
+  "UTC": "2026-10-18T00:06:20.183226+00:00",
+  "status": "PASS_STATIC_CURRENT_HEAD_PRESENTATION_VERIFIER_REVIEW",
+  "scope": "Independent static review of the current 5b9 presentation plan, complete helper and exact identity-only diff. This is not an execution or result-body review.",
+  "plan": {
+    "file": "presentation-verification-plan.json",
+    "bytes": 1727,
+    "sha256": "ff79d736365b597669eb76995bd6a6341c3ed473e5fef02423af13bea8d0cf9d"
+  },
+  "helper": {
+    "path": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/verify-presentation-once.py",
+    "bytes": 4186,
+    "sha256": "c211852673719bbd1230c18b50b57949849eaa0de63321cabd680863d9c27ddc"
+  },
+  "diff": {
+    "path": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/presentation-helper-static-diff.patch",
+    "bytes": 2509,
+    "sha256": "491a5eea7241d3cc6f6c06602fa3f0f68c4899857b799d5313b8336a981ea475"
+  },
+  "parentHelperSHA256": "a591e3b737075145def811300a93b106026f5ae0e5d2a713674834e4c5dff280",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "tree": "36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9",
+  "run": 39080996151,
+  "job": 117537720885,
+  "artifact": 12119011256,
+  "artifactBytes": 24811,
+  "artifactSHA256": "4f5177910f0f87c38dc79727031685f5ecf48889c3d9b09b9ecf9627b528640e",
+  "checks": [
+    "All plan/helper/diff length and SHA-256 pins match; complete diff was independently regenerated against accepted 12c helper and is exact. Only source/destination/run/job/artifact identity and exact artifact byte/digest constants change.",
+    "Current manifest is 8987 bytes, SHA-256 c3e079c62317bad84acf0abc8b507f9a308f00d84d2da1a4e5086cfc8be5b4c2, Git blob 37c8269b0cefb7db383c35b9032ccf9e3453f5c7. Presentation list contains exactly 41 unique files, including both family and label suites.",
+    "Job is pinned to current head/run/success; artifact is pinned to name/head/run/nonexpiry/exact size/full digest. Source receipt pins current revision/tree, clean state, unchanged tested files/source, log SHA and exact Node command/file order.",
+    "Actual TAP count must be positive, tests equal pass, and fail/cancelled/skipped/todo all zero. Receipt summary and log must agree; no inherited 405 count.",
+    "Existing internal 65 MiB plus 256 KiB reserve, bounded 3-member/256 KiB decoding, exclusive outputs and single artifact GET remain. A second invocation fails at pre-download exclusive metadata output; no retry or test execution loop exists.",
+    "No branch/product/source mutation, browser or native acceptance is introduced. Results are local evidence and are not public projection."
+  ],
+  "blockers": [],
+  "chronology": "Plan was prepared uninvoked. During this static review, owner reported root separately authorized and invoked it once as session39739, EXIT0. This peer did not invoke, fetch, reread or independently validate those execution result bodies; root must rely on their separate actual receipts.",
+  "limitations": [
+    "Static acceptance does not qualify native player, public delivery, full combined application, physical devices or endurance.",
+    "No network, artifact GET, helper invocation, test rerun, renderer/server or product write performed by this review."
+  ]
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/qualify-combined-company.py", line 41, in <module>
+    assert module in expected
+           ^^^^^^^^^^^^^^^^^^
+AssertionError

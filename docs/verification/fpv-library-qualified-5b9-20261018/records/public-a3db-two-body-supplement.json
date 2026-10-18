@@ -1,0 +1,89 @@
+{
+  "preparedAt": "2026-10-18T00:16:26.669865+00:00",
+  "status": "PASS_TWO_CHANGED_AUDITED_HTTP_BODIES",
+  "scope": "Two newly observed named HTTP response bodies only; supplements but does not rewrite the six-body receipt.",
+  "pinnedRevision": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+  "priorReceipt": {
+    "path": "[INTERNAL_PRESERVATION_RECORDS]/PUBLIC-A3DB-BOUNDED-BODY-VERIFICATION-20261018T0014Z.json",
+    "bytes": 17218,
+    "sha256": "c63b3611964061b33ba55b4f9d74aa064096abdb740bb00119cd053472c5b1c6"
+  },
+  "existingManifest": {
+    "path": "[OWNED_PUBLIC_A3DB_RECORDS]/manifest.json",
+    "bytes": 510221,
+    "sha256": "dfd17f91afed86a26e43b41b29a231777776d756e07c810ee052f823f5e74760",
+    "sourceRevision": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+    "refetched": false
+  },
+  "observations": [
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/world-app.mjs",
+      "startedAt": "2026-10-18T00:16:25.551879+00:00",
+      "oneRequestNoRetry": true,
+      "sourceCommit": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+      "sourceGitBlob": "c4ff8c4110a5f075d790b70fc5e8b6caed7179cd",
+      "sourceBytes": 412091,
+      "sourceSHA256": "9e4374bc374e39d1b6e36726a1e24ef231165492adae3fefe5d6c161b742e6c2",
+      "existingManifestPin": {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "bytes": 412091,
+        "sha256": "9e4374bc374e39d1b6e36726a1e24ef231165492adae3fefe5d6c161b742e6c2"
+      },
+      "finishedAt": "2026-10-18T00:16:26.669595+00:00",
+      "status": 200,
+      "bytes": 412091,
+      "sha256": "9e4374bc374e39d1b6e36726a1e24ef231165492adae3fefe5d6c161b742e6c2",
+      "responseGitBlob": "c4ff8c4110a5f075d790b70fc5e8b6caed7179cd",
+      "headers": {
+        "Content-Type": "text/javascript; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:04 GMT",
+        "ETag": "\"6ad40628-649bb\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:16:25 GMT"
+      },
+      "sourceBodyEqual": true,
+      "manifestBodyEqual": true,
+      "localBody": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/world-app.mjs"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+      "url": "https://mekhovov.github.io/revealline/optional-practice/civilian-fpv/advanced-practice.mjs",
+      "startedAt": "2026-10-18T00:16:25.550765+00:00",
+      "oneRequestNoRetry": true,
+      "sourceCommit": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+      "sourceGitBlob": "2a2f7a9bd22b190714a537157e4cdd8edbfb4dd8",
+      "sourceBytes": 63958,
+      "sourceSHA256": "65b400bd5b2410518b0b33bf6a4e6d46b48369599de7ed5bed82c0a95aec41f7",
+      "existingManifestPin": {
+        "path": "optional-practice/civilian-fpv/advanced-practice.mjs",
+        "bytes": 63958,
+        "sha256": "65b400bd5b2410518b0b33bf6a4e6d46b48369599de7ed5bed82c0a95aec41f7"
+      },
+      "finishedAt": "2026-10-18T00:16:26.080591+00:00",
+      "status": 200,
+      "bytes": 63958,
+      "sha256": "65b400bd5b2410518b0b33bf6a4e6d46b48369599de7ed5bed82c0a95aec41f7",
+      "responseGitBlob": "2a2f7a9bd22b190714a537157e4cdd8edbfb4dd8",
+      "headers": {
+        "Content-Type": "text/javascript; charset=utf-8",
+        "Last-Modified": "Sat, 17 Oct 2026 23:35:05 GMT",
+        "ETag": "\"6ad40629-f9d6\"",
+        "Cache-Control": "max-age=600",
+        "Date": "Sun, 18 Oct 2026 00:16:26 GMT"
+      },
+      "sourceBodyEqual": true,
+      "manifestBodyEqual": true,
+      "localBody": "[OWNED_PUBLIC_A3DB_RECORDS]/bodies/advanced-practice.mjs"
+    }
+  ],
+  "newPublicGETCount": 2,
+  "newHTTPBodyBytes": 476049,
+  "combinedScope": "Prior six changed bodies and these two named audited bodies have separate actual HTTP receipts at pinned a3db. No whole-site or all-runtime body acceptance.",
+  "limits": [
+    "No repeated marker, manifest, accepted six bodies or unchanged generated runtime GET.",
+    "No fresh main-ref observation or rollout stability over time claim; all comparisons remain pinned to already observed a3db and its retained actual manifest.",
+    "No browser, renderer, player/original storage access, source execution, artifact GET, public write, Git mutation, gameplay, persistence or endurance acceptance.",
+    "All prior negatives, source-only-path404 and the earlier receipt scope remain intact; negative new outcomes would be retained without retry."
+  ]
+}

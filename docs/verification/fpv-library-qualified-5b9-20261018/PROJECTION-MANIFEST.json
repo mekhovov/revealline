@@ -1,0 +1,607 @@
+{
+  "format": "fpv-current-qualification-public-projection.v1",
+  "productHead": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "rawCount": 39,
+  "rawBytes": 164612,
+  "mappingCount": 39,
+  "scope": "Only existing small receipts/methods/negative records, plus one bounded exact-head workflow rollup. Original paths omitted; raw byte identities retained. No original payload replay or publication.",
+  "aliases": [
+    {
+      "privatePrefixSHA256": "fcc28531b3f4b14a4bae133447173af2a6c637ae6ec496fe3cfa4f07e99e5b19",
+      "publicReplacement": "[INTERNAL_PRESERVATION_RECORDS]"
+    },
+    {
+      "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+      "publicReplacement": "[EXTERNAL_PACKAGE_STAGING]"
+    },
+    {
+      "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+      "publicReplacement": "[OWNED_LIBRARY_METADATA]"
+    },
+    {
+      "privatePrefixSHA256": "6fd244508bedf6f2944323b7d6c71fb9e60d9d8ccf96a1b5e804bbe5cfe18b04",
+      "publicReplacement": "[OWNED_PUBLIC_A3DB_RECORDS]"
+    },
+    {
+      "privatePrefixSHA256": "ea33578495fb1bf2537812c158e2601e718fec0f13e2fd2b914147d6059955c2",
+      "publicReplacement": "[OWNED_STORAGE_METADATA]"
+    },
+    {
+      "privatePrefixSHA256": "a4a80b5354c9610dd3a9b01d79289ea53ce3f9691ded0cf309a287e321f15407",
+      "publicReplacement": "[LOCAL_USER_HOME]"
+    }
+  ],
+  "mappings": [
+    {
+      "publicPath": "records/source-identity.json",
+      "rawLabel": "source-identity-canonical-reconciliation.json",
+      "rawBytes": 1356,
+      "rawSHA256": "74a6a816bfa04174700056703957c4b37c71db2204b67c6109d345a8d135c49e",
+      "publicBytes": 1356,
+      "publicSHA256": "74a6a816bfa04174700056703957c4b37c71db2204b67c6109d345a8d135c49e",
+      "publicGitBlob": "1d0bafe3eb00b857adc7bbb25e376dcf4648782e",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/merge-original-terminal.json",
+      "rawLabel": "merge-actual-terminal.json",
+      "rawBytes": 126,
+      "rawSHA256": "17441153ede7fc2485e5e47939e69f615a0acdf9da6a83b8bba2ef563c709dd4",
+      "publicBytes": 126,
+      "publicSHA256": "17441153ede7fc2485e5e47939e69f615a0acdf9da6a83b8bba2ef563c709dd4",
+      "publicGitBlob": "d4066b4e0797d48ba0ff5e8215d3ba8606830447",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/merge-original-negative.json",
+      "rawLabel": "merge-negative.json",
+      "rawBytes": 119,
+      "rawSHA256": "72893907787b43ddc60bfd0369573c5db1280632fce3f533fdca4f480a4a4834",
+      "publicBytes": 119,
+      "publicSHA256": "72893907787b43ddc60bfd0369573c5db1280632fce3f533fdca4f480a4a4834",
+      "publicGitBlob": "ec1fb5364463fa2b8700030dcf130db95ab64016",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/qualification-original-plan.json",
+      "rawLabel": "qualification-plan.json",
+      "rawBytes": 6838,
+      "rawSHA256": "63e3fea2880d142daabdb1ae7a8291a18d3a9b4189bc65fd70b10e54f7bd61f8",
+      "publicBytes": 6682,
+      "publicSHA256": "1bc331bf262b0971da3f4689c3c72c2915ec0b31991723f0a6058dd2945c12f0",
+      "publicGitBlob": "d93a96e79ba2234a6e40423d58aeb7175b77ad68",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[OWNED_LIBRARY_METADATA]",
+          "occurrences": 14
+        }
+      ]
+    },
+    {
+      "publicPath": "records/qualification-original-helper-diff.patch",
+      "rawLabel": "qualification-helper-diff.patch",
+      "rawBytes": 16671,
+      "rawSHA256": "7549978f18c413169500e4605da0d72fb21ccd31f5d2f928a37077bcf667f67f",
+      "publicBytes": 16435,
+      "publicSHA256": "723ff4d67151f2d2a67fb6f168e78bae6bdc8be170d3177a27a49b7a7c45cb8e",
+      "publicGitBlob": "761de230ae827580fca18493540f98d94058c64c",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 5
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[OWNED_LIBRARY_METADATA]",
+          "occurrences": 2
+        }
+      ]
+    },
+    {
+      "publicPath": "records/qualification-original-peer.json",
+      "rawLabel": "QUALIFICATION-GUARD-PEER-REVIEW.json",
+      "rawBytes": 4503,
+      "rawSHA256": "62526a2c9f3a9fcbe7080887dd2a5cc4e8f7cf67119911350489a0e5ae80a7fa",
+      "publicBytes": 4503,
+      "publicSHA256": "62526a2c9f3a9fcbe7080887dd2a5cc4e8f7cf67119911350489a0e5ae80a7fa",
+      "publicGitBlob": "2b7097f679dce2abd65de662b894fbd48e0771fa",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/qualification-original-approval.json",
+      "rawLabel": "ROOT-ONCE-CONTROLLER-APPROVAL.json",
+      "rawBytes": 1278,
+      "rawSHA256": "61b4cfc2849e0ab3ee789206597f2070f331ac1d3c33281897351f2c71085447",
+      "publicBytes": 1278,
+      "publicSHA256": "61b4cfc2849e0ab3ee789206597f2070f331ac1d3c33281897351f2c71085447",
+      "publicGitBlob": "cf7ac77e73ec9e6c4e6dc6f7e042f99719a639de",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/optional-original-receipt.json",
+      "rawLabel": "qualification-original-members-and-closure.json",
+      "rawBytes": 5668,
+      "rawSHA256": "87e6a6ef3f51819a1ae15e522968db2e011ff7e7b0746239ef516910b16bb444",
+      "publicBytes": 5668,
+      "publicSHA256": "87e6a6ef3f51819a1ae15e522968db2e011ff7e7b0746239ef516910b16bb444",
+      "publicGitBlob": "6d64a0761de6eb72ac20be0695caaed8cf8dc030",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/optional-actual-terminal.json",
+      "rawLabel": "optional-terminal.json",
+      "rawBytes": 1205,
+      "rawSHA256": "de9bcd11277d51451c3b46c7904400692e37dc16ff0f9075ebaa341f79b8d853",
+      "publicBytes": 1137,
+      "publicSHA256": "3da20eb03b52fb1697f96d8fedc1d41bc675ea9509fb88fe90347b752af20e2b",
+      "publicGitBlob": "2ef2e0394f70c9bf1d4efdbf828303702fb4160b",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[OWNED_LIBRARY_METADATA]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/optional-artifact-metadata.json",
+      "rawLabel": "github-artifact-metadata.json",
+      "rawBytes": 855,
+      "rawSHA256": "1a7a20b666faee4e618a276364df17fac7c64027a1cb7004935e7ad527e325b2",
+      "publicBytes": 855,
+      "publicSHA256": "1a7a20b666faee4e618a276364df17fac7c64027a1cb7004935e7ad527e325b2",
+      "publicGitBlob": "b86fe92a84d9960fd6db88a85495fdf0ea0d71c1",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/packaged-family-label-receipt.json",
+      "rawLabel": "packaged-family-label-receipt.json",
+      "rawBytes": 2429,
+      "rawSHA256": "ea139d6762811ae297e402d304b26e3b73b5e407e2d17bc05b599983e31c3517",
+      "publicBytes": 2297,
+      "publicSHA256": "92eae81757c87e4e3a821ee1a99b91e3612870d3793aabed84efdfd5b6c0d9e1",
+      "publicGitBlob": "9b3ea5dd2899cd727b40cc95b028f1522111cbd3",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/packaged-actual-terminal.json",
+      "rawLabel": "packaged-terminal.json",
+      "rawBytes": 1189,
+      "rawSHA256": "7bd58096113f0d50d458282c49bbe5d47a6884646c3c075e0a174ce647cf5cb0",
+      "publicBytes": 1121,
+      "publicSHA256": "85d4df8a1a32b519d4174f6b1b3a6252588f147ee818c45f397776052e5e6e96",
+      "publicGitBlob": "2d835cf60cf1a8c8c10aa8e630b0bf532e9efb67",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[OWNED_LIBRARY_METADATA]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/packaged-family-label-checks.tap",
+      "rawLabel": "packaged-family-label-checks.tap",
+      "rawBytes": 6447,
+      "rawSHA256": "3c7c8ecb9df09ce96f787b7d8520891b56e12d09d3fb1125059fbf64885b75d5",
+      "publicBytes": 6447,
+      "publicSHA256": "3c7c8ecb9df09ce96f787b7d8520891b56e12d09d3fb1125059fbf64885b75d5",
+      "publicGitBlob": "a8e48ae97150a97bf74e85b603193d10e2e8075c",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-405-receipt.json",
+      "rawLabel": "presentation-exact-head-verification.json",
+      "rawBytes": 11331,
+      "rawSHA256": "5dc1292d73f580ef011131eb88a7f7954022cfb479260fb3476a3c690ef585cc",
+      "publicBytes": 11331,
+      "publicSHA256": "5dc1292d73f580ef011131eb88a7f7954022cfb479260fb3476a3c690ef585cc",
+      "publicGitBlob": "717724c75103f59e58fa0806fdfc02b6beceb238",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-actual-terminal.json",
+      "rawLabel": "PRESENTATION-ACTUAL-TERMINAL.json",
+      "rawBytes": 204,
+      "rawSHA256": "55ebc5b889888e432f80a427667bfef51759068ce815d31fe67a6ffb326c7eda",
+      "publicBytes": 204,
+      "publicSHA256": "55ebc5b889888e432f80a427667bfef51759068ce815d31fe67a6ffb326c7eda",
+      "publicGitBlob": "d1e0f78e006b948e2dbe12248c755c1dbfec16a7",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/presentation-later-static-peer.json",
+      "rawLabel": "PRESENTATION-STATIC-PEER-REVIEW.json",
+      "rawBytes": 3221,
+      "rawSHA256": "f1e92f41212bdf9bc10ed53e7dbaa53c179fab562cac8ea95a7b47140b3017bb",
+      "publicBytes": 3205,
+      "publicSHA256": "a621df744f236dabc59f01bf60006343482ea0c77e4b37f4a798c13155906082",
+      "publicGitBlob": "da21ea8800ea8a36becc95f87c61efeb38a85288",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[OWNED_LIBRARY_METADATA]",
+          "occurrences": 2
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-original-failed-terminal.json",
+      "rawLabel": "company-terminal.json",
+      "rawBytes": 742,
+      "rawSHA256": "59e0a7458c33b428d63fab16dad6cc311737f5f263f6b544579cbe2ac0fa5c6d",
+      "publicBytes": 726,
+      "publicSHA256": "ffb8a5c37935f2d4a5ac064e749df8d811914330e700af793481d32fbc15e021",
+      "publicGitBlob": "7faf9a78058f7d6290c6bab91ab176869ff07a66",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[OWNED_LIBRARY_METADATA]",
+          "occurrences": 2
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-original-failed-stderr.log",
+      "rawLabel": "company.stderr.log",
+      "rawBytes": 229,
+      "rawSHA256": "0ffa141d9bcd8da3578700e52d068eec6937a9fcffdfba5c9c3d700bd8b58c74",
+      "publicBytes": 221,
+      "publicSHA256": "3f104e32a397fc9dd576271df797729ec080058ad4539950420855890f91bdb3",
+      "publicGitBlob": "8e2c6644b7f95e0833648c7166df6e25f7dae244",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[OWNED_LIBRARY_METADATA]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/controller-original-failed-terminal.json",
+      "rawLabel": "CONTROLLER-ACTUAL-TERMINAL.json",
+      "rawBytes": 239,
+      "rawSHA256": "82cef4e42266f5370133fcbd4d92ff2aeafd3fbbf65dded83a69763fc9ff493e",
+      "publicBytes": 239,
+      "publicSHA256": "82cef4e42266f5370133fcbd4d92ff2aeafd3fbbf65dded83a69763fc9ff493e",
+      "publicGitBlob": "f4d901eb08d6458021c80f01dfe3d0258a924109",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/controller-original-negative.json",
+      "rawLabel": "controller-negative.json",
+      "rawBytes": 230,
+      "rawSHA256": "c92ceb451213c37211cbb59bf9372a139dbc69017bb41f8bb40a05ecf818b26e",
+      "publicBytes": 230,
+      "publicSHA256": "c92ceb451213c37211cbb59bf9372a139dbc69017bb41f8bb40a05ecf818b26e",
+      "publicGitBlob": "d806064f1d817d1ba9251ea6c4c0ada3a44cc394",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/root-original-failure-reconciliation.json",
+      "rawLabel": "ROOT-CONTROLLER-FAILURE-RECONCILIATION-20261018T0025Z.json",
+      "rawBytes": 2650,
+      "rawSHA256": "83fa33579a81bf5a75723c579f3dfb9c2eb6dcf9179b8542b1b9f8649882f0e0",
+      "publicBytes": 2650,
+      "publicSHA256": "83fa33579a81bf5a75723c579f3dfb9c2eb6dcf9179b8542b1b9f8649882f0e0",
+      "publicGitBlob": "4d6e0f948dce342c299becd0f8d1ea7e87c07d9f",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/root-internal-write-failure.json",
+      "rawLabel": "ROOT-INTERNAL-WRITE-FAILURE-AND-CORRECTION-STATE-20261018.json",
+      "rawBytes": 2020,
+      "rawSHA256": "e04b074e1e410ca8b47059ab71a8d684789cc6e647a217e2ea6ea252d3e2fd20",
+      "publicBytes": 1942,
+      "publicSHA256": "cd410939091c27d4c4f36058848aaddc97f54b8a393bce0a63e910c8df537681",
+      "publicGitBlob": "f6964c2cfce855574c92fe55de9a051f21ac8d9b",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "fcc28531b3f4b14a4bae133447173af2a6c637ae6ec496fe3cfa4f07e99e5b19",
+          "replacement": "[INTERNAL_PRESERVATION_RECORDS]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-correction-plan.json",
+      "rawLabel": "company-correction-plan.json",
+      "rawBytes": 17978,
+      "rawSHA256": "ec7d89faecd38802ace2e03b30e85ef61fbe9de1f5f2a6cae423c05421a4f136",
+      "publicBytes": 16626,
+      "publicSHA256": "a9f9cfa50e4872e44b27cb0fd091ec98b586b26c4702cca2924aba723e6ac2e9",
+      "publicGitBlob": "7f09a3410d7af1b0259a76e427b01a8ff2821e28",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 28
+        },
+        {
+          "privatePrefixSHA256": "84e5b7950b307dec032fa391a9d8860de18e3208a74958e522403048534e2a14",
+          "replacement": "[OWNED_LIBRARY_METADATA]",
+          "occurrences": 15
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-corrected-validator.py",
+      "rawLabel": "qualify-existing-company-corrected-once.py",
+      "rawBytes": 9012,
+      "rawSHA256": "dd9fd4c22d0bde6a83285af4beda7e37c89ba7e5cebac30bebd5eb48f578aa60",
+      "publicBytes": 9012,
+      "publicSHA256": "dd9fd4c22d0bde6a83285af4beda7e37c89ba7e5cebac30bebd5eb48f578aa60",
+      "publicGitBlob": "ac3ed901b4bc71dcfc3fa92dabf14f3fa5d15bf1",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-corrected-once-launcher.py",
+      "rawLabel": "run-company-correction-once.py",
+      "rawBytes": 2572,
+      "rawSHA256": "edc0ac63d3442431246a469ab22a97256add21dfef39f18e14b3769173689ce0",
+      "publicBytes": 2572,
+      "publicSHA256": "edc0ac63d3442431246a469ab22a97256add21dfef39f18e14b3769173689ce0",
+      "publicGitBlob": "a28e15487ff11f475f9c1f315e05e2474560fd53",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-correction-helper.diff",
+      "rawLabel": "company-correction-helper.diff",
+      "rawBytes": 15621,
+      "rawSHA256": "accd61be9b26f7d55ef9e7c248f9cd4188135f1d6c6ccc6660a12c590611cb5e",
+      "publicBytes": 15577,
+      "publicSHA256": "da094f9132aab08dd93bc6db86abd9fb109f1b0a7447ca2d89bf51479fc3c834",
+      "publicGitBlob": "9aeba194ec747db2ac3f486864b61324b8845f7d",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-original-failed-helper.py",
+      "rawLabel": "original-company-helper.py",
+      "rawBytes": 6561,
+      "rawSHA256": "5cd93e4230e82f3228a3b641fa374efbe89341ebb23c9ff04f17364980d1a101",
+      "publicBytes": 6517,
+      "publicSHA256": "acb27f9fc85d95c28eff6eb87bfdb55db48b66f151836a34550473c91d23c3e2",
+      "publicGitBlob": "5f00523fe25ffe2f716bd51ec05b191ff2cd193b",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-correction-peer.json",
+      "rawLabel": "COMPANY-CORRECTION-PEER-REVIEW.json",
+      "rawBytes": 9211,
+      "rawSHA256": "3f401cac364bfdaf6837fd9d55ba70b9a2a216ab7b08bd20e5eab62a9e2422af",
+      "publicBytes": 9079,
+      "publicSHA256": "0e4eef82acaea6991489fa298866e7d60541f26bc1c7766c971c5da83a957267",
+      "publicGitBlob": "d0634c49d4264fb93f6eae59d1797bb0c5cc267e",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 3
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-correction-approval.json",
+      "rawLabel": "ROOT-ONCE-COMPANY-CORRECTION-APPROVAL.json",
+      "rawBytes": 1808,
+      "rawSHA256": "8a4dba7d0cd9a4d41d77500551c8f00c6c8f9cb24f406c3c6ef72bbfb6c0d7de",
+      "publicBytes": 1808,
+      "publicSHA256": "8a4dba7d0cd9a4d41d77500551c8f00c6c8f9cb24f406c3c6ef72bbfb6c0d7de",
+      "publicGitBlob": "12f8f2991b8e984ef0bc466f6f0d38ae4ea0e795",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-correction-actual-intent.json",
+      "rawLabel": "ACTUAL-INTENT.json",
+      "rawBytes": 642,
+      "rawSHA256": "94ece04d69b60fd7d44a4658937dcf84891e1105a21f7b523474253bb7a73312",
+      "publicBytes": 598,
+      "publicSHA256": "0fb55b1dcf4ac3449919c3379de05a1f699aace579d0214697f9c72f3aa018b8",
+      "publicGitBlob": "3a3e52ee12057d033ea22415d76450ee49e886d6",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-correction-actual-terminal.json",
+      "rawLabel": "ACTUAL-TERMINAL.json",
+      "rawBytes": 753,
+      "rawSHA256": "f1b85f64001d28ca6a784a9b723893dff2e9bf3478b17535b29bb2dbc45561b7",
+      "publicBytes": 709,
+      "publicSHA256": "11953e28be6c4f7498f6fdc628bf5032adedfc07d4704d022e07dee772e72703",
+      "publicGitBlob": "e13fbc92c4a891ea92ba542965c128e6fbc5a0ff",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "bf1fe7d1ec91bcc66915e8ea69d026b97629f13631b463f23143a501b62b9a19",
+          "replacement": "[EXTERNAL_PACKAGE_STAGING]",
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "publicPath": "records/company-corrected-receipt.json",
+      "rawLabel": "company-corrected-original-members-receipt.json",
+      "rawBytes": 4361,
+      "rawSHA256": "1ab1af692aebfcfc416b6dfd63a96ab295c28c3cd8ae5a8f45ef2793232f2817",
+      "publicBytes": 4361,
+      "publicSHA256": "1ab1af692aebfcfc416b6dfd63a96ab295c28c3cd8ae5a8f45ef2793232f2817",
+      "publicGitBlob": "ac2fef74ea6b3f2feae77da341456c81e675c21e",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-corrected-root-acceptance.json",
+      "rawLabel": "ROOT-CORRECTED-COMPANY-ACCEPTANCE.json",
+      "rawBytes": 1351,
+      "rawSHA256": "fa0dc108c54a07877c00056cdecc74bd419cf6dc5e88e4cff2c8ee4cf1a1ec60",
+      "publicBytes": 1351,
+      "publicSHA256": "fa0dc108c54a07877c00056cdecc74bd419cf6dc5e88e4cff2c8ee4cf1a1ec60",
+      "publicGitBlob": "76c110f9ab8fbc7c8552f88e2ef66e1b3e57c855",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-original-artifact-metadata.json",
+      "rawLabel": "github-company-artifact-metadata.json",
+      "rawBytes": 847,
+      "rawSHA256": "7d36bc7a9d6905e7199e428a17fd5902a7c76a9e52a1adb0bda0fe80b260574a",
+      "publicBytes": 847,
+      "publicSHA256": "7d36bc7a9d6905e7199e428a17fd5902a7c76a9e52a1adb0bda0fe80b260574a",
+      "publicGitBlob": "b2ee144c5608ef00f73214095469c87446a8d0e8",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/company-original-download-terminal.json",
+      "rawLabel": "company-download-terminal.json",
+      "rawBytes": 81,
+      "rawSHA256": "f328c1db35c01b4c3eccf794acf5dd8c375a2af2fade308458f6b96d6b852237",
+      "publicBytes": 81,
+      "publicSHA256": "f328c1db35c01b4c3eccf794acf5dd8c375a2af2fade308458f6b96d6b852237",
+      "publicGitBlob": "e8cbdf81ab96880e12c206567b2e68ac482918b1",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/focused-company-completed-cloud-state.json",
+      "rawLabel": "cloud-state-4.json",
+      "rawBytes": 186,
+      "rawSHA256": "498cebb9281e790cc5e6a7e98b91ceb2fa5d9b57c5461309eea7b95b69f52884",
+      "publicBytes": 186,
+      "publicSHA256": "498cebb9281e790cc5e6a7e98b91ceb2fa5d9b57c5461309eea7b95b69f52884",
+      "publicGitBlob": "601dfa5974f6cbf1e1b83c1bc35bf2ec6eafb6de",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/ordinary-ci-rollup.json",
+      "rawLabel": "ordinary-ci-rollup.json",
+      "rawBytes": 2371,
+      "rawSHA256": "a607ff02d564f9f2cbc84c4cffb3874e92e4932bc0f03a66adb94bf65df225c5",
+      "publicBytes": 2371,
+      "publicSHA256": "a607ff02d564f9f2cbc84c4cffb3874e92e4932bc0f03a66adb94bf65df225c5",
+      "publicGitBlob": "23bb75c9018caedc30f6c0e57dada5304d984c05",
+      "transformation": "unchanged UTF-8 bytes",
+      "substitutions": []
+    },
+    {
+      "publicPath": "records/public-a3db-six-body-receipt.json",
+      "rawLabel": "PUBLIC-A3DB-BOUNDED-BODY-VERIFICATION-20261018T0014Z.json",
+      "rawBytes": 17218,
+      "rawSHA256": "c63b3611964061b33ba55b4f9d74aa064096abdb740bb00119cd053472c5b1c6",
+      "publicBytes": 17148,
+      "publicSHA256": "9639edb47f5184ab70a902dd285441f420161e22341140056787baef5439456d",
+      "publicGitBlob": "680ce77e20d20bb57681f108886b85c40494e955",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "fcc28531b3f4b14a4bae133447173af2a6c637ae6ec496fe3cfa4f07e99e5b19",
+          "replacement": "[INTERNAL_PRESERVATION_RECORDS]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "6fd244508bedf6f2944323b7d6c71fb9e60d9d8ccf96a1b5e804bbe5cfe18b04",
+          "replacement": "[OWNED_PUBLIC_A3DB_RECORDS]",
+          "occurrences": 18
+        }
+      ]
+    },
+    {
+      "publicPath": "records/public-a3db-two-body-supplement.json",
+      "rawLabel": "PUBLIC-A3DB-TWO-AUDITED-BODIES-SUPPLEMENT-20261018.json",
+      "rawBytes": 4489,
+      "rawSHA256": "01ce378b21413028ed69b353930ad351135857f851dd634babb6159fdd40f9d3",
+      "publicBytes": 4449,
+      "publicSHA256": "8d27e50f1d681fc0e05eefc9ce25919806bdd448a122b51524f520db093424f3",
+      "publicGitBlob": "1f3f36fd5ac37c36c40a61a7cc2b6fde1f8ec2fd",
+      "transformation": "literal private-path-prefix substitutions only",
+      "substitutions": [
+        {
+          "privatePrefixSHA256": "fcc28531b3f4b14a4bae133447173af2a6c637ae6ec496fe3cfa4f07e99e5b19",
+          "replacement": "[INTERNAL_PRESERVATION_RECORDS]",
+          "occurrences": 1
+        },
+        {
+          "privatePrefixSHA256": "6fd244508bedf6f2944323b7d6c71fb9e60d9d8ccf96a1b5e804bbe5cfe18b04",
+          "replacement": "[OWNED_PUBLIC_A3DB_RECORDS]",
+          "occurrences": 3
+        }
+      ]
+    }
+  ]
+}

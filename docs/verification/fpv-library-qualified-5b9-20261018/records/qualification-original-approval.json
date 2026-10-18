@@ -1,0 +1,20 @@
+{
+  "UTC": "2026-10-18T00:02:41.801250+00:00",
+  "decision": "APPROVE_EXACT_ONCE_EXTERNAL_CURRENT_HEAD_QUALIFICATION",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "run": 39081073861,
+  "pins": {
+    "qualification-plan.json": "63e3fea2880d142daabdb1ae7a8291a18d3a9b4189bc65fd70b10e54f7bd61f8",
+    "run-new-combined-once.py": "55ceb9fa81a6a078d9702fc41ce4a963d5e51496aa22e1976864f6970b97ea65",
+    "QUALIFICATION-GUARD-PEER-REVIEW.json": "62526a2c9f3a9fcbe7080887dd2a5cc4e8f7cf67119911350489a0e5ae80a7fa"
+  },
+  "rootReview": "Full plan, exact four-helper change diff, controller and peer review read; current/parent helpers and six source pins hash-verified.",
+  "scope": "Exactly one optional-original, packaged24-family, Company-original sequence. Existing cloud jobs only. Original12c checks not repeated.",
+  "constraints": [
+    "One controller; actual intent/session/terminals required; no retry after failure.",
+    "All bulk storage external with3GiB plus remaining reserve. Small internal metadata allowance is not heavy-work authority.",
+    "No renderer/server or native/full-player/public/physical acceptance.",
+    "If source identities or pinned inputs differ, stop.",
+    "Preserve originals, negatives and ambiguous merge wrapper limitation."
+  ]
+}

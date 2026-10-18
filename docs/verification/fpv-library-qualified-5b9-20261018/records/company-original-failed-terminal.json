@@ -1,0 +1,15 @@
+{
+  "UTC": "2026-10-18T00:22:01.773510+00:00",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "run": 39081073861,
+  "helper": {
+    "path": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/qualify-combined-company.py",
+    "bytes": 6561,
+    "SHA256": "5cd93e4230e82f3228a3b641fa374efbe89341ebb23c9ff04f17364980d1a101",
+    "parentHelper": "[OWNED_LIBRARY_METADATA]/combined-fe1bb1-20261017-001/qualify-combined-company.py",
+    "parentSHA256": "8da5c914f5d3366b1115347268f4621aaa946f5bbab0c4f57802e3c0c23b9373"
+  },
+  "actualExitCode": 1,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "0ffa141d9bcd8da3578700e52d068eec6937a9fcffdfba5c9c3d700bd8b58c74"
+}

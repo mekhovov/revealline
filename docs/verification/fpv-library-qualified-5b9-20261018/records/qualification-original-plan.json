@@ -1,0 +1,115 @@
+{
+  "UTC": "2026-10-18T00:00:39.760177+00:00",
+  "status": "PREPARED_NOT_AUTHORIZED_TO_INVOKE",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "tree": "36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9",
+  "base": "a3db2c95b4ce446f2232b829f9551b73e0f51514",
+  "run": 39081073861,
+  "externalRoot": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018",
+  "helpers": [
+    {
+      "path": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/qualify-combined-optional.py",
+      "bytes": 8876,
+      "SHA256": "e27fae32eb8a4603780e3b771eef2b4b399fe412d454520b4e49c7bec7629bd9",
+      "parentHelper": "[OWNED_LIBRARY_METADATA]/combined-fe1bb1-20261017-001/qualify-combined-optional.py",
+      "parentSHA256": "7deac9ae68faf34a190ebecb21209837a0c88cd6622f3ae134a889b0ffa65109"
+    },
+    {
+      "path": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/qualify-combined-company.py",
+      "bytes": 6561,
+      "SHA256": "5cd93e4230e82f3228a3b641fa374efbe89341ebb23c9ff04f17364980d1a101",
+      "parentHelper": "[OWNED_LIBRARY_METADATA]/combined-fe1bb1-20261017-001/qualify-combined-company.py",
+      "parentSHA256": "8da5c914f5d3366b1115347268f4621aaa946f5bbab0c4f57802e3c0c23b9373"
+    },
+    {
+      "path": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/qualify-combined-family-labels.py",
+      "bytes": 3770,
+      "SHA256": "d414c62ff2d571a1691198e8edd5affd251a4639387b143cf8666123c11396d2",
+      "parentHelper": "[OWNED_LIBRARY_METADATA]/combined-fe1bb1-20261017-001/qualify-combined-family-labels.py",
+      "parentSHA256": "f9f5bb7c19d5b3fc260a2fb3069c8906fff22d62dc97de6d174f74ccb69283f6"
+    }
+  ],
+  "controller": {
+    "path": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/run-new-combined-once.py",
+    "bytes": 3949,
+    "SHA256": "55ceb9fa81a6a078d9702fc41ce4a963d5e51496aa22e1976864f6970b97ea65",
+    "parentHelper": "[OWNED_LIBRARY_METADATA]/combined-fe1bb1-20261017-001/run-new-combined-once.py",
+    "parentSHA256": "96156f2a7b028de7c03ab7d11c4ddeca6590f792aa98e608c6638ecaddf3f6f6"
+  },
+  "currentPolicySources": [
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-optional-package-policy.mjs",
+      "bytes": 31419,
+      "sha256": "b1afd3ccb30d9af2c3527e94ce458f95662e619626ca424636ec3add80e194e3",
+      "gitBlob": "1e211c134f658d09d93b3d8c3a0517965a3e6557"
+    },
+    {
+      "path": "game/editions/package-budget.mjs",
+      "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-package-budget.mjs",
+      "bytes": 1259,
+      "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+      "gitBlob": "1709c3dc71a4c2282e378db940dac2c899669323"
+    },
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-company-edition-candidate.yml",
+      "bytes": 8471,
+      "sha256": "9f9e77e7994b4eedff63dbac48c53c6d8746f4bf6e0848a3851ddd4ade889570",
+      "gitBlob": "f6f23c753f21267442300579d2cae31041a3e809"
+    },
+    {
+      "path": ".github/workflows/industrial-feature-tests.yml",
+      "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-industrial-feature-tests.yml",
+      "bytes": 2192,
+      "sha256": "08a0d45b61439eac811424e3b0616ee24e89dbd62ab2a8e7ff6de050a74c0cd0",
+      "gitBlob": "30c75fd6d2a961f4eb1e2bf3fee9ced4284c4fc2"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+      "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-aircraft-appearance.mjs",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-preview.mjs",
+      "local": "[OWNED_LIBRARY_METADATA]/combined-a3db-20261017-001/source-aircraft-preview.mjs",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    }
+  ],
+  "newRequiredAircraftModules": {
+    "optional-practice/civilian-fpv/aircraft-appearance.mjs": {
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e",
+      "gitBlob": "74b2be0436d3aaec04ef1707e4c95f5ac4f1040b"
+    },
+    "optional-practice/civilian-fpv/aircraft-preview.mjs": {
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c",
+      "gitBlob": "f5aa83735433d1bee11649dc9d75920e658fc87a"
+    }
+  },
+  "scope": "One new-head optional original download, packaged family/label software check, one Company original download from existing focused exact-head run39081073861. No12c or earlier repeated qualification. Root+peer review required before helper/controller invocation or any artifact download.",
+  "limits": {
+    "optionalArtifactBytes": 67108864,
+    "companyArtifactBytes": 268435456,
+    "externalReserveBytes": 3221225472,
+    "optionalRemainingAllowanceBytes": 536870912,
+    "companyRemainingAllowanceBytes": 1073741824,
+    "familyRemainingAllowanceBytes": 134217728,
+    "noInternalHeavyWork": true,
+    "noNativeRenderer": true,
+    "noRetries": true
+  },
+  "changedGuards": [
+    "Optional policy exact SHA b1afd3cc pinned before artifact download; manifest limits equal committed98/8MiB,141/(12MiB+256KiB),200/20MiB. This inherits main1573 count changes only.",
+    "Both new appearance/preview modules must be original source bytes with exact length/SHA/Gitblob in Academy and Worlds runtime/source archives (eight identities). Full existing member hash/budget/module closure checks remain.",
+    "Both new modules must also match exact source bytes in Company runtime/source archives (four identities); existing2000/80MiB plus stricter observed72MiB runtime checks unchanged.",
+    "Family runtime count/bytes still bind actual newly accepted optional receipt; committed ceiling becomes200/20MiB. Exact24 focused groups unchanged."
+  ],
+  "laterPresentation": "Reuse ordinary Industrial39080996151. Only once its actual current artifact exists, prepare exact plan for receipt/TAP/source/manifest/command validation; do not inherit old405 count/artifact or dispatch duplicate Industrial.",
+  "evidenceLimits": "The actual initial merge wrapper EXIT1 and exact canonical reconciliation PASS remain distinct. Old12c/native evidence remains historical with headroom limitation; no native/player/public/original-storage/physical acceptance inherits. All current-head source/workflow results need actual evidence."
+}

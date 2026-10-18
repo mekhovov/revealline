@@ -1,0 +1,130 @@
+{
+  "UTC": "2026-10-18T00:35:10.742219+00:00",
+  "status": "PASS_STATIC_CORRECTED_COMPANY_SCOPE_PLAN_NOT_EXECUTED",
+  "scope": "Independent full plan/helper/launcher review and bounded named-metadata schema checks only. Root once-only approval and actual corrected validation remain separate.",
+  "head": "5b9e2a8bcee3b379840a0f76af8284d95b390834",
+  "tree": "36556457a812b0c8ba7b8a4a2cac0a7ae74ee0d9",
+  "run": 39081073861,
+  "artifactId": 12119292608,
+  "plan": {
+    "bytes": 17978,
+    "sha256": "ec7d89faecd38802ace2e03b30e85ef61fbe9de1f5f2a6cae423c05421a4f136"
+  },
+  "helper": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/qualify-existing-company-corrected-once.py",
+    "bytes": 9012,
+    "sha256": "dd9fd4c22d0bde6a83285af4beda7e37c89ba7e5cebac30bebd5eb48f578aa60"
+  },
+  "launcher": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/run-company-correction-once.py",
+    "bytes": 2572,
+    "sha256": "edc0ac63d3442431246a469ab22a97256add21dfef39f18e14b3769173689ce0"
+  },
+  "diff": {
+    "path": "[EXTERNAL_PACKAGE_STAGING]/regional-family-library-5b9e2a8b-combined-a3db-20261018/company-scope-correction-001/company-correction-helper.diff",
+    "bytes": 15621,
+    "sha256": "accd61be9b26f7d55ef9e7c248f9cd4188135f1d6c6ccc6660a12c590611cb5e"
+  },
+  "checkedInputs": {
+    "github-company-artifact-metadata.json": {
+      "bytes": 847,
+      "sha256": "7d36bc7a9d6905e7199e428a17fd5902a7c76a9e52a1adb0bda0fe80b260574a"
+    },
+    "company-download-terminal.json": {
+      "bytes": 81,
+      "sha256": "f328c1db35c01b4c3eccf794acf5dd8c375a2af2fade308458f6b96d6b852237"
+    },
+    "optional-accepted-receipt.json": {
+      "bytes": 5668,
+      "sha256": "87e6a6ef3f51819a1ae15e522968db2e011ff7e7b0746239ef516910b16bb444"
+    },
+    "root-failure-reconciliation.json": {
+      "bytes": 2650,
+      "sha256": "83fa33579a81bf5a75723c579f3dfb9c2eb6dcf9179b8542b1b9f8649882f0e0"
+    },
+    "optional-actual-terminal.json": {
+      "bytes": 1205,
+      "sha256": "de9bcd11277d51451c3b46c7904400692e37dc16ff0f9075ebaa341f79b8d853"
+    },
+    "original-company-terminal.json": {
+      "bytes": 742,
+      "sha256": "59e0a7458c33b428d63fab16dad6cc311737f5f263f6b544579cbe2ac0fa5c6d"
+    },
+    "original-company.stderr.log": {
+      "bytes": 229,
+      "sha256": "0ffa141d9bcd8da3578700e52d068eec6937a9fcffdfba5c9c3d700bd8b58c74"
+    },
+    "original-controller-terminal.json": {
+      "bytes": 239,
+      "sha256": "82cef4e42266f5370133fcbd4d92ff2aeafd3fbbf65dded83a69763fc9ff493e"
+    },
+    "original-controller-negative.json": {
+      "bytes": 230,
+      "sha256": "c92ceb451213c37211cbb59bf9372a139dbc69017bb41f8bb40a05ecf818b26e"
+    },
+    "completed-candidate-cloud-state.json": {
+      "bytes": 186,
+      "sha256": "498cebb9281e790cc5e6a7e98b91ceb2fa5d9b57c5461309eea7b95b69f52884"
+    },
+    "canonical-source-identity.json": {
+      "bytes": 1356,
+      "sha256": "74a6a816bfa04174700056703957c4b37c71db2204b67c6109d345a8d135c49e"
+    },
+    "source-package-budget.mjs": {
+      "bytes": 1259,
+      "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e"
+    },
+    "source-optional-package-policy.mjs": {
+      "bytes": 31419,
+      "sha256": "b1afd3ccb30d9af2c3527e94ce458f95662e619626ca424636ec3add80e194e3"
+    },
+    "source-company-edition-candidate.yml": {
+      "bytes": 8471,
+      "sha256": "9f9e77e7994b4eedff63dbac48c53c6d8746f4bf6e0848a3851ddd4ade889570"
+    },
+    "original-company-helper.py": {
+      "bytes": 6561,
+      "sha256": "5cd93e4230e82f3228a3b641fa374efbe89341ebb23c9ff04f17364980d1a101"
+    },
+    "original-qualification-plan.json": {
+      "bytes": 6838,
+      "sha256": "63e3fea2880d142daabdb1ae7a8291a18d3a9b4189bc65fd70b10e54f7bd61f8"
+    }
+  },
+  "findings": [
+    "All sixteen external input copies match their exact plan lengths/SHA-256; helper, launcher and diff pins match. Diff independently regenerates exactly from the preserved original failed helper. Python AST parsing was static only.",
+    "Unsupported Company aircraft membership/four-proof assertions are removed. Five actual projected Company member identities are required in both runtime and source inventories, and the eight previously accepted optional identities are independently bound to the exact current-head receipt and EXIT0 terminal without replay.",
+    "Retained original is pinned by exact parent/path, regular-file/non-symlink condition, 78427399-byte size and GitHub digest528c1748. The approved helper will perform its full-body hash and stable before/after stat check; this peer did not rehash or read original payloads.",
+    "Exact eight outer names, seven checksums, safe unique ZIP inventory, CRC reads, every original runtime/source member length/SHA, one equal embedded metadata record, current revision/tree/edition, and runtime2000/80MiB plus72MiB guard remain. No runtime budget is falsely assigned to source inventory.",
+    "New metadata assumptions were checked directly against the exact existing small named JSON members. Envelope and verification versions are v0.151.1; admission status is verified-candidate-members, zipMembersVerified=true, publicEligible=false, and exactly one fpv-learning edition. Its distribution/manifest/sourceArchive/sourceInventory descriptors match the plan. Both tables have editionId fpv-learning and version v0.151.1; each has1140 unique files. totalBytes equals the summed file bytes: runtime41102514, source64893140.",
+    "Previously recorded candidate job/run success and source canonical identity are pinned local evidence, not a new network status claim. Original Company and controller EXIT1 records remain unchanged failures; canonical source receipt also retains the earlier merge wrapper EXIT1.",
+    "Launcher binds caller-supplied exact plan and root-approval hashes, then exact helper/launcher pins before exclusive actual-once creation. One subprocess runs with external cwd/TMPDIR/TMP/TEMP and Python -B. Exclusive intent/stdout/stderr/actual terminal or wrapper negative preserves actual child exit and receipt hash; no automatic retry exists.",
+    "All new helper writes are confined to the external actual-once child. No API/Git/artifact GET/build/extraction, prior-controller restart, optional/family/presentation replay, product mutation, renderer or public publication is present.",
+    "Collector provenance remains explicitly the earlier memory-only current-source read. No retained compiler body is invented, and projected Company hashes are not replaced with raw source hashes."
+  ],
+  "blockers": [],
+  "limitations": [
+    "No corrected Company pass, full player, native, public, later-main, persistence-cause or endurance acceptance follows from this static review.",
+    "Pre-start reserve is3GiB plus1GiB. A free-space sample does not establish continuous reserve or internal renderer headroom.",
+    "If execution outcome is unknown, inspect the single existing intent/session/terminal; do not restart.",
+    "No new input original comparisons or previous payload qualifications were replayed; only exact current external copies and named metadata were consumed."
+  ],
+  "reviewExternalAvailableBytes": 67174400000,
+  "earlierDiagnosticTransportNegatives": [
+    {
+      "attribution": "Independent reviewer functions.exec exec_command result chunk fd4b55, earlier Company scope diagnosis",
+      "intendedAction": "Read named metadata using a Python heredoc",
+      "actualToolExitCode": 1,
+      "toolOutput": "zsh:1: can't create temp file for here document: no space left on device\n",
+      "meaning": "Shell failed before the intended Python metadata read; no successful read or clean transport claimed."
+    },
+    {
+      "attribution": "Independent reviewer exact current Git identity read, exec session44772; final write_stdin result chunk9eb644",
+      "intendedAction": "git rev-parse at exact5b9 for bundle-editions, optional-package-policy, package-budget and Company workflow",
+      "actualToolExitCode": 0,
+      "toolOutput": "fatal: sha1 file '.git/objects/pack/tmp_pack_l3QULn' write error. Out of diskspace\nfatal: could not finish pack-objects to repack local links\nfatal: index-pack failed\n20cbd23acff950a4b352cf08d9cb812650ab42eb\n1e211c134f658d09d93b3d8c3a0517965a3e6557\n1709c3dc71a4c2282e378db940dac2c899669323\nf6f23c753f21267442300579d2cae31041a3e809\n",
+      "meaning": "Returned blob IDs and toolEXIT0 do not make this a clean no-write Git read. Git emitted pack/index write failures. No origin/cause of those internal Git actions is inferred. Partial packs were not searched, removed or cleaned; no further Git call was made for this review."
+    }
+  ],
+  "peerActions": "Read external plan/helper/launcher and copied small inputs, independently hash/check exact diff, and inspect only named small original metadata in memory. Used absolute /usr/bin/python3 -B from /. Wrote this single external receipt only; no internal write or correction invocation."
+}
