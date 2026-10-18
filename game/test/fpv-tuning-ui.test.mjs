@@ -1043,6 +1043,129 @@ test('headerless CLI version selection and firmware-default baseline support del
   assert.match(f.ui.root.textContent, /No verified SIM adapter/);
 });
 
+test('CLI review compares the unsaved patch baseline and clearly separates ignored controller values', async (t) => {
+  const f = fixture(t);
+  await f.click('New Actual profile');
+  f.edit('Maximum rate (°/s)', 800, { scope: f.axis('Roll'), type: 'number' });
+  const saved = f.store.export();
+  f.edit('Paste CLI or a SIM rate profile', 'set roll_srate = 90\nset p_roll = 80', {
+    tag: 'textarea',
+  });
+  await f.click('Preview import');
+  const review = f.ui.root.querySelector('.workbench-import-review');
+  assert.equal(review.hidden, false);
+  assert.match(review.textContent, /Baseline: Before import draft/);
+  assert.match(review.textContent, /100%: 800\.0 → 900\.0 °\/s/);
+  const row = review
+    .querySelectorAll('tr')
+    .find((item) => item.querySelector('th')?.textContent === 'roll_srate');
+  assert.deepEqual(
+    row.querySelectorAll('td').map((item) => item.textContent),
+    ['80', '90'],
+  );
+  assert.match(review.textContent, /Supported imported settings \(1\)/);
+  assert.match(review.textContent, /Ignored · not applied \(1\)/);
+  assert.match(review.textContent, /p_roll = 80 · PID 0 \/ rates 0/);
+  assert.equal(review.querySelectorAll('svg').length, 2);
+  assert.equal(review.querySelectorAll('svg')[0].querySelectorAll('path').length, 6);
+  assert.equal(review.querySelectorAll('svg')[1].querySelectorAll('path').length, 2);
+  assert.equal(f.store.export(), saved);
+  const technical = f.ui.root
+    .querySelectorAll('details')
+    .find((item) => item.querySelector('summary')?.textContent === 'Technical import report');
+  assert.equal(Boolean(technical.open), false);
+  await f.click('Undo last edit');
+  assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value, '800');
+  assert.equal(review.hidden, true);
+  assert.equal(f.store.export(), saved);
+  await f.click('Preview import');
+  f.edit('Paste CLI or a SIM rate profile', 'set roll_srate = bad', { tag: 'textarea' });
+  assert.equal(review.hidden, true);
+  assert.equal(technical.hidden, true);
+});
+
+test('accepted import preview updates the draft header immediately and undo restores the saved baseline', async (t) => {
+  const f = fixture(t);
+  await f.click('New Actual profile');
+  await f.click('Save for next flight');
+  const saved = f.store.export();
+  assert.match(
+    f.ui.root.querySelector('.workbench-summary').textContent,
+    /0 changes · Saved for next flight/,
+  );
+  f.edit('Paste CLI or a SIM rate profile', 'set roll_srate = 70', { tag: 'textarea' });
+  await f.click('Preview import');
+  assert.match(
+    f.ui.root.querySelector('.workbench-summary').textContent,
+    /[1-9][0-9]* changes · Draft/,
+  );
+  assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value, '700');
+  assert.equal(f.store.export(), saved);
+  await f.click('Undo last edit');
+  assert.equal(f.find('Maximum rate (°/s)', 'input', f.axis('Roll'), 'number').value, '670');
+  assert.match(
+    f.ui.root.querySelector('.workbench-summary').textContent,
+    /0 changes · Saved for next flight/,
+  );
+  assert.equal(f.store.export(), saved);
+});
+
+test('firmware-default reviews use the selected source defaults and show inferred and normalized values', async (t) => {
+  const f = fixture(t);
+  await f.click('New Actual profile');
+  f.edit('Maximum rate (°/s)', 800, { scope: f.axis('Roll'), type: 'number' });
+  f.edit('Source / export firmware version', '2026.6.2', { tag: 'select', event: 'change' });
+  f.edit('Patch baseline', 'defaults', { tag: 'select', event: 'change' });
+  f.edit('Paste CLI or a SIM rate profile', 'set roll_srate = 76', { tag: 'textarea' });
+  await f.click('Preview import');
+  const review = f.ui.root.querySelector('.workbench-import-review');
+  assert.match(review.textContent, /Baseline: Verified firmware defaults · 2026\.6\.2/);
+  assert.match(review.textContent, /Source firmware: 2026\.6\.2 \(selected manually\)/);
+  assert.match(review.textContent, /100%: 670\.0 → 760\.0 °\/s/);
+  assert.doesNotMatch(review.textContent, /800\.0/);
+  f.edit('Operation', 'diff', { tag: 'select', event: 'change' });
+  f.edit('Paste CLI or a SIM rate profile', 'rateprofile 2\nset roll_rc_rate = 255', {
+    tag: 'textarea',
+  });
+  await f.click('Preview import');
+  assert.match(review.textContent, /Source rate profile: 2/);
+  assert.match(review.textContent, /Inferred firmware defaults \([1-9][0-9]*\)/);
+  assert.match(review.textContent, /Firmware normalization \(1\)/);
+  assert.match(review.textContent, /axes\.roll\.rcRate: 255 → 200/);
+});
+
+test('native import review freezes the pre-import draft across locale refresh and remains unsaved', async (t) => {
+  const f = fixture(t);
+  f.edit('Rate algorithm', 'actual', { tag: 'select', event: 'change' });
+  f.edit('Maximum rate (°/s)', 810, { scope: f.axis('Roll'), type: 'number' });
+  const saved = f.store.export();
+  f.edit('Patch baseline', 'defaults', { tag: 'select', event: 'change' });
+  f.edit(
+    'Paste CLI or a SIM rate profile',
+    exportNativeRateProfile(createRateProfile({ axes: { roll: { rate: 85 } } })),
+    { tag: 'textarea' },
+  );
+  await f.click('Preview import');
+  const review = f.ui.root.querySelector('.workbench-import-review');
+  assert.match(review.textContent, /SIM rate profile · Baseline: Before import draft/);
+  assert.match(review.textContent, /100%: 810\.0 → 850\.0 °\/s/);
+  const row = review
+    .querySelectorAll('tr')
+    .find((item) => item.querySelector('th')?.textContent === 'axes.roll.rate');
+  assert.deepEqual(
+    row.querySelectorAll('td').map((item) => item.textContent),
+    ['81', '85'],
+  );
+  f.setLocale('uk');
+  assert.match(review.textContent, /Основа: Чернетка до імпорту/);
+  assert.match(review.textContent, /100%: 810\.0 → 850\.0 °\/s/);
+  assert.equal(
+    review.querySelectorAll('svg')[0].getAttribute('aria-label'),
+    'Рейти імпорту: основа й результат',
+  );
+  assert.equal(f.store.export(), saved);
+});
+
 test('unsupported firmware headers invalidate a prior preview and cannot save against another version', async (t) => {
   const f = fixture(t),
     initial = f.store.export();
@@ -1737,10 +1860,15 @@ test('restoring history invalidates a completed same-rate preview and retains th
   const before = f.store.export();
   f.edit('Paste CLI or a SIM rate profile', `${source}\n`, { tag: 'textarea' });
   await f.click('Preview import');
-  assert.doesNotMatch(f.ui.root.textContent, new RegExp(original.provenance.source.sha256));
+  const receipt = f.ui.root
+    .querySelectorAll('details')
+    .find((node) => node.querySelector('summary')?.textContent === 'Import receipt');
+  // The change list legitimately includes the old source as its before value;
+  // the active receipt must describe only the accepted preview.
+  assert.doesNotMatch(receipt.textContent, new RegExp(original.provenance.source.sha256));
   await f.click('Restore revision to draft');
   assert.equal(f.find('Profile name').value, 'Original receipt');
-  assert.match(f.ui.root.textContent, new RegExp(original.provenance.source.sha256));
+  assert.match(receipt.textContent, new RegExp(original.provenance.source.sha256));
   await f.click('Save import as new profile');
   assert.equal(f.store.export(), before);
   assert.match(f.ui.root.querySelector('[role="status"]').textContent, /Preview the import first/);
