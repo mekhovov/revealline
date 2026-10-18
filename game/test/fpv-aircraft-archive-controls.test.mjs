@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { mountAircraftArchiveControls } from '../../optional-practice/civilian-fpv/aircraft-archive-controls.mjs';
+import { mountPracticeSplits } from '../../optional-practice/civilian-fpv/flight-sectors.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
@@ -24,6 +25,7 @@ function fixture(
     course,
     referenceIdentity,
     onReference,
+    hasSplitReference,
     onVisualReference,
     hasVisualReference,
     begin,
@@ -138,6 +140,7 @@ function fixture(
     makeId: () => `archive-${++ids}`,
     onPause: () => pauses++,
     ...(onReference ? { onReference } : {}),
+    ...(hasSplitReference ? { hasSplitReference } : {}),
     ...(onVisualReference ? { onVisualReference } : {}),
     ...(hasVisualReference ? { hasVisualReference } : {}),
     verify: verify ?? (async () => ({ verificationScope: 'complete-session' })),
@@ -158,6 +161,7 @@ function fixture(
   t.after(() => ui.dispose());
   return {
     ui,
+    session,
     calls,
     records,
     update,
@@ -1170,3 +1174,120 @@ test('a reference lost by the renderer restores Show and reports unavailable wit
     /Visual reference unavailable; split timing remains available/,
   );
 });
+
+for (const locale of ['en', 'uk'])
+  for (const failure of ['discontinuity', 'presentation', 'presence query'])
+    test(`split selection follows ${failure} in ${locale} without changing the visual or proof`, async (t) => {
+      let splits,
+        queryFailed = false,
+        verifications = 0,
+        visualCalls = 0;
+      const applied = [],
+        f = fixture(t, {
+          course: verificationCourse(),
+          referenceIdentity,
+          verifyCourse: async () => {
+            verifications++;
+            return visualReport();
+          },
+          onReference: (session, value) => {
+            applied.push(value);
+            return splits.setReference(session, value);
+          },
+          hasSplitReference: (session) => {
+            if (queryFailed) throw new Error('optional presence query failed');
+            return splits.hasReference(session);
+          },
+          onVisualReference: () => {
+            visualCalls++;
+            return true;
+          },
+        });
+      splits = mountPracticeSplits({ parent: f.ui.root.ownerDocument.body, locale: () => locale });
+      t.after(() => splits.dispose());
+      const state = (ticks, step = 0) => ({ ticks, step, total: 1 });
+      splits.update(f.session, state(0), { enabled: true });
+      await prepareCourseArchive(f);
+      f.button('Verify course completion').click();
+      await settle();
+      f.button('Use as split reference').click();
+      f.button('Show reference aircraft').click();
+      f.setLocale(locale);
+      const use = locale === 'uk' ? 'Використати як орієнтир часу' : 'Use as split reference',
+        clear = locale === 'uk' ? 'Прибрати орієнтир часу' : 'Clear split reference',
+        hide = locale === 'uk' ? 'Сховати еталонний дрон' : 'Hide reference aircraft';
+      f.update();
+      f.update();
+      assert.ok(f.button(clear), 'ordinary paused paints retain the selected split');
+      const writes = f.calls.slice(),
+        records = structuredClone([...f.records]),
+        pauses = f.pauses;
+      if (failure === 'discontinuity') splits.update(f.session, state(2), { enabled: true });
+      if (failure === 'presentation') {
+        const list = splits.root.querySelector('ol'),
+          replace = list.replaceChildren;
+        list.replaceChildren = () => {
+          throw new Error('optional split presentation failed');
+        };
+        splits.consume(f.session, state(1, 1));
+        splits.update(f.session, state(1, 1), { enabled: true });
+        list.replaceChildren = replace;
+      }
+      if (failure === 'presence query') queryFailed = true;
+      else assert.equal(splits.hasReference(f.session), false);
+      assert.doesNotThrow(() => f.update());
+      assert.ok(f.button(use), 'one paint reconciles the cleared or unknown split selection');
+      assert.equal(f.button(use).disabled, false, 'the verified proof remains usable');
+      assert.ok(f.button(hide), 'the independent visual reference stays selected');
+      assert.equal(applied.length, 1, 'reconciliation never reapplies or clears a reference');
+      assert.equal(visualCalls, 1);
+      assert.equal(verifications, 1);
+      assert.equal(f.pauses, pauses);
+      assert.deepEqual(f.calls, writes);
+      assert.deepEqual([...f.records], records);
+      queryFailed = false;
+      splits.update(f.session, state(2), { enabled: true });
+      f.button(use).click();
+      assert.ok(f.button(clear), 'one explicit action reselects after observer recovery');
+      assert.equal(splits.hasReference(f.session), true);
+      assert.equal(applied.length, 2);
+      assert.equal(visualCalls, 1);
+      assert.equal(verifications, 1);
+    });
+
+for (const change of ['selection', 'disposal'])
+  test(`split cleanup survives a failed presence query before ${change}`, async (t) => {
+    let splits,
+      queryFailed = false;
+    const f = fixture(t, {
+      course: verificationCourse(),
+      referenceIdentity,
+      verifyCourse: async () => referenceReport(),
+      onReference: (session, value) => splits.setReference(session, value),
+      hasSplitReference: (session) => {
+        if (queryFailed) throw new Error('optional presence query failed');
+        return splits.hasReference(session);
+      },
+    });
+    splits = mountPracticeSplits({ parent: f.ui.root.ownerDocument.body });
+    t.after(() => splits.dispose());
+    splits.update(f.session, { ticks: 0, step: 0, total: 1 }, { enabled: true });
+    await prepareCourseArchive(f);
+    f.button('Verify course completion').click();
+    await settle();
+    f.button('Use as split reference').click();
+    queryFailed = true;
+    f.update();
+    assert.ok(f.button('Use as split reference'));
+    assert.equal(splits.hasReference(f.session), true, 'a failed query cannot clear during paint');
+    if (change === 'selection') {
+      const select = f.ui.root.querySelector('select');
+      select.value = '';
+      select.emit('change');
+    } else f.ui.dispose();
+    assert.equal(
+      splits.hasReference(f.session),
+      false,
+      'cleanup owns the reference despite unknown display state',
+    );
+  });

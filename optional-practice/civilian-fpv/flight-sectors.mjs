@@ -265,6 +265,7 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
       false,
     ),
     restored: guard(reset),
+    hasReference: guard((session) => session === owner && Boolean(reference), false),
     setReference: guard((session, value) => {
       if (session !== owner || noCourse || !observer?.snapshot()) return false;
       if (value !== null) {

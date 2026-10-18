@@ -165,6 +165,8 @@ test('split reference compares known observations, copies bounded rows and retai
   ui.update(owner, state(0), { enabled: true });
   const value = reference();
   assert.equal(ui.setReference(owner, value), true);
+  assert.equal(ui.hasReference(owner), true);
+  assert.equal(ui.hasReference({}), false);
   value.rows[0].ticks = 100;
   assert.match(ui.root.textContent, /Objective 1: not observed · reference 0.20 s/);
   for (let tick = 1; tick <= 12; tick++) ui.consume(owner, state(tick, tick === 12 ? 1 : 0));
@@ -172,14 +174,17 @@ test('split reference compares known observations, copies bounded rows and retai
   assert.match(ui.root.textContent, /Objective 1: 0.24 s · reference 0.20 s · Δ \+0.04 s/);
   ui.update(owner, state(12, 1), { enabled: true });
   assert.match(ui.root.textContent, /Earlier completed flight/);
+  assert.equal(ui.hasReference(owner), true);
   locale = 'uk';
   ui.update(owner, state(12, 1), { enabled: true });
   assert.match(ui.root.textContent, /Орієнтир часу/);
   assert.equal(ui.setReference({}, reference()), false);
   assert.equal(ui.setReference(owner, null), true);
+  assert.equal(ui.hasReference(owner), false);
   assert.doesNotMatch(ui.root.textContent, /Earlier completed flight|Δ/);
   ui.dispose();
   assert.equal(ui.setReference(owner, reference()), false);
+  assert.equal(ui.hasReference(owner), false);
 });
 test('split references never invent missing recovery history and clear on recovery, owner, mode or observation discontinuity', () => {
   const doc = new Document(),
@@ -193,12 +198,15 @@ test('split references never invent missing recovery history and clear on recove
   assert.doesNotMatch(ui.root.textContent, /Δ/);
   ui.restored(owner, state(6, 1));
   assert.doesNotMatch(ui.root.textContent, /Earlier completed flight/);
+  assert.equal(ui.hasReference(owner), false);
   ui.setReference(owner, reference());
   ui.update(owner, state(8, 1), { enabled: true });
   assert.doesNotMatch(ui.root.textContent, /Earlier completed flight/);
+  assert.equal(ui.hasReference(owner), false);
   ui.setReference(owner, reference());
   ui.update({}, state(0), { enabled: true });
   assert.doesNotMatch(ui.root.textContent, /Earlier completed flight/);
+  assert.equal(ui.hasReference(owner), false);
   ui.update(owner, state(0, 0, 0), { enabled: true, freeFlight: true });
   assert.equal(ui.setReference(owner, reference()), false);
   ui.update(owner, state(0), { enabled: false });

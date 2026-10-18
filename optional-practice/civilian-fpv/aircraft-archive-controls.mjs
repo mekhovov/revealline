@@ -22,6 +22,7 @@ export function mountAircraftArchiveControls({
   getSession,
   onPause = () => {},
   onReference = () => false,
+  hasSplitReference = () => true,
   onVisualReference = () => false,
   hasVisualReference = () => true,
   key = 'academy',
@@ -106,7 +107,8 @@ export function mountAircraftArchiveControls({
   };
   function clearCourse() {
     if (!courseView) return;
-    if (courseView.referenceSelected) applyReference(courseView.session, null);
+    // A failed presence query changes the label, not ownership of cleanup.
+    applyReference(courseView.session, null);
     if (courseView.visualSelected) applyVisual(courseView.session, null);
     operation?.controller.abort();
     courseView = null;
@@ -182,6 +184,13 @@ export function mountAircraftArchiveControls({
     select.value = rows.some((row) => row.id === selected) ? selected : (rows[0]?.id ?? '');
   }
   function paint() {
+    if (courseView?.referenceSelected) {
+      try {
+        courseView.referenceSelected = hasSplitReference(courseView.session) === true;
+      } catch {
+        courseView.referenceSelected = false;
+      }
+    }
     if (courseView?.visualSelected) {
       try {
         if (!hasVisualReference(courseView.session)) throw new Error();

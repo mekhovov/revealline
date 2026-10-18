@@ -9155,6 +9155,7 @@ export function mountWorldApp({
     onPause: () => pauseFlight(),
     onRestored: (session, state) => practiceSplits.restored(session, state),
     onReference: (session, value) => practiceSplits.setReference(session, value),
+    hasSplitReference: (session) => practiceSplits.hasReference(session),
     onVisualReference: (session, value) => session === flight && renderer?.setAircraftReference?.(value) === true,
     hasVisualReference: (session) => session === flight && renderer?.hasAircraftReference?.() === true,
   });
