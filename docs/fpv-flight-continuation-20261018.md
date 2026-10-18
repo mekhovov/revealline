@@ -106,11 +106,47 @@ pad with zero throttle, the starting height condition still did not complete.
 The explanation UI reported **Height −0.0 m / required 0.0–0.8 m**, position
 inside, tilt **0.02° / ≤10°**, centred rotation **0.0% / ≤5%**, speed
 **0.0 m/s / ≤0.5 m/s**, and **Hold 0.0 / 0.8 s**. Only Height was unsatisfied.
-This confirms the small floor-contact offset can block the actual learning UI;
-the new versioned mission-adapter correction remains under implementation.
-The separate `$floor`/physical-support identifier mismatch is established by
-source and predicate-isolation tests, not by a completed rendered landing yet.
-The exported original library is retained for restoration after the test.
+This confirms the small floor-contact offset can block the actual learning UI.
+The separate `$floor`/physical-support identifier mismatch was established by
+source and predicate-isolation tests. The negative remains recorded rather than
+being replaced by the subsequent positive result.
+
+## Versioned lesson correction and rendered acceptance
+
+On `55a5eefd1f02dec493fd80a5da53aabd301cedbf`, the same local tab was normally
+reloaded and entered the saved Meteor75 lesson again. The versioned adapter maps
+only the actual floor support to the authored `$floor` and snaps its mission
+height only within the documented 3 mm contact tolerance. Physical state,
+contact telemetry and named platforms are unchanged; historical v1 recovery
+retains its original identity and behavior.
+
+With ordinary keyboard input and explicit pauses for inspection, the on-pad
+condition advanced after 1.56 seconds. The flight then satisfied the lift band
+and landed gently; **Route complete** was visible at **0:13.66**. The positive
+attempt did not touch the ceiling. Flying continued after completion: a second
+takeoff reached 0.5 m with positive climb, and the flight was paused at **0:16.34**.
+The checkpoint was **0:15.00**. Finishing its archive succeeded, and verification
+reported **Complete session physics verified from reset. Unscored.** The saved
+label was `World · 2026-10-18T19:12:57.272Z · 0:00–0:16 · finished`.
+
+This is one rendered World teaching lesson in Self-level with keyboard controls,
+not all-course, hardware-radio or real-aircraft qualification. Separately,
+`1c7354bebc5349c90a7f99190654ca098fedb4fc` records all fifteen presets completing
+the same original ground/lift/land objectives in both modes with one bounded
+feedback pilot. The [per-case receipt](fpv-aircraft-mission-adapter-qualification.json)
+records 6.04–6.26 second completion, 4.54–4.70 seconds airborne, exact effective
+aircraft/controller/rate identities, continued practice and paused recovery.
+These direct-simulation cases are not additional rendered flights.
+
+The pre-test library was restored through the ordinary backup UI. Restore
+committed successfully but initially reported `Cannot read properties of
+undefined (reading 'profileId')`: the editor still referenced the removed
+Meteor75 setup. **Refresh library** recovered the view. A fresh backup matched
+the original `My drone` / `Legacy feel` contents exactly except the expected
+library revision increase from 0 to 2. That post-restore UI defect has a separate
+follow-up; no successful one-click restore claim is made for this source.
+The FPV camera preference was restored, the flight remained paused, the temporary
+tab was closed and its source server stopped. No archives were deleted.
 
 ## Open archive-retention incident
 
