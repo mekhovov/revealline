@@ -11,7 +11,7 @@ import {
 
 const read = (path) => readFile(new URL('../' + path, import.meta.url));
 const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
-const planPath = 'docs/performance/solo-73-app-diagnostics-plan.json';
+const planPath = 'docs/performance/solo-797-app-diagnostics-plan.json';
 const workflow = (await read(workflowPath)).toString();
 const held = JSON.parse(await read(planPath));
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -21,7 +21,35 @@ function body(text) {
   return result.split(/\n  [a-z][a-z-]+:\n/)[0];
 }
 function reviewedFixture() {
-  return structuredClone(held); // Actual reviewed declaration, not synthetic release authority.
+  // Modeled evidence exercises the held source boundary; it is never saved or dispatched.
+  const value = structuredClone(held);
+  Object.assign(value.release, {
+    status: 'reviewed-diagnostic-only',
+    noUnclosedOwners: true,
+    allPriorPlannedJobsClosed: true,
+    priorProofInspected: true,
+    firstEightAllCorrectnessPassed: true,
+    firstEightEvidence: {
+      format: 'SoloFirstEightCorrectnessEvidenceV1',
+      sourceRevision: '797e03f28743921842df6aa57520a72016ba3dfc',
+      runId: 1,
+      artifactId: 2,
+      artifactSHA256: '0'.repeat(64),
+      summarySHA256: '0'.repeat(64),
+      correctness: 'passed',
+      ownersClosed: true,
+    },
+    evidence: [
+      {
+        runId: 1,
+        artifactId: 2,
+        artifactSHA256: '0'.repeat(64),
+        summarySHA256: '0'.repeat(64),
+        disposition: 'passed',
+      },
+    ],
+  });
+  return value;
 }
 
 function admission(text) {
@@ -51,7 +79,7 @@ function admission(text) {
   );
   assert.match(
     job,
-    /solo-shared-source-checkout\.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e/,
+    /solo-shared-source-checkout\.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5/,
   );
   // The old per-job time envelope is retained, including the single three-minute
   // candidate materialization and six-minute dependency install.
@@ -81,18 +109,16 @@ function admission(text) {
   return guard;
 }
 
-test('app-overhead uses the actual scoped correctness receipt without changing matched-workload limits', () => {
-  assert.equal(held.release.status, 'reviewed-diagnostic-only');
-  assert.equal(held.release.noUnclosedOwners, true);
-  assert.equal(held.release.evidence[0].runId, 39105055762);
-  assert.equal(held.release.evidence[0].scope, 'first-eight-correctness-only');
-  assert.equal(held.release.evidence[0].numericalFailures.length, 3);
-  const unreleased = structuredClone(held);
-  unreleased.release.status = 'held-for-review';
-  assert.throws(() => bindDiagnosticsJob(unreleased, 'chromium'));
+test('app-overhead holds797 admission until its own correctness receipt without changing matched limits', () => {
+  assert.equal(held.release.status, 'held-for-review');
+  assert.equal(held.release.noUnclosedOwners, false);
+  assert.equal(held.release.firstEightEvidence, null);
+  assert.equal(held.release.firstEightAllCorrectnessPassed, false);
+  assert.deepEqual(held.release.evidence, []);
+  assert.throws(() => bindDiagnosticsJob(held, 'chromium'));
   const value = reviewedFixture();
-  assert.equal(value.runtimeRevision, '73a345cec696d7789198cf295ca5c37b17ca0e71');
-  assert.equal(value.candidate.artifact, 12127570566);
+  assert.equal(value.runtimeRevision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  assert.equal(value.candidate.artifact, 12128990483);
   assert.equal(value.baseline.revision, '8b01991942dc764b8aa4726851699ce1985e53ae');
   assert.equal(value.analysisMethod, 'paired-p95-endpoint-box-v1');
   assert.equal(value.release.unconditionalClockGuarantee, false);

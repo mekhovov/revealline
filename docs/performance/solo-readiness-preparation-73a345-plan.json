@@ -235,7 +235,7 @@
     {
       "path": "scripts/solo-qualification-hitch-journal.mjs",
       "bytes": 35102,
-      "sha256": "eb2ef67ccf2b7ac8a592e5837a840b579c374ed6cfbbdf93fa46842768dcb3ee"
+      "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3"
     },
     {
       "path": "scripts/solo-qualification-native-replay.mjs",
@@ -244,8 +244,8 @@
     },
     {
       "path": "scripts/solo-qualification-next-route.mjs",
-      "bytes": 33570,
-      "sha256": "1cd68a804778caa5baddf6fdec73bf0f07d622d9c4e3b615446bb1e2d827405b"
+      "bytes": 34117,
+      "sha256": "9ee84cc43780a0d08fed6ab8ced22023162adb02c393356b5030f129abac45c3"
     },
     {
       "path": "scripts/solo-qualification-observation.mjs",
@@ -299,8 +299,8 @@
     },
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 103574,
-      "sha256": "ddfec248b76941fed837f552af95bea5fca98683e1682d0b64acc8bad0679458"
+      "bytes": 107252,
+      "sha256": "4ab9c2532e317c590e8c1fd6090c57f22cfdd437d4099941d98a15d39295e00c"
     },
     {
       "path": "scripts/soundtrack-archive-admissions.mjs",

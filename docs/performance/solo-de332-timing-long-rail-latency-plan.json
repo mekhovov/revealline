@@ -256,7 +256,7 @@
     {
       "path": "scripts/solo-qualification-hitch-journal.mjs",
       "bytes": 35102,
-      "sha256": "eb2ef67ccf2b7ac8a592e5837a840b579c374ed6cfbbdf93fa46842768dcb3ee"
+      "sha256": "caf7ae7843b5495775b593be2f995fc72b5cef512433a334889250e4885d71b3"
     },
     {
       "path": "scripts/solo-qualification-native-replay.mjs",
@@ -320,30 +320,12 @@
     }
   ],
   "jobs": [
-    {
-      "engine": "chromium",
-      "repetition": 1
-    },
-    {
-      "engine": "chromium",
-      "repetition": 2
-    },
-    {
-      "engine": "chromium",
-      "repetition": 3
-    },
-    {
-      "engine": "webkit",
-      "repetition": 1
-    },
-    {
-      "engine": "webkit",
-      "repetition": 2
-    },
-    {
-      "engine": "webkit",
-      "repetition": 3
-    }
+    { "engine": "chromium", "repetition": 1 },
+    { "engine": "chromium", "repetition": 2 },
+    { "engine": "chromium", "repetition": 3 },
+    { "engine": "webkit", "repetition": 1 },
+    { "engine": "webkit", "repetition": 2 },
+    { "engine": "webkit", "repetition": 3 }
   ],
   "phaseOrder": [
     "cold-first30",
@@ -411,7 +393,7 @@
     }
   },
   "measurementScope": {
-    "lightweight": "Existing fixed-size rAF/phase/audio API and PRE_STEP\u2192POST_RENDER work probe only. Same settled120 pre-navigation fixedB, internal appB remains independently admitted/provisional; no replacing missing internalcalibration. Owner/RSS/disk supervisor remains part of hostedstratum. All raw startup/failed/inconclusive observations retained.",
+    "lightweight": "Existing fixed-size rAF/phase/audio API and PRE_STEP→POST_RENDER work probe only. Same settled120 pre-navigation fixedB, internal appB remains independently admitted/provisional; no replacing missing internalcalibration. Owner/RSS/disk supervisor remains part of hostedstratum. All raw startup/failed/inconclusive observations retained.",
     "excluded": "No CPU/heap profiler, forcedGC, synthetic recovery/contextloss, audio identity instrumentation, diagnostics-on/off pairing or trace in timingrows. Those remain separate released lanes.",
     "remaining": [
       "Demo30s whole-window work/cadence qualification",
@@ -424,8 +406,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-sustained.mjs",
-      "bytes": 103574,
-      "sha256": "ddfec248b76941fed837f552af95bea5fca98683e1682d0b64acc8bad0679458"
+      "bytes": 107252,
+      "sha256": "4ab9c2532e317c590e8c1fd6090c57f22cfdd437d4099941d98a15d39295e00c"
     },
     {
       "path": "scripts/solo-remote-baseline.mjs",

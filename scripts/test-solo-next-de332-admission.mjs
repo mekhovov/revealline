@@ -41,6 +41,28 @@ const workflow = executed.workflow;
 const bytes = await read(plan.recipes.next.path);
 const recipe = JSON.parse(bytes);
 const source = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+function reviewedParserControl(value) {
+  // Parser-only held-state control. The on-disk797 declaration carries no first-eight result.
+  if (!value.status?.startsWith('held-')) return value;
+  const plan = structuredClone(value);
+  assert.equal(plan.candidate.revision, '797e03f28743921842df6aa57520a72016ba3dfc');
+  assert.equal(plan.release.firstEightEvidence, null);
+  plan.status = 'reviewed-diagnostic-only';
+  if (plan.phase === 'next') plan.release.status = 'reviewed-diagnostic-only';
+  plan.release.firstEightAllCorrectnessPassed = true;
+  plan.release.firstEightEvidence = {
+    format: 'SoloFirstEightCorrectnessEvidenceV1',
+    sourceRevision: plan.candidate.revision,
+    runId: 1,
+    artifactId: 2,
+    artifactSHA256: 'a'.repeat(64),
+    summarySHA256: 'b'.repeat(64),
+    correctness: 'passed',
+    ownersClosed: true,
+  };
+  return plan;
+}
+
 const guard =
   "github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'next'";
 const flags = (revision) => [
@@ -282,7 +304,9 @@ test('Next is explicit main-branch manual selection only, never a PR event or au
 
 test('current helper digest mismatch rejects before any package or native operation', async () => {
   const target = 'scripts/run-solo-remote-correctness.mjs';
-  const currentPlan = await json('docs/performance/solo-next-geometric-de332-tooling-plan.json');
+  const currentPlan = reviewedParserControl(
+    await json('docs/performance/solo-next-geometric-797e03-plan.json'),
+  );
   let sideEffects = 0;
   await assert.rejects(
     prepareSustainedMode({

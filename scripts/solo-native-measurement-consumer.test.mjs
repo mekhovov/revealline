@@ -26,12 +26,12 @@ const lifecycle = ['retry', 'soak', 'long29'];
 const boundedMatch = (value, pattern) =>
   assert(pattern.test(value), 'Missing workflow contract: ' + pattern);
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const source = '73a345cec696d7789198cf295ca5c37b17ca0e71';
-const tree = 'ea30e68636b3342f8e60664a79d425e11e27ff1e';
+const source = '797e03f28743921842df6aa57520a72016ba3dfc';
+const tree = 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5';
 const baseline = '8b01991942dc764b8aa4726851699ce1985e53ae';
 const baselineTree = '9373b6a74aea8fa1ef47aa17ace140b4cf714609';
 const pathFor = (lane, phase) =>
-  'docs/performance/solo-73-' +
+  'docs/performance/solo-797-' +
   (lane === 'journal-cost' ? lane : lane + '-' + phase) +
   '-plan.json';
 const manifest = async (lane, phase) => JSON.parse(await read(pathFor(lane, phase)));
@@ -48,26 +48,25 @@ function expression(value, inputs) {
   );
 }
 function reviewed(plan, lane) {
-  if (plan.release.status !== 'held-for-review') {
-    assert.equal(plan.release.evidence[0].runId, 39105055762);
-    assert.equal(plan.release.evidence[0].artifactId, 12127359946);
-    assert.equal(
-      plan.release.evidence[0].artifactSHA256,
-      '17665afe978ae63cfaf8d24b1a9626e1d7f607b7ee2611fc637c9e680f3d46d8',
-    );
-    assert.equal(
-      plan.release.evidence[0].summarySHA256,
-      'a33416a355620817896366d5312fbecb44f0c7e6b8f7220941c8447886d99762',
-    );
-    assert.equal(plan.release.evidence[0].scope, 'first-eight-correctness-only');
-    assert.equal(plan.release.evidence[0].numericalFailures.length, 3);
-    return structuredClone(plan);
-  }
+  assert.equal(plan.release.status, 'held-for-review');
+  assert.equal(plan.release.firstEightEvidence, null);
+  assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
+  assert.deepEqual(plan.release.evidence, []);
   const result = structuredClone(plan);
   result.release.status = lane === 'timing' ? 'reviewed-and-released' : 'reviewed-diagnostic-only';
   for (const key of ['noUnclosedOwners', 'allPriorPlannedJobsClosed', 'priorProofInspected'])
     result.release[key] = true;
-  if (lane === 'timing') result.release.firstEightAllCorrectnessPassed = true;
+  result.release.firstEightAllCorrectnessPassed = true;
+  result.release.firstEightEvidence = {
+    format: 'SoloFirstEightCorrectnessEvidenceV1',
+    sourceRevision: source,
+    runId: 1,
+    artifactId: 2,
+    artifactSHA256: '0'.repeat(64),
+    summarySHA256: '0'.repeat(64),
+    correctness: 'passed',
+    ownersClosed: true,
+  };
   if (lane === 'lifecycle') result.release.predecessorRun = 1;
   result.release.evidence = [
     {
@@ -118,7 +117,17 @@ function checkJob(text, lane) {
     ),
   );
   assert.equal((job.match(/if: \$\{\{ always\(\) \}\}/g) ?? []).length, 2);
-  assert(job.includes('scripts/solo-runtime73-measurement.test.mjs'));
+  const sourceCommand = job.split('\n').find((line) => line.trim().startsWith('node --test '));
+  assert(sourceCommand);
+  const sourceArgs = sourceCommand.trim().split(/\s+/);
+  assert.deepEqual(sourceArgs.slice(0, 3), ['node', '--test', '--test-concurrency=2']);
+  assert.deepEqual(sourceArgs.slice(3, 6), [
+    'scripts/solo-de332-diagnostics.test.mjs',
+    'scripts/solo-de332-timing.test.mjs',
+    'scripts/solo-de332-lifecycle.test.mjs',
+  ]);
+  assert(!sourceArgs.includes('scripts/solo-runtime73-measurement.test.mjs'));
+  assert(!sourceArgs.slice(3).some((arg) => arg.startsWith('--test')));
   assert(job.includes('scripts/solo-native-measurement-consumer.test.mjs'));
   assert(job.includes('--signal=TERM --kill-after=30s'));
   assert(job.includes("'maximumTotalBytes':" + (lane === 'journal-cost' ? 20 : 24) + '*1024*1024'));
@@ -285,10 +294,8 @@ test('actual shell selectors accept only the fixed phase-to-declaration map', ()
 
 test('real binders keep ten journal pairs and all72 matched timing roles while held releases refuse admission', async () => {
   const journal = await manifest('journal-cost');
-  assert.equal(journal.release.status, 'reviewed-diagnostic-only');
-  const unreviewedJournal = structuredClone(journal);
-  unreviewedJournal.release.status = 'held-for-review';
-  assert.throws(() => diagnosticsMatrix(unreviewedJournal));
+  assert.equal(journal.release.status, 'held-for-review');
+  assert.throws(() => diagnosticsMatrix(journal));
   const j = reviewed(journal, 'journal-cost');
   for (const row of diagnosticsMatrix(j).include) {
     assert.deepEqual([row.jobMinutes, row.stepMinutes, row.outerSeconds], [130, 88, 5220]);
@@ -304,13 +311,9 @@ test('real binders keep ten journal pairs and all72 matched timing roles while h
   let count = 0;
   for (const phase of timing) {
     const held = await manifest('timing', phase);
-    assert.equal(held.release.firstEightAllCorrectnessPassed, phase === 'cold-first30');
-    if (phase === 'cold-first30') {
-      assert.equal(held.release.status, 'reviewed-and-released');
-      const unreleased = structuredClone(held);
-      unreleased.release.status = 'held-for-review';
-      assert.throws(() => timingMatrix(unreleased));
-    } else assert.throws(() => timingMatrix(held));
+    assert.equal(held.release.firstEightAllCorrectnessPassed, false);
+    assert.equal(held.release.status, 'held-for-review');
+    assert.throws(() => timingMatrix(held));
     const m = reviewed(held, 'timing');
     for (const row of timingMatrix(m).include) {
       assert.deepEqual([row.jobMinutes, row.stepMinutes, row.outerSeconds], [122, 78, 4620]);
@@ -335,13 +338,8 @@ test('real lifecycle binders match actual job/outer expressions for36 independen
   let count = 0;
   for (const phase of lifecycle) {
     const held = await manifest('lifecycle', phase);
-    if (phase === 'soak') {
-      assert.equal(held.release.status, 'reviewed-diagnostic-only');
-      assert.equal(held.release.predecessorRun, 39105055762);
-      const unreleased = structuredClone(held);
-      unreleased.release.status = 'held-for-review';
-      assert.throws(() => sustainedMatrix(unreleased));
-    } else assert.throws(() => sustainedMatrix(held));
+    assert.equal(held.release.status, 'held-for-review');
+    assert.throws(() => sustainedMatrix(held));
     const m = reviewed(held, 'lifecycle');
     for (const row of sustainedMatrix(m).include) {
       assert.equal(row.jobMinutes, get(/^    timeout-minutes: \$\{\{ (.+) \}\}$/m, phase));
@@ -373,7 +371,7 @@ test('every plan reference is current and retained in each exact sparse measurem
       const p = await manifest(lane, phase);
       assert.equal(p.candidate.revision, source);
       assert.equal(p.candidate.tree, tree);
-      assert.equal(p.candidate.artifact, 12127570566);
+      assert.equal(p.candidate.artifact, 12128990483);
       assert.equal(p.baseline.revision, baseline);
       assert.equal((lane === 'journal-cost' ? p : p.release).automaticRetries, 0);
       assert.equal((lane === 'journal-cost' ? p : p.release).automaticPhaseContinuation, false);
