@@ -139,6 +139,7 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
   parent.append(root);
   let owner = null,
     observer = null,
+    reference = null,
     noCourse = false,
     disposed = false,
     painted = '';
@@ -153,6 +154,7 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
         state?.originTick,
         state?.originStep,
         state?.rows,
+        reference,
       ]);
       if (key === painted) return;
       painted = key;
@@ -168,15 +170,32 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
             (state.partial
               ? ` ${t('Earlier timings are unavailable after recovery or interrupted observation.', 'Попередній час недоступний після відновлення чи перерваного спостереження.')}`
               : '');
+      if (reference)
+        help.textContent += ` ${t('Split reference', 'Орієнтир часу')}: ${reference.name}.`;
       list.replaceChildren();
       list.hidden = noCourse || !state;
       if (!noCourse && state) {
-        const rows = state.rows.length ? state.rows : [null];
+        const rows = reference
+          ? reference.rows.map(
+              (entry) =>
+                state.rows.find((row) => row.index === entry.index) ?? { index: entry.index },
+            )
+          : state.rows.length
+            ? state.rows
+            : [null];
         for (const row of rows) {
           const item = doc.createElement('li');
           item.textContent = row
-            ? `${t('Objective', 'Завдання')} ${row.index + 1}: ${row.ticks === null ? t('start time unavailable', 'час початку недоступний') : `${(row.ticks / 50).toFixed(2)} ${t('s', 'с')}`}`
+            ? `${t('Objective', 'Завдання')} ${row.index + 1}: ${row.ticks === undefined ? t('not observed', 'ще не спостерігалося') : row.ticks === null ? t('start time unavailable', 'час початку недоступний') : `${(row.ticks / 50).toFixed(2)} ${t('s', 'с')}`}`
             : t('No observed splits yet.', 'Ще немає спостережуваних ділянок.');
+          const compared = row && reference?.rows[row.index];
+          if (compared) {
+            item.textContent += ` · ${t('reference', 'орієнтир')} ${(compared.ticks / 50).toFixed(2)} ${t('s', 'с')}`;
+            if (Number.isSafeInteger(row.ticks)) {
+              const delta = (row.ticks - compared.ticks) / 50;
+              item.textContent += ` · Δ ${delta > 0 ? '+' : ''}${delta.toFixed(2)} ${t('s', 'с')}`;
+            }
+          }
           list.append(item);
         }
       }
@@ -186,6 +205,7 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
   };
   const unavailable = () => {
     observer = null;
+    reference = null;
     painted = '';
     try {
       help.textContent = t('Observed timing unavailable.', 'Спостережуваний час недоступний.');
@@ -208,6 +228,7 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
   const reset = (session, state) => {
     if (disposed || session !== owner || noCourse) return;
     observer = createPracticeSectorObserver();
+    reference = null;
     observer.reset(state);
     painted = '';
     paint();
@@ -219,7 +240,7 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
       freeFlight ||= state?.total === 0;
       root.hidden = !enabled;
       if (!enabled) {
-        owner = observer = null;
+        owner = observer = reference = null;
         painted = '';
         return;
       }
@@ -227,6 +248,7 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
         owner = session;
         noCourse = freeFlight;
         observer = null;
+        reference = null;
         reset(session, state);
         painted = '';
       }
@@ -243,10 +265,42 @@ export function mountPracticeSplits({ parent, locale = () => 'en' }) {
       false,
     ),
     restored: guard(reset),
+    setReference: guard((session, value) => {
+      if (session !== owner || noCourse || !observer?.snapshot()) return false;
+      if (value !== null) {
+        if (
+          typeof value?.name !== 'string' ||
+          value.name.length > 120 ||
+          !Array.isArray(value.rows) ||
+          value.rows.length !== observer.snapshot().total ||
+          value.rows.length === 0 ||
+          value.rows.length > MAX_SECTORS
+        )
+          return false;
+        let end = 0;
+        for (const [index, row] of value.rows.entries()) {
+          if (
+            row?.index !== index ||
+            !Number.isSafeInteger(row.ticks) ||
+            row.ticks < 0 ||
+            !Number.isSafeInteger(row.endTick) ||
+            row.endTick !== end + row.ticks
+          )
+            return false;
+          end = row.endTick;
+        }
+      }
+      reference = value && {
+        name: value.name,
+        rows: value.rows.map(({ index, ticks, endTick }) => ({ index, ticks, endTick })),
+      };
+      paint();
+      return true;
+    }, false),
     snapshot: guard(() => observer?.snapshot() ?? null),
     dispose: guard(() => {
       disposed = true;
-      owner = observer = null;
+      owner = observer = reference = null;
       root.remove();
     }),
   };
