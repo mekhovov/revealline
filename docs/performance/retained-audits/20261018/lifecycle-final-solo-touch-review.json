@@ -1,0 +1,105 @@
+{
+  "format": "SoloLifecycleVisibleTouchDeltaReviewV1",
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "proposal": {
+    "blob": "d934f89db432ac57e20eeaf14fed0be842f11ee0",
+    "bytes": 1239359,
+    "sha256": "db16560a8c67d0e3ba71078cfa9bedabe367733499f7442d256f3d924c90d02d"
+  },
+  "priorCleanSoloReview": "a88ab6f5ea624ccb01b81d4fda88c441404c433a",
+  "decision": "Clean narrow final touch-fixture delta review; prior Solo production/edge-delivery review remains applicable.",
+  "identities": {
+    "test": {
+      "path": "game/test/solo-cadence-input-host.test.mjs",
+      "afterBlob": "075a75d413c5b8c8785652a789885d5b3f8ee100",
+      "bytes": 20565,
+      "sha256": "b6e93b1fece20768995b22a14c3c4cb0ced2794a9b25814c65477bf8e1cea4b2"
+    },
+    "readSources": [
+      {
+        "path": "game/test/helpers/solo-dom.mjs",
+        "blob": "11edae6ed89c9fa2d74034a4912112277bf13e03",
+        "bytes": 35091,
+        "sha256": "f73fe5e2a5d54b76a59f094f8dfc4f7b0f564229c15c8c7c6d4b81d3fdcfdcff"
+      },
+      {
+        "path": "game/input-presentation.mjs",
+        "blob": "f6f0386edbdd8c6d0f586e07a7155d4dc81ede77",
+        "bytes": 2047,
+        "sha256": "cff89ffa1eb8c51c528d56c41e4d33b281cc3de4ecb62c91089320082adc2dd5"
+      },
+      {
+        "path": "game/display-preferences.mjs",
+        "blob": "e47f665938833e836836b19f4e8b95889b1f338d",
+        "bytes": 8517,
+        "sha256": "d4b224b541d45f9e2a276fc591869c7e1c7c72798432354daa97200537f637ae"
+      },
+      {
+        "path": "game/touch-preferences.mjs",
+        "blob": "88be1f87c5262cd3731fd17ae1d0fabcb226b7ed",
+        "bytes": 2727,
+        "sha256": "3fd5caf74eed8559e0fccb8bbf609e1f605a9a5702d047e35b750939438f7596"
+      },
+      {
+        "path": "game/touch-controls.mjs",
+        "blob": "1c47bbcc4d76de4875534c60df1168b11180d7f9",
+        "bytes": 1651,
+        "sha256": "247811a921e69ff3488faa3138e36db42f5bacddccd03e2d52b0f21169809cc6"
+      },
+      {
+        "path": "game/ui/fullscreen.mjs",
+        "blob": "8ed2b55c8a2980121ce7884da889a0ec72fba89a",
+        "bytes": 7739,
+        "sha256": "baef8c6d27206a4ff0b107ded975c2f23949c8957a12cc039689c32017213f76"
+      },
+      {
+        "path": "game/ui/touch-steering.mjs",
+        "blob": "f4f317306f272442e436bc4913950c5f4bbad851",
+        "bytes": 5419,
+        "sha256": "c14ee4cb438d4171155abf65861fca3e32963e018339363eccd32de2e3869912"
+      },
+      {
+        "path": "game/ui/input.mjs",
+        "blob": "0fa14480cab5c615165f8cc432bf0d34a2189733",
+        "bytes": 18973,
+        "sha256": "cc86bb1180e5138fe43308d55ce4d08fda38a25b6fe5e0f10f7b337f60877c49"
+      },
+      {
+        "path": "game/app.mjs",
+        "blob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+        "bytes": 619315,
+        "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+      }
+    ]
+  },
+  "verification": [
+    "Final proposal envelope byte length/SHA256 independently verified.",
+    "All seven after-content byte lengths/SHA256/Git blob identities independently recomputed.",
+    "Compared complete changes to1c57: four runtime source bodies unchanged; only Solo and shared clock test files changed.",
+    "Solo bounded advanceTo loops, exact checkpoint/saved replay checks and expected once-only edge ticks remain unchanged."
+  ],
+  "touchFixture": [
+    "Only source==='touch' creates navigator.maxTouchPoints=1 and true matches for the two coarse-pointer queries. Existing keyboard/gamepad fixture behavior is unchanged.",
+    "The default Solo fixture already provides a matches-only matchMedia result. Actual coarse branches in app.mjs:2870,2998,3481\u20133495 consume matches rather than requiring a subscription method.",
+    "display-preferences.mjs:200\u2013201,246\u2013247 feature-detects addEventListener/removeEventListener and legacy listener methods; fullscreen.mjs:161\u2013162 likewise feature-detects subscription. The shim therefore does not omit a required method in these actual owners.",
+    "solo-dom.mjs:386\u2013397 constructs a fresh per-host navigator object; browserSetup changes that object rather than the original process navigator. Lines599\u2013602 capture original global descriptors before installing replacements. Registered teardown625\u2013635 restores those descriptors, including navigator and matchMedia.",
+    "The new control first requires screenControls==='shown', emits pointerType touch down/up, then invokes the existing action/pickup click path from ui/input.mjs:374\u2013389.",
+    "Pointer events establish the intended public modality; the click handler owns the one-shot request. No hidden-DOM shortcut or physical-browser claim is made."
+  ],
+  "scope": "Solo visible-touch fixture only. Shared clock/input changes and shared visible-pad test are independently reviewed by status_checks; this receipt does not replace that review.",
+  "limitations": {
+    "newProposalControls": 12,
+    "executed": false,
+    "required": "Hosted source/strict replay/lifecycle gates and native final-source qualification remain outstanding. Synthetic coarse capability and pointer events do not qualify real iPhone input,layout or timing."
+  },
+  "execution": {
+    "product": false,
+    "tests": false,
+    "build": false,
+    "browser": false,
+    "localWrites": false,
+    "sourceMutation": false,
+    "prChanges": false,
+    "ciDispatch": false
+  }
+}

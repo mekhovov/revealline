@@ -1,0 +1,143 @@
+{
+  "format": "BoundedSoloCadenceHudCacheSourceReviewV1",
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "decision": "No concrete player-visible regression found within the inspected adaptive-quality, HUD-throttling and static-cache paths. This is a bounded source review, not whole-app certification or a fresh test pass.",
+  "sources": [
+    {
+      "path": "game/app.mjs",
+      "blob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+      "bytes": 619315,
+      "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+    },
+    {
+      "path": "game/ui/visual-quality-policy.mjs",
+      "blob": "b643f8fb1940d90899fd93c6a3a17d1e464c6e66",
+      "bytes": 4876,
+      "sha256": "4804297bc797e5933e46a44437e513aa0993c61111ad3a649443c4fde5b1c5b9"
+    },
+    {
+      "path": "game/ui/preparation-cadence.mjs",
+      "blob": "3efb2114601b803248176b0cf0a5772f5c86651b",
+      "bytes": 3467,
+      "sha256": "bfda897404e56965747a932ee8cb8569e6ac5ff27d72ed83dfa009441c7fe3c3"
+    },
+    {
+      "path": "game/ui/render.mjs",
+      "blob": "2c753b194f16b1195c6a2033b7ac14c651e04a51",
+      "bytes": 64882,
+      "sha256": "ce86a96a38d9fc636ef11bd4cb7ff469b7592d8b25f0c695f646ebfbcb9f1798"
+    },
+    {
+      "path": "game/ui/classic-view.mjs",
+      "blob": "86add39df2bfdace9fe7564575b928db56611ea8",
+      "bytes": 28594,
+      "sha256": "f2df1a947f84d92599fc9e7a9a5ec53d28ee8ba69240b648a976c173247892be"
+    },
+    {
+      "path": "game/core/encounter.mjs",
+      "blob": "c9995860a38e8f1741bddc562d8d65ce65b0665c",
+      "bytes": 10043,
+      "sha256": "5543956a0dc81a613c33e1244a6f02621d1c089ec6cade4e34ff1fcc569d279b"
+    },
+    {
+      "path": "game/presentation/battlefield-ground.mjs",
+      "blob": "78efafb3730043f9d2eb78f213781655aaf67819",
+      "bytes": 6817,
+      "sha256": "418186611e5423d68498c8aa1f74e1e77651cc28e8fd42e8bf381ff74db0d117"
+    },
+    {
+      "path": "game/test/visual-quality-policy.test.mjs",
+      "blob": "b7f9240e6d1b183a5e19b56a09741a3a10f5de6f",
+      "bytes": 16177,
+      "sha256": "f507a473ad6dc7647c6cd018f2213b44ff6fcc632861679cd4227f191a50931d"
+    },
+    {
+      "path": "game/test/preparation-cadence.test.mjs",
+      "blob": "f9feb1e89375c93866434de8f62dddd22d27980a",
+      "bytes": 5020,
+      "sha256": "c113d122da16172f366c5f1f9f69127ca4db62902b6a70f648bdbc36d866e523"
+    },
+    {
+      "path": "game/test/solo-render-submission.test.mjs",
+      "blob": "af62acbde72267361362c43500106986e7082957",
+      "bytes": 22982,
+      "sha256": "27432bd746d8cd356e317c158016e57938a8d8f76a7f0a6fea80c170a2785e4e"
+    },
+    {
+      "path": "game/test/render-performance.test.mjs",
+      "blob": "346d0c2de394f12e31b86deb97c222d46bcc578b",
+      "bytes": 12931,
+      "sha256": "f47136698cd554c36fc350784d40a8faa8e908e87ac40d2c3d593ff3b26e1d9c"
+    },
+    {
+      "path": "game/test/hud-numeric-values.test.mjs",
+      "blob": "e068480ec26de0aa12686ee871a48d431d1a38c3",
+      "bytes": 3305,
+      "sha256": "2144b959a74c6e2be4cd6f2d561bca075e7eff71bc5421d69ec686e451c6ea53"
+    },
+    {
+      "path": "game/test/hud-status-cues.test.mjs",
+      "blob": "1e31834985092605e97de223e76b50eda8385db7",
+      "bytes": 11164,
+      "sha256": "642aae36753152046678c473adcf5316b2c53df9a0e90b9fbd5d28e508a96bfc"
+    },
+    {
+      "path": "game/test/solo-cadence-readiness-host.test.mjs",
+      "blob": "10d57a3a923f4b83db3978ddcb248a8fd800e517",
+      "bytes": 19564,
+      "sha256": "a05bc8de2d7e8bf11eb51d327e2770fe2ca4503f5b97af53a53559d083b2e46a"
+    },
+    {
+      "path": "game/test/renderer-readability.test.mjs",
+      "blob": "333b12d874b0d52eb42df3eec5df1bb85acee294",
+      "bytes": 19084,
+      "sha256": "e3e2c6a4c67230b2229c47c93c74c2128292f85d0aa3a240b7fc653ce404cbf4"
+    }
+  ],
+  "findings": [
+    {
+      "area": "Stable cadence versus overload",
+      "source": "game/ui/preparation-cadence.mjs:58\u201374; game/ui/visual-quality-policy.mjs:71\u2013125; game/app.mjs:13040\u201313044,13236\u201313255",
+      "observation": "Thirty eligible quiet preparation observations establish one frozen median baseline. Active loaded gameplay cannot replace it. Cheap regular slower cadence is not itself an overload; measured work/tail or sufficiently populated irregular delivery can request decorative relief. Downgrade requires two consecutive windows and a ten-second dwell; restoration requires headroom and a safe transition.",
+      "control": "solo-render-submission.test.mjs:348\u2013395 exercises real host submission under steady30Hz and irregular callbacks, exact authoritative checkpoints, no restoration during play and public Resume restoration. Preparation/policy controls also cover rejected samples, cadence rates, work tails, interruption resets and preference floor."
+    },
+    {
+      "area": "Immediate HUD versus clock throttle",
+      "source": "game/app.mjs:11110\u201311126,11401\u201311402,12012,12323; game/core/encounter.mjs:185\u2013201",
+      "observation": "Lives/coverage/score/status/ammo and other structural changes bypass the100ms gate. Accepted events mark hudDirty before the same callback's refresh; encounter phase changes emit events. Clock-only refresh remains bounded at100ms when unchanged.",
+      "control": "hud-status-cues.test.mjs:193\u2013208 inspects the accepted capture callback. hud-numeric-values.test.mjs checks actual legal capture score, exact saved/replayed state and immediate locale changes.",
+      "limit": "The numeric test pauses before its score assertion, so it does not independently prove sub100ms damage/score delivery. Source ordering supports that behavior; no new timing control was executed."
+    },
+    {
+      "area": "Cell/topology and terrain caching",
+      "source": "game/ui/render.mjs:621\u2013676,1153\u20131177,1184\u20131212,1233\u20131292",
+      "observation": "Cell cache compares every byte and geometry rather than aggregate coverage, rebuilding covered runs/walls/boundary paths on differences. Terrain dependencies include coordinates/kind, relevant palette values and sprite assets. Layer size changes retire storage; look/level invalidation clears layers.",
+      "control": "render-performance.test.mjs:59\u201379 covers capture, erosion, equal-coverage swaps, geometry changes and authority preservation. Existing terrain/presentation controls inspect readable geometry and art placement.",
+      "limit": "These modeled operations establish invalidation/ordering, not native raster equivalence."
+    },
+    {
+      "area": "Picture/resize and paused display",
+      "source": "game/ui/render.mjs:1138\u20131151,365\u2013368,756\u2013764; game/app.mjs:1427\u20131428,13073\u201313081,13283\u201313320,13539\u201313576; game/presentation/battlefield-ground.mjs:150\u2013181",
+      "observation": "Static picture cache includes source identity/dimensions/fit; mutable filtered canvases bypass that cache. Logical and CSS geometry invalidate the displayed board. Theme/ground preference changes invalidate paused rendering, with ground.prepare replacing its surface when its key changes. Unchanged paused display retains pixels while input/UI polling still occurs before draw suppression.",
+      "control": "solo-render-submission.test.mjs:201\u2013345 covers paused reuse, resize, dirty repaint and display preference changes without advancing authority or resuming steady compositing; solo-cadence-readiness-host.test.mjs:254\u2013298 covers late paint followed by prepared submission."
+    }
+  ],
+  "remaining": [
+    "Native concealment/hazard raster comparisons, equal-coverage layout/erosion pixels, picture transitions and resize/orientation qualification.",
+    "Matched sustained application-cost and cadence measurements; source comparisons do not establish achieved frame budgets or adaptation effectiveness.",
+    "Physical iPhone17Pro Safari and SteamDeckOLED Chrome qualification; neither device was used.",
+    "Existing failed or inconclusive native evidence remains unchanged."
+  ],
+  "execution": {
+    "sourceReadOnly": true,
+    "product": false,
+    "tests": false,
+    "build": false,
+    "browser": false,
+    "localWrites": false,
+    "sourceChanges": false,
+    "prChanges": false,
+    "nativeDispatch": false
+  },
+  "retention": "One remote audit blob only, explicitly requested by root after the read-only review."
+}

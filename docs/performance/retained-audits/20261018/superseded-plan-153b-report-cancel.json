@@ -1,0 +1,52 @@
+{
+  "operation": "cancel-superseded-empty-report-only",
+  "run": 39173426611,
+  "oldHead": "153b13445a5c32f3aa6b63113b56fb3c11a008cc",
+  "currentPrHead": "bd1a8f1b26e96f03902720e387780c67c68cc0c9",
+  "jobsBefore": [
+    {
+      "id": 117812001674,
+      "name": "preflight",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": 0
+    },
+    {
+      "id": 117820642063,
+      "name": "release-ready",
+      "status": "queued",
+      "conclusion": null,
+      "runner_id": 0
+    },
+    {
+      "id": 117820642302,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": null
+    },
+    {
+      "id": 117820642771,
+      "name": "focused_shards",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": null
+    },
+    {
+      "id": 117820642789,
+      "name": "focused",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": null
+    },
+    {
+      "id": 117820642975,
+      "name": "test",
+      "status": "completed",
+      "conclusion": "cancelled",
+      "runner_id": null
+    }
+  ],
+  "response": "{}",
+  "limits": "No active runner or functional job. Current plan checks and every unrelated run untouched."
+}

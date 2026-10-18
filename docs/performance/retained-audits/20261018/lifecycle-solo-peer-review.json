@@ -1,0 +1,83 @@
+{
+  "format": "SoloLifecyclePulsePeerReviewV1",
+  "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "proposal": {
+    "blob": "1c57fe6ded4aa2bf3e597019536583d66fb552b4",
+    "bytes": 1237262,
+    "sha256": "a06a7e04c75376866f14b1056b2dfb645470f3d283af459eee5542936caa4371"
+  },
+  "decision": "Clean source review within the Solo pending-pulse and catch-up scope after bounding the new test loops.",
+  "reviewedSources": [
+    {
+      "path": "game/app.mjs",
+      "before": {
+        "blob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+        "bytes": 619315,
+        "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+      },
+      "after": {
+        "blob": "c9e316b639d399299490aa538a037d2b08077cf6",
+        "bytes": 619632,
+        "sha256": "f2144bf2bd7ecd88bfc9c3c00d38c6649c9cf7005cefd0c049610e9576e22e53"
+      }
+    },
+    {
+      "path": "game/test/solo-cadence-input-host.test.mjs",
+      "before": {
+        "blob": "6898fb4f3dd3c6c85f4fb2204cd3dc4f9a940812",
+        "bytes": 16702,
+        "sha256": "3b20b73ca6c3ab5433e737c792025a1bf0a9d800710128f0ee5a5b09366479b8"
+      },
+      "after": {
+        "blob": "0edcae4a8dad60eeb2f6e206b08a0166a33b6a41",
+        "bytes": 19952,
+        "sha256": "db1ee5bba34f6802b73960e7249000aeca26d1e11a917aeb2b7678595d0b83a5"
+      }
+    },
+    {
+      "path": "game/ui/input.mjs",
+      "blob": "0fa14480cab5c615165f8cc432bf0d34a2189733",
+      "bytes": 18973,
+      "sha256": "cc86bb1180e5138fe43308d55ce4d08fda38a25b6fe5e0f10f7b337f60877c49"
+    }
+  ],
+  "verification": [
+    "Final envelope length/SHA256 verified by remote readback.",
+    "All seven proposal after-content byte lengths, SHA256 and Git blob identities independently recomputed.",
+    "Solo predecessor source/test blob bytes and original unified diffs verified against exact dd337 identities.",
+    "Final Solo production delta from prior reviewed72ed is comment precision only; final test delta bounds both synchronous loops at eight callbacks and asserts exact target tick."
+  ],
+  "sourceFindings": [
+    "ui/input.poll consumes local action/pickup one-shot flags at lines530\u2013531; the app must own an already sampled request through its intentionally neutral Resume tick.",
+    "Only the resuming tick defers pendingAction/pendingPickup retirement. Ordinary consumption retains existing semantics.",
+    "Respawn and capture.stop paths explicitly retire pending actions before another step; public Pause/lifecycle clearInput already clears pending state.",
+    "Neutral masking itself,120Hz fixed simulation,interruption threshold,recordInput ordering and public replay/save formats remain unchanged.",
+    "Solo held gamepad neutrality remains owned by existing controller/input clear gates; no router or held-state semantics were changed by the Solo hunk.",
+    "Same-poll catch-up may represent a held input over consecutive ticks as before; the relevant correctness guarantee is no unintended second logical edge."
+  ],
+  "newSoloControlScope": [
+    "Keyboard and actual action/pickup-button requests are sampled in a zero-tick callback before the neutral tick, preventing the old same-poll hold from hiding pulse loss.",
+    "120Hz,144Hz and three-tick catch-up cases compare exact authoritative checkpoints and strictly verify the actual saved replay.",
+    "Each gesture must produce exactly one recorded action/pickup rising edge at beforeTick+2.",
+    "Public Pause retires a deferred request; physically held keys through Resume cannot replay it.",
+    "Both new advance loops are bounded to eight callbacks with exact progress assertions."
+  ],
+  "coordination": "status_checks owns independent shared input/Team/Versus clock and short sampled-pad review; this receipt does not replace that review.",
+  "limits": {
+    "newProposalControls": 12,
+    "executed": false,
+    "hostedGates": "Existing strict replay and changed lifecycle/input gates still required on final source.",
+    "native": "No physical input,display timing or device qualification; native final-source qualification remains open."
+  },
+  "execution": {
+    "product": false,
+    "tests": false,
+    "build": false,
+    "browser": false,
+    "localWrites": false,
+    "sourceMutation": false,
+    "prMutation": false,
+    "ciDispatch": false
+  },
+  "retention": "One compact remote audit blob requested by root."
+}

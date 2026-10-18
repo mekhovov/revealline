@@ -1,0 +1,15 @@
+{
+  "schema": "SoloRemoteCheckoutRetryDispatchV1",
+  "pr": 1675,
+  "head": "8499225d1d4391372e52903a3a0e8ecaab1b3aad",
+  "run": 39173025211,
+  "job": 117809866425,
+  "priorRunAttempt": 1,
+  "evidence": {
+    "blob": "2bd2dfb0da56f9cbe6a23b32b68c84b5a6ebdede",
+    "bytes": 47736,
+    "sha256": "5a6b5a2be89ed879563b91683a8dbe48dc2976585c0a796e049d3ee6de5551b1"
+  },
+  "response": "{}",
+  "issued": "2026-10-18T23:34:10.731699+00:00"
+}

@@ -1,0 +1,183 @@
+{
+  "schema": "revealline-source-peer-review-v1",
+  "reviewedAt": "2026-10-18T23:48:31.726Z",
+  "reviewer": "status_checks",
+  "scope": "Independent source review of shared Team/Versus lifecycle clocks, neutral-tick input ownership and actual-host control fixtures. Solo fresh pulse/catch-up review is independently owned by status_qualification.",
+  "baseRef": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "method": [
+    "Remote exact-source and proposal bytes reviewed in RAM only.",
+    "Before Git blob/bytes/SHA256 receipts checked against exact base sources; final proposal envelope and every afterContent receipt independently checked.",
+    "No local writes, functional test execution, native browser execution, workflow dispatch, branch change, PR mutation or merge performed."
+  ],
+  "conclusion": "Source review clean after the fixture visibility correction; remote functional and combined-source qualification remain required.",
+  "reviewedBehavior": [
+    {
+      "path": "game/couch/couch.mjs",
+      "finding": "Accepted match activation resets RAF baseline before resume; menu/paused time cannot become active catch-up. Native RAF elapsed calculation, strict >250ms interruption guard, 120Hz simulation, controller poll frequency, replay semantics and clear/disconnect/respawn ownership remain unchanged. Neutral action behavior is requested only on the existing first neutral tick."
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "finding": "Every accepted fresh Start/Retry resets last=null before startCoop. Existing resume and staged replacement boundaries remain intact; no elapsed clamp or interruption threshold change."
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "finding": "Neutral consumption preserves existing pending local action/pickup and ORs only already-admitted sampled pad action/pickup into the same pending owner. Masked command is recorded as the last command; a short fresh pad press released before the following poll therefore emits once. Blocked pre-held pad commands remain false, sustained-pad semantics and ordinary consume calls remain unchanged. Boost remains level-only. Clear/player-clear/disconnect lifecycle continues to retire the same pending owner."
+    },
+    {
+      "path": "game/app.mjs",
+      "finding": "Independent lifecycle-override review found explicit pending action/pickup retirement required and supplied in respawn and capture.stopped overrides. Existing lifecycle, terminal and inactive clears remain. Detailed Solo once-only/catch-up controls reviewed separately by status_qualification."
+    }
+  ],
+  "testsReviewed": {
+    "newTopLevelControls": 12,
+    "executed": false,
+    "sharedHost": 7,
+    "sharedInput": 2,
+    "soloComplementary": 3,
+    "sharedCases": [
+      "Versus accepted Resume gaps100/250/500ms exclude prior menu time; subsequent exactly250ms advances30 fixed ticks and251ms pauses before catch-up.",
+      "Versus fresh local action and touch pickup survive one neutral tick, separately and in a two-tick callback, then emit no duplicate.",
+      "Team accepted Start and confirmed Retry gaps100/500ms exclude lobby/pause time;110 subsequent callbacks are exactly110 fixed120Hz ticks, followed by genuine active elapsed and strict interruption assertions.",
+      "Shared input controls retain fresh local and short fresh sampled pad requests through neutral, keep pre-held pad blocked, retain sustained-pad semantics, and preserve per-seat clearing."
+    ],
+    "fixtureEvidence": [
+      {
+        "path": "game/test/helpers/couch-host.mjs",
+        "gitBlob": "04566923d58d7b279c0dce52203704cfdcf91d77",
+        "notes": "Real host and public actions; real mutable run references captured by inert painter; controlled RAF clock and existing Start-cue settling; pagehide teardown restores globals."
+      },
+      {
+        "path": "game/test/helpers/coop-host.mjs",
+        "gitBlob": "f2880662c47942038c6e6833aa6bd06e400883a4",
+        "notes": "tick default elapsed is FIXED_DT*1000; imported from actual coop/core; calls actual Team host."
+      },
+      {
+        "path": "game/coop/core.mjs",
+        "gitBlob": "fa24f89b8578428653bd405c4c496c07056f5378",
+        "notes": "FIXED_DT=1/120 at122."
+      },
+      {
+        "path": "game/test/helpers/host-action.mjs",
+        "gitBlob": "9896546351426087337853cc7989c1b8929010f4",
+        "notes": "Uses actual click handler and awaits admitted action; Solo settle does not advance shared controlled RAF."
+      },
+      {
+        "path": "game/couch/couch-shell.mjs",
+        "gitBlob": "33379101498879c8a49cfa3340f727f2d50c1c11",
+        "notes": "coarse initializes both seat modalities to touch at83; Auto visibility at303–309 makes second pad visible and not inert while running. Seat0 keyboard does not alter seat1 modality."
+      }
+    ]
+  },
+  "resolvedReviewFindings": [
+    "Original neutralActions proposal did not retain a fresh short sampled pad press released before next poll; final OR into existing pending flags and negative/once-only unit segment fix this without admitting blocked held pads.",
+    "Original shared host pulse fixture could emit into hidden Auto pad; final fixture opts into coarse input and asserts visible/non-inert seat1 pad before its touch event."
+  ],
+  "qualificationLimits": [
+    "All12 new behavioral controls remain unexecuted.",
+    "This source review does not establish physical device timing, native rendering, or end-to-end performance improvements.",
+    "Defects were found during review; no evidence establishes that PR1544 introduced them.",
+    "Finite FPV projection closure reportedly excludes the four changed runtime files; actual generator check, source-entry admission, full combined build and CI execution remain remote qualification responsibilities."
+  ],
+  "proposal": {
+    "gitBlob": "d934f89db432ac57e20eeaf14fed0be842f11ee0",
+    "bytes": 1239359,
+    "sha256": "db16560a8c67d0e3ba71078cfa9bedabe367733499f7442d256f3d924c90d02d"
+  },
+  "receipts": [
+    {
+      "path": "game/couch/couch.mjs",
+      "before": {
+        "gitBlob": "6f4a12dba5296b1d1681b79742bc8a38daf93860",
+        "bytes": 207485,
+        "sha256": "9134b8348647b9ef3b8fa31b5e2aabe3a0f4d9d952e9e969e7d1d98135857d1f"
+      },
+      "after": {
+        "bytes": 207572,
+        "sha256": "9d54e15dccaec8f8d876288c14cd1df50584e7fcae5cf191567f33d625cff576",
+        "gitBlob": "234d63e3371e3d84ad733eb2593b5518fbee0f01"
+      },
+      "identicalTo1c57": true
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "before": {
+        "gitBlob": "ba2a6a4bfb80175f2c39c979a588b84d7ebf6bd1",
+        "bytes": 289352,
+        "sha256": "30e89294233e216ef29f761d67a2e003c7291345bb91a271e759db8f75b7368f"
+      },
+      "after": {
+        "bytes": 289449,
+        "sha256": "a359ca4ca21b178487807ad4ffc5443b237e122a3da15dd177ecc57b9e2fdd7c",
+        "gitBlob": "6c9cc0cd45a41c49d3c095ba622b821b70d22288"
+      },
+      "identicalTo1c57": true
+    },
+    {
+      "path": "game/couch/couch-input.mjs",
+      "before": {
+        "gitBlob": "d8e12c237f7a5f542b59c45b0b9e613d7fca93ef",
+        "bytes": 20771,
+        "sha256": "116205f58186ae494001021853455290062b7964f4b16143622e463b07d96321"
+      },
+      "after": {
+        "bytes": 21194,
+        "sha256": "5119cbaa1b5d057ab4488b1bf3ebff9ff066da69c160c8c2308b6aa17170da9c",
+        "gitBlob": "2d54f29a47b0044447feb8c4fce3d27b6590a41b"
+      },
+      "identicalTo1c57": true
+    },
+    {
+      "path": "game/app.mjs",
+      "before": {
+        "gitBlob": "ec8c2d1179c42b603987cfd725d45f20f4af6251",
+        "bytes": 619315,
+        "sha256": "5ca8626b58091cf5d814640dd20c89a47322ff14a149d9c5d3f3183a9b4a82fa"
+      },
+      "after": {
+        "bytes": 619632,
+        "sha256": "f2144bf2bd7ecd88bfc9c3c00d38c6649c9cf7005cefd0c049610e9576e22e53",
+        "gitBlob": "c9e316b639d399299490aa538a037d2b08077cf6"
+      },
+      "identicalTo1c57": true
+    },
+    {
+      "path": "game/test/solo-cadence-input-host.test.mjs",
+      "before": {
+        "gitBlob": "6898fb4f3dd3c6c85f4fb2204cd3dc4f9a940812",
+        "bytes": 16702,
+        "sha256": "3b20b73ca6c3ab5433e737c792025a1bf0a9d800710128f0ee5a5b09366479b8"
+      },
+      "after": {
+        "bytes": 20565,
+        "sha256": "b6e93b1fece20768995b22a14c3c4cb0ced2794a9b25814c65477bf8e1cea4b2",
+        "gitBlob": "075a75d413c5b8c8785652a789885d5b3f8ee100"
+      },
+      "identicalTo1c57": false
+    },
+    {
+      "path": "game/test/couch-input.test.mjs",
+      "before": {
+        "gitBlob": "d88c65d22e8857f1d7667cb0ff22d13e4041a363",
+        "bytes": 19844,
+        "sha256": "f6126041fb7a8d74e5ceff46814bdc2ef698f0ec1ef0dd750bdd3e33395125d0"
+      },
+      "after": {
+        "bytes": 22115,
+        "sha256": "a24df386b27a5ceaa6c04f07a0857fbfa2ffc36e0a1ad254cdffd9dd1a6ccc7e",
+        "gitBlob": "a7a26793f572e9b7caac0ea2451cef7148eb0f38"
+      },
+      "identicalTo1c57": true
+    },
+    {
+      "path": "game/test/couch-lifecycle-clock.test.mjs",
+      "before": null,
+      "after": {
+        "bytes": 4672,
+        "sha256": "91f767a9a0be9c8fc66b20d9a5a1a6cc92f9e20f8f0d8f439781b3a62799467f",
+        "gitBlob": "7184ce721c075b05527c4aeaa948891b1dd50209"
+      },
+      "identicalTo1c57": false
+    }
+  ],
+  "finalDelta": "All four production output bodies and the shared input test are byte-identical to reviewed1c57. Shared host test only adds helper option passthrough, coarse:true on the pulse cases, visible/non-inert assertions before seat1 input, and pointerType touch on down/up. Solo fixture visibility strengthening is delegated to the complementary review."
+}

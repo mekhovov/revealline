@@ -1,0 +1,20 @@
+{
+  "format": "PlanPublicationReceiptV1",
+  "observedAt": "2026-10-18T23:28:28.358242+00:00",
+  "pullRequest": 1623,
+  "head": "bd1a8f1b26e96f03902720e387780c67c68cc0c9",
+  "tree": "ea35b173b4773bd0d5932ce57a188ddb21e4c3e6",
+  "path": "docs/performance/solo-performance-followup-plan.md",
+  "blob": "8954c91257a3a23b6e50757516ab9bb311785c4d",
+  "bytes": 147574,
+  "sha256": "ee8d0b2b8fce64de57fea8653ffd318c289872960bc87f742e886341ee60c496",
+  "previousHead": "153b13445a5c32f3aa6b63113b56fb3c11a008cc",
+  "historicalTail": {
+    "bytes": 126143,
+    "sha256": "d31ad625087f70e4e507accdcce3bad037a3d44410ba77893c9484c011074bff",
+    "unchanged": true
+  },
+  "headerPeer": "abd2dcbd2459ad927e51b363f38c405aebcfa5a7",
+  "evidenceIndex": "5122e1447c2ababc1d1df3643acc48bad200554e",
+  "verification": "One-file commit and branch/PR readback verified; formatting only, no local application execution. Draft remains."
+}
