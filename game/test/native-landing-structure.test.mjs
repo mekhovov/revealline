@@ -34,6 +34,8 @@ for (const [mode, file, rootId, soundId, prefix, secondary] of [
       root = document.getElementById(rootId),
       savedParent = sound.parentNode,
       recovery = secondary && document.getElementById(secondary);
+    const summary = mode === 'versus' && document.getElementById('race-summary');
+    const summaryParent = summary?.parentNode;
     let toggles = 0;
     sound.addEventListener('click', () => toggles++);
     const menu = prepareNativeMenus({ document, mode });
@@ -47,10 +49,12 @@ for (const [mode, file, rootId, soundId, prefix, secondary] of [
     assert.equal(root.querySelector('.native-menu-actions').contains(sound), false);
     assert.equal(menu.panels.extras.querySelectorAll('.game-mode-destinations').length, 1);
     assert.equal(root.querySelector('.game-mode-destinations'), null);
+    if (summary) assert.equal(summary.parentNode.className, 'landing-commands');
     if (recovery) assert.equal(recovery.parentNode.id, `${prefix}-panel-data`);
     sound.click();
     assert.equal(toggles, 1, 'Moving controls preserves their original behavior.');
     menu.destroy();
     assert.equal(sound.parentNode, savedParent, 'Disposal restores the existing host structure.');
+    if (summary) assert.equal(summary.parentNode, summaryParent);
   });
 }
