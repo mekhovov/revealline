@@ -4,6 +4,7 @@ import { createSoundtrackSource, fetchSoundtrackCatalogue } from '../soundtrack-
 import { resolveCatalogueTrack } from '../soundtrack.mjs';
 import { fixture } from './helpers/soundtrack-fixtures.mjs';
 import { responseFor } from './helpers/soundtrack-albums.mjs';
+import { inspectMP3 } from '../mp3.mjs';
 
 const original = await fixture('source');
 const track = resolveCatalogueTrack({
@@ -342,4 +343,67 @@ test('same-recording catalogue aliases cannot widen bundled playback, storage or
       );
     }
   }
+});
+
+test('acquisition returns the exact owned Blob inspected by the supplied operation', async () => {
+  const controller = new AbortController();
+  let inspected,
+    childSignal,
+    inspections = 0;
+  const source = createSoundtrackSource({
+    catalogue,
+    localPlayback: () => false,
+    readOfficial: () => null,
+    baseURL: 'https://example.test/',
+    fetch: async (url) => responseFor(body, url),
+  });
+  const result = await source.readAsset(track.asset.sha256, {
+    signal: controller.signal,
+    async inspect(blob, { signal }) {
+      inspected = blob;
+      childSignal = signal;
+      inspections++;
+      assert.equal(blob.type, 'audio/mpeg');
+      return inspectMP3(blob, { signal });
+    },
+  });
+  assert.equal(inspections, 1);
+  assert.equal(result, inspected);
+  assert.notEqual(childSignal, controller.signal);
+  assert.equal(childSignal.aborted, false);
+  assert.deepEqual(await inspectMP3(result), track.asset);
+});
+
+test('delegated inspection preserves pinned facts and rejects completion after cancellation', async () => {
+  const source = createSoundtrackSource({
+    catalogue,
+    localPlayback: () => false,
+    readOfficial: () => null,
+    baseURL: 'https://example.test/',
+    fetch: async (url) => responseFor(body, url),
+  });
+  await assert.rejects(
+    source.readAsset(track.asset.sha256, {
+      async inspect(blob, options) {
+        return { ...(await inspectMP3(blob, options)), frames: track.asset.frames + 1 };
+      },
+    }),
+    /differs from its pinned/,
+  );
+  const controller = new AbortController();
+  await assert.rejects(
+    source.readAsset(track.asset.sha256, {
+      signal: controller.signal,
+      async inspect(blob, options) {
+        const actual = await inspectMP3(blob, options);
+        controller.abort();
+        return actual;
+      },
+    }),
+    { name: 'AbortError' },
+  );
+  await assert.rejects(
+    source.readAsset(track.asset.sha256, { inspect: true }),
+    /inspection operation/,
+  );
 });
