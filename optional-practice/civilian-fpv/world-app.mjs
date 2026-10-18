@@ -6661,6 +6661,11 @@ export function mountWorldApp({
       (!checkpointRequest || checkpointRequest.watch) &&
       learningById.get(entry.beginner);
     if (learning) {
+      tuningStore.refresh();
+      const selectedLibrary = tuningStore.snapshot();
+      const selectedSetup = selectedLibrary.setups.find(
+        (setup) => setup.id === selectedLibrary.selectedSetupId,
+      );
       learningPreferences ??= {
         'flight-camera': $('flight-camera').value,
       };
@@ -6679,6 +6684,12 @@ export function mountWorldApp({
         ),
         practice: Boolean(options.recover),
         replay: Boolean(options.replayProof || checkpointRequest?.watch),
+        practiceAircraftName:
+          !options.replayProof &&
+          !checkpointRequest &&
+          selectedSetup?.advanced?.aircraft?.format === 'AdvancedAircraft.v2'
+            ? selectedSetup.name
+            : null,
       });
     } else {
       beginnerCoach.close();

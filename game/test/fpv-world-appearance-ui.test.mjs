@@ -2312,6 +2312,86 @@ for (const host of ['World', 'Regional'])
       );
     });
 
+test('Flight School explicit practice uses the selected aircraft and exact customized rates and PID tune', async (t) => {
+  const priorLocale = getLocale();
+  setLocale('en', { persist: false });
+  t.after(() => setLocale(priorLocale, { persist: false }));
+  const tuning = await import('../../optional-practice/civilian-fpv/tuning-library.mjs');
+  for (const presetId of ['meteor75-analog-2022', 'helion-pro-o4']) {
+    await t.test(presetId, async (t) => {
+      const storage = new Map();
+      const store = tuning.createTuningLibraryStore({
+        storage: {
+          getItem: (key) => storage.get(key) ?? null,
+          setItem: (key, value) => storage.set(key, value),
+        },
+      });
+      await store.createPresetSetup({
+        presetId,
+        setupId: 'custom-aircraft',
+        profileId: 'starter-rates',
+        rates: 'defaults',
+      });
+      const draft = store.effective();
+      draft.advanced.controller.gains.roll.p *= 1.07;
+      draft.advanced.controller.gains.pitch.i *= 0.93;
+      draft.advanced.controller.gains.yaw.feedforward *= 1.05;
+      draft.advanced.controller.inputSmoothingHz = 12;
+      draft.response.rates.axes.roll.rate = 73;
+      draft.response.rates.axes.pitch.expo = 31;
+      draft.response.rates.axes.yaw.rcRate = 17;
+      draft.camera = { tilt: 19, verticalFov: 91 };
+      await store.saveAircraftConfiguration({
+        setupId: 'custom-aircraft',
+        newProfileId: 'custom-rates',
+        advanced: draft.advanced,
+        response: draft.response,
+        camera: draft.camera,
+      });
+      const saved = store.export();
+      const h = fixture(t, { storage });
+      h.win.Worker = RegionalWorker;
+      await h.app.ready;
+      for (const mode of ['acro', 'self-level']) {
+        await h.app.startFlight(BEGINNER_CATALOGUE[0], { mode });
+        const worker = RegionalWorker.instances.at(-1);
+        const initialized = worker.messages.find((message) => message.type === 'init').options;
+        assert.deepEqual(initialized.aircraft, draft.advanced.aircraft);
+        assert.deepEqual(initialized.controller, draft.advanced.controller);
+        assert.deepEqual(initialized.response, draft.response);
+        assert.equal(initialized.assist.mode, mode);
+        assert.equal(h.$('world-fov').value, '91');
+        assert.equal(h.$('world-tilt').value, '19');
+        assert.equal(h.app.snapshot().state.ticks, 0);
+        assert.equal(h.app.snapshot().learning.guideOpen, true);
+        const start = h.doc.querySelector('[data-coach-action="start"]');
+        assert.match(start.textContent, /^Practice with /);
+        assert.match(h.$('beginner-coach').textContent, /REFERENCE AIRCRAFT · WATCH ONLY/);
+        assert.equal(h.doc.querySelector('[data-coach-action="lab-immersive"]'), null);
+        start.click();
+        assert.equal(h.app.snapshot().learning.guideOpen, false);
+        assert.equal(h.app.snapshot().state.status, 'active');
+        assert.equal(
+          RegionalWorker.instances.at(-1),
+          worker,
+          'practice uses the prepared aircraft, without resetting configuration',
+        );
+        for (let tick = 0; tick < 8; tick++) {
+          h.tick();
+          await new Promise((resolve) => setImmediate(resolve));
+        }
+        assert.ok(h.app.snapshot().state.ticks > 0);
+        assert.equal(
+          h.app.snapshot().state.advancedTelemetry.backend,
+          'civilian-quad-aircraft-regional.v2',
+        );
+        assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), saved);
+        h.app.pause();
+      }
+    });
+  }
+});
+
 test('saved aircraft prepares World, Beginner and Regional hosts with physical geometry and continuous controls', async (t) => {
   const priorLocale = getLocale();
   setLocale('en', { persist: false });
