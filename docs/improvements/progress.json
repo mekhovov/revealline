@@ -93,14 +93,15 @@
         "browser": "scoped_passed",
         "physical": "not_tested"
       },
-      "blocker": "Merge observation saw changing check inventory; no check bypass.",
+      "blocker": "Merge reconciliation queued; exact-head release-ready passed.",
       "pr": "https://github.com/mekhovov/revealline/pull/1618",
       "commit": "de0cecf192c6c6a2844a8f29776082cc5bc728a0",
-      "next": "Required checks are passing; wait for a stable exact-head inventory and release-ready queue reconciliation.",
+      "next": "Observe trusted merge reconciliation without bypassing required checks.",
       "evidence": [
         "Red/green reproduction on clean20555cd; child close refreshes existing restrictions without changing saved flight.",
         "Expanded focused suites159/160: unchanged recovery-display storage-listener assertion also fails on clean20555cd. Changed tests, lint, validation and changed formatting pass.",
-        "Actual IAB browser: Collection→Achievements→Records→Back→Back and Saves→Back both permit recovery. Returning preserves paused First return at0:25,3lives,0points. No physical-device claim."
+        "Actual IAB browser: Collection→Achievements→Records→Back→Back and Saves→Back both permit recovery. Returning preserves paused First return at0:25,3lives,0points. No physical-device claim.",
+        "Latest exact-head status: release-ready and scoped validation successful; general test/build skipped by existing classification. Controller reconciliation queued."
       ]
     },
     {
@@ -381,7 +382,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Capture-scoped family/mode context using existing Home and library owners; inventory other hosts before claiming full coverage.",
+      "next": "Correct Capture-only label on shared authored Hunt hosts before F01a promotion; continue Snake and remaining host contexts.",
       "evidence": [
         "Mission library already owns focus-only selection, launch and Back; Overflight already groups Survival/Raid operations. Extend existing owners; do not introduce a second chooser or rename established game identities."
       ],
@@ -862,19 +863,20 @@
       "impact": "H/H",
       "effort": "**3–6d**; F11a",
       "featureId": "F11",
-      "status": "developing",
+      "status": "draft_review",
       "owner": "lane-b",
       "qualification": {
         "automated": "not_run",
         "browser": "not_run",
         "physical": "not_tested"
       },
-      "blocker": "Stacked on PR1627 until merge/rebase.",
-      "pr": null,
-      "commit": null,
-      "next": "Bounded ZIP inspection, native component extraction and ordered existing import reviews; never claim automatic or completed restore from extraction.",
+      "blocker": "Stacked on F11a #1627; independent browser review and main rebase/checks pending.",
+      "pr": "https://github.com/mekhovov/revealline/pull/1635",
+      "commit": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5",
+      "next": "Review ZIP selection, bounded rejection, component-download guidance and dialog lifecycle; no automatic imports or completed-restore claim.",
       "evidence": [
-        "14 initial parser tests pass for bounded ZIP records/paths/counts, CRC and manifest hashes. UI/lifecycle review in progress."
+        "14 initial parser tests pass for bounded ZIP records/paths/counts, CRC and manifest hashes. UI/lifecycle review in progress.",
+        "64 focused tests, full lint/validate and changed formatting pass; reader accepts the real 11679-byte F11a browser export with all five member hashes. Eight full-format baseline failures unchanged."
       ]
     },
     {
