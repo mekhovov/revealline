@@ -426,6 +426,7 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
         plan.sourceCohort,
       ) ||
         ([
+          'readiness-preparation-row-candidatede332',
           'readiness-geometry-corrected-package',
           'readiness-preparation-row-candidatee1cc',
           'readiness-diagnosed-row-candidate239',
@@ -434,7 +435,28 @@ export async function verifyTimingHitchJournal(plan, raw, output, soloURL) {
     const savedReadiness = resumeReadiness && plan.phase === 'saved-resume';
     if (plan.format === 'SoloHostedReadinessPlanV1') {
       assert.equal(plan.performanceExclusion, true);
-      if (
+      if (plan.sourceCohort === 'readiness-preparation-row-candidatede332') {
+        const { de332ReadinessSelection } = await import('./solo-remote-readiness.mjs');
+        const selected = de332ReadinessSelection(plan);
+        assert.equal(plan.candidate.revision, selected.source.revision);
+        assert.equal(plan.runtimeRevision, selected.source.revision);
+        assert.equal(plan.candidate.tree, selected.source.tree);
+        assert.deepEqual(plan.fixture, selected.fixture);
+        assert.equal(plan.protocol.name, selected.protocol);
+        assert.equal(raw.readinessPilot.protocol, selected.protocol);
+        for (const [key, value] of Object.entries({
+          ...(selected.geometry ? { geometryObservation: 'phase-boundary-v1' } : {}),
+          ...(selected.requiredStartRetention
+            ? { requiredStartRetention: selected.requiredStartRetention }
+            : {}),
+          ...(selected.cancelBoundary ? { cancelBoundaryObservation: 'post-command-v3' } : {}),
+        })) {
+          assert.equal(plan.protocol[key], value);
+          assert.equal(raw.readinessPilot[key], value);
+        }
+        if (selected.settlement)
+          assert.equal(raw.readinessPilot.settlementObservation, 'original-demand-v1');
+      } else if (
         [
           'readiness-selected-font-settlement-candidatee1cc',
           'readiness-selected-font-direct-sheet-candidatee1cc',

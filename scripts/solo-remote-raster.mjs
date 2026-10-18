@@ -55,28 +55,87 @@ const finalEarnedSource = Object.freeze({
   baseline: '8b01991942dc764b8aa4726851699ce1985e53ae',
   baselineTree: '9373b6a74aea8fa1ef47aa17ace140b4cf714609',
 });
+export const DE332_EARNED_RASTER_SOURCE = Object.freeze({
+  ...finalEarnedSource,
+  cohort: 'earned-raster-candidatede332',
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+  runtime: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+});
 function validateEarnedSource(plan) {
   if (plan.sourceCohort === undefined) {
     assert.equal(plan.release.sourceCohort, undefined);
     return false;
   }
-  assert.equal(plan.sourceCohort, finalEarnedSource.cohort);
-  assert.equal(plan.release.sourceCohort, finalEarnedSource.cohort);
+  const source =
+    plan.sourceCohort === DE332_EARNED_RASTER_SOURCE.cohort
+      ? DE332_EARNED_RASTER_SOURCE
+      : finalEarnedSource;
+  assert.equal(plan.sourceCohort, source.cohort);
+  assert.equal(plan.release.sourceCohort, source.cohort);
   assert(earnedRaster(plan), 'Final source selector is limited to the earned protocol');
-  assert.equal(plan.runtimeRevision, finalEarnedSource.runtime);
-  assert.equal(plan.candidate.revision, finalEarnedSource.revision);
-  assert.equal(plan.candidate.tree, finalEarnedSource.tree);
-  assert.equal(plan.baseline.revision, finalEarnedSource.baseline);
-  assert.equal(plan.baseline.tree, finalEarnedSource.baselineTree);
+  assert.equal(plan.runtimeRevision, source.runtime);
+  assert.equal(plan.candidate.revision, source.revision);
+  assert.equal(plan.candidate.tree, source.tree);
+  assert.equal(plan.baseline.revision, source.baseline);
+  assert.equal(plan.baseline.tree, source.baselineTree);
   assert(!plan.baseline.publishVerifiedNormal, 'Raster has no baseline build');
   assert.equal(plan.baseline.publisher, undefined);
   assert.equal(plan.baseline.reusableArtifact, undefined);
-  return true;
+  return source;
 }
 function validateRelease(plan) {
   const diagnostic = plan.status === 'reviewed-diagnostic-only';
   assert(diagnostic || plan.status === 'reviewed-and-released');
   assert.equal(plan.release?.status, 'reviewed');
+  if (plan.sourceCohort === DE332_EARNED_RASTER_SOURCE.cohort) {
+    assert(diagnostic, 'Current raster remains an excluded diagnostic');
+    assert.equal(plan.release.scope, 'independent-native-raster');
+    assert.equal(plan.release.performanceQualification, 'excluded');
+    assert.equal(plan.release.automaticRetries, 0);
+    assert.equal(plan.release.firstEightAllCorrectnessPassed, true);
+    assert.equal(plan.release.priorProofInspected, true);
+    assert.equal(plan.release.noUnclosedOwners, true);
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+    assert.deepEqual(
+      Object.fromEntries(
+        ['revision', 'tree', 'run', 'artifact', 'inner', 'outer', 'manifestSHA256'].map((key) => [
+          key,
+          plan.candidate[key],
+        ]),
+      ),
+      {
+        revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+        tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+        run: 39091745654,
+        artifact: 12123463810,
+        inner: {
+          bytes: 1075789325,
+          sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+        },
+        outer: {
+          bytes: 1094606342,
+          sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+        },
+        manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+      },
+    );
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      ref: 'refs/heads/main',
+      lane: 'raster',
+      reviewOrder: 'manual-after-current-first-eight',
+    });
+    assert.deepEqual(plan.release.evidence, [
+      {
+        runId: 39096176143,
+        artifactId: 12125002138,
+        artifactSHA256: 'd6b5ed1d46c6f89eab6d40361893f2dedb2d6698a50b6ba612cf6058c68c705d',
+        summarySHA256: 'c67a520f87683b2a43479919f27e798c7cb3adff9a0d0896d815d554d5918955',
+      },
+    ]);
+    return;
+  }
   assert.equal(plan.release.firstEightAllCorrectnessPassed, !diagnostic);
   if (!diagnostic) return;
   assert.equal(plan.release.scope, 'independent-native-raster');
@@ -155,11 +214,11 @@ export function validateRasterPlan(plan) {
     assert.equal(plan.status, 'reviewed-diagnostic-only');
     assert.equal(
       plan.candidate.revision,
-      finalEarned ? finalEarnedSource.revision : 'cce49c81d82b79aefc24898f32eeebc609e569fb',
+      finalEarned ? finalEarned.revision : 'cce49c81d82b79aefc24898f32eeebc609e569fb',
     );
     assert.equal(
       plan.candidate.tree,
-      finalEarned ? finalEarnedSource.tree : '71f7e4cb3b0a39c1d281635774371a693794dd22',
+      finalEarned ? finalEarned.tree : '71f7e4cb3b0a39c1d281635774371a693794dd22',
     );
     assert.deepEqual(plan.raster.fixture, {
       path: 'docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture',

@@ -773,6 +773,7 @@ test('actual qualifier hooks install before selection, read after awaited Cancel
     'readinessModule',
     'page',
     'report',
+    'readinessOptions',
     'return (async()=>{let selectedFontSettlementOwner;' +
       source.slice(installStart, installEnd) +
       'return selectedFontSettlementOwner;})()',
@@ -782,9 +783,15 @@ test('actual qualifier hooks install before selection, read after awaited Cancel
     await setup(
       true,
       { label: 'selected-theme' },
-      { createSelectedFontSettlementOwner: () => owner },
+      {
+        createSelectedFontSettlementOwner: ({ sourceRevision }) => {
+          assert.equal(sourceRevision, SELECTED_FONT_SOURCE_BINDING.revision);
+          return owner;
+        },
+      },
       {},
       report,
+      { sourceRevision: SELECTED_FONT_SOURCE_BINDING.revision },
     ),
     owner,
   );

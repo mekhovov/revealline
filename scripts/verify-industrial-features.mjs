@@ -6,6 +6,7 @@ import { createWriteStream } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync, spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { setTimeout as delay } from 'node:timers/promises';
 import { readTestPolicy } from '../publishing/test-policy.mjs';
 import { checkSourceIdentity } from './check-source-identity.mjs';
 
@@ -64,7 +65,8 @@ export function summarizeIndustrialTap(text, exitCode, signal) {
 }
 
 /** Run one owned process group. A terminating parent is not proof that its
- * descendants exited: close must kill the group before retiring escalation. */
+ * descendants exited: close must kill the group and confirm its absence within
+ * the original termination grace before reporting settled cleanup. */
 export async function executeIndustrialPhase({
   command,
   cwd,
@@ -83,13 +85,55 @@ export async function executeIndustrialPhase({
     let timedOut = false,
       interrupted = false,
       killTimer,
+      terminationDeadline,
+      groupCleanup,
       failure;
     const kill = (kind) => {
+      terminationDeadline ??= performance.now() + graceMs;
       try {
         if (process.platform !== 'win32' && child.pid) process.kill(-child.pid, kind);
         else child.kill(kind);
       } catch (error) {
         if (error.code !== 'ESRCH') failure ??= error;
+      }
+    };
+    const waitForOwnedGroup = async () => {
+      if (process.platform === 'win32' || !child.pid) return;
+      groupCleanup = { pgid: child.pid, absent: false, probes: 0, probeErrors: { EPERM: 0 } };
+      let permissionError;
+      for (;;) {
+        groupCleanup.probes++;
+        try {
+          // Signal acceptance is not process settlement. Even a zombie group
+          // remains observable; only ESRCH proves this exact owned group absent.
+          process.kill(-child.pid, 0);
+        } catch (error) {
+          if (error.code === 'ESRCH') {
+            groupCleanup.absent = true;
+            if (performance.now() <= terminationDeadline) return;
+            throw Object.assign(
+              new Error('Owned process group absence was observed after termination grace'),
+              { code: 'ETIMEDOUT' },
+            );
+          }
+          if (error.code !== 'EPERM') throw error;
+          // Darwin can report EPERM for a group containing only unreaped zombies.
+          // Permission denial is not absence; retain it while awaiting ESRCH.
+          groupCleanup.probeErrors.EPERM++;
+          permissionError = error;
+        }
+        const remaining = terminationDeadline - performance.now();
+        if (remaining <= 0)
+          throw (
+            permissionError ??
+            Object.assign(
+              new Error('Owned process group remained observable after termination grace'),
+              {
+                code: 'ETIMEDOUT',
+              },
+            )
+          );
+        await delay(Math.min(10, remaining));
       }
     };
     const terminate = () => {
@@ -120,21 +164,36 @@ export async function executeIndustrialPhase({
     });
     child.on('close', (exitCode, childSignal) => {
       // Descendants with closed stdio can outlive a SIGTERM'd test runner.
-      if (timedOut || interrupted || failure) kill('SIGKILL');
+      const terminating = timedOut || interrupted || Boolean(failure);
+      if (terminating) kill('SIGKILL');
       clearTimeout(deadline);
       clearTimeout(killTimer);
       signal?.removeEventListener('abort', interrupt);
-      const result = { exitCode, signal: childSignal, timedOut, interrupted };
+      const result = () => ({
+        exitCode,
+        signal: childSignal,
+        timedOut,
+        interrupted,
+        ...(groupCleanup ? { groupCleanup } : {}),
+      });
       const finish = () => {
         if (failure) {
           // Keep cleanup failures fatal, but do not discard the observed child
           // outcome needed for a truthful failed execution receipt.
-          failure.executionResult = result;
+          failure.executionResult = result();
           reject(failure);
-        } else resolve(result);
+        } else resolve(result());
       };
-      if (writer.destroyed) finish();
-      else writer.end(finish);
+      const closeWriter = () => {
+        if (writer.destroyed) finish();
+        else writer.end(finish);
+      };
+      if (terminating)
+        waitForOwnedGroup().then(closeWriter, (error) => {
+          failure ??= error;
+          closeWriter();
+        });
+      else closeWriter();
     });
   });
 }
@@ -267,6 +326,7 @@ async function main(args) {
         timedOut: result.timedOut,
         interrupted: result.interrupted,
         executionError: result.executionError,
+        ...(result.groupCleanup ? { groupCleanup: result.groupCleanup } : {}),
         source,
         manifestSha256: sha256(manifestBytes),
         command: ['node', ...command],
