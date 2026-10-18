@@ -46,7 +46,7 @@ the entire game is covered. A Journey export conflict, cancellation or changed
 owner prevents publication; only the existing Journey exporter can return its
 explicitly marked available-evidence recovery result.
 
-In **Saves & loads → Inspect an archive and extract files**, choose a portable
+In **Saves & loads → Inspect and restore an archive**, choose a portable
 ZIP and explicitly inspect it. The read-only inspector checks its bounded ZIP
 structure, safe filenames, CRC32 checksums and each component's recorded SHA-256.
 It lists actual exclusions and offers native downloads of the original files in
@@ -54,6 +54,28 @@ restore order. A different version/profile channel receives an advisory; that
 advisory cannot establish component compatibility or identify a trusted source.
 Download the needed files before closing the screen. Each download is a request,
 not proof of a saved file. Nothing is imported or restored by inspection.
+
+The guided controls review one included component at a time: pictures, stories,
+music, compatible Legacy game data, then Journey. Each uses the existing import
+validator and an explicit Library confirmation before its existing owner commits.
+Pictures and stories merge immutable history while preserving current assignments;
+music replaces its saved library, playlists and listening choices and clears the
+device-only public-style sidecar. The music review explains this replacement and
+its lack of Undo. Game data retains its existing replacement review, available
+Undo snapshot and authored-flight guard. Journey preserves current clear receipts
+and uses its existing merge and best-result rules; progress and optional
+performance evidence can have different durability outcomes.
+
+The receipt counts only actual successful owner results. It distinguishes
+cancelled review, failed preparation, partial Journey storage and an unconfirmed
+write. Earlier completed components remain saved when a later step fails.
+Retry performs a new review against the current destination and generation;
+**Leave this component and continue** advances without claiming that component
+was restored or reversing any partial changes. Keep the ZIP and inspect the
+destination after an uncertain result. Receipts last only while this inspected
+archive stays open; after closing or reloading, inspect and review again. There
+is no persistent restore journal, combined transaction, automatic resume or
+cross-store Undo. Native component downloads remain available as a fallback.
 
 You can also extract it using the device's archive tool. Read the manifest and
 coverage report, then use the existing reviews for pictures, stories, music and
@@ -106,7 +128,13 @@ qualification.
 Additional tests cover malicious ZIP structure, checksum and manifest mismatch,
 exact extracted bytes, early-v1 compatibility, authored/partial Journey scope,
 native download retry, English/Ukrainian changes, cancellation, stale reads and
-the actual ordinary Home export → inspect → download flow. Inspection does not
+the actual ordinary Home export → inspect → download flow. Guided-apply tests
+exercise real media/story/music/Journey commit owners using modeled IndexedDB
+and codec boundaries, destination and generation conflicts, released story
+reservations, Journey partial durability, ordered retry and stale views. The
+actual authored Home host exercises per-component confirmation and cancellation;
+Legacy Journey exercises its unchanged game replacement review, and the authored
+owner still rejects a Legacy game-data component. Inspection does not
 prove that a component's separate restore will succeed; those existing reviewers
 still validate their own format, owner, originals, generations and replacement policy.
 

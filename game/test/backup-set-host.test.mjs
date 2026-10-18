@@ -181,6 +181,17 @@ test('actual Journey host includes its current progress in an archive without ch
   assert.match(h.$('backup-set-status').textContent, /Journey: current profile/);
   assert.deepEqual(h.storage.map, stored);
   assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
+  const zip = await (await fetchBlob(h.$('download-backup-archive').href)).blob();
+  h.$('backup-review-file').files = [zip];
+  h.$('backup-review-file').emit('change');
+  assert.equal(await h.$('backup-review-inspect').onclick(), true);
+  for (const id of ['media', 'story', 'audio']) h.$(`backup-apply-keep-${id}`).click();
+  const replacement = h.$('backup-apply-review-game').onclick();
+  await settle(() => !h.$('library-operation-confirm').hidden);
+  assert.equal(h.$('library-operation-confirm').textContent, 'Replace game data');
+  h.$('library-operation-confirm').click();
+  assert.equal(await replacement, true, h.$('backup-apply-status-game').textContent);
+  assert.match(h.$('backup-apply-summary').textContent, /Saved 1 of 5.*kept unchanged: 3/);
   assert.deepEqual(h.errors, []);
   h.$('library-dialog').close();
 });
@@ -249,9 +260,43 @@ test('ordinary authored Home exports an archive with truthful exclusions while l
   assert.ok(h.$('backup-review-step-journey'));
   assert.equal(h.doc.activeElement.id, 'backup-review-download-media');
   assert.equal(h.$('backup-review-download-media').emit('click').defaultPrevented, false);
-  assert.match(h.$('backup-set-status').textContent, /Nothing has been imported or restored/);
+  assert.match(h.$('backup-set-status').textContent, /does not change the restore progress/);
   assert.deepEqual(h.storage.map, stored);
   assert.deepEqual(authoritativeCheckpoint(h.rendered.run), before);
+  // Actual app host, existing shared confirmation control and actual storage
+  // adapters. Codec/IDB boundaries are modeled; this is not a browser receipt.
+  const cancelled = h.$('backup-apply-review-media').onclick();
+  await settle(() => !h.$('library-operation-confirm').hidden);
+  h.$('library-operation-cancel').click();
+  assert.equal(await cancelled, false);
+  assert.match(h.$('backup-apply-status-media').textContent, /Review cancelled before saving/);
+  assert.equal(h.$('backup-apply-review-story').disabled, true);
+  for (const id of ['media', 'story', 'audio', 'journey']) {
+    const pending = h.$(`backup-apply-review-${id}`).onclick();
+    await settle(() => !h.$('library-operation-confirm').hidden);
+    assert.equal(h.$('library-operation-confirm').textContent, 'Restore reviewed component');
+    h.$('library-operation-confirm').click();
+    assert.equal(await pending, true, h.$(`backup-apply-status-${id}`).textContent);
+  }
+  assert.match(h.$('backup-apply-summary').textContent, /All 4 included components reported saved/);
+  assert.deepEqual(
+    authoritativeCheckpoint(h.rendered.run),
+    before,
+    'restoration never launches or changes the live attempt',
+  );
+  const legacyFixture = await backupSetFixture(),
+    { prepareBackupArchive } = await import('../backup-archive.mjs'),
+    legacyZip = (await prepareBackupArchive(legacyFixture.source)).files[0].blob;
+  h.$('backup-review-file').files = [legacyZip];
+  h.$('backup-review-file').emit('change');
+  assert.equal(await h.$('backup-review-inspect').onclick(), true);
+  for (const id of ['media', 'story', 'audio']) h.$(`backup-apply-keep-${id}`).click();
+  assert.equal(await h.$('backup-apply-review-game').onclick(), false);
+  assert.match(
+    h.$('backup-apply-status-game').textContent,
+    /Use the ordinary game for Legacy game-data backups/,
+  );
+  assert.equal(h.$('library-operation-confirm').hidden, true);
   assert.deepEqual(h.errors, []);
   h.$('library-dialog').close();
 });

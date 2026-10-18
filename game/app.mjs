@@ -264,6 +264,7 @@ import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { prepareSavedVisualTheme } from './presentation/saved-visual-theme.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
+import { createBackupArchiveRestore } from './backup-archive-restore.mjs';
 import {
   upgradeSoundtrackLibrary,
   setCatalogueTracks,
@@ -7997,6 +7998,32 @@ try {
       ? null
       : {
           edition: { version: buildVersion, channel, sourceRevision: buildSourceRevision },
+          restore: createBackupArchiveRestore({
+            identity: () => backupInventoryIdentity({ legacySession: false }),
+            mediaStore: pictureStore,
+            storyStore,
+            audioStore: createSoundtrackStore({ managedStore: pictureManager }),
+            journey: journeyProfile,
+            catalogue: SOUNDTRACK_CATALOGUE,
+            afterAudio: async () => {
+              if (!soundtrackPlayer || soundtrackDisposed) return;
+              const snapshot = await pictureManager.readDomain('audio');
+              if (snapshot.generation < soundtrackGeneration) return;
+              soundtrackGeneration = snapshot.generation;
+              soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+              soundtrackLibrary = setCatalogueTracks(
+                upgradeSoundtrackLibrary(snapshot.library),
+                SOUNDTRACK_CATALOGUE.tracks,
+              );
+              soundtrackPlayer.setLibrary(soundtrackLibrary, {
+                publicStyles: snapshot.publicStyles,
+              });
+            },
+            afterJourney: () => {
+              refreshJourneySkip();
+              refreshJourneyBest();
+            },
+          }),
           journey: journeyProfile
             ? {
                 identity: () => journeyProfile.stateRevision(),

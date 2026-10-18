@@ -24,6 +24,7 @@ export function attachBackupSetPanel({
   refresh,
   presentFeedback = () => {},
   URLImpl = URL,
+  restore,
 }) {
   const node = (tag, id, text) => {
     const element = document.createElement(tag);
@@ -283,6 +284,7 @@ export function attachBackupSetPanel({
     presentFeedback,
     onStart: release,
     URLImpl,
+    restore,
   });
   cancelButton.onclick = () => archiveReview.cancelPending() || cancel();
   dialog.addEventListener('close', () => {

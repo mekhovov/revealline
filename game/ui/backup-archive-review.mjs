@@ -1,11 +1,12 @@
 import { t, localizedText } from '../i18n/index.mjs';
 import { inspectBackupArchive } from '../backup-archive-inspection.mjs';
+import { attachBackupArchiveApply } from './backup-archive-apply.mjs';
 
 const order = ['media', 'story', 'audio', 'game', 'journey'];
 const copy = (key, values) => t(`interface:backupReview.${key}`, values);
 
-/** Read-only ZIP inspection and native component downloads. The Library lends
- * its single operation slot/status; existing import owners remain independent. */
+/** ZIP inspection and native component downloads stay read-only. An optional
+ * guided executor lends the Library's operation slot to existing import owners. */
 export function attachBackupArchiveReview({
   document: doc,
   dialog,
@@ -21,6 +22,7 @@ export function attachBackupArchiveReview({
   onStart,
   URLImpl = URL,
   inspect = inspectBackupArchive,
+  restore,
 }) {
   const node = (tag, id, text) => {
     const element = doc.createElement(tag);
@@ -29,8 +31,12 @@ export function attachBackupArchiveReview({
     return element;
   };
   const section = node('section', 'section'),
-    heading = node('h3', 'title', () => copy('title')),
-    help = node('p', 'help', () => copy('help')),
+    heading = node('h3', 'title', () =>
+      restore ? t('interface:backupApply.title') : copy('title'),
+    ),
+    help = node('p', 'help', () =>
+      restore ? t('interface:backupApply.inspectHelp') : copy('help'),
+    ),
     label = node('label', 'label'),
     input = node('input', 'file'),
     button = node('button', 'inspect', () => copy('inspect')),
@@ -77,7 +83,11 @@ export function attachBackupArchiveReview({
     }
     release();
     input.value = '';
-    if (owned && !quiet) showStatus(() => copy('cleared'), operation ? 'cancelled' : 'ready');
+    if (owned && !quiet)
+      showStatus(
+        () => (restore ? t('interface:backupApply.cleared') : copy('cleared')),
+        operation ? 'cancelled' : 'ready',
+      );
     if (!operation && owned && focus && dialog.open && !doc.hidden)
       button.focus({ preventScroll: true });
     return owned;
@@ -97,7 +107,9 @@ export function attachBackupArchiveReview({
       }
       presentFeedback();
       localizedText(state, () => copy('requestedFile'));
-      showStatus(() => copy('requested'));
+      showStatus(() =>
+        restore ? t('interface:backupApply.downloadRequested') : copy('requested'),
+      );
       return true;
     };
     const name = node('p', null, () => file.filename);
@@ -115,7 +127,7 @@ export function attachBackupArchiveReview({
     );
     results.append(
       summary,
-      node('p', null, () => copy('notRestored')),
+      node('p', null, () => (restore ? t('interface:backupApply.inspected') : copy('notRestored'))),
     );
     if (
       manifest.edition.version !== edition.version ||
@@ -138,6 +150,15 @@ export function attachBackupArchiveReview({
       exclusions,
       node('h4', null, () => copy('order')),
     );
+    const apply = restore
+      ? attachBackupArchiveApply({
+          document: doc,
+          root: results,
+          execute: restore,
+          current: () => reviewed === owner && dialog.open && input.files?.[0] === owner.file,
+          busy,
+        })
+      : null;
     const steps = node('ol');
     for (const id of order) {
       const file = files.find((item) => item.id === id);
@@ -145,9 +166,10 @@ export function attachBackupArchiveReview({
       const row = node('li', `step-${id}`);
       row.append(
         node('h4', null, () => copy(`name.${id}`)),
-        node('p', null, () => copy(`step.${id}`)),
+        ...(restore ? [] : [node('p', null, () => copy(`step.${id}`))]),
         ...fileLink(file, owner, () => copy('download', { name: copy(`name.${id}`) })),
       );
+      apply?.add(file, row);
       steps.append(row);
     }
     results.append(
@@ -208,7 +230,11 @@ export function attachBackupArchiveReview({
         return false;
       reviewed = { file, inspection };
       render(reviewed);
-      showStatus(() => copy('ready', { count: inspection.files.length }));
+      showStatus(() =>
+        restore
+          ? t('interface:backupApply.checked')
+          : copy('ready', { count: inspection.files.length }),
+      );
       const hadFocus = finish(op);
       if (hadFocus && !doc.hidden && doc.hasFocus?.() !== false)
         results.querySelector('a')?.focus({ preventScroll: true });
