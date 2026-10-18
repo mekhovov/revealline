@@ -14032,9 +14032,15 @@ try {
           ];
         }
         if (!runtimeContent) {
-          const { duelExpeditionLibrarySources, teamExpeditionLibrarySource } = await import(
-            './mission-library/multiplayer-expeditions.mjs'
-          );
+          const [
+            { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
+            { TEAM_EXPANSION_ROUTE },
+            { teamJourneyLibraryOwner },
+          ] = await Promise.all([
+            import('./mission-library/multiplayer-expeditions.mjs'),
+            import('./content-design/multiplayer-expansion.mjs'),
+            import('./mission-library/team-source.mjs'),
+          ]);
           assertCurrent();
           const expansionSources = [
             ...duelExpeditionLibrarySources({
@@ -14043,10 +14049,16 @@ try {
               launch: departLibraryMission,
               difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
             }),
-            teamExpeditionLibrarySource({
-              launch: departLibraryMission,
-              difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-            }),
+            ...(journeySources.some(
+              (source) => source.id === teamJourneyLibraryOwner(TEAM_EXPANSION_ROUTE),
+            )
+              ? []
+              : [
+                  teamExpeditionLibrarySource({
+                    launch: departLibraryMission,
+                    difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+                  }),
+                ]),
           ];
           journeySources = [
             ...journeySources,
