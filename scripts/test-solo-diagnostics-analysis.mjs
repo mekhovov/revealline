@@ -15,6 +15,7 @@ import {
   observerArguments,
 } from './qualify-solo-diagnostics.mjs';
 import { createObservationStop } from './solo-observation-lifecycle.mjs';
+import { PROSPECTIVE_OVERHEAD_METHOD } from './solo-overhead-interval.mjs';
 
 const revision = '1'.repeat(40);
 
@@ -222,6 +223,58 @@ test('noisy point estimates below 5% remain unresolved; clearly excessive overhe
   assert.equal(analyzeDiagnostics(excessive.manifest, excessive.reports).status, 'fail');
 });
 
+test('default app report remains byte-identical without the prospective opt-in', () => {
+  const { manifest, reports } = evidence();
+  const result = analyzeDiagnostics(manifest, reports);
+  // Exact complete synthetic default report from the pre-method assessor.
+  assert.equal(
+    createHash('sha256').update(JSON.stringify(result)).digest('hex'),
+    '539854e876f4df1feb6b2f13487c241342c7c3e3f6d1fb82aa03612a9a9d81e7',
+  );
+  assert.equal(Object.hasOwn(result, 'analysisMethod'), false);
+});
+
+test('prospective app method resolves only the assumed interval, without replacing the old result', () => {
+  const f = evidence(Array(10).fill(1), { offMs: 6.3, quantum: 0.1 });
+  const old = analyzeDiagnostics(f.manifest, f.reports);
+  assert.equal(old.status, 'unresolved');
+  assert(old.adjustedInterval.upper95 > 0.05);
+  f.manifest.analysisMethod = PROSPECTIVE_OVERHEAD_METHOD;
+  const before = JSON.stringify(f);
+  const result = analyzeDiagnostics(f.manifest, f.reports);
+  assert.equal(result.analysisMethod, PROSPECTIVE_OVERHEAD_METHOD);
+  assert.equal(result.status, 'pass');
+  assert.equal(result.adjustedInterval.vertices, 1024);
+  assert.equal(result.adjustedInterval.degreesOfFreedom, 9);
+  assert(result.adjustedInterval.upper95 > 0.04 && result.adjustedInterval.upper95 < 0.041);
+  assert.equal(result.limit, 0.05);
+  assert.match(result.assumptions.join(' '), /not a guaranteed browser privacy-jitter bound/);
+  assert.equal(JSON.stringify(f), before);
+  delete f.manifest.analysisMethod;
+  assert.deepEqual(analyzeDiagnostics(f.manifest, f.reports), old);
+});
+
+test('prospective app mode keeps noise, coarse clocks, ten-pair and method identity boundaries', () => {
+  for (const [ratios, options, status] of [
+    [Array(10).fill(1.2), {}, 'fail'],
+    [[0.8, 1.2, 0.85, 1.15, 0.9, 1.1, 0.8, 1.2, 0.9, 1.1], {}, 'unresolved'],
+    [Array(10).fill(1), { offMs: 3, quantum: 0.1 }, 'unresolved'],
+    [Array(10).fill(1), { offMs: 0.1, quantum: 0.1 }, 'unresolved'],
+  ]) {
+    const f = evidence(ratios, options);
+    f.manifest.analysisMethod = PROSPECTIVE_OVERHEAD_METHOD;
+    assert.equal(analyzeDiagnostics(f.manifest, f.reports).status, status);
+  }
+  const short = evidence([1, 1, 1]);
+  short.manifest.analysisMethod = PROSPECTIVE_OVERHEAD_METHOD;
+  assert.throws(() => analyzeDiagnostics(short.manifest, short.reports), /ten pairs/);
+  for (const analysisMethod of [null, '', 'paired-p95-endpoint-box-v2']) {
+    const f = evidence();
+    f.manifest.analysisMethod = analysisMethod;
+    assert.throws(() => analyzeDiagnostics(f.manifest, f.reports), /Unknown overhead method/);
+  }
+});
+
 test('timer quantization cannot masquerade as a precise zero-variance pass', () => {
   const coarse = evidence(Array(10).fill(1), { offMs: 2, quantum: 0.1 });
   const result = analyzeDiagnostics(coarse.manifest, coarse.reports);
@@ -257,6 +310,32 @@ test('an unpainted ready scene requires the first full active witness before ada
 });
 
 for (const [name, mutate] of [
+  [
+    'missing timer-resolution evidence',
+    ({ manifest }) => {
+      manifest.timerResolution = null;
+    },
+  ],
+  [
+    'incompatible timer-resolution browser',
+    ({ manifest }) => {
+      manifest.timerResolution.browser = 'webkit 155';
+    },
+  ],
+  [
+    'insufficient positive timer steps',
+    ({ manifest }) => {
+      manifest.timerResolution.positiveSteps = 19;
+    },
+  ],
+  [
+    'interior off-arm adaptive reduction despite a full final tier',
+    ({ reports }) => {
+      reports.find(
+        (report) => !report[0].diagnostics,
+      )[0].external.qualityProbe.samples[20].quality = 'reduced';
+    },
+  ],
   [
     'failed status without a redundant failure string',
     ({ reports }) => {
@@ -438,14 +517,17 @@ for (const [name, mutate] of [
   ],
 ])
   test(`${name} retains the original pair inventory and prevents a gate pass`, () => {
-    const sample = evidence();
-    mutate(sample);
-    const result = analyzeDiagnostics(sample.manifest, sample.reports);
-    assert.equal(result.status, 'unresolved');
-    assert.equal(result.plannedPairs, 10);
-    assert.equal(result.pairs.length, 10);
-    assert.equal(result.observations.length, 20);
-    assert(result.reasons.length > 0);
+    for (const analysisMethod of [null, PROSPECTIVE_OVERHEAD_METHOD]) {
+      const sample = evidence();
+      if (analysisMethod) sample.manifest.analysisMethod = analysisMethod;
+      mutate(sample);
+      const result = analyzeDiagnostics(sample.manifest, sample.reports);
+      assert.equal(result.status, 'unresolved');
+      assert.equal(result.plannedPairs, 10);
+      assert.equal(result.pairs.length, 10);
+      assert.equal(result.observations.length, 20);
+      assert(result.reasons.length > 0);
+    }
   });
 
 test('analysis preserves missing/invalid files and detects changed raw report bytes', async (t) => {
