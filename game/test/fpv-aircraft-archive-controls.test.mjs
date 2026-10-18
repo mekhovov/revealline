@@ -18,7 +18,18 @@ test('shared archive file chooser stays visible when mounted directly in the Adv
 });
 function fixture(
   t,
-  { verify, verifyCourse, course, begin, append, list, remove, key = 'academy' } = {},
+  {
+    verify,
+    verifyCourse,
+    course,
+    referenceIdentity,
+    onReference,
+    begin,
+    append,
+    list,
+    remove,
+    key = 'academy',
+  } = {},
 ) {
   const document = new Document(),
     window = new Events(),
@@ -85,6 +96,7 @@ function fixture(
     close() {},
   };
   const session = {
+    referenceIdentity: () => referenceIdentity,
     ...(course ? { course: () => course } : {}),
     async readSealedSegment(after) {
       reads++;
@@ -123,6 +135,7 @@ function fixture(
     store,
     makeId: () => `archive-${++ids}`,
     onPause: () => pauses++,
+    ...(onReference ? { onReference } : {}),
     verify: verify ?? (async () => ({ verificationScope: 'complete-session' })),
     ...(verifyCourse ? { verifyCourse } : {}),
     exportFile: async () => ({ status: 'requested' }),
@@ -861,4 +874,142 @@ test('explicit cancellation terminates a course job and keeps its result correct
   assert.match(f.ui.root.textContent, /Перевірку курсу скасовано/);
   assert.equal(f.button('Перевірити завершення курсу').disabled, false);
   assert.deepEqual(f.calls, []);
+});
+
+const referenceIdentity = {
+  configurationClass: '0123456789abcdef',
+  terrainIdentity: 'fedcba9876543210',
+};
+const referenceReport = () => ({
+  ...courseVerified(),
+  course: {
+    ...courseVerified().course,
+    referenceIdentity: { ...referenceIdentity },
+    splits: [{ index: 0, ticks: 301, endTick: 301 }],
+  },
+});
+test('only owned compatible completed proof offers an explicit copied unscored split reference', async (t) => {
+  const applied = [],
+    report = referenceReport();
+  const f = fixture(t, {
+    course: verificationCourse(),
+    referenceIdentity,
+    verifyCourse: async () => report,
+    onReference: (session, value) => {
+      applied.push({ session, value });
+      return true;
+    },
+  });
+  await prepareCourseArchive(f);
+  assert.equal(f.button('Use as split reference').hidden, true);
+  f.button('Use as split reference').emit('click');
+  assert.equal(applied.length, 0, 'unverified imported data has no reference authority');
+  f.button('Verify course completion').click();
+  await settle();
+  assert.equal(applied.length, 0, 'verification never selects automatically');
+  assert.equal(f.button('Use as split reference').disabled, false);
+  const writes = f.calls.slice();
+  f.button('Use as split reference').click();
+  assert.equal(applied.length, 1);
+  assert.equal(applied[0].value.name, 'recorded-flight');
+  assert.deepEqual(applied[0].value.rows, report.course.splits);
+  assert.notEqual(applied[0].value.rows, report.course.splits);
+  report.course.splits[0].ticks = 1;
+  assert.equal(applied[0].value.rows[0].ticks, 301);
+  f.update();
+  assert.equal(applied.length, 1, 'ordinary paused/live paints retain the selection');
+  f.setLocale('uk');
+  f.update();
+  assert.equal(f.button('Прибрати орієнтир часу').disabled, false);
+  assert.match(f.ui.root.textContent, /Сумісний орієнтир часу/);
+  f.button('Прибрати орієнтир часу').click();
+  assert.equal(applied.at(-1).value, null);
+  assert.deepEqual(f.calls, writes, 'selection and clearing never write archives or flight state');
+});
+for (const mismatch of [
+  'configurationClass',
+  'terrainIdentity',
+  'unprepared',
+  'clip',
+  'incomplete',
+  'frequency',
+  'missing-proof',
+]) {
+  test(`split reference rejects ${mismatch}`, async (t) => {
+    const report = referenceReport(),
+      identity = { ...referenceIdentity };
+    let calls = 0;
+    if (mismatch in identity) identity[mismatch] = 'ffffffffffffffff';
+    if (mismatch === 'clip') report.physics.verificationScope = 'checkpoint';
+    if (mismatch === 'incomplete') report.course.verified = false;
+    if (mismatch === 'frequency') report.course.missionHz = 100;
+    if (mismatch === 'missing-proof') delete report.physics;
+    const f = fixture(t, {
+      course: verificationCourse(),
+      referenceIdentity: mismatch === 'unprepared' ? null : identity,
+      verifyCourse: async () => report,
+      onReference: () => {
+        calls++;
+        return true;
+      },
+    });
+    await prepareCourseArchive(f);
+    f.button('Verify course completion').click();
+    await settle();
+    assert.equal(f.button('Use as split reference').disabled, true);
+    f.button('Use as split reference').emit('click');
+    assert.equal(calls, 0);
+  });
+}
+for (const change of ['selection', 'recovery', 'owner', 'verification', 'disposal']) {
+  test(`selected reference is cleared on ${change}`, async (t) => {
+    const applied = [];
+    const f = fixture(t, {
+      course: verificationCourse(),
+      referenceIdentity,
+      verifyCourse: async () => referenceReport(),
+      onReference: (session, value) => {
+        applied.push({ session, value });
+        return true;
+      },
+    });
+    await prepareCourseArchive(f);
+    f.button('Verify course completion').click();
+    await settle();
+    f.button('Use as split reference').click();
+    if (change === 'selection') {
+      const select = f.ui.root.querySelector('select');
+      select.value = '';
+      select.emit('change');
+    }
+    if (change === 'recovery') {
+      f.setGeneration('1');
+      f.update();
+    }
+    if (change === 'owner') {
+      f.replaceSession();
+      f.update();
+    }
+    if (change === 'verification') f.button('Verify course completion').click();
+    if (change === 'disposal') f.ui.dispose();
+    await settle();
+    assert.equal(applied.length, 2);
+    assert.equal(applied[1].value, null);
+    assert.equal(applied[1].session, applied[0].session);
+  });
+}
+test('reference presentation failures neither select nor escape into flight updates', async (t) => {
+  const f = fixture(t, {
+    course: verificationCourse(),
+    referenceIdentity,
+    verifyCourse: async () => referenceReport(),
+    onReference: () => {
+      throw new Error('panel unavailable');
+    },
+  });
+  await prepareCourseArchive(f);
+  f.button('Verify course completion').click();
+  await settle();
+  assert.doesNotThrow(() => f.button('Use as split reference').click());
+  assert.ok(f.button('Use as split reference'));
 });

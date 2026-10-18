@@ -148,3 +148,87 @@ test('pause-panel observations localize, retain ownership, report unknown gaps a
   ui.dispose();
   assert.equal(ui.consume(second, state(1, 1)), false);
 });
+
+const reference = () => ({
+  name: 'Earlier completed flight',
+  rows: [
+    { index: 0, ticks: 10, endTick: 10 },
+    { index: 1, ticks: 20, endTick: 30 },
+    { index: 2, ticks: 30, endTick: 60 },
+  ],
+});
+test('split reference compares known observations, copies bounded rows and retains ordinary pause paints', () => {
+  const doc = new Document(),
+    owner = {};
+  let locale = 'en';
+  const ui = mountPracticeSplits({ parent: doc.body, locale: () => locale });
+  ui.update(owner, state(0), { enabled: true });
+  const value = reference();
+  assert.equal(ui.setReference(owner, value), true);
+  value.rows[0].ticks = 100;
+  assert.match(ui.root.textContent, /Objective 1: not observed · reference 0.20 s/);
+  for (let tick = 1; tick <= 12; tick++) ui.consume(owner, state(tick, tick === 12 ? 1 : 0));
+  ui.update(owner, state(12, 1), { enabled: true });
+  assert.match(ui.root.textContent, /Objective 1: 0.24 s · reference 0.20 s · Δ \+0.04 s/);
+  ui.update(owner, state(12, 1), { enabled: true });
+  assert.match(ui.root.textContent, /Earlier completed flight/);
+  locale = 'uk';
+  ui.update(owner, state(12, 1), { enabled: true });
+  assert.match(ui.root.textContent, /Орієнтир часу/);
+  assert.equal(ui.setReference({}, reference()), false);
+  assert.equal(ui.setReference(owner, null), true);
+  assert.doesNotMatch(ui.root.textContent, /Earlier completed flight|Δ/);
+  ui.dispose();
+  assert.equal(ui.setReference(owner, reference()), false);
+});
+test('split references never invent missing recovery history and clear on recovery, owner, mode or observation discontinuity', () => {
+  const doc = new Document(),
+    owner = {},
+    ui = mountPracticeSplits({ parent: doc.body });
+  ui.update(owner, state(5), { enabled: true });
+  assert.equal(ui.setReference(owner, reference()), true);
+  ui.consume(owner, state(6, 1));
+  ui.update(owner, state(6, 1), { enabled: true });
+  assert.match(ui.root.textContent, /Objective 1: start time unavailable · reference 0.20 s/);
+  assert.doesNotMatch(ui.root.textContent, /Δ/);
+  ui.restored(owner, state(6, 1));
+  assert.doesNotMatch(ui.root.textContent, /Earlier completed flight/);
+  ui.setReference(owner, reference());
+  ui.update(owner, state(8, 1), { enabled: true });
+  assert.doesNotMatch(ui.root.textContent, /Earlier completed flight/);
+  ui.setReference(owner, reference());
+  ui.update({}, state(0), { enabled: true });
+  assert.doesNotMatch(ui.root.textContent, /Earlier completed flight/);
+  ui.update(owner, state(0, 0, 0), { enabled: true, freeFlight: true });
+  assert.equal(ui.setReference(owner, reference()), false);
+  ui.update(owner, state(0), { enabled: false });
+  assert.equal(ui.setReference(owner, reference()), false);
+});
+test('reference rows reject unsafe, unbounded, mismatched and noncontiguous timing', () => {
+  const doc = new Document(),
+    owner = {},
+    ui = mountPracticeSplits({ parent: doc.body });
+  ui.update(owner, state(0), { enabled: true });
+  for (const mutate of [
+    (v) => (v.name = 'x'.repeat(121)),
+    (v) => v.rows.pop(),
+    (v) => (v.rows[1].index = 9),
+    (v) => (v.rows[0].ticks = null),
+    (v) => (v.rows[0].ticks = -1),
+    (v) => (v.rows[0].endTick = 11),
+    (v) => (v.rows[2].endTick = Number.MAX_SAFE_INTEGER + 1),
+    (v) => (v.rows = Array(65).fill(v.rows[0])),
+  ]) {
+    const value = reference();
+    mutate(value);
+    assert.equal(ui.setReference(owner, value), false);
+  }
+  const long = reference();
+  long.rows = [{ index: 0, ticks: 36001, endTick: 36001 }];
+  ui.update(owner, state(0, 0, 1), { enabled: true });
+  assert.equal(
+    ui.setReference(owner, long),
+    true,
+    'practice does not inherit the legacy twelve-minute ceiling',
+  );
+});

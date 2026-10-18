@@ -9135,6 +9135,7 @@ export function mountWorldApp({
     getSession: () => (replayProof ? null : flight),
     onPause: () => pauseFlight(),
     onRestored: (session, state) => practiceSplits.restored(session, state),
+    onReference: (session, value) => practiceSplits.setReference(session, value),
   });
   aircraftChallengeControls = mountAircraftChallengeControls({
     parents: [shellBriefing, playShell.elements.content.pause],

@@ -21,6 +21,7 @@ export function mountAircraftArchiveControls({
   locale = () => 'en',
   getSession,
   onPause = () => {},
+  onReference = () => false,
   key = 'academy',
   platformOptions = {},
   workerURL,
@@ -87,11 +88,39 @@ export function mountAircraftArchiveControls({
   const setResult = (text) => {
     if (result.textContent !== text) result.textContent = text;
   };
+  const applyReference = (session, value) => {
+    try {
+      return onReference(session, value) === true;
+    } catch {
+      return false;
+    }
+  };
   function clearCourse() {
     if (!courseView) return;
+    if (courseView.referenceSelected) applyReference(courseView.session, null);
     operation?.controller.abort();
     courseView = null;
     setResult('');
+  }
+  function referenceMatches() {
+    try {
+      const report = courseView?.report;
+      if (
+        !courseView?.valid() ||
+        !report?.physics?.verified ||
+        report.physics.verificationScope !== 'complete-session' ||
+        !report.course?.verified ||
+        report.course.missionHz !== 50
+      )
+        return false;
+      const actual = owner?.referenceIdentity?.(),
+        expected = report.course.referenceIdentity;
+      return ['configurationClass', 'terrainIdentity'].every(
+        (key) => /^[0-9a-f]{16}$/.test(actual?.[key]) && actual[key] === expected?.[key],
+      );
+    } catch {
+      return false;
+    }
   }
   function renderCourse() {
     if (!courseView) return;
@@ -179,6 +208,10 @@ export function mountAircraftArchiveControls({
     download.textContent = t('Export selected archive', 'Експортувати вибраний архів');
     verifyButton.textContent = t('Verify selected archive', 'Перевірити вибраний архів');
     courseButton.textContent = t('Verify course completion', 'Перевірити завершення курсу');
+    referenceButton.textContent = courseView?.referenceSelected
+      ? t('Clear split reference', 'Прибрати орієнтир часу')
+      : t('Use as split reference', 'Використати як орієнтир часу');
+    referenceButton.hidden = !courseView?.report?.course?.verified;
     courseHelp.textContent = activeCourse
       ? `${t('Check the selected archive against this frozen course', 'Перевірити вибраний архів за цією версією курсу')}: ${courseTitle(activeCourse)}. ${t('Uses the recorded aircraft, settings and mode. Static hold, gate and landing objectives only; unscored.', 'Використовує записані дрон, налаштування та режим. Лише статичні завдання утримання, воріт і посадки; без заліку.')}`
       : t(
@@ -194,9 +227,22 @@ export function mountAircraftArchiveControls({
     finish.disabled ||= !context?.manifest || Boolean(context?.stopped);
     for (const node of [download, verifyButton, remove]) node.disabled ||= !select.value;
     courseButton.disabled ||= !select.value || !activeCourse;
+    referenceButton.disabled ||= !courseView?.referenceSelected && !referenceMatches();
     select.disabled = Boolean(operation);
     file.disabled = Boolean(operation);
     renderCourse();
+    if (!referenceButton.hidden)
+      courseHelp.textContent += ` ${
+        referenceMatches()
+          ? t(
+              'Compatible unscored split reference. Resume to compare; restarting requires selecting the reference again.',
+              'Сумісний орієнтир часу без заліку. Продовжте політ для порівняння; після перезапуску виберіть орієнтир знову.',
+            )
+          : t(
+              'Split reference unavailable: aircraft, controller, course or terrain settings differ, or the flight is not ready.',
+              'Орієнтир часу недоступний: відрізняються налаштування дрона, контролера, курсу чи місцевості, або політ не готовий.',
+            )
+      }`;
   }
   async function refreshRows(signal) {
     let next;
@@ -336,9 +382,9 @@ export function mountAircraftArchiveControls({
   }
   async function run(action, valid = null) {
     if (disposed || operation || root.hidden) return;
+    if (!valid) clearCourse();
     const job = { controller: new AbortController() };
     operation = job;
-    if (!valid) courseView = null;
     result.textContent = t('Preparing…', 'Підготовка…');
     paint();
     try {
@@ -449,10 +495,12 @@ export function mountAircraftArchiveControls({
   );
   const courseButton = button(() => {
     if (!activeCourse || !select.value) return;
+    clearCourse();
     const session = owner,
       archiveGeneration = generation(),
       id = select.value;
     const view = {
+      session,
       name: rows.find((row) => row.id === id)?.name ?? id,
       course: structuredClone(activeCourse),
       valid: () =>
@@ -485,6 +533,18 @@ export function mountAircraftArchiveControls({
       if (!view.valid() || courseView !== view) throw cancelled();
       view.report = report;
     }, view.valid);
+  });
+  const referenceButton = button(() => {
+    if (!courseView?.referenceSelected && !referenceMatches()) return;
+    const view = courseView;
+    const value = view.referenceSelected
+      ? null
+      : {
+          name: String(view.name).slice(0, 120),
+          rows: structuredClone(view.report.course.splits),
+        };
+    if (applyReference(owner, value)) view.referenceSelected = value !== null;
+    paint();
   });
   const remove = button(() =>
     run(async (signal) => {
@@ -620,6 +680,7 @@ export function mountAircraftArchiveControls({
     },
     dispose() {
       if (disposed) return;
+      clearCourse();
       disposed = true;
       work?.controller.abort();
       operation?.controller.abort();
