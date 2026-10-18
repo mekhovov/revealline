@@ -6404,7 +6404,8 @@ export function bootCoop({
       // callback can replace the result with a new (then immediately paused) run.
       if (elapsed > 0.25) {
         continuousPlay.cancel('stalled');
-        pause();
+        // A loading/lobby callback does not own cancellation of its required picture.
+        if (running()) pause();
       } else continuousPlay.advance(elapsed * 1000);
       if (running()) {
         accumulator += elapsed;
