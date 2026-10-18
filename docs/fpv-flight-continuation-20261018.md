@@ -56,6 +56,42 @@ mode required waiting for the new paused attempt before reopening the workbench;
 an early activation during that transition did not remain open. No saved tuning
 library was changed. This receipt does not replace production-CSP/public checks.
 
+## Additional current-source routes and reopen check
+
+On source `cf13bcad9a59a387be7c31c9af8d30d74e7c1860`, the local World host also
+ran two representative draft flights. The X650 check entered **Clockwise catch**
+in **Circuit stadium** and reached **0:25.54**, with the checkpoint at **0:25**.
+After explicit pause/resume it retained **46%** throttle, neutral rotational
+input and an upright response at 17.7 m with approximately −0.1 m/s vertical
+speed. Archive capacity was full and did not end the flight.
+
+The **Cetus X** check entered level 91, **Turn and travel** in **Open meadow**,
+then explicitly used **Test draft**. It reached **1:12.76**, with the checkpoint
+at **1:10**. Normal keyboard input produced takeoff, steering, descent and
+re-takeoff. The run included contact with the 10 m ceiling and ground; it is not
+a measured continuous-airtime result. Explicit resume retained **46%** throttle
+and neutral rotational input. Both checks used Self-level. Test draft starts
+unscored free practice, so these checks do **not** claim completed course goals.
+
+At **1:04.50**, Finish current archive saved the Cetus session. Verification
+reported **Complete session physics verified from reset. Unscored.** Flying
+continued for another 8.26 seconds after the archive finished. The saved label
+was `World · 2026-10-18T18:50:32.960Z · 0:00–1:04 · finished`.
+
+After reverting the draft and reloading the same browser tab normally, a new
+unarmed aircraft draft exposed the recording panel without creating another
+archive. The same saved label remained available, and verification again
+reported a complete session verified from reset. The temporary draft was
+reverted, its flight remained paused and the agent-created tab was closed.
+No saved tuning-library edits or archive deletions were made in this check.
+
+This is one positive same-tab reload/verification observation on the source
+preview. It does not close the protected-record incident, qualify cross-context
+storage or establish production/offline behavior. Opening this test tab initially
+required the local password again and showed a different archive inventory from
+the previous closed test tab; the browser storage-context relationship was not
+observed. Do not infer native deletion or recoverability from that difference.
+
 ## Open archive-retention incident
 
 The user authorized deleting exactly ten identified test archives while preserving six older records. The first attempted action reported a closing-database error; all sixteen entries remained in the cached list. After reload, a successful refresh exposed only a new test session. No successful ten-record cleanup or preservation of the six older archives is claimed. No further deletes were attempted. The [retention follow-up](fpv-archive-retention-followup-20261018.md) records the ownership audit and the earlier matching public negative. This remains P1.
