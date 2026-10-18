@@ -83,8 +83,8 @@ export function mountAircraftArchiveControls({
   function paint() {
     heading.textContent = t('Saved flight sessions', 'Збережені льотні сесії');
     explanation.textContent = t(
-      'Sessions save locally up to 32 MiB each, 128 MiB total and 16 sessions. Nothing is deleted automatically. Finish an archive to save its final segment; flying can continue. All aircraft archives are unscored.',
-      'Сесії зберігаються на пристрої: до 32 МіБ кожна, 128 МіБ загалом і 16 сесій. Автоматичного видалення немає. Завершіть архів, щоб зберегти останній сегмент; політ можна продовжити. Усі архіви дронів без заліку.',
+      'Sessions save locally after flight begins, up to 32 MiB each, 128 MiB total and 16 sessions. Nothing is deleted automatically. Finish an archive to save its final segment; flying can continue. All aircraft archives are unscored.',
+      'Сесії зберігаються на пристрої після початку польоту: до 32 МіБ кожна, 128 МіБ загалом і 16 сесій. Автоматичного видалення немає. Завершіть архів, щоб зберегти останній сегмент; політ можна продовжити. Усі архіви дронів без заліку.',
     );
     const saved = context?.manifest;
     status.textContent = context?.error
@@ -93,7 +93,12 @@ export function mountAircraftArchiveControls({
         ? `${t('Archive finished through', 'Архів завершено до')} ${clock(saved?.endTick)}.`
         : saved
           ? `${t('Archiving on this device', 'Архівування на цьому пристрої')}. ${t('Saved through', 'Збережено до')} ${clock(saved.endTick)}.`
-          : t('Preparing local archive…', 'Підготовка локального архіву…');
+          : context
+            ? t(
+                'Ready to archive when flight begins.',
+                'Готово до архівування після початку польоту.',
+              )
+            : t('Preparing local archive…', 'Підготовка локального архіву…');
     select.setAttribute('aria-label', t('Saved session archive', 'Архів збереженої сесії'));
     finish.textContent = t('Finish current archive', 'Завершити поточний архів');
     refresh.textContent = t('Refresh saved sessions', 'Оновити збережені сесії');
@@ -169,11 +174,20 @@ export function mountAircraftArchiveControls({
           session,
           generation: envelope.generation,
           afterIndex: initialCursor,
+          startTick: envelope.origin.startTick,
           manifest: null,
           stopped: false,
           error: null,
         };
         context = ctx;
+      }
+      if (context.stopped) return;
+      if (!context.manifest) {
+        // Preparing a paused aircraft or restoring its exact starting checkpoint
+        // is not a flight. Retain only an in-memory cursor until simulation progress
+        // exists; the recorder still owns the original checkpoint and full tail.
+        if (!envelope.segment && envelope.latestTick <= context.startTick) return;
+        const ctx = context;
         ctx.manifest = await store.begin(
           {
             id: ctx.id,
@@ -187,7 +201,6 @@ export function mountAircraftArchiveControls({
         );
         if (!current(session)) throw cancelled();
       }
-      if (context.stopped) return;
       if (envelope.gap) {
         await interrupt(context, 'gap', signal);
         throw new Error(t('A recording segment was missed.', 'Пропущено сегмент запису.'));
@@ -268,7 +281,12 @@ export function mountAircraftArchiveControls({
       select.value = context.id;
     }),
   );
-  const refresh = button(() => run((signal) => refreshRows(signal)));
+  const refresh = button(() =>
+    run(async (signal) => {
+      await refreshRows(signal);
+      result.textContent = t('Saved sessions refreshed.', 'Список збережених сесій оновлено.');
+    }),
+  );
   const download = button(() =>
     run(async (signal) => {
       const packet = await store.exportPackage(select.value, { signal });
@@ -417,7 +435,9 @@ export function mountAircraftArchiveControls({
           !context ||
           (archive?.generation !== undefined && archive.generation !== context.generation) ||
           (!context.stopped &&
-            (archive?.lastSealedIndex > context.afterIndex || tick - lastPollTick >= 50))
+            ((!context.manifest && archive?.latestTick > context.startTick) ||
+              archive?.lastSealedIndex > context.afterIndex ||
+              tick - lastPollTick >= 50))
         ) {
           if (
             archive?.generation !== undefined &&
