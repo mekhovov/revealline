@@ -25,6 +25,11 @@ import * as flowHelpers from '../ui/continuous-play.mjs';
 import * as celebrationHelpers from '../ui/celebration.mjs';
 import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
+import { collectSupportSummary } from '../local-support-summary.mjs';
+import { offlineAvailability } from '../offline.mjs';
+import { nativePlatform } from '../platform.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { menuPad } from './helpers/global-tools-fixture.mjs';
 import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
@@ -85,7 +90,7 @@ import {
   advanceClassicReactionTime,
   observeClassicWorldReactions,
 } from '../snake/classic-world-reactions.mjs';
-import { t } from '../i18n/index.mjs';
+import { t, getLocale as summaryLocale, setLocale as setSummaryLocale } from '../i18n/index.mjs';
 import { mountEnemyAppearanceControls } from '../ui/enemy-appearance-controls.mjs';
 import { prepareClassicEnvironments } from '../snake/classic-environment.mjs';
 import { selectedArcadeCollection } from '../presentation/industrial-arcade.mjs';
@@ -137,9 +142,10 @@ async function harness({
   legacySavedRound = null,
   recordReceipt = { verified: true, saved: true },
   catalogue = CLASSIC_SNAKE_LEVELS,
+  language = 'en',
 } = {}) {
   const document = new Document();
-  let harnessLocale = 'en';
+  let harnessLocale = language;
   document.hasFocus = () => focused;
   const writerClaims = [];
   document.createElement = (tag) => {
@@ -170,6 +176,9 @@ async function harness({
   mount(parseHTML(html), document.body);
   const window = new Events();
   const pads = [];
+  const supportExports = [];
+  let supportNow = 0,
+    padReads = 0;
   let tools, offlinePanel, offlineOptions;
   const storage = new Map();
   if (savedRound) storage.set(SAVE_KEY, JSON.stringify(savedRound));
@@ -309,6 +318,23 @@ async function harness({
             handleFrameCommand: () => false,
             dispose() {},
           }),
+    attachLocalSupportSummary: (options) =>
+      attachLocalSupportSummary({
+        ...options,
+        collect: (options) => collectSupportSummary({ ...options, env: context }),
+        exportFile: async (value) => {
+          supportExports.push(structuredClone(value));
+          return { status: 'requested' };
+        },
+      }),
+    offlineAvailability: () =>
+      offlineAvailability({
+        documentRef: document,
+        locationRef: location,
+        navigatorRef: context.navigator,
+        secure: true,
+      }),
+    nativePlatform: () => nativePlatform(location),
     attachInstallOfflinePanel: (options) => {
       offlineOptions = options;
       offlinePanel = attachInstallOfflinePanel({
@@ -413,7 +439,8 @@ async function harness({
       scheduledFrames.push(callback);
     },
     screen: { orientation: new Events() },
-    navigator: { getGamepads: () => pads },
+    navigator: { getGamepads: () => (++padReads, pads) },
+    performance: { now: () => supportNow },
     setTimeout,
     getLocale: () => harnessLocale,
     t,
@@ -572,6 +599,11 @@ async function harness({
     shell,
     optionalEntries,
     pads,
+    supportExports,
+    get padReads() {
+      return padReads;
+    },
+    removeGamepadAPI: () => delete context.navigator.getGamepads,
     offlinePanel,
     canActivateOffline: () => offlineOptions.canActivate(),
     disposeTools: () => {
@@ -587,11 +619,104 @@ async function harness({
       shell.elements.buttons['home-retry'].click();
     },
     frame(now) {
+      supportNow = now;
       scheduledFrames.shift()(now);
     },
     $: (id) => document.getElementById(id),
   };
 }
+
+for (const mode of ['solo', 'versus', 'team'])
+  test(`${mode} Snake support reuses observed controllers and preserves paused play and storage`, async (t) => {
+    const oldLocale = summaryLocale();
+    setSummaryLocale('en', { persist: false });
+    t.after(() => setSummaryLocale(oldLocale, { persist: false }));
+    const state = await harness({ mode, directEntry: false });
+    t.after(() => state.window.emit('pagehide', { persisted: false }));
+    state.start();
+    state.frame(0);
+    state.frame(100);
+    state.shell.open('settings');
+    state.$('snake-menu-settings-tab-data').click();
+    const pad = menuPad();
+    pad.id = 'private-snake-device';
+    state.pads.push(pad);
+    state.frame(110);
+    const paused = state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      stored = [...state.storage],
+      polls = state.padReads;
+    const prepare = state.$('support-summary-prepare');
+    prepare.focus();
+    prepare.click();
+    await waitFor(() => !state.$('support-summary-download').disabled);
+    const report = JSON.parse(state.$('support-summary-json').textContent);
+    assert.equal(report.scope, 'snake-game-shell');
+    assert.equal(report.game.host, `snake-${mode}`);
+    assert.equal(report.game.state, 'paused');
+    assert.equal(report.game.saving.writable, true);
+    assert.equal(report.controller.status, 'observed');
+    assert.equal(report.controller.assigned, true);
+    assert.equal(report.controller.freshness, 'recent');
+    assert.equal(report.controller.neutral, null);
+    assert.equal(report.controller.confirmBlocked, null);
+    assert.equal(report.controller.confirmReason, 'unavailable');
+    assert.match(state.$('support-summary-controller').textContent, /not reported/);
+    assert.doesNotMatch(JSON.stringify(report), /private-snake-device|axes|buttons|https:/);
+    assert.equal(state.padReads, polls, 'Preparing a summary must not poll controllers.');
+    assert.equal(state.document.activeElement, prepare);
+    assert.deepEqual(
+      state.created.map((run) => core.exportClassicSnakeReplay(run)),
+      paused,
+    );
+    assert.deepEqual([...state.storage], stored);
+    state.$('support-summary-download').click();
+    await waitFor(() => state.supportExports.length === 1);
+    assert.deepEqual(state.supportExports[0], report);
+    state.pads.length = 0;
+    state.frame(120);
+    prepare.click();
+    await waitFor(() => !state.$('support-summary-download').disabled);
+    assert.equal(
+      JSON.parse(state.$('support-summary-json').textContent).controller.status,
+      'disconnected',
+    );
+    state.shell.elements.dialogs.settings.close();
+    assert.equal(state.$('support-summary-json').textContent, '');
+    assert.equal(state.$('support-summary-download').disabled, true);
+  });
+
+test('Snake support exposes unknown APIs and released writer honestly, with Ukrainian copy and lifecycle reset', async (t) => {
+  const oldLocale = summaryLocale();
+  setSummaryLocale('uk', { persist: false });
+  t.after(() => setSummaryLocale(oldLocale, { persist: false }));
+  const state = await harness({ directEntry: false, language: 'uk' });
+  t.after(() => state.window.emit('pagehide', { persisted: false }));
+  state.shell.open('settings');
+  state.$('snake-menu-settings-tab-data').click();
+  state.removeGamepadAPI();
+  state.writerClaims.at(-1).release();
+  state.frame(100);
+  state.$('support-summary-prepare').click();
+  await waitFor(() => !state.$('support-summary-download').disabled);
+  const report = JSON.parse(state.$('support-summary-json').textContent);
+  assert.equal(report.game.state, 'idle');
+  assert.equal(report.game.locale, 'uk');
+  assert.equal(report.game.saving.writable, false);
+  assert.equal(report.game.saving.reason, 'unavailable');
+  assert.equal(report.controller.status, 'unavailable');
+  assert.equal(report.controller.assigned, null);
+  assert.equal(report.storage.retention, 'unavailable');
+  assert.equal(report.build.version, null);
+  assert.equal(report.offline.files, 'not-verified-here');
+  assert.match(state.$('support-summary-title').textContent, /Локальний звіт/);
+  assert.doesNotMatch(
+    state.$('support-summary-root').textContent,
+    /interface:|supportSummary\.|\{\{/,
+  );
+  state.window.emit('pagehide', { persisted: true });
+  assert.equal(state.$('support-summary-download').disabled, true);
+  assert.equal(state.$('support-summary-json').textContent, '');
+});
 
 for (const mode of ['solo', 'versus', 'team']) {
   test(`${mode} Snake can finish offline setup from Ready but defers during a paused flight`, async (t) => {
