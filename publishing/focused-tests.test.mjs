@@ -679,7 +679,18 @@ test('parallel focused ordinary failure and independent abort are not deadline f
 });
 
 test('parallel focused invalid per-command deadlines fail before spawning', async () => {
-  const values = [-1, 0, 0.5, '50', NaN, Infinity, 2 ** 32, Number.MAX_SAFE_INTEGER + 1];
+  const values = [
+    -1,
+    0,
+    0.5,
+    '50',
+    NaN,
+    Infinity,
+    2 ** 31,
+    2 ** 32 - 1,
+    2 ** 32,
+    Number.MAX_SAFE_INTEGER + 1,
+  ];
   let spawns = 0;
   const result = await runFocusedCommandsParallel(
     values.map((timeoutMs, index) => ({
@@ -702,7 +713,7 @@ test('parallel focused invalid per-command deadlines fail before spawning', asyn
   assert.equal(result.exitCode, 1);
   assert.equal(result.failures.length, values.length);
   for (const failure of result.failures) {
-    assert.match(failure.error, /timeout must be a positive 32-bit integer/);
+    assert.match(failure.error, /timeout must be a positive signed 32-bit integer/);
     assert.equal(failure.status, null);
     assert.equal(failure.signal, null);
     assert.equal(Object.hasOwn(failure, 'timedOut'), false);
