@@ -1689,6 +1689,13 @@ shell = mountModePlayShell({
   idPrefix: 'overflight',
   modeName: { en: 'FPV Survivals', uk: 'FPV Survivals' },
   locale: getLocale(),
+  homeAction:
+    mode.id === 'overflight' && !mode.prototype && !studio && !fixture && !reviewBuild
+      ? {
+          label: (language) => mode.text(language, 'suspendOpen'),
+          activate: () => suspendView?.open(),
+        }
+      : null,
   wordmarkURL: new URL('../ui/art/identity/fpv-line/wordmark.png', import.meta.url).href,
   slots: Object.fromEntries(
     ['missions', 'briefing', 'settings', 'help', 'workshop', 'results']
@@ -1750,6 +1757,7 @@ shell.elements.home.querySelector('.mode-play-mission').after(homeSetup);
 if (mode.id === 'overflight' && !mode.prototype && !studio && !fixture && !reviewBuild) {
   suspendView = createSurvivalSuspendView({
     document: doc,
+    opener: shell.elements.buttons['home-extra'],
     text,
     onOpen: () => pause({ menu: false }),
     canSave: () => !!run && run.phase === 'paused' && !run.review && !preparing && !runtimeFailed,
@@ -1815,7 +1823,6 @@ if (mode.id === 'overflight' && !mode.prototype && !studio && !fixture && !revie
         return coordinator.read();
       }),
   });
-  homeSetup.after(suspendView.opener);
 }
 
 // A review URL selects a demonstration, but only an explicit action enables it.

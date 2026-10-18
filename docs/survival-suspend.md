@@ -1,7 +1,8 @@
 # Single Drone saved flights
 
 Single Drone has one manual saved flight per browser profile on a device. From
-Home or a paused flight, open **Saved flight**. Saving requires a complete,
+Home, open **Saved flight**. During a flight, pause and choose **Home** to
+reach Home without ending the paused flight. Saving requires a complete,
 verifiable game release, available IndexedDB storage and a held writer lease.
 Development pages without the emitted release identity explain that saving is
 unavailable. Saving neither ends nor resumes the current flight.
@@ -63,6 +64,13 @@ receipt in one IndexedDB transaction. The receipt captures the attempt ID, exact
 result input and original comparison result. Duplicate requests return that
 receipt; the same ID with different input is rejected. Ordinary unsaved results
 retain their existing API and schema.
+
+Personal score records retain the current result within the existing 256-context,
+512 KiB and structural limits. When full, empty contexts are removed first, then
+other contexts in stored order; imported object order is not treated as a play
+timestamp. The saved result and its receipt commit atomically with this retention.
+Mastery keeps its existing bounded ordering. Neither store can leave a finishing
+journal permanently stuck solely because its collection is full.
 
 The coordinator retires the recovery checkpoint only after both stores acknowledge
 durable ownership. Interruption before either store, after one store, or after both

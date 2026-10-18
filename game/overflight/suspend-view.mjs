@@ -9,20 +9,24 @@ export function createSurvivalSuspendView({
   recover,
   canSave,
   onOpen,
+  opener: suppliedOpener = null,
 }) {
   const el = (tag, key) => {
     const node = doc.createElement(tag);
     if (key) node.dataset.suspendCopy = key;
     return node;
   };
-  const opener = el('button', 'suspendOpen');
-  opener.type = 'button';
-  opener.id = 'overflight-suspend-open';
+  const opener = suppliedOpener ?? el('button', 'suspendOpen');
+  if (!suppliedOpener) {
+    opener.type = 'button';
+    opener.id = 'overflight-suspend-open';
+  }
   const dialog = el('dialog');
   dialog.id = 'overflight-suspend-dialog';
   dialog.className = 'overflight-suspend-dialog';
   const title = el('h2', 'suspendTitle'),
     help = el('p', 'suspendHelp'),
+    retention = el('p', 'suspendRetention'),
     status = el('p'),
     confirm = el('p'),
     actions = el('div');
@@ -39,7 +43,7 @@ export function createSurvivalSuspendView({
       return [name, button];
     }),
   );
-  dialog.append(title, help, status, confirm, actions);
+  dialog.append(title, help, retention, status, confirm, actions);
   doc.body.append(dialog);
   let busy = false,
     state = null,
@@ -48,7 +52,8 @@ export function createSurvivalSuspendView({
     detail = '',
     closed = false;
   const paint = () => {
-    for (const node of [opener, title, help]) node.textContent = text(node.dataset.suspendCopy);
+    for (const node of [...(suppliedOpener ? [] : [opener]), title, help, retention])
+      node.textContent = text(node.dataset.suspendCopy);
     status.textContent = `${text(statusKey)}${detail ? ` ${detail}` : ''}`;
     confirm.hidden = !confirmation;
     confirm.textContent = confirmation
@@ -134,7 +139,7 @@ export function createSurvivalSuspendView({
     confirmation = null;
     opener.focus({ preventScroll: true });
   };
-  opener.addEventListener('click', open);
+  if (!suppliedOpener) opener.addEventListener('click', open);
   dialog.addEventListener('click', onClick);
   dialog.addEventListener('cancel', cancel);
   dialog.addEventListener('close', close);
@@ -142,15 +147,16 @@ export function createSurvivalSuspendView({
   return {
     opener,
     dialog,
+    open,
     refresh: paint,
     dispose() {
       closed = true;
-      opener.removeEventListener('click', open);
+      if (!suppliedOpener) opener.removeEventListener('click', open);
       dialog.removeEventListener('click', onClick);
       dialog.removeEventListener('cancel', cancel);
       dialog.removeEventListener('close', close);
       dialog.remove();
-      opener.remove();
+      if (!suppliedOpener) opener.remove();
     },
   };
 }

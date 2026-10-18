@@ -213,6 +213,7 @@ test('native save entry is scoped to player Single Drone and requires retained a
       reviewBuild: null,
       suspendView: null,
       doc: {},
+      shell: { elements: { buttons: { 'home-extra': {} } } },
       text: (key) => key,
       pause: noop,
       run: { phase: 'paused' },
@@ -234,6 +235,7 @@ test('native save entry is scoped to player Single Drone and requires retained a
     runInNewContext(mount, context);
     if (!Object.keys(patch).length) {
       assert.ok(mounted);
+      assert.equal(mounted.opener, context.shell.elements.buttons['home-extra']);
       await assert.rejects(mounted.restore(), /appearance is missing/);
       assert.equal(adopted, 0);
       assert.equal(prepared, 0);

@@ -152,6 +152,31 @@ function validateRecordReceipt(value) {
   return { entry: state.entries[key], previous: value.previous };
 }
 
+function retainRecords(state, key, entry) {
+  // Keep the current result even at capacity. Preserve the v1 entry schema;
+  // empty contexts are discarded first, then other contexts in stored order.
+  // Each input entry is valid, so only aggregate byte/node/count budgets can
+  // require more eviction. Imported key order is not claimed as a timestamp.
+  validateOverflightRecords({ format: OVERFLIGHT_RECORDS_FORMAT, entries: { [key]: entry } });
+  const retained = Object.entries(state.entries)
+    .filter(([id]) => id !== key)
+    .sort(
+      ([, left], [, right]) =>
+        Number(!!(left.last || left.bestScore || left.fastestClear)) -
+        Number(!!(right.last || right.bestScore || right.fastestClear)),
+    );
+  while (retained.length >= 256) retained.shift();
+  for (;;) {
+    state.entries = Object.fromEntries([...retained, [key, entry]]);
+    try {
+      return validateOverflightRecords(state);
+    } catch (error) {
+      if (!retained.length) throw error;
+      retained.shift();
+    }
+  }
+}
+
 /** Shared profile storage owns persistence. Review runs never write player records. */
 export function createOverflightRecords({ backend, ...options } = {}) {
   const store =
@@ -237,8 +262,8 @@ export function createOverflightRecords({ backend, ...options } = {}) {
           (source) => {
             const state = validateOverflightRecords(source);
             const previous = state.entries[key]?.last ?? null;
-            state.entries[key] = merge(state.entries[key] ?? empty(context), result);
-            return { state, receipt: { entry: state.entries[key], previous } };
+            const entry = merge(state.entries[key] ?? empty(context), result);
+            return { state: retainRecords(state, key, entry), receipt: { entry, previous } };
           },
         );
         const receipt = validateRecordReceipt(saved.receipt);
@@ -259,8 +284,7 @@ export function createOverflightRecords({ backend, ...options } = {}) {
         const saved = validateOverflightRecords(
           await store.update((source) => {
             const state = validateOverflightRecords(source);
-            state.entries[key] = combined(context, state.entries[key], local);
-            return validateOverflightRecords(state);
+            return retainRecords(state, key, combined(context, state.entries[key], local));
           }),
         );
         known.set(key, saved.entries[key]);
