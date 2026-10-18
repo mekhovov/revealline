@@ -1,3 +1,4 @@
+import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createHash } from 'node:crypto';
@@ -18,7 +19,7 @@ import {
   NEXT_ROUTE_PROTOCOL,
 } from './solo-qualification-next-route.mjs';
 const root = new URL('../', import.meta.url),
-  read = (p) => readFile(new URL(p, root)),
+  read = readSoloDiagnosticSource,
   sha = (b) => createHash('sha256').update(b).digest('hex');
 const path = 'docs/performance/solo-first-victory-cpu-239-plan.json',
   workflowPath = '.github/workflows/solo-remote-first-victory-cpu-239-temporary.yml';

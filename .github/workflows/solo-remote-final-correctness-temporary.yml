@@ -223,6 +223,8 @@ jobs:
             /scripts/solo-build-archive.mjs
             /scripts/solo-build-worker-closure.mjs
             /scripts/solo-final-wave-witness.mjs
+            /scripts/solo-retired-diagnostic-source.mjs
+            /docs/performance/fixtures/solo-retired-diagnostics/source.json
             /scripts/solo-qualification-audio.mjs
             /scripts/solo-qualification-browser-context.mjs
             /scripts/solo-qualification-cadence.mjs

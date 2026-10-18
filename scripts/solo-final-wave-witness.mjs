@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
+import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';
 
 export const FINAL_WAVE_WITNESS_PATH =
   'docs/performance/fixtures/solo-final-wave/a7e-execution-source.json';
@@ -26,7 +27,15 @@ export async function assertFinalWaveBindings(manifestPath, references, workflow
   const release = witness.releases.find((entry) => entry.workflow === workflowPath);
   assert(release && Object.hasOwn(release.manifests, manifestPath), 'Unwitnessed release');
   for (const path of [manifestPath, workflowPath]) {
-    const bytes = await readFile(new URL(path, root));
+    const current = await readSoloDiagnosticSource(path);
+    // Correctness later reused its workflow path. Its original a7e execution
+    // definition is already preserved separately; compare that exact source.
+    const bytes =
+      path === '.github/workflows/solo-remote-final-correctness-temporary.yml'
+        ? await readFile(
+            new URL('docs/performance/fixtures/solo-final-wave/a7e-correctness-workflow.yml', root),
+          )
+        : current;
     assert.equal(bytes.length, files.get(path)?.bytes, path);
     assert.equal(sha(bytes), files.get(path)?.sha256, path);
   }

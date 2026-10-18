@@ -1,3 +1,4 @@
+import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { parse } from 'acorn';
@@ -22,7 +23,7 @@ import {
   FIRST_VICTORY_CPU_FIXTURE,
 } from './solo-qualification-next-route.mjs';
 const root = new URL('../', import.meta.url),
-  read = (p) => readFile(new URL(p, root));
+  read = readSoloDiagnosticSource;
 const manifest = JSON.parse(await read('docs/performance/solo-first-victory-cpu-e1cc-plan.json'));
 const bytes = await read(manifest.recipe.path),
   recipe = JSON.parse(bytes),

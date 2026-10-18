@@ -3,6 +3,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
+import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';
 const root = new URL('../', import.meta.url);
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
 export const PAGE_ERROR_WITNESS_PATH =
@@ -106,7 +107,7 @@ export async function readHistoricalPageErrorRefs(manifestPath, workflowPath) {
     await readFile(new URL(READINESS_PRIOR_TOOLS_PATH, root)),
   );
   const manifestBytes = await readFile(new URL(manifestPath, root));
-  const workflowBytes = await readFile(new URL(workflowPath, root));
+  const workflowBytes = await readSoloDiagnosticSource(workflowPath);
   const refs = historicalReadinessToolRefs(
     readinessWitness,
     manifestPath,
@@ -190,6 +191,6 @@ export async function readHistoricalQualificationRefs(manifestPath, workflowPath
     manifestPath,
     workflowPath,
     await readFile(new URL(manifestPath, root)),
-    await readFile(new URL(workflowPath, root)),
+    await readSoloDiagnosticSource(workflowPath),
   );
 }

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';
 import test from 'node:test';
 import {
   READINESS_PRIOR_TOOLS_PATH,
@@ -7,8 +7,7 @@ import {
   historicalReadinessToolRefs,
   readHistoricalPageErrorRefs,
 } from './solo-page-error-source-witness.mjs';
-const root = new URL('../', import.meta.url);
-const read = (path) => readFile(new URL(path, root));
+const read = readSoloDiagnosticSource;
 
 test('readiness tool changes retain exact executed and parked source authority', async () => {
   const bytes = await read(READINESS_PRIOR_TOOLS_PATH);
