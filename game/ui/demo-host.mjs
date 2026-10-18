@@ -266,6 +266,9 @@ export function attachDemoHost({
   let publishedPreparationPhase = null;
   function preparationPhase() {
     if (!active) return null;
+    // An explicit foreground handoff may prepare an independent main renderer
+    // while this Demo display remains lost. Suspension still retires handoffs.
+    if (handoffPending && foreground()) return 'preparing';
     if (lifecycleSuspended) return 'suspended';
     // Spectator transport remains available in the background. Keep required
     // fetch/decode/worker work admitted, but park bulk main-thread work.
