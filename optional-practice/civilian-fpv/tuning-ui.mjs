@@ -1,3 +1,12 @@
+import {
+  mountWorkbenchChrome,
+  mountWorkbenchPhysics,
+  drawWorkbenchCurve,
+  paintCameraFraming,
+} from './setup-workbench.mjs';
+import { createSetupDraft } from './setup-draft.mjs';
+import { createControllerTunePanel } from './controller-tune-panel.mjs';
+import { mountResponseBenchPanel } from './response-bench-panel.mjs';
 import { DEFAULT_RESPONSE, responseCurve } from './radio-profile.mjs';
 import { createTunedResponse, TUNED_RESPONSE_FORMAT } from './flight-response.mjs';
 import {
@@ -21,6 +30,7 @@ import { exportJSONFile, exportTextFile } from '../../game/platform.mjs';
 import {
   previewBetaflightImport,
   previewNativeRateImport,
+  betaflightDefaultRateProfile,
   exportBetaflightRates,
   exportNativeRateProfile,
   resolveBetaflightPresetBundle,
@@ -46,6 +56,11 @@ export function mountFlightTuning({
   onSaved = () => {},
   getDiagnostics = () => ({}),
   onAdvanced,
+  onCalibration,
+  canCalibrate = () => true,
+  getFlightConfiguration = () => null,
+  getPracticeConditions = () => null,
+  responseBenchWorkerURL,
   platformOptions = {},
 } = {}) {
   const translations = new Map(),
@@ -65,12 +80,22 @@ export function mountFlightTuning({
   };
   const root = doc.createElement('dialog');
   root.className = 'fpv-tuning';
-  translatedAttribute(root, 'aria-label', t('Aircraft, rates & throttle', 'Дрон, рейти й газ'));
+  translatedAttribute(root, 'aria-label', t('Setup workbench', 'Майстерня налаштувань'));
   const removers = [],
     buttons = [],
     drafts = new Map(),
     setupDrafts = new Map();
-  let library,
+  let controllerTunes,
+    responseBench,
+    benchSignature = '',
+    inputReviewSignature = null;
+  let workbench,
+    physics,
+    completeDraft,
+    editedSetup,
+    editedSetupId,
+    savedState = false,
+    library,
     selected,
     draft,
     camera,
@@ -82,6 +107,9 @@ export function mountFlightTuning({
     evaluator,
     savedEvaluator,
     imported = null,
+    importComparison = null,
+    importReviewPanel = null,
+    importTechnical = null,
     hashingImport = null,
     draftProvenance = null,
     frame = null,
@@ -143,22 +171,25 @@ export function mountFlightTuning({
     const wrap = el('label', label, parent),
       input = el('input', undefined, wrap);
     input.type = type;
+    if (type === 'checkbox') wrap.className = 'tuning-checkbox';
     translatedAttribute(input, 'aria-label', label);
+    input.dataset.search = (translations.get(label) ?? [label]).join(' ');
     return input;
   };
   const select = (label, choices, parent = root) => {
     const wrap = el('label', label, parent),
       input = el('select', undefined, wrap);
     translatedAttribute(input, 'aria-label', label);
+    input.dataset.search = (translations.get(label) ?? [label]).join(' ');
     for (const [value, text] of choices) {
       const option = el('option', text, input);
       option.value = value;
     }
     return input;
   };
-  const heading = el('h2', t('Aircraft, rates & throttle', 'Дрон, рейти й газ'));
+  const heading = el('h2', t('Setup workbench', 'Майстерня налаштувань'));
   heading.tabIndex = -1;
-  el(
+  const introduction = el(
     'p',
     t(
       'Profiles on this device. Rates control requested rotation; the aircraft determines how quickly it follows.',
@@ -168,11 +199,36 @@ export function mountFlightTuning({
   const status = el('p');
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
+  function currentSetup() {
+    return editedSetup ?? library?.setups.find((item) => item.id === editedSetupId);
+  }
+  function physicalBaseline(setup) {
+    if (setup.preset && listAircraftPresets().some((item) => item.id === setup.preset.id)) {
+      const { aircraft, controller } = createPresetConfiguration(setup.preset.id);
+      return { aircraft, controller };
+    }
+    // Saved numerical configurations remain usable after their catalog entry retires.
+    return setup.advanced ?? null;
+  }
   function report(failure) {
     status.textContent = `${t('Could not apply: ', 'Не вдалося застосувати: ')}${failure.message}`;
+    const invalid = root.querySelector('[aria-invalid="true"]');
+    if (invalid && workbench) {
+      const panel = invalid.closest('[data-section]');
+      if (panel) workbench.show(panel.dataset.section, false);
+      workbench.reveal(invalid);
+      invalid.focus();
+    }
   }
   function clearImportPreview() {
     imported = null;
+    importComparison = null;
+    if (importReviewPanel) {
+      releaseChildren(importReviewPanel);
+      importReviewPanel.replaceChildren();
+      importReviewPanel.hidden = true;
+      importTechnical.hidden = true;
+    }
     if (hashingImport !== null) {
       hashingImport = null;
       status.textContent = t(
@@ -192,12 +248,26 @@ export function mountFlightTuning({
     ),
     aircraftPanel,
   );
+  const aircraftSearch = field(t('Search aircraft', 'Пошук дрона'), 'search', aircraftPanel);
   const aircraftSelect = select(
     t('Aircraft preset', 'Пресет дрона'),
     listAircraftPresets().map((p) => [p.id, `${p.name} · ${p.variant}`]),
     aircraftPanel,
   );
   aircraftSelect.value = listAircraftPresets()[0].id;
+  listen(aircraftSearch, 'input', () => {
+    const query = aircraftSearch.value.toLocaleLowerCase();
+    for (const option of aircraftSelect.options)
+      option.hidden = !option.textContent.toLocaleLowerCase().includes(query);
+  });
+  el(
+    'p',
+    t(
+      'Built-in references are read-only. Use in draft creates your own editable setup.',
+      'Вбудовані еталони незмінні. «Використати в чернетці» створює ваші власні редаговані налаштування.',
+    ),
+    aircraftPanel,
+  );
   const rateChoice = select(
     t('Rates when selecting an aircraft', 'Рейти під час вибору дрона'),
     [
@@ -326,47 +396,57 @@ export function mountFlightTuning({
     );
   }
   listen(aircraftSelect, 'change', paintAircraft);
-  async function useAircraft({ reset = false } = {}) {
+  function useAircraft({ reset = false } = {}) {
     if (rateChoice.value === 'keep') commitNumericInputs();
     remember();
-    const setup = library.setups.find((item) => item.id === library.selectedSetupId);
-    if (reset && !setup.preset)
+    const source = currentSetup();
+    if (reset && !source.preset)
       throw new Error(
         t(
           'This setup has no built-in preset to restore.',
           'Ці налаштування не мають вбудованого пресету для відновлення.',
         ),
       );
-    const profileId = id();
-    await mutate(() =>
-      store.createPresetSetup(
-        {
-          presetId: reset ? setup.preset.id : aircraftSelect.value,
-          setupId: reset ? setup.id : id(),
-          profileId,
-          rates: rateChoice.value,
-          ...(reset ? { replace: true } : {}),
-          ...(rateChoice.value === 'keep'
-            ? {
-                response: clone(draft),
-                ...(currentReceipt() ? { provenance: clone(currentReceipt()) } : {}),
-              }
-            : {}),
-        },
-        library.revision,
-      ),
-    );
-    if (reset) setupDrafts.delete(setup.id);
-    load(profileId);
-    onSaved(store.effective());
+    const preset = getAircraftPreset(reset ? source.preset.id : aircraftSelect.value);
+    const config = createPresetConfiguration(preset.id);
+    const next = {
+      id: reset ? source.id : id(),
+      name: reset ? source.name : preset.name,
+      profileId: selected,
+      camera: config.camera,
+      advanced: { aircraft: config.aircraft, controller: config.controller },
+      preset: config.preset,
+      components: config.components,
+    };
+    if (rateChoice.value !== 'keep') {
+      draft = clone(config.response);
+      draftProvenance = null;
+      profileName.value = `${preset.name} · ${t('SIM starter rates', 'Початкові рейти SIM')}`;
+      algorithmDrafts = {};
+      numericDrafts = {};
+    }
+    editedSetup = next;
+    editedSetupId = next.id;
+    setupDrafts.delete(next.id);
+    remember();
+    // The new setup remains detached until Save; populate its defaults now.
+    setupDrafts.set(next.id, {
+      name: next.name,
+      profileId: selected,
+      cameraText: next.camera,
+      advanced: clone(next.advanced),
+      components: clone(next.components),
+      baseRevision: editRevision,
+    });
+    load(selected);
     status.textContent = t(
-      'Aircraft saved for the next flight. Choose Apply & restart to fly it now.',
-      'Дрон збережено для наступного польоту. Виберіть «Застосувати й перезапустити», щоб полетіти зараз.',
+      'Aircraft added to draft. Test or save when ready.',
+      'Дрон додано до чернетки. Перевірте або збережіть, коли готові.',
     );
   }
-  action(t('Use this aircraft', 'Використати цей дрон'), () => useAircraft(), aircraftPanel);
+  action(t('Use in draft', 'Використати в чернетці'), () => useAircraft(), aircraftPanel);
   action(
-    t('Reset saved aircraft to its preset', 'Скинути збережений дрон до його пресету'),
+    t('Reset draft to aircraft defaults', 'Скинути чернетку до типових значень дрона'),
     () => useAircraft({ reset: true }),
     aircraftPanel,
   );
@@ -377,6 +457,42 @@ export function mountFlightTuning({
   const profileSelect = select(t('Rate profile', 'Профіль рейтів'), [], toolbar);
   const profileName = field(t('Profile name', 'Назва профілю'), 'text', toolbar);
   profileName.maxLength = 120;
+  const libraryPreviews = el('div');
+  libraryPreviews.className = 'tuning-fields';
+  const profilePreview = el('section', undefined, libraryPreviews);
+  translatedAttribute(
+    profilePreview,
+    'aria-label',
+    t('Rate profile preview', 'Перегляд профілю рейтів'),
+  );
+  el('h3', t('Rate profile preview', 'Перегляд профілю рейтів'), profilePreview);
+  const profilePreviewSummary = el('p', undefined, profilePreview);
+  const profilePreviewSvg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  profilePreviewSvg.setAttribute('role', 'img');
+  translatedAttribute(
+    profilePreviewSvg,
+    'aria-label',
+    t('Selected profile rate curves', 'Криві рейтів вибраного профілю'),
+  );
+  profilePreview.append(profilePreviewSvg);
+  const profilePreviewReadouts = el('pre', undefined, profilePreview);
+  const setupPreview = el('section', undefined, libraryPreviews);
+  translatedAttribute(
+    setupPreview,
+    'aria-label',
+    t('Saved setup preview', 'Перегляд збережених налаштувань'),
+  );
+  el('h3', t('Saved setup preview', 'Перегляд збережених налаштувань'), setupPreview);
+  const setupPreviewSummary = el('p', undefined, setupPreview);
+  const setupPreviewReadouts = el('pre', undefined, setupPreview);
+  el(
+    'p',
+    t(
+      'Browsing does not change your draft. Choose Use in draft to apply your selection.',
+      'Перегляд не змінює чернетку. Виберіть «Використати в чернетці», щоб застосувати вибране.',
+    ),
+    libraryPreviews,
+  );
   const affected = el('p');
   const management = el('div');
   management.className = 'tuning-actions';
@@ -495,6 +611,14 @@ export function mountFlightTuning({
     'checkbox',
     editor,
   );
+  el(
+    'p',
+    t(
+      'Center sensitivity changes small-stick response. Maximum rate changes full-stick rotation. More expo softens the centre while retaining the endpoint. These controls request rotation; PID and the aircraft determine the achieved response.',
+      'Чутливість центру змінює реакцію на малий хід стіка. Максимальний рейт визначає обертання за повного ходу. Більше expo пом’якшує центр, зберігаючи крайнє значення. Ці налаштування задають обертання; PID і дрон визначають фактичну реакцію.',
+    ),
+    editor,
+  );
   const values = el('div', undefined, editor);
   values.className = 'tuning-fields';
   const preview = el('section');
@@ -507,9 +631,12 @@ export function mountFlightTuning({
     ),
     preview,
   );
+  const axisLegend = el('div', undefined, preview);
+  axisLegend.className = 'workbench-axis-legend';
   const visibility = Object.fromEntries(
     axes.map((axis) => {
-      const box = field(axisName(axis), 'checkbox', preview);
+      const box = field(axisName(axis), 'checkbox', axisLegend);
+      box.parentNode.style.borderLeft = `3px solid ${colors[axes.indexOf(axis)]}`;
       box.checked = true;
       listen(box, 'change', paintPreview);
       return [axis, box];
@@ -527,7 +654,7 @@ export function mountFlightTuning({
   const readouts = el('pre', undefined, preview);
   const demonstration = el('div', undefined, preview);
   demonstration.className = 'tuning-demonstration';
-  const quad = el('div', '✚', demonstration);
+  const quad = el('div', '', demonstration);
   quad.className = 'tuning-quad';
   quad.setAttribute('aria-hidden', 'true');
   const previewAxis = select(
@@ -541,6 +668,46 @@ export function mountFlightTuning({
     preview,
   );
   Object.assign(previewStick, { min: '-100', max: '100', step: '1', value: '25' });
+  const capturePreview = field(
+    t('Capture live sticks for preview', 'Перехопити стіки для перегляду'),
+    'checkbox',
+    preview,
+  );
+  const captureStatus = el(
+    'p',
+    t(
+      'Sticks navigate menus. Enable capture to drive the rotation preview.',
+      'Стіки керують меню. Увімкніть перехоплення для перегляду обертання.',
+    ),
+    preview,
+  );
+  listen(capturePreview, 'change', () => {
+    captureStatus.textContent = capturePreview.checked
+      ? t(
+          'Preview owns sticks; menu navigation is paused. Press and release controller B to return.',
+          'Стіки керують переглядом; навігацію меню призупинено. Натисніть і відпустіть B контролера для повернення.',
+        )
+      : t('Sticks navigate menus.', 'Стіки керують меню.');
+  });
+  const previewExact = field(
+    t('Preview stick position · exact (%)', 'Положення стіка · точно (%)'),
+    'number',
+    preview,
+  );
+  Object.assign(previewExact, { min: '-100', max: '100', step: '1', value: '25' });
+  listen(previewExact, 'input', () => {
+    if (
+      previewExact.value.trim() &&
+      Number.isFinite(Number(previewExact.value)) &&
+      Math.abs(Number(previewExact.value)) <= 100
+    ) {
+      previewStick.value = previewExact.value;
+      paintInspected();
+    }
+  });
+  listen(previewStick, 'input', () => {
+    previewExact.value = previewStick.value;
+  });
   const motion = field(t('Animate rotation preview', 'Анімувати обертання'), 'checkbox', preview);
   const diagnostics = el('pre', undefined, preview);
   translatedAttribute(diagnostics, 'aria-label', t('Input diagnostics', 'Діагностика введення'));
@@ -590,6 +757,8 @@ export function mountFlightTuning({
     componentPanel,
   );
   const componentSummary = el('p', undefined, componentPanel);
+  let capacityOwnershipNote = null,
+    capacityOwnershipAction = null;
   el(
     'p',
     t(
@@ -622,14 +791,60 @@ export function mountFlightTuning({
       massGrams: payloadChoice.value === 'none' ? 0 : cameraValue(payloadMass, commit),
     };
     if (Object.values(battery).includes(null) || cameraPayload.massGrams === null) return null;
-    const setup = library.setups.find((item) => item.id === library.selectedSetupId);
-    return applyAircraftComponents(setup.advanced.aircraft, componentInventory, {
-      battery,
-      cameraPayload,
-    });
+    const setup = currentSetup();
+    return applyAircraftComponents(
+      physics?.read(commit)?.aircraft ?? setup.advanced.aircraft,
+      componentInventory,
+      {
+        battery,
+        cameraPayload,
+      },
+    );
   }
   function paintComponents() {
     componentPanel.hidden = !componentInventory;
+    const capacityControl = physics?.fields.find(
+      ({ path }) => path === 'aircraft.battery.capacityAh',
+    );
+    if (capacityControl) {
+      // Component capacity has one editing owner. The Expert field mirrors it
+      // explicitly instead of accepting a value that readComponents replaces.
+      capacityControl.input.readOnly = Boolean(componentInventory);
+      if (componentInventory) {
+        if (!capacityOwnershipNote) {
+          capacityOwnershipNote = el(
+            'p',
+            t(
+              'Read-only mirror of battery capacity. Edit the installed battery in Aircraft; both views use the same value.',
+              'Значення є лише відображенням ємності батареї. Редагуйте встановлену батарею в розділі «Дрон»; обидва подання використовують те саме значення.',
+            ),
+            capacityControl.row,
+          );
+          capacityOwnershipNote.id = `workbench-capacity-${id()}`;
+          capacityControl.input.setAttribute('aria-describedby', capacityOwnershipNote.id);
+          capacityOwnershipAction = action(
+            t('Edit installed battery', 'Редагувати встановлену батарею'),
+            () => {
+              workbench.show('aircraft', false);
+              batteryChoice.focus();
+              batteryChoice.scrollIntoView?.({ block: 'center' });
+            },
+            capacityControl.row,
+          );
+        }
+        const text =
+          batteryChoice.value === 'reference'
+            ? String(componentInventory.reference.capacityMah)
+            : batteryCapacity.value;
+        if (text.trim() && Number.isFinite(Number(text)))
+          capacityControl.input.value = String(Number(text) / 1000);
+        capacityControl.input.removeAttribute('aria-invalid');
+      }
+      if (capacityOwnershipNote) {
+        capacityOwnershipNote.hidden = !componentInventory;
+        capacityOwnershipAction.hidden = !componentInventory;
+      }
+    }
     if (!componentInventory) return;
     batteryCapacity.disabled = batteryMass.disabled = batteryChoice.value === 'reference';
     payloadMass.disabled = payloadChoice.value === 'none';
@@ -652,21 +867,6 @@ export function mountFlightTuning({
   }
   for (const input of [batteryChoice, batteryCapacity, batteryMass, payloadChoice, payloadMass])
     for (const event of ['input', 'change']) listen(input, event, paintComponents);
-  action(
-    t('Save battery & physical camera', 'Зберегти акумулятор і фізичну камеру'),
-    async () => {
-      const setup = readSetup();
-      await mutate(() => store.saveSetup(setup, editRevision));
-      setupDrafts.delete(setup.id);
-      load(selected);
-      onSaved(store.effective());
-      status.textContent = t(
-        'Components saved for the next flight. Use Apply & restart to fly them now.',
-        'Компоненти збережено для наступного польоту. Натисніть «Застосувати й перезапустити», щоб випробувати їх зараз.',
-      );
-    },
-    componentPanel,
-  );
   const batteryPracticePanel = el('fieldset', undefined, setupPanel);
   el(
     'legend',
@@ -697,10 +897,7 @@ export function mountFlightTuning({
   action(
     t('Fresh battery & restart flight', 'Свіжа батарея й перезапуск польоту'),
     () => {
-      if (
-        library.setups.find((setup) => setup.id === library.selectedSetupId)?.advanced?.aircraft
-          .format === 'AdvancedAircraft.v2'
-      )
+      if (currentSetup()?.advanced?.aircraft.format === 'AdvancedAircraft.v2')
         return applyAndRestart();
     },
     batteryPracticePanel,
@@ -761,28 +958,23 @@ export function mountFlightTuning({
     setupPanel,
   );
   action(
-    t('Save drone assignment & camera', 'Зберегти профіль і камеру дрона'),
-    async () => {
-      const setup = readSetup();
-      await mutate(() => store.saveSetup(setup, editRevision));
-      setupDrafts.delete(setup.id);
-      onSaved(store.effective());
-    },
-    setupPanel,
-  );
-  action(
     t('Duplicate drone setup', 'Дублювати налаштування дрона'),
-    async () => {
-      remember();
+    () => {
       const setup = readSetup();
+      remember();
       setup.id = id();
       setup.name += ` ${t('copy', 'копія')}`;
-      await mutate(() => store.createAndSelectSetup(setup, library.revision));
+      editedSetup = setup;
+      editedSetupId = setup.id;
+      setupDrafts.set(setup.id, {
+        name: setup.name,
+        profileId: setup.profileId,
+        cameraText: setup.camera,
+        advanced: clone(setup.advanced),
+        components: clone(setup.components),
+        baseRevision: editRevision,
+      });
       load(selected);
-      status.textContent = t(
-        'Drone setup duplicated and selected.',
-        'Налаштування дрона продубльовано й вибрано.',
-      );
     },
     setupPanel,
   );
@@ -801,6 +993,15 @@ export function mountFlightTuning({
     ),
     transfer,
   );
+  const transferSteps = el(
+    'p',
+    t(
+      '1 File or paste → 2 Format & baseline → 3 Review changes → 4 Save new profile',
+      '1 Файл або текст → 2 Формат і основа → 3 Перегляд змін → 4 Збереження профілю',
+    ),
+    transfer,
+  );
+  transferSteps.className = 'workbench-flow';
   const importKind = select(
     t('Operation', 'Операція'),
     [
@@ -881,7 +1082,202 @@ export function mountFlightTuning({
       if (!disposed && generation === uploadGeneration) report(error);
     }
   });
-  const importReview = el('pre', undefined, transfer);
+  importReviewPanel = el('section', undefined, transfer);
+  importReviewPanel.className = 'workbench-import-review';
+  importReviewPanel.hidden = true;
+  importTechnical = el('details', undefined, transfer);
+  importTechnical.hidden = true;
+  el('summary', t('Technical import report', 'Технічний звіт імпорту'), importTechnical);
+  const importReview = el('pre', undefined, importTechnical);
+  function importFields(profile, prefix = '', result = {}) {
+    for (const [key, value] of Object.entries(profile ?? {})) {
+      if (key === 'format') continue;
+      const name = prefix ? `${prefix}.${key}` : key;
+      if (value && typeof value === 'object') importFields(value, name, result);
+      else result[name] = value;
+    }
+    return result;
+  }
+  function paintImportReview() {
+    if (!importComparison) return;
+    releaseChildren(importReviewPanel);
+    importReviewPanel.replaceChildren();
+    importReviewPanel.hidden = importTechnical.hidden = false;
+    const { result, before, after, firmwareBaseline } = importComparison;
+    const native = result.provenance.source.kind === 'native';
+    const baselineLabel = firmwareBaseline
+      ? t('Verified firmware defaults', 'Перевірені типові значення прошивки')
+      : t('Before import draft', 'Чернетка до імпорту');
+    const afterLabel = t('Imported result', 'Результат імпорту');
+    el('h4', t('Review import changes', 'Перегляд змін імпорту'), importReviewPanel);
+    const operation = native
+      ? t('SIM rate profile', 'Профіль рейтів SIM')
+      : result.kind === 'patch'
+        ? t('Snippet / preset patch', 'Фрагмент / патч пресету')
+        : result.kind === 'diff'
+          ? t('Sparse diff', 'Різниця від типових значень')
+          : t('Complete configuration', 'Повна конфігурація');
+    el(
+      'p',
+      `${operation} · ${t('Baseline', 'Основа')}: ${baselineLabel}${firmwareBaseline ? ` · ${result.sourceVersion}` : ''}`,
+      importReviewPanel,
+    );
+    if (!native) {
+      const origin =
+        result.sourceVersionOrigin === 'header'
+          ? t('file header', 'заголовок файлу')
+          : result.sourceVersionOrigin === 'manual'
+            ? t('selected manually', 'вибрано вручну')
+            : t('not specified', 'не вказано');
+      el(
+        'p',
+        `${t('Source firmware', 'Прошивка джерела')}: ${result.sourceVersion ?? '—'} (${origin}) · ${t('Source rate profile', 'Профіль рейтів джерела')}: ${result.selectedProfile}${result.name ? ` · ${result.name}` : ''}`,
+        importReviewPanel,
+      );
+    }
+    el(
+      'p',
+      t(
+        'Only rates and throttle are previewed. Aircraft, camera and controller gains stay unchanged. Saving creates a separate profile; assignment remains explicit.',
+        'Переглядаються лише рейти й газ. Дрон, камера та коефіцієнти контролера не змінюються. Збереження створює окремий профіль; призначення виконується явно.',
+      ),
+      importReviewPanel,
+    );
+    const oldFields = importFields(before.rates);
+    const nextFields = importFields(after.rates);
+    const changed =
+      result.changedFields ??
+      Object.entries(nextFields)
+        .filter(([key, value]) => oldFields[key] !== value)
+        .map(([field, value]) => ({ field, before: oldFields[field], after: value }));
+    const tableWrap = el('div', undefined, importReviewPanel);
+    tableWrap.className = 'controller-tune-preview';
+    const table = el('table', undefined, tableWrap);
+    el(
+      'caption',
+      t('Changed settings · native profile units', 'Змінені параметри · власні одиниці профілю'),
+      table,
+    );
+    const head = el('tr', undefined, el('thead', undefined, table));
+    for (const text of [t('Setting', 'Параметр'), t('Before', 'До'), t('After', 'Після')])
+      el('th', text, head).setAttribute('scope', 'col');
+    const body = el('tbody', undefined, table);
+    for (const item of changed) {
+      const row = el('tr', undefined, body);
+      el('th', item.field, row, false).setAttribute('scope', 'row');
+      el('td', String(item.before ?? '—'), row, false);
+      el('td', String(item.after ?? '—'), row, false);
+    }
+    if (!changed.length)
+      el(
+        'p',
+        t('No rate or throttle values change.', 'Значення рейтів і газу не змінюються.'),
+        importReviewPanel,
+      );
+    const selected = (items) =>
+      (items ?? []).filter((item) => item.profile === result.selectedProfile);
+    const list = (label, items, describe = (item) => String(item)) => {
+      const details = el('details', undefined, importReviewPanel);
+      el('summary', `${label} (${items.length})`, details);
+      const rows = el('ul', undefined, details);
+      for (const item of items.slice(0, 32)) el('li', describe(item).slice(0, 512), rows, false);
+      if (items.length > 32)
+        el(
+          'p',
+          t('More entries are in the technical report.', 'Решта записів — у технічному звіті.'),
+          details,
+        );
+    };
+    list(
+      t('Supported imported settings', 'Підтримувані імпортовані параметри'),
+      native
+        ? Object.keys(nextFields)
+        : result.profiles.find((item) => item.index === result.selectedProfile).assignedFields,
+    );
+    list(
+      t('Inferred firmware defaults', 'Виведені типові значення прошивки'),
+      selected(result.inferredDefaults),
+      (item) => `${item.field}: ${item.value}`,
+    );
+    list(
+      t('Firmware normalization', 'Нормалізація прошивки'),
+      selected(result.normalizations),
+      (item) => `${item.field}: ${item.before} → ${item.after}`,
+    );
+    list(
+      t('Ignored · not applied', 'Пропущено · не застосовано'),
+      result.unapplied ?? [],
+      (item) =>
+        `${t('Line', 'Рядок')} ${item.line}: ${item.command ?? `${item.key} = ${item.value}`} · PID ${item.pidProfile} / ${t('rates', 'рейти')} ${item.rateProfile}`,
+    );
+    list(t('Source warnings', 'Попередження джерела'), result.warnings ?? []);
+    const beforeEvaluator = compile(before),
+      afterEvaluator = compile(after);
+    const graph = (label) => {
+      const node = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      node.setAttribute('role', 'img');
+      node.setAttribute('aria-label', label);
+      importReviewPanel.append(node);
+      return node;
+    };
+    el(
+      'p',
+      `${baselineLabel}: ${t('dashed lines', 'штрихові лінії')} · ${afterLabel}: ${t('solid lines', 'суцільні лінії')}.`,
+      importReviewPanel,
+    );
+    drawWorkbenchCurve(
+      doc,
+      graph(t('Import rates: baseline and result', 'Рейти імпорту: основа й результат')),
+      {
+        maximum: Math.max(
+          1,
+          ...axes.flatMap((axis) => [beforeEvaluator.rate(axis, 1), afterEvaluator.rate(axis, 1)]),
+        ),
+        xLabel: t('Stick travel (%)', 'Хід стіка (%)'),
+        series: axes.flatMap((axis, index) => [
+          {
+            evaluate: (x) => beforeEvaluator.rate(axis, x),
+            color: colors[index],
+            dashed: true,
+            label: `${axisName(axis)} · ${baselineLabel}`,
+          },
+          {
+            evaluate: (x) => afterEvaluator.rate(axis, x),
+            color: colors[index],
+            label: `${axisName(axis)} · ${afterLabel}`,
+          },
+        ]),
+      },
+    );
+    drawWorkbenchCurve(
+      doc,
+      graph(t('Import throttle: baseline and result', 'Газ імпорту: основа й результат')),
+      {
+        maximum: 100,
+        yLabel: t('Output (%)', 'Вихід (%)'),
+        xLabel: t('Stick travel (%)', 'Хід стіка (%)'),
+        series: [
+          {
+            evaluate: (x) => beforeEvaluator.throttle(x) * 100,
+            color: '#f1ca72',
+            dashed: true,
+            label: baselineLabel,
+          },
+          {
+            evaluate: (x) => afterEvaluator.throttle(x) * 100,
+            color: '#55c8a4',
+            label: afterLabel,
+          },
+        ],
+      },
+    );
+    for (const axis of axes)
+      el(
+        'p',
+        `${axisName(axis)} · 50%: ${beforeEvaluator.rate(axis, 0.5).toFixed(1)} → ${afterEvaluator.rate(axis, 0.5).toFixed(1)} °/s · 100%: ${beforeEvaluator.rate(axis, 1).toFixed(1)} → ${afterEvaluator.rate(axis, 1).toFixed(1)} °/s`,
+        importReviewPanel,
+      );
+  }
   function parseImport(source = uploadedSource ?? text.value) {
     if (presetNeedsResolution)
       throw new Error(
@@ -919,14 +1315,27 @@ export function mountFlightTuning({
         : {}),
     });
   }
-  function showImport(result) {
+  function showImport(result, beforeImport) {
+    // Import is one undoable draft edit, including prior unsaved/raw values.
+    updateWorkbench();
     imported = result;
     importReview.textContent = JSON.stringify(result, null, 2);
+    const firmwareBaseline = result.provenance.baseline?.kind === 'firmware-defaults';
+    importComparison = {
+      result,
+      firmwareBaseline,
+      before: firmwareBaseline
+        ? createTunedResponse(betaflightDefaultRateProfile(result.sourceVersion))
+        : clone(beforeImport),
+      after: createTunedResponse(result.profile, beforeImport),
+    };
+    paintImportReview();
     draft = createTunedResponse(result.profile, draft);
     draftProvenance = clone(result.provenance);
     algorithmDrafts = {};
     numericDrafts = {};
     paintFields();
+    updateWorkbench();
     status.textContent = t(
       'Preview only. Save as a new profile, then assign it explicitly.',
       'Лише перегляд. Збережіть новий профіль, а потім призначте його явно.',
@@ -964,7 +1373,7 @@ export function mountFlightTuning({
           if (hashingImport === generation) clearImportPreview();
           return;
         }
-        showImport(result);
+        showImport(result, JSON.parse(originalDraft));
       } catch (error) {
         if (
           !disposed &&
@@ -1102,8 +1511,9 @@ export function mountFlightTuning({
       };
       presetNeedsResolution = false;
       importKind.value = 'patch';
-      importReview.textContent = JSON.stringify(result, null, 2);
       clearImportPreview();
+      importReview.textContent = JSON.stringify(result, null, 2);
+      importTechnical.hidden = false;
       status.textContent = t(
         'Review options, resolve again after changes, then preview the patch against its baseline.',
         'Перевірте опції, повторно розгорніть після змін і перегляньте патч на вибраній основі.',
@@ -1262,11 +1672,30 @@ export function mountFlightTuning({
       },
       setup = readSetup(),
       revision = editRevision;
-    await mutate(() => store.saveEditing(profileId, changes, setup, revision));
+    await mutate(() =>
+      store.saveSetupDraft(
+        {
+          setup,
+          profile: { sourceId: profileId, ...changes },
+          rateAction: sharedChoice.value,
+          newProfileId: id(),
+          newProfileName: changes.name,
+          select: true,
+        },
+        revision,
+      ),
+    );
     if (disposed) return;
+    // Saving replaces the comparison baseline even when the draft itself is unchanged.
+    responseBench?.invalidate();
     drafts.delete(profileId);
     setupDrafts.delete(setup.id);
-    load(profileId);
+    editedSetup = null;
+    editedSetupId = store.snapshot().selectedSetupId;
+    completeDraft = null;
+    load();
+    savedState = true;
+    updateWorkbench();
     onSaved(store.effective());
     status.textContent = t(
       'Saved for the next flight. The current attempt keeps its original configuration.',
@@ -1299,6 +1728,9 @@ export function mountFlightTuning({
         camera: setup.camera,
         ...(setup.advanced ? { advanced: clone(setup.advanced) } : {}),
       };
+      if (!setup.advanced) delete configuration.advanced;
+      configuration.setupId = setup.id;
+      configuration.profileId = selected;
       delete configuration.simulationIdentity;
       close();
       onTest(configuration);
@@ -1309,9 +1741,13 @@ export function mountFlightTuning({
     t('Revert draft', 'Скасувати чернетку'),
     () => {
       drafts.delete(selected);
-      setupDrafts.delete(library.selectedSetupId);
+      setupDrafts.delete(editedSetupId);
       algorithmDrafts = {};
-      load(selected);
+      editedSetup = null;
+      if (!store.snapshot().setups.some((item) => item.id === editedSetupId))
+        editedSetupId = store.snapshot().selectedSetupId;
+      completeDraft = null;
+      load();
     },
     actions,
   );
@@ -1321,6 +1757,9 @@ export function mountFlightTuning({
       drafts.clear();
       setupDrafts.clear();
       store.refresh();
+      editedSetup = null;
+      editedSetupId = store.snapshot().selectedSetupId;
+      completeDraft = null;
       load();
     },
     actions,
@@ -1377,7 +1816,7 @@ export function mountFlightTuning({
         baseRevision: editRevision,
       });
     if (library) {
-      setupDrafts.set(library.selectedSetupId, {
+      setupDrafts.set(editedSetupId, {
         name: setupName.value,
         profileId: assignment.value || null,
         // A draft may be incomplete. Keep its text rather than coercing an
@@ -1385,6 +1824,9 @@ export function mountFlightTuning({
         cameraText: { tilt: tilt.value, verticalFov: fov.value },
         componentsText: componentInventory ? componentText() : null,
         batteryDepletion: batteryDepletion.checked,
+        advanced: clone(physics?.read(false) ?? currentSetup()?.advanced),
+        physicsText: physics?.raw(),
+        components: clone(componentInventory),
         baseRevision: editRevision,
       });
     }
@@ -1402,7 +1844,15 @@ export function mountFlightTuning({
     clearImportPreview();
     uploadGeneration++;
     library = store.snapshot();
-    const setup = library.setups.find((item) => item.id === library.selectedSetupId);
+    editedSetupId ??= library.selectedSetupId;
+    const setup = currentSetup();
+    if (!completeDraft)
+      completeDraft = createSetupDraft({
+        library,
+        setupId: library.setups.some((item) => item.id === setup.id)
+          ? setup.id
+          : library.selectedSetupId,
+      });
     selected = profileId ?? setup.profileId ?? library.defaultProfileId;
     const saved = library.profiles.find((item) => item.id === selected) ?? library.profiles[0];
     selected = saved.id;
@@ -1424,7 +1874,12 @@ export function mountFlightTuning({
     );
     setOptions(
       setupSelect,
-      library.setups.map((p) => [p.id, p.name]),
+      [
+        ...library.setups.map((p) => [p.id, p.name]),
+        ...(!library.setups.some((item) => item.id === setup.id)
+          ? [[setup.id, `${setup.name} · ${t('Draft', 'Чернетка')}`]]
+          : []),
+      ],
       setup.id,
     );
     setOptions(
@@ -1445,7 +1900,12 @@ export function mountFlightTuning({
       aircraftSelect.value = setup.preset.id;
       paintAircraft();
     }
-    componentInventory = setup.components ? clone(setup.components) : null;
+    physics?.load(
+      pendingSetup?.advanced ?? setup.advanced ?? null,
+      physicalBaseline(setup),
+      pendingSetup?.physicsText,
+    );
+    componentInventory = clone(pendingSetup?.components ?? setup.components ?? null);
     if (
       !componentInventory &&
       setup.preset &&
@@ -1487,6 +1947,8 @@ export function mountFlightTuning({
     for (const node of [tilt, fov]) cameraValue(node, false);
     paintAssignment(pendingSetup ? pendingSetup.profileId : setup.profileId);
     paintFields();
+    paintLibraryPreviews();
+    updateWorkbench();
     const error = store.status().error;
     if (error) report(new Error(error));
     else if (editRevision !== library.revision)
@@ -1510,15 +1972,17 @@ export function mountFlightTuning({
         .join(', ') || t('no drones yet', 'ще жоден дрон')
     }${library.defaultProfileId === selected ? t(' · player default', ' · типовий профіль гравця') : ''}`;
   }
-  function readSetup() {
+  function readSetup(commit = true) {
     const setup = {
-      ...clone(library.setups.find((setup) => setup.id === library.selectedSetupId)),
-      id: library.selectedSetupId,
+      ...clone(currentSetup()),
+      id: editedSetupId,
       name: setupName.value,
       profileId: assignment.value || null,
-      camera: { tilt: cameraValue(tilt), verticalFov: cameraValue(fov) },
+      camera: { tilt: cameraValue(tilt, commit), verticalFov: cameraValue(fov, commit) },
     };
-    const components = readComponents();
+    const advanced = physics?.read(commit);
+    if (advanced) setup.advanced = advanced;
+    const components = readComponents(commit);
     if (components) {
       setup.advanced.aircraft = components.aircraft;
       setup.components = components.components;
@@ -1529,13 +1993,18 @@ export function mountFlightTuning({
   }
   function acceptOwnSave(previousRevision, { reloadAircraft = false } = {}) {
     library = store.snapshot();
+    if (reloadAircraft) {
+      editedSetup = null;
+      editedSetupId = library.selectedSetupId;
+      completeDraft = null;
+    }
     if (editRevision === previousRevision) editRevision = library.revision;
     for (const cached of drafts.values())
       if (cached.baseRevision === previousRevision) cached.baseRevision = library.revision;
     for (const cached of setupDrafts.values())
       if (cached.baseRevision === previousRevision) cached.baseRevision = library.revision;
     if (reloadAircraft) {
-      const setup = library.setups.find((item) => item.id === library.selectedSetupId);
+      const setup = currentSetup();
       drafts.delete(selected);
       drafts.delete(setup.profileId ?? library.defaultProfileId);
       // Advanced saves the complete response, camera and component inventory.
@@ -1569,20 +2038,47 @@ export function mountFlightTuning({
     }
   }
   listen(profileSelect, 'change', () => {
-    remember();
-    load(profileSelect.value);
+    const profile = library.profiles.find((p) => p.id === profileSelect.value);
+    paintLibraryPreviews();
+    status.textContent = `${t('Browsing rates', 'Перегляд рейтів')}: ${profile?.name ?? ''}. ${t('Choose Use rate profile in draft to edit.', 'Виберіть «Використати профіль у чернетці».')}`;
   });
+  action(
+    t('Use rate profile in draft', 'Використати профіль у чернетці'),
+    () => {
+      remember();
+      const next = profileSelect.value;
+      load(next);
+      assignment.value = next;
+      updateWorkbench();
+    },
+    toolbar,
+  );
   listen(setupSelect, 'change', () => {
+    paintLibraryPreviews();
+    status.textContent = t(
+      'Browsing saved setups. Choose Use saved setup in draft to edit.',
+      'Перегляд збережених налаштувань. Виберіть «Використати налаштування в чернетці».',
+    );
+  });
+  action(
+    t('Use saved setup in draft', 'Використати налаштування в чернетці'),
+    () => {
+      if (setupSelect.value === editedSetupId) return;
+      remember();
+      editedSetupId = setupSelect.value;
+      editedSetup = null;
+      completeDraft = null;
+      load();
+    },
+    toolbar,
+  );
+  listen(assignment, 'change', () => {
+    const assigned = assignment.value,
+      next = assigned || library.defaultProfileId;
     remember();
-    void mutate(() => store.selectSetup(setupSelect.value, library.revision))
-      .then(() => {
-        load();
-        onSaved(store.effective());
-      })
-      .catch((failure) => {
-        setupSelect.value = library.selectedSetupId;
-        report(failure);
-      });
+    load(next);
+    assignment.value = assigned;
+    updateWorkbench();
   });
   listen(algorithm, 'change', () => {
     const old = draft.format === TUNED_RESPONSE_FORMAT ? draft.rates.algorithm : 'legacy';
@@ -1853,7 +2349,7 @@ export function mountFlightTuning({
         draft.maxTilt = value;
       },
     );
-    number(
+    const legacyResponse = number(
       'responseTicks',
       t('Legacy airframe response (50 Hz ticks)', 'Реакція класичної моделі (такти 50 Гц)'),
       draft.responseTicks,
@@ -1864,6 +2360,17 @@ export function mountFlightTuning({
         draft.responseTicks = value;
       },
     );
+    if (currentSetup().advanced) {
+      legacyResponse.input.disabled = legacyResponse.slider.disabled = true;
+      el(
+        'small',
+        t(
+          'Inactive for this aircraft backend; preserved for Legacy flights.',
+          'Неактивно для цієї фізичної моделі; збережено для класичних польотів.',
+        ),
+        legacyResponse.input.parentNode.parentNode,
+      );
+    }
     paintPreview();
   }
   function compile(response) {
@@ -1875,39 +2382,110 @@ export function mountFlightTuning({
           throttle: (x) => x,
         };
   }
+  function rateReadouts(response, evaluated) {
+    return axes
+      .map(
+        (axis) =>
+          `${axisName(axis)} · ${t('center slope', 'нахил у центрі')} ${(response.format === TUNED_RESPONSE_FORMAT ? evaluated.rate(axis, 0.000001) * 1000000 : response.maxRate * (1 - response.expo / 100)).toFixed(1)} · 50% ${evaluated.rate(axis, 0.5).toFixed(1)} · 100% ${evaluated.rate(axis, 1).toFixed(1)} °/s`,
+      )
+      .join('\n');
+  }
+  function rateAlgorithm(response) {
+    return response.format === TUNED_RESPONSE_FORMAT
+      ? `${title(response.rates.algorithm)}${response.rates.algorithm === 'quick' ? ` · ${t('RC expo mode', 'Режим RC expo')}: ${response.rates.quickRatesRcExpo ? t('on', 'увімкнено') : t('off', 'вимкнено')}` : ''}`
+      : t('Legacy feel', 'Класична реакція');
+  }
+  function paintLibraryPreviews() {
+    if (!library) return;
+    const profile = library.profiles.find((item) => item.id === profileSelect.value);
+    profilePreview.hidden = !profile;
+    if (profile) {
+      const evaluated = compile(profile.response);
+      profilePreviewSummary.textContent = `${profile.name} · ${rateAlgorithm(profile.response)}`;
+      profilePreviewReadouts.textContent = rateReadouts(profile.response, evaluated);
+      drawWorkbenchCurve(doc, profilePreviewSvg, {
+        maximum: Math.max(1, ...axes.map((axis) => evaluated.rate(axis, 1))),
+        xLabel: t('Stick travel (%)', 'Хід стіка (%)'),
+        series: axes.map((axis, index) => ({
+          evaluate: (x) => evaluated.rate(axis, x),
+          color: colors[index],
+          label: axisName(axis),
+          dashed: index === 1,
+        })),
+      });
+    }
+    const setup = library.setups.find((item) => item.id === setupSelect.value);
+    if (!setup) {
+      setupPreviewSummary.textContent = t(
+        'This setup is not saved yet. Inspect the current draft in Aircraft, Rates and Camera.',
+        'Ці налаштування ще не збережено. Перегляньте поточну чернетку в розділах «Дрон», «Рейти» та «Камера».',
+      );
+      setupPreviewReadouts.textContent = '';
+      return;
+    }
+    const assigned = library.profiles.find(
+      (item) => item.id === (setup.profileId ?? library.defaultProfileId),
+    );
+    const aircraft = setup.advanced?.aircraft;
+    const preset = listAircraftPresets().find((item) => item.id === setup.preset?.id);
+    setupPreviewSummary.textContent = `${setup.name} · ${preset?.name ?? aircraft?.id ?? t('Legacy aircraft', 'Класичний дрон')}${aircraft ? ` · ${(aircraft.mass * 1000).toFixed(1)} ${t('g flying weight', 'г польотної маси')}` : ''}`;
+    setupPreviewReadouts.textContent = `${t('Camera', 'Камера')}: ${t('tilt', 'нахил')} ${setup.camera.tilt}° · ${t('vertical FOV', 'вертикальне поле зору')} ${setup.camera.verticalFov}°\n${t('Rates', 'Рейти')}: ${assigned.name} · ${rateAlgorithm(assigned.response)}${setup.profileId ? '' : ` · ${t('Player default', 'Типовий профіль гравця')}`}\n${rateReadouts(assigned.response, compile(assigned.response))}`;
+  }
+  function paintInspected() {
+    if (evaluator)
+      inspected.textContent = `${previewStick.value}% · ${axisName(previewAxis.value)} ${evaluator.rate(previewAxis.value, Number(previewStick.value) / 100).toFixed(1)} °/s`;
+  }
   function paintPreview() {
     if (!draft) return;
     try {
       paintReceipt();
       evaluator = compile(draft);
+      paintInspected();
       savedEvaluator = compile(library.profiles.find((p) => p.id === selected).response);
-      svg.replaceChildren();
       const maximum = Math.max(
         1,
         ...axes.flatMap((axis) => [evaluator.rate(axis, 1), savedEvaluator.rate(axis, 1)]),
       );
-      for (const [i, axis] of axes.entries())
-        if (visibility[axis].checked) {
-          for (const [engine, dashed] of [
-            [savedEvaluator, true],
-            [evaluator, false],
-          ]) {
-            const path = doc.createElementNS('http://www.w3.org/2000/svg', 'path');
-            path.setAttribute(
-              'd',
-              Array.from(
-                { length: 101 },
-                (_, x) =>
-                  `${x ? 'L' : 'M'}${20 + x * 5.6},${190 - (engine.rate(axis, x / 100) / maximum) * 175}`,
-              ).join(' '),
-            );
-            path.setAttribute('fill', 'none');
-            path.setAttribute('stroke', colors[i]);
-            path.setAttribute('stroke-width', '2');
-            if (dashed) path.setAttribute('stroke-dasharray', '5 4');
-            svg.append(path);
-          }
-        }
+      drawWorkbenchCurve(doc, svg, {
+        maximum,
+        xLabel: t('Stick travel (%)', 'Хід стіка (%)'),
+        series: axes.flatMap((axis, i) =>
+          visibility[axis].checked
+            ? [
+                {
+                  evaluate: (x) => savedEvaluator.rate(axis, x),
+                  color: colors[i],
+                  dashed: true,
+                  label: `${axisName(axis)} ${t('saved', 'збережене')}`,
+                },
+                {
+                  evaluate: (x) => evaluator.rate(axis, x),
+                  color: colors[i],
+                  label: `${axisName(axis)} ${t('draft', 'чернетка')}`,
+                },
+              ]
+            : [],
+        ),
+      });
+      if (throttleSvg)
+        drawWorkbenchCurve(doc, throttleSvg, {
+          maximum: 100,
+          yLabel: t('Output (%)', 'Вихід (%)'),
+          xLabel: t('Stick travel (%)', 'Хід стіка (%)'),
+          series: [
+            {
+              evaluate: (x) => savedEvaluator.throttle(x) * 100,
+              color: '#f1ca72',
+              dashed: true,
+              label: t('Saved throttle', 'Збережений газ'),
+            },
+            {
+              evaluate: (x) => evaluator.throttle(x) * 100,
+              color: '#55c8a4',
+              label: t('Draft throttle', 'Газ чернетки'),
+            },
+          ],
+        });
       readouts.textContent =
         axes
           .filter((axis) => visibility[axis].checked)
@@ -1929,19 +2507,35 @@ export function mountFlightTuning({
       frame = null;
       return;
     }
-    if (motion.checked && evaluator && previousTime !== null)
+    if (
+      motion.checked &&
+      !doc.hidden &&
+      workbench?.current() === 'rates' &&
+      previewDisclosure.open &&
+      !win.matchMedia?.('(prefers-reduced-motion: reduce)').matches &&
+      doc.body?.dataset.effects !== 'reduced' &&
+      evaluator &&
+      previousTime !== null
+    )
       angle =
         (angle +
-          evaluator.rate(previewAxis.value, Number(previewStick.value) / 100) *
+          evaluator.rate(
+            previewAxis.value,
+            capturePreview.checked
+              ? getDiagnostics().context === 'live-preview'
+                ? (getDiagnostics().calibrated?.[previewAxis.value] ?? 0)
+                : 0
+              : Number(previewStick.value) / 100,
+          ) *
             Math.min(0.05, (time - previousTime) / 1000)) %
         360;
     previousTime = time;
     const rotation =
       previewAxis.value === 'roll'
-        ? 'rotateZ'
+        ? 'rotateY'
         : previewAxis.value === 'pitch'
           ? 'rotateX'
-          : 'rotateY';
+          : 'rotateZ';
     quad.style.transform = `${rotation}(${angle}deg)`;
     if (time - lastDiagnostic > 200) {
       lastDiagnostic = time;
@@ -1976,7 +2570,16 @@ export function mountFlightTuning({
               ]),
             )
           : null;
-      diagnostics.textContent = `${t('Input source', 'Джерело вводу')}: ${source}\n${context}\n${t('Raw input', 'Сире введення')}: ${JSON.stringify(available(info.raw))}\n${t('Calibrated', 'Каліброване')}: ${JSON.stringify(available(info.calibrated))}\n${t('Requested rotation (draft °/s)', 'Задане обертання (чернетка °/с)')}: ${JSON.stringify(available(requested))}\n${t('Achieved rotation (last committed flight °/s)', 'Досягнуте обертання (останній прийнятий крок польоту °/с)')}: ${JSON.stringify(available(info.achieved))}\n${t('Flight tick', 'Крок польоту')}: ${available(info.flightTick)}\n${t('Browser sample age (ms)', 'Вік зразка браузера (мс)')}: ${available(info.sampleAgeMs)} · ${t('Observed timestamp cadence (Hz)', 'Спостережувана частота міток (Гц)')}: ${available(info.cadenceHz)}`;
+      for (const [axis, { meter, output }] of inputMeters) {
+        const value = info.calibrated?.[axis];
+        meter.hidden = !Number.isFinite(value);
+        if (Number.isFinite(value)) meter.value = value;
+        output.textContent = Number.isFinite(value)
+          ? `${Math.round(value * 100)}%`
+          : t('unavailable', 'недоступно');
+      }
+      inputReadiness.textContent = `${t('Input source', 'Джерело вводу')}: ${source} · ${info.calibrated ? t('Input available; check mapping and centre before tuning.', 'Ввід доступний; перевірте канали й центр перед налаштуванням.') : t('No live calibrated sample. Open calibration or check your input source.', 'Немає каліброваного зразка. Відкрийте калібрування або перевірте джерело вводу.')}`;
+      diagnostics.textContent = `${info.mapping ? `${t('Mapping', 'Призначення')}: ${info.mapping} · ${t('Throttle change input', 'Ввід зміни газу')}: ${info.throttleRate ?? '—'} (${t('normalized; flight throttle unavailable', 'нормалізовано; газ польоту недоступний')})\n` : ''}${t('Input source', 'Джерело вводу')}: ${source}\n${context}\n${t('Raw input', 'Сире введення')}: ${JSON.stringify(available(info.raw))}\n${t('Calibrated', 'Каліброване')}: ${JSON.stringify(available(info.calibrated))}\n${t('Requested rotation (draft °/s)', 'Задане обертання (чернетка °/с)')}: ${JSON.stringify(available(requested))}\n${t('Achieved rotation (last committed flight °/s)', 'Досягнуте обертання (останній прийнятий крок польоту °/с)')}: ${JSON.stringify(available(info.achieved))}\n${t('Flight tick', 'Крок польоту')}: ${available(info.flightTick)}\n${t('Browser sample age (ms)', 'Вік зразка браузера (мс)')}: ${available(info.sampleAgeMs)} · ${t('Observed timestamp cadence (Hz)', 'Спостережувана частота міток (Гц)')}: ${available(info.cadenceHz)}`;
     }
     frame = win.requestAnimationFrame(animate);
   }
@@ -2000,15 +2603,25 @@ export function mountFlightTuning({
   }
   function close() {
     openEpoch++;
+    responseBench?.invalidate();
+    controllerTunes?.invalidate();
     clearImportPreview();
     remember();
     if (root.open) root.close();
     if (frame !== null) win.cancelAnimationFrame(frame);
     frame = null;
+    capturePreview.checked = false;
     returnButton.hidden = !draftFlightActive;
     onClose({ testing });
     if (opener?.isConnected) opener.focus();
   }
+  listen(doc, 'visibilitychange', () => {
+    if (doc.hidden) {
+      if (frame !== null) win.cancelAnimationFrame(frame);
+      frame = null;
+      previousTime = null;
+    } else if (root.open && frame === null) frame = win.requestAnimationFrame(animate);
+  });
   listen(root, 'cancel', (event) => {
     event.preventDefault();
     close();
@@ -2020,6 +2633,521 @@ export function mountFlightTuning({
         'Інша вкладка змінила бібліотеку. Експортуйте чернетку перед оновленням. Збереження застарілої чернетки заблоковано.',
       );
   });
+  const sharedChoice = select(
+    t('When saving edited rates', 'Під час збереження змінених рейтів'),
+    [
+      ['copy', t('Save as a copy', 'Зберегти як копію')],
+      ['update', t('Update shared profile', 'Оновити спільний профіль')],
+    ],
+    management,
+  );
+  sharedChoice.value = 'copy';
+  workbench = mountWorkbenchChrome({
+    document: doc,
+    window: win,
+    root,
+    t,
+    listen,
+    action,
+    el,
+    heading,
+    status,
+    onSection(section) {
+      if (section === 'rates') return;
+      capturePreview.checked = false;
+      captureStatus.textContent = t('Sticks navigate menus.', 'Стіки керують меню.');
+    },
+  });
+  workbench.add('overview', introduction);
+  const flow = el(
+    'p',
+    t('Input → Rates → Controller → Aircraft → Camera', 'Ввід → Рейти → Контролер → Дрон → Камера'),
+    workbench.panel('overview'),
+  );
+  flow.className = 'workbench-flow';
+  const inputReadiness = el('p', '', workbench.panel('overview'));
+  const inputReviewed = field(
+    t(
+      'I checked my input connection, mapping and stick centres',
+      'Я перевірив з’єднання, призначення каналів і центри стіків',
+    ),
+    'checkbox',
+    workbench.panel('overview'),
+  );
+  function readinessSignature() {
+    const conditions = getPracticeConditions();
+    return JSON.stringify(
+      conditions?.input ?? { source: getDiagnostics().source ?? 'unavailable' },
+    );
+  }
+  listen(inputReviewed, 'change', () => {
+    inputReviewSignature = inputReviewed.checked ? readinessSignature() : null;
+    responseBench?.invalidate();
+  });
+  const inputMeters = new Map();
+  const inputMeterGroup = el('div', undefined, workbench.panel('overview'));
+  inputMeterGroup.className = 'workbench-input-meters';
+  for (const axis of [...axes, 'throttle']) {
+    const label = axis === 'throttle' ? t('Throttle', 'Газ') : axisName(axis);
+    const row = el('label', label, inputMeterGroup);
+    const meter = el('meter', undefined, row),
+      output = el('output', '—', row);
+    meter.min = axis === 'throttle' ? 0 : -1;
+    meter.max = 1;
+    meter.value = 0;
+    translatedAttribute(meter, 'aria-label', label);
+    inputMeters.set(axis, { meter, output });
+  }
+  const assignmentHelp = el(
+    'p',
+    t(
+      'The assigned profile is the saved source. Edited rates shown in the header will be saved as a copy unless you choose to update the shared profile in Library.',
+      'Призначений профіль — збережене джерело. Змінені рейти в заголовку буде збережено як копію, якщо в Бібліотеці не вибрати оновлення спільного профілю.',
+    ),
+    setupPanel,
+  );
+  assignmentHelp.className = 'workbench-help';
+  if (onCalibration)
+    action(
+      t('Check input & calibration', 'Перевірити ввід і калібрування'),
+      async () => {
+        if (!canCalibrate()) {
+          status.textContent = t(
+            'Input calibration is unavailable during replay. Your draft is retained.',
+            'Калібрування вводу недоступне під час відтворення. Чернетку збережено.',
+          );
+          return;
+        }
+        remember();
+        const returnOpener = opener;
+        const returnToDraft = () => open({ keepDraft: true, openerElement: returnOpener });
+        close();
+        try {
+          if ((await onCalibration(returnToDraft)) === false) returnToDraft();
+        } catch (failure) {
+          returnToDraft();
+          throw failure;
+        }
+      },
+      workbench.panel('overview'),
+    );
+  const changesView = el('details', undefined, workbench.panel('overview'));
+  el('summary', t('Show changed settings', 'Показати змінені налаштування'), changesView);
+  const changesList = el('ul', undefined, changesView);
+  const aircraftDisclosure = el('details', undefined, workbench.panel('overview'));
+  aircraftDisclosure.open = true;
+  el('summary', t('Current aircraft preview', 'Перегляд поточного дрона'), aircraftDisclosure);
+  const draftAircraftView = el('div', undefined, aircraftDisclosure);
+  workbench.add('aircraft', aircraftPanel, setupPanel);
+  workbench.add('rates', editor, preview);
+  workbench.add('camera', tilt.parentNode, fov.parentNode);
+  const cameraSliders = [];
+  for (const exact of [tilt, fov]) {
+    const slider = field(exact.getAttribute('aria-label'), 'range', workbench.panel('camera'));
+    Object.assign(slider, { min: exact.min, max: exact.max, step: '0.1', value: exact.value });
+    cameraSliders.push({ exact, slider });
+    listen(slider, 'input', () => {
+      exact.value = slider.value;
+      cameraValue(exact, false);
+      updateWorkbench();
+    });
+    listen(exact, 'input', () => {
+      if (cameraValue(exact, false) !== null) slider.value = exact.value;
+    });
+  }
+  const cameraSvg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  cameraSvg.setAttribute('role', 'img');
+  translatedAttribute(
+    cameraSvg,
+    'aria-label',
+    t('Camera framing preview at 16:9', 'Попередній перегляд камери 16:9'),
+  );
+  const cameraDisclosure = el('details', undefined, workbench.panel('camera'));
+  cameraDisclosure.open = true;
+  cameraDisclosure.className = 'workbench-camera-preview';
+  el('summary', t('Camera framing preview', 'Попередній перегляд кадру камери'), cameraDisclosure);
+  cameraDisclosure.append(cameraSvg);
+  el(
+    'p',
+    t(
+      'Vertical FOV stays constant as the screen shape changes; horizontal FOV depends on aspect ratio. Tilt and FOV change only your view.',
+      'Вертикальне поле зору незмінне за різних пропорцій екрана; горизонтальне залежить від них. Нахил і поле зору змінюють лише огляд.',
+    ),
+    workbench.panel('camera'),
+  );
+  workbench.add('library', toolbar, libraryPreviews, affected, management, transfer);
+  transfer.open = false;
+  physics = mountWorkbenchPhysics({
+    t,
+    el,
+    field,
+    action,
+    listen,
+    aircraftParent: workbench.panel('aircraft'),
+    controllerParent: workbench.panel('controller'),
+    onChange: () => {
+      paintComponents();
+      updateWorkbench();
+    },
+  });
+  action(
+    t('Edit exact PID gains', 'Редагувати точні коефіцієнти PID'),
+    () => {
+      workbench.reveal(workbench.panel('controller'));
+    },
+    workbench.panel('controller'),
+  );
+  action(
+    t('Restore saved controller', 'Відновити збережений контролер'),
+    () => {
+      const current = physics.read();
+      if (!current) return;
+      current.controller = clone(currentSetup().advanced.controller);
+      const setup = currentSetup();
+      physics.load(current, physicalBaseline(setup));
+      paintComponents();
+      updateWorkbench();
+    },
+    workbench.panel('controller'),
+  );
+  const throttleSvg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  throttleSvg.setAttribute('role', 'img');
+  translatedAttribute(
+    throttleSvg,
+    'aria-label',
+    t('Throttle curve: saved and draft', 'Крива газу: збережене й чернетка'),
+  );
+  preview.append(throttleSvg);
+  el('h4', t('Commanded rotation', 'Задане обертання'), demonstration);
+  const inspected = el('p', '', preview);
+  translatedAttribute(inspected, 'aria-label', t('Inspected rate', 'Рейт у вибраній точці'));
+  listen(previewStick, 'input', paintInspected);
+  listen(previewAxis, 'change', paintInspected);
+  const previewDisclosure = doc.createElement('details');
+  previewDisclosure.open = true;
+  el(
+    'summary',
+    t('Visual previews and comparisons', 'Наочні перегляди й порівняння'),
+    previewDisclosure,
+  );
+  for (const child of [...preview.children]) previewDisclosure.append(child);
+  preview.append(previewDisclosure);
+  const diagnosticDetails = el('details', undefined, workbench.panel('overview'));
+  el('summary', t('Input diagnostics', 'Діагностика введення'), diagnosticDetails);
+  diagnosticDetails.append(diagnostics);
+  root.append(actions);
+  actions.className = 'tuning-actions workbench-actions';
+  // Explanations belong to Overview; the action bar remains compact on small screens.
+  for (const button of [...actions.querySelectorAll('button')]) {
+    if (button.textContent === t('Refresh library', 'Оновити бібліотеку'))
+      workbench.panel('library').append(button);
+    if (
+      button.textContent ===
+      t('Advanced reference quad · experimental', 'Еталонний дрон Advanced · експериментальний')
+    )
+      workbench.panel('controller').append(button);
+  }
+  for (const paragraph of [...actions.querySelectorAll('p')])
+    workbench.panel('overview').append(paragraph);
+  action(
+    t('Undo last edit', 'Скасувати останню зміну'),
+    () => {
+      if (!completeDraft?.undo()) return;
+      const editor = completeDraft.state().editorState;
+      if (editor) {
+        editedSetup = clone(editor.setup);
+        editedSetupId = editor.setup.id;
+        drafts.set(editor.profileId, {
+          response: clone(editor.response),
+          name: editor.profileName,
+          provenance: clone(editor.provenance),
+          algorithms: clone(editor.algorithms),
+          numeric: clone(editor.numeric),
+          baseRevision: editRevision,
+        });
+        setupDrafts.set(editor.setup.id, {
+          name: editor.setupName,
+          profileId: editor.assignment,
+          cameraText: clone(editor.cameraText),
+          componentsText: clone(editor.componentsText),
+          batteryDepletion: editor.batteryDepletion,
+          advanced: clone(editor.advanced),
+          physicsText: clone(editor.physicsText),
+          components: clone(editor.components),
+          baseRevision: editRevision,
+        });
+        load(editor.profileId);
+        return;
+      }
+      const state = completeDraft.snapshot();
+      editedSetup = clone(state.setup);
+      editedSetupId = state.setup.id;
+      drafts.set(state.profile.sourceId, {
+        response: state.profile.response,
+        name: state.profile.name,
+        provenance: state.profile.provenance,
+        baseRevision: editRevision,
+      });
+      setupDrafts.set(state.setup.id, {
+        name: state.setup.name,
+        profileId: state.setup.profileId,
+        cameraText: state.setup.camera,
+        advanced: state.setup.advanced,
+        components: state.setup.components,
+        baseRevision: editRevision,
+      });
+      load(state.profile.sourceId);
+    },
+    actions,
+  );
+  function captureEditorState() {
+    return {
+      profileId: selected,
+      profileName: profileName.value,
+      response: clone(draft),
+      provenance: clone(currentReceipt()),
+      algorithms: clone(algorithmDrafts),
+      numeric: clone(numericDrafts),
+      setup: clone(currentSetup()),
+      setupName: setupName.value,
+      assignment: assignment.value || null,
+      cameraText: { tilt: tilt.value, verticalFov: fov.value },
+      componentsText: componentInventory ? componentText() : null,
+      batteryDepletion: batteryDepletion.checked,
+      advanced: clone(physics?.read(false) ?? currentSetup()?.advanced ?? null),
+      physicsText: physics?.raw() ?? {},
+      components: clone(componentInventory),
+    };
+  }
+  function updateWorkbench() {
+    if (!workbench || !library || !draft || !physics) return;
+    let setup;
+    try {
+      setup = readSetup(false);
+    } catch {
+      completeDraft?.capture(completeDraft.snapshot(), captureEditorState());
+      responseBench?.invalidate();
+      return;
+    }
+    try {
+      completeDraft?.capture(
+        {
+          setup,
+          profile: {
+            sourceId: selected,
+            name: profileName.value,
+            response: clone(draft),
+            ...(currentReceipt() ? { provenance: clone(currentReceipt()) } : {}),
+          },
+        },
+        captureEditorState(),
+      );
+    } catch {
+      /* Incomplete text stays editable. Save validates the complete setup. */
+    }
+    for (const { exact, slider } of cameraSliders)
+      if (exact.value.trim() && Number.isFinite(Number(exact.value))) slider.value = exact.value;
+    const changes = completeDraft?.changes() ?? [];
+    const invalid = [...root.querySelectorAll('[aria-invalid="true"]')].length;
+    workbench.summary(
+      `${setupName.value} · ${profileName.value} · ${changes.length} ${t('changes', 'змін')}${invalid ? ` · ${invalid} ${t('unfinished values', 'незавершених значень')}` : ''} · ${changes.length || invalid ? t('Draft', 'Чернетка') : savedState ? t('Saved for next flight', 'Збережено для наступного польоту') : getFlightConfiguration() && JSON.stringify(getFlightConfiguration().response) === JSON.stringify(draft) && JSON.stringify(getFlightConfiguration().camera) === JSON.stringify(setup.camera) && JSON.stringify(getFlightConfiguration().advanced) === JSON.stringify(setup.advanced) ? t('Used by this flight', 'Використовується цим польотом') : t('Saved for next flight', 'Збережено для наступного польоту')}`,
+    );
+    changesList.replaceChildren();
+    for (const change of changes)
+      el(
+        'li',
+        `${{ aircraft: t('Aircraft', 'Дрон'), rates: t('Rates', 'Рейти'), controller: t('Controller', 'Контролер'), camera: t('Camera', 'Камера') }[change.group]} · ${change.path.split('.').slice(-2).join(' ')}: ${JSON.stringify(change.before) ?? '—'} → ${JSON.stringify(change.after) ?? '—'}`,
+        changesList,
+        false,
+      );
+    if (setup.camera.tilt !== null && setup.camera.verticalFov !== null)
+      paintCameraFraming(doc, cameraSvg, setup.camera.tilt, setup.camera.verticalFov, t);
+    if (setup.advanced?.aircraft.format === 'AdvancedAircraft.v2') {
+      const aircraft = setup.advanced.aircraft;
+      const figure = createAircraftPreview({
+        document: doc,
+        aircraft,
+        name: setup.name,
+        wheelbaseMm: Math.round(aircraft.armLength * 2000),
+        locale: locale(),
+      });
+      draftAircraftView.replaceChildren(figure);
+      const perf = aircraftPerformance(aircraft);
+      el(
+        'p',
+        `${t('Current draft', 'Поточна чернетка')}: ${(aircraft.mass * 1000).toFixed(2)} g · ${t('Hover', 'Зависання')} ${perf.hoverThrottle === null ? '—' : `${(perf.hoverThrottle * 100).toFixed(1)}%`} · ${t('Thrust / weight', 'Тяга / вага')} ${perf.thrustToWeight.toFixed(2)}`,
+        draftAircraftView,
+        false,
+      );
+      const geometryKey = JSON.stringify({
+        id: aircraft.id,
+        name: setup.name,
+        geometry: aircraft.geometry,
+        armLength: aircraft.armLength,
+        locale: locale(),
+      });
+      if (!quad.firstChild || quad.dataset.geometry !== geometryKey) {
+        const preview = createAircraftPreview({
+          document: doc,
+          aircraft,
+          name: setup.name,
+          wheelbaseMm: Math.round(aircraft.armLength * 2000),
+          locale: locale(),
+        });
+        quad.replaceChildren(preview.querySelector('svg'));
+        quad.dataset.geometry = geometryKey;
+      }
+    } else {
+      draftAircraftView.replaceChildren();
+      const key = `legacy-generic:${locale()}`;
+      if (quad.dataset.geometry !== key) {
+        // This illustrates the commanded axes, not a measured Legacy airframe.
+        const diagram = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        diagram.setAttribute('viewBox', '0 0 180 120');
+        diagram.setAttribute('role', 'img');
+        diagram.setAttribute(
+          'aria-label',
+          t(
+            'Generic commanded rotation · illustrative geometry',
+            'Умовний перегляд заданого обертання · ілюстративна геометрія',
+          ),
+        );
+        const part = (tag, attributes) => {
+          const node = doc.createElementNS('http://www.w3.org/2000/svg', tag);
+          for (const [name, value] of Object.entries(attributes)) node.setAttribute(name, value);
+          diagram.append(node);
+        };
+        part('path', {
+          d: 'M48 30 L132 90 M48 90 L132 30',
+          stroke: '#91a7ba',
+          'stroke-width': '7',
+          fill: 'none',
+        });
+        for (const [cx, cy] of [
+          [48, 30],
+          [132, 30],
+          [48, 90],
+          [132, 90],
+        ])
+          part('circle', { cx, cy, r: '18', fill: 'none', stroke: '#55c8a4', 'stroke-width': '3' });
+        part('rect', {
+          x: '77',
+          y: '39',
+          width: '26',
+          height: '42',
+          rx: '5',
+          fill: '#304f68',
+          stroke: '#edf5ff',
+        });
+        part('path', {
+          d: 'M90 40 V17 M84 24 L90 17 L96 24',
+          stroke: '#f1ca72',
+          'stroke-width': '3',
+          fill: 'none',
+        });
+        quad.replaceChildren(diagram);
+        quad.dataset.geometry = key;
+      }
+    }
+    workbench.refresh();
+    const nextSignature = JSON.stringify({ setup, response: draft, raw: captureEditorState() });
+    if (nextSignature !== benchSignature) {
+      benchSignature = nextSignature;
+      responseBench?.invalidate();
+      controllerTunes?.refresh();
+    }
+  }
+  function comparisonConfiguration({ saved = false } = {}) {
+    if (!library || !draft) return null;
+    if (!saved && root.querySelector('[aria-invalid="true"]'))
+      throw new Error(
+        t(
+          'Complete valid draft values before comparison.',
+          'Перед порівнянням введіть коректні значення чернетки.',
+        ),
+      );
+    const baseline = saved ? completeDraft.baseline() : null;
+    const setup = baseline?.setup ?? readSetup(false);
+    return {
+      format: 'FpvEffectiveFlightConfig.v1',
+      response: clone(baseline?.profile.response ?? draft),
+      camera: clone(setup.camera),
+      setupId: setup.id,
+      profileId: baseline?.profile.sourceId ?? selected,
+      ...(setup.advanced ? { advanced: clone(setup.advanced) } : {}),
+    };
+  }
+  function useController(controller) {
+    const configuration = physics.read();
+    if (!configuration)
+      throw new Error(t('Select a compatible aircraft first.', 'Спочатку оберіть сумісний дрон.'));
+    configuration.controller = clone(controller);
+    const raw = Object.fromEntries(
+      Object.entries(physics.raw()).filter(([path]) => !path.startsWith('controller.')),
+    );
+    physics.load(configuration, physicalBaseline(currentSetup()), raw);
+    updateWorkbench();
+    workbench.show('controller');
+    status.textContent = t(
+      'Controller values copied into the draft. Test, compare and save when ready.',
+      'Значення контролера скопійовано в чернетку. Перевірте, порівняйте й збережіть, коли будете готові.',
+    );
+  }
+  controllerTunes = createControllerTunePanel({
+    document: doc,
+    window: win,
+    locale,
+    getConfiguration: () => comparisonConfiguration(),
+    onUse: useController,
+    report,
+    platformOptions,
+  });
+  workbench.panel('library').append(controllerTunes.root);
+  action(
+    t('Choose or save a controller tune', 'Вибрати або зберегти налаштування контролера'),
+    () => {
+      workbench.show('library');
+      const title = controllerTunes.root.querySelector('h3');
+      title.tabIndex = -1;
+      title.focus();
+      title.scrollIntoView?.({ block: 'start' });
+    },
+    workbench.panel('controller'),
+  );
+  responseBench = mountResponseBenchPanel({
+    document: doc,
+    window: win,
+    locale,
+    report,
+    getSaved: () => comparisonConfiguration({ saved: true }),
+    getDraft: () => comparisonConfiguration(),
+    onUse: useController,
+    workerURL: responseBenchWorkerURL,
+    getInputReadiness: () => ({
+      ready: inputReviewed.checked && inputReviewSignature === readinessSignature(),
+    }),
+    getPracticeConditions,
+    onManualTest(configuration) {
+      remember();
+      testing = true;
+      draftFlightActive = true;
+      returnButton.hidden = false;
+      close();
+      onTest(clone(configuration));
+    },
+  });
+  workbench.panel('controller').append(responseBench.root);
+  function workbenchEdit(event) {
+    if (controllerTunes.root.contains(event.target) || responseBench.root.contains(event.target))
+      return;
+    updateWorkbench();
+  }
+  listen(root, 'input', workbenchEdit);
+  listen(root, 'change', workbenchEdit);
+  // Keep typing and adjustment keys inside the modal; Escape still uses dialog cancel.
+  listen(root, 'keydown', (event) => {
+    if (['INPUT', 'SELECT', 'TEXTAREA'].includes(event.target?.tagName)) event.stopPropagation();
+  });
   doc.body.append(root);
   return Object.freeze({
     root,
@@ -2028,6 +3156,44 @@ export function mountFlightTuning({
     close,
     acceptOwnSave,
     endDraftTest,
+    captureActive: () => root.open && capturePreview.checked,
+    releaseCapture() {
+      capturePreview.checked = false;
+      captureStatus.textContent = t(
+        'Sticks navigate menus. Enable capture to drive the rotation preview.',
+        'Стіки керують меню. Увімкніть захоплення для попереднього перегляду обертання.',
+      );
+      capturePreview.focus();
+    },
+    async savePracticeDraft(advanced, metadata = {}) {
+      remember();
+      if (metadata.response) {
+        draft = clone(metadata.response);
+        algorithmDrafts = {};
+        numericDrafts = {};
+      }
+      if (metadata.camera) {
+        tilt.value = String(metadata.camera.tilt);
+        fov.value = String(metadata.camera.fov);
+      }
+      editedSetup = {
+        ...clone(currentSetup()),
+        advanced: clone(advanced),
+        ...(metadata.preset ? { preset: clone(metadata.preset) } : {}),
+      };
+      if (metadata.components !== undefined) {
+        editedSetup.components = clone(metadata.components);
+        componentInventory = clone(metadata.components);
+      }
+      physics.load(advanced, advanced);
+      remember();
+      const pending = setupDrafts.get(editedSetupId);
+      pending.advanced = clone(advanced);
+      pending.components = clone(componentInventory);
+      delete pending.componentsText;
+      load(selected);
+      await save();
+    },
     button(parent) {
       // Safari does not focus buttons on pointer activation. Keep the actual
       // trigger so closing the modal restores keyboard navigation to it.
@@ -2052,6 +3218,9 @@ export function mountFlightTuning({
         }
       }
       for (const { node, name, pair } of attributeBindings) node.setAttribute(name, t(...pair));
+      controllerTunes?.refresh();
+      responseBench?.refresh();
+      paintImportReview();
       const pair = translations.get(status.textContent);
       if (pair) status.textContent = t(...pair);
       if (library && !busy) {
@@ -2061,11 +3230,16 @@ export function mountFlightTuning({
         paintFields();
         paintAircraft();
         paintComponents();
+        paintLibraryPreviews();
+        updateWorkbench();
       }
+      workbench?.refresh();
     },
     dispose() {
       if (disposed) return;
       disposed = true;
+      responseBench?.dispose();
+      controllerTunes?.dispose();
       if (frame !== null) win.cancelAnimationFrame(frame);
       for (const remove of removers) remove();
       for (const button of buttons) button.remove();

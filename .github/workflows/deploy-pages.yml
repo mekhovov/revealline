@@ -88,7 +88,7 @@ jobs:
               'No passing verdict is claimed for deferred checks. See `docs/fast-release-mode.md`.' >> "$GITHUB_STEP_SUMMARY"
           fi
 
-  focused:
+  focused_shards:
     if: >-
       github.event_name == 'pull_request' &&
       needs.preflight.result == 'success' &&
@@ -99,11 +99,17 @@ jobs:
     # Host fixtures are CPU-intensive. Two workers preserve parallel progress
     # without starving async test handoffs on the standard hosted runner.
     timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        shard: [1, 2, 3, 4]
     permissions:
       contents: read
       pull-requests: read
     env:
       EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
+      EXPECTED_AUTOMATION: ${{ github.workflow_sha }}
     steps:
       - name: Check out exact pull-request source
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -193,6 +199,8 @@ jobs:
         env:
           FALLBACK_HANDLED_BY_BUILD: ${{ needs.preflight.outputs.admission == 'release' || needs.preflight.outputs.admission == 'release-evidence' }}
         run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/focused-shard"
           extra=()
           if [ "$FALLBACK_HANDLED_BY_BUILD" = true ]; then
             extra+=(--fallback-handled)
@@ -202,7 +210,10 @@ jobs:
             --paths "$RUNNER_TEMP/focused-paths.txt" \
             --manifest automation/publishing/focused-test-map.json \
             --test-policy automation/publishing/test-policy.json \
-            "${extra[@]}"
+            --shard ${{ matrix.shard }}/4 \
+            --receipt "$RUNNER_TEMP/focused-shard/receipt.json" \
+            --admission "$RUNNER_TEMP/preflight-admission/admission.json" \
+            "${extra[@]}" 2>&1 | tee "$RUNNER_TEMP/focused-shard/output.log"
 
       - name: Verify exact tracked source after commands
         if: always() && steps.plan.outputs.required == 'true'
@@ -210,6 +221,76 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE"
           node ../automation/scripts/check-source-identity.mjs --root .
+
+      - name: Retain available focused shard evidence
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.shard }}
+          path: ${{ runner.temp }}/focused-shard/
+          if-no-files-found: error
+          retention-days: 7
+
+  focused:
+    # Keep the existing required status: no individual shard can qualify the gate.
+    if: >-
+      always() && github.event_name == 'pull_request' &&
+      needs.preflight.result == 'success' &&
+      needs.preflight.outputs.admission != 'hold' &&
+      needs.preflight.outputs.focusedRequired == 'true'
+    needs: [preflight, focused_shards]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      EXPECTED_SOURCE: ${{ github.event.pull_request.head.sha }}
+      EXPECTED_AUTOMATION: ${{ github.workflow_sha }}
+    steps:
+      - name: Require every shard job to succeed
+        env:
+          SHARDS_RESULT: ${{ needs.focused_shards.result }}
+        run: test "$SHARDS_RESULT" = success
+
+      - name: Check out trusted focused receipt verifier
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.workflow_sha }}
+          path: automation
+          fetch-depth: 1
+          persist-credentials: false
+          sparse-checkout: |
+            publishing/focused-test-map.json
+            publishing/focused-tests.mjs
+            publishing/test-policy.json
+            publishing/test-policy.mjs
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          package-manager-cache: false
+          node-version: 20.19.x
+
+      - name: Download immutable preflight admission
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          name: admission-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/preflight-admission
+
+      - name: Download all four focused shard receipts
+        uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
+        with:
+          pattern: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-*
+          path: ${{ runner.temp }}/focused-shards
+          merge-multiple: false
+
+      - name: Require exact complete command coverage
+        run: |
+          node automation/publishing/focused-tests.mjs \
+            --verify-shards "$RUNNER_TEMP/focused-shards" \
+            --artifact-prefix "focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-" \
+            --admission "$RUNNER_TEMP/preflight-admission/admission.json" \
+            --manifest automation/publishing/focused-test-map.json \
+            --test-policy automation/publishing/test-policy.json
 
   test:
     if: >-

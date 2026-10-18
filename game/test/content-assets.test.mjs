@@ -16,10 +16,62 @@ import { prepareContentPreview } from '../content-design/preview.mjs';
 import { canonicalJSON, dataIdentity } from '../data-json.mjs';
 import { acquireCandidatePicture } from '../content-design/picture.mjs';
 import { rasterFixtures } from './helpers/raster-fixtures.mjs';
+import { waitFor } from './helpers/wait-for.mjs';
 const asset = HORIZON_ART_CANDIDATES[0];
 const bytes = await readFile(new URL(`../${asset.path}`, import.meta.url));
 const fetchAsset = async () => new Response(bytes);
 const digest = (value) => webcrypto.subtle.digest('SHA-256', value);
+
+test('native artwork encoding follows verification and cancellation retires its reader', async (t) => {
+  const descriptor = Object.getOwnPropertyDescriptor(globalThis, 'FileReader');
+  let reader;
+  class NativeReader {
+    constructor() {
+      reader = this;
+      this.aborted = false;
+    }
+    readAsDataURL(blob) {
+      this.blob = blob;
+    }
+    abort() {
+      this.aborted = true;
+      this.onabort?.();
+    }
+  }
+  Object.defineProperty(globalThis, 'FileReader', { configurable: true, value: NativeReader });
+  t.after(() =>
+    descriptor
+      ? Object.defineProperty(globalThis, 'FileReader', descriptor)
+      : delete globalThis.FileReader,
+  );
+  const originalBtoa = Object.getOwnPropertyDescriptor(globalThis, 'btoa');
+  Object.defineProperty(globalThis, 'btoa', {
+    configurable: true,
+    value: () => assert.fail('Native encoding needs no JS binary string.'),
+  });
+  t.after(() => Object.defineProperty(globalThis, 'btoa', originalBtoa));
+  const loading = loadPreviewArtwork(asset, { fetchAsset, digest });
+  await waitFor(() => reader?.blob, { message: 'Native encoding begins after validation' });
+  assert.deepEqual(new Uint8Array(await reader.blob.arrayBuffer()), new Uint8Array(bytes));
+  assert.equal(reader.blob.type, assetRevisionMime(asset));
+  reader.result = `data:image/png;base64,${bytes.toString('base64')}`;
+  reader.onload();
+  assert.equal((await loading).dataUrl, reader.result);
+  const controller = new AbortController();
+  reader = null;
+  const cancelled = loadPreviewArtwork(asset, { fetchAsset, digest, signal: controller.signal });
+  await waitFor(() => reader?.blob, { message: 'Cancellable native encoding begins' });
+  controller.abort();
+  await assert.rejects(cancelled, { name: 'AbortError' });
+  assert.equal(reader.aborted, true);
+  assert.equal(reader.onload, null);
+  reader = null;
+  await assert.rejects(
+    loadPreviewArtwork({ ...asset, width: asset.width + 1 }, { fetchAsset, digest }),
+    /dimensions/,
+  );
+  assert.equal(reader, null, 'Bad bytes/header never enter native encoding.');
+});
 
 test('PNG, JPEG and WebP asset pins retain exact bytes, MIME and gameplay-independent identities', async () => {
   for (const { extension, mime, bytes: original } of rasterFixtures()) {

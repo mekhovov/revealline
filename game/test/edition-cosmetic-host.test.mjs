@@ -110,13 +110,16 @@ test(
     page.frame(0);
     assert.equal(expected.status, 'won');
     assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(expected));
+    assert.equal(option().disabled, false, 'The winning frame exposes its accepted cosmetic.');
     assert.equal(page.$('game-overlay').hidden, true);
     page.$('skip-celebration').onclick();
     assert.equal(page.$('show-result').hidden, false);
     await waitFor(() => {
+      // Reward acceptance must not need another interval of display time.
       page.frame(0);
       return option().disabled === false;
     });
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), authoritativeCheckpoint(expected));
     assert.notEqual(
       page.$('body-select').value,
       'optional-glider',
@@ -133,11 +136,15 @@ test(
     t.after(() => backend.close());
     let state;
     for (let n = 0; n < 100; n++) {
-      page.frame(0);
+      // Durable profile adoption is asynchronous. Keep terminal display time
+      // flowing for ordinary UI polling after synchronous reward acceptance.
+      page.frame(1000 / 60);
       state = await backend.read();
       if (state.receipts.length) break;
       await new Promise((resolve) => setTimeout(resolve, 5));
     }
+    assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
+    assert.equal(state.receipts.length, 1, 'The exact accepted cosmetic is durably retained.');
     assert.equal(
       state.receipts[0].definition.payloads.at(-1).recipeRevision,
       recipe.recipeRevision,

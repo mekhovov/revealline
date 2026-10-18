@@ -234,9 +234,8 @@ export async function smokeFPVHistoricalUpdate({
           .getByRole('button', { name: 'Aircraft, rates & throttle', exact: true })
           .filter({ visible: true })
           .click();
-        await page
-          .getByRole('dialog', { name: 'Aircraft, rates & throttle', exact: true })
-          .waitFor();
+        await page.getByRole('dialog', { name: 'Setup workbench', exact: true }).waitFor();
+        await page.getByRole('button', { name: 'Library', exact: true }).click();
       };
       await page.goto(`${base}index.html?lang=en`);
       await page.locator('#access-gate').waitFor();
@@ -402,6 +401,7 @@ export async function smokeFPVHistoricalUpdate({
         await page.getByLabel('Rate profile', { exact: true }).inputValue(),
         'legacy-feel',
       );
+      await page.getByRole('button', { name: 'Camera', exact: true }).click();
       assert.equal(
         await page.getByLabel('Camera tilt (degrees)', { exact: true }).inputValue(),
         '27',
@@ -411,9 +411,7 @@ export async function smokeFPVHistoricalUpdate({
         '108',
       );
       // First persist the migrated setup through the actual editor before creating new rates.
-      await page
-        .getByRole('button', { name: 'Save drone assignment & camera', exact: true })
-        .click();
+      await page.getByRole('button', { name: 'Save for next flight', exact: true }).click();
       await page.waitForFunction(() => localStorage.getItem('revealline.fpv.tuning.v1') !== null);
       const migrated = await page.evaluate(() =>
         JSON.parse(localStorage.getItem('revealline.fpv.tuning.v1')),
@@ -459,6 +457,7 @@ export async function smokeFPVHistoricalUpdate({
         await page.getByLabel('Rate profile', { exact: true }).inputValue(),
         'historical-new-rates',
       );
+      await page.getByRole('button', { name: 'Rates & throttle', exact: true }).click();
       assert.equal(
         await page
           .getByRole('group', { name: 'Roll', exact: true })
@@ -466,6 +465,7 @@ export async function smokeFPVHistoricalUpdate({
           .inputValue(),
         '900',
       );
+      await page.getByRole('button', { name: 'Camera', exact: true }).click();
       assert.equal(
         await page.getByLabel('Camera tilt (degrees)', { exact: true }).inputValue(),
         '33',

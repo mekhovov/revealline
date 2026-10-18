@@ -1,0 +1,11 @@
+# Immediate saved-flight readback
+
+The successful `saveCaptureSession` receipt now retains the exact immutable JSON string already validated, size-checked and supplied to storage. Main Solo still reads the real slot immediately after every successful write. An exact byte match establishes the same readback without parsing and reconstructing the dense recording again. A different encoding still goes through the existing bounded semantic comparison; a failed write or unreadable slot grants no new ownership.
+
+The public Continue → Save control uses a legitimate dense recording and verifies real writes/readbacks, the paused checkpoint, replay and size protection. It counts only parses from the immediate ownership comparison. The original path performs two such parses; the new path performs zero. The separate saved-flight menu metadata parse remains. Eight complete capture-session and dense-persistence controls pass; raw before/after results are retained under `.cache/solo-followup/save-readback-dedup/`.
+
+This removes redundant parsing from save/readback. It does not replace durable storage, skip its readback, change a save/replay format or prove the cause of a native frame stall. Native save cost and long-recording qualification remain separate measurements.
+
+The broader mode-return check also exposed older assertions that assumed every stored flight used an unwrapped `xonix-session.v5`, and called the current Duel menu “Versus.” Those assertions fail against the original persistence path too. The corrected tests validate the actual outer and native envelopes, preserve appearance/theme/presentation/actor pins and the checkpoint, and use the current public menu name. Earlier failed output and the exact-before loader are retained. No product label or format was changed for the tests.
+
+The complete corrected mode-return file passes all 68 controls (40 top-level cases), with no failures or skips. It exercises both Team and Duel public host chains; its application/session/test source hashes stayed unchanged during execution. Retained TAP is `.cache/solo-followup/final-mode-return-host/complete-v1.tap`, 15,486 bytes, SHA-256 `9b59141eb57d2e4792b3985f3a16a458c2ac221ec47b1c586f6099fc9dd107b4`. These modeled host checks do not establish native timing.

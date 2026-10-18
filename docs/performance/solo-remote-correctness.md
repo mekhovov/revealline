@@ -1,0 +1,345 @@
+# Solo remote correctness follow-up
+
+This Linux cohort continues checks while the local browser and two evidence reads
+have unresolved owners. The user confirmed the network share is connected; the
+waiting processes remained present on 16 October 2026 at 22:17 UTC. No new local
+browser run was admitted. Linux results do not qualify Safari on iPhone, installed
+PWA behavior, Steam Deck Chrome, temperature, or the previous macOS timing matrix.
+
+## Retained first attempt
+
+[Run 38972430908](https://github.com/mekhovov/revealline/actions/runs/38972430908)
+used tooling `1467394b3c8555a65560b127a7b2dc0bf4335eb5`, exact candidate
+`2ec605eb76e38f9c9a3e21b7fa82dd80c580c457`, and original-main source
+`b11745223861c3973ad4bf440cc536198b8e0371`. It **failed**. The candidate archive,
+source/CSP verification, pinned browser installation and Linux wrapper checks
+passed; these do not replace the browser results below.
+
+| Planned observation                               | Result                                                                                               |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Candidate Chromium worker                         | Failed at launch: Chromium's Unix socket path was too long.                                          |
+| Candidate WebKit worker                           | Failed: all three MP3 validation cases were correct, but play became paused. Cause was not captured. |
+| Candidate Chromium paused rendering               | Failed at launch with the same socket-path error.                                                    |
+| Candidate WebKit paused rendering                 | Passed.                                                                                              |
+| Baseline/candidate first 30 seconds, both engines | Not run: normal baseline build reached its 600-second setup deadline.                                |
+
+The failed baseline build had no stage output, peaked at 2,297,393,152 bytes of
+owned RSS, and required termination. Its cause is unattributed. Every command
+closed without surviving or ambiguous processes; forced termination still makes
+that command fail. No retry, numerical pass or missing observation was inferred.
+
+Actual environment: Ubuntu runner image `20261012.334.1`, four AMD EPYC 7763 CPUs,
+16,766,414,848 bytes of memory, Node 22.13.1, Playwright 1.62.1, Chromium
+151.0.7922.34 and WebKit 26.5. All eight rows are excluded from performance
+qualification.
+
+The 249,998-byte artifact `12077289287` has SHA-256
+`78a094bf0858fb1b0e255ee0a895110c93fbc05895c264ee08d5903a4a7fced5`.
+All 42 members were retained and read back. The acquisition receipt is
+`5bfe1917d78c12c346dd4ee949e49a355ec87577bc662833d4d3a4b8eefafc71`.
+Raw reports and logs remain under
+`.cache/solo-followup/remote-linux-correctness-38972430908/`.
+
+The preceding workflow attempt, `38972229017`, failed validation before creating
+any job because `runner.temp` was used in job-level environment declarations.
+The corrected workflow initializes those paths after runner assignment. That
+failed attempt remains separate from the eight-row execution above.
+
+## Second attempt and source-contract correction
+
+[Run 38975072391](https://github.com/mekhovov/revealline/actions/runs/38975072391)
+used tooling `41e925a6fbd7e1d3d68fbe092bf8cee368f7827a` with the same exact
+candidate and baseline sources. All four worker/paused-render checks passed in
+Chromium 151.0.7922.34 and WebKit 26.5. The earlier WebKit pause did not recur;
+its cause remains unattributed, and its failed report is retained.
+
+The normal baseline build completed in 384.863 seconds, with peak owned RSS
+5,311,541,248 bytes. Its ZIP/member verification passed. Source verification
+then failed four checks because it required the candidate's MP3 worker modules,
+which do not exist in original-main source `b1174522`. The four first-30-second
+rows did not run. All observed processes closed cleanly without forced cleanup.
+This is a failed cohort with four passing browser rows, not an eight-row pass.
+
+Artifact `12078379364` is 262,730 bytes, SHA-256
+`11d96fa02196171f0bb167ed96790b750782c3b17b1d50360d47b2c178dfbfc1`.
+All 49 members were retained and read back; receipt SHA-256 is
+`f5f41a6c2e325b71cb1defe09b08f5548c15694fd4906d368af2835af889bb05`.
+Raw evidence remains under `.cache/solo-followup/remote-linux-correctness-38975072391/`.
+
+The next verifier binds worker requirements to the actual compared source:
+all four files are explicitly read and compared even when omitted from the
+package. Any source presence requires the complete package and both offline
+core inventories; a partial source contract fails. A historical source with
+none of the files permits none in the package or inventories. This preserves
+candidate closure checks without imposing a later capability on the baseline.
+Five focused negative/positive tests and five existing archive tests pass.
+The earlier failed proof is not rewritten or admitted for reuse.
+
+The short owned scratch paths, 1,200-second setup ceiling, bounded setup-only
+file witnesses and unexpected-pause snapshot remain. Browser deadlines,
+scenario assertions, build flags and resource budgets remain unchanged.
+Sustained and offline follow-ups have separate plans and acceptance; neither
+is credited by these correctness checks.
+
+The version-three lane also retains a normal baseline artifact only after its
+build, full ZIP/member verification and source/CSP proof pass. It binds the
+exact producer, source and tree, command receipts and checksums, then performs
+a full readback before upload. Future comparisons must pin the actual artifact
+and independently verify it again; failed or missing proof cannot enable reuse.
+The 75-minute helper and all row deadlines stay fixed. The job allows separate
+setup and upload steps (139 minutes of declared step caps inside 145 minutes),
+including the additional baseline upload; this does not extend gameplay windows.
+
+## Third attempt: eight correctness checks passed
+
+[Run 38978329593](https://github.com/mekhovov/revealline/actions/runs/38978329593)
+used tooling `d569ce092db47d14f974da24063f82f4a280a19a`, the same exact
+`2ec605eb` candidate and original `b1174522` baseline. All eight browser rows
+passed their correctness requirements. All four first-30-second observations
+passed strict replay in their observed engine; the separately retained Node
+portability mismatch does not replace those checks. Every observed command
+closed cleanly. The original-main normal build passed independent archive,
+source, worker-contract, offline-resource and CSP verification.
+
+This cohort is explicitly **excluded from timing qualification**. Raw combined
+statuses remain baseline Chromium failed, candidate Chromium inconclusive,
+baseline WebKit failed, and candidate WebKit failed. The candidate's internal
+pre-play cadence collected only 15/30 and 12/30 eligible callbacks respectively.
+Its default 60 Hz estimate is not a measured baseline. The independent blank
+reference measured 16.7 ms and 16 ms; it is not silently substituted for the
+missing internal calibration. The title-ready observation had long callback
+gaps despite low Phaser work, and WebKit retains a 227 ms interval attributed
+to the preceding playing phase. These signals require separate attribution.
+
+Artifact `12080518438` contains 70 fully read-back members. Its 603,136-byte
+archive SHA-256 is `f6e7d037e053c3075d7c80f5810806f24af995747ee4fa8015fc8eb231998d43`;
+the summary SHA-256 is `e9127024581f3f8b7cc53265736c6569d034bb91081a7a4928253fa0a1beae06`.
+The reports, clean closures and analysis remain under
+`.cache/solo-followup/remote-d569-monitor-01/`.
+
+The successful producer also published baseline artifact `12080662080`, exact
+normal-build ZIP SHA-256 `1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290`.
+Prospective consumers pin its actual run, source/tree, outer archive and positive
+readiness proof, then verify every archive member and the source/CSP contract
+again before use. Local admission retained the small publication proof and
+GitHub metadata; the large baseline archive was not downloaded locally.
+Missing or mismatched reuse evidence fails admission without a rebuild fallback.
+
+The subsequent exact-source Appearance package for `d569ce092` succeeded in
+[run 38978329616](https://github.com/mekhovov/revealline/actions/runs/38978329616),
+including all 68 declared focused files. Its five-member compact metadata
+artifact was independently read back and agrees with the original upload API.
+Original artifact `12081585270` has outer SHA-256
+`f7d71b126e6076622fdfa1d7eeccdff0e8dbf594fb45304773c470f66ae6e6ca`
+and inner ZIP SHA-256
+`1d5ce94afe14c0419f26d160986567d54a05c11b7edd6e055871f4de41b866b5`.
+This is successful packaging plus verified small metadata, not full local
+archive verification or native qualification of the newer Demo runtime.
+The first eight passing rows still used `2ec605eb`.
+
+## Current package: seven correctness checks passed, one failed
+
+[Run 38985941469](https://github.com/mekhovov/revealline/actions/runs/38985941469)
+used tooling `ddbb565a0640b61f83edde5828a2825942cf26ab`, exact candidate
+`3adcd53792043ef02459e86168c6b33a66d6ef00` (runtime `0d9fef112`) and the
+original-main `b1174522` package. Candidate and baseline admission passed full
+archive, source, static-worker contract, offline closure and CSP verification.
+The candidate archive has 3,502 verified members and SHA-256
+`8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8`;
+its manifest SHA-256 is
+`efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718`.
+The reused baseline was independently reverified without a rebuild fallback.
+
+**Seven of eight correctness rows passed.** Chromium worker validation, both
+paused-render checks and all four first-30-second scenarios passed. Each of
+those four scenarios passed strict replay in its observed engine. WebKit worker
+validation accepted the valid MP3 and rejected both malformed and truncated
+inputs through the exact static worker, with no pending request or owned bytes.
+Nevertheless, visible, focused gameplay had automatically paused for a long
+frame interruption, so the unchanged running-state assertion failed. No page
+error occurred. The current probe did not retain the precise frame/phase
+interval; the cause remains unattributed. This is not an eight-row pass or a
+proven harness failure. The similarly paused first attempt remains separate.
+
+All commands closed without forced cleanup, surviving or ambiguous processes.
+All eight rows remain excluded from timing qualification, including Chromium's
+raw observed-window pass. Candidate WebKit retained incomplete internal cadence
+calibration, missed callback deadlines and a long preceding-playing interval;
+its raw combined timing result remains failed. No physical-device, installed-PWA,
+GPU-completion or heat result is inferred.
+
+The 796,542-byte evidence artifact `12083397932` has SHA-256
+`f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1`.
+All 79 members and the producer's internal inventory were independently read
+back. The immutable analysis has SHA-256
+`4b8427ce16ddf6754efaba7055336b86cbf1393b84e91e625f4d1397aad17500`.
+Evidence remains under
+`.cache/solo-followup/remote-current-correctness-38985941469/`.
+The large package was verified on the isolated Linux runner; this follow-up
+retained and verified its bounded proofs locally without downloading that
+payload again. Later diagnostic lanes cannot mark the first-eight gate passed.
+
+### Separate worker-pause attribution cohort
+
+The predeclared six-window diagnostic compares three worker inspections with three
+public-Start idle controls in the fixed order worker/control, control/worker,
+worker/control. Each fresh WebKit context observes twelve seconds. This adds
+opt-in bounded application diagnostics and eight worker-stage timestamps; it
+exports only after the window has stopped. A still-running game receives the
+ordinary public Menu, which forces Pause rather than toggling Resume; an
+automatically paused game receives no action.
+There is no automatic Resume, retry-until-green or per-frame DOM logging.
+
+The original ordinary worker probe keeps its validation, active-state checks,
+static worker and deadlines. The new idle arm makes no worker-validation claim.
+The independent diagnostic retains the failed first-eight prerequisite and cannot
+qualify timing, physical devices or a successor performance stage. Full exact
+`3adcd5379` package verification precedes execution. All six observations must
+be retained, including failures; correlation with worker timestamps alone does
+not establish causation. The focused wrapper/contract group passes 24 tests,
+with three Linux-only cleanup tests explicitly skipped on this macOS host.
+
+[Run 38990108478](https://github.com/mekhovov/revealline/actions/runs/38990108478)
+completed on October 17, 2026 using tooling
+`74959676f2fc3de8039cebc30fb86905c562d661`. All three worker observations and all
+three idle controls passed their declared checks. Every window began and ended
+with visible, focused, running gameplay; no safety interruption or page error
+was recorded. Worker validation accepted the valid MP3 and rejected malformed
+and truncated inputs, with no pending request or retained worker bytes. All
+process owners closed cleanly. Full candidate archive/source/CSP admission
+passed before these observations.
+
+The original seven-of-eight failure remains unresolved. This instrumented
+twelve-second cohort did not reproduce it and does not replace the ordinary
+worker probe or qualify frame cadence. Internal cadence calibration remained
+provisional. Callback intervals are measured separately from application work:
+the first worker window contains a **204 ms playing interval**, with 17 ms of
+update and 2 ms of draw work. Its interval began 199 ms before the recorded
+`before-module-import` timestamp, so proximity to worker inspection does not
+identify the worker as its cause. This gap remains an investigation target.
+
+All six observations also retain 130–229 ms intervals attributed to preparation
+that cross the transition into playing. Their asynchronous/rendering cause has
+not been isolated. The 272–294 ms maximum preceding-playing intervals occur
+after the declared twelve-second windows, across the public Menu/Pause action;
+they remain in the evidence and are not attributed to active worker inspection.
+No interval is discarded or converted into a performance pass by this phase
+distinction.
+
+The 323,237-byte evidence artifact `12084916681` has SHA-256
+`68a7c1ce133f90b01a59d6fddf5c454b754861d637ec1139aaee4fcc2e060927`.
+All 48 members and their producer inventory were independently read back.
+The immutable analysis has SHA-256
+`e0dd826a388fcc6012dfe580cc715f5753d739b698286c1b6f79a7017a504c0c`;
+it retains raw phase transitions, worker-stage timestamps, interval endpoints,
+application work and preparation/resource snapshots. Evidence remains under
+`.cache/solo-followup/remote-worker-diagnostic-38990108478/`.
+
+A separately declared confirmation fixed three fresh WebKit calls to the
+ordinary worker probe, followed by one existing paused-render companion. Worker
+calls retain the original inputs, assertions and deadlines without the
+diagnostics flag, an added observation window or automatic Resume. The companion
+retains its existing canvas instrumentation. Full package admission precedes
+all four rows; every outcome is retained with zero retries. This confirmation
+cannot promote the failed first-eight gate or waive the 204 ms diagnostic gap.
+[Run 38991754609](https://github.com/mekhovov/revealline/actions/runs/38991754609)
+used tooling `aeadf7f43a8c1aba3af78d6cc8713666b4af49f1`. **All three original
+worker reports passed**, with running gameplay before/after inspection and the
+correct static worker; the paused-render companion also passed. All owners
+closed cleanly and exact package/source/CSP admission passed. The hosted wrapper
+nevertheless failed because its added blanket check rejected a console warning
+about an optional external soundtrack catalogue blocked by the existing CSP.
+The unchanged worker smoke records that warning without rejecting it. The
+wrapper is corrected to enforce the original static-worker proof and retain
+warnings. Its historical failed classification is unchanged; the separate
+post-hoc assessment of the original contract grants no performance credit.
+No repeat of this confirmation is needed. The earlier cohort's actual plan and
+helper bytes remain immutable in its artifact.
+
+Artifact `12085418081` has 43 independently read-back members, 264,159 bytes,
+and SHA-256 `266278098b7601eede714250250c4586d5017b363ea1971e42bfce6a021006cc`.
+The independent analysis is
+`.cache/solo-followup/remote-38991754609/confirmation/analysis-v1.json`, SHA-256
+`1c432a22e0721a439fdd6620f237195161c6b94f318578095706cd1afa29bd10`.
+
+### Native raster source-observation correction
+
+[Run 38991754555](https://github.com/mekhovov/revealline/actions/runs/38991754555)
+used the same tooling and exact package. Both engines stopped with source
+observation overflow before retaining any cases or captures. They produced
+**no pixel pass or pixel failure conclusion**. Package/source/CSP verification
+and owner cleanup passed. Each retained 152 source identities totaling
+2,242,201 bytes. The observed `i18n/index.mjs` imports the 1,265,063-byte
+localization catalogue, exceeding the observer's one-MiB per-source limit.
+
+The prospective correction raises only that source witness limit to two MiB,
+retaining the eight-MiB aggregate and 256-source caps. All twelve original
+cases, zero pixel tolerance, capture protocols, browser deadlines and ownership
+checks remain unchanged. Rejected source identities now retain a bounded reason.
+One new observation per affected engine was declared on the next push from
+`aeadf7f43`; previous failed artifacts remain unchanged. Chromium artifact
+`12085497880` is 422,825 bytes with SHA-256
+`4a0e1ba7b8f70ae988467d5c8cbf628ad6e1f4e16a53ba231d377be0619d24e1`;
+WebKit artifact `12085033070` is 419,435 bytes with SHA-256
+`96ab0343220d6cff4cb362f04224e2b3b4e1569f9b1dbda9f3159556305d8181`.
+Each has 44 independently verified members and a separate analysis under
+`.cache/solo-followup/remote-38991754555/`.
+
+The corrected [run 38992974782](https://github.com/mekhovov/revealline/actions/runs/38992974782)
+used tooling `bffcbd838a7bb925da8aaf030695773f893d8bda` and the same frozen
+`3adcd537` package. **Both Chromium and WebKit passed all twelve strict cases**,
+each retaining 84 captures with zero invariant, source, page or request failures.
+Both admitted the exact localization catalogue and 153 source identities totaling
+3,507,264 bytes; all source, package, process and profile checks completed cleanly.
+The known strict control failure was not reproduced, so the declared conditional
+localization did not run. This does not resolve the historical Mac WebKit failure.
+
+| Retained artifact      |     Bytes | SHA-256                                                            |
+| ---------------------- | --------: | ------------------------------------------------------------------ |
+| Chromium `12085788233` | 2,867,962 | `f0a6c452af7e34716d1d0a7ae9bfe9cde5798143870a4bee7c5df57773bb36a6` |
+| WebKit `12084969769`   | 1,619,940 | `81df8c5505e797018eb2b75fb59160563ab8b8d14ba546990ea9c85ae9ab2b05` |
+
+Each artifact has 128 independently read-back members. Separate analysis files
+under `.cache/solo-followup/remote-38992974782/` have SHA-256
+`34e02233ab0decbc0c57110c3fdcd15d3fc57cbf305a0cb8b9b2d0229575e7d6`
+(Chromium) and `d28395a1e470410387794a9d71cddcac20213f712d1add9a2dccb875b1b1b183`
+(WebKit). A separate direct visual inspection covered 22 original PNGs: every
+WebKit quality/mode representative, four Chromium representatives, and both
+engines' selected same-owner A/B/A picture sequences. Concealment, visible actors,
+warning/active lane boundaries and source restoration showed no visible issue in
+that sample. The exact selected files and hashes are in `visual-review-v1.json`;
+the machine reports remain unchanged with their original visual-review-pending label.
+
+These are synthetic claimed-cell and picture-source controls. They do not establish
+earned-capture or erosion correctness, a timing pass, physical-device qualification,
+or evidence for the later `b5b985f70` startup fix. The failed first-eight gate and
+unattributed 204 ms interval remain unchanged.
+
+## Other CI evidence
+
+The optional-practice integration job in
+[run 38972430979](https://github.com/mekhovov/revealline/actions/runs/38972430979)
+passed using merge revision `0fcd92cb25cd64977fc129da28c469270d52061a`
+and PR head `1467394b3c8555a65560b127a7b2dc0bf4335eb5`. Its groups report
+362/362, 10/10, and 168 passed plus one skipped out of 169. The skipped historical
+snapshot case has no pass credit. This is merge-integration evidence, distinct
+from the exact candidate package and the still-open whole-PR checks.
+
+The exact-head Company job in that same run completed all **1,363/1,363**
+Company tests, followed by complete groups of 16, 54, 51 and 157 tests, all
+passing. Source-release checks also passed (72 JavaScript and 64 Python tests).
+The subsequent packaging step was canceled, and package uploads were skipped.
+The job is **canceled**, not passed; complete test steps do not establish a
+successful package or whole-PR pass.
+
+The next exact-head Company job, source
+`41e925a6fbd7e1d3d68fbe092bf8cee368f7827a`, **passed** in
+[run 38975072276](https://github.com/mekhovov/revealline/actions/runs/38975072276).
+It completed the 1,363 Company tests, all 1,641 focused JavaScript tests,
+72 source-release JavaScript tests and 64 Python tests, then successfully
+compiled and inspected the original package members. The retained 676,571-byte
+job log has SHA-256 `694d43d0983b36fba2f8feb5fbc701f63af8e5d8236d51acb7f4672ef8ac92cd`.
+The earlier canceled job remains a separate result. Appearance production CI
+also succeeded at exact `41e925a6` in run `38975072909`; that archive was not
+independently acquired, and the latest verified local package remains `2ec605eb`.
+These results do not qualify the subsequent Demo runtime change.

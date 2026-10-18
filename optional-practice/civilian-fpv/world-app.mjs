@@ -1100,9 +1100,12 @@ export function mountWorldApp({
     raf = 0,
     radioSetup = null,
     tuning = null,
+    tuningCalibrationReturn = null,
     aircraftControls = null,
     aircraftChallengeControls = null,
     aircraftAttemptConfiguration = null,
+    workbenchAttemptConfiguration = null,
+    activeTuningDraft = null,
     aircraftAdvice = null,
     aircraftAdviceText = null,
     courseClassFilter = null,
@@ -1267,15 +1270,24 @@ export function mountWorldApp({
   });
   const savePreferences = () => {
     try {
+      const preferences = Object.fromEntries(
+        preferenceIds
+          .filter((id) => !['world-language', 'sim-text-face', 'sim-motion'].includes(id))
+          .map((id) => [id, learningPreferences?.[id] ?? $(id).value]),
+      );
+      if (activeTuningDraft) {
+        let saved;
+        try {
+          saved = JSON.parse(storage?.getItem('revealline.fpv.world-settings.v1') ?? '{}');
+        } catch { /* Invalid saved camera preferences stay absent. */ }
+        for (const id of ['world-fov', 'world-tilt']) {
+          if (typeof saved?.[id] === 'string') preferences[id] = saved[id];
+          else delete preferences[id];
+        }
+      }
       storage?.setItem(
         'revealline.fpv.world-settings.v1',
-        JSON.stringify(
-          Object.fromEntries(
-            preferenceIds
-              .filter((id) => !['world-language', 'sim-text-face', 'sim-motion'].includes(id))
-              .map((id) => [id, learningPreferences?.[id] ?? $(id).value]),
-          ),
-        ),
+        JSON.stringify(preferences),
       );
     } catch (error) {
       reportError(error);
@@ -1654,6 +1666,7 @@ export function mountWorldApp({
       if (!appearanceSession.select(appearance) || !current || replayProof || checkpointRequest)
         return;
       void startFlight(current, {
+        ...retainedDraftOptions(),
         preview,
         playlist: playingPlaylist,
         index: playlistIndex,
@@ -2105,6 +2118,7 @@ export function mountWorldApp({
     onReset: () => {
       if (current)
         void startFlight(current, {
+          ...retainedDraftOptions(),
           preview,
           playlist: playingPlaylist,
           index: playlistIndex,
@@ -5369,7 +5383,7 @@ export function mountWorldApp({
             'Запис виконання, медаль і запис польоту не збережено.',
           ),
         ),
-        button(txt('Practise again', 'Тренуватися ще раз'), () => startFlight(current), 'primary'),
+        button(txt('Practise again', 'Тренуватися ще раз'), () => startFlight(current, retainedDraftOptions()), 'primary'),
         button(txt('Back to lobby', 'До меню'), () => closeFlight()),
       );
       $('flight-status').textContent = current.freeFlight
@@ -6306,7 +6320,10 @@ export function mountWorldApp({
     return operation;
   }
   async function startRegionalFlight(entry, options = {}) {
-    if (!options.tuningDraft) tuning?.endDraftTest();
+    if (!options.tuningDraft) {
+      tuning?.endDraftTest();
+      activeTuningDraft = null;
+    }
     const token = ++flightToken;
     const ownsLaunch = () =>
       !disposed && token === flightToken && options.isCurrent?.() !== false;
@@ -6385,6 +6402,8 @@ export function mountWorldApp({
     regionalPreparing = null;
     flight = nextFlight;
     aircraftAttemptConfiguration = physicalAircraft ? clone(baselineConfiguration) : null;
+    workbenchAttemptConfiguration = clone(baselineConfiguration);
+    activeTuningDraft = options.tuningDraft ? clone(tuningConfiguration) : null;
     current = entry;
     if (!options.tuningDraft) tuningReturnEntry = null;
     recorder = null;
@@ -6486,7 +6505,10 @@ export function mountWorldApp({
     }
   }
   async function startFlight(entry, options = {}) {
-    if (!options.tuningDraft) tuning?.endDraftTest();
+    if (!options.tuningDraft) {
+      tuning?.endDraftTest();
+      activeTuningDraft = null;
+    }
     if (entry.regional) return startRegionalFlight(entry, options);
     regionalManifestRequest?.abort();
     const requestedCamera =
@@ -6898,6 +6920,8 @@ export function mountWorldApp({
           capacityAh: tuningConfiguration.advanced.aircraft.battery.capacityAh,
         });
       aircraftAttemptConfiguration = physicalAircraft ? clone(baselineConfiguration) : null;
+      workbenchAttemptConfiguration = clone(baselineConfiguration);
+      activeTuningDraft = options.tuningDraft ? clone(tuningConfiguration) : null;
       recorder =
         physicalAircraft || modePractice || entry.freeFlight
           ? null
@@ -7106,6 +7130,15 @@ export function mountWorldApp({
     await flight?.dispose?.();
     if (token !== flightToken || disposed) return;
     flight = null;
+    if (activeTuningDraft) {
+      tuningStore.refresh();
+      const camera = tuningStore.effective().camera;
+      $('world-fov').value = String(camera.verticalFov);
+      $('world-tilt').value = String(camera.tilt);
+      activeTuningDraft = null;
+      tuningReturnEntry = null;
+      tuning?.endDraftTest();
+    }
     if (learningDemoReturn) $('flight-mode').value = learningDemoReturn.mode;
     learningDemoReturn = null;
     returnToLesson.hidden = true;
@@ -7710,7 +7743,7 @@ export function mountWorldApp({
     if (disposed) return null;
     // Keep flight keys in the reference arena and radio samples in the rate preview.
     if (advancedPractice) return null;
-    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: true };
+    if (tuning?.root.open) return { root: tuning.root, key: 'fpv-tuning', blockRadio: tuning.captureActive(), blockDevices: tuning.captureActive(), captureControllerIndex: gamepad.status().index, onCaptureBack: () => tuning.releaseCapture() };
     const globalToolRoot = globalTools?.root();
     if (globalToolRoot)
       return {
@@ -7865,6 +7898,13 @@ export function mountWorldApp({
     secondaryDialogOpen: () => !!doc.querySelector('dialog[open]:not(#flight-dialog)'),
   });
   on($('world-pause'), 'click', () => pauseFlight());
+  // Restarting the current trial retains its aircraft, controller, rates and
+  // camera. Explicit new flights omit this option and use saved preferences.
+  function retainedDraftOptions() {
+    return activeTuningDraft && !replayProof && !checkpointRequest
+      ? { tuningDraft: clone(activeTuningDraft) }
+      : {};
+  }
   function retryFlight({ paused = false } = {}) {
     continuousPlay.cancel('retry');
     if (current?.regional && !sceneReady && flight) {
@@ -7872,6 +7912,7 @@ export function mountWorldApp({
       return prepareRegionalFlight();
     }
     return startFlight(current, {
+      ...retainedDraftOptions(),
       preview,
       playlist: playingPlaylist,
       index: playlistIndex,
@@ -7917,7 +7958,7 @@ export function mountWorldApp({
     const selected = practiceState(),
       entry = current,
       camera = $('flight-camera').value;
-    const options = { lessonCamera: camera, paused: true };
+    const options = { ...retainedDraftOptions(), lessonCamera: camera, paused: true };
     if (action === 'practice' || (action === 'try' && checkpointSession)) {
       if (!selected.section && !selected.fullPractice) return;
       const proof = selected.section
@@ -8063,6 +8104,7 @@ export function mountWorldApp({
     }
     if (current && $('flight-dialog').open)
       return startFlight(modeEntry, {
+        ...retainedDraftOptions(),
         preview: preview && !modePractice,
         paused: true,
         preserveFocus,
@@ -8253,6 +8295,7 @@ export function mountWorldApp({
             response = learningPreferences ? { ...DEFAULT_RESPONSE } : rates;
             if (current && $('flight-dialog').open)
               return startFlight(current, {
+                ...retainedDraftOptions(),
                 preview,
                 playlist: playingPlaylist,
                 index: playlistIndex,
@@ -8270,6 +8313,7 @@ export function mountWorldApp({
     radioSetup = null;
     $('world-radio-dialog').close();
     pauseFlight();
+    if (tuningCalibrationReturn) {const done=tuningCalibrationReturn; tuningCalibrationReturn=null; done(); return;}
     if (playShell?.elements.dialogs.pause.open)
       playShell.elements.content.pause.querySelector('[data-flight-setup="radio"]')?.focus();
     else if ($('sim-settings').open) $('radio-setup-button').focus();
@@ -8700,7 +8744,7 @@ export function mountWorldApp({
     $('flight-quality').value = 'low';
     savePreferences();
     try {
-      await startRegionalFlight(current, { mode: $('flight-mode').value,
+      await startRegionalFlight(current, { ...retainedDraftOptions(), mode: $('flight-mode').value,
         lessonCamera: $('flight-camera').value, paused: true });
     } catch (error) { reportError(error); }
     finally { regionalRecoveryControls.busy = false; paintRegionalPreparation(); }
@@ -8957,6 +9001,17 @@ export function mountWorldApp({
     store: tuningStore,
     locale: () => locale,
     onOpen: () => pauseFlight(),
+    getFlightConfiguration: () => workbenchAttemptConfiguration,
+    responseBenchWorkerURL: new URL('../fpv-worlds/response-bench-worker.mjs', import.meta.url),
+    getPracticeConditions: () => {
+      const entry = tuningReturnEntry ?? current ?? catalogue.find((item) => !item.beginner && !item.legacy);
+      if (!entry) return null;
+      return { host: entry.regional ? 'Regional' : 'World', courseId: entry.id, mode: $('flight-mode').value, courseIdentity: dataIdentity(entry.regional ? entry.configuration : entry.course),
+        label: `${entry.regional ? 'Regional' : 'World'} · ${entry.id} · ${$('flight-mode').value}`,
+        input: { source: $('flight-source').value, keyboard: $('flight-keyboard-preset').value, touch: $('flight-touch-response').value, radio: radio.status().profile, radioDevice: radio.status().selected?.key ?? null, controller: { id: gamepad.status().id, index: gamepad.status().index } } };
+    },
+    canCalibrate: () => !$('radio-setup-button').disabled,
+    onCalibration(done) { tuningCalibrationReturn = done; $('radio-setup-button').click(); },
     onApply() {
       if ($('sim-settings').open) closeSettings({ force: true });
       const entry =
@@ -8978,7 +9033,7 @@ export function mountWorldApp({
     getDiagnostics: () => inputDiagnostics.read(
       flight,
       replayProof ? 'recording' : $('flight-source').value,
-      !replayProof && $('flight-source').value === 'radio' ? radio.diagnostics() : null,
+      !replayProof && $('flight-source').value === 'radio' ? radio.diagnostics() : !replayProof && $('flight-source').value === 'controller' ? gamepad.previewDiagnostics() : null,
     ),
     onAdvanced(configuration) {
       pauseFlight();
@@ -9002,23 +9057,7 @@ export function mountWorldApp({
         },
         onPause: () => pauseFlight(),
         async onSaveConfiguration(advanced, metadata = {}) {
-          const library = tuningStore.snapshot(),
-            setup = library.setups.find((item) => item.id === library.selectedSetupId);
-          await tuningStore.saveAircraftConfiguration(
-            {
-              setupId: setup.id,
-              newProfileId: `aircraft-${win.crypto?.randomUUID?.() ?? Date.now()}`,
-              advanced,
-              response: metadata.response,
-              ...(metadata.camera
-                ? { camera: { tilt: metadata.camera.tilt, verticalFov: metadata.camera.fov } }
-                : {}),
-              ...(metadata.preset ? { preset: metadata.preset } : {}),
-              ...(metadata.components !== undefined ? { components: metadata.components } : {}),
-            },
-            library.revision,
-          );
-          tuning.acceptOwnSave(library.revision, { reloadAircraft: true });
+          await tuning.savePracticeDraft(advanced, metadata);
         },
         onClose() {
           advancedPractice?.dispose();
@@ -9077,6 +9116,7 @@ export function mountWorldApp({
   $('world-viewport').append(tuning.returnButton);
   for (const cameraId of ['world-fov', 'world-tilt'])
     on($(cameraId), 'change', () => {
+      if (activeTuningDraft) return;
       tuningStore.refresh();
       const library = tuningStore.snapshot(),
         setup = library.setups.find((item) => item.id === library.selectedSetupId);
@@ -9164,6 +9204,7 @@ export function mountWorldApp({
     host: 'worlds',
     locale: () => locale,
     canChange: () => !flight || flight.snapshot().status !== 'active' || playShell.blocksPlay(),
+    canPersistCamera: () => !activeTuningDraft,
     comparison: {
       root: playShell.elements.content.pause,
       button: ghostButton,

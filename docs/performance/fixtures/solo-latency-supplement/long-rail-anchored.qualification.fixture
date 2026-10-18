@@ -1,0 +1,364 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "long-rail-anchored-meaningful-steering-v1",
+  "kind": "performance",
+  "timeoutMs": 240000,
+  "entryPath": "playground/",
+  "readySelector": "#import-file",
+  "coverage": [
+    "long-cuts",
+    "captures",
+    "22 legal steering commands inside an edge-anchored captured strip; prospective supplemental native preflight only; no replacement credit for earlier routes"
+  ],
+  "replayRequirements": {
+    "closures": 1,
+    "maximumTrailCells": 20,
+    "directionChangesWithMovement": 20
+  },
+  "actions": [
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "upload",
+      "selector": "#import-file",
+      "file": "long-rail.xonix.json",
+      "acceptedLevelSelector": "#level-json"
+    },
+    {
+      "type": "click",
+      "selector": "#preview-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "follow",
+      "selector": "#open-preview",
+      "preparationStatusSelector": "[data-presentation-status=\"auxiliary\"]",
+      "timeoutMs": 120000
+    },
+    {
+      "type": "snapshot",
+      "group": "prepared"
+    },
+    {
+      "type": "click",
+      "selector": "#start-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "ms": 1000,
+      "label": "anchored-admission"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 1000,
+      "label": "anchored-anchor-top"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 5000,
+      "label": "anchored-anchor-right"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 200,
+      "label": "anchored-cut-one-inset"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 6000,
+      "label": "anchored-cut-one"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 1000,
+      "label": "anchored-anchor-bottom"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 2000,
+      "label": "anchored-steer-inset"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-1"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-2"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-3"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-4"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-5"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-6"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-7"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-8"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-9"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-10"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-11"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-12"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-13"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-14"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-15"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-16"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-17"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-18"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-19"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-20"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 500,
+      "label": "anchored-steering-21"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 500,
+      "label": "anchored-steering-22"
+    },
+    {
+      "type": "wait",
+      "phase": "running"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "snapshot",
+      "group": "after-workload"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "readyHiddenSelector": "#boot-status",
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "long-rail",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3d7899811222442a",
+      "name": "Long rail",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 35.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [
+        {
+          "x": 33,
+          "y": 10,
+          "w": 5,
+          "h": 16
+        },
+        {
+          "x": 15,
+          "y": 18,
+          "w": 12,
+          "h": 3
+        }
+      ],
+      "goal": {
+        "coverage": 0.68
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [
+          {
+            "id": "player-speed",
+            "kind": "player-speed",
+            "x": 50.5,
+            "y": 0.5
+          }
+        ],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "west",
+          "type": "bouncer",
+          "x": 8.5,
+          "y": 8.5,
+          "vx": 7.81352993211135,
+          "vy": 7.81352993211135,
+          "course": "field-course.v2"
+        },
+        {
+          "id": "east",
+          "type": "bouncer",
+          "x": 60.5,
+          "y": 23.5,
+          "vx": -7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        },
+        {
+          "id": "outer",
+          "type": "border-patrol",
+          "speed": 8.16,
+          "clockwise": true,
+          "x": 71.5,
+          "y": 25.5
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 35.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}

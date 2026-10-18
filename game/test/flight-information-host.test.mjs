@@ -4,10 +4,12 @@ import { readFileSync } from 'node:fs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { deferred } from './helpers/media-fixtures.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
-import { readFlightInformation } from '../ui/flight-information-host.mjs';
+import { attachFlightInformation, readFlightInformation } from '../ui/flight-information-host.mjs';
+import { createRun } from '../core/index.mjs';
 import { Soundscape } from '../ui/audio.mjs';
 import { BoardPainter } from '../ui/render.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
+import { nativeCaptureSession } from '../capture-presentation-session.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
 const campaign = (cause = 'self-contact', goal = 1, lives = 3) => ({
@@ -30,6 +32,52 @@ function tap(page, code) {
   page.key(code);
   page.key(code, false);
 }
+
+test('retaining completed feedback never projects live state; explicit readers remain fresh', () => {
+  const element = {},
+    run = createRun(campaign().levels[0]),
+    state = { started: true, paused: false };
+  let reads = 0;
+  const host = attachFlightInformation({
+    element,
+    getState: () => {
+      reads++;
+      return state;
+    },
+    writeWarning: (fullText, cue) => ({ fullText, cue, expiresAt: run.time + 5 }),
+  });
+  host.adopt(run, 'retained-feedback');
+  host.warning('Ready', null, 'host.ready');
+  const events = [{ type: 'cut.started', tick: run.tick, time: run.time }],
+    ticket = host.begin(run, events);
+  host.observeEvent(ticket, 0, () => host.warning('Cutting', 'cut-start'));
+  assert.equal(host.finish(ticket), true);
+  for (let i = 0; i < 240; i++) assert.equal(host.finish(host.begin(run, [])), true);
+  assert.equal(reads, 0, 'Feedback retention does not request a live snapshot.');
+
+  const first = readFlightInformation(element);
+  assert.equal(reads, 1);
+  assert.equal(first.snapshot.paused, false);
+  assert.equal(first.lastBatch.sequence, 241);
+  assert.deepEqual(first.lastBatch.events, []);
+  assert.equal(first.recentBatches.length, 1);
+  assert.deepEqual(first.recentBatches[0].events[0].event, events[0]);
+  assert.deepEqual(
+    first.recentNotices.map((notice) => notice.fullText),
+    ['Ready', 'Cutting'],
+  );
+  assert.equal(first.lastWarning, first.recentNotices[1]);
+  assert.equal(Object.isFrozen(first.recentBatches[0].events[0].event), true);
+  state.paused = true;
+  assert.equal(host.read().snapshot.paused, true);
+  assert.equal(reads, 2);
+  assert.equal(first.snapshot.paused, false);
+  host.adopt(run, 'replacement');
+  assert.deepEqual(host.read().recentNotices, []);
+  assert.deepEqual(host.read().recentBatches, []);
+  host.dispose();
+  assert.equal(readFlightInformation(element), null);
+});
 
 test('actual host adopts fresh attempts and reads live state without changing the checkpoint', async (t) => {
   const p = await soloPage(t, { campaign: campaign() });
@@ -62,7 +110,7 @@ test('verified restore of the same saved attempt gets new presentation ownership
   p.$('pause-button').click();
   const before = information(p).owner;
   const slot = 'revealline.suspended.dev.v1';
-  const saved = JSON.parse(p.storage.getItem(slot));
+  const saved = nativeCaptureSession(JSON.parse(p.storage.getItem(slot)));
   p.$('continue-saved').click();
   await settle(() => !p.$('continue-saved').disabled);
   p.frame(0);
@@ -83,9 +131,15 @@ for (const outcome of ['won', 'lost'])
     const p = await soloPage(t, {
       campaign: campaign('self-contact', outcome === 'won' ? 0.1 : 1, 1),
     });
-    const soundEvents = [],
-      effectBatches = [];
-    t.mock.method(Soundscape.prototype, 'event', (event) => soundEvents.push(event));
+    const soundBatches = [],
+      effectBatches = [],
+      originalEvents = Soundscape.prototype.events;
+    // The feedback director may enrich/coalesce audible cues. Observe the
+    // accepted engine batch at its entry while preserving that real processing.
+    t.mock.method(Soundscape.prototype, 'events', function (events, ...args) {
+      soundBatches.push(structuredClone(events));
+      return originalEvents.call(this, events, ...args);
+    });
     t.mock.method(BoardPainter.prototype, 'effectsFor', (events, run) =>
       effectBatches.push({ events: structuredClone(events), run }),
     );
@@ -106,7 +160,7 @@ for (const outcome of ['won', 'lost'])
       batch.events.map((entry) => entry.event),
       effectBatches.at(-1).events,
     );
-    assert.deepEqual(soundEvents.slice(-batch.events.length), effectBatches.at(-1).events);
+    assert.deepEqual(soundBatches.at(-1), effectBatches.at(-1).events);
     assert.equal(effectBatches.at(-1).run, p.rendered.run);
     assert.ok(
       batch.events.some(

@@ -31,8 +31,16 @@ import {
   validateAircraftRecording,
 } from './aircraft-recording.mjs';
 
-export const AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v1';
-export const AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v1';
+export const LEGACY_AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v1';
+export const LEGACY_AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v1';
+export const AIRCRAFT_BACKEND = 'civilian-quad-aircraft.v2';
+export const AIRCRAFT_REGIONAL_BACKEND = 'civilian-quad-aircraft-regional.v2';
+export const AIRCRAFT_BACKENDS = Object.freeze([
+  LEGACY_AIRCRAFT_BACKEND,
+  LEGACY_AIRCRAFT_REGIONAL_BACKEND,
+  AIRCRAFT_BACKEND,
+  AIRCRAFT_REGIONAL_BACKEND,
+]);
 export const AIRCRAFT_SNAPSHOT_FORMAT = 'AdvancedAircraftSnapshot.v1';
 const AXES = ['x', 'y', 'z'];
 const CONTROLS = ['roll', 'pitch', 'yaw', 'throttle'];
@@ -129,7 +137,7 @@ function configurationIdentity(config) {
 }
 export function aircraftFlightIdentities(config, { terrainIdentity = null } = {}) {
   required(
-    [AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND].includes(config.backend),
+    AIRCRAFT_BACKENDS.includes(config.backend),
     'Unsupported aircraft comparison configuration',
   );
   const physical = physicalConfiguration(config);
@@ -162,6 +170,15 @@ export function aircraftFlightIdentities(config, { terrainIdentity = null } = {}
 export function createAircraftSimulation(options = {}) {
   const aircraft = validateAircraftPhysics(options.aircraft);
   const regional = options.terrain !== undefined;
+  const backend = options.backend ?? (regional ? AIRCRAFT_REGIONAL_BACKEND : AIRCRAFT_BACKEND);
+  required(
+    (regional
+      ? [AIRCRAFT_REGIONAL_BACKEND, LEGACY_AIRCRAFT_REGIONAL_BACKEND]
+      : [AIRCRAFT_BACKEND, LEGACY_AIRCRAFT_BACKEND]
+    ).includes(backend),
+    'Unsupported aircraft backend or terrain mode',
+  );
+  const supportedIntegral = [AIRCRAFT_BACKEND, AIRCRAFT_REGIONAL_BACKEND].includes(backend);
   if (regional)
     required(
       options.terrain?.format === 'AdvancedRegionalTerrain.v1' && options.floor === false,
@@ -242,7 +259,7 @@ export function createAircraftSimulation(options = {}) {
     );
   }
   const config = {
-    backend: regional ? AIRCRAFT_REGIONAL_BACKEND : AIRCRAFT_BACKEND,
+    backend,
     ...(regional ? { terrain: { format: 'AdvancedRegionalTerrain.v1' } } : {}),
     collision: WORLD_COLLISION_BACKEND,
     frequency: hz,
@@ -259,7 +276,11 @@ export function createAircraftSimulation(options = {}) {
     configuration: frozen,
   };
   const identity = configurationIdentity(config);
-  const controller = createAircraftController({ aircraft, tune });
+  const controller = createAircraftController({
+    aircraft,
+    tune,
+    groundIntegralPolicy: supportedIntegral ? 'supported-reset.v1' : 'legacy',
+  });
   let world,
     body,
     bodyHandle,
@@ -705,6 +726,11 @@ export function createAircraftSimulation(options = {}) {
       dt,
       voltage: state.voltage,
       usedAh: state.usedAh,
+      grounded:
+        supportedIntegral &&
+        state.contact.grounded &&
+        state.contact.support !== null &&
+        state.contact.support.normal.y >= 0.5,
     });
     const propulsion = stepAircraftPropulsion(aircraft, {
       motorSpeeds: state.motorSpeeds,
@@ -735,20 +761,42 @@ export function createAircraftSimulation(options = {}) {
     contacts(velocity);
     state.substep++;
   }
-  function runMission(motionSource) {
+  // Requested explicitly by the isolated response bench. These copied samples
+  // are observations only: they never enter dynamics, checkpoints or hashes.
+  function physicsSample() {
+    const angular = rotate(body.rotation(), body.angvel(), true),
+      diagnostic = controller.telemetry();
+    return {
+      substep: state.substep,
+      seconds: state.substep / hz,
+      requestedRates: { roll: state.target.roll, pitch: state.target.pitch, yaw: state.target.yaw },
+      achievedRates: {
+        roll: (-angular.z * 180) / Math.PI,
+        pitch: (-angular.x * 180) / Math.PI,
+        yaw: (-angular.y * 180) / Math.PI,
+      },
+      motors: [...state.motorSpeeds],
+      requestedTorque: diagnostic.requestedTorque,
+      achievedTorque: diagnostic.achievedTorque,
+      saturated: diagnostic.saturated,
+    };
+  }
+  function runMission(motionSource, diagnostics = false) {
     required(!regional || terrain, 'Verified terrain is required before aircraft flight');
     required(safeTick(state.missionTick + 1), 'Aircraft clock exhausted safe integer precision');
     const motions = validateMotions(motionSource),
       events = [];
     if (motions.length) events.push(['motion', state.missionTick, motions]);
     state.contact.impactSpeed = 0;
-    const trace = [{ ...body.translation(), ...hullExtents() }];
+    const trace = [{ ...body.translation(), ...hullExtents() }],
+      physicsSamples = diagnostics ? [] : null;
     for (let step = 0; step < missionSteps; step++) {
       substep(events, motions, (step + 1) / missionSteps);
       trace.push({ ...body.translation(), ...hullExtents() });
+      if (diagnostics) physicsSamples.push(physicsSample());
     }
     state.missionTick++;
-    return { trace, events };
+    return { trace, events, physicsSamples };
   }
   function accepted(events) {
     recorder.append({
@@ -830,18 +878,26 @@ export function createAircraftSimulation(options = {}) {
     else if (admitted && kind === 'mission') accepted([]);
     return { admitted, adopted: admitted, telemetry: telemetry() };
   }
-  function stepMission({ admitMotion, motions } = {}) {
+  function stepMission({ admitMotion, motions, diagnostics = false } = {}) {
     unlocked();
+    required(typeof diagnostics === 'boolean', 'Invalid aircraft diagnostics request');
     const before = transactionCapture();
     try {
-      const result = runMission(motions);
+      const result = runMission(motions, diagnostics);
       const admitted = admitMotion
         ? admitMotion(result.trace[0], result.trace.at(-1), clone(result.trace))
         : true;
       required(typeof admitted === 'boolean', 'Motion admission must return a boolean');
       if (!admitted) restoreInternal(before);
       else accepted(result.events);
-      return { admitted, telemetry: telemetry(), trace: result.trace };
+      return {
+        admitted,
+        telemetry: telemetry(),
+        trace: result.trace,
+        ...(diagnostics
+          ? { physicsHz: hz, physicsSamples: admitted ? result.physicsSamples : [] }
+          : {}),
+      };
     } catch (error) {
       restoreInternal(before);
       throw error;

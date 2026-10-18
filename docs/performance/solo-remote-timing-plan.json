@@ -1,0 +1,333 @@
+{
+  "format": "SoloHostedTimingManifestV1",
+  "cohort": "linux-timing-3ad-independent-diagnostic-v1",
+  "phase": "cold-first30",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "candidate": {
+    "revision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "tree": "48018be714c3965f989c75c9fe18e8da2529eebd",
+    "run": 38983792534,
+    "artifact": 12082915872,
+    "outer": {
+      "bytes": 1090952183,
+      "sha256": "637d7e10ccabe6fe1936d28bfb3e00f07d7bf03083a30ce3d0fee3249b7a1135"
+    },
+    "inner": {
+      "bytes": 1073310046,
+      "sha256": "8f3a54fe973540f6bd0fbcf069d1a8f87702f69ef87d901da83b563ce564a3d8"
+    },
+    "manifestSHA256": "efc58d03a6d4abb45dca63fbf8f4ec85232a47b3f9259e14b26efc6cfc086718",
+    "producer": "Exact successful Appearance package, Node22.13.1 Linux; original focused-policy metadata retained. Full outer/member/source/CSP verification required remotely before any native row."
+  },
+  "baseline": {
+    "revision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "tree": "09f68c3691a4ae1013c3073f0ccf301b3355903f",
+    "producer": "Retained exact-source normal Linux b117 producer38978329593/attempt1 under Node22.13.1; no source flags or budgets changed. Each consumer must verify the complete pinned outer/ready/inner/source/CSP before admission. No fallback rebuild or historical macOS artifact substitution.",
+    "historicalArtifactInvestigation": {
+      "mainRun": 38817575550,
+      "pagesArtifact": 12011437947,
+      "pagesSHA256": "842551f36fcc368c9ef1be2b92ecabee10fe524ed4a75c063ac8dc981f0cb8eb",
+      "disposition": "Exact b117 workflow uses publication-profile main-pages and removes standalone distribution.zip before staging. Not substituted for normal distribution. Company run38817575589 is a bundled-edition profile."
+    },
+    "reusableArtifact": {
+      "format": "SoloHostedNormalBaselineReuseV1",
+      "run": 38978329593,
+      "artifact": 12080662080,
+      "name": "solo-normal-baseline-b1174522-38978329593-1",
+      "producer": {
+        "repository": "mekhovov/revealline",
+        "workflow": ".github/workflows/solo-remote-correctness-temporary.yml",
+        "run": 38978329593,
+        "attempt": 1,
+        "toolingRevision": "d569ce092db47d14f974da24063f82f4a280a19a",
+        "toolingTree": "ee4d756b04fd512849cb19ceb613edfbb04c7c68"
+      },
+      "outer": {
+        "bytes": 1073744615,
+        "sha256": "abf5d8ae1f277cc2b640f103a3ab3471ebf13fe78eba518cc7630c7c316b9e62"
+      },
+      "inner": {
+        "bytes": 1073181451,
+        "sha256": "1e9bb6ad49ced329fecd66f9976c024dad2949bdf4b008f376ee50d6bbf36290"
+      },
+      "manifestSHA256": "2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8",
+      "ready": {
+        "bytes": 1602,
+        "sha256": "4e90b38ad8e3d871f122798643c87173dde7d2a006c1e282485c124fcaa2132a"
+      }
+    },
+    "reuse": "Exact API/producer-small-evidence pins only locally; full large outer and ready-body readback remain mandatory in each remote consumer. This binding grants no performance qualification or candidate release."
+  },
+  "evidenceBytes": 536870912,
+  "rowEvidenceBytes": 134217728,
+  "setupTimeoutMs": 2400000,
+  "calibrationTimeoutMs": 300000,
+  "calibrationPreset": "mid",
+  "recipes": {
+    "cold-first30": {
+      "path": "docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture",
+      "bytes": 6387,
+      "sha256": "aa3a4c98c6f272ea515d1e8c9e0fb3238d78782065bfb96ae8fe4e304041e2c5",
+      "authority": ".cache/solo-followup/qualification-first30-prospective-03/cold-first30.qualification.json"
+    },
+    "warm-first30": {
+      "path": "docs/performance/fixtures/solo-remote-timing/warm-first30.qualification.fixture",
+      "bytes": 6570,
+      "sha256": "6da01ca449068ca6705012f3d6604362c581fe52c4583407797c0961acf3156d",
+      "authority": ".cache/solo-followup/qualification-first30-prospective-03/warm-first30.qualification.json"
+    },
+    "sentry": {
+      "path": "docs/performance/fixtures/solo-remote-timing/sentry.qualification.fixture",
+      "bytes": 5450,
+      "sha256": "86cc1eea19e1d229dae865b368a94238de900ad83be5d9a4ee469b2e4dc3c0fd",
+      "authority": ".cache/solo-followup/qualification-playground-ready-01/sentry-detour.qualification.json"
+    },
+    "long-rail": {
+      "path": "docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture",
+      "bytes": 4562,
+      "sha256": "b9afaecaadcbd0f657dd8064b9f7932c0c7ec12d6433f7d2b76f60de7ef19528",
+      "authority": ".cache/solo-followup/qualification-playground-ready-01/long-rail.qualification.json"
+    },
+    "sentry-level": {
+      "path": "docs/performance/fixtures/solo-remote-timing/sentry-detour.xonix.fixture",
+      "bytes": 4049,
+      "sha256": "caad15d6f4770bc5e48935db1655e2892cfb5bd9093a72d0d7795125e8d2d3fa",
+      "authority": ".cache/solo-followup/qualification-playground-ready-01/sentry-detour.xonix.json"
+    },
+    "long-rail-level": {
+      "path": "docs/performance/fixtures/solo-remote-timing/long-rail.xonix.fixture",
+      "bytes": 3563,
+      "sha256": "821897e571449bb5ec27678eef09c5955d9e9be873aaaf76736ff1aadbd0d84c",
+      "authority": ".cache/solo-followup/qualification-playground-ready-01/long-rail.xonix.json"
+    }
+  },
+  "frozenTools": [
+    {
+      "path": "scripts/calibrate-solo-performance.mjs",
+      "bytes": 4773,
+      "sha256": "e8a6d45e8cc2a04d65537f2bc0a6d0d8df18caec2766de4cefb9a153ec6bc816"
+    },
+    {
+      "path": "scripts/vendor/devtools-benchmark.mjs",
+      "bytes": 2739,
+      "sha256": "dc39973cdbf82704a3d623dd57d037ea501eb5761596c66e27f301c9e860af6b"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 66337,
+      "sha256": "457e608f8c2defb2e75c19057780224e8dc7b0121ad21da811408323e1054a2f"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 26233,
+      "sha256": "88363cc018c21e04ee50addae9e6086b76849c429249cdf4e9a9e9c6c6d24637"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 14584,
+      "sha256": "0195f26910e35c68f6dc29e472b84b151b9910f2afd8ce9183ed5ef577d21a7b"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+    },
+    {
+      "path": "scripts/qualify-solo-diagnostics.mjs",
+      "bytes": 18407,
+      "sha256": "0f3d728db67010838dde5b7c51dcc1093e9c7b11d67e68610d3bd491693bac5f"
+    },
+    {
+      "path": "scripts/solo-diagnostics-analysis.mjs",
+      "bytes": 17537,
+      "sha256": "6ad22a3c0a85208b4d36464d6ad7e12fb5feac46eb5aac8096f55c8896949225"
+    },
+    {
+      "path": "scripts/observe-solo-performance.mjs",
+      "bytes": 19115,
+      "sha256": "bd6b3f552b1048355a789c8af35475d402aabcab005fb01f25f610e4f676bd91"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 92165,
+      "sha256": "09acb154eb13de251f7986684698be439fe3b4209d620828e24872f98e4a482c"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 53814,
+      "sha256": "6d00e1ba38cdaf0a468a58a999c803e03ae1a6a59b0dffefc8ec87644fa7c311"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+    }
+  ],
+  "jobs": [
+    {
+      "engine": "chromium",
+      "repetition": 1
+    },
+    {
+      "engine": "chromium",
+      "repetition": 2
+    },
+    {
+      "engine": "chromium",
+      "repetition": 3
+    },
+    {
+      "engine": "webkit",
+      "repetition": 1
+    },
+    {
+      "engine": "webkit",
+      "repetition": 2
+    },
+    {
+      "engine": "webkit",
+      "repetition": 3
+    }
+  ],
+  "phaseOrder": ["cold-first30", "warm-first30", "sentry", "long-rail"],
+  "latestSourceRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+  "latestRuntimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+  "release": {
+    "format": "SoloHostedTimingReleaseV1",
+    "status": "reviewed-diagnostic-only",
+    "phase": "cold-first30",
+    "previousPhase": "latest-first8",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "baselineRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "latestRuntimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "noUnclosedOwners": true,
+    "allPriorPlannedJobsClosed": true,
+    "priorProofInspected": true,
+    "firstEightAllCorrectnessPassed": false,
+    "latestProductionPackageVerified": true,
+    "evidence": [
+      {
+        "runId": 38985941469,
+        "artifactId": 12083397932,
+        "artifactSHA256": "f4ec29665182e28337d14bed46323e70e16981912be53170c75c97063419c3e1",
+        "summarySHA256": "3de8915a541d66a8afd3d56b066825881d75100c653d12acc68fd1c9785e6929",
+        "disposition": "failed-reviewed"
+      }
+    ],
+    "scope": "independent-comparison-diagnostics",
+    "predecessorRun": 38985941469,
+    "automaticRetries": 0,
+    "automaticPhaseContinuation": false,
+    "performanceQualification": "not-qualified-diagnostic-only"
+  },
+  "scope": "Independent excluded cold-first30 comparison at exact3ad/b117, three counterbalanced pairs per engine. Original recipe bytes,480s command bounds, fresh verified mid Chromium calibration and persistent400x850DPR3WebKit preserved. All raw gates remain decisive and retained; aggregate performance is not-qualified-diagnostic-only. Warm/combat/capture phases require separate later review, without an all-pass prerequisite waiver.",
+  "resources": {
+    "maxParallelJobs": 6,
+    "rowsSerialWithinJob": true,
+    "automaticRetries": 0,
+    "perCommandRSSBytes": 6442450944,
+    "perCommandLogBytes": 4194304,
+    "minimumInitialMemoryBytes": 12884901888,
+    "minimumInitialDiskBytes": 8589934592,
+    "minimumRemainingDiskBytes": 1073741824,
+    "finalizationReserveBytes": 4194304,
+    "setupEvidenceMaximumBytes": 25165824
+  },
+  "deadlines": {
+    "jobMinutes": 120,
+    "helperMinutes": 75,
+    "setupMinutes": 40,
+    "calibrationMinutes": 5,
+    "rowCount": 2,
+    "perRowSeconds": 480,
+    "rowBoundaryAndFinalizationReserveMinutes": 14,
+    "outsideHelperMinutes": 45,
+    "scenarioTimeoutMs": {
+      "cold-first30": 240000,
+      "warm-first30": 360000,
+      "sentry": 240000,
+      "long-rail": 240000
+    }
+  },
+  "measurementScope": {
+    "lightweight": "Existing fixed-size rAF/phase/audio API and PRE_STEP\u2192POST_RENDER work probe only. Same settled120 pre-navigation fixedB, internal appB remains independently admitted/provisional; no replacing missing internalcalibration. Owner/RSS/disk supervisor remains part of hostedstratum. All raw startup/failed/inconclusive observations retained.",
+    "excluded": "No CPU/heap profiler, forcedGC, synthetic recovery/contextloss, audio identity instrumentation, diagnostics-on/off pairing or trace in timingrows. Those remain separate released lanes.",
+    "remaining": [
+      "Demo30s whole-window work/cadence qualification",
+      "Heap/native memory trend ownership review",
+      "Successful offline launch plus public gameplay/strict replay",
+      "Physical iPhoneSafari/installedPWA/SteamDeckthermal qualification",
+      "OriginalmacOS raster and contaminated observations remain independent historical failures"
+    ]
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-sustained.mjs",
+      "bytes": 49845,
+      "sha256": "ab5a12e8e9eab5f7afd871a8a93c8790a923dc445dd76078345fc008aa1d0d6e"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0"
+    }
+  ],
+  "lineage": {
+    "originalMatrix": ".cache/solo-followup/qualification-matrix-v16-bound/matrix.json",
+    "originalMatrixSHA256": "ca01260b6ea7c77cf40dd5c9db0d65fa2d29e8fec08e8178700f6c69e68be2d9",
+    "recipeAuthority": ".cache/solo-followup/remote-latest-timing-followup-01/recipe-authority.json",
+    "recipeAuthoritySHA256": "fe176a02707c8b09c46ad290d8d20c99f6dd71d22d9c34ceacf399e1b9b8cd5e",
+    "lastRuntimeBoundaryAtDesign": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "binding": "Actual final package source/runtime identities and latest-first8 full readback are pending; parent reviewed release required. No historic2ec/d569 artifact substitution."
+  },
+  "bindingScope": {
+    "status": "metadata-and-git-source-bound-release-held",
+    "candidateRevision": "3adcd53792043ef02459e86168c6b33a66d6ef00",
+    "runtimeRevision": "0d9fef1120face4c0f9998ebd24a94e6df0d85c0",
+    "candidateArtifact": 12082915872,
+    "firstEight": "Pending exact3ad first8 retained evidence and review; no positive release flags granted.",
+    "sourceAssets": "Demo catalog/replay identities derive from exact git show3ad bytes; remote package equality remains required.",
+    "baseline": "Existing actualb117 reusable normal-artifact identity retained for lanes that observe baseline; full outer/ready/inner/source/CSP proof mandatory remotely, no fallback rebuild."
+  },
+  "performanceExclusion": true,
+  "admissionReview": {
+    "distinction": "Admission permits collecting independently declared diagnostic observations. It neither certifies the failed first-eight prerequisite nor weakens any raw timing, replay, resource, sample-count or duration gate.",
+    "prerequisite": "Run38985941469 remains failed:7/8rows passed, WebKit active worker row failed. Both source/archive proofs passed and all8owned commands closed. This retained failure can be investigated while independent comparisons run.",
+    "ownershipScope": "Prior closure refers to this declared predecessor cohort, not unrelated concurrent jobs on separately owned hosted machines. Current job archive/source/RSS/disk/process ownership guards remain mandatory.",
+    "phaseScope": "Only this selected phase is released; three fixed counterbalanced source pairs per engine, all failures and partial results retained. Later phase review may accept failed-reviewed predecessor evidence, never unreviewed or unclosed ownership.",
+    "execution": "No changes to original recipes, controls, elapsed timing, calibration, repetition counts, scenario/command deadlines, row evidence limits or result evaluation. No automatic retry, continuation or inserted Resume.",
+    "limits": "Overall performance remains not-qualified-diagnostic-only even if individual observed-window numeric components pass. Missing baseline internal counters and candidate input samples remain unresolved. Hosted Linux stress is not physical iPhone/Steam Deck or thermal qualification."
+  }
+}
