@@ -3,6 +3,7 @@ import test from 'node:test';
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { parse } from 'acorn';
+import { qualificationCadenceOption } from './solo-qualification-cadence.mjs';
 import {
   bindAuxiliaryJob,
   auxiliaryMatrix,
@@ -19,7 +20,7 @@ import {
 } from './solo-qualification-shared-mode.mjs';
 const read = (path) => readFile(new URL('../' + path, import.meta.url));
 const manifest = JSON.parse(
-  await read('docs/performance/solo-shared-mode-public-return-797e03-plan.json'),
+  await read('docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json'),
 );
 // Scoped correctness only; raw numerical and portability failures remain retained.
 const firstEightOutcome = JSON.parse(
@@ -52,6 +53,33 @@ const model = new Function(
   'readSharedModePublicState',
   `${priorTest.slice(control.start, control.end)}\nreturn (${priorTest.slice(modelNode.start, modelNode.end)});`,
 )(assert, readSharedModePublicState);
+
+// Execute the actual CLI cadence declaration and guard, without importing its browser driver.
+const qualifierSource = (await read('scripts/qualify-solo-runtime.mjs')).toString();
+const qualifierAST = parse(qualifierSource, { ecmaVersion: 'latest', sourceType: 'module' });
+const cadenceDeclaration = qualifierAST.body.find(
+  (node) =>
+    node.type === 'VariableDeclaration' &&
+    node.declarations.some((value) => value.id.name === 'workProbe'),
+);
+const cadenceGuard = qualifierAST.body.find(
+  (node) =>
+    node.type === 'ExpressionStatement' &&
+    node.expression.type === 'CallExpression' &&
+    node.expression.callee.name === 'assert' &&
+    node.expression.arguments[1]?.value === 'Settled cadence requires the work probe',
+);
+assert(cadenceDeclaration && cadenceGuard);
+const cliCadence = new Function(
+  'assert',
+  'qualificationCadenceOption',
+  'flags',
+  qualifierSource.slice(cadenceDeclaration.start, cadenceDeclaration.end) +
+    '\n' +
+    qualifierSource.slice(cadenceGuard.start, cadenceGuard.end) +
+    '\nreturn { workProbe, cadenceProtocol };',
+).bind(null, assert, qualificationCadenceOption);
+
 async function observed(plan) {
   const m = model(),
     record = {};
@@ -208,6 +236,16 @@ test('actual adapter arguments reach exact observer admission without unsupporte
       '/evidence',
     );
     assert(!args.includes('--work-probe'));
+    assert(!args.some((arg) => arg.startsWith('--cadence=')));
+    assert.deepEqual(cliCadence(args.slice(4)), { workProbe: false, cadenceProtocol: 'blank30' });
+    assert.throws(
+      () => cliCadence([...args.slice(4), '--cadence=settled120']),
+      /Settled cadence requires the work probe/,
+    );
+    assert.deepEqual(cliCadence(['--work-probe', '--cadence=settled120']), {
+      workProbe: true,
+      cadenceProtocol: 'settled120',
+    });
     assert(!args.includes('--audio-proof'));
     assert(!args.includes('--baseline-runtime'));
     assert.equal(
@@ -340,4 +378,84 @@ test('source797 observer selection preserves the old exact source and rejects mi
     args.map((x) => x.replace('--source-revision=', '--source-revision-other=')),
   ])
     assert.throws(() => qualificationSharedModeOptions(changed, recipe, bytes));
+});
+
+test('executed shared-return declaration and failed adapter stay bound to actual historical Git bytes', async () => {
+  const witnessBytes = await read(
+    'docs/performance/fixtures/solo-shared-mode/9aaf-executed-source.json',
+  );
+  const declarationBytes = await read(
+    'docs/performance/solo-shared-mode-public-return-797e03-plan.json',
+  );
+  const check = (value, declaration) => {
+    assert.equal(value.length, 1578);
+    assert.equal(
+      createHash('sha256').update(value).digest('hex'),
+      'a3c7882b060ea2672907539742c694fab8dece2bd56e4f58f784c7de7806d7ed',
+    );
+    const witness = JSON.parse(value);
+    assert.equal(witness.sourceRevision, '9aaf4ea6ee9ebe23821552e59851f2e3e817a15b');
+    assert.equal(witness.sourceTree, '7e64a66f9eb309b692719b163ca00fbe78146ad5');
+    assert.equal(witness.postHocExactGitReadback, true);
+    const records = new Map(witness.records.map((ref) => [ref.path, ref]));
+    assert.equal(records.size, 2);
+    const expected = records.get(
+      'docs/performance/solo-shared-mode-public-return-797e03-plan.json',
+    );
+    assert.equal(declaration.length, expected.bytes);
+    assert.equal(createHash('sha256').update(declaration).digest('hex'), expected.sha256);
+    const old = JSON.parse(declaration);
+    assert.deepEqual(
+      old.adapterInputs,
+      witness.records
+        .filter((ref) => ref.path === 'scripts/solo-remote-auxiliary.mjs')
+        .map(({ path, bytes, sha256 }) => ({ path, bytes, sha256 })),
+    );
+    assert.deepEqual(
+      witness.evidence.map((entry) => entry.status),
+      ['failed-before-browser', 'failed-before-browser'],
+    );
+  };
+  check(witnessBytes, declarationBytes);
+  assert.throws(() => check(Buffer.concat([witnessBytes, Buffer.from(' ')]), declarationBytes));
+  const changed = JSON.parse(declarationBytes);
+  changed.adapterInputs[0].sha256 = '0'.repeat(64);
+  assert.throws(() => check(witnessBytes, Buffer.from(JSON.stringify(changed))));
+  const old = JSON.parse(declarationBytes);
+  const successor = structuredClone(manifest);
+  delete successor.toolingSuccessor;
+  successor.adapterInputs = old.adapterInputs;
+  assert.deepEqual(
+    successor,
+    old,
+    'Only the new tooling identity and explanatory prior-declaration record differ',
+  );
+});
+
+test('production preparation cannot use historical adapter pins with current source', async () => {
+  const old = JSON.parse(
+    await read('docs/performance/solo-shared-mode-public-return-797e03-plan.json'),
+  );
+  const plan = bindAuxiliaryJob(old, 'recovery-chromium');
+  let effects = 0;
+  await assert.rejects(
+    () =>
+      prepareAuxiliaryMode({
+        plan,
+        repository: new URL('../', import.meta.url).pathname.replace(/\/$/, ''),
+        digest: async (path) => {
+          const value = await readFile(path);
+          return { bytes: value.length, sha256: createHash('sha256').update(value).digest('hex') };
+        },
+        get admitted() {
+          effects++;
+          throw Error('historical source must reject first');
+        },
+        required: async () => {
+          effects++;
+        },
+      }),
+    { name: 'AssertionError' },
+  );
+  assert.equal(effects, 0);
 });

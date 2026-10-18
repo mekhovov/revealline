@@ -5770,6 +5770,8 @@ jobs:
             /docs/performance/solo-remote-offline-current-plan.json
             /docs/performance/solo-remote-offline-plan.json
             /docs/performance/solo-shared-mode-public-return-797e03-plan.json
+            /docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json
+            /docs/performance/fixtures/solo-shared-mode/9aaf-executed-source.json
             /game/audio/effects/start.wav
             /game/audio/reactions/guide-capture-0-en.m4a
             /game/audio/reactions/pilot.mjs
@@ -6098,7 +6100,7 @@ jobs:
         run: |
           set -euo pipefail
           node --test --test-concurrency=2 scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-auxiliary.mjs scripts/test-solo-qualification.mjs scripts/test-solo-shared-mode-public-return.mjs scripts/test-solo-shared-mode-797e03-admission.mjs scripts/test-solo-native-consumer-shared-demo.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
-          node scripts/solo-remote-auxiliary.mjs bind-plan docs/performance/solo-shared-mode-public-return-797e03-plan.json "$RUNNER_TEMP/shared-return-plan.json" "${{ matrix.job }}"
+          node scripts/solo-remote-auxiliary.mjs bind-plan docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json "$RUNNER_TEMP/shared-return-plan.json" "${{ matrix.job }}"
       - name: Run fixed public Team and Versus return observations
         timeout-minutes: 63
         working-directory: tools
@@ -6175,6 +6177,7 @@ jobs:
             /scripts/solo-qualification-shared-mode.mjs
             /docs/performance/fixtures/solo-shared-mode/public-return.qualification.fixture
             /docs/performance/solo-shared-mode-public-return-797e03-plan.json
+            /docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json
             /.github/workflows/solo-native-package-consumer.yml
             /.github/workflows/solo-remote-auxiliary-temporary.yml
             /.github/workflows/solo-remote-final-audio-temporary.yml
@@ -6707,6 +6710,7 @@ jobs:
             /scripts/solo-qualification-shared-mode.mjs
             /docs/performance/fixtures/solo-shared-mode/public-return.qualification.fixture
             /docs/performance/solo-shared-mode-public-return-797e03-plan.json
+            /docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json
             /.github/workflows/solo-native-package-consumer.yml
             /.github/workflows/solo-remote-auxiliary-temporary.yml
             /.github/workflows/solo-remote-final-audio-temporary.yml
