@@ -35,7 +35,7 @@
           background: #070914;
           color: #edf2ff;
         }
-        html:not([data-boot-state='ready'])
+        html:not([data-boot-state='ready']):not([data-boot-state='interactive'])
           body
           > :not(#boot-screen):not(#access-gate):not(script) {
           display: none !important;

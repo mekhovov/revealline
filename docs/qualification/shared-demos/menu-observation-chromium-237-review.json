@@ -1,0 +1,108 @@
+{
+  "format": "SharedDemoMenuObservationReviewV1",
+  "created": "2026-10-18T22:22:47.037227+00:00",
+  "qualificationStatus": "Diagnostic reproduced the original menu-click timeout. It is not a pass or a replacement for the failed restoration gate.",
+  "sourceHead": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+  "runtimeFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+  "evidence": [
+    {
+      "path": "docs/qualification/shared-demos/menu-observation-chromium-237.json",
+      "sha256": "24df78f1088adda7d80d44c20e60a5af0a3ad3022990c1d0277ab3bee5e29659"
+    },
+    {
+      "path": "docs/qualification/shared-demos/menu-observation-chromium-237-binding.json",
+      "sha256": "a5ba164d804fffdc94ff3b1d72e17dbe732d7a31b10d54f8b81ccb70391f2438"
+    },
+    {
+      "path": "docs/qualification/shared-demos/menu-observation-chromium-237-menu.png",
+      "sha256": "6eaccf50c3896054db35e50ae195e5c514917d698553a8fdb9b7bb89619b26d4"
+    }
+  ],
+  "attempts": [
+    {
+      "index": 0,
+      "stage": "watching",
+      "started": "2026-10-18T22:21:41.343Z",
+      "finished": "2026-10-18T22:21:41.537Z",
+      "clickResolved": true,
+      "clickTimeoutMs": 3000,
+      "beforeBoot": "ready",
+      "beforeBody": "briefing",
+      "rectVariants": [
+        "{\"height\": 44, \"width\": 184.3125, \"x\": 12, \"y\": 3}"
+      ],
+      "pointerEventRecords": 10,
+      "trustedClickCaptureRecords": 1,
+      "rafSamples": 10,
+      "maxObservedRafGapMs": 62.399999998509884,
+      "longTasks": [],
+      "beforeHit": [
+        "IMG.fpv-line-wordmark",
+        "SPAN.fpv-line-brand.fpv-line-brand--compact",
+        "BUTTON#shell-menu",
+        "DIV.shell-bar",
+        "BODY.field-kit.game-shell"
+      ],
+      "finalHit": [
+        "DIALOG#shell-home.shell-home.native-landing.menu-scene-host",
+        "HTML"
+      ],
+      "finalDialogs": [
+        "DIALOG#shell-home.shell-home.native-landing.menu-scene-host"
+      ]
+    },
+    {
+      "index": 1,
+      "stage": "practice",
+      "started": "2026-10-18T22:21:50.851Z",
+      "finished": "2026-10-18T22:21:54.934Z",
+      "clickResolved": false,
+      "clickTimeoutMs": 3000,
+      "beforeBoot": "ready",
+      "beforeBody": "briefing",
+      "rectVariants": [
+        "{\"height\": 44, \"width\": 184.3125, \"x\": 12, \"y\": 3}"
+      ],
+      "pointerEventRecords": 0,
+      "trustedClickCaptureRecords": 0,
+      "rafSamples": 7,
+      "maxObservedRafGapMs": 4018.800000000745,
+      "longTasks": [
+        {
+          "startTime": 5401.599999997765,
+          "duration": 4013,
+          "name": "self"
+        }
+      ],
+      "beforeHit": [
+        "IMG.fpv-line-wordmark",
+        "SPAN.fpv-line-brand.fpv-line-brand--compact",
+        "BUTTON#shell-menu",
+        "DIV.shell-bar",
+        "BODY.field-kit.game-shell"
+      ],
+      "finalHit": [
+        "IMG.fpv-line-wordmark",
+        "SPAN.fpv-line-brand.fpv-line-brand--compact",
+        "BUTTON#shell-menu",
+        "DIV.shell-bar",
+        "BODY.field-kit.game-shell"
+      ],
+      "finalDialogs": []
+    }
+  ],
+  "findings": [
+    "The first menu opening succeeded with trusted pointer/click delivery and stable menu geometry.",
+    "The second menu opening reproduced the unchanged3000ms timeout while the menu remained visible, enabled, unobstructed and geometrically stable. Boot was ready and no modal was open.",
+    "A4013ms self long task overlapped the failed attempt; RAF sampling paused for approximately4seconds. No pointerdown, mousedown or click was observed for the failed attempt, so this reproduction did not reach the menu click handler.",
+    "This establishes main-thread starvation before input dispatch for the instrumented reproduction. It does not identify the owning application function, prove the source of the earlier Firefox failure, or justify a longer timeout."
+  ],
+  "limitations": [
+    "The read-only geometry/event observer can perturb timing; diagnostic copies and hashes are preserved for review.",
+    "Long Task API attribution identifies self/main-frame only and has no JavaScript call stack. A bounded CPU sample during the same interval is the narrow next step if authorized.",
+    "No production or durable qualifier changes, forced click, alternate key, timeout increase or retry of the qualification receipt occurred."
+  ],
+  "browserCloseCompleted": true,
+  "previewClosed": true,
+  "sourceUnchanged": true
+}

@@ -95,20 +95,33 @@
     renderFailure();
     return true;
   }
-  function ready() {
+  // Incoming navigation may still own cancellable preparation after the
+  // ordinary controls exist. Reveal them without claiming startup is complete.
+  function reveal() {
     if (state !== 'loading') return false;
+    state = 'interactive';
+    host.clearTimeout(slowTimer);
+    doc.querySelectorAll('[data-boot-inert]').forEach((element) => {
+      element.inert = false;
+      element.setAttribute('aria-busy', 'true');
+    });
+    $('boot-screen').hidden = true;
+    doc.documentElement.dataset.bootState = 'interactive';
+    return true;
+  }
+  function ready() {
+    if (state !== 'loading' && state !== 'interactive') return false;
+    if (state === 'loading') reveal();
     state = 'ready';
     stop();
     doc.querySelectorAll('[data-boot-inert]').forEach((element) => {
-      element.inert = false;
       element.removeAttribute('aria-busy');
     });
-    $('boot-screen').hidden = true;
     doc.documentElement.dataset.bootState = 'ready';
     return true;
   }
   function resourceError(event) {
-    if (state !== 'loading') return;
+    if (state !== 'loading' && state !== 'interactive') return;
     const target = event.target;
     if (target?.id === 'boot-phaser') fail(new Error(t('errors:theGameRendererDidNotLoad')));
     else if (target?.tagName === 'LINK' && target.rel === 'stylesheet')
@@ -166,7 +179,15 @@
     controls[(index + direction + controls.length) % controls.length].focus();
   }
   function keydown(event) {
-    if (inputOwners || state === 'ready' || event.altKey || event.ctrlKey || event.metaKey) return;
+    if (
+      inputOwners ||
+      state === 'ready' ||
+      state === 'interactive' ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey
+    )
+      return;
     // Native keyboard/pointer interaction wins until a held pad returns neutral.
     padNeutral = false;
     if (['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft'].includes(event.key)) {
@@ -177,7 +198,7 @@
   function pollPad() {
     if (state === 'ready') return;
     frame = host.requestAnimationFrame(pollPad);
-    if (inputOwners || doc.hidden || !doc.hasFocus()) {
+    if (inputOwners || state === 'interactive' || doc.hidden || !doc.hasFocus()) {
       padNeutral = false;
       padCommand = null;
       return;
@@ -249,7 +270,7 @@
       $('boot-updates').hidden = false;
       void import('./boot-updates.mjs')
         .then(({ attachBootUpdates }) => {
-          if (state !== 'ready')
+          if (state !== 'ready' && state !== 'interactive')
             startupUpdates = attachBootUpdates({ document: doc, window: host });
         })
         .catch(() => {});
@@ -274,12 +295,12 @@
         return import(appURL);
       })
       .then(() => {
-        if (state === 'loading')
+        if (state === 'loading' || state === 'interactive')
           fail(new Error(t('errors:theGameDidNotConfirmStartupOpenTheCurrentOnline')));
       })
       .catch(fail);
   }
-  host.RevealLineBoot = Object.freeze({ ready, fail, progress, suspendInput });
+  host.RevealLineBoot = Object.freeze({ reveal, ready, fail, progress, suspendInput });
   host.addEventListener('error', resourceError, true);
   if (doc.readyState !== 'complete' && !host.RevealLineAccess?.scriptsReady)
     doc.addEventListener('DOMContentLoaded', mount, { once: true });

@@ -22,15 +22,15 @@ const settleBoot = (condition) =>
     message: 'The real host must finish boot preparation and reach the held metadata request.',
   });
 const expert = JSON.stringify({ format: JOURNEY_PREFERENCES_VERSION, difficulty: 'expert' });
-// Native boot keeps controls inert until ready. This is the same finite focus
+// Native boot keeps controls inert until reveal. This is the same finite focus
 // boundary used by the existing checked mode-return host tests.
 function nativeSoloBoot(t) {
   const original = Object.getOwnPropertyDescriptor(globalThis, 'RevealLineBoot');
   const focus = SoloElement.prototype.focus;
-  let ready = false;
+  let interactive = false;
   t.mock.method(SoloElement.prototype, 'focus', function (...args) {
     if (
-      ready &&
+      interactive &&
       !this.disabled &&
       !this.closest('[hidden],[inert]') &&
       this.getClientRects().length
@@ -42,12 +42,20 @@ function nativeSoloBoot(t) {
     fail(error) {
       throw error;
     },
+    reveal() {
+      interactive = true;
+      globalThis.document.documentElement.dataset.bootState = 'interactive';
+      for (const element of globalThis.document.querySelectorAll('[data-boot-inert]')) {
+        element.inert = false;
+        element.setAttribute('aria-busy', 'true');
+      }
+      globalThis.document.getElementById('boot-screen').hidden = true;
+    },
     ready() {
-      ready = true;
+      if (!interactive) this.reveal();
       globalThis.document.documentElement.dataset.bootState = 'ready';
       for (const element of globalThis.document.querySelectorAll('[data-boot-inert]'))
-        element.inert = false;
-      globalThis.document.getElementById('boot-screen').hidden = true;
+        element.removeAttribute('aria-busy');
     },
   };
   t.after(() =>
@@ -137,15 +145,19 @@ function incomingSoloSearch() {
   })}`;
 }
 
-test('native inert boot cannot cancel exact Team-to-Solo handoff with its own fallback focus', async (t) => {
+test('native boot completes the exact Team-to-Solo briefing before ready and waits for Start', async (t) => {
   nativeSoloBoot(t);
   const p = await solo(t, { search: incomingSoloSearch() });
-  await settle(() => {
-    p.frame(0);
-    return p.doc.body.dataset.flightState === 'running';
-  });
+  assert.deepEqual(p.errors, []);
+  assert.equal(p.doc.documentElement.dataset.bootState, 'ready');
+  assert.equal(p.doc.body.dataset.flightState, 'briefing');
   assert.equal(p.rendered.run.levelId, 'choose-your-share');
+  assert.equal(p.rendered.run.tick, 0);
+  assert.equal(p.rendered.paused, true);
   assert.equal(p.$('journey-chooser').open, false);
+  p.$('start-button').click();
+  await p.waitUntilRunning('incoming exact Solo briefing');
+  assert.equal(p.rendered.run.levelId, 'choose-your-share');
   assert.equal(p.doc.activeElement.id, 'game-canvas');
   assert.deepEqual(p.errors, []);
 });
@@ -158,7 +170,9 @@ for (const interruption of ['focus', 'hidden'])
     const gate = new Promise((resolve) => {
       release = resolve;
     });
+    const storage = memoryStorage();
     const page = solo(t, {
+      storage,
       search: incomingSoloSearch(),
       fetchResponse: async (path) => {
         if (String(path).includes('/content-design/assets/'))
@@ -173,7 +187,18 @@ for (const interruption of ['focus', 'hidden'])
     try {
       await settleBoot(() => entered);
       const doc = globalThis.document;
+      const savedBefore = [...storage.map];
       assert.equal(doc.activeElement, doc.body, 'The boot surface has not claimed focus.');
+      assert.equal(
+        doc.documentElement.dataset.bootState,
+        'interactive',
+        'Pending incoming work cannot report public ready.',
+      );
+      assert.ok(
+        [...doc.querySelectorAll('[data-boot-inert]')].every(
+          (node) => !node.inert && node.getAttribute('aria-busy') === 'true',
+        ),
+      );
       if (interruption === 'focus') {
         doc.getElementById('overlay-menu').focus();
         assert.equal(
@@ -187,10 +212,29 @@ for (const interruption of ['focus', 'hidden'])
       }
       release();
       const p = await page;
+      assert.deepEqual(p.errors, []);
+      assert.notEqual(p.doc.body.dataset.flightState, 'running');
+      assert.notEqual(p.$('journey-chooser')?.open, true);
+      if (interruption === 'hidden') {
+        doc.hidden = false;
+        doc.emit('visibilitychange');
+      }
       p.frame(0);
       assert.equal(p.rendered.run.levelId, 'first-return');
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.rendered.paused, true);
       assert.notEqual(p.doc.body.dataset.flightState, 'running');
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.deepEqual([...storage.map], savedBefore);
+      assert.equal(
+        doc.documentElement.dataset.bootState,
+        'ready',
+        'Retired incoming intent completes boot readiness.',
+      );
+      assert.ok(
+        [...doc.querySelectorAll('[data-boot-inert]')].every(
+          (node) => !node.hasAttribute('aria-busy'),
+        ),
+      );
       if (interruption === 'focus') assert.equal(doc.activeElement.id, 'overlay-menu');
       assert.deepEqual(p.errors, []);
     } finally {

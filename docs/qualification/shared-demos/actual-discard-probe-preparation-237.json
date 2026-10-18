@@ -1,0 +1,33 @@
+{
+  "format": "SharedDemoActualDiscardProbePreparationV1",
+  "created": "2026-10-18T22:34:05.689168+00:00",
+  "status": "Prepared ignored script only; not executed. Await a new frozen HEAD/runtime after source edits and exclusive browser release.",
+  "script": ".cache/qualify-demo-actual-discard-237.mjs",
+  "scriptSHA256": "187c772d45805d7351f163fdb8d9414606d6467628c66d6a55b90656a8e21d8c",
+  "scope": [
+    "One isolated Playwright Chromium browser, no user browser attachment. One fresh context per selected game mode, containing only the exact app tab and chrome://discards control tab.",
+    "Default all four modes, with one ordinary-control actual discard and watching/practice actual discard each:12 total. Optional --mode selects one.360second overall browser bound plus existing10second cleanup bound.",
+    "Real public Urgent Discard action is selected by exact full owned app URL and unique native tab ID; no arbitrary global-discard action, Mojo call, crash, forced click, page.reload fallback or wasDiscarded assignment.",
+    "Confirm native UI discarded state before restoring by tab activation; require native document.wasDiscarded=true and changed document identity.",
+    "Reuse ordinary entry, demo, practice, storage/IndexedDB observers, strict pageerror handling and bounded report cleanup from the existing restoration qualifier. Preserve original3second menu click.",
+    "Require normal entry with no demo/practice/native surfaces,0 native scene/practice worlds, empty renderer stats, same ordinary host-listener baseline and all observed old dedicated workers closed. Compare byte-exact Local/Session storage and mutation signatures to ordinary discard baseline.",
+    "No broad diagnostic filtering. Failed UI admission, incomplete discard or resource/persistence assertion remains failure.",
+    "Require --head and --fingerprint matching updated frozen declaration; compare scoped source hashes/HEAD before and after; parent full-fingerprint wrapper complements this."
+  ],
+  "primarySources": [
+    {
+      "url": "https://developer.chrome.com/docs/web-platform/page-lifecycle-api",
+      "supports": "chrome://discards is the documented manual discard test path; document.wasDiscarded proves restoration from discard."
+    },
+    {
+      "url": "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/resources/discards/discards_tab.ts",
+      "sha256": "8147438ac40b370b53d5bbe4aec8b26e01733ee2f9632ad67da946763934b1b5",
+      "supports": "Installed Chrome155 source canDiscardViaUi requires a nonvisible, nondiscarded tab; urgent action derives data-id from the chosen row and invokes native discardById, then refreshes UI."
+    }
+  ],
+  "limitations": [
+    "Browser-specific internal UI can change; preparation is syntax-checked but not browser-qualified yet.",
+    "Actual discard proves fresh-document recovery and observed ownership cleanup; it cannot directly inspect browser-internal GPU/renderer memory or every saved-game state.",
+    "Headless new Chrome is intended; if UI does not expose the owned tab, report the failed mechanism rather than substituting a fake reload."
+  ]
+}

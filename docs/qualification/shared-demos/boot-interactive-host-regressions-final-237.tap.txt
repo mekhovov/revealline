@@ -1,0 +1,619 @@
+TAP version 13
+# Subtest: actual app initialization failure retains inert gameplay and does not overwrite saved profile
+ok 1 - actual app initialization failure retains inert gameplay and does not overwrite saved profile
+  ---
+  duration_ms: 282.514625
+  ...
+# Subtest: actual app fallback readiness exposes native title without starting a flight
+ok 2 - actual app fallback readiness exposes native title without starting a flight
+  ---
+  duration_ms: 1746.901708
+  ...
+# Subtest: installed startup retains a plain update link when optional modules and renderer fail
+ok 3 - installed startup retains a plain update link when optional modules and renderer fail
+  ---
+  duration_ms: 6.660666
+  ...
+# Subtest: native wrapper startup never resolves a web updater under its custom protocol
+ok 4 - native wrapper startup never resolves a web updater under its custom protocol
+  ---
+  duration_ms: 0.886791
+  ...
+# Subtest: downloaded file shows usable native launch options without importing or redirecting
+ok 5 - downloaded file shows usable native launch options without importing or redirecting
+  ---
+  duration_ms: 0.417458
+  ...
+# Subtest: early renderer or stylesheet errors retain inert controls and close partially opened dialogs
+ok 6 - early renderer or stylesheet errors retain inert controls and close partially opened dialogs
+  ---
+  duration_ms: 1.146208
+  ...
+# Subtest: missing renderer does not expose legacy controls or request an app startup
+ok 7 - missing renderer does not expose legacy controls or request an app startup
+  ---
+  duration_ms: 0.395167
+  ...
+# Subtest: app import rejection has an actual caught promise path and stays concealed
+ok 8 - app import rejection has an actual caught promise path and stays concealed
+  ---
+  duration_ms: 2.577834
+  ...
+# Subtest: delayed required styles keep the static launch active and report an actionable failure
+ok 9 - delayed required styles keep the static launch active and report an actionable failure
+  ---
+  duration_ms: 2.232792
+  ...
+# (node:10845) ExperimentalWarning: vm.USE_MAIN_CONTEXT_DEFAULT_LOADER is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: cached and delayed styles both finish before app initialization is admitted
+ok 10 - cached and delayed styles both finish before app initialization is admitted
+  ---
+  duration_ms: 6.480667
+  ...
+# Subtest: resolved legacy app cannot substitute hidden status for the ready handshake
+ok 11 - resolved legacy app cannot substitute hidden status for the ready handshake
+  ---
+  duration_ms: 3.27175
+  ...
+# Subtest: pending top-level await keeps loading and real ready succeeds before import completion
+ok 12 - pending top-level await keeps loading and real ready succeeds before import completion
+  ---
+  duration_ms: 4.041084
+  ...
+# Subtest: rejected real app import restores its hidden status and retains the import error
+ok 13 - rejected real app import restores its hidden status and retains the import error
+  ---
+  duration_ms: 3.48675
+  ...
+# Subtest: interactive reveal preserves cancellable controls and failure ownership until final ready
+ok 14 - interactive reveal preserves cancellable controls and failure ownership until final ready
+  ---
+  duration_ms: 4.57625
+  ...
+# Subtest: interactive preparation retains resource failure instead of reporting ready
+ok 15 - interactive preparation retains resource failure instead of reporting ready
+  ---
+  duration_ms: 4.741916
+  ...
+# Subtest: interactive preparation retains rejection failure instead of reporting ready
+ok 16 - interactive preparation retains rejection failure instead of reporting ready
+  ---
+  duration_ms: 5.999791
+  ...
+# Subtest: interactive preparation retains missing-ready failure instead of reporting ready
+ok 17 - interactive preparation retains missing-ready failure instead of reporting ready
+  ---
+  duration_ms: 2.898333
+  ...
+# Subtest: ready alone reveals the game and shuts down boot scheduling/listeners
+ok 18 - ready alone reveals the game and shuts down boot scheduling/listeners
+  ---
+  duration_ms: 0.530792
+  ...
+# Subtest: boot keyboard and controller navigation requires fresh input and yields after pointer use
+ok 19 - boot keyboard and controller navigation requires fresh input and yields after pointer use
+  ---
+  duration_ms: 0.983083
+  ...
+# Subtest: public root enters the native game within source, Pages and frozen prefixes with exact queries
+ok 20 - public root enters the native game within source, Pages and frozen prefixes with exact queries
+  ---
+  duration_ms: 1.133083
+  ...
+# Subtest: public launcher retains its own script URL while access remains pending
+ok 21 - public launcher retains its own script URL while access remains pending
+  ---
+  duration_ms: 0.702792
+  ...
+# Subtest: file launch and a cross-origin script never automatically leave the current document
+ok 22 - file launch and a cross-origin script never automatically leave the current document
+  ---
+  duration_ms: 1.851458
+  ...
+# Subtest: static launch markup survives disabled JS and excludes decorative fake controls
+ok 23 - static launch markup survives disabled JS and excludes decorative fake controls
+  ---
+  duration_ms: 1.44
+  ...
+# Subtest: password-delayed startup waits for deferred scripts after DOMContentLoaded has passed
+ok 24 - password-delayed startup waits for deferred scripts after DOMContentLoaded has passed
+  ---
+  duration_ms: 0.417792
+  ...
+# Subtest: the actual inline guard hides the title until the ready handshake
+ok 25 - the actual inline guard hides the title until the ready handshake
+  ---
+  duration_ms: 2.520584
+  ...
+# Subtest: fresh title focuses visible Deploy only after boot reveals it
+ok 26 - fresh title focuses visible Deploy only after boot reveals it
+  ---
+  duration_ms: 1948.132459
+  ...
+# Subtest: ready handoff keeps a deliberate visible menu focus instead of selecting another action
+ok 27 - ready handoff keeps a deliberate visible menu focus instead of selecting another action
+  ---
+  duration_ms: 1559.268875
+  ...
+# Subtest: saved-flight title selects visible Continue or the next enabled action without adopting the flight
+    # Subtest: prepare a legitimate saved cut
+    ok 1 - prepare a legitimate saved cut
+      ---
+      duration_ms: 2433.177375
+      ...
+    # Subtest: Continue owns initial focus
+    ok 2 - Continue owns initial focus
+      ---
+      duration_ms: 1505.973791
+      ...
+    # Subtest: disabled Continue falls back to Missions
+    ok 3 - disabled Continue falls back to Missions
+      ---
+      duration_ms: 1260.443458
+      ...
+    1..3
+ok 28 - saved-flight title selects visible Continue or the next enabled action without adopting the flight
+  ---
+  duration_ms: 5200.49725
+  ...
+# Subtest: a background ready handoff does not claim keyboard focus
+ok 29 - a background ready handoff does not claim keyboard focus
+  ---
+  duration_ms: 1266.37125
+  ...
+# Subtest: actual Title Missions → team → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 12430.59775
+      ...
+    # Subtest: receiving Solo opens exact Missions focus, with no flight resume
+    ok 2 - receiving Solo opens exact Missions focus, with no flight resume
+      ---
+      duration_ms: 10751.063667
+      ...
+    # Subtest: the same return query is consumed, not replayed
+    ok 3 - the same return query is consumed, not replayed
+      ---
+      duration_ms: 1516.230708
+      ...
+    1..3
+ok 30 - actual Title Missions → team → Back restores exact menu without adoption
+  ---
+  duration_ms: 24699.369667
+  ...
+# Subtest: actual paused cut Missions → team → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 11332.225667
+      ...
+    # Subtest: receiving Solo opens exact Missions focus, with no flight resume
+    ok 2 - receiving Solo opens exact Missions focus, with no flight resume
+      ---
+      duration_ms: 10388.9535
+      ...
+    # Subtest: the same return query is consumed, not replayed
+    ok 3 - the same return query is consumed, not replayed
+      ---
+      duration_ms: 1476.927708
+      ...
+    1..3
+ok 31 - actual paused cut Missions → team → Back restores exact menu without adoption
+  ---
+  duration_ms: 23199.086875
+  ...
+# Subtest: failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+    # Subtest: preserve an externally changed slot through Leave and pagehide
+    ok 1 - preserve an externally changed slot through Leave and pagehide
+      ---
+      duration_ms: 12287.178
+      ...
+    1..1
+ok 32 - failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+  ---
+  duration_ms: 12287.786959
+  ...
+# Subtest: storage failure after a successful check requires another deliberate Leave with truthful warning
+ok 33 - storage failure after a successful check requires another deliberate Leave with truthful warning
+  ---
+  duration_ms: 11956.850542
+  ...
+# Subtest: unavailable return storage preserves ready title with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 10927.498792
+      ...
+    1..1
+ok 34 - unavailable return storage preserves ready title with an explicit fixed fallback
+  ---
+  duration_ms: 10927.730125
+  ...
+# Subtest: unavailable return storage preserves verified flight with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 11637.145375
+      ...
+    1..1
+ok 35 - unavailable return storage preserves verified flight with an explicit fixed fallback
+  ---
+  duration_ms: 11637.378
+  ...
+# Subtest: Stay cancels a pending verified-save wait and late completion cannot navigate or write
+ok 36 - Stay cancels a pending verified-save wait and late completion cannot navigate or write
+  ---
+  duration_ms: 14388.922666
+  ...
+# Subtest: return with incompatible source falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 12204.303375
+      ...
+    # Subtest: reject stale context at the real receiving host
+    ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 1266.101041
+      ...
+    1..2
+ok 37 - return with incompatible source falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 13471.300292
+  ...
+# Subtest: return with incompatible selection falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 9380.476417
+      ...
+    # Subtest: reject stale context at the real receiving host
+    ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 1281.641083
+      ...
+    1..2
+ok 38 - return with incompatible selection falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 10662.458334
+  ...
+# Subtest: checked save quota failure never claims durable storage or navigates silently
+ok 39 - checked save quota failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 11540.020917
+  ...
+# Subtest: checked save readback failure never claims durable storage or navigates silently
+ok 40 - checked save readback failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 12943.490875
+  ...
+# Subtest: a newer slot after helper readback cannot become this departure’s saved authority
+ok 41 - a newer slot after helper readback cannot become this departure’s saved authority
+  ---
+  duration_ms: 12067.045792
+  ...
+# Subtest: pending theme preparation cannot depart with a stale visible selection
+ok 42 - pending theme preparation cannot depart with a stale visible selection
+  ---
+  duration_ms: 10804.440916
+  ...
+# Subtest: team: blur retires a pending save decision before late locks can write or navigate
+ok 43 - team: blur retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 12260.931708
+  ...
+# Subtest: team: hidden retires a pending save decision before late locks can write or navigate
+ok 44 - team: hidden retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 14458.279875
+  ...
+# Subtest: team: pagehide retires a pending save decision before late locks can write or navigate
+ok 45 - team: pagehide retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 13317.274875
+  ...
+# Subtest: team: foreground lost during hint write cannot navigate or leave a reusable owned hint
+ok 46 - team: foreground lost during hint write cannot navigate or leave a reusable owned hint
+  ---
+  duration_ms: 13173.698459
+  ...
+# Subtest: team: Stay returns to the actual initiating link and other mode cannot steal its pending decision
+ok 47 - team: Stay returns to the actual initiating link and other mode cannot steal its pending decision
+  ---
+  duration_ms: 14872.8035
+  ...
+# Subtest: team: modified gestures remain native and do not write or pause the existing flight
+ok 48 - team: modified gestures remain native and do not write or pause the existing flight
+  ---
+  duration_ms: 13659.409125
+  ...
+# Subtest: team: rejected native dialog opening releases its owner and keeps the flight paused
+ok 49 - team: rejected native dialog opening releases its owner and keeps the flight paused
+  ---
+  duration_ms: 17243.18525
+  ...
+# Subtest: actual Title Missions → versus → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 20384.660125
+      ...
+    # Subtest: actual Versus host returns through the fixed own link
+    ok 2 - actual Versus host returns through the fixed own link
+      ---
+      duration_ms: 5376.536958
+      ...
+    # Subtest: receiving Solo opens exact Missions focus, with no flight resume
+    ok 3 - receiving Solo opens exact Missions focus, with no flight resume
+      ---
+      duration_ms: 19591.117833
+      ...
+    # Subtest: the same return query is consumed, not replayed
+    ok 4 - the same return query is consumed, not replayed
+      ---
+      duration_ms: 1691.99525
+      ...
+    1..4
+ok 50 - actual Title Missions → versus → Back restores exact menu without adoption
+  ---
+  duration_ms: 47048.442125
+  ...
+# Subtest: actual paused cut Missions → versus → Back restores exact menu without adoption
+    # Subtest: depart through the real explicit controls
+    not ok 1 - depart through the real explicit controls
+      ---
+      duration_ms: 9478.390416
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/mode-return-host-cases.mjs:101:17'
+      failureType: 'testCodeFailure'
+      error: 'Asynchronous host action did not settle.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/wait-for.mjs:15:12)
+        runNextTicks (node:internal/process/task_queues:60:5)
+        process.processTimers (node:internal/timers:516:9)
+        async settle (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/solo-dom.mjs:232:3)
+        async missions (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/mode-return-host-cases.mjs:69:7)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/mode-return-host-cases.mjs:107:11)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/mode-return-host-cases.mjs:101:9)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    1..1
+not ok 51 - actual paused cut Missions → versus → Back restores exact menu without adoption
+  ---
+  duration_ms: 9480.225709
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/mode-return-host-cases.mjs:97:7'
+  failureType: 'testCodeFailure'
+  error: |-
+    pagehide must not overwrite the checked handoff
+    + actual - expected
+    
+    + null
+    - undefined
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual: ~
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/mode-return-host-cases.mjs:149:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+    # Subtest: preserve an externally changed slot through Leave and pagehide
+    ok 1 - preserve an externally changed slot through Leave and pagehide
+      ---
+      duration_ms: 12610.987042
+      ...
+    1..1
+ok 52 - failed checked save stays paused; explicit Leave warns of loss and never overwrites a newer save
+  ---
+  duration_ms: 12611.278
+  ...
+# Subtest: storage failure after a successful check requires another deliberate Leave with truthful warning
+ok 53 - storage failure after a successful check requires another deliberate Leave with truthful warning
+  ---
+  duration_ms: 11528.161667
+  ...
+# Subtest: unavailable return storage preserves ready title with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 10710.021208
+      ...
+    1..1
+ok 54 - unavailable return storage preserves ready title with an explicit fixed fallback
+  ---
+  duration_ms: 10710.723333
+  ...
+# Subtest: unavailable return storage preserves verified flight with an explicit fixed fallback
+    # Subtest: choose the warned fallback deliberately
+    ok 1 - choose the warned fallback deliberately
+      ---
+      duration_ms: 11796.712333
+      ...
+    1..1
+ok 55 - unavailable return storage preserves verified flight with an explicit fixed fallback
+  ---
+  duration_ms: 11796.914625
+  ...
+# Subtest: Stay cancels a pending verified-save wait and late completion cannot navigate or write
+ok 56 - Stay cancels a pending verified-save wait and late completion cannot navigate or write
+  ---
+  duration_ms: 10918.566833
+  ...
+# Subtest: return with incompatible source falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 10148.645709
+      ...
+    # Subtest: reject stale context at the real receiving host
+    ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 1153.153167
+      ...
+    1..2
+ok 57 - return with incompatible source falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 11302.572666
+  ...
+# Subtest: return with incompatible selection falls back to visible Title without changing stored authority
+    # Subtest: capture the installed menu identity
+    ok 1 - capture the installed menu identity
+      ---
+      duration_ms: 8136.892916
+      ...
+    # Subtest: reject stale context at the real receiving host
+    ok 2 - reject stale context at the real receiving host
+      ---
+      duration_ms: 1119.394459
+      ...
+    1..2
+ok 58 - return with incompatible selection falls back to visible Title without changing stored authority
+  ---
+  duration_ms: 9256.572708
+  ...
+# Subtest: checked save quota failure never claims durable storage or navigates silently
+ok 59 - checked save quota failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 9234.770792
+  ...
+# Subtest: checked save readback failure never claims durable storage or navigates silently
+ok 60 - checked save readback failure never claims durable storage or navigates silently
+  ---
+  duration_ms: 9023.43575
+  ...
+# Subtest: a newer slot after helper readback cannot become this departure’s saved authority
+ok 61 - a newer slot after helper readback cannot become this departure’s saved authority
+  ---
+  duration_ms: 9471.683583
+  ...
+# Subtest: pending theme preparation cannot depart with a stale visible selection
+ok 62 - pending theme preparation cannot depart with a stale visible selection
+  ---
+  duration_ms: 9202.900958
+  ...
+# Subtest: versus: blur retires a pending save decision before late locks can write or navigate
+ok 63 - versus: blur retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 9973.263833
+  ...
+# Subtest: versus: hidden retires a pending save decision before late locks can write or navigate
+ok 64 - versus: hidden retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 11788.074625
+  ...
+# Subtest: versus: pagehide retires a pending save decision before late locks can write or navigate
+ok 65 - versus: pagehide retires a pending save decision before late locks can write or navigate
+  ---
+  duration_ms: 10285.83125
+  ...
+# Subtest: versus: foreground lost during hint write cannot navigate or leave a reusable owned hint
+ok 66 - versus: foreground lost during hint write cannot navigate or leave a reusable owned hint
+  ---
+  duration_ms: 9812.218583
+  ...
+# Subtest: versus: Stay returns to the actual initiating link and other mode cannot steal its pending decision
+ok 67 - versus: Stay returns to the actual initiating link and other mode cannot steal its pending decision
+  ---
+  duration_ms: 11383.970375
+  ...
+# Subtest: versus: modified gestures remain native and do not write or pause the existing flight
+ok 68 - versus: modified gestures remain native and do not write or pause the existing flight
+  ---
+  duration_ms: 12098.65675
+  ...
+# Subtest: versus: rejected native dialog opening releases its owner and keeps the flight paused
+ok 69 - versus: rejected native dialog opening releases its owner and keeps the flight paused
+  ---
+  duration_ms: 13072.819917
+  ...
+# Subtest: published Solo boots the starter and starts an unprepared chapter online without a popup
+ok 70 - published Solo boots the starter and starts an unprepared chapter online without a popup
+  ---
+  duration_ms: 6627.477
+  ...
+# Subtest: an exact saved campaign restores online and retains explicitly prepared offline bytes
+    # Subtest: online restore needs no offline preparation
+    ok 1 - online restore needs no offline preparation
+      ---
+      duration_ms: 1366.955542
+      ...
+    # Subtest: prepared bytes restore the saved campaign and explicit retention survives deselection
+    ok 2 - prepared bytes restore the saved campaign and explicit retention survives deselection
+      ---
+      duration_ms: 1487.456875
+      ...
+    # Subtest: expired optional retention preserves the paused saved flight without a late pin
+    ok 3 - expired optional retention preserves the paused saved flight without a late pin
+      ---
+      duration_ms: 3248.270833
+      ...
+    # Subtest: a reopened page restores the deselected chapter from retained bytes with network blocked
+    ok 4 - a reopened page restores the deselected chapter from retained bytes with network blocked
+      ---
+      duration_ms: 1420.441208
+      ...
+    1..4
+ok 71 - an exact saved campaign restores online and retains explicitly prepared offline bytes
+  ---
+  duration_ms: 7627.7125
+  ...
+# Subtest: ordinary mode departure opens Versus without offline preparation
+ok 72 - ordinary mode departure opens Versus without offline preparation
+  ---
+  duration_ms: 833.929333
+  ...
+# Subtest: Classic Start and Resume never wait for optional sharing, and paused discovery keeps the exact public URL
+ok 73 - Classic Start and Resume never wait for optional sharing, and paused discovery keeps the exact public URL
+  ---
+  duration_ms: 2115.018167
+  ...
+# Subtest: retiring the page while optional sharing reads its body prevents stale parsing and publication
+ok 74 - retiring the page while optional sharing reads its body prevents stale parsing and publication
+  ---
+  duration_ms: 1750.37
+  ...
+# Subtest: opening paused settings before the first Start can publish the Classic link without advancing the run
+ok 75 - opening paused settings before the first Start can publish the Classic link without advancing the run
+  ---
+  duration_ms: 1218.146083
+  ...
+# Subtest: the accepted current Journey exposes its exact link immediately at Start without the Classic index
+ok 76 - the accepted current Journey exposes its exact link immediately at Start without the Classic index
+  ---
+  duration_ms: 4717.329583
+  ...
+# Subtest: an incoming Journey briefing retains its exact share link through a fresh page load before Start
+    # Subtest: incoming share
+    ok 1 - incoming share
+      ---
+      duration_ms: 11788.485625
+      ...
+    # Subtest: reload accepted share
+    ok 2 - reload accepted share
+      ---
+      duration_ms: 9943.601791
+      ...
+    1..2
+ok 77 - an incoming Journey briefing retains its exact share link through a fresh page load before Start
+  ---
+  duration_ms: 21732.685917
+  ...
+1..77
+# tests 111
+# suites 0
+# pass 109
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 602132.051875
