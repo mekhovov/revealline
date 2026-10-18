@@ -1,0 +1,420 @@
+TAP version 13
+# Subtest: Survival sources lazily cover exactly the ordinary authored mission inventory
+ok 1 - Survival sources lazily cover exactly the ordinary authored mission inventory
+  ---
+  duration_ms: 103.356041
+  ...
+# Subtest: verified native playback pauses, forks exactly, and practice cannot mutate the performance
+ok 2 - verified native playback pauses, forks exactly, and practice cannot mutate the performance
+  ---
+  duration_ms: 6138.924917
+  ...
+# Subtest: sparse diagnostics report the first differing checkpoint and reject stale content
+ok 3 - sparse diagnostics report the first differing checkpoint and reject stale content
+  ---
+  duration_ms: 53.157416
+  ...
+# Subtest: cancelled preparation cannot adopt a Survival player
+ok 4 - cancelled preparation cannot adopt a Survival player
+  ---
+  duration_ms: 9.759875
+  ...
+# Subtest: one prefetched payload can fall back only to another fully verified runtime performance
+ok 5 - one prefetched payload can fall back only to another fully verified runtime performance
+  ---
+  duration_ms: 5237.725666
+  ...
+# Subtest: a failed preparation diagnostic observer cannot alter native verification
+ok 6 - a failed preparation diagnostic observer cannot alter native verification
+  ---
+  duration_ms: 5173.786375
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback
+ok 7 - the browser-preferred Survival recording is strictly checked before fallback
+  ---
+  duration_ms: 9369.397333
+  ...
+# Subtest: the browser-preferred Survival recording is strictly checked before fallback with prefetch
+ok 8 - the browser-preferred Survival recording is strictly checked before fallback with prefetch
+  ---
+  duration_ms: 9774.155417
+  ...
+# Subtest: fresh keyboard or neutral-then-moved controller input is required for takeover
+ok 9 - fresh keyboard or neutral-then-moved controller input is required for takeover
+  ---
+  duration_ms: 0.686917
+  ...
+# Subtest: fresh movement resumes paused native practice through the shared host
+ok 10 - fresh movement resumes paused native practice through the shared host
+  ---
+  duration_ms: 0.191334
+  ...
+# Subtest: the initiating key remains owned through host handoff and its release stops movement
+ok 11 - the initiating key remains owned through host handoff and its release stops movement
+  ---
+  duration_ms: 0.191
+  ...
+# Subtest: a takeover touch keeps its origin through reconstruction and releases normally
+ok 12 - a takeover touch keeps its origin through reconstruction and releases normally
+  ---
+  duration_ms: 0.335417
+  ...
+# Subtest: release during reconstruction updates movement and retains only the initiating action
+ok 13 - release during reconstruction updates movement and retains only the initiating action
+  ---
+  duration_ms: 0.243708
+  ...
+# Subtest: foreground loss fully clears a handoff gesture even during the synchronous interrupt
+ok 14 - foreground loss fully clears a handoff gesture even during the synchronous interrupt
+  ---
+  duration_ms: 0.256542
+  ...
+# Subtest: practice consumes the initiating boost once despite controller samples before its first tick
+ok 15 - practice consumes the initiating boost once despite controller samples before its first tick
+  ---
+  duration_ms: 25.864208
+  ...
+# Subtest: review provenance and pilot inputs share the selected route without changing prior defaults
+ok 16 - review provenance and pilot inputs share the selected route without changing prior defaults
+  ---
+  duration_ms: 2.079416
+  ...
+# Subtest: native entry forwards an explicit review route through both wrappers and records that same route
+ok 17 - native entry forwards an explicit review route through both wrappers and records that same route
+  ---
+  duration_ms: 41.02475
+  ...
+# Subtest: native variant mission picker queries progress only for supported installed projects
+ok 18 - native variant mission picker queries progress only for supported installed projects
+  ---
+  duration_ms: 67.277
+  ...
+# Subtest: completed-frame trials include explicitly requested native Survivor and Riy review builds
+ok 19 - completed-frame trials include explicitly requested native Survivor and Riy review builds
+  ---
+  duration_ms: 20.654083
+  ...
+# Subtest: native catalogue exposes all eighteen compiled layouts for all five operations
+ok 20 - native catalogue exposes all eighteen compiled layouts for all five operations
+  ---
+  duration_ms: 584.901
+  ...
+# Subtest: one fixed clock scales every simulation system and keeps paused time out of the run
+ok 21 - one fixed clock scales every simulation system and keeps paused time out of the run
+  ---
+  duration_ms: 0.696333
+  ...
+# Subtest: an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+ok 22 - an upgrade stops catch-up on that exact step and a hitch never requests automatic pause
+  ---
+  duration_ms: 0.075625
+  ...
+# Subtest: modal actions wait for release while held steering stays responsive
+ok 23 - modal actions wait for release while held steering stays responsive
+  ---
+  duration_ms: 0.119084
+  ...
+# Subtest: keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+ok 24 - keyboard focus loss forgets missed keyup but rejects repeats until a fresh press
+  ---
+  duration_ms: 0.164542
+  ...
+# Subtest: raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+ok 25 - raw measurement pages stay bounded and reconstruct the complete untruncated receipt
+  ---
+  duration_ms: 1.971291
+  ...
+# Subtest: the shared audio adapter emits bounded semantic cues once per tick
+ok 26 - the shared audio adapter emits bounded semantic cues once per tick
+  ---
+  duration_ms: 0.58675
+  ...
+# Subtest: native Overflight interface has matching English and Ukrainian coverage
+ok 27 - native Overflight interface has matching English and Ukrainian coverage
+  ---
+  duration_ms: 0.242125
+  ...
+# Subtest: the 750 ms resume ramp integrates exactly at different display cadences
+ok 28 - the 750 ms resume ramp integrates exactly at different display cadences
+  ---
+  duration_ms: 0.1715
+  ...
+# Subtest: ten retries keep one renderer and context restoration requires explicit resume
+ok 29 - ten retries keep one renderer and context restoration requires explicit resume
+  ---
+  duration_ms: 13.37375
+  ...
+# Subtest: appearance replacement retires the old atlas first and teardown retires a pending renderer
+ok 30 - appearance replacement retires the old atlas first and teardown retires a pending renderer
+  ---
+  duration_ms: 1.671167
+  ...
+# Subtest: native music context is accepted by the shared soundtrack schema
+ok 31 - native music context is accepted by the shared soundtrack schema
+  ---
+  duration_ms: 1.07175
+  ...
+# Subtest: Studio project messages require the exact same-origin embedding parent
+ok 32 - Studio project messages require the exact same-origin embedding parent
+  ---
+  duration_ms: 0.124041
+  ...
+# Subtest: an accepted evolution has one audio cue even when no simulation tick elapsed
+ok 33 - an accepted evolution has one audio cue even when no simulation tick elapsed
+  ---
+  duration_ms: 0.546959
+  ...
+# Subtest: a failed renderer is replaced on Retry while healthy retries retain their owner
+ok 34 - a failed renderer is replaced on Retry while healthy retries retain their owner
+  ---
+  duration_ms: 0.38075
+  ...
+# Subtest: explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+ok 35 - explicit review playback uses ordinary input at 10 Hz while the host keeps fixed 60 Hz steps
+  ---
+  duration_ms: 0.425083
+  ...
+# Subtest: review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+ok 36 - review upgrades show legally rerolled offers for 1.5 visible seconds and never count hidden time
+  ---
+  duration_ms: 0.277084
+  ...
+# Subtest: ordinary manual play never invokes review input or automatic upgrade selection
+ok 37 - ordinary manual play never invokes review input or automatic upgrade selection
+  ---
+  duration_ms: 0.067417
+  ...
+# Subtest: review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+ok 38 - review capture is silent, bounded to 20 seconds, and releases tracks, timers and previous URLs
+  ---
+  duration_ms: 1.017459
+  ...
+# Subtest: oversize and unsupported review capture fail without retaining chunks or active tracks
+ok 39 - oversize and unsupported review capture fail without retaining chunks or active tracks
+  ---
+  duration_ms: 2.285542
+  ...
+# Subtest: native Marathon continuation retains its run when next-sortie settings change
+ok 40 - native Marathon continuation retains its run when next-sortie settings change
+  ---
+  duration_ms: 10.483375
+  ...
+# Subtest: review stop checkpoints are bounded and require an explicit diagnostic build
+ok 41 - review stop checkpoints are bounded and require an explicit diagnostic build
+  ---
+  duration_ms: 0.112667
+  ...
+# Subtest: review stop immediately releases all actions, survives replacements, and keeps earned drafts
+ok 42 - review stop immediately releases all actions, survives replacements, and keeps earned drafts
+  ---
+  duration_ms: 0.11
+  ...
+# Subtest: native Settings initialization preserves operation cards and navigation on Home
+ok 43 - native Settings initialization preserves operation cards and navigation on Home
+  ---
+  duration_ms: 30.538541
+  ...
+# Subtest: a selected demonstration remains manual until opt-in, and takeover stops all automation
+ok 44 - a selected demonstration remains manual until opt-in, and takeover stops all automation
+  ---
+  duration_ms: 0.34125
+  ...
+# Subtest: opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+ok 45 - opt-in review traces retain bounded ordinary inputs and snapshots without writing simulation state
+  ---
+  duration_ms: 98.229792
+  ...
+# Subtest: finished review download captures terminal state instead of an older inspector snapshot
+ok 46 - finished review download captures terminal state instead of an older inspector snapshot
+  ---
+  duration_ms: 10.353583
+  ...
+# Subtest: all native families, wardrobes and motion poses fit two audited textures
+ok 47 - all native families, wardrobes and motion poses fit two audited textures
+  ---
+  duration_ms: 6.313291
+  ...
+# Subtest: field equipment is deterministic, original bounded pixel data with distinct silhouettes
+ok 48 - field equipment is deterministic, original bounded pixel data with distinct silhouettes
+  ---
+  duration_ms: 3.222667
+  ...
+# Subtest: native family gait timing and reduced effects preserve meaningful danger cues
+ok 49 - native family gait timing and reduced effects preserve meaningful danger cues
+  ---
+  duration_ms: 0.276167
+  ...
+# Subtest: authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+ok 50 - authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+  ---
+  duration_ms: 0.09675
+  ...
+# Subtest: shared effect composites preserve full danger cues and locate chain endpoints in world space
+ok 51 - shared effect composites preserve full danger cues and locate chain endpoints in world space
+  ---
+  duration_ms: 0.372167
+  ...
+# Subtest: cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+ok 52 - cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+  ---
+  duration_ms: 0.475917
+  ...
+# Subtest: benchmark gates remain strict and cannot accept an incomplete protocol
+ok 53 - benchmark gates remain strict and cannot accept an incomplete protocol
+  ---
+  duration_ms: 0.814375
+  ...
+# Subtest: 120 Hz full protocol retains all three measured windows beyond 36000 samples
+ok 54 - 120 Hz full protocol retains all three measured windows beyond 36000 samples
+  ---
+  duration_ms: 20.255583
+  ...
+# Subtest: a paused or hidden trial cannot pass even when its retained cadence is fast
+ok 55 - a paused or hidden trial cannot pass even when its retained cadence is fast
+  ---
+  duration_ms: 0.913459
+  ...
+# Subtest: a completed independent trial freezes before inspection and ignores subsequent pauses
+ok 56 - a completed independent trial freezes before inspection and ignores subsequent pauses
+  ---
+  duration_ms: 0.847917
+  ...
+# Subtest: real earned drafts retain complete render intervals while manual lifecycle interruptions invalidate
+ok 57 - real earned drafts retain complete render intervals while manual lifecycle interruptions invalidate
+  ---
+  duration_ms: 724.378125
+  ...
+# Subtest: only the live Survivor/Riy final objective gets a persistent marker without new texture work
+ok 58 - only the live Survivor/Riy final objective gets a persistent marker without new texture work
+  ---
+  duration_ms: 49.346042
+  ...
+# Subtest: arming a late renderer window preserves earned remains, live simulation and prepared resources
+ok 59 - arming a late renderer window preserves earned remains, live simulation and prepared resources
+  ---
+  duration_ms: 227.12275
+  ...
+# Subtest: persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+ok 60 - persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+  ---
+  duration_ms: 166.142916
+  ...
+# Subtest: enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+ok 61 - enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+  ---
+  duration_ms: 54.593458
+  ...
+# Subtest: renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+ok 62 - renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+  ---
+  duration_ms: 74.395958
+  ...
+# Subtest: diagnostic context restoration uses the extension and cancels its timer on destroy
+ok 63 - diagnostic context restoration uses the extension and cancels its timer on destroy
+  ---
+  duration_ms: 506.79225
+  ...
+# Subtest: normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+ok 64 - normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+  ---
+  duration_ms: 392.072042
+  ...
+# Subtest: armor detail follows approach distance without changing actor coverage, quality cues or simulation
+ok 65 - armor detail follows approach distance without changing actor coverage, quality cues or simulation
+  ---
+  duration_ms: 38.016833
+  ...
+# Subtest: Riy native attachments distinguish both escort roles with reduced effects
+ok 66 - Riy native attachments distinguish both escort roles with reduced effects
+  ---
+  duration_ms: 43.92375
+  ...
+# Subtest: Riy coverage faces rear for Sweeper, forward for Breaker and hides during Focus
+ok 67 - Riy coverage faces rear for Sweeper, forward for Breaker and hides during Focus
+  ---
+  duration_ms: 42.226
+  ...
+# Subtest: paged atlas packing stays deterministic, non-overlapping and device-bounded
+ok 68 - paged atlas packing stays deterministic, non-overlapping and device-bounded
+  ---
+  duration_ms: 18.3755
+  ...
+# Subtest: low-capability device routes frames across retained pages and releases every canvas
+ok 69 - low-capability device routes frames across retained pages and releases every canvas
+  ---
+  duration_ms: 38.195167
+  ...
+# Subtest: world art is prepared in bounded retained tiles once, including failure cleanup
+ok 70 - world art is prepared in bounded retained tiles once, including failure cleanup
+  ---
+  duration_ms: 30.795916
+  ...
+# Subtest: ten world renderer lifecycles preserve reference and stress coverage and release every retained page
+ok 71 - ten world renderer lifecycles preserve reference and stress coverage and release every retained page
+  ---
+  duration_ms: 460.907375
+  ...
+# Subtest: accepted Studio actor images and Motion clips bake once and feed native upgrade previews
+ok 72 - accepted Studio actor images and Motion clips bake once and feed native upgrade previews
+  ---
+  duration_ms: 80.235833
+  ...
+# Subtest: all eighteen selected-world inventories keep exact texture accounting without multiplying sprite atlases
+ok 73 - all eighteen selected-world inventories keep exact texture accounting without multiplying sprite atlases
+  ---
+  duration_ms: 146.7915
+  ...
+# Subtest: ten V4 world lifecycles retain custom panels, recover all pages and release every selected-scene canvas
+ok 74 - ten V4 world lifecycles retain custom panels, recover all pages and release every selected-scene canvas
+  ---
+  duration_ms: 678.915334
+  ...
+# Subtest: owned Phaser games remove only their lifecycle listeners and preserve the paused origin
+ok 75 - owned Phaser games remove only their lifecycle listeners and preserve the paused origin
+  ---
+  duration_ms: 2.052125
+  ...
+# Subtest: owned Phaser setup preserves headless start, postBoot and requested focus semantics
+ok 76 - owned Phaser setup preserves headless start, postBoot and requested focus semantics
+  ---
+  duration_ms: 0.638167
+  ...
+# Subtest: partial owned Phaser startup releases page hooks and preserves the primary error
+ok 77 - partial owned Phaser startup releases page hooks and preserves the primary error
+  ---
+  duration_ms: 0.356333
+  ...
+# Subtest: owned start semantics stay bound to the reviewed bundled Phaser 4.2.1 lifecycle
+ok 78 - owned start semantics stay bound to the reviewed bundled Phaser 4.2.1 lifecycle
+  ---
+  duration_ms: 6.1175
+  ...
+# Subtest: synchronous failed construction retires its started engine before losing the Game handle
+ok 79 - synchronous failed construction retires its started engine before losing the Game handle
+  ---
+  duration_ms: 0.583125
+  ...
+# Subtest: manual resource export requires real Demo Pause and retains closed display across reopen
+ok 80 - manual resource export requires real Demo Pause and retains closed display across reopen
+  ---
+  duration_ms: 3104.394625
+  ...
+# Subtest: closed Demo retains unsettled scene reservation until ignored decode actually completes
+ok 81 - closed Demo retains unsettled scene reservation until ignored decode actually completes
+  ---
+  duration_ms: 1862.665291
+  ...
+# Subtest: manual resource export rejects advancing practice despite the retained interrupted spectator flag
+ok 82 - manual resource export rejects advancing practice despite the retained interrupted spectator flag
+  ---
+  duration_ms: 1803.100208
+  ...
+1..82
+# tests 82
+# suites 0
+# pass 82
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 36174.114292

@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: survival Fresh CLI closes its browser and saves one failed receipt when context setup fails
+ok 1 - survival Fresh CLI closes its browser and saves one failed receipt when context setup fails
+  ---
+  duration_ms: 238.817125
+  ...
+# Subtest: sim Fresh CLI closes its browser and saves one failed receipt when context setup fails
+ok 2 - sim Fresh CLI closes its browser and saves one failed receipt when context setup fails
+  ---
+  duration_ms: 264.042917
+  ...
+# Subtest: packaging enumerates all four modes and every body variant once, with only qualified Solo diagnostics
+ok 3 - packaging enumerates all four modes and every body variant once, with only qualified Solo diagnostics
+  ---
+  duration_ms: 3.095
+  ...
+# Subtest: packaging rejects URL escapes, remote recordings and invalid native filenames
+ok 4 - packaging rejects URL escapes, remote recordings and invalid native filenames
+  ---
+  duration_ms: 1.964292
+  ...
+# Subtest: offline trace tools and reference bodies are distinguished from shipped sparse diagnostics
+ok 5 - offline trace tools and reference bodies are distinguished from shipped sparse diagnostics
+  ---
+  duration_ms: 0.312416
+  ...
+# Subtest: existing packaging evidence is preserved before any expensive build starts
+ok 6 - existing packaging evidence is preserved before any expensive build starts
+  ---
+  duration_ms: 9.9445
+  ...
+# Subtest: CDP inspection keeps direct owners separate and releases handler/root handles
+ok 7 - CDP inspection keeps direct owners separate and releases handler/root handles
+  ---
+  duration_ms: 1.584334
+  ...
+# Subtest: CDP failure still releases captured handles and does not invent a zero count
+ok 8 - CDP failure still releases captured handles and does not invent a zero count
+  ---
+  duration_ms: 0.868583
+  ...
+# Subtest: Listener differences preserve multiplicity, options and exact target ownership
+ok 9 - Listener differences preserve multiplicity, options and exact target ownership
+  ---
+  duration_ms: 9.798416
+  ...
+# Subtest: The paused-origin observer keeps the first game across native renderer creation
+ok 10 - The paused-origin observer keeps the first game across native renderer creation
+  ---
+  duration_ms: 0.40475
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 557.620583

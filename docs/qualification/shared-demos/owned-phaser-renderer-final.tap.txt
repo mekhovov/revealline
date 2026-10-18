@@ -1,0 +1,175 @@
+TAP version 13
+# Subtest: all native families, wardrobes and motion poses fit two audited textures
+ok 1 - all native families, wardrobes and motion poses fit two audited textures
+  ---
+  duration_ms: 5.417209
+  ...
+# Subtest: field equipment is deterministic, original bounded pixel data with distinct silhouettes
+ok 2 - field equipment is deterministic, original bounded pixel data with distinct silhouettes
+  ---
+  duration_ms: 2.417
+  ...
+# Subtest: native family gait timing and reduced effects preserve meaningful danger cues
+ok 3 - native family gait timing and reduced effects preserve meaningful danger cues
+  ---
+  duration_ms: 0.294666
+  ...
+# Subtest: authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+ok 4 - authored cast preserves mixed wardrobes and explicit cast only selects a rendered wardrobe
+  ---
+  duration_ms: 0.247916
+  ...
+# Subtest: shared effect composites preserve full danger cues and locate chain endpoints in world space
+ok 5 - shared effect composites preserve full danger cues and locate chain endpoints in world space
+  ---
+  duration_ms: 0.424209
+  ...
+# Subtest: cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+ok 6 - cadence retains foreground stalls, excludes known pauses, and exports bounded ordered samples
+  ---
+  duration_ms: 0.605208
+  ...
+# Subtest: benchmark gates remain strict and cannot accept an incomplete protocol
+ok 7 - benchmark gates remain strict and cannot accept an incomplete protocol
+  ---
+  duration_ms: 0.778167
+  ...
+# Subtest: 120 Hz full protocol retains all three measured windows beyond 36000 samples
+ok 8 - 120 Hz full protocol retains all three measured windows beyond 36000 samples
+  ---
+  duration_ms: 15.755958
+  ...
+# Subtest: a paused or hidden trial cannot pass even when its retained cadence is fast
+ok 9 - a paused or hidden trial cannot pass even when its retained cadence is fast
+  ---
+  duration_ms: 0.917291
+  ...
+# Subtest: a completed independent trial freezes before inspection and ignores subsequent pauses
+ok 10 - a completed independent trial freezes before inspection and ignores subsequent pauses
+  ---
+  duration_ms: 0.475541
+  ...
+# Subtest: real earned drafts retain complete render intervals while manual lifecycle interruptions invalidate
+ok 11 - real earned drafts retain complete render intervals while manual lifecycle interruptions invalidate
+  ---
+  duration_ms: 480.776792
+  ...
+# Subtest: only the live Survivor/Riy final objective gets a persistent marker without new texture work
+ok 12 - only the live Survivor/Riy final objective gets a persistent marker without new texture work
+  ---
+  duration_ms: 28.655083
+  ...
+# Subtest: arming a late renderer window preserves earned remains, live simulation and prepared resources
+ok 13 - arming a late renderer window preserves earned remains, live simulation and prepared resources
+  ---
+  duration_ms: 112.917292
+  ...
+# Subtest: persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+ok 14 - persistent native remains obey shared settings, preserve live draw counts, and survive recovery without new texture work
+  ---
+  duration_ms: 32.770625
+  ...
+# Subtest: enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+ok 15 - enemy behavior cues retain phase, rally direction and reward identity with reduced effects
+  ---
+  duration_ms: 24.327208
+  ...
+# Subtest: renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+ok 16 - renderer submits every visible actor above 64 without texture work, preserves simulation, restores and disposes
+  ---
+  duration_ms: 32.838209
+  ...
+# Subtest: diagnostic context restoration uses the extension and cancels its timer on destroy
+ok 17 - diagnostic context restoration uses the extension and cancels its timer on destroy
+  ---
+  duration_ms: 486.542834
+  ...
+# Subtest: normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+ok 18 - normal and reduced-effects renderers preserve identical real-core outcomes over 600 ticks
+  ---
+  duration_ms: 814.326208
+  ...
+# Subtest: armor detail follows approach distance without changing actor coverage, quality cues or simulation
+ok 19 - armor detail follows approach distance without changing actor coverage, quality cues or simulation
+  ---
+  duration_ms: 34.674583
+  ...
+# Subtest: Riy native attachments distinguish both escort roles with reduced effects
+ok 20 - Riy native attachments distinguish both escort roles with reduced effects
+  ---
+  duration_ms: 235.159875
+  ...
+# Subtest: Riy coverage faces rear for Sweeper, forward for Breaker and hides during Focus
+ok 21 - Riy coverage faces rear for Sweeper, forward for Breaker and hides during Focus
+  ---
+  duration_ms: 88.961583
+  ...
+# Subtest: paged atlas packing stays deterministic, non-overlapping and device-bounded
+ok 22 - paged atlas packing stays deterministic, non-overlapping and device-bounded
+  ---
+  duration_ms: 30.628
+  ...
+# Subtest: low-capability device routes frames across retained pages and releases every canvas
+ok 23 - low-capability device routes frames across retained pages and releases every canvas
+  ---
+  duration_ms: 41.97425
+  ...
+# Subtest: world art is prepared in bounded retained tiles once, including failure cleanup
+ok 24 - world art is prepared in bounded retained tiles once, including failure cleanup
+  ---
+  duration_ms: 33.380458
+  ...
+# Subtest: ten world renderer lifecycles preserve reference and stress coverage and release every retained page
+ok 25 - ten world renderer lifecycles preserve reference and stress coverage and release every retained page
+  ---
+  duration_ms: 435.56225
+  ...
+# Subtest: accepted Studio actor images and Motion clips bake once and feed native upgrade previews
+ok 26 - accepted Studio actor images and Motion clips bake once and feed native upgrade previews
+  ---
+  duration_ms: 80.916584
+  ...
+# Subtest: all eighteen selected-world inventories keep exact texture accounting without multiplying sprite atlases
+ok 27 - all eighteen selected-world inventories keep exact texture accounting without multiplying sprite atlases
+  ---
+  duration_ms: 161.261833
+  ...
+# Subtest: ten V4 world lifecycles retain custom panels, recover all pages and release every selected-scene canvas
+ok 28 - ten V4 world lifecycles retain custom panels, recover all pages and release every selected-scene canvas
+  ---
+  duration_ms: 688.997375
+  ...
+# Subtest: owned Phaser games remove only their lifecycle listeners and preserve the paused origin
+ok 29 - owned Phaser games remove only their lifecycle listeners and preserve the paused origin
+  ---
+  duration_ms: 4.062875
+  ...
+# Subtest: owned Phaser setup preserves headless start, postBoot and requested focus semantics
+ok 30 - owned Phaser setup preserves headless start, postBoot and requested focus semantics
+  ---
+  duration_ms: 2.164916
+  ...
+# Subtest: partial owned Phaser startup releases page hooks and preserves the primary error
+ok 31 - partial owned Phaser startup releases page hooks and preserves the primary error
+  ---
+  duration_ms: 0.636083
+  ...
+# Subtest: owned start semantics stay bound to the reviewed bundled Phaser 4.2.1 lifecycle
+ok 32 - owned start semantics stay bound to the reviewed bundled Phaser 4.2.1 lifecycle
+  ---
+  duration_ms: 5.693792
+  ...
+# Subtest: synchronous failed construction retires its started engine before losing the Game handle
+ok 33 - synchronous failed construction retires its started engine before losing the Game handle
+  ---
+  duration_ms: 0.709417
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4223.945
