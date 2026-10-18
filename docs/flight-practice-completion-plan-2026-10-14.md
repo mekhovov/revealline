@@ -3,12 +3,20 @@
 ## Latest review checkpoint — 19 October 2026
 
 Use the [Mac mini follow-up and updated remaining-order table](flight-practice-execution-2026-10-19.md).
-The approved share resolves output space; bounded writes pass 47 targeted tests.
-The current normal full build still fails its unchanged ten-minute limit before
-output materialization. Preparation was caught in main-game localization/level
-normalization; whole-run attribution is not established. The owner selected
-continued local diagnosis with an external supervisor. R1–R9 remain open
-as detailed there; no current production journey or new offline pass is claimed.
+The approved share resolves output space; bounded writes, opt-in phase reporting
+and conservative cross-volume clone veto pass **53 targeted tests**. External
+sampling and isolated original validators completed without changing catalogue
+bytes. The instrumented normal full build still fails its unchanged ten-minute
+limit in **expanded-files**; the latest writer change has no full-build retest.
+Whole-run attribution and current production-directory journeys remain open.
+
+**Newly audited passes:** current Academy historical installed-session continuity
+completes its R2 refresh, and all six current restarted-offline short-flight routes
+pass. Simulator evidence remains pinned to candidate `6177d2cc8`; build-tool
+evidence is separately pinned to `623918462`, not relabelled runtime bytes.
+Next: current-head CI, bounded evidence-led build diagnosis, independent all-app
+actual recovery (R3) and native outstanding-digest cancellation (R4), then current
+production journeys. Acceptance/reviewer work (R6–R9) retains its prerequisites.
 Hosting, hardware and historical Worlds stay owner-deferred, not passed. Earlier
 disk measurements and source-specific results below are preserved history.
 
