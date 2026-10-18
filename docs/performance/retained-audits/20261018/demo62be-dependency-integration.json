@@ -1,0 +1,63 @@
+{
+  "format": "SoloDemoBranchDependencyIntegrationV1",
+  "at": "2026-10-18T20:30:38.861331+00:00",
+  "branch": "codex/solo-demo-paused-geometry-20261018",
+  "oldHead": "2a377f2b9fb7a30e4e5f21ffc393e573e6c5b8ef",
+  "main": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "traceDependency": "4d28eb409e45a3db3b26ce4ec7a64437e5929a95",
+  "firstMerge": {
+    "sha": "f1a48365ddbee1684186665cb3173f3a15711cab",
+    "tree": "dfda2e8851c497ec87ce41e8e1e2c9e7a2838696",
+    "parents": [
+      "2a377f2b9fb7a30e4e5f21ffc393e573e6c5b8ef",
+      "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465"
+    ]
+  },
+  "finalMerge": {
+    "sha": "62be652ce70b11f840b491c218609d5225374be4",
+    "tree": "208381cc212a9a8c405ae8661e6df225c8c88d52",
+    "parents": [
+      "f1a48365ddbee1684186665cb3173f3a15711cab",
+      "4d28eb409e45a3db3b26ce4ec7a64437e5929a95"
+    ]
+  },
+  "reviewedComposition": "82fd32bead56c48175ec4521140afcf41f59a44e",
+  "mainChangedPaths": [
+    "game/test/profile-recovery-dialog.test.mjs",
+    "game/test/profile-recovery-settings-host.test.mjs",
+    "game/ui/profile-recovery-dialog.mjs"
+  ],
+  "traceChangedPaths": [
+    ".github/workflows/solo-native-package-consumer.yml",
+    "docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json",
+    "docs/performance/fixtures/solo-replay-portability/node-1255-catalogs.fixture",
+    "docs/performance/solo-browser-frame-trace-9d-tasks-plan.json",
+    "scripts/qualify-solo-runtime.mjs",
+    "scripts/solo-frame-trace-executed-source.mjs",
+    "scripts/solo-frame-trace-failure-admission.test.mjs",
+    "scripts/solo-frame-trace-tasks-admission.test.mjs",
+    "scripts/solo-frame-trace.test.mjs",
+    "scripts/solo-qualification-cpu-profile.mjs",
+    "scripts/solo-remote-cpu-profile.mjs",
+    "scripts/solo-replay-portability-diagnostic.mjs",
+    "scripts/solo-replay-portability-diagnostic.test.mjs",
+    "scripts/solo-runtime73-measurement.test.mjs",
+    "scripts/solo-shared-owner-declared-source.mjs",
+    "scripts/test-solo-frame-trace-admission.mjs",
+    "scripts/test-solo-native-consumer-preparation.mjs",
+    "scripts/test-solo-native-consumer-shared-demo.mjs",
+    "scripts/test-solo-readiness-rejoin-797e03.mjs",
+    "scripts/test-solo-remote-cpu-profile.mjs",
+    "scripts/test-solo-replay-portability-hook.mjs",
+    "scripts/test-solo-shared-mode-owner-admission.mjs"
+  ],
+  "sharedPaths": [
+    ".github/workflows/solo-native-package-consumer.yml",
+    "scripts/solo-runtime73-measurement.test.mjs",
+    "scripts/test-solo-native-consumer-shared-demo.mjs"
+  ],
+  "allFinalBlobIdentitiesVerified": true,
+  "mainUnchanged": true,
+  "sourceTestsExecuted": false,
+  "releaseHold": "Draft; Depends on #1621; complete fresh exact-head checks and accepted predecessor required."
+}

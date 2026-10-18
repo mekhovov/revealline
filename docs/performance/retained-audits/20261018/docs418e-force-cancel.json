@@ -1,0 +1,269 @@
+{
+  "format": "SoloSupersededDocsReportForceCancelV1",
+  "at": "2026-10-18T20:26:10.908930+00:00",
+  "priorNormalCancellationAudit": "48a1678b4d295ef937cbf9f1ad5a5b7c18caab39",
+  "currentHead": "70bf8f0a42e4a6a1a64747c55f05caaf6419b658",
+  "run": 39159971084,
+  "before": {
+    "head": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+    "status": "queued",
+    "jobs": [
+      {
+        "id": 117771853980,
+        "run_id": 39159971084,
+        "workflow_name": "Validate source for continuous main",
+        "head_branch": "codex/solo-performance-status-20261018-late",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159971084",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAba7_gnA",
+        "head_sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117771853980",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159971084/job/117771853980",
+        "status": "completed",
+        "conclusion": "success",
+        "created_at": "2026-10-18T19:45:55Z",
+        "started_at": "2026-10-18T20:19:49Z",
+        "completed_at": "2026-10-18T20:20:03Z",
+        "name": "preflight",
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1,
+            "started_at": "2026-10-18T20:19:50Z",
+            "completed_at": "2026-10-18T20:19:51Z"
+          },
+          {
+            "name": "Check out the workflow's test policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2,
+            "started_at": "2026-10-18T20:19:51Z",
+            "completed_at": "2026-10-18T20:19:52Z"
+          },
+          {
+            "name": "Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3,
+            "started_at": "2026-10-18T20:19:52Z",
+            "completed_at": "2026-10-18T20:19:56Z"
+          },
+          {
+            "name": "Read explicit automated-suite policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4,
+            "started_at": "2026-10-18T20:19:56Z",
+            "completed_at": "2026-10-18T20:19:56Z"
+          },
+          {
+            "name": "Classify the pull request for the release train",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5,
+            "started_at": "2026-10-18T20:19:56Z",
+            "completed_at": "2026-10-18T20:19:58Z"
+          },
+          {
+            "name": "Preserve exact source and admission metadata",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6,
+            "started_at": "2026-10-18T20:19:58Z",
+            "completed_at": "2026-10-18T20:19:59Z"
+          },
+          {
+            "name": "Record temporary fast-release policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7,
+            "started_at": "2026-10-18T20:19:59Z",
+            "completed_at": "2026-10-18T20:19:59Z"
+          },
+          {
+            "name": "Post Set up Node.js",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 13,
+            "started_at": "2026-10-18T20:19:59Z",
+            "completed_at": "2026-10-18T20:19:59Z"
+          },
+          {
+            "name": "Post Check out the workflow's test policy",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 14,
+            "started_at": "2026-10-18T20:19:59Z",
+            "completed_at": "2026-10-18T20:20:00Z"
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 15,
+            "started_at": "2026-10-18T20:20:00Z",
+            "completed_at": "2026-10-18T20:20:00Z"
+          }
+        ],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117771853980",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 1000042589,
+        "runner_name": "GitHub Actions 1000042589",
+        "runner_group_id": 0,
+        "runner_group_name": "GitHub Actions"
+      },
+      {
+        "id": 117779520470,
+        "run_id": 39159971084,
+        "workflow_name": "Validate source for continuous main",
+        "head_branch": "codex/solo-performance-status-20261018-late",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159971084",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAbbDTb1g",
+        "head_sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117779520470",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159971084/job/117779520470",
+        "status": "queued",
+        "conclusion": null,
+        "created_at": "2026-10-18T20:20:03Z",
+        "started_at": "2026-10-18T20:20:03Z",
+        "completed_at": null,
+        "name": "release-ready",
+        "steps": [],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117779520470",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": 0,
+        "runner_name": "",
+        "runner_group_id": 0,
+        "runner_group_name": ""
+      },
+      {
+        "id": 117779520611,
+        "run_id": 39159971084,
+        "workflow_name": "Validate source for continuous main",
+        "head_branch": "codex/solo-performance-status-20261018-late",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159971084",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAbbDTcYw",
+        "head_sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117779520611",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159971084/job/117779520611",
+        "status": "completed",
+        "conclusion": "skipped",
+        "created_at": "2026-10-18T20:20:03Z",
+        "started_at": "2026-10-18T20:20:03Z",
+        "completed_at": "2026-10-18T20:20:03Z",
+        "name": "build",
+        "steps": [],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117779520611",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": null,
+        "runner_name": null,
+        "runner_group_id": null,
+        "runner_group_name": null
+      },
+      {
+        "id": 117779520788,
+        "run_id": 39159971084,
+        "workflow_name": "Validate source for continuous main",
+        "head_branch": "codex/solo-performance-status-20261018-late",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159971084",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAbbDTdFA",
+        "head_sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117779520788",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159971084/job/117779520788",
+        "status": "completed",
+        "conclusion": "skipped",
+        "created_at": "2026-10-18T20:20:03Z",
+        "started_at": "2026-10-18T20:20:03Z",
+        "completed_at": "2026-10-18T20:20:03Z",
+        "name": "focused_shards",
+        "steps": [],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117779520788",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": null,
+        "runner_name": null,
+        "runner_group_id": null,
+        "runner_group_name": null
+      },
+      {
+        "id": 117779520958,
+        "run_id": 39159971084,
+        "workflow_name": "Validate source for continuous main",
+        "head_branch": "codex/solo-performance-status-20261018-late",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159971084",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAbbDTdvg",
+        "head_sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117779520958",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159971084/job/117779520958",
+        "status": "completed",
+        "conclusion": "skipped",
+        "created_at": "2026-10-18T20:20:03Z",
+        "started_at": "2026-10-18T20:20:03Z",
+        "completed_at": "2026-10-18T20:20:03Z",
+        "name": "test",
+        "steps": [],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117779520958",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": null,
+        "runner_name": null,
+        "runner_group_id": null,
+        "runner_group_name": null
+      },
+      {
+        "id": 117779521481,
+        "run_id": 39159971084,
+        "workflow_name": "Validate source for continuous main",
+        "head_branch": "codex/solo-performance-status-20261018-late",
+        "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39159971084",
+        "run_attempt": 1,
+        "node_id": "CR_kwDOUYDvKM8AAAAbbDTfyQ",
+        "head_sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/117779521481",
+        "html_url": "https://github.com/mekhovov/revealline/actions/runs/39159971084/job/117779521481",
+        "status": "completed",
+        "conclusion": "skipped",
+        "created_at": "2026-10-18T20:20:03Z",
+        "started_at": "2026-10-18T20:20:03Z",
+        "completed_at": "2026-10-18T20:20:03Z",
+        "name": "focused",
+        "steps": [],
+        "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/117779521481",
+        "labels": [
+          "ubuntu-latest"
+        ],
+        "runner_id": null,
+        "runner_name": null,
+        "runner_group_id": null,
+        "runner_group_name": null
+      }
+    ]
+  },
+  "request": {
+    "method": "POST force-cancel",
+    "exitCode": 0,
+    "stdout": "{}",
+    "stderr": ""
+  },
+  "after": {
+    "status": "queued",
+    "conclusion": null,
+    "updated_at": "2026-10-18T20:26:10Z",
+    "head_sha": "418e0bab39e8e802f0bc8e7480ca5310360620c1"
+  },
+  "scope": "Only the superseded documentation aggregate; all source/test jobs terminal, no current/native/other-chat jobs touched."
+}
