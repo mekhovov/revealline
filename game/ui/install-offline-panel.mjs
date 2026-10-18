@@ -58,6 +58,7 @@ export function attachInstallOfflinePanel({
   const origin = url.origin,
     editionScope = new URL('../', url).href;
   const install = captureInstallPrompt(win);
+  const statusLoad = new AbortController();
   let dialog,
     frame,
     closeButton,
@@ -268,6 +269,7 @@ export function attachInstallOfflinePanel({
     },
     dispose() {
       disposed = true;
+      statusLoad.abort();
       stopLocaleStatus();
       if (ownedFrames.get(doc)?.frame === frame) ownedFrames.delete(doc);
       unsubscribe?.();
@@ -285,7 +287,9 @@ export function attachInstallOfflinePanel({
     try {
       const active = readInstalledState(win?.localStorage).active;
       const states = win?.caches
-        ? await createOfficialDownloads({ caches: win.caches, origin }).states()
+        ? await createOfficialDownloads({ caches: win.caches, origin }).states({
+            signal: statusLoad.signal,
+          })
         : [];
       const saved = states.some(
         (state) => state.edition === editionScope && state.group === 'gameplay',

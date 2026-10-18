@@ -416,6 +416,45 @@ async function setup(
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
   new File([value], name, { type: 'audio/mpeg' });
 
+test('disposing the soundtrack panel stops discovery without publishing recording availability', async (t) => {
+  let release;
+  const pending = new Promise((resolve) => (release = resolve)),
+    calls = [];
+  const caches = {
+    async open() {
+      calls.push('open');
+      return {
+        async match() {
+          calls.push('match');
+          await pending;
+          return undefined;
+        },
+      };
+    },
+  };
+  for (const [key, value] of Object.entries({
+    caches,
+    location: new URL('https://game.example/game/'),
+    navigator: { locks: {} },
+  })) {
+    const original = Object.getOwnPropertyDescriptor(globalThis, key);
+    Object.defineProperty(globalThis, key, { configurable: true, value });
+    t.after(() => {
+      if (original) Object.defineProperty(globalThis, key, original);
+      else delete globalThis[key];
+    });
+  }
+  const app = await setup(t, { open: false, callbacks: { catalogue: SOUNDTRACK_CATALOGUE } });
+  let adoptions = 0;
+  app.player.setLocalRecordingIds = () => adoptions++;
+  assert.deepEqual(calls, ['open', 'match']);
+  app.panel.dispose();
+  release();
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(calls, ['open', 'match'], 'The next recording must not be inspected.');
+  assert.equal(adoptions, 0, 'Cancelled availability cannot be adopted by the player.');
+});
+
 function onlineCatalogueFixture() {
   const definitions = [
     ['1'.repeat(64), 'Night Circuit', 'Signal Artist', 'Synth collection', ['synth', 'electronic']],

@@ -1,0 +1,355 @@
+{
+  "format": "WebKitCacheOwnershipReviewV2",
+  "created": "2026-10-18T22:29:30.188649+00:00",
+  "source": {
+    "binding": "Diagnostic-only official-downloads override is hashed. Scoped live files and frozen manifest are checked before/after; this does not independently recompute the complete tree fingerprint.",
+    "head": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+    "manifestPath": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "created": "2026-10-18T21:24:01.185264+00:00",
+    "integrationBase": "237b405437def3c41b01165fe057af1ab06f618c",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "71edf353e3a45ae92fbdda94cd46b1f09e47ef0f8ef0680e23a4d293e0a22c54",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "headAfter": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+  "sourceUnchangedAtExit": true,
+  "childReport": "docs/qualification/shared-demos/webkit-cache-owner-reloads-final-237-f970.json",
+  "childReportSHA256": "37e8c037556528089933c2b5d2e5170943324f044c44bbba38a93604c8d31b6e",
+  "protocolReport": "docs/qualification/shared-demos/webkit-cache-protocol-final-237-f970.json",
+  "protocolReportSHA256": "6f0578aeb16ffc2df270d2720eff232639cf448112769e20ea3e3160e2f6133a",
+  "scope": "One bounded four ordinary Solo reload diagnostic; no demo entry, no production file modification. One diagnostic module override and init observer affect scheduling. Not unchanged-production acceptance.",
+  "functionalChecksPassed": 4,
+  "strictDiagnosticGate": false,
+  "errors": [
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "receivedAt": "2026-10-18T22:26:23.330Z",
+      "name": "Cache API operation failed",
+      "rawMessage": "Context is stopped",
+      "stack": "",
+      "message": "Cache API operation failed: Context is stopped"
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-2",
+      "receivedAt": "2026-10-18T22:26:26.431Z",
+      "name": "Cannot load blob",
+      "rawMessage": "ttp://127.0.0.1:8771/2552e32f-a4e0-4cd7-b1dd-af9c63c9dcd4 due to access control checks.",
+      "stack": "Cannot load blob:http://127.0.0.1:8771/2552e32f-a4e0-4cd7-b1dd-af9c63c9dcd4 due to access control checks.\n    at browserDecode (http://127.0.0.1:8771/game/presentation/host.mjs:156:38)\n    at unknown (http://127.0.0.1:8771/game/presentation/host.mjs:581:44)",
+      "message": "Cannot load blob:http://127.0.0.1:8771/2552e32f-a4e0-4cd7-b1dd-af9c63c9dcd4 due to access control checks.\n    at browserDecode (http://127.0.0.1:8771/game/presentation/host.mjs:156:38)\n    at unknown (http://127.0.0.1:8771/game/presentation/host.mjs:581:44)"
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-4",
+      "receivedAt": "2026-10-18T22:26:42.452Z",
+      "name": "Cache API operation failed",
+      "rawMessage": "Context is stopped",
+      "stack": "",
+      "message": "Cache API operation failed: Context is stopped"
+    }
+  ],
+  "domErrors": [],
+  "nativeCacheEvents": 2225,
+  "nativeProtocolEvents": 73,
+  "overflow": {
+    "cache": false,
+    "nativeConsole": false,
+    "protocol": 0,
+    "unparseable": 0
+  },
+  "cleanup": {
+    "browserCloseCompleted": true,
+    "previewClosed": true,
+    "childExit": {
+      "code": 1,
+      "signal": null
+    }
+  },
+  "documents": [
+    {
+      "id": "1792362378678-0.5401360582087849",
+      "scanStarts": [
+        {
+          "scan": 2,
+          "at": 1792362382560,
+          "stack": "localOfficialRecordingIds@http://127.0.0.1:8771/game/official-downloads.mjs:445:106\ninitializeSoundtrack@http://127.0.0.1:8771/game/app.mjs:2236:64\nmodule code@http://127.0.0.1:8771/game/app.mjs:15418:28"
+        }
+      ],
+      "matchesStarted": 39,
+      "matchesSettled": 38,
+      "pendingRecordedMatches": [
+        {
+          "operation": 41,
+          "at": 1792362383273,
+          "url": "http://127.0.0.1:8771/.revealline-official/sha256/39bab87bc4caa84d82d409bac0b7c44f54567e2c090f318556bdf48a6cdcd691",
+          "beforeUnload": true
+        }
+      ],
+      "checkpointStarts": 1,
+      "checkpointKeysSettled": 1,
+      "pagehideAt": 1792362383276,
+      "existingCatchEvents": []
+    },
+    {
+      "id": "1792362383309-0.5095739910206004",
+      "scanStarts": [
+        {
+          "scan": 2,
+          "at": 1792362385637,
+          "stack": "localOfficialRecordingIds@http://127.0.0.1:8771/game/official-downloads.mjs:445:106\ninitializeSoundtrack@http://127.0.0.1:8771/game/app.mjs:2236:64\nmodule code@http://127.0.0.1:8771/game/app.mjs:15418:28"
+        },
+        {
+          "scan": 80,
+          "at": 1792362386054,
+          "stack": "localOfficialRecordingIds@http://127.0.0.1:8771/game/official-downloads.mjs:445:106\nrefreshOfficialDownloads@http://127.0.0.1:8771/game/ui/soundtrack-panel.mjs:1824:48\nattachSoundtrackPanel@http://127.0.0.1:8771/game/ui/soundtrack-panel.mjs:2000:32\n@http://127.0.0.1:8771/game/app.mjs:2310:50"
+        }
+      ],
+      "matchesStarted": 81,
+      "matchesSettled": 81,
+      "pendingRecordedMatches": [],
+      "checkpointStarts": 1,
+      "checkpointKeysSettled": 1,
+      "pagehideAt": 1792362386466,
+      "existingCatchEvents": []
+    },
+    {
+      "id": "1792362386493-0.659437933051105",
+      "scanStarts": [
+        {
+          "scan": 2,
+          "at": 1792362389037,
+          "stack": "localOfficialRecordingIds@http://127.0.0.1:8771/game/official-downloads.mjs:445:106\ninitializeSoundtrack@http://127.0.0.1:8771/game/app.mjs:2236:64\nmodule code@http://127.0.0.1:8771/game/app.mjs:15418:28"
+        },
+        {
+          "scan": 80,
+          "at": 1792362389407,
+          "stack": "localOfficialRecordingIds@http://127.0.0.1:8771/game/official-downloads.mjs:445:106\nrefreshOfficialDownloads@http://127.0.0.1:8771/game/ui/soundtrack-panel.mjs:1824:48\nattachSoundtrackPanel@http://127.0.0.1:8771/game/ui/soundtrack-panel.mjs:2000:32\n@http://127.0.0.1:8771/game/app.mjs:2310:50"
+        }
+      ],
+      "matchesStarted": 87,
+      "matchesSettled": 87,
+      "pendingRecordedMatches": [],
+      "checkpointStarts": 1,
+      "checkpointKeysSettled": 1,
+      "pagehideAt": 1792362389684,
+      "existingCatchEvents": []
+    },
+    {
+      "id": "1792362389709-0.023214162978693054",
+      "scanStarts": [
+        {
+          "scan": 2,
+          "at": 1792362392117,
+          "stack": "localOfficialRecordingIds@http://127.0.0.1:8771/game/official-downloads.mjs:445:106\ninitializeSoundtrack@http://127.0.0.1:8771/game/app.mjs:2236:64\nmodule code@http://127.0.0.1:8771/game/app.mjs:15418:28"
+        },
+        {
+          "scan": 80,
+          "at": 1792362392706,
+          "stack": "localOfficialRecordingIds@http://127.0.0.1:8771/game/official-downloads.mjs:445:106\nrefreshOfficialDownloads@http://127.0.0.1:8771/game/ui/soundtrack-panel.mjs:1824:48\nattachSoundtrackPanel@http://127.0.0.1:8771/game/ui/soundtrack-panel.mjs:2000:32\n@http://127.0.0.1:8771/game/app.mjs:2310:50"
+        }
+      ],
+      "matchesStarted": 82,
+      "matchesSettled": 81,
+      "pendingRecordedMatches": [
+        {
+          "operation": 85,
+          "at": 1792362402428,
+          "url": "http://127.0.0.1:8771/.revealline-official/sha256/e50fd5b7f3275040ba246df9ce2ed9a07b7c015d90ce628692f3c7615cd9dee3",
+          "beforeUnload": true
+        }
+      ],
+      "checkpointStarts": 1,
+      "checkpointKeysSettled": 1,
+      "pagehideAt": 1792362402429,
+      "existingCatchEvents": []
+    },
+    {
+      "id": "1792362402453-0.2596598195995913",
+      "scanStarts": [
+        {
+          "scan": 2,
+          "at": 1792362404721,
+          "stack": "localOfficialRecordingIds@http://127.0.0.1:8771/game/official-downloads.mjs:445:106\ninitializeSoundtrack@http://127.0.0.1:8771/game/app.mjs:2236:64\nmodule code@http://127.0.0.1:8771/game/app.mjs:15418:28"
+        }
+      ],
+      "matchesStarted": 62,
+      "matchesSettled": 61,
+      "pendingRecordedMatches": [
+        {
+          "operation": 64,
+          "at": 1792362414183,
+          "url": "http://127.0.0.1:8771/.revealline-official/sha256/ea025d386c8598dd966d13c2f0758417ff97198172cfbd7a2a1b25a9b3cedfbf",
+          "beforeUnload": false
+        }
+      ],
+      "checkpointStarts": 1,
+      "checkpointKeysSettled": 1,
+      "pagehideAt": null,
+      "existingCatchEvents": []
+    }
+  ],
+  "nativeErrors": [
+    {
+      "nativeMessage": {
+        "source": "javascript",
+        "level": "error",
+        "text": "Cache API operation failed: Context is stopped",
+        "type": "log",
+        "line": 0,
+        "column": 0,
+        "url": "",
+        "repeatCount": 1,
+        "timestamp": 1792362383.304207
+      },
+      "targetId": "page-8",
+      "pageProxyId": "7",
+      "receivedAt": "2026-10-18T22:26:23.320Z",
+      "nearestPrecedingMainDocument": "1792362378678-0.5401360582087849",
+      "association": "Temporal association, not a native operation-to-promise identifier.",
+      "millisecondsAfterObservedPagehide": 28.20703125,
+      "pendingRecordedMatches": [
+        {
+          "operation": 41,
+          "at": 1792362383273,
+          "url": "http://127.0.0.1:8771/.revealline-official/sha256/39bab87bc4caa84d82d409bac0b7c44f54567e2c090f318556bdf48a6cdcd691",
+          "beforeUnload": true
+        }
+      ]
+    },
+    {
+      "nativeMessage": {
+        "source": "javascript",
+        "level": "error",
+        "text": "Cannot load blob:http://127.0.0.1:8771/2552e32f-a4e0-4cd7-b1dd-af9c63c9dcd4 due to access control checks.",
+        "type": "log",
+        "line": 156,
+        "column": 38,
+        "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+        "repeatCount": 1,
+        "timestamp": 1792362386.424267,
+        "stackTrace": {
+          "callFrames": [
+            {
+              "functionName": "browserDecode",
+              "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+              "scriptId": "55",
+              "lineNumber": 156,
+              "columnNumber": 38
+            },
+            {
+              "functionName": "",
+              "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+              "scriptId": "55",
+              "lineNumber": 581,
+              "columnNumber": 44
+            }
+          ]
+        }
+      },
+      "targetId": "page-8",
+      "pageProxyId": "7",
+      "receivedAt": "2026-10-18T22:26:26.430Z",
+      "nearestPrecedingMainDocument": "1792362383309-0.5095739910206004",
+      "association": "Temporal association, not a native operation-to-promise identifier.",
+      "millisecondsAfterObservedPagehide": -41.73291015625,
+      "pendingRecordedMatches": []
+    },
+    {
+      "nativeMessage": {
+        "source": "javascript",
+        "level": "error",
+        "text": "Cache API operation failed: Context is stopped",
+        "type": "log",
+        "line": 0,
+        "column": 0,
+        "url": "",
+        "repeatCount": 1,
+        "timestamp": 1792362402.45151
+      },
+      "targetId": "page-8",
+      "pageProxyId": "7",
+      "receivedAt": "2026-10-18T22:26:42.451Z",
+      "nearestPrecedingMainDocument": "1792362389709-0.023214162978693054",
+      "association": "Temporal association, not a native operation-to-promise identifier.",
+      "millisecondsAfterObservedPagehide": 22.510009765625,
+      "pendingRecordedMatches": [
+        {
+          "operation": 85,
+          "at": 1792362402428,
+          "url": "http://127.0.0.1:8771/.revealline-official/sha256/e50fd5b7f3275040ba246df9ce2ed9a07b7c015d90ce628692f3c7615cd9dee3",
+          "beforeUnload": true
+        }
+      ]
+    }
+  ],
+  "frameExclusion": {
+    "observedBlankChildFrameIds": [
+      "enemy-guide-frame"
+    ],
+    "childCacheCalls": 0,
+    "qualification": "Observed blank frames are enemy-guide-frame, not an audio iframe."
+  },
+  "serviceWorkerExclusion": {
+    "registrationSnapshots": 10,
+    "nonemptyRegistrations": [],
+    "nonNullControllers": [],
+    "qualification": "No service worker registration or controller was observed in any document/frame."
+  },
+  "conclusions": [
+    "Both native cache errors occur shortly after old-main pagehide with an observed soundtrack scan Cache.match un-settled at teardown. Reload1 has the initializeSoundtrack scan; reload4 has the second eager soundtrack-panel scan.",
+    "All five initial offline-panel checkpoint key enumerations completed; no checkpoint match existed in the fresh empty cache. The code-level missing cancellation remains but is not implicated by this run.",
+    "The native error carries no call frame or operation identifier. Pending-at-teardown and timing strongly implicate the scan but do not directly prove which native promise generated the error.",
+    "Existing Promise catches did not run before context retirement; WebKit native console logging is independent of application rejection handling.",
+    "One separate native blob access-control error occurred during browserDecode before pagehide. The cache ownership correction does not claim to resolve that presentation issue.",
+    "Native Cache API has no AbortSignal; signal propagation can prevent new work/adoption after owner cancellation, not abort an already submitted native request."
+  ],
+  "proposedMinimalPatch": {
+    "sharedStore": "Optional signal for localOfficialRecordingIds/states/checkpoints; before-open and between-await checks; preserve cancellation through best-effort catches. Existing inspect checks also move before open and after each await.",
+    "owners": [
+      "app: existing soundtrackLoad.signal",
+      "soundtrack-panel: existing publicationLifetime.signal",
+      "couch-music-host: existing lifetime.signal",
+      "install-offline-panel: one status-load lifetime aborted in dispose"
+    ],
+    "preserve": [
+      "No cache deletion or writes added",
+      "No beforeunload cancellation; cancelled navigation and persisted pagehide semantics remain intact",
+      "No error filtering",
+      "No claim that every native context-stop diagnostic is preventable"
+    ]
+  },
+  "observerSources": [
+    {
+      "source": ".cache/capture-webkit-cache-237-owner.mjs",
+      "preserved": "docs/qualification/shared-demos/webkit-cache-237-observer-runner.mjs.txt",
+      "bytes": 5416,
+      "sha256": "414dee6c512dd55542ab40f8458211ebae8fbdfbb9b9e1dbc26aec6ed900f167"
+    },
+    {
+      "source": ".cache/qualify-webkit-cache-237-owner-child.mjs",
+      "preserved": "docs/qualification/shared-demos/webkit-cache-237-observer-child.mjs.txt",
+      "bytes": 24375,
+      "sha256": "274a56d0fd5e0e9670b9df290abe48e90047881705bf914003b3e2f17e2cd5b5"
+    },
+    {
+      "source": ".cache/webkit-cache-237-owner/observe.mjs",
+      "preserved": "docs/qualification/shared-demos/webkit-cache-237-observer.mjs.txt",
+      "bytes": 3448,
+      "sha256": "db23a4ecd3cbeeadc772e338ef7606acb5d6f47847ef8fe1a31d3281481d14f8"
+    },
+    {
+      "source": ".cache/webkit-cache-237-owner/official-downloads.mjs",
+      "preserved": "docs/qualification/shared-demos/webkit-cache-237-official-downloads-observation.mjs.txt",
+      "bytes": 19915,
+      "sha256": "14b80d456ad2e4d2a29626028131b41cbea5af9dc0ab6406cd9c154febcd4173"
+    },
+    {
+      "source": ".cache/webkit-cache-237-owner/override.json",
+      "preserved": "docs/qualification/shared-demos/webkit-cache-237-override.json",
+      "bytes": 518,
+      "sha256": "e68619e13a11cdd2139dd418d4f09bff8efadfb5182df186150305be03124d8d"
+    }
+  ]
+}

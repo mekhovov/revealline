@@ -400,7 +400,9 @@ export function attachCouchMusicHost({
   // A native click observes explicit mute/unmute after its own button handler.
   doc.addEventListener('click', startRememberedMenuMusic);
   void run(async () => {
-    player.setLocalRecordingIds(await localOfficialRecordingIds(source.catalogue));
+    const ids = await localOfficialRecordingIds(source.catalogue, { signal: lifetime.signal });
+    lifetime.signal.throwIfAborted();
+    player.setLocalRecordingIds(ids);
     await load();
   });
   return Object.freeze({

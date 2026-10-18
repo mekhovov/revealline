@@ -90,12 +90,20 @@ export function createOfficialDownloads({
       return null;
     return blob;
   }
-  async function checkpoints({ strict = false } = {}) {
+  async function checkpoints({ strict = false, signal } = {}) {
+    aborted(signal);
     const cache = await cacheStorage.open(DOWNLOAD_STATE_CACHE);
+    aborted(signal);
     const result = [];
-    for (const entry of await cache.keys()) {
+    const entries = await cache.keys();
+    aborted(signal);
+    for (const entry of entries) {
       try {
-        const state = await (await cache.match(entry)).json();
+        aborted(signal);
+        const response = await cache.match(entry);
+        aborted(signal);
+        const state = await response.json();
+        aborted(signal);
         if (
           !state ||
           typeof state.edition !== 'string' ||
@@ -107,6 +115,7 @@ export function createOfficialDownloads({
           throw new Error('Invalid ownership checkpoint.');
         result.push({ url: entry.url, state });
       } catch {
+        aborted(signal);
         // An unreadable owner may still protect saves, another edition or music.
         // Browsing can omit it, but reclamation must stop before changing anything.
         if (strict)
@@ -120,11 +129,17 @@ export function createOfficialDownloads({
     }
     return result;
   }
-  async function states() {
-    return (await checkpoints()).map(({ state }) => state);
+  async function states({ signal } = {}) {
+    const entries = await checkpoints({ signal });
+    aborted(signal);
+    return entries.map(({ state }) => state);
   }
   async function inspect(files, { verify = false, signal } = {}) {
+    // Cache API requests themselves cannot be aborted. Stop submitting further
+    // requests or accepting their results once this caller loses ownership.
+    aborted(signal);
     const cache = await cacheStorage.open(OFFICIAL_CACHE);
+    aborted(signal);
     const unique = [...new Map(files.map((file) => [checkFile(file).sha256, file])).values()];
     const missing = [],
       corrupt = [];
@@ -132,15 +147,20 @@ export function createOfficialDownloads({
     for (const file of unique) {
       aborted(signal);
       const hit = await cache.match(key(file.sha256));
+      aborted(signal);
       if (!hit) {
         missing.push(file);
         continue;
       }
-      if (
-        hit.status !== 200 ||
-        Number(hit.headers.get('Content-Length')) !== file.bytes ||
-        (verify && (await assetDigest(await hit.arrayBuffer())) !== file.sha256)
-      ) {
+      let invalid = hit.status !== 200 || Number(hit.headers.get('Content-Length')) !== file.bytes;
+      if (!invalid && verify) {
+        const bytes = await hit.arrayBuffer();
+        aborted(signal);
+        const digest = await assetDigest(bytes);
+        aborted(signal);
+        invalid = digest !== file.sha256;
+      }
+      if (invalid) {
         corrupt.push(file);
       } else readyBytes += file.bytes;
     }
@@ -422,8 +442,9 @@ export async function readOfficialOriginal(hash, { pin = false } = {}) {
   return blob;
 }
 
-export async function localOfficialRecordingIds(catalogue) {
+export async function localOfficialRecordingIds(catalogue, { signal } = {}) {
   try {
+    aborted(signal);
     const tracks = [...catalogue.tracks];
     if (!tracks.length) return [];
     const store = createOfficialDownloads(),
@@ -440,13 +461,16 @@ export async function localOfficialRecordingIds(catalogue) {
     if (conflictingSizes) {
       const ids = [];
       for (const track of tracks)
-        if ((await store.inspect([track.asset])).ready) ids.push(track.id);
+        if ((await store.inspect([track.asset], { signal })).ready) ids.push(track.id);
+      aborted(signal);
       return ids;
     }
-    const report = await store.inspect(assets),
+    const report = await store.inspect(assets, { signal }),
       unavailable = new Set([...report.missing, ...report.corrupt].map((file) => file.sha256));
+    aborted(signal);
     return tracks.filter((track) => !unavailable.has(track.asset.sha256)).map((track) => track.id);
   } catch {
+    aborted(signal);
     return [];
   }
 }
