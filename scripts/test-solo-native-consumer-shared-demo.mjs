@@ -15,7 +15,7 @@ const source = '797e03f28743921842df6aa57520a72016ba3dfc';
 const tree = 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5';
 const lanes = {
   'shared-return': {
-    plan: 'solo-shared-mode-public-return-797e03-plan.json',
+    plan: 'solo-shared-mode-public-return-797e03-tooling-plan.json',
     job: 105,
     step: 63,
     seconds: 3720,

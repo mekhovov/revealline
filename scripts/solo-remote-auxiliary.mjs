@@ -624,8 +624,7 @@ export function auxiliaryArguments(ctx, row, url, dir) {
     '--server-fixture-access',
     ...(sharedReturn(ctx.plan)
       ? [`--shared-mode-public-return=${SHARED_MODE_PROTOCOL}`]
-      : ['--work-probe']),
-    '--cadence=settled120',
+      : ['--work-probe', '--cadence=settled120']),
     '--cpu=1',
     `--browser=${row.engine}`,
     `--source-revision=${sourceRevision(ctx.plan, row.source)}`,
