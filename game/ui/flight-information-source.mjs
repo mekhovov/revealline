@@ -80,6 +80,27 @@ const rulesets = new Set([
 ]);
 const finite = (value) => Number.isFinite(value) && value >= 0;
 const integer = (value) => Number.isSafeInteger(value) && value >= 0;
+const proportion = (value) => finite(value) && value <= 1;
+const flightProgress = (run) => {
+  const hunt = run.level?.classic?.hunt?.mode === 'hunt',
+    current = hunt ? run.classic?.hunt?.kills : run.coverage,
+    target = hunt ? run.level.classic.hunt.quota : run.level?.goal?.coverage,
+    currentValid = hunt ? integer(current) : proportion(current),
+    targetValid = hunt ? integer(target) && target > 0 : proportion(target) && target >= 0.01;
+  // Match the engine's coverage tolerance without claiming that other required
+  // objectives are complete. Missing facts are not reconstructed from captions.
+  return {
+    kind: hunt ? 'hunt' : 'coverage',
+    current: currentValid ? current : null,
+    target: targetValid ? target : null,
+    remaining:
+      currentValid && targetValid
+        ? current + (hunt ? 0 : EPS) >= target
+          ? 0
+          : target - current
+        : null,
+  };
+};
 const check = (condition, key) => {
   if (!condition) throw new TypeError(t(key));
 };
@@ -227,6 +248,7 @@ export function flightInformationSnapshot(run, { started, paused }) {
     time: run.time,
     player,
     objectives,
+    progress: flightProgress(run),
     classicExpected,
     encounterExpected,
     classic,

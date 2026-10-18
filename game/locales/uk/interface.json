@@ -6016,5 +6016,13 @@
   "flightLimits.recordingWarning": "Запис і нові відновлювані збереження закінчуються після 30 хвилин гри. Призупиніть політ і перевірте «Збереження польоту», перш ніж залишити гру.",
   "flightLimits.collectionWarning": "Наближаються дві години гри: пізніший завершений результат не можна буде залишити в класичній колекції. Призупиніть політ і перевірте «Збереження польоту».",
   "flightLimits.collectionExpired": "Двогодинне обмеження класичної колекції перевищено. Цей політ можна продовжити, але його завершення не можна залишити в класичній колекції. Попередній прогрес не зміниться.",
+  "flightDetails.progress.title": "Прогрес місії",
+  "flightDetails.progress.unavailable": "Частина даних про прогрес місії недоступна.",
+  "flightDetails.progress.hunt": "Знешкоджено цілей: {{current}} / {{target}}.",
+  "flightDetails.progress.revealed": "Відкрито зображення: {{value}}%.",
+  "flightDetails.progress.target": "Ціль відкриття: {{value}}% зображення.",
+  "flightDetails.progress.remaining": "Ще потрібно відкрити: {{value}}% зображення.",
+  "flightDetails.progress.lessThan": "До цілі відкриття залишилося менше ніж {{value}}% зображення.",
+  "flightDetails.progress.reached": "Ціль відкриття досягнуто. Решту обов’язкових цілей усе ще потрібно виконати.",
   "worldIdsCommaSeparated": "Світи (через кому: retro, fpv, ukraine)"
 }
