@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { createMediaPreparation } from '../ui/media-preparation.mjs';
+import { settleUntil } from './helpers/soundtrack-audio.mjs';
 import {
   ONLINE_SOUNDTRACK_CATALOGUE_URL,
   fetchOnlineSoundtrackCatalogue,
@@ -631,4 +633,47 @@ test('online catalogue stops reading a streamed response at its byte limit', asy
   );
   assert.equal(reads, 3);
   assert.equal(cancelled, true);
+});
+
+test('malformed downloaded catalogue is not parsed during gameplay and queued parsing is cancellable', async (t) => {
+  const preparation = createMediaPreparation();
+  t.after(() => preparation.close());
+  preparation.setPhase('playing');
+  const request = () => ({
+    status: 200,
+    redirected: false,
+    url: ONLINE_SOUNDTRACK_CATALOGUE_URL,
+    headers: new Headers(),
+    body: new Response('{invalid JSON').body,
+  });
+  let settled = false;
+  const pending = fetchOnlineSoundtrackCatalogue({ preparation, fetch: request });
+  pending.then(
+    () => {
+      settled = true;
+    },
+    () => {
+      settled = true;
+    },
+  );
+  await settleUntil(
+    () => preparation.snapshot().queued === 1 && preparation.snapshot().active.fetch === 0,
+  );
+  assert.equal(settled, false);
+  preparation.setPhase('paused');
+  await assert.rejects(pending, /JSON|catalogue/i);
+  preparation.setPhase('playing');
+  const controller = new AbortController();
+  const cancelled = fetchOnlineSoundtrackCatalogue({
+    preparation,
+    fetch: request,
+    signal: controller.signal,
+  });
+  const rejected = assert.rejects(cancelled, { name: 'AbortError' });
+  await settleUntil(
+    () => preparation.snapshot().queued === 1 && preparation.snapshot().active.fetch === 0,
+  );
+  controller.abort();
+  await rejected;
+  assert.equal(preparation.snapshot().queued, 0);
 });

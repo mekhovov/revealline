@@ -1,0 +1,115 @@
+{
+  "format": "revealline-solo-startup-profile.v1",
+  "capturedDate": "2026-10-16",
+  "purpose": "Diagnostic attribution before final startup fixes; not timing qualification",
+  "environment": {
+    "browser": "HeadlessChrome/155.0.0.0 on macOS",
+    "viewport": { "width": 1280, "height": 800 },
+    "route": "/game/?journey=opening&performance=1",
+    "audio": "Default master muted",
+    "profile": "Fresh browser context",
+    "source": "Performance worktree candidate based on b1174522, before final catalogue, silent activation and native image encoding fixes"
+  },
+  "capture": {
+    "cpuSamplingIntervalMicroseconds": 1000,
+    "trace": "CDP devtools.timeline, v8 and user timing events",
+    "independentObserver": "requestAnimationFrame intervals, longtask entries and flight-state transitions",
+    "launchAtMs": 4378.3,
+    "firstActiveAtMs": 6715,
+    "lastIndependentFrameAtMs": 19930,
+    "activeObservationMs": 13215,
+    "pageErrors": [],
+    "rawArtifactPrefix": ".cache/solo-evidence/startup-profile-current",
+    "traceArchive": "/Volumes/alex/solo-performance-b1174522/startup-profile-evidence.tar.gz",
+    "traceArchiveMember": "startup-profile-current.trace.json",
+    "attributionNotes": [
+      "Sampled inclusive times overlap along the same call stack and must not be added.",
+      "CPU sampling and tracing introduce overhead; these durations establish causes, not release performance scores.",
+      "This short diagnostic capture does not replace independent first-30-second or physical-device qualification.",
+      "Function locations refer to the profiled candidate and may move after edits."
+    ]
+  },
+  "activeLongTasks": [
+    {
+      "startAtMs": 7525.4,
+      "afterFirstActiveMs": 810.4,
+      "durationMs": 153,
+      "attribution": [
+        { "function": "applyFlightPresentation", "file": "game/app.mjs", "inclusiveMs": 103.8 },
+        {
+          "function": "setPublishedTrack",
+          "file": "game/ui/soundtrack-player.mjs",
+          "inclusiveMs": 96.8
+        },
+        { "function": "emit", "file": "game/ui/soundtrack-player.mjs", "inclusiveMs": 68.6 },
+        { "function": "onChange", "file": "game/app.mjs", "inclusiveMs": 51.2 },
+        { "function": "garbage collector", "exclusiveMs": 29.4 }
+      ],
+      "cause": "Presentation adoption notified multiple music views; each snapshot revalidated and copied the raw soundtrack catalogue because it was not a resolver-owned immutable catalogue.",
+      "followup": "Resolve the code-owned catalogue once during Solo soundtrack initialization, enabling the transport's existing safe selection cache. Preserve live validation of mutable external catalogues and dynamic published permissions."
+    }
+  ],
+  "preparationLongTasks": [
+    {
+      "startAtMs": 4415,
+      "durationMs": 180,
+      "dominantFunction": "soundtrackPlayer.startAt -> emit -> onChange -> snapshot",
+      "dominantInclusiveMs": 168.7,
+      "cause": "Repeated soundtrack catalogue selection, validation and copying during notifications.",
+      "followup": "Reuse the resolver-owned catalogue and cached selection."
+    },
+    {
+      "startAtMs": 4970.5,
+      "durationMs": 55,
+      "dominantFunction": "loadPreviewArtwork data-URL encoding",
+      "dominantInclusiveMs": 38.6,
+      "garbageCollectorExclusiveMs": 14.5,
+      "cause": "Large JavaScript binary-string construction for the required legacy data-URL result.",
+      "followup": "Validate headers directly from bytes, then use cancellable native FileReader.readAsDataURL in browsers while preserving the existing dataUrl contract."
+    },
+    {
+      "startAtMs": 5033,
+      "durationMs": 534,
+      "attribution": [
+        {
+          "function": "createGameAudioContext",
+          "file": "game/ui/audio-output.mjs",
+          "exclusiveMs": 370.4
+        },
+        {
+          "function": "createContentExecutionCatalog",
+          "file": "game/content-design/execution.mjs",
+          "inclusiveMs": 125.3
+        }
+      ],
+      "cause": "Muted Solo activation initialized a native audio device; visual identity preparation also compiled content in the same task.",
+      "followup": "Defer ordinary activation while no context exists and master sound is silent. Activate synchronously in an explicit unmute or volume control gesture. Keep Soundscape's general activation contract and explicit music Play intact; inspect reuse of accepted visual identities separately."
+    },
+    {
+      "startAtMs": 5726.1,
+      "durationMs": 140,
+      "dominantFunction": "refreshOfficialDownloads -> setLocalRecordingIds -> setContext",
+      "dominantInclusiveMs": 108.9,
+      "cause": "Unchanged local recording IDs triggered selection validation and repeated music-view snapshots.",
+      "followup": "Skip unchanged installed-ID updates only for resolver-owned immutable catalogues and preserve refresh behavior for mutable catalogue permissions."
+    },
+    {
+      "startAtMs": 6416.3,
+      "durationMs": 184,
+      "dominantFunction": "prepare -> setTheme -> soundtrackPlayer.setContext",
+      "dominantInclusiveMs": 120.2,
+      "cause": "Theme adoption recomputed soundtrack selection and repeated raw-catalogue validation through view notifications.",
+      "followup": "Reuse the resolver-owned catalogue and existing selection cache."
+    }
+  ],
+  "followupVerification": {
+    "focusedMediaTests": { "passed": 105, "failed": 0 },
+    "silentActivationHostTests": { "passed": 3, "failed": 0 },
+    "hostBehaviors": [
+      "Muted Start creates no AudioContext; unmute activates synchronously in its control gesture.",
+      "Unmuted zero-volume Start defers AudioContext creation until volume rises.",
+      "Explicit music Pause remains paused when unmute activates effects."
+    ],
+    "timing": "A separate quiet, unprofiled run is required after these fixes."
+  }
+}

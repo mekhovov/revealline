@@ -106,6 +106,14 @@ export function createFlightInputDiagnostics({
             ? 'last-flight-sample'
             : 'unavailable',
         raw: diagnostic?.raw ?? null,
+        ...(preview?.mapping
+          ? {
+              mapping: preview.mapping,
+              throttleRate: preview.throttleRate,
+              throttleRateLabel: preview.throttleRateLabel,
+              throttleRateUnits: preview.throttleRateUnits,
+            }
+          : {}),
         calibrated: preview ? preview.calibrated : (sample?.calibrated ?? null),
         sampleAgeMs:
           diagnostic?.sampleAgeMs == null
@@ -410,6 +418,26 @@ export function createFlightGamepad({
     const raw = pad.buttons?.[index];
     return typeof raw === 'number' ? raw : (raw?.value ?? (raw?.pressed ? 1 : 0));
   };
+  // The preview and flight use the same mapping once. Reading a preview must
+  // never acquire flight ownership, advance retained throttle or consume an
+  // action-button edge while the workbench owns the device.
+  const mappedControls = (pad, values = Array.from(pad.axes).slice(0, 4).map(axis)) => {
+    const pressed = (index) => button(pad, index) > 0.5,
+      trigger = (index) => Math.max(0, (button(pad, index) - 0.12) / 0.88);
+    return {
+      rotation: {
+        roll: values[2] || (Number(pressed(15)) - Number(pressed(14))) * 0.5,
+        pitch: -values[3] || (Number(pressed(12)) - Number(pressed(13))) * 0.5,
+        yaw: values[0] || (Number(pressed(5)) - Number(pressed(4))) * 0.5,
+      },
+      throttleRate: -values[1] || trigger(7) - trigger(6),
+      fire: pressed(2),
+      intent:
+        values.some((value) => Math.abs(value) > 0.18) ||
+        [4, 5, 12, 13, 14, 15].some(pressed) ||
+        Math.abs(trigger(7) - trigger(6)) > 0.18,
+    };
+  };
   const valid = (pad) =>
     pad &&
     pad.connected !== false &&
@@ -585,18 +613,7 @@ export function createFlightGamepad({
         }
       } else if (heldActions.length) pending = heldActions[0];
       if (ready) {
-        rotation = {
-          roll: values[2] || (Number(pressed(15)) - Number(pressed(14))) * 0.5,
-          pitch: -values[3] || (Number(pressed(12)) - Number(pressed(13))) * 0.5,
-          yaw: values[0] || (Number(pressed(5)) - Number(pressed(4))) * 0.5,
-        };
-        const trigger = (i) => Math.max(0, (button(pad, i) - 0.12) / 0.88);
-        throttleRate = -values[1] || trigger(7) - trigger(6);
-        fire = pressed(2);
-        intent =
-          values.some((value) => Math.abs(value) > 0.18) ||
-          [4, 5, 12, 13, 14, 15].some(pressed) ||
-          Math.abs(trigger(7) - trigger(6)) > 0.18;
+        ({ rotation, throttleRate, fire, intent } = mappedControls(pad, values));
         reason = scope === 'flight' ? 'active' : 'ready';
       }
       return { ...status(), actions };
@@ -610,6 +627,18 @@ export function createFlightGamepad({
     preview: status,
     status,
     diagnostics: () => (diagnostic ? structuredClone(diagnostic) : null),
+    previewDiagnostics() {
+      if (disposed || !connected || !diagnostic) return null;
+      const mapped = mappedControls(diagnostic.raw);
+      return structuredClone({
+        ...diagnostic,
+        calibrated: { ...mapped.rotation, throttle: null },
+        mapping: 'standard-mode-2',
+        throttleRate: mapped.throttleRate,
+        throttleRateLabel: 'Throttle change input',
+        throttleRateUnits: 'normalized',
+      });
+    },
     // A separate unscored preview may inherit its current thrust on takeover.
     // Real flight ownership/reset still clears this value and all action edges.
     seedThrottle(value) {
@@ -664,7 +693,8 @@ export function createFlightMenuNavigation({
     editing = null,
     marked = null,
     disposed = false,
-    lastTime = null;
+    lastTime = null,
+    captureEscape = null;
   const text = (en, uk) => (locale() === 'uk' ? uk : en);
   const hint = (en, uk) => onHint(text(en, uk));
   const listen = (node, type, fn) => {
@@ -708,6 +738,7 @@ export function createFlightMenuNavigation({
     if (marked) delete marked.dataset.fpvMenuFocus;
     marked = null;
     lastTime = null;
+    captureEscape = null;
   }
   function sync() {
     const candidate = !disposed && !doc.hidden ? getContext() : null;
@@ -716,7 +747,9 @@ export function createFlightMenuNavigation({
       next?.root !== context?.root ||
       next?.key !== context?.key ||
       next?.blockRadio !== context?.blockRadio ||
-      next?.blockDevices !== context?.blockDevices
+      next?.blockDevices !== context?.blockDevices ||
+      next?.captureControllerIndex !== context?.captureControllerIndex ||
+      Boolean(next?.onCaptureBack) !== Boolean(context?.onCaptureBack)
     ) {
       reset();
       for (const key of heldKeys) blockedKeys.add(key);
@@ -724,12 +757,18 @@ export function createFlightMenuNavigation({
       if (context)
         hint(
           context.blockDevices
-            ? 'Keyboard: Tab/arrows, Enter to select, Esc to go back. Device menus are paused during control capture.'
+            ? typeof context.onCaptureBack === 'function' &&
+              Number.isInteger(context.captureControllerIndex)
+              ? 'Sticks control the preview. Release all buttons, then press and release B to return to menu controls. Keyboard: Esc to go back.'
+              : 'Keyboard: Tab/arrows, Enter to select, Esc to go back. Device menus are paused during control capture.'
             : context.blockRadio
               ? 'Keyboard: Tab/arrows, Enter, Esc. Controller: release, then press/release A to connect; D-pad/stick moves, A confirms, B goes back. Radio sticks belong to setup here.'
               : 'Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.',
           context.blockDevices
-            ? 'Клавіатура: Tab/стрілки, Enter — вибір, Esc — назад. Меню пристроїв призупинено під час запису керування.'
+            ? typeof context.onCaptureBack === 'function' &&
+              Number.isInteger(context.captureControllerIndex)
+              ? 'Стіки керують переглядом. Відпустіть усі кнопки, потім натисніть і відпустіть B, щоб повернути керування меню. Клавіатура: Esc — назад.'
+              : 'Клавіатура: Tab/стрілки, Enter — вибір, Esc — назад. Меню пристроїв призупинено під час запису керування.'
             : context.blockRadio
               ? 'Клавіатура: Tab/стрілки, Enter, Esc. Геймпад: відпустіть, натисніть і відпустіть A; хрестовина/стік — вибір, A — підтвердити, B — назад. Стіки пульта тут належать налаштуванню.'
               : 'Tab/стрілки — вибір; Enter — підтвердити; Esc — назад. Геймпад: відпустіть, натисніть і відпустіть A. Пульт: утримайте рискання праворуч 0,7 с й поверніть у центр для підключення; крен/тангаж — вибір, утримання рискання праворуч/ліворуч і центр — підтвердити/назад.',
@@ -739,6 +778,7 @@ export function createFlightMenuNavigation({
     if (context && next) {
       context.frameFocused = next.frameFocused;
       context.handleFrameCommand = next.handleFrameCommand;
+      context.onCaptureBack = next.onCaptureBack;
     }
     if (editing && (!available(editing.element) || !context?.root.contains(editing.element)))
       cancelEdit();
@@ -944,10 +984,70 @@ export function createFlightMenuNavigation({
         : y > 0
           ? 'down'
           : 'up';
+  // The host explicitly grants this one escape action to the captured pad.
+  // Preview stick deflection is allowed, but button pickup/press/release must
+  // be fresh. This path never joins, navigates, confirms, arms or emits Back.
+  function pollCaptureEscape(gamepads) {
+    const index = context.captureControllerIndex;
+    if (typeof context.onCaptureBack !== 'function' || !Number.isInteger(index) || index < 0) {
+      captureEscape = null;
+      return;
+    }
+    const pad = Array.from(gamepads ?? []).find((candidate) => candidate?.index === index);
+    const value = (button) =>
+      typeof button === 'number' ? button : (button?.value ?? (button?.pressed ? 1 : 0));
+    if (
+      !pad ||
+      pad.connected === false ||
+      pad.mapping !== 'standard' ||
+      typeof pad.id !== 'string' ||
+      !pad.axes ||
+      pad.axes.length < 4 ||
+      !pad.buttons ||
+      pad.buttons.length < 16 ||
+      !Array.from(pad.axes)
+        .slice(0, 4)
+        .every((axis) => Number.isFinite(axis) && Math.abs(axis) <= 1)
+    ) {
+      captureEscape = null;
+      return;
+    }
+    const buttons = Array.from(pad.buttons).slice(0, 16).map(value);
+    if (!buttons.every((button) => Number.isFinite(button) && button >= 0 && button <= 1)) {
+      captureEscape = null;
+      return;
+    }
+    const key = `pad:${pad.index}:${pad.id}:${pad.axes.length}:${pad.buttons.length}`;
+    if (captureEscape?.key !== key) captureEscape = { key, ready: false, pending: false };
+    const released = buttons.every((button) => button <= 0.12),
+      otherPressed = buttons.some((button, index) => index !== 1 && button > 0.12);
+    if (!captureEscape.ready) {
+      if (released) captureEscape.ready = true;
+      return;
+    }
+    if (otherPressed) {
+      captureEscape.ready = captureEscape.pending = false;
+      return;
+    }
+    if (buttons[1] > 0.5) captureEscape.pending = true;
+    else if (released && captureEscape.pending) {
+      captureEscape.ready = captureEscape.pending = false;
+      context.onCaptureBack();
+      reset();
+    }
+  }
   function poll({ now = win.performance.now(), gamepads = [], radio = null } = {}) {
     if (!sync()) return;
+    if (!Number.isFinite(now)) {
+      reset();
+      return;
+    }
     if (lastTime !== null && (now - lastTime > 350 || now < lastTime)) reset();
     lastTime = now;
+    if (context.blockDevices && typeof context.onCaptureBack === 'function') {
+      pollCaptureEscape(gamepads);
+      return;
+    }
     const sampled = [];
     for (const pad of context.blockDevices ? [] : Array.from(gamepads ?? [])) {
       if (!pad || pad.connected === false || pad.mapping !== 'standard') continue;

@@ -1,0 +1,49 @@
+{
+  "format": "RevealLinePublishedPagesSmokeV1",
+  "repository": "mekhovov/revealline",
+  "root": "https://mekhovov.github.io/revealline/",
+  "expectedDeployment": "manual-main-github.sha",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "profile": "fresh-ephemeral",
+  "credential": "REVEALLINE_PAGES_TEST_PASSWORD",
+  "credentialEntry": "ordinary-public-password-form",
+  "ownerTimeoutMs": 600000,
+  "flowTimeoutMs": 570000,
+  "cleanupTimeoutMs": 10000,
+  "rssBytes": 6442450944,
+  "privateOutputBytes": 1048576,
+  "reportBytes": 262144,
+  "maximumEvents": 128,
+  "metadataBytes": 16384,
+  "manifestBytes": 1048576,
+  "assetBytes": 2097152,
+  "assets": [
+    "game/index.html",
+    "game/access-gate.mjs",
+    "game/app.mjs",
+    "game/couch/index.html",
+    "game/couch/relay-rescue.html"
+  ],
+  "flows": [
+    "solo-direct-start-pause-resume",
+    "missions-current-selection",
+    "settings-demo-return",
+    "team-versus-public-return"
+  ],
+  "sharedModeTimeoutMs": 180000,
+  "retries": 0,
+  "performanceExcluded": true,
+  "limitations": [
+    "Critical public controls only; not whole-app correctness or performance qualification.",
+    "No physical-device, offline-install, durable-save, replay or raster acceptance.",
+    "Response errors and cancellations are retained; no app-cause inference from a failed smoke.",
+    "Selecting the current Journey card deliberately replaces only this fresh smoke attempt; replacement/departure confirmation is refused.",
+    "Chromium and WebKit desktop engines only; no Safari or physical-device equivalence claim."
+  ],
+  "artifactBytes": 4194304,
+  "privateEvidenceBytes": 4194304,
+  "outerTimeoutSeconds": 720,
+  "jobTimeoutMinutes": 32,
+  "engines": ["chromium", "webkit"]
+}

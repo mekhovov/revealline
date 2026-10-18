@@ -4,8 +4,12 @@ import { readFile } from 'node:fs/promises';
 import { createHash, webcrypto } from 'node:crypto';
 import { page } from './helpers/coop-host.mjs';
 import { waitFor } from './helpers/coop-presentation-fixture.mjs';
-import { createTeamImpactOriginalCandidates } from '../content-design/team-impact-originals.mjs';
+import {
+  createTeamCulturalSpecialistV2OriginalCandidates,
+  TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY,
+} from '../content-design/team-cultural-specialist-v2-originals.mjs';
 import { createModeReturn } from '../mode-return.mjs';
+import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
 import { createJourneyBackend } from '../journey/profile.mjs';
 import { managedIndexedDB } from './helpers/managed-idb.mjs';
 import { playTeamEditionRoute } from './helpers/team-edition-host-route.mjs';
@@ -14,8 +18,24 @@ import {
   TEAM_SPATIAL_PROFILE_KEY,
 } from '../content-design/team-spatial-originals.mjs';
 
+// Preserve strict object identity without formatting the cyclic fake DOM on failure.
+function assertSameReference(actual, expected, message = 'Expected the same owned object.') {
+  if (Object.is(actual, expected)) return;
+  const describe = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    return (
+      [value.tagName, value.id, value.sha256]
+        .filter((part) => typeof part === 'string' && part.length > 0)
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.fail(`${message} Actual: ${describe(actual)}; expected: ${describe(expected)}.`);
+}
+
 const base = 'http://localhost/game/couch/relay-rescue.html';
-const source = createTeamImpactOriginalCandidates();
+const source = createTeamCulturalSpecialistV2OriginalCandidates();
 const originals = new Map(
   await Promise.all(
     source.assets.map(async (asset) => [
@@ -29,6 +49,20 @@ const enter = (f, id) => {
   f.$(id).focus();
   f.tap('Enter');
 };
+const enterVisible = (f, id) => {
+  const target = f.$(id);
+  assert.ok(target && !target.closest('[hidden],[inert]'), `${id} must be visible.`);
+  assert.ok(target.getClientRects().length, `${id} must have a visible native box.`);
+  target.focus();
+  assertSameReference(f.doc.activeElement, target);
+  f.tap('Enter');
+};
+function settings(f, category) {
+  enterVisible(f, 'coop-settings-open');
+  assert.equal(f.$('coop-options').open, true);
+  enterVisible(f, `coop-settings-tab-${category}`);
+  assert.equal(f.$(`coop-settings-panel-${category}`).hidden, false);
+}
 
 async function fresh(t, href = base, extra = {}) {
   const { journeyIndexedDB = null, ...pageOptions } = extra;
@@ -98,8 +132,8 @@ test('a current Team win retains only its exact accepted Team original', async (
   assert.deepEqual(state.profile.clears.solo, {});
   assert.deepEqual(state.profile.clears.versus, {});
   assert(state.profile.clears.team[record.missionId]);
-  f.$('coop-journey-pictures').focus();
-  f.$('coop-journey-pictures').click();
+  settings(f, 'data');
+  enterVisible(f, 'coop-journey-pictures');
   await waitFor(
     () =>
       f.$('team-journey-pictures')?.open &&
@@ -109,13 +143,14 @@ test('a current Team win retains only its exact accepted Team original', async (
   assert.match(f.$('team-journey-pictures').textContent, new RegExp(mission.name, 'i'));
   assert.doesNotMatch(f.$('team-journey-pictures').textContent, /earned Solo|earned Versus/);
   f.$('team-journey-pictures').querySelector('header').querySelector('button').click();
-  assert.equal(f.doc.activeElement, f.$('coop-journey-pictures'));
+  assertSameReference(f.doc.activeElement, f.$('coop-journey-pictures'));
 });
 
-test('queryless Team offers all twelve original missions across five campaigns and starts directly', async (t) => {
+test('queryless Team offers all twelve original missions across nine campaigns and starts directly', async (t) => {
   const f = await fresh(t);
   assert.equal(source.missions.length, 12);
-  assert.equal(source.campaigns.length, 5);
+  assert.equal(DEFAULT_JOURNEY_ROUTES.team, TEAM_CULTURAL_SPECIALIST_V2_PROFILE_KEY);
+  assert.equal(source.campaigns.length, 9);
   assert.equal(f.$('coop-level').value, source.missions[0].id);
   assert.equal(f.$('coop-boot').textContent, 'Team Journey · 12 missions');
   assert.match(
@@ -131,9 +166,24 @@ test('queryless Team offers all twelve original missions across five campaigns a
   enter(f, 'coop-discovery-open');
   await waitFor(() => f.$('journey-chooser')?.open);
   const cards = [...f.$('journey-cards').querySelectorAll('.journey-card')];
-  assert.equal(cards.length, 14, 'Twelve new missions plus two retained legacy arenas');
-  const missionCards = cards.filter((card) =>
-    card.querySelector('.journey-card-tags').textContent.includes('Journey'),
+  assert.equal(
+    cards.length,
+    116,
+    'Twelve current missions, two legacy arenas, six Hunt lessons and 96 Expeditions.',
+  );
+  const ownerCounts = {};
+  for (const card of cards) {
+    const owner = JSON.parse(card.dataset.missionId)[0];
+    ownerCounts[owner] = (ownerCounts[owner] ?? 0) + 1;
+  }
+  assert.deepEqual(ownerCounts, {
+    'team-journey:humanoid-hunt-v1': 6,
+    'journey:team-expedition-v1': 96,
+    [`journey:${DEFAULT_JOURNEY_ROUTES.team}`]: 12,
+    'team-classic:relay-rescue-starter': 2,
+  });
+  const missionCards = cards.filter(
+    (card) => JSON.parse(card.dataset.missionId)[1] === DEFAULT_JOURNEY_ROUTES.team,
   );
   assert.equal(missionCards.length, 12);
   for (const card of missionCards) {
@@ -150,9 +200,14 @@ test('queryless Team offers all twelve original missions across five campaigns a
       mission.id,
     );
   assert.equal(
-    f.$('journey-campaign').querySelectorAll('option').length,
-    7,
-    'All + five campaigns + legacy pack',
+    [...f.$('journey-campaign').querySelectorAll('option')].filter(
+      (option) =>
+        !option.value ||
+        JSON.parse(option.value)[1] === DEFAULT_JOURNEY_ROUTES.team ||
+        JSON.parse(option.value)[0] === 'team-classic:relay-rescue-starter',
+    ).length,
+    11,
+    'All + the current edition’s nine campaigns + the retained legacy pack',
   );
   enter(f, 'journey-back');
   enter(f, 'coop-start');
@@ -180,7 +235,9 @@ test('explicit legacy retains both arenas and provides a deliberate New journey 
   assert.equal(f.$('coop-solo').getAttribute('href'), '../?journey=legacy');
   assert.equal(f.$('coop-versus').getAttribute('href'), './?journey=legacy');
   assert.equal(f.$('coop-catalogue').textContent, 'New journey');
-  enter(f, 'coop-catalogue');
+  assert.ok(f.$('coop-catalogue').closest('[hidden],[inert]'));
+  settings(f, 'extras');
+  enterVisible(f, 'coop-catalogue');
   assert.deepEqual(f.visits, [base]);
 });
 
@@ -215,14 +272,18 @@ test('catalogue switching keeps origin but clears legacy return tokens and requi
   enter(f, 'coop-start');
   f.tick(2);
   enter(f, 'coop-pause');
-  assert.equal(f.$('coop-overlay').contains(f.$('coop-catalogue')), true);
-  enter(f, 'coop-catalogue');
+  assert.equal(f.$('coop-overlay').contains(f.$('coop-catalogue')), false);
+  assert.ok(f.$('coop-catalogue').closest('[hidden],[inert]'));
+  settings(f, 'extras');
+  enterVisible(f, 'coop-catalogue');
   assert.equal(f.$('coop-discard-dialog').open, true);
   assert.deepEqual(f.visits, []);
   enter(f, 'coop-discard-stay');
   assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
-  assert.equal(f.doc.activeElement, f.$('coop-catalogue'));
-  enter(f, 'coop-catalogue');
+  assertSameReference(f.doc.activeElement, f.$('coop-settings-open'));
+  assert.equal(f.$('coop-options').open, false);
+  settings(f, 'extras');
+  enterVisible(f, 'coop-catalogue');
   enter(f, 'coop-discard-confirm');
   assert.deepEqual(f.visits, [base + '?journey=legacy&return=solo']);
 });
@@ -285,7 +346,7 @@ test('New journey return from explicit legacy clears stale authored and save-ret
   assert.equal(f.$('coop-catalogue').getAttribute('href'), 'relay-rescue.html?return=versus');
 });
 
-test('modeled controller reaches the same catalogue switch inside Pause and restores it on Stay', async (t) => {
+test('modeled controller reaches the catalogue through Pause Settings and restores its public opener on Stay', async (t) => {
   const f = await page(t, { nativeFocus: true, nativeVisibility: true });
   f.$('coop-start').click();
   f.tick(2);
@@ -307,16 +368,30 @@ test('modeled controller reaches the same catalogue switch inside Pause and rest
   };
   f.tick(2);
   button(0); // Adopt, then release before deliberate navigation.
-  for (let n = 0; n < 40 && f.doc.activeElement.id !== 'coop-catalogue'; n++) button(13);
-  assert.equal(f.doc.activeElement.id, 'coop-catalogue');
-  button(0);
+  const reach = (id) => {
+    for (let n = 0; n < 40 && f.doc.activeElement.id !== id; n++) button(13);
+    assert.equal(f.doc.activeElement.id, id);
+    assert.ok(!f.$(id).closest('[hidden],[inert]'));
+  };
+  const catalogue = () => {
+    reach('coop-settings-open');
+    button(0);
+    assert.equal(f.$('coop-options').open, true);
+    reach('coop-settings-tab-extras');
+    button(0);
+    button(15); // Leave the vertical category rail for the visible Extras content.
+    reach('coop-catalogue');
+    button(0);
+  };
+  catalogue();
   assert.equal(f.$('coop-discard-dialog').open, true);
   button(1);
   assert.equal(f.$('coop-discard-dialog').open, false);
-  assert.equal(f.doc.activeElement.id, 'coop-catalogue');
+  assert.equal(f.doc.activeElement.id, 'coop-settings-open');
+  assert.equal(f.$('coop-options').open, false);
   assert.equal(f.$('coop-overlay-kicker').textContent, 'PAUSED');
   assert.deepEqual(f.visits, []);
-  button(0);
+  catalogue();
   button(13);
   assert.equal(f.doc.activeElement.id, 'coop-discard-confirm');
   button(0);

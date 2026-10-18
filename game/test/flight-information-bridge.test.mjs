@@ -20,6 +20,40 @@ function completed(bridge, run, events, text = 'observed') {
   return ticket;
 }
 
+test('completed observation readers preserve ownership and never inspect live projections', () => {
+  const bridge = createFlightInformationBridge(),
+    run = newRun();
+  assert.equal(bridge.readLastWarning(), null);
+  assert.equal(bridge.readLastBatch(), null);
+  bridge.adopt(run, 'first');
+  completed(bridge, run, [event('boss.warning')]);
+  const warning = bridge.readLastWarning(),
+    batch = bridge.readLastBatch();
+  assert.equal(warning, bridge.read(host).lastWarning);
+  assert.equal(batch, bridge.read(host).lastBatch);
+  assert.equal(Object.isFrozen(warning), true);
+  assert.equal(Object.isFrozen(batch.events[0].event), true);
+  // A projection may become unavailable independently of completed observations.
+  Object.defineProperty(run, 'ruleset', {
+    get() {
+      throw new Error('Live projection read');
+    },
+  });
+  assert.equal(bridge.readLastWarning(), warning);
+  assert.equal(bridge.readLastBatch(), batch);
+  const pending = bridge.begin(run, [event('cells.claimed')]);
+  assert.equal(bridge.readLastBatch(), batch, 'Pending batches are never published.');
+  bridge.suspend();
+  assert.equal(bridge.finish(pending), false);
+  assert.equal(bridge.readLastBatch(), batch);
+  bridge.adopt(newRun(), 'replacement');
+  assert.equal(bridge.readLastWarning(), null);
+  assert.equal(bridge.readLastBatch(), null);
+  bridge.dispose();
+  assert.equal(bridge.readLastWarning(), null);
+  assert.equal(bridge.readLastBatch(), null);
+});
+
 test('every accepted adoption resets history and advances generation even for the same runId and object', () => {
   const bridge = createFlightInformationBridge(),
     run = newRun();

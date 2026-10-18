@@ -1,13 +1,30 @@
 # FPV tuning implementation status
 
-Updated 2026-10-17. The post-publication review below corrects three additional
-failure boundaries. [PR #1561](https://github.com/mekhovov/revealline/pull/1561)
-merged implementation `eaecd6056` into `main` as `b2f251dac` through the normal
-repository controller. The ordinary Pages build, deployment and verification
-all succeeded. Historical reports retain their original source hashes and scope;
-the post-deployment evidence is recorded separately below. Those public receipts
-qualify the original deployed merge, not the later corrections.
+Updated 2026-10-17. The latest correction is merged in
+[PR #1565](https://github.com/mekhovov/revealline/pull/1565) and published as
+`3e744a5ef7bede48eafcb79a8377bb46fb37d76f`. Available software work and delivery are complete.
+Physical and wider-platform qualification remain deferred; Advanced remains
+optional, unscored and default-ineligible. Historical reports below retain their
+original source hashes and scope.
 
+## Input availability completion
+
+The [latest review](fpv-tuning-input-recovery-review.md) preserves the completed
+rates/profile/import scope and closes a reproduced recovery defect: unavailable
+radio input now pauses a healthy Advanced practice worker while retaining its
+recording, export and explicit resume. Genuine worker failures remain unavailable.
+The live-test runner retains bounded startup diagnostics. Review prompted a
+correction restricting request/capture error metadata to fixed categories.
+
+All **741 practice tests**, EN/UK browser recovery, actual Electron export/resume,
+release validation and 12 non-skipped product checks pass. Fresh Academy and World
+password/offline/replay acceptance passes on the deployed revision. Additional live
+UI checks confirm missing-radio recording retention and explicit keyboard resume
+on both routes, with six exported records replayed. The original
+startup timeout remains failed and unexplained. The
+[delivery receipt](fpv-input-recovery-delivery-verification.json) binds the exact
+sources and evidence. No new physics benchmark or physical-device qualification
+is claimed.
 
 ## Boundary completion review
 
@@ -22,8 +39,11 @@ remain unavailable and Advanced remains unscored.
 All **731 practice tests** and release validation pass. Six editor-browser cases
 pass, including delayed import completion after restoring same-rate history.
 All 20 pins in the existing numerical matrix still match; no physics, timing or
-quota change was made. Final browser/native receipts and ordinary delivery are
-recorded in the boundary review. Earlier reports below keep their original scope.
+quota change was made. Current browser/native receipts and ordinary delivery are
+bound by the [final delivery verification](fpv-boundary-delivery-verification.json).
+Both fresh public password/offline flows pass. An earlier World startup timeout
+remains recorded with an unknown cause; reopening its profile and a full fresh
+rerun succeeded. Earlier reports below keep their original scope.
 
 ## Post-publication corrections
 

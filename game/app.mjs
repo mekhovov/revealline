@@ -1,4 +1,5 @@
 import { loadBaseArtwork } from './base-artwork.mjs';
+import { continuousPlayPreferences } from './ui/continuous-play.mjs';
 import { nativeArtReviewURL } from './ui/art-review-navigation.mjs';
 import { specialistFailureCopy } from './hunt/actor-catalog.mjs';
 import { getLocale } from './i18n/index.mjs';
@@ -40,6 +41,9 @@ import {
 import { projectEditionGuideScenario } from './editions/selected-presentation.mjs';
 import { installedPresentation, invalidateInstalledMigration } from './installed-app.mjs';
 import { createGameWakeLock } from './ui/game-wake-lock.mjs';
+import { createSceneClock } from './ui/scene-clock.mjs';
+import { createPerformanceSession } from './ui/performance-session.mjs';
+import { createVisualQualityPolicy } from './ui/visual-quality-policy.mjs';
 import { localOfficialChapter } from './official-chapter-source.mjs';
 import { localOfficialRecordingIds } from './official-downloads.mjs';
 import {
@@ -50,6 +54,11 @@ import {
 } from './ui/gameplay-copy.mjs';
 import { contentText } from './i18n/content.mjs';
 import { flightPictureFailure, flightPictureStatus } from './ui/flight-picture-copy.mjs';
+import {
+  createPreparationCadence,
+  PreparationCadenceTimeoutError,
+} from './ui/preparation-cadence.mjs';
+import { ThemePreparationTimeoutError } from './presentation/theme-host.mjs';
 import { profileWriterMessage } from './ui/profile-writer-copy.mjs';
 import { milestoneName, achievementName, achievementDescription } from './ui/reward-copy.mjs';
 import { soloControllerFlightHint } from './ui/controller-flight-copy.mjs';
@@ -77,6 +86,7 @@ import { createJourneyAuthority } from './journey/authority.mjs';
 import { createJourneyProfileStore } from './journey/profile.mjs';
 import { attachJourneySaveNotice } from './ui/journey-save-notice.mjs';
 import { createSoloPerformanceBinding } from './journey/performance-binding.mjs';
+import { JOURNEY_PERFORMANCE_LIMITS } from './journey/performance.mjs';
 import { journeyPerformanceText } from './ui/journey-performance.mjs';
 import { createJourneyPreferences } from './journey/preferences.mjs';
 import { loadAuthoredJourneyRoute } from './content-design/route-loader.mjs';
@@ -91,25 +101,17 @@ import { publishedRouteViews } from './content-design/published-journey.mjs';
 import { journeyActorThemeCandidates } from './presentation/journey-actor-materials.mjs';
 import { journeyDifficultyCatalog, journeyPreset } from './content-design/catalogs.mjs';
 import { createCandidateFlightPictures } from './ui/candidate-flight-pictures.mjs';
-import { attachJourneyChooser } from './ui/journey-chooser.mjs';
 import {
   resolveInstalledMissionTarget,
   installedMissionExecutionIndex,
   resolveCampaignMissionTarget,
 } from './mission-library/installed-target.mjs';
-import { createInstalledMissionLibrary } from './mission-library/installed-library.mjs';
 import {
   CLASSIC_RULES_ORIGINAL,
   CLASSIC_RULES_CURRENT,
   projectClassicCurrentRulesEntry,
 } from './mission-library/classic-current-rules.mjs';
 import { journeyLibrarySource } from './mission-library/journey-source.mjs';
-import { publishedJourneyLibrarySources } from './mission-library/published-routes.mjs';
-import {
-  duelExpeditionLibrarySources,
-  teamExpeditionLibrarySource,
-} from './mission-library/multiplayer-expeditions.mjs';
-import { combineJourneyLibrarySources } from './mission-library/cross-mode-journey.mjs';
 import { trackMissionLibraryOpening } from './mission-library/opening-intent.mjs';
 import { authoredMissionSuccessor } from './mission-library/authored-continuation.mjs';
 import { librarySuccessor, retainedLibraryMission } from './mission-library/continuous-next.mjs';
@@ -125,7 +127,10 @@ import {
   readMissionLibraryReturn,
 } from './mission-library/handoff.mjs';
 import { playedLevelHref } from './mission-library/played-level-link.mjs';
-import { createDuel } from './multiplayer.mjs';
+import {
+  acceptedJourneyMission,
+  acceptedClassicMission,
+} from './mission-library/accepted-played-mission.mjs';
 import { createPresentationHost } from './presentation/host.mjs';
 import {
   createReleasePictureDefaults,
@@ -252,12 +257,18 @@ import { createJourneyVisualThemeIdentityAdapter } from './presentation/journey-
 import { prepareCampaignVisualThemeContext } from './presentation/visual-theme-identities.mjs';
 import { verifyIndexedInstalledPack } from './mission-library/pack-identity.mjs';
 import { attachMenuStyleControls } from './ui/menu-style-controls.mjs';
+import { sharedBattlefieldGround } from './presentation/battlefield-ground.mjs';
 import { attachPreferenceRestoration } from './ui/preference-restoration.mjs';
 import { settingsTabOwnsKey } from './ui/settings-panels.mjs';
 import { attachPublishedAudio } from './ui/published-audio.mjs';
 import { prepareSavedVisualTheme } from './presentation/saved-visual-theme.mjs';
 import { createSoundtrackStore } from './soundtrack-store.mjs';
-import { upgradeSoundtrackLibrary, setCatalogueTracks, SOUNDTRACK_MODES } from './soundtrack.mjs';
+import {
+  upgradeSoundtrackLibrary,
+  setCatalogueTracks,
+  SOUNDTRACK_MODES,
+  resolveSoundtrackCatalogue,
+} from './soundtrack.mjs';
 import { prepareSoundtrackLibrary } from './soundtrack-bundle.mjs';
 import { createSoundtrackSource } from './soundtrack-source.mjs';
 import { prepareOpeningTheme, usesOpeningThemeDefault } from './opening-soundtrack.mjs';
@@ -283,7 +294,7 @@ import {
 import { createSoundtrackPlayer } from './ui/soundtrack-player.mjs';
 import { attachSoundtrackPanel } from './ui/soundtrack-panel.mjs';
 import { availableCommunitySoundtrackStyles } from './community-soundtrack-styles.mjs';
-import { attachLibraryPanel } from './ui/library-panel.mjs';
+import { attachLibraryEntry } from './ui/library-entry.mjs';
 import { masteryFor, masteryText } from './ui/mastery-view.mjs';
 import { createMasteryObserver, captureMasterySetup, captureMasteryFacts } from './mastery.mjs';
 import { createMasteryAwards } from './mastery-awards.mjs';
@@ -385,17 +396,39 @@ import {
   scenarioMasteryCampaign,
 } from './content.mjs';
 import { prepareScenario } from './imports.mjs';
-import { createRecorder, recordInput, exportReplay, MAX_REPLAY_TICKS } from './replay.mjs';
+import {
+  createOwnedRecorder,
+  adoptOwnedRecorder,
+  recordInput,
+  exportReplay,
+  exportReplayAsync,
+  MAX_REPLAY_TICKS,
+} from './replay.mjs';
 import { exportReplayPresentation } from './replay-presentation.mjs';
 
 const $ = (id) => document.getElementById(id),
-  show = (id, on) => ($(id).hidden = !on);
-const getJSON = async (path) => {
+  show = (id, on) => {
+    const element = $(id),
+      hidden = !on;
+    if (element.hidden !== hidden) element.hidden = hidden;
+    return hidden;
+  };
+const getJSON = async (path, assertCurrent) => {
+  assertCurrent?.();
   const r = await fetch(
     communityRouteFromURL(location.href) ? new URL(path, gameDocumentURL(location.href)) : path,
   );
+  try {
+    assertCurrent?.();
+  } catch (error) {
+    await r.body?.cancel?.().catch(() => {});
+    throw error;
+  }
   if (!r.ok) throw new Error(t('gameplay:couldNotLoad', { value1: path }));
-  return r.json();
+  if (!assertCurrent) return r.json();
+  const text = await r.text();
+  assertCurrent();
+  return JSON.parse(text);
 };
 const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
 let startupEditionWriter = null;
@@ -431,6 +464,48 @@ function preparationStatus(observer, message, stage, isCurrent = () => true) {
 }
 
 try {
+  const sceneClock = createSceneClock();
+  const qualityPolicy = createVisualQualityPolicy();
+  const performanceSession =
+    new URLSearchParams(location.search).get('performance') === '1'
+      ? createPerformanceSession()
+      : null;
+  let modalNavigation = null;
+  let fieldScene = null,
+    performanceRunGeneration = 0,
+    performanceResultGeneration = 0,
+    hudRevision = 0,
+    hudWorkMs = 0,
+    simulationWorkMs = 0;
+  const inputTokens = new Float64Array(32);
+  let inputTokenCount = 0,
+    inputAppliedCount = 0,
+    droppedInputObservations = 0;
+  function observeInput(kind, atMs = performance.now()) {
+    if (!performanceSession || paused || !started || dialogOpen()) return;
+    if (inputTokenCount >= inputTokens.length) {
+      ++droppedInputObservations;
+      return;
+    }
+    if (!Number.isFinite(atMs) || atMs < 0 || atMs > performance.now()) atMs = performance.now();
+    inputTokens[inputTokenCount++] = performanceSession.input(kind, atMs);
+  }
+  const rendererLost = new Set();
+  function rendererInterrupted(source) {
+    rendererLost.add(source);
+    performanceSession?.reportFailure('Canvas2D context lost; explicit recovery required.');
+    fieldScene?.invalidate();
+    sceneClock.reset();
+    pause(true);
+    performanceSession?.setPhase('error');
+    warning(localizedMessage('interface:flightPausedPressResumeToContinue'));
+  }
+  function rendererRestored(source) {
+    rendererLost.delete(source);
+    fieldScene?.invalidate();
+    if (!rendererLost.size) painter.invalidate();
+    // Repaint in the paused scene. Only an explicit Resume releases the run.
+  }
   const previewSession = createStudioPreviewSession(location.href);
   const profileStorage = () => previewSession?.storage ?? globalThis.localStorage;
   const profileSessionStorage = () => previewSession?.sessionStorage ?? globalThis.sessionStorage;
@@ -710,9 +785,22 @@ try {
   let editionWriter = null,
     editionUI = null,
     journeyRewardsDurable = false;
+  // Early hydration precedes Soundscape creation. It can execute bootstrap
+  // work; once its existing admission owner exists, every later verification
+  // chunk waits while play/suspension owns the main thread.
+  let optionalVerificationPreparation = null;
+  const scheduleOptionalReplayChunk = (work, { signal }) =>
+    optionalVerificationPreparation
+      ? optionalVerificationPreparation.run('main', work, { signal })
+      : work();
   const journeyProfile = journeyEnabled
     ? createJourneyProfileStore({
         profileKey: authoredRoute?.profileKey,
+        schedulePerformanceChunk: scheduleOptionalReplayChunk,
+        canRunProgressWork: () => !optionalVerificationPreparation || !started || paused,
+        canRunPerformanceWork: () =>
+          !optionalVerificationPreparation ||
+          !['playing', 'suspended'].includes(optionalVerificationPreparation.snapshot().phase),
         ...(candidateHost
           ? {
               acceptPerformanceBinding: createSoloPerformanceBinding({
@@ -741,10 +829,10 @@ try {
     retainedLibraryOwner = null,
     unifiedLibrary = null,
     unifiedLibraryLoading = null,
+    unifiedBuildRevision = 0,
     unifiedChooser = null,
     disposeUnifiedPreview = null,
     cancelUnifiedOpening = null,
-    retiredJourneyChooser = null,
     unifiedOpenRevision = 0,
     unifiedLaunchRevision = 0,
     unifiedDisposed = false,
@@ -1105,6 +1193,9 @@ try {
   // Restored attempts already acquired their signal in the original session.
   // Keep this presentation identity separate from Pause and first-frame timing.
   const restoredSignalRuns = new WeakSet();
+  let hudDirty = true,
+    hudAt = -Infinity,
+    hudState = null;
   let levelIndex = initialSelection.levelIndex,
     campaignOverview = !scenario && initialSelection.overview,
     theme = themesFile.themes[0],
@@ -1200,10 +1291,18 @@ try {
   const packLaunchGuard = createPackLaunchGuard();
   let playedLevelLink = null;
   let playedLevelLinkGeneration = 0;
+  let playedLevelLinkController = null;
   let demoHost = null;
-  const demoLibrary = createDemoLibrary();
+  const demoLibrary = createDemoLibrary({
+    scheduleChunk: scheduleOptionalReplayChunk,
+    canRunOptionalWork: () =>
+      !['playing', 'suspended'].includes(optionalVerificationPreparation?.snapshot().phase),
+    ownsEntry: (entry) =>
+      candidateHost?.owns(entry) === true || executionCatalog.find(entry?.executionKey) === entry,
+  });
   const courseVisit = Object.create(null);
   const masteryAwards = createMasteryAwards({
+    scheduleChunk: scheduleOptionalReplayChunk,
     getGeneration: () => libraryGeneration,
     commit: (record) => {
       library = withMasteryRecords(library, [record]);
@@ -1273,10 +1372,17 @@ try {
     document,
     window,
     getStorage: () => localStorage,
+    onChange: () => fieldScene?.invalidate(),
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
   const stopDisplayView = displayPreferences.subscribe(applyDisplayPreferences);
+  const continuousPreferences = continuousPlayPreferences();
+  let automaticNextEnabled = continuousPreferences.snapshot().autoNext;
+  const stopAutomaticNextView = continuousPreferences.subscribe(({ autoNext }) => {
+    automaticNextEnabled = autoNext;
+    if (!autoNext) clearResultAutoAdvance({ dismiss: true });
+  });
   const actorPreferences = createActorStylePreferences({
     window,
     getStorage: () => profileStorage(),
@@ -1317,6 +1423,8 @@ try {
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
   });
   if (runtimeContent) menuStyle.themeHost.setThemes(runtimeContent.appearanceThemes);
+  const stopBoardThemeView = menuStyle.themeHost.subscribe(() => fieldScene?.invalidate());
+  const stopBoardGroundView = sharedBattlefieldGround().subscribe(() => fieldScene?.invalidate());
   function currentAppearanceDefault(entry = activeEntry) {
     if (!runtimeContent) return null;
     // Difficulty projections have their own execution identity. Only an owned
@@ -1350,6 +1458,15 @@ try {
   }
   refreshAppearanceDefault();
   const sound = new Soundscape({ persistentMusic: true, audioMaster });
+  optionalVerificationPreparation = sound.mediaPreparation;
+  let mediaPreparationPhase = 'menu';
+  function setMediaPreparationPhase(phase) {
+    const effective = demoHost?.preparationPhase ?? phase;
+    if (effective === mediaPreparationPhase) return;
+    mediaPreparationPhase = effective;
+    if (effective === 'playing' || effective === 'suspended') ++unifiedBuildRevision;
+    sound.setPreparationPhase(effective);
+  }
   sound.setActorPresentation(() => ({
     collectionId: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences())?.id,
   }));
@@ -1449,7 +1566,8 @@ try {
   let gameShell = null,
     missionPicker = null,
     enemyGuide = null,
-    optionalWorlds = null;
+    optionalWorlds = null,
+    optionalWorldsDisposed = false;
   const demoAudioListeners = new Set();
   let demoAudioOperation = 0,
     demoAudioController = null;
@@ -1458,6 +1576,8 @@ try {
   };
   let guideMusicWasPlaying = false;
   let soundtrackPlayer = null,
+    soundtrackOwnerState = 'never-created',
+    soundtrackBootstrapMediaElementCreated = false,
     quickMusicControls = null,
     soundtrackPanel = null,
     soundtrackStore = null;
@@ -1492,13 +1612,34 @@ try {
   let flightActorLease = null,
     flightActorsReady = false,
     actorJourneyIdentity = null,
-    actorMissionIndex = null;
+    actorMissionIndex = null,
+    actorMissionIndexValue = null;
   const actorCustomPacks = new WeakSet();
   let flightPictures = null,
     picturePrewarm = null,
     pictureResume = null,
     pictureThemePending = null,
     pictureGeneration = 0;
+  let preparationLayout = null;
+  function releasePreparationLayout(owner = preparationLayout) {
+    if (!owner || preparationLayout !== owner) return;
+    preparationLayout = null;
+    delete document.body.dataset.flightLayout;
+    refreshInputPresentation();
+    if (!started || paused) fieldScene?.syncDisplayGeometry();
+  }
+  function prepareFlightLayout() {
+    preparationLayout = { run };
+    // Adopt the eventual CSS geometry without granting simulation, controls,
+    // or the public running state. The existing attempt owns this lease.
+    if (document.body.dataset.flightLayout !== 'preparing')
+      document.body.dataset.flightLayout = 'preparing';
+    refreshInputPresentation();
+    // A layout read belongs to this paused activation, never the active loop.
+    // Reconcile it before deciding whether the existing board is still ready.
+    fieldScene?.syncDisplayGeometry();
+    return preparationLayout;
+  }
   const picturePreparingMessage = localizedMessage(
     'interface:preparingTheChosenPictureFlightStaysPausedUntilItIs',
   );
@@ -1542,6 +1683,10 @@ try {
           stage: status.stage,
           progress: status.progress ?? null,
         });
+      },
+      message(message) {
+        if (preparationOperation === operation)
+          operation.status.update({ message, stage: 'preparing', progress: null });
       },
       finish(message = '', state = 'ready') {
         if (preparationOperation !== operation) return;
@@ -1873,6 +2018,7 @@ try {
     preserveResult = false,
     preserveWorld = false,
   } = {}) {
+    releasePreparationLayout();
     if (!preserveWorld) {
       // A newer navigation intent also retires an activation still downloading.
       ++worldPlayEpoch;
@@ -1960,17 +2106,20 @@ try {
     legacyPictureButton.hidden = true;
     resume();
   };
-  function soundtrackContext() {
-    const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
-    const level = scenario?.level || (activeEntry.baseCampaign || campaign).levels[levelIndex];
+  function currentSoundtrackScene() {
     if (
       $('shell-home').open ||
       ($('shell-missions').open && $('shell-missions').dataset.view !== 'brief')
     )
       soundtrackScene = 'menu';
     else if (started && !paused) soundtrackScene = 'gameplay';
+    return soundtrackScene;
+  }
+  function soundtrackContext() {
+    const edition = activeEntry.baseCampaignKey || campaignKey(campaign);
+    const level = scenario?.level || (activeEntry.baseCampaign || campaign).levels[levelIndex];
     return {
-      scene: soundtrackScene,
+      scene: currentSoundtrackScene(),
       themeId: theme.id,
       campaignKey: edition,
       mapKey: JSON.stringify([edition, level.id, level.revision, theme.id]),
@@ -1988,7 +2137,14 @@ try {
     sound.configure(mix);
     if (music !== undefined) soundtrackPlayer.setVolume(music);
   }
+  let deferredMutedActivation = false;
   async function activateAudio({ explicit = false } = {}) {
+    const master = audioMaster.snapshot();
+    if (!explicit && !sound.context && (master.muted || master.volume === 0)) {
+      deferredMutedActivation = true;
+      return false;
+    }
+    deferredMutedActivation = false;
     if (!soundtrackPlayer) {
       contextualReactions?.resume();
       return sound.enable().then(() => contextualReactions?.prepare());
@@ -2008,6 +2164,7 @@ try {
   }
   function setMasterMuted(muted) {
     audioPreferences.setMuted(muted);
+    activateDeferredAudio();
     // Only explicit player actions mirror the legacy preference. Playback promises never do.
     const saved = preferences({ musicEnabled: !audioMaster.snapshot().muted });
     const warning = audioPreferences.getWarning() || saved.warning || '';
@@ -2015,9 +2172,14 @@ try {
   }
   function setMasterVolume(volume) {
     audioPreferences.setVolume(volume);
+    activateDeferredAudio();
     const saved = preferences({ masterVolume: audioMaster.snapshot().volume });
     const warning = audioPreferences.getWarning() || saved.warning || '';
     return { ok: !warning, warning };
+  }
+  function activateDeferredAudio() {
+    const master = audioMaster.snapshot();
+    if (deferredMutedActivation && !master.muted && master.volume > 0) void activateAudio(); // Keep context activation inside this control gesture.
   }
   function suspendAudio() {
     contextualReactions?.suspend();
@@ -2050,7 +2212,7 @@ try {
   }
   async function initializeSoundtrack() {
     try {
-      const catalogue = SOUNDTRACK_CATALOGUE;
+      const catalogue = resolveSoundtrackCatalogue(SOUNDTRACK_CATALOGUE);
       if (soundtrackDisposed) return;
       const source = createSoundtrackSource({
         catalogue,
@@ -2060,164 +2222,183 @@ try {
         installedOnly: () => soundtrackLibrary?.listening?.installedOnly ?? false,
       });
       const audioElement = document.createElement('audio');
+      soundtrackBootstrapMediaElementCreated = true;
       if (typeof audioElement.play !== 'function')
         throw new Error(t('interface:thisBrowserDoesNotProvideFileAudioPlaybackBuiltIn'));
       soundtrackStore = createSoundtrackStore({ managedStore: pictureManager });
-      soundtrackPlayer = createSoundtrackPlayer({
-        localPlayback: installedPresentation(),
-        localRecordingIds: await localOfficialRecordingIds(catalogue),
-        catalogue,
-        bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
-        audioMaster,
-        soundscape: sound,
-        audioElement,
-        readAsset: source.readAsset,
-        onChange: (state) => {
-          soundtrackPanel?.update(state);
-          quickMusicControls?.render();
-          notifyDemoAudio();
-          musicPreviewState = state;
+      const localRecordingIds = await localOfficialRecordingIds(catalogue);
+      await sound.mediaPreparation.run(
+        'main',
+        () => {
+          soundtrackOwnerState = 'creating';
+          soundtrackPlayer = createSoundtrackPlayer({
+            localPlayback: installedPresentation(),
+            localRecordingIds,
+            onlineCatalogueDownload: { preparation: sound.mediaPreparation },
+            catalogue,
+            bundledTrackIds: SOUNDTRACK_BUNDLED_ASSETS.map(({ id }) => id),
+            audioMaster,
+            soundscape: sound,
+            audioElement,
+            readAsset: source.readAsset,
+            onChange: (state) => {
+              soundtrackPanel?.update(state);
+              notifyDemoAudio();
+              musicPreviewState = state;
+              renderMusicPreview();
+              if (soundtrackLoading) return;
+              const playbackMessage = state.error || state.notice;
+              soundtrackStatus(
+                playbackMessage
+                  ? () => soundtrackErrorText(playbackMessage)
+                  : state.preparation?.message ||
+                      (state.track
+                        ? `${state.track.title} · ${state.status}`
+                        : t('interface:chooseAPlaylistOrImportMp3Songs')),
+                state.preparation,
+                playbackMessage || state.preparation?.message ? null : state.track,
+              );
+            },
+          });
+          soundtrackOwnerState = 'active';
+          quickMusicControls = attachQuickMusicControls({
+            document,
+            prefix: 'solo',
+            // The landing owns passive song metadata; transport lives in Audio.
+            settingsRoot: $('settings-panel-audio'),
+            snapshot: () => soundtrackPlayer?.snapshot(),
+            getMaster: () => audioMaster.snapshot(),
+            active: () =>
+              !soundtrackDisposed && !enemyGuide?.practiceActive && !soundtrackPanel?.isOpen(),
+            conflicts: (event) =>
+              !!actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), event),
+            play: () => {
+              cancelDemoAudio();
+              soundtrackMenuGesture = true;
+              const waking = soundtrackPlayer.wake();
+              const playing = activateAudio({ explicit: true });
+              return Promise.all([waking, playing]).then(([, result]) => result);
+            },
+            pause: () => {
+              cancelDemoAudio();
+              soundtrackMenuGesture = true;
+              soundtrackPlayer.pause();
+            },
+            previous: () => {
+              soundtrackMenuGesture = true;
+              return soundtrackPlayer.previous();
+            },
+            next: () => {
+              cancelDemoAudio();
+              soundtrackMenuGesture = true;
+              return soundtrackPlayer.next();
+            },
+            onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
+          });
           renderMusicPreview();
-          if (soundtrackLoading) return;
-          const playbackMessage = state.error || state.notice;
-          soundtrackStatus(
-            playbackMessage
-              ? () => soundtrackErrorText(playbackMessage)
-              : state.preparation?.message ||
-                  (state.track
-                    ? `${state.track.title} · ${state.status}`
-                    : t('interface:chooseAPlaylistOrImportMp3Songs')),
-            state.preparation,
-            playbackMessage || state.preparation?.message ? null : state.track,
-          );
+          soundtrackPlayer.setAuthoredTrack(authoredMusic);
+          soundtrackPlayer.setContext(soundtrackContext());
+          publishedAudio.setPlayer(soundtrackPlayer);
+          if (soundtrackSuspended) soundtrackPlayer.suspend();
+          soundtrackPanel = attachSoundtrackPanel({
+            onlineCatalogueDownload: { preparation: sound.mediaPreparation },
+            audioMaster,
+            onMasterMuted: setMasterMuted,
+            onMasterVolume: setMasterVolume,
+            document,
+            store: soundtrackStore,
+            player: soundtrackPlayer,
+            catalogue,
+            availableStyles: availableCommunitySoundtrackStyles(
+              runtimeContent?.selection.brand.id ?? null,
+            ),
+            bundled: SOUNDTRACK_BUNDLED_ASSETS,
+            readAsset: source.readAsset,
+            getContext: soundtrackContext,
+            onLibrary: (_library, snapshot) => {
+              if (soundtrackDisposed || snapshot.generation < soundtrackGeneration) return;
+              soundtrackGeneration = snapshot.generation;
+              soundtrackLibrary = _library;
+              soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+            },
+            onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
+            onOpen: () => {
+              pause(true);
+              clearInput();
+              $('settings-dialog').close();
+            },
+            onClose: () => {
+              clearInput();
+              $('settings-dialog').showModal();
+              void storageRetention.refresh();
+              $('soundtrack-open').focus();
+            },
+            onVolume: (value) => {
+              $('music-volume').value = value;
+              preferences({ musicVolume: value });
+            },
+            onPlayback: () => {
+              soundtrackMenuGesture = true;
+            },
+            beforeAudio: () => {
+              if (soundtrackSuspended) {
+                soundtrackSuspended = false;
+                return soundtrackPlayer.wake();
+              }
+            },
+            settingsRoot: $('settings-panel-audio'),
+          });
+          // The studio owns persisted playlist selection. Keep the legacy genre selector
+          // only for browsers that cannot attach the file-audio transport.
+          $('music-select').closest('label').hidden = true;
+          localizedText($('music-preview'), () => t('interface:playSelectedPlaylist'));
+          $('soundtrack-open').disabled = false;
+          $('soundtrack-open').onclick = () => soundtrackPanel.open();
         },
-      });
-      quickMusicControls = attachQuickMusicControls({
-        document,
-        prefix: 'solo',
-        // The landing owns passive song metadata; transport lives in Audio.
-        settingsRoot: $('settings-panel-audio'),
-        snapshot: () => soundtrackPlayer?.snapshot(),
-        getMaster: () => audioMaster.snapshot(),
-        active: () =>
-          !soundtrackDisposed && !enemyGuide?.practiceActive && !soundtrackPanel?.isOpen(),
-        conflicts: (event) =>
-          !!actionForKey(resolveKeyBindings(library.preferences.keyboardBindings), event),
-        play: () => {
-          cancelDemoAudio();
-          soundtrackMenuGesture = true;
-          const waking = soundtrackPlayer.wake();
-          const playing = activateAudio({ explicit: true });
-          return Promise.all([waking, playing]).then(([, result]) => result);
-        },
-        pause: () => {
-          cancelDemoAudio();
-          soundtrackMenuGesture = true;
-          soundtrackPlayer.pause();
-        },
-        previous: () => {
-          soundtrackMenuGesture = true;
-          return soundtrackPlayer.previous();
-        },
-        next: () => {
-          cancelDemoAudio();
-          soundtrackMenuGesture = true;
-          return soundtrackPlayer.next();
-        },
-        onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
-      });
-      renderMusicPreview();
-      soundtrackPlayer.setAuthoredTrack(authoredMusic);
-      soundtrackPlayer.setContext(soundtrackContext());
-      publishedAudio.setPlayer(soundtrackPlayer);
-      if (soundtrackSuspended) soundtrackPlayer.suspend();
-      soundtrackPanel = attachSoundtrackPanel({
-        audioMaster,
-        onMasterMuted: setMasterMuted,
-        onMasterVolume: setMasterVolume,
-        document,
-        store: soundtrackStore,
-        player: soundtrackPlayer,
-        catalogue,
-        availableStyles: availableCommunitySoundtrackStyles(
-          runtimeContent?.selection.brand.id ?? null,
-        ),
-        bundled: SOUNDTRACK_BUNDLED_ASSETS,
-        readAsset: source.readAsset,
-        getContext: soundtrackContext,
-        onLibrary: (_library, snapshot) => {
-          if (soundtrackDisposed || snapshot.generation < soundtrackGeneration) return;
-          soundtrackGeneration = snapshot.generation;
-          soundtrackLibrary = _library;
-          soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
-        },
-        onError: (error) => soundtrackStatus(() => soundtrackErrorText(error)),
-        onOpen: () => {
-          pause(true);
-          clearInput();
-          $('settings-dialog').close();
-        },
-        onClose: () => {
-          clearInput();
-          $('settings-dialog').showModal();
-          void storageRetention.refresh();
-          $('soundtrack-open').focus();
-        },
-        onVolume: (value) => {
-          $('music-volume').value = value;
-          preferences({ musicVolume: value });
-        },
-        onPlayback: () => {
-          soundtrackMenuGesture = true;
-        },
-        beforeAudio: () => {
-          if (soundtrackSuspended) {
-            soundtrackSuspended = false;
-            return soundtrackPlayer.wake();
-          }
-        },
-        settingsRoot: $('settings-panel-audio'),
-      });
-      // The studio owns persisted playlist selection. Keep the legacy genre selector
-      // only for browsers that cannot attach the file-audio transport.
-      $('music-select').closest('label').hidden = true;
-      localizedText($('music-preview'), () => t('interface:playSelectedPlaylist'));
-      $('soundtrack-open').disabled = false;
-      $('soundtrack-open').onclick = () => soundtrackPanel.open();
+        { signal: soundtrackLoad.signal, eligible: () => !soundtrackDisposed },
+      );
       try {
         const snapshot = await soundtrackStore.read({ signal: soundtrackLoad.signal });
-        soundtrackLoading = false;
-        if (!soundtrackDisposed && snapshot.generation >= soundtrackGeneration) {
-          soundtrackGeneration = snapshot.generation;
-          soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
-          soundtrackLibrary = setCatalogueTracks(
-            upgradeSoundtrackLibrary(snapshot.library),
-            catalogue.tracks,
-          );
-          soundtrackPlayer.setLibrary(soundtrackLibrary, { publicStyles: snapshot.publicStyles });
-          if (
-            usesOpeningThemeDefault(soundtrackLibrary, {
-              fresh: snapshot.generation === 0,
-            })
-          ) {
-            // The exact core recording is allowed to load without blocking the
-            // menu. Playback still waits for the first eligible browser gesture.
-            void prepareOpeningTheme(soundtrackPlayer, soundtrackLibrary, { fresh: true });
-          } else {
-            // This does not play audio. It only makes a selected local MP3 ready
-            // before the player taps Start or Play, which iOS requires.
-            void soundtrackPlayer.prepare({ allowNetwork: false });
-          }
-        } else if (!soundtrackDisposed) {
-          const state = soundtrackPlayer.snapshot();
-          soundtrackStatus(
-            state.preparation?.message ||
-              (state.error
-                ? () => soundtrackErrorText(state.error)
-                : t('interface:musicLibraryReady')),
-            state.preparation,
-          );
-        }
+        await sound.mediaPreparation.run(
+          'main',
+          () => {
+            soundtrackLoading = false;
+            if (!soundtrackDisposed && snapshot.generation >= soundtrackGeneration) {
+              soundtrackGeneration = snapshot.generation;
+              soundtrackAssets = new Map(snapshot.assets.map(({ sha256, blob }) => [sha256, blob]));
+              soundtrackLibrary = setCatalogueTracks(
+                upgradeSoundtrackLibrary(snapshot.library),
+                catalogue.tracks,
+              );
+              soundtrackPlayer.setLibrary(soundtrackLibrary, {
+                publicStyles: snapshot.publicStyles,
+              });
+              if (
+                usesOpeningThemeDefault(soundtrackLibrary, {
+                  fresh: snapshot.generation === 0,
+                })
+              ) {
+                // The exact core recording is allowed to load without blocking the
+                // menu. Playback still waits for the first eligible browser gesture.
+                void prepareOpeningTheme(soundtrackPlayer, soundtrackLibrary, { fresh: true });
+              } else {
+                // This does not play audio. It only makes a selected local MP3 ready
+                // before the player taps Start or Play, which iOS requires.
+                void soundtrackPlayer.prepare({ allowNetwork: false });
+              }
+            } else if (!soundtrackDisposed) {
+              const state = soundtrackPlayer.snapshot();
+              soundtrackStatus(
+                state.preparation?.message ||
+                  (state.error
+                    ? () => soundtrackErrorText(state.error)
+                    : t('interface:musicLibraryReady')),
+                state.preparation,
+              );
+            }
+          },
+          { signal: soundtrackLoad.signal, eligible: () => !soundtrackDisposed },
+        );
       } catch (error) {
         soundtrackLoading = false;
         if (!soundtrackDisposed)
@@ -2228,6 +2409,8 @@ try {
           );
       }
     } catch (error) {
+      if (soundtrackDisposed || soundtrackLoad.signal.aborted) return;
+      soundtrackOwnerState = 'failed';
       soundtrackLoading = false;
       quickMusicControls?.dispose();
       quickMusicControls = null;
@@ -2303,6 +2486,8 @@ try {
   document.addEventListener('pointerdown', startRememberedMenuMusic);
   document.addEventListener('keydown', startRememberedMenuMusic);
   const painter = new BoardPainter(presets, {
+    onContextLoss: ({ owner, source }) => rendererInterrupted(owner ?? source),
+    onContextRestored: ({ owner, source }) => rendererRestored(owner ?? source),
     onAssetStatus: craftFeedback.update,
     onAsset: (message) => {
       const rig = visuals()?.player
@@ -2332,10 +2517,12 @@ try {
   let presentationHost = null,
     presentationSnapshot = null,
     pagePresentationSnapshot = null,
+    deferredPagePresentation = false,
     presentationReady = Promise.resolve(null);
   try {
     if (!runtimeContent)
       presentationHost = createPresentationHost({
+        preparation: sound.mediaPreparation,
         skipTitleArtwork: true,
         baseURL: new URL('presentation/compiled/', gameDocumentURL(location.href)),
       });
@@ -2344,11 +2531,17 @@ try {
         .load({ onStatus: presentationFeedback.update })
         .then((snapshot) => {
           pagePresentationSnapshot = snapshot;
-          if (!flightVisualLease) applyFlightPresentation();
+          if (!flightVisualLease) {
+            if (started && !paused) deferredPagePresentation = true;
+            else applyFlightPresentation();
+          }
           return snapshot;
         })
         .catch((error) => {
-          if (error.name === 'AbortError') return null;
+          if (error.name === 'AbortError') {
+            presentationFeedback.update({ status: 'cancelled', message: '' });
+            return null;
+          }
           compiledPresentationWarning = t(
             'interface:releaseArtworkIsUnavailableSourceArtworkIsShown',
           );
@@ -2366,6 +2559,7 @@ try {
       (theme.id === 'fpv' || theme.family === 'fpv') && !scenario?.music && !musicOverride,
   });
   function applyFlightPresentation() {
+    deferredPagePresentation = false;
     const snapshot = flightVisualLease?.snapshot ?? pagePresentationSnapshot;
     if (snapshot) (flightVisualLease ?? presentationHost).apply(document.documentElement);
     presentationSnapshot = snapshot;
@@ -2466,10 +2660,12 @@ try {
       const pack = installed.packs.find((item) => item.id === entry.sourcePackId);
       if (!pack) return null;
       if (actorCustomPacks.has(pack)) return null;
-      actorMissionIndex ??= getJSON('content/mission-library-index.json').catch((error) => {
-        actorMissionIndex = null;
-        throw error;
-      });
+      actorMissionIndex ??= getJSON('content/mission-library-index.json')
+        .then((index) => (actorMissionIndexValue = index))
+        .catch((error) => {
+          actorMissionIndex = null;
+          throw error;
+        });
       let index;
       try {
         index = await actorMissionIndex;
@@ -2596,6 +2792,7 @@ try {
   });
   const missionThumbnails = createMissionPictureThumbnails({
     readMedia: pictureMedia,
+    isActive: missionListVisible,
     onUpdate: () => missionPicker?.sync(),
     render(picture, backdrop) {
       if (!backdrop && picture.visualOverrides?.background?.dataUrl)
@@ -2620,9 +2817,50 @@ try {
       }
     },
   });
+  let missionListDirty = true,
+    missionListInitialized = false,
+    missionThumbnailRefreshPending = true,
+    missionThumbnailTargets = [];
+  function missionListVisible() {
+    return (
+      !document.hidden &&
+      document.hasFocus() &&
+      !(started && !paused && run?.status === 'running') &&
+      $('shell-missions').open &&
+      !$('shell-mission-content').hidden &&
+      !$('missions').closest('[hidden],[inert]')
+    );
+  }
+  function retireMissionThumbnails() {
+    missionThumbnailRefreshPending = true;
+    missionThumbnails.cancel();
+  }
+  function refreshMissionThumbnails() {
+    if (!missionThumbnailRefreshPending || !missionListVisible()) return;
+    missionThumbnailRefreshPending = false;
+    void missionThumbnails
+      .refresh({
+        library,
+        entries: executionCatalog.entries,
+        entry: activeEntry,
+        themeId: theme.id,
+        targets: missionThumbnailTargets,
+      })
+      .catch(() => {
+        /* Preserve honest unavailable thumbnails. */
+      });
+  }
+  const reconcileMissionListVisibility = () => {
+    if (missionListVisible()) refreshVisibleMissions();
+    else retireMissionThumbnails();
+  };
+  $('shell-missions').addEventListener('focusin', reconcileMissionListVisibility);
+  $('shell-missions').addEventListener('toggle', reconcileMissionListVisibility);
+  $('shell-missions').addEventListener('close', reconcileMissionListVisibility);
+  window.addEventListener('focus', reconcileMissionListVisibility);
   window.addEventListener('pagehide', (event) => {
     if (event.persisted) return;
-    painter.setPresentation(null);
+    painter.dispose();
     publishedAudio.close();
     presentationHost?.close();
   });
@@ -2657,7 +2895,9 @@ try {
     return flightInformation.warning(message, cue, role);
   }
   function dialogOpen() {
-    return !!document.querySelector('dialog[open]');
+    return modalNavigation
+      ? modalNavigation.hasOpenDialog()
+      : !!document.querySelector('dialog[open]');
   }
   const soloRadio = createSoloRadioInput({
     readPads: controllerPreview ? controllerPreview.readPads : () => navigator.getGamepads(),
@@ -2713,7 +2953,7 @@ try {
     navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches
       ? 'touch'
       : 'keyboard';
-  const modalNavigation = attachModalNavigation({
+  modalNavigation = attachModalNavigation({
     getFallbackFocus: ({ dialog, top }) =>
       dialog.id === 'settings-dialog' && !top ? $('shell-menu') : null,
   });
@@ -2991,6 +3231,179 @@ try {
       refreshControllerBoostCue();
     },
   });
+  if (performanceSession) {
+    const keyboardLatency = (event) => {
+      if (!event.repeat && event.defaultPrevented) observeInput('keyboard', event.timeStamp);
+    };
+    const touchLatency = (event) => {
+      if (
+        (event.type !== 'pointermove' || event.buttons) &&
+        (event.target?.closest?.(
+          '#game-canvas,[data-move],#boost-button,#action-button,#pickup-button',
+        ) ||
+          (event.defaultPrevented && event.target?.closest?.('#touch-surface,.direction-controls')))
+      )
+        observeInput(event.pointerType === 'touch' ? 'touch' : 'pointer', event.timeStamp);
+    };
+    window.addEventListener('keydown', keyboardLatency);
+    document.addEventListener('pointerdown', touchLatency);
+    document.addEventListener('pointermove', touchLatency);
+    const observers = [];
+    const supported = globalThis.PerformanceObserver?.supportedEntryTypes ?? [];
+    for (const [type, record] of [
+      ['longtask', 'longTask'],
+      ['long-animation-frame', 'longAnimationFrame'],
+    ]) {
+      if (!supported.includes(type)) continue;
+      const observer = new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) performanceSession[record](entry.duration);
+      });
+      observer.observe({ type, buffered: true });
+      observers.push(observer);
+    }
+    performanceSession.setObserverSupport({
+      longTask: supported.includes('longtask'),
+      longAnimationFrame: supported.includes('long-animation-frame'),
+    });
+    function sharedImageResources() {
+      const unique = new Set(),
+        categories = {};
+      let unavailableSnapshots = 0;
+      const summarize = (images) => {
+        let pixels = 0,
+          unknownDimensions = 0;
+        for (const image of images) {
+          const width = image.naturalWidth || image.width || 0,
+            height = image.naturalHeight || image.height || 0;
+          if (width > 0 && height > 0) pixels += width * height;
+          else unknownDimensions++;
+        }
+        return { images: images.size, pixels, rgbaBytesEstimate: pixels * 4, unknownDimensions };
+      };
+      for (const [name, snapshot] of [
+        ['pagePresentation', pagePresentationSnapshot],
+        ['activePresentation', presentationSnapshot],
+        ['actorAppearance', flightActorLease?.snapshot],
+      ]) {
+        const images = new Set();
+        // These base release snapshots are read-only lookups. Never query the
+        // painter's adapter here: that could create a derived sprite on export.
+        try {
+          for (const slot of Object.keys(snapshot?.resolved?.assets ?? {})) {
+            const image = snapshot.image?.(slot)?.image;
+            if (image) images.add(image);
+          }
+        } catch {
+          unavailableSnapshots++;
+        }
+        for (const image of images) unique.add(image);
+        categories[name] = summarize(images);
+      }
+      const backdrop = flightPictures?.current()?.image;
+      const images = new Set(backdrop ? [backdrop] : []);
+      for (const image of images) unique.add(image);
+      categories.activeBackdrop = summarize(images);
+      return {
+        scope:
+          'Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.',
+        categories,
+        uniqueObserved: summarize(unique),
+        sharedCategoryReferences:
+          Object.values(categories).reduce((sum, value) => sum + value.images, 0) - unique.size,
+        unavailableSnapshots,
+        accounting:
+          'Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.',
+        estimate:
+          'RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable.',
+      };
+    }
+    window.RevealLineSoloPerformance = Object.freeze({
+      export() {
+        const session = performanceSession.export({
+          paused:
+            (paused || !started || ['won', 'lost'].includes(run?.status)) &&
+            (!demoHost || demoHost.resourceExportReady),
+        });
+        const ownedSoundtrack = soundtrackPlayer?.preparationDiagnostics();
+        const mediaAdmission = ownedSoundtrack?.admission ?? sound.mediaPreparation.snapshot();
+        const soundtrackState =
+          (soundtrackOwnerState === 'active' && !soundtrackPlayer) ||
+          (soundtrackOwnerState === 'never-created' && soundtrackPlayer)
+            ? 'unavailable'
+            : soundtrackOwnerState;
+        return {
+          ...session,
+          droppedInputObservations,
+          buildVersion,
+          sourceRevision: buildSourceRevision,
+          userAgent: navigator.userAgent,
+          secureContext:
+            typeof globalThis.isSecureContext === 'boolean' ? globalThis.isSecureContext : null,
+          protocol: location.protocol,
+          viewport: { width: innerWidth, height: innerHeight },
+          cadenceCalibration: fieldScene?.cadence.snapshot() ?? {
+            samples: 0,
+            required: 30,
+            baselineMs: null,
+            restartedSamples: 0,
+            waiting: false,
+            status: 'pending-quiet-preparation',
+          },
+          quality: qualityPolicy.snapshot(),
+          audio: audioMaster.snapshot(),
+          resources: {
+            renderer: painter.resourceSnapshot(),
+            demo: demoHost?.resourceSnapshot() ?? null,
+            phaser: fieldScene?.resourceSnapshot() ?? null,
+            sharedPresentationImages: sharedImageResources(),
+            pcm: {
+              ...sound.resourceSnapshot(),
+              reactions: contextualReactions?.diagnostics().cache ?? null,
+            },
+            media: {
+              ...mediaAdmission,
+              reservationAccounting:
+                'reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory.',
+            },
+            soundtrackOwner: {
+              format: 'SoloOptionalOwnerStateV1',
+              state: soundtrackState,
+              // This monotonic fact is not a native media-memory or live-element count.
+              bootstrapMediaElementCreated: soundtrackBootstrapMediaElementCreated,
+            },
+            soundtrack:
+              ownedSoundtrack ??
+              (soundtrackState === 'never-created'
+                ? {
+                    admission: mediaAdmission,
+                    inspection: {
+                      workerOwned: false,
+                      workerActive: false,
+                      workerOwnedBytes: 0,
+                      pendingRequests: 0,
+                    },
+                    playback: {
+                      ownedBlobURLCount: 0,
+                      ownedBlobBytes: 0,
+                      failedRevocationCount: 0,
+                      failedRevocationBytes: 0,
+                      decks: [],
+                    },
+                  }
+                : { admission: mediaAdmission, inspection: null, playback: null }),
+          },
+          canvas: fieldScene?.boardTexture.context.getContextAttributes?.() ?? null,
+        };
+      },
+    });
+    window.addEventListener('pagehide', (event) => {
+      if (event.persisted) return;
+      for (const observer of observers) observer.disconnect();
+      window.removeEventListener('keydown', keyboardLatency);
+      document.removeEventListener('pointerdown', touchLatency);
+      document.removeEventListener('pointermove', touchLatency);
+    });
+  }
   function readingPrompt({ scrollable }) {
     const mode = document.body.dataset.inputMode;
     const scroll = !scrollable
@@ -3028,7 +3441,9 @@ try {
         (navigator.maxTouchPoints > 0 || globalThis.matchMedia?.('(any-pointer: coarse)').matches)
           ? 'touch'
           : document.body.dataset.inputMode,
-      scope: controllerScope(),
+      // Reserve the future touch footprint during paused preparation only.
+      // Actual input/controller ownership continues to use controllerScope().
+      scope: preparationLayout ? 'flight' : controllerScope(),
       running: run?.status === 'running',
     });
     const next = visible ? 'shown' : 'hidden';
@@ -3264,6 +3679,7 @@ try {
     enemyGuide.open();
   };
   handlePageHide = (event) => {
+    ++unifiedBuildRevision;
     const demoActive = demoHost?.active;
     demoHost?.suspend();
     cancelUnifiedOpening?.();
@@ -3281,7 +3697,7 @@ try {
     masteryAwards.cancelAll();
     cancelRestore();
     cancelPictureStart({ retirePrewarm: true });
-    missionThumbnails.cancel();
+    retireMissionThumbnails();
     clearInput();
     if (replayDownload) replayDownload.observed = false;
     replayFeedback?.clear();
@@ -3304,14 +3720,19 @@ try {
       document.removeEventListener('keydown', startRememberedMenuMusic);
       journeyReactions.dispose();
       soundtrackDisposed = true;
+      soundtrackOwnerState = 'disposed';
       soundtrackLoad.abort();
       quickMusicControls?.dispose();
       enemyGuide.dispose();
+      optionalWorldsDisposed = true;
       optionalWorlds?.dispose();
       soundtrackPlayer?.dispose();
       soundtrackPanel?.dispose();
       stopMasterView();
       stopDisplayView();
+      stopAutomaticNextView();
+      stopBoardThemeView();
+      stopBoardGroundView();
       stopActorView();
       actorPreferences.dispose();
       compactCredit.dispose();
@@ -3348,6 +3769,10 @@ try {
       gameplayTuning.dispose();
       if (browsingJourneyPreferences !== journeyPreferences) browsingJourneyPreferences.dispose();
       missionThumbnails.close();
+      $('shell-missions').removeEventListener('focusin', reconcileMissionListVisibility);
+      $('shell-missions').removeEventListener('toggle', reconcileMissionListVisibility);
+      $('shell-missions').removeEventListener('close', reconcileMissionListVisibility);
+      window.removeEventListener('focus', reconcileMissionListVisibility);
       libraryPanel.dispose();
       window.removeEventListener('beforeunload', protectSessionOriginals);
       sessionPictures.dispose();
@@ -3512,6 +3937,10 @@ try {
     },
   });
   function clearInput({ preserveNavigation = false, resetDirection = false } = {}) {
+    fieldScene?.resetTitleQuality();
+    sceneClock.reset();
+    performanceSession?.discardInputs();
+    inputTokenCount = inputAppliedCount = 0;
     pendingAction = false;
     pendingPickup = false;
     pendingSwitch = null;
@@ -4663,7 +5092,7 @@ try {
         options,
       );
       const nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
-      const nextRecorder = createRecorder(nextRun.level, options, buildVersion);
+      const nextRecorder = createOwnedRecorder(nextRun.level, options, buildVersion);
       ticket.pictures = newFlightPictures({
         nextRun,
         nextRunId,
@@ -4741,7 +5170,7 @@ try {
       pictures?.dispose();
     }
   }
-  function finishWorldPlay(request) {
+  async function finishWorldPlay(request) {
     const intent = worldPlayIntents.get(request.launch);
     const prepared = intent?.committed;
     if (!prepared) return false;
@@ -4789,8 +5218,8 @@ try {
       if (current()) request.launch.onSelected();
       return current();
     }
-    if (current() && !dialogOpen()) resume();
-    return started && run === prepared.run;
+    if (current() && !dialogOpen()) await resume();
+    return started && !paused && run === prepared.run && runId === prepared.runId;
   }
   async function requestWorldLaunch(entry, launch, onStatus) {
     if (
@@ -5124,7 +5553,7 @@ try {
     if (!unfinishedFlight()) {
       if (launch && target.same) return false;
       const selected = await applyMissionRequest(request);
-      if (selected && request.kind === 'world-play') finishWorldPlay(request);
+      if (selected && request.kind === 'world-play') await finishWorldPlay(request);
       else if (selected && launch?.isCurrent()) launch.onSelected();
       return selected;
     }
@@ -5276,7 +5705,7 @@ try {
         if (availableFocusTarget(ticket.opener)) ticket.opener.focus({ preventScroll: true });
         return;
       }
-      if (ticket.request.kind === 'world-play') finishWorldPlay(ticket.request);
+      if (ticket.request.kind === 'world-play') await finishWorldPlay(ticket.request);
       else if (ticket.launch) {
         if (ticket.launch.isCurrent()) ticket.launch.onSelected();
       } else if (ticket.request.kind === 'card') {
@@ -5793,7 +6222,9 @@ try {
         ok: false,
         warning: t('interface:finishOrCancelTheCourseHandoffBeforeChangingSettings'),
       };
+    const previousGrid = library.preferences.showGrid;
     library = updatePreferences(library, { ...library.preferences, ...patch });
+    if (library.preferences.showGrid !== previousGrid) fieldScene?.invalidate();
     if (!practice) return persistProfile();
     refreshTextSize();
     refreshScreenSteeringHand();
@@ -5808,10 +6239,17 @@ try {
       clearPreparation();
     }
   }
-  function rememberSelection() {
+  let selectedJourneyRun = null;
+  function rememberSelection({ skipped = null } = {}) {
     const mission = journeyEnabled && journeyMission();
-    if (mission && !practice && !scenario)
-      journeyProfile.record({ type: 'select', mode: 'solo', missionId: mission.id });
+    if (mission && !practice && !scenario && (selectedJourneyRun !== run || skipped)) {
+      const events = [];
+      if (selectedJourneyRun !== run)
+        events.push({ type: 'select', mode: 'solo', missionId: mission.id });
+      if (skipped) events.push({ type: 'skip', mode: 'solo', missionId: skipped.id });
+      journeyProfile.recordMany(events);
+      selectedJourneyRun = run;
+    }
     if (candidateHost?.owns(activeEntry)) return;
     return selectionBookmark.remember({
       campaignKey: activeEntry.baseCampaignKey || campaignKey(campaign),
@@ -5927,7 +6365,15 @@ try {
   function nextJourneyMission(id) {
     return candidateHost ? candidateHost.next(id) : journeyCatalog.next(id);
   }
+  function cancelPlayedLevelDiscovery() {
+    if (!playedLevelLinkController) return;
+    ++playedLevelLinkGeneration;
+    playedLevelLinkController.abort();
+    playedLevelLinkController = null;
+  }
+  window.addEventListener('pagehide', cancelPlayedLevelDiscovery);
   function clearPlayedLevelLink() {
+    cancelPlayedLevelDiscovery();
     playedLevelLinkGeneration++;
     if (playedLevelLink) {
       // A newly selected local/practice mission must not retain the previous
@@ -5948,14 +6394,72 @@ try {
     $('level-link-status').textContent = '';
     $('level-link-status').hidden = true;
   }
-  async function updatePlayedLevelLink() {
+  async function updatePlayedLevelLink({ discoverClassic = false } = {}) {
+    if (practiceSession || practice || demo || runtimeContent || playedLevelLink) return;
+    const mission = journeyMission();
+    if (!mission && (!discoverClassic || playedLevelLinkController)) return;
     const generation = ++playedLevelLinkGeneration;
-    const selectedRun = run;
-    if (practiceSession || practice || demo || runtimeContent) return;
+    const selectedRun = run,
+      selectedEntry = activeEntry,
+      selectedLevel = campaign.levels[levelIndex],
+      selectedPacks = packs;
+    let controller = null;
     try {
-      const host = await getUnifiedMissionLibrary();
-      if (generation !== playedLevelLinkGeneration || run !== selectedRun) return;
-      const row = currentSoloLibraryMission(host);
+      let row = mission
+        ? acceptedJourneyMission(mission, authoredRoute?.id ?? DEFAULT_JOURNEY_ROUTES.solo)
+        : null;
+      if (!mission) {
+        const safe = () =>
+          (paused || !started) && pictureResume === null && !document.hidden && document.hasFocus();
+        if (!safe()) return;
+        controller = new AbortController();
+        playedLevelLinkController = controller;
+        const isCurrent = () =>
+          !controller.signal.aborted &&
+          generation === playedLevelLinkGeneration &&
+          run === selectedRun &&
+          activeEntry === selectedEntry &&
+          packs === selectedPacks &&
+          safe();
+        let text = null;
+        if (!actorMissionIndexValue) {
+          const path = 'content/mission-library-index.json';
+          const response = await fetch(
+            communityRouteFromURL(location.href)
+              ? new URL(path, gameDocumentURL(location.href))
+              : path,
+            { signal: controller.signal },
+          );
+          if (!response.ok || !isCurrent()) return;
+          text = await response.text();
+          if (!isCurrent()) return;
+        }
+        // Optional discovery never holds Start. Parse and fingerprint only in
+        // a safe phase, including when the response arrives after Resume.
+        row = await sound.mediaPreparation.run(
+          'main',
+          () => {
+            const index = actorMissionIndexValue ?? JSON.parse(text);
+            actorMissionIndexValue = index;
+            actorMissionIndex = Promise.resolve(index);
+            return acceptedClassicMission({
+              index,
+              entry: selectedEntry,
+              level: selectedLevel,
+              baseEntry,
+              packs: selectedPacks,
+              isCurrent,
+            });
+          },
+          { signal: controller.signal, eligible: isCurrent },
+        );
+      }
+      if (
+        controller?.signal.aborted ||
+        generation !== playedLevelLinkGeneration ||
+        run !== selectedRun
+      )
+        return;
       const href = playedLevelHref(row, { baseURL: location.href });
       if (!href) return;
       playedLevelLink = href;
@@ -5968,6 +6472,8 @@ try {
       }
     } catch {
       // Optional discovery failures cannot stop gameplay or share the wrong map.
+    } finally {
+      if (controller && playedLevelLinkController === controller) playedLevelLinkController = null;
     }
   }
   $('copy-level-link').onclick = async () => {
@@ -6057,12 +6563,16 @@ try {
     );
     preparationButtonBusy(operation.button, true);
     try {
-      const host = await getUnifiedMissionLibrary();
+      const isCurrent = () =>
+        librarySkipResolution === operation &&
+        !operation.controller.signal.aborted &&
+        skipSnapshotCurrent(operation.snapshot);
+      const host = await getUnifiedMissionLibrary(isCurrent);
       if (librarySkipResolution !== operation || !skipSnapshotCurrent(operation.snapshot)) {
         cancelSkipResolution({ announce: false });
         return;
       }
-      await host.refreshInstalled();
+      await refreshUnifiedInstalled(host, isCurrent);
       if (librarySkipResolution !== operation || !skipSnapshotCurrent(operation.snapshot)) {
         cancelSkipResolution({ announce: false });
         return;
@@ -6113,9 +6623,8 @@ try {
     if (candidateHost) {
       const adopted = await prepareResultAttempt(kind, mission.levelIndex, null, mission, {
         briefingOnly,
+        skipped,
       });
-      if (adopted && skipped)
-        journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
       return adopted;
     }
     const owner = { run, runId, mission, feedback: null, cancel: null };
@@ -6173,9 +6682,10 @@ try {
       // navigation or lifecycle work must not revive the preceding pack owner.
       owner.cancel = null;
       if (journeyLaunch === owner) journeyLaunch = null;
-      const adopted = await prepareResultAttempt(kind, index, entry, null, { briefingOnly });
-      if (adopted && skipped)
-        journeyProfile.record({ type: 'skip', mode: 'solo', missionId: skipped.id });
+      const adopted = await prepareResultAttempt(kind, index, entry, null, {
+        briefingOnly,
+        skipped,
+      });
       return adopted;
     } catch (error) {
       if (
@@ -6761,7 +7271,17 @@ try {
       canonicalJSON(JSON.parse(raw)) === canonicalJSON(session)
     );
   }
-  function persistAttempt(notify = true) {
+  function markPauseWork(trace, kind, incomplete = false) {
+    if (!trace) return;
+    if (incomplete) trace.complete = false;
+    try {
+      trace.session.markEvent(kind, trace.generation, trace.tick);
+    } catch {
+      // Optional observations must never change the synchronous pause/save path.
+      trace.complete = false;
+    }
+  }
+  function persistAttempt(notify = true, pauseTrace = null) {
     if (titleFlightHold)
       throw new Error(t('interface:explicitlyResumeTheVerifiedFlightBeforeSavingAgain'));
     if (modeDepartureHold)
@@ -6769,19 +7289,37 @@ try {
     if (courseEntryHold)
       throw new Error(t('interface:theCourseHandoffKeepsThisFlightPausedResumeExplicitlyBefore'));
     assertWriter();
-    const session = snapshotAttempt();
+    markPauseWork(pauseTrace, 'pause-snapshot-begin');
+    let session;
+    try {
+      session = snapshotAttempt();
+      markPauseWork(pauseTrace, 'pause-snapshot-end');
+    } catch (error) {
+      markPauseWork(pauseTrace, 'pause-snapshot-failed', true);
+      throw error;
+    }
     let saved;
+    markPauseWork(pauseTrace, 'pause-save-begin');
     try {
       saved = saveSession(profileStorage(), sessionKey, session);
     } catch {
       saved = { ok: false, warning: t('interface:storageIsUnavailableExportThisAttempt') };
     }
+    markPauseWork(pauseTrace, saved.ok ? 'pause-save-end' : 'pause-save-failed', !saved.ok);
     if (saved.ok) {
+      markPauseWork(pauseTrace, 'pause-readback-begin');
       try {
         const raw = profileStorage().getItem(sessionKey);
-        if (attemptReadbackMatches(raw, session)) lastOwnedAttempt = raw;
+        // The serializer already validated these bytes and their storage limit.
+        // Keep semantic readback for equivalent encodings; changed content must
+        // still pass the original validation before it grants slot ownership.
+        if (raw === saved.serialized || attemptReadbackMatches(raw, session)) {
+          lastOwnedAttempt = raw;
+          markPauseWork(pauseTrace, 'pause-readback-end');
+        } else markPauseWork(pauseTrace, 'pause-readback-failed', true);
       } catch {
         /* A successful write result alone is not readback authority. */
+        markPauseWork(pauseTrace, 'pause-readback-failed', true);
       }
     }
     if (notify)
@@ -6975,9 +7513,12 @@ try {
       run = restored.run;
       clearPlayedLevelLink();
       restoredSignalRuns.add(run);
-      recorder = restored.recorder;
+      recorder = adoptOwnedRecorder(restored.recorder);
       runId = restored.session.runId;
       const informationOwner = flightInformation.adopt(run, runId);
+      performanceRunGeneration = informationOwner?.generation ?? 0;
+      if (informationOwner)
+        performanceSession?.markEvent('run-adopted', performanceRunGeneration, run.tick);
       masteryDefinition = recoverGameplayTuning(run.level)
         ? null
         : masteryFor(campaignKey(campaign), run.levelId, masteryCatalog);
@@ -7369,7 +7910,7 @@ try {
         ? profileLocks.request(`${libraryKey}.backup-lock`, { signal }, work)
         : work(),
   });
-  const libraryPanel = attachLibraryPanel({
+  const libraryPanelOptions = {
     // Selected editions already scope their pack catalogue; omitted examples
     // must not trigger a request for the default game's unrelated catalogue.
     examplePackIndex: runtimeContent ? packCatalog : undefined,
@@ -7619,6 +8160,12 @@ try {
       }
     },
     setPacks: replacePackLibrary,
+  };
+  const libraryPanel = attachLibraryEntry({
+    document,
+    window,
+    api: libraryPanelOptions,
+    admit: (work, options) => sound.mediaPreparation.run('main', work, options),
   });
   courseView = attachFirstFlightView({
     onEnter: enterFirstFlight,
@@ -7837,10 +8384,15 @@ try {
   };
   $('switch-class-button').onclick = () => {
     if (!craftSwitchAvailable()) return;
-    const next = $('switch-class-select').value;
+    const next = $('switch-class-select').value,
+      selectedRun = run;
     $('hangar-dialog').close();
-    resume();
-    pendingSwitch = next;
+    const resumed = resume();
+    const apply = () => {
+      if (run === selectedRun && started && !paused) pendingSwitch = next;
+    };
+    if (resumed?.then) return resumed.then(apply);
+    apply();
   };
   document.addEventListener('keydown', (e) => {
     if (
@@ -7873,6 +8425,21 @@ try {
     settledPictureRemaining = 0;
   }
   function clearResultAutoAdvance({ dismiss = false } = {}) {
+    const notice = $('result-auto-next');
+    if (
+      dismiss &&
+      run?.status === 'won' &&
+      !notice.hidden &&
+      !$('game-overlay').hidden &&
+      $('game-overlay').dataset.kind === 'won'
+    )
+      // Removing this row during pointerdown moves the action out from under
+      // the release. Keep its occupied slot for this result only, while hiding
+      // the cancelled countdown from both sight and live announcements.
+      notice.dataset.reserveSpace = 'true';
+    else if (!dismiss) delete notice.dataset.reserveSpace;
+    notice.setAttribute('aria-hidden', 'true');
+    notice.setAttribute('aria-live', 'off');
     if (dismiss && run?.status === 'won') resultAutoAdvanceDismissedRun = run;
     resultAutoAdvanceRun = null;
     resultAutoAdvanceRemaining = 0;
@@ -7881,6 +8448,7 @@ try {
   }
   function automaticResultContinuationAvailable() {
     if (
+      !automaticNextEnabled ||
       practice ||
       scenario ||
       courseSession ||
@@ -7897,6 +8465,12 @@ try {
   }
   function refreshResultAutoAdvance() {
     const active = resultAutoAdvanceRun === run && automaticResultContinuationAvailable();
+    const notice = $('result-auto-next');
+    if (active && (notice.hidden || notice.dataset.reserveSpace)) {
+      delete notice.dataset.reserveSpace;
+      notice.removeAttribute('aria-hidden');
+      notice.setAttribute('aria-live', 'polite');
+    }
     show('result-auto-next', active);
     if (!active) return;
     const seconds = Math.max(1, Math.ceil(resultAutoAdvanceRemaining));
@@ -8197,13 +8771,19 @@ try {
   }
   $('text-face').onchange = () => changeDisplay({ textFace: $('text-face').value });
   function applyDisplayPreferences(state) {
+    const effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+    const boardChanged =
+      document.body.dataset.textSize !== state.textSize ||
+      document.body.dataset.textFace !== state.textFace ||
+      document.body.dataset.effects !== effects;
     $('text-size').value = state.textSize;
     document.body.dataset.textSize = state.textSize;
     $('text-face').value = state.textFace;
     document.body.dataset.textFace = state.textFace;
     $('reduced-effects').checked = state.reducedEffects;
     $('settings-reduced-effects').checked = state.reducedEffects;
-    document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
+    document.body.dataset.effects = effects;
+    if (boardChanged) fieldScene?.invalidate();
     localizedText($('display-system-reduction'), () =>
       state.effectiveReducedEffects && !state.reducedEffects
         ? t('interface:systemReducedMotionIsActiveYourSavedReducedEffectsChoice')
@@ -8437,7 +9017,24 @@ try {
     setTheme();
   }
   function paintMissions() {
-    missionThumbnails.cancel();
+    missionListDirty = true;
+    retireMissionThumbnails();
+    // Keep the native selection mirror current without rebuilding a closed
+    // browser. The authoritative selection and Start remain owned by the run.
+    $('level-select').value = campaign.levels[levelIndex].id;
+    // Retained Legacy controls synchronously inspect their first prepared
+    // snapshot. Build it once while paused; later hidden updates stay lazy.
+    refreshVisibleMissions(!missionListInitialized && paused && !started);
+  }
+  function refreshVisibleMissions(initialPreparation = false) {
+    if (!initialPreparation && !missionListVisible()) return;
+    if (!missionListDirty) {
+      refreshMissionThumbnails();
+      return;
+    }
+    missionListDirty = false;
+    missionListInitialized = true;
+    missionThumbnailTargets = [];
     $('missions').replaceChildren();
     if (courseSession) {
       localizedText($('campaign-progress'), () =>
@@ -8448,7 +9045,6 @@ try {
       );
       return;
     }
-    const thumbnailTargets = [];
     campaign.levels.forEach((level, index) => {
       const b = document.createElement('button');
       b.type = 'button';
@@ -8461,7 +9057,7 @@ try {
         !!progress.clears[level.id] ||
         !!difficultyNavigation.access(activeEntry, library.campaigns)?.levels[index]?.completed;
       b.dataset.pictureState = earnedPicture ? 'unavailable' : 'concealed';
-      thumbnailTargets.push({ button: b, level, earned: earnedPicture });
+      missionThumbnailTargets.push({ button: b, level, earned: earnedPicture });
       localizedAttribute(b, 'aria-label', () =>
         t(b.disabled ? 'interface:missions.lockedLabel' : 'interface:missions.label', {
           number: index + 1,
@@ -8497,23 +9093,14 @@ try {
       };
       $('missions').append(b);
     });
-    void missionThumbnails
-      .refresh({
-        library,
-        entries: executionCatalog.entries,
-        entry: activeEntry,
-        themeId: theme.id,
-        targets: thumbnailTargets,
-      })
-      .catch(() => {
-        /* Preserve honest unavailable thumbnails. */
-      });
+    refreshMissionThumbnails();
     localizedText(
       $('campaign-progress'),
       () =>
         `${String(currentSelection().completed).padStart(2, '0')} / ${String(campaign.levels.length).padStart(2, '0')}${difficultyLabel(activeEntry) ? t('gameplay:medals', { value1: difficultyLabel(activeEntry) }) : ''}`,
     );
     refreshContentSelectors();
+    missionPicker?.sync();
   }
   function updateLoadout() {
     const recipe =
@@ -8641,6 +9228,12 @@ try {
   }
   function overlay(kind, { preserveFocus = false } = {}) {
     if (practiceRenderFailure.failed) return;
+    const newResultObservation =
+      performanceSession &&
+      ['won', 'lost', 'campaign-complete'].includes(kind) &&
+      ($('game-overlay').hidden ||
+        $('game-overlay').dataset.kind !== kind ||
+        performanceResultGeneration !== performanceRunGeneration);
     // Repeated suspension may repaint Pause, but does not own a new focus
     // choice. An inactive child must not pull focus back from its parent.
     const repeatedPause =
@@ -8897,6 +9490,10 @@ try {
     // finished presenting.
     if (kind === 'won' && !celebrationActive) armResultAutoAdvance();
     else clearResultAutoAdvance();
+    if (newResultObservation && !$('game-overlay').hidden) {
+      performanceSession.markEvent('result-overlay-shown', performanceRunGeneration, run.tick);
+      performanceResultGeneration = performanceRunGeneration;
+    }
   }
   function resultAttemptCurrent(ticket) {
     if (
@@ -9062,9 +9659,9 @@ try {
       document.addEventListener('focusin', changedFocus);
       document.addEventListener('visibilitychange', lostForeground);
       window.addEventListener('blur', windowBlur);
-      const host = await getUnifiedMissionLibrary();
+      const host = await getUnifiedMissionLibrary(current);
       if (!current()) return;
-      await host.refreshInstalled();
+      await refreshUnifiedInstalled(host, current);
       if (!current()) return;
       const row = currentSoloLibraryMission(host);
       const next = librarySuccessor(host.library, row, 'solo');
@@ -9266,7 +9863,7 @@ try {
     destinationIndex = levelIndex,
     destinationEntry = null,
     destinationMission = null,
-    { briefingOnly = kind === 'choose' } = {},
+    { briefingOnly = kind === 'choose', skipped = null } = {},
   ) {
     if (resultAttempt?.kind === kind) return;
     const previousEpoch = resultAttemptEpoch,
@@ -9446,9 +10043,10 @@ try {
               options,
             )),
         nextRunId = crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`,
-        nextRecorder = retainHunt
-          ? createRecorder(nextRun.level, options, buildVersion)
-          : (candidateAttempt?.recorder ?? createRecorder(nextRun.level, options, buildVersion));
+        nextRecorder =
+          candidateAttempt?.recorder && !retainHunt
+            ? adoptOwnedRecorder(candidateAttempt.recorder)
+            : createOwnedRecorder(nextRun.level, options, buildVersion);
       const pins =
         kind === 'retry' && !candidateAttempt && !ticket.owner.legacy
           ? retryFlightPresentationPins(ticket.owner.pins(), {
@@ -9560,13 +10158,17 @@ try {
         // Choosing an exact mission prepares its accepted rules and artwork.
         // Only a fresh Start activation may leave this briefing; Retry/Next
         // retain their existing single-action continuation contract.
+        if (skipped) rememberSelection({ skipped });
         if (briefingOnly) {
+          // The settled briefing already owns its accepted public Journey identity.
+          // Classic discovery stays optional because discoverClassic remains false.
+          void updatePlayedLevelLink();
           clearInput();
           focusMission();
           return !started && paused && run === nextRun;
         }
-        resume();
-        return started && !paused;
+        await resume();
+        return started && !paused && run === nextRun && runId === nextRunId;
       }
     } catch (error) {
       if (resultAttempt === ticket) {
@@ -9813,6 +10415,9 @@ try {
     runId = preparedAttempt?.runId || crypto.randomUUID?.() || `${Date.now()}-${Math.random()}`;
     refreshRunningEnemies();
     const informationOwner = flightInformation.adopt(run, runId);
+    performanceRunGeneration = informationOwner?.generation ?? 0;
+    if (informationOwner)
+      performanceSession?.markEvent('run-adopted', performanceRunGeneration, run.tick);
     courseObserver = null;
     courseUnavailable = null;
     if (courseSession)
@@ -9907,7 +10512,7 @@ try {
     recordingStopped = false;
     recorder =
       preparedAttempt?.recorder ||
-      createRecorder(
+      createOwnedRecorder(
         run.level,
         {
           seed: run.seed,
@@ -9990,13 +10595,21 @@ try {
     refreshHUD();
     return true;
   }
-  function resume({ alignCourseBoard = true, contentSwitchTicket = null } = {}) {
+  function resume({
+    alignCourseBoard = true,
+    contentSwitchTicket = null,
+    resumeCue = runMessageCue,
+    progressAttempt = null,
+  } = {}) {
     if (practiceRenderFailure.failed) return;
+    if (rendererLost.size) return;
     // A queued activation may arrive after blur even when the picture is cached.
     // Use actual foreground state: a fresh Resume need not wait for another frame.
     if (document.hidden || !document.hasFocus()) return;
     if (courseBlocked()) return;
     if (!run || (campaignOverview && !practice) || ['won', 'lost'].includes(run.status)) return;
+    cancelPlayedLevelDiscovery();
+    if (deferredPagePresentation && paused) applyFlightPresentation();
     if (!started && runningEnemyNeedsPreparation) {
       try {
         if (!prepare({ contentSwitchTicket })) return;
@@ -10025,17 +10638,30 @@ try {
       !!freshSoloVisualSelection(activeEntry, theme.id);
     const needsFreshActors = !practice && !flightActorsReady;
     const needsCaptureEnvironment = !captureEnvironmentReady;
-    if (
+    const needsFlightAssets =
       !flightPictures?.ready(theme.id) ||
       needsFreshVisuals ||
       needsFreshActors ||
-      needsCaptureEnvironment
+      needsCaptureEnvironment;
+    if (pictureResume) return;
+    const layoutOwner = !started || paused ? prepareFlightLayout() : null;
+    const needsProgress =
+      journeyProfile &&
+      (progressAttempt?.run !== run || progressAttempt?.runId !== runId) &&
+      ((!started && selectedJourneyRun !== run && journeyMission() && !practice && !scenario) ||
+        !journeyRewardsDurable);
+    if (
+      needsProgress ||
+      needsFlightAssets ||
+      !fieldScene?.prepared() ||
+      !fieldScene?.cadence.ready ||
+      menuStyle.themeHost.preparing
     ) {
-      if (pictureResume) return;
       clearPictureRecovery();
       const owner = flightPictures,
         ticket = ++pictureGeneration,
         selectedRun = run,
+        selectedRunId = runId,
         selectedTheme = theme.id;
       const selectedEntry = activeEntry,
         selectedLevel = activeEntry.campaign.levels[levelIndex],
@@ -10047,8 +10673,11 @@ try {
       pictureVisualController = controller;
       pictureResume = ticket;
       paused = true;
+      setMediaPreparationPhase('preparing');
+      performanceSession?.setPhase('preparing');
+      void sound.prepareGameplayAudio().catch(() => {});
       clearInput();
-      warning(picturePreparingMessage, null, 'host.picture');
+      if (needsFlightAssets) warning(picturePreparingMessage, null, 'host.picture');
       const notify = flightInformation.captureWarning('host.picture');
       const feedback = beginPreparation(picturePreparingMessage, cancelPictureStart);
       const prewarm =
@@ -10093,28 +10722,30 @@ try {
               onStatus: feedback.update,
             });
         })
-        .then(() => {
+        .then(async () => {
+          // The existing shared theme owner includes its selected fonts. Wait
+          // under this attempt's lease before accepting appearance or painting.
+          if (menuStyle.themeHost.preparing) {
+            feedback.message(() => t('interface:gettingReadyGameplayIsPaused'));
+            await menuStyle.themeHost.whenReady({ signal: controller.signal });
+          }
           if (
-            pictureResume === ticket &&
-            pictureGeneration === ticket &&
-            owner === flightPictures &&
-            run === selectedRun &&
-            theme.id === selectedTheme
-          )
-            feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
-          if (
+            controller.signal.aborted ||
             pictureResume !== ticket ||
             pictureGeneration !== ticket ||
             owner !== flightPictures ||
             run !== selectedRun ||
             theme.id !== selectedTheme ||
-            (needsFreshActors && actorPreferences.snapshot().revision !== actorChoice.revision) ||
-            document.hidden ||
-            !document.hasFocus() ||
-            dialogOpen() ||
-            courseBlocked()
+            (needsFreshActors && actorPreferences.snapshot().revision !== actorChoice.revision)
           )
             return;
+          if (document.hidden || !document.hasFocus()) {
+            // Asset completion is useful feedback while paused. It grants no
+            // adoption, rendering or Resume authority to an unfocused page.
+            feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
+            return;
+          }
+          if (dialogOpen() || courseBlocked()) return;
           if (stagedVisuals) {
             adoptFlightVisualLease(stagedVisuals);
             stagedVisuals = null;
@@ -10134,21 +10765,102 @@ try {
             captureEnvironmentCandidate = stagedEnvironment;
             captureEnvironmentReady = true;
           }
+          if (acceptedCaptureAppearance === undefined)
+            acceptedCaptureAppearance = acceptAttemptAppearance(captureEnvironmentCandidate, {
+              artRevision: runtimeActorArtRevision(),
+              collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
+            });
+          painter.setAttemptAppearance(acceptedCaptureAppearance);
+          if (needsProgress) {
+            feedback.message(() => t('interface:gettingReadyGameplayIsPaused'));
+            // Accepted assets/run own this selection. Required storage settles
+            // while paused, before board submission and quiet cadence grant play.
+            if (!started && selectedJourneyRun !== run) rememberSelection();
+            await journeyProfile.flush();
+            if (
+              controller.signal.aborted ||
+              pictureResume !== ticket ||
+              pictureGeneration !== ticket ||
+              run !== selectedRun ||
+              runId !== selectedRunId ||
+              owner !== flightPictures ||
+              document.hidden ||
+              !document.hasFocus() ||
+              dialogOpen()
+            )
+              return;
+          }
+          await fieldScene.prepareBoard(controller.signal);
+          if (!fieldScene.cadence.ready) {
+            feedback.message(() => t('interface:gettingReadyGameplayIsPaused'));
+            await fieldScene.prepareCadence(controller.signal);
+          }
+          // A late paint/theme acceptance can invalidate caches during quiet
+          // callbacks without replacing the attempt. Submit its replacement
+          // board before granting play; the completed cadence is not rewritten.
+          if (!fieldScene.prepared()) await fieldScene.prepareBoard(controller.signal);
+          if (
+            controller.signal.aborted ||
+            pictureResume !== ticket ||
+            pictureGeneration !== ticket ||
+            run !== selectedRun ||
+            owner !== flightPictures ||
+            theme.id !== selectedTheme ||
+            document.hidden ||
+            !document.hasFocus() ||
+            dialogOpen() ||
+            rendererLost.size
+          )
+            return;
+          if (menuStyle.themeHost.preparing) {
+            // A new selection after the awaited owner needs a fresh explicit
+            // activation, not an unbounded renewal of preparation's deadline.
+            feedback.finish(() => t('interface:gameNotReadyTryStartOrResumeAgain'));
+            return;
+          }
+          feedback.finish(t('interface:flightAssetsReadyPressResumeToContinue'));
           pictureResume = null;
           pictureVisualController = null;
-          resume({ alignCourseBoard, contentSwitchTicket });
+          return resume({
+            alignCourseBoard,
+            contentSwitchTicket,
+            resumeCue,
+            progressAttempt: { run: selectedRun, runId: selectedRunId },
+          });
         })
         .catch((error) => {
+          // Lifecycle and ownership cancellation are not missing-original failures.
+          if (error?.name === 'AbortError') return;
+          if (
+            pictureResume === ticket &&
+            (error instanceof PreparationCadenceTimeoutError ||
+              error instanceof ThemePreparationTimeoutError)
+          ) {
+            performanceSession?.reportFailure(
+              error instanceof PreparationCadenceTimeoutError
+                ? 'Preparation: quiet cadence deadline exceeded.'
+                : 'Preparation: selected theme deadline exceeded.',
+            );
+            const message = () => t('interface:gameNotReadyTryStartOrResumeAgain');
+            feedback.finish(message, 'error');
+            notify(message);
+            return;
+          }
           if (pictureResume === ticket) {
+            performanceSession?.reportFailure(`Preparation: ${error.message ?? String(error)}`);
             feedback.finish(() => flightPictureFailure(error), 'error');
             pictureFailure(error, notify);
           }
         })
         .finally(() => {
+          releasePreparationLayout(layoutOwner);
           stagedVisuals?.release();
           stagedActors?.release();
           if (pictureVisualController === controller) pictureVisualController = null;
-          if (pictureResume === ticket) pictureResume = null;
+          if (pictureResume === ticket) {
+            pictureResume = null;
+            feedback.finish('', 'cancelled');
+          }
         });
     }
     pictureResume = null;
@@ -10170,12 +10882,16 @@ try {
           collection: selectedArcadeCollection(menuStyle.themeHost.effectivePreferences()),
         });
       painter.setAttemptAppearance(acceptedCaptureAppearance);
-      rememberSelection();
+      if (selectedJourneyRun !== run) rememberSelection();
     }
+    void updatePlayedLevelLink();
     started = true;
     paused = false;
-    void updatePlayedLevelLink();
-    if (['restored', 'paused-resume'].includes(runMessageCue))
+    retireMissionThumbnails();
+    setMediaPreparationPhase('playing');
+    performanceSession?.setPhase('playing');
+    qualityPolicy.safeTransition(performance.now());
+    if (['restored', 'paused-resume'].includes(resumeCue))
       warning(
         run.player.cutting
           ? localizedMessage('interface:flightResumedYourUnfinishedLineIsStillExposed')
@@ -10192,6 +10908,9 @@ try {
     localizedText($('pause-button'), () => 'Ⅱ');
     refreshCourse();
     refreshHUD();
+    // The public state now owns the same geometry; removing the lease cannot
+    // briefly restore the paused layout between preparation and active play.
+    releasePreparationLayout(layoutOwner);
     if (courseSession && alignCourseBoard) revealFirstFlightBoard($('arena-shell'));
   }
   function finishDefeatPresentation() {
@@ -10217,8 +10936,21 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force, { preserveWorld = false } = {}) {
+    const pauseTrace =
+      performanceSession && performanceRunGeneration > 0
+        ? {
+            session: performanceSession,
+            generation: performanceRunGeneration,
+            tick: run?.tick,
+            complete: true,
+          }
+        : null;
+    markPauseWork(pauseTrace, 'pause-begin');
+    setMediaPreparationPhase(document.hidden || !document.hasFocus() ? 'suspended' : 'paused');
+    performanceSession?.setPhase(document.hidden ? 'hidden' : 'paused');
     if (practiceRenderFailure.failed) return;
     cancelPictureStart({ preserveRecovery: true, preserveWorld });
+    markPauseWork(pauseTrace, 'pause-phase');
     if (courseBlocked()) {
       clearInput();
       paused = true;
@@ -10235,13 +10967,20 @@ try {
       sound.pause?.();
       return;
     }
-    if (!started || ['won', 'lost'].includes(run?.status)) return;
+    if (!started || ['won', 'lost'].includes(run?.status)) {
+      if (journeyProfile && !journeyRewardsDurable && (!started || paused))
+        void journeyProfile.flush();
+      void updatePlayedLevelLink({ discoverClassic: true });
+      return;
+    }
     if (force !== true && paused) {
       resume();
       return;
     }
     clearInput();
     paused = true;
+    markPauseWork(pauseTrace, 'pause-input');
+    if (journeyProfile && !journeyRewardsDurable) void journeyProfile.flush();
     sound.pause?.();
     if (runMessageCue === 'resumed')
       warning(
@@ -10251,6 +10990,7 @@ try {
         'paused-resume',
         'host.paused',
       );
+    markPauseWork(pauseTrace, 'pause-audio');
     if (
       !practice &&
       !courseEntryHold &&
@@ -10260,176 +11000,28 @@ try {
       !sessionBusy
     ) {
       try {
-        persistAttempt(false);
-      } catch {}
-    }
+        persistAttempt(false, pauseTrace);
+      } catch {
+        markPauseWork(pauseTrace, 'pause-persist-failed', true);
+      }
+    } else markPauseWork(pauseTrace, 'pause-save-skipped');
     overlay('pause');
+    markPauseWork(pauseTrace, 'pause-overlay');
     localizedText($('pause-button'), () => '▶');
     refreshHUD();
+    markPauseWork(pauseTrace, 'pause-hud');
+    void updatePlayedLevelLink({ discoverClassic: true });
+    markPauseWork(pauseTrace, 'pause-link');
+    // End is a completed synchronous span, never evidence of durable storage
+    // or asynchronous sharing/flush completion. Failed substages stay partial.
+    if (pauseTrace?.complete) markPauseWork(pauseTrace, 'pause-end');
   }
-  function refreshHUD() {
-    huntStatus?.render(run);
-    huntResultStatus?.render(run);
-    encounterVariantControls?.refresh();
-    if (practiceRenderFailure.failed) return;
-    profileRecovery?.refresh();
-    refreshJourneySkip();
-    const reactionMission = journeySkipMission();
-    journeyReactions.present({
-      owned: !!reactionMission,
-      mode: 'solo',
-      outcome: run?.status,
-      missionId: reactionMission?.id,
-      ...(candidateHost?.owns(activeEntry) ? { feedback: activeEntry.campaignFeedback } : {}),
-      encounter: !!run?.level.encounter,
-      relays: !!run?.level.relayGates?.gates?.length,
-    });
-    show(
-      'pause-button',
-      started &&
-        !paused &&
-        !courseBlocked() &&
-        !campaignOverview &&
-        !celebrationActive &&
-        !defeatActive &&
-        !['won', 'lost'].includes(run.status),
-    );
-    localizedText($('shell-edition'), () =>
-      courseSession
-        ? t('interface:firstFlight2')
-        : practice
-          ? t('interface:practice')
-          : !arcadeActionCapabilities(run?.level).manualAbility
-            ? t('interface:arcadeEdition')
-            : t('interface:tacticalEdition'),
-    );
-    document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
-    const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
-    const previousPicturePhase = document.body.dataset.winPicture;
-    const phase = enjoyingPicture
-      ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
-        ? 'revealing'
-        : celebrationActive
-          ? 'celebrating'
-          : 'settled'
-      : 'off';
-    const arrival =
-      previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(phase)
-        ? $('game-canvas').getBoundingClientRect()
-        : null;
-    document.body.dataset.winPicture = phase;
-    if (arrival)
-      animateRewardArrival(
-        $('game-canvas'),
-        arrival,
-        displayPreferences.snapshot().effectiveReducedEffects,
-      );
-    show('win-picture-caption', enjoyingPicture && phase !== 'revealing');
-    document.body.dataset.flightState =
-      defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
-        ? 'picture'
-        : campaignOverview || ['won', 'lost'].includes(run.status)
-          ? 'result'
-          : !started
-            ? 'briefing'
-            : paused
-              ? 'paused'
-              : 'running';
-    $('coverage').innerHTML = `${(run.coverage * 100).toFixed(1)}<small>%</small>`;
-    $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
-    localizedAttribute($('coverage'), 'aria-valuetext', () =>
-      t(
-        run.level.classic?.hunt?.mode === 'hunt'
-          ? 'gameplay:hud.huntCoverageValue'
-          : 'gameplay:hud.coverageValue',
-        {
-          coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
-          target: Math.round(run.level.goal.coverage * 100),
-          kills: run.classic?.hunt?.kills ?? 0,
-          total: run.level.classic?.hunt?.targets.length ?? 0,
-        },
+  function refreshHUDClocks() {
+    localizedText($('time'), () =>
+      timeLabel(
+        run.rules.timeLimitSeconds ? Math.max(0, run.rules.timeLimitSeconds - run.time) : run.time,
       ),
     );
-    $('coverage-bar').style.width = `${run.coverage * 100}%`;
-    $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
-    $('goal-marker').hidden = run.level.classic?.hunt?.mode === 'hunt';
-    localizedText($('target'), () =>
-      run.level.classic?.hunt?.mode === 'hunt'
-        ? `${huntText('targets')}: ${run.classic.hunt.kills}/${run.level.classic.hunt.quota}`
-        : t('gameplay:target', { value1: Math.round(run.level.goal.coverage * 100) }),
-    );
-    $('coverage').dataset.target =
-      run.level.classic?.hunt?.mode !== 'hunt' && Number.isFinite(run.level.goal.coverage)
-        ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
-        : '';
-    localizedText($('lives'), () =>
-      run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—',
-    );
-    localizedAttribute($('lives'), 'aria-label', () =>
-      t('gameplay:hud.lives', { count: run.lives }),
-    );
-    $('lives').dataset.compactValue = `♥ ${run.lives}`;
-    localizedText($('time'), () => timeLabel(run.time));
-    localizedText($('score'), () => {
-      // Keep raw score precision in the run/save/replay; only compact the HUD.
-      const label = formatNumber(run.score, { useGrouping: false, maximumFractionDigits: 3 });
-      return Number.isInteger(run.score) ? label.padStart(5, '0') : label;
-    });
-    const required = run.objectives.filter((o) => o.required),
-      done = required.filter((o) => o.captured);
-    localizedText($('objective-state'), () =>
-      campaignOverview
-        ? t('interface:chooseAMissionToReplay')
-        : run.status === 'won'
-          ? t('interface:targetReached')
-          : run.status === 'lost'
-            ? t('interface:retryWhenYouAreReady')
-            : run.level.classic?.hunt
-              ? huntText(
-                  run.level.classic.hunt.mode === 'hunt'
-                    ? 'huntGoal'
-                    : run.level.classic.hunt.mode === 'capture-quota'
-                      ? 'quotaGoal'
-                      : 'bonusGoal',
-                )
-              : required.length
-                ? `${contentText(theme, 'labels.objective')}: ${done.length} / ${required.length}`
-                : t('interface:closeALineToRevealThePicture'),
-    );
-    localizedText($('flight-state'), () =>
-      campaignOverview
-        ? t('interface:campaignComplete3')
-        : run.status === 'won'
-          ? t('interface:missionComplete')
-          : run.status === 'lost'
-            ? t('interface:flightEnded')
-            : run.status === 'respawning'
-              ? t('interface:recovering')
-              : !started
-                ? t('interface:readyForLaunch')
-                : paused
-                  ? t('interface:paused')
-                  : run.player.cutting
-                    ? run.player.speed === 0
-                      ? t('interface:lineExposedChooseATurn')
-                      : t('interface:liveLineExposed')
-                    : [
-                          'xonix-core.v6',
-                          'xonix-core.v7',
-                          'xonix-core.v8',
-                          'xonix-core.v9',
-                          'xonix-core.v10',
-                          'xonix-core.v11',
-                          'xonix-core.v12',
-                          'xonix-core.v13',
-                          'xonix-core.v14',
-                          'xonix-core.v15',
-                          'xonix-core.v16',
-                        ].includes(run.ruleset)
-                      ? t('interface:reclaimedGround')
-                      : t('interface:safeGround'),
-    );
-    $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
     localizedText($('ability-state'), () => {
       const left = Math.max(0, run.ability.cooldownUntil - run.time);
       const status =
@@ -10448,62 +11040,315 @@ try {
           })
         : status;
     });
-    const canSwitchCraft = craftSwitchAvailable();
-    $('hangar-button').disabled = !canSwitchCraft;
-    show('hangar-button', canSwitchCraft);
-    localizedText(
-      $('loadout-note'),
-      () =>
-        t('interface:startingClassChangesBeginAFreshAttempt') +
-        (canSwitchCraft ? ' ' + t('interface:useAHangarToSwitchDuringFlight') + '' : ''),
-    );
-    $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
-    $('restart-button').hidden = !started || ['won', 'lost'].includes(run.status);
-    refreshInputPresentation();
-    $('pause-button').disabled = courseBlocked() || campaignOverview;
-    $('save-attempt-button').disabled =
-      !started || practice || ['won', 'lost'].includes(run.status);
-    const near = run.hangars?.some(
-      (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,
-    );
-    localizedText($('hangar-state'), () =>
-      courseSession
-        ? t('interface:scoutFixedLessonCraftNoHangarsInTraining')
-        : run.signal?.zoneIds?.length
-          ? run.signal.resistant
-            ? t('interface:fiberLinkSignalZoneBypassedLineRemainsVulnerable')
-            : t('interface:signalInterferenceSlowerMovementOrDisabledEquipment')
-          : canSwitchCraft
-            ? t(
-                near && !run.player.cutting
-                  ? 'gameplay:hud.hangarAvailable'
-                  : 'gameplay:hud.hangarReturn',
-                { craft: contentText(run.classRecipe, 'label') },
-              )
-            : contentText(run.classRecipe, 'label'),
-    );
-    if (run.rules.timeLimitSeconds)
-      localizedText($('time'), () => timeLabel(Math.max(0, run.rules.timeLimitSeconds - run.time)));
-    const encounter = encounterView(run),
-      classic = classicView(run);
-    show('encounter-status', !!(encounter || classic) && !campaignOverview);
-    $('encounter-status').dataset.kind = encounter ? 'encounter' : 'classic';
-    localizedText(
-      $('encounter-title'),
-      () => contentText(encounter, 'title') || t('interface:classicField'),
-    );
-    localizedText($('encounter-instruction'), () => contentText(encounter, 'instruction') || '');
-    show('encounter-instruction', !!encounter);
-    localizedText($('classic-summary'), () => contentText(classic, 'summary') || '');
-    show('classic-summary', !!classic);
-    $('encounter-status').dataset.phase =
-      encounter?.phase ||
-      (classic?.enemies.some((enemy) => enemy.mode === 'warning') ? 'warning' : 'open');
-    refreshMastery();
-    refreshCourse();
-    flightDetails?.reconcile();
+  }
+  function refreshHUD(frame = false, terminalHUD = false) {
+    const workStart = performanceSession ? performance.now() : 0;
+    // Only the same callback that completed terminal work opts into these
+    // bounded numeric marks. Ordinary HUD frames allocate no diagnostic row.
+    const terminalGeneration = terminalHUD && performanceSession ? performanceRunGeneration : 0;
+    const terminalTick = terminalGeneration ? run.tick : 0;
+    if (terminalGeneration)
+      performanceSession.markEvent(
+        'terminal-hud-begin',
+        terminalGeneration,
+        terminalTick,
+        workStart,
+      );
+    try {
+      const now = performance.now();
+      const changed =
+        !hudState ||
+        hudState.run !== run ||
+        hudState.status !== run.status ||
+        hudState.lives !== run.lives ||
+        hudState.coverage !== run.coverage ||
+        hudState.score !== run.score ||
+        hudState.cutting !== run.player.cutting ||
+        hudState.stopped !== (run.player.speed === 0) ||
+        hudState.ammo !== run.ability.ammo ||
+        hudState.paused !== paused ||
+        hudState.started !== started ||
+        hudState.celebrating !== celebrationActive ||
+        hudState.defeat !== defeatActive;
+      if (frame && !hudDirty && !changed && now - hudAt < 100) return;
+      hudAt = now;
+      refreshHUDClocks();
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-clocks', terminalGeneration, terminalTick);
+      const switchCraft = craftSwitchAvailable();
+      const nearHangar =
+        run.hangars?.some((h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius) ??
+        false;
+      const signalState = `${run.signal?.zoneIds?.join(',') ?? ''}:${run.signal?.resistant ?? false}`;
+      const enjoyingPicture = run.status === 'won' && $('game-overlay').hidden;
+      const picturePhase = enjoyingPicture
+        ? celebrationActive && winRevealAge < REWARD_BOARD_SECONDS
+          ? 'revealing'
+          : celebrationActive
+            ? 'celebrating'
+            : 'settled'
+        : 'off';
+      if (
+        frame &&
+        !hudDirty &&
+        !changed &&
+        hudState.switchCraft === switchCraft &&
+        hudState.nearHangar === nearHangar &&
+        hudState.signalState === signalState &&
+        hudState.picturePhase === picturePhase
+      ) {
+        huntStatus?.render(run);
+        huntResultStatus?.render(run);
+        refreshMastery();
+        refreshCourse();
+        flightDetails?.reconcile();
+        return;
+      }
+      hudDirty = false;
+      ++hudRevision;
+      hudState = {
+        run,
+        status: run.status,
+        lives: run.lives,
+        coverage: run.coverage,
+        score: run.score,
+        cutting: run.player.cutting,
+        stopped: run.player.speed === 0,
+        ammo: run.ability.ammo,
+        paused,
+        started,
+        celebrating: celebrationActive,
+        defeat: defeatActive,
+        switchCraft,
+        nearHangar,
+        signalState,
+        picturePhase,
+      };
+      huntStatus?.render(run);
+      huntResultStatus?.render(run);
+      encounterVariantControls?.refresh();
+      if (practiceRenderFailure.failed) return;
+      profileRecovery?.refresh();
+      refreshJourneySkip();
+      const reactionMission = journeySkipMission();
+      journeyReactions.present({
+        owned: !!reactionMission,
+        mode: 'solo',
+        outcome: run?.status,
+        missionId: reactionMission?.id,
+        ...(candidateHost?.owns(activeEntry) ? { feedback: activeEntry.campaignFeedback } : {}),
+        encounter: !!run?.level.encounter,
+        relays: !!run?.level.relayGates?.gates?.length,
+      });
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-owners', terminalGeneration, terminalTick);
+      show(
+        'pause-button',
+        started &&
+          !paused &&
+          !courseBlocked() &&
+          !campaignOverview &&
+          !celebrationActive &&
+          !defeatActive &&
+          !['won', 'lost'].includes(run.status),
+      );
+      localizedText($('shell-edition'), () =>
+        courseSession
+          ? t('interface:firstFlight2')
+          : practice
+            ? t('interface:practice')
+            : !arcadeActionCapabilities(run?.level).manualAbility
+              ? t('interface:arcadeEdition')
+              : t('interface:tacticalEdition'),
+      );
+      document.body.dataset.pictureState = flightPictures?.ready(theme.id) ? 'ready' : 'pending';
+      const previousPicturePhase = document.body.dataset.winPicture;
+      const arrival =
+        previousPicturePhase === 'revealing' && ['celebrating', 'settled'].includes(picturePhase)
+          ? $('game-canvas').getBoundingClientRect()
+          : null;
+      document.body.dataset.winPicture = picturePhase;
+      if (arrival)
+        animateRewardArrival(
+          $('game-canvas'),
+          arrival,
+          displayPreferences.snapshot().effectiveReducedEffects,
+        );
+      show('win-picture-caption', enjoyingPicture && picturePhase !== 'revealing');
+      document.body.dataset.flightState =
+        defeatActive || celebrationActive || (run.status === 'won' && !$('show-result').hidden)
+          ? 'picture'
+          : campaignOverview || ['won', 'lost'].includes(run.status)
+            ? 'result'
+            : !started
+              ? 'briefing'
+              : paused
+                ? 'paused'
+                : 'running';
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-picture', terminalGeneration, terminalTick);
+      const coverageLabel = (run.coverage * 100).toFixed(1);
+      if ($('coverage').firstChild.textContent !== coverageLabel)
+        $('coverage').firstChild.textContent = coverageLabel;
+      $('coverage').setAttribute('aria-valuenow', (run.coverage * 100).toFixed(1));
+      localizedAttribute($('coverage'), 'aria-valuetext', () =>
+        t(
+          run.level.classic?.hunt?.mode === 'hunt'
+            ? 'gameplay:hud.huntCoverageValue'
+            : 'gameplay:hud.coverageValue',
+          {
+            coverage: formatNumber(run.coverage * 100, { maximumFractionDigits: 1 }),
+            target: Math.round(run.level.goal.coverage * 100),
+            kills: run.classic?.hunt?.kills ?? 0,
+            total: run.level.classic?.hunt?.targets.length ?? 0,
+          },
+        ),
+      );
+      const coverageTransform = `scaleX(${run.coverage})`;
+      if ($('coverage-bar').style.transform !== coverageTransform)
+        $('coverage-bar').style.transform = coverageTransform;
+      $('goal-marker').style.left = `${run.level.goal.coverage * 100}%`;
+      $('goal-marker').hidden = run.level.classic?.hunt?.mode === 'hunt';
+      localizedText($('target'), () =>
+        run.level.classic?.hunt?.mode === 'hunt'
+          ? `${huntText('targets')}: ${run.classic.hunt.kills}/${run.level.classic.hunt.quota}`
+          : t('gameplay:target', { value1: Math.round(run.level.goal.coverage * 100) }),
+      );
+      $('coverage').dataset.target =
+        run.level.classic?.hunt?.mode !== 'hunt' && Number.isFinite(run.level.goal.coverage)
+          ? ` / ${Math.round(run.level.goal.coverage * 100)}%`
+          : '';
+      localizedText($('lives'), () =>
+        run.lives > 3 ? `◆ ×${run.lives}` : '◆ '.repeat(run.lives).trim() || '—',
+      );
+      localizedAttribute($('lives'), 'aria-label', () =>
+        t('gameplay:hud.lives', { count: run.lives }),
+      );
+      $('lives').dataset.compactValue = `♥ ${run.lives}`;
+      localizedText($('score'), () => {
+        // Keep raw score precision in the run/save/replay; only compact the HUD.
+        const label = formatNumber(run.score, { useGrouping: false, maximumFractionDigits: 3 });
+        return Number.isInteger(run.score) ? label.padStart(5, '0') : label;
+      });
+      const required = run.objectives.filter((o) => o.required),
+        done = required.filter((o) => o.captured);
+      localizedText($('objective-state'), () =>
+        campaignOverview
+          ? t('interface:chooseAMissionToReplay')
+          : run.status === 'won'
+            ? t('interface:targetReached')
+            : run.status === 'lost'
+              ? t('interface:retryWhenYouAreReady')
+              : run.level.classic?.hunt
+                ? huntText(
+                    run.level.classic.hunt.mode === 'hunt'
+                      ? 'huntGoal'
+                      : run.level.classic.hunt.mode === 'capture-quota'
+                        ? 'quotaGoal'
+                        : 'bonusGoal',
+                  )
+                : required.length
+                  ? `${contentText(theme, 'labels.objective')}: ${done.length} / ${required.length}`
+                  : t('interface:closeALineToRevealThePicture'),
+      );
+      localizedText($('flight-state'), () =>
+        campaignOverview
+          ? t('interface:campaignComplete3')
+          : run.status === 'won'
+            ? t('interface:missionComplete')
+            : run.status === 'lost'
+              ? t('interface:flightEnded')
+              : run.status === 'respawning'
+                ? t('interface:recovering')
+                : !started
+                  ? t('interface:readyForLaunch')
+                  : paused
+                    ? t('interface:paused')
+                    : run.player.cutting
+                      ? run.player.speed === 0
+                        ? t('interface:lineExposedChooseATurn')
+                        : t('interface:liveLineExposed')
+                      : [
+                            'xonix-core.v6',
+                            'xonix-core.v7',
+                            'xonix-core.v8',
+                            'xonix-core.v9',
+                            'xonix-core.v10',
+                            'xonix-core.v11',
+                            'xonix-core.v12',
+                            'xonix-core.v13',
+                            'xonix-core.v14',
+                            'xonix-core.v15',
+                            'xonix-core.v16',
+                          ].includes(run.ruleset)
+                        ? t('interface:reclaimedGround')
+                        : t('interface:safeGround'),
+      );
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-values', terminalGeneration, terminalTick);
+      $('status-dot').style.background = run.player.cutting ? 'var(--danger)' : 'var(--safe)';
+      const canSwitchCraft = craftSwitchAvailable();
+      $('hangar-button').disabled = !canSwitchCraft;
+      show('hangar-button', canSwitchCraft);
+      localizedText(
+        $('loadout-note'),
+        () =>
+          t('interface:startingClassChangesBeginAFreshAttempt') +
+          (canSwitchCraft ? ' ' + t('interface:useAHangarToSwitchDuringFlight') + '' : ''),
+      );
+      $('restart-button').disabled = defeatActive || courseBlocked() || campaignOverview;
+      $('restart-button').hidden = !started || ['won', 'lost'].includes(run.status);
+      refreshInputPresentation();
+      $('pause-button').disabled = courseBlocked() || campaignOverview;
+      $('save-attempt-button').disabled =
+        !started || practice || ['won', 'lost'].includes(run.status);
+      const near = run.hangars?.some(
+        (h) => Math.hypot(h.x - run.player.x, h.y - run.player.y) <= h.radius,
+      );
+      localizedText($('hangar-state'), () =>
+        courseSession
+          ? t('interface:scoutFixedLessonCraftNoHangarsInTraining')
+          : run.signal?.zoneIds?.length
+            ? run.signal.resistant
+              ? t('interface:fiberLinkSignalZoneBypassedLineRemainsVulnerable')
+              : t('interface:signalInterferenceSlowerMovementOrDisabledEquipment')
+            : canSwitchCraft
+              ? t(
+                  near && !run.player.cutting
+                    ? 'gameplay:hud.hangarAvailable'
+                    : 'gameplay:hud.hangarReturn',
+                  { craft: contentText(run.classRecipe, 'label') },
+                )
+              : contentText(run.classRecipe, 'label'),
+      );
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-controls', terminalGeneration, terminalTick);
+      const encounter = encounterView(run),
+        classic = classicView(run);
+      show('encounter-status', !!(encounter || classic) && !campaignOverview);
+      $('encounter-status').dataset.kind = encounter ? 'encounter' : 'classic';
+      localizedText(
+        $('encounter-title'),
+        () => contentText(encounter, 'title') || t('interface:classicField'),
+      );
+      localizedText($('encounter-instruction'), () => contentText(encounter, 'instruction') || '');
+      show('encounter-instruction', !!encounter);
+      localizedText($('classic-summary'), () => contentText(classic, 'summary') || '');
+      show('classic-summary', !!classic);
+      $('encounter-status').dataset.phase =
+        encounter?.phase ||
+        (classic?.enemies.some((enemy) => enemy.mode === 'warning') ? 'warning' : 'open');
+      refreshMastery();
+      refreshCourse();
+      flightDetails?.reconcile();
+      if (terminalGeneration)
+        performanceSession.markEvent('terminal-hud-end', terminalGeneration, terminalTick);
+    } finally {
+      if (performanceSession) hudWorkMs += performance.now() - workStart;
+    }
   }
   function eventFeedback(events) {
+    if (events.length) hudDirty = true;
     contextualReactions?.events(events, {
       attemptId: runId,
       actorFamilyFor: (id) => pursuitRoster(run?.level).find((actor) => actor.id === id)?.family,
@@ -10520,10 +11365,12 @@ try {
       journeyEnabled &&
       !practice &&
       (candidateHost ? activeEntry.campaignId === 'prologue' : levelIndex < 2);
+    let captureExplanation;
     const captureTeaching = () => {
+      if (captureExplanation !== undefined) return captureExplanation;
       const occupied = inspectCaptureSnapshot(run).components.filter((region) => region.retained);
       const anchors = occupied.flatMap((region) => region.enemyIds);
-      return `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`;
+      return (captureExplanation = `Line secured. ${occupied.length} occupied region${occupied.length === 1 ? ' remains' : 's remain'}${anchors.length ? ` around ${anchors.slice(0, 3).join(', ')}${anchors.length > 3 ? ' and other field enemies' : ''}` : ''}. Empty regions fill; field enemies retain their regions.`);
     };
     const openedGates = events.filter((event) => event.type === 'relay.opened').length;
     const captureTerrain = [
@@ -10748,6 +11595,73 @@ try {
       throw error;
     }
   }
+  async function captureJourneyPerformanceLater(acceptedMission, acceptedClear) {
+    const acceptedRun = run,
+      acceptedRecorder = recorder,
+      acceptedRunId = runId;
+    const assertActive = () => {
+      if (!journeyPerformanceActive)
+        throw new DOMException('Journey comparison cancelled.', 'AbortError');
+    };
+    const currentResult = () =>
+      journeyPerformanceActive &&
+      run === acceptedRun &&
+      recorder === acceptedRecorder &&
+      runId === acceptedRunId;
+    const scheduleChunk = (work, options) =>
+      scheduleOptionalReplayChunk(() => {
+        assertActive();
+        return work();
+      }, options);
+    try {
+      // Terminal run/recorder references remain immutable after their final
+      // simulation step. Next may replace them, but must not discard a valid
+      // accepted personal best; only the result UI belongs to the current run.
+      await scheduleChunk(() => {}, {});
+      assertActive();
+      // Owner admission drains in microtasks. A timer task after admission
+      // gives the winning frame a real yield before taking the private snapshot.
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      assertActive();
+      let exported;
+      await scheduleChunk(() => {
+        const clear = journeyProfile.snapshot().clears.solo[acceptedMission.id];
+        if (
+          clear?.runId !== acceptedClear.runId ||
+          clear.gameplayId !== acceptedClear.gameplayId ||
+          clear.difficulty !== acceptedClear.difficulty
+        )
+          throw new DOMException('Journey comparison was replaced.', 'AbortError');
+        // Keep the existing optional array budget and public export contract.
+        const optionalReplay =
+          acceptedRecorder.segmentCount > JOURNEY_PERFORMANCE_LIMITS.arrayItems
+            ? Promise.reject(new RangeError('Journey performance array budget exceeded.'))
+            : exportReplayAsync(acceptedRecorder, acceptedRun, { scheduleChunk });
+        // Observe both outcomes immediately, but return no promise: the export's
+        // inner chunks need this same main slot after this callback releases it.
+        exported = optionalReplay.then(
+          (replay) => ({ replay }),
+          (error) => ({ error }),
+        );
+      }, {});
+      const outcome = await exported;
+      assertActive();
+      if ('error' in outcome) throw outcome.error;
+      const result = await journeyProfile.performance.capture({
+        mode: 'solo',
+        missionId: acceptedMission.id,
+        ...acceptedClear,
+        replay: outcome.replay,
+      });
+      if (!currentResult()) return;
+      journeyBestResult = { runId: acceptedRunId, result };
+      refreshJourneyBest();
+    } catch {
+      if (!currentResult()) return;
+      journeyBestResult = { runId: acceptedRunId, result: { error: 'unavailable' } };
+      refreshJourneyBest();
+    }
+  }
   const gameWakeLock = createGameWakeLock();
   window.addEventListener('pagehide', (event) => {
     if (!event.persisted) {
@@ -10757,7 +11671,8 @@ try {
     if (event.persisted) gameWakeLock.setActive(false);
     else gameWakeLock.dispose();
   });
-  function update(elapsed) {
+  function update(elapsed, flightWasActive) {
+    let terminalHUD = false;
     gameWakeLock.setActive(
       !demoHost?.active && started && !paused && run.status === 'running' && !document.hidden,
     );
@@ -10770,6 +11685,7 @@ try {
       }
       return;
     }
+    if (['won', 'lost'].includes(run.status)) setMediaPreparationPhase('paused');
     controllerInactive = false;
     // The isolated lesson owns its controller; the paused parent must not
     // sample the same pad or turn a child Confirm into a parent menu action.
@@ -10790,6 +11706,7 @@ try {
         ? demoHost.toggleBoostEligible
         : run?.status === 'running',
     });
+    if (controllerFrame.assigned && !paused && started) observeInput('controller');
     soloRadioSetup.refresh();
     refreshControllerBoostCue();
     const { status, assigned, disconnected } = controllerFrame;
@@ -10898,6 +11815,7 @@ try {
       message: status.message.slice(0, 240),
     });
     if (
+      flightWasActive &&
       !courseBlocked() &&
       !paused &&
       started &&
@@ -10950,7 +11868,29 @@ try {
           } catch {
             stopCourseGuidance();
           }
+        const simulationStart = performanceSession ? performance.now() : 0;
         stepRun(run, command, FIXED_DT);
+        if (performanceSession) {
+          const acceptedAt = performance.now();
+          simulationWorkMs += acceptedAt - simulationStart;
+          for (let i = 0; i < run.events.length; i++)
+            if (run.events[i].type === 'cells.claimed')
+              performanceSession.markEvent(
+                'capture-accepted',
+                performanceRunGeneration,
+                run.tick,
+                acceptedAt,
+              );
+          if (beforeStatus !== run.status && (run.status === 'won' || run.status === 'lost'))
+            performanceSession.markEvent(
+              run.status === 'won' ? 'victory-accepted' : 'defeat-accepted',
+              performanceRunGeneration,
+              run.tick,
+              acceptedAt,
+            );
+          for (let i = 0; i < inputTokenCount; i++) performanceSession.tick(inputTokens[i]);
+          inputAppliedCount = inputTokenCount;
+        }
         sound.feedback(true, theme, run, {
           bodyId: flightActorLease?.pin().style === 'fpv' ? `fpv-${run.activeClassId}` : bodyId,
           actorStyle: flightActorLease?.pin().style,
@@ -11019,6 +11959,7 @@ try {
         eventFeedback(run.events);
       }
       if (!handled && ['won', 'lost'].includes(run.status)) {
+        performanceSession?.markEvent('terminal-work-begin', performanceRunGeneration, run.tick);
         let journeyRewardFailure = null;
         handled = true;
         paused = true;
@@ -11032,16 +11973,17 @@ try {
             (candidateHost?.progressMission?.(activeEntry, levelIndex) ?? journeyMission());
           if (mission) {
             const acceptedPicture = flightPictures?.current();
+            const gameplayId = dataIdentity({
+              ruleset: run.ruleset,
+              level: run.level,
+              classes: run.classRecipes,
+            });
             const completion = {
               type: 'complete',
               mode: 'solo',
               missionId: mission.id,
               runId,
-              gameplayId: dataIdentity({
-                ruleset: run.ruleset,
-                level: run.level,
-                classes: run.classRecipes,
-              }),
+              gameplayId,
               difficulty: activeEntry.difficulty || 'standard',
               stars: run.medal === 'gold' ? 3 : run.medal === 'silver' ? 2 : 1,
               ...(candidateHost?.owns(activeEntry) &&
@@ -11054,15 +11996,13 @@ try {
                       mode: 'solo',
                       editionId: authoredRoute.id,
                       missionId: mission.id,
-                      campaignKey: campaignKey(activeEntry.campaign),
+                      // This branch already requires the exact host-owned entry. Its
+                      // immutable execution key was validated during preparation.
+                      campaignKey: activeEntry.executionKey,
                       levelId: run.levelId,
                       levelRevision: String(flightPictures.context.levelRevision),
                       runId,
-                      gameplayId: dataIdentity({
-                        ruleset: run.ruleset,
-                        level: run.level,
-                        classes: run.classRecipes,
-                      }),
+                      gameplayId,
                       difficulty: activeEntry.difficulty || 'standard',
                       name: mission.name,
                       campaignTitle: mission.campaignTitle,
@@ -11099,36 +12039,11 @@ try {
           ) {
             const acceptedMission =
               candidateHost?.progressMission?.(activeEntry, levelIndex) ?? journeyMission();
-            const acceptedRun = run,
-              acceptedRunId = runId;
+            const acceptedRunId = runId;
             const acceptedClear =
               acceptedMission && journeyProfile?.snapshot().clears.solo[acceptedMission.id];
-            if (acceptedClear?.runId === acceptedRunId) {
-              try {
-                const replay = exportReplay(recorder, acceptedRun);
-                void journeyProfile.performance
-                  .capture({
-                    mode: 'solo',
-                    missionId: acceptedMission.id,
-                    ...acceptedClear,
-                    replay,
-                  })
-                  .then((result) => {
-                    if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
-                      return;
-                    journeyBestResult = { runId: acceptedRunId, result };
-                    refreshJourneyBest();
-                  })
-                  .catch(() => {
-                    if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
-                      return;
-                    journeyBestResult = { runId: acceptedRunId, result: { error: 'unavailable' } };
-                    refreshJourneyBest();
-                  });
-              } catch {
-                /* Comparison is optional; the accepted clear and Next remain available. */
-              }
-            }
+            if (acceptedClear?.runId === acceptedRunId)
+              void captureJourneyPerformanceLater(acceptedMission, acceptedClear);
           }
           if (!candidateHost?.owns(activeEntry)) {
             const previousBodies = availableBodies();
@@ -11278,6 +12193,8 @@ try {
             'host.lost',
           );
         }
+        performanceSession?.markEvent('terminal-work-end', performanceRunGeneration, run.tick);
+        terminalHUD = !!performanceSession;
       }
     } else {
       pendingAction = false;
@@ -11338,8 +12255,11 @@ try {
     });
     storyDialog.syncSettings();
     if (soundtrackPlayer) {
-      const context = soundtrackContext();
-      if (context.scene !== soundtrackLastScene) {
+      // The ordinary callback only needs the scene. Full context construction
+      // validates/hashes a raw practice campaign; retain that work at actual
+      // scene transitions and the existing accepted mission/theme boundaries.
+      if (currentSoundtrackScene() !== soundtrackLastScene) {
+        const context = soundtrackContext();
         soundtrackLastScene = context.scene;
         soundtrackPlayer.setContext(context);
       }
@@ -11347,7 +12267,7 @@ try {
     } else sound.update(!paused && started, theme, run);
     if (!sound.previewActive && $('music-preview').textContent.startsWith('Playing'))
       localizedText($('music-preview'), () => t('interface:previewMusic'));
-    refreshHUD();
+    refreshHUD(true, terminalHUD);
   }
   for (const t of themesFile.themes)
     $('theme-select').append(localizedOption(() => themeLabel(t), t.id));
@@ -11586,6 +12506,7 @@ try {
     restartRequest = null;
     restartDialog.close();
     if ($('shell-workshop-dialog').open) $('shell-workshop-dialog').close();
+    if ($('settings-dialog').open) $('settings-dialog').close();
     if ($('shell-home').open) $('shell-home').close();
     demo = false;
     try {
@@ -11776,7 +12697,8 @@ try {
     document,
     onPictureReady: (record) => editionUI?.pictureReady(record),
     getState: async () => {
-      if (!collectionJourneyState) await getUnifiedMissionLibrary();
+      if (!collectionJourneyState)
+        await getUnifiedMissionLibrary(() => $('collection-dialog').open);
       return collectionJourneyState;
     },
   });
@@ -11786,7 +12708,6 @@ try {
     storyDialog.close();
     pause(true);
     prepareCollectionProgress();
-    libraryPanel.populateGallery();
     localizedText($('collection-back'), () =>
       opener?.closest('#settings-dialog')
         ? t('interface:backToSettings')
@@ -11804,6 +12725,7 @@ try {
     )
       opener.focus({ preventScroll: true });
     $('collection-dialog').showModal();
+    void libraryPanel.populateGallery();
     return journeyCollection.open();
   };
   $('choose-appearance').onclick = focusAppearance;
@@ -11922,6 +12844,8 @@ try {
     lastReplay && downloadCurrentReplay(lastReplayPresentation ?? lastReplay);
   $('download-raw-replay').onclick = () => lastReplay && downloadCurrentReplay(lastReplay);
   function suspendInteraction() {
+    ++unifiedBuildRevision;
+    retireMissionThumbnails();
     cancelUnifiedOpening?.();
     // Returning to focus must not revive a picker or launch requested before
     // the interruption, even when its asynchronous work finishes afterward.
@@ -11947,7 +12871,9 @@ try {
   );
   window.addEventListener('blur', guardInstallOfflineBlur(suspendInteraction));
   function restoreListening() {
-    if (document.hidden || soundtrackDisposed || enemyGuide?.practiceActive) return;
+    if (document.hidden || !document.hasFocus() || soundtrackDisposed || enemyGuide?.practiceActive)
+      return;
+    setMediaPreparationPhase(started && !paused ? 'playing' : started ? 'paused' : 'menu');
     if (!soundtrackPlayer) {
       // The procedural fallback is used when file-audio setup is unavailable.
       // It still needs a fresh resume after an iOS lifecycle interruption.
@@ -12044,75 +12970,582 @@ try {
   refreshControllerPrompts();
   class FieldScene extends Phaser.Scene {
     create() {
+      fieldScene = this;
       this.boardSize = boardPaintSizeForRun(run);
       const { width, height } = this.boardSize;
       this.boardTexture = this.textures.createCanvas('field', width, height);
-      document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
-      document.documentElement.style.setProperty('--board-aspect', String(width / height));
       this.boardImage = this.add.image(0, 0, 'field').setOrigin(0);
       this.game.canvas.setAttribute('aria-hidden', 'true');
+      this.displayCSSWidth = this.game.canvas.clientWidth;
+      this.displayCSSHeight = this.game.canvas.clientHeight;
+      this.revision = 0;
+      this.preparedState = null;
+      this.failedPreparationRun = null;
+      this.lastPaint = null;
+      this.displayedBoardValid = false;
+      this.renderSuppressed = false;
+      this.cadence = createPreparationCadence({
+        onReady(baseline) {
+          qualityPolicy.setBaseline(baseline);
+          performanceSession?.setBaseline(baseline);
+        },
+      });
+      this.observedTitleOwner = null;
+      this.frameTitleQuality = null;
+      this.lastInterfaceAt = -Infinity;
+      this.lastInterfaceRun = null;
+      this.lastInterfaceStatus = null;
+      this.framePending = false;
+      this.pendingSubmission = false;
+      this.frameStartedAt = null;
+      const preStep = () => this.beginFrame();
+      const postRender = (renderer) => this.finishFrame(renderer);
+      this.game.events.on(Phaser.Core.Events.PRE_STEP, preStep);
+      this.game.events.on(Phaser.Core.Events.POST_RENDER, postRender);
+      let hooksRetired = false;
+      const retireFrameHooks = () => {
+        if (hooksRetired) return;
+        hooksRetired = true;
+        this.restoreDisplayRender();
+        this.game.events.off(Phaser.Core.Events.PRE_STEP, preStep);
+        this.game.events.off(Phaser.Core.Events.POST_RENDER, postRender);
+        this.preparedCancel?.();
+        this.failedPreparationRun = null;
+        this.cadence.cancel();
+        this.framePending = this.pendingSubmission = false;
+      };
+      this.events.once('shutdown', retireFrameHooks);
+      this.events.once('destroy', retireFrameHooks);
+      const resized = () => {
+        if (!this.syncDisplayGeometry()) this.invalidate();
+      };
+      const observer =
+        typeof ResizeObserver === 'function'
+          ? new ResizeObserver(() => this.syncDisplayGeometry())
+          : null;
+      observer?.observe(this.game.canvas);
+      window.addEventListener('resize', resized);
+      const surfaces = [
+        this.game.canvas,
+        this.boardTexture.canvas ?? this.boardTexture.context.canvas,
+      ];
+      const listeners = surfaces.filter(Boolean).map((canvas) => {
+        const lost = () => rendererInterrupted(canvas);
+        const restored = () => {
+          const context = canvas.getContext('2d');
+          context?.setTransform(1, 0, 0, 1, 0, 0);
+          if (context) context.imageSmoothingEnabled = false;
+          rendererRestored(canvas);
+        };
+        canvas.addEventListener?.('contextlost', lost);
+        canvas.addEventListener?.('contextrestored', restored);
+        return () => {
+          canvas.removeEventListener?.('contextlost', lost);
+          canvas.removeEventListener?.('contextrestored', restored);
+        };
+      });
+      window.addEventListener('pagehide', (event) => {
+        this.resetTitleQuality();
+        sceneClock.reset();
+        performanceSession?.discardInputs();
+        performanceSession?.setPhase('hidden');
+        if (event.persisted) return;
+        retireFrameHooks();
+        observer?.disconnect();
+        window.removeEventListener('resize', resized);
+        for (const dispose of listeners) dispose();
+      });
+      this.resizeBoard();
     }
-    update(now, delta) {
+    resourceSnapshot() {
+      const displayed = this.game.canvas,
+        detachedBoard = this.boardTexture.canvas ?? this.boardTexture.context.canvas;
+      const dimensions = (canvas) => {
+        const width = canvas?.width ?? 0,
+          height = canvas?.height ?? 0,
+          pixels = width * height;
+        return {
+          canvases: Number(pixels > 0),
+          width,
+          height,
+          pixels,
+          rgbaBytesEstimate: pixels * 4,
+        };
+      };
+      const unique = new Set([displayed, detachedBoard].filter(Boolean));
+      let pixels = 0;
+      for (const canvas of unique) pixels += dimensions(canvas).pixels;
+      return {
+        scope:
+          'Phaser-owned displayed canvas and detached board texture; separate from painter caches.',
+        displayed: dimensions(displayed),
+        detachedBoard: dimensions(detachedBoard),
+        uniqueCanvases: unique.size,
+        pixels,
+        rgbaBytesEstimate: pixels * 4,
+        estimate:
+          'RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable.',
+      };
+    }
+    restoreDisplayRender() {
+      if (!this.renderSuppressed) return false;
+      this.renderSuppressed = false;
+      this.suppressedRenderer.config.clearBeforeRender = this.savedClearBeforeRender;
+      this.suppressedCamera.visible = this.savedCameraVisible;
+      this.suppressedRenderer = this.suppressedCamera = null;
+      return true;
+    }
+    retainUnchangedDisplay() {
+      const renderer = this.game.renderer,
+        camera = this.cameras.main;
+      // Retaining pixels is safe only for this single Canvas board. A later
+      // scene/camera/object addition automatically restores ordinary rendering.
+      // A covering Demo can defer an invalidated board until it is visible again.
+      if (
+        ((!this.displayedBoardValid || !this.lastPaint) &&
+          !demoHost?.active &&
+          this.failedPreparationRun !== run) ||
+        this.preparedFrame ||
+        this.pendingSubmission ||
+        rendererLost.size ||
+        renderer?.type !== Phaser.CANVAS ||
+        renderer.config?.clearBeforeRender !== true ||
+        !camera?.visible ||
+        camera.alpha !== 1 ||
+        this.game.scene?.scenes?.length !== 1 ||
+        this.cameras.cameras?.length !== 1 ||
+        this.sys.displayList?.list?.length !== 1 ||
+        this.sys.displayList.list[0] !== this.boardImage
+      )
+        return;
+      this.suppressedRenderer = renderer;
+      this.suppressedCamera = camera;
+      this.savedClearBeforeRender = renderer.config.clearBeforeRender;
+      this.savedCameraVisible = camera.visible;
+      this.renderSuppressed = true;
+      // Pair these flags: hiding the camera alone would clear the retained board.
+      renderer.config.clearBeforeRender = false;
+      camera.visible = false;
+    }
+    titleQualityOwner() {
+      if (
+        document.hidden ||
+        !document.hasFocus() ||
+        demoHost?.active ||
+        pictureResume ||
+        preparationOperation ||
+        pictureThemePending ||
+        rendererLost.size
+      )
+        return null;
+      const owner = gameShell?.qualityObservationOwner;
+      return owner && controllerDialog() === $('shell-home') ? owner : null;
+    }
+    resetTitleQuality() {
+      if (this.observedTitleOwner) qualityPolicy.safeTransition(performance.now());
+      this.observedTitleOwner = this.frameTitleQuality = null;
+    }
+    beginFrame() {
+      // A failed/aborted renderer may not emit POST_RENDER.
+      this.restoreDisplayRender();
+      this.frameStartedAt = performance.now();
+      this.framePending = false;
+      this.pendingSubmission = false;
+      this.submittedInputCount = 0;
+      this.submittedPreparation = null;
+    }
+    finishFrame(renderer) {
+      const retained = this.restoreDisplayRender();
+      if (!this.framePending) return;
+      this.framePending = false;
+      const submittedAt = performance.now();
+      // Scene creation can occur after PRE_STEP on the first boot frame. Do not
+      // publish a partial measurement, but still acknowledge its visible board.
+      const timed = this.frameStartedAt !== null;
+      const workMs = timed ? submittedAt - this.frameStartedAt : 0;
+      this.frameStartedAt = null;
+      // Game POST_RENDER follows every camera and CanvasRenderer.postRender.
+      // This is render submission, not browser compositing or physical scanout.
+      const foreground = !document.hidden && document.hasFocus();
+      const boardSubmitted =
+        !retained &&
+        renderer &&
+        !rendererLost.size &&
+        this.sys.isVisible() &&
+        this.cameras.main.visible &&
+        this.cameras.main.alpha > 0 &&
+        this.boardImage.willRender(this.cameras.main);
+      if (boardSubmitted && this.pendingSubmission && this.submittedRun === run)
+        this.displayedBoardValid = true;
+      const visibleBoard = boardSubmitted && foreground && !demoHost?.active && !dialogOpen();
+      this.cadence.observe(
+        this.frameRawMs,
+        workMs,
+        timed &&
+          !demoHost?.active &&
+          foreground &&
+          ((!started && !pictureResume) || (paused && this.cadence.waiting)),
+      );
+      if (timed) {
+        if (
+          (this.frameActive && !demoHost?.active) ||
+          (this.frameDemoPractice && this.frameDemoPractice === demoHost?.qualityPracticeOwner)
+        )
+          qualityPolicy.observe(this.frameNow, this.frameRawMs, workMs);
+        else if (
+          this.frameTitleQuality &&
+          this.frameTitleQuality === this.observedTitleOwner &&
+          this.frameTitleQuality === this.titleQualityOwner()
+        )
+          qualityPolicy.observe(this.frameNow, this.frameRawMs, workMs, true);
+        else if (this.observedTitleOwner && this.observedTitleOwner !== this.titleQualityOwner())
+          this.resetTitleQuality();
+        performanceSession?.recordFrame(
+          this.frameNow,
+          this.frameUpdateMs,
+          this.frameDrawMs,
+          this.frameHudMs,
+          this.frameSimulationMs,
+          workMs,
+        );
+      }
+      gameShell?.setQuality(qualityPolicy.snapshot().tier);
+      if (!visibleBoard || !this.pendingSubmission || this.submittedRun !== run) return;
+      const count = Math.min(this.submittedInputCount, inputAppliedCount, inputTokenCount);
+      for (let i = 0; i < count; i++) performanceSession?.rendered(inputTokens[i], submittedAt);
+      inputTokens.copyWithin(0, count, inputTokenCount);
+      inputTokenCount -= count;
+      inputAppliedCount -= count;
+      const finish = this.submittedPreparation;
+      this.submittedPreparation = null;
+      this.pendingSubmission = false;
+      if (finish && this.preparedFrame === finish) {
+        this.preparedFrame = null;
+        finish();
+      }
+    }
+    syncDisplayGeometry() {
+      const width = this.game.canvas.clientWidth,
+        height = this.game.canvas.clientHeight;
+      if (width === this.displayCSSWidth && height === this.displayCSSHeight) return false;
+      this.displayCSSWidth = width;
+      this.displayCSSHeight = height;
+      this.invalidate();
+      return true;
+    }
+    invalidate() {
+      ++this.revision;
+      this.preparedState = null;
+      this.lastPaint = null;
+      this.displayedBoardValid = false;
+    }
+    prepared() {
+      const state = this.preparedState;
+      return (
+        !!state &&
+        state.run === run &&
+        state.generation === painter.preparationGeneration &&
+        state.paintRevision === painter.paintRevision &&
+        state.backdrop === flightPictures?.current() &&
+        state.actors === flightActorLease &&
+        state.revision === this.revision &&
+        !rendererLost.size
+      );
+    }
+    resizeBoard() {
+      const { width, height } = boardPaintSizeForRun(run);
+      if (width !== this.boardSize.width || height !== this.boardSize.height) {
+        this.boardTexture.setSize(width, height);
+        this.boardImage.setSizeToFrame();
+        this.scale.resize(width, height);
+        this.cameras.main.setSize(width, height);
+        this.boardSize = { width, height };
+        this.invalidate();
+      }
+      document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
+      document.documentElement.style.setProperty('--board-aspect', String(width / height));
+    }
+    drawOptions() {
+      return {
+        actorAppearance: flightActorLease
+          ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
+          : null,
+        textFace: displayPreferences.snapshot().textFace,
+        // The texture is detached; only the displayed Phaser canvas has a CSS size.
+        displayCSSWidth: this.displayCSSWidth,
+        paused,
+        quality: qualityPolicy.snapshot().tier,
+        reduced: displayPreferences.snapshot().effectiveReducedEffects,
+        fullReveal: run.status === 'won',
+        showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
+        showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
+        brutal: encounterDisplay.snapshot().brutal,
+        blood: encounterDisplay.snapshot().blood,
+        backdrop: flightPictures?.current(),
+        celebrationPaused: document.hidden || !document.hasFocus() || dialogOpen(),
+        defeatEffectsRunning: defeatEffectsRunning(),
+        signalReception:
+          run.status === 'won'
+            ? 'off'
+            : run.status === 'lost'
+              ? 'lost'
+              : restoredSignalRuns.has(run)
+                ? 'off'
+                : started
+                  ? 'playing'
+                  : 'ready',
+        signalEffectsRunning:
+          run.status === 'lost'
+            ? defeatEffectsRunning()
+            : started && !paused && !document.hidden && document.hasFocus() && !dialogOpen(),
+      };
+    }
+    // Preserve the existing native observer's read-only sample-count contract.
+    get readyCount() {
+      return this.cadence.samples;
+    }
+    async prepareCadence(signal) {
+      const selectedRun = run,
+        selectedPictures = flightPictures,
+        selectedTheme = theme.id,
+        selectedActors = flightActorLease,
+        selectedGeneration = painter.preparationGeneration;
+      await this.cadence.wait({
+        signal,
+        current: () =>
+          run === selectedRun &&
+          flightPictures === selectedPictures &&
+          theme.id === selectedTheme &&
+          flightActorLease === selectedActors &&
+          painter.preparationGeneration === selectedGeneration &&
+          paused &&
+          !rendererLost.size &&
+          !document.hidden &&
+          document.hasFocus() &&
+          !dialogOpen(),
+      });
+    }
+    async prepareBoard(signal) {
+      const owner = {
+        run,
+        generation: painter.preparationGeneration,
+        backdrop: flightPictures?.current(),
+        actors: flightActorLease,
+      };
+      const current = () =>
+        run === owner.run &&
+        painter.preparationGeneration === owner.generation &&
+        flightPictures?.current() === owner.backdrop &&
+        flightActorLease === owner.actors &&
+        !rendererLost.size &&
+        !document.hidden &&
+        document.hasFocus() &&
+        !dialogOpen();
+      for (;;) {
+        signal.throwIfAborted();
+        if (!current()) throw new DOMException('Preparation superseded.', 'AbortError');
+        this.resizeBoard();
+        this.syncDisplayGeometry();
+        const state = { ...owner, revision: this.revision };
+        await painter.prepare(this.boardTexture.context, run, this.drawOptions(), { signal });
+        signal.throwIfAborted();
+        if (!current()) throw new DOMException('Preparation superseded.', 'AbortError');
+        state.paintRevision = painter.paintRevision;
+        this.lastPaint = null;
+        // The next game POST_RENDER confirms Phaser submitted the prepared board
+        // to its visible canvas while paused. This does not claim display scanout.
+        await new Promise((resolve, reject) => {
+          const cancel = (
+            reason = signal.reason ?? new DOMException('Preparation cancelled.', 'AbortError'),
+          ) => {
+            if (this.preparedFrame !== finish || this.preparedCancel !== cancel) return false;
+            this.preparedFrame = this.preparedCancel = this.preparedFailure = null;
+            signal.removeEventListener('abort', onAbort);
+            reject(reason);
+            return true;
+          };
+          // Abort listeners receive an Event, not the promise rejection reason.
+          const onAbort = () => cancel();
+          const fail = (error) => !signal.aborted && paused && current() && cancel(error);
+          const finish = () => {
+            signal.removeEventListener('abort', onAbort);
+            if (this.preparedCancel === cancel) this.preparedCancel = this.preparedFailure = null;
+            resolve();
+          };
+          signal.addEventListener('abort', onAbort, { once: true });
+          this.preparedCancel = cancel;
+          this.preparedFailure = fail;
+          this.preparedFrame = finish;
+          // Only a fresh explicit preparation may retry a failed submission.
+          // Keep the display held throughout its asynchronous painter work.
+          this.failedPreparationRun = null;
+          if (signal.aborted) cancel();
+        });
+        signal.throwIfAborted();
+        if (!current()) throw new DOMException('Preparation superseded.', 'AbortError');
+        // ResizeObserver may deliver after POST_RENDER. Reconcile the actual
+        // paused layout before accepting its submission; a delayed notification
+        // for this same size is then harmless.
+        this.syncDisplayGeometry();
+        // A late presentation or asset acceptance can change the painter while
+        // the same attempt and originals remain owned, just as layout changes
+        // the scene. Reprepare with the single existing cancellation owner and
+        // await a fresh submission; never accept the superseded paint. Actual
+        // run/look ownership, lifecycle and renderer interruption still abort.
+        if (painter.paintRevision !== state.paintRevision || this.revision !== state.revision)
+          continue;
+        this.preparedState = state;
+        return;
+      }
+    }
+    update(now) {
       if (practiceRenderFailure.failed) return;
       if (globalThis.RevealLineBoot && document.documentElement.dataset.bootState !== 'ready')
         return;
-      try {
-        const dt = clamp(delta / 1000, 0, 1);
-        update(dt);
-        // The modal owns its visible board. Keep the covered ordinary renderer
-        // and its presentation clock untouched until the demo hands back control.
-        if (demoHost?.active) return;
-        editionUI?.refresh();
-        titleCharacter?.update(dt, {
-          visible:
-            !document.hidden && document.hasFocus() && controllerDialog() === $('shell-home'),
-          reduced: displayPreferences.snapshot().effectiveReducedEffects,
-        });
-        const { width, height } = boardPaintSizeForRun(run);
-        if (width !== this.boardSize.width || height !== this.boardSize.height) {
-          this.boardTexture.setSize(width, height);
-          this.boardImage.setSizeToFrame();
-          this.scale.resize(width, height);
-          this.cameras.main.setSize(width, height);
-          this.boardSize = { width, height };
-          document.documentElement.style.setProperty('--board-ratio', `${width} / ${height}`);
-          document.documentElement.style.setProperty('--board-aspect', String(width / height));
-        }
-        painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), {
-          actorAppearance: flightActorLease
-            ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
-            : null,
-          textFace: displayPreferences.snapshot().textFace,
-          // The texture is detached; only the displayed Phaser canvas has a CSS size.
-          displayCSSWidth: this.game.canvas.clientWidth,
-          paused,
-          reduced: displayPreferences.snapshot().effectiveReducedEffects,
-          fullReveal: run.status === 'won',
-          showGrid: scenario?.presentation?.showGrid || library.preferences.showGrid,
-          showCombatScrap: practiceRemains ?? encounterDisplay.snapshot().showRemains,
-          brutal: encounterDisplay.snapshot().brutal,
-          blood: encounterDisplay.snapshot().blood,
-          backdrop: flightPictures?.current(),
-          celebrationPaused: document.hidden || !document.hasFocus() || dialogOpen(),
-          defeatEffectsRunning: defeatEffectsRunning(),
-          signalReception:
-            run.status === 'won'
-              ? 'off'
-              : run.status === 'lost'
-                ? 'lost'
-                : restoredSignalRuns.has(run)
-                  ? 'off'
+      const workStart = performance.now();
+      if (this.failedPreparationRun !== run || !paused) this.failedPreparationRun = null;
+      const preparationRun = run,
+        preparationTicket = pictureResume,
+        preparationFailure = paused && pictureResume !== null ? this.preparedFailure : null;
+      hudWorkMs = simulationWorkMs = 0;
+      let updateMs = 0,
+        drawMs = 0,
+        preparingDraw = false;
+      const foreground = !document.hidden && document.hasFocus();
+      const demoPractice = demoHost?.qualityPracticeOwner ?? null;
+      const titleOwner = this.titleQualityOwner();
+      const titleQuality = titleOwner && titleOwner === this.observedTitleOwner ? titleOwner : null;
+      if (titleOwner !== this.observedTitleOwner) {
+        qualityPolicy.safeTransition(now);
+        this.observedTitleOwner = titleOwner;
+      }
+      if (foreground)
+        qualityPolicy.setReducedPreference(displayPreferences.snapshot().effectiveReducedEffects);
+      const active = foreground && started && !paused && !dialogOpen() && !rendererLost.size;
+      const time = sceneClock.sample(now, active);
+      const rawMs = time.rawElapsedMs;
+      const dt = active
+        ? time.interrupted
+          ? rawMs / 1000
+          : time.elapsedSeconds
+        : Math.min(rawMs / 1000, 0.1);
+      if (time.interrupted) performanceSession?.interruption(rawMs);
+      performanceSession?.setPhase(
+        !foreground
+          ? 'hidden'
+          : rendererLost.size
+            ? 'error'
+            : pictureResume !== null
+              ? 'preparing'
+              : ['won', 'lost'].includes(run.status)
+                ? 'result'
+                : active
+                  ? 'playing'
                   : started
-                    ? 'playing'
+                    ? 'paused'
                     : 'ready',
-          signalEffectsRunning:
-            run.status === 'lost'
-              ? defeatEffectsRunning()
-              : started && !paused && !document.hidden && document.hasFocus() && !dialogOpen(),
+      );
+      try {
+        // Controller Menu/Confirm can Resume synchronously while polling below.
+        // Its paused UI interval must not become authoritative gameplay time.
+        update(dt, active);
+        updateMs = performance.now() - workStart;
+        if (!foreground || demoHost?.active) this.retainUnchangedDisplay();
+        if (demoHost?.active || !foreground || rendererLost.size) return;
+        if (
+          this.lastInterfaceRun !== run ||
+          this.lastInterfaceStatus !== run.status ||
+          now - this.lastInterfaceAt >= 100
+        ) {
+          // Accepted transitions must be observed before a deliberate Retry or
+          // Next can replace their run/recorder. Ordinary UI polling stays bounded.
+          this.lastInterfaceRun = run;
+          this.lastInterfaceStatus = run.status;
+          this.lastInterfaceAt = now;
+          editionUI?.refresh();
+        }
+        titleCharacter?.update(Math.min(dt, 0.1), {
+          visible: controllerDialog() === $('shell-home'),
+          reduced: qualityPolicy.snapshot().reduced,
         });
+        if (this.failedPreparationRun === run && paused) {
+          // A persistent renderer fault must not restart itself on the next RAF.
+          // Poll input/UI above, retaining this single Canvas until explicit Retry.
+          this.retainUnchangedDisplay();
+          return;
+        }
+        const size = boardPaintSizeForRun(run);
+        if (size.width !== this.boardSize.width || size.height !== this.boardSize.height)
+          this.resizeBoard();
+        const animated = (!paused && started) || celebrationActive || defeatEffectsRunning();
+        const prior = this.lastPaint;
+        if (
+          animated ||
+          this.preparedFrame ||
+          !prior ||
+          prior.run !== run ||
+          prior.tick !== run.tick ||
+          prior.hud !== hudRevision ||
+          prior.paintRevision !== painter.paintRevision ||
+          prior.generation !== painter.preparationGeneration ||
+          prior.backdrop !== flightPictures?.current() ||
+          prior.actors !== flightActorLease ||
+          prior.quality !== qualityPolicy.snapshot().tier
+        ) {
+          const drawStart = performance.now(),
+            options = this.drawOptions();
+          preparingDraw = true;
+          painter.draw(this.boardTexture.context, run, Math.min(dt, 0.1), options);
+          preparingDraw = false;
+          drawMs = performance.now() - drawStart;
+          // Reuse this record rather than allocating presentation bookkeeping each frame.
+          this.lastPaint ??= {};
+          this.lastPaint.run = run;
+          this.lastPaint.tick = run.tick;
+          this.lastPaint.hud = hudRevision;
+          this.lastPaint.generation = painter.preparationGeneration;
+          this.lastPaint.paintRevision = painter.paintRevision;
+          this.lastPaint.backdrop = flightPictures?.current();
+          this.lastPaint.actors = flightActorLease;
+          this.lastPaint.quality = qualityPolicy.snapshot().tier;
+          this.pendingSubmission = true;
+          this.submittedRun = run;
+          this.submittedInputCount = inputAppliedCount;
+          this.submittedPreparation = this.preparedFrame;
+        }
         advanceDefeatPresentation(Math.min(dt, 0.1));
+        if (!animated && !this.pendingSubmission) this.retainUnchangedDisplay();
       } catch (error) {
-        if (!practiceRenderFailure.fail(error)) throw error;
+        this.pendingSubmission = false;
+        performanceSession?.reportFailure(`Scene: ${error.message ?? String(error)}`);
+        performanceSession?.setPhase('error');
+        const rejectedPreparation =
+          preparingDraw &&
+          preparationFailure &&
+          this.preparedFailure === preparationFailure &&
+          run === preparationRun &&
+          paused &&
+          pictureResume === preparationTicket &&
+          preparationFailure(error);
+        if (rejectedPreparation) {
+          this.preparedState = this.lastPaint = null;
+          this.failedPreparationRun = run;
+          this.retainUnchangedDisplay();
+        }
+        // Phaser schedules its next RAF only after this callback returns. Keep
+        // that loop alive for the owned paused recovery; ordinary errors throw.
+        if (!practiceRenderFailure.fail(error) && !rejectedPreparation) throw error;
+      } finally {
+        this.framePending = true;
+        this.frameNow = now;
+        this.frameRawMs = rawMs;
+        this.frameActive = active;
+        this.frameDemoPractice = demoPractice;
+        this.frameTitleQuality = titleQuality;
+        this.frameUpdateMs = updateMs;
+        this.frameDrawMs = drawMs;
+        this.frameHudMs = hudWorkMs;
+        this.frameSimulationMs = simulationWorkMs;
       }
     }
   }
@@ -12127,7 +13560,7 @@ try {
     antialias: false,
     audio: { noAudio: true },
     input: { keyboard: false, mouse: false, touch: false, gamepad: false },
-    fps: { target: 60, forceSetTimeOut: false },
+    fps: { target: 60, limit: 0, smoothStep: false, forceSetTimeOut: false },
     scene: FieldScene,
     banner: false,
   });
@@ -12350,7 +13783,7 @@ try {
     // The first source catalogue contains exact installed Classic originals.
     if (candidateHost?.owns(entry))
       throw new Error(t('interface:thisMissionBelongsToADifferentGameplayHostSelectIt'));
-    const host = await getUnifiedMissionLibrary();
+    const host = await getUnifiedMissionLibrary(isCurrent);
     assertIntent();
     const baseKey = entry.baseCampaignKey || campaignKey(entry.baseCampaign ?? entry.campaign);
     const row = host.library
@@ -12384,471 +13817,604 @@ try {
     handedOff = true;
     return true;
   }
-  async function getUnifiedMissionLibrary() {
+  function unifiedLibraryGuard(isCurrent = () => true) {
+    const revision = unifiedBuildRevision,
+      oldRun = run;
+    return () => {
+      if (
+        unifiedDisposed ||
+        revision !== unifiedBuildRevision ||
+        run !== oldRun ||
+        !paused ||
+        document.hidden ||
+        document.hasFocus?.() === false ||
+        mediaPreparationPhase === 'playing' ||
+        mediaPreparationPhase === 'suspended' ||
+        !isCurrent()
+      )
+        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
+    };
+  }
+  async function refreshUnifiedInstalled(host, isCurrent) {
+    const assertCurrent = unifiedLibraryGuard(isCurrent);
+    assertCurrent();
+    return host.refreshInstalled({ assertCurrent });
+  }
+  async function getUnifiedMissionLibrary(isCurrent = () => true) {
+    const callerCurrent = unifiedLibraryGuard(isCurrent);
+    callerCurrent();
     if (unifiedLibrary) return unifiedLibrary;
-    if (unifiedLibraryLoading) return unifiedLibraryLoading;
-    unifiedLibraryLoading = (async () => {
-      const index =
-        runtimeContent?.missionIndex ?? (await getJSON('content/mission-library-index.json'));
-      actorMissionIndex = Promise.resolve(index);
-      const route = authoredRoute || (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo));
-      const originalThemes =
-        runtimeContent?.themes ?? (await getJSON('content-design/themes.json')).themes;
-      const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
-        ? journeyActorThemeCandidates(originalThemes, {
-            includeOriginals: route.preserveOriginalThemes === true,
-          })
-        : originalThemes;
-      const views = publishedRouteViews(route);
-      const host =
-        candidateHost ||
-        views?.solo ||
-        (await createSoloRouteHost(route, {
-          themes: libraryThemes,
-          buildVersion,
-          corePackIds: route.corePackIds,
-          optionalCampaignIds: route.optionalCampaignIds,
-          ...(!runtimeContent
-            ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
-            : {}),
-        }));
-      const profile = candidateHost
-        ? journeyProfile
-        : createJourneyProfileStore({
-            profileKey: route.profileKey,
-            ...(previewSession?.journeyOptions(route.profileKey) ?? {}),
-          });
-      if (!candidateHost) await profile.load();
-      collectionJourneyState = { profile, catalog: host.catalog, editionId: route.id };
-      const launchSolo = async (mission, context) => {
-        if (context.isCurrent?.() === false) return false;
-        if (!candidateHost || context.mode !== 'solo') {
-          if (context.skip && context.mode === 'solo') {
-            let validationHost = host,
-              disposeValidationHost = false;
-            if (!validationHost.preparer) {
-              validationHost = await createSoloRouteHost(route, {
-                themes: libraryThemes,
-                buildVersion,
-                corePackIds: route.corePackIds,
-                optionalCampaignIds: route.optionalCampaignIds,
-                ...(!runtimeContent
-                  ? {
-                      ensurePackage: (groupId, options) =>
-                        gameplayDownloads.ensure(groupId, options),
-                    }
-                  : {}),
-              });
-              disposeValidationHost = true;
-            }
-            try {
-              const candidate = await validationHost.preparer.prepare(
-                {
-                  missionId: mission.id,
-                  difficulty: browsingJourneyPreferences.snapshot().difficulty,
-                  seed,
-                  turnPolicy,
-                },
-                { signal: context.signal, onStatus: context.onStatus },
-              );
-              if (context.isCurrent?.() === false) {
-                if (validationHost.preparer.current(candidate)) validationHost.preparer.cancel();
-                return false;
-              }
-              validationHost.preparer.cancel();
-            } finally {
-              if (disposeValidationHost) validationHost.preparer.dispose();
-            }
-          }
-          return departLibraryMission(context);
+    let attempt = unifiedLibraryLoading;
+    if (attempt) {
+      // A new explicit owner may join a still-admitted request. A retired
+      // generation cannot recover authority merely because play paused again.
+      for (const current of attempt.callers) {
+        try {
+          current();
+        } catch (error) {
+          if (error?.name !== 'AbortError') throw error;
+          attempt.callers.delete(current);
         }
-        if ($('shell-home').open) $('shell-home').close();
-        if (context.transferContinuation && !context.transferContinuation()) return false;
-        return launchJourneyMission(mission, {
-          kind: context.skip ? 'skip' : context.continuation ? 'next' : 'choose',
-          skipped: context.skip ? journeySkipMission() : null,
-        });
-      };
-      let journeySources,
-        spatialEditions = { dispose() {} };
-      if (runtimeContent) {
-        const manifestFor = (
-          mission,
-          difficulty = browsingJourneyPreferences.snapshot().difficulty,
-        ) =>
-          host
-            .select(mission, difficulty)
-            ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
-        const source = journeyLibrarySource({
-          editionId: route.id,
-          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-          editionLabel: () =>
-            route.id === DEFAULT_JOURNEY_ROUTES.solo
-              ? t('interface:newJourney')
-              : contentText(route, 'label'),
-          catalog: host.catalog,
-          profile,
-          details: (mission) => journeyMissionDetails(manifestFor(mission)),
-          tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
-          card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-          launch: launchSolo,
-        });
-        journeySources = [source];
-      } else if (views) {
-        journeySources = publishedJourneyLibrarySources({
-          route,
-          views,
-          soloHost: candidateHost,
-          profile,
-          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-          launchSolo,
-          launchRemote: departLibraryMission,
-        });
-      } else {
-        // Compile the other mode through its own validated runtime adapter. The
-        // combined browsing identity never grants this Solo host Versus ownership.
-        const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
-        const versusPreview = createCandidateVersusHost(route.source, {
-          themes: libraryThemes,
-          corePackIds: route.corePackIds,
-          optionalCampaignIds: route.optionalCampaignIds,
-        });
-        const manifestFor = (
-          mission,
-          difficulty = browsingJourneyPreferences.snapshot().difficulty,
-        ) =>
-          host
-            .select(mission, difficulty)
-            ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
-        const source = journeyLibrarySource({
-          editionId: route.id,
-          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-          editionLabel: () =>
-            route.id === DEFAULT_JOURNEY_ROUTES.solo
-              ? t('interface:newJourney')
-              : contentText(route, 'label'),
-          catalog: host.catalog,
-          profile,
-          details: (mission) => journeyMissionDetails(manifestFor(mission)),
-          tags: (mission) => authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
-          card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-          launch: launchSolo,
-        });
-        const versusSource = journeyLibrarySource({
-          editionId: route.id,
-          edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
-          editionLabel: () =>
-            route.id === DEFAULT_JOURNEY_ROUTES.solo
-              ? t('interface:newJourney')
-              : contentText(route, 'label'),
-          catalog: versusPreview.catalog,
-          profile,
-          details: (mission) =>
-            journeyMissionDetails(
-              versusPreview.manifest(mission, browsingJourneyPreferences.snapshot().difficulty),
-            ),
-          tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
-          card: (mission) =>
-            versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
-          launch: (_mission, context) => departLibraryMission(context),
-        });
-        const { createRemoteTeamLibrarySources } = await import(
-          './mission-library/remote-team.mjs'
-        );
-        const teamSources = createRemoteTeamLibrarySources({
-          launch: departLibraryMission,
-          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-        });
-        const { createSpatialNextEditionSources } = await import(
-          './mission-library/spatial-next-editions.mjs'
-        );
-        spatialEditions = await createSpatialNextEditionSources({
-          activeRouteId: route.id,
-          originalThemes,
-          difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-          launch: departLibraryMission,
-        });
-        journeySources = [
-          combineJourneyLibrarySources([
-            { mode: 'solo', source },
-            { mode: 'versus', source: versusSource },
-          ]),
-          ...spatialEditions.sources,
-          ...teamSources,
-        ];
       }
-      if (!runtimeContent) {
-        const expansionSources = [
-          ...duelExpeditionLibrarySources({
-            themes: originalThemes,
-            activeRouteId: route.id,
-            launch: departLibraryMission,
-            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-          }),
-          teamExpeditionLibrarySource({
-            launch: departLibraryMission,
-            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
-          }),
-        ];
-        journeySources = [
-          ...journeySources,
-          ...expansionSources.filter(
-            (source) => !journeySources.some((existing) => existing.id === source.id),
-          ),
-        ];
+      attempt.callers.add(callerCurrent);
+      try {
+        attempt.assertCurrent();
+      } catch (error) {
+        if (error?.name !== 'AbortError') throw error;
+        attempt = null;
       }
-      const classicProjectionCache = new WeakMap();
-      const classicRuntimeEntry = (row) => {
-        const pack =
-          row.source === 'base' ? null : packs.packs.find((item) => item.id === row.packId);
-        const source =
-          row.source === 'base'
-            ? baseEntry
-            : pack
-              ? resolvePackCampaign(pack, row.campaignId)
-              : null;
-        if (!source) return null;
-        if (!classicProjectionCache.has(source)) classicProjectionCache.set(source, new Map());
-        const projections = classicProjectionCache.get(source);
-        if (!projections.has(row.rulesEdition))
-          projections.set(
-            row.rulesEdition,
-            projectClassicCurrentRulesEntry(source, row.rulesEdition),
-          );
-        return projections.get(row.rulesEdition);
-      };
-      const libraryRowRuntimeCampaignKey = (row) => {
-        if (row.collection !== 'Classic') return JSON.parse(row.campaignKey)[2];
-        const entry = classicRuntimeEntry(row);
-        return entry ? campaignKey(entry.campaign) : null;
-      };
-      const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
-      const result = await createInstalledMissionLibrary({
-        getProjectSources: async () => {
-          if (runtimeContent) return [];
-          const { installedCreatorLibrarySources } = await import(
-            './mission-library/creator-source.mjs'
-          );
-          try {
-            return await installedCreatorLibrarySources();
-          } catch (error) {
-            contentStatus(
-              `Creator campaigns could not be read: ${error.message} Open My creations to recover or reinstall them.`,
-              true,
-            );
-            return [];
+    }
+    if (attempt) return attempt.promise;
+    const callers = new Set([callerCurrent]);
+    const admitted = unifiedLibraryGuard();
+    const assertCurrent = () => {
+      admitted();
+      for (const current of callers) {
+        try {
+          current();
+          return;
+        } catch (error) {
+          if (error?.name !== 'AbortError') throw error;
+        }
+      }
+      throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
+    };
+    attempt = { callers, assertCurrent, promise: null };
+    unifiedLibraryLoading = attempt;
+    attempt.promise = (async () => {
+      let ownedHost = null,
+        spatialEditions = { dispose() {} },
+        result = null,
+        committed = false;
+      try {
+        const [
+          { attachJourneyChooser },
+          { createInstalledMissionLibrary },
+          { publishedJourneyLibrarySources },
+          { combineJourneyLibrarySources },
+          { createDuel },
+        ] = await Promise.all([
+          import('./ui/journey-chooser.mjs'),
+          import('./mission-library/installed-library.mjs'),
+          import('./mission-library/published-routes.mjs'),
+          import('./mission-library/cross-mode-journey.mjs'),
+          import('./multiplayer.mjs'),
+        ]);
+        assertCurrent();
+        const index =
+          runtimeContent?.missionIndex ??
+          (await getJSON('content/mission-library-index.json', assertCurrent));
+        assertCurrent();
+        actorMissionIndex = Promise.resolve(index);
+        actorMissionIndexValue = index;
+        const route =
+          authoredRoute ||
+          (await loadAuthoredJourneyRoute(DEFAULT_JOURNEY_ROUTES.solo, { assertCurrent }));
+        assertCurrent();
+        const originalThemes =
+          runtimeContent?.themes ??
+          (await getJSON('content-design/themes.json', assertCurrent)).themes;
+        assertCurrent();
+        const libraryThemes = authoredJourneyUsesActorMaterials(route.id)
+          ? journeyActorThemeCandidates(originalThemes, {
+              includeOriginals: route.preserveOriginalThemes === true,
+            })
+          : originalThemes;
+        const views = publishedRouteViews(route);
+        const host =
+          candidateHost ||
+          views?.solo ||
+          (await createSoloRouteHost(route, {
+            assertCurrent,
+            themes: libraryThemes,
+            buildVersion,
+            corePackIds: route.corePackIds,
+            optionalCampaignIds: route.optionalCampaignIds,
+            ...(!runtimeContent
+              ? { ensurePackage: (groupId, options) => gameplayDownloads.ensure(groupId, options) }
+              : {}),
+          }));
+        if (!candidateHost && !views?.solo) ownedHost = host;
+        assertCurrent();
+        const profile = candidateHost
+          ? journeyProfile
+          : createJourneyProfileStore({
+              profileKey: route.profileKey,
+              ...(previewSession?.journeyOptions(route.profileKey) ?? {}),
+              canRunProgressWork: () => {
+                if (!committed) assertCurrent();
+                return (
+                  !unifiedDisposed &&
+                  paused &&
+                  !document.hidden &&
+                  document.hasFocus?.() !== false &&
+                  mediaPreparationPhase !== 'playing' &&
+                  mediaPreparationPhase !== 'suspended'
+                );
+              },
+            });
+        if (!candidateHost) await profile.load();
+        assertCurrent();
+        const launchSolo = async (mission, context) => {
+          if (context.isCurrent?.() === false) return false;
+          if (!candidateHost || context.mode !== 'solo') {
+            if (context.skip && context.mode === 'solo') {
+              let validationHost = host,
+                disposeValidationHost = false;
+              if (!validationHost.preparer) {
+                validationHost = await createSoloRouteHost(route, {
+                  themes: libraryThemes,
+                  buildVersion,
+                  corePackIds: route.corePackIds,
+                  optionalCampaignIds: route.optionalCampaignIds,
+                  ...(!runtimeContent
+                    ? {
+                        ensurePackage: (groupId, options) =>
+                          gameplayDownloads.ensure(groupId, options),
+                      }
+                    : {}),
+                });
+                disposeValidationHost = true;
+              }
+              try {
+                const candidate = await validationHost.preparer.prepare(
+                  {
+                    missionId: mission.id,
+                    difficulty: browsingJourneyPreferences.snapshot().difficulty,
+                    seed,
+                    turnPolicy,
+                  },
+                  { signal: context.signal, onStatus: context.onStatus },
+                );
+                if (context.isCurrent?.() === false) {
+                  if (validationHost.preparer.current(candidate)) validationHost.preparer.cancel();
+                  return false;
+                }
+                validationHost.preparer.cancel();
+              } finally {
+                if (disposeValidationHost) validationHost.preparer.dispose();
+              }
+            }
+            return departLibraryMission(context);
           }
-        },
-        index,
-        journeySources,
-        getPacks: () => selectedEditionPacks ?? packs,
-        baseEntry,
-        compatibility: ({ entry, level }) => {
-          const supported = [];
-          try {
-            createRun(level, {
-              classRecipes: entry.classRecipes,
-              classId: entry.classRecipes[0].id,
-            });
-            supported.push('solo');
-          } catch {}
-          try {
-            createDuel(level, {
-              classRecipes: entry.classRecipes,
-              classId: entry.classRecipes[0].id,
-            });
-            supported.push('versus');
-          } catch {}
-          return supported;
-        },
-        describe: ({ level }) => {
-          const actual = normalizedLevel(level);
-          return {
-            rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
-          };
-        },
-        prepareClassic: prepareLibraryClassic,
-        availabilityExternal: (row, pack) => {
-          if (!pack)
-            return isRelease
-              ? { state: 'download', bytes: row.download.bytes }
+          if ($('shell-home').open) $('shell-home').close();
+          if (context.transferContinuation && !context.transferContinuation()) return false;
+          return launchJourneyMission(mission, {
+            kind: context.skip ? 'skip' : context.continuation ? 'next' : 'choose',
+            skipped: context.skip ? journeySkipMission() : null,
+          });
+        };
+        let journeySources;
+        if (runtimeContent) {
+          const manifestFor = (
+            mission,
+            difficulty = browsingJourneyPreferences.snapshot().difficulty,
+          ) =>
+            host
+              .select(mission, difficulty)
+              ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
+          const source = journeyLibrarySource({
+            editionId: route.id,
+            edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+            editionLabel: () =>
+              route.id === DEFAULT_JOURNEY_ROUTES.solo
+                ? t('interface:newJourney')
+                : contentText(route, 'label'),
+            catalog: host.catalog,
+            profile,
+            details: (mission) => journeyMissionDetails(manifestFor(mission)),
+            tags: (mission) =>
+              authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
+            card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+            launch: launchSolo,
+          });
+          journeySources = [source];
+        } else if (views) {
+          journeySources = publishedJourneyLibrarySources({
+            route,
+            views,
+            soloHost: candidateHost,
+            profile,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            launchSolo,
+            launchRemote: departLibraryMission,
+          });
+        } else {
+          // Compile the other mode through its own validated runtime adapter. The
+          // combined browsing identity never grants this Solo host Versus ownership.
+          const { createCandidateVersusHost } = await import('./content-design/versus-host.mjs');
+          assertCurrent();
+          const versusPreview = createCandidateVersusHost(route.source, {
+            themes: libraryThemes,
+            corePackIds: route.corePackIds,
+            optionalCampaignIds: route.optionalCampaignIds,
+          });
+          const manifestFor = (
+            mission,
+            difficulty = browsingJourneyPreferences.snapshot().difficulty,
+          ) =>
+            host
+              .select(mission, difficulty)
+              ?.manifests.find((manifest) => manifest.missionId === mission.levelId);
+          const source = journeyLibrarySource({
+            editionId: route.id,
+            edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+            editionLabel: () =>
+              route.id === DEFAULT_JOURNEY_ROUTES.solo
+                ? t('interface:newJourney')
+                : contentText(route, 'label'),
+            catalog: host.catalog,
+            profile,
+            details: (mission) => journeyMissionDetails(manifestFor(mission)),
+            tags: (mission) =>
+              authoredJourneyMissionTags(mission, manifestFor(mission, 'standard')),
+            card: (mission) => host.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+            launch: launchSolo,
+          });
+          const versusSource = journeyLibrarySource({
+            editionId: route.id,
+            edition: route.id === DEFAULT_JOURNEY_ROUTES.solo ? 'New Journey' : route.label,
+            editionLabel: () =>
+              route.id === DEFAULT_JOURNEY_ROUTES.solo
+                ? t('interface:newJourney')
+                : contentText(route, 'label'),
+            catalog: versusPreview.catalog,
+            profile,
+            details: (mission) =>
+              journeyMissionDetails(
+                versusPreview.manifest(mission, browsingJourneyPreferences.snapshot().difficulty),
+              ),
+            tags: (mission) => authoredJourneyMissionTags(mission, versusPreview.manifest(mission)),
+            card: (mission) =>
+              versusPreview.card(mission, browsingJourneyPreferences.snapshot().difficulty),
+            launch: (_mission, context) => departLibraryMission(context),
+          });
+          const { createRemoteTeamLibrarySources } = await import(
+            './mission-library/remote-team.mjs'
+          );
+          assertCurrent();
+          const teamSources = createRemoteTeamLibrarySources({
+            launch: departLibraryMission,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+          });
+          const { createSpatialNextEditionSources } = await import(
+            './mission-library/spatial-next-editions.mjs'
+          );
+          assertCurrent();
+          spatialEditions = await createSpatialNextEditionSources({
+            assertCurrent,
+            activeRouteId: route.id,
+            originalThemes,
+            difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            launch: departLibraryMission,
+          });
+          assertCurrent();
+          journeySources = [
+            combineJourneyLibrarySources([
+              { mode: 'solo', source },
+              { mode: 'versus', source: versusSource },
+            ]),
+            ...spatialEditions.sources,
+            ...teamSources,
+          ];
+        }
+        if (!runtimeContent) {
+          const [
+            { duelExpeditionLibrarySources, teamExpeditionLibrarySource },
+            { TEAM_EXPANSION_ROUTE },
+            { teamJourneyLibraryOwner },
+          ] = await Promise.all([
+            import('./mission-library/multiplayer-expeditions.mjs'),
+            import('./content-design/multiplayer-expansion.mjs'),
+            import('./mission-library/team-source.mjs'),
+          ]);
+          assertCurrent();
+          const expansionSources = [
+            ...duelExpeditionLibrarySources({
+              themes: originalThemes,
+              activeRouteId: route.id,
+              launch: departLibraryMission,
+              difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+            }),
+            ...(journeySources.some(
+              (source) => source.id === teamJourneyLibraryOwner(TEAM_EXPANSION_ROUTE),
+            )
+              ? []
+              : [
+                  teamExpeditionLibrarySource({
+                    launch: departLibraryMission,
+                    difficulty: () => browsingJourneyPreferences.snapshot().difficulty,
+                  }),
+                ]),
+          ];
+          journeySources = [
+            ...journeySources,
+            ...expansionSources.filter(
+              (source) => !journeySources.some((existing) => existing.id === source.id),
+            ),
+          ];
+        }
+        const classicProjectionCache = new WeakMap();
+        const classicRuntimeEntry = (row) => {
+          const pack =
+            row.source === 'base' ? null : packs.packs.find((item) => item.id === row.packId);
+          const source =
+            row.source === 'base'
+              ? baseEntry
+              : pack
+                ? resolvePackCampaign(pack, row.campaignId)
+                : null;
+          if (!source) return null;
+          if (!classicProjectionCache.has(source)) classicProjectionCache.set(source, new Map());
+          const projections = classicProjectionCache.get(source);
+          if (!projections.has(row.rulesEdition))
+            projections.set(
+              row.rulesEdition,
+              projectClassicCurrentRulesEntry(source, row.rulesEdition),
+            );
+          return projections.get(row.rulesEdition);
+        };
+        const libraryRowRuntimeCampaignKey = (row) => {
+          if (row.collection !== 'Classic') return JSON.parse(row.campaignKey)[2];
+          const entry = classicRuntimeEntry(row);
+          return entry ? campaignKey(entry.campaign) : null;
+        };
+        const selectedEditionPacks = runtimeContent ? emptyPackLibrary() : null;
+        assertCurrent();
+        result = await createInstalledMissionLibrary({
+          assertCurrent,
+          getProjectSources: async ({ assertCurrent }) => {
+            if (runtimeContent) return [];
+            const { installedCreatorLibrarySources } = await import(
+              './mission-library/creator-source.mjs'
+            );
+            assertCurrent();
+            try {
+              return await installedCreatorLibrarySources({ assertCurrent });
+            } catch (error) {
+              assertCurrent();
+              contentStatus(
+                `Creator campaigns could not be read: ${error.message} Open My creations to recover or reinstall them.`,
+                true,
+              );
+              return [];
+            }
+          },
+          index,
+          journeySources,
+          getPacks: () => selectedEditionPacks ?? packs,
+          baseEntry,
+          compatibility: ({ entry, level }) => {
+            const supported = [];
+            try {
+              createRun(level, {
+                classRecipes: entry.classRecipes,
+                classId: entry.classRecipes[0].id,
+              });
+              supported.push('solo');
+            } catch {}
+            try {
+              createDuel(level, {
+                classRecipes: entry.classRecipes,
+                classId: entry.classRecipes[0].id,
+              });
+              supported.push('versus');
+            } catch {}
+            return supported;
+          },
+          describe: ({ level }) => {
+            const actual = normalizedLevel(level);
+            return {
+              rules: `${actual.classic?.hunt ? missionBriefing(actual).goal : `${Math.round(actual.goal.coverage * 100)}% coverage`} · ${actual.rules.lives} lives · ${actual.rules.moveSpeed} cells/s · Authored rules`,
+            };
+          },
+          prepareClassic: prepareLibraryClassic,
+          availabilityExternal: (row, pack) => {
+            if (!pack)
+              return isRelease
+                ? { state: 'download', bytes: row.download.bytes }
+                : {
+                    state: 'unavailable',
+                    reason: t('interface:originalPictureDownloadIsAvailableInPublishedBuilds'),
+                  };
+            const present = chapterSnapshot?.index?.chapters.some(
+              (chapter) => chapter.id === row.packId,
+            );
+            return present
+              ? { state: 'ready' }
               : {
                   state: 'unavailable',
-                  reason: t('interface:originalPictureDownloadIsAvailableInPublishedBuilds'),
+                  reason: t('interface:installThisChapterWithItsOriginalPicturesInWorlds'),
                 };
-          const present = chapterSnapshot?.index?.chapters.some(
-            (chapter) => chapter.id === row.packId,
-          );
-          return present
-            ? { state: 'ready' }
-            : {
-                state: 'unavailable',
-                reason: t('interface:installThisChapterWithItsOriginalPicturesInWorlds'),
-              };
-        },
-        launchClassic: async (row, context) => {
-          if (row.source === 'external') {
-            const snapshot = await checkedChapters();
-            await externalChapters.readiness(snapshot, row.packId);
-            if (packs.packs.find((pack) => pack.id === row.packId) !== context.pack)
-              throw new Error(t('interface:installedOriginalsChangedChoosePlayAgain'));
-          }
-          return launchLibraryClassic(context.pack, context.selection, context);
-        },
-        launchCustom: (binding, context) => {
-          // The verified library classified this exact immutable prepared pack,
-          // including same-ID modifications. Do not add an actor-download
-          // dependency to its existing authored gameplay path.
-          actorCustomPacks.add(binding.pack);
-          return launchLibraryClassic(binding.pack, binding.selection, context);
-        },
-        progressClassic: (row) => {
-          const entry = classicRuntimeEntry(row);
-          return entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId]
-            ? t('interface:cleared')
-            : '';
-        },
-        progressStateClassic: (row) => {
-          const entry = classicRuntimeEntry(row);
-          const clear =
-            entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId];
-          return clear
-            ? { state: 'completed', bestStars: clear.medals ?? null }
-            : { state: 'new', bestStars: null };
-        },
-        progressCustom: (binding) =>
-          library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId]
-            ? t('interface:cleared')
-            : '',
-        progressStateCustom: (binding) => {
-          const clear =
-            library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId];
-          return clear
-            ? { state: 'completed', bestStars: clear.medals ?? null }
-            : { state: 'new', bestStars: null };
-        },
-      });
-      if (unifiedDisposed) {
-        result.library.dispose();
-        spatialEditions.dispose();
-        if (!candidateHost) host.preparer?.dispose();
-        throw new DOMException(t('interface:missionLibraryClosed'), 'AbortError');
-      }
-      disposeUnifiedPreview = () => {
-        spatialEditions.dispose();
-        if (!candidateHost) host.preparer?.dispose();
-      };
-      const state = createMissionLibrarySessionState({ mode: 'solo' });
-      // Checked return restores the retained runtime independently of browsing.
-      // Preserve the source chooser's validated filters/card; use its runtime
-      // selection only as a fallback for older returns without browse state.
-      // Neither UI state grants runtime ownership or launch authority.
-      const returnedRow = exactReturn
-        ? result.library.missions.find((row) => {
-            if (!['Classic', 'Custom'].includes(row.collection) || !row.modes.includes('solo'))
-              return false;
-            const owner = JSON.parse(row.ownerId);
-            const sourcePackId =
-              owner[0] === 'classic' ? owner[2] : owner[0] === 'custom' ? owner[1] : undefined;
-            return (
-              row.runtimeId === returnedSelection.levelId &&
-              libraryRowRuntimeCampaignKey(row) === returnedSelection.campaignKey &&
-              sourcePackId === (activeEntry.sourcePackId ?? null) &&
-              row.modes.includes('solo') &&
-              result.library.availability(row, 'solo').state === 'ready'
-            );
-          })
-        : null;
-      retiredJourneyChooser?.destroy();
-      retiredJourneyChooser = null;
-      unifiedChooser = attachJourneyChooser({
-        library: result.library,
-        profile,
-        goalPreferenceOptions: {
-          editionId: runtimeContent?.editionId ?? 'default',
-          getStorage: profileStorage,
-        },
-        ...(runtimeContent
-          ? {
-              supportedModes: runtimeContent.selection.edition.modes,
-              availableCollectionsOnly: true,
-              description: runtimeContent.selection.edition.name,
+          },
+          launchClassic: async (row, context) => {
+            if (row.source === 'external') {
+              const snapshot = await checkedChapters();
+              await externalChapters.readiness(snapshot, row.packId);
+              if (packs.packs.find((pack) => pack.id === row.packId) !== context.pack)
+                throw new Error(t('interface:installedOriginalsChangedChoosePlayAgain'));
             }
-          : {}),
-        getCurrentId: () => {
-          const mission = candidateHost && journeyMission();
-          if (mission)
-            return result.library.missions.find(
-              (row) =>
-                row.ownerId === `journey:${authoredRoute.id}` &&
-                row.editionId === authoredRoute.id &&
-                row.runtimeId === mission.id &&
-                row.modes.includes('solo'),
-            )?.id;
-          try {
-            return retainedLibraryMission(result.library, {
-              mode: 'solo',
-              levelId: campaign.levels[levelIndex].id,
-              campaignKey: activeEntry.classicRulesSourceCampaignKey
-                ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
-                : activeEntry.baseCampaignKey || campaignKey(campaign),
-              sourcePackId: activeEntry.sourcePackId ?? null,
-              rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
-              ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
-            })?.id;
-          } catch {
-            // Focus is a browsing hint, never authority to replace an unavailable edition.
-            return null;
-          }
-        },
-        readState: () =>
-          state.read() ??
-          (returnedRow
+            return launchLibraryClassic(context.pack, context.selection, context);
+          },
+          launchCustom: (binding, context) => {
+            // The verified library classified this exact immutable prepared pack,
+            // including same-ID modifications. Do not add an actor-download
+            // dependency to its existing authored gameplay path.
+            actorCustomPacks.add(binding.pack);
+            return launchLibraryClassic(binding.pack, binding.selection, context);
+          },
+          progressClassic: (row) => {
+            const entry = classicRuntimeEntry(row);
+            return entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId]
+              ? t('interface:cleared')
+              : '';
+          },
+          progressStateClassic: (row) => {
+            const entry = classicRuntimeEntry(row);
+            const clear =
+              entry && library.campaigns[campaignKey(entry.campaign)]?.clears?.[row.levelId];
+            return clear
+              ? { state: 'completed', bestStars: clear.medals ?? null }
+              : { state: 'new', bestStars: null };
+          },
+          progressCustom: (binding) =>
+            library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId]
+              ? t('interface:cleared')
+              : '',
+          progressStateCustom: (binding) => {
+            const clear =
+              library.campaigns[binding.selection.campaignKey]?.clears?.[binding.selection.levelId];
+            return clear
+              ? { state: 'completed', bestStars: clear.medals ?? null }
+              : { state: 'new', bestStars: null };
+          },
+        });
+        assertCurrent();
+        const state = createMissionLibrarySessionState({ mode: 'solo' });
+        // Checked return restores the retained runtime independently of browsing.
+        // Preserve the source chooser's validated filters/card; use its runtime
+        // selection only as a fallback for older returns without browse state.
+        // Neither UI state grants runtime ownership or launch authority.
+        const returnedRow = exactReturn
+          ? result.library.missions.find((row) => {
+              if (!['Classic', 'Custom'].includes(row.collection) || !row.modes.includes('solo'))
+                return false;
+              const owner = JSON.parse(row.ownerId);
+              const sourcePackId =
+                owner[0] === 'classic' ? owner[2] : owner[0] === 'custom' ? owner[1] : undefined;
+              return (
+                row.runtimeId === returnedSelection.levelId &&
+                libraryRowRuntimeCampaignKey(row) === returnedSelection.campaignKey &&
+                sourcePackId === (activeEntry.sourcePackId ?? null) &&
+                row.modes.includes('solo') &&
+                result.library.availability(row, 'solo').state === 'ready'
+              );
+            })
+          : null;
+        unifiedChooser = attachJourneyChooser({
+          library: result.library,
+          profile,
+          goalPreferenceOptions: {
+            editionId: runtimeContent?.editionId ?? 'default',
+            getStorage: profileStorage,
+          },
+          ...(runtimeContent
             ? {
-                search: '',
-                collection: '',
-                campaign: '',
-                mode: 'solo',
-                selectedId: returnedRow.id,
-                scroll: 0,
+                supportedModes: runtimeContent.selection.edition.modes,
+                availableCollectionsOnly: true,
+                description: runtimeContent.selection.edition.name,
               }
-            : null),
-        writeState: state.write,
-        launchContext: libraryActivationContext,
-        onPause: () => {
-          pause(true);
-          clearInput();
-          clearSkipConfirmation();
-        },
-        onReturn: (opener) => {
-          clearInput();
-          (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({
-            preventScroll: true,
-          });
-        },
-      });
-      if (!journeyPreferences)
-        browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
-      // Keep the native settings and their guarded handlers, but not the old
-      // pack/level/campaign browser. Settings describe the current Solo host,
-      // independently of the library's cross-mode browsing filter.
-      const setup = $('mission-picker-setup');
-      if (setup) {
-        setup.querySelector('.mission-picker-setup-fields').append($('shell-mode-choice'));
-        setup.classList.add('mission-library-setup');
-        setup.open = false;
-        localizedText(setup.querySelector('summary'), () => t('interface:currentSoloFlightSetup'));
-        for (const id of ['pack-select', 'level-select', 'campaign-select'])
-          $(id).closest('label').hidden = true;
-        $('journey-chooser').querySelector('.journey-footer').append(setup);
+            : {}),
+          getCurrentId: () => {
+            const mission = candidateHost && journeyMission();
+            if (mission)
+              return result.library.missions.find(
+                (row) =>
+                  row.ownerId === `journey:${authoredRoute.id}` &&
+                  row.editionId === authoredRoute.id &&
+                  row.runtimeId === mission.id &&
+                  row.modes.includes('solo'),
+              )?.id;
+            try {
+              return retainedLibraryMission(result.library, {
+                mode: 'solo',
+                levelId: campaign.levels[levelIndex].id,
+                campaignKey: activeEntry.classicRulesSourceCampaignKey
+                  ? `${activeEntry.classicRulesSourceCampaignKey}::${activeEntry.classicRulesEdition}`
+                  : activeEntry.baseCampaignKey || campaignKey(campaign),
+                sourcePackId: activeEntry.sourcePackId ?? null,
+                rulesEdition: activeEntry.classicRulesEdition ?? CLASSIC_RULES_ORIGINAL,
+                ...(retainedLibraryOwner?.entry === activeEntry ? retainedLibraryOwner : {}),
+              })?.id;
+            } catch {
+              // Focus is a browsing hint, never authority to replace an unavailable edition.
+              return null;
+            }
+          },
+          readState: () =>
+            state.read() ??
+            (returnedRow
+              ? {
+                  search: '',
+                  collection: '',
+                  campaign: '',
+                  mode: 'solo',
+                  selectedId: returnedRow.id,
+                  scroll: 0,
+                }
+              : null),
+          writeState: state.write,
+          launchContext: libraryActivationContext,
+          onPause: () => {
+            pause(true);
+            clearInput();
+            clearSkipConfirmation();
+          },
+          onReturn: (opener) => {
+            clearInput();
+            (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({
+              preventScroll: true,
+            });
+          },
+        });
+        if (!journeyPreferences)
+          browsingJourneyPreferences.subscribe(() => unifiedChooser?.refresh());
+        // Keep the native settings and their guarded handlers, but not the old
+        // pack/level/campaign browser. Settings describe the current Solo host,
+        // independently of the library's cross-mode browsing filter.
+        const setup = $('mission-picker-setup');
+        if (setup) {
+          setup.querySelector('.mission-picker-setup-fields').append($('shell-mode-choice'));
+          setup.classList.add('mission-library-setup');
+          setup.open = false;
+          localizedText(setup.querySelector('summary'), () =>
+            t('interface:currentSoloFlightSetup'),
+          );
+          for (const id of ['pack-select', 'level-select', 'campaign-select'])
+            $(id).closest('label').hidden = true;
+          $('journey-chooser').querySelector('.journey-footer').append(setup);
+        }
+        collectionJourneyState = { profile, catalog: host.catalog, editionId: route.id };
+        disposeUnifiedPreview = () => {
+          spatialEditions.dispose();
+          ownedHost?.preparer?.dispose();
+        };
+        unifiedLibrary = result;
+        committed = true;
+        return result;
+      } finally {
+        if (!committed) {
+          result?.library.dispose();
+          spatialEditions.dispose();
+          ownedHost?.preparer?.dispose();
+        }
       }
-      unifiedLibrary = result;
-      return result;
     })();
     try {
-      return await unifiedLibraryLoading;
+      return await attempt.promise;
     } finally {
-      unifiedLibraryLoading = null;
+      attempt.callers.clear();
+      if (unifiedLibraryLoading === attempt) unifiedLibraryLoading = null;
     }
   }
   function libraryActivationContext() {
@@ -12924,14 +14490,21 @@ try {
       onRetire: cancel,
     });
     cancelUnifiedOpening = cancel;
+    const isCurrent = () =>
+      revision === unifiedOpenRevision &&
+      opening.current() &&
+      controllerDialog() === parent &&
+      $('shell-home').open === homeWasOpen &&
+      run === oldRun &&
+      started === wasStarted;
     try {
-      const host = await getUnifiedMissionLibrary();
+      const host = await getUnifiedMissionLibrary(isCurrent);
       // The installed-card refresh may move focus while it reconciles an owned
       // catalogue. Claim the still-current opener before that internal work;
       // newer input still retires the claim while the state/revision checks
       // below also reject replaced navigation and game state.
       if (!opening.claim()) return;
-      await host.refreshInstalled();
+      await refreshUnifiedInstalled(host, isCurrent);
       const openingCurrent = opening.current();
       opening.dispose();
       if (
@@ -12991,29 +14564,6 @@ try {
             })
         : t('interface:journeyTechnicalTestPreview'),
     );
-    journeyChooser = attachJourneyChooser({
-      catalog: journeyCatalog,
-      profile: journeyProfile,
-      onChoose: (mission) => {
-        // Browsing retains Home for Back. Only deliberate mission selection
-        // leaves it before the staged preparation owns the next attempt.
-        if ($('shell-home').open) $('shell-home').close();
-        return launchJourneyMission(mission);
-      },
-      getCard: candidateHost
-        ? (mission) => candidateHost.card(mission, journeyPreferences.snapshot().difficulty)
-        : undefined,
-      onPause: () => {
-        pause(true);
-        clearInput();
-        clearSkipConfirmation();
-      },
-      onReturn: (opener) => {
-        clearInput();
-        (availableFocusTarget(opener) ? opener : controllerFocus())?.focus({ preventScroll: true });
-      },
-    });
-    $('journey-chooser').querySelector('.journey-footer').append($('missions-catalogue'));
     refreshJourneySkip();
     $('journey-save-retry').onclick = () => void journeyProfile.flush();
     $('journey-save-export').onclick = async () => {
@@ -13030,7 +14580,9 @@ try {
       $('journey-save-retry').hidden = true;
       $('journey-save-export').hidden = true;
     }
-    window.addEventListener('online', () => void journeyProfile.flush());
+    window.addEventListener('online', () => {
+      if (!journeyRewardsDurable && (!started || paused)) void journeyProfile.flush();
+    });
   }
   $('journey-skip').onclick = () => {
     if (!normalSoloSkipAvailable()) return;
@@ -13115,146 +14667,158 @@ try {
       }
     };
   }
-  optionalWorlds = attachOptionalChaptersPanel({
-    onPlayActivation: captureWorldPlay,
-    getLibrary: () => packs,
-    getUsage: () => chapterSnapshot?.usage,
-    sourceChapters:
-      !practiceSession && !runtimeContent
-        ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
-            const { descriptor, name, description, mode, levels } = edition;
-            return presentSourceChapter(edition, {
-              id: descriptor.id,
-              controlId:
-                descriptor.id === SOURCE_EXTERNAL_CHAPTER.id ? 'source' : `source-${descriptor.id}`,
-              name,
-              description,
-              mode,
-              themeId: descriptor.themeId,
-              levels,
-              sourceOnly: !isRelease,
-              bytes: descriptor.pack.bytes + descriptor.media.bytes,
-              download: isRelease
-                ? (options) =>
-                    installSourceChapter(descriptor.id, null, { ...options, download: true })
-                : null,
-              backupSupported: !!externalBackup,
-              async inspect({ signal }) {
-                const snapshot = await inspectChapters({ signal });
-                if (snapshot.status !== 'checked') return { status: snapshot.reason };
-                const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
-                if (installed)
+  function getOptionalWorlds() {
+    if (optionalWorldsDisposed) return null;
+    return (optionalWorlds ??= attachOptionalChaptersPanel({
+      onPlayActivation: captureWorldPlay,
+      getLibrary: () => packs,
+      getUsage: () => chapterSnapshot?.usage,
+      sourceChapters:
+        !practiceSession && !runtimeContent
+          ? SOURCE_EXTERNAL_EDITIONS.map((edition) => {
+              const { descriptor, name, description, mode, levels } = edition;
+              return presentSourceChapter(edition, {
+                id: descriptor.id,
+                controlId:
+                  descriptor.id === SOURCE_EXTERNAL_CHAPTER.id
+                    ? 'source'
+                    : `source-${descriptor.id}`,
+                name,
+                description,
+                mode,
+                themeId: descriptor.themeId,
+                levels,
+                sourceOnly: !isRelease,
+                bytes: descriptor.pack.bytes + descriptor.media.bytes,
+                download: isRelease
+                  ? (options) =>
+                      installSourceChapter(descriptor.id, null, { ...options, download: true })
+                  : null,
+                backupSupported: !!externalBackup,
+                async inspect({ signal }) {
+                  const snapshot = await inspectChapters({ signal });
+                  if (snapshot.status !== 'checked') return { status: snapshot.reason };
+                  const installed = snapshot.index.chapters.some((d) => d.id === descriptor.id);
+                  if (installed)
+                    await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                  return { status: installed ? 'installed' : 'absent' };
+                },
+                install: (files, options) => installSourceChapter(descriptor.id, files, options),
+                async play({ signal, onStatus, launch }) {
+                  if (!storedStateAdopted || !persistenceReady)
+                    throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
+                  const snapshot = await checkedChapters({ signal });
                   await externalChapters.readiness(snapshot, descriptor.id, { signal });
-                return { status: installed ? 'installed' : 'absent' };
-              },
-              install: (files, options) => installSourceChapter(descriptor.id, files, options),
-              async play({ signal, onStatus, launch }) {
-                if (!storedStateAdopted || !persistenceReady)
-                  throw new Error(t('interface:reloadAfterRecoveryBeforePlayingThisChapter'));
-                const snapshot = await checkedChapters({ signal });
-                await externalChapters.readiness(snapshot, descriptor.id, { signal });
-                assertWorldPlay(launch);
-                adoptContentCatalog(contentFromChapters(snapshot));
-                const pack = packs.packs.find((item) => item.id === descriptor.id);
-                return requestWorldPlay(pack, { signal, launch, onStatus });
-              },
-              async choose({ signal, onStatus, launch }) {
-                if (!storedStateAdopted || !persistenceReady)
-                  throw new Error(
-                    t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+                  assertWorldPlay(launch);
+                  adoptContentCatalog(contentFromChapters(snapshot));
+                  const pack = packs.packs.find((item) => item.id === descriptor.id);
+                  return requestWorldPlay(pack, { signal, launch, onStatus });
+                },
+                async choose({ signal, onStatus, launch }) {
+                  if (!storedStateAdopted || !persistenceReady)
+                    throw new Error(
+                      t('interface:reloadAfterRecoveryToAdoptThePreservedProfileBeforeChoosing'),
+                    );
+                  preparationStatus(
+                    onStatus,
+                    t('interface:checkingInstalledChapterOriginals'),
+                    'verifying',
+                    () => !signal?.aborted,
                   );
-                preparationStatus(
-                  onStatus,
-                  t('interface:checkingInstalledChapterOriginals'),
-                  'verifying',
-                  () => !signal?.aborted,
-                );
-                const snapshot = await checkedChapters({ signal });
-                await externalChapters.readiness(snapshot, descriptor.id, { signal });
-                if (signal.aborted || !launch?.isCurrent())
-                  throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
-                // Reconcile only checked content; this does not replace the run.
-                // The explicit selection below still requires Stay / Replace.
-                adoptContentCatalog(contentFromChapters(snapshot));
-                const pack = packs.packs.find((p) => p.id === descriptor.id);
-                return requestWorldLaunch(
-                  resolvePackCampaign(pack, pack.campaigns[0].id),
-                  launch,
-                  onStatus,
-                );
-              },
-            });
-          })
-        : [],
-    loadCatalog: async ({ signal }) => {
-      if (runtimeContent) return { format: 'revealline-optional-chapters.v1', packs: [] };
-      const options = { signal, baseURL: new URL('../', gameDocumentURL(location.href)) };
-      if (isRelease) await loadExternalCatalog(options);
-      return loadOptionalCatalog(options);
-    },
-    install: installOptionalChapter,
-    playInstalled: (pack, options) => {
-      if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
-        throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
-      return requestWorldPlay(pack, options);
-    },
-    play: async (summary, options) => {
-      const pack = packs.packs.find((item) => item.id === summary.id);
-      if (!pack) throw new Error(t('interface:installThisChapterBeforePlaying'));
-      await verifyOptionalInstalled(pack, summary, { signal: options.signal });
-      return requestWorldPlay(pack, options);
-    },
-    chooseInstalled: async (pack, { signal, launch, onStatus }) => {
-      if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
-        throw new Error(t('interface:returnToTheNormalGameAndResolveRecoveryBeforeChoosing'));
-      if (signal?.aborted)
-        throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
-      if (!packs.packs.includes(pack))
-        throw new Error(t('interface:installedContentChangedRefreshTheChapterList'));
-      // External originals always go through their descriptor/readiness card.
-      if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
-        throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
-      return requestWorldLaunch(resolvePackCampaign(pack, pack.campaigns[0].id), launch, onStatus);
-    },
-    choose: async (summary, { signal, onStatus, launch }) => {
-      if (courseEntry || courseSession || practice)
-        throw new Error(t('interface:returnFromPracticeBeforeChoosingAWorld'));
-      const pack = packs.packs.find((item) => item.id === summary.id);
-      if (!pack) throw new Error(t('interface:installThisWorldBeforeChoosingIt'));
-      preparationStatus(
-        onStatus,
-        localizedMessage('interface:optionalChapters.verifying', { chapter: summary.name }),
-        'verifying',
-        () => !signal?.aborted,
-      );
-      await verifyOptionalInstalled(pack, summary, { signal });
-      if (signal?.aborted)
-        throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
-      if (packs.packs.find((item) => item.id === summary.id) !== pack)
-        throw new Error(t('interface:installedContentChangedChooseThisWorldAgain'));
-      return requestWorldLaunch(resolvePackCampaign(pack, pack.campaigns[0].id), launch, onStatus);
-    },
-    onOpen: () => {
-      pause(true);
-      clearInput();
-    },
-    onClose: () => {
-      clearInput();
-      gameShell?.openHome();
-    },
-    onChosen: () => {
-      clearInput();
-      controllerReading.refresh();
-      controllerFocus()?.focus({ preventScroll: true });
-    },
-    onRead: (request) => controllerNavigation.beginReading(request),
-    onManage: () => {
-      clearInput();
-      libraryPanel.open('packs');
-    },
-  });
+                  const snapshot = await checkedChapters({ signal });
+                  await externalChapters.readiness(snapshot, descriptor.id, { signal });
+                  if (signal.aborted || !launch?.isCurrent())
+                    throw new DOMException(t('interface:chapterSelectionCancelled'), 'AbortError');
+                  // Reconcile only checked content; this does not replace the run.
+                  // The explicit selection below still requires Stay / Replace.
+                  adoptContentCatalog(contentFromChapters(snapshot));
+                  const pack = packs.packs.find((p) => p.id === descriptor.id);
+                  return requestWorldLaunch(
+                    resolvePackCampaign(pack, pack.campaigns[0].id),
+                    launch,
+                    onStatus,
+                  );
+                },
+              });
+            })
+          : [],
+      loadCatalog: async ({ signal }) => {
+        if (runtimeContent) return { format: 'revealline-optional-chapters.v1', packs: [] };
+        const options = { signal, baseURL: new URL('../', gameDocumentURL(location.href)) };
+        if (isRelease) await loadExternalCatalog(options);
+        return loadOptionalCatalog(options);
+      },
+      install: installOptionalChapter,
+      playInstalled: (pack, options) => {
+        if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
+          throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
+        return requestWorldPlay(pack, options);
+      },
+      play: async (summary, options) => {
+        const pack = packs.packs.find((item) => item.id === summary.id);
+        if (!pack) throw new Error(t('interface:installThisChapterBeforePlaying'));
+        await verifyOptionalInstalled(pack, summary, { signal: options.signal });
+        return requestWorldPlay(pack, options);
+      },
+      chooseInstalled: async (pack, { signal, launch, onStatus }) => {
+        if (courseEntry || courseSession || practice || !storedStateAdopted || !persistenceReady)
+          throw new Error(t('interface:returnToTheNormalGameAndResolveRecoveryBeforeChoosing'));
+        if (signal?.aborted)
+          throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
+        if (!packs.packs.includes(pack))
+          throw new Error(t('interface:installedContentChangedRefreshTheChapterList'));
+        // External originals always go through their descriptor/readiness card.
+        if (SOURCE_EXTERNAL_EDITIONS.some(({ descriptor }) => descriptor.id === pack.id))
+          throw new Error(t('interface:useThisChapterSExactOriginalPictureCard'));
+        return requestWorldLaunch(
+          resolvePackCampaign(pack, pack.campaigns[0].id),
+          launch,
+          onStatus,
+        );
+      },
+      choose: async (summary, { signal, onStatus, launch }) => {
+        if (courseEntry || courseSession || practice)
+          throw new Error(t('interface:returnFromPracticeBeforeChoosingAWorld'));
+        const pack = packs.packs.find((item) => item.id === summary.id);
+        if (!pack) throw new Error(t('interface:installThisWorldBeforeChoosingIt'));
+        preparationStatus(
+          onStatus,
+          localizedMessage('interface:optionalChapters.verifying', { chapter: summary.name }),
+          'verifying',
+          () => !signal?.aborted,
+        );
+        await verifyOptionalInstalled(pack, summary, { signal });
+        if (signal?.aborted)
+          throw new DOMException(t('interface:worldSelectionCancelled'), 'AbortError');
+        if (packs.packs.find((item) => item.id === summary.id) !== pack)
+          throw new Error(t('interface:installedContentChangedChooseThisWorldAgain'));
+        return requestWorldLaunch(
+          resolvePackCampaign(pack, pack.campaigns[0].id),
+          launch,
+          onStatus,
+        );
+      },
+      onOpen: () => {
+        pause(true);
+        clearInput();
+      },
+      onClose: () => {
+        clearInput();
+        gameShell?.openHome();
+      },
+      onChosen: () => {
+        clearInput();
+        controllerReading.refresh();
+        controllerFocus()?.focus({ preventScroll: true });
+      },
+      onRead: (request) => controllerNavigation.beginReading(request),
+      onManage: () => {
+        clearInput();
+        libraryPanel.open('packs');
+      },
+    }));
+  }
   if (!practiceSession) {
-    retiredJourneyChooser = journeyChooser;
     journeyChooser = {
       open: openUnifiedMissions,
       primary: () => unifiedChooser?.primary(),
@@ -13278,7 +14842,10 @@ try {
       $('mission-brief-read').focus({ preventScroll: true });
       return true;
     },
-    focusMissions: () => missionPicker?.focusSelectedChapter(),
+    focusMissions: () => {
+      refreshVisibleMissions();
+      return missionPicker?.focusSelectedChapter();
+    },
     focusGame: () => controllerFocus()?.focus({ preventScroll: true }),
     pause,
     getTopDialog: controllerDialog,
@@ -13321,7 +14888,7 @@ try {
     onTitleCancel: cancelTitleFlight,
     onModeDeparture: requestModeDeparture,
     separateTeam: !!authoredRoute,
-    onWorlds: () => optionalWorlds.open(),
+    onWorlds: () => getOptionalWorlds()?.open(),
     onMissions: !practiceSession
       ? (opener) =>
           journeyChooser.open(opener, {
@@ -13452,6 +15019,9 @@ try {
     presets,
     audio: demoAudio,
     audioMaster,
+    onPreparationPhase: setMediaPreparationPhase,
+    onQualityFrame: (now, interval, work) => qualityPolicy.observe(now, interval, work),
+    onQualityTransition: () => qualityPolicy.safeTransition(performance.now()),
     prepareActors: (entry, level, themeId, options) =>
       prepareAttemptActors(entry, level, themeId, options),
     preparePresentation: async (demoPainter, entry, level, themeId, options) => {
@@ -13462,11 +15032,15 @@ try {
       return lease;
     },
     getContext: () => ({
-      entries: executionEntries(),
+      // Scene admission needs the catalogue; presentation/input sampling does not.
+      get entries() {
+        return executionEntries();
+      },
       library,
       preferences: library.preferences,
       themeId: theme.id,
       reduced: displayPreferences.snapshot().effectiveReducedEffects,
+      quality: qualityPolicy.snapshot().tier,
       renderOptions: {
         textFace: displayPreferences.snapshot().textFace,
         showGrid: library.preferences.showGrid,
@@ -13532,6 +15106,7 @@ try {
     onEnter: () => {
       clearInput();
       paused = true;
+      setMediaPreparationPhase('preparing');
       if (started && !['won', 'lost'].includes(run.status)) overlay('pause');
       demoReturnSettings = $('settings-dialog').open;
       if (demoReturnSettings) $('settings-dialog').close();
@@ -13539,6 +15114,15 @@ try {
     },
     onExit: ({ handoff, origin }) => {
       clearInput();
+      setMediaPreparationPhase(
+        document.hidden || !document.hasFocus()
+          ? 'suspended'
+          : started && !paused
+            ? 'playing'
+            : started
+              ? 'paused'
+              : 'menu',
+      );
       sound.pause();
       if (handoff) {
         if (!controllerDialog()) $('start-button').focus({ preventScroll: true });
@@ -13578,7 +15162,8 @@ try {
       return;
     }
     try {
-      const result = await demoLibrary.keep(exportReplay(recorder, run), {
+      if (!manual && !demoLibrary.enabled) return;
+      const result = await demoLibrary.keepRecording(recorder, run, {
         entry: activeEntry,
         practice: false,
         manual,
@@ -13627,6 +15212,7 @@ try {
   mountWorkshopLinks({ document, href: workshopContext.href });
   editionUI = runtimeContent
     ? await mountEditionSoloUI({
+        scheduleReplayChunk: scheduleOptionalReplayChunk,
         provider: runtimeContent,
         document,
         window,
@@ -13737,7 +15323,13 @@ try {
     // opening lease still retires on genuinely newer input or lost foreground.
     await (async () => {
       try {
-        const host = await getUnifiedMissionLibrary();
+        const host = await getUnifiedMissionLibrary(
+          () =>
+            revision === unifiedOpenRevision &&
+            opening.current() &&
+            run === incomingRun &&
+            started === incomingStarted,
+        );
         // The boot picture may still own a media-generation write. Finish it
         // before the requested mission prepares its distinct exact original.
         // Its failure is not authority to replace or reject the requested art.

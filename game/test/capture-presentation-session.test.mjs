@@ -89,17 +89,20 @@ test('Capture outer envelope preserves native replay and exact artwork through s
   assert.deepEqual(snapshotCaptureSession(f.native), f.native);
   assert.equal(captureSessionAppearance(f.native), null);
   let raw = 'prior';
-  assert.equal(
-    saveCaptureSession(
-      {
-        setItem: (_, value) => {
-          raw = value;
-        },
+  const saved = saveCaptureSession(
+    {
+      setItem: (_, value) => {
+        raw = value;
       },
-      'slot',
-      f.saved,
-    ).ok,
-    true,
+    },
+    'slot',
+    f.saved,
+  );
+  assert.equal(saved.ok, true);
+  assert.equal(
+    saved.serialized,
+    raw,
+    'Receipt retains exactly the validated bytes supplied to storage',
   );
   assert.deepEqual(JSON.parse(raw), f.saved);
   const restored = await restoreCaptureSession(raw, {

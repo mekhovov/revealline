@@ -35,6 +35,8 @@ async function fixture(
   {
     storage = managedIndexedDB(),
     image = false,
+    imageRewards = 1,
+    observeCollection = false,
     teaser = false,
     reducedMotion = false,
     durable = true,
@@ -173,12 +175,13 @@ async function fixture(
     locales: locales({ title: 'Further reading' }),
   });
   if (image)
-    rewards[0].payloads.push({
-      id: 'picture',
-      type: 'image',
-      asset: { assetId: catalog.assets[0].id, sha256: catalog.assets[0].sha256 },
-      locales: locales({ title: 'Original picture', alt: 'The exact earned illustration' }),
-    });
+    for (const reward of rewards.slice(0, imageRewards))
+      reward.payloads.push({
+        id: 'picture',
+        type: 'image',
+        asset: { assetId: catalog.assets[0].id, sha256: catalog.assets[0].sha256 },
+        locales: locales({ title: 'Original picture', alt: 'The exact earned illustration' }),
+      });
   rewards.push({
     ...copy(rewards[0]),
     id: 'campaign-finale',
@@ -302,6 +305,35 @@ async function fixture(
       return 1;
     },
   });
+  if (observeCollection) {
+    const observers = new Set();
+    win.MutationObserver = class {
+      constructor(callback) {
+        this.callback = callback;
+      }
+      observe(target, options) {
+        assert.equal(target === collection, true);
+        assert.deepEqual(options.attributeFilter, ['open']);
+        observers.add(this);
+      }
+      disconnect() {
+        observers.delete(this);
+      }
+    };
+    for (const method of ['setAttribute', 'removeAttribute']) {
+      const original = collection[method].bind(collection);
+      t.mock.method(collection, method, (...args) => {
+        original(...args);
+        if (args[0] === 'open')
+          queueMicrotask(() => {
+            for (const observer of observers)
+              observer.callback([
+                { type: 'attributes', attributeName: 'open', target: collection },
+              ]);
+          });
+      });
+    }
+  }
   t.mock.method(globalThis, 'fetch', async (url, options) => {
     requests.push({ url: String(url), options });
     return new Response(audioFiles.get(String(url)) ?? png);
@@ -376,6 +408,11 @@ async function fixture(
     },
     backend,
     settle,
+    // The production host refreshes normally; this fixture has no observer unless requested.
+    openCollection() {
+      collection.showModal();
+      view.refresh();
+    },
     accepted,
     get profile() {
       return profile;
@@ -413,7 +450,7 @@ test('changing language retains earned reader focus without playing media or cha
   f.accepted(1);
   f.view.refresh();
   await f.settle();
-  f.collection.showModal();
+  f.openCollection();
   f.cards[0].querySelector('button').click();
   const dialog = f.doc.getElementById('completion-reward-dialog');
   const before = copy(f.view.snapshot().state);
@@ -623,6 +660,7 @@ test('winning practice or skipping a mission cannot grant; accepted progress gra
   f.view.refresh();
   await f.settle();
   assert.equal((await f.exportState()).receipts.length, 0);
+  f.openCollection();
   assert.equal(f.cards[0].dataset.earned, 'false');
   f.accepted(1);
   f.view.refresh();
@@ -644,6 +682,7 @@ test('the final mission alone and five distinct wins keep the six-mission finale
   f.accepted(6);
   f.view.refresh();
   await f.settle();
+  f.openCollection();
   assert.equal(f.cards.at(-1).dataset.earned, 'false');
   for (let index = 2; index <= 5; index++) f.accepted(index);
   f.view.refresh();
@@ -668,7 +707,7 @@ test('resource URLs stay hidden while locked and opening a reward pauses without
   f.view.refresh();
   await f.settle();
   assert.deepEqual(f.externalClicks, []);
-  f.collection.showModal();
+  f.openCollection();
   const open = f.cards[0].querySelector('button');
   open.focus();
   open.click();
@@ -692,8 +731,8 @@ test('exact earned images verify on demand and release object URLs on close/disp
   f.accepted(1);
   f.view.refresh();
   await f.settle();
-  assert.equal(f.requests.length, 1);
-  f.collection.showModal();
+  assert.equal(f.requests.length, 0);
+  f.openCollection();
   f.cards[0].querySelector('button').click();
   const dialog = f.doc.getElementById('completion-reward-dialog');
   await waitFor(() => !!dialog.querySelector('img'));
@@ -718,12 +757,12 @@ test('missing pinned media never substitutes newer artwork or revokes the earned
   await f.settle();
   const earned = await f.exportState();
   f.provider.catalog.assets[0].sha256 = 'b'.repeat(64);
-  f.collection.showModal();
+  f.openCollection();
   f.cards[0].querySelector('button').click();
   await f.settle();
   const dialog = f.doc.getElementById('completion-reward-dialog');
   assert.equal(dialog.querySelector('img'), null);
-  assert.equal(f.requests.length, 1);
+  assert.equal(f.requests.length, 0);
   assert(dialog.textContent.includes('Knowledge earned'));
   assert.deepEqual((await f.exportState()).receipts, earned.receipts);
 });
@@ -735,6 +774,7 @@ test('unavailable storage keeps earned discoveries available with a session-only
   f.setRun({ levelId: 'mission-1', status: 'won' });
   f.view.refresh();
   await f.settle();
+  f.openCollection();
   assert.equal(f.cards[0].dataset.earned, 'true');
   const status = f.doc.getElementById('completion-reward-save-status');
   assert.equal(status.dataset.durable, 'false');
@@ -793,7 +833,7 @@ test('closing a viewer cancels pending media without publishing a late object UR
   f.accepted(1);
   f.view.refresh();
   await f.settle();
-  f.collection.showModal();
+  f.openCollection();
   f.cards[0].querySelector('button').click();
   const dialog = f.doc.getElementById('completion-reward-dialog');
   await f.settle();
@@ -812,7 +852,7 @@ test('an earned discovery exports exact offline pictures without opening resourc
   f.view.refresh();
   await f.settle();
   const before = await f.exportState();
-  f.collection.showModal();
+  f.openCollection();
   f.cards[0].querySelector('button').click();
   await f.doc.getElementById('completion-reward-printable').onclick();
   const file = f.created.findLast((item) => item.blob.type.startsWith('text/html'));
@@ -834,7 +874,7 @@ test('optional atlas mounts only after earning and cannot change accepted progre
   f.view.refresh();
   await f.settle();
   const before = await f.exportState();
-  f.collection.showModal();
+  f.openCollection();
   f.cards[0].querySelector('button').click();
   const atlas = f.doc.querySelector('.discovery-exploration');
   assert(atlas);
@@ -856,9 +896,9 @@ test('native media is absent while locked; earned viewer uses shared sound owner
   assert.equal(f.requests.length, 0);
   f.accepted(1);
   f.view.refresh();
+  f.openCollection();
   await waitFor(() => f.cards[0].dataset.earned === 'true');
   const before = await f.exportState();
-  f.collection.showModal();
   f.cards[0].querySelector('button').click();
   assert(f.doc.querySelector('[data-reward-media="audio"]'));
   await waitFor(() =>
@@ -888,7 +928,7 @@ test('native media is absent while locked; earned viewer uses shared sound owner
 
 test('campaign exhibit shows every earned thumbnail without another click and releases it on close', async (t) => {
   const f = await fixture(t, { image: true });
-  f.collection.showModal();
+  f.openCollection();
   const pictures = () => f.doc.getElementById('completion-reward-exhibit-pictures');
   pictures().click();
   await f.settle();
@@ -920,6 +960,7 @@ test('earned pictures stay visible while locked-preview controls keep accepted p
   f.accepted(1);
   f.view.refresh();
   await f.settle();
+  f.openCollection();
   const generation = f.profile.generation;
   const receipts = JSON.stringify(f.view.snapshot().state.receipts);
   await waitFor(() =>
@@ -1012,7 +1053,7 @@ test('locked ready and Collection previews request separate art only after expli
     f.revoked,
     f.created.map((item) => item.url),
   );
-  f.collection.showModal();
+  f.openCollection();
   f.doc.getElementById('completion-reward-exhibit-pictures').click();
   await waitFor(() => f.doc.getElementById('completion-reward-shelf').querySelector('img'));
   assert.equal(f.requests.length, 2);
@@ -1069,9 +1110,9 @@ test('earned playlist stays locked until its accepted win and switching never ch
   assert.equal(f.requests.length, 0);
   f.accepted(1);
   f.view.refresh();
+  f.openCollection();
   await waitFor(() => f.cards[0].dataset.earned === 'true');
   const before = await f.exportState();
-  f.collection.showModal();
   f.cards[0].querySelector('button').click();
   const group = f.doc.querySelector('[data-reward-audio-group]');
   assert(group);
@@ -1177,5 +1218,138 @@ test('custom provider replacements and mutable authored arrays are revalidated o
     accepted.receipts.find((receipt) => receipt.definition.id === replacement.id).definition
       .payloads[0].type,
     'knowledge',
+  );
+});
+
+test('closed reward shelf preserves accepted and durable rewards without hidden art or cards', async (t) => {
+  const f = await fixture(t, { image: true });
+  const run = { levelId: 'mission-1', status: 'running' };
+  f.setRun(run);
+  f.view.refresh();
+  f.accepted(1);
+  run.status = 'won';
+  f.overlay.dataset.kind = 'won';
+  f.view.refresh();
+  const result = f.doc.getElementById('completion-reward-result');
+  assert.equal(result.hidden, false);
+  assert.equal(result.querySelector('button').disabled, false);
+  assert.equal(result.classList.contains('completion-reward-arrive'), true);
+  assert.equal(
+    f.view.snapshot().state.receipts[0].evidence.clears['mission-1'].runId,
+    'accepted-1',
+  );
+  assert.equal(f.doc.getElementById('completion-reward-save-status').dataset.pending, 'true');
+  await f.settle();
+  assert.equal(
+    (await f.backend.read()).receipts[0].evidence.clears['mission-1'].runId,
+    'accepted-1',
+  );
+  assert.equal(f.doc.getElementById('completion-reward-save-status').dataset.durable, 'true');
+  assert.equal(f.requests.length, 0, 'Closed collection must not request earned art.');
+  assert.equal(f.created.length, 0);
+  assert.equal(f.cards.length, 0, 'Closed collection must not build hidden reward cards.');
+  f.openCollection();
+  f.view.refresh();
+  await waitFor(() => f.doc.getElementById('completion-reward-shelf').querySelector('img'));
+  assert.equal(f.cards[0].dataset.earned, 'true');
+  assert.equal(f.requests.length, 1, 'Opening the collection automatically shows earned art.');
+});
+
+test('closing reward shelf cancels its queue and late durability cannot restart it during a new run', async (t) => {
+  const f = await fixture(t, { image: true, imageRewards: 3 });
+  const pending = [];
+  t.mock.method(
+    globalThis,
+    'fetch',
+    (url, options) =>
+      new Promise((resolve) => {
+        pending.push({ url, signal: options.signal, resolve });
+      }),
+  );
+  f.openCollection();
+  for (let mission = 1; mission <= 3; mission++) f.accepted(mission);
+  f.view.refresh();
+  await waitFor(() => pending.length === 2);
+  f.collection.close();
+  assert(pending.every(({ signal }) => signal.aborted));
+  f.setRun({ levelId: 'mission-4', status: 'running' });
+  f.overlay.dataset.kind = 'playing';
+  f.setDurable(false);
+  f.view.refresh();
+  f.setDurable(true);
+  f.view.refresh();
+  for (const request of pending.slice()) request.resolve(new Response(png));
+  await f.settle();
+  assert.equal(pending.length, 2, 'Closed shelf must not restart or admit its third queued image.');
+  assert.equal(f.created.length, 0, 'Canceled responses must not create object URLs.');
+  assert.equal(f.doc.getElementById('completion-reward-shelf').querySelector('img'), null);
+  assert.equal((await f.backend.read()).receipts.length, 3);
+  f.openCollection();
+  f.view.refresh();
+  await waitFor(() => pending.length === 4);
+  pending[2].resolve(new Response(png));
+  pending[3].resolve(new Response(png));
+  await waitFor(() => pending.length === 5);
+  pending[4].resolve(new Response(png));
+  await waitFor(
+    () => f.doc.getElementById('completion-reward-shelf').querySelectorAll('img').length === 3,
+  );
+  assert.equal(f.created.length, 3);
+  f.collection.close();
+  f.view.dispose();
+  assert.deepEqual(f.revoked.slice().sort(), f.created.map(({ url }) => url).sort());
+});
+
+test('closing reward shelf leaves the independently opened reward viewer request alive', async (t) => {
+  const f = await fixture(t, { image: true });
+  const pending = [];
+  t.mock.method(
+    globalThis,
+    'fetch',
+    (url, options) =>
+      new Promise((resolve) => {
+        pending.push({ signal: options.signal, resolve });
+      }),
+  );
+  f.openCollection();
+  f.accepted(1);
+  f.view.refresh();
+  await waitFor(() => pending.length === 1);
+  f.cards[0].querySelector('button').click();
+  await waitFor(() => pending.length === 2);
+  f.collection.close();
+  assert.equal(pending[0].signal.aborted, true);
+  assert.equal(pending[1].signal.aborted, false, 'The viewer owns a different request.');
+  pending[0].resolve(new Response(png));
+  pending[1].resolve(new Response(png));
+  const viewer = f.doc.getElementById('completion-reward-dialog');
+  await waitFor(() => viewer.querySelector('img'));
+  assert.equal(f.doc.getElementById('completion-reward-shelf').querySelector('img'), null);
+  assert.equal(f.created.length, 1);
+  viewer.close();
+  assert.deepEqual(
+    f.revoked,
+    f.created.map(({ url }) => url),
+  );
+});
+
+test('public collection open reconciles current accepted state through its open observer', async (t) => {
+  const f = await fixture(t, { image: true, observeCollection: true });
+  f.accepted(1);
+  assert.equal(f.view.snapshot().state.receipts.length, 0);
+  assert.equal(f.cards.length, 0);
+  f.collection.showModal();
+  await waitFor(() => f.doc.getElementById('completion-reward-shelf').querySelector('img'));
+  assert.equal(f.cards[0].dataset.earned, 'true');
+  assert.equal(
+    f.view.snapshot().state.receipts[0].evidence.clears['mission-1'].runId,
+    'accepted-1',
+  );
+  assert.equal(f.requests.length, 1);
+  f.collection.close();
+  await f.settle();
+  assert.deepEqual(
+    f.revoked,
+    f.created.map(({ url }) => url),
   );
 });

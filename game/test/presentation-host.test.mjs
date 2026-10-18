@@ -10,6 +10,7 @@ import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
 import { prepareStillAsset } from '../media-still.mjs';
 import { rasterFixtures } from './helpers/raster-fixtures.mjs';
 import { pageActorArtPool } from '../presentation/actor-art-pool.mjs';
+import { createMediaPreparation } from '../ui/media-preparation.mjs';
 
 const baseURL = 'https://game.test/releases/v1/game/presentation/compiled/';
 const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
@@ -102,6 +103,189 @@ function styleFixture() {
     },
   };
 }
+
+test('optional page stages use the existing admission owner and preserve an accepted release during play', async (t) => {
+  const preparation = createMediaPreparation(),
+    e = environment(await fixture(), { preparation, document: {} });
+  t.after(() => {
+    e.host.close();
+    preparation.close();
+  });
+  preparation.setPhase('playing');
+  await assert.rejects(e.host.load(), { name: 'AbortError' });
+  assert.equal(e.requests.length, 0, 'active play cannot start optional release fetching');
+  preparation.setPhase('paused');
+  const accepted = await e.host.load(),
+    requests = e.requests.length,
+    urls = e.urls.length;
+  preparation.setPhase('playing');
+  await assert.rejects(e.host.load(), { name: 'AbortError' });
+  assert.equal(e.host.current(), accepted);
+  assert.equal(e.requests.length, requests);
+  assert.equal(e.urls.length, urls);
+  assert.equal(e.decoded[0].closes, 0, 'the accepted owner survives rejected optional reload');
+  assert.throws(
+    () => createPresentationHost({ profile: 'board', preparation }),
+    /full-host admission/,
+  );
+  assert.throws(() => createPresentationHost({ preparation: {} }), /admission owner/);
+});
+
+test('an optional manifest arriving during play cannot proceed to asset decoding or URL construction', async (t) => {
+  const f = await fixture(),
+    preparation = createMediaPreparation();
+  const e = environment(f, {
+    preparation,
+    document: {},
+    fetch: async (url) => {
+      preparation.setPhase('playing');
+      return new Response(f.files.get(url.slice(baseURL.length)));
+    },
+  });
+  t.after(() => {
+    e.host.close();
+    preparation.close();
+  });
+  await assert.rejects(e.host.load(), { name: 'AbortError' });
+  assert.equal(e.host.current(), null);
+  assert.equal(e.decoded.length, 0);
+  assert.equal(e.urls.length, 0);
+  await tick();
+  assert.deepEqual(preparation.snapshot().active, { fetch: 0, decode: 0, inspect: 0, main: 0 });
+});
+
+test('late optional bitmap completion keeps its reservation and releases without active-play follow-up work', async (t) => {
+  const f = await fixture(),
+    preparation = createMediaPreparation(),
+    document = {};
+  let complete, announce;
+  const began = new Promise((resolve) => {
+    announce = resolve;
+  });
+  const image = {
+    width: 32,
+    height: 32,
+    closes: 0,
+    close() {
+      this.closes++;
+    },
+  };
+  const e = environment(f, {
+    preparation,
+    document,
+    decodeImage: () => {
+      announce();
+      return new Promise((resolve) => {
+        complete = resolve;
+      });
+    },
+  });
+  t.after(() => {
+    e.host.close();
+    preparation.close();
+  });
+  const loading = e.host.load(),
+    rejected = assert.rejects(loading, { name: 'AbortError' });
+  await began;
+  await tick();
+  const pool = pageActorArtPool(document);
+  assert.equal(pool.stats().reservedBytes, 32 * 32 * 4);
+  assert.equal(
+    preparation.snapshot().active.main,
+    0,
+    'native decoding does not occupy shared JS admission',
+  );
+  preparation.setPhase('playing');
+  assert.equal(pool.stats().reservedBytes, 32 * 32 * 4, 'native work keeps its actual reservation');
+  complete(image);
+  await rejected;
+  assert.equal(image.closes, 1);
+  assert.equal(pool.stats().reservedBytes, 0);
+  assert.equal(e.urls.length, 0);
+  assert.equal(e.host.current(), null);
+});
+
+test('cancellation racing native submission cannot orphan the late optional bitmap', async (t) => {
+  const f = await fixture(),
+    preparation = createMediaPreparation(),
+    document = {},
+    controller = new AbortController(),
+    image = {
+      width: 32,
+      height: 32,
+      closes: 0,
+      close() {
+        this.closes++;
+      },
+    };
+  const e = environment(f, {
+    preparation,
+    document,
+    decodeImage: () => {
+      controller.abort();
+      return Promise.resolve(image);
+    },
+  });
+  t.after(() => {
+    e.host.close();
+    preparation.close();
+  });
+  await assert.rejects(e.host.load({ signal: controller.signal }), { name: 'AbortError' });
+  await tick();
+  assert.equal(image.closes, 1);
+  assert.equal(pageActorArtPool(document).stats().reservedBytes, 0);
+  assert.equal(e.urls.length, 0);
+});
+
+test('optional crop completion cannot submit a canvas encoding after play begins', async (t) => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files),
+    preparation = createMediaPreparation();
+  manifest.resolved.assets['player.scout.compact'].geometry.frame = {
+    x: 8,
+    y: 4,
+    width: 16,
+    height: 16,
+  };
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  const crop = {
+    width: 16,
+    height: 16,
+    closes: 0,
+    close() {
+      this.closes++;
+    },
+  };
+  let canvases = 0;
+  const document = {
+    createElement() {
+      canvases++;
+      assert.fail('active play must not start encoding');
+    },
+  };
+  const e = environment(
+    { files },
+    {
+      preparation,
+      document,
+      cropImage: async () => {
+        preparation.setPhase('playing');
+        return crop;
+      },
+    },
+  );
+  t.after(() => {
+    e.host.close();
+    preparation.close();
+  });
+  await assert.rejects(e.host.load(), { name: 'AbortError' });
+  assert.equal(canvases, 0);
+  assert.equal(e.decoded[0].closes, 1);
+  assert.equal(crop.closes, 1);
+  assert.equal(pageActorArtPool(document).stats().reservedBytes, 0);
+  assert.equal(e.urls.length, 0);
+});
 
 test('native landing skips only the two legacy title backdrops while other screens still load', async () => {
   const folder = new URL('../presentation/compiled/', import.meta.url);
@@ -745,6 +929,69 @@ test('font bytes are pinned and decoded before atomic registration, with owned C
   finishFont();
   await rejected;
   assert.equal(late.decoded[0].closes, 1);
+});
+
+test('optional late font completion cannot register fonts or continue page artwork during play', async (t) => {
+  const f = await fixture(),
+    manifest = structuredClone(f.manifest),
+    files = new Map(f.files),
+    preparation = createMediaPreparation();
+  const bytes = new Uint8Array(
+      await fs.readFile(new URL('../ui/fonts/field-kit/ibm-plex-mono-500.woff2', import.meta.url)),
+    ),
+    hash = await hashPresentationBytes(bytes),
+    asset = manifest.resolved.assets['font.numeric'];
+  Object.assign(asset, {
+    id: 'compiled.numeric',
+    kind: 'font',
+    recipe: null,
+    file: { sha256: hash, bytes: bytes.length, mime: 'font/woff2', width: null, height: null },
+  });
+  manifest.resolved.bindings['font.numeric'] = { id: asset.id, revision: 1 };
+  manifest.urls[hash] = `./assets/${hash}.woff2`;
+  files.set('runtime.json', new TextEncoder().encode(JSON.stringify(manifest)));
+  files.set(`assets/${hash}.woff2`, bytes);
+  const registered = [];
+  let complete, announce;
+  const began = new Promise((resolve) => {
+    announce = resolve;
+  });
+  const e = environment(
+    { files },
+    {
+      preparation,
+      document: { fonts: { add: (face) => registered.push(face), delete() {} } },
+      fontFactory: (family) => ({
+        family,
+        load() {
+          announce();
+          return new Promise((resolve) => {
+            complete = resolve;
+          });
+        },
+      }),
+    },
+  );
+  t.after(() => {
+    e.host.close();
+    preparation.close();
+  });
+  const loading = e.host.load(),
+    rejected = assert.rejects(loading, { name: 'AbortError' });
+  await began;
+  await tick();
+  assert.equal(preparation.snapshot().active.main, 0);
+  preparation.setPhase('playing');
+  const requests = e.requests.length;
+  complete();
+  await rejected;
+  assert.equal(e.requests.length, requests);
+  assert.deepEqual(registered, []);
+  assert.deepEqual(
+    e.revoked,
+    e.urls.map(({ url }) => url),
+  );
+  assert.equal(e.host.current(), null);
 });
 
 test('picture originals remain lazy exact bytes and host close cancels a late original response', async () => {

@@ -154,7 +154,10 @@ test('v9 optional scout/sentry edits keep pressure recipes, independent populati
     const team = createTeamOpeningCandidates();
     team.actorCatalogId = 'journey-actors-v9';
     team.missions[0].combat = { version: 'mission-combat.v1', enabled };
-    assert.throws(() => compileContentProject(team), /not qualified for Team/);
+    assert.throws(
+      () => compileContentProject(team),
+      /Optional combat requires the explicitly qualified Team hunt edition\./,
+    );
   }
 });
 

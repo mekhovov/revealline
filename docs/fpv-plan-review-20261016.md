@@ -92,6 +92,15 @@ source work and queues.
 
 ### P1 — Establish stable performance before another endurance attempt
 
+**17 October evidence review:** the preserved 9207 failure has a 516.9 ms
+begin-to-begin interval, with 515.7 ms between the preceding measured end mark
+and the next begin mark. No retained observer entry explains that interval;
+this does not establish a scheduling, GC or GPU cause. The
+[boundary review and next native trace protocol](fpv-authored-terminal-gap-review-20261017.md)
+and [derived receipt](fpv-authored-terminal-gap-review-20261017.json) identify the
+next bounded diagnostic. No runtime optimization or new elapsed run is claimed;
+all existing gates and failed reports remain unchanged.
+
 **Work:** obtain actual phase/caller evidence for long frames, then optimize the
 measured bottleneck. Compare the same scene, route, browser, viewport and quality
 before/after; record frame-time percentiles and maxima, resident resources and
