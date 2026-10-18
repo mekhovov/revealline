@@ -38,7 +38,7 @@ const manifest = async (lane, phase) => JSON.parse(await read(pathFor(lane, phas
 function body(text, lane) {
   const result = text.split('\n  ' + lane + ':\n')[1];
   assert(result, lane);
-  return result.split(/\n  [a-z][a-z-]+:\n/)[0];
+  return result.split(/\n  [A-Za-z_][A-Za-z0-9_-]*:\n/)[0];
 }
 function expression(value, inputs) {
   return new Function('inputs', 'contains', 'fromJSON', 'return (' + value + ')')(
@@ -473,7 +473,7 @@ test('every job retains its invoked shared source checkout script in sparse tool
   };
   const jobsStart = workflow.indexOf('\njobs:\n');
   assert(jobsStart >= 0);
-  const lanes = [...workflow.slice(jobsStart).matchAll(/^  ([a-z][a-z0-9-]*):$/gm)].map(
+  const lanes = [...workflow.slice(jobsStart).matchAll(/^  ([A-Za-z_][A-Za-z0-9_-]*):$/gm)].map(
     (match) => match[1],
   );
   assert(lanes.length > 0);
@@ -481,6 +481,23 @@ test('every job retains its invoked shared source checkout script in sparse tool
     const path = requiredSourceCheckout(workflow, lane);
     if (path) assert((await read(path)).length > 0);
   }
+  const adjacentJobs = [
+    'jobs:',
+    '  Readiness_2:',
+    '    steps:',
+    '      - run: |',
+    '          bash tools/scripts/solo-shared-source-checkout.sh source',
+    '  _Following2:',
+    '    steps:',
+    '      - with:',
+    '          sparse-checkout: |',
+    '            /scripts/solo-shared-source-checkout.sh',
+    '',
+  ].join('\n');
+  assert.throws(
+    () => requiredSourceCheckout('\n' + adjacentJobs, 'Readiness_2'),
+    /missing invoked sparse source checkout/,
+  );
   for (const lane of ['readiness', 'touch', 'shared-return', 'demo-recovery', 'demo-resources']) {
     const path = requiredSourceCheckout(workflow, lane);
     assert(path, lane + ': expected source checkout invocation');
