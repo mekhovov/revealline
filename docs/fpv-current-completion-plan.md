@@ -1,6 +1,6 @@
 # SIM completion plan — current status and remaining work
 
-Reviewed **18 October 2026, 22:55 CEST (Europe/Berlin)**. This is the current
+Reviewed **18 October 2026, 23:14 CEST (Europe/Berlin)**. This is the current
 execution index for the accepted rates, aircraft and Setup Workbench plans.
 It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
@@ -24,7 +24,7 @@ confirmed their bytes matched the verified PR #1583 release. The later live
 metadata check at 22:49 CEST reports
 `cb8dddd3d3c11d24c56b014fa48ac0e6417d6465`, the existing recovery-entry update.
 Its build/deploy succeeded while post-deployment verification was queued.
-The continuation changes below are not yet public.
+PR #1626 has now merged normally as `e4400303952d4d6dcfd6416d6d085131ce71466b` at 23:05 CEST. Its [Pages deployment](https://github.com/mekhovov/revealline/actions/runs/39166266155) is queued; live-byte acceptance remains. Later continuation changes below are not yet public.
 
 ### Current continuation — implementation and acceptance in progress
 
@@ -32,7 +32,7 @@ Work is isolated on `codex/fpv-sustained-flight-20261018`, based on refreshed
 main `e3a20a2a342757444775c0c261131da168280b58`. Unrelated local demo/UI edits
 remain untouched. The reviewed six-commit candidate was subsequently rebased
 cleanly onto main `461ace72e78f8cbd77c26549381d9e21d0a65e91`. The following work is
-**committed and under hosted review, not yet published** in
+**merged through protected review, with deployment pending** in
 [PR #1626](https://github.com/mekhovov/revealline/pull/1626), final source
 `cf13bcad9a59a387be7c31c9af8d30d74e7c1860`.
 
@@ -43,14 +43,18 @@ one skip** because their historical fixture bundle was absent. That optional run
 is bound to merge-integration source `8fc952b7a0beb70b3065663e4b5390feb209d490`,
 not the isolated PR head. All four focused source shards, their aggregate, the Appearance
 preview and industrial checks have passed. The focused aggregate completed at
-22:21 CEST. The final release-ready job remains queued without an assigned runner
-as of 22:49 CEST; the API does not expose a proven capacity limit or exact queue
-reason. Its source workflow has not completed, so normal release reconciliation
-is still waiting on that gate. The PR is ready for ordinary protected reconciliation; no enqueue
-label or GitHub auto-merge request is required by this repository's controller.
+22:21 CEST and final release-ready passed at 22:55 CEST. The normal controller
+merged the unchanged cf13 source at 23:05 CEST as `e4400303952d4d6dcfd6416d6d085131ce71466b`.
+No gate was waived. Parent Pages deployment is queued at review time.
+The five reviewed follow-up fixes rebased cleanly onto that merge, with all five
+patches unchanged, and are now [PR #1665](https://github.com/mekhovov/revealline/pull/1665),
+source `35ae4985c0bec6277a45b9331efc0c0332aa165a`. Post-rebase 448/448 focused tests,
+ESLint and diff checks pass. Two inherited formatting warnings are disclosed;
+large unrelated reformatting was avoided. New main advanced independently; the
+published candidate remains stable for normal integration gates.
 An obsolete cancelled run's always-run aggregate
-had blocked the source lane and was force-cancelled; the final source still must
-pass its own normal checks. No final-source gate was waived. Repository
+had blocked the source lane and was force-cancelled; the final source subsequently
+passed its own normal checks. No final-source gate was waived. Repository
 `REVEALLINE_FULL_CI=false` means the broader deferred lint/test gates must not be
 reported as a full-repository pass. Publication and deployed UI acceptance remain.
 
@@ -281,14 +285,22 @@ bytes**; source slots remain **151/151**, with World at **211/211**. A complete
 visual ghost must fit those limits or receive a separately reviewed size reduction.
 Hosted integration/publication and deployed acceptance remain.
 
-**Next independent software slice, R11D:** a manually selected verified practice
-reference, split comparison first and bounded visual ghost afterward. Preserve the
-recorded configuration, compare against the prepared current flight's comparison
-class, and reject cloned/imported proof flags. Do not reuse the legacy PB renderer:
-its fixed geometry, origin conventions and 12-minute ceiling are incompatible.
-No score or promotion is enabled by this work. Provisional software estimate:
-**1–3 engineering days for split-reference integration; 3–5 further days for the
-visual ghost and all-host qualification**, subject to measured package headroom.
+**R11D split-reference slice is now implemented, independently reviewed and locally
+accepted** through `d4565cf6e`. [Detailed acceptance](fpv-practice-reference-20261018.md)
+records prepared comparison/terrain matching, explicitly selected owned proof,
+bounded split data and safe recovery. The real Meteor75 test retained its reference
+through pause/resume and cleared it at checkpoint recovery. EN/UK and explicit
+clearing passed. Automated scopes: 38 session/worker, 42 reconstruction, 69 UI, 20
+validator/projection and 19 exact package checks; no skips in these groups.
+
+A narrow generator prerequisite reuses the already shipped JSON validators,
+saving 5,033 bytes with AST/boundary preservation. Final current Academy margins
+are **4,259 original-input bytes and 32,579 bundled bytes**, source slots 151/151;
+World remains 211/211. No caps changed. Hosted publication and deployed acceptance
+remain. The next independent slice, **R11E**, is bounded geometry-correct visual
+reference playback, provisionally **3–5 engineering days**, subject to capacity.
+Do not reuse the legacy PB renderer's fixed geometry, origin or 12-minute ceiling.
+No score or competitive promotion is enabled.
 
 ## Delivered and retained
 
@@ -367,10 +379,11 @@ qualification; P3 depends on a qualified physical/platform baseline.
 | R10 / P3                          | Measured propwash and ground effect. **Gated on a qualified base and effect-specific evidence.**                                                                                                                                                                                                                                                           | **No dependable ETA yet.** Define a fit/implementation estimate only after usable measurements and acceptance tolerances exist.                                                                                                                  | Each effect has an identified measurement basis and held-out validation, with versioned behavior and preserved historical playback. Arbitrary coefficients cannot close the gate.                                                                                                                                                                                                            |
 | R11A / P2, independent software   | **Implemented, independently reviewed and locally accepted** at `a113208ce8e4076c19b2acc99332c3172e53bfcc`. Academy/World aircraft practice shows bounded, unscored objective times. All fifteen aircraft in both modes retain identical full recovery output with observations enabled/disabled. Rendered Meteor75 lesson and EN/UK recovery labels pass. | **Hosted integration and deployed acceptance remain.** Actual package checks pass; its original 683-byte margin became 52,800 bytes at R18 (32,682 after R11C); every later integration still needs remeasurement.                               | Accepted mission intervals only; no 12-minute ceiling or invented pre-recovery history. No physics/configuration/recording or scoring authority change. Regional free flight explicitly has no course splits.                                                                                                                                                                                |
 | R17 / P2                          | **Implemented, reviewed and locally accepted** at `39a8be8c19c2a107b7be2352f45dbfe5cc23f5cd`. Existing recovery messages follow EN→UK→EN without repeating operations or live-status writes; the known full-store reason translates and unknown diagnostics remain literal.                                                                                | **Hosted integration and deployed acceptance remain.** 36/36 focused controls checks and 19/19 package checks pass. Rendered recovery/language-switch acceptance passes on a fresh isolated origin.                                              | Publish without changing recovery/storage/physics behavior. Its original 261-byte Academy margin became 52,800 bytes at R18 (32,682 after R11C); full-store translation was tested automatically, not reproduced in that fresh-origin rendered check.                                                                                                                                        |
-| R11B / P2, independent software   | **Tooling complete, independently reviewed and committed** at `a1d883ccedb68704acc320352ec6a3f895d8b580`; integrated unchanged on the combined follow-up. 42/42 checks pass, including all 15 aircraft × both modes on one lesson. No shipped-runtime, archive-format or scoring changes.                                                                  | **Repository integration/release remains.** No radio/pilot dependency. Browser integration is locally complete in R11C; reference/ghost integration remains R11D.                                                                                | Exact bounded dependency, canonical reset/terrain/inputs and segment hashes are verified through the original mission adapter. Dynamic/action-dependent courses, partial origins and unknown versions fail closed. Reports grant no comparison eligibility.                                                                                                                                  |
+| R11B / P2, independent software   | **Tooling complete, independently reviewed and committed** at `a1d883ccedb68704acc320352ec6a3f895d8b580`; integrated unchanged on the combined follow-up. 42/42 checks pass, including all 15 aircraft × both modes on one lesson. No shipped-runtime, archive-format or scoring changes.                                                                  | **Repository integration/release remains.** No radio/pilot dependency. Browser integration is locally complete in R11C; split references are locally complete in R11D; visual ghosts remain R11E.                                                | Exact bounded dependency, canonical reset/terrain/inputs and segment hashes are verified through the original mission adapter. Dynamic/action-dependent courses, partial origins and unknown versions fail closed. Reports grant no comparison eligibility.                                                                                                                                  |
 | R18 / P1 integration prerequisite | **Implemented, independently reviewed and accepted locally** at `7f38f550e5f67278aea5fa8d1f3aad1b059caa0c`. Build-only presentation indentation projection saves 52,539 bytes with exact asset/token preservation. Actual packaged Academy startup, previews and EN/UK paused recovery pass.                                                               | **Hosted integration and publication remain.** Preservation 9/9 and packages 19/19 pass. At R18, bundled Academy had **52,800 bytes** spare (32,682 after R11C); original-input margin and full file counts remain constraints.                  | Publish the reviewed projection with unchanged caps, numerical identities, offline pins and assets. Every later runtime/dependency addition still needs a fresh capacity check.                                                                                                                                                                                                              |
 | R11C / P2, independent software   | **Implemented, reviewed and locally accepted** through `5947bdcf5`; shared CLI/browser course kernel, dedicated cancellable workers, explicit course-completion UI and EN/UK feedback. World real lesson and actual packaged Academy checks pass.                                                                                                          | **Hosted integration and deployed acceptance remain.** 42 reconstruction, 22 worker, 31 UI and 19 package tests pass within their recorded scopes.                                                                                               | Published course checking preserves historical recordings, current-flight configuration and unscored status.                                                                                                                                                                                                                                                                                 |
-| R11D / P2, independent software   | **Designed, not implemented:** one verified unscored practice reference, split comparisons, then a bounded geometry-correct visual ghost.                                                                                                                                                                                                                  | **1–3 engineering days for split references, then 3–5 days for the visual increment**, provisional. Academy raw-input headroom is 4,361 B; measure fit before claiming delivery.                                                                 | Frozen comparison-class filtering; owned verification results only; bounded memory; safe recovery/cancellation; all 15 aircraft × both modes and host/legacy compatibility.                                                                                                                                                                                                                  |
+| R11D / P2, independent software   | **Implemented, reviewed and locally accepted** at `d4565cf6e`: owned complete proof, prepared comparison/terrain filtering, explicit unscored split selection, copying and lifecycle safeguards.                                                                                                                                                           | **Hosted integration and deployed acceptance remain.** Exact packages pass: 4,259 raw-input and 32,579 bundled Academy bytes spare.                                                                                                              | Publish with no physics/recording/score authority changes; retain documented browser and automated scope.                                                                                                                                                                                                                                                                                    |
+| R11E / P2, independent software   | **Designed, not implemented:** bounded geometry-correct visual aircraft reference, reusing verified course output and the existing physical model.                                                                                                                                                                                                         | **3–5 engineering days**, provisional; source-file slots are full and original-input capacity needs a measured prerequisite if the implementation cannot fit.                                                                                    | Correct metre/COM/orientation/geometry, bounded memory and accepted samples only, full-tail verification, safe cancellation/recovery and all-host compatibility.                                                                                                                                                                                                                             |
 | R11 / P3                          | Advanced scored comparison/sector integration and default promotion. **Not enabled; integration as well as qualification remains.**                                                                                                                                                                                                                        | **Software proof/sector/ghost work can proceed before external qualification.** Promotion allowance remains **1–2 engineering weeks after relevant physical/platform gates and comparison rules are agreed**, provisional; no calendar date now. | Comparison/sector filtering and verified records work with frozen identities; platform/physical qualification and a reviewed promotion decision are recorded. Practice archives remain unscored until then.                                                                                                                                                                                  |
 | R12 / separate distribution scope | Signed/full-game native distribution. **Unscheduled product/packaging work; simulator-only fixture is delivered.**                                                                                                                                                                                                                                         | **Not estimated** until target platforms, signing/distribution access and package-budget scope are decided. Does not block the current web release.                                                                                              | Reviewed package fits the distribution budget and passes signed installation, update and runtime checks on its target platforms.                                                                                                                                                                                                                                                             |
 
