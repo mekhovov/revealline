@@ -14918,9 +14918,18 @@ try {
     };
   }
   function soloNavigationContext() {
-    // These authored Hunt libraries share this host without becoming Capture.
-    // Their existing edition and mission identity remains authoritative.
-    if (['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)) return '';
+    // The accepted catalogue owner, not the entry URL or visual theme, grants
+    // this identity. Classic/imported selections retain their Capture context.
+    if (
+      candidateHost?.owns(activeEntry) &&
+      ['humanoid-hunt-v1', 'snake-hunt-v1'].includes(authoredRoute?.id)
+    ) {
+      const name =
+        authoredRoute.id === 'humanoid-hunt-v1'
+          ? huntText('lessons')
+          : contentText(authoredRoute.source, 'name');
+      return `${name} · ${t('interface:solo2')}`;
+    }
     return t('interface:captureNavigation.context', { mode: t('interface:solo2') });
   }
   gameShell = attachGameShell({
