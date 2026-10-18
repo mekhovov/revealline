@@ -7207,6 +7207,7 @@ jobs:
             /.prettierignore
             /.prettierrc.json
             /eslint.config.mjs
+            /scripts/eslint-localization.mjs
             /scripts/solo-replay-portability-diagnostic.mjs
             /scripts/diagnose-solo-replay-portability.mjs
             /scripts/solo-replay-portability-diagnostic.test.mjs
@@ -7559,6 +7560,8 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /eslint.config.mjs
+            /scripts/eslint-localization.mjs
             /scripts/solo-replay-portability-diagnostic.mjs
             /scripts/diagnose-solo-replay-portability.mjs
             /scripts/solo-replay-portability-diagnostic.test.mjs
