@@ -95,6 +95,32 @@ test('a transport error with empty stack still keeps its actual message', () => 
   );
 });
 
+test('stackless Playwright native errors retain distinct names without exemptions', () => {
+  for (const name of ['Cache API operation failed', 'InvalidStateError']) {
+    for (const stack of ['', undefined]) {
+      const error = new Error('Context is stopped');
+      error.name = name;
+      error.stack = stack;
+      const message = browserErrorDescription(error);
+      assert.equal(message, `${name}: Context is stopped`);
+      assert.equal(restorationDiagnosticGate([{ message }], []), false);
+    }
+  }
+});
+
+test('browser error formatting preserves complete stacks and bounds all descriptions', () => {
+  const stack = `NativeError: failure\n    at native (${'x'.repeat(5000)})`;
+  assert.equal(
+    browserErrorDescription({ name: 'OtherName', message: 'Other message', stack }),
+    stack.slice(0, 4000),
+  );
+  assert.equal(
+    browserErrorDescription({ name: 'InvalidStateError', message: 'x'.repeat(5000), stack: '' }),
+    `InvalidStateError: ${'x'.repeat(5000)}`.slice(0, 4000),
+  );
+  assert.equal(browserErrorDescription('plain failure'), 'plain failure');
+});
+
 test('strict diagnostics reject DOM-only errors and later-handled rejections', () => {
   assert.equal(restorationDiagnosticGate([], []), true);
   assert.equal(restorationDiagnosticGate([{ message: 'Failure' }], []), false);

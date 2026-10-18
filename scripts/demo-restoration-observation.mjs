@@ -39,7 +39,10 @@ export function restoredFromBFCache(before, after) {
 }
 
 export function browserErrorDescription(error) {
-  return String(error?.stack || error?.message || error).slice(0, 4000);
+  if (error?.stack) return String(error.stack).slice(0, 4000);
+  const message = String(error?.message ?? error);
+  const name = typeof error?.name === 'string' ? error.name : '';
+  return (name ? `${name}${message ? `: ${message}` : ''}` : message).slice(0, 4000);
 }
 
 export function restorationDiagnosticGate(pageErrors, events) {

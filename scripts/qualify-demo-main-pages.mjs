@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { classicDemoSourcePaths } from './demo-native-dependencies.mjs';
+import { projectDefaultRuntimeMetadata } from './default-runtime-metadata.mjs';
 import { prepareBuildProject } from './game-cli.mjs';
 import { parse } from '../publishing/vendor/acorn-8.18.0.mjs';
 import { demoPackagingRequirements } from './qualify-demo-packaging.mjs';
@@ -48,6 +49,15 @@ async function fingerprint(directories = ['game', 'optional-practice', 'publishi
   }
   return { sha256: h.digest('hex'), files: paths.length, bytes };
 }
+/** Only the existing distribution metadata projection may change source bytes.
+ * Authored packs, images, replays, and generated full Journey sources stay exact. */
+export async function demoNativeDependencyBytes(name, bytes) {
+  if (name !== 'game/content/mission-library-index.json') return bytes;
+  const entries = [{ name, bytes }];
+  await projectDefaultRuntimeMetadata(root, entries);
+  return entries[0].bytes;
+}
+
 export function mainPagesAuditFailures(report) {
   const errors = [];
   if (!report.headStable || !report.sourceStable)
@@ -277,7 +287,10 @@ export async function qualifyDemoMainPages({
   const mismatchedNative = [];
   for (const name of new Set(requiredNative.map((row) => row.path))) {
     if (!entries.has(name)) continue;
-    const source = generatedNative.get(name) ?? (await readFile(path.join(root, name)));
+    const source = await demoNativeDependencyBytes(
+      name,
+      generatedNative.get(name) ?? (await readFile(path.join(root, name))),
+    );
     if (sha(source) !== sha(entries.get(name).bytes))
       mismatchedNative.push({
         path: name,
@@ -440,6 +453,12 @@ export async function qualifyDemoMainPages({
     requiredNativePaths: [...new Set(requiredNative.map((r) => r.path))].length,
     missingNative,
     mismatchedNative,
+    nativeMetadataProjection: {
+      path: 'game/content/mission-library-index.json',
+      producer: 'scripts/default-runtime-metadata.mjs#projectDefaultRuntimeMetadata',
+      contract:
+        'Existing lossless JSON compaction only; all authored native sources retain exact byte checks.',
+    },
     classic,
     journeys,
     finalStaged: {
