@@ -1,0 +1,85 @@
+{
+  "format": "SharedDemoFinalBrowserMatrixV1",
+  "started": "2026-10-18T18:14:45.228866+00:00",
+  "sourceRevision": "65d77958724693538db5c55d421aacdfc2490ce5",
+  "sourceFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+  "complete": false,
+  "results": [
+    {
+      "name": "mixed-chromium",
+      "command": [
+        "node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--browser=chromium",
+        "--url=http://127.0.0.1:8769",
+        "--seconds=0",
+        "--report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/mixed-chromium-461ace-final.json",
+        "--practice=true",
+        "--cycles=12",
+        "--lifecycle=true",
+        "--localeCheck=true"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 87.716,
+      "report": "mixed-chromium-461ace-final.json",
+      "sha256": "56dc3bb370f8af04d37755018c34b4c0a77ee2c1b05a0f505c7b673ebd738587",
+      "complete": true,
+      "checks": 28,
+      "errors": 0
+    },
+    {
+      "name": "mixed-firefox",
+      "command": [
+        "node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1538/firefox/Nightly.app/Contents/MacOS/firefox",
+        "--browser=firefox",
+        "--url=http://127.0.0.1:8769",
+        "--seconds=0",
+        "--report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/mixed-firefox-461ace-final.json",
+        "--practice=true",
+        "--cycles=12",
+        "--lifecycle=true",
+        "--localeCheck=true"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 66.501,
+      "report": "mixed-firefox-461ace-final.json",
+      "sha256": "fd956c160fcd5dc4044cbcde194b7a00111f3997da3d83858fdff9c4ee84ddc0",
+      "complete": true,
+      "checks": 27,
+      "errors": 0
+    },
+    {
+      "name": "mixed-webkit",
+      "command": [
+        "node",
+        "scripts/qualify-shared-demo-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--executable=/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+        "--browser=webkit",
+        "--url=http://127.0.0.1:8769",
+        "--seconds=0",
+        "--report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/mixed-webkit-461ace-final.json",
+        "--practice=true",
+        "--cycles=12",
+        "--lifecycle=true",
+        "--localeCheck=true"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 64.347,
+      "report": "mixed-webkit-461ace-final.json",
+      "sha256": "196b919de1eeaee6163ed4fba837b815c1eb7f1137cfb1a2db79af218b18d15c",
+      "complete": true,
+      "checks": 27,
+      "errors": 0
+    }
+  ],
+  "interruption": {
+    "stage": "graphics-chromium",
+    "description": "Child invocation returned without its report or log output during observed disk pressure. Wrapper then failed reading the missing report; precise process exit/cause was not retained. The three prior mixed browser results are complete and independently hashed; graphics/offline gates require separate reruns."
+  }
+}

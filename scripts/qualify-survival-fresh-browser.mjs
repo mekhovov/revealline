@@ -122,6 +122,11 @@ try {
   await page.getByLabel('Password', { exact: true }).fill('fixture-password');
   await page.getByRole('button', { name: 'Unlock', exact: true }).click();
   await page.locator('#demo-button').waitFor({ state: 'visible', timeout: 30000 });
+  await page.waitForFunction(
+    () => typeof globalThis.RevealLineOverflight?.snapshot === 'function',
+    null,
+    { timeout: 30000 },
+  );
   const origin = await snapshot();
   assert.equal(origin.summary.seed, 42);
   assert.equal(origin.summary.airframes, 1);
