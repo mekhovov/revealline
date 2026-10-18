@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  DEMO_CATALOG_PATHS,
   classicDemoSourcePaths,
   journeyDemoSourcePaths,
   simDemoSourcePaths,
@@ -570,13 +571,7 @@ export async function qualifyDemoMainPages({
       requiredPaths: [
         ...required.filter((name) => !name.endsWith('.diagnostics.json')),
         ...requiredNative.map((row) => row.path),
-        ...[
-          'catalog.json',
-          'catalog.journey-current.json',
-          'catalog.journey-archive.json',
-          'snake/catalog.json',
-          'survival/catalog.json',
-        ].map((name) => `game/demo-data/${name}`),
+        ...DEMO_CATALOG_PATHS,
       ],
       roots: ['game/ui/demo-entry.mjs', ...roots.filter((name) => name.startsWith('game/'))],
     });

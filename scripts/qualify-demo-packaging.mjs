@@ -7,6 +7,7 @@ import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from '../publishing/vendor/acorn-8.18.0.mjs';
+import { DEMO_CATALOG_PATHS } from './demo-native-dependencies.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const digest = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -244,12 +245,6 @@ export async function qualifyDemoPackaging({
   const simIndex = await json('optional-practice/civilian-fpv/demo-data/index.json');
   const snakeCatalog = await json('game/demo-data/snake/catalog.json');
   const survivalCatalog = await json('game/demo-data/survival/catalog.json');
-  const metadata = [
-    ...catalogNames.map((name) => `game/demo-data/${name}`),
-    'optional-practice/civilian-fpv/demo-data/index.json',
-    'game/demo-data/snake/catalog.json',
-    'game/demo-data/survival/catalog.json',
-  ];
   const required = demoPackagingRequirements({
     soloCatalogs,
     simIndex,
@@ -257,7 +252,7 @@ export async function qualifyDemoPackaging({
     survivalCatalog,
     survivalVariants: SURVIVAL_DEMO_RUNTIME_VARIANTS,
   });
-  const missing = [...metadata, ...required].filter((name) => !names.has(name));
+  const missing = [...DEMO_CATALOG_PATHS, ...required].filter((name) => !names.has(name));
   const core = JSON.parse(
     project.entries.find((entry) => entry.name === 'offline-cache.json').bytes,
   );

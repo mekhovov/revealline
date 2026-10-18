@@ -18,6 +18,7 @@ import { buildOfflineDestinations, buildNavigationBootstraps } from './offline-d
 import { readFileSync } from 'node:fs';
 import { addOfflineExperiences } from './offline-experiences.mjs';
 import {
+  DEMO_CATALOG_PATHS,
   classicDemoSourcePaths,
   journeyDemoSourcePaths,
   simDemoSourcePaths,
@@ -379,6 +380,7 @@ export async function buildOfflineContent(
   // without charging every starter/chapter download for their optional bodies.
   const extraPaths = new Set();
   const demoSourcePaths = new Set([
+    ...DEMO_CATALOG_PATHS,
     ...classicDemoSourcePaths(entries),
     ...(await journeyDemoSourcePaths(entries)),
   ]);

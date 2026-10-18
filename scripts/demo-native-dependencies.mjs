@@ -1,6 +1,17 @@
 import { createHash } from 'node:crypto';
 
 export const SIM_DEMO_INDEX = 'optional-practice/civilian-fpv/demo-data/index.json';
+// These finite inventories belong to the demo selection even when they are not
+// reachable through runtime module imports. Per-engine qualification reports do
+// not add another runtime catalog or offline owner.
+export const DEMO_CATALOG_PATHS = Object.freeze([
+  'game/demo-data/catalog.json',
+  'game/demo-data/catalog.journey-current.json',
+  'game/demo-data/catalog.journey-archive.json',
+  'game/demo-data/snake/catalog.json',
+  'game/demo-data/survival/catalog.json',
+  SIM_DEMO_INDEX,
+]);
 export const SIM_DEMO_RUNTIME_PATHS = Object.freeze(
   ['inventory', 'player', 'input', 'payload'].map(
     (name) => `optional-practice/civilian-fpv/demo-${name}.mjs`,
