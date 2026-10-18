@@ -1,3 +1,7 @@
+import {
+  assertDeclaredReadinessTool,
+  modelCurrentReadinessTools,
+} from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -527,8 +531,16 @@ for (const sourceLabel of ['de332', '797']) {
     assert.equal(m.candidate.revision, sourceRevision);
     assert.equal(m.candidate.artifact, sourceLabel === '797' ? 12128990483 : 12123463810);
     assert.equal(m.baseline.reusableArtifact.artifact, 12088541389);
-    for (const ref of [...m.frozenTools, ...m.adapterInputs, ...Object.values(m.recipes)])
+    for (const ref of [...m.frozenTools, ...m.adapterInputs, ...Object.values(m.recipes)]) {
+      if (
+        await assertDeclaredReadinessTool(
+          `docs/performance/solo-${sourceLabel}-lifecycle-soak-plan.json`,
+          ref,
+        )
+      )
+        continue;
       assert.deepEqual(await reference(ref.path), ref);
+    }
     assert.equal(recipe.actions.find((a) => a.type === 'repeat').atLeastMs, 1800000);
     const jobs = sustainedMatrix(m).include;
     assert.equal(jobs.length, 6);
@@ -608,7 +620,14 @@ for (const sourceLabel of ['de332', '797']) {
   });
 
   test(`${sourceLabel}: soak uses actual anchored preparation, chunk hydration and final-document journal`, async (t) => {
-    const p = bindSustainedJob(await de332SoakManifest(), 'webkit', 1),
+    const p = bindSustainedJob(
+        await modelCurrentReadinessTools(
+          `docs/performance/solo-${sourceLabel}-lifecycle-soak-plan.json`,
+          await de332SoakManifest(),
+        ),
+        'webkit',
+        1,
+      ),
       dir = await temporary(t),
       work = join(dir, 'work');
     await mkdir(work);

@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -25,11 +26,14 @@ const job = workflow.split('\n  correctness:\n')[1].split('\n  declare:\n')[0];
 const proofPath = 'docs/performance/fixtures/solo-73a345-consumer/first-eight-39105055762.json';
 // The unexecuted73 tooling declaration stays separate from its immutable570 predecessor.
 const nextPlanPath = 'docs/performance/solo-remote-797e03-correctness-plan.json';
+const finalPlanPath = 'docs/performance/solo-remote-9d5139b-correctness-plan.json';
 const activePlanPath = job.includes(
-  '78m node scripts/run-solo-remote-correctness.mjs ' + nextPlanPath,
+  '78m node scripts/run-solo-remote-correctness.mjs ' + finalPlanPath,
 )
-  ? nextPlanPath
-  : planPath;
+  ? finalPlanPath
+  : job.includes('78m node scripts/run-solo-remote-correctness.mjs ' + nextPlanPath)
+    ? nextPlanPath
+    : planPath;
 test('tooling successor preserves exact73 runtime, package, recipe, eight rows, baseline, numerical exclusions and bounds', () => {
   for (const key of [
     'format',
@@ -144,9 +148,11 @@ function workflowAdmission(text) {
   assert(text.includes('scripts/test-solo-73a345-correctness-tooling.mjs'));
   assert(
     text.includes(
-      activePlanPath === planPath
-        ? '73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e'
-        : '797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+      activePlanPath === finalPlanPath
+        ? '9d5139b9983c700a6a708f65f379fa4d5a8b0395 99f9e6cea7ea7dc27c93609aae632908531d93d1'
+        : activePlanPath === planPath
+          ? '73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e'
+          : '797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
     ),
   );
   assert.equal((text.match(/if: \$\{\{ always\(\) \}\}/g) ?? []).length, 2);
@@ -178,6 +184,7 @@ test('current prospective refs stay strict before effects; historical witness ne
     [...prior.adapterInputs, ...prior.frozenTools, prior.fixture].map((ref) => ref.path),
   );
   for (const ref of refs) {
+    if (await assertDeclaredReadinessTool(planPath, ref)) continue;
     const bytes = await read(ref.path);
     assert.equal(bytes.length, ref.bytes, ref.path);
     assert.equal(sha(bytes), ref.sha256, ref.path);

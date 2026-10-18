@@ -20,7 +20,11 @@ import {
   waitQualificationControl,
   waitQualificationPreparation,
 } from './solo-qualification-export.mjs';
-import { createQualificationCpuProfile } from './solo-qualification-cpu-profile.mjs';
+import {
+  createQualificationCpuProfile,
+  createQualificationFrameTrace,
+  qualificationFrameTraceOptions,
+} from './solo-qualification-cpu-profile.mjs';
 import { createQualificationReplayIdentity } from './solo-qualification-replay-identity.mjs';
 import {
   qualificationContextMode,
@@ -92,6 +96,7 @@ const profileMode = qualificationProfileMode(flags, engine, scenario);
 const memoryProfile = profileMode === 'memory-profile',
   audioProof = profileMode === 'audio-proof',
   cpuProfile = profileMode === 'cpu-profile';
+const frameTraceOptions = qualificationFrameTraceOptions(flags, engine, bytes);
 const audioOptions = audioProofOptions(flags, scenario.audioRequirements, audioProof);
 const exportsReplay = (actions) =>
   actions.some(
@@ -209,7 +214,11 @@ url.searchParams.set('performance', '1');
 const report = {
   format: 'SoloQualificationReportV1',
   scenario: scenario.id,
-  kind: readinessOptions ? 'readiness-diagnostic' : (profileMode ?? scenario.kind),
+  kind: frameTraceOptions
+    ? 'frame-trace-diagnostic'
+    : readinessOptions
+      ? 'readiness-diagnostic'
+      : (profileMode ?? scenario.kind),
   scenarioKind: scenario.kind,
   cacheMode,
   baselineRuntime,
@@ -311,6 +320,9 @@ const report = {
 if (readinessOptions) {
   report.readinessPilot = {
     protocol: readinessOptions.protocol,
+    ...(readinessOptions.requiredClickIdentityObservation
+      ? { requiredClickIdentityObservation: readinessOptions.requiredClickIdentityObservation }
+      : {}),
     ...(readinessOptions.requiredStartRetention
       ? { requiredStartRetention: readinessOptions.requiredStartRetention }
       : {}),
@@ -373,6 +385,7 @@ async function save() {
 }
 await save();
 let browser, context, page, deadline, nativeReplay, cdp, playwright, cpuRecorder, persistentOwner;
+let frameRecorder;
 let activeAction = null;
 let partialReplay = false;
 let memorySnapshots = 0;
@@ -477,7 +490,8 @@ try {
     'Service workers are explicitly blocked for controlled online qualification; offline/update lifecycle is separate.',
   );
   page = await context.newPage();
-  if (memoryProfile || cpuProfile || cpu !== 1) cdp = await context.newCDPSession(page);
+  if (memoryProfile || cpuProfile || frameTraceOptions || cpu !== 1)
+    cdp = await context.newCDPSession(page);
   page.on('pageerror', (error) => {
     if (report.pageErrors.length < 100) {
       report.pageErrorWitnesses.push({
@@ -613,6 +627,7 @@ try {
 ${observationInitScript}
 ${quality ? `window.soloQualificationCreateSubmittedTierObservation = ${createSubmittedTierObservation.toString()};` : ''}
 ${readiness ? `window.soloQualificationCreateReadinessProbe = ${readinessModule.createBrowserReadinessProbe.toString()};` : ''}
+${options.requiredClickIdentityObservation ? `window.soloQualificationCreateRequiredRejoinObservation = ${readinessModule.createRequiredRejoinObservation.toString()};` : ''}
 ${options.requiredOriginal ? `window.soloQualificationInstallRequiredOriginalWitness = ${readinessModule.installRequiredOriginalRequestWitness.toString()};` : ''}
 ${nextRoute ? `window.soloQualificationCreateNextRouteReader = ${nextRouteModule.createNextRouteReader.toString()};` : ''}
 ${cost ? journalCostModule.journalCostInitScript() : ''}
@@ -633,6 +648,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       readinessGeometry,
       requiredOriginal,
       requiredStartRetention,
+      requiredClickIdentityObservation,
       faultEntryURL,
       qualityObservation,
       nextRoute,
@@ -645,7 +661,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       const counts = phases.map(() => new Float64Array(bounds.length));
       const totals = new Float64Array(phases.length * 5),
         tail = new Float64Array(256 * 4);
-      let observedGame, phaser, costScene;
+      let observedGame, phaser, costScene, observedReadinessSceneClass;
       const workBounds = [
         0.25,
         0.5,
@@ -692,10 +708,22 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             constructor(...args) {
               super(...args);
               observedGame = this;
+              if (requiredClickIdentityObservation) observedReadinessSceneClass = args[0]?.scene;
             }
           };
         },
       });
+      let requiredCheckpoint = null;
+      const requiredRejoin = requiredClickIdentityObservation
+        ? window.soloQualificationCreateRequiredRejoinObservation(
+            () => observedGame?.scene?.scenes ?? [],
+            (run) => {
+              if (!requiredCheckpoint) throw Error('Source-native checkpoint unavailable');
+              return requiredCheckpoint(run);
+            },
+            () => observedReadinessSceneClass,
+          )
+        : null;
       const readiness = readinessProbe
         ? window.soloQualificationCreateReadinessProbe(
             () => {
@@ -709,9 +737,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             readinessGeometry,
             readinessCancelBoundary === true,
             requiredStartRetention ? (event) => requiredWitness.captureStart(event) : null,
+            requiredRejoin,
           )
         : null;
-      let requiredCheckpoint = null;
       const requiredWitness = requiredOriginal
         ? window.soloQualificationInstallRequiredOriginalWitness(
             () => observedGame?.scene?.scenes ?? [],
@@ -982,6 +1010,9 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       ...(readinessOptions?.requiredStartRetention
         ? { requiredStartRetention: readinessOptions.requiredStartRetention }
         : {}),
+      ...(readinessOptions?.requiredClickIdentityObservation
+        ? { requiredClickIdentityObservation: readinessOptions.requiredClickIdentityObservation }
+        : {}),
       ...(requiredOriginalReadiness ? { faultEntryURL: url.href } : {}),
       ...(readinessOptions?.geometryObservation ? { readinessGeometry: true } : {}),
       qualityObservation: Boolean(qualityOptions),
@@ -1144,6 +1175,19 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
     assert(time > 0, 'Scenario deadline exceeded');
     return time;
   };
+  if (frameTraceOptions) {
+    frameRecorder = createQualificationFrameTrace(cdp, {
+      file: resolve(output) + '.frame-trace.json',
+      remainingMs: () => deadline - Date.now(),
+      onLimit: async () => {
+        report.scenarioStatus = 'fail';
+        process.exitCode = 1;
+        await context?.close().catch(() => {});
+        await browser?.close();
+      },
+    });
+    report.frameTrace = frameRecorder.report;
+  }
   async function execute(actions, prefix = '') {
     for (let index = 0; index < actions.length; index++) {
       const action = actions[index],
@@ -1158,9 +1202,18 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       report.actions.push(record);
       const previousAction = activeAction;
       activeAction = { path, type: action.type };
-      const timeout = remaining(action),
-        locator = action.selector ? page.locator(action.selector) : null;
+      let timeout = remaining(action);
+      const locator = action.selector ? page.locator(action.selector) : null;
       try {
+        // Hash-bound warm recipe: setup precedes public Start without extending its deadline.
+        if (frameRecorder && path === '3') {
+          const setupStarted = Date.now(),
+            actionDeadline = setupStarted + timeout;
+          await frameRecorder.start();
+          report.frameTrace.preStartSetupMs = Date.now() - setupStarted;
+          timeout = Math.min(remaining(action), actionDeadline - Date.now());
+          assert(timeout > 0, 'Frame trace setup exhausted the original public Start deadline');
+        }
         if (selectedFontSettlement && action.label === 'selected-theme') {
           selectedFontSettlementOwner = readinessModule.createSelectedFontSettlementOwner({
             page,
@@ -1686,6 +1739,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
             readinessModule.assertOptionalIconFallback(report.optionalIconFallback);
           }
         }
+        if (frameRecorder && path === '7') frameRecorder.afterDirectionThree();
         if (record.status === 'running') record.status = 'pass';
       } catch (error) {
         record.status = 'fail';
@@ -1795,6 +1849,17 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       report.scenarioStatus = 'fail';
       report.selectedFontFailure =
         'Original selected-font response did not complete within its owned fault protocol.';
+      process.exitCode = 1;
+    }
+  }
+  if (frameRecorder) {
+    await frameRecorder.finish(
+      report.scenarioStatus === 'fail' ? 'scenario-failure' : 'actions-ended',
+    );
+    if (report.frameTrace.status !== 'retained') {
+      report.scenarioStatus = 'fail';
+      report.frameTraceFailure =
+        'Complete bounded frame trace unavailable; partial evidence retained.';
       process.exitCode = 1;
     }
   }
@@ -1947,7 +2012,8 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
       process.exitCode = 1;
     }
   }
-  if (cpuProfile) report.performanceGateStatus = 'excluded-cpu-profiling';
+  if (frameTraceOptions) report.performanceGateStatus = 'excluded-browser-frame-tracing';
+  else if (cpuProfile) report.performanceGateStatus = 'excluded-cpu-profiling';
   else if (audioProof) report.performanceGateStatus = 'excluded-audio-identity-profiling';
   else if (memoryProfile) {
     report.performanceGateStatus = 'excluded-memory-profiling';
@@ -2000,6 +2066,7 @@ ${hitchStore ? hitchModule.hitchJournalInitScript({ costProbe: cost }) : ''}
         cleanupFailure: report.mediaFaultCleanupFailure,
         audioCheck: report.audioCheck,
         startRetention: readinessOptions.requiredStartRetention ?? null,
+        requiredClickIdentityObservation: readinessOptions.requiredClickIdentityObservation ?? null,
       });
     } else if (selectedFontReadiness) {
       report.readinessAssessment = selectedFontSettlement

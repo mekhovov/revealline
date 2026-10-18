@@ -1,3 +1,4 @@
+import { assertDeclaredReadinessTool } from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -127,17 +128,24 @@ test('all eight workloads, baseline, recipe, acceptance, original bounds and num
   for (const key of ['hitchJournal', 'profile', 'cpu', 'readinessProbe'])
     assert.equal(plan[key], undefined);
 });
+const nextPlanPath = 'docs/performance/solo-remote-9d5139b-correctness-plan.json';
+const nextSelected = job.includes(
+  '78m node scripts/run-solo-remote-correctness.mjs ' + nextPlanPath,
+);
+const activePlanPath = nextSelected ? nextPlanPath : planPath;
+const activeSource = nextSelected ? '9d5139b9983c700a6a708f65f379fa4d5a8b0395' : source;
+const activeTree = nextSelected ? '99f9e6cea7ea7dc27c93609aae632908531d93d1' : tree;
 function workflowAdmission(text) {
   assert.equal(text.match(/^    if: (.+)$/m)?.[1], guard);
   assert.match(text, /^    timeout-minutes: 145$/m);
   assert(text.includes('timeout-minutes: 79\n        working-directory: tools'));
-  assert(text.includes('78m node scripts/run-solo-remote-correctness.mjs ' + planPath));
+  assert(text.includes('78m node scripts/run-solo-remote-correctness.mjs ' + activePlanPath));
   assert(
     text.includes(
       'solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 ' +
-        source +
+        activeSource +
         ' ' +
-        tree,
+        activeTree,
     ),
   );
   assert(text.includes('playwright@1.62.1'));
@@ -145,7 +153,11 @@ function workflowAdmission(text) {
   assert(text.includes("node-version: '22.13.1'"));
   assert(text.includes('SOLO_TOOLING_REVISION: ${{ github.sha }}'));
   assert(text.includes('ref: ${{ github.sha }}'));
-  assert(text.includes('solo-linux-797e03-correctness'));
+  assert(
+    text.includes(
+      nextSelected ? 'solo-linux-9d5139b-correctness' : 'solo-linux-797e03-correctness',
+    ),
+  );
   assert.equal((text.match(/if: \$\{\{ always\(\) \}\}/g) ?? []).length, 2);
   for (const forbidden of [
     'continue-on-error',
@@ -193,21 +205,27 @@ test('manual trusted-main job selects only797 with exact command ordering and un
     );
   for (const [before, after] of [
     [
-      '78m node scripts/run-solo-remote-correctness.mjs ' + planPath,
+      '78m node scripts/run-solo-remote-correctness.mjs ' + activePlanPath,
       '78m node scripts/run-solo-remote-correctness.mjs ' + priorPath,
     ],
     ['timeout-minutes: 145', 'timeout-minutes: 146'],
     ['timeout-minutes: 79', 'timeout-minutes: 80'],
     ['78m node', '79m node'],
-    [tree, prior.candidate.tree],
+    [activeTree, prior.candidate.tree],
     [
-      'node --test scripts/test-solo-797e03-correctness.mjs',
-      'node scripts/test-solo-797e03-correctness.mjs --test',
+      job.split('\n').find((line) => line.trim().startsWith('node --test ')),
+      job
+        .split('\n')
+        .find((line) => line.trim().startsWith('node --test '))
+        .replace('node --test ', 'node '),
     ],
-  ])
+  ]) {
+    assert(job.includes(before), 'Mutation must target the actual workflow');
     assert.throws(() => workflowAdmission(job.replace(before, after)));
+  }
 });
 async function current(ref) {
+  if (await assertDeclaredReadinessTool(planPath, ref)) return;
   const bytes = await read(ref.path);
   assert.equal(bytes.length, ref.bytes, ref.path);
   assert.equal(sha(bytes), ref.sha256, ref.path);

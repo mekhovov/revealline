@@ -237,6 +237,10 @@ function sourceReadinessSelection(plan) {
   );
   assert(PREPARATION_READINESS_PHASES.includes(plan.phase));
   const latest = plan.sourceCohort === RUNTIME797_READINESS_ROW;
+  if (plan.requiredClickIdentityObservation !== undefined) {
+    assert(latest);
+    assert.equal(plan.requiredClickIdentityObservation, 'retained-reference-rejoin-v1');
+  }
   const current = plan.sourceCohort === RUNTIME73_READINESS_ROW;
   const common = latest
     ? { source: RUNTIME797_READINESS_SOURCE, runtime797: true, documents: 1 }
@@ -279,7 +283,12 @@ function sourceReadinessSelection(plan) {
     protocol: plan.phase + '-v1',
     mediaFault: true,
     ...(plan.phase === 'required-original-cancel'
-      ? { requiredStartRetention: 'trusted-initial-start-v1' }
+      ? {
+          requiredStartRetention: 'trusted-initial-start-v1',
+          ...(plan.requiredClickIdentityObservation
+            ? { requiredClickIdentityObservation: plan.requiredClickIdentityObservation }
+            : {}),
+        }
       : {}),
   };
 }
@@ -1016,6 +1025,10 @@ export function readinessRow(engine, phase = 'cold-first30') {
   };
 }
 export function validateReadinessPlan(plan) {
+  if (plan.requiredClickIdentityObservation !== undefined) {
+    assert(runtime797Plan(plan) || plan.sourceCohort === RUNTIME797_READINESS_ROW);
+    assert.equal(plan.requiredClickIdentityObservation, 'retained-reference-rejoin-v1');
+  }
   if (sourceBoundPlan(plan)) {
     const latest = runtime797Plan(plan);
     const current = runtime73Plan(plan);
@@ -1496,6 +1509,9 @@ export function readinessArguments(ctx, row, url, dir) {
     ...(selected.requiredStartRetention
       ? ['--readiness-required-start=' + selected.requiredStartRetention]
       : []),
+    ...(selected.requiredClickIdentityObservation
+      ? ['--readiness-required-rejoin=' + selected.requiredClickIdentityObservation]
+      : []),
     ...(selected.cancelBoundary ? ['--readiness-cancel-boundary=post-command-v3'] : []),
     ...(row.engine === 'webkit'
       ? ['--context=persistent', '--viewport=400x850', '--dpr=3', '--mobile-context']
@@ -1573,6 +1589,7 @@ export async function readinessAssessment(
           fallback: raw?.optionalIconFallback,
           cleanupFailure: raw?.mediaFaultCleanupFailure,
           startRetention: selected.requiredStartRetention ?? null,
+          requiredClickIdentityObservation: selected.requiredClickIdentityObservation ?? null,
           ...(selected.audioFault ? { audioCheck: raw?.audioCheck } : {}),
         })
       : selected.font
@@ -1662,6 +1679,10 @@ export async function readinessAssessment(
     assert.equal(raw.baselineRuntime, false);
     assert.equal(raw.readinessPilot.protocol, selected.protocol);
     assert.equal(raw.readinessPilot.performanceQualification, false);
+    assert.equal(
+      raw.readinessPilot.requiredClickIdentityObservation,
+      selected.requiredClickIdentityObservation,
+    );
     if (selected.settlement) {
       assert.equal(raw.readinessPilot.cancelBoundaryObservation, 'post-command-v3');
       assert.equal(raw.readinessPilot.settlementObservation, 'original-demand-v1');
