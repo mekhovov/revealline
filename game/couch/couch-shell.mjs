@@ -2,7 +2,7 @@ import { createPauseMenu, pauseMusicAction } from '../ui/pause-menu.mjs';
 import { nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
 import { gameplayStatsLabel } from '../ui/gameplay-copy.mjs';
 import { contentText } from '../i18n/content.mjs';
-import { t, localizedText } from '../i18n/index.mjs';
+import { t, localizedText, getLocale } from '../i18n/index.mjs';
 import { mountModeChoices } from '../ui/mode-choice.mjs';
 import { authoredModeDestinations } from '../ui/authored-mode-routes.mjs';
 import { DEFAULT_JOURNEY_ROUTES } from '../content-design/default-entry.mjs';
@@ -12,6 +12,8 @@ import { prepareNativeMenus } from '../ui/native-menus.mjs';
 import { commitMenuRetune } from '../ui/menu-retune.mjs';
 import { authoredJourneyModeHref, isAuthoredJourneyRouteId } from '../content-design/mode-href.mjs';
 import { isMissionLibrarySourceJourney } from '../mission-library/handoff.mjs';
+import { couchDirectionLabel, resolveCouchKeyboard } from './keyboard-bindings.mjs';
+import { keyLabel } from '../key-bindings.mjs';
 
 const ABILITY = Object.freeze({
   get scan() {
@@ -74,6 +76,7 @@ export function createCouchShell({
   onMissions = null,
   controllerNeedsTouch = () => false,
   getSceneContext = () => ({}),
+  getKeyboardBindings = () => null,
 } = {}) {
   const nativeMenu = prepareNativeMenus({ document: doc, mode: 'versus', getSceneContext });
   const $ = (id) => doc.getElementById(id),
@@ -84,6 +87,20 @@ export function createCouchShell({
     shown = [false, false],
     removers = [],
     settings = attachSettingsPanels({ root: $('race-options-panel'), document: doc });
+  let keyboardSource, keyboardLocale, keyboardView;
+  const keyboard = () => {
+    const source = getKeyboardBindings(),
+      locale = getLocale();
+    if (!keyboardView || source !== keyboardSource || locale !== keyboardLocale) {
+      keyboardSource = source;
+      keyboardLocale = locale;
+      keyboardView = {
+        bindings: resolveCouchKeyboard(source),
+        directions: [0, 1].map((player) => couchDirectionLabel(source, player)),
+      };
+    }
+    return keyboardView;
+  };
   const authoredDestinations = authoredModeDestinations('versus', authoredRoute);
   const secondaryDestinations = Object.freeze({
     about: $('race-more-about').getAttribute('href'),
@@ -315,9 +332,7 @@ export function createCouchShell({
             ? t('interface:onScreenControls')
             : modality[i] === 'touch'
               ? t('interface:touch')
-              : i === 0
-                ? t('interface:wASD')
-                : t('interface:arrowKeys');
+              : keyboard().directions[i];
       setText(`race-seat-${i}`, () => device());
       setText(
         `racer-input-${i}`,
@@ -712,13 +727,15 @@ export function createCouchShell({
       const run = match.runs[i],
         e = equipment[i];
       const keyboardHelp = () => {
-        const hints = [i === 0 ? t('interface:wASDMove') : t('interface:arrowKeysMove')];
-        if (e.action) hints.push(`${i === 0 ? 'Q' : t('interface:enter')}: ${e.label}`);
-        if (e.pickup) hints.push(t('gameplay:supply', { value1: i === 0 ? 'E' : '/' }));
-        if (e.boost)
-          hints.push(
-            i === 0 ? t('interface:couch.leftShiftBoost') : t('interface:couch.rightShiftBoost'),
-          );
+        const keys = keyboard().bindings.seats[i];
+        const hints = [
+          t('interface:couchKeyboard.move', {
+            keys: keyboard().directions[i],
+          }),
+        ];
+        if (e.action) hints.push(`${keyLabel(keys.action)}: ${e.label}`);
+        if (e.pickup) hints.push(t('gameplay:supply', { value1: keyLabel(keys.pickup) }));
+        if (e.boost) hints.push(`${keyLabel(keys.boost)}: ${t('common:controls.boost')}`);
         return `${hints.join(' · ')}.`;
       };
       setText(`race-help-${i}`, () => keyboardHelp());
