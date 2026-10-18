@@ -34,7 +34,9 @@ for (const [mode, file, rootId, soundId, prefix, secondary] of [
       root = document.getElementById(rootId),
       savedParent = sound.parentNode,
       recovery = secondary && document.getElementById(secondary);
-    const summary = mode === 'versus' && document.getElementById('race-summary');
+    const summary =
+      mode !== 'solo' &&
+      document.getElementById(mode === 'versus' ? 'race-summary' : 'coop-navigation-context');
     const summaryParent = summary?.parentNode;
     let toggles = 0;
     sound.addEventListener('click', () => toggles++);
