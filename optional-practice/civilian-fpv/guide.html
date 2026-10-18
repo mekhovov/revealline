@@ -182,6 +182,22 @@
         restore your exported backups with its import tools. Downloading the app does not recover
         lost records; without an export, they may be unrecoverable.
       </p>
+      <p>
+        <strong>Radio calibration and the tuning library are separate backups.</strong> In the FPV
+        apps, keep Radio setup’s <strong>Export profiles</strong> file for calibration. For rates,
+        throttle and saved drone setups, open
+        <strong
+          >Settings → Controls → Radio setup → Rates &amp; throttle → Import / export · Betaflight
+          and backups</strong
+        >, choose <strong>Backup complete library</strong>, then <strong>Download file</strong>.
+        Save the downloaded JSON outside browser storage. <strong>Export SIM rates</strong> and a
+        rate-only CLI export are not complete-library backups. To restore, open the same section,
+        use <strong>Upload text / JSON</strong> to load your library JSON, wait until its text
+        appears, then choose <strong>Restore library backup</strong>.
+        <strong>Restore library backup replaces the saved library</strong>: first back up any
+        current settings you want to keep. Importing radio calibration does not restore the tuning
+        library. Restored settings apply to a new flight, not an already running attempt.
+      </p>
       <h2>Troubleshooting</h2>
       <ul>
         <li>
@@ -324,6 +340,25 @@
         Перед очищенням сховища експортуйте записи, нотатники, списки та авторські світи засобами
         застосунків. Автоматичної резервної копії немає. Файли <strong>.rlpack</strong> додають
         контент усередині World Studio, а не виконувані застосунки каталогу.
+      </p>
+      <p>
+        <strong
+          >Калібрування пульта й бібліотека налаштувань потребують окремих резервних копій.</strong
+        >
+        У FPV-застосунках збережіть файл <strong>Експорт профілів</strong> з налаштування пульта для
+        калібрування. Для рейтів, газу й збережених конфігурацій дрона відкрийте
+        <strong
+          >Налаштування → Керування → Налаштувати пульт → Рейти й газ → Імпорт / експорт ·
+          Betaflight і резервні копії</strong
+        >, натисніть <strong>Резервна копія всієї бібліотеки</strong>, потім
+        <strong>Завантажити файл</strong>. Збережіть JSON поза сховищем браузера. Експорт окремих
+        рейтів SIM або CLI лише з рейтами не замінює повну копію бібліотеки. Для відновлення в тому
+        самому розділі виберіть свій JSON через <strong>Завантажити текст / JSON</strong>,
+        дочекайтеся появи тексту й натисніть <strong>Відновити бібліотеку</strong>.
+        <strong>Відновити бібліотеку замінює збережену бібліотеку</strong>: спочатку зробіть копію
+        поточних налаштувань, які хочете зберегти. Імпорт калібрування пульта не відновлює
+        бібліотеку налаштувань. Відновлені налаштування діють у новому польоті, а не в уже запущеній
+        спробі.
       </p>
       <h2>Як усунути проблему</h2>
       <ul>

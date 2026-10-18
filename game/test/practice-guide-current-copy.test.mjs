@@ -58,6 +58,47 @@ test('repository and shipped guides name the current rendered radio setup contro
   }
 });
 
+test('all player guides distinguish radio calibration from complete tuning-library backup and restoration', async () => {
+  const tuning = await source('optional-practice/civilian-fpv/tuning-ui.mjs');
+  const radio = await source('optional-practice/civilian-fpv/radio-setup.mjs');
+  const calibrationLabels = [...radio.matchAll(/export: '([^']+)'/g)].map((match) => match[1]);
+  assert.deepEqual(calibrationLabels, ['Export profiles', 'Експорт профілів']);
+  const labels = [
+    ['Import / export · Betaflight and backups', 'Імпорт / експорт · Betaflight і резервні копії'],
+    ['Backup complete library', 'Резервна копія всієї бібліотеки'],
+    ['Download file', 'Завантажити файл'],
+    ['Upload text / JSON', 'Завантажити текст / JSON'],
+    ['Restore library backup', 'Відновити бібліотеку'],
+  ];
+  for (const pair of labels)
+    for (const label of pair)
+      assert(tuning.includes(`'${label}'`), `Missing live UI label: ${label}`);
+  for (const [index, locale] of ['en', 'uk'].entries())
+    for (const guide of await localizedGuides(locale)) {
+      assert(guide.includes(calibrationLabels[index]));
+      for (const pair of labels)
+        assert(guide.includes(pair[index]), `Missing ${locale} backup step`);
+      assert.match(
+        guide,
+        locale === 'en'
+          ? /Radio calibration and the tuning library are separate backups/
+          : /Калібрування пульта й бібліотека налаштувань потребують окремих резервних копій/,
+      );
+      assert.match(
+        guide,
+        locale === 'en'
+          ? /Importing radio calibration does not restore the tuning library/
+          : /Імпорт калібрування пульта не відновлює бібліотеку налаштувань/,
+      );
+      assert.match(
+        guide,
+        locale === 'en'
+          ? /Restore library backup replaces the saved library/
+          : /Відновити бібліотеку замінює збережену бібліотеку/,
+      );
+    }
+});
+
 test('repository and shipped guides document the reachable maintained Detailed HUD in both locales', async () => {
   for (const locale of ['en', 'uk'])
     for (const guide of await localizedGuides(locale)) {
