@@ -5896,7 +5896,7 @@
   "supportSummary.download": "Download summary",
   "supportSummary.notPrepared": "No summary prepared.",
   "supportSummary.exact": "View the exact JSON summary",
-  "supportSummary.limits": "This is a snapshot of the primary game shell, not a backup or a check of every mode. API availability and storage estimates do not prove saving, long-term retention or physical controller support. Online status is only a browser hint.",
+  "supportSummary.limits": "This is a snapshot of the current game shell, not a backup or a check of every mode. API availability and storage estimates do not prove saving, long-term retention or physical controller support. Online status is only a browser hint.",
   "supportSummary.captured": "Captured at",
   "supportSummary.build": "Game version",
   "supportSummary.game": "Game state",
@@ -5941,5 +5941,7 @@
   "supportSummary.game.lost": "Attempt ended",
   "supportSummary.game.unavailable": "Unavailable",
   "supportSummary.preparedWaiting": "Summary prepared below. An earlier export is still waiting for its destination; another export will be available when it settles.",
+  "supportSummary.controller.observed": "Snake detected a controller. Neutral-input and Confirm readiness are not reported by this game.",
+  "supportSummary.game.finished": "Round finished",
   "worldIdsCommaSeparated": "Worlds (comma separated: retro, fpv, ukraine)"
 }
