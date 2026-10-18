@@ -135,17 +135,11 @@
       "inputTraceIdentity": "004a620b36d19d0d",
       "title": "First Signal",
       "provenance": "authored",
-      "tags": [
-        "capture",
-        "bent-cut",
-        "safe-ground"
-      ],
+      "tags": ["capture", "bent-cut", "safe-ground"],
       "durationSeconds": 30.683333333333334,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/first-signal-left.replay.json",
-      "replayVariants": [
-        "./demo-data/first-signal-left.chromium-macos.replay.json"
-      ]
+      "replayVariants": ["./demo-data/first-signal-left.chromium-macos.replay.json"]
     },
     "sourceAssets": [
       {
@@ -176,18 +170,15 @@
         "sourceRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71"
       },
       "cyclesPerMode": 10,
-      "modes": [
-        "spectator",
-        "practice"
-      ],
+      "modes": ["spectator", "practice"],
       "snapshotLimit": 64
     }
   },
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-demo.mjs",
-      "bytes": 27396,
-      "sha256": "e1e373468e8fbc44a604a01e16fd311e6088ac7ba989c9e70061c1d13acae61f"
+      "bytes": 28634,
+      "sha256": "50762ec6934fcf1bcb2326eb4041ada02ccadaffaafb33c98d91f8488673eb6e"
     },
     {
       "path": "scripts/observe-solo-demo-recovery.mjs",
