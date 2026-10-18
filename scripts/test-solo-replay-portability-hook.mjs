@@ -205,6 +205,27 @@ test('fixed native workflow source controls run exact Node before main-only manu
     ?.split('\n  replay-portability:\n')[0];
   const native = workflow.split('\n  replay-portability:\n')[1];
   assert(source && native);
+  const config = await readFile(new URL('../eslint.config.mjs', import.meta.url), 'utf8');
+  const lintInputs = [
+    'eslint.config.mjs',
+    ...[...config.matchAll(/from ['"](\.[^'"]+)['"]/g)].map((match) =>
+      match[1].replace(/^\.\//, ''),
+    ),
+  ];
+  assert(lintInputs.includes('scripts/eslint-localization.mjs'));
+  const requireLintInputs = (job) => {
+    for (const path of lintInputs) {
+      assert(job.includes('            /' + path + '\n'), 'Missing lint dependency: ' + path);
+    }
+  };
+  requireLintInputs(source);
+  for (const path of lintInputs) {
+    assert.throws(
+      () => requireLintInputs(source.replace('            /' + path + '\n', '')),
+      /Missing lint dependency/,
+    );
+  }
+
   assert.match(workflow, /types:\s*\[opened,\s*synchronize\]/);
   for (const field of [
     'SoloReplayPortabilitySourceReceiptV1',
