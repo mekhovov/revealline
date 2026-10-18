@@ -3,6 +3,7 @@ import { resolveIndustrialEnvironment } from '../../game/presentation/industrial
 import { canonicalJSON } from '../../game/data-json.mjs';
 import { validateAircraftPhysics } from './aircraft-physics.mjs';
 import { aircraftAppearance } from './aircraft-appearance.mjs';
+import { sampleGhostPath, validateAircraftCoursePresentation } from './advanced-ghost-path.mjs';
 import { actorVisual } from '../../game/hunt/actor-catalog.mjs';
 import { sharedActorAppearance, runtimeActorArtRevision } from '../../game/hunt/preferences.mjs';
 import {
@@ -288,6 +289,94 @@ export function buildPhysicalAircraftVisual({
     }
   });
   return { rotors, tint, physical: true, root: parts };
+}
+
+/** Owned presentation only: metre-valued COM poses, independent of legacy PB. */
+export function createAircraftReferenceVisual({ parent, mesh, material, release, label }) {
+  const root = new THREE.Group();
+  root.name = 'aircraft-practice-reference';
+  parent.add(root);
+  let data = null,
+    visual = null,
+    pose = null,
+    unavailable = false;
+  const clear = () => {
+    data = visual = pose = null;
+    root.visible = false;
+    try {
+      release(root);
+    } catch {
+      unavailable = true;
+      root.clear();
+    }
+  };
+  root.visible = false;
+  return {
+    set(value) {
+      const checked = value === null ? null : validateAircraftCoursePresentation(value);
+      clear();
+      if (!checked) return true;
+      if (unavailable) return false;
+      try {
+        visual = buildPhysicalAircraftVisual({
+          configuration: checked.aircraft,
+          parent: root,
+          mesh,
+          material: (_color, extras) =>
+            material(0x65dcf5, {
+              ...extras,
+              emissive: 0x175c70,
+              emissiveIntensity: 0.5,
+              transparent: true,
+              opacity: 0.42,
+              depthWrite: false,
+            }),
+        });
+        root.scale.setScalar(checked.aircraft.radius / 0.22);
+        const badge = label?.('REF', '#65dcf5', root, 0.48);
+        if (badge) badge.position.y = 0.4;
+        root.traverse((part) => {
+          part.castShadow = part.receiveShadow = false;
+        });
+        data = checked;
+        return true;
+      } catch {
+        clear();
+        return false;
+      }
+    },
+    draw(tick, { camera, view, reducedMotion = false } = {}) {
+      if (!data || !Number.isSafeInteger(tick) || tick < 0) return;
+      try {
+        const sample = sampleGhostPath(data.path, Math.min(tick, data.completedAtTick));
+        root.position.fromArray(sample, 1);
+        root.quaternion.fromArray(sample, 4).normalize();
+        root.visible =
+          view !== 'editor' &&
+          (view !== 'fpv' ||
+            !camera ||
+            root.position.distanceTo(camera.position) >= Math.max(0.15, data.aircraft.radius * 2));
+        for (const rotor of visual.rotors)
+          rotor.rotation.y = reducedMotion ? 0 : sample[0] * 0.72 * rotor.userData.spin;
+        pose = {
+          tick: sample[0],
+          finished: tick >= data.completedAtTick,
+          position: root.position.toArray(),
+          orientation: root.quaternion.toArray(),
+        };
+      } catch {
+        clear();
+      }
+    },
+    active: () => Boolean(data),
+    snapshot: () => ({
+      samples: data?.path.length ?? 0,
+      visible: root.visible,
+      aircraftId: data?.aircraft.id ?? null,
+      pose: pose && structuredClone(pose),
+    }),
+    clear,
+  };
 }
 
 /** Shared presentation only. Hosts supply admitted bounds and poses; no physics or ownership. */
@@ -708,6 +797,13 @@ export function createFlightRenderer({
     delete group.userData.visuals;
     group.clear();
   }
+  const aircraftReference = createAircraftReferenceVisual({
+    parent: scene,
+    mesh,
+    material,
+    release: releaseGroup,
+    label,
+  });
   const representedCollisionMeshes = new Map();
   let importedGroundFog = null;
   function clearImported() {
@@ -1813,6 +1909,7 @@ export function createFlightRenderer({
     presentationGeneration++;
     flightViewFrame.reset();
     setGhost([]);
+    aircraftReference.clear();
     editor?.detach();
     course = value;
     mode = selectedMode;
@@ -2952,6 +3049,7 @@ export function createFlightRenderer({
     }
     world.userData.visuals?.updatePresentation?.(state, { reducedMotion });
     updateGhost(state.ticks);
+    aircraftReference.draw(state.ticks, { camera, view, reducedMotion });
     if (pathLine) pathLine.visible = view !== 'fpv' && view !== 'editor';
     renderer.render(scene, camera);
     return !renderer.getContext().isContextLost();
@@ -3511,6 +3609,7 @@ export function createFlightRenderer({
     setPath([]);
     releaseEnvironmentLight();
     setGhost([]);
+    aircraftReference.clear();
     clearImported();
     for (const group of [world, goals, aircraft, actors, projectiles, editHandles])
       releaseGroup(group);
@@ -3862,6 +3961,9 @@ export function createFlightRenderer({
     setAircraft,
     setPath,
     setGhost,
+    setAircraftReference: (value) => aircraftReference.set(value),
+    aircraftReferenceSnapshot: () => aircraftReference.snapshot(),
+    hasAircraftReference: () => aircraftReference.active(),
     ghostSnapshot: () => ({
       samples: ghostSamples.length,
       visible: ghostAircraft.visible,
