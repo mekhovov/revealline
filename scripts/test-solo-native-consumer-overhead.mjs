@@ -134,7 +134,7 @@ test('actual manual job guards reject forks, other events, refs and lanes withou
   const guard = admission(workflow);
   assert.match(
     workflow,
-    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,?\s*\]/,
+    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,\s*replay-portability,?\s*\]/,
   );
   assert.match(workflow, /cancel-in-progress: false/);
   const evaluate = new Function('github', 'inputs', `return (${guard})`);
