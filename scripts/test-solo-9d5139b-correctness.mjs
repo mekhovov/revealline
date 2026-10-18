@@ -1,3 +1,4 @@
+import { assertSharedOwnerDeclaredTool } from './solo-shared-owner-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -216,11 +217,12 @@ test('manual trusted-main job selects only9d5139b with exact command ordering an
     assert.throws(() => workflowAdmission(job.replace(before, after)));
 });
 async function current(ref) {
+  if (await assertSharedOwnerDeclaredTool(planPath, ref)) return;
   const bytes = await read(ref.path);
   assert.equal(bytes.length, ref.bytes, ref.path);
   assert.equal(sha(bytes), ref.sha256, ref.path);
 }
-test('current references match actual sparse files and stale baseline helper fails before publication', async () => {
+test('executed9d references retain exact source while unchanged inputs and stale-input rejection remain current', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.fixture];
   assert.deepEqual(
     refs.map((ref) => ref.path),

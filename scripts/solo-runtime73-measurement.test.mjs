@@ -53,3 +53,6 @@ import './test-solo-demo-797e03-tooling-admission.mjs';
 
 // Actual production boot and current shared-return successor admission.
 import './test-solo-shared-mode-boot-admission.mjs';
+
+// Complete shared owner successor and immutable executed-input controls.
+import './test-solo-shared-mode-owner-admission.mjs';

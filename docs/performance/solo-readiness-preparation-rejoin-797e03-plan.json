@@ -185,8 +185,8 @@
     },
     {
       "path": "scripts/qualify-solo-runtime.mjs",
-      "bytes": 95197,
-      "sha256": "54e3da78d657e320be2afaa12859877e55941cf708697c34baa594d9550d28b7"
+      "bytes": 95425,
+      "sha256": "bba8114b4b553e8681ec641d91c45b7270f02e58ccd207385818a13070c98373"
     },
     {
       "path": "scripts/reviewed-soundtrack-batches.mjs",

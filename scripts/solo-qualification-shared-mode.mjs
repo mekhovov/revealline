@@ -59,6 +59,59 @@ export function qualificationSharedModeOptions(flags, scenario, bytes) {
   return { protocol: SHARED_MODE_PROTOCOL, sourceRevision };
 }
 
+/** Adopt only the initialized blank page created by this fresh persistent owner.
+ * No page is dismissed and no unexpected document is silently accepted. */
+export async function claimSharedModeInitialPage(context, provenance) {
+  const pages = context.pages();
+  Object.assign(provenance, {
+    policy: 'fresh-persistent-single-blank-v1',
+    status: 'inspecting',
+    initialPageCount: pages.length,
+    initialPages: pages.slice(0, 4).map((page) => ({
+      url: page.url().slice(0, 4096),
+      closed: page.isClosed(),
+      belongsToContext: page.context() === context,
+    })),
+    omittedPages: Math.max(0, pages.length - 4),
+  });
+  try {
+    assert.equal(pages.length, 1, 'Persistent shared owner must begin with exactly one page');
+    const page = pages[0];
+    assert.equal(page.isClosed(), false, 'Initial persistent page is closed');
+    assert.equal(page.context(), context, 'Initial persistent page owner changed');
+    assert.equal(page.url(), 'about:blank', 'Initial persistent page is not blank');
+    provenance.openerPresent = (await page.opener()) !== null;
+    assert.equal(provenance.openerPresent, false, 'Initial persistent page has an opener');
+    const current = context.pages();
+    assert.equal(current.length, 1, 'Persistent page set changed during adoption');
+    assert.equal(current[0], page, 'Persistent page identity changed during adoption');
+    assert.equal(page.isClosed(), false, 'Initial persistent page closed during adoption');
+    assert.equal(page.url(), 'about:blank', 'Initial persistent page navigated during adoption');
+    provenance.status = 'adopted';
+    return page;
+  } catch (error) {
+    provenance.status = 'refused';
+    provenance.failure = String(error.message ?? error).slice(0, 1024);
+    throw error;
+  }
+}
+
+function retainPublicState(state, mode, atMs) {
+  const serialized = JSON.stringify(state);
+  const bytes = Buffer.byteLength(serialized);
+  // One replaced snapshot, not a per-poll log. Overflow is diagnostic-only;
+  // the unchanged guard still assesses the full state returned by the page.
+  return bytes <= 16384
+    ? { mode, atMs, bytes, state: JSON.parse(serialized), overflow: false }
+    : {
+        mode,
+        atMs,
+        bytes,
+        sha256: createHash('sha256').update(serialized).digest('hex'),
+        overflow: true,
+      };
+}
+
 /** Serialized as an ordinary page.evaluate read. No application globals, event
  * injection, storage, style, attributes, clocks or run state are written. */
 export function readSharedModePublicState(mode) {
@@ -122,6 +175,8 @@ export function readSharedModePublicState(mode) {
     hidden: document.hidden,
     focused: document.hasFocus(),
     boot: document.documentElement.dataset.bootState ?? null,
+    access: document.documentElement.dataset.accessState ?? null,
+    loadingMessage: mode === 'team' ? text('coop-boot') : text('boot-status'),
     tool: document.documentElement.dataset.toolState ?? null,
     phase:
       mode === 'team'
@@ -232,11 +287,15 @@ export async function executeSharedModePublicReturn({
   let stopped = false;
   const remaining = () => {
     const value = deadline - now();
+    if (!stopped && value <= 0)
+      record.deadlineFailure ??= { scope: 'action', operation: null, remainingMs: value };
     assert(!stopped && value > 0, 'Shared-mode deadline expired');
     return value;
   };
   const step = async (label, work, cap = 10000) => {
-    const budget = Math.min(cap, remaining());
+    const available = remaining();
+    const budget = Math.min(cap, available);
+    const deadlineScope = available <= cap ? 'action' : 'operation';
     let timer;
     try {
       const value = await Promise.race([
@@ -247,6 +306,12 @@ export async function executeSharedModePublicReturn({
         new Promise((_, reject) => {
           timer = setTimeout(() => {
             stopped = true;
+            record.deadlineFailure ??= {
+              scope: deadlineScope,
+              operation: label,
+              budgetMs: budget,
+              remainingAtStartMs: available,
+            };
             reject(new Error(`Shared-mode operation expired: ${label}`));
           }, budget);
         }),
@@ -261,8 +326,13 @@ export async function executeSharedModePublicReturn({
     }
   };
   const read = async (mode) => {
+    record.publicStateReads ??= { completed: 0, last: null, pending: null };
+    record.publicStateReads.pending = { mode, startedAtMs: now() };
     const state = await step('public state', () => page.evaluate(readSharedModePublicState, mode));
     state.pageCount = page.context().pages().length;
+    record.publicStateReads.completed++;
+    record.publicStateReads.last = retainPublicState(state, mode, now());
+    record.publicStateReads.pending = null;
     assertForeground(state);
     return state;
   };

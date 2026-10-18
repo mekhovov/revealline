@@ -16,7 +16,7 @@ const source = '797e03f28743921842df6aa57520a72016ba3dfc';
 const tree = 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5';
 const lanes = {
   'shared-return': {
-    plan: 'solo-shared-mode-public-return-797e03-boot-plan.json',
+    plan: 'solo-shared-mode-public-return-797e03-owner-plan.json',
     job: 105,
     step: 63,
     seconds: 3720,
@@ -86,6 +86,7 @@ function check(text, lane) {
     );
     assert(body.includes('scripts/test-solo-shared-mode-797e03-admission.mjs '));
     assert(body.includes('scripts/test-solo-shared-mode-boot-admission.mjs '));
+    assert(body.includes('scripts/test-solo-shared-mode-owner-admission.mjs '));
     assert(body.includes('scripts/test-solo-shared-mode-public-return.mjs '));
   } else {
     assert(!body.includes('matrix.'));
@@ -212,6 +213,10 @@ test('each reviewed sparse set contains every exact adapter and frozen observer 
 
 test('shared boot successor setup retains the actual source and complete regression entry', () => {
   const required = [
+    'docs/performance/solo-shared-mode-public-return-797e03-owner-plan.json',
+    'scripts/solo-shared-owner-declared-source.mjs',
+    'docs/performance/fixtures/solo-shared-mode/91b-owner-declared-source.json',
+    'scripts/test-solo-shared-mode-owner-admission.mjs',
     'docs/performance/solo-shared-mode-public-return-797e03-boot-plan.json',
     'docs/performance/fixtures/solo-shared-mode/public-return-boot-ready.qualification.fixture',
     'scripts/test-solo-shared-mode-boot-admission.mjs',
