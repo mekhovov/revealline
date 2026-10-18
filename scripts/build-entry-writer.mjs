@@ -1,10 +1,45 @@
 import * as fs from 'node:fs/promises';
 import { constants } from 'node:fs';
 import { execFile } from 'node:child_process';
-import { dirname, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { promisify } from 'node:util';
 
 const runFile = promisify(execFile);
+
+/** Bound filesystem round trips on network output volumes. All owned writes
+ * settle before returning an error, so the caller can safely remove staging.
+ * Directory promises are shared; accepted bytes and ZIP ordering are unchanged. */
+export async function writeBuildEntries(
+  root,
+  staging,
+  entries,
+  { mkdir = fs.mkdir, writeEntry = writeBuildEntry } = {},
+) {
+  const directories = new Map();
+  let next = 0,
+    failure;
+  const worker = async () => {
+    while (!failure && next < entries.length) {
+      const entry = entries[next++];
+      try {
+        const target = join(staging, entry.name),
+          parent = dirname(target);
+        if (!directories.has(parent))
+          directories.set(
+            parent,
+            Promise.resolve().then(() => mkdir(parent, { recursive: true })),
+          );
+        await directories.get(parent);
+        // A different worker may have failed while this parent was pending.
+        if (!failure) await writeEntry(join(root, entry.name), target, entry.bytes);
+      } catch (error) {
+        failure ??= { error };
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(4, entries.length) }, worker));
+  if (failure) throw failure.error;
+}
 
 export function canCloneBuildEntry(source, destinationDirectory) {
   return (
