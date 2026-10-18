@@ -1,0 +1,106 @@
+{
+  "items": [
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "tag": "b7",
+      "file": "[storage-assessment]/b7-world-app.mjs.source",
+      "bytes": 412965,
+      "sha256": "993980cd3088cd21f6441344f3327ae6f70a5995ef1729033c081dc2c6437e9a",
+      "gitBlobId": "fa77b6dc9158bb6aabde2c22cf5aa29778585ada",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "tag": "56",
+      "file": "[storage-assessment]/56-world-app.mjs.source",
+      "bytes": 414662,
+      "sha256": "87e61f1795253503b78b1dcb5f6638b3cbdd4d553c8d02cc50bd7c16cb8274f2",
+      "gitBlobId": "e12bb8e82ae3a0465a76dea3f0b4eddd3c86aabe",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "tag": "b7",
+      "file": "[storage-assessment]/b7-app.mjs.source",
+      "bytes": 104321,
+      "sha256": "441baea296482a57359dedb514910eeeaa0db9926de772d296539ab18997b3c5",
+      "gitBlobId": "9b41fa559d80a596dd2afbb3fe74a04d7c54e599",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/app.mjs",
+      "tag": "56",
+      "file": "[storage-assessment]/56-app.mjs.source",
+      "bytes": 104983,
+      "sha256": "ceafd793ec79d9d7eaa1c5fba8306b61b0822f18a1f9dd3492e4485ffc83d883",
+      "gitBlobId": "9e9bc47504a7e32a13938b89aa6a06f9c65baea8",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+      "tag": "b7",
+      "file": "[storage-assessment]/b7-advanced-aircraft-runtime.mjs.source",
+      "bytes": 51137,
+      "sha256": "ed75b777bd16f1bb898ec2229fe8f2b1955ee342a06e2bd33a98a84088c1d25c",
+      "gitBlobId": "05857caf83433efd53036901b72f37f6a7a77d9c",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+      "tag": "56",
+      "file": "[storage-assessment]/56-advanced-aircraft-runtime.mjs.source",
+      "bytes": 52048,
+      "sha256": "e820690dd0aff89b3adecb6ba1b4870a86c57e3121a0a7daf1482cb0e0f412b8",
+      "gitBlobId": "97b66f12712a4e99da792dda37d744fb72b73b0d",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "tag": "b7",
+      "file": "[storage-assessment]/b7-advanced-worker.mjs.source",
+      "bytes": 8586,
+      "sha256": "fd35f9f339ae3a98b1dc1b16c13eba18acd3b76f8430363937476c21a02f6156",
+      "gitBlobId": "b2e4a4998adaf0bc9de71826104c4c66d06cc819",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+      "tag": "56",
+      "file": "[storage-assessment]/56-advanced-worker.mjs.source",
+      "bytes": 8669,
+      "sha256": "817cca5b766596586558ca8b4cf7437b965750acbd0bed730fb80f6bb3bca046",
+      "gitBlobId": "4f5279cab2f1684393494b6fa34998ff593b1bd7",
+      "mode": "100644",
+      "type": "blob"
+    }
+  ],
+  "diffs": [
+    {
+      "path": "[storage-assessment]/world-app.mjs.diff",
+      "bytes": 7972,
+      "sha256": "ae258eca280c7e5559507133369aa7d4d60becac84acb6764cdee8da98bb376b"
+    },
+    {
+      "path": "[storage-assessment]/app.mjs.diff",
+      "bytes": 4806,
+      "sha256": "8e19f7a79c0216f4ebe619d9652390d6bfcf3e1f9baed4d49efc71415e527559"
+    },
+    {
+      "path": "[storage-assessment]/advanced-aircraft-runtime.mjs.diff",
+      "bytes": 3064,
+      "sha256": "a240643e6b2fcc95e33f3481647cecf3f784cc193a7ac3f4a39b019961d68207"
+    },
+    {
+      "path": "[storage-assessment]/advanced-worker.mjs.diff",
+      "bytes": 1108,
+      "sha256": "b5b1cef31b5a01927a6584dff312898bc6f9698718ba4886671cadfb66226081"
+    }
+  ]
+}

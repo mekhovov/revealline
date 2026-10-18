@@ -1,0 +1,125 @@
+{
+  "at": "2026-10-18T04:18:27.945234+00:00",
+  "result": "canonical normal merge accepted as source identity only",
+  "pr": 1545,
+  "branch": "codex/fpv-library-lifecycle-audit-20261016",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "parents": [
+    "53338dc73469f866e9289b2b5f74555c68e8231e",
+    "56e29fd264f77df191b75b3425cc6e7bb0ce9e13"
+  ],
+  "openDraft": true,
+  "observedMainBefore": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "pinnedIncoming": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "featureDeltas": [
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/README.md",
+      "sha": "5195fac8c3fdc9822efa105b9f0ede317294e908",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/audit-20261016.md",
+      "sha": "5b05a99a6a3572d017591a118bf211266b6bd1dd",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/cursor-counts-20261017/before-fix.json",
+      "sha": "4e8c6a9f652562513131fafcc9d9dc5db43e681f",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/cursor-counts-20261017/candidate.diff",
+      "sha": "b621c42bf1ddfdf16a4e7b416daea5362898d42c",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/cursor-counts-20261017/node20-after.tap",
+      "sha": "7995e5fd34a08768c066670946f933cda9aa29d1",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/cursor-counts-20261017/review.json",
+      "sha": "1aee152c7ff305586786aae348c54d395223f91d",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/before-integration-node20.tap",
+      "sha": "7e97c97b482aa0d467a01a144d8e717f4a424847",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/node20.tap",
+      "sha": "4c20ee8214f8fd1a74c137cb58ce5561a519627c",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/node22.tap",
+      "sha": "891fc81ce47ec368a544ac2eb23b911289c50d3f",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/software.json",
+      "sha": "19e57b45e656c0bdfd74d7997434a48d80897595",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/source-review.json",
+      "sha": "942df9998f0a0db7c4f06ffcfc51a16f9923e478",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/host.mjs",
+      "sha": "b2996c6b706afd3cd221091e3b01ee049600c49b",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/observe.mjs",
+      "sha": "0ebd84223e006468f8f9901899d99bacea9bba95",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/prepare.mjs",
+      "sha": "8edc78a5adb84b5dfb35858f519dc6341239e085",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/transactions.mjs",
+      "sha": "0723b60ae2ddac652384e3ed11889e9cd527aaa4",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/verify-transactions.mjs",
+      "sha": "02e06c8300d936e56864c039c725cd91a38aa8f9",
+      "mode": "100644",
+      "type": "blob"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/verify.mjs",
+      "sha": "ba0133ef3f06b6f02971114c0d56b1196650af3f",
+      "mode": "100644",
+      "type": "blob"
+    }
+  ],
+  "differenceFromPinnedMainExactly17": true,
+  "postToolExitCode": 0,
+  "responseSha": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "responseConsistent": true,
+  "noRetry": true,
+  "packageNativeAcceptance": false
+}

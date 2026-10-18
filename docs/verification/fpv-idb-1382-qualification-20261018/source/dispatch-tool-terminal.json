@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-18T04:19:40.177002+00:00",
+  "reportedActualToolExitCode": 0,
+  "toolResult": {
+    "chunk_id": "d56387",
+    "wall_time_seconds": 4.369187,
+    "exit_code": 0,
+    "original_token_count": 389,
+    "output": "{\"run\": {\"at\": \"2026-10-18T04:19:32.713308+00:00\", \"head\": \"1382a3e43479df18a7aeb522f218d34862462ade\", \"tree\": \"1442e7fafbe73c723bde8d36881b01bb2cb4dfbb\", \"branch\": \"codex/fpv-library-lifecycle-audit-20261016\", \"workflow\": \".github/workflows/company-edition-candidate.yml\", \"runId\": 39096687385, \"event\": \"workflow_dispatch\", \"runHeadSha\": \"1382a3e43479df18a7aeb522f218d34862462ade\", \"runHeadBranch\": \"codex/fpv-library-lifecycle-audit-20261016\", \"headCommit\": \"1382a3e43479df18a7aeb522f218d34862462ade\", \"statusAtIdentification\": \"queued\", \"conclusionAtIdentification\": null, \"createdAt\": \"2026-10-18T04:19:31Z\", \"runURL\": \"https://github.com/mekhovov/revealline/actions/runs/39096687385\", \"dispatchedOnce\": true, \"reusedExisting\": false, \"sourceGuard\": \"workflow_dispatch event SHA must equal head in future job/artifact metadata; optional integration name does not mean synthetic PR merge when both SHAs equal selected dispatch head\", \"currentOriginalPackageAcceptance\": false, \"packageControllerNotInvoked\": true}, \"receipt\": {\"path\": \"[storage-current]/CURRENT-CANDIDATE-RUN-RECEIPT.json\", \"bytes\": 1050, \"sha256\": \"5de13266763a8cf0ef53eb830919d19ae4faf512ebdbf1add91b6f085fcba803\"}, \"terminal\": {\"path\": \"[storage-current]/DISPATCH-ACTUAL-CHILD-TERMINAL.json\", \"bytes\": 361, \"sha256\": \"930abfb8a12507b00a27df1e1e5082e7431e3e9b1a66f69b6d07477db6858871\"}}\n"
+  }
+}

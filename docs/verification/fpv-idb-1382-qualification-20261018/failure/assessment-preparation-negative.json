@@ -1,0 +1,9 @@
+{
+  "recordedAt": "2026-10-18T04:10:58.744678+00:00",
+  "operation": "read-only assessment record preparation",
+  "actualToolExitCode": 1,
+  "toolChunk": "e8498f",
+  "traceback": "Traceback (most recent call last):\n  File \"<string>\", line 21, in <module>\n    assert len(found)==1,(name,found)\n           ^^^^^^^^^^^^^\nAssertionError: ('package-budget.mjs', [])\n",
+  "cause": "A named metadata join incorrectly limited package-budget.mjs to scripts/ or publishing/ roots. No output assessment/plan or operational mutation had been reached.",
+  "resolution": "Resolve the single exact basename from the already retained complete tree metadata; no new GET, body sweep, test or package operation."
+}

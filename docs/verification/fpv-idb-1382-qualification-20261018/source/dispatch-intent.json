@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-18T04:19:30.677570+00:00",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "branch": "codex/fpv-library-lifecycle-audit-20261016",
+  "workflow": ".github/workflows/company-edition-candidate.yml",
+  "inputs": {
+    "editions": "fpv-learning"
+  },
+  "existingRunIds": [
+    39096630191,
+    39096630197,
+    39096630246,
+    39096630201
+  ],
+  "suitableExistingOriginalCandidateCount": 0,
+  "operation": "one workflow_dispatch POST; no retry",
+  "eventSemantics": "dispatch github.sha and fallback PR-head source both bind selected head; PR optional merge-tree artifacts excluded"
+}

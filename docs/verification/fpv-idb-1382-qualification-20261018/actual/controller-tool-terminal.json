@@ -1,0 +1,12 @@
+{
+  "sessionId": 12506,
+  "source": "Actual tools.write_stdin result for the sole owned controller; not inferred from file state",
+  "result": {
+    "chunk_id": "a23f87",
+    "wall_time_seconds": 52.549117,
+    "exit_code": 0,
+    "original_token_count": 238,
+    "output": "{\"stage\": \"company\", \"at\": \"2026-10-18T04:39:58.764774+00:00\", \"head\": \"1382a3e43479df18a7aeb522f218d34862462ade\", \"tree\": \"1442e7fafbe73c723bde8d36881b01bb2cb4dfbb\", \"run\": 39096687385, \"helper\": {\"role\": \"company\", \"path\": \"[storage-current]/qualify-storage-company.py\", \"bytes\": 7559, \"sha256\": \"f8b54611f9cf0209db57ca0a901fe80d9ba5912c28ee37ca8df69bcdbfdd0d34\"}, \"actualExitCode\": 0, \"stdoutSHA256\": \"901c5336b1e6304f5d3490bfda002167cd260dd16a3b26d1133a8d69c5f485e6\", \"stderrSHA256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\", \"receipt\": {\"path\": \"[storage-current]/qualification-originals/company-original-members-receipt.json\", \"bytes\": 1943, \"sha256\": \"901c5336b1e6304f5d3490bfda002167cd260dd16a3b26d1133a8d69c5f485e6\"}}\n"
+  },
+  "recordedAt": "2026-10-18T04:40:08.240733+00:00"
+}

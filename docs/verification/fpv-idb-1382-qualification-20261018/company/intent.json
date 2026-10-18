@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-18T04:38:16.581341+00:00",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "run": 39096687385,
+  "helper": {
+    "role": "company",
+    "path": "[storage-current]/qualify-storage-company.py",
+    "bytes": 7559,
+    "sha256": "f8b54611f9cf0209db57ca0a901fe80d9ba5912c28ee37ca8df69bcdbfdd0d34"
+  },
+  "oneInvocation": true,
+  "externalAvailable": 64716800000
+}

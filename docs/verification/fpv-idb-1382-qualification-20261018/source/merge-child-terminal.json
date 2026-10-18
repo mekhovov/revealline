@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-18T04:18:28.058242+00:00",
+  "actualChildExitCode": 0,
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "acceptance": {
+    "path": "[storage-current]/MERGE-CANONICAL-ACCEPTANCE.json",
+    "bytes": 4187,
+    "sha256": "0d8e65e0479a418b29e289fe8d4edca68e77056de018ea8f02765613dcf91b53"
+  }
+}

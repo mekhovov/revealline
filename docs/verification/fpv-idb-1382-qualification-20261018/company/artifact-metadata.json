@@ -1,0 +1,20 @@
+{
+  "id": 12125173149,
+  "node_id": "MDg6QXJ0aWZhY3QxMjEyNTE3MzE0OQ==",
+  "name": "company-candidate-1382a3e43479df18a7aeb522f218d34862462ade",
+  "size_in_bytes": 78548559,
+  "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12125173149",
+  "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12125173149/zip",
+  "expired": false,
+  "digest": "sha256:f0e1413bf1123d1bb07cbd5aec4b841dd1d52830c7a618827d12bca877569db6",
+  "created_at": "2026-10-18T04:38:03Z",
+  "updated_at": "2026-10-18T04:38:03Z",
+  "expires_at": "2026-11-01T04:38:00Z",
+  "workflow_run": {
+    "id": 39096687385,
+    "repository_id": 1367404328,
+    "head_repository_id": 1367404328,
+    "head_branch": "codex/fpv-library-lifecycle-audit-20261016",
+    "head_sha": "1382a3e43479df18a7aeb522f218d34862462ade"
+  }
+}

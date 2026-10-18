@@ -1,0 +1,38 @@
+{
+  "UTC": "2026-10-18T04:33:38.203941+00:00",
+  "status": "ACCEPTED_SCOPED_CURRENT_OPTIONAL_RECEIPT",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "run": 39096687385,
+  "receiptBytes": 17631,
+  "receiptSHA256": "07b64d2a073990fc9524d4746e1f554d22df06ec9152122cf9c49cd9fb5a7bd7",
+  "terminalBytes": 999,
+  "terminalSHA256": "26129efa02586d53fd783f8faa33d081ae5f8109f1a6cac5f5be69547aeed498",
+  "actualChildExit": 0,
+  "artifactId": 12124274514,
+  "artifactBytes": 27488671,
+  "artifactSHA256": "24873cc74251161c4aa211888bc420bc55db2c54faf6f9eb35c4e3edf93db5c0",
+  "rootReview": "Full receipt and terminal read; accepted exact source/tree/run/helper and actual completed guards. No root archive GET or repeat payload qualification.",
+  "observed": {
+    "checksums": 15,
+    "originalInventories": 6,
+    "tuningRoleIdentities": 38,
+    "aircraftRoleIdentities": 8,
+    "closures": [
+      70,
+      125,
+      179
+    ],
+    "academyArchiveMemberBytes": [
+      12040712,
+      12082967
+    ],
+    "academyArchiveCap": 13107200
+  },
+  "limitations": [
+    "13303808B raw source-input allowance is policy/producer metadata, not independently measured raw input.",
+    "Company phase and controller12506 remain unfinished; optional acceptance does not imply whole-controller success.",
+    "No native/full-player/public/original affected-storage/physical/endurance acceptance.",
+    "Originals and all earlier failures/limits remain; do not repeat this accepted stage."
+  ]
+}

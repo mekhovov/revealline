@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-18T04:19:32.820825+00:00",
+  "actualChildExitCode": 0,
+  "receipt": {
+    "path": "[storage-current]/CURRENT-CANDIDATE-RUN-RECEIPT.json",
+    "bytes": 1050,
+    "sha256": "5de13266763a8cf0ef53eb830919d19ae4faf512ebdbf1add91b6f085fcba803"
+  }
+}

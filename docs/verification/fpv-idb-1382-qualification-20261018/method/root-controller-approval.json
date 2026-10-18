@@ -1,0 +1,26 @@
+{
+  "status": "APPROVED_ONE_OWN_CURRENT_CONTROLLER_INVOCATION",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "run": 39096687385,
+  "planSHA256": "3fba45046317edad074c2f07e859b08fdce016495f7f65be5a8872b2170992cb",
+  "controllerSHA256": "cb6173f527b4627a927b31da20353938fa2284a8086568fd337de473fe4857cf",
+  "peerSHA256": "89c5ae86ce7ea6ab7c1c20af49a8665a8ea54d10bda968ea2caea9fcce218dba",
+  "helpers": {
+    "optional": "56e90c16e8c2b056c607caf3d45e44f3da61ba1628abf14533d3c0558f3d0af0",
+    "company": "f8b54611f9cf0209db57ca0a901fe80d9ba5912c28ee37ca8df69bcdbfdd0d34"
+  },
+  "rootReview": "Complete plan/controller/optional/Company and peer receipt read. All27 static pins and21 source length/SHA/Git IDs independently checked. Canonical merge and actual dispatch/terminals accepted only for source identity.",
+  "sourceInputLimitation": "13303808-byte raw source-input cap is retained policy metadata/producer claim, not independently measured raw source-input usage. Finished Academy source and runtime ZIPs remain independently enforced at13107200 bytes; larger raw-input cap is never an archive fallback. Carry this in acceptance and publication.",
+  "scope": "Only once own1382 optional original then own Company original after exact existing run jobs succeed. Exclusive outputs, all original checks and current committed caps/closures/38 tuning +8 aircraft identities remain. Stop first failure and retain partials; no automatic retry.",
+  "nativePublicAndSourceMutationAuthorized": false,
+  "priorOperationsReplayAuthorized": false,
+  "headroomObservation": {
+    "at": "2026-10-18T04:27:34.261707+00:00",
+    "internalAvailableBytes": 5058641920,
+    "externalAvailableBytes": 65126400000,
+    "ongoingChecksRequired": true
+  },
+  "cooperativeDeadlineLimitation": "75-minute cooperative cap is not proof of termination during blocking filesystem/subprocess work.",
+  "UTC": "2026-10-18T04:27:58.218125+00:00"
+}

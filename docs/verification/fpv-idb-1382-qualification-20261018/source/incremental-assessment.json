@@ -1,0 +1,639 @@
+{
+  "schema": "fpv-storage-current-main-incremental-assessment/v1",
+  "recordedAt": "2026-10-18T04:11:59.020364+00:00",
+  "decision": "Assessment complete. No observer source fix justified. All operation remains held for sustained headroom and exact root integration approval.",
+  "base": "b7f65a138d34c8a62d58246f3be9de86564c4279",
+  "main": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "product": {
+    "sha": "53338dc73469f866e9289b2b5f74555c68e8231e",
+    "pr": 1545,
+    "state": "Open/Draft/clean",
+    "provenance": "Root fresh04:04 GitHub observation, not refetched by this agent"
+  },
+  "acceptedPreviousAssessment": {
+    "path": "[prior-storage-assessment]/STORAGE-B7-INTEGRATION-ASSESSMENT.json",
+    "bytes": 23755,
+    "sha256": "0b8407d917563cf50ac1eb6a969a039e30c633aa47ae8bbb6aaaca154aa00a85"
+  },
+  "comparison": {
+    "capped": {
+      "path": "[shared-current-assessment]/main-b7-to-56-compare.json",
+      "bytes": 2045007,
+      "sha256": "aad0fc761f81986a17ffb84a040b2bfbf8f635b66432c25f112b718266736a39"
+    },
+    "reportedCommits": 502,
+    "returnedCommits": 250,
+    "returnedFiles": 300,
+    "limit": "Capped comparison alone cannot prove absence or unchanged source.",
+    "resolution": "Reuse complete exact b7/56 recursive Git tree metadata fetched once by Library under root approval, both truncated=false.",
+    "completeDiff": {
+      "path": "[shared-current-assessment]/COMPLETE-PATH-IDENTITY-DIFF.json",
+      "bytes": 1198548,
+      "sha256": "bf89f0a2f7e44d5ee61bac7d486ec85f08dac926ae2e64e00a21a4f3e349fc19"
+    },
+    "changes": 1158,
+    "nonTreeChanges": 1098,
+    "trees": {
+      "b7": {
+        "id": "e43d61214c9205106c379bd40fd9a89c00453394",
+        "rows": 47098,
+        "truncated": false,
+        "record": {
+          "path": "[shared-current-assessment]/b7-complete-tree.json",
+          "bytes": 13532158,
+          "sha256": "ef37a35bbeac5653c512574e342a35404c03e18ccb1a79c5fbd8f58162cb2af3"
+        }
+      },
+      "56": {
+        "id": "bca8a38f92b58a1619337d0e293f9d00c72cf816",
+        "rows": 47921,
+        "truncated": false,
+        "record": {
+          "path": "[shared-current-assessment]/56-complete-tree.json",
+          "bytes": 13750029,
+          "sha256": "ac8fc2935ea4a176100c5f4c0924659dceb0f75375155c876156e9434d6d97aa"
+        }
+      }
+    }
+  },
+  "observerDeltaJoin": {
+    "count": 17,
+    "incrementalOverlap": 0,
+    "rows": [
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/README.md",
+        "b7": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "68c258fcc9c763dcdddc96eb70903eff7cbab523",
+          "size": 9120
+        },
+        "main56": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "68c258fcc9c763dcdddc96eb70903eff7cbab523",
+          "size": 9120
+        },
+        "expectedProduct5333GitBlobId": "5195fac8c3fdc9822efa105b9f0ede317294e908",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/audit-20261016.md",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "5b05a99a6a3572d017591a118bf211266b6bd1dd",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/cursor-counts-20261017/before-fix.json",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "4e8c6a9f652562513131fafcc9d9dc5db43e681f",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/cursor-counts-20261017/candidate.diff",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "b621c42bf1ddfdf16a4e7b416daea5362898d42c",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/cursor-counts-20261017/node20-after.tap",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "7995e5fd34a08768c066670946f933cda9aa29d1",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/cursor-counts-20261017/review.json",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "1aee152c7ff305586786aae348c54d395223f91d",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/before-integration-node20.tap",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "7e97c97b482aa0d467a01a144d8e717f4a424847",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/node20.tap",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "4c20ee8214f8fd1a74c137cb58ce5561a519627c",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/node22.tap",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "891fc81ce47ec368a544ac2eb23b911289c50d3f",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/software.json",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "19e57b45e656c0bdfd74d7997434a48d80897595",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/evidence/transactions-20261016/source-review.json",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "942df9998f0a0db7c4f06ffcfc51a16f9923e478",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/host.mjs",
+        "b7": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "21e1d252c7d1bc4ebdd60edaedfd3775884edb9b",
+          "size": 4697
+        },
+        "main56": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "21e1d252c7d1bc4ebdd60edaedfd3775884edb9b",
+          "size": 4697
+        },
+        "expectedProduct5333GitBlobId": "b2996c6b706afd3cd221091e3b01ee049600c49b",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/observe.mjs",
+        "b7": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "45ccfd40fb5adfeb071887c74c9d91c6478d03b1",
+          "size": 11361
+        },
+        "main56": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "45ccfd40fb5adfeb071887c74c9d91c6478d03b1",
+          "size": 11361
+        },
+        "expectedProduct5333GitBlobId": "0ebd84223e006468f8f9901899d99bacea9bba95",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/prepare.mjs",
+        "b7": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "741f414a56499493413c635bab05e28395f9c14e",
+          "size": 3157
+        },
+        "main56": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "741f414a56499493413c635bab05e28395f9c14e",
+          "size": 3157
+        },
+        "expectedProduct5333GitBlobId": "8edc78a5adb84b5dfb35858f519dc6341239e085",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/transactions.mjs",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "0723b60ae2ddac652384e3ed11889e9cd527aaa4",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/verify-transactions.mjs",
+        "b7": null,
+        "main56": null,
+        "expectedProduct5333GitBlobId": "02e06c8300d936e56864c039c725cd91a38aa8f9",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      },
+      {
+        "path": "authoring/fpv-worlds/idb-ownership/verify.mjs",
+        "b7": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ff294d3edf3de1ef33ba17bb0d6a3fb0d4fe969c",
+          "size": 18030
+        },
+        "main56": {
+          "mode": "100644",
+          "type": "blob",
+          "sha": "ff294d3edf3de1ef33ba17bb0d6a3fb0d4fe969c",
+          "size": 18030
+        },
+        "expectedProduct5333GitBlobId": "ba0133ef3f06b6f02971114c0d56b1196650af3f",
+        "expectedProductMode": "100644",
+        "expectedProductType": "blob"
+      }
+    ],
+    "provenance": "Expected product identities retain prior accepted canonical immutable5333 verification. b7/56 identities and absent entries joined from complete shared trees."
+  },
+  "namedStoreJoin": [
+    {
+      "path": "optional-practice/civilian-fpv/world-store.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "81fcfb872f2d13e9b8c74f2a057cfd8cc47d0b57",
+        "size": 17516
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "81fcfb872f2d13e9b8c74f2a057cfd8cc47d0b57",
+        "size": 17516
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-records.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1fb632f11e8db0ace7423c392230d5aa4ed8d872",
+        "size": 11475
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1fb632f11e8db0ace7423c392230d5aa4ed8d872",
+        "size": 11475
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-locations.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6a4c970ded375a8e80ab0ea15e50d42afdb54de3",
+        "size": 7936
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "6a4c970ded375a8e80ab0ea15e50d42afdb54de3",
+        "size": 7936
+      }
+    },
+    {
+      "path": "optional-practice/civilian-fpv/regional-library.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecc2ff11d27940be93f150c109b3692e23e3d45c",
+        "size": 63555
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "ecc2ff11d27940be93f150c109b3692e23e3d45c",
+        "size": 63555
+      }
+    }
+  ],
+  "packageGuardJoin": [
+    {
+      "path": "scripts/bundle-optional-practice.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b3c152994bb778bc2544b0775406d24756ba534",
+        "size": 8964
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1b3c152994bb778bc2544b0775406d24756ba534",
+        "size": 8964
+      }
+    },
+    {
+      "path": "scripts/bundle-editions.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "20cbd23acff950a4b352cf08d9cb812650ab42eb",
+        "size": 8168
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "20cbd23acff950a4b352cf08d9cb812650ab42eb",
+        "size": 8168
+      }
+    },
+    {
+      "path": "scripts/compile-edition.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "be2b64aadf15b7c239dd799cfc51011a4c45ca31",
+        "size": 44846
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "be2b64aadf15b7c239dd799cfc51011a4c45ca31",
+        "size": 44846
+      }
+    },
+    {
+      "path": "game/editions/package-budget.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1709c3dc71a4c2282e378db940dac2c899669323",
+        "size": 1259
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "1709c3dc71a4c2282e378db940dac2c899669323",
+        "size": 1259
+      }
+    },
+    {
+      "path": "publishing/optional-package-policy.mjs",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e1a1c565023a9fa522cdddb56e522a253b5282b2",
+        "size": 31710
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "e1a1c565023a9fa522cdddb56e522a253b5282b2",
+        "size": 31710
+      }
+    },
+    {
+      "path": ".github/workflows/company-edition-candidate.yml",
+      "b7": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "f6f23c753f21267442300579d2cae31041a3e809",
+        "size": 8471
+      },
+      "main56": {
+        "mode": "100644",
+        "type": "blob",
+        "sha": "db727b0e861106b5da5edad8434d4b80281dcc5d",
+        "size": 9279
+      }
+    }
+  ],
+  "sourceBodies": {
+    "items": [
+      {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "tag": "b7",
+        "file": "[storage-assessment]/b7-world-app.mjs.source",
+        "bytes": 412965,
+        "sha256": "993980cd3088cd21f6441344f3327ae6f70a5995ef1729033c081dc2c6437e9a",
+        "gitBlobId": "fa77b6dc9158bb6aabde2c22cf5aa29778585ada",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-app.mjs",
+        "tag": "56",
+        "file": "[storage-assessment]/56-world-app.mjs.source",
+        "bytes": 414662,
+        "sha256": "87e61f1795253503b78b1dcb5f6638b3cbdd4d553c8d02cc50bd7c16cb8274f2",
+        "gitBlobId": "e12bb8e82ae3a0465a76dea3f0b4eddd3c86aabe",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "tag": "b7",
+        "file": "[storage-assessment]/b7-app.mjs.source",
+        "bytes": 104321,
+        "sha256": "441baea296482a57359dedb514910eeeaa0db9926de772d296539ab18997b3c5",
+        "gitBlobId": "9b41fa559d80a596dd2afbb3fe74a04d7c54e599",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/app.mjs",
+        "tag": "56",
+        "file": "[storage-assessment]/56-app.mjs.source",
+        "bytes": 104983,
+        "sha256": "ceafd793ec79d9d7eaa1c5fba8306b61b0822f18a1f9dd3492e4485ffc83d883",
+        "gitBlobId": "9e9bc47504a7e32a13938b89aa6a06f9c65baea8",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+        "tag": "b7",
+        "file": "[storage-assessment]/b7-advanced-aircraft-runtime.mjs.source",
+        "bytes": 51137,
+        "sha256": "ed75b777bd16f1bb898ec2229fe8f2b1955ee342a06e2bd33a98a84088c1d25c",
+        "gitBlobId": "05857caf83433efd53036901b72f37f6a7a77d9c",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs",
+        "tag": "56",
+        "file": "[storage-assessment]/56-advanced-aircraft-runtime.mjs.source",
+        "bytes": 52048,
+        "sha256": "e820690dd0aff89b3adecb6ba1b4870a86c57e3121a0a7daf1482cb0e0f412b8",
+        "gitBlobId": "97b66f12712a4e99da792dda37d744fb72b73b0d",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+        "tag": "b7",
+        "file": "[storage-assessment]/b7-advanced-worker.mjs.source",
+        "bytes": 8586,
+        "sha256": "fd35f9f339ae3a98b1dc1b16c13eba18acd3b76f8430363937476c21a02f6156",
+        "gitBlobId": "b2e4a4998adaf0bc9de71826104c4c66d06cc819",
+        "mode": "100644",
+        "type": "blob"
+      },
+      {
+        "path": "optional-practice/civilian-fpv/advanced-worker.mjs",
+        "tag": "56",
+        "file": "[storage-assessment]/56-advanced-worker.mjs.source",
+        "bytes": 8669,
+        "sha256": "817cca5b766596586558ca8b4cf7437b965750acbd0bed730fb80f6bb3bca046",
+        "gitBlobId": "4f5279cab2f1684393494b6fa34998ff593b1bd7",
+        "mode": "100644",
+        "type": "blob"
+      }
+    ],
+    "diffs": [
+      {
+        "path": "[storage-assessment]/world-app.mjs.diff",
+        "bytes": 7972,
+        "sha256": "ae258eca280c7e5559507133369aa7d4d60becac84acb6764cdee8da98bb376b"
+      },
+      {
+        "path": "[storage-assessment]/app.mjs.diff",
+        "bytes": 4806,
+        "sha256": "8e19f7a79c0216f4ebe619d9652390d6bfcf3e1f9baed4d49efc71415e527559"
+      },
+      {
+        "path": "[storage-assessment]/advanced-aircraft-runtime.mjs.diff",
+        "bytes": 3064,
+        "sha256": "a240643e6b2fcc95e33f3481647cecf3f784cc193a7ac3f4a39b019961d68207"
+      },
+      {
+        "path": "[storage-assessment]/advanced-worker.mjs.diff",
+        "bytes": 1108,
+        "sha256": "b5b1cef31b5a01927a6584dff312898bc6f9698718ba4886671cadfb66226081"
+      }
+    ]
+  },
+  "reusedSourcePins": {
+    "optionalPolicy": {
+      "path": "[shared-current-assessment]/56-publishing__optional-package-policy.mjs.source",
+      "bytes": 31710,
+      "sha256": "21622f40aba00736d1cd3424fe880fc33522ca6e541cb8bce3e36d3beeadbd72"
+    },
+    "companyWorkflow": {
+      "path": "[shared-current-assessment]/56-.github__workflows__company-edition-candidate.yml.source",
+      "bytes": 9279,
+      "sha256": "3e6d628e666da710053b5fa8ce6dbb35d70400670a51f5cd4d30d2f4df31e97c"
+    },
+    "flightComfort": {
+      "path": "[shared-current-assessment]/56-optional-practice__civilian-fpv__flight-fullscreen.mjs.source",
+      "bytes": 324774,
+      "sha256": "54d3db054b4c2d405df6b11f77e18f00b81880989293cd3a7d95a6788d948b27"
+    },
+    "flightComfortDiff": {
+      "path": "[shared-current-assessment]/optional-practice__civilian-fpv__flight-fullscreen.mjs.diff",
+      "bytes": 697,
+      "sha256": "d80b10ce51995f4f5ba5994af9ff997e941654e251c35ccd9121bd94cd64458f"
+    }
+  },
+  "findings": [
+    {
+      "id": "S1",
+      "finding": "All17 observer delta paths have identical b7/56 main identities, including identical absence for product-added paths. Named WorldStore, WorldRecords, RegionalLocations and regional-library modes/types/blobs are unchanged.",
+      "meaning": "No concrete observer defect or source edit is justified. Post-merge preservation must retain every exact product delta identity."
+    },
+    {
+      "id": "S2",
+      "finding": "World and Academy hosts retain active temporary tuning configuration across same-session restart/reset/input/mode transitions. World preferences preserve saved FOV/tilt during drafts, host camera save callbacks are gated, and shared flight-comfort saves only when canPersistCamera allows it.",
+      "meaning": "Current combined native checks must distinguish retained temporary trials from saved setup/camera preferences. This is localStorage/configuration scope, not IDB evidence."
+    },
+    {
+      "id": "S3",
+      "finding": "World close awaits owned flight disposal and rechecks launch/disposed ownership before restoring saved camera settings and clearing active draft state. Academy review explicitly clears active drafts.",
+      "meaning": "Normal trial close/reopen and remaining pagehide/ownership transitions need current evidence; no original public storage intervention is justified."
+    },
+    {
+      "id": "S4",
+      "finding": "Advanced runtime defaults aircraft and regional backend constants to v2 while accepting explicit v1; supported grounded integral policy changes for v2. The worker accepts legacy aircraft reference backend.",
+      "meaning": "Runtime identities materially changed; old5333 packages/native history cannot qualify current runtime. This assessment is not replay/physics proof."
+    },
+    {
+      "id": "S5",
+      "finding": "The reviewed exact WorldApp, Academy app, Advanced runtime and worker diffs introduce no IDB factory or close-call change. Named store blobs are identical.",
+      "meaning": "No source finding here establishes the original closing-IDBDatabase transaction cause, closer, contents or subsequent zero visible saved rows."
+    },
+    {
+      "id": "S6",
+      "finding": "Optional policy, both bundlers, edition compiler and Company budget sources remain exact b7 identities.",
+      "meaning": "Retain b7 Academy150files/13,107,200B installed/13,303,808B source-input, Worlds210files/20MiB. Actual new-head inventories/closures must be observed; this is not a global capacity/retention change."
+    },
+    {
+      "id": "S7",
+      "finding": "Current PR optional checks out github.sha (integration merge), names optional-flight-integration-<event SHA>-head-<PR head>; Company candidate uses PR head. Full Company archive upload requires event != pull_request; PR capacity metadata is not an original archive.",
+      "meaning": "Ordinary PR results cannot jointly qualify both exact product-head originals. Reuse suitable existing non-PR originals if available; otherwise one pinned selected-head workflow_dispatch editions=fpv-learning is the concrete package dependency. Guard optional naming and event/head equality explicitly."
+    }
+  ],
+  "nextMergeGate": {
+    "requires": [
+      "Root-confirmed sustained internal >=3GiB for the forthcoming native window",
+      "Root approval of deliberate exact integration window",
+      "Immediate main/product/PR pin reconciliation, no repeated polling while held"
+    ],
+    "proposal": "One normal exact56e29fd264f77df191b75b3425cc6e7bb0ce9e13 into exact53338dc73469f866e9289b2b5f74555c68e8231e merge on existing Draft1545, only if still pinned and explicitly approved.",
+    "acceptance": [
+      "Verify canonical normal parents/tree/ref and incoming main paths",
+      "Retain all17 product path/blob/mode/type identities unchanged",
+      "Keep Open/Draft; source identity does not confer package/native qualification",
+      "No force/rebase or uncertain mutation retry; reconcile uncertain result read-only"
+    ]
+  },
+  "nextPackageGate": [
+    "Reuse automatic new-head checks within their explicit event/source scope.",
+    "Inspect once for suitable existing own exact-head non-PR optional/Company archives. Otherwise approve one focused company-edition-candidate workflow_dispatch editions=fpv-learning at the pinned selected combined branch.",
+    "Verify both jobs event/source head identities. Update optional artifact naming guards for optional-flight-integration-<eventSHA>-head-<headSHA>; do not accept ordinary PR merge artifacts as head artifacts.",
+    "Before invocation seal exact external helpers/plan for root+peer review; preserve strict outer checksum set, run/head/edition metadata, original hash/CRC, full runtime+source inventories, budgets, module closure and worker membership.",
+    "Retain corrected Company/core positive membership; no optional-only aircraft/tuning modules or raw Git-source equality for projected Company files. Do not inherit Library actual execution receipts.",
+    "No replay of accepted5333/7842 original packages, tests or publications."
+  ],
+  "nextNativeGate": {
+    "precondition": "Only after accepted exact new source/package and renewed sustained safe headroom; separate current fixture approval/preparation is required and not performed here.",
+    "firstFiniteSession": [
+      "Observe current authoring fixture through normal visible UI, preserving the original affected public context.",
+      "Use legitimate existing saved data for nonempty/skipped cursor scope when available; if absent, leave the gate open rather than seed or inspect hidden storage.",
+      "Exercise temporary trial, same-session reset/input/mode/camera transition, normal close and normal reopen, distinguishing draft retention from saved preferences. Remain paused/disarmed except a separately approved explicit arm.",
+      "Capture ordinary application-issued close if naturally reached and remaining pagehide/teardown; do not replay accepted historical zero-row/Stop observations.",
+      "Abort/failure paths require a concrete safe approved fixture trigger; never force such errors into the original public context."
+    ],
+    "acceptance": "Bind actual visible transitions/observer exports to exact source/package, retaining unknowns. Do not infer method-pointer identity, saved payload hashes, original repair, physical or full-player acceptance from counters.",
+    "open": [
+      "Original public connection owner/closer/content/cause",
+      "Nonempty/skipped cursors without legitimate observed data",
+      "Ordinary close capture if not reached",
+      "Remaining abort/failure/pagehide",
+      "Current full-player/public integration",
+      "Physical/offline/restart/quota/eviction/endurance"
+    ]
+  },
+  "preparationNegative": {
+    "path": "[storage-assessment]/ASSESSMENT-PREPARATION-PATH-NEGATIVE.json",
+    "bytes": 703,
+    "sha256": "ecbce055e3b93bdade16fea6dff688dd6aae21ee76e06a77e16b1ab8264ade59"
+  },
+  "limitations": [
+    "Root initial headroom samples do not alone establish sustained native readiness.",
+    "Capped compare limitation preserved; complete tree identities resolve metadata absence, not body semantics outside named review.",
+    "Preparation metadata assertion EXIT1 before output/mutation: package-budget path filter limited to scripts/publishing. Corrected only by exact basename lookup in retained tree; actual path game/editions/package-budget.mjs. No GET/operation repeated."
+  ],
+  "operations": {
+    "exactSourceBlobReads": 8,
+    "compareGets": 0,
+    "treeGets": 0,
+    "merge": false,
+    "dispatch": false,
+    "build": false,
+    "artifactGet": false,
+    "tests": false,
+    "fixture": false,
+    "rendererNative": false,
+    "publication": false,
+    "storageInteraction": false,
+    "localGit": false,
+    "internalWrites": false,
+    "allNewRecordsExternal": true
+  }
+}

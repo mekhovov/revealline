@@ -1,0 +1,44 @@
+{
+  "UTC": "2026-10-18T04:39:58.314903+00:00",
+  "sourceRevision": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "sourceTree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "run": 39096687385,
+  "artifactId": 12125173149,
+  "githubArtifactBytes": 78548559,
+  "githubArtifactSHA256": "f0e1413bf1123d1bb07cbd5aec4b841dd1d52830c7a618827d12bca877569db6",
+  "topLevelChecksums": 7,
+  "allMemberHashes": true,
+  "archives": [
+    {
+      "role": "runtime",
+      "files": 1152,
+      "contentBytesIncludingMetadata": 41465588,
+      "archiveBytes": 41638734,
+      "archiveSHA256": "e0efa187a06351505f3bda6b6b9e99c3d39089ce42d8f5cf711c3239d0114d3d"
+    },
+    {
+      "role": "source",
+      "files": 1152,
+      "contentBytesIncludingMetadata": 65556909,
+      "archiveBytes": 65731773,
+      "archiveSHA256": "f945c6de099b5fb5123562c5641b44b1a653513b8f065babad0da14d9bfb519b"
+    }
+  ],
+  "requiredCompanyCoreMembers": [
+    "game/company.html",
+    "game/fpv-entry.mjs",
+    "game/optional-practice-catalog.mjs",
+    "game/ui/optional-practice-panel.mjs",
+    "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs"
+  ],
+  "existingCompanyRuntimeLimits": {
+    "files": 2000,
+    "bytes": 83886080,
+    "policySHA256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e",
+    "gitBlob": "1709c3dc71a4c2282e378db940dac2c899669323"
+  },
+  "runtimeAlsoUnder72MiB": true,
+  "cloudReproducibleBuilds": 2,
+  "publicEligible": false,
+  "scope": "Current exact 1382a3e4 original Company runtime/source member sets,lengths,hashes and unchanged existing runtime budget. Source inventory separately hashed, not assigned runtime budget. No native/player/public/later-main integration acceptance. Own current1382 optional originals are separately qualified first by this controller; earlier5333/7842 and Library results are not inherited. Company projected bodies are checked against its own manifest/source inventory, not raw Git source."
+}

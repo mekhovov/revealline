@@ -1,0 +1,77 @@
+{
+  "schema": "fpv-storage-current-package-static-peer-review/v1",
+  "reviewedAt": "2026-10-18T04:27:20.643989+00:00",
+  "result": "PASS_STATIC_REVIEW_WITH_EXPLICIT_SOURCE_INPUT_SCOPE",
+  "scope": "Sealed prepared Storage1382 exact-head package controller and helpers only. Not execution authorization or package acceptance.",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "run": 39096687385,
+  "plan": {
+    "path": "[storage-current]/PACKAGE-QUALIFICATION-PLAN.json",
+    "bytes": 18476,
+    "sha256": "3fba45046317edad074c2f07e859b08fdce016495f7f65be5a8872b2170992cb"
+  },
+  "controller": {
+    "path": "[storage-current]/run-storage-current-once.py",
+    "bytes": 5370,
+    "sha256": "cb6173f527b4627a927b31da20353938fa2284a8086568fd337de473fe4857cf"
+  },
+  "helpers": [
+    {
+      "role": "optional",
+      "path": "[storage-current]/qualify-storage-optional.py",
+      "bytes": 13228,
+      "sha256": "56e90c16e8c2b056c607caf3d45e44f3da61ba1628abf14533d3c0558f3d0af0"
+    },
+    {
+      "role": "company",
+      "path": "[storage-current]/qualify-storage-company.py",
+      "bytes": 7559,
+      "sha256": "f8b54611f9cf0209db57ca0a901fe80d9ba5912c28ee37ca8df69bcdbfdd0d34"
+    }
+  ],
+  "guardDiffs": [
+    {
+      "path": "[storage-current]/optional-guard.diff",
+      "bytes": 15325,
+      "sha256": "2ac9832f9e2529f96a32c40e39f0e8a47db44a7527cc12870011bc54f3a265e7"
+    },
+    {
+      "path": "[storage-current]/company-guard.diff",
+      "bytes": 9297,
+      "sha256": "22d9e2aab8eaf032bd981a4a91ea43088876df95679093e795d7b8db7bec1ae1"
+    },
+    {
+      "path": "[storage-current]/controller-guard.diff",
+      "bytes": 9515,
+      "sha256": "2e19492bfacb4660df5874eec1d5c65abc1da879e44cb50a166c2dcbb84a4369"
+    }
+  ],
+  "verified": [
+    "Read complete current plan/controller/optional/Company bodies. Current hashes and exact parent-to-child guard diffs match all three sealed method adaptations.",
+    "All21 reused source bodies (490379 bytes) match length,SHA256 and Git blob IDs. Their current1382/tree1442 metadata joins accepted canonical main56 plus exactly17 disjoint observer deltas; no Library execution receipt is inherited.",
+    "Controller binds separate root approval to exact plan/controller/head/tree/run before exclusive actual-once directory. It requires a fresh bulk root, exact helper/input hashes, fixed Python, external temp paths and one stage invocation with first-failure stop.",
+    "workflow_dispatch, run/head_commit/head_branch/workflow and immutable candidate tree guards retained; optional integration artifact name contains the same exact dispatch head twice. Ordinary PR synthetic merge artifacts and Company capacity-only artifacts cannot substitute.",
+    "Each fresh original uses one selected nonexpired artifact and one GET; remote length/digest then full outer checksum set, every declared body, safe duplicate-free inventories, all inner member hashes/CRC and embedded tables are required.",
+    "Optional six source/runtime original inventories remain bounded by exact committed manifest limits; current source-pinned module closure has no checkout-source fallback. Exactly38 scoped tuning identities and8 aircraft identities are checked in intended package/role combinations.",
+    "Company requires its own five projected core members and its own manifests/inventories; optional-only aircraft/tuning presence and raw Git-source equality are not imposed on Company. Runtime limits remain2000 files,80MiB with additional72MiB check.",
+    "External reserve uses3GiB plus1.5GiB remaining optional/Company work, then1GiB remaining Company work, plus32MiB records. Existing partials and failures are retained; original outputs are exclusive. Cooperative75-minute deadline does not prove termination of blocking work.",
+    "Actual receipts/tool and child terminals followed by root acceptance are required. No family suite, old observer tests, prior originals, native/player/public or future-main acceptance is credited."
+  ],
+  "requiredAcceptanceLimitation": {
+    "academyRawSourceInputPolicyBytes": 13303808,
+    "meaning": "Retained policy metadata and producer claim, not independently measured raw source-input usage.",
+    "independentFinishedArchiveLimitBytes": 13107200,
+    "archiveBudgetMeaning": "Finished Academy source and runtime ZIP member totals remain independently enforced against the manifest archive cap. The larger source-input allowance is not a fallback and does not weaken any archive guard.",
+    "rootApprovalAndPublicationMustCarryThisLimitation": true
+  },
+  "shardScope": "These helpers do not run or accept focused/presentation shard evidence. Any later shard acceptance separately requires complete union and canonical candidate-tree binding.",
+  "limitations": [
+    "No actual new archive counts,bytes or passing qualification result are available from this static review.",
+    "No new source semantic audit,source/body fetch,artifact GET,helper/controller execution,test,native/server,Git call or product/public write occurred."
+  ],
+  "operation": {
+    "peerReceiptOnlyExternalWrite": true,
+    "rootApprovalRemainsSeparate": true
+  }
+}

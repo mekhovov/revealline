@@ -1,0 +1,97 @@
+--- [prior-storage-method]/qualify-storage-optional-v2.py
++++ [storage-current]/qualify-storage-optional.py
+@@ -1,13 +1,16 @@
+ from pathlib import Path, PurePosixPath
+ import subprocess,json,hashlib,zipfile,io,os,datetime,base64
+-HEAD='53338dc73469f866e9289b2b5f74555c68e8231e';RUN=39081155120
++HEAD='1382a3e43479df18a7aeb522f218d34862462ade';RUN=39096687385
+ BASE=Path('[external-qualification-root]')
+-ROOT=BASE/'storage-observer-53338dc7-combined-a3db-20261018'
++N=Path('[storage-current]')
++ROOT=N/'qualification-originals'
++SOURCE_INPUTS={r['path']:r for r in json.loads((N/'SOURCE-INPUTS.json').read_text())['rows']}
++assert all(os.environ.get(k)==str(N) for k in ('TMPDIR','TMP','TEMP')),'external optional environment required'
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+ def api(p): return json.loads(subprocess.check_output(['gh','api','repos/mekhovov/revealline/'+p]))
+ def reserve():
+  s=os.statvfs(BASE); free=s.f_bavail*s.f_frsize
+- assert free>=3*1024**3+512*1024**2, ('external reserve',free)
++ assert free>=3*1024**3+1536*1024**2+32*1024**2, ('external reserve',free)
+  return free
+ def put(p,b):
+  p.parent.mkdir(parents=True,exist_ok=True)
+@@ -20,15 +23,15 @@
+  for x in rows:assert safe(x.filename) and not x.is_dir() and ((x.external_attr>>16)&0o170000)!=0o120000 and not (x.flag_bits&1)
+  return rows
+ def source(path):
+- d=api('contents/'+path+'?ref='+HEAD);b=base64.b64decode(d['content'])
+- assert len(b)==d['size'] and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==d['sha']
++ row=SOURCE_INPUTS[path];b=Path(row['local']).read_bytes()
++ assert len(b)==row['bytes'] and sha(b)==row['sha256'] and hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()==row['gitBlob']
+  return b
+-policy_source=source('publishing/optional-package-policy.mjs');assert sha(policy_source)=='b1afd3ccb30d9af2c3527e94ce458f95662e619626ca424636ec3add80e194e3'
+-expected_limits={'civilian-flight':{'files':98,'bytes':8*1024**2},'civilian-fpv':{'files':141,'bytes':12*1024**2+256*1024},'fpv-worlds':{'files':200,'bytes':20*1024**2}}
+-run=api('actions/runs/'+str(RUN));assert run['event']=='workflow_dispatch' and run['path']=='.github/workflows/company-edition-candidate.yml';assert run['head_sha']==HEAD
+-jobs=api('actions/runs/'+str(RUN)+'/jobs')['jobs'];assert next(x for x in jobs if x['name']=='optional-practice')['conclusion']=='success'
+-available=api('actions/runs/'+str(RUN)+'/artifacts')['artifacts'];selected=[x for x in available if x['name']=='optional-flight-candidate-'+HEAD and not x['expired']];assert len(selected)==1;AID=selected[0]['id'];meta=api('actions/artifacts/'+str(AID));assert meta['workflow_run']['head_sha']==HEAD and meta['workflow_run']['id']==RUN and not meta['expired']
+-assert meta['name']=='optional-flight-candidate-'+HEAD and 0<meta['size_in_bytes']<=64*1024**2 and isinstance(meta['digest'],str) and len(meta['digest'])==71 and meta['digest'].startswith('sha256:')
++policy_source=source('publishing/optional-package-policy.mjs');assert sha(policy_source)=='21622f40aba00736d1cd3424fe880fc33522ca6e541cb8bce3e36d3beeadbd72'
++expected_limits={'civilian-flight':{'files':98,'bytes':8*1024**2},'civilian-fpv':{'files':150,'bytes':12*1024**2+512*1024},'fpv-worlds':{'files':210,'bytes':20*1024**2}}
++run=api('actions/runs/'+str(RUN));assert run['event']=='workflow_dispatch' and run['path']=='.github/workflows/company-edition-candidate.yml';assert run['head_sha']==HEAD and run['head_commit']['id']==HEAD and run['head_branch']=='codex/fpv-library-lifecycle-audit-20261016'
++jobsMeta=api('actions/runs/'+str(RUN)+'/jobs?per_page=100');assert jobsMeta['total_count']<=100;jobs=jobsMeta['jobs'];assert next(x for x in jobs if x['name']=='optional-practice')['conclusion']=='success'
++artifactsMeta=api('actions/runs/'+str(RUN)+'/artifacts?per_page=100');assert artifactsMeta['total_count']<=100;available=artifactsMeta['artifacts'];selected=[x for x in available if x['name']=='optional-flight-integration-'+HEAD+'-head-'+HEAD and not x['expired']];assert len(selected)==1;AID=selected[0]['id'];meta=api('actions/artifacts/'+str(AID));assert meta['workflow_run']['head_sha']==HEAD and meta['workflow_run']['id']==RUN and not meta['expired']
++assert meta['name']=='optional-flight-integration-'+HEAD+'-head-'+HEAD and 0<meta['size_in_bytes']<=64*1024**2 and isinstance(meta['digest'],str) and len(meta['digest'])==71 and meta['digest'].startswith('sha256:')
+ free=reserve();ROOT.mkdir(exist_ok=False);put(ROOT/'github-artifact-metadata.json',(json.dumps(meta,indent=2)+'\n').encode())
+ put(ROOT/'start.json',(json.dumps({'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'externalFreeBytes':free,'originalsUntouched':True},indent=2)+'\n').encode())
+ env={**os.environ,'TMPDIR':str(ROOT),'TMP':str(ROOT),'TEMP':str(ROOT)}
+@@ -39,13 +42,14 @@
+ put(ROOT/'download-terminal.json',(json.dumps({'exitCode':result.returncode,'stderr':result.stderr.decode(),'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat()},indent=2)+'\n').encode());assert result.returncode==0
+ b=partial.read_bytes();assert len(b)==meta['size_in_bytes'] and 'sha256:'+sha(b)==meta['digest'];archive=ROOT/'github-artifact.zip';partial.rename(archive)
+ NEW_MODULES={'optional-practice/civilian-fpv/aircraft-appearance.mjs': {'bytes': 1018, 'sha256': 'eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e', 'gitBlob': '74b2be0436d3aaec04ef1707e4c95f5ac4f1040b'}, 'optional-practice/civilian-fpv/aircraft-preview.mjs': {'bytes': 7063, 'sha256': '07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c', 'gitBlob': 'f5aa83735433d1bee11649dc9d75920e658fc87a'}}
+-rows=[];new_module_proofs=[]
++rows=[];new_module_proofs=[];tuning_module_proofs=[]
++TUNING_MODULES={'optional-practice/civilian-fpv/aircraft-tuning-fields.mjs': {'bytes': 5669, 'sha256': 'ad4c2d297c2a29d3a2cc65a820ab5a1e58ec9625b9ca09e0fd2494d0613cd59b', 'gitBlob': 'df49837b5f0c72d2c0a733fea45515bff6c1195e', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/civilian-fpv/controller-tune-library.mjs': {'bytes': 13958, 'sha256': 'ee5ab5386e560ae783f55dc2bf02e9961e92596a824a2969d51ca3d3eafa6021', 'gitBlob': '19d9d3529de485ef4f4b36ac6e3b2c216d18704a', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/civilian-fpv/controller-tune-panel.mjs': {'bytes': 23441, 'sha256': '579e5fc86483ad7546c94510447d1e21480fa0bff7157a8a6777a2b388ebea26', 'gitBlob': '34174c79e341ad2dbc4c2dd8f7491f0742340696', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/civilian-fpv/response-bench-client.mjs': {'bytes': 3516, 'sha256': '7233f50f2fc77470fc9080ac08f49bb1df0f50452f91a355b38d497eb0431942', 'gitBlob': '1f57edb0a342fdfafc003cbcca01626822c9863b', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/civilian-fpv/response-bench-panel.mjs': {'bytes': 36107, 'sha256': 'b801209b271c7a24fa6c17817f64c336cbdbd9a27d7ff80b21e34c113c02b358', 'gitBlob': '00a370c65be80cb52e9c5d0beb6abeb552bfcff5', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/civilian-fpv/response-bench-worker.mjs': {'bytes': 2205, 'sha256': 'b21283025f7912be36e0f26e59b09cc2e49e0748208d9c07648dda6352e0ac6e', 'gitBlob': '7ca492ef154e510ba9aa6e2911d1482e2e4a170b', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/civilian-fpv/response-bench.mjs': {'bytes': 24561, 'sha256': '09ee0de8e7ffc5c787a4113f99d985fa334b6f8ed663744b1b3fa0017d1d2ad9', 'gitBlob': '3a3e3e158ffde1910522e549331e085448f54443', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/civilian-fpv/setup-draft.mjs': {'bytes': 13550, 'sha256': '3695eab0f10c77224c5de2b6c86f899922f67361e4fbad0fa9fd6ba9673693fa', 'gitBlob': 'f896c5de065d0ea24d717c263a0b9786fcdc5f8f', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/civilian-fpv/setup-workbench.mjs': {'bytes': 19906, 'sha256': '7d2fcf5945f9a4a78b97f2e39ae12e36375af260311cc443be20fcfa686bb26f', 'gitBlob': '91ae524a9e0b9c89cba7180fa8cb54d56a86e0b5', 'packages': ['civilian-fpv', 'fpv-worlds']}, 'optional-practice/fpv-worlds/response-bench-worker.mjs': {'bytes': 208, 'sha256': '608fd23e0bc62c6d2e56874f26e86a9ea0012929ea69d155ed1290ed48484f10', 'gitBlob': '20aca5efc973b9cc3990524dbfbaa04a4f77192e', 'packages': ['fpv-worlds']}}
+ with zipfile.ZipFile(archive) as outer:
+  inventory(outer,512*1024**2)
+  checks=json.loads(outer.read('optional-checksums.json'));declared=[r['path'] for r in checks['files']];assert len(declared)==len(set(declared)) and set(outer.namelist())==set(declared)|{'optional-checksums.json'}
+  for row in checks['files']:
+   x=outer.read(row['path']);assert len(x)==row['bytes'] and sha(x)==row['sha256']
+- envelope=json.loads(outer.read('optional-packages.json'));verification=json.loads(outer.read('optional-candidate-verification.json'));tree=api('git/commits/'+HEAD)['tree']['sha'];assert tree=='7b1cb82c32146448ef4d6b6710233a73b88f74f4'
++ envelope=json.loads(outer.read('optional-packages.json'));verification=json.loads(outer.read('optional-candidate-verification.json'));tree=api('git/commits/'+HEAD)['tree']['sha'];assert tree=='1442e7fafbe73c723bde8d36881b01bb2cb4dfbb'
+  assert envelope['sourceRevision']==verification['sourceRevision']==HEAD and envelope['sourceTree']==verification['sourceTree']==tree
+  assert verification['reproducibleBuilds']==2 and verification['committedInputsVerified'] and not verification['publicEligible']
+  assert {x['id']for x in envelope['packages']}=={'civilian-flight','civilian-fpv','fpv-worlds'}
+@@ -56,7 +60,7 @@
+   for kind,table,metadata in [('distribution',manifest,'optional-package.json'),('source',inv,'source-inventory.json')]:
+    name=kind+'-optional-'+ident+'.zip';raw=outer.read(name)
+    with zipfile.ZipFile(io.BytesIO(raw)) as z:
+-    actual=inventory(z,128*1024**2);expected={f['path']for f in table['files']}|{metadata}
++    actual=inventory(z,128*1024**2);assert len(table['files'])==len({f['path']for f in table['files']});expected={f['path']for f in table['files']}|{metadata}
+     assert len(actual)==len(expected) and set(z.namelist())==expected
+     for f in table['files']:
+      data=z.read(f['path']);assert len(data)==f['bytes'] and sha(data)==f['sha256'],(name,f['path'])
+@@ -67,15 +71,21 @@
+       body=z.read(module);blob=hashlib.sha1(b'blob '+str(len(body)).encode()+b'\0'+body).hexdigest()
+       assert len(body)==pin['bytes'] and sha(body)==pin['sha256'] and blob==pin['gitBlob'],(ident,kind,module)
+       new_module_proofs.append({'package':ident,'role':kind,'path':module,**pin})
++    for module,pin in TUNING_MODULES.items():
++     if ident not in pin['packages']:continue
++     assert module in expected
++     body=z.read(module);blob=hashlib.sha1(b'blob '+str(len(body)).encode()+b'\0'+body).hexdigest()
++     assert len(body)==pin['bytes'] and sha(body)==pin['sha256'] and blob==pin['gitBlob'],(ident,kind,module)
++     tuning_module_proofs.append({'package':ident,'role':kind,'path':module,'bytes':pin['bytes'],'sha256':pin['sha256'],'gitBlob':pin['gitBlob']})
+     total=sum(x.file_size for x in actual);assert total<=manifest['limits']['bytes'] and len(actual)<=manifest['limits']['files']
+     rows.append({'id':ident,'kind':kind,'verifiedMembers':len(actual),'uncompressedBytes':total,'limits':manifest['limits'],'archiveBytes':len(raw),'archiveSHA256':sha(raw)})
+    put(ROOT/name,raw)
+  for item in outer.infolist():
+   if not item.filename.endswith('.zip'):put(ROOT/item.filename,outer.read(item))
+-assert len(new_module_proofs)==8
++assert len(new_module_proofs)==8 and len(tuning_module_proofs)==38
+ validator=ROOT/'validator'
+ for name in ['publishing/edition-zip.mjs','publishing/optional-module-closure.mjs','publishing/optional-package-policy.mjs','publishing/optional-import-capabilities.mjs','publishing/vendor/acorn-8.18.0.mjs']:put(validator/name,policy_source if name=='publishing/optional-package-policy.mjs' else source(name))
+ program="import {readFile,writeFile} from 'node:fs/promises';import {readEditionZip} from './publishing/edition-zip.mjs';import {validateOptionalModuleClosure} from './publishing/optional-module-closure.mjs';import {OPTIONAL_PACKAGE_POLICIES} from './publishing/optional-package-policy.mjs';const root=process.argv[2],rows=[];for(const id of ['civilian-flight','civilian-fpv','fpv-worlds']){const files=readEditionZip(await readFile(root+'/distribution-optional-'+id+'.zip'));rows.push({id,...validateOptionalModuleClosure(files,OPTIONAL_PACKAGE_POLICIES[id])});}await writeFile(root+'/archive-import-closure-receipt.json',JSON.stringify({validatorSource:'"+HEAD+"',packages:rows,scope:'Finished original archive imports only; no checkout source fallback or execution'},null,2)+'\\n',{flag:'wx'});console.log(JSON.stringify(rows));"
+-put(validator/'verify.mjs',program.encode());run=subprocess.run(['node',str(validator/'verify.mjs'),str(ROOT)],capture_output=True,env=env);put(ROOT/'import-closure.log',run.stdout+run.stderr);assert run.returncode==0,'closure failure retained'
+-receipt={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':HEAD,'sourceTree':tree,'run':RUN,'artifactId':AID,'archiveBytes':meta['size_in_bytes'],'archiveSHA256':sha(b),'topLevelChecksums':len(checks['files']),'archives':rows,'newAircraftModuleIdentities':new_module_proofs,'moduleClosure':json.loads((ROOT/'archive-import-closure-receipt.json').read_text()),'scope':'Exact optional original artifact, all six original source/runtime inventories and member hashes/budgets, finished import closures. No native/player/public acceptance. Combined source includes exact main a3db2c95. This is new storage53338dc7 evidence; old7842, Library and earlier evidence are not inherited.'}
++put(validator/'verify.mjs',program.encode());run=subprocess.run(['[existing-node]',str(validator/'verify.mjs'),str(ROOT)],capture_output=True,env=env);put(ROOT/'import-closure.log',run.stdout+run.stderr);assert run.returncode==0,'closure failure retained'
++receipt={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':HEAD,'sourceTree':tree,'run':RUN,'artifactId':AID,'archiveBytes':meta['size_in_bytes'],'archiveSHA256':sha(b),'topLevelChecksums':len(checks['files']),'archives':rows,'newAircraftModuleIdentities':new_module_proofs,'newTuningModuleIdentities':tuning_module_proofs,'academySourceInputBudget':13303808,'sourceInputBudgetIsNotArchiveFallback':True,'moduleClosure':json.loads((ROOT/'archive-import-closure-receipt.json').read_text()),'scope':'Exact optional original artifact, all six original source/runtime inventories and member hashes/budgets, finished import closures. No native/player/public acceptance. Combined source includes pinned main56e29fd2. This is new storage1382a3e4 evidence; old5333/7842, Library and earlier evidence are not inherited. Exact dispatch optional event and head both bind this candidate.'}
+ put(ROOT/'qualification-original-members-and-closure.json',(json.dumps(receipt,indent=2)+'\n').encode());print(json.dumps({'root':str(ROOT),'receipt':receipt},indent=2))

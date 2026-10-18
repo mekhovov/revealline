@@ -1,0 +1,100 @@
+--- [prior-storage-method]/run-storage-combined-once-v2.py
++++ [storage-current]/run-storage-current-once.py
+@@ -1,39 +1,72 @@
+ from pathlib import Path
+-import subprocess,json,datetime,time,hashlib,sys,os
+-N=Path('[prior-storage-method]');PLAN=json.loads((N/'PACKAGE-QUALIFICATION-PLAN-v2.json').read_text());HEAD=PLAN['head'];RUN=PLAN['run'];E=Path(PLAN['externalRoot']);APPROVAL=json.loads((N/'ROOT-ONCE-CONTROLLER-APPROVAL.json').read_text());assert APPROVAL['planSHA256']==hashlib.sha256((N/'PACKAGE-QUALIFICATION-PLAN-v2.json').read_bytes()).hexdigest() and APPROVAL['controllerSHA256']==hashlib.sha256(Path(__file__).read_bytes()).hexdigest() and APPROVAL['head']==HEAD and APPROVAL['run']==RUN;OUT=N/'actual-once';OUT.mkdir(exist_ok=False);start=time.monotonic();counter=0;last=None
++import subprocess,json,datetime,time,hashlib,sys,os,traceback
++N=Path("[storage-current]")
++PLAN_PATH=N/'PACKAGE-QUALIFICATION-PLAN.json'
++PLAN=json.loads(PLAN_PATH.read_text());HEAD=PLAN['head'];TREE=PLAN['tree'];RUN=PLAN['run'];ROOT=Path(PLAN['externalRoot'])
+ sha=lambda b:hashlib.sha256(b).hexdigest()
+-def put(p,obj):
+- b=(json.dumps(obj,indent=2)+'\n').encode();assert len(b)<2*1024**2;s=os.statvfs(N);assert s.f_bavail*s.f_frsize>=65*1024**2+len(b)
+- with p.open('xb')as f:f.write(b);f.flush();os.fsync(f.fileno())
+-def api(p):return json.loads(subprocess.check_output(['gh','api','repos/mekhovov/revealline/'+p]))
++APPROVAL=json.loads((N/'ROOT-ONCE-CONTROLLER-APPROVAL.json').read_text())
++assert APPROVAL['planSHA256']==sha(PLAN_PATH.read_bytes()) and APPROVAL['controllerSHA256']==sha(Path(__file__).read_bytes())
++assert APPROVAL['head']==HEAD and APPROVAL['run']==RUN and APPROVAL['tree']==TREE
++assert all(os.environ.get(k)==str(N) for k in ('TMPDIR','TMP','TEMP')),'external-only controller environment required'
++assert str(Path(sys.executable).resolve())==str(Path(PLAN['python']).resolve())
++assert not ROOT.exists(),'fresh exact-head bulk output must not exist'
++for pin in PLAN['inputPins']+PLAN['helpers']:
++ b=Path(pin['path']).read_bytes();assert len(b)==pin['bytes'] and sha(b)==pin['sha256']
++OUT=N/'actual-once';OUT.mkdir(exist_ok=False)
++start=time.monotonic();counter=0;last=None;remaining=1536*1024**2
++def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
++def reserve():
++ s=os.statvfs(N);free=s.f_bavail*s.f_frsize
++ assert free>=3*1024**3+remaining+32*1024**2,('external reserve plus remaining work',free,remaining)
++ return free
++def put(path,obj):
++ raw=(json.dumps(obj,indent=2)+'\n').encode();assert len(raw)<2*1024**2
++ reserve()
++ with path.open('xb') as f:f.write(raw);f.flush();os.fsync(f.fileno())
++def api(path):return json.loads(subprocess.check_output(['gh','api','repos/mekhovov/revealline/'+path]))
++def verify_run():
++ run=api('actions/runs/'+str(RUN))
++ assert run['head_sha']==HEAD and run['head_commit']['id']==HEAD and run['head_branch']==PLAN['branch']
++ assert run['event']=='workflow_dispatch' and run['path']=='.github/workflows/company-edition-candidate.yml'
++ return run
+ def wait(job):
+  global counter,last
+  while True:
+   assert time.monotonic()-start<75*60,'cooperative deadline exceeded; no retry'
+-  run=api('actions/runs/'+str(RUN));assert run['head_sha']==HEAD and run['event']=='workflow_dispatch' and run['path']=='.github/workflows/company-edition-candidate.yml'
+-  jobs=api('actions/runs/'+str(RUN)+'/jobs')['jobs'];j=next((j for j in jobs if j['name']==job),None)
+-  state={'job':job,'runStatus':run['status'],'runConclusion':run['conclusion'],'jobStatus':j['status']if j else None,'jobConclusion':j['conclusion']if j else None}
++  reserve();run=verify_run();meta=api('actions/runs/'+str(RUN)+'/jobs?per_page=100')
++  assert meta['total_count']<=100;matches=[j for j in meta['jobs'] if j['name']==job];assert len(matches)<=1
++  j=matches[0] if matches else None
++  state={'job':job,'runStatus':run['status'],'runConclusion':run['conclusion'],'jobStatus':j['status'] if j else None,'jobConclusion':j['conclusion'] if j else None}
+   if state!=last:
+-   counter+=1;put(OUT/('cloud-state-'+str(counter)+'.json'),{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),**state});last=state
++   counter+=1;put(OUT/('cloud-state-'+str(counter)+'.json'),{'at':now(),**state});last=state
+   if j and j['status']=='completed':
+    assert j['conclusion']=='success',state
+    if job!='candidate' or run['conclusion']=='success':return
+   if run['status']=='completed':raise RuntimeError('run completed without required successful job')
+   time.sleep(30)
+-def stage(name,helper,receipt):
+- pin=next(x for x in PLAN['helpers']if Path(x['path']).name==helper);h=Path(pin['path']);b=h.read_bytes();assert len(b)==pin['bytes']and sha(b)==pin['SHA256'];put(OUT/(name+'-intent.json'),{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'helper':pin,'oneInvocation':True})
+- result=subprocess.run([sys.executable,str(h)],capture_output=True)
+- with (OUT/(name+'.stdout.log')).open('xb')as f:f.write(result.stdout)
+- with (OUT/(name+'.stderr.log')).open('xb')as f:f.write(result.stderr)
+- record={'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'helper':pin,'actualExitCode':result.returncode,'stdoutSHA256':sha(result.stdout),'stderrSHA256':sha(result.stderr)}
++def stage(name,receipt):
++ pin=next(r for r in PLAN['helpers'] if r['role']==name);helper=Path(pin['path']);b=helper.read_bytes()
++ assert len(b)==pin['bytes'] and sha(b)==pin['sha256']
++ put(OUT/(name+'-intent.json'),{'at':now(),'head':HEAD,'tree':TREE,'run':RUN,'helper':pin,'oneInvocation':True,'externalAvailable':reserve()})
++ tempRoot=N if name=='optional' else ROOT
++ env={**os.environ,'TMPDIR':str(tempRoot),'TMP':str(tempRoot),'TEMP':str(tempRoot),'PYTHONDONTWRITEBYTECODE':'1','GH_NO_UPDATE_NOTIFIER':'1'}
++ result=subprocess.run([sys.executable,'-B',str(helper)],capture_output=True,env=env,cwd='/')
++ for stream,body in [('stdout',result.stdout),('stderr',result.stderr)]:
++  with (OUT/(name+'.'+stream+'.log')).open('xb') as f:f.write(body);f.flush();os.fsync(f.fileno())
++ record={'at':now(),'head':HEAD,'tree':TREE,'run':RUN,'helper':pin,'actualExitCode':result.returncode,'stdoutSHA256':sha(result.stdout),'stderrSHA256':sha(result.stderr)}
+  if result.returncode==0:
+-  p=E/receipt;raw=p.read_bytes();assert len(raw)<2*1024**2
+-  with (OUT/receipt).open('xb')as f:f.write(raw)
+-  record['receipt']={'originalPath':str(p),'internalCopy':str(OUT/receipt),'bytes':len(raw),'SHA256':sha(raw)}
+- put(OUT/(name+'-terminal.json'),record);print(json.dumps({'stage':name,**record}),flush=True);assert result.returncode==0,'stage failure preserved; no retry'
+-put(OUT/'controller-intent.json',{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'planSHA256':sha((N/'PACKAGE-QUALIFICATION-PLAN-v2.json').read_bytes()),'controllerSHA256':sha(Path(__file__).read_bytes()),'scope':'Exactly storage5333 optional original then Company original. No family suite, duplicate dispatch/download/build, old7842 or Library qualification.'})
++  path=ROOT/receipt;raw=path.read_bytes();assert len(raw)<2*1024**2
++  record['receipt']={'path':str(path),'bytes':len(raw),'sha256':sha(raw)}
++ put(OUT/(name+'-terminal.json'),record);print(json.dumps({'stage':name,**record}),flush=True)
++ assert result.returncode==0,'stage failed; no automatic retry'
++assert api('git/commits/'+HEAD)['tree']['sha']==TREE
++put(OUT/'controller-intent.json',{'at':now(),'head':HEAD,'tree':TREE,'run':RUN,'planSHA256':sha(PLAN_PATH.read_bytes()),'controllerSHA256':sha(Path(__file__).read_bytes()),'scope':'Exactly own1382 optional originals then Company originals; no family suite, source tests, downloads from older runs, native or publication','cooperativeDeadlineMinutes':75,'limitation':'A cooperative deadline is not proof of termination if a filesystem/subprocess call blocks.'})
+ try:
+- wait('optional-practice');stage('optional','qualify-storage-optional-v2.py','qualification-original-members-and-closure.json');wait('candidate');stage('company','qualify-storage-company-v2.py','company-original-members-receipt.json')
+- put(OUT/'controller-result.json',{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'allTwoStagesPassed':True,'scope':'Exact source artifact/software gates only; no native/player/public or future-main acceptance'})
+-except BaseException as e:
+- put(OUT/'controller-negative.json',{'UTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'head':HEAD,'run':RUN,'type':type(e).__name__,'message':str(e),'noAutomaticRetry':True});raise
++ wait('optional-practice');stage('optional','qualification-original-members-and-closure.json')
++ remaining=1024**3
++ wait('candidate');stage('company','company-original-members-receipt.json')
++ remaining=0
++ put(OUT/'controller-result.json',{'at':now(),'head':HEAD,'tree':TREE,'run':RUN,'allTwoStagesPassed':True,'scope':'Exact current own source/artifact/software scope only; no native/full-player/public or future-main acceptance'})
++except BaseException as exc:
++ put(OUT/'controller-negative.json',{'at':now(),'head':HEAD,'tree':TREE,'run':RUN,'type':type(exc).__name__,'message':str(exc),'traceback':traceback.format_exc(),'noAutomaticRetry':True})
++ raise

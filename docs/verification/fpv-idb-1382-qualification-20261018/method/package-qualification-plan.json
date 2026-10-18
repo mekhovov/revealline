@@ -1,0 +1,366 @@
+{
+  "schema": "fpv-storage-current-package-plan/v1",
+  "preparedAt": "2026-10-18T04:24:26.754120+00:00",
+  "status": "PREPARED_ONLY_ROOT_AND_PEER_APPROVAL_REQUIRED",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "pinnedMain": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "run": 39096687385,
+  "branch": "codex/fpv-library-lifecycle-audit-20261016",
+  "event": "workflow_dispatch",
+  "externalRoot": "[storage-current]/qualification-originals",
+  "actualOnce": "[storage-current]/actual-once",
+  "python": "[existing-python]",
+  "node": "[existing-node]",
+  "cwd": "/",
+  "environment": {
+    "TMPDIR": "[storage-current]",
+    "TMP": "[storage-current]",
+    "TEMP": "[storage-current]"
+  },
+  "controller": {
+    "path": "[storage-current]/run-storage-current-once.py",
+    "bytes": 5370,
+    "sha256": "cb6173f527b4627a927b31da20353938fa2284a8086568fd337de473fe4857cf"
+  },
+  "helpers": [
+    {
+      "role": "optional",
+      "path": "[storage-current]/qualify-storage-optional.py",
+      "bytes": 13228,
+      "sha256": "56e90c16e8c2b056c607caf3d45e44f3da61ba1628abf14533d3c0558f3d0af0"
+    },
+    {
+      "role": "company",
+      "path": "[storage-current]/qualify-storage-company.py",
+      "bytes": 7559,
+      "sha256": "f8b54611f9cf0209db57ca0a901fe80d9ba5912c28ee37ca8df69bcdbfdd0d34"
+    }
+  ],
+  "inputPins": [
+    {
+      "path": "[storage-current]/SOURCE-INPUTS.json",
+      "bytes": 22752,
+      "sha256": "93bc9cfb9224a9c25689c439085c7687869351fe52517043841d38f8be093913"
+    },
+    {
+      "path": "[storage-current]/MERGE-CANONICAL-ACCEPTANCE.json",
+      "bytes": 4187,
+      "sha256": "0d8e65e0479a418b29e289fe8d4edca68e77056de018ea8f02765613dcf91b53"
+    },
+    {
+      "path": "[storage-current]/CURRENT-CANDIDATE-RUN-RECEIPT.json",
+      "bytes": 1050,
+      "sha256": "5de13266763a8cf0ef53eb830919d19ae4faf512ebdbf1add91b6f085fcba803"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__aircraft-tuning-fields.mjs.source",
+      "bytes": 5669,
+      "sha256": "ad4c2d297c2a29d3a2cc65a820ab5a1e58ec9625b9ca09e0fd2494d0613cd59b"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__controller-tune-library.mjs.source",
+      "bytes": 13958,
+      "sha256": "ee5ab5386e560ae783f55dc2bf02e9961e92596a824a2969d51ca3d3eafa6021"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__controller-tune-panel.mjs.source",
+      "bytes": 23441,
+      "sha256": "579e5fc86483ad7546c94510447d1e21480fa0bff7157a8a6777a2b388ebea26"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__response-bench-client.mjs.source",
+      "bytes": 3516,
+      "sha256": "7233f50f2fc77470fc9080ac08f49bb1df0f50452f91a355b38d497eb0431942"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__response-bench-panel.mjs.source",
+      "bytes": 36107,
+      "sha256": "b801209b271c7a24fa6c17817f64c336cbdbd9a27d7ff80b21e34c113c02b358"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__response-bench-worker.mjs.source",
+      "bytes": 2205,
+      "sha256": "b21283025f7912be36e0f26e59b09cc2e49e0748208d9c07648dda6352e0ac6e"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__response-bench.mjs.source",
+      "bytes": 24561,
+      "sha256": "09ee0de8e7ffc5c787a4113f99d985fa334b6f8ed663744b1b3fa0017d1d2ad9"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__setup-draft.mjs.source",
+      "bytes": 13550,
+      "sha256": "3695eab0f10c77224c5de2b6c86f899922f67361e4fbad0fa9fd6ba9673693fa"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__setup-workbench.mjs.source",
+      "bytes": 19906,
+      "sha256": "7d2fcf5945f9a4a78b97f2e39ae12e36375af260311cc443be20fcfa686bb26f"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__fpv-worlds__response-bench-worker.mjs.source",
+      "bytes": 208,
+      "sha256": "608fd23e0bc62c6d2e56874f26e86a9ea0012929ea69d155ed1290ed48484f10"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__aircraft-appearance.mjs.source",
+      "bytes": 1018,
+      "sha256": "eac3ae9df81f7fc4f96da3dc55023797895034e096b02ba62a480a2efb3ae09e"
+    },
+    {
+      "path": "[storage-current]/source-inputs/optional-practice__civilian-fpv__aircraft-preview.mjs.source",
+      "bytes": 7063,
+      "sha256": "07ac999bc60dcef1a23a4a1a905d6e322c4c522aeeae466110b416bdc2a0a27c"
+    },
+    {
+      "path": "[storage-current]/source-inputs/publishing__optional-package-policy.mjs.source",
+      "bytes": 31710,
+      "sha256": "21622f40aba00736d1cd3424fe880fc33522ca6e541cb8bce3e36d3beeadbd72"
+    },
+    {
+      "path": "[storage-current]/source-inputs/publishing__edition-zip.mjs.source",
+      "bytes": 6736,
+      "sha256": "437c01641e8cf8e6e4bf201f42eab19e035f9f5919ec70417331d51ef58f56c4"
+    },
+    {
+      "path": "[storage-current]/source-inputs/publishing__optional-module-closure.mjs.source",
+      "bytes": 2419,
+      "sha256": "dd88effb1ab7f754866a87410f5fd125db7234e22176eaeba393eafaac578d4c"
+    },
+    {
+      "path": "[storage-current]/source-inputs/publishing__optional-import-capabilities.mjs.source",
+      "bytes": 1459,
+      "sha256": "d336481a02ef0fe4a3203fecc74fe8f1739c4df035b6d921ee886a0290f0d28d"
+    },
+    {
+      "path": "[storage-current]/source-inputs/publishing__vendor__acorn-8.18.0.mjs.source",
+      "bytes": 233301,
+      "sha256": "953573b8fdab71599749ea5f2b33d3e760c2116178f9423ee7458dbe39d59453"
+    },
+    {
+      "path": "[storage-current]/source-inputs/game__editions__package-budget.mjs.source",
+      "bytes": 1259,
+      "sha256": "0b8191091e2868194ab372aca3c5d130f9b61c18db9711062fb418869138262e"
+    },
+    {
+      "path": "[storage-current]/source-inputs/.github__workflows__company-edition-candidate.yml.source",
+      "bytes": 9279,
+      "sha256": "3e6d628e666da710053b5fa8ce6dbb35d70400670a51f5cd4d30d2f4df31e97c"
+    },
+    {
+      "path": "[storage-current]/source-inputs/scripts__compile-edition.mjs.source",
+      "bytes": 44846,
+      "sha256": "f836063d1ac4412e5a957ba682fadb9fd316cf205ff3176250bd4ff9a9a1fa23"
+    },
+    {
+      "path": "[storage-current]/source-inputs/scripts__bundle-editions.mjs.source",
+      "bytes": 8168,
+      "sha256": "6d61c9f1368eca3779561a8583ac0bc911fec037fa54a095d555150ef5b7302a"
+    }
+  ],
+  "parents": [
+    {
+      "role": "optional",
+      "path": "[prior-storage-method]/qualify-storage-optional-v2.py",
+      "bytes": 9206,
+      "sha256": "f23606a146bb316c22d687cbadd223e861183fc404c5c5fac1f56928232f250f"
+    },
+    {
+      "role": "company",
+      "path": "[prior-storage-originals]/company-only-continuation-001/qualify-company-only.py",
+      "bytes": 7060,
+      "sha256": "38fe2cc4966f383633fa784efa5f7f1bc4daffb19ea82cfe3b9dbc8c724cda1b"
+    },
+    {
+      "role": "controller",
+      "path": "[prior-storage-method]/run-storage-combined-once-v2.py",
+      "bytes": 4307,
+      "sha256": "44c4f96e86784fc90d879f509e7c9e1a2815accd67a7ac936dd0b68e2c13715a"
+    }
+  ],
+  "guardDiffs": [
+    {
+      "path": "[storage-current]/optional-guard.diff",
+      "bytes": 15325,
+      "sha256": "2ac9832f9e2529f96a32c40e39f0e8a47db44a7527cc12870011bc54f3a265e7"
+    },
+    {
+      "path": "[storage-current]/company-guard.diff",
+      "bytes": 9297,
+      "sha256": "22d9e2aab8eaf032bd981a4a91ea43088876df95679093e795d7b8db7bec1ae1"
+    },
+    {
+      "path": "[storage-current]/controller-guard.diff",
+      "bytes": 9515,
+      "sha256": "2e19492bfacb4660df5874eec1d5c65abc1da879e44cb50a166c2dcbb84a4369"
+    }
+  ],
+  "sourceReuse": {
+    "sharedMap": {
+      "path": "[shared-current-source]/CURRENT-QUALIFICATION-SOURCE-PINS.json",
+      "bytes": 13867,
+      "sha256": "96bece1168e58a5b541380e90a94c292fcd1241f400650ea56df7161cd661e93"
+    },
+    "ownJoin": {
+      "path": "[storage-current]/SOURCE-INPUTS.json",
+      "bytes": 22752,
+      "sha256": "93bc9cfb9224a9c25689c439085c7687869351fe52517043841d38f8be093913"
+    },
+    "bodyCount": 21,
+    "totalBodyBytes": 490379,
+    "noNewSourceGET": true,
+    "canonicalRule": "All21 source blobs/modes/types match main56 complete tree; own canonical main56\u21921382 delta consists only17 disjoint observer paths. Only source bytes/method reused, not Library actual package/test evidence."
+  },
+  "artifactNames": {
+    "optional": "optional-flight-integration-1382a3e43479df18a7aeb522f218d34862462ade-head-1382a3e43479df18a7aeb522f218d34862462ade",
+    "company": "company-candidate-1382a3e43479df18a7aeb522f218d34862462ade"
+  },
+  "provenanceGuards": [
+    "Exact workflow_dispatch run/head_commit/head_branch/workflow and canonical current candidate tree",
+    "Optional and Company both bind same dispatch HEAD; ordinary PR optional synthetic event source excluded",
+    "Each own original artifact id/size/remote digest bound before one GET and post-download digest match",
+    "Current metadata-only PR Company capacity archive cannot substitute for full original archive"
+  ],
+  "budgets": {
+    "externalFloorBytes": 3221225472,
+    "remainingOptionalAndCompanyBytes": 1610612736,
+    "remainingCompanyBytes": 1073741824,
+    "smallRecordReserveBytes": 33554432,
+    "optional": {
+      "civilian-flight": {
+        "files": 98,
+        "bytes": 8388608
+      },
+      "civilian-fpv": {
+        "files": 150,
+        "bytes": 13107200,
+        "separateSourceInputBytes": 13303808
+      },
+      "fpv-worlds": {
+        "files": 210,
+        "bytes": 20971520
+      }
+    },
+    "sourceInputNotArchiveFallback": true,
+    "companyRuntime": {
+      "files": 2000,
+      "policyBytes": 83886080,
+      "additionalCoreBytesCheck": 75497472
+    },
+    "retainedRevisionLimit": "256 revisions (count), not256MiB"
+  },
+  "roleChecks": {
+    "aircraftModuleIdentities": 8,
+    "tuningModuleIdentities": 38,
+    "tuningMap": {
+      "optional-practice/civilian-fpv/aircraft-tuning-fields.mjs": {
+        "bytes": 5669,
+        "sha256": "ad4c2d297c2a29d3a2cc65a820ab5a1e58ec9625b9ca09e0fd2494d0613cd59b",
+        "gitBlob": "df49837b5f0c72d2c0a733fea45515bff6c1195e",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/civilian-fpv/controller-tune-library.mjs": {
+        "bytes": 13958,
+        "sha256": "ee5ab5386e560ae783f55dc2bf02e9961e92596a824a2969d51ca3d3eafa6021",
+        "gitBlob": "19d9d3529de485ef4f4b36ac6e3b2c216d18704a",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/civilian-fpv/controller-tune-panel.mjs": {
+        "bytes": 23441,
+        "sha256": "579e5fc86483ad7546c94510447d1e21480fa0bff7157a8a6777a2b388ebea26",
+        "gitBlob": "34174c79e341ad2dbc4c2dd8f7491f0742340696",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/civilian-fpv/response-bench-client.mjs": {
+        "bytes": 3516,
+        "sha256": "7233f50f2fc77470fc9080ac08f49bb1df0f50452f91a355b38d497eb0431942",
+        "gitBlob": "1f57edb0a342fdfafc003cbcca01626822c9863b",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/civilian-fpv/response-bench-panel.mjs": {
+        "bytes": 36107,
+        "sha256": "b801209b271c7a24fa6c17817f64c336cbdbd9a27d7ff80b21e34c113c02b358",
+        "gitBlob": "00a370c65be80cb52e9c5d0beb6abeb552bfcff5",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/civilian-fpv/response-bench-worker.mjs": {
+        "bytes": 2205,
+        "sha256": "b21283025f7912be36e0f26e59b09cc2e49e0748208d9c07648dda6352e0ac6e",
+        "gitBlob": "7ca492ef154e510ba9aa6e2911d1482e2e4a170b",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/civilian-fpv/response-bench.mjs": {
+        "bytes": 24561,
+        "sha256": "09ee0de8e7ffc5c787a4113f99d985fa334b6f8ed663744b1b3fa0017d1d2ad9",
+        "gitBlob": "3a3e3e158ffde1910522e549331e085448f54443",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/civilian-fpv/setup-draft.mjs": {
+        "bytes": 13550,
+        "sha256": "3695eab0f10c77224c5de2b6c86f899922f67361e4fbad0fa9fd6ba9673693fa",
+        "gitBlob": "f896c5de065d0ea24d717c263a0b9786fcdc5f8f",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/civilian-fpv/setup-workbench.mjs": {
+        "bytes": 19906,
+        "sha256": "7d2fcf5945f9a4a78b97f2e39ae12e36375af260311cc443be20fcfa686bb26f",
+        "gitBlob": "91ae524a9e0b9c89cba7180fa8cb54d56a86e0b5",
+        "packages": [
+          "civilian-fpv",
+          "fpv-worlds"
+        ]
+      },
+      "optional-practice/fpv-worlds/response-bench-worker.mjs": {
+        "bytes": 208,
+        "sha256": "608fd23e0bc62c6d2e56874f26e86a9ea0012929ea69d155ed1290ed48484f10",
+        "gitBlob": "20aca5efc973b9cc3990524dbfbaa04a4f77192e",
+        "packages": [
+          "fpv-worlds"
+        ]
+      }
+    },
+    "actualInventoriesAndClosures": "Observe actual runtime/source inventory and closure counts. No old count substitution."
+  },
+  "stageOrder": [
+    "Wait existing optional-practice success; invoke optional helper once",
+    "Wait existing candidate and run success; invoke Company helper once"
+  ],
+  "unchangedGuardScope": [
+    "Strict outer checksum set and each declared body",
+    "All original runtime/source member sets, hashes, implicit CRC on each read, embedded metadata, bounded safe inventory and archive budgets",
+    "Module closure from current pinned validator source with no checkout-source fallback",
+    "Corrected Company core-positive membership; no optional-only requirements or raw-source equality for projected Company files"
+  ],
+  "limits": [
+    "No Library family suite or synthetic observer test replay",
+    "No dispatch, build, prior original GET, native fixture/server/renderer, product/source mutation or publication",
+    "Stop first failure; no automatic retry; preserve partials/negative evidence",
+    "75-minute deadline is cooperative and is not proof of terminal if filesystem/subprocess calls block",
+    "Current acceptance requires actual receipts and tool/child exits followed by root review; historical5333/7842 scope stays closed"
+  ]
+}

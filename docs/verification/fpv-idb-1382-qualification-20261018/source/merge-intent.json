@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-18T04:18:21.749896+00:00",
+  "approval": {
+    "path": "[prior-shared-integration-root]/ROOT-PINNED-56-INTEGRATION-APPROVAL-20261018.json",
+    "bytes": 3095,
+    "sha256": "a9b4ac1bb5408e071e4d888f2a27f06d5377a7f6d0447901fbe2ea97ed263259"
+  },
+  "baseBranch": "codex/fpv-library-lifecycle-audit-20261016",
+  "expectedBase": "53338dc73469f866e9289b2b5f74555c68e8231e",
+  "pinnedIncoming": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "observedMain": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "laterMainDrift": false,
+  "rule": "one merge POST; no retry on failure or uncertain result",
+  "externalAvailableBytes": 65126400000
+}

@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-18T04:29:55.942370+00:00",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "run": 39096687385,
+  "helper": {
+    "role": "optional",
+    "path": "[storage-current]/qualify-storage-optional.py",
+    "bytes": 13228,
+    "sha256": "56e90c16e8c2b056c607caf3d45e44f3da61ba1628abf14533d3c0558f3d0af0"
+  },
+  "actualExitCode": 0,
+  "stdoutSHA256": "d3386a67403570b9fd1e39cbe543ec15d1a34d7c29c56ce464db55e6de01cb30",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "receipt": {
+    "path": "[storage-current]/qualification-originals/qualification-original-members-and-closure.json",
+    "bytes": 17631,
+    "sha256": "07b64d2a073990fc9524d4746e1f554d22df06ec9152122cf9c49cd9fb5a7bd7"
+  }
+}

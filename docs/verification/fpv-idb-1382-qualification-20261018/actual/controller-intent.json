@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-18T04:28:23.273546+00:00",
+  "head": "1382a3e43479df18a7aeb522f218d34862462ade",
+  "tree": "1442e7fafbe73c723bde8d36881b01bb2cb4dfbb",
+  "run": 39096687385,
+  "planSHA256": "3fba45046317edad074c2f07e859b08fdce016495f7f65be5a8872b2170992cb",
+  "controllerSHA256": "cb6173f527b4627a927b31da20353938fa2284a8086568fd337de473fe4857cf",
+  "scope": "Exactly own1382 optional originals then Company originals; no family suite, source tests, downloads from older runs, native or publication",
+  "cooperativeDeadlineMinutes": 75,
+  "limitation": "A cooperative deadline is not proof of termination if a filesystem/subprocess call blocks."
+}
