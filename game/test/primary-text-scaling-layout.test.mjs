@@ -22,6 +22,9 @@ const readerLayouts = await Promise.all(
     parsers.css.parse(await readFile(new URL(`../ui/${file}`, import.meta.url), 'utf8')),
   ),
 );
+const theme = await parsers.css.parse(
+  await readFile(new URL('../ui/pixel-theme.css', import.meta.url), 'utf8'),
+);
 function descendants(nodes) {
   return nodes.flatMap((node) => [node, ...descendants(node.nodes ?? [])]);
 }
@@ -32,6 +35,13 @@ const stateRules = descendants(legacy.nodes).filter(
     rule.nodes.some((node) => node.prop === 'display' && node.value.text === 'none'),
 );
 assert.equal(stateRules.length, 1, 'Use the actual legacy pause/briefing visibility owner.');
+const headingRules = descendants(theme.nodes).filter(
+  (rule) =>
+    rule.type === 'css-rule' &&
+    rule.raws.selector === '.game-shell .shell-dialog-heading' &&
+    rule.nodes.some((node) => node.prop === 'position' && node.value.text === 'sticky'),
+);
+assert.equal(headingRules.length, 1, 'Use the actual theme sticky dialog heading owner.');
 function elements(node) {
   return [node, ...(node.childNodes ?? []).flatMap(elements)].filter((item) => item.tagName);
 }
@@ -130,7 +140,7 @@ function computed(element, property, width) {
       }
     }
   }
-  visit([...stateRules, ...readerLayouts.flatMap((sheet) => sheet.nodes)], 0);
+  visit([...stateRules, ...headingRules, ...readerLayouts.flatMap((sheet) => sheet.nodes)], 0);
   visit(css.nodes, 1);
   return (
     winner?.value ??
@@ -293,10 +303,14 @@ test('enlarged Field details and Mission brief retain useful readers outside hea
       assert.equal(computed(reader, 'overflow', width), 'auto');
     }
     assert.equal(computed(heading, 'grid-template-columns', width), 'minmax(0, 1fr)');
+    assert.equal(computed(heading, 'position', width), 'static');
     assert.equal(computed(actions, 'inline-size', width), '100%');
     setAttr(slot, 'hidden', '');
     assert.equal(computed(slot, 'display', width), 'none');
     setAttr(slot, 'hidden', null);
+    setAttr(brief, 'data-view', 'catalogue');
+    assert.equal(computed(heading, 'position', width), 'sticky');
+    setAttr(brief, 'data-view', 'brief');
   }
   for (const [owner, name, value] of [
     [body, 'data-text-size', 'large'],
@@ -309,5 +323,6 @@ test('enlarged Field details and Mission brief retain useful readers outside hea
     assert.equal(computed(brief, 'display', 320), 'flex');
     assert.equal(computed(byId('flight-details-reading'), 'min-height', 320), '64px');
     assert.equal(computed(byId('flight-details-reading'), 'min-block-size', 320), undefined);
+    assert.equal(computed(heading, 'position', 320), 'sticky');
   }
 });
