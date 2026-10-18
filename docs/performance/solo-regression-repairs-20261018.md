@@ -1,6 +1,6 @@
 # Whole-app review repairs — 18 October 2026
 
-Status: implementation and delivery in progress. Branch `codex/solo-performance-regression-fixes` starts from main `7e9575053aa59d366785de5b383f43e49a4a5c58`. These repairs follow the [retained whole-app audit](solo-whole-app-regression-audit-20261018.md); they do not change its historical outcomes.
+Status: runtime repairs pushed for review in [PR #1579](https://github.com/mekhovov/revealline/pull/1579); complete CI and delivery remain in progress. Branch `codex/solo-performance-regression-fixes` starts from main `7e9575053aa59d366785de5b383f43e49a4a5c58`. These repairs follow the [retained whole-app audit](solo-whole-app-regression-audit-20261018.md); they do not change its historical outcomes.
 
 ## Confirmed fixes
 
@@ -10,13 +10,13 @@ Status: implementation and delivery in progress. Branch `codex/solo-performance-
 | Current Journey Standard/Gentle/Expert saves appeared as Archived.               | Existing execution construction owns a weak identity receipt; the gallery reads its exact difficulty/base/execution/policy identity. Forged/cloned or mismatched wrappers remain rejected. The thin helper does not import project compilation. | Three real-host cases fail before, nine legacy controls remain passing. Complete gallery, execution, earned-picture and campaign context/difficulty group: 43/43. Save identities and URLs do not change. |
 | A failed protected-page script hid the page behind an unhelpful error.           | Report bounded script path and ordered position without credentials/query/fragment; offer one explicit full-document Reload. Stale callbacks cannot change a replacement document or continue its script list.                                  | Four added regressions fail before. Complete runtime gate, boot and community group: 50/50. Ordered execution and security attributes remain tested. Native recovered-load smoke remains required.        |
 
-Scoped lint and formatting pass for these three groups, and independent peer reviews found no further issue. Individual group counts are not a deduplicated full-suite total. Local before/after evidence remains under `.cache/solo-followup/`; the meaningful regressions are committed with the implementation.
+Scoped lint and formatting pass for these groups, and independent peer reviews found no further issue. Individual group counts are not a deduplicated full-suite total. Local before/after evidence remains under `.cache/solo-followup/`; the meaningful regressions are committed with the implementation.
 
 ## Remaining findings and priorities
 
 1. Run complete applicable source/build checks on the new head; publish a reviewable PR and verify the resulting Pages release. Older de332 native results cannot qualify these runtime edits.
 2. Attribute the retained Next terminal HUD cost in a separate diagnostic run. WebKit's 87 ms update included 61 ms of HUD work; sampled CPU alone may not explain raster, compositor or scheduling delays. Do not label all five driver deadline failures as application defects.
-3. Repair the independently discovered generated `authoring/library/neon-artwork/index.html` protection omission through its generator, then verify the source inventory. It is unchanged from current main, not introduced by the three fixes above.
+3. Both generated Neon artwork and mosaic galleries now use the shared protection projection in their generators and regenerated output. Their images, links and appearance bytes are otherwise unchanged. A new generator regression fails before; complete gate-runtime, gate-inventory and theme-bootstrap controls pass 26/26. This omission originated in main commit `cb663b0a`, not the PR #1544 runtime; production build verification remains required.
 4. The intended soundtrack catalogue URL is unchanged and returns 404. Authenticated repository metadata reports `private: true` and `has_pages: false`; there is no active Pages configuration. The current manual workflow would skip its push-only deployment. Determine private-repository Pages eligibility and review the exact public artifact before any access/publication change. Do not change the configured URL or weaken media validation to hide this failure.
 5. Resolve Cocoa's fresh blank-browser ownership failure without broad process exemptions, then complete native media coverage. No codec observation has occurred in the retained latest attempts.
 6. Admit and execute the existing raster/shared-mode/Demo, readiness, touch, overhead, repeated-transition, sustained and matched timing workloads against an exact final package. Preserve every failed or partial observation and unchanged acceptance gates.
