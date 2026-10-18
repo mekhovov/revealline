@@ -1,0 +1,380 @@
+{
+  "engine": "webkit",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T05:30:54.565Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Порожнє поле: рухайтеся широкими петлями, ловіть єдину ціль і стежте за зростанням хвоста."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:freight-depot-dispatch-junction:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Dispatch Junction",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 26
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:garage-03-self-level-da0ccb9ce6929f92",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "8",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Barrier timing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 230,
+          "materials": 147,
+          "textures": 31,
+          "gpuGeometries": 214,
+          "gpuTextures": 29,
+          "gpuPrograms": 16,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Пройдіть орієнтири, оминаючи рухомі перешкоди. Спершу спостерігайте за їхнім ритмом."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-6ab3604dd6a03040",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Second landing",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-haul-switchbacks:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Haul Switchbacks",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "solo",
+      "source": "stone-lanes-detour",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Stone Lanes",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-ricochet-quarry:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Ricochet Quarry",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:courtyard-06-acro-5691d8d404d3a9a8",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Delivery crossing",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-7e1cae99ddeff5f9",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Sorting yard",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:river-port-pump-apron:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Pump Apron",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-orchard-05-acro-53fcb2e424178960",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Barn beacon and garden pad",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-living-switchback-yard:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Switchback Yard",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:river-port-floodgate-yard:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Floodgate Yard",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "solo",
+      "source": "night-patrol-loop",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Night Patrol",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-offset-quays:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Offset Quays",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-52-acro-65adb09bd2b16dde",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "4",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Orbit the landmark",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T05:31:46.288Z",
+  "enduranceFinished": "2026-10-18T05:31:46.288Z",
+  "finished": "2026-10-18T05:31:46.403Z"
+}

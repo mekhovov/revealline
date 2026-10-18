@@ -4,6 +4,11 @@ optional-practice/civilian-fpv/vendor/
 # Generated bounded input recordings; portable replay checks bind their exact bytes.
 optional-practice/civilian-fpv/demonstrations.mjs
 
+# Generated, bounded demo payloads and catalogs. Their native authoring and
+# qualification commands validate exact identities, structure, and byte limits.
+game/demo-data/
+optional-practice/civilian-fpv/demo-data/
+
 # Exact retained runtime bytes are hash/schema verified, never reformatted.
 game/presentation/compiled/runtime.*.json
 game/editions/retained/*.json

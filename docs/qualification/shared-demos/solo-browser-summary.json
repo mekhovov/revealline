@@ -1,0 +1,150 @@
+{
+  "created": "2026-10-18T05:28:26.245Z",
+  "sourceRevision": "7e9575053aa59d366785de5b383f43e49a4a5c58",
+  "complete": true,
+  "requiredLevels": 240,
+  "catalogClips": 242,
+  "browsers": [
+    {
+      "engine": "chromium",
+      "strictNewPerformances": 232,
+      "preservedReviewedPerformances": 10,
+      "coveredLevels": 240,
+      "actualRuntime": {
+        "journey-runtime-final": 139,
+        "journey-presentation-final": 139
+      },
+      "reports": [
+        {
+          "file": "solo-browser-chromium-initial.json",
+          "sha256": "f7670d735cb4b86dcde743ab894b1bf0705331d182af22cd1c72114732dfae4d",
+          "verified": 93
+        },
+        {
+          "file": "solo-browser-chromium-journey-first.json",
+          "sha256": "cf9117bc9ec3c3a2a56bb3c800dd3785a275c2bbe605163d5b51cfddac46b8bb",
+          "verified": 81
+        },
+        {
+          "file": "solo-browser-chromium-journey-second.json",
+          "sha256": "107e4aaa4895b80b72fac7cc995408e8ddda336db725a340380acb561c20381e",
+          "verified": 52
+        },
+        {
+          "file": "solo-browser-chromium-journey-final.json",
+          "sha256": "4e05b5a9485527c514166639d84a0b537e1b946acbbc0633b106863cf04d22f9",
+          "verified": 6
+        },
+        {
+          "file": "solo-browser-chromium-reviewed-runtime.json",
+          "sha256": "cbd7fd9673ce94f00e52e278e4786a07a0c67846e13cd9e000c732b6363102a6",
+          "verified": 10
+        },
+        {
+          "file": "solo-browser-chromium-journey-runtime-final.json",
+          "sha256": "6b1d7df92d1ae543e14cc6550bb5a3bc7ef8dab375455c58935710079cce82a2",
+          "verified": 139
+        },
+        {
+          "file": "solo-browser-chromium-journey-presentation-final.json",
+          "sha256": "918e39128dbd87627ad9f1ed536e2c10b6bf2ef47a8561a838142b17ef4116ab",
+          "verified": 139
+        }
+      ]
+    },
+    {
+      "engine": "firefox",
+      "strictNewPerformances": 232,
+      "preservedReviewedPerformances": 10,
+      "coveredLevels": 240,
+      "actualRuntime": {
+        "journey-runtime-final": 139,
+        "journey-presentation-final": 139
+      },
+      "reports": [
+        {
+          "file": "solo-browser-firefox-initial.json",
+          "sha256": "f308ee25baea1d42e98e40c29f81750ca857bb691f249c5ab69406cd31cc3c05",
+          "verified": 93
+        },
+        {
+          "file": "solo-browser-firefox-journey-first.json",
+          "sha256": "b86f837c2cc3091869ed80efc91d84f53b18c2255ccdddff292599ffcf19e8b9",
+          "verified": 81
+        },
+        {
+          "file": "solo-browser-firefox-journey-second.json",
+          "sha256": "0f3164087473c57c9550dceb86c1cf16910d51a376003023d3f034dd1067450b",
+          "verified": 52
+        },
+        {
+          "file": "solo-browser-firefox-journey-final.json",
+          "sha256": "01dec52752dfaf6d4a16874317f5637b3e7c5b95e6f3d788def314dbc3a04998",
+          "verified": 6
+        },
+        {
+          "file": "solo-browser-firefox-reviewed-runtime.json",
+          "sha256": "d5a3fce941473268cd576d67a6e11bbd7dc6487af4b283736f9624ebbbfedfd7",
+          "verified": 10
+        },
+        {
+          "file": "solo-browser-firefox-journey-runtime-final.json",
+          "sha256": "00b09ef7cf939b748b318b201be63ec657fad068e4d46e3f527d96bf833e8902",
+          "verified": 139
+        },
+        {
+          "file": "solo-browser-firefox-journey-presentation-final.json",
+          "sha256": "28290c4f9567e1d616ddcf079dc2fe0df754d2b2f0760688c68d7a71283299b5",
+          "verified": 139
+        }
+      ]
+    },
+    {
+      "engine": "webkit",
+      "strictNewPerformances": 232,
+      "preservedReviewedPerformances": 10,
+      "coveredLevels": 240,
+      "actualRuntime": {
+        "journey-runtime-final": 139,
+        "journey-presentation-final": 139
+      },
+      "reports": [
+        {
+          "file": "solo-browser-webkit-initial.json",
+          "sha256": "819384e90eaffad1e39afa4fcbfc33c86cb6f2cf7d2ac6e9bef7d4e2bbc5044a",
+          "verified": 93
+        },
+        {
+          "file": "solo-browser-webkit-journey-first.json",
+          "sha256": "8cf26ab67b53c3e70a5c3854bc901993557fa5eab88dedb0e4c685e6e8186d41",
+          "verified": 81
+        },
+        {
+          "file": "solo-browser-webkit-journey-second.json",
+          "sha256": "c00cb4cf1c73a5fd120d83df62ac11978a48c3cf108a9bc99b0b368659078973",
+          "verified": 52
+        },
+        {
+          "file": "solo-browser-webkit-journey-final.json",
+          "sha256": "18eb7facc79fd31fb17f37e647b7b1e4c2c29d98f97c0bbd579e4326e16eb935",
+          "verified": 6
+        },
+        {
+          "file": "solo-browser-webkit-reviewed-runtime.json",
+          "sha256": "1b08ee70da26e36332dd629640b21be566e44d054c3e71c50e256603bd9c0d5b",
+          "verified": 10
+        },
+        {
+          "file": "solo-browser-webkit-journey-runtime-final.json",
+          "sha256": "b1d76df8aeefd0f2f5c16aaa034c719643a91c7e506aec9e1e295cf0886ae0bf",
+          "verified": 139
+        },
+        {
+          "file": "solo-browser-webkit-journey-presentation-final.json",
+          "sha256": "3788fcb156b8790e71f9379f51a4543fc8260c817157c59fef8dad1b7baf8a9f",
+          "verified": 139
+        }
+      ]
+    }
+  ]
+}

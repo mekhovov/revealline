@@ -80,7 +80,7 @@ export async function demoPage(t, { clipId = 'first-signal-left', ...options } =
     if (typeof path?.pathname !== 'string' || !path.pathname.includes('/demo-data/'))
       return ordinaryFetch(path, fetchOptions);
     let contents = await readFile(path, 'utf8');
-    if (path.pathname.endsWith('/catalog.json')) {
+    if (/\/catalog(?:\.[a-z-]+)?\.json$/.test(path.pathname)) {
       const catalog = JSON.parse(contents);
       catalog.clips = catalog.clips.filter((clip) => clip.id === clipId);
       contents = JSON.stringify(catalog);

@@ -5,6 +5,7 @@ import {
   missionLibraryHref,
   readMissionLibraryHandoff,
   readMissionLibraryIntent,
+  readMissionLibraryReady,
   createMissionLibrarySessionState,
   MISSION_LIBRARY_STATE_PREFIX,
 } from '../mission-library/handoff.mjs';
@@ -21,6 +22,26 @@ const href = (options = {}) =>
     missionId: opaque,
     ...options,
   });
+
+test('demo Ready handoffs retain exact authored Solo route ownership', () => {
+  for (const journey of ['legacy', ...AUTHORED_JOURNEY_ROUTE_IDS]) {
+    const destination = new URL(href({ journey, ready: true }));
+    assert.equal(readMissionLibraryReady(destination.searchParams), true);
+    assert.equal(readMissionLibraryHandoff(destination.searchParams), opaque);
+  }
+  for (const search of [
+    'library-ready=1',
+    'library-mission=a&library-ready=1&journey=unknown',
+    'library-mission=a&library-ready=1&library-ready=1&journey=legacy',
+    'library-mission=a&library-ready=1&journey=legacy&journey=whole-spatial-v25',
+  ])
+    assert.throws(
+      () => readMissionLibraryReady(new URLSearchParams(search)),
+      /exact authored Solo/,
+    );
+  for (const mode of ['versus', 'team'])
+    assert.throws(() => href({ mode, journey: 'legacy', ready: true }), /only for Solo/);
+});
 
 test('fixed destinations preserve release prefix across every current/destination mode', () => {
   const current = { solo: 'index.html', versus: 'couch/', team: 'couch/relay-rescue.html' };

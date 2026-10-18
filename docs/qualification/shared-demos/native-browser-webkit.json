@@ -1,0 +1,1820 @@
+{
+  "engine": "webkit",
+  "modes": [
+    "snake",
+    "survival"
+  ],
+  "started": "2026-10-18T04:23:28.326Z",
+  "verified": [
+    {
+      "id": "snake:classic-snake-open-loop:standard",
+      "mode": "snake",
+      "tick": 93,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 25
+    },
+    {
+      "id": "snake:classic-snake-two-landings:standard",
+      "mode": "snake",
+      "tick": 98,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 11
+    },
+    {
+      "id": "snake:classic-snake-first-baffle:standard",
+      "mode": "snake",
+      "tick": 108,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 13
+    },
+    {
+      "id": "snake:classic-snake-offset-docks:standard",
+      "mode": "snake",
+      "tick": 102,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 8
+    },
+    {
+      "id": "snake:classic-snake-room-to-follow:standard",
+      "mode": "snake",
+      "tick": 156,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 10
+    },
+    {
+      "id": "snake:classic-snake-first-circuit:standard",
+      "mode": "snake",
+      "tick": 141,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 10
+    },
+    {
+      "id": "snake:classic-snake-open-elbow:standard",
+      "mode": "snake",
+      "tick": 86,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 9
+    },
+    {
+      "id": "snake:classic-snake-u-turn-yard:standard",
+      "mode": "snake",
+      "tick": 195,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 12
+    },
+    {
+      "id": "snake:classic-snake-staggered-elbows:standard",
+      "mode": "snake",
+      "tick": 121,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 11
+    },
+    {
+      "id": "snake:classic-snake-turning-pockets:standard",
+      "mode": "snake",
+      "tick": 190,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 11
+    },
+    {
+      "id": "snake:classic-snake-s-bend:standard",
+      "mode": "snake",
+      "tick": 121,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 10
+    },
+    {
+      "id": "snake:classic-snake-elbow-exchange:standard",
+      "mode": "snake",
+      "tick": 170,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 12
+    },
+    {
+      "id": "snake:classic-snake-long-island:standard",
+      "mode": "snake",
+      "tick": 107,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 27
+    },
+    {
+      "id": "snake:classic-snake-split-islands:standard",
+      "mode": "snake",
+      "tick": 198,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 16
+    },
+    {
+      "id": "snake:classic-snake-bent-causeway:standard",
+      "mode": "snake",
+      "tick": 123,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 20
+    },
+    {
+      "id": "snake:classic-snake-three-detours:standard",
+      "mode": "snake",
+      "tick": 228,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 16
+    },
+    {
+      "id": "snake:classic-snake-inner-or-outer:standard",
+      "mode": "snake",
+      "tick": 132,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 21
+    },
+    {
+      "id": "snake:classic-snake-long-circuit:standard",
+      "mode": "snake",
+      "tick": 245,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 20
+    },
+    {
+      "id": "snake:classic-snake-forked-chase:standard",
+      "mode": "snake",
+      "tick": 219,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 17
+    },
+    {
+      "id": "snake:classic-snake-parallel-paths:standard",
+      "mode": "snake",
+      "tick": 225,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 16
+    },
+    {
+      "id": "snake:classic-snake-crossroads:standard",
+      "mode": "snake",
+      "tick": 235,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 14
+    },
+    {
+      "id": "snake:classic-snake-broken-divider:standard",
+      "mode": "snake",
+      "tick": 247,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 18
+    },
+    {
+      "id": "snake:classic-snake-runner-triangle:standard",
+      "mode": "snake",
+      "tick": 276,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 13
+    },
+    {
+      "id": "snake:classic-snake-cutoff-network:standard",
+      "mode": "snake",
+      "tick": 339,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 14
+    },
+    {
+      "id": "snake:classic-snake-keep-the-tail:standard",
+      "mode": "snake",
+      "tick": 109,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 14
+    },
+    {
+      "id": "snake:classic-snake-lighten-at-home:standard",
+      "mode": "snake",
+      "tick": 169,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 10
+    },
+    {
+      "id": "snake:classic-snake-banking-steps:standard",
+      "mode": "snake",
+      "tick": 108,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 15
+    },
+    {
+      "id": "snake:classic-snake-persistent-hub:standard",
+      "mode": "snake",
+      "tick": 180,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 18
+    },
+    {
+      "id": "snake:classic-snake-two-return-rhythm:standard",
+      "mode": "snake",
+      "tick": 116,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 16
+    },
+    {
+      "id": "snake:classic-snake-return-weave:standard",
+      "mode": "snake",
+      "tick": 203,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 14
+    },
+    {
+      "id": "snake:classic-snake-one-warning:standard",
+      "mode": "snake",
+      "tick": 207,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 18
+    },
+    {
+      "id": "snake:classic-snake-warning-courtyard:standard",
+      "mode": "snake",
+      "tick": 265,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 15
+    },
+    {
+      "id": "snake:classic-snake-crossed-sightlines:standard",
+      "mode": "snake",
+      "tick": 232,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 9
+    },
+    {
+      "id": "snake:classic-snake-screened-approach:standard",
+      "mode": "snake",
+      "tick": 294,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 12
+    },
+    {
+      "id": "snake:classic-snake-guarded-returns:standard",
+      "mode": "snake",
+      "tick": 236,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 18
+    },
+    {
+      "id": "snake:classic-snake-garden-crossfire:standard",
+      "mode": "snake",
+      "tick": 222,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 13
+    },
+    {
+      "id": "snake:classic-snake-opposite-arrivals:standard",
+      "mode": "snake",
+      "tick": 195,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 12
+    },
+    {
+      "id": "snake:classic-snake-crossing-schedule:standard",
+      "mode": "snake",
+      "tick": 273,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 12
+    },
+    {
+      "id": "snake:classic-snake-paired-loops:standard",
+      "mode": "snake",
+      "tick": 186,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 20
+    },
+    {
+      "id": "snake:classic-snake-shared-detour:standard",
+      "mode": "snake",
+      "tick": 348,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 29
+    },
+    {
+      "id": "snake:classic-snake-support-corridor:standard",
+      "mode": "snake",
+      "tick": 174,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 35
+    },
+    {
+      "id": "snake:classic-snake-shared-circuit:standard",
+      "mode": "snake",
+      "tick": 306,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 15
+    },
+    {
+      "id": "snake:classic-snake-long-opening:standard",
+      "mode": "snake",
+      "tick": 294,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 15
+    },
+    {
+      "id": "snake:classic-snake-fork-and-warning:standard",
+      "mode": "snake",
+      "tick": 308,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 15
+    },
+    {
+      "id": "snake:classic-snake-ordered-islands:standard",
+      "mode": "snake",
+      "tick": 188,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 12
+    },
+    {
+      "id": "snake:classic-snake-last-shedding-bank:standard",
+      "mode": "snake",
+      "tick": 399,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 18
+    },
+    {
+      "id": "snake:classic-snake-woven-gauntlet:standard",
+      "mode": "snake",
+      "tick": 227,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 16
+    },
+    {
+      "id": "snake:classic-snake-final-weave:standard",
+      "mode": "snake",
+      "tick": 491,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 15
+    },
+    {
+      "id": "snake:classic-pursuit-oval-intercept:standard",
+      "mode": "snake",
+      "tick": 42,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 37
+    },
+    {
+      "id": "snake:classic-pursuit-split-yard:standard",
+      "mode": "snake",
+      "tick": 44,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 34
+    },
+    {
+      "id": "snake:classic-pursuit-island-clock:standard",
+      "mode": "snake",
+      "tick": 27,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 33
+    },
+    {
+      "id": "snake:classic-pursuit-passing-bays:standard",
+      "mode": "snake",
+      "tick": 70,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 51
+    },
+    {
+      "id": "snake:classic-pursuit-crossroads:standard",
+      "mode": "snake",
+      "tick": 98,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 72
+    },
+    {
+      "id": "snake:classic-pursuit-inner-shortcut:standard",
+      "mode": "snake",
+      "tick": 75,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 64
+    },
+    {
+      "id": "snake:classic-pursuit-open-intercept:standard",
+      "mode": "snake",
+      "tick": 65,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 49
+    },
+    {
+      "id": "snake:classic-pursuit-blind-corner:standard",
+      "mode": "snake",
+      "tick": 85,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 51
+    },
+    {
+      "id": "snake:classic-pursuit-zigzag-exit:standard",
+      "mode": "snake",
+      "tick": 107,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 61
+    },
+    {
+      "id": "snake:classic-pursuit-broken-ring:standard",
+      "mode": "snake",
+      "tick": 123,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 70
+    },
+    {
+      "id": "snake:classic-pursuit-border-cutoff:standard",
+      "mode": "snake",
+      "tick": 81,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 66
+    },
+    {
+      "id": "snake:classic-pursuit-three-way-escape:standard",
+      "mode": "snake",
+      "tick": 118,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 77
+    },
+    {
+      "id": "snake:classic-pursuit-first-dash:standard",
+      "mode": "snake",
+      "tick": 64,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 48
+    },
+    {
+      "id": "snake:classic-pursuit-corner-pause:standard",
+      "mode": "snake",
+      "tick": 114,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 88
+    },
+    {
+      "id": "snake:classic-pursuit-alternating-straights:standard",
+      "mode": "snake",
+      "tick": 115,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 72
+    },
+    {
+      "id": "snake:classic-pursuit-staggered-cover:standard",
+      "mode": "snake",
+      "tick": 82,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 52
+    },
+    {
+      "id": "snake:classic-pursuit-crossing-bursts:standard",
+      "mode": "snake",
+      "tick": 76,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 52
+    },
+    {
+      "id": "snake:classic-pursuit-long-way-round:standard",
+      "mode": "snake",
+      "tick": 145,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 86
+    },
+    {
+      "id": "snake:classic-pursuit-first-shutter:standard",
+      "mode": "snake",
+      "tick": 102,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 92
+    },
+    {
+      "id": "snake:classic-pursuit-split-corridor:standard",
+      "mode": "snake",
+      "tick": 77,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 71
+    },
+    {
+      "id": "snake:classic-pursuit-offset-windows:standard",
+      "mode": "snake",
+      "tick": 107,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 72
+    },
+    {
+      "id": "snake:classic-pursuit-clockwork-ring:standard",
+      "mode": "snake",
+      "tick": 122,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 77
+    },
+    {
+      "id": "snake:classic-pursuit-boundary-detour:standard",
+      "mode": "snake",
+      "tick": 138,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 105
+    },
+    {
+      "id": "snake:classic-pursuit-return-junction:standard",
+      "mode": "snake",
+      "tick": 134,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 83
+    },
+    {
+      "id": "snake:classic-pursuit-first-pulse:standard",
+      "mode": "snake",
+      "tick": 134,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 78
+    },
+    {
+      "id": "snake:classic-pursuit-cable-service:standard",
+      "mode": "snake",
+      "tick": 140,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 83
+    },
+    {
+      "id": "snake:classic-pursuit-choose-the-detour:standard",
+      "mode": "snake",
+      "tick": 109,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 70
+    },
+    {
+      "id": "snake:classic-pursuit-courier-crossing:standard",
+      "mode": "snake",
+      "tick": 148,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 89
+    },
+    {
+      "id": "snake:classic-pursuit-shared-supply:standard",
+      "mode": "snake",
+      "tick": 140,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 90
+    },
+    {
+      "id": "snake:classic-pursuit-last-offer:standard",
+      "mode": "snake",
+      "tick": 138,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 87
+    },
+    {
+      "id": "snake:classic-pursuit-patrol-into-sprint:standard",
+      "mode": "snake",
+      "tick": 148,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 90
+    },
+    {
+      "id": "snake:classic-pursuit-runner-at-the-window:standard",
+      "mode": "snake",
+      "tick": 162,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 93
+    },
+    {
+      "id": "snake:classic-pursuit-border-relay:standard",
+      "mode": "snake",
+      "tick": 94,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 64
+    },
+    {
+      "id": "snake:classic-pursuit-forked-interception:standard",
+      "mode": "snake",
+      "tick": 154,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 91
+    },
+    {
+      "id": "snake:classic-pursuit-supply-circuit:standard",
+      "mode": "snake",
+      "tick": 168,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 103
+    },
+    {
+      "id": "snake:classic-pursuit-final-airfield:standard",
+      "mode": "snake",
+      "tick": 237,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 128
+    },
+    {
+      "id": "snake:classic-living-refuge-bays:standard",
+      "mode": "snake",
+      "tick": 47,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 53
+    },
+    {
+      "id": "snake:classic-living-switchback-yard:standard",
+      "mode": "snake",
+      "tick": 86,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 72
+    },
+    {
+      "id": "snake:classic-living-rendezvous-crossing:standard",
+      "mode": "snake",
+      "tick": 92,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 67
+    },
+    {
+      "id": "snake:classic-living-cable-cutoff:standard",
+      "mode": "snake",
+      "tick": 73,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 71
+    },
+    {
+      "id": "snake:classic-living-return-pincer:standard",
+      "mode": "snake",
+      "tick": 67,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 47
+    },
+    {
+      "id": "snake:classic-living-twin-intercepts:standard",
+      "mode": "snake",
+      "tick": 98,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 73
+    },
+    {
+      "id": "snake:classic-living-shield-window:standard",
+      "mode": "snake",
+      "tick": 66,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 45
+    },
+    {
+      "id": "snake:classic-living-brace-break:standard",
+      "mode": "snake",
+      "tick": 107,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 67
+    },
+    {
+      "id": "snake:classic-living-shutter-flank:standard",
+      "mode": "snake",
+      "tick": 55,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 55
+    },
+    {
+      "id": "snake:classic-living-frozen-opening:standard",
+      "mode": "snake",
+      "tick": 63,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 51
+    },
+    {
+      "id": "snake:classic-living-supply-flanks:standard",
+      "mode": "snake",
+      "tick": 83,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 63
+    },
+    {
+      "id": "snake:classic-living-living-airfield:standard",
+      "mode": "snake",
+      "tick": 133,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 95
+    },
+    {
+      "id": "snake:classic-field-signal-check:standard",
+      "mode": "snake",
+      "tick": 40,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 43
+    },
+    {
+      "id": "snake:classic-field-quiet-return:standard",
+      "mode": "snake",
+      "tick": 78,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 75
+    },
+    {
+      "id": "snake:classic-field-lane-window:standard",
+      "mode": "snake",
+      "tick": 44,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 54
+    },
+    {
+      "id": "snake:classic-field-two-returns:standard",
+      "mode": "snake",
+      "tick": 42,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 48
+    },
+    {
+      "id": "snake:classic-field-relay-key:standard",
+      "mode": "snake",
+      "tick": 27,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 28
+    },
+    {
+      "id": "snake:classic-field-linked-courts:standard",
+      "mode": "snake",
+      "tick": 39,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 36
+    },
+    {
+      "id": "snake:classic-field-broadcast-check:standard",
+      "mode": "snake",
+      "tick": 60,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 49
+    },
+    {
+      "id": "snake:classic-field-quiet-channel:standard",
+      "mode": "snake",
+      "tick": 85,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 63
+    },
+    {
+      "id": "snake:classic-field-signal-crossing:standard",
+      "mode": "snake",
+      "tick": 88,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 58
+    },
+    {
+      "id": "snake:classic-field-relay-airfield:standard",
+      "mode": "snake",
+      "tick": 96,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 66
+    },
+    {
+      "id": "snake:classic-field-border-watch:standard",
+      "mode": "snake",
+      "tick": 67,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 44
+    },
+    {
+      "id": "snake:classic-field-border-cutoff:standard",
+      "mode": "snake",
+      "tick": 156,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 89
+    },
+    {
+      "id": "snake:classic-field-contour-orbit:standard",
+      "mode": "snake",
+      "tick": 36,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 27
+    },
+    {
+      "id": "snake:classic-field-contour-transfer:standard",
+      "mode": "snake",
+      "tick": 139,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 81
+    },
+    {
+      "id": "snake:classic-field-wake-watch:standard",
+      "mode": "snake",
+      "tick": 52,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 37
+    },
+    {
+      "id": "snake:classic-field-wake-courtyard:standard",
+      "mode": "snake",
+      "tick": 156,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 92
+    },
+    {
+      "id": "snake:classic-field-ricochet-line:standard",
+      "mode": "snake",
+      "tick": 53,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 36
+    },
+    {
+      "id": "snake:classic-field-ricochet-yard:standard",
+      "mode": "snake",
+      "tick": 131,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 75
+    },
+    {
+      "id": "snake:classic-field-open-seam:standard",
+      "mode": "snake",
+      "tick": 26,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 23
+    },
+    {
+      "id": "snake:classic-field-seam-return:standard",
+      "mode": "snake",
+      "tick": 48,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 44
+    },
+    {
+      "id": "snake:classic-field-guard-line:standard",
+      "mode": "snake",
+      "tick": 37,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 31
+    },
+    {
+      "id": "snake:classic-field-guard-return:standard",
+      "mode": "snake",
+      "tick": 76,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 49
+    },
+    {
+      "id": "snake:classic-field-field-links:standard",
+      "mode": "snake",
+      "tick": 63,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 44
+    },
+    {
+      "id": "snake:classic-field-field-finale:standard",
+      "mode": "snake",
+      "tick": 123,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 81
+    },
+    {
+      "id": "snake:classic-expedition-orchard-fork:standard",
+      "mode": "snake",
+      "tick": 39,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 30
+    },
+    {
+      "id": "snake:classic-expedition-switchback-courts:standard",
+      "mode": "snake",
+      "tick": 61,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 58
+    },
+    {
+      "id": "snake:classic-expedition-opposite-platforms:standard",
+      "mode": "snake",
+      "tick": 55,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 37
+    },
+    {
+      "id": "snake:classic-expedition-boundary-exchange:standard",
+      "mode": "snake",
+      "tick": 30,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 36
+    },
+    {
+      "id": "snake:classic-expedition-mirror-returns:standard",
+      "mode": "snake",
+      "tick": 69,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 63
+    },
+    {
+      "id": "snake:classic-expedition-inner-outer-transfer:standard",
+      "mode": "snake",
+      "tick": 57,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 57
+    },
+    {
+      "id": "snake:classic-expedition-shutter-split:standard",
+      "mode": "snake",
+      "tick": 68,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 67
+    },
+    {
+      "id": "snake:classic-expedition-pulse-detour:standard",
+      "mode": "snake",
+      "tick": 79,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 72
+    },
+    {
+      "id": "snake:classic-expedition-tail-workshop:standard",
+      "mode": "snake",
+      "tick": 101,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 76
+    },
+    {
+      "id": "snake:classic-expedition-courier-overpass:standard",
+      "mode": "snake",
+      "tick": 119,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 81
+    },
+    {
+      "id": "snake:classic-expedition-breaking-bridge:standard",
+      "mode": "snake",
+      "tick": 44,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 36
+    },
+    {
+      "id": "snake:classic-expedition-clockwork-intercepts:standard",
+      "mode": "snake",
+      "tick": 86,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 64
+    },
+    {
+      "id": "snake:classic-expedition-edge-of-reception:standard",
+      "mode": "snake",
+      "tick": 79,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 61
+    },
+    {
+      "id": "snake:classic-expedition-blind-bend:standard",
+      "mode": "snake",
+      "tick": 43,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 39
+    },
+    {
+      "id": "snake:classic-expedition-moving-shadow:standard",
+      "mode": "snake",
+      "tick": 51,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 43
+    },
+    {
+      "id": "snake:classic-expedition-quiet-relay:standard",
+      "mode": "snake",
+      "tick": 80,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 62
+    },
+    {
+      "id": "snake:classic-expedition-clear-ground:standard",
+      "mode": "snake",
+      "tick": 55,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 95
+    },
+    {
+      "id": "snake:classic-expedition-radio-chase:standard",
+      "mode": "snake",
+      "tick": 98,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 121
+    },
+    {
+      "id": "snake:classic-expedition-outpost-circuit:standard",
+      "mode": "snake",
+      "tick": 78,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 74
+    },
+    {
+      "id": "snake:classic-expedition-crosswind-gates:standard",
+      "mode": "snake",
+      "tick": 65,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 60
+    },
+    {
+      "id": "snake:classic-expedition-relay-islands:standard",
+      "mode": "snake",
+      "tick": 91,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 61
+    },
+    {
+      "id": "snake:classic-expedition-waking-junction:standard",
+      "mode": "snake",
+      "tick": 57,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 46
+    },
+    {
+      "id": "snake:classic-expedition-signal-workshop:standard",
+      "mode": "snake",
+      "tick": 65,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 54
+    },
+    {
+      "id": "snake:classic-expedition-four-routes-home:standard",
+      "mode": "snake",
+      "tick": 123,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 85
+    },
+    {
+      "id": "snake:classic-operation-first-dispatch:standard",
+      "mode": "snake",
+      "tick": 31,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 41
+    },
+    {
+      "id": "snake:classic-operation-long-and-short:standard",
+      "mode": "snake",
+      "tick": 56,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 58
+    },
+    {
+      "id": "snake:classic-operation-platform-cut:standard",
+      "mode": "snake",
+      "tick": 55,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 53
+    },
+    {
+      "id": "snake:classic-operation-courier-gap:standard",
+      "mode": "snake",
+      "tick": 75,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 65
+    },
+    {
+      "id": "snake:classic-operation-twin-dispatch:standard",
+      "mode": "snake",
+      "tick": 75,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 66
+    },
+    {
+      "id": "snake:classic-operation-edge-express:standard",
+      "mode": "snake",
+      "tick": 75,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 80
+    },
+    {
+      "id": "snake:classic-operation-shutter-transfer:standard",
+      "mode": "snake",
+      "tick": 28,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 34
+    },
+    {
+      "id": "snake:classic-operation-last-departure:standard",
+      "mode": "snake",
+      "tick": 71,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 66
+    },
+    {
+      "id": "snake:classic-operation-first-pressure:standard",
+      "mode": "snake",
+      "tick": 47,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 52
+    },
+    {
+      "id": "snake:classic-operation-near-and-far:standard",
+      "mode": "snake",
+      "tick": 71,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 72
+    },
+    {
+      "id": "snake:classic-operation-pressure-elbow:standard",
+      "mode": "snake",
+      "tick": 45,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 55
+    },
+    {
+      "id": "snake:classic-operation-double-pressure:standard",
+      "mode": "snake",
+      "tick": 104,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 100
+    },
+    {
+      "id": "snake:classic-operation-heavy-crossing:standard",
+      "mode": "snake",
+      "tick": 81,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 80
+    },
+    {
+      "id": "snake:classic-operation-runner-valve:standard",
+      "mode": "snake",
+      "tick": 42,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 53
+    },
+    {
+      "id": "snake:classic-operation-edge-pressure:standard",
+      "mode": "snake",
+      "tick": 92,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 93
+    },
+    {
+      "id": "snake:classic-operation-assembly-return:standard",
+      "mode": "snake",
+      "tick": 166,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 149
+    },
+    {
+      "id": "snake:classic-operation-orchard-post:standard",
+      "mode": "snake",
+      "tick": 52,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 50
+    },
+    {
+      "id": "snake:classic-operation-split-delivery:standard",
+      "mode": "snake",
+      "tick": 142,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 110
+    },
+    {
+      "id": "snake:classic-operation-glasshouse-elbow:standard",
+      "mode": "snake",
+      "tick": 75,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 62
+    },
+    {
+      "id": "snake:classic-operation-two-harvests:standard",
+      "mode": "snake",
+      "tick": 97,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 79
+    },
+    {
+      "id": "snake:classic-operation-refuge-cargo:standard",
+      "mode": "snake",
+      "tick": 83,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 69
+    },
+    {
+      "id": "snake:classic-operation-irrigation-shortcut:standard",
+      "mode": "snake",
+      "tick": 102,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 99
+    },
+    {
+      "id": "snake:classic-operation-border-harvest:standard",
+      "mode": "snake",
+      "tick": 99,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 81
+    },
+    {
+      "id": "snake:classic-operation-harvest-rendezvous:standard",
+      "mode": "snake",
+      "tick": 127,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 97
+    },
+    {
+      "id": "snake:classic-operation-harbor-clearances:standard",
+      "mode": "snake",
+      "tick": 43,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 38
+    },
+    {
+      "id": "snake:classic-operation-seam-parcels:standard",
+      "mode": "snake",
+      "tick": 72,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 55
+    },
+    {
+      "id": "snake:classic-operation-north-south:standard",
+      "mode": "snake",
+      "tick": 39,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 52
+    },
+    {
+      "id": "snake:classic-operation-offset-quays:standard",
+      "mode": "snake",
+      "tick": 58,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 56
+    },
+    {
+      "id": "snake:classic-operation-tidal-door:standard",
+      "mode": "snake",
+      "tick": 61,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 52
+    },
+    {
+      "id": "snake:classic-operation-quay-dispatch:standard",
+      "mode": "snake",
+      "tick": 27,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 30
+    },
+    {
+      "id": "snake:classic-operation-lighten-at-sea:standard",
+      "mode": "snake",
+      "tick": 79,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 61
+    },
+    {
+      "id": "snake:classic-operation-horizon-relay:standard",
+      "mode": "snake",
+      "tick": 82,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 83
+    },
+    {
+      "id": "snake:classic-operation-furnace-permit:standard",
+      "mode": "snake",
+      "tick": 48,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 43
+    },
+    {
+      "id": "snake:classic-operation-coolant-cargo:standard",
+      "mode": "snake",
+      "tick": 114,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 80
+    },
+    {
+      "id": "snake:classic-operation-watch-the-aim:standard",
+      "mode": "snake",
+      "tick": 64,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 55
+    },
+    {
+      "id": "snake:classic-operation-pressure-flank:standard",
+      "mode": "snake",
+      "tick": 92,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 72
+    },
+    {
+      "id": "snake:classic-operation-crossing-orders:standard",
+      "mode": "snake",
+      "tick": 49,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 43
+    },
+    {
+      "id": "snake:classic-operation-guarded-transfer:standard",
+      "mode": "snake",
+      "tick": 106,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 75
+    },
+    {
+      "id": "snake:classic-operation-furnace-switch:standard",
+      "mode": "snake",
+      "tick": 43,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 39
+    },
+    {
+      "id": "snake:classic-operation-works-clearance:standard",
+      "mode": "snake",
+      "tick": 103,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 79
+    },
+    {
+      "id": "snake:classic-operation-dock-permission:standard",
+      "mode": "snake",
+      "tick": 62,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 48
+    },
+    {
+      "id": "snake:classic-operation-two-landings:standard",
+      "mode": "snake",
+      "tick": 156,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 101
+    },
+    {
+      "id": "snake:classic-operation-pump-return:standard",
+      "mode": "snake",
+      "tick": 118,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 80
+    },
+    {
+      "id": "snake:classic-operation-loading-dispatch:standard",
+      "mode": "snake",
+      "tick": 94,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 69
+    },
+    {
+      "id": "snake:classic-operation-harbor-window:standard",
+      "mode": "snake",
+      "tick": 94,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 71
+    },
+    {
+      "id": "snake:classic-operation-relay-load:standard",
+      "mode": "snake",
+      "tick": 72,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 57
+    },
+    {
+      "id": "snake:classic-operation-outbound-inbound:standard",
+      "mode": "snake",
+      "tick": 80,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 60
+    },
+    {
+      "id": "snake:classic-operation-harbor-homecoming:standard",
+      "mode": "snake",
+      "tick": 172,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 117
+    },
+    {
+      "id": "snake:classic-operation-silent-parcel:standard",
+      "mode": "snake",
+      "tick": 98,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 117
+    },
+    {
+      "id": "snake:classic-operation-ridge-reception:standard",
+      "mode": "snake",
+      "tick": 43,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 63
+    },
+    {
+      "id": "snake:classic-operation-broadcast-freight:standard",
+      "mode": "snake",
+      "tick": 68,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 70
+    },
+    {
+      "id": "snake:classic-operation-unseen-dispatch:standard",
+      "mode": "snake",
+      "tick": 72,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 80
+    },
+    {
+      "id": "snake:classic-operation-clear-side-channel:standard",
+      "mode": "snake",
+      "tick": 85,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 101
+    },
+    {
+      "id": "snake:classic-operation-pulse-rendezvous:standard",
+      "mode": "snake",
+      "tick": 111,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 108
+    },
+    {
+      "id": "snake:classic-operation-receiver-bridge:standard",
+      "mode": "snake",
+      "tick": 64,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 72
+    },
+    {
+      "id": "snake:classic-operation-summit-blackbird:standard",
+      "mode": "snake",
+      "tick": 83,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 90
+    },
+    {
+      "id": "snake:classic-operation-first-notch:standard",
+      "mode": "snake",
+      "tick": 61,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 49
+    },
+    {
+      "id": "snake:classic-operation-loaded-excavation:standard",
+      "mode": "snake",
+      "tick": 107,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 90
+    },
+    {
+      "id": "snake:classic-operation-stepped-masonry:standard",
+      "mode": "snake",
+      "tick": 77,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 64
+    },
+    {
+      "id": "snake:classic-operation-survey-seam:standard",
+      "mode": "snake",
+      "tick": 108,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 84
+    },
+    {
+      "id": "snake:classic-operation-temporary-permanent:standard",
+      "mode": "snake",
+      "tick": 64,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 53
+    },
+    {
+      "id": "snake:classic-operation-ricochet-quarry:standard",
+      "mode": "snake",
+      "tick": 87,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 62
+    },
+    {
+      "id": "snake:classic-operation-restored-arch:standard",
+      "mode": "snake",
+      "tick": 111,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 80
+    },
+    {
+      "id": "snake:classic-operation-garden-breaches:standard",
+      "mode": "snake",
+      "tick": 98,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 83
+    },
+    {
+      "id": "snake:classic-operation-glasshouse-intentions:standard",
+      "mode": "snake",
+      "tick": 64,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 68
+    },
+    {
+      "id": "snake:classic-operation-orchard-forks:standard",
+      "mode": "snake",
+      "tick": 56,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 57
+    },
+    {
+      "id": "snake:classic-operation-paired-shelters:standard",
+      "mode": "snake",
+      "tick": 69,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 50
+    },
+    {
+      "id": "snake:classic-operation-held-hedge:standard",
+      "mode": "snake",
+      "tick": 74,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 76
+    },
+    {
+      "id": "snake:classic-operation-seedling-spiral:standard",
+      "mode": "snake",
+      "tick": 125,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 124
+    },
+    {
+      "id": "snake:classic-operation-garden-seam:standard",
+      "mode": "snake",
+      "tick": 60,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 64
+    },
+    {
+      "id": "snake:classic-operation-quiet-conservatory:standard",
+      "mode": "snake",
+      "tick": 101,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 106
+    },
+    {
+      "id": "snake:classic-operation-three-garden-returns:standard",
+      "mode": "snake",
+      "tick": 127,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 118
+    },
+    {
+      "id": "snake:classic-operation-pulse-loading-bay:standard",
+      "mode": "snake",
+      "tick": 117,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 76
+    },
+    {
+      "id": "snake:classic-operation-reel-before-return:standard",
+      "mode": "snake",
+      "tick": 132,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 111
+    },
+    {
+      "id": "snake:classic-operation-cold-window:standard",
+      "mode": "snake",
+      "tick": 77,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 56
+    },
+    {
+      "id": "snake:classic-operation-radio-spares:standard",
+      "mode": "snake",
+      "tick": 121,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 116
+    },
+    {
+      "id": "snake:classic-operation-short-cable-long-door:standard",
+      "mode": "snake",
+      "tick": 118,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 97
+    },
+    {
+      "id": "snake:classic-operation-freight-flank:standard",
+      "mode": "snake",
+      "tick": 73,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 59
+    },
+    {
+      "id": "snake:classic-operation-two-offers-one-route:standard",
+      "mode": "snake",
+      "tick": 107,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 79
+    },
+    {
+      "id": "snake:classic-operation-last-train-home:standard",
+      "mode": "snake",
+      "tick": 85,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 94
+    },
+    {
+      "id": "snake:classic-operation-shared-manifest:standard",
+      "mode": "snake",
+      "tick": 76,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 55
+    },
+    {
+      "id": "snake:classic-operation-opposed-levers:standard",
+      "mode": "snake",
+      "tick": 59,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 49
+    },
+    {
+      "id": "snake:classic-operation-two-held-doors:standard",
+      "mode": "snake",
+      "tick": 104,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 81
+    },
+    {
+      "id": "snake:classic-operation-opposite-loads:standard",
+      "mode": "snake",
+      "tick": 181,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 125
+    },
+    {
+      "id": "snake:classic-operation-shared-frequency:standard",
+      "mode": "snake",
+      "tick": 69,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 75
+    },
+    {
+      "id": "snake:classic-operation-staggered-rendezvous:standard",
+      "mode": "snake",
+      "tick": 87,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 77
+    },
+    {
+      "id": "snake:classic-operation-relay-partners:standard",
+      "mode": "snake",
+      "tick": 89,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 69
+    },
+    {
+      "id": "snake:classic-operation-summit-coordination:standard",
+      "mode": "snake",
+      "tick": 54,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 58
+    },
+    {
+      "id": "snake:classic-operation-citadel-dispatch:standard",
+      "mode": "snake",
+      "tick": 90,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 74
+    },
+    {
+      "id": "snake:classic-operation-stone-cable:standard",
+      "mode": "snake",
+      "tick": 92,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 82
+    },
+    {
+      "id": "snake:classic-operation-citadel-reception:standard",
+      "mode": "snake",
+      "tick": 123,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 124
+    },
+    {
+      "id": "snake:classic-operation-furnace-terrace:standard",
+      "mode": "snake",
+      "tick": 79,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 64
+    },
+    {
+      "id": "snake:classic-operation-border-citadel:standard",
+      "mode": "snake",
+      "tick": 116,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 104
+    },
+    {
+      "id": "snake:classic-operation-garden-machinery:standard",
+      "mode": "snake",
+      "tick": 74,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 66
+    },
+    {
+      "id": "snake:classic-operation-three-court-delivery:standard",
+      "mode": "snake",
+      "tick": 129,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 135
+    },
+    {
+      "id": "snake:classic-operation-living-citadel-finale:standard",
+      "mode": "snake",
+      "tick": 129,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 129
+    },
+    {
+      "id": "survival:field-crossing-broken-crossroads:standard",
+      "mode": "survival",
+      "tick": 19020,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 4945
+    },
+    {
+      "id": "survival:field-crossing-shelterbelt-gaps:standard",
+      "mode": "survival",
+      "tick": 19208,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 5773
+    },
+    {
+      "id": "survival:field-crossing-supply-orchard-edge:standard",
+      "mode": "survival",
+      "tick": 19446,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 6107
+    },
+    {
+      "id": "survival:freight-depot-shunting-yard:standard",
+      "mode": "survival",
+      "tick": 19028,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 4546
+    },
+    {
+      "id": "survival:freight-depot-loading-loop:standard",
+      "mode": "survival",
+      "tick": 19877,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 5542
+    },
+    {
+      "id": "survival:freight-depot-dispatch-junction:standard",
+      "mode": "survival",
+      "tick": 19561,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 7219
+    },
+    {
+      "id": "survival:relay-ruins-antenna-court:standard",
+      "mode": "survival",
+      "tick": 19188,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 4744
+    },
+    {
+      "id": "survival:relay-ruins-split-compound:standard",
+      "mode": "survival",
+      "tick": 20579,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 7242
+    },
+    {
+      "id": "survival:relay-ruins-receiver-gardens:standard",
+      "mode": "survival",
+      "tick": 19598,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 6415
+    },
+    {
+      "id": "survival:river-port-pump-apron:standard",
+      "mode": "survival",
+      "tick": 19130,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 4331
+    },
+    {
+      "id": "survival:river-port-twin-docks:standard",
+      "mode": "survival",
+      "tick": 19460,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 5792
+    },
+    {
+      "id": "survival:river-port-floodgate-yard:standard",
+      "mode": "survival",
+      "tick": 19478,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 9227
+    },
+    {
+      "id": "survival:chalk-quarry-survey-basin:standard",
+      "mode": "survival",
+      "tick": 19357,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 3811
+    },
+    {
+      "id": "survival:chalk-quarry-haul-switchbacks:standard",
+      "mode": "survival",
+      "tick": 19598,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 5005
+    },
+    {
+      "id": "survival:chalk-quarry-reclaimer-court:standard",
+      "mode": "survival",
+      "tick": 19274,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 6592
+    },
+    {
+      "id": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "mode": "survival",
+      "tick": 19604,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 4619
+    },
+    {
+      "id": "survival:orchard-strongpoint-irrigation-courts:standard",
+      "mode": "survival",
+      "tick": 19526,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 6786
+    },
+    {
+      "id": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+      "mode": "survival",
+      "tick": 19454,
+      "outcome": "won",
+      "loadingAndPlaybackMs": 9634
+    }
+  ],
+  "failures": [],
+  "complete": true,
+  "browserVersion": "26.5",
+  "finished": "2026-10-18T04:25:33.125Z"
+}

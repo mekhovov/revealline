@@ -28,6 +28,7 @@ import {
   animateRewardArrival,
 } from './ui/reward-arrival.mjs';
 import { loadCompanyStartup } from './ui/company-startup.mjs';
+import { demoSettingsKey } from './demo-settings.mjs';
 import { createStudioPreviewSession } from './studio-preview-session.mjs';
 import { editionDepartureDestinationAllowed } from './editions/departure-destination.mjs';
 import { mountEditionSoloUI } from './ui/edition-solo.mjs';
@@ -197,8 +198,13 @@ import { attachFullscreen } from './ui/fullscreen.mjs';
 import { editionThemeLabel } from './ui/edition-theme-label.mjs';
 import { attachGameShell } from './ui/game-shell.mjs';
 import { attachDemoHost } from './ui/demo-host.mjs';
+import { demoLaunchURL } from './demo-launch.mjs';
 import { createDemoLibrary } from './demo-library.mjs';
 import { loadDemoSources } from './demo-sources.mjs';
+import {
+  loadBuiltinSoloDemoSources,
+  mergeBuiltinSoloDemoSources,
+} from './demo-modes/solo-builtins.mjs';
 import { demoIdentity } from './demo-catalog.mjs';
 import { emitDemoEvents, updateDemoFeedback } from './demo-audio-feedback.mjs';
 import { authoredModeDestinations } from './ui/authored-mode-routes.mjs';
@@ -4213,6 +4219,7 @@ try {
     ...(librarySourceReturn ? { [librarySourceReturn.mode]: librarySourceDestination } : {}),
     catalogue: catalogueHref,
     library: './',
+    demo: './',
   });
   for (const kind of ['versus', 'team'])
     for (const id of [`shell-title-${kind}`, `shell-${kind}`])
@@ -4230,7 +4237,7 @@ try {
         ? t('interface:soloDeparture.currentArtwork')
         : t('interface:soloDeparture.retainedArtwork')
       : (destinationLabel ??
-        (kind === 'library'
+        (kind === 'library' || kind === 'demo'
           ? t('interface:selectedMission')
           : kind === 'catalogue'
             ? catalogueLabel()
@@ -4503,6 +4510,7 @@ try {
       libraryReady = false,
       editionId = null,
       presentationId = undefined,
+      demoSource = null,
     } = {},
   ) {
     if (
@@ -4539,11 +4547,14 @@ try {
       (kind !== 'catalogue' || !destinationEdition || editionId === runtimeContent.editionId)
     )
       return false;
-    const destinationHref = destinationEdition
-      ? runtimeContent.href({ edition: editionId, presentation: null })
-      : presentationChange
-        ? runtimeContent.href({ presentation: presentationId })
-        : null;
+    const destinationHref =
+      kind === 'demo'
+        ? demoLaunchURL(demoSource)
+        : destinationEdition
+          ? runtimeContent.href({ edition: editionId, presentation: null })
+          : presentationChange
+            ? runtimeContent.href({ presentation: presentationId })
+            : null;
     const destinationLabel = destinationEdition?.name ?? null;
     if (
       kind === 'library' &&
@@ -11777,6 +11788,8 @@ try {
       ) {
         demoHost.controller({
           ...sampledFrame,
+          gamepads: controller.gamepads,
+          now: controllerTime,
           ui: { ...sampledFrame.ui, confirm: false },
         });
         demoHost.update(elapsed);
@@ -13833,6 +13846,17 @@ try {
         throw new DOMException(t('interface:preparationCancelled'), 'AbortError');
     };
     assertIntent();
+    if ((source.modeId && source.modeId !== 'solo') || source.journeyContext) {
+      let handedOff = false;
+      const current = () => handedOff || isCurrent();
+      const result = await requestModeDeparture('demo', { preventDefault() {} }, $('shell-demo'), {
+        origin: 'solo-title',
+        isCurrent: current,
+        demoSource: source,
+      });
+      handedOff = result !== false && modeDeparture?.kind === 'demo';
+      return handedOff;
+    }
     const entry = executionEntries().find(
       (item) => campaignKey(item.campaign) === campaignKey(source.entry.campaign),
     );
@@ -15167,12 +15191,32 @@ try {
       touchSettings: touchPreferences.snapshot(),
       tapSteering: $('tap-steering').checked,
     }),
-    loadSources: ({ signal }) =>
-      loadDemoSources({ entries: executionEntries(), library: demoLibrary, turnPolicy, signal }),
+    loadSources: async ({ signal }) => {
+      const [existing, builtin] = await Promise.all([
+        loadDemoSources({ entries: executionEntries(), library: demoLibrary, turnPolicy, signal }),
+        runtimeContent ? [] : loadBuiltinSoloDemoSources({ signal }),
+      ]);
+      return mergeBuiltinSoloDemoSources(existing, builtin);
+    },
     readMedia: async (options) =>
       createSessionPictureView(await pictureMedia(options), sessionPictures),
-    getJourneyPictureContext: ({ entry, level }) => {
-      if (!candidateHost?.owns(entry)) return null;
+    getJourneyPictureContext: ({ entry, level, journeyContext }) => {
+      if (!candidateHost?.owns(entry)) {
+        if (journeyContext?.editionId !== authoredRoute?.id) return journeyContext ?? null;
+        // A lazily compiled demo has its own entry objects. Only the exact
+        // active route's native mission identity may borrow its earned-art view.
+        const native = candidateHost?.catalog.missions.find(
+          (mission) => mission.id === journeyContext.missionId,
+        );
+        return native
+          ? {
+              ...journeyContext,
+              entries: [...candidateHost.entries, entry],
+              profile: journeyProfile.snapshot(),
+              pictures: journeyProfile.pictures(),
+            }
+          : journeyContext;
+      }
       const index = entry.campaign.levels.findIndex((item) => item.id === level.id);
       return {
         editionId: authoredRoute.id,
@@ -15262,7 +15306,7 @@ try {
       return controllerConfirmGuard.owned();
     },
     canWrite: () => writer.writable && persistenceReady && !backupBusy,
-    settingsKey: `revealline.demo.${channel}.v1`,
+    settingsKey: demoSettingsKey({ channel }),
     setCollect: (enabled) => demoLibrary.setEnabled(enabled),
     clearRecordings: () => demoLibrary.clear(),
   });
@@ -15290,7 +15334,8 @@ try {
     }
   }
   $('demo-keep').onclick = () => void retainDemoRun(true);
-  $('shell-demo').hidden = practiceSession;
+  $('shell-demo').hidden = practiceSession || !!courseSession;
+  $('shell-demo-all').hidden = practiceSession || !!courseSession;
   $('demo-button').hidden = practiceSession;
   for (const id of ['shell-catalogue', 'missions-catalogue']) {
     const link = $(id);

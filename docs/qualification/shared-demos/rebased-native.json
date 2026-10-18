@@ -1,0 +1,103 @@
+{
+  "format": "SharedDemoPostRebaseNativeQualificationV1",
+  "generatedAt": "2026-10-18T05:03:46.828Z",
+  "head": "ba25be21c68e1eb245f2655eda4673f5ab3cbd5a",
+  "upstream": "56e29fd264f77df191b75b3425cc6e7bb0ce9e13",
+  "workingTreeChanges": true,
+  "checks": [
+    {
+      "command": "node scripts/qualify-solo-demos.mjs",
+      "passed": true,
+      "required": 240,
+      "qualified": 240,
+      "groups": {
+        "base": 12,
+        "current": 77,
+        "archive": 12,
+        "journey-current": 91,
+        "journey-archive": 48
+      },
+      "receipt": "docs/qualification/solo-demo-coverage.json",
+      "note": "Full native terminal verification and meaningful progress; existing reviewed compatibility remains unchanged."
+    },
+    {
+      "command": "node scripts/generate-survival-demos.mjs --check",
+      "passed": true,
+      "required": 18,
+      "qualified": 18,
+      "simulationIdentity": "e5f65192cdc4fd239d231b8e01f71233925dcb1a4e25ec749aeb0fc8390ab01f",
+      "outcomes": {
+        "won": 18,
+        "lost": 0
+      },
+      "minimumUpgradesChosen": 10
+    },
+    {
+      "command": "node --test game/test/demo-sources.test.mjs game/test/demo-solo-coverage.test.mjs game/test/demo-solo-catalog.test.mjs",
+      "passed": true,
+      "tests": 21,
+      "durationMs": 53112.596417
+    },
+    {
+      "command": "node --test game/test/demo-survival.test.mjs game/test/demo-survival-fresh.test.mjs",
+      "passed": true,
+      "tests": 19,
+      "durationMs": 25874.494542
+    },
+    {
+      "command": "node --test game/test/replay-player.test.mjs game/test/demo-library.test.mjs game/test/demo-clock.test.mjs game/test/demo-audio.test.mjs",
+      "passed": true,
+      "tests": 57,
+      "durationMs": 1689.571291
+    },
+    {
+      "command": "node --test game/test/edition-solo-host.test.mjs",
+      "passed": true,
+      "tests": 51,
+      "durationMs": 67946.479834
+    },
+    {
+      "command": "node --test game/test/demo-survival-fresh.test.mjs game/test/overflight-host.test.mjs game/test/overflight-world-source-lifecycle.test.mjs game/test/overflight-renderer.test.mjs",
+      "passed": true,
+      "tests": 76,
+      "durationMs": 2918.717708
+    },
+    {
+      "command": "node --test game/test/demo-survival-fresh.test.mjs",
+      "passed": true,
+      "tests": 10,
+      "durationMs": 271.046041,
+      "note": "Final source after pre-construction ownership guard."
+    }
+  ],
+  "limitations": [
+    "Browser rendering, ordinary host handoff, packaging and endurance checks are recorded separately."
+  ],
+  "review": {
+    "scope": [
+      "persistence isolation",
+      "resource retirement and late preparation ownership",
+      "startup and recovery deadlines",
+      "native terminal and meaningful progress coverage"
+    ],
+    "findings": [
+      {
+        "status": "fixed",
+        "summary": "Survival Fresh could adopt a late ordinary preparation after demo closure or foreground loss.",
+        "change": "Optional ownership guard at theme/world/renderer boundaries; epoch-guarded restoration of exact paused run and session options through existing renderer owner.",
+        "tests": [
+          "delayed theme readiness cancellation",
+          "delayed world readiness cancellation",
+          "delayed renderer readiness cancellation with candidate cleanup",
+          "newer ordinary preparation preserves ownership",
+          "failed restoration exposes recovery state"
+        ]
+      }
+    ],
+    "additionalConfirmedFindings": 0,
+    "limitations": [
+      "Human unfamiliar-player review, physical controller, mobile and audible checks require separate evidence.",
+      "Browser catalog verification, packaging and endurance receipts are recorded separately."
+    ]
+  }
+}

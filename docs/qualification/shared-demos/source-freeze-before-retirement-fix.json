@@ -1,0 +1,11 @@
+{
+  "format": "DemoProductionSourceFingerprintV1",
+  "head": "4f68b924ee74c1a02fa340b1d17ddadf5ffa2c3f",
+  "files": 9988,
+  "bytes": 404257285,
+  "sha256": "65607ce7d465474cbae486775a20bddbdca9b0c22b3c886a20e92f88e3873e53",
+  "scope": "game, optional-practice and publishing JS/JSON/CSS/HTML, excluding tests and qualification coverage receipts",
+  "recordedAt": "2026-10-18T05:47:23.333891+00:00",
+  "workingTreeChanges": true,
+  "note": "Frozen game tree after final upstream recovery integration; documentation, tests and reports may change without altering this digest."
+}

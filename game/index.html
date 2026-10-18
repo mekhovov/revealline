@@ -3073,6 +3073,20 @@ No offline check yet.</pre
       <div id="demo-panel" class="demo-panel" data-demo-ui hidden>
         <p id="demo-panel-caption"></p>
         <p id="demo-panel-status"></p>
+        <ol
+          id="demo-caption-history"
+          data-i18n-aria-label="demo:recentCaptions"
+          aria-label="Recent explanations"
+        ></ol>
+        <button
+          id="demo-retry"
+          type="button"
+          class="button secondary"
+          data-i18n="demo:retry"
+          hidden
+        >
+          Retry
+        </button>
         <button
           id="demo-details-close"
           type="button"
@@ -3086,6 +3100,11 @@ No offline check yet.</pre
             <span data-i18n="demo:details">Audio &amp; details</span>
           </summary>
           <div id="demo-audio" data-demo-ui></div>
+          <label data-demo-ui
+            ><input id="demo-auto-live" type="checkbox" /><span data-i18n="demo:auto"
+              >Show a demo after 60 seconds on the idle home screen</span
+            ></label
+          >
           <label class="demo-picture-setting" data-demo-ui
             ><input id="demo-show-all-pictures-live" type="checkbox" /><span
               data-i18n="demo:showAllPictures"
@@ -3290,6 +3309,14 @@ No offline check yet.</pre
             data-i18n="interface:missions"
           >
             Missions
+          </button>
+          <button
+            id="shell-demo-all"
+            type="button"
+            class="button secondary"
+            data-i18n="demo:watchAll"
+          >
+            Watch all modes
           </button>
           <button id="shell-demo" type="button" class="button secondary" data-i18n="demo:watch">
             Watch demo

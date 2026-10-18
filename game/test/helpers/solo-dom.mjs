@@ -137,7 +137,7 @@ class SoloDocument extends Document {
     return node;
   }
 }
-function mount(document, html) {
+export function mount(document, html) {
   const stack = [document.body];
   for (const token of html
     .split(/<body\b[^>]*>/u)[1]

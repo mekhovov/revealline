@@ -1,0 +1,483 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T06:42:45.868Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Порожнє поле: рухайтеся широкими петлями, ловіть єдину ціль і стежте за зростанням хвоста."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-dc59e6e76ae9df8b",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Split berths",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:river-port-pump-apron:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Pump Apron",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 17
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:stadium-04-acro-0296096807fc10f2",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Altitude ladder",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Пройдіть ворота в позначеному напрямку й сядьте на майданчик. Плавна траєкторія краща за різкі корекції."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "pause",
+      "mode": "sim"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-first-dispatch:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · First Dispatch",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:container-yard-03-acro-988a786656816ea8",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Crossing crane",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-2e72fe1d788ce165",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Read the lock",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:garage-01-acro-4ffd496ad72c79b0",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Parking approach",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-expedition-courier-overpass:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Courier Overpass",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:relay-ruins-antenna-court:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Antenna Court",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-d775783a12234789",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Cross-stitch crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-orchard-01-acro-39243be8ab62510e",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Meet the orchard guide",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-long-circuit:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Long Circuit",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-shunting-yard:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Shunting Yard",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-9695696535e4ee17",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Long way home",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-coast-03-self-level-d4e57d46b263b9b3",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792305799040,
+        "loadingMs": 15284,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Coastal courier",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T06:44:05.459Z",
+  "enduranceFinished": "2026-10-18T06:44:05.459Z",
+  "finished": "2026-10-18T06:44:05.627Z"
+}

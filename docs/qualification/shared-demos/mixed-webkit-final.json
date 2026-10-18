@@ -1,0 +1,394 @@
+{
+  "engine": "webkit",
+  "requestedDurationSeconds": 0,
+  "started": "2026-10-18T04:37:27.369Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "66",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "allocatedSprites": 17
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:beginner-01-acro-5b7652234b696e5a",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "67",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Meet your drone",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "geometries": 117,
+          "materials": 81,
+          "textures": 19,
+          "gpuGeometries": 78,
+          "gpuTextures": 15,
+          "gpuPrograms": 9,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Познайомтеся з чотирма осями керування, підготуйтеся на майданчику й зробіть перший малий підскок."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-reel-before-return:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Reel Before Return",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Вантаж і зростання хвоста ділять вузьке повернення. Котушка прибирає звичайний хвіст, зберігаючи пакунки; розвантажтеся перед тісним внутрішнім кутом."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "175",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-living-citadel-finale:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Living Citadel Finale",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-route-choices-cross-route-choice-self-level-f4d190b08a35083f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "8",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Cross-route choice",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-survey-basin:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "7",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Survey Basin",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-9a05e4f32fe3e8c3",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "42",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Islands in concert",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-18-self-level-01b84b1aaae8d520",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Roll and lateral braking",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "geometries": 123,
+          "materials": 79,
+          "textures": 17,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 6,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-haul-switchbacks:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Haul Switchbacks",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-long-circuit:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Long Circuit",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-f223736d7f7b47b2",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "47",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · A return in reserve",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:stadium-07-self-level-201d98181c7b146f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "6",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Crossing lights",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "geometries": 108,
+          "materials": 128,
+          "textures": 33,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 9,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-oval-intercept:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Oval Intercept",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-84508838cf882427",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "39",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Long rail",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T04:38:55.448Z",
+  "enduranceFinished": "2026-10-18T04:38:55.448Z",
+  "finished": "2026-10-18T04:38:56.562Z"
+}

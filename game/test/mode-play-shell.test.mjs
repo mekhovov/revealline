@@ -65,6 +65,22 @@ function fixture(options = {}) {
   return { document, source, slots, calls, shell };
 }
 
+test('late shared demo actions join the existing keyboard and controller landing order', () => {
+  const { document, shell } = fixture();
+  const nodes = ['watch-current', 'watch-all'].map((id) => {
+    const button = document.createElement('button');
+    button.id = id;
+    shell.elements.content.home.querySelector('.mode-play-main-menu').append(button);
+    return button;
+  });
+  shell.addHomeActions(nodes);
+  assert.equal(shell.elements.buttons.settings.getAttribute('data-menu-down').split(' ')[0], nodes[0].id);
+  assert.equal(nodes[0].getAttribute('data-menu-down').split(' ')[0], nodes[1].id);
+  assert.equal(nodes[1].getAttribute('data-menu-up').split(' ')[0], nodes[0].id);
+  assert.equal(shell.elements.buttons.sound.getAttribute('data-menu-up').split(' ')[0], nodes[1].id);
+  shell.dispose();
+});
+
 test('keyboard and controller directions share the exact landing cycle and mode row', () => {
   const h = fixture({
     withModes: true,

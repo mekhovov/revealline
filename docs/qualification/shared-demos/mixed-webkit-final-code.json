@@ -1,0 +1,372 @@
+{
+  "engine": "webkit",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T06:51:02.212Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "first-signal-left",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First Signal",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:river-port-twin-docks:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Twin Docks",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-edge-pressure:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Edge Pressure",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Закриті ворота — не єдиний перехід. Перейдіть через край до дальньої плити й відкрийте прямий шлях."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-interception-crossing-patrols-self-level-0af9c00724097fdb",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Crossing patrols",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Горизонтальні й вертикальні маршрути перетинаються у відкритому просторі. Оберіть підхід із вільним виходом."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "pause",
+      "mode": "sim"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:relay-ruins-split-compound:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Split Compound",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-field-signal-crossing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Signal Crossing",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-26-self-level-616326c6a2c3dcc6",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Your first solo Acro route",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-0c1decf0a2983bd4",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Windbreak weave",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-split-islands:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Split Islands",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-reclaimer-court:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Reclaimer Court",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-quarry-04-acro-1caf2b5b48a5bdd2",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quarry pulse arena",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-f96b30d71b0716cf",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Crossed bands",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-rooftops-04-self-level-5ed1fecffb664a97",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Roof-to-roof landings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-forked-interception:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Forked Interception",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-45ff8eaac10d989c",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Three open circuits",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-survey-basin:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Survey Basin",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T06:51:57.615Z",
+  "enduranceFinished": "2026-10-18T06:51:57.615Z",
+  "finished": "2026-10-18T06:51:57.776Z"
+}

@@ -129,6 +129,7 @@ export function createControllerRouter({
     boostLatched = false,
     boostArmed = false;
   const seen = new Map();
+  let latestGamepads = [];
   let generation = 0,
     assigned = null,
     blocked = true,
@@ -462,6 +463,7 @@ export function createControllerRouter({
   });
 
   function sample({ scope, timeMs, toggleBoostEligible = true, spectator = false } = {}) {
+    latestGamepads = [];
     sampledConfirmPad = null;
     sampledRawGamepads = undefined;
     if (destroyed) return result('disposed', statusText('interface:controllerInputIsStopped'));
@@ -481,6 +483,7 @@ export function createControllerRouter({
     let raw;
     try {
       raw = readPads();
+      latestGamepads = Array.from(raw ?? []).slice(0, 32);
       if (diagnosticsEnabled()) sampledRawGamepads = describePads(raw);
     } catch {
       invalidate();
@@ -681,6 +684,10 @@ export function createControllerRouter({
     );
   }
   return {
+    // Reuse this frame for native demo adapters; they must never poll hardware again.
+    get gamepads() {
+      return latestGamepads;
+    },
     sample,
     readMenuConfirm,
     menuConfirmPressed,

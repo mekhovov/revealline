@@ -170,7 +170,6 @@ export function prepareNativeMenus({
       'shell-help',
       'shell-home-fpv',
       'shell-home-practice',
-      'shell-demo',
       'demo-availability',
       'shell-workshop',
     ])

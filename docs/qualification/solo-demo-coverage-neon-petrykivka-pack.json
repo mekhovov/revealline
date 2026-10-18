@@ -1,0 +1,29 @@
+{
+  "format": "SoloDemoCoverageV1",
+  "required": 101,
+  "groups": {
+    "base": 12,
+    "current": 77,
+    "archive": 12
+  },
+  "entries": [
+    {
+      "id": "solo-qualified-14d1e5097d455385",
+      "levelId": "neon-petrykivka-pack",
+      "levelKey": "neon-mosaic/2/68f10772f1871b8b/neon-petrykivka-pack",
+      "catalogGroup": "current",
+      "qualified": true,
+      "attempts": [],
+      "outcome": "won",
+      "ticks": 7890,
+      "seconds": 65.75,
+      "captures": 19,
+      "capturedCells": 1611,
+      "coverage": 0.7570488721804511,
+      "progressEvents": 0,
+      "sourceId": "solo-qualified-14d1e5097d455385",
+      "diagnosticCheckpoints": 13
+    }
+  ],
+  "passed": false
+}

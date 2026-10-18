@@ -1,0 +1,59 @@
+{
+  "format": "SharedDemoSettingsQualificationV1",
+  "generatedAt": "2026-10-18T05:30:02.481648+00:00",
+  "head": "7e9575053aa59d366785de5b383f43e49a4a5c58",
+  "workingTreeChanges": true,
+  "sources": [
+    {
+      "path": "game/demo-settings.mjs",
+      "sha256": "aadaf83711f4f840d387d5b7183dcf09105dfec9c16a7b60764e902082e67ed8"
+    },
+    {
+      "path": "game/demo-experience.mjs",
+      "sha256": "068cca14e2e80259c0b8bd05daf1f3f3f6d360bfdb398a8a8305b2bd74074364"
+    },
+    {
+      "path": "game/ui/demo-entry.mjs",
+      "sha256": "c34c1ad74eb96332f4d9674e1bb596fd3bba0d73657f8e182f17eba72fbe49ca"
+    },
+    {
+      "path": "game/app.mjs",
+      "sha256": "8ffd3f4679b5e6c51e24b95e7fcda92f40774f91c53debc19e3ebd1d8108cae2"
+    },
+    {
+      "path": "game/test/demo-settings.test.mjs",
+      "sha256": "a5eb8b129cf9a191048697aaa1c15c16a5efd06d2cf6ed14fa76485cda6d6cff"
+    }
+  ],
+  "checks": [
+    {
+      "command": "node --test game/test/demo-settings.test.mjs game/test/demo-experience.test.mjs",
+      "passed": true,
+      "tests": 19,
+      "durationMs": 332.212959
+    },
+    {
+      "command": "node --test game/test/demo-native-host.test.mjs game/test/demo-survival-fresh.test.mjs game/test/demo-sources.test.mjs",
+      "passed": true,
+      "tests": 31,
+      "durationMs": 8164.761375
+    },
+    {
+      "command": "node node_modules/eslint/bin/eslint.js game/demo-settings.mjs game/demo-experience.mjs game/ui/demo-entry.mjs game/test/demo-settings.test.mjs game/app.mjs",
+      "passed": true
+    }
+  ],
+  "verified": [
+    "Actual mounted Solo-host and native-entry settings agree for dev and release builds",
+    "Native explicit idle preference change is read when Solo reopens, preserving recording and sound opt-ins",
+    "Watching, takeover, practice and return leave storage unchanged",
+    "Existing canonical settings outrank legacy shared fallback, even when malformed",
+    "Legacy fallback reads never migrate or overwrite settings",
+    "Edition and release channels remain isolated",
+    "Denied storage retains safe defaults and explicit changes remain session-only",
+    "Small build metadata loading has a bounded timeout and cannot fetch a full catalog"
+  ],
+  "limitations": [
+    "DOM boundary tests do not claim physical-device or browser rendering qualification. Actual browser cross-page checks are recorded separately."
+  ]
+}

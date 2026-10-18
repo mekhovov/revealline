@@ -1847,6 +1847,49 @@ test('World mission launch cannot steal Home focus after deferred scene preparat
   assert.equal(h.app.snapshot().state.status, 'active');
 });
 
+for (const rejected of [false, true])
+  test(`SIM cancelled Fresh preserves its paused origin after delayed native preparation (${rejected ? 'rejected' : 'resolved'})`, async (t) => {
+    let releasePreparation, candidateSignal;
+    let defer = false;
+    const h = fixture(t, {
+      async industrialPreparationFactory(options) {
+        const prepared = await prepareNativeIndustrialAttempt(options);
+        if (!defer) return prepared;
+        candidateSignal = options.signal;
+        return new Promise((resolve, reject) => {
+          releasePreparation = () =>
+            rejected ? reject(new Error('Late native preparation failure')) : resolve(prepared);
+        });
+      },
+    });
+    await h.app.ready;
+    const entries = WORLD_CATALOGUE.filter((entry) => !entry.legacy && !entry.beginner);
+    await h.app.startFlight(entries[0], { mode: 'self-level' });
+    h.app.pause();
+    const origin = h.app.snapshot();
+    const rendered = h.rendered.length;
+    let current = true;
+    defer = true;
+    const launch = h.app.startFlight(entries[1], {
+      mode: 'self-level',
+      isCurrent: () => current,
+    });
+    await waitFor(() => releasePreparation);
+    current = false;
+    releasePreparation();
+    await launch;
+    assert.equal(h.app.snapshot().course, origin.course);
+    assert.deepEqual(h.app.snapshot().state, origin.state);
+    assert.deepEqual(h.app.snapshot().appearance.accepted, origin.appearance.accepted);
+    assert.equal(h.rendered.length, rendered, 'The candidate never replaces the accepted scene.');
+    assert.equal(candidateSignal.aborted, true);
+    assert.equal(h.$('world-arm').disabled, false);
+    h.$('world-arm').click();
+    assert.equal(h.app.snapshot().state.status, 'active');
+    h.tick(3);
+    assert.ok(h.app.snapshot().state.ticks > origin.state.ticks);
+  });
+
 test('World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route', (t) => {
   const h = fixture(t);
   const hunts = WORLD_CATALOGUE.slice(0, 6);
@@ -2036,6 +2079,88 @@ test('World tuning uses saved rates and camera only in a new flight, retaining t
   assert.equal(next.response.rates.axes.yaw.rate, 87);
   assert.equal(h.$('world-fov').value, '109');
   assert.equal(initial.response.format, 'FlightResponseProfile.v1');
+});
+
+test('SIM demo Fresh preserves exact course and response with saved custom aircraft tuning', async (t) => {
+  const tuning = await import('../../optional-practice/civilian-fpv/tuning-library.mjs');
+  const { simDemoInventory } = await import(
+    '../../optional-practice/civilian-fpv/demo-inventory.mjs'
+  );
+  const catalog = JSON.parse(
+    await readFile(
+      new URL('../../optional-practice/civilian-fpv/demo-data/index.json', import.meta.url),
+    ),
+  );
+  const inventory = simDemoInventory();
+  const storage = new Map();
+  const store = tuning.createTuningLibraryStore({
+    storage: {
+      getItem: (key) => storage.get(key) ?? null,
+      setItem: (key, value) => storage.set(key, value),
+    },
+  });
+  await store.createPresetSetup({
+    presetId: 'meteor75-analog-2022',
+    setupId: 'custom-aircraft',
+    profileId: 'starter-rates',
+    rates: 'defaults',
+  });
+  const draft = store.effective();
+  draft.response.rates.axes.roll.rate = 73;
+  draft.camera = { tilt: 19, verticalFov: 91 };
+  await store.saveAircraftConfiguration({
+    setupId: 'custom-aircraft',
+    newProfileId: 'custom-rates',
+    advanced: draft.advanced,
+    response: draft.response,
+    camera: draft.camera,
+  });
+  const saved = store.export();
+  const h = fixture(t, { storage }),
+    blobs = [];
+  h.win.Worker = RegionalWorker;
+  await h.app.ready;
+  h.win.URL = {
+    createObjectURL(blob) {
+      blobs.push(blob);
+      return 'blob:demo-fresh-proof';
+    },
+    revokeObjectURL() {},
+  };
+  const responses = new Set();
+  for (const row of catalog.entries) {
+    if (responses.has(row.proof.responseIdentity)) continue;
+    responses.add(row.proof.responseIdentity);
+    const target = inventory.find(
+      (item) =>
+        item.levelId === row.levelId &&
+        item.variantId === row.variantId &&
+        item.sourceIdentity === row.sourceIdentity,
+    );
+    await h.app.startFlight(target.entry, {
+      mode: target.variantId,
+      demonstratedResponse: row.proof.response,
+    });
+    assert.equal(h.app.snapshot().state.status, 'disarmed');
+    assert.equal(h.app.snapshot().state.ticks, 0);
+    assert.equal(h.app.snapshot().state.advancedTelemetry, undefined);
+    const index = blobs.length;
+    h.$('export-flight').click();
+    await settleUntil(() => blobs.length > index, 'Fresh recording export should finish');
+    const proof = JSON.parse(await blobs[index].text()).records[0].proof;
+    assert.equal(proof.mode, row.proof.mode);
+    assert.equal(proof.courseIdentity, row.proof.courseIdentity);
+    assert.equal(proof.responseIdentity, row.proof.responseIdentity);
+    assert.deepEqual(proof.response, row.proof.response);
+    assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), saved);
+  }
+  await h.app.startFlight(BEGINNER_CATALOGUE[0], { mode: 'acro' });
+  const initialized = RegionalWorker.instances
+    .at(-1)
+    .messages.find((message) => message.type === 'init').options;
+  assert.deepEqual(initialized.aircraft, draft.advanced.aircraft);
+  assert.deepEqual(initialized.response, draft.response);
+  assert.equal(storage.get(tuning.TUNING_LIBRARY_KEY), saved);
 });
 
 test('World draft testing enters unscored free flight and returns to the unsaved camera and rate draft', async (t) => {

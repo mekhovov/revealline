@@ -12,11 +12,17 @@
       "inputTraceIdentity": "004a620b36d19d0d",
       "title": "First Signal",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "safe-ground"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "safe-ground"
+      ],
       "durationSeconds": 30.683333333333334,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/first-signal-left.replay.json",
-      "replayVariants": ["./demo-data/first-signal-left.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/first-signal-left.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "first-signal-right",
@@ -29,11 +35,17 @@
       "inputTraceIdentity": "0d05c1be36470add",
       "title": "First Signal",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "safe-ground"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "safe-ground"
+      ],
       "durationSeconds": 31.908333333333335,
       "turnPolicy": "grid-center",
       "replayURL": "./demo-data/first-signal-right.replay.json",
-      "replayVariants": ["./demo-data/first-signal-right.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/first-signal-right.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "relay-orchard-loop",
@@ -46,11 +58,17 @@
       "inputTraceIdentity": "6846dc10dc836abe",
       "title": "Relay Orchard",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "relay"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "relay"
+      ],
       "durationSeconds": 45.475,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/relay-orchard-loop.replay.json",
-      "replayVariants": ["./demo-data/relay-orchard-loop.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/relay-orchard-loop.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "relay-orchard-stairs",
@@ -63,11 +81,17 @@
       "inputTraceIdentity": "f1d666419fb5f5e0",
       "title": "Relay Orchard",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "relay"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "relay"
+      ],
       "durationSeconds": 45.675,
       "turnPolicy": "grid-center",
       "replayURL": "./demo-data/relay-orchard-stairs.replay.json",
-      "replayVariants": ["./demo-data/relay-orchard-stairs.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/relay-orchard-stairs.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "crosswind-openings",
@@ -80,11 +104,17 @@
       "inputTraceIdentity": "9e8557a13e622aa0",
       "title": "Crosswind",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "multiple-enemies"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "multiple-enemies"
+      ],
       "durationSeconds": 46.7,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/crosswind-openings.replay.json",
-      "replayVariants": ["./demo-data/crosswind-openings.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/crosswind-openings.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "night-patrol-loop",
@@ -97,11 +127,17 @@
       "inputTraceIdentity": "b6b1b38a63b715ba",
       "title": "Night Patrol",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "border-patrol"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "border-patrol"
+      ],
       "durationSeconds": 46.68333333333333,
       "turnPolicy": "grid-center",
       "replayURL": "./demo-data/night-patrol-loop.replay.json",
-      "replayVariants": ["./demo-data/night-patrol-loop.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/night-patrol-loop.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "stone-lanes-detour",
@@ -114,11 +150,18 @@
       "inputTraceIdentity": "02aee710343a0599",
       "title": "Stone Lanes",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "walls", "relay"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "walls",
+        "relay"
+      ],
       "durationSeconds": 25.041666666666668,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/stone-lanes-detour.replay.json",
-      "replayVariants": ["./demo-data/stone-lanes-detour.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/stone-lanes-detour.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "hidden-frequency-search",
@@ -131,11 +174,18 @@
       "inputTraceIdentity": "806c350fdb164271",
       "title": "Hidden Frequency",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "scan", "hidden-relay"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "scan",
+        "hidden-relay"
+      ],
       "durationSeconds": 44.391666666666666,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/hidden-frequency-search.replay.json",
-      "replayVariants": ["./demo-data/hidden-frequency-search.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/hidden-frequency-search.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "the-crossing-windows",
@@ -148,11 +198,17 @@
       "inputTraceIdentity": "59808a071ea860a3",
       "title": "The Crossing",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "lane-warning"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "lane-warning"
+      ],
       "durationSeconds": 34.608333333333334,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/the-crossing-windows.replay.json",
-      "replayVariants": ["./demo-data/the-crossing-windows.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/the-crossing-windows.chromium-macos.replay.json"
+      ]
     },
     {
       "id": "signal-garden-route",
@@ -165,11 +221,4221 @@
       "inputTraceIdentity": "6102f337b970c3f7",
       "title": "Signal Garden",
       "provenance": "authored",
-      "tags": ["capture", "bent-cut", "signal-zone", "hidden-relay"],
+      "tags": [
+        "capture",
+        "bent-cut",
+        "signal-zone",
+        "hidden-relay"
+      ],
       "durationSeconds": 47.13333333333333,
       "turnPolicy": "immediate",
       "replayURL": "./demo-data/signal-garden-route.replay.json",
-      "replayVariants": ["./demo-data/signal-garden-route.chromium-macos.replay.json"]
+      "replayVariants": [
+        "./demo-data/signal-garden-route.chromium-macos.replay.json"
+      ]
+    },
+    {
+      "id": "solo-qualified-478808a96f4fbf5e",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-08",
+      "levelRevision": "1",
+      "identity": "07559fdb9548f17f",
+      "recordingIdentity": "d1384c3dc6516b24",
+      "inputTraceIdentity": "353aaa5366229bfa",
+      "title": "Last Light",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 61.016666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-478808a96f4fbf5e.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "d1384c3dc6516b24",
+          "replayURL": "./demo-data/solo-qualified-478808a96f4fbf5e.chromium.replay.json",
+          "inputTraceIdentity": "353aaa5366229bfa",
+          "durationSeconds": 61.016666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "d1384c3dc6516b24",
+          "replayURL": "./demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json",
+          "inputTraceIdentity": "353aaa5366229bfa",
+          "durationSeconds": 61.016666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "d1384c3dc6516b24",
+          "replayURL": "./demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json",
+          "inputTraceIdentity": "353aaa5366229bfa",
+          "durationSeconds": 61.016666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-acdacc2c6fce041f",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-10",
+      "levelRevision": "1",
+      "identity": "6c261c7403bd2de5",
+      "recordingIdentity": "38e792b6a12aa0fc",
+      "inputTraceIdentity": "ced91062922b0959",
+      "title": "Supply Circuit",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 22.4,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-acdacc2c6fce041f.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "38e792b6a12aa0fc",
+          "replayURL": "./demo-data/solo-qualified-acdacc2c6fce041f.chromium.replay.json",
+          "inputTraceIdentity": "ced91062922b0959",
+          "durationSeconds": 22.4,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "38e792b6a12aa0fc",
+          "replayURL": "./demo-data/solo-qualified-acdacc2c6fce041f.firefox.replay.json",
+          "inputTraceIdentity": "ced91062922b0959",
+          "durationSeconds": 22.4,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "38e792b6a12aa0fc",
+          "replayURL": "./demo-data/solo-qualified-acdacc2c6fce041f.webkit.replay.json",
+          "inputTraceIdentity": "ced91062922b0959",
+          "durationSeconds": 22.4,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-365f2ab3bab05af8",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-11",
+      "levelRevision": "1",
+      "identity": "40e2759ce4e5c909",
+      "recordingIdentity": "f52c52d981fab5be",
+      "inputTraceIdentity": "993102a5c3305161",
+      "title": "Short Fuse",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 13.941666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-365f2ab3bab05af8.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "f52c52d981fab5be",
+          "replayURL": "./demo-data/solo-qualified-365f2ab3bab05af8.chromium.replay.json",
+          "inputTraceIdentity": "993102a5c3305161",
+          "durationSeconds": 13.941666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "f52c52d981fab5be",
+          "replayURL": "./demo-data/solo-qualified-365f2ab3bab05af8.firefox.replay.json",
+          "inputTraceIdentity": "993102a5c3305161",
+          "durationSeconds": 13.941666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "f52c52d981fab5be",
+          "replayURL": "./demo-data/solo-qualified-365f2ab3bab05af8.webkit.replay.json",
+          "inputTraceIdentity": "993102a5c3305161",
+          "durationSeconds": 13.941666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d0257fa131665b79",
+      "campaignId": "first-signal",
+      "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-12",
+      "levelRevision": "1",
+      "identity": "21b01a4b4433411e",
+      "recordingIdentity": "af7a7b92368ea255",
+      "inputTraceIdentity": "7cc26937cd6ebd85",
+      "title": "Relay Storm",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 89.425,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d0257fa131665b79.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "af7a7b92368ea255",
+          "replayURL": "./demo-data/solo-qualified-d0257fa131665b79.chromium.performance.replay.json",
+          "inputTraceIdentity": "7cc26937cd6ebd85",
+          "durationSeconds": 89.425,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "af7a7b92368ea255",
+          "replayURL": "./demo-data/solo-qualified-d0257fa131665b79.firefox.performance.replay.json",
+          "inputTraceIdentity": "7cc26937cd6ebd85",
+          "durationSeconds": 89.425,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "af7a7b92368ea255",
+          "replayURL": "./demo-data/solo-qualified-d0257fa131665b79.webkit.performance.replay.json",
+          "inputTraceIdentity": "7cc26937cd6ebd85",
+          "durationSeconds": 89.425,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6cdffde70fe72fa4",
+      "campaignId": "fpv-pressure-lines",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "orchard-crossing",
+      "levelRevision": "1",
+      "identity": "af346e7e3d400f49",
+      "recordingIdentity": "cef626b614a00d08",
+      "inputTraceIdentity": "e03dcf59e6a3de07",
+      "title": "Orchard Crossing",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 76.81666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6cdffde70fe72fa4.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "cef626b614a00d08",
+          "replayURL": "./demo-data/solo-qualified-6cdffde70fe72fa4.chromium.replay.json",
+          "inputTraceIdentity": "e03dcf59e6a3de07",
+          "durationSeconds": 76.81666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "cef626b614a00d08",
+          "replayURL": "./demo-data/solo-qualified-6cdffde70fe72fa4.firefox.performance.replay.json",
+          "inputTraceIdentity": "e03dcf59e6a3de07",
+          "durationSeconds": 76.81666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "cef626b614a00d08",
+          "replayURL": "./demo-data/solo-qualified-6cdffde70fe72fa4.webkit.replay.json",
+          "inputTraceIdentity": "e03dcf59e6a3de07",
+          "durationSeconds": 76.81666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-cc8994b6f3d0482f",
+      "campaignId": "fpv-pressure-lines",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "courtyard-exits",
+      "levelRevision": "1",
+      "identity": "64ac5c0275b0c5db",
+      "recordingIdentity": "de03c86cecd7cab4",
+      "inputTraceIdentity": "68eae2229dbec184",
+      "title": "Courtyard Exits",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 68.95,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-cc8994b6f3d0482f.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "de03c86cecd7cab4",
+          "replayURL": "./demo-data/solo-qualified-cc8994b6f3d0482f.chromium.replay.json",
+          "inputTraceIdentity": "68eae2229dbec184",
+          "durationSeconds": 68.95,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "de03c86cecd7cab4",
+          "replayURL": "./demo-data/solo-qualified-cc8994b6f3d0482f.firefox.replay.json",
+          "inputTraceIdentity": "68eae2229dbec184",
+          "durationSeconds": 68.95,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "de03c86cecd7cab4",
+          "replayURL": "./demo-data/solo-qualified-cc8994b6f3d0482f.webkit.replay.json",
+          "inputTraceIdentity": "68eae2229dbec184",
+          "durationSeconds": 68.95,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-596ebdf496c9e073",
+      "campaignId": "fpv-pressure-lines",
+      "campaignKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "night-crossfire",
+      "levelRevision": "1",
+      "identity": "e81d92d4c2d590f8",
+      "recordingIdentity": "d28f195cd3dd220e",
+      "inputTraceIdentity": "c978b6531f3ce6dc",
+      "title": "Night Crossfire",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 51.05,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-596ebdf496c9e073.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "d28f195cd3dd220e",
+          "replayURL": "./demo-data/solo-qualified-596ebdf496c9e073.chromium.replay.json",
+          "inputTraceIdentity": "c978b6531f3ce6dc",
+          "durationSeconds": 51.05,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "d28f195cd3dd220e",
+          "replayURL": "./demo-data/solo-qualified-596ebdf496c9e073.firefox.replay.json",
+          "inputTraceIdentity": "c978b6531f3ce6dc",
+          "durationSeconds": 51.05,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "d28f195cd3dd220e",
+          "replayURL": "./demo-data/solo-qualified-596ebdf496c9e073.webkit.replay.json",
+          "inputTraceIdentity": "c978b6531f3ce6dc",
+          "durationSeconds": 51.05,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-fc4db0777028aa09",
+      "campaignId": "fpv-pressure-frontier",
+      "campaignKey": "fpv-pressure-frontier/1/b9387b2be34f51ff",
+      "levelId": "copper-switchyard",
+      "levelRevision": "1",
+      "identity": "19e7c8233a45181a",
+      "recordingIdentity": "3c6c6ee69c86a8a0",
+      "inputTraceIdentity": "3eaeb38740e0ac9a",
+      "title": "Copper Switchyard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 63.18333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-fc4db0777028aa09.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "3c6c6ee69c86a8a0",
+          "replayURL": "./demo-data/solo-qualified-fc4db0777028aa09.chromium.performance.replay.json",
+          "inputTraceIdentity": "3eaeb38740e0ac9a",
+          "durationSeconds": 63.18333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "3c6c6ee69c86a8a0",
+          "replayURL": "./demo-data/solo-qualified-fc4db0777028aa09.firefox.performance.replay.json",
+          "inputTraceIdentity": "3eaeb38740e0ac9a",
+          "durationSeconds": 63.18333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "3c6c6ee69c86a8a0",
+          "replayURL": "./demo-data/solo-qualified-fc4db0777028aa09.webkit.performance.replay.json",
+          "inputTraceIdentity": "3eaeb38740e0ac9a",
+          "durationSeconds": 63.18333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-c8ea742b75efcef6",
+      "campaignId": "fpv-pressure-frontier",
+      "campaignKey": "fpv-pressure-frontier/1/b9387b2be34f51ff",
+      "levelId": "river-frontiers",
+      "levelRevision": "1",
+      "identity": "3b7eaccf4e5651a0",
+      "recordingIdentity": "bc13cf2f4d0ff542",
+      "inputTraceIdentity": "17d2e6d3d9531364",
+      "title": "River Frontiers",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 77,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-c8ea742b75efcef6.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "bc13cf2f4d0ff542",
+          "replayURL": "./demo-data/solo-qualified-c8ea742b75efcef6.chromium.replay.json",
+          "inputTraceIdentity": "17d2e6d3d9531364",
+          "durationSeconds": 77,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "bc13cf2f4d0ff542",
+          "replayURL": "./demo-data/solo-qualified-c8ea742b75efcef6.firefox.performance.replay.json",
+          "inputTraceIdentity": "8c4acb7bc3d43743",
+          "durationSeconds": 69.26666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "bc13cf2f4d0ff542",
+          "replayURL": "./demo-data/solo-qualified-c8ea742b75efcef6.webkit.performance.replay.json",
+          "inputTraceIdentity": "8c4acb7bc3d43743",
+          "durationSeconds": 69.26666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ab845a60c1777460",
+      "campaignId": "fpv-pressure-frontier",
+      "campaignKey": "fpv-pressure-frontier/1/b9387b2be34f51ff",
+      "levelId": "last-beacon",
+      "levelRevision": "1",
+      "identity": "91237f7be65365ef",
+      "recordingIdentity": "451681c0f27887a3",
+      "inputTraceIdentity": "5cfd3727badce16a",
+      "title": "Last Beacon",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 23.483333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-ab845a60c1777460.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "451681c0f27887a3",
+          "replayURL": "./demo-data/solo-qualified-ab845a60c1777460.chromium.replay.json",
+          "inputTraceIdentity": "5cfd3727badce16a",
+          "durationSeconds": 23.483333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "451681c0f27887a3",
+          "replayURL": "./demo-data/solo-qualified-ab845a60c1777460.firefox.replay.json",
+          "inputTraceIdentity": "5cfd3727badce16a",
+          "durationSeconds": 23.483333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "451681c0f27887a3",
+          "replayURL": "./demo-data/solo-qualified-ab845a60c1777460.webkit.replay.json",
+          "inputTraceIdentity": "5cfd3727badce16a",
+          "durationSeconds": 23.483333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-bda094dfb23a16c2",
+      "campaignId": "night-shift",
+      "campaignKey": "night-shift/1/7b8ffcade23e3175",
+      "levelId": "night-shift-01",
+      "levelRevision": "1",
+      "identity": "56e098a84f26a87e",
+      "recordingIdentity": "2569ccf0945c1df3",
+      "inputTraceIdentity": "65041e0732695584",
+      "title": "Midnight Channel",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 4.708333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-bda094dfb23a16c2.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "2569ccf0945c1df3",
+          "replayURL": "./demo-data/solo-qualified-bda094dfb23a16c2.webkit.replay.json",
+          "inputTraceIdentity": "65041e0732695584",
+          "durationSeconds": 4.708333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f39ca41ce3e763e1",
+      "campaignId": "night-shift",
+      "campaignKey": "night-shift/1/7b8ffcade23e3175",
+      "levelId": "night-shift-02",
+      "levelRevision": "1",
+      "identity": "f208d1b606cd1cc1",
+      "recordingIdentity": "c438c8f8d210b63c",
+      "inputTraceIdentity": "d7cab564ac55f9e1",
+      "title": "Voltage Garden",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 18.85,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-f39ca41ce3e763e1.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "c438c8f8d210b63c",
+          "replayURL": "./demo-data/solo-qualified-f39ca41ce3e763e1.chromium.replay.json",
+          "inputTraceIdentity": "d7cab564ac55f9e1",
+          "durationSeconds": 18.85,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "c438c8f8d210b63c",
+          "replayURL": "./demo-data/solo-qualified-f39ca41ce3e763e1.firefox.replay.json",
+          "inputTraceIdentity": "d7cab564ac55f9e1",
+          "durationSeconds": 18.85,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "c438c8f8d210b63c",
+          "replayURL": "./demo-data/solo-qualified-f39ca41ce3e763e1.webkit.replay.json",
+          "inputTraceIdentity": "d7cab564ac55f9e1",
+          "durationSeconds": 18.85,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ede2a5c11f561acc",
+      "campaignId": "night-shift",
+      "campaignKey": "night-shift/1/7b8ffcade23e3175",
+      "levelId": "night-shift-03",
+      "levelRevision": "1",
+      "identity": "b74501864cbdce11",
+      "recordingIdentity": "673bebb1dcba7a2a",
+      "inputTraceIdentity": "d0ee3e0b9935b779",
+      "title": "Afterglow Sentinel",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 43.858333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-ede2a5c11f561acc.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "673bebb1dcba7a2a",
+          "replayURL": "./demo-data/solo-qualified-ede2a5c11f561acc.chromium.replay.json",
+          "inputTraceIdentity": "d0ee3e0b9935b779",
+          "durationSeconds": 43.858333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "673bebb1dcba7a2a",
+          "replayURL": "./demo-data/solo-qualified-ede2a5c11f561acc.firefox.replay.json",
+          "inputTraceIdentity": "d0ee3e0b9935b779",
+          "durationSeconds": 43.858333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "673bebb1dcba7a2a",
+          "replayURL": "./demo-data/solo-qualified-ede2a5c11f561acc.webkit.replay.json",
+          "inputTraceIdentity": "d0ee3e0b9935b779",
+          "durationSeconds": 43.858333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-661be5ee4be18dd1",
+      "campaignId": "living-threads",
+      "campaignKey": "living-threads/1/e3287c370bec5e41",
+      "levelId": "living-threads-01",
+      "levelRevision": "1",
+      "identity": "b1952fa5c5bc6e68",
+      "recordingIdentity": "4e2b98532e4f0255",
+      "inputTraceIdentity": "3c33d93d4c7ce054",
+      "title": "Petals at Dawn",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 5.383333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-661be5ee4be18dd1.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "4e2b98532e4f0255",
+          "replayURL": "./demo-data/solo-qualified-661be5ee4be18dd1.webkit.replay.json",
+          "inputTraceIdentity": "3c33d93d4c7ce054",
+          "durationSeconds": 5.383333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-57d61f78dee61bd0",
+      "campaignId": "living-threads",
+      "campaignKey": "living-threads/1/e3287c370bec5e41",
+      "levelId": "living-threads-02",
+      "levelRevision": "1",
+      "identity": "bd9c2f6c26fcf5e7",
+      "recordingIdentity": "0fff0a01853a3b00",
+      "inputTraceIdentity": "abb4bac3ae9d7116",
+      "title": "The Woven Path",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 46.5,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-57d61f78dee61bd0.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "0fff0a01853a3b00",
+          "replayURL": "./demo-data/solo-qualified-57d61f78dee61bd0.chromium.replay.json",
+          "inputTraceIdentity": "abb4bac3ae9d7116",
+          "durationSeconds": 46.5,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "0fff0a01853a3b00",
+          "replayURL": "./demo-data/solo-qualified-57d61f78dee61bd0.firefox.replay.json",
+          "inputTraceIdentity": "abb4bac3ae9d7116",
+          "durationSeconds": 46.5,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "0fff0a01853a3b00",
+          "replayURL": "./demo-data/solo-qualified-57d61f78dee61bd0.webkit.replay.json",
+          "inputTraceIdentity": "abb4bac3ae9d7116",
+          "durationSeconds": 46.5,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-4b2800b5c31c2f3f",
+      "campaignId": "living-threads",
+      "campaignKey": "living-threads/1/e3287c370bec5e41",
+      "levelId": "living-threads-03",
+      "levelRevision": "1",
+      "identity": "5231915be25c884f",
+      "recordingIdentity": "8b3061cd07cd1cbf",
+      "inputTraceIdentity": "7f471a9459fb4599",
+      "title": "Garden of Memory",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 57.59166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-4b2800b5c31c2f3f.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "8b3061cd07cd1cbf",
+          "replayURL": "./demo-data/solo-qualified-4b2800b5c31c2f3f.chromium.replay.json",
+          "inputTraceIdentity": "7f471a9459fb4599",
+          "durationSeconds": 57.59166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "8b3061cd07cd1cbf",
+          "replayURL": "./demo-data/solo-qualified-4b2800b5c31c2f3f.firefox.replay.json",
+          "inputTraceIdentity": "7f471a9459fb4599",
+          "durationSeconds": 57.59166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "8b3061cd07cd1cbf",
+          "replayURL": "./demo-data/solo-qualified-4b2800b5c31c2f3f.webkit.replay.json",
+          "inputTraceIdentity": "7f471a9459fb4599",
+          "durationSeconds": 57.59166666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-3beea0c189588dba",
+      "campaignId": "fieldcraft",
+      "campaignKey": "fieldcraft/1/96ae746769a8b440",
+      "levelId": "fieldcraft-02",
+      "levelRevision": "1",
+      "identity": "c203b1bd34faee37",
+      "recordingIdentity": "73bb0375fc8689c3",
+      "inputTraceIdentity": "4e055a2205e8bad9",
+      "title": "Switchyard Circuit",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 58.291666666666664,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-3beea0c189588dba.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "73bb0375fc8689c3",
+          "replayURL": "./demo-data/solo-qualified-3beea0c189588dba.chromium.replay.json",
+          "inputTraceIdentity": "4e055a2205e8bad9",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "73bb0375fc8689c3",
+          "replayURL": "./demo-data/solo-qualified-3beea0c189588dba.firefox.replay.json",
+          "inputTraceIdentity": "4e055a2205e8bad9",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "73bb0375fc8689c3",
+          "replayURL": "./demo-data/solo-qualified-3beea0c189588dba.webkit.replay.json",
+          "inputTraceIdentity": "4e055a2205e8bad9",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5e8ee38d1fcc2441",
+      "campaignId": "fieldcraft",
+      "campaignKey": "fieldcraft/1/96ae746769a8b440",
+      "levelId": "fieldcraft-03",
+      "levelRevision": "1",
+      "identity": "b97eafbe9878834f",
+      "recordingIdentity": "00d98aff8e84698f",
+      "inputTraceIdentity": "09cf19b116b01644",
+      "title": "Pulse Recall",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 33.25,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-5e8ee38d1fcc2441.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "00d98aff8e84698f",
+          "replayURL": "./demo-data/solo-qualified-5e8ee38d1fcc2441.chromium.replay.json",
+          "inputTraceIdentity": "09cf19b116b01644",
+          "durationSeconds": 33.25,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "00d98aff8e84698f",
+          "replayURL": "./demo-data/solo-qualified-5e8ee38d1fcc2441.firefox.replay.json",
+          "inputTraceIdentity": "09cf19b116b01644",
+          "durationSeconds": 33.25,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "00d98aff8e84698f",
+          "replayURL": "./demo-data/solo-qualified-5e8ee38d1fcc2441.webkit.replay.json",
+          "inputTraceIdentity": "09cf19b116b01644",
+          "durationSeconds": 33.25,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-cdeea19d777f8c90",
+      "campaignId": "fieldcraft",
+      "campaignKey": "fieldcraft/1/96ae746769a8b440",
+      "levelId": "fieldcraft-04",
+      "levelRevision": "1",
+      "identity": "2e706f56f0279241",
+      "recordingIdentity": "95e6276458319d89",
+      "inputTraceIdentity": "1f77c6545c60e327",
+      "title": "Net Loom",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 29.558333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-cdeea19d777f8c90.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "95e6276458319d89",
+          "replayURL": "./demo-data/solo-qualified-cdeea19d777f8c90.firefox.replay.json",
+          "inputTraceIdentity": "1f77c6545c60e327",
+          "durationSeconds": 29.558333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "95e6276458319d89",
+          "replayURL": "./demo-data/solo-qualified-cdeea19d777f8c90.webkit.replay.json",
+          "inputTraceIdentity": "1f77c6545c60e327",
+          "durationSeconds": 29.558333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0672eec7c1fe6311",
+      "campaignId": "homeward-skies",
+      "campaignKey": "homeward-skies/1/0d01f5687b3c38ff",
+      "levelId": "homeward-02",
+      "levelRevision": "1",
+      "identity": "ab6c883efb42fef0",
+      "recordingIdentity": "7bd3db0e7ab8c7e8",
+      "inputTraceIdentity": "1eb6c8b303bec2d6",
+      "title": "River Switchyard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 58.291666666666664,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-0672eec7c1fe6311.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "7bd3db0e7ab8c7e8",
+          "replayURL": "./demo-data/solo-qualified-0672eec7c1fe6311.chromium.replay.json",
+          "inputTraceIdentity": "1eb6c8b303bec2d6",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "7bd3db0e7ab8c7e8",
+          "replayURL": "./demo-data/solo-qualified-0672eec7c1fe6311.firefox.replay.json",
+          "inputTraceIdentity": "1eb6c8b303bec2d6",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "7bd3db0e7ab8c7e8",
+          "replayURL": "./demo-data/solo-qualified-0672eec7c1fe6311.webkit.replay.json",
+          "inputTraceIdentity": "1eb6c8b303bec2d6",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8c77d68ddaaf730a",
+      "campaignId": "homeward-skies",
+      "campaignKey": "homeward-skies/1/0d01f5687b3c38ff",
+      "levelId": "homeward-03",
+      "levelRevision": "1",
+      "identity": "2775f9418b6d19f7",
+      "recordingIdentity": "803b3034ffa3713e",
+      "inputTraceIdentity": "946b5f929f80e907",
+      "title": "Home Beacon",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 33.25,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-8c77d68ddaaf730a.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "803b3034ffa3713e",
+          "replayURL": "./demo-data/solo-qualified-8c77d68ddaaf730a.chromium.replay.json",
+          "inputTraceIdentity": "946b5f929f80e907",
+          "durationSeconds": 33.25,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "803b3034ffa3713e",
+          "replayURL": "./demo-data/solo-qualified-8c77d68ddaaf730a.firefox.replay.json",
+          "inputTraceIdentity": "946b5f929f80e907",
+          "durationSeconds": 33.25,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "803b3034ffa3713e",
+          "replayURL": "./demo-data/solo-qualified-8c77d68ddaaf730a.webkit.replay.json",
+          "inputTraceIdentity": "946b5f929f80e907",
+          "durationSeconds": 33.25,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-24be1e733257dfcf",
+      "campaignId": "equipment-workshop",
+      "campaignKey": "equipment-workshop/1/3fc2cf073da368b4",
+      "levelId": "workshop-02",
+      "levelRevision": "1",
+      "identity": "ad59400679fbd05b",
+      "recordingIdentity": "e41355b9c96c6c14",
+      "inputTraceIdentity": "74cd1f808e8558ac",
+      "title": "Neon Switchboard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 58.291666666666664,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-24be1e733257dfcf.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "e41355b9c96c6c14",
+          "replayURL": "./demo-data/solo-qualified-24be1e733257dfcf.chromium.replay.json",
+          "inputTraceIdentity": "74cd1f808e8558ac",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "e41355b9c96c6c14",
+          "replayURL": "./demo-data/solo-qualified-24be1e733257dfcf.firefox.replay.json",
+          "inputTraceIdentity": "74cd1f808e8558ac",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "e41355b9c96c6c14",
+          "replayURL": "./demo-data/solo-qualified-24be1e733257dfcf.webkit.replay.json",
+          "inputTraceIdentity": "74cd1f808e8558ac",
+          "durationSeconds": 58.291666666666664,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-3ddc332fe23ac63b",
+      "campaignId": "sentinel-relay",
+      "campaignKey": "sentinel-relay/1/838c4e06647f7fd0",
+      "levelId": "sentinel-relay-01",
+      "levelRevision": "1",
+      "identity": "6688a4cf250c2930",
+      "recordingIdentity": "234449db72e406c9",
+      "inputTraceIdentity": "43555efa6017c786",
+      "title": "Sentinel Relay",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 29.183333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-3ddc332fe23ac63b.replay.json"
+    },
+    {
+      "id": "solo-qualified-1317cbb34f9f263d",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-channels-pack",
+      "levelRevision": "2",
+      "identity": "96b4228452fdac68",
+      "recordingIdentity": "dc10faf92a954d15",
+      "inputTraceIdentity": "6a625518d9437f7b",
+      "title": "Neon Channels",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 132.94166666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-1317cbb34f9f263d.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "dc10faf92a954d15",
+          "replayURL": "./demo-data/solo-qualified-1317cbb34f9f263d.chromium.replay.json",
+          "inputTraceIdentity": "6a625518d9437f7b",
+          "durationSeconds": 132.94166666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "dc10faf92a954d15",
+          "replayURL": "./demo-data/solo-qualified-1317cbb34f9f263d.firefox.replay.json",
+          "inputTraceIdentity": "6a625518d9437f7b",
+          "durationSeconds": 132.94166666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "dc10faf92a954d15",
+          "replayURL": "./demo-data/solo-qualified-1317cbb34f9f263d.webkit.replay.json",
+          "inputTraceIdentity": "6a625518d9437f7b",
+          "durationSeconds": 132.94166666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6d6735f53cea772c",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-crossroads-pack",
+      "levelRevision": "2",
+      "identity": "ea7d715a2e0a885a",
+      "recordingIdentity": "8c352f4afb8e7985",
+      "inputTraceIdentity": "a36fba5b93b34e90",
+      "title": "Neon Crossroads",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 104.06666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6d6735f53cea772c.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "8c352f4afb8e7985",
+          "replayURL": "./demo-data/solo-qualified-6d6735f53cea772c.chromium.replay.json",
+          "inputTraceIdentity": "a36fba5b93b34e90",
+          "durationSeconds": 104.06666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "8c352f4afb8e7985",
+          "replayURL": "./demo-data/solo-qualified-6d6735f53cea772c.firefox.replay.json",
+          "inputTraceIdentity": "a36fba5b93b34e90",
+          "durationSeconds": 104.06666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "8c352f4afb8e7985",
+          "replayURL": "./demo-data/solo-qualified-6d6735f53cea772c.webkit.replay.json",
+          "inputTraceIdentity": "a36fba5b93b34e90",
+          "durationSeconds": 104.06666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b48891e1132779ca",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-hearts-pack",
+      "levelRevision": "2",
+      "identity": "05acb1c3a52053f7",
+      "recordingIdentity": "2cb3cf484b193148",
+      "inputTraceIdentity": "697e4c08fd7a2e81",
+      "title": "Neon Hearts",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 66.975,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-b48891e1132779ca.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "2cb3cf484b193148",
+          "replayURL": "./demo-data/solo-qualified-b48891e1132779ca.chromium.replay.json",
+          "inputTraceIdentity": "697e4c08fd7a2e81",
+          "durationSeconds": 66.975,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "2cb3cf484b193148",
+          "replayURL": "./demo-data/solo-qualified-b48891e1132779ca.firefox.performance.replay.json",
+          "inputTraceIdentity": "697e4c08fd7a2e81",
+          "durationSeconds": 66.975,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "2cb3cf484b193148",
+          "replayURL": "./demo-data/solo-qualified-b48891e1132779ca.webkit.replay.json",
+          "inputTraceIdentity": "697e4c08fd7a2e81",
+          "durationSeconds": 66.975,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-a6bd03461640ac1f",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-conduit-pack",
+      "levelRevision": "2",
+      "identity": "6d4a50e92ce7904a",
+      "recordingIdentity": "0ffa67d6bb31696e",
+      "inputTraceIdentity": "3a7a2d7eb9c98b9b",
+      "title": "Neon Conduit",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 91.44166666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-a6bd03461640ac1f.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "0ffa67d6bb31696e",
+          "replayURL": "./demo-data/solo-qualified-a6bd03461640ac1f.chromium.performance.replay.json",
+          "inputTraceIdentity": "3a7a2d7eb9c98b9b",
+          "durationSeconds": 91.44166666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "0ffa67d6bb31696e",
+          "replayURL": "./demo-data/solo-qualified-a6bd03461640ac1f.firefox.performance.replay.json",
+          "inputTraceIdentity": "3a7a2d7eb9c98b9b",
+          "durationSeconds": 91.44166666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "0ffa67d6bb31696e",
+          "replayURL": "./demo-data/solo-qualified-a6bd03461640ac1f.webkit.replay.json",
+          "inputTraceIdentity": "3a7a2d7eb9c98b9b",
+          "durationSeconds": 91.44166666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-eb610c93d32ff955",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-spines-pack",
+      "levelRevision": "2",
+      "identity": "c8707be63829c9db",
+      "recordingIdentity": "045289811fc9dde5",
+      "inputTraceIdentity": "8948faf0d94fac62",
+      "title": "Neon Spines",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 49.5,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-eb610c93d32ff955.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "045289811fc9dde5",
+          "replayURL": "./demo-data/solo-qualified-eb610c93d32ff955.chromium.replay.json",
+          "inputTraceIdentity": "8948faf0d94fac62",
+          "durationSeconds": 49.5,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "045289811fc9dde5",
+          "replayURL": "./demo-data/solo-qualified-eb610c93d32ff955.firefox.performance.replay.json",
+          "inputTraceIdentity": "8948faf0d94fac62",
+          "durationSeconds": 49.5,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "045289811fc9dde5",
+          "replayURL": "./demo-data/solo-qualified-eb610c93d32ff955.webkit.performance.replay.json",
+          "inputTraceIdentity": "8948faf0d94fac62",
+          "durationSeconds": 49.5,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-fc70762275c737c3",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-fpv-pack",
+      "levelRevision": "2",
+      "identity": "6817951720dbbccd",
+      "recordingIdentity": "d528e6e56b9b0850",
+      "inputTraceIdentity": "9a4ea47d505f075b",
+      "title": "Neon FPV",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 59.69166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-fc70762275c737c3.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "d528e6e56b9b0850",
+          "replayURL": "./demo-data/solo-qualified-fc70762275c737c3.chromium.replay.json",
+          "inputTraceIdentity": "9a4ea47d505f075b",
+          "durationSeconds": 59.69166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "d528e6e56b9b0850",
+          "replayURL": "./demo-data/solo-qualified-fc70762275c737c3.firefox.replay.json",
+          "inputTraceIdentity": "9a4ea47d505f075b",
+          "durationSeconds": 59.69166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "d528e6e56b9b0850",
+          "replayURL": "./demo-data/solo-qualified-fc70762275c737c3.webkit.replay.json",
+          "inputTraceIdentity": "9a4ea47d505f075b",
+          "durationSeconds": 59.69166666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-85b7fe2bd59f4ce6",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-ukraine-pack",
+      "levelRevision": "2",
+      "identity": "a97bed37e5037811",
+      "recordingIdentity": "39916a2e9d96e8aa",
+      "inputTraceIdentity": "9c3c7ae85899ebe1",
+      "title": "Neon UKRAINE",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 68.16666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-85b7fe2bd59f4ce6.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "39916a2e9d96e8aa",
+          "replayURL": "./demo-data/solo-qualified-85b7fe2bd59f4ce6.chromium.performance.replay.json",
+          "inputTraceIdentity": "9c3c7ae85899ebe1",
+          "durationSeconds": 68.16666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "39916a2e9d96e8aa",
+          "replayURL": "./demo-data/solo-qualified-85b7fe2bd59f4ce6.firefox.performance.replay.json",
+          "inputTraceIdentity": "9c3c7ae85899ebe1",
+          "durationSeconds": 68.16666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "39916a2e9d96e8aa",
+          "replayURL": "./demo-data/solo-qualified-85b7fe2bd59f4ce6.webkit.replay.json",
+          "inputTraceIdentity": "9c3c7ae85899ebe1",
+          "durationSeconds": 68.16666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-357575c079f7c22a",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-drone-aid-pack",
+      "levelRevision": "2",
+      "identity": "0068c5d7735b80d8",
+      "recordingIdentity": "05389d30f4548dc3",
+      "inputTraceIdentity": "01ec1fa331ccc788",
+      "title": "Neon DRONE AID",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 64.05833333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-357575c079f7c22a.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "05389d30f4548dc3",
+          "replayURL": "./demo-data/solo-qualified-357575c079f7c22a.chromium.replay.json",
+          "inputTraceIdentity": "01ec1fa331ccc788",
+          "durationSeconds": 64.05833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "05389d30f4548dc3",
+          "replayURL": "./demo-data/solo-qualified-357575c079f7c22a.firefox.replay.json",
+          "inputTraceIdentity": "01ec1fa331ccc788",
+          "durationSeconds": 64.05833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "05389d30f4548dc3",
+          "replayURL": "./demo-data/solo-qualified-357575c079f7c22a.webkit.replay.json",
+          "inputTraceIdentity": "01ec1fa331ccc788",
+          "durationSeconds": 64.05833333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-958579fbf73ab1f3",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-social-drone-pack",
+      "levelRevision": "2",
+      "identity": "2752fbfa27d5eab2",
+      "recordingIdentity": "f4d557323489f1a1",
+      "inputTraceIdentity": "e7e1ac073eaedbba",
+      "title": "Neon SOCIAL DRONE",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 86.38333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-958579fbf73ab1f3.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "f4d557323489f1a1",
+          "replayURL": "./demo-data/solo-qualified-958579fbf73ab1f3.chromium.performance.replay.json",
+          "inputTraceIdentity": "e7e1ac073eaedbba",
+          "durationSeconds": 86.38333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "f4d557323489f1a1",
+          "replayURL": "./demo-data/solo-qualified-958579fbf73ab1f3.firefox.performance.replay.json",
+          "inputTraceIdentity": "e7e1ac073eaedbba",
+          "durationSeconds": 86.38333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "f4d557323489f1a1",
+          "replayURL": "./demo-data/solo-qualified-958579fbf73ab1f3.webkit.performance.replay.json",
+          "inputTraceIdentity": "e7e1ac073eaedbba",
+          "durationSeconds": 86.38333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-11bae25f26fd63b2",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-sdua-pack",
+      "levelRevision": "2",
+      "identity": "38060b6900fd7f0d",
+      "recordingIdentity": "0e2b15810ada3a0c",
+      "inputTraceIdentity": "b99b16aca8dbf120",
+      "title": "Neon SDUA",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 52.108333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-11bae25f26fd63b2.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "0e2b15810ada3a0c",
+          "replayURL": "./demo-data/solo-qualified-11bae25f26fd63b2.chromium.performance.replay.json",
+          "inputTraceIdentity": "b99b16aca8dbf120",
+          "durationSeconds": 52.108333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "0e2b15810ada3a0c",
+          "replayURL": "./demo-data/solo-qualified-11bae25f26fd63b2.firefox.performance.replay.json",
+          "inputTraceIdentity": "b99b16aca8dbf120",
+          "durationSeconds": 52.108333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "0e2b15810ada3a0c",
+          "replayURL": "./demo-data/solo-qualified-11bae25f26fd63b2.webkit.performance.replay.json",
+          "inputTraceIdentity": "b99b16aca8dbf120",
+          "durationSeconds": 52.108333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-519f2cb9a0c75bc5",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-vd-pack",
+      "levelRevision": "2",
+      "identity": "8217da41aafe747e",
+      "recordingIdentity": "a07cb0e4ff240888",
+      "inputTraceIdentity": "137e8558e9618e14",
+      "title": "Neon VD",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 60.075,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-519f2cb9a0c75bc5.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "a07cb0e4ff240888",
+          "replayURL": "./demo-data/solo-qualified-519f2cb9a0c75bc5.chromium.performance.replay.json",
+          "inputTraceIdentity": "137e8558e9618e14",
+          "durationSeconds": 60.075,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "a07cb0e4ff240888",
+          "replayURL": "./demo-data/solo-qualified-519f2cb9a0c75bc5.firefox.replay.json",
+          "inputTraceIdentity": "137e8558e9618e14",
+          "durationSeconds": 60.075,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "a07cb0e4ff240888",
+          "replayURL": "./demo-data/solo-qualified-519f2cb9a0c75bc5.webkit.performance.replay.json",
+          "inputTraceIdentity": "137e8558e9618e14",
+          "durationSeconds": 60.075,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-2d795f9b60e1e9ea",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-fpv-line-pack",
+      "levelRevision": "2",
+      "identity": "0cc573a2516a778f",
+      "recordingIdentity": "6b720ff91031a04d",
+      "inputTraceIdentity": "cd90dd0f21701ddd",
+      "title": "Neon FPV LINE",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 91.55,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-2d795f9b60e1e9ea.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "6b720ff91031a04d",
+          "replayURL": "./demo-data/solo-qualified-2d795f9b60e1e9ea.chromium.performance.replay.json",
+          "inputTraceIdentity": "cd90dd0f21701ddd",
+          "durationSeconds": 91.55,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "6b720ff91031a04d",
+          "replayURL": "./demo-data/solo-qualified-2d795f9b60e1e9ea.firefox.performance.replay.json",
+          "inputTraceIdentity": "cd90dd0f21701ddd",
+          "durationSeconds": 91.55,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "6b720ff91031a04d",
+          "replayURL": "./demo-data/solo-qualified-2d795f9b60e1e9ea.webkit.performance.replay.json",
+          "inputTraceIdentity": "cd90dd0f21701ddd",
+          "durationSeconds": 91.55,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d7e8c58fb56985a6",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-reveal-pack",
+      "levelRevision": "2",
+      "identity": "a77f5a25f377d897",
+      "recordingIdentity": "d37b6fcf0083dce5",
+      "inputTraceIdentity": "3a8b38e8a6f3228d",
+      "title": "Neon REVEAL",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 47.083333333333336,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d7e8c58fb56985a6.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "d37b6fcf0083dce5",
+          "replayURL": "./demo-data/solo-qualified-d7e8c58fb56985a6.chromium.replay.json",
+          "inputTraceIdentity": "3a8b38e8a6f3228d",
+          "durationSeconds": 47.083333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "d37b6fcf0083dce5",
+          "replayURL": "./demo-data/solo-qualified-d7e8c58fb56985a6.firefox.replay.json",
+          "inputTraceIdentity": "3a8b38e8a6f3228d",
+          "durationSeconds": 47.083333333333336,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "d37b6fcf0083dce5",
+          "replayURL": "./demo-data/solo-qualified-d7e8c58fb56985a6.webkit.replay.json",
+          "inputTraceIdentity": "3a8b38e8a6f3228d",
+          "durationSeconds": 47.083333333333336,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6fc96345c2385275",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-fly-free-pack",
+      "levelRevision": "2",
+      "identity": "4b692e91d88adef3",
+      "recordingIdentity": "6e29e7b7616ee4d4",
+      "inputTraceIdentity": "0bb8d19d09950579",
+      "title": "Neon FLY FREE",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 50.516666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6fc96345c2385275.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "6e29e7b7616ee4d4",
+          "replayURL": "./demo-data/solo-qualified-6fc96345c2385275.chromium.replay.json",
+          "inputTraceIdentity": "0bb8d19d09950579",
+          "durationSeconds": 50.516666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "6e29e7b7616ee4d4",
+          "replayURL": "./demo-data/solo-qualified-6fc96345c2385275.firefox.replay.json",
+          "inputTraceIdentity": "0bb8d19d09950579",
+          "durationSeconds": 50.516666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "6e29e7b7616ee4d4",
+          "replayURL": "./demo-data/solo-qualified-6fc96345c2385275.webkit.performance.replay.json",
+          "inputTraceIdentity": "0bb8d19d09950579",
+          "durationSeconds": 50.516666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ed2912770fa96724",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-fpv-drone-pack",
+      "levelRevision": "2",
+      "identity": "b8ea0cc2b9204c4c",
+      "recordingIdentity": "7c85fde0751492aa",
+      "inputTraceIdentity": "d8a35e08e2e4ce0c",
+      "title": "Neon FPV Drone",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 55.69166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-ed2912770fa96724.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "7c85fde0751492aa",
+          "replayURL": "./demo-data/solo-qualified-ed2912770fa96724.chromium.replay.json",
+          "inputTraceIdentity": "d8a35e08e2e4ce0c",
+          "durationSeconds": 55.69166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "7c85fde0751492aa",
+          "replayURL": "./demo-data/solo-qualified-ed2912770fa96724.firefox.performance.replay.json",
+          "inputTraceIdentity": "d8a35e08e2e4ce0c",
+          "durationSeconds": 55.69166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "7c85fde0751492aa",
+          "replayURL": "./demo-data/solo-qualified-ed2912770fa96724.webkit.performance.replay.json",
+          "inputTraceIdentity": "d8a35e08e2e4ce0c",
+          "durationSeconds": 55.69166666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-1b7c6f1b1a4d7efd",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-tryzub-pack",
+      "levelRevision": "2",
+      "identity": "5e8e7aeb3f077240",
+      "recordingIdentity": "ea0b22614dfbf233",
+      "inputTraceIdentity": "be3ffd745e2c3b89",
+      "title": "Neon Ukrainian Trident",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 84.58333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-1b7c6f1b1a4d7efd.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "ea0b22614dfbf233",
+          "replayURL": "./demo-data/solo-qualified-1b7c6f1b1a4d7efd.chromium.performance.replay.json",
+          "inputTraceIdentity": "be3ffd745e2c3b89",
+          "durationSeconds": 84.58333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "ea0b22614dfbf233",
+          "replayURL": "./demo-data/solo-qualified-1b7c6f1b1a4d7efd.firefox.replay.json",
+          "inputTraceIdentity": "be3ffd745e2c3b89",
+          "durationSeconds": 84.58333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "ea0b22614dfbf233",
+          "replayURL": "./demo-data/solo-qualified-1b7c6f1b1a4d7efd.webkit.replay.json",
+          "inputTraceIdentity": "be3ffd745e2c3b89",
+          "durationSeconds": 84.58333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0305faa5f3b057f0",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-tree-of-life-pack",
+      "levelRevision": "2",
+      "identity": "d15e68f6dc05c386",
+      "recordingIdentity": "ce22480dca97a6f5",
+      "inputTraceIdentity": "5fe666629af3d8a0",
+      "title": "Neon Tree of Life",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 57.016666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-0305faa5f3b057f0.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "ce22480dca97a6f5",
+          "replayURL": "./demo-data/solo-qualified-0305faa5f3b057f0.chromium.performance.replay.json",
+          "inputTraceIdentity": "5fe666629af3d8a0",
+          "durationSeconds": 57.016666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "ce22480dca97a6f5",
+          "replayURL": "./demo-data/solo-qualified-0305faa5f3b057f0.firefox.performance.replay.json",
+          "inputTraceIdentity": "5fe666629af3d8a0",
+          "durationSeconds": 57.016666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "ce22480dca97a6f5",
+          "replayURL": "./demo-data/solo-qualified-0305faa5f3b057f0.webkit.performance.replay.json",
+          "inputTraceIdentity": "5fe666629af3d8a0",
+          "durationSeconds": 57.016666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-1d6d571646ea58e8",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-pysanka-pack",
+      "levelRevision": "2",
+      "identity": "46bb30aec13c2d83",
+      "recordingIdentity": "ab98fbb1aa8324fd",
+      "inputTraceIdentity": "75bb5602898a04ea",
+      "title": "Neon Pysanka",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 47.891666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-1d6d571646ea58e8.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "ab98fbb1aa8324fd",
+          "replayURL": "./demo-data/solo-qualified-1d6d571646ea58e8.chromium.replay.json",
+          "inputTraceIdentity": "75bb5602898a04ea",
+          "durationSeconds": 47.891666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "ab98fbb1aa8324fd",
+          "replayURL": "./demo-data/solo-qualified-1d6d571646ea58e8.firefox.replay.json",
+          "inputTraceIdentity": "75bb5602898a04ea",
+          "durationSeconds": 47.891666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "ab98fbb1aa8324fd",
+          "replayURL": "./demo-data/solo-qualified-1d6d571646ea58e8.webkit.replay.json",
+          "inputTraceIdentity": "75bb5602898a04ea",
+          "durationSeconds": 47.891666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-317c68e1e84b012b",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-barvinok-pack",
+      "levelRevision": "2",
+      "identity": "32d9fbebca960018",
+      "recordingIdentity": "67a5f4007aa18c49",
+      "inputTraceIdentity": "3c0b0a7121e47464",
+      "title": "Neon Barvinok",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 54.68333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-317c68e1e84b012b.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "67a5f4007aa18c49",
+          "replayURL": "./demo-data/solo-qualified-317c68e1e84b012b.chromium.performance.replay.json",
+          "inputTraceIdentity": "3c0b0a7121e47464",
+          "durationSeconds": 54.68333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "67a5f4007aa18c49",
+          "replayURL": "./demo-data/solo-qualified-317c68e1e84b012b.firefox.performance.replay.json",
+          "inputTraceIdentity": "3c0b0a7121e47464",
+          "durationSeconds": 54.68333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "67a5f4007aa18c49",
+          "replayURL": "./demo-data/solo-qualified-317c68e1e84b012b.webkit.performance.replay.json",
+          "inputTraceIdentity": "3c0b0a7121e47464",
+          "durationSeconds": 54.68333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-3edb8b3d29afe4e4",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-wheat-pack",
+      "levelRevision": "2",
+      "identity": "9765023b0cb63d75",
+      "recordingIdentity": "248a3e6ae69e7b55",
+      "inputTraceIdentity": "18944c4735646937",
+      "title": "Neon Wheat Sheaf",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 38.55,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-3edb8b3d29afe4e4.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "248a3e6ae69e7b55",
+          "replayURL": "./demo-data/solo-qualified-3edb8b3d29afe4e4.chromium.performance.replay.json",
+          "inputTraceIdentity": "18944c4735646937",
+          "durationSeconds": 38.55,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "248a3e6ae69e7b55",
+          "replayURL": "./demo-data/solo-qualified-3edb8b3d29afe4e4.firefox.performance.replay.json",
+          "inputTraceIdentity": "18944c4735646937",
+          "durationSeconds": 38.55,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "248a3e6ae69e7b55",
+          "replayURL": "./demo-data/solo-qualified-3edb8b3d29afe4e4.webkit.performance.replay.json",
+          "inputTraceIdentity": "18944c4735646937",
+          "durationSeconds": 38.55,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6f9d15c9f157385c",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-didukh-pack",
+      "levelRevision": "2",
+      "identity": "866389644ededcf3",
+      "recordingIdentity": "b495a23946d5a40a",
+      "inputTraceIdentity": "7825cda573900fbb",
+      "title": "Neon Didukh",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 102.425,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6f9d15c9f157385c.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "b495a23946d5a40a",
+          "replayURL": "./demo-data/solo-qualified-6f9d15c9f157385c.chromium.performance.replay.json",
+          "inputTraceIdentity": "7825cda573900fbb",
+          "durationSeconds": 102.425,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "b495a23946d5a40a",
+          "replayURL": "./demo-data/solo-qualified-6f9d15c9f157385c.firefox.performance.replay.json",
+          "inputTraceIdentity": "7825cda573900fbb",
+          "durationSeconds": 102.425,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "b495a23946d5a40a",
+          "replayURL": "./demo-data/solo-qualified-6f9d15c9f157385c.webkit.performance.replay.json",
+          "inputTraceIdentity": "7825cda573900fbb",
+          "durationSeconds": 102.425,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6fb14628da57d097",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-rushnyk-pack",
+      "levelRevision": "2",
+      "identity": "c7242961cd628940",
+      "recordingIdentity": "b2c28012398ba40c",
+      "inputTraceIdentity": "cbdbaa0637506c0a",
+      "title": "Neon Rushnyk",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 26.466666666666665,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6fb14628da57d097.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "b2c28012398ba40c",
+          "replayURL": "./demo-data/solo-qualified-6fb14628da57d097.chromium.performance.replay.json",
+          "inputTraceIdentity": "cbdbaa0637506c0a",
+          "durationSeconds": 26.466666666666665,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "b2c28012398ba40c",
+          "replayURL": "./demo-data/solo-qualified-6fb14628da57d097.firefox.performance.replay.json",
+          "inputTraceIdentity": "cbdbaa0637506c0a",
+          "durationSeconds": 26.466666666666665,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "b2c28012398ba40c",
+          "replayURL": "./demo-data/solo-qualified-6fb14628da57d097.webkit.performance.replay.json",
+          "inputTraceIdentity": "cbdbaa0637506c0a",
+          "durationSeconds": 26.466666666666665,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-63cbda0ed7ddb858",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-bandura-pack",
+      "levelRevision": "2",
+      "identity": "950ef4544f9ed11f",
+      "recordingIdentity": "3362056494f7284d",
+      "inputTraceIdentity": "0c9a69aa5357042b",
+      "title": "Neon Bandura",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 38.50833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-63cbda0ed7ddb858.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "3362056494f7284d",
+          "replayURL": "./demo-data/solo-qualified-63cbda0ed7ddb858.chromium.replay.json",
+          "inputTraceIdentity": "0c9a69aa5357042b",
+          "durationSeconds": 38.50833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "3362056494f7284d",
+          "replayURL": "./demo-data/solo-qualified-63cbda0ed7ddb858.firefox.replay.json",
+          "inputTraceIdentity": "0c9a69aa5357042b",
+          "durationSeconds": 38.50833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "3362056494f7284d",
+          "replayURL": "./demo-data/solo-qualified-63cbda0ed7ddb858.webkit.performance.replay.json",
+          "inputTraceIdentity": "0c9a69aa5357042b",
+          "durationSeconds": 38.50833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-da69d08373c12fee",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-tsymbaly-pack",
+      "levelRevision": "2",
+      "identity": "fd2e5658964cfda2",
+      "recordingIdentity": "b9712fa97cbf2ac5",
+      "inputTraceIdentity": "377eb15e7c565c98",
+      "title": "Neon Tsymbaly",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 43.775,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-da69d08373c12fee.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "b9712fa97cbf2ac5",
+          "replayURL": "./demo-data/solo-qualified-da69d08373c12fee.chromium.performance.replay.json",
+          "inputTraceIdentity": "377eb15e7c565c98",
+          "durationSeconds": 43.775,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "b9712fa97cbf2ac5",
+          "replayURL": "./demo-data/solo-qualified-da69d08373c12fee.firefox.performance.replay.json",
+          "inputTraceIdentity": "377eb15e7c565c98",
+          "durationSeconds": 43.775,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "b9712fa97cbf2ac5",
+          "replayURL": "./demo-data/solo-qualified-da69d08373c12fee.webkit.performance.replay.json",
+          "inputTraceIdentity": "377eb15e7c565c98",
+          "durationSeconds": 43.775,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-014fa419dd4cee2b",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-kosiv-pitcher-pack",
+      "levelRevision": "2",
+      "identity": "cc1cb8878259d1ab",
+      "recordingIdentity": "d8d2009cf8986202",
+      "inputTraceIdentity": "86097b7bc260137a",
+      "title": "Neon Kosiv Pitcher",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 42.43333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-014fa419dd4cee2b.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "d8d2009cf8986202",
+          "replayURL": "./demo-data/solo-qualified-014fa419dd4cee2b.chromium.replay.json",
+          "inputTraceIdentity": "86097b7bc260137a",
+          "durationSeconds": 42.43333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "d8d2009cf8986202",
+          "replayURL": "./demo-data/solo-qualified-014fa419dd4cee2b.firefox.performance.replay.json",
+          "inputTraceIdentity": "86097b7bc260137a",
+          "durationSeconds": 42.43333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "d8d2009cf8986202",
+          "replayURL": "./demo-data/solo-qualified-014fa419dd4cee2b.webkit.performance.replay.json",
+          "inputTraceIdentity": "86097b7bc260137a",
+          "durationSeconds": 42.43333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-7e1dbadc86cf52ca",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-oak-pack",
+      "levelRevision": "2",
+      "identity": "f2bdcf2dcafb63f2",
+      "recordingIdentity": "c2d024c635eddcde",
+      "inputTraceIdentity": "d3f00168237fd191",
+      "title": "Neon Oak and Acorns",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 36.791666666666664,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-7e1dbadc86cf52ca.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "c2d024c635eddcde",
+          "replayURL": "./demo-data/solo-qualified-7e1dbadc86cf52ca.chromium.performance.replay.json",
+          "inputTraceIdentity": "d3f00168237fd191",
+          "durationSeconds": 36.791666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "c2d024c635eddcde",
+          "replayURL": "./demo-data/solo-qualified-7e1dbadc86cf52ca.firefox.replay.json",
+          "inputTraceIdentity": "d3f00168237fd191",
+          "durationSeconds": 36.791666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "c2d024c635eddcde",
+          "replayURL": "./demo-data/solo-qualified-7e1dbadc86cf52ca.webkit.performance.replay.json",
+          "inputTraceIdentity": "d3f00168237fd191",
+          "durationSeconds": 36.791666666666664,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-73fda9cd13ee6004",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-stork-pack",
+      "levelRevision": "2",
+      "identity": "9e5875624cbe9d0c",
+      "recordingIdentity": "3d7c985238ae5b17",
+      "inputTraceIdentity": "12dd9e2bbda2591b",
+      "title": "Neon Stork",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 39.916666666666664,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-73fda9cd13ee6004.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "3d7c985238ae5b17",
+          "replayURL": "./demo-data/solo-qualified-73fda9cd13ee6004.chromium.performance.replay.json",
+          "inputTraceIdentity": "12dd9e2bbda2591b",
+          "durationSeconds": 39.916666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "3d7c985238ae5b17",
+          "replayURL": "./demo-data/solo-qualified-73fda9cd13ee6004.firefox.performance.replay.json",
+          "inputTraceIdentity": "12dd9e2bbda2591b",
+          "durationSeconds": 39.916666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "3d7c985238ae5b17",
+          "replayURL": "./demo-data/solo-qualified-73fda9cd13ee6004.webkit.performance.replay.json",
+          "inputTraceIdentity": "12dd9e2bbda2591b",
+          "durationSeconds": 39.916666666666664,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0cf6a5512cf875ec",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-swallow-pack",
+      "levelRevision": "2",
+      "identity": "5a6206f78ce71000",
+      "recordingIdentity": "b63b3197fd9f971c",
+      "inputTraceIdentity": "07609c8e45b1a445",
+      "title": "Neon Swallow",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 38.858333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-0cf6a5512cf875ec.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "b63b3197fd9f971c",
+          "replayURL": "./demo-data/solo-qualified-0cf6a5512cf875ec.chromium.replay.json",
+          "inputTraceIdentity": "07609c8e45b1a445",
+          "durationSeconds": 38.858333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "b63b3197fd9f971c",
+          "replayURL": "./demo-data/solo-qualified-0cf6a5512cf875ec.firefox.replay.json",
+          "inputTraceIdentity": "07609c8e45b1a445",
+          "durationSeconds": 38.858333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "b63b3197fd9f971c",
+          "replayURL": "./demo-data/solo-qualified-0cf6a5512cf875ec.webkit.replay.json",
+          "inputTraceIdentity": "07609c8e45b1a445",
+          "durationSeconds": 38.858333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-e546fded69fb9336",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-horse-pack",
+      "levelRevision": "2",
+      "identity": "6935d1f8d5cd9cc6",
+      "recordingIdentity": "91d6b99aea672975",
+      "inputTraceIdentity": "9bac20bcab1ff8e3",
+      "title": "Neon Pysanka Horse",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 51.375,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-e546fded69fb9336.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "91d6b99aea672975",
+          "replayURL": "./demo-data/solo-qualified-e546fded69fb9336.chromium.replay.json",
+          "inputTraceIdentity": "9bac20bcab1ff8e3",
+          "durationSeconds": 51.375,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "91d6b99aea672975",
+          "replayURL": "./demo-data/solo-qualified-e546fded69fb9336.firefox.replay.json",
+          "inputTraceIdentity": "9bac20bcab1ff8e3",
+          "durationSeconds": 51.375,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "91d6b99aea672975",
+          "replayURL": "./demo-data/solo-qualified-e546fded69fb9336.webkit.performance.replay.json",
+          "inputTraceIdentity": "9bac20bcab1ff8e3",
+          "durationSeconds": 51.375,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ae4fe97bb5a844f3",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-deer-pack",
+      "levelRevision": "2",
+      "identity": "1bc6cacad0ede5b7",
+      "recordingIdentity": "8442b1701a4c1f36",
+      "inputTraceIdentity": "dba16c4afbc2b4cb",
+      "title": "Neon Pysanka Deer",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 43.775,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-ae4fe97bb5a844f3.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "8442b1701a4c1f36",
+          "replayURL": "./demo-data/solo-qualified-ae4fe97bb5a844f3.chromium.replay.json",
+          "inputTraceIdentity": "dba16c4afbc2b4cb",
+          "durationSeconds": 43.775,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "8442b1701a4c1f36",
+          "replayURL": "./demo-data/solo-qualified-ae4fe97bb5a844f3.firefox.replay.json",
+          "inputTraceIdentity": "dba16c4afbc2b4cb",
+          "durationSeconds": 43.775,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "8442b1701a4c1f36",
+          "replayURL": "./demo-data/solo-qualified-ae4fe97bb5a844f3.webkit.replay.json",
+          "inputTraceIdentity": "dba16c4afbc2b4cb",
+          "durationSeconds": 43.775,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b420aacc8400ae19",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-fish-pack",
+      "levelRevision": "2",
+      "identity": "366ebdf654752c11",
+      "recordingIdentity": "91443fec721bb4cf",
+      "inputTraceIdentity": "6faa160ae18fa5a9",
+      "title": "Neon Pysanka Fish",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 127.53333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-b420aacc8400ae19.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "91443fec721bb4cf",
+          "replayURL": "./demo-data/solo-qualified-b420aacc8400ae19.chromium.replay.json",
+          "inputTraceIdentity": "6faa160ae18fa5a9",
+          "durationSeconds": 127.53333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "91443fec721bb4cf",
+          "replayURL": "./demo-data/solo-qualified-b420aacc8400ae19.firefox.replay.json",
+          "inputTraceIdentity": "6faa160ae18fa5a9",
+          "durationSeconds": 127.53333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "91443fec721bb4cf",
+          "replayURL": "./demo-data/solo-qualified-b420aacc8400ae19.webkit.replay.json",
+          "inputTraceIdentity": "6faa160ae18fa5a9",
+          "durationSeconds": 127.53333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5345516b36f07dce",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-berehynia-pack",
+      "levelRevision": "2",
+      "identity": "f0433f66906b74f1",
+      "recordingIdentity": "1264cfbe563bd254",
+      "inputTraceIdentity": "4cc28a603858a717",
+      "title": "Neon Berehynia Motif",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 29.316666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-5345516b36f07dce.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "1264cfbe563bd254",
+          "replayURL": "./demo-data/solo-qualified-5345516b36f07dce.chromium.performance.replay.json",
+          "inputTraceIdentity": "4cc28a603858a717",
+          "durationSeconds": 29.316666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "1264cfbe563bd254",
+          "replayURL": "./demo-data/solo-qualified-5345516b36f07dce.firefox.performance.replay.json",
+          "inputTraceIdentity": "4cc28a603858a717",
+          "durationSeconds": 29.316666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "1264cfbe563bd254",
+          "replayURL": "./demo-data/solo-qualified-5345516b36f07dce.webkit.performance.replay.json",
+          "inputTraceIdentity": "4cc28a603858a717",
+          "durationSeconds": 29.316666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-9f0dd1a83a873b3a",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-bezkonechnyk-pack",
+      "levelRevision": "2",
+      "identity": "53d3a63f360fca36",
+      "recordingIdentity": "52700520e9d03295",
+      "inputTraceIdentity": "6b716a51844010a1",
+      "title": "Neon Bezkonechnyk",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 39.733333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-9f0dd1a83a873b3a.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "52700520e9d03295",
+          "replayURL": "./demo-data/solo-qualified-9f0dd1a83a873b3a.chromium.performance.replay.json",
+          "inputTraceIdentity": "6b716a51844010a1",
+          "durationSeconds": 39.733333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "52700520e9d03295",
+          "replayURL": "./demo-data/solo-qualified-9f0dd1a83a873b3a.firefox.replay.json",
+          "inputTraceIdentity": "6b716a51844010a1",
+          "durationSeconds": 39.733333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "52700520e9d03295",
+          "replayURL": "./demo-data/solo-qualified-9f0dd1a83a873b3a.webkit.performance.replay.json",
+          "inputTraceIdentity": "6b716a51844010a1",
+          "durationSeconds": 39.733333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8e69822594538456",
+      "campaignId": "fpv-first-light-r4",
+      "campaignKey": "fpv-first-light-r4/4/0295a1eae3e180ec",
+      "levelId": "orchard-window",
+      "levelRevision": "4",
+      "identity": "0a87fb3c7948cf5e",
+      "recordingIdentity": "2b4bf733f9fb34a5",
+      "inputTraceIdentity": "cd8357a6f7b6225a",
+      "title": "Orchard Window",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 27.366666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-8e69822594538456.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "2b4bf733f9fb34a5",
+          "replayURL": "./demo-data/solo-qualified-8e69822594538456.chromium.replay.json",
+          "inputTraceIdentity": "cd8357a6f7b6225a",
+          "durationSeconds": 27.366666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "2b4bf733f9fb34a5",
+          "replayURL": "./demo-data/solo-qualified-8e69822594538456.firefox.replay.json",
+          "inputTraceIdentity": "cd8357a6f7b6225a",
+          "durationSeconds": 27.366666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "2b4bf733f9fb34a5",
+          "replayURL": "./demo-data/solo-qualified-8e69822594538456.webkit.replay.json",
+          "inputTraceIdentity": "cd8357a6f7b6225a",
+          "durationSeconds": 27.366666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-b20ed0897d0f5ffc",
+      "campaignId": "fpv-first-light-r4",
+      "campaignKey": "fpv-first-light-r4/4/0295a1eae3e180ec",
+      "levelId": "split-courtyard",
+      "levelRevision": "4",
+      "identity": "b17c16e8a3b63d73",
+      "recordingIdentity": "60cdf798b9bacaa7",
+      "inputTraceIdentity": "a13c2db131557864",
+      "title": "Split Courtyard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 75.70833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-b20ed0897d0f5ffc.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "60cdf798b9bacaa7",
+          "replayURL": "./demo-data/solo-qualified-b20ed0897d0f5ffc.chromium.replay.json",
+          "inputTraceIdentity": "a13c2db131557864",
+          "durationSeconds": 75.70833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "60cdf798b9bacaa7",
+          "replayURL": "./demo-data/solo-qualified-b20ed0897d0f5ffc.firefox.replay.json",
+          "inputTraceIdentity": "a13c2db131557864",
+          "durationSeconds": 75.70833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "60cdf798b9bacaa7",
+          "replayURL": "./demo-data/solo-qualified-b20ed0897d0f5ffc.webkit.replay.json",
+          "inputTraceIdentity": "a13c2db131557864",
+          "durationSeconds": 75.70833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-209dd22e35205b41",
+      "campaignId": "fpv-first-light-r4",
+      "campaignKey": "fpv-first-light-r4/4/0295a1eae3e180ec",
+      "levelId": "night-signal",
+      "levelRevision": "4",
+      "identity": "a21d24c9e77b275b",
+      "recordingIdentity": "e14d958e4cf39f8f",
+      "inputTraceIdentity": "45d15788cd880ef4",
+      "title": "Night Signal",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 26.225,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-209dd22e35205b41.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "e14d958e4cf39f8f",
+          "replayURL": "./demo-data/solo-qualified-209dd22e35205b41.chromium.replay.json",
+          "inputTraceIdentity": "45d15788cd880ef4",
+          "durationSeconds": 26.225,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "e14d958e4cf39f8f",
+          "replayURL": "./demo-data/solo-qualified-209dd22e35205b41.firefox.replay.json",
+          "inputTraceIdentity": "45d15788cd880ef4",
+          "durationSeconds": 26.225,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "e14d958e4cf39f8f",
+          "replayURL": "./demo-data/solo-qualified-209dd22e35205b41.webkit.replay.json",
+          "inputTraceIdentity": "45d15788cd880ef4",
+          "durationSeconds": 26.225,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ab36af48e02d65ca",
+      "campaignId": "fpv-first-light-r3",
+      "campaignKey": "fpv-first-light-r3/3/73b6b5aed8595174",
+      "levelId": "orchard-window",
+      "levelRevision": "3",
+      "identity": "13c83f3f60338988",
+      "recordingIdentity": "6518772b743975e0",
+      "inputTraceIdentity": "974c469da2e85389",
+      "title": "Orchard Window",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 27.366666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-ab36af48e02d65ca.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "6518772b743975e0",
+          "replayURL": "./demo-data/solo-qualified-ab36af48e02d65ca.chromium.replay.json",
+          "inputTraceIdentity": "974c469da2e85389",
+          "durationSeconds": 27.366666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "6518772b743975e0",
+          "replayURL": "./demo-data/solo-qualified-ab36af48e02d65ca.firefox.replay.json",
+          "inputTraceIdentity": "974c469da2e85389",
+          "durationSeconds": 27.366666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "6518772b743975e0",
+          "replayURL": "./demo-data/solo-qualified-ab36af48e02d65ca.webkit.replay.json",
+          "inputTraceIdentity": "974c469da2e85389",
+          "durationSeconds": 27.366666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-70dd4c708b708cfc",
+      "campaignId": "fpv-first-light-r3",
+      "campaignKey": "fpv-first-light-r3/3/73b6b5aed8595174",
+      "levelId": "split-courtyard",
+      "levelRevision": "3",
+      "identity": "341c77e1bb6b0bad",
+      "recordingIdentity": "e0d71b83700a1260",
+      "inputTraceIdentity": "f9cc2f99b0f9cdc1",
+      "title": "Split Courtyard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 75.70833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-70dd4c708b708cfc.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "e0d71b83700a1260",
+          "replayURL": "./demo-data/solo-qualified-70dd4c708b708cfc.chromium.replay.json",
+          "inputTraceIdentity": "f9cc2f99b0f9cdc1",
+          "durationSeconds": 75.70833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "e0d71b83700a1260",
+          "replayURL": "./demo-data/solo-qualified-70dd4c708b708cfc.firefox.replay.json",
+          "inputTraceIdentity": "f9cc2f99b0f9cdc1",
+          "durationSeconds": 75.70833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "e0d71b83700a1260",
+          "replayURL": "./demo-data/solo-qualified-70dd4c708b708cfc.webkit.replay.json",
+          "inputTraceIdentity": "f9cc2f99b0f9cdc1",
+          "durationSeconds": 75.70833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5fe1b2d2833db1f9",
+      "campaignId": "fpv-first-light-r3",
+      "campaignKey": "fpv-first-light-r3/3/73b6b5aed8595174",
+      "levelId": "night-signal",
+      "levelRevision": "3",
+      "identity": "96c30772eb0d5125",
+      "recordingIdentity": "7c003105fd686e46",
+      "inputTraceIdentity": "96ec017b9eeb67f1",
+      "title": "Night Signal",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 26.225,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-5fe1b2d2833db1f9.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "7c003105fd686e46",
+          "replayURL": "./demo-data/solo-qualified-5fe1b2d2833db1f9.chromium.replay.json",
+          "inputTraceIdentity": "96ec017b9eeb67f1",
+          "durationSeconds": 26.225,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "7c003105fd686e46",
+          "replayURL": "./demo-data/solo-qualified-5fe1b2d2833db1f9.firefox.replay.json",
+          "inputTraceIdentity": "96ec017b9eeb67f1",
+          "durationSeconds": 26.225,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "7c003105fd686e46",
+          "replayURL": "./demo-data/solo-qualified-5fe1b2d2833db1f9.webkit.replay.json",
+          "inputTraceIdentity": "96ec017b9eeb67f1",
+          "durationSeconds": 26.225,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-58fa121c41ee9a76",
+      "campaignId": "fpv-first-light-r2",
+      "campaignKey": "fpv-first-light-r2/2/33e59e00d45542d4",
+      "levelId": "orchard-window",
+      "levelRevision": "2",
+      "identity": "448abfa69a96e95c",
+      "recordingIdentity": "a042bf099adf1aa3",
+      "inputTraceIdentity": "96f797a902e40355",
+      "title": "Orchard Window",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 60.141666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-58fa121c41ee9a76.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "a042bf099adf1aa3",
+          "replayURL": "./demo-data/solo-qualified-58fa121c41ee9a76.chromium.performance.replay.json",
+          "inputTraceIdentity": "96f797a902e40355",
+          "durationSeconds": 60.141666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "a042bf099adf1aa3",
+          "replayURL": "./demo-data/solo-qualified-58fa121c41ee9a76.firefox.performance.replay.json",
+          "inputTraceIdentity": "96f797a902e40355",
+          "durationSeconds": 60.141666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "a042bf099adf1aa3",
+          "replayURL": "./demo-data/solo-qualified-58fa121c41ee9a76.webkit.replay.json",
+          "inputTraceIdentity": "96f797a902e40355",
+          "durationSeconds": 60.141666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8c5a7d940162231c",
+      "campaignId": "fpv-first-light-r2",
+      "campaignKey": "fpv-first-light-r2/2/33e59e00d45542d4",
+      "levelId": "split-courtyard",
+      "levelRevision": "2",
+      "identity": "63def20d076fc7f9",
+      "recordingIdentity": "055e6e277d23e94a",
+      "inputTraceIdentity": "c4bb93d202b3f700",
+      "title": "Split Courtyard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 99.85833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-8c5a7d940162231c.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "055e6e277d23e94a",
+          "replayURL": "./demo-data/solo-qualified-8c5a7d940162231c.chromium.replay.json",
+          "inputTraceIdentity": "c4bb93d202b3f700",
+          "durationSeconds": 99.85833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "055e6e277d23e94a",
+          "replayURL": "./demo-data/solo-qualified-8c5a7d940162231c.firefox.replay.json",
+          "inputTraceIdentity": "c4bb93d202b3f700",
+          "durationSeconds": 99.85833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "055e6e277d23e94a",
+          "replayURL": "./demo-data/solo-qualified-8c5a7d940162231c.webkit.replay.json",
+          "inputTraceIdentity": "c4bb93d202b3f700",
+          "durationSeconds": 99.85833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ec7912cb8caf199d",
+      "campaignId": "fpv-first-light-r2",
+      "campaignKey": "fpv-first-light-r2/2/33e59e00d45542d4",
+      "levelId": "night-signal",
+      "levelRevision": "2",
+      "identity": "4df41df708d08c53",
+      "recordingIdentity": "602964edfbb26a91",
+      "inputTraceIdentity": "63a4a7333e333053",
+      "title": "Night Signal",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 26.008333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-ec7912cb8caf199d.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "602964edfbb26a91",
+          "replayURL": "./demo-data/solo-qualified-ec7912cb8caf199d.chromium.replay.json",
+          "inputTraceIdentity": "63a4a7333e333053",
+          "durationSeconds": 26.008333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "602964edfbb26a91",
+          "replayURL": "./demo-data/solo-qualified-ec7912cb8caf199d.firefox.replay.json",
+          "inputTraceIdentity": "63a4a7333e333053",
+          "durationSeconds": 26.008333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "602964edfbb26a91",
+          "replayURL": "./demo-data/solo-qualified-ec7912cb8caf199d.webkit.replay.json",
+          "inputTraceIdentity": "63a4a7333e333053",
+          "durationSeconds": 26.008333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-01c45eb2a92b2a48",
+      "campaignId": "fpv-first-light",
+      "campaignKey": "fpv-first-light/1/7109e646c73e09be",
+      "levelId": "orchard-window",
+      "levelRevision": "1",
+      "identity": "ecd797cbcb2c6eb9",
+      "recordingIdentity": "7e832849c9cb74df",
+      "inputTraceIdentity": "21b5d69550aac071",
+      "title": "Orchard Window",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 61.858333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-01c45eb2a92b2a48.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "7e832849c9cb74df",
+          "replayURL": "./demo-data/solo-qualified-01c45eb2a92b2a48.chromium.replay.json",
+          "inputTraceIdentity": "21b5d69550aac071",
+          "durationSeconds": 61.858333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "7e832849c9cb74df",
+          "replayURL": "./demo-data/solo-qualified-01c45eb2a92b2a48.firefox.replay.json",
+          "inputTraceIdentity": "21b5d69550aac071",
+          "durationSeconds": 61.858333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "7e832849c9cb74df",
+          "replayURL": "./demo-data/solo-qualified-01c45eb2a92b2a48.webkit.replay.json",
+          "inputTraceIdentity": "21b5d69550aac071",
+          "durationSeconds": 61.858333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-906d14f392635406",
+      "campaignId": "fpv-first-light",
+      "campaignKey": "fpv-first-light/1/7109e646c73e09be",
+      "levelId": "split-courtyard",
+      "levelRevision": "1",
+      "identity": "818e1b88ce001d52",
+      "recordingIdentity": "0ad1c77b454a690e",
+      "inputTraceIdentity": "9c31eb7c0a304ec4",
+      "title": "Split Courtyard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 74.31666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-906d14f392635406.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "0ad1c77b454a690e",
+          "replayURL": "./demo-data/solo-qualified-906d14f392635406.chromium.replay.json",
+          "inputTraceIdentity": "9c31eb7c0a304ec4",
+          "durationSeconds": 74.31666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "0ad1c77b454a690e",
+          "replayURL": "./demo-data/solo-qualified-906d14f392635406.firefox.replay.json",
+          "inputTraceIdentity": "9c31eb7c0a304ec4",
+          "durationSeconds": 74.31666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "0ad1c77b454a690e",
+          "replayURL": "./demo-data/solo-qualified-906d14f392635406.webkit.replay.json",
+          "inputTraceIdentity": "9c31eb7c0a304ec4",
+          "durationSeconds": 74.31666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-7cf943719a6391a9",
+      "campaignId": "fpv-first-light",
+      "campaignKey": "fpv-first-light/1/7109e646c73e09be",
+      "levelId": "night-signal",
+      "levelRevision": "1",
+      "identity": "4168180a8136ee58",
+      "recordingIdentity": "d276048e6f60b218",
+      "inputTraceIdentity": "882d0a0ea9411271",
+      "title": "Night Signal",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 92.4,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-7cf943719a6391a9.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "d276048e6f60b218",
+          "replayURL": "./demo-data/solo-qualified-7cf943719a6391a9.chromium.replay.json",
+          "inputTraceIdentity": "882d0a0ea9411271",
+          "durationSeconds": 92.4,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "d276048e6f60b218",
+          "replayURL": "./demo-data/solo-qualified-7cf943719a6391a9.firefox.replay.json",
+          "inputTraceIdentity": "882d0a0ea9411271",
+          "durationSeconds": 92.4,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "d276048e6f60b218",
+          "replayURL": "./demo-data/solo-qualified-7cf943719a6391a9.webkit.replay.json",
+          "inputTraceIdentity": "882d0a0ea9411271",
+          "durationSeconds": 92.4,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-8a91659e300e8ed3",
+      "campaignId": "fieldcraft",
+      "campaignKey": "fieldcraft/1/96ae746769a8b440",
+      "levelId": "fieldcraft-01",
+      "levelRevision": "1",
+      "identity": "0f846c22f4f2462a",
+      "recordingIdentity": "2a3dfe1ae0bba716",
+      "inputTraceIdentity": "7aba15e5611ba6d5",
+      "title": "Copper Crossing",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 49.65833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-8a91659e300e8ed3.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "2a3dfe1ae0bba716",
+          "replayURL": "./demo-data/solo-qualified-8a91659e300e8ed3.chromium.replay.json",
+          "inputTraceIdentity": "7aba15e5611ba6d5",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "2a3dfe1ae0bba716",
+          "replayURL": "./demo-data/solo-qualified-8a91659e300e8ed3.firefox.replay.json",
+          "inputTraceIdentity": "7aba15e5611ba6d5",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "2a3dfe1ae0bba716",
+          "replayURL": "./demo-data/solo-qualified-8a91659e300e8ed3.webkit.replay.json",
+          "inputTraceIdentity": "7aba15e5611ba6d5",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d98ec8cfe4477b6c",
+      "campaignId": "homeward-skies",
+      "campaignKey": "homeward-skies/1/0d01f5687b3c38ff",
+      "levelId": "homeward-01",
+      "levelRevision": "1",
+      "identity": "29c2b68659cbc861",
+      "recordingIdentity": "2f1fd4e569ec5a26",
+      "inputTraceIdentity": "7c75184a77f2c7e1",
+      "title": "Copper Orchard",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 49.65833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d98ec8cfe4477b6c.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "2f1fd4e569ec5a26",
+          "replayURL": "./demo-data/solo-qualified-d98ec8cfe4477b6c.chromium.replay.json",
+          "inputTraceIdentity": "7c75184a77f2c7e1",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "2f1fd4e569ec5a26",
+          "replayURL": "./demo-data/solo-qualified-d98ec8cfe4477b6c.firefox.replay.json",
+          "inputTraceIdentity": "7c75184a77f2c7e1",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "2f1fd4e569ec5a26",
+          "replayURL": "./demo-data/solo-qualified-d98ec8cfe4477b6c.webkit.replay.json",
+          "inputTraceIdentity": "7c75184a77f2c7e1",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6884a9c1bc511396",
+      "campaignId": "equipment-workshop",
+      "campaignKey": "equipment-workshop/1/3fc2cf073da368b4",
+      "levelId": "workshop-01",
+      "levelRevision": "1",
+      "identity": "4ef71e8498d16384",
+      "recordingIdentity": "168b90ac7ba18851",
+      "inputTraceIdentity": "4c829ebfe623a1d8",
+      "title": "Garden of Threads",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 49.65833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6884a9c1bc511396.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "168b90ac7ba18851",
+          "replayURL": "./demo-data/solo-qualified-6884a9c1bc511396.chromium.replay.json",
+          "inputTraceIdentity": "4c829ebfe623a1d8",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "168b90ac7ba18851",
+          "replayURL": "./demo-data/solo-qualified-6884a9c1bc511396.firefox.replay.json",
+          "inputTraceIdentity": "4c829ebfe623a1d8",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "168b90ac7ba18851",
+          "replayURL": "./demo-data/solo-qualified-6884a9c1bc511396.webkit.replay.json",
+          "inputTraceIdentity": "4c829ebfe623a1d8",
+          "durationSeconds": 49.65833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-1365c63c29f6f7b0",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-labyrinth-pack",
+      "levelRevision": "2",
+      "identity": "a7584175222b76e8",
+      "recordingIdentity": "18e106c951b1bace",
+      "inputTraceIdentity": "91149574790a89a0",
+      "title": "Neon Labyrinth",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 132.59166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-1365c63c29f6f7b0.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "18e106c951b1bace",
+          "replayURL": "./demo-data/solo-qualified-1365c63c29f6f7b0.chromium.replay.json",
+          "inputTraceIdentity": "91149574790a89a0",
+          "durationSeconds": 132.59166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "18e106c951b1bace",
+          "replayURL": "./demo-data/solo-qualified-1365c63c29f6f7b0.firefox.replay.json",
+          "inputTraceIdentity": "91149574790a89a0",
+          "durationSeconds": 132.59166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "18e106c951b1bace",
+          "replayURL": "./demo-data/solo-qualified-1365c63c29f6f7b0.webkit.replay.json",
+          "inputTraceIdentity": "91149574790a89a0",
+          "durationSeconds": 132.59166666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0a838d0c1691b31f",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-arrows-pack",
+      "levelRevision": "2",
+      "identity": "b7dbd1e41c71d155",
+      "recordingIdentity": "4b71e92ad4fe3ab6",
+      "inputTraceIdentity": "93c637c1fa9d4708",
+      "title": "Neon Arrows",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 48.86666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-0a838d0c1691b31f.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "4b71e92ad4fe3ab6",
+          "replayURL": "./demo-data/solo-qualified-0a838d0c1691b31f.chromium.replay.json",
+          "inputTraceIdentity": "93c637c1fa9d4708",
+          "durationSeconds": 48.86666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "4b71e92ad4fe3ab6",
+          "replayURL": "./demo-data/solo-qualified-0a838d0c1691b31f.firefox.replay.json",
+          "inputTraceIdentity": "93c637c1fa9d4708",
+          "durationSeconds": 48.86666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "4b71e92ad4fe3ab6",
+          "replayURL": "./demo-data/solo-qualified-0a838d0c1691b31f.webkit.replay.json",
+          "inputTraceIdentity": "93c637c1fa9d4708",
+          "durationSeconds": 48.86666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-539f1ca4cc7249a8",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-chambers-pack",
+      "levelRevision": "2",
+      "identity": "4bff5ee14b8f5595",
+      "recordingIdentity": "e0ec192045ac7e5b",
+      "inputTraceIdentity": "a8046902507eb631",
+      "title": "Neon Chambers",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 102.85,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-539f1ca4cc7249a8.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "e0ec192045ac7e5b",
+          "replayURL": "./demo-data/solo-qualified-539f1ca4cc7249a8.chromium.performance.replay.json",
+          "inputTraceIdentity": "a8046902507eb631",
+          "durationSeconds": 102.85,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "e0ec192045ac7e5b",
+          "replayURL": "./demo-data/solo-qualified-539f1ca4cc7249a8.firefox.performance.replay.json",
+          "inputTraceIdentity": "a8046902507eb631",
+          "durationSeconds": 102.85,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "e0ec192045ac7e5b",
+          "replayURL": "./demo-data/solo-qualified-539f1ca4cc7249a8.webkit.replay.json",
+          "inputTraceIdentity": "a8046902507eb631",
+          "durationSeconds": 102.85,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-9f55f7092af5ad15",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-crossgrid-pack",
+      "levelRevision": "2",
+      "identity": "e32d55d143d0b466",
+      "recordingIdentity": "0d6bf7226ec76712",
+      "inputTraceIdentity": "a8230bd373aee06e",
+      "title": "Neon Crossgrid",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 32.975,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-9f55f7092af5ad15.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "0d6bf7226ec76712",
+          "replayURL": "./demo-data/solo-qualified-9f55f7092af5ad15.chromium.replay.json",
+          "inputTraceIdentity": "a8230bd373aee06e",
+          "durationSeconds": 32.975,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "0d6bf7226ec76712",
+          "replayURL": "./demo-data/solo-qualified-9f55f7092af5ad15.firefox.replay.json",
+          "inputTraceIdentity": "a8230bd373aee06e",
+          "durationSeconds": 32.975,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "0d6bf7226ec76712",
+          "replayURL": "./demo-data/solo-qualified-9f55f7092af5ad15.webkit.replay.json",
+          "inputTraceIdentity": "a8230bd373aee06e",
+          "durationSeconds": 32.975,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-34436b9f24286344",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-switchback-pack",
+      "levelRevision": "2",
+      "identity": "3e5a4ab4bee7680e",
+      "recordingIdentity": "f77e93fbd71784d5",
+      "inputTraceIdentity": "f9b3bc1be09dcaa1",
+      "title": "Neon Switchback",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 84.875,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-34436b9f24286344.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "f77e93fbd71784d5",
+          "replayURL": "./demo-data/solo-qualified-34436b9f24286344.chromium.replay.json",
+          "inputTraceIdentity": "f9b3bc1be09dcaa1",
+          "durationSeconds": 84.875,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "f77e93fbd71784d5",
+          "replayURL": "./demo-data/solo-qualified-34436b9f24286344.firefox.replay.json",
+          "inputTraceIdentity": "f9b3bc1be09dcaa1",
+          "durationSeconds": 84.875,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "f77e93fbd71784d5",
+          "replayURL": "./demo-data/solo-qualified-34436b9f24286344.webkit.replay.json",
+          "inputTraceIdentity": "f9b3bc1be09dcaa1",
+          "durationSeconds": 84.875,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-5107ade9c5d366bb",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-spirals-pack",
+      "levelRevision": "2",
+      "identity": "e48fa3837df62937",
+      "recordingIdentity": "8bdffad341318488",
+      "inputTraceIdentity": "72da52242b8095b8",
+      "title": "Neon Spirals",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 100.20833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-5107ade9c5d366bb.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "8bdffad341318488",
+          "replayURL": "./demo-data/solo-qualified-5107ade9c5d366bb.chromium.replay.json",
+          "inputTraceIdentity": "72da52242b8095b8",
+          "durationSeconds": 100.20833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "8bdffad341318488",
+          "replayURL": "./demo-data/solo-qualified-5107ade9c5d366bb.firefox.replay.json",
+          "inputTraceIdentity": "72da52242b8095b8",
+          "durationSeconds": 100.20833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "8bdffad341318488",
+          "replayURL": "./demo-data/solo-qualified-5107ade9c5d366bb.webkit.replay.json",
+          "inputTraceIdentity": "72da52242b8095b8",
+          "durationSeconds": 100.20833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-9f1b8ec355af25b9",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-crossfire-pack",
+      "levelRevision": "2",
+      "identity": "99cb4fa8acf9b218",
+      "recordingIdentity": "1c1900d6ea5ea3c8",
+      "inputTraceIdentity": "ba1f15187c168782",
+      "title": "Neon Crossfire",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 113.60833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-9f1b8ec355af25b9.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "1c1900d6ea5ea3c8",
+          "replayURL": "./demo-data/solo-qualified-9f1b8ec355af25b9.chromium.replay.json",
+          "inputTraceIdentity": "ba1f15187c168782",
+          "durationSeconds": 113.60833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "1c1900d6ea5ea3c8",
+          "replayURL": "./demo-data/solo-qualified-9f1b8ec355af25b9.firefox.replay.json",
+          "inputTraceIdentity": "ba1f15187c168782",
+          "durationSeconds": 113.60833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "1c1900d6ea5ea3c8",
+          "replayURL": "./demo-data/solo-qualified-9f1b8ec355af25b9.webkit.replay.json",
+          "inputTraceIdentity": "ba1f15187c168782",
+          "durationSeconds": 113.60833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-609112f5d34480ec",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-pinwheels-pack",
+      "levelRevision": "2",
+      "identity": "85635d7901b1bae1",
+      "recordingIdentity": "cda64fdb65776257",
+      "inputTraceIdentity": "71fe31b6d42a990f",
+      "title": "Neon Pinwheels",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 86.03333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-609112f5d34480ec.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "cda64fdb65776257",
+          "replayURL": "./demo-data/solo-qualified-609112f5d34480ec.chromium.replay.json",
+          "inputTraceIdentity": "71fe31b6d42a990f",
+          "durationSeconds": 86.03333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "cda64fdb65776257",
+          "replayURL": "./demo-data/solo-qualified-609112f5d34480ec.firefox.replay.json",
+          "inputTraceIdentity": "71fe31b6d42a990f",
+          "durationSeconds": 86.03333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "cda64fdb65776257",
+          "replayURL": "./demo-data/solo-qualified-609112f5d34480ec.webkit.replay.json",
+          "inputTraceIdentity": "71fe31b6d42a990f",
+          "durationSeconds": 86.03333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6e585d1b8ae71b58",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-wavebands-pack",
+      "levelRevision": "2",
+      "identity": "f247fbfeaa96d1a0",
+      "recordingIdentity": "4bddb572b68cfd24",
+      "inputTraceIdentity": "b9ce3d9050661eed",
+      "title": "Neon Wavebands",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 107.34166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6e585d1b8ae71b58.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "4bddb572b68cfd24",
+          "replayURL": "./demo-data/solo-qualified-6e585d1b8ae71b58.chromium.replay.json",
+          "inputTraceIdentity": "b9ce3d9050661eed",
+          "durationSeconds": 107.34166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "4bddb572b68cfd24",
+          "replayURL": "./demo-data/solo-qualified-6e585d1b8ae71b58.firefox.replay.json",
+          "inputTraceIdentity": "b9ce3d9050661eed",
+          "durationSeconds": 107.34166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "4bddb572b68cfd24",
+          "replayURL": "./demo-data/solo-qualified-6e585d1b8ae71b58.webkit.replay.json",
+          "inputTraceIdentity": "b9ce3d9050661eed",
+          "durationSeconds": 107.34166666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-508a8b6278a54af2",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-switchyards-pack",
+      "levelRevision": "2",
+      "identity": "b1095eb4fb4d6c56",
+      "recordingIdentity": "a06bd05a201a8184",
+      "inputTraceIdentity": "241b794a391416ab",
+      "title": "Neon Switchyards",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 33.30833333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-508a8b6278a54af2.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "a06bd05a201a8184",
+          "replayURL": "./demo-data/solo-qualified-508a8b6278a54af2.chromium.replay.json",
+          "inputTraceIdentity": "241b794a391416ab",
+          "durationSeconds": 33.30833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "a06bd05a201a8184",
+          "replayURL": "./demo-data/solo-qualified-508a8b6278a54af2.firefox.performance.replay.json",
+          "inputTraceIdentity": "241b794a391416ab",
+          "durationSeconds": 33.30833333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "a06bd05a201a8184",
+          "replayURL": "./demo-data/solo-qualified-508a8b6278a54af2.webkit.performance.replay.json",
+          "inputTraceIdentity": "241b794a391416ab",
+          "durationSeconds": 33.30833333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6831f1fd6349b2be",
+      "campaignId": "neon-reference",
+      "campaignKey": "neon-reference/2/608cd0b9fd6ede21",
+      "levelId": "neon-prism-pack",
+      "levelRevision": "2",
+      "identity": "2fab6144bce7c210",
+      "recordingIdentity": "3304debe61e1b845",
+      "inputTraceIdentity": "add7570258ff9f75",
+      "title": "Neon Prism",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 103.81666666666666,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6831f1fd6349b2be.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "lost",
+          "recordingIdentity": "3304debe61e1b845",
+          "replayURL": "./demo-data/solo-qualified-6831f1fd6349b2be.chromium.performance.replay.json",
+          "inputTraceIdentity": "add7570258ff9f75",
+          "durationSeconds": 103.81666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "lost",
+          "recordingIdentity": "3304debe61e1b845",
+          "replayURL": "./demo-data/solo-qualified-6831f1fd6349b2be.firefox.performance.replay.json",
+          "inputTraceIdentity": "add7570258ff9f75",
+          "durationSeconds": 103.81666666666666,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "lost",
+          "recordingIdentity": "3304debe61e1b845",
+          "replayURL": "./demo-data/solo-qualified-6831f1fd6349b2be.webkit.performance.replay.json",
+          "inputTraceIdentity": "add7570258ff9f75",
+          "durationSeconds": 103.81666666666666,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-d03c65948bb71da1",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-victory-drones-pack",
+      "levelRevision": "2",
+      "identity": "b52951382f8d2568",
+      "recordingIdentity": "56868582ba4963c2",
+      "inputTraceIdentity": "2e412e52a7f3e0fc",
+      "title": "Neon VICTORY DRONES",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 50.166666666666664,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-d03c65948bb71da1.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "56868582ba4963c2",
+          "replayURL": "./demo-data/solo-qualified-d03c65948bb71da1.chromium.replay.json",
+          "inputTraceIdentity": "2e412e52a7f3e0fc",
+          "durationSeconds": 50.166666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "56868582ba4963c2",
+          "replayURL": "./demo-data/solo-qualified-d03c65948bb71da1.firefox.performance.replay.json",
+          "inputTraceIdentity": "2e412e52a7f3e0fc",
+          "durationSeconds": 50.166666666666664,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "56868582ba4963c2",
+          "replayURL": "./demo-data/solo-qualified-d03c65948bb71da1.webkit.replay.json",
+          "inputTraceIdentity": "2e412e52a7f3e0fc",
+          "durationSeconds": 50.166666666666664,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-13346d4f3775859d",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-vyshyvanka-pack",
+      "levelRevision": "2",
+      "identity": "75dfffe1b07a5073",
+      "recordingIdentity": "e4e0ce1a10944160",
+      "inputTraceIdentity": "0dd9ed38bffd0804",
+      "title": "Neon Vyshyvanka Diamonds",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 111.38333333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-13346d4f3775859d.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "e4e0ce1a10944160",
+          "replayURL": "./demo-data/solo-qualified-13346d4f3775859d.chromium.performance.replay.json",
+          "inputTraceIdentity": "0dd9ed38bffd0804",
+          "durationSeconds": 111.38333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "e4e0ce1a10944160",
+          "replayURL": "./demo-data/solo-qualified-13346d4f3775859d.firefox.replay.json",
+          "inputTraceIdentity": "0dd9ed38bffd0804",
+          "durationSeconds": 111.38333333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "e4e0ce1a10944160",
+          "replayURL": "./demo-data/solo-qualified-13346d4f3775859d.webkit.performance.replay.json",
+          "inputTraceIdentity": "0dd9ed38bffd0804",
+          "durationSeconds": 111.38333333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-0a05fdf1d370e239",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-ruzha-pack",
+      "levelRevision": "2",
+      "identity": "5b248f69d2430916",
+      "recordingIdentity": "c8da0c7cd7afbc89",
+      "inputTraceIdentity": "d0e920b5dc66cff6",
+      "title": "Neon Eight-Point Ruzha",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 110.00833333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-0a05fdf1d370e239.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "c8da0c7cd7afbc89",
+          "replayURL": "./demo-data/solo-qualified-0a05fdf1d370e239.chromium.replay.json",
+          "inputTraceIdentity": "d0e920b5dc66cff6",
+          "durationSeconds": 110.00833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "c8da0c7cd7afbc89",
+          "replayURL": "./demo-data/solo-qualified-0a05fdf1d370e239.firefox.replay.json",
+          "inputTraceIdentity": "d0e920b5dc66cff6",
+          "durationSeconds": 110.00833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "c8da0c7cd7afbc89",
+          "replayURL": "./demo-data/solo-qualified-0a05fdf1d370e239.webkit.replay.json",
+          "inputTraceIdentity": "d0e920b5dc66cff6",
+          "durationSeconds": 110.00833333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-a1ce0aac4a4ba375",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-kalyna-pack",
+      "levelRevision": "2",
+      "identity": "6fbf69fbb47407cc",
+      "recordingIdentity": "2efc428bf7bf2e67",
+      "inputTraceIdentity": "54263f91c41b524d",
+      "title": "Neon Kalyna",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 74.75833333333334,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-a1ce0aac4a4ba375.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "2efc428bf7bf2e67",
+          "replayURL": "./demo-data/solo-qualified-a1ce0aac4a4ba375.chromium.replay.json",
+          "inputTraceIdentity": "54263f91c41b524d",
+          "durationSeconds": 74.75833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "2efc428bf7bf2e67",
+          "replayURL": "./demo-data/solo-qualified-a1ce0aac4a4ba375.firefox.replay.json",
+          "inputTraceIdentity": "54263f91c41b524d",
+          "durationSeconds": 74.75833333333334,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "2efc428bf7bf2e67",
+          "replayURL": "./demo-data/solo-qualified-a1ce0aac4a4ba375.webkit.replay.json",
+          "inputTraceIdentity": "54263f91c41b524d",
+          "durationSeconds": 74.75833333333334,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-cb467c172a8504ec",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-vinok-pack",
+      "levelRevision": "2",
+      "identity": "55ec758f60a30983",
+      "recordingIdentity": "877d4c33c94e1e74",
+      "inputTraceIdentity": "23434fa40316c373",
+      "title": "Neon Vinok",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 71.39166666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-cb467c172a8504ec.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "877d4c33c94e1e74",
+          "replayURL": "./demo-data/solo-qualified-cb467c172a8504ec.chromium.performance.replay.json",
+          "inputTraceIdentity": "23434fa40316c373",
+          "durationSeconds": 71.39166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "877d4c33c94e1e74",
+          "replayURL": "./demo-data/solo-qualified-cb467c172a8504ec.firefox.performance.replay.json",
+          "inputTraceIdentity": "23434fa40316c373",
+          "durationSeconds": 71.39166666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "877d4c33c94e1e74",
+          "replayURL": "./demo-data/solo-qualified-cb467c172a8504ec.webkit.performance.replay.json",
+          "inputTraceIdentity": "23434fa40316c373",
+          "durationSeconds": 71.39166666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-f85650a2f81b67ed",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-trembita-pack",
+      "levelRevision": "2",
+      "identity": "9cac6bcca78de139",
+      "recordingIdentity": "29c6e038c61f38c2",
+      "inputTraceIdentity": "30a1bda5643d3633",
+      "title": "Neon Trembita",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 91.28333333333333,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-f85650a2f81b67ed.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "29c6e038c61f38c2",
+          "replayURL": "./demo-data/solo-qualified-f85650a2f81b67ed.chromium.performance.replay.json",
+          "inputTraceIdentity": "30a1bda5643d3633",
+          "durationSeconds": 91.28333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "29c6e038c61f38c2",
+          "replayURL": "./demo-data/solo-qualified-f85650a2f81b67ed.firefox.performance.replay.json",
+          "inputTraceIdentity": "30a1bda5643d3633",
+          "durationSeconds": 91.28333333333333,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "29c6e038c61f38c2",
+          "replayURL": "./demo-data/solo-qualified-f85650a2f81b67ed.webkit.performance.replay.json",
+          "inputTraceIdentity": "30a1bda5643d3633",
+          "durationSeconds": 91.28333333333333,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-c7131a2a20fe532d",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-opishnia-ram-pack",
+      "levelRevision": "2",
+      "identity": "64a477d6cb585cda",
+      "recordingIdentity": "494ce1efa1e13113",
+      "inputTraceIdentity": "6565b634525737e0",
+      "title": "Neon Opishnia Ram",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 69.26666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-c7131a2a20fe532d.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "494ce1efa1e13113",
+          "replayURL": "./demo-data/solo-qualified-c7131a2a20fe532d.chromium.replay.json",
+          "inputTraceIdentity": "6565b634525737e0",
+          "durationSeconds": 69.26666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "494ce1efa1e13113",
+          "replayURL": "./demo-data/solo-qualified-c7131a2a20fe532d.firefox.replay.json",
+          "inputTraceIdentity": "6565b634525737e0",
+          "durationSeconds": 69.26666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "494ce1efa1e13113",
+          "replayURL": "./demo-data/solo-qualified-c7131a2a20fe532d.webkit.performance.replay.json",
+          "inputTraceIdentity": "6565b634525737e0",
+          "durationSeconds": 69.26666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-6a03bb8315594257",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-ornek-tulip-pack",
+      "levelRevision": "2",
+      "identity": "c05cea380711d001",
+      "recordingIdentity": "94003943602b977d",
+      "inputTraceIdentity": "2b088b9d7e9f4fa4",
+      "title": "Neon Crimean Tatar Ornek Tulip",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 91.26666666666667,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-6a03bb8315594257.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "94003943602b977d",
+          "replayURL": "./demo-data/solo-qualified-6a03bb8315594257.chromium.performance.replay.json",
+          "inputTraceIdentity": "2b088b9d7e9f4fa4",
+          "durationSeconds": 91.26666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "94003943602b977d",
+          "replayURL": "./demo-data/solo-qualified-6a03bb8315594257.firefox.replay.json",
+          "inputTraceIdentity": "2b088b9d7e9f4fa4",
+          "durationSeconds": 91.26666666666667,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "94003943602b977d",
+          "replayURL": "./demo-data/solo-qualified-6a03bb8315594257.webkit.replay.json",
+          "inputTraceIdentity": "2b088b9d7e9f4fa4",
+          "durationSeconds": 91.26666666666667,
+          "turnPolicy": "immediate"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-14d1e5097d455385",
+      "campaignId": "neon-mosaic",
+      "campaignKey": "neon-mosaic/2/68f10772f1871b8b",
+      "levelId": "neon-petrykivka-pack",
+      "levelRevision": "2",
+      "identity": "25131f8a2a91287c",
+      "recordingIdentity": "8a85de5b5e37addb",
+      "inputTraceIdentity": "d8bbbb63492c52ab",
+      "title": "Neon Petrykivka Flower",
+      "provenance": "recorded",
+      "tags": [
+        "capture"
+      ],
+      "durationSeconds": 65.75,
+      "turnPolicy": "immediate",
+      "replayURL": "./demo-data/solo-qualified-14d1e5097d455385.replay.json",
+      "runtimePerformances": [
+        {
+          "engine": "chromium",
+          "outcome": "won",
+          "recordingIdentity": "8a85de5b5e37addb",
+          "replayURL": "./demo-data/solo-qualified-14d1e5097d455385.chromium.replay.json",
+          "inputTraceIdentity": "d8bbbb63492c52ab",
+          "durationSeconds": 65.75,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "firefox",
+          "outcome": "won",
+          "recordingIdentity": "8a85de5b5e37addb",
+          "replayURL": "./demo-data/solo-qualified-14d1e5097d455385.firefox.replay.json",
+          "inputTraceIdentity": "d8bbbb63492c52ab",
+          "durationSeconds": 65.75,
+          "turnPolicy": "immediate"
+        },
+        {
+          "engine": "webkit",
+          "outcome": "won",
+          "recordingIdentity": "8a85de5b5e37addb",
+          "replayURL": "./demo-data/solo-qualified-14d1e5097d455385.webkit.replay.json",
+          "inputTraceIdentity": "d8bbbb63492c52ab",
+          "durationSeconds": 65.75,
+          "turnPolicy": "immediate"
+        }
+      ]
     }
   ]
 }

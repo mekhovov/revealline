@@ -14,7 +14,7 @@ import { createRun } from '../core/index.mjs';
 import { companySimulationIdentity } from '../company-session.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { retainedEditionFixture } from './helpers/retained-edition-fixture.mjs';
-import { getLocale, setLocale } from '../i18n/index.mjs';
+import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
 import { createRewardMissionBindings } from '../rewards/bindings.mjs';
 
@@ -856,7 +856,11 @@ test('edition pause keeps canonical Skip confirmation and Watch first cut action
     message: 'Exact-edition Demo preparation did not reach its playable scene.',
   });
   assert.ok(
-    f.source.missions.some((mission) => mission.name === page.$('demo-level').textContent),
+    f.source.missions.some(
+      (mission) =>
+        `${translate('interface:nativeMenu.solo')} · ${mission.name}` ===
+        page.$('demo-level').textContent,
+    ),
     'The presentation-only Demo rotation stays within this edition, without requiring its first mission.',
   );
   assert.equal(page.doc.body.dataset.flightState, 'paused');

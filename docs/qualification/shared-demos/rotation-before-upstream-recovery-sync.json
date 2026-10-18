@@ -1,0 +1,2770 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 7200,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T05:30:10.453Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Порожнє поле: рухайтеся широкими петлями, ловіть єдину ціль і стежте за зростанням хвоста."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:garage-01-self-level-4ffd496ad72c79b0",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Parking approach",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Злетіть, стабілізуйтеся в кожному об’ємі та сядьте. Усі завдання відкриті — не поспішайте."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-205560abb7070791",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First link",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:relay-ruins-antenna-court:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Antenna Court",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "pause",
+      "mode": "survival"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-solar-farm-02-self-level-1f47af7d5f8a2e2f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Panel-edge precision",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-shunting-yard:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Shunting Yard",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-courier-crossing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Courier Crossing",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-2d3df26570caee45",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First fracture",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-alternating-straights:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Alternating Straights",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-rooftops-01-acro-637c54bc7f16fbad",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Campus skylines",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-bbe0c5897adb725d",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792301462759,
+        "loadingMs": 15016,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Wake the yard",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-loading-dispatch:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792301462759,
+        "loadingMs": 15016,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Loading Dispatch",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-07-self-level-96b61727c33609cb",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792301462759,
+        "loadingMs": 15016,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Brake, do not chase",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-4301d76f85efb491",
+      "phase": "playing",
+      "failure": "survival:river-port-twin-docks:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "at": 1792301462759,
+        "loadingMs": 15016,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Outer loop",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-4301d76f85efb491",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Outer loop",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "narrow-controls"
+    }
+  ],
+  "samples": [
+    {
+      "at": "2026-10-18T05:31:55.889Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "600",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 39
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:32:05.896Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1200",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 50
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:32:15.903Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1710",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 105
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:32:25.908Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2311",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 175
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:32:35.915Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2820",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 194
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:32:45.921Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "3328",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 281
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:32:55.928Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "3839",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 327
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:33:05.934Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "4438",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 343
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:33:15.939Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "5038",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 346
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:33:25.945Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "5547",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 395
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:33:35.950Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "6147",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 451
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:33:45.957Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "6746",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 503
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:33:55.964Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "7346",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 512
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:34:05.967Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "7856",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 525
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:34:15.975Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "8456",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 632
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:34:25.981Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "8964",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 665
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:34:35.986Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "9564",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 760
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:34:45.992Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "10073",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 765
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:34:55.998Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "10673",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 767
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:35:06.005Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "11273",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 770
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:35:16.008Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "11783",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 934
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:35:26.014Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "12292",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 950
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:35:36.028Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "12891",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 959
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:35:46.037Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "13491",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 959
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:35:56.054Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "14091",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 961
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:36:06.064Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "14691",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1090
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:36:16.072Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "15291",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1186
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:36:26.078Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "15891",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1186
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:36:36.094Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "16491",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1186
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:36:46.104Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "17091",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1186
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:36:56.119Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "17691",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1527
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:37:06.126Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "18291",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1529
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:37:16.142Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "18891",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1529
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:37:26.150Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "19491",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1623
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:37:36.154Z",
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "complete",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "19877",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 1657
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:37:46.160Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-seam-parcels:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "35",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Seam Parcels",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:37:56.168Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-seam-parcels:standard",
+      "phase": "complete",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "72",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Seam Parcels",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:38:06.174Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-quarry-04-acro-1caf2b5b48a5bdd2",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "424",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quarry pulse arena",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 141,
+          "materials": 148,
+          "textures": 24,
+          "gpuGeometries": 104,
+          "gpuTextures": 20,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:38:16.181Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-quarry-04-acro-1caf2b5b48a5bdd2",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "925",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quarry pulse arena",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 141,
+          "materials": 148,
+          "textures": 24,
+          "gpuGeometries": 104,
+          "gpuTextures": 20,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:38:26.187Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-quarry-04-acro-1caf2b5b48a5bdd2",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1425",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quarry pulse arena",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 142,
+          "materials": 150,
+          "textures": 24,
+          "gpuGeometries": 105,
+          "gpuTextures": 21,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:38:36.192Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-quarry-04-acro-1caf2b5b48a5bdd2",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1924",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quarry pulse arena",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 142,
+          "materials": 150,
+          "textures": 24,
+          "gpuGeometries": 105,
+          "gpuTextures": 21,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:38:46.200Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-quarry-04-acro-1caf2b5b48a5bdd2",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2425",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quarry pulse arena",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 142,
+          "materials": 150,
+          "textures": 24,
+          "gpuGeometries": 105,
+          "gpuTextures": 21,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:38:56.212Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-quarry-04-acro-1caf2b5b48a5bdd2",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2926",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quarry pulse arena",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 142,
+          "materials": 150,
+          "textures": 24,
+          "gpuGeometries": 105,
+          "gpuTextures": 21,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:39:06.217Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-quarry-04-acro-1caf2b5b48a5bdd2",
+      "phase": "complete",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "3327",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Quarry pulse arena",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 142,
+          "materials": 150,
+          "textures": 24,
+          "gpuGeometries": 107,
+          "gpuTextures": 22,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:39:16.225Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "362",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:39:26.228Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1562",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:39:36.234Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2762",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:39:46.238Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "3962",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:39:56.244Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "5162",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:40:06.251Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "6362",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:40:16.255Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "7562",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:40:26.259Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "8770",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:40:36.264Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "9962",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:40:46.270Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-a13b85ddde0f9663",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "11161",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Dnipro crossings",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:40:56.300Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-field-border-cutoff:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Border Cutoff",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:41:06.331Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-field-border-cutoff:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "50",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Border Cutoff",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:41:16.337Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-field-border-cutoff:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "100",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Border Cutoff",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:41:26.341Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-field-border-cutoff:standard",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "150",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Border Cutoff",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:41:36.347Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-low-roof-window-self-level-c493212fc881f7ea",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "150",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Roof Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 176,
+          "textures": 26,
+          "gpuGeometries": 285,
+          "gpuTextures": 29,
+          "gpuPrograms": 16,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:41:46.355Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-low-roof-window-self-level-c493212fc881f7ea",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "651",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Roof Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 176,
+          "textures": 26,
+          "gpuGeometries": 285,
+          "gpuTextures": 29,
+          "gpuPrograms": 17,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:41:56.364Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-low-roof-window-self-level-c493212fc881f7ea",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1151",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Roof Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 176,
+          "textures": 26,
+          "gpuGeometries": 285,
+          "gpuTextures": 29,
+          "gpuPrograms": 17,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:42:06.373Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-low-roof-window-self-level-c493212fc881f7ea",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1652",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Roof Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 176,
+          "textures": 26,
+          "gpuGeometries": 285,
+          "gpuTextures": 29,
+          "gpuPrograms": 17,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:42:16.378Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-low-roof-window-self-level-c493212fc881f7ea",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2152",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Roof Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 176,
+          "textures": 26,
+          "gpuGeometries": 285,
+          "gpuTextures": 29,
+          "gpuPrograms": 17,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:42:26.387Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-low-roof-window-self-level-c493212fc881f7ea",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2653",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Roof Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 176,
+          "textures": 26,
+          "gpuGeometries": 285,
+          "gpuTextures": 29,
+          "gpuPrograms": 17,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:42:36.392Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-low-roof-window-self-level-c493212fc881f7ea",
+      "phase": "complete",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2927",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Low Roof Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 287,
+          "materials": 176,
+          "textures": 26,
+          "gpuGeometries": 285,
+          "gpuTextures": 29,
+          "gpuPrograms": 17,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "at": "2026-10-18T05:42:46.398Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-bd23e3eb635875d1",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "363",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Living border",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:42:56.408Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-bd23e3eb635875d1",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1561",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Living border",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:43:06.416Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-bd23e3eb635875d1",
+      "phase": "playing",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2761",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Living border",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:43:16.456Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "",
+      "phase": "loading",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:43:26.488Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "",
+      "phase": "loading",
+      "failure": "survival:chalk-quarry-reclaimer-court:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "at": 1792301487717,
+        "loadingMs": 15386,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:43:36.496Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-bd23e3eb635875d1",
+      "phase": "playing",
+      "failure": "survival:field-crossing-supply-orchard-edge:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:field-crossing-supply-orchard-edge:standard",
+        "modeId": "survival",
+        "at": 1792302208984,
+        "loadingMs": 15245,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "362",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Living border",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:43:46.502Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-bd23e3eb635875d1",
+      "phase": "playing",
+      "failure": "survival:field-crossing-supply-orchard-edge:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:field-crossing-supply-orchard-edge:standard",
+        "modeId": "survival",
+        "at": 1792302208984,
+        "loadingMs": 15245,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "1562",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Living border",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:43:56.512Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-bd23e3eb635875d1",
+      "phase": "playing",
+      "failure": "survival:field-crossing-supply-orchard-edge:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:field-crossing-supply-orchard-edge:standard",
+        "modeId": "survival",
+        "at": 1792302208984,
+        "loadingMs": 15245,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "2762",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Living border",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:44:06.532Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "",
+      "phase": "loading",
+      "failure": "survival:field-crossing-supply-orchard-edge:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:field-crossing-supply-orchard-edge:standard",
+        "modeId": "survival",
+        "at": 1792302208984,
+        "loadingMs": 15245,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:44:16.553Z",
+      "workers": 0,
+      "mode": "solo",
+      "source": "",
+      "phase": "loading",
+      "failure": "survival:field-crossing-supply-orchard-edge:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:field-crossing-supply-orchard-edge:standard",
+        "modeId": "survival",
+        "at": 1792302208984,
+        "loadingMs": 15245,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:44:26.560Z",
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-oval-intercept:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792302259645,
+        "loadingMs": 15578,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "30",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Oval Intercept",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "at": "2026-10-18T05:44:36.571Z",
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-24-acro-89edd7ed96c134ec",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792302259645,
+        "loadingMs": 15578,
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at http://127.0.0.1:8769/game/demo-loading.mjs:47:27"
+      },
+      "tick": "188",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Three gates, one smooth line",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 137,
+          "materials": 90,
+          "textures": 18,
+          "gpuGeometries": 79,
+          "gpuTextures": 9,
+          "gpuPrograms": 9,
+          "contextLost": false
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "complete": false,
+  "enduranceStarted": "2026-10-18T05:31:45.882Z",
+  "failure": "page.waitForTimeout: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:286:16",
+  "finished": "2026-10-18T05:44:41.243Z"
+}

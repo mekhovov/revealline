@@ -1,0 +1,105 @@
+{
+  "engine": "webkit",
+  "started": "2026-10-18T04:27:55.555Z",
+  "complete": true,
+  "verified": [],
+  "variants": [],
+  "performances": [],
+  "failures": [],
+  "catalogs": "demo-data/catalog.json",
+  "required": 10,
+  "browserVersion": "26.5",
+  "runtime": [
+    {
+      "id": "first-signal-left",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3682,
+      "themes": 4,
+      "captures": 4,
+      "capturedCells": 740
+    },
+    {
+      "id": "first-signal-right",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3829,
+      "themes": 4,
+      "captures": 4,
+      "capturedCells": 793
+    },
+    {
+      "id": "relay-orchard-loop",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5457,
+      "themes": 4,
+      "captures": 5,
+      "capturedCells": 1066
+    },
+    {
+      "id": "relay-orchard-stairs",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5481,
+      "themes": 4,
+      "captures": 5,
+      "capturedCells": 1118
+    },
+    {
+      "id": "crosswind-openings",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5604,
+      "themes": 4,
+      "captures": 5,
+      "capturedCells": 1025
+    },
+    {
+      "id": "night-patrol-loop",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5602,
+      "themes": 4,
+      "captures": 5,
+      "capturedCells": 1082
+    },
+    {
+      "id": "stone-lanes-detour",
+      "ok": true,
+      "outcome": "won",
+      "tick": 3005,
+      "themes": 4,
+      "captures": 3,
+      "capturedCells": 1191
+    },
+    {
+      "id": "hidden-frequency-search",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5327,
+      "themes": 4,
+      "captures": 5,
+      "capturedCells": 1328
+    },
+    {
+      "id": "the-crossing-windows",
+      "ok": true,
+      "outcome": "won",
+      "tick": 4153,
+      "themes": 4,
+      "captures": 4,
+      "capturedCells": 1319
+    },
+    {
+      "id": "signal-garden-route",
+      "ok": true,
+      "outcome": "won",
+      "tick": 5656,
+      "themes": 4,
+      "captures": 5,
+      "capturedCells": 1232
+    }
+  ],
+  "finished": "2026-10-18T04:27:58.027Z"
+}

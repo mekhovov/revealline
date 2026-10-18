@@ -149,9 +149,10 @@ test('hidden playback completes a real recorded level, retains its recap and ado
       firstLevel = page.$('demo-level').textContent;
     focused(page, false);
     hidden(page, true);
-    // Each wake admits at most2s and yields its quarter-second slices. The
-    // document is hidden throughout: the fixture dispatches no animation frame.
-    for (let wakes = 0; page.$('demo-level').textContent === firstLevel; wakes++) {
+    // Each wake admits at most 2s and yields its quarter-second slices. Observe
+    // real scene retirement: hidden documents intentionally retain their DOM
+    // readouts as well as pixels, and the fixture dispatches no animation frame.
+    for (let wakes = 0; !painted.painter.disposed; wakes++) {
       assert.ok(
         wakes < 34,
         `A real recording and its recap must rotate: ${watched.status}, tick ${watched.tick}, errors ${JSON.stringify(page.errors)}`,
@@ -162,11 +163,10 @@ test('hidden playback completes a real recorded level, retains its recap and ado
     assert.equal(watched.status, 'won');
     assert.equal(watched.tick, 3682);
     assert.equal(page.demoFrame, painted, 'Background completion and rotation do not repaint.');
-    await page.ready();
-    assert.equal(page.demoFrame, painted);
+    assert.equal(page.$('demo-level').textContent, firstLevel, 'Hidden readouts stay untouched.');
     hidden(page, false);
     focused(page, true);
-    page.frame(0);
+    await page.ready();
     assert.notEqual(page.demoFrame.painter, painted.painter);
     assert.notEqual(page.demoFrame.run, watched);
     assert.equal(page.demoFrame.options.paused, false);
