@@ -204,7 +204,7 @@ test('aggregate preserves the required focused status and rejects any nonsuccess
   const { spawnSync } = await import('node:child_process');
   const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
   const aggregate = source.split('\n  focused:\n')[1]?.split('\n  test:\n')[0];
-  assert.match(aggregate, /always\(\) && github.event_name == 'pull_request'/u);
+  assert.match(aggregate, /!cancelled\(\) && github.event_name == 'pull_request'/u);
   for (const condition of [
     "needs.preflight.result == 'success'",
     "needs.preflight.outputs.admission != 'hold'",
@@ -238,8 +238,54 @@ test('aggregate preserves the required focused status and rejects any nonsuccess
   assert.ok(aggregate.includes('--admission "$RUNNER_TEMP/preflight-admission/admission.json"'));
   assert.ok(aggregate.includes('--test-policy automation/publishing/test-policy.json'));
   const ready = source.split('\n  release-ready:\n')[1];
+  assert.match(ready, /if: \$\{\{ !cancelled\(\) && github.event_name == 'pull_request' \}\}/u);
   assert.match(ready, /needs: \[preflight, focused, test, build\]/u);
   assert.match(ready, /FOCUSED_RESULT: \$\{\{ needs.focused.result \}\}/u);
   assert.ok(ready.includes('test "$FOCUSED_RESULT" = success'));
   assert.ok(ready.includes('test "$FOCUSED_RESULT" = skipped'));
+});
+
+test('release policy rejects failed dependencies and keeps only explicit policy skips', async () => {
+  const { spawnSync } = await import('node:child_process');
+  const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
+  const ready = source.split('\n  release-ready:\n')[1];
+  const body = ready?.split('        run: |\n')[1]?.replace(/^ {10}/gmu, '');
+  assert.ok(body);
+  const passing = {
+    ADMISSION: 'release',
+    PREFLIGHT_RESULT: 'success',
+    FOCUSED_REQUIRED: 'true',
+    FOCUSED_RESULT: 'success',
+    BUILD_RESULT: 'success',
+    FULL_CI: 'true',
+    TEST_RESULT: 'success',
+  };
+  const check = (overrides, expected) => {
+    // Exercise the workflow's actual gate body; this does not model GitHub's
+    // scheduler or claim that cancellation was observed on a hosted runner.
+    const result = spawnSync('bash', ['-e', '-o', 'pipefail', '-c', body], {
+      env: { ...process.env, ...passing, ...overrides },
+      timeout: 1000,
+    });
+    assert.equal(result.error, undefined);
+    assert.equal(result.status === 0, expected, JSON.stringify(overrides));
+  };
+  check({}, true);
+  // A dependency reporting cancelled while its workflow remains live must
+  // still fail admission. Whole-workflow cancellation stops the job instead.
+  for (const name of ['PREFLIGHT_RESULT', 'FOCUSED_RESULT', 'BUILD_RESULT', 'TEST_RESULT']) {
+    for (const status of ['failure', 'cancelled', 'skipped', '']) {
+      check({ [name]: status }, false);
+    }
+  }
+  for (const ADMISSION of ['maintenance', 'scheduled']) {
+    check({ ADMISSION, BUILD_RESULT: 'skipped', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
+  }
+  check({ ADMISSION: 'release-evidence', TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
+  check({ FOCUSED_REQUIRED: 'false', FOCUSED_RESULT: 'skipped' }, true);
+  check({ FOCUSED_REQUIRED: 'false', FOCUSED_RESULT: 'success' }, false);
+  check({ FOCUSED_REQUIRED: '' }, false);
+  check({ ADMISSION: 'hold' }, false);
+  check({ ADMISSION: 'unknown' }, false);
+  check({ TEST_RESULT: 'skipped', FULL_CI: 'false' }, true);
 });
