@@ -1120,16 +1120,46 @@ try {
         },
       };
       await revealFPVProfiles(page, () => clickFPV('#setup', 'controls'));
+      // Current calibration-only imports explicitly leave the separate Rates
+      // owner unchanged. Historical packages still import the legacy response.
+      // Capture actual public baseline bytes; never accept an arbitrary response
+      // or weaken the later exact export equality checks.
+      const ratesOwnerCount = await page
+        .locator('#setup-dialog')
+        .getByRole('button', { name: 'Rates & throttle', exact: true, includeHidden: true })
+        .count();
+      assert(ratesOwnerCount === 0 || ratesOwnerCount === 1);
+      const ratesOwner = ratesOwnerCount === 1;
+      let priorProfileExport = null;
+      if (ratesOwner) {
+        await page.getByRole('button', { name: 'Export profiles', exact: true }).press('Enter');
+        priorProfileExport = JSON.parse(
+          await page.getByRole('textbox', { name: 'Profile JSON', exact: true }).inputValue(),
+        );
+      }
       await page
         .getByRole('textbox', { name: 'Profile JSON', exact: true })
         .fill(JSON.stringify(profileFixture));
       await page.getByRole('button', { name: 'Import profiles', exact: true }).press('Enter');
+      let profileImportNotice = '';
+      if (ratesOwner) {
+        const notice = page.locator('#setup-dialog').getByRole('status').filter({
+          hasText:
+            'Included flight response settings were not applied. Rates & throttle profiles remain unchanged.',
+        });
+        await notice.waitFor({ state: 'visible' });
+        profileImportNotice = await notice.innerText();
+      }
       await page.locator('[data-close="setup-dialog"]').click();
       const savedProfiles = await exportedProfiles();
       const importedProfiles = JSON.parse(savedProfiles);
       assert.deepEqual(
         importedProfiles,
-        expectedImportedProfileExport(importedProfiles.format, profileFixture),
+        expectedImportedProfileExport(importedProfiles.format, profileFixture, {
+          ratesOwner,
+          priorExport: priorProfileExport,
+          importNotice: profileImportNotice,
+        }),
       );
       if (migrationEnabled) {
         const references = {},

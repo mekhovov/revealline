@@ -702,6 +702,56 @@ test('profile export expectations preserve the entire legacy fixture and current
     assert.notDeepEqual(damaged, library);
 });
 
+test('calibration-only import retains exact prior Rates response and all imported radio fields', () => {
+  const response = {
+    format: 'FlightResponseProfile.v1',
+    id: 'gentle-v1',
+    name: 'Gentle',
+    maxRate: 240,
+    maxTilt: 30,
+    expo: 30,
+    responseTicks: 8,
+  };
+  const fixture = {
+    format: 'FlightProfiles.v1',
+    radio: { id: 'fixture', verified: false },
+    response: { ...response, id: 'incoming', name: 'Incoming', expo: 40 },
+  };
+  const priorExport = { format: 'FlightProfiles.v2', radio: null, radios: [], response };
+  const importNotice =
+    'Imported as a draft. Included flight response settings were not applied. Rates & throttle profiles remain unchanged.';
+  const policy = { ratesOwner: true, priorExport, importNotice };
+  const expected = expectedImportedProfileExport('FlightProfiles.v2', fixture, policy);
+  assert.deepEqual(expected, {
+    ...fixture,
+    format: 'FlightProfiles.v2',
+    radios: [fixture.radio],
+    response,
+  });
+  expected.response.expo = 1;
+  expected.radio.verified = true;
+  assert.equal(priorExport.response.expo, 30);
+  assert.equal(fixture.radio.verified, false);
+  assert.equal(fixture.response.expo, 40);
+  for (const patch of [
+    { priorExport: null },
+    { priorExport: { ...priorExport, format: 'FlightProfiles.v99' } },
+    { priorExport: { ...priorExport, response: {} } },
+    { priorExport: { ...priorExport, radio: fixture.radio } },
+    { priorExport: { ...priorExport, radios: [fixture.radio] } },
+    { importNotice: '' },
+    { importNotice: 'Saved on this device' },
+    { ratesOwner: 'yes' },
+    { arbitraryPolicy: true },
+  ])
+    assert.throws(() =>
+      expectedImportedProfileExport('FlightProfiles.v2', fixture, { ...policy, ...patch }),
+    );
+  assert.throws(() =>
+    expectedImportedProfileExport('FlightProfiles.v2', fixture, { ...policy, ratesOwner: false }),
+  );
+});
+
 test('offline restart closes every page and rejects surviving windows', async () => {
   const pages = new Set();
   for (let index = 0; index < 4; index++) {
