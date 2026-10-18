@@ -250,7 +250,7 @@ function manualAdmission(text, name, jobMinutes, stepMinutes) {
 test('new fixed lanes require deliberate main dispatch and preserve native, retention and setup bounds', () => {
   assert.match(
     workflow,
-    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,?\s*\]/,
+    /options:\s*\[\s*first-eight,\s*next,\s*cocoa,\s*raster,\s*hud-cpu,\s*readiness,\s*touch,\s*app-overhead,\s*journal-cost,\s*timing,\s*lifecycle,\s*shared-return,\s*demo-recovery,\s*demo-resources,\s*replay-portability,?\s*\]/,
   );
   assert.match(workflow, /cancel-in-progress: false/);
   for (const [name, jobMinutes, stepMinutes] of [
