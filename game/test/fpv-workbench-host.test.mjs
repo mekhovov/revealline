@@ -4,11 +4,20 @@ import { Document, Events } from './helpers/couch-dom.mjs';
 import { mountFlightTuning } from '../../optional-practice/civilian-fpv/tuning-ui.mjs';
 import { createTuningLibraryStore } from '../../optional-practice/civilian-fpv/tuning-library.mjs';
 import { CONTROLLER_TUNE_LIBRARY_KEY } from '../../optional-practice/civilian-fpv/controller-tune-library.mjs';
+import { canonicalJSON } from '../data-json.mjs';
 
 const settle = () => new Promise((resolve) => setImmediate(resolve));
 async function fixture(
   t,
-  { physical = false, prepare, enableBench = false, conditions = null, workerURL } = {},
+  {
+    physical = false,
+    prepare,
+    enableBench = false,
+    conditions = null,
+    workerURL,
+    getFlightConfiguration = () => null,
+    onApply = () => {},
+  } = {},
 ) {
   const document = new Document(),
     window = new Events(),
@@ -67,6 +76,8 @@ async function fixture(
     document,
     window,
     store,
+    getFlightConfiguration,
+    onApply,
     getPracticeConditions: () => conditions,
     responseBenchWorkerURL: workerURL,
     onCalibration: (done) => {
@@ -664,4 +675,164 @@ test('Basic never hides a focused customized control while it is being restored 
   f.field('Search all settings').focus();
   f.ui.refresh();
   assert.equal(row.hidden, true, 'ordinary refresh conceals it after focus moves elsewhere');
+});
+
+test('saved configuration stays next-flight-only until Apply & restart uses it', async (t) => {
+  let flight = null;
+  const f = await fixture(t, {
+    physical: true,
+    getFlightConfiguration: () => flight,
+    onApply: (configuration) => {
+      flight = structuredClone(configuration);
+    },
+  });
+  flight = JSON.parse(canonicalJSON(f.store.effective()));
+  const originalFlight = structuredClone(flight);
+  const summary = () => f.ui.root.querySelector('.workbench-summary').textContent;
+  f.ui.refresh();
+  assert.match(summary(), /Used by this flight$/, 'storage key order does not change ownership');
+  f.edit('Camera tilt (degrees)', 25);
+  assert.match(summary(), /Draft$/);
+  await f.click('Save for next flight');
+  assert.match(summary(), /Saved for next flight$/);
+  assert.match(f.ui.root.querySelector('[role="status"]').textContent, /Saved for the next flight/);
+  assert.deepEqual(flight, originalFlight, 'saving never changes the running attempt');
+  f.ui.close();
+  f.ui.open();
+  assert.match(summary(), /Saved for next flight$/);
+  await f.click('Apply & restart');
+  assert.equal(flight.camera.tilt, 25);
+  f.ui.open();
+  assert.match(summary(), /Used by this flight$/);
+  assert.doesNotMatch(
+    f.ui.root.querySelector('[role="status"]').textContent,
+    /current attempt keeps its original configuration/,
+    'the previous save confirmation cannot contradict the newly restarted flight',
+  );
+  f.edit('Camera tilt (degrees)', '');
+  assert.match(summary(), /unfinished values.*Draft$/);
+  assert.equal(flight.camera.tilt, 25, 'unfinished edits remain separate from the active flight');
+  await f.click('Save for next flight');
+  const failure = f.ui.root.querySelector('[role="status"]').textContent;
+  assert.match(failure, /Camera tilt.*enter a value/);
+  f.ui.close();
+  f.ui.open({ keepDraft: true });
+  assert.equal(f.ui.root.querySelector('[role="status"]').textContent, failure);
+});
+
+test('no-op saves and later launches report the actual frozen flight configuration', async (t) => {
+  let flight = null;
+  const f = await fixture(t, { getFlightConfiguration: () => flight });
+  const summary = () => f.ui.root.querySelector('.workbench-summary').textContent;
+  flight = f.store.effective();
+  f.ui.refresh();
+  await f.click('Save for next flight');
+  assert.match(summary(), /Used by this flight$/, 'an unchanged save is already active');
+  f.edit('Maximum rate (°/s)', 360);
+  await f.click('Save for next flight');
+  assert.match(summary(), /Saved for next flight$/);
+  flight = f.store.effective();
+  f.ui.refresh();
+  assert.match(
+    summary(),
+    /Used by this flight$/,
+    'a launch outside the workbench activates the saved configuration',
+  );
+  flight = null;
+  f.ui.refresh();
+  assert.match(summary(), /Saved for next flight$/, 'without a flight no configuration is active');
+});
+
+test('rate curve pointer inspection compares saved and draft values at the responsive plot position', async (t) => {
+  const f = await fixture(t);
+  await f.click('Rates & throttle');
+  f.edit('Maximum rate (°/s)', 360);
+  const chart = f.ui.root.querySelector('[aria-label="Rate curves: zero to full stick"]');
+  chart._rect = { x: 10, y: 20, width: 300, height: 122.5 };
+  const state = f.store.export();
+  const draftSummary = f.ui.root.querySelector('.workbench-summary').textContent;
+  const inspection = () => chart.querySelector('[data-curve-inspection]');
+  const readout = () => f.ui.root.querySelector('[aria-label="Inspected rate"]').textContent;
+  assert.equal(
+    chart.nextSibling,
+    f.ui.root.querySelector('[aria-label="Inspected rate"]'),
+    'saved/draft inspection remains immediately beside the graph being pointed at',
+  );
+  assert.equal(f.ui.root.querySelectorAll('[aria-label="Inspected rate"]').length, 1);
+  let escaped = 0;
+  f.document.body.addEventListener('pointermove', () => escaped++);
+  chart.emit('pointermove', { clientX: 292, pointerType: 'mouse', buttons: 0, isPrimary: true });
+  assert.equal(f.field('Preview stick position · exact (%)').value, '100');
+  assert.equal(readout(), '100% · Roll · Saved 240.0 °/s · Draft 360.0 °/s');
+  assert.equal(inspection().querySelector('line').getAttribute('x1'), '564');
+  assert.equal(inspection().querySelectorAll('circle').length, 6);
+  assert.match(inspection().textContent, /Roll saved: 240\.0 °\/s/);
+  assert.match(inspection().textContent, /Roll draft: 360\.0 °\/s/);
+  chart.emit('pointermove', { clientX: 164, pointerType: 'mouse', buttons: 0, isPrimary: true });
+  assert.equal(f.field('Preview stick position · exact (%)').value, '50');
+  assert.equal(inspection().querySelector('line').getAttribute('x1'), '308');
+  assert.equal(escaped, 0, 'chart pointer events stay inside the paused editor');
+  const roll = f.field('Roll');
+  roll.checked = false;
+  roll.emit('change');
+  assert.equal(inspection().querySelectorAll('circle').length, 4);
+  assert.doesNotMatch(inspection().textContent, /Roll/);
+  f.edit('Preview stick position · exact (%)', -50);
+  assert.match(readout(), /^-50% · Roll · Saved -[\d.]+ °\/s · Draft -[\d.]+ °\/s$/);
+  assert.equal(inspection().querySelector('line').getAttribute('x1'), '308');
+  assert.equal(f.store.export(), state);
+  assert.equal(f.ui.root.querySelector('.workbench-summary').textContent, draftSummary);
+  assert.equal(f.tested.length, 0);
+});
+
+test('touch curve inspection owns one pointer and releases it on cancellation, hiding and close', async (t) => {
+  const f = await fixture(t);
+  await f.click('Rates & throttle');
+  const chart = f.ui.root.querySelector('[aria-label="Rate curves: zero to full stick"]');
+  // A wider SVG element letterboxes its centered viewBox; pointer mapping
+  // must use the plotted coordinates instead of the full element width.
+  chart._rect = { x: 10, y: 20, width: 400, height: 122.5 };
+  const exact = f.field('Preview stick position · exact (%)');
+  const down = () =>
+    chart.emit('pointerdown', {
+      clientX: 214,
+      pointerType: 'touch',
+      pointerId: 7,
+      isPrimary: true,
+      button: 0,
+      buttons: 1,
+    });
+  assert.equal(down().defaultPrevented, true);
+  assert.equal(exact.value, '50');
+  assert.equal(chart.hasPointerCapture(7), true);
+  chart.emit('pointermove', { clientX: 0, pointerId: 8, pointerType: 'touch', buttons: 1 });
+  assert.equal(exact.value, '50', 'a second touch cannot take over');
+  chart.emit('pointermove', { clientX: 10000, pointerId: 7, pointerType: 'touch', buttons: 1 });
+  assert.equal(exact.value, '100', 'captured dragging clamps to the plotted range');
+  chart.emit('pointercancel', { pointerId: 7 });
+  assert.equal(chart.hasPointerCapture(7), false);
+  chart.emit('pointermove', { clientX: 0, pointerId: 7, pointerType: 'touch', buttons: 0 });
+  assert.equal(exact.value, '100', 'touch needs a new explicit press after cancellation');
+  down();
+  await f.click('Overview');
+  assert.equal(chart.hasPointerCapture(7), false);
+  chart.emit('pointermove', { clientX: 0, pointerType: 'mouse', buttons: 0 });
+  assert.equal(exact.value, '50', 'hidden charts do not inspect input');
+  await f.click('Rates & throttle');
+  down();
+  f.document.hidden = true;
+  f.document.emit('visibilitychange');
+  assert.equal(chart.hasPointerCapture(7), false);
+  f.document.hidden = false;
+  down();
+  const disclosure = chart.closest('details');
+  disclosure.open = false;
+  disclosure.emit('toggle');
+  assert.equal(chart.hasPointerCapture(7), false);
+  disclosure.open = true;
+  down();
+  f.ui.close();
+  assert.equal(chart.hasPointerCapture(7), false);
+  chart.emit('pointerdown', { clientX: 0, pointerId: 7, pointerType: 'touch', button: 0 });
+  assert.equal(chart.hasPointerCapture(7), false, 'closed editors cannot acquire pointer input');
 });
