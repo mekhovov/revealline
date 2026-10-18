@@ -11,6 +11,22 @@ const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 const css = await parsers.css.parse(
   await readFile(new URL('../ui/solo-text-scaling.css', import.meta.url), 'utf8'),
 );
+// The briefing owner uses data-kind selectors inside the legacy cascade layer,
+// rather than [hidden] on every section. Include that actual rule as the lower
+// layer so the regression observes the production ownership boundary.
+const legacy = await parsers.css.parse(
+  await readFile(new URL('../ui/device-controls.css', import.meta.url), 'utf8'),
+);
+function descendants(nodes) {
+  return nodes.flatMap((node) => [node, ...descendants(node.nodes ?? [])]);
+}
+const stateRules = descendants(legacy.nodes).filter(
+  (rule) =>
+    rule.type === 'css-rule' &&
+    rule.raws.selector?.includes('.pause-secondary-groups') &&
+    rule.nodes.some((node) => node.prop === 'display' && node.value.text === 'none'),
+);
+assert.equal(stateRules.length, 1, 'Use the actual legacy pause/briefing visibility owner.');
 function elements(node) {
   return [node, ...(node.childNodes ?? []).flatMap(elements)].filter((item) => item.tagName);
 }
@@ -85,26 +101,27 @@ function specificity(nodes) {
 }
 function computed(element, property, width) {
   let winner = null;
-  function visit(nodes) {
+  function visit(nodes, layer) {
     for (const rule of nodes) {
       if (rule.type === 'css-atrule') {
         assert.equal(rule.name, 'media');
         const limit = rule.params.value.match(/^\(max-width:\s*(\d+)px\)$/);
         assert.ok(limit, 'This finite sheet has only a max-width breakpoint.');
-        if (width <= Number(limit[1])) visit(rule.nodes);
+        if (width <= Number(limit[1])) visit(rule.nodes, layer);
       }
       if (rule.type !== 'css-rule') continue;
       const declaration = rule.nodes.find((node) => node.prop === property);
       if (!declaration) continue;
       for (const selector of rule.selector.nodes) {
         if (!matches(selector.nodes, element)) continue;
-        const rank = specificity(selector.nodes);
+        const rank = [layer, ...specificity(selector.nodes)];
         if (!winner || compare(rank, winner.rank) >= 0)
           winner = { rank, value: declaration.value.text };
       }
     }
   }
-  visit(css.nodes);
+  visit(stateRules, 0);
+  visit(css.nodes, 1);
   return (
     winner?.value ??
     (property === 'display' && attr(element, 'hidden') !== undefined ? 'none' : undefined)
@@ -116,7 +133,10 @@ function page() {
   const root = nodes.find((node) => node.tagName === 'html');
   const body = nodes.find((node) => node.tagName === 'body');
   assert.equal(attr(root, 'data-text-scaling'), 'solo');
+  // mountGameShell adds this class before showing the actual overlays.
+  setAttr(body, 'class', `${attr(body, 'class') ?? ''} game-shell`);
   setAttr(body, 'data-text-size', 'extra-large');
+  setAttr(byId('game-overlay'), 'data-kind', 'pause');
   return { nodes, byId, root, body };
 }
 
@@ -168,6 +188,35 @@ test('all compact pause action variants win the cascade with a single column', (
         assert.equal(computed(grid, 'grid-template-columns', 844), 'repeat(2, minmax(0, 1fr))');
         for (const width of [320, 390, 640])
           assert.equal(computed(grid, 'grid-template-columns', width), 'minmax(0, 1fr)');
+      }
+    }
+  }
+});
+
+test('pause-only containers respect actual legacy briefing and result visibility ownership', () => {
+  const { byId } = page();
+  const overlay = byId('game-overlay');
+  const within = elements(overlay);
+  const sections = [
+    ...within.filter((node) => classed(node, 'pause-secondary-groups')),
+    ...within.filter((node) => classed(node, 'pause-menu-section')),
+  ];
+  for (const width of [320, 844]) {
+    for (const kind of ['ready', 'pause', 'won', 'lost', 'ready']) {
+      setAttr(overlay, 'data-kind', kind);
+      for (const section of sections) {
+        setAttr(section, 'hidden', null);
+        const expected =
+          kind === 'pause'
+            ? 'grid'
+            : kind === 'ready' && classed(section, 'pause-missions-section')
+              ? undefined
+              : 'none';
+        assert.equal(
+          computed(section, 'display', width),
+          expected,
+          `${kind}/${width}: ${attr(section, 'class')}`,
+        );
       }
     }
   }

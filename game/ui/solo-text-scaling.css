@@ -341,7 +341,11 @@ html[data-text-scaling='solo'] body[data-text-size='extra-large'] #overlay-readi
 html[data-text-scaling='solo']
   body[data-text-size='extra-large']
   #game-overlay
-  :is(.overlay-actions, .pause-menu-section, .pause-secondary-groups):not([hidden]) {
+  .overlay-actions:not([hidden]),
+html[data-text-scaling='solo']
+  body[data-text-size='extra-large']
+  #game-overlay[data-kind='pause']
+  :is(.pause-menu-section, .pause-secondary-groups):not([hidden]) {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
