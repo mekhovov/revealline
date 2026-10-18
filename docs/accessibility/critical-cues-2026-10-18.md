@@ -69,7 +69,7 @@ Browser silent-play review and listening remain pending. No F07b defect has been
 
 - **T01**: [game/couch/relay-rescue.mjs:2252](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L2252); [game/couch/relay-rescue.mjs:6012](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L6012); [game/couch/relay-rescue.mjs:5879](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L5879)
 
-- **T02**: [game/couch/relay-rescue.mjs:2288](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L2288); [game/couch/coop-pilot-cues.mjs:6](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/coop-pilot-cues.mjs#L6)
+- **T02**: [game/couch/relay-rescue.mjs:2288](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L2288); [game/couch/coop-support-presentation.mjs:81](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/coop-support-presentation.mjs#L81)
 
 - **T03**: [game/couch/relay-rescue.mjs:5952](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L5952); [game/couch/relay-rescue.mjs:849](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/relay-rescue.mjs#L849); [game/couch/coop-cue-overflow.mjs:7](https://github.com/mekhovov/revealline/blob/cb8dddd3d3c11d24c56b014fa48ac0e6417d6465/game/couch/coop-cue-overflow.mjs#L7)
 
