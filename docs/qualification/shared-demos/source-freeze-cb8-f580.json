@@ -1,0 +1,8 @@
+{
+  "created": "2026-10-18T20:30:13.091774+00:00",
+  "integrationBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+  "sourceFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+  "files": 9994,
+  "bytes": 404341587
+}
