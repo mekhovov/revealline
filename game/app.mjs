@@ -14911,6 +14911,11 @@ try {
     };
   }
   gameShell = attachGameShell({
+    comfortSettings: {
+      display: displayPreferences,
+      setDisplay: changeDisplay,
+      displayWarning: () => $('display-preferences-status').textContent,
+    },
     getAppearanceDefault: () => {
       const pin = currentAppearanceDefault();
       return pin && runtimeContent?.appearanceThemes.length
