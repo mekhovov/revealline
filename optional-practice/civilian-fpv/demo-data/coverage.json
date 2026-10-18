@@ -13,7 +13,7 @@
       "outcome": "complete",
       "ticks": 1225,
       "progress": 1,
-      "elapsedMs": 223
+      "elapsedMs": 271
     },
     {
       "id": "snake-hunt-loops-01:acro:3b4a1c3fc34c705d",
@@ -21,7 +21,7 @@
       "outcome": "complete",
       "ticks": 1225,
       "progress": 1,
-      "elapsedMs": 379
+      "elapsedMs": 528
     },
     {
       "id": "snake-hunt-loops-02:self-level:cb5af0f8873b2a63",
@@ -29,7 +29,7 @@
       "outcome": "complete",
       "ticks": 2094,
       "progress": 1,
-      "elapsedMs": 328
+      "elapsedMs": 410
     },
     {
       "id": "snake-hunt-loops-02:acro:cb5af0f8873b2a63",
@@ -37,7 +37,7 @@
       "outcome": "complete",
       "ticks": 2093,
       "progress": 1,
-      "elapsedMs": 323
+      "elapsedMs": 480
     },
     {
       "id": "snake-hunt-loops-03:self-level:4646cf2eb8780f84",
@@ -45,7 +45,7 @@
       "outcome": "complete",
       "ticks": 2487,
       "progress": 1,
-      "elapsedMs": 426
+      "elapsedMs": 1016
     },
     {
       "id": "snake-hunt-loops-03:acro:4646cf2eb8780f84",
@@ -53,7 +53,7 @@
       "outcome": "complete",
       "ticks": 2486,
       "progress": 1,
-      "elapsedMs": 405
+      "elapsedMs": 492
     },
     {
       "id": "snake-hunt-loops-04:self-level:d154d7194625a062",
@@ -61,7 +61,7 @@
       "outcome": "complete",
       "ticks": 2631,
       "progress": 1,
-      "elapsedMs": 434
+      "elapsedMs": 529
     },
     {
       "id": "snake-hunt-loops-04:acro:d154d7194625a062",
@@ -69,7 +69,7 @@
       "outcome": "complete",
       "ticks": 2633,
       "progress": 1,
-      "elapsedMs": 438
+      "elapsedMs": 535
     },
     {
       "id": "snake-hunt-loops-05:self-level:2032ff1d09bb4d10",
@@ -77,7 +77,7 @@
       "outcome": "complete",
       "ticks": 3529,
       "progress": 1,
-      "elapsedMs": 644
+      "elapsedMs": 748
     },
     {
       "id": "snake-hunt-loops-05:acro:2032ff1d09bb4d10",
@@ -85,7 +85,7 @@
       "outcome": "complete",
       "ticks": 3528,
       "progress": 1,
-      "elapsedMs": 655
+      "elapsedMs": 787
     },
     {
       "id": "snake-hunt-loops-06:self-level:86f62172427c11a0",
@@ -93,7 +93,7 @@
       "outcome": "complete",
       "ticks": 3605,
       "progress": 1,
-      "elapsedMs": 715
+      "elapsedMs": 888
     },
     {
       "id": "snake-hunt-loops-06:acro:86f62172427c11a0",
@@ -101,7 +101,7 @@
       "outcome": "complete",
       "ticks": 3607,
       "progress": 1,
-      "elapsedMs": 709
+      "elapsedMs": 793
     },
     {
       "id": "snake-hunt-weave-01:self-level:1fd6471e7501cbe6",
@@ -109,7 +109,7 @@
       "outcome": "complete",
       "ticks": 1310,
       "progress": 1,
-      "elapsedMs": 157
+      "elapsedMs": 195
     },
     {
       "id": "snake-hunt-weave-01:acro:1fd6471e7501cbe6",
@@ -117,7 +117,7 @@
       "outcome": "complete",
       "ticks": 1312,
       "progress": 1,
-      "elapsedMs": 156
+      "elapsedMs": 186
     },
     {
       "id": "snake-hunt-weave-02:self-level:79a1cc4db002c46f",
@@ -125,7 +125,7 @@
       "outcome": "complete",
       "ticks": 2222,
       "progress": 1,
-      "elapsedMs": 337
+      "elapsedMs": 457
     },
     {
       "id": "snake-hunt-weave-02:acro:79a1cc4db002c46f",
@@ -133,7 +133,7 @@
       "outcome": "complete",
       "ticks": 2222,
       "progress": 1,
-      "elapsedMs": 352
+      "elapsedMs": 514
     },
     {
       "id": "snake-hunt-weave-03:self-level:5718be4455dbb364",
@@ -141,7 +141,7 @@
       "outcome": "complete",
       "ticks": 2439,
       "progress": 1,
-      "elapsedMs": 392
+      "elapsedMs": 680
     },
     {
       "id": "snake-hunt-weave-03:acro:5718be4455dbb364",
@@ -149,7 +149,7 @@
       "outcome": "complete",
       "ticks": 2440,
       "progress": 1,
-      "elapsedMs": 389
+      "elapsedMs": 552
     },
     {
       "id": "snake-hunt-weave-04:self-level:5771923bdf896839",
@@ -157,7 +157,7 @@
       "outcome": "complete",
       "ticks": 3064,
       "progress": 1,
-      "elapsedMs": 537
+      "elapsedMs": 746
     },
     {
       "id": "snake-hunt-weave-04:acro:5771923bdf896839",
@@ -165,7 +165,7 @@
       "outcome": "complete",
       "ticks": 3064,
       "progress": 1,
-      "elapsedMs": 527
+      "elapsedMs": 670
     },
     {
       "id": "snake-hunt-weave-05:self-level:b79dc21793195b8a",
@@ -173,7 +173,7 @@
       "outcome": "complete",
       "ticks": 3279,
       "progress": 1,
-      "elapsedMs": 600
+      "elapsedMs": 728
     },
     {
       "id": "snake-hunt-weave-05:acro:b79dc21793195b8a",
@@ -181,7 +181,7 @@
       "outcome": "complete",
       "ticks": 3282,
       "progress": 1,
-      "elapsedMs": 613
+      "elapsedMs": 645
     },
     {
       "id": "snake-hunt-weave-06:self-level:31dd3d0c1307edab",
@@ -189,7 +189,7 @@
       "outcome": "complete",
       "ticks": 4283,
       "progress": 1,
-      "elapsedMs": 859
+      "elapsedMs": 878
     },
     {
       "id": "snake-hunt-weave-06:acro:31dd3d0c1307edab",
@@ -197,7 +197,7 @@
       "outcome": "complete",
       "ticks": 4288,
       "progress": 1,
-      "elapsedMs": 870
+      "elapsedMs": 862
     },
     {
       "id": "snake-hunt-heights-01:self-level:7a0b520c505b369c",
@@ -205,7 +205,7 @@
       "outcome": "complete",
       "ticks": 1286,
       "progress": 1,
-      "elapsedMs": 164
+      "elapsedMs": 156
     },
     {
       "id": "snake-hunt-heights-01:acro:7a0b520c505b369c",
@@ -213,7 +213,7 @@
       "outcome": "complete",
       "ticks": 1285,
       "progress": 1,
-      "elapsedMs": 152
+      "elapsedMs": 165
     },
     {
       "id": "snake-hunt-heights-02:self-level:32ddc2e3772c67c3",
@@ -221,7 +221,7 @@
       "outcome": "complete",
       "ticks": 1738,
       "progress": 1,
-      "elapsedMs": 245
+      "elapsedMs": 243
     },
     {
       "id": "snake-hunt-heights-02:acro:32ddc2e3772c67c3",
@@ -229,7 +229,7 @@
       "outcome": "complete",
       "ticks": 1738,
       "progress": 1,
-      "elapsedMs": 250
+      "elapsedMs": 243
     },
     {
       "id": "snake-hunt-heights-03:self-level:4bb975c0a6c13095",
@@ -245,7 +245,7 @@
       "outcome": "complete",
       "ticks": 2389,
       "progress": 1,
-      "elapsedMs": 391
+      "elapsedMs": 381
     },
     {
       "id": "snake-hunt-heights-04:self-level:98231d4fb2bab9aa",
@@ -253,7 +253,7 @@
       "outcome": "complete",
       "ticks": 3070,
       "progress": 1,
-      "elapsedMs": 544
+      "elapsedMs": 547
     },
     {
       "id": "snake-hunt-heights-04:acro:98231d4fb2bab9aa",
@@ -261,7 +261,7 @@
       "outcome": "complete",
       "ticks": 3068,
       "progress": 1,
-      "elapsedMs": 538
+      "elapsedMs": 683
     },
     {
       "id": "snake-hunt-heights-05:self-level:f3c76ffd96e59d5f",
@@ -269,7 +269,7 @@
       "outcome": "complete",
       "ticks": 2795,
       "progress": 1,
-      "elapsedMs": 506
+      "elapsedMs": 495
     },
     {
       "id": "snake-hunt-heights-05:acro:f3c76ffd96e59d5f",
@@ -277,7 +277,7 @@
       "outcome": "complete",
       "ticks": 2795,
       "progress": 1,
-      "elapsedMs": 486
+      "elapsedMs": 509
     },
     {
       "id": "snake-hunt-heights-06:self-level:a8158db3a041cf40",
@@ -285,7 +285,7 @@
       "outcome": "complete",
       "ticks": 3718,
       "progress": 1,
-      "elapsedMs": 742
+      "elapsedMs": 734
     },
     {
       "id": "snake-hunt-heights-06:acro:a8158db3a041cf40",
@@ -293,7 +293,7 @@
       "outcome": "complete",
       "ticks": 3718,
       "progress": 1,
-      "elapsedMs": 731
+      "elapsedMs": 730
     },
     {
       "id": "snake-hunt-chase-01:self-level:29d5f9a1eee0c54f",
@@ -301,7 +301,7 @@
       "outcome": "complete",
       "ticks": 1363,
       "progress": 1,
-      "elapsedMs": 229
+      "elapsedMs": 181
     },
     {
       "id": "snake-hunt-chase-01:acro:29d5f9a1eee0c54f",
@@ -309,7 +309,7 @@
       "outcome": "complete",
       "ticks": 1362,
       "progress": 1,
-      "elapsedMs": 225
+      "elapsedMs": 186
     },
     {
       "id": "snake-hunt-chase-02:self-level:7d2187cbef14db64",
@@ -317,7 +317,7 @@
       "outcome": "complete",
       "ticks": 2094,
       "progress": 1,
-      "elapsedMs": 358
+      "elapsedMs": 331
     },
     {
       "id": "snake-hunt-chase-02:acro:7d2187cbef14db64",
@@ -325,7 +325,7 @@
       "outcome": "complete",
       "ticks": 2095,
       "progress": 1,
-      "elapsedMs": 354
+      "elapsedMs": 339
     },
     {
       "id": "snake-hunt-chase-03:self-level:01b9494dd4385932",
@@ -333,7 +333,7 @@
       "outcome": "complete",
       "ticks": 3041,
       "progress": 1,
-      "elapsedMs": 540
+      "elapsedMs": 535
     },
     {
       "id": "snake-hunt-chase-03:acro:01b9494dd4385932",
@@ -341,7 +341,7 @@
       "outcome": "complete",
       "ticks": 3041,
       "progress": 1,
-      "elapsedMs": 545
+      "elapsedMs": 553
     },
     {
       "id": "snake-hunt-chase-04:self-level:1d9fd67d61c58ea5",
@@ -349,7 +349,7 @@
       "outcome": "complete",
       "ticks": 4028,
       "progress": 1,
-      "elapsedMs": 802
+      "elapsedMs": 810
     },
     {
       "id": "snake-hunt-chase-04:acro:1d9fd67d61c58ea5",
@@ -357,7 +357,7 @@
       "outcome": "complete",
       "ticks": 4030,
       "progress": 1,
-      "elapsedMs": 813
+      "elapsedMs": 797
     },
     {
       "id": "snake-hunt-chase-05:self-level:8012b94f01055490",
@@ -365,7 +365,7 @@
       "outcome": "complete",
       "ticks": 3640,
       "progress": 1,
-      "elapsedMs": 750
+      "elapsedMs": 761
     },
     {
       "id": "snake-hunt-chase-05:acro:8012b94f01055490",
@@ -373,7 +373,7 @@
       "outcome": "complete",
       "ticks": 3640,
       "progress": 1,
-      "elapsedMs": 1035
+      "elapsedMs": 752
     },
     {
       "id": "snake-hunt-chase-06:self-level:c91ff32dfaa62cd9",
@@ -381,7 +381,7 @@
       "outcome": "complete",
       "ticks": 5056,
       "progress": 1,
-      "elapsedMs": 1341
+      "elapsedMs": 1423
     },
     {
       "id": "snake-hunt-chase-06:acro:c91ff32dfaa62cd9",
@@ -389,7 +389,7 @@
       "outcome": "complete",
       "ticks": 5056,
       "progress": 1,
-      "elapsedMs": 1440
+      "elapsedMs": 1279
     },
     {
       "id": "snake-hunt-interception-loop-intercept:self-level:87fde9899f3423ba",
@@ -397,7 +397,7 @@
       "outcome": "complete",
       "ticks": 1490,
       "progress": 1,
-      "elapsedMs": 211
+      "elapsedMs": 199
     },
     {
       "id": "snake-hunt-interception-loop-intercept:acro:87fde9899f3423ba",
@@ -413,7 +413,7 @@
       "outcome": "complete",
       "ticks": 1687,
       "progress": 1,
-      "elapsedMs": 249
+      "elapsedMs": 245
     },
     {
       "id": "snake-hunt-interception-two-return-lanes:acro:5aa29fc9c2ba76ef",
@@ -421,7 +421,7 @@
       "outcome": "complete",
       "ticks": 1688,
       "progress": 1,
-      "elapsedMs": 269
+      "elapsedMs": 255
     },
     {
       "id": "snake-hunt-interception-corner-approach:self-level:123e730a32e8b2d0",
@@ -429,7 +429,7 @@
       "outcome": "complete",
       "ticks": 1637,
       "progress": 1,
-      "elapsedMs": 236
+      "elapsedMs": 232
     },
     {
       "id": "snake-hunt-interception-corner-approach:acro:123e730a32e8b2d0",
@@ -437,7 +437,7 @@
       "outcome": "complete",
       "ticks": 1651,
       "progress": 1,
-      "elapsedMs": 244
+      "elapsedMs": 237
     },
     {
       "id": "snake-hunt-interception-crossing-patrols:self-level:0af9c00724097fdb",
@@ -445,7 +445,7 @@
       "outcome": "complete",
       "ticks": 1644,
       "progress": 1,
-      "elapsedMs": 228
+      "elapsedMs": 231
     },
     {
       "id": "snake-hunt-interception-crossing-patrols:acro:0af9c00724097fdb",
@@ -453,7 +453,7 @@
       "outcome": "complete",
       "ticks": 1711,
       "progress": 1,
-      "elapsedMs": 232
+      "elapsedMs": 247
     },
     {
       "id": "snake-hunt-interception-island-bypass:self-level:e4f72e7ef2119926",
@@ -461,7 +461,7 @@
       "outcome": "complete",
       "ticks": 1600,
       "progress": 1,
-      "elapsedMs": 226
+      "elapsedMs": 295
     },
     {
       "id": "snake-hunt-interception-island-bypass:acro:e4f72e7ef2119926",
@@ -469,7 +469,7 @@
       "outcome": "complete",
       "ticks": 1594,
       "progress": 1,
-      "elapsedMs": 232
+      "elapsedMs": 452
     },
     {
       "id": "snake-hunt-interception-staggered-interception:self-level:1acc61b450d8adee",
@@ -477,7 +477,7 @@
       "outcome": "complete",
       "ticks": 5189,
       "progress": 1,
-      "elapsedMs": 946
+      "elapsedMs": 1149
     },
     {
       "id": "snake-hunt-interception-staggered-interception:acro:1acc61b450d8adee",
@@ -485,7 +485,7 @@
       "outcome": "complete",
       "ticks": 5189,
       "progress": 1,
-      "elapsedMs": 937
+      "elapsedMs": 1118
     },
     {
       "id": "snake-hunt-route-choices-warehouse-return:self-level:9586a414f8d7e715",
@@ -493,7 +493,7 @@
       "outcome": "complete",
       "ticks": 2078,
       "progress": 1,
-      "elapsedMs": 337
+      "elapsedMs": 395
     },
     {
       "id": "snake-hunt-route-choices-warehouse-return:acro:9586a414f8d7e715",
@@ -501,7 +501,7 @@
       "outcome": "complete",
       "ticks": 2077,
       "progress": 1,
-      "elapsedMs": 348
+      "elapsedMs": 500
     },
     {
       "id": "snake-hunt-route-choices-courtyard-approaches:self-level:0767d7a495801f82",
@@ -509,7 +509,7 @@
       "outcome": "complete",
       "ticks": 2679,
       "progress": 1,
-      "elapsedMs": 451
+      "elapsedMs": 757
     },
     {
       "id": "snake-hunt-route-choices-courtyard-approaches:acro:0767d7a495801f82",
@@ -517,7 +517,7 @@
       "outcome": "complete",
       "ticks": 5635,
       "progress": 1,
-      "elapsedMs": 1016
+      "elapsedMs": 1660
     },
     {
       "id": "snake-hunt-route-choices-platform-perimeter:self-level:62580d92ae17749e",
@@ -525,7 +525,7 @@
       "outcome": "complete",
       "ticks": 1637,
       "progress": 1,
-      "elapsedMs": 244
+      "elapsedMs": 368
     },
     {
       "id": "snake-hunt-route-choices-platform-perimeter:acro:62580d92ae17749e",
@@ -533,7 +533,7 @@
       "outcome": "complete",
       "ticks": 1639,
       "progress": 1,
-      "elapsedMs": 250
+      "elapsedMs": 353
     },
     {
       "id": "snake-hunt-route-choices-boundary-cutback:self-level:acdb5b6cb78fd27f",
@@ -541,7 +541,7 @@
       "outcome": "complete",
       "ticks": 3903,
       "progress": 1,
-      "elapsedMs": 694
+      "elapsedMs": 966
     },
     {
       "id": "snake-hunt-route-choices-boundary-cutback:acro:acdb5b6cb78fd27f",
@@ -549,7 +549,7 @@
       "outcome": "complete",
       "ticks": 3894,
       "progress": 1,
-      "elapsedMs": 678
+      "elapsedMs": 938
     },
     {
       "id": "snake-hunt-route-choices-cross-route-choice:self-level:f4d190b08a35083f",
@@ -557,7 +557,7 @@
       "outcome": "complete",
       "ticks": 2081,
       "progress": 1,
-      "elapsedMs": 352
+      "elapsedMs": 613
     },
     {
       "id": "snake-hunt-route-choices-cross-route-choice:acro:f4d190b08a35083f",
@@ -565,7 +565,7 @@
       "outcome": "complete",
       "ticks": 2081,
       "progress": 1,
-      "elapsedMs": 359
+      "elapsedMs": 907
     },
     {
       "id": "snake-hunt-route-choices-airfield-circuit:self-level:dc83846a2b0b4d08",
@@ -573,7 +573,7 @@
       "outcome": "complete",
       "ticks": 7859,
       "progress": 1,
-      "elapsedMs": 1632
+      "elapsedMs": 2115
     },
     {
       "id": "snake-hunt-route-choices-airfield-circuit:acro:dc83846a2b0b4d08",
@@ -581,7 +581,7 @@
       "outcome": "complete",
       "ticks": 7859,
       "progress": 1,
-      "elapsedMs": 1627
+      "elapsedMs": 1995
     },
     {
       "id": "snake-hunt-ground-routes-low-pass-depot:self-level:ebc583128e1cc807",
@@ -589,7 +589,7 @@
       "outcome": "complete",
       "ticks": 1539,
       "progress": 1,
-      "elapsedMs": 220
+      "elapsedMs": 278
     },
     {
       "id": "snake-hunt-ground-routes-low-pass-depot:acro:ebc583128e1cc807",
@@ -597,7 +597,7 @@
       "outcome": "complete",
       "ticks": 1543,
       "progress": 1,
-      "elapsedMs": 206
+      "elapsedMs": 249
     },
     {
       "id": "snake-hunt-ground-routes-split-yard-return:self-level:7e783801753dd500",
@@ -605,7 +605,7 @@
       "outcome": "complete",
       "ticks": 2114,
       "progress": 1,
-      "elapsedMs": 320
+      "elapsedMs": 362
     },
     {
       "id": "snake-hunt-ground-routes-split-yard-return:acro:7e783801753dd500",
@@ -613,7 +613,7 @@
       "outcome": "complete",
       "ticks": 2114,
       "progress": 1,
-      "elapsedMs": 321
+      "elapsedMs": 387
     },
     {
       "id": "snake-hunt-ground-routes-crossing-arrivals:self-level:22dfa2bb72ff1f5b",
@@ -621,7 +621,7 @@
       "outcome": "complete",
       "ticks": 1650,
       "progress": 1,
-      "elapsedMs": 241
+      "elapsedMs": 270
     },
     {
       "id": "snake-hunt-ground-routes-crossing-arrivals:acro:22dfa2bb72ff1f5b",
@@ -629,7 +629,7 @@
       "outcome": "complete",
       "ticks": 1652,
       "progress": 1,
-      "elapsedMs": 225
+      "elapsedMs": 286
     },
     {
       "id": "snake-hunt-ground-routes-shelter-arc:self-level:4c28fb8fe462cfdc",
@@ -637,7 +637,7 @@
       "outcome": "complete",
       "ticks": 2539,
       "progress": 1,
-      "elapsedMs": 419
+      "elapsedMs": 526
     },
     {
       "id": "snake-hunt-ground-routes-shelter-arc:acro:4c28fb8fe462cfdc",
@@ -645,7 +645,7 @@
       "outcome": "complete",
       "ticks": 2538,
       "progress": 1,
-      "elapsedMs": 435
+      "elapsedMs": 481
     },
     {
       "id": "snake-hunt-ground-routes-freight-slalom:self-level:2b037eb18b810f1f",
@@ -653,7 +653,7 @@
       "outcome": "complete",
       "ticks": 2392,
       "progress": 1,
-      "elapsedMs": 397
+      "elapsedMs": 446
     },
     {
       "id": "snake-hunt-ground-routes-freight-slalom:acro:2b037eb18b810f1f",
@@ -661,7 +661,7 @@
       "outcome": "complete",
       "ticks": 2392,
       "progress": 1,
-      "elapsedMs": 408
+      "elapsedMs": 446
     },
     {
       "id": "snake-hunt-ground-routes-forked-depot:self-level:a682f8b8a384a380",
@@ -669,7 +669,7 @@
       "outcome": "complete",
       "ticks": 3353,
       "progress": 1,
-      "elapsedMs": 625
+      "elapsedMs": 759
     },
     {
       "id": "snake-hunt-ground-routes-forked-depot:acro:a682f8b8a384a380",
@@ -677,7 +677,7 @@
       "outcome": "complete",
       "ticks": 3356,
       "progress": 1,
-      "elapsedMs": 640
+      "elapsedMs": 788
     },
     {
       "id": "snake-hunt-approach-windows-low-roof-window:self-level:c493212fc881f7ea",
@@ -685,7 +685,7 @@
       "outcome": "complete",
       "ticks": 2927,
       "progress": 1,
-      "elapsedMs": 497
+      "elapsedMs": 1064
     },
     {
       "id": "snake-hunt-approach-windows-low-roof-window:acro:c493212fc881f7ea",
@@ -693,7 +693,7 @@
       "outcome": "complete",
       "ticks": 2931,
       "progress": 1,
-      "elapsedMs": 504
+      "elapsedMs": 578
     },
     {
       "id": "snake-hunt-approach-windows-roofline-exchange:self-level:2c507fd99c33913e",
@@ -701,7 +701,7 @@
       "outcome": "complete",
       "ticks": 1978,
       "progress": 1,
-      "elapsedMs": 331
+      "elapsedMs": 376
     },
     {
       "id": "snake-hunt-approach-windows-roofline-exchange:acro:2c507fd99c33913e",
@@ -709,7 +709,7 @@
       "outcome": "complete",
       "ticks": 1978,
       "progress": 1,
-      "elapsedMs": 339
+      "elapsedMs": 384
     },
     {
       "id": "snake-hunt-approach-windows-return-slot:self-level:46ac9c8522e311d4",
@@ -717,7 +717,7 @@
       "outcome": "complete",
       "ticks": 2008,
       "progress": 1,
-      "elapsedMs": 337
+      "elapsedMs": 405
     },
     {
       "id": "snake-hunt-approach-windows-return-slot:acro:46ac9c8522e311d4",
@@ -725,7 +725,7 @@
       "outcome": "complete",
       "ticks": 2009,
       "progress": 1,
-      "elapsedMs": 323
+      "elapsedMs": 382
     },
     {
       "id": "snake-hunt-approach-windows-staggered-roofs:self-level:1d49ebd2e6260507",
@@ -733,7 +733,7 @@
       "outcome": "complete",
       "ticks": 2403,
       "progress": 1,
-      "elapsedMs": 421
+      "elapsedMs": 467
     },
     {
       "id": "snake-hunt-approach-windows-staggered-roofs:acro:1d49ebd2e6260507",
@@ -741,7 +741,7 @@
       "outcome": "complete",
       "ticks": 2404,
       "progress": 1,
-      "elapsedMs": 412
+      "elapsedMs": 458
     },
     {
       "id": "snake-hunt-approach-windows-window-chain:self-level:4d86d994066e593e",
@@ -749,7 +749,7 @@
       "outcome": "complete",
       "ticks": 7081,
       "progress": 1,
-      "elapsedMs": 1525
+      "elapsedMs": 1732
     },
     {
       "id": "snake-hunt-approach-windows-window-chain:acro:4d86d994066e593e",
@@ -757,7 +757,7 @@
       "outcome": "complete",
       "ticks": 7062,
       "progress": 1,
-      "elapsedMs": 1509
+      "elapsedMs": 1911
     },
     {
       "id": "snake-hunt-approach-windows-three-yard-finale:self-level:3a59b447f6ecb47b",
@@ -765,7 +765,7 @@
       "outcome": "complete",
       "ticks": 4141,
       "progress": 1,
-      "elapsedMs": 904
+      "elapsedMs": 1011
     },
     {
       "id": "snake-hunt-approach-windows-three-yard-finale:acro:3a59b447f6ecb47b",
@@ -773,7 +773,7 @@
       "outcome": "complete",
       "ticks": 4142,
       "progress": 1,
-      "elapsedMs": 912
+      "elapsedMs": 1009
     },
     {
       "id": "native-pursuit-refuge-return:self-level:cb0399429b973f68",
@@ -781,7 +781,7 @@
       "outcome": "complete",
       "ticks": 983,
       "progress": 1,
-      "elapsedMs": 137
+      "elapsedMs": 180
     },
     {
       "id": "native-pursuit-refuge-return:acro:cb0399429b973f68",
@@ -789,7 +789,7 @@
       "outcome": "complete",
       "ticks": 983,
       "progress": 1,
-      "elapsedMs": 154
+      "elapsedMs": 156
     },
     {
       "id": "native-pursuit-meeting-yard:self-level:b6d7b83bfa3cffbd",
@@ -797,7 +797,7 @@
       "outcome": "complete",
       "ticks": 810,
       "progress": 1,
-      "elapsedMs": 109
+      "elapsedMs": 137
     },
     {
       "id": "native-pursuit-meeting-yard:acro:b6d7b83bfa3cffbd",
@@ -805,7 +805,7 @@
       "outcome": "complete",
       "ticks": 808,
       "progress": 1,
-      "elapsedMs": 104
+      "elapsedMs": 122
     },
     {
       "id": "native-pursuit-runner-court:self-level:1c2f4e12f6cab75c",
@@ -813,7 +813,7 @@
       "outcome": "complete",
       "ticks": 326,
       "progress": 1,
-      "elapsedMs": 33
+      "elapsedMs": 61
     },
     {
       "id": "native-pursuit-runner-court:acro:1c2f4e12f6cab75c",
@@ -821,7 +821,7 @@
       "outcome": "complete",
       "ticks": 326,
       "progress": 1,
-      "elapsedMs": 33
+      "elapsedMs": 40
     },
     {
       "id": "native-pursuit-burst-lanes:self-level:9112756abe5f6643",
@@ -829,7 +829,7 @@
       "outcome": "complete",
       "ticks": 420,
       "progress": 1,
-      "elapsedMs": 41
+      "elapsedMs": 59
     },
     {
       "id": "native-pursuit-burst-lanes:acro:9112756abe5f6643",
@@ -837,7 +837,7 @@
       "outcome": "complete",
       "ticks": 420,
       "progress": 1,
-      "elapsedMs": 43
+      "elapsedMs": 62
     },
     {
       "id": "native-pursuit-refuge-return:self-level:b8e39faef6189918",
@@ -845,7 +845,7 @@
       "outcome": "complete",
       "ticks": 670,
       "progress": 1,
-      "elapsedMs": 83
+      "elapsedMs": 109
     },
     {
       "id": "native-pursuit-refuge-return:acro:b8e39faef6189918",
@@ -853,7 +853,7 @@
       "outcome": "complete",
       "ticks": 670,
       "progress": 1,
-      "elapsedMs": 83
+      "elapsedMs": 96
     },
     {
       "id": "native-pursuit-switchback-crossing:self-level:148b660f5ae3bea1",
@@ -861,7 +861,7 @@
       "outcome": "complete",
       "ticks": 1061,
       "progress": 1,
-      "elapsedMs": 127
+      "elapsedMs": 146
     },
     {
       "id": "native-pursuit-switchback-crossing:acro:148b660f5ae3bea1",
@@ -869,7 +869,7 @@
       "outcome": "complete",
       "ticks": 1061,
       "progress": 1,
-      "elapsedMs": 128
+      "elapsedMs": 145
     },
     {
       "id": "native-pursuit-meeting-yard:self-level:bf364ae9edd1d98f",
@@ -877,7 +877,7 @@
       "outcome": "complete",
       "ticks": 773,
       "progress": 1,
-      "elapsedMs": 95
+      "elapsedMs": 104
     },
     {
       "id": "native-pursuit-meeting-yard:acro:bf364ae9edd1d98f",
@@ -885,7 +885,7 @@
       "outcome": "complete",
       "ticks": 780,
       "progress": 1,
-      "elapsedMs": 96
+      "elapsedMs": 108
     },
     {
       "id": "native-pursuit-armor-windows:self-level:8c8d4d94ea6c2f13",
@@ -893,7 +893,7 @@
       "outcome": "complete",
       "ticks": 2236,
       "progress": 1,
-      "elapsedMs": 294
+      "elapsedMs": 312
     },
     {
       "id": "native-pursuit-armor-windows:acro:8c8d4d94ea6c2f13",
@@ -901,7 +901,7 @@
       "outcome": "complete",
       "ticks": 2236,
       "progress": 1,
-      "elapsedMs": 273
+      "elapsedMs": 310
     },
     {
       "id": "adventure-coast-01:self-level:d393d9dc2cdbf8ac",
@@ -909,7 +909,7 @@
       "outcome": "complete",
       "ticks": 4843,
       "progress": 4,
-      "elapsedMs": 241
+      "elapsedMs": 299
     },
     {
       "id": "adventure-coast-01:acro:d393d9dc2cdbf8ac",
@@ -917,7 +917,7 @@
       "outcome": "complete",
       "ticks": 4843,
       "progress": 4,
-      "elapsedMs": 237
+      "elapsedMs": 274
     },
     {
       "id": "adventure-coast-02:self-level:3b4dfcf92ac24b24",
@@ -925,7 +925,7 @@
       "outcome": "complete",
       "ticks": 3748,
       "progress": 8,
-      "elapsedMs": 188
+      "elapsedMs": 196
     },
     {
       "id": "adventure-coast-02:acro:3b4dfcf92ac24b24",
@@ -933,7 +933,7 @@
       "outcome": "complete",
       "ticks": 3740,
       "progress": 8,
-      "elapsedMs": 170
+      "elapsedMs": 185
     },
     {
       "id": "adventure-coast-03:self-level:d4e57d46b263b9b3",
@@ -941,7 +941,7 @@
       "outcome": "complete",
       "ticks": 2577,
       "progress": 3,
-      "elapsedMs": 133
+      "elapsedMs": 168
     },
     {
       "id": "adventure-coast-03:acro:d4e57d46b263b9b3",
@@ -949,7 +949,7 @@
       "outcome": "complete",
       "ticks": 2685,
       "progress": 3,
-      "elapsedMs": 145
+      "elapsedMs": 156
     },
     {
       "id": "adventure-coast-04:self-level:210391f9a173f079",
@@ -957,7 +957,7 @@
       "outcome": "complete",
       "ticks": 3093,
       "progress": 5,
-      "elapsedMs": 195
+      "elapsedMs": 193
     },
     {
       "id": "adventure-coast-04:acro:210391f9a173f079",
@@ -965,7 +965,7 @@
       "outcome": "complete",
       "ticks": 3089,
       "progress": 5,
-      "elapsedMs": 225
+      "elapsedMs": 230
     },
     {
       "id": "adventure-coast-05:self-level:923d46f923372d2d",
@@ -973,7 +973,7 @@
       "outcome": "complete",
       "ticks": 6644,
       "progress": 7,
-      "elapsedMs": 262
+      "elapsedMs": 380
     },
     {
       "id": "adventure-coast-05:acro:923d46f923372d2d",
@@ -981,7 +981,7 @@
       "outcome": "complete",
       "ticks": 6606,
       "progress": 7,
-      "elapsedMs": 292
+      "elapsedMs": 357
     },
     {
       "id": "adventure-quarry-01:self-level:3fa340eba3f435b4",
@@ -989,7 +989,7 @@
       "outcome": "complete",
       "ticks": 4192,
       "progress": 5,
-      "elapsedMs": 226
+      "elapsedMs": 275
     },
     {
       "id": "adventure-quarry-01:acro:3fa340eba3f435b4",
@@ -997,7 +997,7 @@
       "outcome": "complete",
       "ticks": 4198,
       "progress": 5,
-      "elapsedMs": 203
+      "elapsedMs": 289
     },
     {
       "id": "adventure-quarry-02:self-level:6d4d3cd2ff691c81",
@@ -1005,7 +1005,7 @@
       "outcome": "complete",
       "ticks": 3726,
       "progress": 5,
-      "elapsedMs": 208
+      "elapsedMs": 285
     },
     {
       "id": "adventure-quarry-02:acro:6d4d3cd2ff691c81",
@@ -1013,7 +1013,7 @@
       "outcome": "complete",
       "ticks": 3951,
       "progress": 5,
-      "elapsedMs": 225
+      "elapsedMs": 283
     },
     {
       "id": "adventure-quarry-03:self-level:9a113e46e3713a55",
@@ -1021,7 +1021,7 @@
       "outcome": "complete",
       "ticks": 2052,
       "progress": 3,
-      "elapsedMs": 102
+      "elapsedMs": 153
     },
     {
       "id": "adventure-quarry-03:acro:9a113e46e3713a55",
@@ -1029,7 +1029,7 @@
       "outcome": "complete",
       "ticks": 2137,
       "progress": 3,
-      "elapsedMs": 107
+      "elapsedMs": 154
     },
     {
       "id": "adventure-quarry-04:self-level:1caf2b5b48a5bdd2",
@@ -1037,7 +1037,7 @@
       "outcome": "complete",
       "ticks": 3121,
       "progress": 3,
-      "elapsedMs": 183
+      "elapsedMs": 302
     },
     {
       "id": "adventure-quarry-04:acro:1caf2b5b48a5bdd2",
@@ -1045,7 +1045,7 @@
       "outcome": "complete",
       "ticks": 3327,
       "progress": 3,
-      "elapsedMs": 192
+      "elapsedMs": 383
     },
     {
       "id": "adventure-quarry-05:self-level:a7cbbf241ab8c431",
@@ -1053,7 +1053,7 @@
       "outcome": "complete",
       "ticks": 7476,
       "progress": 8,
-      "elapsedMs": 281
+      "elapsedMs": 477
     },
     {
       "id": "adventure-quarry-05:acro:a7cbbf241ab8c431",
@@ -1061,7 +1061,7 @@
       "outcome": "complete",
       "ticks": 7463,
       "progress": 8,
-      "elapsedMs": 280
+      "elapsedMs": 474
     },
     {
       "id": "adventure-rooftops-01:self-level:637c54bc7f16fbad",
@@ -1069,7 +1069,7 @@
       "outcome": "complete",
       "ticks": 5002,
       "progress": 5,
-      "elapsedMs": 236
+      "elapsedMs": 414
     },
     {
       "id": "adventure-rooftops-01:acro:637c54bc7f16fbad",
@@ -1077,7 +1077,7 @@
       "outcome": "complete",
       "ticks": 5010,
       "progress": 5,
-      "elapsedMs": 231
+      "elapsedMs": 392
     },
     {
       "id": "adventure-rooftops-02:self-level:6b01dcda04f018d9",
@@ -1085,7 +1085,7 @@
       "outcome": "complete",
       "ticks": 4206,
       "progress": 9,
-      "elapsedMs": 147
+      "elapsedMs": 226
     },
     {
       "id": "adventure-rooftops-02:acro:6b01dcda04f018d9",
@@ -1093,7 +1093,7 @@
       "outcome": "complete",
       "ticks": 4211,
       "progress": 9,
-      "elapsedMs": 154
+      "elapsedMs": 211
     },
     {
       "id": "adventure-rooftops-03:self-level:7c70b3d832650381",
@@ -1101,7 +1101,7 @@
       "outcome": "complete",
       "ticks": 4073,
       "progress": 3,
-      "elapsedMs": 214
+      "elapsedMs": 297
     },
     {
       "id": "adventure-rooftops-03:acro:7c70b3d832650381",
@@ -1109,7 +1109,7 @@
       "outcome": "complete",
       "ticks": 4145,
       "progress": 3,
-      "elapsedMs": 192
+      "elapsedMs": 311
     },
     {
       "id": "adventure-rooftops-04:self-level:5ed1fecffb664a97",
@@ -1117,7 +1117,7 @@
       "outcome": "complete",
       "ticks": 9826,
       "progress": 7,
-      "elapsedMs": 361
+      "elapsedMs": 524
     },
     {
       "id": "adventure-rooftops-04:acro:5ed1fecffb664a97",
@@ -1125,7 +1125,7 @@
       "outcome": "complete",
       "ticks": 9793,
       "progress": 7,
-      "elapsedMs": 371
+      "elapsedMs": 474
     },
     {
       "id": "adventure-rooftops-05:self-level:4003a54d1fd34302",
@@ -1133,7 +1133,7 @@
       "outcome": "complete",
       "ticks": 3857,
       "progress": 5,
-      "elapsedMs": 198
+      "elapsedMs": 252
     },
     {
       "id": "adventure-rooftops-05:acro:4003a54d1fd34302",
@@ -1141,7 +1141,7 @@
       "outcome": "complete",
       "ticks": 3859,
       "progress": 5,
-      "elapsedMs": 209
+      "elapsedMs": 257
     },
     {
       "id": "adventure-orchard-01:self-level:39243be8ab62510e",
@@ -1149,7 +1149,7 @@
       "outcome": "complete",
       "ticks": 4130,
       "progress": 5,
-      "elapsedMs": 236
+      "elapsedMs": 235
     },
     {
       "id": "adventure-orchard-01:acro:39243be8ab62510e",
@@ -1157,7 +1157,7 @@
       "outcome": "complete",
       "ticks": 4136,
       "progress": 5,
-      "elapsedMs": 323
+      "elapsedMs": 233
     },
     {
       "id": "adventure-orchard-02:self-level:1c45351e324ce4f8",
@@ -1165,7 +1165,7 @@
       "outcome": "complete",
       "ticks": 4678,
       "progress": 6,
-      "elapsedMs": 270
+      "elapsedMs": 261
     },
     {
       "id": "adventure-orchard-02:acro:1c45351e324ce4f8",
@@ -1173,7 +1173,7 @@
       "outcome": "complete",
       "ticks": 4683,
       "progress": 6,
-      "elapsedMs": 306
+      "elapsedMs": 380
     },
     {
       "id": "adventure-orchard-03:self-level:b1ab510e63c8bb46",
@@ -1181,7 +1181,7 @@
       "outcome": "complete",
       "ticks": 3094,
       "progress": 5,
-      "elapsedMs": 176
+      "elapsedMs": 210
     },
     {
       "id": "adventure-orchard-03:acro:b1ab510e63c8bb46",
@@ -1189,7 +1189,7 @@
       "outcome": "complete",
       "ticks": 3092,
       "progress": 5,
-      "elapsedMs": 167
+      "elapsedMs": 190
     },
     {
       "id": "adventure-orchard-04:self-level:66d8d85351118e23",
@@ -1197,7 +1197,7 @@
       "outcome": "complete",
       "ticks": 1731,
       "progress": 3,
-      "elapsedMs": 95
+      "elapsedMs": 112
     },
     {
       "id": "adventure-orchard-04:acro:66d8d85351118e23",
@@ -1205,7 +1205,7 @@
       "outcome": "complete",
       "ticks": 1726,
       "progress": 3,
-      "elapsedMs": 108
+      "elapsedMs": 100
     },
     {
       "id": "adventure-orchard-05:self-level:53fcb2e424178960",
@@ -1213,7 +1213,7 @@
       "outcome": "complete",
       "ticks": 6132,
       "progress": 4,
-      "elapsedMs": 276
+      "elapsedMs": 326
     },
     {
       "id": "adventure-orchard-05:acro:53fcb2e424178960",
@@ -1221,7 +1221,7 @@
       "outcome": "complete",
       "ticks": 6123,
       "progress": 4,
-      "elapsedMs": 264
+      "elapsedMs": 255
     },
     {
       "id": "adventure-solar-farm-01:self-level:b77f58c7950920dd",
@@ -1229,7 +1229,7 @@
       "outcome": "complete",
       "ticks": 4771,
       "progress": 5,
-      "elapsedMs": 256
+      "elapsedMs": 257
     },
     {
       "id": "adventure-solar-farm-01:acro:b77f58c7950920dd",
@@ -1237,7 +1237,7 @@
       "outcome": "complete",
       "ticks": 4757,
       "progress": 5,
-      "elapsedMs": 406
+      "elapsedMs": 345
     },
     {
       "id": "adventure-solar-farm-02:self-level:1f47af7d5f8a2e2f",
@@ -1245,7 +1245,7 @@
       "outcome": "complete",
       "ticks": 5197,
       "progress": 5,
-      "elapsedMs": 351
+      "elapsedMs": 291
     },
     {
       "id": "adventure-solar-farm-02:acro:1f47af7d5f8a2e2f",
@@ -1253,7 +1253,7 @@
       "outcome": "complete",
       "ticks": 5181,
       "progress": 5,
-      "elapsedMs": 297
+      "elapsedMs": 242
     },
     {
       "id": "adventure-solar-farm-03:self-level:bb72971048dde3c3",
@@ -1261,7 +1261,7 @@
       "outcome": "complete",
       "ticks": 3093,
       "progress": 5,
-      "elapsedMs": 169
+      "elapsedMs": 200
     },
     {
       "id": "adventure-solar-farm-03:acro:bb72971048dde3c3",
@@ -1269,7 +1269,7 @@
       "outcome": "complete",
       "ticks": 3089,
       "progress": 5,
-      "elapsedMs": 196
+      "elapsedMs": 194
     },
     {
       "id": "adventure-solar-farm-04:self-level:1c63fbf497207a55",
@@ -1277,7 +1277,7 @@
       "outcome": "complete",
       "ticks": 4207,
       "progress": 7,
-      "elapsedMs": 229
+      "elapsedMs": 233
     },
     {
       "id": "adventure-solar-farm-04:acro:1c63fbf497207a55",
@@ -1285,7 +1285,7 @@
       "outcome": "complete",
       "ticks": 4304,
       "progress": 7,
-      "elapsedMs": 227
+      "elapsedMs": 368
     },
     {
       "id": "adventure-solar-farm-05:self-level:db63feaa5ca42699",
@@ -1293,7 +1293,7 @@
       "outcome": "complete",
       "ticks": 3117,
       "progress": 3,
-      "elapsedMs": 194
+      "elapsedMs": 223
     },
     {
       "id": "adventure-solar-farm-05:acro:db63feaa5ca42699",
@@ -1301,7 +1301,7 @@
       "outcome": "complete",
       "ticks": 3151,
       "progress": 3,
-      "elapsedMs": 333
+      "elapsedMs": 217
     },
     {
       "id": "adventure-rail-depot-01:self-level:0ee57e4f5ae6e36a",
@@ -1309,7 +1309,7 @@
       "outcome": "complete",
       "ticks": 3957,
       "progress": 4,
-      "elapsedMs": 250
+      "elapsedMs": 243
     },
     {
       "id": "adventure-rail-depot-01:acro:0ee57e4f5ae6e36a",
@@ -1317,7 +1317,7 @@
       "outcome": "complete",
       "ticks": 3938,
       "progress": 4,
-      "elapsedMs": 207
+      "elapsedMs": 216
     },
     {
       "id": "adventure-rail-depot-02:self-level:d47ea721585bd9a1",
@@ -1325,7 +1325,7 @@
       "outcome": "complete",
       "ticks": 4147,
       "progress": 9,
-      "elapsedMs": 231
+      "elapsedMs": 247
     },
     {
       "id": "adventure-rail-depot-02:acro:d47ea721585bd9a1",
@@ -1333,7 +1333,7 @@
       "outcome": "complete",
       "ticks": 4138,
       "progress": 9,
-      "elapsedMs": 193
+      "elapsedMs": 208
     },
     {
       "id": "adventure-rail-depot-03:self-level:214fcba8a95ee419",
@@ -1341,7 +1341,7 @@
       "outcome": "complete",
       "ticks": 2052,
       "progress": 3,
-      "elapsedMs": 112
+      "elapsedMs": 126
     },
     {
       "id": "adventure-rail-depot-03:acro:214fcba8a95ee419",
@@ -1349,7 +1349,7 @@
       "outcome": "complete",
       "ticks": 2137,
       "progress": 3,
-      "elapsedMs": 132
+      "elapsedMs": 125
     },
     {
       "id": "adventure-rail-depot-04:self-level:eb40f955ccd4288b",
@@ -1357,7 +1357,7 @@
       "outcome": "complete",
       "ticks": 4146,
       "progress": 5,
-      "elapsedMs": 233
+      "elapsedMs": 257
     },
     {
       "id": "adventure-rail-depot-04:acro:eb40f955ccd4288b",
@@ -1365,7 +1365,7 @@
       "outcome": "complete",
       "ticks": 4163,
       "progress": 5,
-      "elapsedMs": 229
+      "elapsedMs": 260
     },
     {
       "id": "adventure-rail-depot-05:self-level:229a0544f2a84658",
@@ -1373,7 +1373,7 @@
       "outcome": "complete",
       "ticks": 3121,
       "progress": 3,
-      "elapsedMs": 204
+      "elapsedMs": 203
     },
     {
       "id": "adventure-rail-depot-05:acro:229a0544f2a84658",
@@ -1381,7 +1381,7 @@
       "outcome": "complete",
       "ticks": 3327,
       "progress": 3,
-      "elapsedMs": 206
+      "elapsedMs": 209
     },
     {
       "id": "flight-01:self-level:573db8b71fe99103",
@@ -1389,7 +1389,7 @@
       "outcome": "complete",
       "ticks": 239,
       "progress": 2,
-      "elapsedMs": 11
+      "elapsedMs": 9
     },
     {
       "id": "flight-01:acro:573db8b71fe99103",
@@ -1397,7 +1397,7 @@
       "outcome": "complete",
       "ticks": 239,
       "progress": 2,
-      "elapsedMs": 10
+      "elapsedMs": 8
     },
     {
       "id": "flight-02:self-level:8f671907feda67c9",
@@ -1405,7 +1405,7 @@
       "outcome": "complete",
       "ticks": 383,
       "progress": 2,
-      "elapsedMs": 21
+      "elapsedMs": 12
     },
     {
       "id": "flight-02:acro:8f671907feda67c9",
@@ -1413,7 +1413,7 @@
       "outcome": "complete",
       "ticks": 383,
       "progress": 2,
-      "elapsedMs": 12
+      "elapsedMs": 16
     },
     {
       "id": "flight-03:self-level:1b240bb932f3f649",
@@ -1421,7 +1421,7 @@
       "outcome": "complete",
       "ticks": 433,
       "progress": 4,
-      "elapsedMs": 14
+      "elapsedMs": 13
     },
     {
       "id": "flight-03:acro:1b240bb932f3f649",
@@ -1437,7 +1437,7 @@
       "outcome": "complete",
       "ticks": 433,
       "progress": 4,
-      "elapsedMs": 15
+      "elapsedMs": 13
     },
     {
       "id": "flight-04:acro:9f0f8cfdac49a166",
@@ -1445,7 +1445,7 @@
       "outcome": "complete",
       "ticks": 433,
       "progress": 4,
-      "elapsedMs": 16
+      "elapsedMs": 14
     },
     {
       "id": "flight-05:self-level:dec5e82c56c5d299",
@@ -1453,7 +1453,7 @@
       "outcome": "complete",
       "ticks": 435,
       "progress": 4,
-      "elapsedMs": 14
+      "elapsedMs": 15
     },
     {
       "id": "flight-05:acro:dec5e82c56c5d299",
@@ -1461,7 +1461,7 @@
       "outcome": "complete",
       "ticks": 435,
       "progress": 4,
-      "elapsedMs": 14
+      "elapsedMs": 16
     },
     {
       "id": "flight-06:self-level:80e5b607f33f1a75",
@@ -1469,7 +1469,7 @@
       "outcome": "complete",
       "ticks": 899,
       "progress": 6,
-      "elapsedMs": 25
+      "elapsedMs": 29
     },
     {
       "id": "flight-06:acro:80e5b607f33f1a75",
@@ -1477,7 +1477,7 @@
       "outcome": "complete",
       "ticks": 900,
       "progress": 6,
-      "elapsedMs": 26
+      "elapsedMs": 27
     },
     {
       "id": "flight-07:self-level:923c2d912d5f865c",
@@ -1485,7 +1485,7 @@
       "outcome": "complete",
       "ticks": 498,
       "progress": 4,
-      "elapsedMs": 15
+      "elapsedMs": 16
     },
     {
       "id": "flight-07:acro:923c2d912d5f865c",
@@ -1493,7 +1493,7 @@
       "outcome": "complete",
       "ticks": 488,
       "progress": 4,
-      "elapsedMs": 21
+      "elapsedMs": 14
     },
     {
       "id": "flight-08:self-level:0a44f9386d8f14eb",
@@ -1509,7 +1509,7 @@
       "outcome": "complete",
       "ticks": 491,
       "progress": 4,
-      "elapsedMs": 16
+      "elapsedMs": 17
     },
     {
       "id": "flight-09:self-level:6a883e6da14ef864",
@@ -1517,7 +1517,7 @@
       "outcome": "complete",
       "ticks": 638,
       "progress": 5,
-      "elapsedMs": 17
+      "elapsedMs": 22
     },
     {
       "id": "flight-09:acro:6a883e6da14ef864",
@@ -1525,7 +1525,7 @@
       "outcome": "complete",
       "ticks": 638,
       "progress": 5,
-      "elapsedMs": 18
+      "elapsedMs": 19
     },
     {
       "id": "flight-10:self-level:17c60cf6ab703346",
@@ -1533,7 +1533,7 @@
       "outcome": "complete",
       "ticks": 610,
       "progress": 5,
-      "elapsedMs": 18
+      "elapsedMs": 20
     },
     {
       "id": "flight-10:acro:17c60cf6ab703346",
@@ -1541,7 +1541,7 @@
       "outcome": "complete",
       "ticks": 610,
       "progress": 5,
-      "elapsedMs": 18
+      "elapsedMs": 19
     },
     {
       "id": "flight-11:self-level:c1dba4037a711cbe",
@@ -1549,7 +1549,7 @@
       "outcome": "complete",
       "ticks": 1243,
       "progress": 8,
-      "elapsedMs": 36
+      "elapsedMs": 47
     },
     {
       "id": "flight-11:acro:c1dba4037a711cbe",
@@ -1557,7 +1557,7 @@
       "outcome": "complete",
       "ticks": 1243,
       "progress": 8,
-      "elapsedMs": 34
+      "elapsedMs": 39
     },
     {
       "id": "flight-12:self-level:52cfa145bb51eee1",
@@ -1565,7 +1565,7 @@
       "outcome": "complete",
       "ticks": 1126,
       "progress": 7,
-      "elapsedMs": 32
+      "elapsedMs": 33
     },
     {
       "id": "flight-12:acro:52cfa145bb51eee1",
@@ -1573,7 +1573,7 @@
       "outcome": "complete",
       "ticks": 1126,
       "progress": 7,
-      "elapsedMs": 33
+      "elapsedMs": 34
     },
     {
       "id": "woodland-01:self-level:1c47c14d883b740f",
@@ -1581,7 +1581,7 @@
       "outcome": "complete",
       "ticks": 1184,
       "progress": 3,
-      "elapsedMs": 61
+      "elapsedMs": 81
     },
     {
       "id": "woodland-01:acro:1c47c14d883b740f",
@@ -1589,7 +1589,7 @@
       "outcome": "complete",
       "ticks": 1186,
       "progress": 3,
-      "elapsedMs": 82
+      "elapsedMs": 88
     },
     {
       "id": "woodland-02:self-level:eb1d529b3d3e00a0",
@@ -1597,7 +1597,7 @@
       "outcome": "complete",
       "ticks": 2020,
       "progress": 4,
-      "elapsedMs": 104
+      "elapsedMs": 127
     },
     {
       "id": "woodland-02:acro:eb1d529b3d3e00a0",
@@ -1605,7 +1605,7 @@
       "outcome": "complete",
       "ticks": 2018,
       "progress": 4,
-      "elapsedMs": 102
+      "elapsedMs": 107
     },
     {
       "id": "woodland-03:self-level:c56634122985257f",
@@ -1613,7 +1613,7 @@
       "outcome": "complete",
       "ticks": 2271,
       "progress": 5,
-      "elapsedMs": 115
+      "elapsedMs": 122
     },
     {
       "id": "woodland-03:acro:c56634122985257f",
@@ -1621,7 +1621,7 @@
       "outcome": "complete",
       "ticks": 2274,
       "progress": 5,
-      "elapsedMs": 117
+      "elapsedMs": 122
     },
     {
       "id": "woodland-04:self-level:816eb9ccbee739d6",
@@ -1629,7 +1629,7 @@
       "outcome": "complete",
       "ticks": 1732,
       "progress": 4,
-      "elapsedMs": 90
+      "elapsedMs": 99
     },
     {
       "id": "woodland-04:acro:816eb9ccbee739d6",
@@ -1637,7 +1637,7 @@
       "outcome": "complete",
       "ticks": 1738,
       "progress": 4,
-      "elapsedMs": 89
+      "elapsedMs": 112
     },
     {
       "id": "woodland-05:self-level:6ac551684372a2d6",
@@ -1645,7 +1645,7 @@
       "outcome": "complete",
       "ticks": 2582,
       "progress": 4,
-      "elapsedMs": 134
+      "elapsedMs": 137
     },
     {
       "id": "woodland-05:acro:6ac551684372a2d6",
@@ -1653,7 +1653,7 @@
       "outcome": "complete",
       "ticks": 2586,
       "progress": 4,
-      "elapsedMs": 150
+      "elapsedMs": 146
     },
     {
       "id": "woodland-06:self-level:2103471b771e85f4",
@@ -1661,7 +1661,7 @@
       "outcome": "complete",
       "ticks": 2468,
       "progress": 4,
-      "elapsedMs": 158
+      "elapsedMs": 176
     },
     {
       "id": "woodland-06:acro:2103471b771e85f4",
@@ -1669,7 +1669,7 @@
       "outcome": "complete",
       "ticks": 2469,
       "progress": 4,
-      "elapsedMs": 160
+      "elapsedMs": 238
     },
     {
       "id": "woodland-07:self-level:284f18928f5e8d4b",
@@ -1677,7 +1677,7 @@
       "outcome": "complete",
       "ticks": 2178,
       "progress": 4,
-      "elapsedMs": 144
+      "elapsedMs": 234
     },
     {
       "id": "woodland-07:acro:284f18928f5e8d4b",
@@ -1685,7 +1685,7 @@
       "outcome": "complete",
       "ticks": 2183,
       "progress": 4,
-      "elapsedMs": 143
+      "elapsedMs": 251
     },
     {
       "id": "woodland-08:self-level:24b24db9621baec9",
@@ -1693,7 +1693,7 @@
       "outcome": "complete",
       "ticks": 2230,
       "progress": 5,
-      "elapsedMs": 116
+      "elapsedMs": 263
     },
     {
       "id": "woodland-08:acro:24b24db9621baec9",
@@ -1701,7 +1701,7 @@
       "outcome": "complete",
       "ticks": 2233,
       "progress": 5,
-      "elapsedMs": 113
+      "elapsedMs": 190
     },
     {
       "id": "courtyard-01:self-level:12fe004c06475577",
@@ -1709,7 +1709,7 @@
       "outcome": "complete",
       "ticks": 1207,
       "progress": 3,
-      "elapsedMs": 85
+      "elapsedMs": 81
     },
     {
       "id": "courtyard-01:acro:12fe004c06475577",
@@ -1717,7 +1717,7 @@
       "outcome": "complete",
       "ticks": 1207,
       "progress": 3,
-      "elapsedMs": 62
+      "elapsedMs": 86
     },
     {
       "id": "courtyard-02:self-level:72f2754a35002534",
@@ -1725,7 +1725,7 @@
       "outcome": "complete",
       "ticks": 2238,
       "progress": 4,
-      "elapsedMs": 113
+      "elapsedMs": 156
     },
     {
       "id": "courtyard-02:acro:72f2754a35002534",
@@ -1733,7 +1733,7 @@
       "outcome": "complete",
       "ticks": 2238,
       "progress": 4,
-      "elapsedMs": 112
+      "elapsedMs": 150
     },
     {
       "id": "courtyard-03:self-level:f7065fd14eb2f7b5",
@@ -1741,7 +1741,7 @@
       "outcome": "complete",
       "ticks": 2528,
       "progress": 5,
-      "elapsedMs": 127
+      "elapsedMs": 202
     },
     {
       "id": "courtyard-03:acro:f7065fd14eb2f7b5",
@@ -1749,7 +1749,7 @@
       "outcome": "complete",
       "ticks": 2519,
       "progress": 5,
-      "elapsedMs": 126
+      "elapsedMs": 190
     },
     {
       "id": "courtyard-04:self-level:8ec54c3b11e729cd",
@@ -1757,7 +1757,7 @@
       "outcome": "complete",
       "ticks": 1891,
       "progress": 4,
-      "elapsedMs": 95
+      "elapsedMs": 152
     },
     {
       "id": "courtyard-04:acro:8ec54c3b11e729cd",
@@ -1765,7 +1765,7 @@
       "outcome": "complete",
       "ticks": 1895,
       "progress": 4,
-      "elapsedMs": 97
+      "elapsedMs": 136
     },
     {
       "id": "courtyard-05:self-level:17f7577ed3a93f23",
@@ -1773,7 +1773,7 @@
       "outcome": "complete",
       "ticks": 2482,
       "progress": 4,
-      "elapsedMs": 143
+      "elapsedMs": 181
     },
     {
       "id": "courtyard-05:acro:17f7577ed3a93f23",
@@ -1781,7 +1781,7 @@
       "outcome": "complete",
       "ticks": 2480,
       "progress": 4,
-      "elapsedMs": 137
+      "elapsedMs": 158
     },
     {
       "id": "courtyard-06:self-level:5691d8d404d3a9a8",
@@ -1789,7 +1789,7 @@
       "outcome": "complete",
       "ticks": 2832,
       "progress": 4,
-      "elapsedMs": 191
+      "elapsedMs": 258
     },
     {
       "id": "courtyard-06:acro:5691d8d404d3a9a8",
@@ -1797,7 +1797,7 @@
       "outcome": "complete",
       "ticks": 2849,
       "progress": 4,
-      "elapsedMs": 186
+      "elapsedMs": 239
     },
     {
       "id": "courtyard-07:self-level:406edf13dca1efa3",
@@ -1805,7 +1805,7 @@
       "outcome": "complete",
       "ticks": 2397,
       "progress": 4,
-      "elapsedMs": 176
+      "elapsedMs": 290
     },
     {
       "id": "courtyard-07:acro:406edf13dca1efa3",
@@ -1813,7 +1813,7 @@
       "outcome": "complete",
       "ticks": 2400,
       "progress": 4,
-      "elapsedMs": 164
+      "elapsedMs": 300
     },
     {
       "id": "courtyard-08:self-level:7984cad0355a7c02",
@@ -1821,7 +1821,7 @@
       "outcome": "complete",
       "ticks": 2095,
       "progress": 5,
-      "elapsedMs": 107
+      "elapsedMs": 273
     },
     {
       "id": "courtyard-08:acro:7984cad0355a7c02",
@@ -1829,7 +1829,7 @@
       "outcome": "complete",
       "ticks": 2095,
       "progress": 5,
-      "elapsedMs": 109
+      "elapsedMs": 151
     },
     {
       "id": "warehouse-01:self-level:8bcf631f885754bc",
@@ -1837,7 +1837,7 @@
       "outcome": "complete",
       "ticks": 1210,
       "progress": 3,
-      "elapsedMs": 49
+      "elapsedMs": 61
     },
     {
       "id": "warehouse-01:acro:8bcf631f885754bc",
@@ -1845,7 +1845,7 @@
       "outcome": "complete",
       "ticks": 1210,
       "progress": 3,
-      "elapsedMs": 52
+      "elapsedMs": 67
     },
     {
       "id": "warehouse-02:self-level:c2fa91b3230377aa",
@@ -1853,7 +1853,7 @@
       "outcome": "complete",
       "ticks": 2405,
       "progress": 5,
-      "elapsedMs": 116
+      "elapsedMs": 148
     },
     {
       "id": "warehouse-02:acro:c2fa91b3230377aa",
@@ -1861,7 +1861,7 @@
       "outcome": "complete",
       "ticks": 2421,
       "progress": 5,
-      "elapsedMs": 117
+      "elapsedMs": 183
     },
     {
       "id": "warehouse-03:self-level:87bb468d38498e04",
@@ -1869,7 +1869,7 @@
       "outcome": "complete",
       "ticks": 2786,
       "progress": 5,
-      "elapsedMs": 147
+      "elapsedMs": 159
     },
     {
       "id": "warehouse-03:acro:87bb468d38498e04",
@@ -1877,7 +1877,7 @@
       "outcome": "complete",
       "ticks": 2794,
       "progress": 5,
-      "elapsedMs": 131
+      "elapsedMs": 171
     },
     {
       "id": "warehouse-04:self-level:02d9a79166ddda7f",
@@ -1885,7 +1885,7 @@
       "outcome": "complete",
       "ticks": 2538,
       "progress": 6,
-      "elapsedMs": 129
+      "elapsedMs": 144
     },
     {
       "id": "warehouse-04:acro:02d9a79166ddda7f",
@@ -1893,7 +1893,7 @@
       "outcome": "complete",
       "ticks": 2546,
       "progress": 6,
-      "elapsedMs": 123
+      "elapsedMs": 153
     },
     {
       "id": "warehouse-05:self-level:0913f4dd9f2bd83b",
@@ -1901,7 +1901,7 @@
       "outcome": "complete",
       "ticks": 2823,
       "progress": 5,
-      "elapsedMs": 145
+      "elapsedMs": 176
     },
     {
       "id": "warehouse-05:acro:0913f4dd9f2bd83b",
@@ -1909,7 +1909,7 @@
       "outcome": "complete",
       "ticks": 2832,
       "progress": 5,
-      "elapsedMs": 162
+      "elapsedMs": 192
     },
     {
       "id": "warehouse-06:self-level:cffa6dfd26f1e843",
@@ -1917,7 +1917,7 @@
       "outcome": "complete",
       "ticks": 2984,
       "progress": 4,
-      "elapsedMs": 136
+      "elapsedMs": 164
     },
     {
       "id": "warehouse-06:acro:cffa6dfd26f1e843",
@@ -1925,7 +1925,7 @@
       "outcome": "complete",
       "ticks": 2994,
       "progress": 4,
-      "elapsedMs": 124
+      "elapsedMs": 235
     },
     {
       "id": "warehouse-07:self-level:e712b7ba20610cc5",
@@ -1933,7 +1933,7 @@
       "outcome": "complete",
       "ticks": 2602,
       "progress": 4,
-      "elapsedMs": 144
+      "elapsedMs": 185
     },
     {
       "id": "warehouse-07:acro:e712b7ba20610cc5",
@@ -1941,7 +1941,7 @@
       "outcome": "complete",
       "ticks": 2608,
       "progress": 4,
-      "elapsedMs": 142
+      "elapsedMs": 182
     },
     {
       "id": "warehouse-08:self-level:48d618aa4a97e0f4",
@@ -1949,7 +1949,7 @@
       "outcome": "complete",
       "ticks": 2918,
       "progress": 6,
-      "elapsedMs": 105
+      "elapsedMs": 143
     },
     {
       "id": "warehouse-08:acro:48d618aa4a97e0f4",
@@ -1957,7 +1957,7 @@
       "outcome": "complete",
       "ticks": 2932,
       "progress": 6,
-      "elapsedMs": 112
+      "elapsedMs": 138
     },
     {
       "id": "stadium-01:self-level:1cf288d48cefed0d",
@@ -1965,7 +1965,7 @@
       "outcome": "complete",
       "ticks": 1331,
       "progress": 3,
-      "elapsedMs": 71
+      "elapsedMs": 58
     },
     {
       "id": "stadium-01:acro:1cf288d48cefed0d",
@@ -1973,7 +1973,7 @@
       "outcome": "complete",
       "ticks": 1329,
       "progress": 3,
-      "elapsedMs": 56
+      "elapsedMs": 57
     },
     {
       "id": "stadium-02:self-level:354a431b29f3dc22",
@@ -1981,7 +1981,7 @@
       "outcome": "complete",
       "ticks": 2899,
       "progress": 6,
-      "elapsedMs": 131
+      "elapsedMs": 149
     },
     {
       "id": "stadium-02:acro:354a431b29f3dc22",
@@ -1989,7 +1989,7 @@
       "outcome": "complete",
       "ticks": 2911,
       "progress": 6,
-      "elapsedMs": 134
+      "elapsedMs": 148
     },
     {
       "id": "stadium-03:self-level:879c469c26e9a62a",
@@ -1997,7 +1997,7 @@
       "outcome": "complete",
       "ticks": 3699,
       "progress": 6,
-      "elapsedMs": 188
+      "elapsedMs": 194
     },
     {
       "id": "stadium-03:acro:879c469c26e9a62a",
@@ -2005,7 +2005,7 @@
       "outcome": "complete",
       "ticks": 3708,
       "progress": 6,
-      "elapsedMs": 180
+      "elapsedMs": 223
     },
     {
       "id": "stadium-04:self-level:0296096807fc10f2",
@@ -2013,7 +2013,7 @@
       "outcome": "complete",
       "ticks": 2828,
       "progress": 6,
-      "elapsedMs": 150
+      "elapsedMs": 186
     },
     {
       "id": "stadium-04:acro:0296096807fc10f2",
@@ -2021,7 +2021,7 @@
       "outcome": "complete",
       "ticks": 2844,
       "progress": 6,
-      "elapsedMs": 128
+      "elapsedMs": 157
     },
     {
       "id": "stadium-05:self-level:d79d1eb302e3b80d",
@@ -2029,7 +2029,7 @@
       "outcome": "complete",
       "ticks": 3897,
       "progress": 7,
-      "elapsedMs": 186
+      "elapsedMs": 281
     },
     {
       "id": "stadium-05:acro:d79d1eb302e3b80d",
@@ -2037,7 +2037,7 @@
       "outcome": "complete",
       "ticks": 3919,
       "progress": 7,
-      "elapsedMs": 183
+      "elapsedMs": 212
     },
     {
       "id": "stadium-06:self-level:aaa95a1d07144626",
@@ -2045,7 +2045,7 @@
       "outcome": "complete",
       "ticks": 2146,
       "progress": 4,
-      "elapsedMs": 88
+      "elapsedMs": 112
     },
     {
       "id": "stadium-06:acro:aaa95a1d07144626",
@@ -2053,7 +2053,7 @@
       "outcome": "complete",
       "ticks": 2153,
       "progress": 4,
-      "elapsedMs": 89
+      "elapsedMs": 95
     },
     {
       "id": "stadium-07:self-level:201d98181c7b146f",
@@ -2069,7 +2069,7 @@
       "outcome": "complete",
       "ticks": 2498,
       "progress": 4,
-      "elapsedMs": 133
+      "elapsedMs": 154
     },
     {
       "id": "stadium-08:self-level:092787ddb12b8d75",
@@ -2077,7 +2077,7 @@
       "outcome": "complete",
       "ticks": 2923,
       "progress": 6,
-      "elapsedMs": 110
+      "elapsedMs": 120
     },
     {
       "id": "stadium-08:acro:092787ddb12b8d75",
@@ -2085,7 +2085,7 @@
       "outcome": "complete",
       "ticks": 2929,
       "progress": 6,
-      "elapsedMs": 114
+      "elapsedMs": 119
     },
     {
       "id": "container-yard-01:self-level:1bed23119c5fb82b",
@@ -2093,7 +2093,7 @@
       "outcome": "complete",
       "ticks": 1282,
       "progress": 3,
-      "elapsedMs": 55
+      "elapsedMs": 58
     },
     {
       "id": "container-yard-01:acro:1bed23119c5fb82b",
@@ -2101,7 +2101,7 @@
       "outcome": "complete",
       "ticks": 1282,
       "progress": 3,
-      "elapsedMs": 53
+      "elapsedMs": 55
     },
     {
       "id": "container-yard-02:self-level:8b75f2fd5817aa83",
@@ -2109,7 +2109,7 @@
       "outcome": "complete",
       "ticks": 2867,
       "progress": 4,
-      "elapsedMs": 120
+      "elapsedMs": 142
     },
     {
       "id": "container-yard-02:acro:8b75f2fd5817aa83",
@@ -2117,7 +2117,7 @@
       "outcome": "complete",
       "ticks": 2883,
       "progress": 4,
-      "elapsedMs": 131
+      "elapsedMs": 125
     },
     {
       "id": "container-yard-03:self-level:988a786656816ea8",
@@ -2125,7 +2125,7 @@
       "outcome": "complete",
       "ticks": 2750,
       "progress": 4,
-      "elapsedMs": 155
+      "elapsedMs": 158
     },
     {
       "id": "container-yard-03:acro:988a786656816ea8",
@@ -2133,7 +2133,7 @@
       "outcome": "complete",
       "ticks": 2756,
       "progress": 4,
-      "elapsedMs": 156
+      "elapsedMs": 190
     },
     {
       "id": "container-yard-04:self-level:bd60fadc69b39d69",
@@ -2141,7 +2141,7 @@
       "outcome": "complete",
       "ticks": 1285,
       "progress": 2,
-      "elapsedMs": 60
+      "elapsedMs": 80
     },
     {
       "id": "container-yard-04:acro:bd60fadc69b39d69",
@@ -2149,7 +2149,7 @@
       "outcome": "complete",
       "ticks": 1292,
       "progress": 2,
-      "elapsedMs": 61
+      "elapsedMs": 67
     },
     {
       "id": "container-yard-05:self-level:b22648d12041a47a",
@@ -2157,7 +2157,7 @@
       "outcome": "complete",
       "ticks": 1707,
       "progress": 2,
-      "elapsedMs": 98
+      "elapsedMs": 114
     },
     {
       "id": "container-yard-05:acro:b22648d12041a47a",
@@ -2165,7 +2165,7 @@
       "outcome": "complete",
       "ticks": 1714,
       "progress": 2,
-      "elapsedMs": 94
+      "elapsedMs": 102
     },
     {
       "id": "container-yard-06:self-level:42550035d6485211",
@@ -2173,7 +2173,7 @@
       "outcome": "complete",
       "ticks": 2128,
       "progress": 2,
-      "elapsedMs": 107
+      "elapsedMs": 184
     },
     {
       "id": "container-yard-06:acro:42550035d6485211",
@@ -2181,7 +2181,7 @@
       "outcome": "complete",
       "ticks": 2132,
       "progress": 2,
-      "elapsedMs": 121
+      "elapsedMs": 137
     },
     {
       "id": "container-yard-07:self-level:e6bc433f2ee2658b",
@@ -2189,7 +2189,7 @@
       "outcome": "complete",
       "ticks": 1794,
       "progress": 2,
-      "elapsedMs": 101
+      "elapsedMs": 138
     },
     {
       "id": "container-yard-07:acro:e6bc433f2ee2658b",
@@ -2197,7 +2197,7 @@
       "outcome": "complete",
       "ticks": 1799,
       "progress": 2,
-      "elapsedMs": 97
+      "elapsedMs": 145
     },
     {
       "id": "container-yard-08:self-level:192c5446d4ebe5d8",
@@ -2205,7 +2205,7 @@
       "outcome": "complete",
       "ticks": 4100,
       "progress": 6,
-      "elapsedMs": 242
+      "elapsedMs": 325
     },
     {
       "id": "container-yard-08:acro:192c5446d4ebe5d8",
@@ -2213,7 +2213,7 @@
       "outcome": "complete",
       "ticks": 4112,
       "progress": 6,
-      "elapsedMs": 252
+      "elapsedMs": 340
     },
     {
       "id": "garage-01:self-level:4ffd496ad72c79b0",
@@ -2221,7 +2221,7 @@
       "outcome": "complete",
       "ticks": 1285,
       "progress": 3,
-      "elapsedMs": 70
+      "elapsedMs": 71
     },
     {
       "id": "garage-01:acro:4ffd496ad72c79b0",
@@ -2229,7 +2229,7 @@
       "outcome": "complete",
       "ticks": 1280,
       "progress": 3,
-      "elapsedMs": 53
+      "elapsedMs": 70
     },
     {
       "id": "garage-02:self-level:747536f144c43fbc",
@@ -2237,7 +2237,7 @@
       "outcome": "complete",
       "ticks": 3292,
       "progress": 5,
-      "elapsedMs": 132
+      "elapsedMs": 153
     },
     {
       "id": "garage-02:acro:747536f144c43fbc",
@@ -2245,7 +2245,7 @@
       "outcome": "complete",
       "ticks": 3204,
       "progress": 5,
-      "elapsedMs": 126
+      "elapsedMs": 143
     },
     {
       "id": "garage-03:self-level:da0ccb9ce6929f92",
@@ -2253,7 +2253,7 @@
       "outcome": "complete",
       "ticks": 3160,
       "progress": 4,
-      "elapsedMs": 175
+      "elapsedMs": 193
     },
     {
       "id": "garage-03:acro:da0ccb9ce6929f92",
@@ -2261,7 +2261,7 @@
       "outcome": "complete",
       "ticks": 3182,
       "progress": 4,
-      "elapsedMs": 179
+      "elapsedMs": 191
     },
     {
       "id": "garage-04:self-level:5d2255a5c90168e1",
@@ -2269,7 +2269,7 @@
       "outcome": "complete",
       "ticks": 1364,
       "progress": 2,
-      "elapsedMs": 73
+      "elapsedMs": 74
     },
     {
       "id": "garage-04:acro:5d2255a5c90168e1",
@@ -2277,7 +2277,7 @@
       "outcome": "complete",
       "ticks": 1381,
       "progress": 2,
-      "elapsedMs": 94
+      "elapsedMs": 75
     },
     {
       "id": "garage-05:self-level:40b43e3a1e06d341",
@@ -2285,7 +2285,7 @@
       "outcome": "complete",
       "ticks": 1532,
       "progress": 2,
-      "elapsedMs": 81
+      "elapsedMs": 86
     },
     {
       "id": "garage-05:acro:40b43e3a1e06d341",
@@ -2293,7 +2293,7 @@
       "outcome": "complete",
       "ticks": 1646,
       "progress": 2,
-      "elapsedMs": 92
+      "elapsedMs": 94
     },
     {
       "id": "garage-06:self-level:5c04355c6c1364ca",
@@ -2301,7 +2301,7 @@
       "outcome": "complete",
       "ticks": 1785,
       "progress": 2,
-      "elapsedMs": 87
+      "elapsedMs": 94
     },
     {
       "id": "garage-06:acro:5c04355c6c1364ca",
@@ -2309,7 +2309,7 @@
       "outcome": "complete",
       "ticks": 1799,
       "progress": 2,
-      "elapsedMs": 90
+      "elapsedMs": 94
     },
     {
       "id": "garage-07:self-level:eab2870679a1696c",
@@ -2317,7 +2317,7 @@
       "outcome": "complete",
       "ticks": 1779,
       "progress": 2,
-      "elapsedMs": 97
+      "elapsedMs": 100
     },
     {
       "id": "garage-07:acro:eab2870679a1696c",
@@ -2325,7 +2325,7 @@
       "outcome": "complete",
       "ticks": 1812,
       "progress": 2,
-      "elapsedMs": 99
+      "elapsedMs": 122
     },
     {
       "id": "garage-08:self-level:3bd218162e169abe",
@@ -2333,7 +2333,7 @@
       "outcome": "complete",
       "ticks": 3606,
       "progress": 6,
-      "elapsedMs": 215
+      "elapsedMs": 229
     },
     {
       "id": "garage-08:acro:3bd218162e169abe",
@@ -2341,7 +2341,7 @@
       "outcome": "complete",
       "ticks": 3634,
       "progress": 6,
-      "elapsedMs": 224
+      "elapsedMs": 227
     },
     {
       "id": "beginner-01:self-level:5b7652234b696e5a",
@@ -2349,7 +2349,7 @@
       "outcome": "complete",
       "ticks": 360,
       "progress": 3,
-      "elapsedMs": 14
+      "elapsedMs": 15
     },
     {
       "id": "beginner-01:acro:5b7652234b696e5a",
@@ -2357,7 +2357,7 @@
       "outcome": "complete",
       "ticks": 360,
       "progress": 3,
-      "elapsedMs": 15
+      "elapsedMs": 16
     },
     {
       "id": "beginner-02:self-level:e50fcbdb6764bd0f",
@@ -2373,7 +2373,7 @@
       "outcome": "complete",
       "ticks": 564,
       "progress": 3,
-      "elapsedMs": 21
+      "elapsedMs": 23
     },
     {
       "id": "beginner-03:self-level:20c47db382d75bc5",
@@ -2381,7 +2381,7 @@
       "outcome": "complete",
       "ticks": 561,
       "progress": 3,
-      "elapsedMs": 28
+      "elapsedMs": 24
     },
     {
       "id": "beginner-03:acro:20c47db382d75bc5",
@@ -2389,7 +2389,7 @@
       "outcome": "complete",
       "ticks": 561,
       "progress": 3,
-      "elapsedMs": 24
+      "elapsedMs": 23
     },
     {
       "id": "beginner-04:self-level:bbce5a92237477b8",
@@ -2397,7 +2397,7 @@
       "outcome": "complete",
       "ticks": 696,
       "progress": 5,
-      "elapsedMs": 28
+      "elapsedMs": 30
     },
     {
       "id": "beginner-04:acro:bbce5a92237477b8",
@@ -2405,7 +2405,7 @@
       "outcome": "complete",
       "ticks": 696,
       "progress": 5,
-      "elapsedMs": 28
+      "elapsedMs": 31
     },
     {
       "id": "beginner-05:self-level:29eb33e8d0941bc0",
@@ -2413,7 +2413,7 @@
       "outcome": "complete",
       "ticks": 654,
       "progress": 4,
-      "elapsedMs": 24
+      "elapsedMs": 29
     },
     {
       "id": "beginner-05:acro:29eb33e8d0941bc0",
@@ -2421,7 +2421,7 @@
       "outcome": "complete",
       "ticks": 655,
       "progress": 4,
-      "elapsedMs": 27
+      "elapsedMs": 28
     },
     {
       "id": "beginner-06:self-level:e1520c67b8bab038",
@@ -2429,7 +2429,7 @@
       "outcome": "complete",
       "ticks": 828,
       "progress": 4,
-      "elapsedMs": 32
+      "elapsedMs": 34
     },
     {
       "id": "beginner-06:acro:e1520c67b8bab038",
@@ -2437,7 +2437,7 @@
       "outcome": "complete",
       "ticks": 832,
       "progress": 4,
-      "elapsedMs": 33
+      "elapsedMs": 45
     },
     {
       "id": "beginner-07:self-level:96b61727c33609cb",
@@ -2445,7 +2445,7 @@
       "outcome": "complete",
       "ticks": 948,
       "progress": 5,
-      "elapsedMs": 36
+      "elapsedMs": 41
     },
     {
       "id": "beginner-07:acro:96b61727c33609cb",
@@ -2461,7 +2461,7 @@
       "outcome": "complete",
       "ticks": 830,
       "progress": 4,
-      "elapsedMs": 33
+      "elapsedMs": 35
     },
     {
       "id": "beginner-08:acro:df81ed3f34a3b642",
@@ -2469,7 +2469,7 @@
       "outcome": "complete",
       "ticks": 827,
       "progress": 4,
-      "elapsedMs": 37
+      "elapsedMs": 35
     },
     {
       "id": "beginner-09:self-level:a76f372299d61107",
@@ -2477,7 +2477,7 @@
       "outcome": "complete",
       "ticks": 899,
       "progress": 5,
-      "elapsedMs": 35
+      "elapsedMs": 37
     },
     {
       "id": "beginner-09:acro:a76f372299d61107",
@@ -2485,7 +2485,7 @@
       "outcome": "complete",
       "ticks": 903,
       "progress": 5,
-      "elapsedMs": 38
+      "elapsedMs": 37
     },
     {
       "id": "beginner-10:self-level:6c6745619ebc45cf",
@@ -2493,7 +2493,7 @@
       "outcome": "complete",
       "ticks": 732,
       "progress": 4,
-      "elapsedMs": 37
+      "elapsedMs": 33
     },
     {
       "id": "beginner-10:acro:6c6745619ebc45cf",
@@ -2509,7 +2509,7 @@
       "outcome": "complete",
       "ticks": 945,
       "progress": 5,
-      "elapsedMs": 33
+      "elapsedMs": 40
     },
     {
       "id": "beginner-11:acro:6cdbd35333c04b69",
@@ -2517,7 +2517,7 @@
       "outcome": "complete",
       "ticks": 948,
       "progress": 5,
-      "elapsedMs": 35
+      "elapsedMs": 38
     },
     {
       "id": "beginner-12:self-level:43f761053d0d99c5",
@@ -2525,7 +2525,7 @@
       "outcome": "complete",
       "ticks": 1032,
       "progress": 6,
-      "elapsedMs": 38
+      "elapsedMs": 42
     },
     {
       "id": "beginner-12:acro:43f761053d0d99c5",
@@ -2533,7 +2533,7 @@
       "outcome": "complete",
       "ticks": 1045,
       "progress": 6,
-      "elapsedMs": 40
+      "elapsedMs": 42
     },
     {
       "id": "beginner-13:self-level:69bdf9a4ac73a31e",
@@ -2541,7 +2541,7 @@
       "outcome": "complete",
       "ticks": 667,
       "progress": 4,
-      "elapsedMs": 25
+      "elapsedMs": 31
     },
     {
       "id": "beginner-13:acro:69bdf9a4ac73a31e",
@@ -2549,7 +2549,7 @@
       "outcome": "complete",
       "ticks": 654,
       "progress": 4,
-      "elapsedMs": 25
+      "elapsedMs": 31
     },
     {
       "id": "beginner-14:self-level:cea3c2b2d9a5dc24",
@@ -2557,7 +2557,7 @@
       "outcome": "complete",
       "ticks": 752,
       "progress": 4,
-      "elapsedMs": 29
+      "elapsedMs": 31
     },
     {
       "id": "beginner-14:acro:cea3c2b2d9a5dc24",
@@ -2565,7 +2565,7 @@
       "outcome": "complete",
       "ticks": 757,
       "progress": 4,
-      "elapsedMs": 27
+      "elapsedMs": 30
     },
     {
       "id": "beginner-15:self-level:451ad6d46ab40e85",
@@ -2573,7 +2573,7 @@
       "outcome": "complete",
       "ticks": 360,
       "progress": 3,
-      "elapsedMs": 15
+      "elapsedMs": 16
     },
     {
       "id": "beginner-15:acro:451ad6d46ab40e85",
@@ -2589,7 +2589,7 @@
       "outcome": "complete",
       "ticks": 712,
       "progress": 4,
-      "elapsedMs": 26
+      "elapsedMs": 29
     },
     {
       "id": "beginner-16:acro:5f480be5552a4896",
@@ -2597,7 +2597,7 @@
       "outcome": "complete",
       "ticks": 712,
       "progress": 4,
-      "elapsedMs": 27
+      "elapsedMs": 41
     },
     {
       "id": "beginner-17:self-level:1cefa1a39dc2964d",
@@ -2605,7 +2605,7 @@
       "outcome": "complete",
       "ticks": 659,
       "progress": 4,
-      "elapsedMs": 26
+      "elapsedMs": 33
     },
     {
       "id": "beginner-17:acro:1cefa1a39dc2964d",
@@ -2613,7 +2613,7 @@
       "outcome": "complete",
       "ticks": 608,
       "progress": 4,
-      "elapsedMs": 23
+      "elapsedMs": 27
     },
     {
       "id": "beginner-18:self-level:01b84b1aaae8d520",
@@ -2621,7 +2621,7 @@
       "outcome": "complete",
       "ticks": 968,
       "progress": 4,
-      "elapsedMs": 37
+      "elapsedMs": 43
     },
     {
       "id": "beginner-18:acro:01b84b1aaae8d520",
@@ -2629,7 +2629,7 @@
       "outcome": "complete",
       "ticks": 961,
       "progress": 4,
-      "elapsedMs": 36
+      "elapsedMs": 42
     },
     {
       "id": "beginner-19:self-level:80dc8d60a229d28f",
@@ -2637,7 +2637,7 @@
       "outcome": "complete",
       "ticks": 974,
       "progress": 6,
-      "elapsedMs": 39
+      "elapsedMs": 45
     },
     {
       "id": "beginner-19:acro:80dc8d60a229d28f",
@@ -2645,7 +2645,7 @@
       "outcome": "complete",
       "ticks": 973,
       "progress": 6,
-      "elapsedMs": 37
+      "elapsedMs": 43
     },
     {
       "id": "beginner-20:self-level:1b0ad0ea2b94f32f",
@@ -2653,7 +2653,7 @@
       "outcome": "complete",
       "ticks": 899,
       "progress": 5,
-      "elapsedMs": 34
+      "elapsedMs": 45
     },
     {
       "id": "beginner-20:acro:1b0ad0ea2b94f32f",
@@ -2661,7 +2661,7 @@
       "outcome": "complete",
       "ticks": 908,
       "progress": 5,
-      "elapsedMs": 46
+      "elapsedMs": 47
     },
     {
       "id": "beginner-21:self-level:6e525e60ae7a9fd7",
@@ -2669,7 +2669,7 @@
       "outcome": "complete",
       "ticks": 965,
       "progress": 5,
-      "elapsedMs": 39
+      "elapsedMs": 44
     },
     {
       "id": "beginner-21:acro:6e525e60ae7a9fd7",
@@ -2677,7 +2677,7 @@
       "outcome": "complete",
       "ticks": 959,
       "progress": 5,
-      "elapsedMs": 38
+      "elapsedMs": 42
     },
     {
       "id": "beginner-22:self-level:f2fee45d782060e4",
@@ -2685,7 +2685,7 @@
       "outcome": "complete",
       "ticks": 1776,
       "progress": 10,
-      "elapsedMs": 71
+      "elapsedMs": 81
     },
     {
       "id": "beginner-22:acro:f2fee45d782060e4",
@@ -2693,7 +2693,7 @@
       "outcome": "complete",
       "ticks": 1763,
       "progress": 10,
-      "elapsedMs": 69
+      "elapsedMs": 78
     },
     {
       "id": "beginner-23:self-level:ed45d8e143324668",
@@ -2701,7 +2701,7 @@
       "outcome": "complete",
       "ticks": 1042,
       "progress": 5,
-      "elapsedMs": 42
+      "elapsedMs": 45
     },
     {
       "id": "beginner-23:acro:ed45d8e143324668",
@@ -2709,7 +2709,7 @@
       "outcome": "complete",
       "ticks": 1057,
       "progress": 5,
-      "elapsedMs": 40
+      "elapsedMs": 44
     },
     {
       "id": "beginner-24:self-level:89edd7ed96c134ec",
@@ -2717,7 +2717,7 @@
       "outcome": "complete",
       "ticks": 1036,
       "progress": 5,
-      "elapsedMs": 39
+      "elapsedMs": 42
     },
     {
       "id": "beginner-24:acro:89edd7ed96c134ec",
@@ -2725,7 +2725,7 @@
       "outcome": "complete",
       "ticks": 1031,
       "progress": 5,
-      "elapsedMs": 36
+      "elapsedMs": 51
     },
     {
       "id": "beginner-25:self-level:5b7fdad9ec9b8949",
@@ -2733,7 +2733,7 @@
       "outcome": "complete",
       "ticks": 673,
       "progress": 4,
-      "elapsedMs": 27
+      "elapsedMs": 32
     },
     {
       "id": "beginner-25:acro:5b7fdad9ec9b8949",
@@ -2741,7 +2741,7 @@
       "outcome": "complete",
       "ticks": 676,
       "progress": 4,
-      "elapsedMs": 25
+      "elapsedMs": 31
     },
     {
       "id": "beginner-26:self-level:616326c6a2c3dcc6",
@@ -2749,7 +2749,7 @@
       "outcome": "complete",
       "ticks": 1391,
       "progress": 8,
-      "elapsedMs": 53
+      "elapsedMs": 58
     },
     {
       "id": "beginner-26:acro:616326c6a2c3dcc6",
@@ -2757,7 +2757,7 @@
       "outcome": "complete",
       "ticks": 1407,
       "progress": 8,
-      "elapsedMs": 62
+      "elapsedMs": 56
     },
     {
       "id": "beginner-27:self-level:61cef0ae26829648",
@@ -2765,7 +2765,7 @@
       "outcome": "complete",
       "ticks": 1382,
       "progress": 7,
-      "elapsedMs": 50
+      "elapsedMs": 57
     },
     {
       "id": "beginner-27:acro:61cef0ae26829648",
@@ -2773,7 +2773,7 @@
       "outcome": "complete",
       "ticks": 1379,
       "progress": 7,
-      "elapsedMs": 54
+      "elapsedMs": 55
     },
     {
       "id": "beginner-28:self-level:98ef9c7fc4ecf757",
@@ -2781,7 +2781,7 @@
       "outcome": "complete",
       "ticks": 1151,
       "progress": 5,
-      "elapsedMs": 57
+      "elapsedMs": 48
     },
     {
       "id": "beginner-28:acro:98ef9c7fc4ecf757",
@@ -2789,7 +2789,7 @@
       "outcome": "complete",
       "ticks": 1151,
       "progress": 5,
-      "elapsedMs": 45
+      "elapsedMs": 47
     },
     {
       "id": "beginner-29:self-level:d6b2a77138cf3647",
@@ -2797,7 +2797,7 @@
       "outcome": "complete",
       "ticks": 1596,
       "progress": 7,
-      "elapsedMs": 60
+      "elapsedMs": 66
     },
     {
       "id": "beginner-29:acro:d6b2a77138cf3647",
@@ -2805,7 +2805,7 @@
       "outcome": "complete",
       "ticks": 1597,
       "progress": 7,
-      "elapsedMs": 61
+      "elapsedMs": 85
     },
     {
       "id": "beginner-30:self-level:f64b398a00779157",
@@ -2813,7 +2813,7 @@
       "outcome": "complete",
       "ticks": 1280,
       "progress": 6,
-      "elapsedMs": 47
+      "elapsedMs": 56
     },
     {
       "id": "beginner-30:acro:f64b398a00779157",
@@ -2821,7 +2821,7 @@
       "outcome": "complete",
       "ticks": 1277,
       "progress": 6,
-      "elapsedMs": 48
+      "elapsedMs": 57
     },
     {
       "id": "beginner-31:self-level:f1cdd1513c0ee9f3",
@@ -2829,7 +2829,7 @@
       "outcome": "complete",
       "ticks": 1853,
       "progress": 8,
-      "elapsedMs": 67
+      "elapsedMs": 78
     },
     {
       "id": "beginner-31:acro:f1cdd1513c0ee9f3",
@@ -2837,7 +2837,7 @@
       "outcome": "complete",
       "ticks": 1840,
       "progress": 8,
-      "elapsedMs": 70
+      "elapsedMs": 75
     },
     {
       "id": "beginner-32:self-level:9e197dcf42162e29",
@@ -2845,7 +2845,7 @@
       "outcome": "complete",
       "ticks": 1723,
       "progress": 8,
-      "elapsedMs": 61
+      "elapsedMs": 68
     },
     {
       "id": "beginner-32:acro:9e197dcf42162e29",
@@ -2853,7 +2853,7 @@
       "outcome": "complete",
       "ticks": 1709,
       "progress": 8,
-      "elapsedMs": 61
+      "elapsedMs": 78
     },
     {
       "id": "beginner-33:self-level:72d00097adedbf2a",
@@ -2861,7 +2861,7 @@
       "outcome": "complete",
       "ticks": 2086,
       "progress": 9,
-      "elapsedMs": 77
+      "elapsedMs": 87
     },
     {
       "id": "beginner-33:acro:72d00097adedbf2a",
@@ -2869,7 +2869,7 @@
       "outcome": "complete",
       "ticks": 2091,
       "progress": 9,
-      "elapsedMs": 84
+      "elapsedMs": 90
     },
     {
       "id": "beginner-34:self-level:ca13700fe66c2268",
@@ -2877,7 +2877,7 @@
       "outcome": "complete",
       "ticks": 2447,
       "progress": 10,
-      "elapsedMs": 108
+      "elapsedMs": 97
     },
     {
       "id": "beginner-34:acro:ca13700fe66c2268",
@@ -2885,7 +2885,7 @@
       "outcome": "complete",
       "ticks": 2446,
       "progress": 10,
-      "elapsedMs": 93
+      "elapsedMs": 126
     },
     {
       "id": "beginner-35:self-level:61eba51d4d1f67f9",
@@ -2893,7 +2893,7 @@
       "outcome": "complete",
       "ticks": 1898,
       "progress": 8,
-      "elapsedMs": 69
+      "elapsedMs": 73
     },
     {
       "id": "beginner-35:acro:61eba51d4d1f67f9",
@@ -2901,7 +2901,7 @@
       "outcome": "complete",
       "ticks": 1902,
       "progress": 8,
-      "elapsedMs": 74
+      "elapsedMs": 73
     },
     {
       "id": "beginner-36:self-level:dc42d2fa3d3c4baa",
@@ -2909,7 +2909,7 @@
       "outcome": "complete",
       "ticks": 1817,
       "progress": 9,
-      "elapsedMs": 66
+      "elapsedMs": 70
     },
     {
       "id": "beginner-36:acro:dc42d2fa3d3c4baa",
@@ -2917,7 +2917,7 @@
       "outcome": "complete",
       "ticks": 1796,
       "progress": 9,
-      "elapsedMs": 69
+      "elapsedMs": 71
     },
     {
       "id": "beginner-37:self-level:50a60434c3e9d920",
@@ -2925,7 +2925,7 @@
       "outcome": "complete",
       "ticks": 2300,
       "progress": 9,
-      "elapsedMs": 92
+      "elapsedMs": 96
     },
     {
       "id": "beginner-37:acro:50a60434c3e9d920",
@@ -2933,7 +2933,7 @@
       "outcome": "complete",
       "ticks": 2312,
       "progress": 9,
-      "elapsedMs": 88
+      "elapsedMs": 94
     },
     {
       "id": "beginner-38:self-level:3c13e4acdfc93df4",
@@ -2941,7 +2941,7 @@
       "outcome": "complete",
       "ticks": 1768,
       "progress": 9,
-      "elapsedMs": 80
+      "elapsedMs": 70
     },
     {
       "id": "beginner-38:acro:3c13e4acdfc93df4",
@@ -2949,7 +2949,7 @@
       "outcome": "complete",
       "ticks": 1769,
       "progress": 9,
-      "elapsedMs": 67
+      "elapsedMs": 84
     },
     {
       "id": "beginner-39:self-level:e7465341f53c8e7c",
@@ -2957,7 +2957,7 @@
       "outcome": "complete",
       "ticks": 2030,
       "progress": 10,
-      "elapsedMs": 76
+      "elapsedMs": 79
     },
     {
       "id": "beginner-39:acro:e7465341f53c8e7c",
@@ -2965,7 +2965,7 @@
       "outcome": "complete",
       "ticks": 2028,
       "progress": 10,
-      "elapsedMs": 74
+      "elapsedMs": 79
     },
     {
       "id": "beginner-40:self-level:f1542163caf3e49f",
@@ -2973,7 +2973,7 @@
       "outcome": "complete",
       "ticks": 2004,
       "progress": 9,
-      "elapsedMs": 73
+      "elapsedMs": 77
     },
     {
       "id": "beginner-40:acro:f1542163caf3e49f",
@@ -2981,7 +2981,7 @@
       "outcome": "complete",
       "ticks": 2007,
       "progress": 9,
-      "elapsedMs": 73
+      "elapsedMs": 86
     },
     {
       "id": "beginner-41:self-level:3f038022f908f6c6",
@@ -2989,7 +2989,7 @@
       "outcome": "complete",
       "ticks": 2517,
       "progress": 11,
-      "elapsedMs": 91
+      "elapsedMs": 102
     },
     {
       "id": "beginner-41:acro:3f038022f908f6c6",
@@ -2997,7 +2997,7 @@
       "outcome": "complete",
       "ticks": 2510,
       "progress": 11,
-      "elapsedMs": 98
+      "elapsedMs": 105
     },
     {
       "id": "beginner-42:self-level:54080d3efd75e5d8",
@@ -3005,7 +3005,7 @@
       "outcome": "complete",
       "ticks": 2805,
       "progress": 12,
-      "elapsedMs": 144
+      "elapsedMs": 115
     },
     {
       "id": "beginner-42:acro:54080d3efd75e5d8",
@@ -3013,7 +3013,7 @@
       "outcome": "complete",
       "ticks": 2784,
       "progress": 12,
-      "elapsedMs": 103
+      "elapsedMs": 150
     },
     {
       "id": "beginner-43:acro:5873933e67fe81af",
@@ -3021,7 +3021,7 @@
       "outcome": "complete",
       "ticks": 1657,
       "progress": 6,
-      "elapsedMs": 73
+      "elapsedMs": 102
     },
     {
       "id": "beginner-44:acro:5f4e0c788f1171c3",
@@ -3029,7 +3029,7 @@
       "outcome": "complete",
       "ticks": 1657,
       "progress": 6,
-      "elapsedMs": 70
+      "elapsedMs": 84
     },
     {
       "id": "beginner-45:acro:56713a5aa945fe30",
@@ -3037,7 +3037,7 @@
       "outcome": "complete",
       "ticks": 1045,
       "progress": 6,
-      "elapsedMs": 46
+      "elapsedMs": 52
     },
     {
       "id": "beginner-46:acro:0c9d849f3be4be28",
@@ -3045,7 +3045,7 @@
       "outcome": "complete",
       "ticks": 1527,
       "progress": 6,
-      "elapsedMs": 66
+      "elapsedMs": 75
     },
     {
       "id": "beginner-47:acro:bc9b796f6f708d31",
@@ -3053,7 +3053,7 @@
       "outcome": "complete",
       "ticks": 1678,
       "progress": 6,
-      "elapsedMs": 77
+      "elapsedMs": 80
     },
     {
       "id": "beginner-48:acro:411698d0d162f643",
@@ -3061,7 +3061,7 @@
       "outcome": "complete",
       "ticks": 1845,
       "progress": 6,
-      "elapsedMs": 77
+      "elapsedMs": 89
     },
     {
       "id": "beginner-49:acro:89c87f6188de63fa",
@@ -3069,7 +3069,7 @@
       "outcome": "complete",
       "ticks": 1752,
       "progress": 6,
-      "elapsedMs": 71
+      "elapsedMs": 83
     },
     {
       "id": "beginner-50:acro:dee283da2f49063b",
@@ -3077,7 +3077,7 @@
       "outcome": "complete",
       "ticks": 1846,
       "progress": 5,
-      "elapsedMs": 78
+      "elapsedMs": 122
     },
     {
       "id": "beginner-51:acro:f2b8ec6f56c3353a",
@@ -3085,7 +3085,7 @@
       "outcome": "complete",
       "ticks": 2018,
       "progress": 5,
-      "elapsedMs": 97
+      "elapsedMs": 118
     },
     {
       "id": "beginner-52:acro:65adb09bd2b16dde",
@@ -3093,7 +3093,7 @@
       "outcome": "complete",
       "ticks": 2793,
       "progress": 7,
-      "elapsedMs": 129
+      "elapsedMs": 224
     },
     {
       "id": "beginner-53:acro:3c6264a46bcd9d85",
@@ -3101,7 +3101,7 @@
       "outcome": "complete",
       "ticks": 2491,
       "progress": 5,
-      "elapsedMs": 110
+      "elapsedMs": 123
     },
     {
       "id": "beginner-54:acro:1acb62e68122fa51",
@@ -3109,7 +3109,7 @@
       "outcome": "complete",
       "ticks": 1542,
       "progress": 7,
-      "elapsedMs": 63
+      "elapsedMs": 78
     },
     {
       "id": "beginner-55:acro:82f7b51474cc2fec",
@@ -3117,7 +3117,7 @@
       "outcome": "complete",
       "ticks": 2075,
       "progress": 7,
-      "elapsedMs": 87
+      "elapsedMs": 94
     },
     {
       "id": "beginner-56:acro:999d17dd9a263cd2",
@@ -3125,7 +3125,7 @@
       "outcome": "complete",
       "ticks": 2622,
       "progress": 8,
-      "elapsedMs": 112
+      "elapsedMs": 124
     },
     {
       "id": "beginner-57:acro:472b0aa21b2fca36",
@@ -3133,7 +3133,7 @@
       "outcome": "complete",
       "ticks": 3212,
       "progress": 12,
-      "elapsedMs": 135
+      "elapsedMs": 163
     },
     {
       "id": "beginner-58:acro:b11704875488ce3a",
@@ -3141,7 +3141,7 @@
       "outcome": "complete",
       "ticks": 5285,
       "progress": 17,
-      "elapsedMs": 250
+      "elapsedMs": 238
     }
   ]
 }
