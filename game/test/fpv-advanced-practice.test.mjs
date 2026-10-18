@@ -223,11 +223,19 @@ test('aircraft arena archives its final tail, continues flying and retires its o
     assert.fail('Arena archive did not settle');
   }
   assert.equal(f.container.querySelector('.aircraft-archive-controls').hidden, false);
-  await rowsWhen((rows) => rows.length === 1);
+  await waitFor(() => f.container.textContent.includes('Ready to archive when flight begins'));
+  assert.equal((await store.list()).length, 0, 'prepared arena consumes no archive slot');
+  assert.equal(f.button('Finish current archive').disabled, true);
   f.button('Start practice').click();
   await waitFor(() => f.session.getTelemetry().missionTick === 1);
+  const started = (await rowsWhen((rows) => rows.length === 1))[0];
+  assert.equal(started.startTick, 0);
+  assert.equal(started.endTick, 0, 'one accepted tick has not rotated a sealed segment');
+  await waitFor(() => !f.button('Finish current archive').disabled);
   f.button('Finish current archive').click();
-  const first = (await rowsWhen((rows) => rows[0].state === 'ended'))[0];
+  const first = (await rowsWhen((rows) => rows[0]?.state === 'ended'))[0];
+  assert.equal(first.id, started.id);
+  assert.equal(first.startTick, 0);
   assert.equal(first.endTick, 1);
   assert.equal(first.host, 'arena');
   assert.equal(
@@ -245,8 +253,18 @@ test('aircraft arena archives its final tail, continues flying and retires its o
   assert.equal(LocalWorker.instances.at(-1).url, workerURL);
   assert.equal(LocalWorker.instances.at(-1).terminated, true);
   f.button('Restart practice').click();
-  await rowsWhen((rows) => rows.length === 2);
-  assert.equal(f.session.getTelemetry().missionTick, 0);
+  await waitFor(
+    () =>
+      !f.button('Start practice').disabled &&
+      f.session.getTelemetry().missionTick === 0 &&
+      f.container.textContent.includes('Ready to archive when flight begins'),
+  );
+  assert.equal((await store.list()).length, 1, 'restarted but unflown arena creates no archive');
+  f.button('Start practice').click();
+  await waitFor(() => f.session.getTelemetry().missionTick === 1);
+  const second = (await rowsWhen((rows) => rows.length === 2)).find((row) => row.id !== first.id);
+  assert.equal(second.state, 'open');
+  f.button('Pause').click();
   const choose = f.container
     .querySelectorAll('select')
     .find((select) => select.children.some((option) => option.value === 'freestyle'));
@@ -259,7 +277,10 @@ test('aircraft arena archives its final tail, continues flying and retires its o
       f.session.getTelemetry().backend === 'civilian-quad-advanced-experimental.v2',
   );
   assert.equal(f.container.querySelector('.aircraft-archive-controls').hidden, true);
-  assert.equal((await store.list()).find((row) => row.id !== first.id).state, 'interrupted');
+  const retired = await rowsWhen((rows) =>
+    rows.some((row) => row.id === second.id && row.state === 'interrupted'),
+  );
+  assert.equal(retired.find((row) => row.id === first.id).state, 'ended');
 });
 
 test('aircraft arena verifies checkpoint clips and retains usable practice controls', async (t) => {

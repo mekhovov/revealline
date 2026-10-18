@@ -16,7 +16,7 @@ test('shared archive file chooser stays visible when mounted directly in the Adv
     /\.aircraft-archive-controls input\[type=['"]file['"]\]\s*\{[^}]*display:\s*block/,
   );
 });
-function fixture(t, { verify, append, key = 'academy' } = {}) {
+function fixture(t, { verify, begin, append, key = 'academy' } = {}) {
   const document = new Document(),
     window = new Events(),
     records = new Map(),
@@ -31,6 +31,7 @@ function fixture(t, { verify, append, key = 'academy' } = {}) {
   const store = {
     async begin(spec) {
       calls.push(['begin', spec.id, spec.origin]);
+      if (begin) await begin();
       const row = {
         ...spec,
         revision: 0,
@@ -104,13 +105,14 @@ function fixture(t, { verify, append, key = 'academy' } = {}) {
       return { generation, finalizedThroughIndex: sealed };
     },
   };
+  let activeSession = session;
   window.confirm = () => true;
   const ui = mountAircraftArchiveControls({
     parent: document.body,
     key,
     window,
     locale: () => locale,
-    getSession: () => session,
+    getSession: () => activeSession,
     store,
     makeId: () => `archive-${++ids}`,
     onPause: () => pauses++,
@@ -141,6 +143,16 @@ function fixture(t, { verify, append, key = 'academy' } = {}) {
     setGeneration: (value) => {
       generation = value;
       sealed = -1;
+      ticks = generation === '0' ? 0 : 500;
+    },
+    setTicks: (value) => {
+      ticks = value;
+    },
+    replaceSession: () => {
+      activeSession = { ...session };
+      generation = '0';
+      sealed = -1;
+      ticks = 0;
     },
     setSealed: (value) => {
       sealed = value;
@@ -171,6 +183,73 @@ test('archive capture waits for prepared worker telemetry before requesting a se
   await settle();
   assert.equal(f.ui.root.hidden, false);
   assert.ok(f.reads > 0);
+  assert.equal(f.records.size, 0);
+});
+
+test('preparing and replacing paused aircraft never consumes archive capacity', async (t) => {
+  const f = fixture(t);
+  for (let i = 0; i < 20; i++) {
+    f.replaceSession();
+    f.update();
+    await settle();
+    assert.equal(f.records.size, 0);
+    assert.equal(f.button('Finish current archive').disabled, true);
+  }
+  assert.equal(f.calls.length, 0, 'no empty manifest is persisted or retired');
+  assert.match(f.ui.root.textContent, /Ready to archive when flight begins/);
+  const reads = f.reads;
+  for (let i = 0; i < 50; i++) f.update();
+  await settle();
+  assert.equal(f.reads, reads, 'waiting at the same accepted tick does not poll the worker again');
+  f.setLocale('uk');
+  f.update();
+  assert.match(f.ui.root.textContent, /Готово до архівування після початку польоту/);
+});
+
+test('first accepted flight progress opens an archive before segment rotation so short flights can finish', async (t) => {
+  const f = fixture(t);
+  f.update();
+  await settle();
+  f.setTicks(1);
+  f.update();
+  await settle();
+  assert.deepEqual(f.calls, [['begin', 'archive-1', { kind: 'fresh', startTick: 0 }]]);
+  assert.equal(f.button('Finish current archive').disabled, false);
+  f.button('Finish current archive').click();
+  await settle();
+  assert.deepEqual(
+    f.calls.map(([kind]) => kind),
+    ['begin', 'append', 'finish'],
+  );
+  assert.equal(f.records.get('archive-1').state, 'ended');
+});
+
+test('refreshing saved sessions replaces preparation feedback with success in both languages', async (t) => {
+  const f = fixture(t);
+  f.update();
+  await settle();
+  for (const [language, button, success] of [
+    ['en', 'Refresh saved sessions', 'Saved sessions refreshed.'],
+    ['uk', 'Оновити збережені сесії', 'Список збережених сесій оновлено.'],
+  ]) {
+    f.setLocale(language);
+    f.update();
+    f.button(button).click();
+    await settle();
+    assert.ok(f.ui.root.textContent.includes(success));
+    assert.doesNotMatch(f.ui.root.textContent, /Preparing…|Підготовка…/);
+    assert.equal(f.button(button).disabled, false);
+    assert.equal(f.records.size, 0, 'refreshing an empty library creates no archive');
+  }
+  f.setTicks(1);
+  f.update();
+  await settle();
+  const before = structuredClone([...f.records.values()]);
+  f.button('Оновити збережені сесії').click();
+  await settle();
+  assert.match(f.ui.root.textContent, /Список збережених сесій оновлено/);
+  assert.equal(f.ui.root.querySelector('select').children.length, 1);
+  assert.deepEqual([...f.records.values()], before, 'refreshing changes only the displayed list');
 });
 
 test('archive verification distinguishes challenge outcomes from physics-only clip verification', async (t) => {
@@ -207,10 +286,11 @@ test('archive controls save closed segments, capture the paused final tail and v
   const f = fixture(t);
   f.update();
   await settle();
-  assert.equal(f.calls.filter(([kind]) => kind === 'begin').length, 1);
+  assert.equal(f.calls.filter(([kind]) => kind === 'begin').length, 0);
   f.setSealed(0);
   f.update();
   await settle();
+  assert.equal(f.calls.filter(([kind]) => kind === 'begin').length, 1);
   assert.match(f.ui.root.textContent, /Saved through 0:01/);
   f.button('Finish current archive').emit('click');
   await settle();
@@ -251,6 +331,31 @@ test('quota failure stops only archives, retains the durable point and does not 
   assert.equal(f.records.get('archive-1').endTick, 0);
 });
 
+test('a full archive store is not consulted until flight begins and cannot stop flight progress', async (t) => {
+  const f = fixture(t, {
+    begin: async () => {
+      throw new Error('Archive storage is full');
+    },
+  });
+  f.update();
+  await settle();
+  assert.equal(f.calls.length, 0);
+  assert.doesNotMatch(f.ui.root.textContent, /Archive stopped/);
+  f.setTicks(1);
+  f.update();
+  await settle();
+  assert.match(f.ui.root.textContent, /Archive stopped; flying continues.*storage is full/);
+  const reads = f.reads;
+  for (let tick = 2; tick < 100; tick++) {
+    f.setTicks(tick);
+    f.update();
+  }
+  await settle();
+  assert.equal(f.calls.length, 1, 'quota failure does not queue repeated writes');
+  assert.equal(f.reads, reads);
+  assert.equal(f.records.size, 0);
+});
+
 test('pending segment writes remain bounded and the final write uses the durable revision', async (t) => {
   let release,
     pending = 0,
@@ -287,6 +392,10 @@ test('recovery generation closes the previous archive and creates an independent
   f.update();
   await settle();
   assert.equal(f.records.get('archive-1').state, 'interrupted');
+  assert.equal(f.records.size, 1, 'restoring at tick500 alone does not create another archive');
+  f.setTicks(501);
+  f.update();
+  await settle();
   assert.deepEqual(f.records.get('archive-2').origin, { kind: 'checkpoint', startTick: 500 });
 });
 
@@ -332,6 +441,7 @@ test('archive names identify the real host in English and Ukrainian', async (t) 
     ]) {
       const f = fixture(t, { key });
       f.setLocale(language);
+      f.setTicks(1);
       f.update();
       await settle();
       const record = [...f.records.values()][0];
