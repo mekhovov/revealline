@@ -59,3 +59,6 @@ import './test-solo-shared-mode-owner-admission.mjs';
 
 // Trusted public Demo Close boundary and immutable executed-input controls.
 import './test-solo-demo-trusted-close-admission.mjs';
+
+// Actual input-owner Close activation and immutable click-only evidence.
+import './test-solo-demo-activation-admission.mjs';

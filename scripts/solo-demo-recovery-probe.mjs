@@ -105,12 +105,16 @@ export function installDemoRecoveryProbe(env = globalThis) {
         throw Error('Exact one-time Demo resource contract required');
       resourceContract = { ...contract };
     },
-    armCloseBoundary({ label, runId, painterId }) {
+    armCloseBoundary({ label, runId, painterId, eventType }) {
+      const activation = eventType !== undefined;
       if (
         !resourceContract ||
         closeCapture ||
         closeCaptureCount >= 20 ||
-        !/^(spectator|practice)-(?:[1-9]|10)-close-click$/.test(label) ||
+        !(activation
+          ? /^(spectator|practice)-(?:[1-9]|10)-close-activation$/.test(label) &&
+            eventType === (label.startsWith('spectator-') ? 'pointerdown' : 'click')
+          : /^(spectator|practice)-(?:[1-9]|10)-close-click$/.test(label)) ||
         !Number.isSafeInteger(runId) ||
         !Number.isSafeInteger(painterId)
       )
@@ -119,12 +123,24 @@ export function installDemoRecoveryProbe(env = globalThis) {
         button = doc.getElementById('demo-back');
       if (!button || typeof doc.addEventListener !== 'function')
         throw Error('Actual Demo Back control required');
-      const capture = { button, listener: null, value: null, count: 0, failure: null };
+      const capture = {
+        button,
+        listener: null,
+        value: null,
+        count: 0,
+        failure: null,
+        eventType: eventType ?? 'click',
+      };
       capture.listener = (event) => {
         if (event.target !== button && !button.contains?.(event.target)) return;
         capture.count++;
-        if (capture.count !== 1 || event.isTrusted !== true) {
-          capture.failure = 'Exactly one trusted Demo Back click required';
+        if (
+          capture.count !== 1 ||
+          event.isTrusted !== true ||
+          (activation && event.type !== capture.eventType) ||
+          (eventType === 'pointerdown' && (event.button !== 0 || event.isPrimary !== true))
+        ) {
+          capture.failure = 'Exactly one trusted Demo Back activation required';
           return;
         }
         try {
@@ -135,22 +151,24 @@ export function installDemoRecoveryProbe(env = globalThis) {
             !value.focused ||
             !value.lastDraw?.paused ||
             value.demo?.id !== runId ||
-            value.painterId !== painterId
+            value.painterId !== painterId ||
+            (activation && value.practice !== label.startsWith('practice-'))
           ) {
             capture.failure = 'Paused Demo Close owner changed';
             return;
           }
-          value.closeClick = {
-            format: 'DemoTrustedCloseBoundaryV1',
+          value[activation ? 'closeActivation' : 'closeClick'] = {
+            format: activation ? 'DemoTrustedCloseActivationV2' : 'DemoTrustedCloseBoundaryV1',
             isTrusted: true,
             target: 'demo-back',
+            ...(activation ? { eventType: capture.eventType } : {}),
           };
           capture.value = value;
         } catch {
           capture.failure = 'Demo Close boundary snapshot failed';
         }
       };
-      doc.addEventListener('click', capture.listener, true);
+      doc.addEventListener(capture.eventType, capture.listener, true);
       closeCapture = capture;
       closeCaptureCount++;
     },
@@ -161,7 +179,7 @@ export function installDemoRecoveryProbe(env = globalThis) {
     },
     disarmCloseBoundary() {
       if (!closeCapture) return;
-      env.document.removeEventListener('click', closeCapture.listener, true);
+      env.document.removeEventListener(closeCapture.eventType, closeCapture.listener, true);
       closeCapture = null;
     },
     install(Painter, checkpoint) {
