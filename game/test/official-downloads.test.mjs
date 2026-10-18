@@ -10,6 +10,7 @@ import {
   officialAssetURL,
   verifiedDownload,
   withOptionalMusicDownload,
+  localOfficialRecordingIds,
 } from '../official-downloads.mjs';
 import { downloadFiles } from '../download-catalogue.mjs';
 import { downloadErrorMessage } from '../offline-download-session.mjs';
@@ -416,4 +417,196 @@ test('damaged download ownership keeps its recovery message live in English and 
   } finally {
     await setLocale(previous);
   }
+});
+
+async function withRecordingCache(work) {
+  const memory = memoryCaches(),
+    opens = [],
+    matches = [],
+    previous = new Map(
+      ['caches', 'location'].map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),
+    );
+  let openFailure = false,
+    matchFailure = null;
+  const storage = {
+    async open(name) {
+      opens.push(name);
+      if (openFailure) throw new Error('Cache unavailable');
+      const cache = await memory.open(name);
+      return {
+        async match(key) {
+          matches.push(key);
+          if (key.endsWith(matchFailure ?? '!')) throw new Error('Cache read failed');
+          const response = await cache.match(key);
+          if (response)
+            response.arrayBuffer = async () => {
+              throw new Error('Presence lookup must not read or hash recording bodies');
+            };
+          return response;
+        },
+      };
+    },
+  };
+  Object.defineProperty(globalThis, 'caches', { configurable: true, value: storage });
+  Object.defineProperty(globalThis, 'location', { configurable: true, value: { origin } });
+  try {
+    return await work({
+      opens,
+      matches,
+      memory,
+      failOpen() {
+        openFailure = true;
+      },
+      failMatch(hash) {
+        matchFailure = hash;
+      },
+      async put(asset, { status = 200, length = asset.bytes, body = 'cache fixture' } = {}) {
+        const cache = await memory.open(OFFICIAL_CACHE);
+        await cache.put(
+          officialAssetURL(asset.sha256, origin),
+          new Response(body, {
+            status,
+            headers: { 'Content-Length': String(length) },
+          }),
+        );
+      },
+    });
+  } finally {
+    for (const [key, descriptor] of previous) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+      else delete globalThis[key];
+    }
+  }
+}
+
+test('local recording lookup opens the cache once for a complete 77-track catalogue', async () => {
+  await withRecordingCache(async (h) => {
+    const tracks = Array.from({ length: 77 }, (_, index) => ({
+      id: 'recording-' + index,
+      asset: { bytes: 4, sha256: (index + 1).toString(16).padStart(64, '0') },
+    }));
+    for (const track of tracks) await h.put(track.asset);
+    assert.deepEqual(
+      await localOfficialRecordingIds({ tracks }),
+      tracks.map((track) => track.id),
+    );
+    assert.deepEqual(h.opens, [OFFICIAL_CACHE]);
+    assert.equal(h.matches.length, 77);
+  });
+});
+
+test('local recording lookup preserves catalogue order, duplicate IDs and shared-hash tracks', async () => {
+  await withRecordingCache(async (h) => {
+    await h.put(a);
+    await h.put(b);
+    const tracks = [
+      { id: 'second', asset: b },
+      { id: 'first', asset: a },
+      { id: 'first', asset: { ...a, mime: 'audio/mpeg' } },
+      { id: 'shared', asset: { ...b, path: 'another-path.mp3' } },
+    ];
+    assert.deepEqual(await localOfficialRecordingIds({ tracks }), [
+      'second',
+      'first',
+      'first',
+      'shared',
+    ]);
+    assert.deepEqual(h.opens, [OFFICIAL_CACHE]);
+    assert.deepEqual(h.matches, [
+      officialAssetURL(b.sha256, origin),
+      officialAssetURL(a.sha256, origin),
+    ]);
+  });
+});
+
+test('local recording lookup excludes missing and metadata-corrupt hashes without reading bodies', async () => {
+  await withRecordingCache(async (h) => {
+    const missing = { bytes: 8, sha256: '1'.repeat(64) },
+      wrongStatus = { bytes: 8, sha256: '2'.repeat(64) },
+      wrongLength = { bytes: 8, sha256: '3'.repeat(64) };
+    await h.put(a, { body: 'not the verified original' });
+    await h.put(wrongStatus, { status: 206 });
+    await h.put(wrongLength, { length: 7 });
+    const tracks = [
+      { id: 'missing', asset: missing },
+      { id: 'ready', asset: a },
+      { id: 'wrong-status', asset: wrongStatus },
+      { id: 'wrong-length', asset: wrongLength },
+      { id: 'ready-again', asset: a },
+    ];
+    assert.deepEqual(await localOfficialRecordingIds({ tracks }), ['ready', 'ready-again']);
+    assert.deepEqual(h.opens, [OFFICIAL_CACHE]);
+    assert.equal(h.matches.length, 4);
+  });
+});
+
+test('local recording lookup returns no partial IDs when cache open or a later read fails', async () => {
+  for (const failure of ['open', 'read']) {
+    await withRecordingCache(async (h) => {
+      await h.put(a);
+      await h.put(b);
+      if (failure === 'open') h.failOpen();
+      else h.failMatch(b.sha256);
+      assert.deepEqual(
+        await localOfficialRecordingIds({
+          tracks: [
+            { id: 'first', asset: a },
+            { id: 'second', asset: b },
+          ],
+        }),
+        [],
+      );
+      assert.deepEqual(h.opens, [OFFICIAL_CACHE]);
+      assert.equal(h.matches.length, failure === 'open' ? 0 : 2);
+    });
+  }
+});
+
+test('local recording lookup leaves an empty catalogue unopened and handles absent Cache Storage', async () => {
+  await withRecordingCache(async (h) => {
+    assert.deepEqual(await localOfficialRecordingIds({ tracks: [] }), []);
+    assert.deepEqual(h.opens, []);
+    Object.defineProperty(globalThis, 'caches', { configurable: true, value: undefined });
+    assert.deepEqual(await localOfficialRecordingIds({ tracks: [{ id: 'first', asset: a }] }), []);
+  });
+});
+
+test('conflicting declared sizes retain per-track readiness regardless of the last duplicate', async () => {
+  for (const lastReady of [false, true]) {
+    await withRecordingCache(async (h) => {
+      await h.put(a);
+      const ready = { id: 'ready', asset: a },
+        wrong = { id: 'wrong', asset: { ...a, bytes: a.bytes + 1 } },
+        tracks = lastReady ? [wrong, ready, ready] : [ready, ready, wrong];
+      assert.deepEqual(await localOfficialRecordingIds({ tracks }), ['ready', 'ready']);
+      assert.equal(h.opens.length, tracks.length);
+      assert.equal(h.matches.length, tracks.length);
+    });
+  }
+});
+
+test('invalid later recording descriptors cannot expose earlier ready IDs', async () => {
+  await withRecordingCache(async (h) => {
+    await h.put(a);
+    assert.deepEqual(
+      await localOfficialRecordingIds({
+        tracks: [
+          { id: 'ready', asset: a },
+          { id: 'invalid', asset: { ...b, bytes: 0 } },
+        ],
+      }),
+      [],
+    );
+  });
+});
+
+test('a later recording lookup opens the current cache after another owner deletes it', async () => {
+  await withRecordingCache(async (h) => {
+    await h.put(a);
+    const catalogue = { tracks: [{ id: 'ready', asset: a }] };
+    assert.deepEqual(await localOfficialRecordingIds(catalogue), ['ready']);
+    await h.memory.delete(OFFICIAL_CACHE);
+    assert.deepEqual(await localOfficialRecordingIds(catalogue), []);
+    assert.deepEqual(h.opens, [OFFICIAL_CACHE, OFFICIAL_CACHE]);
+  });
 });

@@ -221,9 +221,17 @@ export function attachProfileRecoveryDialog({
     event.preventDefault();
     void close();
   };
+  const childClosed = (event) => {
+    // A tool can make entry unavailable while the paused HUD stays unchanged.
+    // Native dialog close does not bubble; capture the return to Settings and
+    // re-evaluate the existing restrictions instead of forcing entry enabled.
+    if (!disposed && event.target?.tagName === 'DIALOG' && !event.target.open && isSettingsOpen())
+      refresh();
+  };
   opener.onclick = open;
   back.onclick = close;
   dialog.addEventListener('cancel', escape);
+  doc.addEventListener('close', childClosed, true);
   win.addEventListener('blur', cancel);
   win.addEventListener('pagehide', close);
   refresh();
@@ -236,6 +244,7 @@ export function attachProfileRecoveryDialog({
       if (disposed) return;
       disposed = true;
       dialog.removeEventListener('cancel', escape);
+      doc.removeEventListener('close', childClosed, true);
       win.removeEventListener('blur', cancel);
       win.removeEventListener('pagehide', close);
       if (opener.onclick === open) opener.onclick = null;
