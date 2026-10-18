@@ -12,6 +12,13 @@ import {
   JOURNEY_PERFORMANCE_LIMITS,
 } from './performance.mjs';
 
+export class JourneyBackupEvidenceUnavailable extends Error {
+  constructor(cause) {
+    super(cause?.message ?? 'Optional backup evidence could not be read.', { cause });
+    this.name = 'JourneyBackupEvidenceUnavailable';
+  }
+}
+
 const sameClear = (profile, record) => {
   const clear = profile?.clears?.solo?.[record.missionId];
   return (
@@ -320,6 +327,39 @@ export function createJourneyPerformanceController({
   const adoptOptional = (value, rows, signal) =>
     scheduleChunk ? admittedInspection(() => adopt(value, rows), signal) : adopt(value, rows);
   const allRows = () => selectPerformanceRecords([...storedRows, ...sessionRows]);
+  const backup = (
+    envelope = retainedEnvelope,
+    generation = stored?.generation ?? retainedEnvelope?.generation ?? 0,
+  ) => {
+    // Unsupported/read-only hosts preserve the existing optional field. Only
+    // verified rows enter the recap; exporting original bytes grants nothing.
+    const records = new Map(
+      (envelope?.records ?? []).map((row) => [performanceRecordKey(row), row]),
+    );
+    for (const row of allRows()) {
+      const key = performanceRecordKey(row),
+        old = records.get(key);
+      required(
+        !old || canonicalJSON(old) === canonicalJSON(row),
+        'Performance run identity changed.',
+      );
+      records.delete(key);
+      records.set(key, row);
+    }
+    const retained = [...records.values()];
+    while (retained.length) {
+      try {
+        return inspectJourneyPerformance({
+          ...emptyJourneyPerformance(),
+          generation,
+          records: retained,
+        });
+      } catch {
+        retained.shift();
+      }
+    }
+    return undefined;
+  };
   const writeImmediately = async (rows, state, signal) => {
     required(canWrite(), 'The Journey saving lease is no longer held.');
     const before =
@@ -498,35 +538,54 @@ export function createJourneyPerformanceController({
       }
     },
     snapshot: () => projection,
-    backup: () => {
-      // Unsupported/read-only hosts preserve the existing optional field. Only
-      // verified rows enter the recap; exporting original bytes grants nothing.
-      const records = new Map(
-        (retainedEnvelope?.records ?? []).map((row) => [performanceRecordKey(row), row]),
-      );
-      for (const row of allRows()) {
-        const key = performanceRecordKey(row),
-          old = records.get(key);
-        required(
-          !old || canonicalJSON(old) === canonicalJSON(row),
-          'Performance run identity changed.',
-        );
-        records.delete(key);
-        records.set(key, row);
-      }
-      const retained = [...records.values()];
-      while (retained.length) {
+    backup: () => backup(),
+    async backupAsync({ signal } = {}) {
+      const job = lifetime(signal);
+      try {
+        job.signal.throwIfAborted();
+        const unavailable = (error) => {
+          job.signal.throwIfAborted();
+          if (error?.name === 'AbortError') throw error;
+          throw new JourneyBackupEvidenceUnavailable(error);
+        };
+        let source;
         try {
-          return inspectJourneyPerformance({
-            ...emptyJourneyPerformance(),
-            generation: stored?.generation ?? retainedEnvelope?.generation ?? 0,
-            records: retained,
-          });
-        } catch {
-          retained.shift();
+          const state = await backend.readState({ signal: job.signal });
+          job.signal.throwIfAborted();
+          const owned = consumeOwnedState?.(state);
+          required(!owned?.unread, 'Backup needs a completed optional read.');
+          source = owned
+            ? owned.performance
+            : state.performance === undefined
+              ? undefined
+              : snapshotJourneyPerformanceSource(state.performance);
+        } catch (error) {
+          unavailable(error);
         }
+        const prepare = () => {
+          job.signal.throwIfAborted();
+          let value;
+          try {
+            value =
+              source === undefined ? emptyJourneyPerformance() : inspectJourneyPerformance(source);
+          } catch (error) {
+            unavailable(error);
+          }
+          // Export only: no replay authority, projection adoption or persistence.
+          // A stale read cannot replace a newer retained envelope or pending row.
+          const envelope =
+            !retainedEnvelope || value.generation >= retainedEnvelope.generation
+              ? value
+              : retainedEnvelope;
+          return backup(
+            envelope,
+            Math.max(value.generation, retainedEnvelope?.generation ?? 0, stored?.generation ?? 0),
+          );
+        };
+        return scheduleChunk ? await admittedInspection(prepare, job.signal) : prepare();
+      } finally {
+        job.done();
       }
-      return undefined;
     },
     subscribe(callback) {
       listeners.add(callback);
