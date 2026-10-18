@@ -42,10 +42,11 @@ concurrency:
 jobs:
   optional-practice:
     runs-on: ubuntu-latest
-    # The aircraft/replay suite passed in 7m26s on run 39059412458, but
-    # dependency setup and artifact checks took the job beyond eight minutes.
-    # Keep every check and allow bounded headroom for hosted-runner variance.
-    timeout-minutes: 12
+    # The earlier aircraft/replay suite alone needed 7m26s on run 39059412458.
+    # All-catalog course and verified Regional geometry flights now add sustained
+    # physics coverage. Retain every check and bound the larger suite plus setup
+    # and package verification with headroom for hosted-runner variance.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
