@@ -1,0 +1,148 @@
+{
+  "format": "SharedDemoNativeRegressionReceiptV1",
+  "recordedAt": "2026-10-18T17:53:51.144Z",
+  "sourceCommit": "892d7b0a43e572237611648b85ee27bb24c7daf3",
+  "sourceStage": "After monotonic deadlines, exact-tick adapters and bounded preparation instrumentation; before the pending Phaser listener-ownership presentation fix.",
+  "runtime": {
+    "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-concurrency=2 game/test/demo-*.test.mjs game/test/snake-demo.test.mjs game/test/solo-demo-*.test.mjs",
+    "exitCode": 0,
+    "file": "docs/qualification/shared-demos/runtime-regressions-20261018.tap.txt",
+    "bytes": 155873,
+    "sha256": "10acc2a2110ca03b92a820b00656ce016f420fa281994a44b4a27620efecba39",
+    "lastWrittenAt": "2026-10-18T17:49:32.305Z",
+    "tests": 736,
+    "pass": 736,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 498287.111584
+  },
+  "consumers": {
+    "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-concurrency=2 game/test/mission-library-handoff.test.mjs game/test/edition-solo-host.test.mjs game/test/edition-runtime.test.mjs",
+    "exitCode": 0,
+    "file": "docs/qualification/shared-demos/native-consumer-regressions-20261018.tap.txt",
+    "bytes": 15345,
+    "sha256": "cba90602987a8b788ac865f88eebdf6a1289e011ae30babe10d52019646a5290",
+    "lastWrittenAt": "2026-10-18T17:51:18.721Z",
+    "tests": 78,
+    "pass": 78,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMs": 77740.205625
+  },
+  "nativeCoverage": {
+    "required": 890,
+    "verified": 890,
+    "modes": {
+      "solo": {
+        "required": 240,
+        "verified": 240,
+        "groups": {
+          "base": 12,
+          "current": 77,
+          "archive": 12,
+          "journey-current": 91,
+          "journey-archive": 48
+        },
+        "outcomes": {
+          "won": 193,
+          "lost": 47
+        },
+        "minimumCaptures": 1,
+        "minimumCapturedCells": 106,
+        "command": "NODE_DISABLE_COMPILE_CACHE=1 nice -n 10 node scripts/qualify-solo-demos.mjs",
+        "exitCode": 0,
+        "output": {
+          "file": "docs/qualification/shared-demos/native-solo-20261018.log.txt",
+          "bytes": 14610,
+          "sha256": "532508ff340daabc0a182c51ceac35ece6cfaf8ae3054e679ca9c1ea37693a2c",
+          "lastWrittenAt": "2026-10-18T17:48:38.990Z"
+        },
+        "report": {
+          "file": "docs/qualification/solo-demo-coverage.json",
+          "bytes": 130414,
+          "sha256": "1e0032727ef58d20d4cd69eff1c6776d1ed3a4cf64851680eacf62f17ebef169",
+          "lastWrittenAt": "2026-10-18T17:48:38.990Z"
+        },
+        "checks": [
+          "Current native authored inventory and exact content/replay identity",
+          "Independent terminal playback with native verification",
+          "At least one real capture and net claimed-cell growth"
+        ]
+      },
+      "snake": {
+        "required": 240,
+        "verified": 240,
+        "output": {
+          "file": "docs/qualification/shared-demos/runtime-regressions-20261018.tap.txt",
+          "bytes": 155873,
+          "sha256": "10acc2a2110ca03b92a820b00656ce016f420fa281994a44b4a27620efecba39",
+          "lastWrittenAt": "2026-10-18T17:49:32.305Z"
+        },
+        "checks": [
+          "Current CLASSIC_SNAKE_LEVELS-derived inventory",
+          "Independent native verifier, natural terminal outcome, meaningfulSnakeDemoProgress",
+          "Full actual player playback to recorded final checkpoint",
+          "Diagnostic checkpoints spaced at most 5.3 simulation seconds"
+        ]
+      },
+      "sim": {
+        "required": 392,
+        "verified": 392,
+        "missing": 0,
+        "failures": 0,
+        "outcomes": {
+          "complete": 392
+        },
+        "minimumObjectiveStep": 1,
+        "command": "NODE_DISABLE_COMPILE_CACHE=1 nice -n 10 node scripts/qualify-sim-demos.mjs",
+        "exitCode": 0,
+        "output": {
+          "file": "docs/qualification/shared-demos/native-sim-20261018.log.txt",
+          "bytes": 908,
+          "sha256": "19af902c2c28da0b11622a7570eeca28c0e857cfd8b2717b4fed6597f7c9d3f2",
+          "lastWrittenAt": "2026-10-18T17:50:37.030Z"
+        },
+        "report": {
+          "file": "optional-practice/civilian-fpv/demo-data/coverage.json",
+          "bytes": 90442,
+          "sha256": "e061105650c607759d12a17aee1e553d1d2d86f777ef5ac75ff4d8501e334dc6",
+          "lastWrittenAt": "2026-10-18T17:50:37.030Z"
+        },
+        "checks": [
+          "Current course/flight-mode inventory and exact native source identities",
+          "Native full replay and terminal status",
+          "Goal-related progress gate"
+        ]
+      },
+      "survival": {
+        "required": 18,
+        "verified": 18,
+        "outcomes": {
+          "won": 18
+        },
+        "command": "NODE_DISABLE_COMPILE_CACHE=1 nice -n 10 node scripts/generate-survival-demos.mjs --check",
+        "exitCode": 0,
+        "output": {
+          "file": "docs/qualification/shared-demos/native-survival-20261018.log.txt",
+          "bytes": 1550,
+          "sha256": "5a519aea59cc2b032f89c5bc1b8d416ce778c067c1f5f880df845192301e2a8e",
+          "lastWrittenAt": "2026-10-18T17:52:58.845Z"
+        },
+        "checks": [
+          "Recomputed transitive core/project simulation dependency identity",
+          "Current authored standard scenario inventory",
+          "Independent full native replay through ordinary movement, upgrades and rerolls",
+          "Natural terminal outcome and positive kills, salvage and upgrades"
+        ]
+      }
+    }
+  },
+  "limitations": [
+    "Native CPU qualification does not replace browser graphics, lifecycle or wall-clock endurance acceptance.",
+    "The two-hour uninterrupted browser run and post-Phaser-fix presentation regressions remain separate evidence.",
+    "The expensive Survival dense per-tick regression was not repeated because its implementation and native simulation were unchanged; its earlier actual observed receipt remains separately recorded.",
+    "No production files, authored recordings or native simulation identities were changed by this validation task."
+  ]
+}

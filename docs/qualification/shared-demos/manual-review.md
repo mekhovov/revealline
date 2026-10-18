@@ -1,6 +1,6 @@
 # Shared demo human and physical-device checks
 
-Status: **not performed**. Automated browser, simulated input, and narrow-layout results are recorded separately in [the evidence index](README.md). Do not mark these checks complete from those receipts.
+Status: **not performed**. On 18 October 2026, the user confirmed that automated work should continue and reviewer timing is unknown; these hands-on checks remain pending. Automated browser, simulated input, and narrow-layout results are recorded separately in [the evidence index](README.md). Do not mark these checks complete from those receipts.
 
 Record reviewer, date, device/controller, browser/version, mode, source ID, observed behavior, and any recording or issue reference for each check.
 
