@@ -1,0 +1,61 @@
+{
+  "format": "SoloRetainedAuditIndexV1",
+  "scope": "Existing exact audit bytes anchored in an evidence branch; not runtime code or a new qualification pass. Original workflow artifacts remain primary raw evidence.",
+  "baseRevision": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+  "records": [
+    {
+      "path": "published-smoke-a46.json",
+      "blob": "9efa132c3d8b2c43171954eb70a240407d17d4b6",
+      "bytes": 104510,
+      "sha256": "8a4230be35e904453fcb63372785a576ea6660bcee1fde98740d19c70b7952ad"
+    },
+    {
+      "path": "worker-source797.json",
+      "blob": "880b4600556e21e022de2b22a65c96a05615c0e3",
+      "bytes": 513963,
+      "sha256": "4105fa6a4e9d38325af886b603f4adbec61fd03679723c0d0181b9d6fd946b16"
+    },
+    {
+      "path": "frame-source9d-incomplete.json",
+      "blob": "801ecd268dde667f38add2d9ccb70103f05ea5b2",
+      "bytes": 1143213,
+      "sha256": "fdf1589d0e854f2a2fb03f140ea5b54682fabe66bed7cfa56dffa986e7dd71bf"
+    },
+    {
+      "path": "demo-click-boundary-failure.json",
+      "blob": "a6187efbbad6bafcf3cb6960c9deb49341819a5d",
+      "bytes": 160536,
+      "sha256": "5d5be0e46cf974e402c9e919af0aafc436293d8ded6dd3a5457777d869e703c8"
+    },
+    {
+      "path": "retry-chromium-1.json",
+      "blob": "842da9855e1b0dad9de42b3ada1344cf8b8c71ee",
+      "bytes": 338158,
+      "sha256": "f60f216079fade19c2fe79b215d9d0f3ee8330603ee776cf0e6980f36c794bab"
+    },
+    {
+      "path": "retry-chromium-2.json",
+      "blob": "732015877be85ca2fac342570bf5b6ed7d8c776c",
+      "bytes": 337810,
+      "sha256": "50c3347832e4e5246319d06239fb3fb26c30712dce78ff28dd003e4d336add29"
+    },
+    {
+      "path": "retry-chromium-3.json",
+      "blob": "297d8a4ddd8a722eedae29fdbdbebaecca2b9951",
+      "bytes": 337823,
+      "sha256": "a39cbb54bddeee7d2955293f4dbf123896c386012c4f3d159d7124a4082d43cb"
+    },
+    {
+      "path": "soak-webkit-3.json",
+      "blob": "5950004bf58cb7f3c2232aecd7f4b589fa13a219",
+      "bytes": 601341,
+      "sha256": "b69d06aed620299d3dfed9e86a6f383d768fcdbc4b6e038fce5ee223a0f37db2"
+    },
+    {
+      "path": "demo-activation-layout-failure.json",
+      "blob": "8e999f638e696af2063141d346b33fcf4f660144",
+      "bytes": 44766,
+      "sha256": "2426b6d8a992e33f196e49506dc66fb0fd85781619cadf1280040a725338e29d"
+    }
+  ]
+}

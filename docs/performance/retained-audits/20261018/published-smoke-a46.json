@@ -1,0 +1,2251 @@
+{
+  "attempt": 1,
+  "findings": [
+    "Normal password gate accepted in both actual public browser rows; dedicated source36/36 was separately successful.",
+    "Both engines completed Solo Start at0:01, explicit Pause/Resume at0:02; this does not erase the prior e2bf startup-pause failure.",
+    "Chromium completed Missions current selection and Demo/Settings return. Team navigation succeeded, but retained final public state says picture loading cancelled; tool ready, Start disabled, 565 public state reads, no Team input/gameplay or Versus coverage.",
+    "WebKit stopped after Home/Missions actions with a public-state read deadline; last observed state was paused0:02/Home visible/chooser unavailable. Final evidence read and browser cleanup also expired; context cleanup closed. Browser-owned cause is unassigned.",
+    "Both outer process owners closed without forced cleanup, ambiguous processes, survivors or ownership violation; this does not erase WebKit browser cleanup failure.",
+    "Both failed before post-run public build binding. Before bindings/source-before-after are exact; main remained a46 through audit.",
+    "Optional soundtrack catalogue404 and console errors retained in both engines. Chromium also reports four GPU readback warnings; neither is assigned as a failure cause.",
+    "No automatic Resume/retry, gate relaxation, whole-app, performance or physical-device pass. No unchanged rerun authorized."
+  ],
+  "format": "RevealLinePublishedPagesFailureAuditV2",
+  "jobs": [
+    {
+      "completed_at": "2026-10-18T15:36:48Z",
+      "conclusion": "success",
+      "id": 117715967112,
+      "name": "source",
+      "started_at": "2026-10-18T15:36:33Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-18T15:41:08Z",
+      "conclusion": "failure",
+      "id": 117716028410,
+      "name": "browser (chromium)",
+      "started_at": "2026-10-18T15:36:50Z",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-10-18T15:39:09Z",
+      "conclusion": "failure",
+      "id": 117716028435,
+      "name": "browser (webkit)",
+      "started_at": "2026-10-18T15:36:51Z",
+      "status": "completed"
+    }
+  ],
+  "performanceExcluded": true,
+  "publicationAuditGitBlob": "83de09ca90d5c698dd762c238f2c15ea69f3d7e0",
+  "records": [
+    {
+      "artifact": {
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12142235066/zip",
+        "created_at": "2026-10-18T15:36:46Z",
+        "digest": "sha256:29a72c2e0dfe800dfeda63c9e186f9b4ed065a8599ef2c01828091e16a413cc1",
+        "expired": false,
+        "expires_at": "2026-11-01T15:36:46Z",
+        "id": 12142235066,
+        "name": "published-pages-source-39141249025-1",
+        "node_id": "MDg6QXJ0aWZhY3QxMjE0MjIzNTA2Ng==",
+        "size_in_bytes": 2573,
+        "updated_at": "2026-10-18T15:36:46Z",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12142235066",
+        "workflow_run": {
+          "head_branch": "main",
+          "head_repository_id": 1367404328,
+          "head_sha": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+          "id": 39141249025,
+          "repository_id": 1367404328
+        }
+      },
+      "members": [
+        {
+          "bytes": 416,
+          "content": {
+            "attempt": "1",
+            "event": "workflow_dispatch",
+            "format": "RevealLinePagesSmokeSourceIdentityV1",
+            "node": "22.13.1",
+            "pullRequestBase": null,
+            "pullRequestHead": null,
+            "revision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+            "runId": "39141249025",
+            "scope": "Identity only. Complete TAP and job conclusion establish the source-control result.",
+            "tree": "f00294df56212d110767bb51f0135aa3ed3180f2"
+          },
+          "path": "source.json",
+          "sha256": "6b87a170f9bd8bb49dbf2c88ba534856bc290a5f10eeb3be3c68ffeeb5a1319f"
+        },
+        {
+          "bytes": 8007,
+          "content": "TAP version 13\n# Subtest: fixed policy and dispatch refuse widened limits, remote inputs and missing credentials\nok 1 - fixed policy and dispatch refuse widened limits, remote inputs and missing credentials\n  ---\n  duration_ms: 7.239974\n  ...\n# Subtest: known credential is removed from nested errors, encoded call logs, keys and URLs\nok 2 - known credential is removed from nested errors, encoded call logs, keys and URLs\n  ---\n  duration_ms: 0.739759\n  ...\n# Subtest: diagnostics retain bounded redacted failures and never serialize console arguments\nok 3 - diagnostics retain bounded redacted failures and never serialize console arguments\n  ---\n  duration_ms: 0.432144\n  ...\n# Subtest: public binding checks exact deployed source and all five critical bytes\nok 4 - public binding checks exact deployed source and all five critical bytes\n  ---\n  duration_ms: 3.874332\n  ...\n# Subtest: wrong source, changed payload, duplicate inventory and oversized metadata fail before browser admission\nok 5 - wrong source, changed payload, duplicate inventory and oversized metadata fail before browser admission\n  ---\n  duration_ms: 4.092522\n  ...\n# Subtest: global operation deadline cannot renew or authorize later work\nok 6 - global operation deadline cannot renew or authorize later work\n  ---\n  duration_ms: 9.572703\n  ...\n# Subtest: fresh observer admits ordinary authentication and closes context before browser\nok 7 - fresh observer admits ordinary authentication and closes context before browser\n  ---\n  duration_ms: 5.421272\n  ...\n# Subtest: both fixed desktop engines are labelled and unknown/mismatched engines are refused\nok 8 - both fixed desktop engines are labelled and unknown/mismatched engines are refused\n  ---\n  duration_ms: 11.086264\n  ...\n# Subtest: redirected or changed credential document cannot receive a fill or submission\nok 9 - redirected or changed credential document cannot receive a fill or submission\n  ---\n  duration_ms: 3.721541\n  ...\n# Subtest: authentication failure retains safe evidence and never enters public flows\nok 10 - authentication failure retains safe evidence and never enters public flows\n  ---\n  duration_ms: 6.310128\n  ...\n# Subtest: unexpected initial page or unclosed Solo page cannot be accepted\nok 11 - unexpected initial page or unclosed Solo page cannot be accepted\n  ---\n  duration_ms: 4.737147\n  ...\n# Subtest: initial context failure still closes the launched browser\nok 12 - initial context failure still closes the launched browser\n  ---\n  duration_ms: 2.13485\n  ...\n# Subtest: partial public failure cannot advance to shared navigation\nok 13 - partial public failure cannot advance to shared navigation\n  ---\n  duration_ms: 1.732191\n  ...\n# Subtest: late diagnostics, deployment changes and either cleanup failure cannot become a pass\nok 14 - late diagnostics, deployment changes and either cleanup failure cannot become a pass\n  ---\n  duration_ms: 9.401744\n  ...\n# Subtest: missing credential fails before browser launch\nok 15 - missing credential fails before browser launch\n  ---\n  duration_ms: 0.249578\n  ...\n# Subtest: actual Solo driver starts directly before Missions, then uses Resume and restored Settings\nok 16 - actual Solo driver starts directly before Missions, then uses Resume and restored Settings\n  ---\n  duration_ms: 2.072365\n  ...\n# Subtest: actual Solo driver refuses ambiguous selection and a clock moving during Pause\nok 17 - actual Solo driver refuses ambiguous selection and a clock moving during Pause\n  ---\n  duration_ms: 1.428552\n  ...\n# Subtest: phase waiter rejects a late successful Home read before taking any public action\nok 18 - phase waiter rejects a late successful Home read before taking any public action\n  ---\n  duration_ms: 0.23772\n  ...\n# Subtest: owner assessment rejects closed-looking reports with every failed closure boundary\nok 19 - owner assessment rejects closed-looking reports with every failed closure boundary\n  ---\n  duration_ms: 4.524556\n  ...\n# Subtest: actual owner launcher redacts private child output and does not forward unrelated secrets\nok 20 - actual owner launcher redacts private child output and does not forward unrelated secrets\n  ---\n  duration_ms: 6.871347\n  ...\n# Subtest: actual owner launcher retains failures, partial reports and changed-source refusal\nok 21 - actual owner launcher retains failures, partial reports and changed-source refusal\n  ---\n  duration_ms: 11.622454\n  ...\n# Subtest: real owned child deadline is failed cleanup authority, never a successful smoke\nok 22 - real owned child deadline is failed cleanup authority, never a successful smoke\n  ---\n  duration_ms: 1006.18044\n  ...\n# Subtest: actual child import failure produces only a redacted bounded failure envelope\nok 23 - actual child import failure produces only a redacted bounded failure envelope\n  ---\n  duration_ms: 25.692973\n  ...\n# Subtest: fixed workflow separates PR source checks from secret-bearing main-only browser execution\nok 24 - fixed workflow separates PR source checks from secret-bearing main-only browser execution\n  ---\n  duration_ms: 1.194857\n  ...\n# Subtest: both exact jobs contain the actual Linux owner import and direct-read closure\nok 25 - both exact jobs contain the actual Linux owner import and direct-read closure\n  ---\n  duration_ms: 300.862862\n  ...\n# Subtest: serialized passive observer retains coalesced Start and Pause plus real window lifecycle\nok 26 - serialized passive observer retains coalesced Start and Pause plus real window lifecycle\n  ---\n  duration_ms: 1.661614\n  ...\n# Subtest: passive ring preserves initial Start/Pause and latest events with explicit bounded omission\nok 27 - passive ring preserves initial Start/Pause and latest events with explicit bounded omission\n  ---\n  duration_ms: 0.921694\n  ...\n# Subtest: observer ignores unchanged labels and records invalid clock without inventing timing\nok 28 - observer ignores unchanged labels and records invalid clock without inventing timing\n  ---\n  duration_ms: 0.620068\n  ...\n# Subtest: actual public diagnostic getter reads warning/preparation only and never keeps a truncated secret prefix\nok 29 - actual public diagnostic getter reads warning/preparation only and never keeps a truncated secret prefix\n  ---\n  duration_ms: 1.035136\n  ...\n# Subtest: console diagnostic text is redacted before truncation and inaccessible text does not throw\nok 30 - console diagnostic text is redacted before truncation and inaccessible text does not throw\n  ---\n  duration_ms: 0.340144\n  ...\n# Subtest: failed Solo flow retains final public warning before cleanup without replacing its primary failure\nok 31 - failed Solo flow retains final public warning before cleanup without replacing its primary failure\n  ---\n  duration_ms: 4.595203\n  ...\n# Subtest: missing, overflowed or clock-invalid public evidence cannot pass otherwise complete controls\nok 32 - missing, overflowed or clock-invalid public evidence cannot pass otherwise complete controls\n  ---\n  duration_ms: 6.895473\n  ...\n# Subtest: final evidence deadline stops later reads and rejects late result retention\nok 33 - final evidence deadline stops later reads and rejects late result retention\n  ---\n  duration_ms: 1.577977\n  ...\n# Subtest: a Direct Start returning to paused remains failure without automatic Resume or extra public actions\nok 34 - a Direct Start returning to paused remains failure without automatic Resume or extra public actions\n  ---\n  duration_ms: 17.026431\n  ...\n# Subtest: late first Start and Pause retain reserved slots after earlier lifecycle overflow\nok 35 - late first Start and Pause retain reserved slots after earlier lifecycle overflow\n  ---\n  duration_ms: 0.996277\n  ...\n# Subtest: actual early-success evidence timeout cannot overwrite the final failed-flow observation\nok 36 - actual early-success evidence timeout cannot overwrite the final failed-flow observation\n  ---\n  duration_ms: 3.19164\n  ...\n1..36\n# tests 36\n# suites 0\n# pass 36\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 1523.040723\n",
+          "path": "controls.tap",
+          "sha256": "b9501064cccb4411962a3a55dcc6104667b1a2007706a73c6bbfec43f4183e92"
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12141691855/zip",
+        "created_at": "2026-10-18T15:39:06Z",
+        "digest": "sha256:0a96431a8d65f84f6122881e89047d312ec626f74cc83bc82ebc0dd5eea63f8e",
+        "expired": false,
+        "expires_at": "2026-11-01T15:39:06Z",
+        "id": 12141691855,
+        "name": "published-pages-controls-webkit-39141249025-1",
+        "node_id": "MDg6QXJ0aWZhY3QxMjE0MTY5MTg1NQ==",
+        "size_in_bytes": 3914,
+        "updated_at": "2026-10-18T15:39:06Z",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12141691855",
+        "workflow_run": {
+          "head_branch": "main",
+          "head_repository_id": 1367404328,
+          "head_sha": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+          "id": 39141249025,
+          "repository_id": 1367404328
+        }
+      },
+      "members": [
+        {
+          "bytes": 3637,
+          "content": {
+            "command": {
+              "ambiguous": [],
+              "argv": [
+                "/opt/hostedtoolcache/node/22.13.1/x64/bin/node",
+                "/home/runner/work/revealline/revealline/scripts/solo-pages-smoke.mjs",
+                "a46ba83be596769ee078076ffe8e5b36123b2da2",
+                "webkit",
+                "/home/runner/work/_temp/pages-playwright/node_modules/playwright/index.mjs",
+                "/tmp/rl-pages-smoke-NlVPZo/report.json"
+              ],
+              "completedAt": "2026-10-18T15:39:05.801Z",
+              "cwd": "/home/runner/work/revealline/revealline",
+              "exitCode": 1,
+              "forcedCleanup": false,
+              "initialLeaderCapture": "direct-child-birth",
+              "outputBytes": 1048576,
+              "outputBytesObserved": 0,
+              "peakRSS": 1814618112,
+              "rssBytes": 6442450944,
+              "signal": null,
+              "startedAt": "2026-10-18T15:37:43.248Z",
+              "status": "closed",
+              "survivors": [],
+              "timeoutMs": 600000,
+              "tracked": [
+                {
+                  "argv": "/opt/hostedtoolcache/node/22.13.1/x64/bin/node /home/runner/work/revealline/revealline/scripts/solo-pages-smoke.mjs a46ba83be596769ee078076ffe8e5b36123b2da2 webkit /home/runner/work/_temp/pages-playwright/node_modules/playwright/index.mjs /tmp/rl-pages-smoke-NlVPZo/report.json",
+                  "birth": "7897",
+                  "pgid": 5120,
+                  "pid": 5120,
+                  "ppid": 5086,
+                  "rss": 3923968,
+                  "state": "R"
+                },
+                {
+                  "argv": "bash /home/runner/.cache/ms-playwright/webkit-2336/pw_run.sh --inspector-pipe --headless --no-startup-window ",
+                  "birth": "8161",
+                  "pgid": 5131,
+                  "pid": 5131,
+                  "ppid": 5120,
+                  "rss": 3846144,
+                  "state": "S"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/webkit-2336/minibrowser-wpe/bin/MiniBrowser --inspector-pipe --headless --no-startup-window ",
+                  "birth": "8161",
+                  "pgid": 5131,
+                  "pid": 5137,
+                  "ppid": 5131,
+                  "rss": 45432832,
+                  "state": "S"
+                },
+                {
+                  "argv": "/usr/lib/x86_64-linux-gnu/../../lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner -l /home/runner/.cache/ms-playwright/webkit-2336/minibrowser-wpe/bin/MiniBrowser ",
+                  "birth": "8167",
+                  "pgid": 5131,
+                  "pid": 5140,
+                  "ppid": 5137,
+                  "rss": 53813248,
+                  "state": "D"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/webkit-2336/minibrowser-wpe/bin/WPENetworkProcess 2 14 ",
+                  "birth": "8224",
+                  "pgid": 5131,
+                  "pid": 5153,
+                  "ppid": 5137,
+                  "rss": 73699328,
+                  "state": "S"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/webkit-2336/minibrowser-wpe/bin/WPEWebProcess 4 21 ",
+                  "birth": "8226",
+                  "pgid": 5131,
+                  "pid": 5156,
+                  "ppid": 5137,
+                  "rss": 64761856,
+                  "state": "S"
+                }
+              ],
+              "violation": null
+            },
+            "engine": "webkit",
+            "expectedRevision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+            "failure": "Expected values to be strictly equal:\n\n1 !== 0\n",
+            "format": "RevealLinePublishedPagesSmokeOwnerV1",
+            "log": {
+              "bytes": 61,
+              "path": "child-log.json",
+              "sha256": "9fc11a02e14c4bc915dcecb7138c2554d78dcaa9330ca8ac921c6668341e55cf"
+            },
+            "performanceExcluded": true,
+            "report": {
+              "bytes": 17759,
+              "path": "report.json",
+              "sha256": "44837a479ec18b2d1f17dc9ebd968163b6a27649d4b5277e4967eb7df7d33fa7"
+            },
+            "retry": false,
+            "sourceAfter": {
+              "revision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+              "tree": "f00294df56212d110767bb51f0135aa3ed3180f2"
+            },
+            "sourceBefore": {
+              "revision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+              "tree": "f00294df56212d110767bb51f0135aa3ed3180f2"
+            },
+            "status": "failed"
+          },
+          "path": "summary.json",
+          "sha256": "4f1837c9c275b6ac63ee4e43a80467a2788ddef6029945e0b360745aeb7305d8"
+        },
+        {
+          "bytes": 17759,
+          "content": {
+            "bindingBefore": {
+              "assets": [
+                {
+                  "bytes": 145952,
+                  "path": "game/index.html",
+                  "sha256": "e6d6543570b8a88f6f9dd8c7c1cec351f51f3965a549696df1fb0024966970ce"
+                },
+                {
+                  "bytes": 8806,
+                  "path": "game/access-gate.mjs",
+                  "sha256": "6f37d01a02e1a916c424ba47fac4545545f6f8f12a7fc30922319f3de71a2902"
+                },
+                {
+                  "bytes": 485781,
+                  "path": "game/app.mjs",
+                  "sha256": "db796742ce63f99b5eccba1f91889d426a8d6c2d37a13a84aa73d47147d5d4f0"
+                },
+                {
+                  "bytes": 51275,
+                  "path": "game/couch/index.html",
+                  "sha256": "cbf9ebaa1d3028d567f1ab08ec92a0962e616118910699713394916e6ed3a05d"
+                },
+                {
+                  "bytes": 61798,
+                  "path": "game/couch/relay-rescue.html",
+                  "sha256": "7c9eef91079e6b929c18839992621b4c1e34c257390093555728a85a94a42b73"
+                }
+              ],
+              "buildVersion": "main-a46ba83be596",
+              "manifest": {
+                "bytes": 513690,
+                "sha256": "036ffc3c5c39c8494ca920c2cbe38a6013ad2d27e34799a13cb87a796f835385"
+              },
+              "metadata": {
+                "bytes": 308,
+                "sha256": "9bc51ffeb5ce518e1cb3e1f7f405915f73acd4584af4b34a4f9d5214d00da24d"
+              },
+              "scope": "Five critical public files checked against this public manifest; not a full payload readback.",
+              "sourceRevision": "a46ba83be596769ee078076ffe8e5b36123b2da2"
+            },
+            "browserVersion": "26.5",
+            "cleanup": {
+              "browser": "failed",
+              "context": "closed"
+            },
+            "cleanupFailure": "browser cleanup deadline",
+            "engine": "webkit",
+            "expectedRevision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+            "failure": "Pages operation expired: public state",
+            "format": "RevealLinePublishedPagesSmokeReportV1",
+            "pages": [
+              {
+                "events": [
+                  {
+                    "kind": "http",
+                    "status": 404,
+                    "url": "https://mekhovov.github.io/revealline-soundtracks/catalogue.json"
+                  },
+                  {
+                    "kind": "console",
+                    "message": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+                    "type": "error"
+                  }
+                ],
+                "overflow": false,
+                "total": 2
+              }
+            ],
+            "performanceExcluded": true,
+            "profile": "fresh-ephemeral",
+            "publicEvidenceFailure": "Public evidence read deadline",
+            "root": "https://mekhovov.github.io/revealline/",
+            "scope": [
+              "Critical public controls only; not whole-app correctness or performance qualification.",
+              "No physical-device, offline-install, durable-save, replay or raster acceptance.",
+              "Response errors and cancellations are retained; no app-cause inference from a failed smoke.",
+              "Selecting the current Journey card deliberately replaces only this fresh smoke attempt; replacement/departure confirmation is refused.",
+              "Chromium and WebKit desktop engines only; no Safari or physical-device equivalence claim."
+            ],
+            "solo": {
+              "actions": [
+                "#shell-featured",
+                "#pause-button",
+                "#start-button",
+                "#pause-button",
+                "#shell-menu",
+                "#shell-play"
+              ],
+              "lastPublicState": {
+                "access": "unlocked",
+                "bootHidden": true,
+                "bootState": "ready",
+                "controls": {
+                  "demo-back": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "demo-dialog": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "journey-back": {
+                    "enabled": false,
+                    "open": false,
+                    "visible": false
+                  },
+                  "journey-chooser": {
+                    "enabled": false,
+                    "open": false,
+                    "visible": false
+                  },
+                  "mission-replace-dialog": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "mode-leave-dialog": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "pause-button": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "settings-dialog": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "settings-tab-extras": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "shell-demo": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "shell-featured": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "shell-home": {
+                    "enabled": true,
+                    "open": true,
+                    "visible": true
+                  },
+                  "shell-menu": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": true
+                  },
+                  "shell-play": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": true
+                  },
+                  "start-button": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": true
+                  }
+                },
+                "coverage": "0.0%",
+                "current": [],
+                "demoLevel": "",
+                "demoStatus": "",
+                "flightState": "paused",
+                "focused": true,
+                "hidden": false,
+                "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                "lives": "◆ ◆ ◆",
+                "preparation": "",
+                "presentation": "",
+                "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                "time": "0:02"
+              },
+              "samples": [
+                {
+                  "phase": "home",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": true,
+                        "visible": true
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "briefing",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "Loading release artwork and fonts…",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:00"
+                  }
+                },
+                {
+                  "phase": "solo-running",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "running",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:01"
+                  }
+                },
+                {
+                  "phase": "solo-paused",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "paused",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:01"
+                  }
+                },
+                {
+                  "phase": "solo-resumed",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "running",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:02"
+                  }
+                }
+              ]
+            },
+            "stages": [
+              "ordinary-password-accepted"
+            ],
+            "status": "failed"
+          },
+          "path": "report.json",
+          "sha256": "44837a479ec18b2d1f17dc9ebd968163b6a27649d4b5277e4967eb7df7d33fa7"
+        },
+        {
+          "bytes": 61,
+          "content": {
+            "output": "",
+            "sourceBytes": 0,
+            "truncated": false
+          },
+          "path": "child-log.json",
+          "sha256": "9fc11a02e14c4bc915dcecb7138c2554d78dcaa9330ca8ac921c6668341e55cf"
+        }
+      ]
+    },
+    {
+      "artifact": {
+        "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12141971354/zip",
+        "created_at": "2026-10-18T15:41:05Z",
+        "digest": "sha256:85bb60596e0af49d3c5915cabde497a3b81ecfd738cda1a284f1f3ca2b0a2b3d",
+        "expired": false,
+        "expires_at": "2026-11-01T15:41:05Z",
+        "id": 12141971354,
+        "name": "published-pages-controls-chromium-39141249025-1",
+        "node_id": "MDg6QXJ0aWZhY3QxMjE0MTk3MTM1NA==",
+        "size_in_bytes": 7032,
+        "updated_at": "2026-10-18T15:41:05Z",
+        "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12141971354",
+        "workflow_run": {
+          "head_branch": "main",
+          "head_repository_id": 1367404328,
+          "head_sha": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+          "id": 39141249025,
+          "repository_id": 1367404328
+        }
+      },
+      "members": [
+        {
+          "bytes": 8408,
+          "content": {
+            "command": {
+              "ambiguous": [],
+              "argv": [
+                "/opt/hostedtoolcache/node/22.13.1/x64/bin/node",
+                "/home/runner/work/revealline/revealline/scripts/solo-pages-smoke.mjs",
+                "a46ba83be596769ee078076ffe8e5b36123b2da2",
+                "chromium",
+                "/home/runner/work/_temp/pages-playwright/node_modules/playwright/index.mjs",
+                "/tmp/rl-pages-smoke-r9kvKy/report.json"
+              ],
+              "completedAt": "2026-10-18T15:41:04.917Z",
+              "cwd": "/home/runner/work/revealline/revealline",
+              "exitCode": 1,
+              "forcedCleanup": false,
+              "initialLeaderCapture": "direct-child-birth",
+              "outputBytes": 1048576,
+              "outputBytesObserved": 0,
+              "peakRSS": 1741418496,
+              "rssBytes": 6442450944,
+              "signal": null,
+              "startedAt": "2026-10-18T15:37:27.269Z",
+              "status": "closed",
+              "survivors": [],
+              "timeoutMs": 600000,
+              "tracked": [
+                {
+                  "argv": "/opt/hostedtoolcache/node/22.13.1/x64/bin/node /home/runner/work/revealline/revealline/scripts/solo-pages-smoke.mjs a46ba83be596769ee078076ffe8e5b36123b2da2 chromium /home/runner/work/_temp/pages-playwright/node_modules/playwright/index.mjs /tmp/rl-pages-smoke-r9kvKy/report.json",
+                  "birth": "13102",
+                  "pgid": 3102,
+                  "pid": 3102,
+                  "ppid": 3068,
+                  "rss": 3903488,
+                  "state": "R"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-KVrTc1 --remote-debugging-pipe --no-startup-window ",
+                  "birth": "13213",
+                  "pgid": 3113,
+                  "pid": 3113,
+                  "ppid": 3102,
+                  "rss": 72716288,
+                  "state": "S"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=zygote --no-zygote-sandbox --no-sandbox --headless ",
+                  "birth": "13218",
+                  "pgid": 3113,
+                  "pid": 3115,
+                  "ppid": 3113,
+                  "rss": 54288384,
+                  "state": "S"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=zygote --no-sandbox --headless ",
+                  "birth": "13218",
+                  "pgid": 3113,
+                  "pid": 3116,
+                  "ppid": 3113,
+                  "rss": 53682176,
+                  "state": "S"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=gpu-process --no-sandbox --disable-dev-shm-usage --disable-breakpad --headless --ozone-platform=headless --use-angle=swiftshader-webgl --enable-unsafe-swiftshader --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=3,i,10540090909304233354,13909401374082572332,262144 --enable-features=CDPScreenshotNewSurface --dis ",
+                  "birth": "13220",
+                  "pgid": 3113,
+                  "pid": 3132,
+                  "ppid": 3115,
+                  "rss": 52494336,
+                  "state": "S"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --use-angle=swiftshader-webgl --use-gl=angle --mute-audio --headless=old --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,10540090909304233354,13909401374082572332,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,1883150692950167633,16970567302663578536,4 --trace-process-track-uuid=3190708989122997041 ",
+                  "birth": "13235",
+                  "pgid": 3113,
+                  "pid": 3145,
+                  "ppid": 3113,
+                  "rss": 83927040,
+                  "state": "S"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=renderer --headless=old --no-sandbox --disable-dev-shm-usage --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=headless --disable-gpu-compositing --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=4 --time- ",
+                  "birth": "13238",
+                  "pgid": 3113,
+                  "pid": 3158,
+                  "ppid": 3116,
+                  "rss": 96972800,
+                  "state": "S"
+                },
+                {
+                  "argv": "/home/runner/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=renderer --headless=old --no-sandbox --disable-dev-shm-usage --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=headless --disable-gpu-compositing --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=5 --time- ",
+                  "birth": "16776",
+                  "pgid": 3113,
+                  "pid": 3181,
+                  "ppid": 3116,
+                  "rss": 83972096,
+                  "state": "S"
+                }
+              ],
+              "violation": null
+            },
+            "engine": "chromium",
+            "expectedRevision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+            "failure": "Expected values to be strictly equal:\n\n1 !== 0\n",
+            "format": "RevealLinePublishedPagesSmokeOwnerV1",
+            "log": {
+              "bytes": 61,
+              "path": "child-log.json",
+              "sha256": "9fc11a02e14c4bc915dcecb7138c2554d78dcaa9330ca8ac921c6668341e55cf"
+            },
+            "performanceExcluded": true,
+            "report": {
+              "bytes": 38268,
+              "path": "report.json",
+              "sha256": "c49b3ef82a042f6469ca714ccfd643a2068532d32031fe71b74fd2f099400a60"
+            },
+            "retry": false,
+            "sourceAfter": {
+              "revision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+              "tree": "f00294df56212d110767bb51f0135aa3ed3180f2"
+            },
+            "sourceBefore": {
+              "revision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+              "tree": "f00294df56212d110767bb51f0135aa3ed3180f2"
+            },
+            "status": "failed"
+          },
+          "path": "summary.json",
+          "sha256": "d97f317b6d3a427305b9c2162a5ad9e50ad712d3d2cd0ed520e902e64bfcfec2"
+        },
+        {
+          "bytes": 38268,
+          "content": {
+            "bindingBefore": {
+              "assets": [
+                {
+                  "bytes": 145952,
+                  "path": "game/index.html",
+                  "sha256": "e6d6543570b8a88f6f9dd8c7c1cec351f51f3965a549696df1fb0024966970ce"
+                },
+                {
+                  "bytes": 8806,
+                  "path": "game/access-gate.mjs",
+                  "sha256": "6f37d01a02e1a916c424ba47fac4545545f6f8f12a7fc30922319f3de71a2902"
+                },
+                {
+                  "bytes": 485781,
+                  "path": "game/app.mjs",
+                  "sha256": "db796742ce63f99b5eccba1f91889d426a8d6c2d37a13a84aa73d47147d5d4f0"
+                },
+                {
+                  "bytes": 51275,
+                  "path": "game/couch/index.html",
+                  "sha256": "cbf9ebaa1d3028d567f1ab08ec92a0962e616118910699713394916e6ed3a05d"
+                },
+                {
+                  "bytes": 61798,
+                  "path": "game/couch/relay-rescue.html",
+                  "sha256": "7c9eef91079e6b929c18839992621b4c1e34c257390093555728a85a94a42b73"
+                }
+              ],
+              "buildVersion": "main-a46ba83be596",
+              "manifest": {
+                "bytes": 513690,
+                "sha256": "036ffc3c5c39c8494ca920c2cbe38a6013ad2d27e34799a13cb87a796f835385"
+              },
+              "metadata": {
+                "bytes": 308,
+                "sha256": "9bc51ffeb5ce518e1cb3e1f7f405915f73acd4584af4b34a4f9d5214d00da24d"
+              },
+              "scope": "Five critical public files checked against this public manifest; not a full payload readback.",
+              "sourceRevision": "a46ba83be596769ee078076ffe8e5b36123b2da2"
+            },
+            "browserVersion": "151.0.7922.34",
+            "cleanup": {
+              "browser": "closed",
+              "context": "closed"
+            },
+            "engine": "chromium",
+            "expectedRevision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+            "failure": "Shared-mode operation expired: native elapsed wait",
+            "format": "RevealLinePublishedPagesSmokeReportV1",
+            "pages": [
+              {
+                "events": [
+                  {
+                    "kind": "console",
+                    "message": "[.WebGL-0x7c403a0e800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+                    "type": "warning"
+                  },
+                  {
+                    "kind": "console",
+                    "message": "[.WebGL-0x7c403a0e800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+                    "type": "warning"
+                  },
+                  {
+                    "kind": "console",
+                    "message": "[.WebGL-0x7c403a0e800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+                    "type": "warning"
+                  },
+                  {
+                    "kind": "console",
+                    "message": "[.WebGL-0x7c403a0e800]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+                    "type": "warning"
+                  },
+                  {
+                    "kind": "http",
+                    "status": 404,
+                    "url": "https://mekhovov.github.io/revealline-soundtracks/catalogue.json"
+                  },
+                  {
+                    "kind": "console",
+                    "message": "Failed to load resource: the server responded with a status of 404 ()",
+                    "type": "error"
+                  }
+                ],
+                "overflow": false,
+                "publicEvidence": {
+                  "flightState": "briefing",
+                  "focused": true,
+                  "hidden": false,
+                  "lifecycle": {
+                    "format": "PagesPublicLifecycleV1",
+                    "limitations": [
+                      "Attribute transitions are public labels, not private run state.",
+                      "Mutation timestamps describe observer delivery, not exact transition time.",
+                      "Events after the final read and retiring-document delivery are unobserved."
+                    ],
+                    "omitted": 0,
+                    "overflow": false,
+                    "retained": [
+                      {
+                        "atMs": 171.69999999998254,
+                        "flightState": null,
+                        "focused": true,
+                        "hidden": false,
+                        "kind": "installed",
+                        "sequence": 1,
+                        "visibility": "visible"
+                      },
+                      {
+                        "atMs": 401.5,
+                        "flightState": null,
+                        "focused": true,
+                        "hidden": false,
+                        "kind": "body-observed",
+                        "sequence": 2,
+                        "visibility": "visible"
+                      },
+                      {
+                        "atMs": 6007.5,
+                        "delivery": "mutation-observer",
+                        "flightState": "briefing",
+                        "focused": true,
+                        "from": null,
+                        "hidden": false,
+                        "kind": "flight-state",
+                        "sequence": 3,
+                        "to": "briefing",
+                        "visibility": "visible"
+                      },
+                      {
+                        "atMs": 10498,
+                        "delivery": "mutation-observer",
+                        "flightState": "running",
+                        "focused": true,
+                        "from": "briefing",
+                        "hidden": false,
+                        "kind": "flight-state",
+                        "sequence": 4,
+                        "to": "running",
+                        "visibility": "visible"
+                      },
+                      {
+                        "atMs": 11679.099999999977,
+                        "delivery": "mutation-observer",
+                        "flightState": "paused",
+                        "focused": true,
+                        "from": "running",
+                        "hidden": false,
+                        "kind": "flight-state",
+                        "sequence": 5,
+                        "to": "paused",
+                        "visibility": "visible"
+                      },
+                      {
+                        "atMs": 12247.199999999983,
+                        "delivery": "mutation-observer",
+                        "flightState": "running",
+                        "focused": true,
+                        "from": "paused",
+                        "hidden": false,
+                        "kind": "flight-state",
+                        "sequence": 6,
+                        "to": "running",
+                        "visibility": "visible"
+                      },
+                      {
+                        "atMs": 13392.699999999983,
+                        "delivery": "mutation-observer",
+                        "flightState": "paused",
+                        "focused": true,
+                        "from": "running",
+                        "hidden": false,
+                        "kind": "flight-state",
+                        "sequence": 7,
+                        "to": "paused",
+                        "visibility": "visible"
+                      },
+                      {
+                        "atMs": 28053.099999999977,
+                        "delivery": "mutation-observer",
+                        "flightState": "briefing",
+                        "focused": true,
+                        "from": "paused",
+                        "hidden": false,
+                        "kind": "flight-state",
+                        "sequence": 8,
+                        "to": "briefing",
+                        "visibility": "visible"
+                      }
+                    ],
+                    "timeBasis": "document-performance.now",
+                    "timeOrigin": 1792337848670.3,
+                    "total": 8
+                  },
+                  "preparation": "",
+                  "presentation": "",
+                  "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                  "runMessageCue": "",
+                  "visibility": "visible"
+                },
+                "total": 6
+              },
+              {
+                "events": [
+                  {
+                    "kind": "http",
+                    "status": 404,
+                    "url": "https://mekhovov.github.io/revealline-soundtracks/catalogue.json"
+                  },
+                  {
+                    "kind": "console",
+                    "message": "Failed to load resource: the server responded with a status of 404 ()",
+                    "type": "error"
+                  }
+                ],
+                "overflow": false,
+                "publicEvidence": {
+                  "flightState": null,
+                  "focused": true,
+                  "hidden": false,
+                  "lifecycle": {
+                    "format": "PagesPublicLifecycleV1",
+                    "limitations": [
+                      "Attribute transitions are public labels, not private run state.",
+                      "Mutation timestamps describe observer delivery, not exact transition time.",
+                      "Events after the final read and retiring-document delivery are unobserved."
+                    ],
+                    "omitted": 0,
+                    "overflow": false,
+                    "retained": [
+                      {
+                        "atMs": 197.39999999999418,
+                        "flightState": null,
+                        "focused": true,
+                        "hidden": false,
+                        "kind": "installed",
+                        "sequence": 1,
+                        "visibility": "visible"
+                      },
+                      {
+                        "atMs": 407.6000000000058,
+                        "flightState": null,
+                        "focused": true,
+                        "hidden": false,
+                        "kind": "body-observed",
+                        "sequence": 2,
+                        "visibility": "visible"
+                      }
+                    ],
+                    "timeBasis": "document-performance.now",
+                    "timeOrigin": 1792337888507.6,
+                    "total": 2
+                  },
+                  "preparation": "",
+                  "presentation": "",
+                  "runMessage": "",
+                  "runMessageCue": null,
+                  "visibility": "visible"
+                },
+                "total": 2
+              }
+            ],
+            "performanceExcluded": true,
+            "profile": "fresh-ephemeral",
+            "root": "https://mekhovov.github.io/revealline/",
+            "scope": [
+              "Critical public controls only; not whole-app correctness or performance qualification.",
+              "No physical-device, offline-install, durable-save, replay or raster acceptance.",
+              "Response errors and cancellations are retained; no app-cause inference from a failed smoke.",
+              "Selecting the current Journey card deliberately replaces only this fresh smoke attempt; replacement/departure confirmation is refused.",
+              "Chromium and WebKit desktop engines only; no Safari or physical-device equivalence claim."
+            ],
+            "shared": {
+              "deadlineFailure": {
+                "budgetMs": 16.63813300000038,
+                "operation": "native elapsed wait",
+                "remainingAtStartMs": 16.63813300000038,
+                "scope": "action"
+              },
+              "failure": "Shared-mode operation expired: native elapsed wait",
+              "initial": {
+                "access": "unlocked",
+                "boot": "ready",
+                "canvases": [],
+                "clock": "0:00",
+                "controls": {
+                  "pause-button": {
+                    "enabled": true,
+                    "present": true,
+                    "visible": false
+                  },
+                  "shell-featured": {
+                    "enabled": true,
+                    "present": true,
+                    "visible": true
+                  },
+                  "shell-home": {
+                    "enabled": true,
+                    "present": true,
+                    "visible": true
+                  },
+                  "shell-title-team": {
+                    "enabled": true,
+                    "present": true,
+                    "visible": true
+                  },
+                  "shell-title-versus": {
+                    "enabled": true,
+                    "present": true,
+                    "visible": true
+                  },
+                  "start-button": {
+                    "enabled": true,
+                    "present": true,
+                    "visible": true
+                  }
+                },
+                "focused": true,
+                "hidden": false,
+                "href": "https://mekhovov.github.io/revealline/game/?journey=legacy",
+                "loadingMessage": "Reading your saved flight and installed chapters…",
+                "mode": "solo",
+                "otherModePresent": false,
+                "pageCount": 1,
+                "phase": "briefing",
+                "players": [],
+                "preparation": "Loading release artwork and fonts…",
+                "timeOrigin": 1792337884054.4,
+                "tool": null
+              },
+              "protocol": "shared-mode-public-return-v1",
+              "publicActions": [
+                {
+                  "kind": "click",
+                  "selector": "#shell-title-team"
+                }
+              ],
+              "publicStateReads": {
+                "completed": 565,
+                "last": {
+                  "atMs": 216868.728753,
+                  "bytes": 1067,
+                  "mode": "team",
+                  "overflow": false,
+                  "state": {
+                    "access": "unlocked",
+                    "boot": null,
+                    "canvases": [
+                      {
+                        "height": 576,
+                        "id": "coop-canvas",
+                        "visible": false,
+                        "width": 1152
+                      }
+                    ],
+                    "clock": "0:00",
+                    "controls": {
+                      "coop-discard-confirm": {
+                        "enabled": true,
+                        "present": true,
+                        "visible": false
+                      },
+                      "coop-discard-dialog": {
+                        "enabled": true,
+                        "present": true,
+                        "visible": false
+                      },
+                      "coop-home-paused": {
+                        "enabled": true,
+                        "present": true,
+                        "visible": false
+                      },
+                      "coop-menu": {
+                        "enabled": true,
+                        "present": true,
+                        "visible": true
+                      },
+                      "coop-overlay": {
+                        "enabled": true,
+                        "present": true,
+                        "visible": false
+                      },
+                      "coop-pause": {
+                        "enabled": true,
+                        "present": true,
+                        "visible": false
+                      },
+                      "coop-resume": {
+                        "enabled": true,
+                        "present": true,
+                        "visible": false
+                      },
+                      "coop-start": {
+                        "enabled": false,
+                        "present": true,
+                        "visible": true
+                      }
+                    },
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/couch/relay-rescue.html?journey=legacy&return=solo",
+                    "loadingMessage": "Two players · one screen · a shared victory",
+                    "mode": "team",
+                    "otherModePresent": false,
+                    "pageCount": 1,
+                    "phase": "false",
+                    "players": [
+                      "Ready",
+                      "Ready"
+                    ],
+                    "preparation": "Picture loading cancelled. Retry picture when you are ready.",
+                    "timeOrigin": 1792337888507.6,
+                    "tool": "ready"
+                  }
+                },
+                "pending": null
+              },
+              "rows": [
+                {
+                  "checkpoint": null,
+                  "inputs": [],
+                  "mode": "team",
+                  "replay": null,
+                  "resources": null,
+                  "samples": [],
+                  "status": "running"
+                }
+              ],
+              "scope": "Public mode navigation, two delivered native player key sets, public clocks/paused controls, and return to Solo. No unfinished Team/Versus replay, internal checkpoint, resource-release, independent per-player motion or raster correctness claim.",
+              "status": "failed"
+            },
+            "solo": {
+              "actions": [
+                "#shell-featured",
+                "#pause-button",
+                "#start-button",
+                "#pause-button",
+                "#shell-menu",
+                "#shell-play",
+                "#journey-back",
+                "#shell-play",
+                ".journey-card[data-current=\"true\"]:visible",
+                "#shell-menu",
+                "#shell-options",
+                "#settings-tab-extras",
+                "#shell-demo",
+                "#demo-back"
+              ],
+              "lastPublicState": {
+                "access": "unlocked",
+                "bootHidden": true,
+                "bootState": "ready",
+                "controls": {
+                  "demo-back": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "demo-dialog": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "journey-back": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "journey-chooser": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "mission-replace-dialog": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "mode-leave-dialog": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "pause-button": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "settings-dialog": {
+                    "enabled": true,
+                    "open": true,
+                    "visible": true
+                  },
+                  "settings-tab-extras": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": true
+                  },
+                  "shell-demo": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": true
+                  },
+                  "shell-featured": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": false
+                  },
+                  "shell-home": {
+                    "enabled": true,
+                    "open": true,
+                    "visible": true
+                  },
+                  "shell-menu": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": true
+                  },
+                  "shell-play": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": true
+                  },
+                  "start-button": {
+                    "enabled": true,
+                    "open": false,
+                    "visible": true
+                  }
+                },
+                "coverage": "0.0%",
+                "current": [],
+                "demoLevel": "First Signal",
+                "demoScene": "playing",
+                "demoStatus": "0% captured · 3 lives · 1s",
+                "flightState": "briefing",
+                "focused": true,
+                "hidden": false,
+                "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                "journeyMode": "solo",
+                "lives": "◆ ◆ ◆",
+                "preparation": "",
+                "presentation": "",
+                "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                "time": "0:00"
+              },
+              "samples": [
+                {
+                  "phase": "home",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": true,
+                        "visible": true
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "briefing",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "Loading release artwork and fonts…",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:00"
+                  }
+                },
+                {
+                  "phase": "solo-running",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "running",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:01"
+                  }
+                },
+                {
+                  "phase": "solo-paused",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "paused",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:01"
+                  }
+                },
+                {
+                  "phase": "solo-resumed",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": false,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "running",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:02"
+                  }
+                },
+                {
+                  "phase": "mission-briefing",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "",
+                    "demoStatus": "",
+                    "flightState": "briefing",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "journeyMode": "solo",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:00"
+                  }
+                },
+                {
+                  "phase": "demo-advanced",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": true,
+                        "visible": true
+                      },
+                      "journey-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "First Signal",
+                    "demoScene": "playing",
+                    "demoStatus": "0% captured · 3 lives · 1s",
+                    "flightState": "briefing",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "journeyMode": "solo",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:00"
+                  }
+                },
+                {
+                  "phase": "settings-restored",
+                  "state": {
+                    "access": "unlocked",
+                    "bootHidden": true,
+                    "bootState": "ready",
+                    "controls": {
+                      "demo-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "demo-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-back": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "journey-chooser": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mission-replace-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "mode-leave-dialog": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "pause-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "settings-dialog": {
+                        "enabled": true,
+                        "open": true,
+                        "visible": true
+                      },
+                      "settings-tab-extras": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-demo": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-featured": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": false
+                      },
+                      "shell-home": {
+                        "enabled": true,
+                        "open": true,
+                        "visible": true
+                      },
+                      "shell-menu": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "shell-play": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      },
+                      "start-button": {
+                        "enabled": true,
+                        "open": false,
+                        "visible": true
+                      }
+                    },
+                    "coverage": "0.0%",
+                    "current": [],
+                    "demoLevel": "First Signal",
+                    "demoScene": "playing",
+                    "demoStatus": "0% captured · 3 lives · 1s",
+                    "flightState": "briefing",
+                    "focused": true,
+                    "hidden": false,
+                    "href": "https://mekhovov.github.io/revealline/game/?journey=whole-spatial-v25&library-mission=%5B%22journey%3Awhole-spatial-v25%22%2C%22whole-spatial-v25%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22journey-opening%5C%22%2C%5C%22prologue%5C%22%5D%22%2C%22candidate%2Fjourney-opening%2Fprologue%2Ffirst-return%22%2C%22%22%5D",
+                    "journeyMode": "solo",
+                    "lives": "◆ ◆ ◆",
+                    "preparation": "",
+                    "presentation": "",
+                    "runMessage": "Choose your route. Open Missions → Mission brief for guidance.",
+                    "time": "0:00"
+                  }
+                }
+              ]
+            },
+            "stages": [
+              "ordinary-password-accepted",
+              "solo-direct-start-pause-resume",
+              "missions-current-selection",
+              "settings-demo-return"
+            ],
+            "status": "failed"
+          },
+          "path": "report.json",
+          "sha256": "c49b3ef82a042f6469ca714ccfd643a2068532d32031fe71b74fd2f099400a60"
+        },
+        {
+          "bytes": 61,
+          "content": {
+            "output": "",
+            "sourceBytes": 0,
+            "truncated": false
+          },
+          "path": "child-log.json",
+          "sha256": "9fc11a02e14c4bc915dcecb7138c2554d78dcaa9330ca8ac921c6668341e55cf"
+        }
+      ]
+    }
+  ],
+  "revision": "a46ba83be596769ee078076ffe8e5b36123b2da2",
+  "run": 39141249025,
+  "runConclusion": "failure",
+  "tree": "f00294df56212d110767bb51f0135aa3ed3180f2",
+  "unchangedRerun": false
+}

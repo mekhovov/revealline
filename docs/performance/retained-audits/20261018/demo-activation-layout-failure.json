@@ -1,0 +1,1473 @@
+{
+  "format": "SoloDemoPausedWidthFailureAuditV1",
+  "auditedAt": "2026-10-18T17:44:37.981Z",
+  "method": "Read-only GitHub API; archive held in RAM, ZIP CRC and every inventory/retention member digest verified; no local functional tests, browser, writes, rerun, or changed acceptance gate.",
+  "run": {
+    "id": 39149681708,
+    "url": "https://github.com/mekhovov/revealline/actions/runs/39149681708",
+    "status": "completed",
+    "conclusion": "failure",
+    "toolingRevision": "c2930c544d7e1353cbc5aae10c0b77d121a32164",
+    "createdAt": "2026-10-18T17:27:40Z",
+    "updatedAt": "2026-10-18T17:32:13Z"
+  },
+  "artifact": {
+    "id": 12144433958,
+    "bytes": 329925,
+    "sha256": "99adb6e5adf9a1d3eea2cbf5755cbc02aba3c8b2c6d62ef317e60d958a6e527e",
+    "memberCount": 43,
+    "zipCRC": "pass"
+  },
+  "runtime": {
+    "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "sourceTree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "buildIdentity": {
+      "url": "http://127.0.0.1:37487/game/build-info.json",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "version": "0.151.1",
+      "sha256": "838af092f174fff96c48c4024ebdb07e8782593f9479656082fc0cf72cbc8e6b"
+    },
+    "package": {
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
+    },
+    "browser": "151.0.7922.34",
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "dpr": 1
+    },
+    "scope": "Hosted Chromium functional stratum, exact retained source797 package. Not current public Pages or physical-device qualification."
+  },
+  "retention": {
+    "inventoryCount": 35,
+    "setupCount": 6,
+    "inventory": [
+      {
+        "path": "candidate-archive.json",
+        "bytes": 516,
+        "sha256": "c389c14d9d7fb5d7f13cc481efa7b830dbb95e4d47c66209ef4660c2d1c14a05"
+      },
+      {
+        "path": "candidate-artifact.json",
+        "bytes": 848,
+        "sha256": "956bdfb63153c3e9a19a1f5ac443ca2727ed73b625a0696a21ec1ba4c41f7f11"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/bound-plan.json",
+        "bytes": 6905,
+        "sha256": "e1767287d3a35f256fbf234ff6ec0615dd777ceb5093646767ac3da2e679ad87"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json",
+        "bytes": 1079332,
+        "sha256": "f0ab2b2e48b2b24912769429e2a57a1c0d5938618f8a1f4ab7abe44688af0c02"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json.after.replay.json",
+        "bytes": 5294,
+        "sha256": "f97b88c7e34ff4cee7252cc8b5dbf2e596149820c76ff06d26551a464738f38c"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json.before.replay.json",
+        "bytes": 5294,
+        "sha256": "f97b88c7e34ff4cee7252cc8b5dbf2e596149820c76ff06d26551a464738f38c"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json.chrome.log",
+        "bytes": 7175,
+        "sha256": "005837c2d801313eb042d21e38de037b26b5177787583a0fc7caa833ab73668a"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json.demo-source.json",
+        "bytes": 10801,
+        "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/scratch-authority.json",
+        "bytes": 737,
+        "sha256": "4def79d0c7c799374c61add206ea068a10bb2e135ba9885729b090a6337a231d"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources.command.json",
+        "bytes": 13636,
+        "sha256": "9e82060fbba96e35d7363bd66d9174d00e5f2aedd2ef246e92e263d36d075fb9"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "candidate-inner.command.json",
+        "bytes": 1538,
+        "sha256": "315b628bb292235d16fe6d257cecd837e53c96aeeeaa640787b834d267790fdd"
+      },
+      {
+        "path": "candidate-inner.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "candidate-outer.command.json",
+        "bytes": 1504,
+        "sha256": "b9cd8669044e7a3e9ee26f4a7c0cba2a2e9c1a293a7a2e4ce4cf99d5317a5358"
+      },
+      {
+        "path": "candidate-outer.json",
+        "bytes": 19561,
+        "sha256": "4e76466b81f8e315ae549897a76b5034fa6e3446e29c35d5ddaccc737d5abd0e"
+      },
+      {
+        "path": "candidate-outer.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "candidate-payload-metadata/_headers",
+        "bytes": 528,
+        "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8"
+      },
+      {
+        "path": "candidate-payload-metadata/game/build-info.json",
+        "bytes": 143,
+        "sha256": "838af092f174fff96c48c4024ebdb07e8782593f9479656082fc0cf72cbc8e6b"
+      },
+      {
+        "path": "candidate-payload-metadata/manifest.json",
+        "bytes": 529292,
+        "sha256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0"
+      },
+      {
+        "path": "candidate-run.json",
+        "bytes": 13612,
+        "sha256": "3006e601a34e5927be8964283704ab442534dd12df6c887d90057c8d57863f78"
+      },
+      {
+        "path": "candidate-source.command.json",
+        "bytes": 2385,
+        "sha256": "cc358d65bfb41ab788a9f4ad18b83419699804ce904e871fa6ef99026a96f544"
+      },
+      {
+        "path": "candidate-source.json",
+        "bytes": 31503,
+        "sha256": "4696fffe6698cd28515e05c0f07a2873794452a044b0ac7457c54a1420749e8d"
+      },
+      {
+        "path": "candidate-source.log",
+        "bytes": 136,
+        "sha256": "ce7097f88c34c8629703b213ea1099f5ba45595990564a78e0c753b89822ba36"
+      },
+      {
+        "path": "demo-browser-version.command.json",
+        "bytes": 852,
+        "sha256": "5133296392450d4833fb855b7391ba7d6b25ede175ac409abe105892555de2f1"
+      },
+      {
+        "path": "demo-browser-version.log",
+        "bytes": 41,
+        "sha256": "2d44e8c7507ca1c7cefc2fff277ee234d5d87be645dd56bee1b3ffca6564e529"
+      },
+      {
+        "path": "demo-display-preflight.command.json",
+        "bytes": 1817,
+        "sha256": "e304d6adf32ecd4c1c7dd3963cfcea7cd1ee74ad5c3795c2067a691ffa14be85"
+      },
+      {
+        "path": "demo-display-preflight.log",
+        "bytes": 26026,
+        "sha256": "8cf5db43af519c0908c95d65e735646222c573da5b7d2615ee784cc2d753811d"
+      },
+      {
+        "path": "observe-solo-demo-recovery.mjs",
+        "bytes": 39360,
+        "sha256": "f62eb027f6878918b83ec56fbd5976fd38e0b88ddf3019cef67b75a89c190c79"
+      },
+      {
+        "path": "plan.json",
+        "bytes": 19275,
+        "sha256": "220a967c590759b78aaad70d527fe83f44e80c44d08a357c4a6a375002d55201"
+      },
+      {
+        "path": "run-solo-remote-correctness.mjs",
+        "bytes": 74932,
+        "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+      },
+      {
+        "path": "solo-demo-recovery-probe.mjs",
+        "bytes": 8971,
+        "sha256": "196aa6817eab026a530cf1e0bb39be5750808bc64d79baa95a791ad7469b511e"
+      },
+      {
+        "path": "solo-remote-archive.py",
+        "bytes": 22756,
+        "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+      },
+      {
+        "path": "solo-remote-demo.mjs",
+        "bytes": 31587,
+        "sha256": "09b66e78eb2535e5765f1c8c5865f4bf8e771ac42e912bf49af39997767077d6"
+      },
+      {
+        "path": "verified-artifacts.json",
+        "bytes": 1297,
+        "sha256": "9f62895ca2f300be9f0e6a1c4876e5dda1783f9e1ff8f6dfcd17f2b4af9fd824"
+      },
+      {
+        "path": "summary.json",
+        "bytes": 23085,
+        "sha256": "0801478ea4043bdb98d7f8be915d8ebe97ad54144be740151811ad5e28696ced"
+      }
+    ],
+    "setup": {
+      "status": "retained",
+      "files": [
+        {
+          "path": "source-checkout.json",
+          "bytes": 387,
+          "sha256": "49cf891ffd55c56abe8fe338b04c43deedc9e52e88d6395d9324462feeaa555e",
+          "status": "retained"
+        },
+        {
+          "path": "tools-npm.log",
+          "bytes": 25,
+          "sha256": "5bcdb310b831841ba2895cbedb0eb7a78ca10c89bfb08b732f665cbae34d9a55",
+          "status": "retained"
+        },
+        {
+          "path": "browser-install.log",
+          "bytes": 24,
+          "sha256": "4aaef3acc3c4b16766abf61c4f4aa2d3bd413e2fe822d3edd6cfa9d7e7334efa",
+          "status": "retained"
+        },
+        {
+          "path": "browser-dependencies.log",
+          "bytes": 19314,
+          "sha256": "7f7c20d475be416c34285f6239a6552b5a0431e7f770a095f127e2278b8ea72c",
+          "status": "retained"
+        },
+        {
+          "path": "wrapper-tests.tap",
+          "bytes": 38941,
+          "sha256": "3881f304e30804bdc62c98a31cbfaaa99967380c28d351986fe2daf2f1aadc54",
+          "status": "retained"
+        },
+        {
+          "path": "browser-package-lock.json",
+          "bytes": 1601,
+          "sha256": "2cea5324052ffbb9e1a67ef75209306dd4d51cabfdcd98bac87413bdeda715d4",
+          "status": "retained"
+        }
+      ],
+      "maximumTotalBytes": 25165824
+    }
+  },
+  "wrapper": {
+    "path": "solo-linux-setup/wrapper-tests.tap",
+    "bytes": 38941,
+    "sha256": "3881f304e30804bdc62c98a31cbfaaa99967380c28d351986fe2daf2f1aadc54",
+    "summary": [
+      "# tests 183",
+      "# pass 183",
+      "# fail 0",
+      "# cancelled 0",
+      "# skipped 0",
+      "# todo 0",
+      "# duration_ms 8669.479718"
+    ]
+  },
+  "sourceVerification": {
+    "sourceProof": {
+      "path": "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-source.json",
+      "bytes": 31503,
+      "sha256": "4696fffe6698cd28515e05c0f07a2873794452a044b0ac7457c54a1420749e8d"
+    },
+    "archiveProof": {
+      "path": "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-archive.json",
+      "bytes": 516,
+      "sha256": "c389c14d9d7fb5d7f13cc481efa7b830dbb95e4d47c66209ef4660c2d1c14a05"
+    },
+    "sourceStatus": "passed",
+    "sourceFailures": [],
+    "archive": {
+      "status": "passed",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "destination": "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/work/candidate-payload",
+      "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+      "verifiedMembers": 3557,
+      "verifiedBytes": 1075202330,
+      "zipSHA256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c",
+      "zipBytes": 1075807530,
+      "markerReconstructed": true,
+      "markerExcludedFromArchive": true
+    },
+    "servedSources": [
+      {
+        "url": "http://127.0.0.1:37487/game/app.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 482579,
+        "sha256": "a64aee0215a01d0dc95aa6ecae2b57cb6c11e9ada5e03547e27acdb70ad589c0",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/ui/visual-quality-policy.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 4584,
+        "sha256": "8343ccae5ff367b58d8d0a7259fff5866d4cd525ed53dac0eacead386e1a6e7e",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/ui/render.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 50263,
+        "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/core/index.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 23285,
+        "sha256": "d5fead46c41a9651da86003f70417a9d2bbd5a61830c007011b205581b2a3330",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/demo-sources.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 5783,
+        "sha256": "e86d06c2bc1b7aad5b0138cec74cf9600182125215fb069e35ff7d9c311e29f7",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/ui/demo-host.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 39006,
+        "sha256": "ace07e601893ec1435649056769de62285fed3fa9ac5ab467d97b984ae5a049a",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/replay.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 33108,
+        "sha256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/replay-player.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 10545,
+        "sha256": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/demo-director.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 7405,
+        "sha256": "7a56e0ea15fcde19d2130262d2ff59637faeaaf505047151a64a5adcf053aa69",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/demo-experience.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 6149,
+        "sha256": "d51d37259f6099546b22b2bf94cf50e6bfa957bb9789fb11a9d3376ddd937fc7",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/ui/demo-clock.mjs",
+        "role": "module",
+        "status": 200,
+        "responses": 1,
+        "bytes": 7534,
+        "sha256": "839214720356f03438daa90ed0acea923d765b0ce38a311d55bef57c980bc03a",
+        "verifiedResponses": 1
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/demo-data/catalog.json",
+        "role": "catalog",
+        "status": 200,
+        "responses": 21,
+        "bytes": 6839,
+        "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078",
+        "verifiedResponses": 21
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/demo-data/first-signal-left.replay.json",
+        "role": "replay",
+        "status": 200,
+        "responses": 21,
+        "bytes": 10793,
+        "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a",
+        "verifiedResponses": 21
+      },
+      {
+        "url": "http://127.0.0.1:37487/game/demo-data/first-signal-left.chromium-macos.replay.json",
+        "role": "replay",
+        "status": 200,
+        "responses": 21,
+        "bytes": 10801,
+        "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e",
+        "verifiedResponses": 21
+      }
+    ],
+    "servedResponsesVerified": true
+  },
+  "failure": {
+    "status": "fail",
+    "text": "AssertionError [ERR_ASSERTION]: Comparable Demo cycle changed\n+ actual - expected\n\n  {\n    calibrationSamples: 30,\n    reduced: false,\n    tier: 'full',\n+   width: 978.6666666666666\n-   width: 565.3333333333334\n  }\n\n    at assessDemoResourceCycles (file:///home/runner/work/revealline/revealline/tools/scripts/solo-remote-demo.mjs:556:14)\n    at observation (file:///home/runner/work/revealline/revealline/tools/scripts/observe-solo-demo-recovery.mjs:795:33)",
+    "classification": "Observer comparability/readiness failure: the first paused sample sometimes precedes asynchronous resize invalidation after the pause panel opens. This failed run is retained and is not a resource pass.",
+    "firstBad": {
+      "mode": "spectator",
+      "cycle": 5,
+      "snapshotIndex": 15,
+      "atMs": 16319.599999999977,
+      "expectedWidth": 565.3333333333334,
+      "actualWidth": 978.6666666666666
+    },
+    "affectedSpectatorCycles": [
+      5,
+      6,
+      8,
+      10
+    ],
+    "reasoning": "interrupt opens the details panel (demo-host renderControls), while ResizeObserver asynchronously clears cached displayCSSWidth. The old pausedDraw waits for only paused plus drawCount>-1. In all four affected cycles, one later paused draw matches 565.3333333333334 before trusted Back activation. This supports an observer boundary fix; it does not prove no other runtime defect.",
+    "resourceAssessment": "Not reached after cross-cycle width assertion; no bounds/retention pass claimed."
+  },
+  "evidence": {
+    "cycles": [
+      {
+        "mode": "spectator",
+        "cycle": 1,
+        "status": "pass",
+        "paused": 3,
+        "activation": 4,
+        "closed": 5,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 3,
+            "atMs": 10463.399999999994,
+            "drawCount": 15,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 4,
+            "tick": 25,
+            "checkpoint": "ad6b7f702da21feb"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 4,
+            "atMs": 10515.199999999983,
+            "drawCount": 15,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 4,
+            "tick": 25,
+            "checkpoint": "ad6b7f702da21feb",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 5,
+            "atMs": 10584,
+            "drawCount": 15,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 4,
+            "tick": 25,
+            "checkpoint": "ad6b7f702da21feb"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 2,
+        "status": "pass",
+        "paused": 6,
+        "activation": 7,
+        "closed": 8,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 6,
+            "atMs": 12003.199999999983,
+            "drawCount": 23,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 6,
+            "tick": 25,
+            "checkpoint": "ad6b7f702da21feb"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 7,
+            "atMs": 12063.899999999994,
+            "drawCount": 23,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 6,
+            "tick": 25,
+            "checkpoint": "ad6b7f702da21feb",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 8,
+            "atMs": 12120.799999999988,
+            "drawCount": 23,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 6,
+            "tick": 25,
+            "checkpoint": "ad6b7f702da21feb"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 3,
+        "status": "pass",
+        "paused": 9,
+        "activation": 10,
+        "closed": 11,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 9,
+            "atMs": 13386,
+            "drawCount": 30,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 8,
+            "tick": 23,
+            "checkpoint": "b30198ad0536f2e8"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 10,
+            "atMs": 13446.399999999994,
+            "drawCount": 30,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 8,
+            "tick": 23,
+            "checkpoint": "b30198ad0536f2e8",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 11,
+            "atMs": 13500.399999999994,
+            "drawCount": 30,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 8,
+            "tick": 23,
+            "checkpoint": "b30198ad0536f2e8"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 4,
+        "status": "pass",
+        "paused": 12,
+        "activation": 13,
+        "closed": 14,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 12,
+            "atMs": 14898.299999999988,
+            "drawCount": 40,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 10,
+            "tick": 30,
+            "checkpoint": "5bd80c86e47ec123"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 13,
+            "atMs": 14963.699999999983,
+            "drawCount": 40,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 10,
+            "tick": 30,
+            "checkpoint": "5bd80c86e47ec123",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 14,
+            "atMs": 15055,
+            "drawCount": 40,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 10,
+            "tick": 30,
+            "checkpoint": "5bd80c86e47ec123"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 5,
+        "status": "pass",
+        "paused": 15,
+        "activation": 16,
+        "closed": 17,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 15,
+            "atMs": 16319.599999999977,
+            "drawCount": 47,
+            "width": 978.6666666666666,
+            "paused": true,
+            "runId": 12,
+            "tick": 20,
+            "checkpoint": "575d920e15042a44"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 16,
+            "atMs": 16380.099999999977,
+            "drawCount": 48,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 12,
+            "tick": 20,
+            "checkpoint": "575d920e15042a44",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 17,
+            "atMs": 16439.099999999977,
+            "drawCount": 48,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 12,
+            "tick": 20,
+            "checkpoint": "575d920e15042a44"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 6,
+        "status": "pass",
+        "paused": 18,
+        "activation": 19,
+        "closed": 20,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 18,
+            "atMs": 17668.899999999965,
+            "drawCount": 54,
+            "width": 978.6666666666666,
+            "paused": true,
+            "runId": 14,
+            "tick": 18,
+            "checkpoint": "ec7e1d164894521a"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 19,
+            "atMs": 17713.5,
+            "drawCount": 55,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 14,
+            "tick": 18,
+            "checkpoint": "ec7e1d164894521a",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 20,
+            "atMs": 17772.099999999977,
+            "drawCount": 55,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 14,
+            "tick": 18,
+            "checkpoint": "ec7e1d164894521a"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 7,
+        "status": "pass",
+        "paused": 21,
+        "activation": 22,
+        "closed": 23,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 21,
+            "atMs": 19073.29999999999,
+            "drawCount": 62,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 16,
+            "tick": 20,
+            "checkpoint": "575d920e15042a44"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 22,
+            "atMs": 19131.599999999977,
+            "drawCount": 62,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 16,
+            "tick": 20,
+            "checkpoint": "575d920e15042a44",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 23,
+            "atMs": 19191.29999999999,
+            "drawCount": 62,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 16,
+            "tick": 20,
+            "checkpoint": "575d920e15042a44"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 8,
+        "status": "pass",
+        "paused": 24,
+        "activation": 25,
+        "closed": 26,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 24,
+            "atMs": 20526,
+            "drawCount": 68,
+            "width": 978.6666666666666,
+            "paused": true,
+            "runId": 18,
+            "tick": 19,
+            "checkpoint": "9862878dd9cad740"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 25,
+            "atMs": 20579.29999999999,
+            "drawCount": 69,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 18,
+            "tick": 19,
+            "checkpoint": "9862878dd9cad740",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 26,
+            "atMs": 20636.099999999977,
+            "drawCount": 69,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 18,
+            "tick": 19,
+            "checkpoint": "9862878dd9cad740"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 9,
+        "status": "pass",
+        "paused": 27,
+        "activation": 28,
+        "closed": 29,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 27,
+            "atMs": 21947.899999999965,
+            "drawCount": 76,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 20,
+            "tick": 19,
+            "checkpoint": "9862878dd9cad740"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 28,
+            "atMs": 21997.5,
+            "drawCount": 76,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 20,
+            "tick": 19,
+            "checkpoint": "9862878dd9cad740",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 29,
+            "atMs": 22063.399999999965,
+            "drawCount": 76,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 20,
+            "tick": 19,
+            "checkpoint": "9862878dd9cad740"
+          }
+        ]
+      },
+      {
+        "mode": "spectator",
+        "cycle": 10,
+        "status": "pass",
+        "paused": 30,
+        "activation": 31,
+        "closed": 32,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 30,
+            "atMs": 23490.899999999965,
+            "drawCount": 82,
+            "width": 978.6666666666666,
+            "paused": true,
+            "runId": 22,
+            "tick": 18,
+            "checkpoint": "ec7e1d164894521a"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 31,
+            "atMs": 23547,
+            "drawCount": 83,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 22,
+            "tick": 18,
+            "checkpoint": "ec7e1d164894521a",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "pointerdown"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 32,
+            "atMs": 23640,
+            "drawCount": 83,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 22,
+            "tick": 18,
+            "checkpoint": "ec7e1d164894521a"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 1,
+        "status": "pass",
+        "paused": 33,
+        "activation": 34,
+        "closed": 35,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 33,
+            "atMs": 25483.899999999965,
+            "drawCount": 110,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 26,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 34,
+            "atMs": 25531.79999999999,
+            "drawCount": 110,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 26,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 35,
+            "atMs": 25590.899999999965,
+            "drawCount": 110,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 26,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 2,
+        "status": "pass",
+        "paused": 36,
+        "activation": 37,
+        "closed": 38,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 36,
+            "atMs": 27412.899999999965,
+            "drawCount": 139,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 29,
+            "tick": 56,
+            "checkpoint": "e7f9b210535eb89a"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 37,
+            "atMs": 27464.399999999965,
+            "drawCount": 139,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 29,
+            "tick": 56,
+            "checkpoint": "e7f9b210535eb89a",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 38,
+            "atMs": 27521.29999999999,
+            "drawCount": 139,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 29,
+            "tick": 56,
+            "checkpoint": "e7f9b210535eb89a"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 3,
+        "status": "pass",
+        "paused": 39,
+        "activation": 40,
+        "closed": 41,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 39,
+            "atMs": 29596.20000000001,
+            "drawCount": 170,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 32,
+            "tick": 58,
+            "checkpoint": "a61ea41229ab37e7"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 40,
+            "atMs": 29648.599999999977,
+            "drawCount": 170,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 32,
+            "tick": 58,
+            "checkpoint": "a61ea41229ab37e7",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 41,
+            "atMs": 29727.79999999999,
+            "drawCount": 170,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 32,
+            "tick": 58,
+            "checkpoint": "a61ea41229ab37e7"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 4,
+        "status": "pass",
+        "paused": 42,
+        "activation": 43,
+        "closed": 44,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 42,
+            "atMs": 31646.899999999965,
+            "drawCount": 199,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 35,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 43,
+            "atMs": 31702.899999999965,
+            "drawCount": 199,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 35,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 44,
+            "atMs": 31781.5,
+            "drawCount": 199,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 35,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 5,
+        "status": "pass",
+        "paused": 45,
+        "activation": 46,
+        "closed": 47,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 45,
+            "atMs": 33579.5,
+            "drawCount": 229,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 38,
+            "tick": 57,
+            "checkpoint": "6734bd9b623e9cfb"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 46,
+            "atMs": 33636.70000000001,
+            "drawCount": 229,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 38,
+            "tick": 57,
+            "checkpoint": "6734bd9b623e9cfb",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 47,
+            "atMs": 33700.09999999998,
+            "drawCount": 229,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 38,
+            "tick": 57,
+            "checkpoint": "6734bd9b623e9cfb"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 6,
+        "status": "pass",
+        "paused": 48,
+        "activation": 49,
+        "closed": 50,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 48,
+            "atMs": 35464.70000000001,
+            "drawCount": 258,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 41,
+            "tick": 54,
+            "checkpoint": "5b650ed333a86526"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 49,
+            "atMs": 35516.20000000001,
+            "drawCount": 258,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 41,
+            "tick": 54,
+            "checkpoint": "5b650ed333a86526",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 50,
+            "atMs": 35588.899999999965,
+            "drawCount": 258,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 41,
+            "tick": 54,
+            "checkpoint": "5b650ed333a86526"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 7,
+        "status": "pass",
+        "paused": 51,
+        "activation": 52,
+        "closed": 53,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 51,
+            "atMs": 37713.399999999965,
+            "drawCount": 286,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 44,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 52,
+            "atMs": 37763.399999999965,
+            "drawCount": 286,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 44,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 53,
+            "atMs": 37817.59999999998,
+            "drawCount": 286,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 44,
+            "tick": 53,
+            "checkpoint": "216f56f409dc83bc"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 8,
+        "status": "pass",
+        "paused": 54,
+        "activation": 55,
+        "closed": 56,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 54,
+            "atMs": 39732.09999999998,
+            "drawCount": 315,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 47,
+            "tick": 60,
+            "checkpoint": "dba7a5d39ac4455d"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 55,
+            "atMs": 39781,
+            "drawCount": 315,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 47,
+            "tick": 60,
+            "checkpoint": "dba7a5d39ac4455d",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 56,
+            "atMs": 39839.20000000001,
+            "drawCount": 315,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 47,
+            "tick": 60,
+            "checkpoint": "dba7a5d39ac4455d"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 9,
+        "status": "pass",
+        "paused": 57,
+        "activation": 58,
+        "closed": 59,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 57,
+            "atMs": 41745.29999999999,
+            "drawCount": 343,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 50,
+            "tick": 51,
+            "checkpoint": "92c0c8116dbb9950"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 58,
+            "atMs": 41798.09999999998,
+            "drawCount": 343,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 50,
+            "tick": 51,
+            "checkpoint": "92c0c8116dbb9950",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 59,
+            "atMs": 41875.29999999999,
+            "drawCount": 343,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 50,
+            "tick": 51,
+            "checkpoint": "92c0c8116dbb9950"
+          }
+        ]
+      },
+      {
+        "mode": "practice",
+        "cycle": 10,
+        "status": "pass",
+        "paused": 60,
+        "activation": 61,
+        "closed": 62,
+        "boundaries": [
+          {
+            "kind": "paused",
+            "index": 60,
+            "atMs": 43680,
+            "drawCount": 371,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 53,
+            "tick": 54,
+            "checkpoint": "d9d189f94f3710fd"
+          },
+          {
+            "kind": "closeActivation",
+            "index": 61,
+            "atMs": 43731,
+            "drawCount": 371,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 53,
+            "tick": 54,
+            "checkpoint": "d9d189f94f3710fd",
+            "closeActivation": {
+              "format": "DemoTrustedCloseActivationV2",
+              "isTrusted": true,
+              "target": "demo-back",
+              "eventType": "click"
+            }
+          },
+          {
+            "kind": "closed",
+            "index": 62,
+            "atMs": 43796.09999999998,
+            "drawCount": 371,
+            "width": 565.3333333333334,
+            "paused": true,
+            "runId": 53,
+            "tick": 54,
+            "checkpoint": "d9d189f94f3710fd"
+          }
+        ]
+      }
+    ],
+    "snapshots": 64,
+    "nativeReconstruction": {
+      "status": "pass",
+      "rows": 20,
+      "everyMatch": true
+    },
+    "storageUnchangedEveryCycle": true,
+    "parentUnchanged": true,
+    "replay": {
+      "bytes": 5294,
+      "beforeSHA256": "f97b88c7e34ff4cee7252cc8b5dbf2e596149820c76ff06d26551a464738f38c",
+      "afterSHA256": "f97b88c7e34ff4cee7252cc8b5dbf2e596149820c76ff06d26551a464738f38c"
+    },
+    "activationToClosedDrawUnchangedEveryCycle": true,
+    "javaScriptErrors": [],
+    "failedRequests": []
+  },
+  "ownership": {
+    "status": "closed",
+    "forcedCleanup": false,
+    "ambiguous": [],
+    "survivors": [],
+    "peakRSS": 3058962432,
+    "exitCode": 1,
+    "signal": null,
+    "violation": null,
+    "outputBytesObserved": 0,
+    "startedAt": "2026-10-18T17:31:21.210Z",
+    "completedAt": "2026-10-18T17:32:08.861Z",
+    "observedBrowserClosed": true,
+    "observedBrowserClosedAt": "2026-10-18T17:32:08.598Z",
+    "observationSettled": true,
+    "browserExit": 0
+  },
+  "nextAction": "Declare a separate paused-geometry successor observer, preserve the original gates and this failure, require actual canvas geometry to match a paused paint across bounded consecutive frame polls, and qualify in the hosted consumer only after meaningful asynchronous-resize and negative controls pass."
+}

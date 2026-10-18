@@ -1,0 +1,3221 @@
+{
+  "format": "SoloDemoResourceTrustedCloseFailureAuditV1",
+  "runId": 39142158750,
+  "tooling": {
+    "revision": "fd78700a0e3167e104da7c854a8b04f2cea9a19f",
+    "tree": "88342841f9447323dddee42bdcccb79429ce2617"
+  },
+  "source": {
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5"
+  },
+  "artifact": {
+    "id": 12141573283,
+    "bytes": 301547,
+    "sha256": "4eb112a65ca25dbdba0f8fb2f789dcfa5ecb61c33ac14730a2a15fe9a67da16e",
+    "crc": "passed",
+    "members": 42
+  },
+  "inventory": {
+    "verified": 34,
+    "records": [
+      {
+        "path": "candidate-archive.json",
+        "bytes": 516,
+        "sha256": "c389c14d9d7fb5d7f13cc481efa7b830dbb95e4d47c66209ef4660c2d1c14a05"
+      },
+      {
+        "path": "candidate-artifact.json",
+        "bytes": 848,
+        "sha256": "956bdfb63153c3e9a19a1f5ac443ca2727ed73b625a0696a21ec1ba4c41f7f11"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/bound-plan.json",
+        "bytes": 6913,
+        "sha256": "11c7399a8027793a8c4c581062d089cf05d0024a86a225259203761b584b0bef"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json",
+        "bytes": 111774,
+        "sha256": "56cca260485c7206218b255586264b8774071df3b75ce906df55dedd839bd27e"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json.before.replay.json",
+        "bytes": 5279,
+        "sha256": "d7941c57ff575fb25f2131110ab3be2a6b1dd1c676fa4c9e58a15e8854c38fa7"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json.chrome.log",
+        "bytes": 5965,
+        "sha256": "68d69d55cf3d97bf60b797791c8896deb7e1f7c0aaca37ba6ecffbc1933c939f"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/report.json.demo-source.json",
+        "bytes": 10801,
+        "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources/scratch-authority.json",
+        "bytes": 734,
+        "sha256": "cbb29887e790e0f7df8bd27283bb7be69813b3589e541981235ee3748f07de95"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources.command.json",
+        "bytes": 12909,
+        "sha256": "4eed2d038b0887a1624fb20206e582c8491ac17cb459d4548949efd2302719ef"
+      },
+      {
+        "path": "candidate-demo-close-reopen-resources.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "candidate-inner.command.json",
+        "bytes": 1537,
+        "sha256": "a0af6dcd359afb9f68e384f75303c40b944472ba01094688b3845e04600324ca"
+      },
+      {
+        "path": "candidate-inner.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "candidate-outer.command.json",
+        "bytes": 1504,
+        "sha256": "3f052b0593628fcdfb492a59b9a24bf5579df725928d400007ddccd3fe856702"
+      },
+      {
+        "path": "candidate-outer.json",
+        "bytes": 19561,
+        "sha256": "4e76466b81f8e315ae549897a76b5034fa6e3446e29c35d5ddaccc737d5abd0e"
+      },
+      {
+        "path": "candidate-outer.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "candidate-payload-metadata/_headers",
+        "bytes": 528,
+        "sha256": "9029ff14f5e17ba54af729e2197cb36c19d873334776798d863c2910bca3f5d8"
+      },
+      {
+        "path": "candidate-payload-metadata/game/build-info.json",
+        "bytes": 143,
+        "sha256": "838af092f174fff96c48c4024ebdb07e8782593f9479656082fc0cf72cbc8e6b"
+      },
+      {
+        "path": "candidate-payload-metadata/manifest.json",
+        "bytes": 529292,
+        "sha256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0"
+      },
+      {
+        "path": "candidate-run.json",
+        "bytes": 13612,
+        "sha256": "3006e601a34e5927be8964283704ab442534dd12df6c887d90057c8d57863f78"
+      },
+      {
+        "path": "candidate-source.command.json",
+        "bytes": 2177,
+        "sha256": "c51761c956acd48e251bac3d0c6c9850f58470fde5f3bb1308637664aa117dd7"
+      },
+      {
+        "path": "candidate-source.json",
+        "bytes": 31503,
+        "sha256": "4696fffe6698cd28515e05c0f07a2873794452a044b0ac7457c54a1420749e8d"
+      },
+      {
+        "path": "candidate-source.log",
+        "bytes": 136,
+        "sha256": "ce7097f88c34c8629703b213ea1099f5ba45595990564a78e0c753b89822ba36"
+      },
+      {
+        "path": "demo-browser-version.command.json",
+        "bytes": 844,
+        "sha256": "c239f8e9f1fcd0845f6ff15072ccaf0bc0387a29fed6edc3d94028726c9396b2"
+      },
+      {
+        "path": "demo-browser-version.log",
+        "bytes": 41,
+        "sha256": "2d44e8c7507ca1c7cefc2fff277ee234d5d87be645dd56bee1b3ffca6564e529"
+      },
+      {
+        "path": "demo-display-preflight.command.json",
+        "bytes": 861,
+        "sha256": "1332993b9f2bd88429f394c9515a62c84dce068690a309d5d41cd26017a6962f"
+      },
+      {
+        "path": "demo-display-preflight.log",
+        "bytes": 26026,
+        "sha256": "8cf5db43af519c0908c95d65e735646222c573da5b7d2615ee784cc2d753811d"
+      },
+      {
+        "path": "observe-solo-demo-recovery.mjs",
+        "bytes": 39054,
+        "sha256": "c1d2591a3fa88e151e969726416b80156144fb594ed1252689d053595198e3fa"
+      },
+      {
+        "path": "plan.json",
+        "bytes": 17042,
+        "sha256": "43af090dbf99828470c9042bf29086bf6d86ba9cdc6af023fecc69f37d892466"
+      },
+      {
+        "path": "run-solo-remote-correctness.mjs",
+        "bytes": 74932,
+        "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+      },
+      {
+        "path": "solo-demo-recovery-probe.mjs",
+        "bytes": 8182,
+        "sha256": "22b0db06b33ce5f363c33997169520456b4b3b0b633d581680bfc680d2ec12d7"
+      },
+      {
+        "path": "solo-remote-archive.py",
+        "bytes": 22756,
+        "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+      },
+      {
+        "path": "solo-remote-demo.mjs",
+        "bytes": 31037,
+        "sha256": "7aba9fde9f37b7b938615425aa4d066b464813751a308d221ed8c0b24ae020e1"
+      },
+      {
+        "path": "verified-artifacts.json",
+        "bytes": 1297,
+        "sha256": "9f62895ca2f300be9f0e6a1c4876e5dda1783f9e1ff8f6dfcd17f2b4af9fd824"
+      },
+      {
+        "path": "summary.json",
+        "bytes": 22200,
+        "sha256": "72470114fa79a751d76cba9364f41dcd32ab81f4a897d37517db1a1139ea3ca5"
+      }
+    ]
+  },
+  "setup": {
+    "tests": 171,
+    "passed": 171,
+    "failed": 0
+  },
+  "outcome": {
+    "status": "failed",
+    "completedCycles": 0,
+    "attemptedCycle": {
+      "mode": "spectator",
+      "cycle": 1,
+      "actions": [
+        "open",
+        "watch-pause"
+      ]
+    },
+    "failure": "page.evaluate: Error: Trusted Demo Close boundary missing\n    at Object.takeCloseBoundary (<anonymous>:159:15)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:32)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at resourceCycles (/home/runner/work/revealline/revealline/tools/scripts/observe-solo-demo-recovery.mjs:419:39)\n    at async observation (/home/runner/work/revealline/revealline/tools/scripts/observe-solo-demo-recovery.mjs:728:5)",
+    "closeCaptureFailure": "page.evaluate: Error: Trusted Demo Close boundary missing\n    at Object.takeCloseBoundary (<anonymous>:159:15)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:32)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)",
+    "closeCaptureCleanupFailure": null,
+    "pageErrors": [],
+    "failedRequests": [],
+    "observationSettled": true,
+    "ownedChrome": {
+      "pid": 4264,
+      "profile": "/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG",
+      "executable": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome",
+      "sandbox": "disabled, matching Playwright1.62.1 Chromium default; hosted functional stratum only",
+      "scope": "Fresh child of shared ownedCommand token; outer owner performs any forced cleanup.",
+      "exitCode": 0,
+      "exitSignal": null
+    },
+    "observedBrowserClosed": true
+  },
+  "owners": [
+    {
+      "path": "solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources.command.json",
+      "sha256": "4eed2d038b0887a1624fb20206e582c8491ac17cb459d4548949efd2302719ef",
+      "status": "closed",
+      "exitCode": 1,
+      "signal": null,
+      "forcedCleanup": false,
+      "ambiguous": [],
+      "survivors": [],
+      "violation": null,
+      "startedAt": "2026-10-18T15:52:03.827Z",
+      "completedAt": "2026-10-18T15:52:21.160Z"
+    },
+    {
+      "path": "solo-linux-runtime797-demo-resources/evidence/candidate-inner.command.json",
+      "sha256": "a0af6dcd359afb9f68e384f75303c40b944472ba01094688b3845e04600324ca",
+      "status": "closed",
+      "exitCode": 0,
+      "signal": null,
+      "forcedCleanup": false,
+      "ambiguous": [],
+      "survivors": [],
+      "violation": null,
+      "startedAt": "2026-10-18T15:51:43.465Z",
+      "completedAt": "2026-10-18T15:51:49.221Z"
+    },
+    {
+      "path": "solo-linux-runtime797-demo-resources/evidence/candidate-outer.command.json",
+      "sha256": "3f052b0593628fcdfb492a59b9a24bf5579df725928d400007ddccd3fe856702",
+      "status": "closed",
+      "exitCode": 0,
+      "signal": null,
+      "forcedCleanup": false,
+      "ambiguous": [],
+      "survivors": [],
+      "violation": null,
+      "startedAt": "2026-10-18T15:51:36.440Z",
+      "completedAt": "2026-10-18T15:51:42.485Z"
+    },
+    {
+      "path": "solo-linux-runtime797-demo-resources/evidence/candidate-source.command.json",
+      "sha256": "c51761c956acd48e251bac3d0c6c9850f58470fde5f3bb1308637664aa117dd7",
+      "status": "closed",
+      "exitCode": 0,
+      "signal": null,
+      "forcedCleanup": false,
+      "ambiguous": [],
+      "survivors": [],
+      "violation": null,
+      "startedAt": "2026-10-18T15:51:49.295Z",
+      "completedAt": "2026-10-18T15:52:02.201Z"
+    },
+    {
+      "path": "solo-linux-runtime797-demo-resources/evidence/demo-browser-version.command.json",
+      "sha256": "c239f8e9f1fcd0845f6ff15072ccaf0bc0387a29fed6edc3d94028726c9396b2",
+      "status": "closed",
+      "exitCode": 0,
+      "signal": null,
+      "forcedCleanup": false,
+      "ambiguous": [],
+      "survivors": [],
+      "violation": null,
+      "startedAt": "2026-10-18T15:52:02.871Z",
+      "completedAt": "2026-10-18T15:52:03.384Z"
+    },
+    {
+      "path": "solo-linux-runtime797-demo-resources/evidence/demo-display-preflight.command.json",
+      "sha256": "1332993b9f2bd88429f394c9515a62c84dce068690a309d5d41cd26017a6962f",
+      "status": "closed",
+      "exitCode": 0,
+      "signal": null,
+      "forcedCleanup": false,
+      "ambiguous": [],
+      "survivors": [],
+      "violation": null,
+      "startedAt": "2026-10-18T15:52:02.285Z",
+      "completedAt": "2026-10-18T15:52:02.802Z"
+    }
+  ],
+  "sourceFindings": {
+    "classification": "Source-proven event-boundary mismatch; actual trusted event was not captured, so no no-paint-after-disposal result is established.",
+    "spectator": "demo-input root pointerdown on data-demo-exit calls back/close while takeoverAvailable or busy, then window click capture consumes the native click echo before the probe document click listener.",
+    "practice": "The ordinary non-busy practice Back path reaches the host click handler. A successor must bind the correct existing activation per mode rather than move runtime navigation.",
+    "retainedLimits": "All original failed observations, 20 cycles, 64 snapshots, exact owned shutdown, storage hashes, replay and numerical exclusions remain; no unchanged rerun.",
+    "records": [
+      {
+        "path": "game/ui/demo-input.mjs",
+        "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+        "bytes": 15543,
+        "sha256": "45f29ea8568a3cc713e7285dcb96e76e8f9324a9a9750b50c87f70d318f2b664",
+        "gitBlob": "58c3c1883f78f5d4d10c541cbfbfe60f3a91857d",
+        "pointerdown": {
+          "startLine": 186,
+          "text": "    'pointerdown',\n    (event) => {\n      const pointerId = event.pointerId ?? 'mouse';\n      if (!active()) return;\n      onActivity();\n      if (event.button > 0) return;\n      if ((takeoverAvailable() || busy()) && event.target?.closest?.('[data-demo-exit]')) {\n        if (nativeConfirmOwned(event)) return;\n        suppressedPointers.add(pointerId);\n        consume(event);\n        back();\n        return;\n      }\n      if (event.target?.closest?.('[data-demo-ui]')) {\n        releaseForUI();\n        return;"
+        },
+        "clickEcho": {
+          "startLine": 333,
+          "text": "  listen(\n    win,\n    'click',\n    (event) => {\n      if (event.detail === 0 && suppressExitKeyClick) {\n        suppressExitKeyClick = false;\n        consume(event);\n        return;\n      }\n      const pointerId = event.pointerId ?? lastReleasedPointer ?? 'mouse';\n      if (event.detail !== 0 && suppressedPointers.has(pointerId)) {\n        suppressedPointers.delete(pointerId);\n        consume(event);\n      }\n    },\n    true,\n  );\n  listen("
+        }
+      },
+      {
+        "path": "game/ui/demo-host.mjs",
+        "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+        "bytes": 48965,
+        "sha256": "05ede7977f47efe0c3f895e4245ccda710e66948c2053626f8b743fcc0abae33",
+        "gitBlob": "4914bcb57fca852dc5323a12bba133370060d2ec",
+        "takeover": {
+          "startLine": 286,
+          "text": "  const takeoverAvailable = () =>\n    active && !practice && !busy && !lifecycleSuspended && !renderingLost() && foreground();\n  function renderControls() {\n    if (!active) return;\n    publishPreparationPhase();\n    if (doc.hidden) return;"
+        },
+        "back": {
+          "startLine": 961,
+          "text": "  const input = attachDemoInput({\n    root: dialog,\n    canvas,\n    active: () => active,\n    watching,\n    takeoverAvailable,\n    busy: () => busy,\n    practice: () => !!practice && armed,\n    getBindings: () => getContext().preferences.keyboardBindings,\n    getTouchSettings: () => getContext().touchSettings ?? { mode: 'swipe' },\n    tapMode: () => getContext().tapSteering === true,\n    interrupt,\n    takeover,\n    back: () => close(),\n    pause: interrupt,\n    menu,"
+        }
+      },
+      {
+        "path": "scripts/solo-demo-recovery-probe.mjs",
+        "revision": "fd78700a0e3167e104da7c854a8b04f2cea9a19f",
+        "bytes": 8182,
+        "sha256": "22b0db06b33ce5f363c33997169520456b4b3b0b633d581680bfc680d2ec12d7",
+        "gitBlob": "2b5730540b179b65d19d6d68633ebcfe977f1725"
+      }
+    ]
+  },
+  "retained": {
+    "summary": {
+      "format": "SoloHostedDemoResourceCohortV1",
+      "status": "failed",
+      "performanceExclusion": true,
+      "timingQualification": "not-attempted",
+      "startedAt": "2026-10-18T15:51:21.504Z",
+      "rows": [
+        {
+          "id": "candidate-demo-close-reopen-resources",
+          "kind": "demo",
+          "source": "candidate",
+          "engine": "chromium",
+          "timeoutMs": 660000,
+          "status": "failed",
+          "storage": {
+            "outputRoot": "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources",
+            "scratchRoot": "/home/runner/work/_temp/sc-JTWS80/r00",
+            "scratchOwner": {
+              "path": "/home/runner/work/_temp/sc-JTWS80",
+              "device": 2049,
+              "inode": 9961511,
+              "maximumRowPathBytes": 52,
+              "lifetime": "Fresh hosted-job owner; retained until job teardown"
+            },
+            "device": 2049,
+            "inode": 10227478,
+            "freeBytesAtAdmission": 76175568896,
+            "minimumRemainingBytes": 1073741824
+          },
+          "scratchAuthority": {
+            "path": "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/scratch-authority.json",
+            "bytes": 734,
+            "sha256": "cbb29887e790e0f7df8bd27283bb7be69813b3589e541981235ee3748f07de95"
+          },
+          "startedAt": "2026-10-18T15:52:03.386Z",
+          "command": {
+            "argv": [
+              "/usr/bin/xvfb-run",
+              "--auto-servernum",
+              "--server-args=-screen 0 1280x800x24",
+              "/opt/hostedtoolcache/node/22.13.1/x64/bin/node",
+              "/home/runner/work/revealline/revealline/tools/scripts/observe-solo-demo-recovery.mjs",
+              "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/bound-plan.json",
+              "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/report.json"
+            ],
+            "cwd": "/home/runner/work/revealline/revealline/tools",
+            "startedAt": "2026-10-18T15:52:03.827Z",
+            "timeoutMs": 660000,
+            "rssBytes": 6442450944,
+            "outputBytes": 4194304,
+            "status": "closed",
+            "tracked": [
+              {
+                "pid": 4240,
+                "state": "R",
+                "ppid": 3929,
+                "pgid": 4240,
+                "birth": "59736",
+                "rss": 446464,
+                "argv": "/usr/bin/xvfb-run --auto-servernum --server-args=-screen 0 1280x800x24 /opt/hostedtoolcache/node/22.13.1/x64/bin/node /home/runner/work/revealline/revealline/tools/scripts/observe-solo-demo-recovery.mjs /home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/bound-plan.json /home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/report.json"
+              },
+              {
+                "pid": 4250,
+                "state": "S",
+                "ppid": 4240,
+                "pgid": 4240,
+                "birth": "59737",
+                "rss": 15314944,
+                "argv": "Xvfb :99 -screen 0 1280x800x24 -nolisten tcp -auth /home/runner/work/_temp/sc-JTWS80/r00/xvfb-run.le30Jr/Xauthority "
+              },
+              {
+                "pid": 4253,
+                "state": "R",
+                "ppid": 4240,
+                "pgid": 4240,
+                "birth": "59740",
+                "rss": 99823616,
+                "argv": "/opt/hostedtoolcache/node/22.13.1/x64/bin/node /home/runner/work/revealline/revealline/tools/scripts/observe-solo-demo-recovery.mjs /home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/bound-plan.json /home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/report.json "
+              },
+              {
+                "pid": 4264,
+                "state": "R",
+                "ppid": 4253,
+                "pgid": 4264,
+                "birth": "59827",
+                "rss": 110186496,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --remote-debugging-port=0 --no-sandbox --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --no-first-run --no-default-browser-check --window-size=1280,800 about:blank "
+              },
+              {
+                "pid": 4266,
+                "state": "S",
+                "ppid": 1,
+                "pgid": 4265,
+                "birth": "59831",
+                "rss": 4796416,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --database=/home/runner/.config/google-chrome-for-testing/Crash Reports --annotation=lsb-release=Ubuntu 24.04.5 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.34 --initial-client-fd=5 --shared-client-connection "
+              },
+              {
+                "pid": 4268,
+                "state": "S",
+                "ppid": 1,
+                "pgid": 4267,
+                "birth": "59831",
+                "rss": 4964352,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/runner/.config/google-chrome-for-testing/Crash Reports --annotation=lsb-release=Ubuntu 24.04.5 LTS --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=151.0.7922.34 --initial-client-fd=4 --shared-client-connection "
+              },
+              {
+                "pid": 4271,
+                "state": "S",
+                "ppid": 4264,
+                "pgid": 4264,
+                "birth": "59831",
+                "rss": 88633344,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=zygote --no-zygote-sandbox --no-sandbox --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --change-stack-guard-on-fork=enable "
+              },
+              {
+                "pid": 4272,
+                "state": "S",
+                "ppid": 4264,
+                "pgid": 4264,
+                "birth": "59832",
+                "rss": 75268096,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=zygote --no-sandbox --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --change-stack-guard-on-fork=enable "
+              },
+              {
+                "pid": 4296,
+                "state": "S",
+                "ppid": 4271,
+                "pgid": 4264,
+                "birth": "59906",
+                "rss": 174391296,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=gpu-process --no-sandbox --ozone-platform=x11 --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAQAEAAAAAAAAAAAAAMAASAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --metrics-shmem-handle=4,i,14073695740370566612,13500860003171856693,262144 --field-trial-handle=3,i,13972737816779832074,13242278011296256756,262144 --variations-seed-version --pseudonymization-salt-handle=7,i,10302424150215248435,11673020926231645296,4 --trace-process-track-uuid=3190708988185955192 "
+              },
+              {
+                "pid": 4297,
+                "state": "S",
+                "ppid": 4264,
+                "pgid": 4264,
+                "birth": "59907",
+                "rss": 139522048,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=network --no-sandbox --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --change-stack-guard-on-fork=enable --shared-files=network_parent_dirs_pipe:100,v8_context_snapshot_data:101 --metrics-shmem-handle=4,i,7346868965439703392,1462218586219055959,524288 --field-trial-handle=3,i,13972737816779832074,13242278011296256756,262144 --variations-seed-version --pseudonymization-salt-handle=7,i,10302424150215248435,11673020926231645296,4 --trace-process-track-uuid=3190708989122997041 "
+              },
+              {
+                "pid": 4303,
+                "state": "S",
+                "ppid": 4272,
+                "pgid": 4264,
+                "birth": "59910",
+                "rss": 53575680,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --no-sandbox --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,419169266950236118,2105529787833612539,524288 --field-trial-handle=3,i,13972737816779832074,13242278011296256756,262144 --variations-seed-version --pseudonymization-salt-handle=7,i,10302424150215248435,11673020926231645296,4 --trace-process-track-uuid=3190708990060038890 "
+              },
+              {
+                "pid": 4403,
+                "state": "S",
+                "ppid": 4272,
+                "pgid": 4264,
+                "birth": "59921",
+                "rss": 143106048,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=renderer --top-chrome-webui --gpu-client-id=5 --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --change-stack-guard-on-fork=enable --no-sandbox --remote-debugging-port=0 --ozone-platform=x11 --lang=en-US --disallow-v8-feature-flag-overrides --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=5 --time-ticks-at-unix-epoch=-1792338126462148 --gpu-channel-request-start-time-ticks=599206406 --launch-time-ticks=599208278 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,14589364470263191290,9394025162540338184,2097152 --field-trial-handle=3,i,13972737816779832074,13242278011296256756,262144 --variations-seed-version --pseudonymization-salt-handle=7,i,10302424150215248435,11673020926231645296,4 --trace-process-track-uuid=3190708990997080739 "
+              },
+              {
+                "pid": 4419,
+                "state": "S",
+                "ppid": 4272,
+                "pgid": 4264,
+                "birth": "59925",
+                "rss": 83021824,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=renderer --gpu-client-id=7 --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --change-stack-guard-on-fork=enable --no-sandbox --remote-debugging-port=0 --ozone-platform=x11 --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=7 --time-ticks-at-unix-epoch=-1792338126462148 --gpu-channel-request-start-time-ticks=599252348 --launch-time-ticks=599255098 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,4277561022164028529,11803724715181513612,2097152 --field-trial-handle=3,i,13972737816779832074,13242278011296256756,262144 --variations-seed-version --pseudonymization-salt-handle=7,i,10302424150215248435,11673020926231645296,4 --trace-process-track-uuid=3190708992871164437 "
+              },
+              {
+                "pid": 4420,
+                "state": "R",
+                "ppid": 4272,
+                "pgid": 4264,
+                "birth": "59926",
+                "rss": 121106432,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=renderer --gpu-client-id=6 --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --change-stack-guard-on-fork=enable --no-sandbox --remote-debugging-port=0 --ozone-platform=x11 --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=6 --time-ticks-at-unix-epoch=-1792338126462148 --gpu-channel-request-start-time-ticks=599254506 --launch-time-ticks=599259822 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,5993964368166816674,6612107066966424851,2097152 --field-trial-handle=3,i,13972737816779832074,13242278011296256756,262144 --variations-seed-version --pseudonymization-salt-handle=7,i,10302424150215248435,11673020926231645296,4 --trace-process-track-uuid=3190708991934122588 "
+              },
+              {
+                "pid": 4452,
+                "state": "S",
+                "ppid": 4272,
+                "pgid": 4264,
+                "birth": "59941",
+                "rss": 102158336,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=renderer --gpu-client-id=8 --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --extension-process --change-stack-guard-on-fork=enable --no-sandbox --remote-debugging-port=0 --ozone-platform=x11 --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=8 --time-ticks-at-unix-epoch=-1792338126462148 --gpu-channel-request-start-time-ticks=599406574 --launch-time-ticks=599413714 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,9154092020924024868,10613117168823415487,2097152 --field-trial-handle=3,i,13972737816779832074,13242278011296256756,262144 --variations-seed-version --pseudonymization-salt-handle=7,i,10302424150215248435,11673020926231645296,4 --trace-process-track-uuid=3190708993808206286 "
+              },
+              {
+                "pid": 4453,
+                "state": "S",
+                "ppid": 4272,
+                "pgid": 4264,
+                "birth": "59941",
+                "rss": 101478400,
+                "argv": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome --type=renderer --gpu-client-id=9 --crashpad-handler-pid=4266 --enable-crash-reporter=, --user-data-dir=/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG --extension-process --change-stack-guard-on-fork=enable --no-sandbox --remote-debugging-port=0 --ozone-platform=x11 --lang=en-US --num-raster-threads=2 --enable-main-frame-before-activation --renderer-client-id=9 --time-ticks-at-unix-epoch=-1792338126462148 --gpu-channel-request-start-time-ticks=599411841 --launch-time-ticks=599418219 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,5520254319049206516,18388045617424240486,2097152 --field-trial-handle=3,i,13972737816779832074,13242278011296256756,262144 --variations-seed-version --pseudonymization-salt-handle=7,i,10302424150215248435,11673020926231645296,4 --trace-process-track-uuid=3190708994745248135 "
+              }
+            ],
+            "forcedCleanup": false,
+            "ambiguous": [],
+            "survivors": [],
+            "initialLeaderCapture": "direct-child-birth",
+            "peakRSS": 2673504256,
+            "exitCode": 1,
+            "signal": null,
+            "violation": null,
+            "outputBytesObserved": 0,
+            "completedAt": "2026-10-18T15:52:21.160Z"
+          },
+          "raw": {
+            "path": "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/report.json",
+            "bytes": 111774,
+            "sha256": "56cca260485c7206218b255586264b8774071df3b75ce906df55dedd839bd27e"
+          },
+          "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n1 !== 0\n\n    at assertDemoResult (file:///home/runner/work/revealline/revealline/tools/scripts/solo-remote-demo.mjs:290:10)\n    at Module.runDemoRow (file:///home/runner/work/revealline/revealline/tools/scripts/solo-remote-demo.mjs:727:5)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async main (file:///home/runner/work/revealline/revealline/tools/scripts/run-solo-remote-correctness.mjs:1676:11)\n    at async file:///home/runner/work/revealline/revealline/tools/scripts/run-solo-remote-correctness.mjs:1940:85",
+          "completedAt": "2026-10-18T15:52:21.164Z"
+        }
+      ],
+      "tooling": {
+        "revision": "fd78700a0e3167e104da7c854a8b04f2cea9a19f",
+        "tree": "88342841f9447323dddee42bdcccb79429ce2617"
+      },
+      "plan": {
+        "path": "/home/runner/work/revealline/revealline/tools/docs/performance/solo-demo-resources-797e03-close-boundary-plan.json",
+        "bytes": 17042,
+        "sha256": "43af090dbf99828470c9042bf29086bf6d86ba9cdc6af023fecc69f37d892466"
+      },
+      "runner": {
+        "platform": "linux",
+        "arch": "x64",
+        "release": "6.17.0-1022-azure",
+        "cpus": [
+          {
+            "model": "AMD EPYC 7763 64-Core Processor",
+            "speed": 0,
+            "times": {
+              "user": 25960,
+              "nice": 830,
+              "sys": 9680,
+              "idle": 505750,
+              "irq": 0
+            }
+          },
+          {
+            "model": "AMD EPYC 7763 64-Core Processor",
+            "speed": 0,
+            "times": {
+              "user": 39940,
+              "nice": 0,
+              "sys": 14510,
+              "idle": 486330,
+              "irq": 0
+            }
+          },
+          {
+            "model": "AMD EPYC 7763 64-Core Processor",
+            "speed": 0,
+            "times": {
+              "user": 28770,
+              "nice": 240,
+              "sys": 9760,
+              "idle": 500130,
+              "irq": 0
+            }
+          },
+          {
+            "model": "AMD EPYC 7763 64-Core Processor",
+            "speed": 0,
+            "times": {
+              "user": 29560,
+              "nice": 2400,
+              "sys": 10290,
+              "idle": 497910,
+              "irq": 0
+            }
+          }
+        ],
+        "memoryBytes": 16766406656,
+        "imageOS": "ubuntu24",
+        "imageVersion": "20261012.334.1",
+        "runId": "39142158750",
+        "attempt": "1",
+        "node": "v22.13.1",
+        "workflowRef": "mekhovov/revealline/.github/workflows/solo-native-package-consumer.yml@refs/heads/main"
+      },
+      "scratchOwner": {
+        "path": "/home/runner/work/_temp/sc-JTWS80",
+        "device": 2049,
+        "inode": 9961511,
+        "maximumRowPathBytes": 52,
+        "lifetime": "Fresh hosted-job owner; retained until job teardown"
+      },
+      "baselineSource": {
+        "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+        "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609"
+      },
+      "candidateSource": {
+        "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+        "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5"
+      },
+      "playwright": {
+        "version": "1.62.1",
+        "module": "/home/runner/work/_temp/solo-browser-tools/node_modules/playwright/index.mjs",
+        "moduleIdentity": {
+          "bytes": 704,
+          "sha256": "a0f5715ea22354f922791a9c53dc012d5d5c067ff9cc4cd35ffb7cd272071a9f"
+        },
+        "engines": {
+          "chromium": {
+            "executable": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome",
+            "identity": {
+              "bytes": 290614600,
+              "sha256": "0b20b130e7edd9dd51873be867761295fe0cfad490c2b9a64f95bd3cfc08fa71"
+            }
+          }
+        },
+        "registry": {
+          "comment": "Do not edit this file, use utils/roll_browser.js",
+          "browsers": [
+            {
+              "name": "chromium",
+              "revision": "1234",
+              "installByDefault": true,
+              "browserVersion": "151.0.7922.34",
+              "title": "Chrome for Testing"
+            },
+            {
+              "name": "chromium-headless-shell",
+              "revision": "1234",
+              "installByDefault": true,
+              "browserVersion": "151.0.7922.34",
+              "title": "Chrome Headless Shell"
+            },
+            {
+              "name": "chromium-tip-of-tree",
+              "revision": "1433",
+              "installByDefault": false,
+              "browserVersion": "151.0.7893.0",
+              "title": "Chrome Canary for Testing"
+            },
+            {
+              "name": "chromium-tip-of-tree-headless-shell",
+              "revision": "1433",
+              "installByDefault": false,
+              "browserVersion": "151.0.7893.0",
+              "title": "Chrome Canary Headless Shell"
+            },
+            {
+              "name": "firefox",
+              "revision": "1538",
+              "installByDefault": true,
+              "browserVersion": "153.0",
+              "title": "Firefox"
+            },
+            {
+              "name": "firefox-beta",
+              "revision": "1526",
+              "installByDefault": false,
+              "browserVersion": "152.0b1",
+              "title": "Firefox Beta"
+            },
+            {
+              "name": "webkit",
+              "revision": "2336",
+              "installByDefault": true,
+              "revisionOverrides": {
+                "mac14": "2251",
+                "mac14-arm64": "2251",
+                "ubuntu20.04-x64": "2092",
+                "ubuntu20.04-arm64": "2092"
+              },
+              "browserVersion": "26.5",
+              "title": "WebKit"
+            },
+            {
+              "name": "ffmpeg",
+              "revision": "1011",
+              "installByDefault": true
+            },
+            {
+              "name": "winldd",
+              "revision": "1007",
+              "installByDefault": false
+            },
+            {
+              "name": "android",
+              "revision": "1001",
+              "installByDefault": false
+            }
+          ]
+        },
+        "registryIdentity": {
+          "bytes": 1780,
+          "sha256": "f306eed529599b1eaf2f8a85db9de2b23e1a3fe36c2b66434b7c9434fb627a99"
+        }
+      },
+      "candidateSetupStatus": "passed",
+      "setupCompletedAt": "2026-10-18T15:52:02.206Z",
+      "modePreparationStartedAt": "2026-10-18T15:52:02.206Z",
+      "modePreparationCompletedAt": "2026-10-18T15:52:03.385Z",
+      "modeScope": "Source797 Demo resource successor with trusted Close boundary; hosted observations remain unexecuted. Historical failed observations and all current limits remain.",
+      "supervisorScope": "Common process/resource admission samples ownership and aggregate filesystem/RSS at250ms outside application callbacks. This environment work remains part of the hosted stratum; no per-frame trace/profiler added.",
+      "completedAt": "2026-10-18T15:52:21.168Z",
+      "artifactScope": "Candidate exact retained CI package; baseline not admitted; see setup status. Localhost access fixture; no authentication, timing, physical-device, GPU or thermal qualification."
+    },
+    "rawReport": {
+      "format": "SoloHostedDemoResourceV1",
+      "resourceContract": {
+        "mode": "close-reopen-resources-v1",
+        "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+        "resources": {
+          "format": "DemoOwnedResourcesV1",
+          "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc"
+        },
+        "cyclesPerMode": 10,
+        "modes": [
+          "spectator",
+          "practice"
+        ],
+        "snapshotLimit": 64,
+        "closeBoundaryPolicy": "trusted-click-capture-v1"
+      },
+      "cycles": [
+        {
+          "mode": "spectator",
+          "cycle": 1,
+          "status": "pending",
+          "actions": [
+            "open",
+            "watch-pause"
+          ],
+          "fork": null,
+          "storageBefore": {
+            "localStorage": [
+              {
+                "key": "revealline.access.revealline.v1",
+                "bytes": 43,
+                "sha256": "ab8294ac3059fda7ab0afde6f7df9f66281926c3c5dc0731afb1a8d57518e603"
+              },
+              {
+                "key": "revealline.suspended.journey-opening.v1",
+                "bytes": 5605,
+                "sha256": "0b67ed56962293bff6f766cb64cd192b886f3606a77ef9b807b24bf50bba2803"
+              }
+            ],
+            "sessionStorage": []
+          },
+          "opened": {
+            "id": 4,
+            "tick": 29,
+            "paused": false,
+            "drawCount": 11
+          },
+          "paused": 3,
+          "closeCaptureFailure": "page.evaluate: Error: Trusted Demo Close boundary missing\n    at Object.takeCloseBoundary (<anonymous>:159:15)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:32)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)"
+        }
+      ],
+      "status": "fail",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "plan": {
+        "path": "/home/runner/work/_temp/solo-linux-runtime797-demo-resources/evidence/candidate-demo-close-reopen-resources/bound-plan.json",
+        "sha256": "11c7399a8027793a8c4c581062d089cf05d0024a86a225259203761b584b0bef"
+      },
+      "startedAt": "2026-10-18T15:52:04.346Z",
+      "performanceExclusion": true,
+      "automaticQualityTransition": "not-observed",
+      "snapshots": [
+        {
+          "label": "ordinary-before",
+          "atMs": 7126.099999999977,
+          "visible": true,
+          "focused": true,
+          "viewport": {
+            "width": 1280,
+            "height": 800,
+            "dpr": 1
+          },
+          "phase": "paused",
+          "open": false,
+          "practice": false,
+          "watchPaused": null,
+          "reducedPreference": false,
+          "mutePressed": null,
+          "ordinary": {
+            "id": 1,
+            "tick": 18,
+            "status": "running",
+            "level": {
+              "version": "xonix-level.v5",
+              "id": "first-return",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+              "name": "First return",
+              "width": 72,
+              "height": 36,
+              "spawn": {
+                "x": 24.5,
+                "y": 0.5
+              },
+              "walls": [],
+              "foundations": [],
+              "goal": {
+                "coverage": 0.3
+              },
+              "encounter": null,
+              "classic": {
+                "version": "classic.v1",
+                "terrain": [],
+                "powerups": [],
+                "arcadeActions": {
+                  "version": "arcade-actions.v1"
+                }
+              },
+              "enemies": [
+                {
+                  "id": "keeper",
+                  "type": "bouncer",
+                  "x": 58.5,
+                  "y": 23.5,
+                  "vx": 7.81352993211135,
+                  "vy": -7.81352993211135,
+                  "course": "field-course.v2"
+                }
+              ],
+              "objectives": [],
+              "supplies": [],
+              "rules": {
+                "lives": 3,
+                "moveSpeed": 8.84,
+                "boostMultiplier": 1.5,
+                "respawnSeconds": 0.65,
+                "graceSeconds": 1,
+                "playerRadius": 0.18,
+                "pointsPerCell": 10,
+                "objectivePoints": 500,
+                "timeMedals": [
+                  90,
+                  150
+                ],
+                "switchCooldownSeconds": 2,
+                "timeLimitSeconds": 0,
+                "cutTimeLimitSeconds": 0,
+                "maxTrailCells": 0,
+                "stopOnCapture": true
+              },
+              "signalZones": [],
+              "hangars": [
+                {
+                  "id": "home-hangar",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ]
+            },
+            "classId": "scout",
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v6",
+              "hash": "e3663a524ef8890e",
+              "sections": {
+                "identity": "7f0adade50944b7a",
+                "configuration": "1f76b7254ac7d495",
+                "board": "1cdb1426df633e1f",
+                "player": "146dc49e566aa498",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "12ed982bd49a4ec1",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "09612b07b5ecb5a5",
+                "ability": "f6b5aef539d929bb",
+                "clock": "2d8a5353adba5199",
+                "continuation": "a1e7286b42b404e7",
+                "result": "5b9bc4ba528108e4",
+                "encounter": "5b9bc4ba528108e4",
+                "classic": "06558b7f15d44ccf",
+                "foundations": "60e21be6e6caf6b0"
+              }
+            }
+          },
+          "demo": null,
+          "painterId": null,
+          "drawCount": 0,
+          "lastDraw": null,
+          "diagnosticsSource": "public-paused-export",
+          "quality": {
+            "tier": "full",
+            "reduced": false,
+            "minimal": false
+          },
+          "calibration": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 16.699999999999818,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          },
+          "resourceContract": {
+            "format": "DemoOwnedResourcesV1",
+            "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc"
+          },
+          "resources": {
+            "renderer": {
+              "layers": {
+                "layers": 4,
+                "pixels": 2654208
+              },
+              "ownedCanvases": {
+                "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+                "categories": {
+                  "staticLayers": {
+                    "canvases": 4,
+                    "pixels": 2654208,
+                    "rgbaBytesEstimate": 10616832
+                  },
+                  "sourceArt": {
+                    "canvases": 1,
+                    "pixels": 110592,
+                    "rgbaBytesEstimate": 442368
+                  },
+                  "battlefieldGround": {
+                    "canvases": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "lost": false
+                  },
+                  "adaptedSprites": {
+                    "canvases": 8,
+                    "pixels": 17408,
+                    "rgbaBytesEstimate": 69632,
+                    "lost": 0
+                  },
+                  "signalNoise": {
+                    "canvases": 1,
+                    "pixels": 16384,
+                    "rgbaBytesEstimate": 65536,
+                    "lost": false
+                  },
+                  "jammerSurface": {
+                    "canvases": 1,
+                    "pixels": 131072,
+                    "rgbaBytesEstimate": 524288,
+                    "lost": false
+                  },
+                  "jammerNoise": {
+                    "canvases": 1,
+                    "pixels": 16384,
+                    "rgbaBytesEstimate": 65536,
+                    "lost": false
+                  },
+                  "demoConcealment": {
+                    "canvases": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "lost": false,
+                    "pixelBufferBytes": 0
+                  }
+                },
+                "canvases": 16,
+                "pixels": 2946048,
+                "rgbaBytesEstimate": 11784192,
+                "retainedPixelBufferBytes": 0,
+                "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+              },
+              "enemyImages": {
+                "scope": "page",
+                "entries": 0,
+                "active": 0,
+                "queued": 0,
+                "reservedBytes": 0,
+                "decodedBytes": 0,
+                "ownedLeases": 0
+              },
+              "legacyImages": {
+                "scope": "page",
+                "pending": 0,
+                "active": 0,
+                "reservedPixels": 0,
+                "retainedPixels": 1572778,
+                "pixelLimit": 16777216
+              }
+            },
+            "demo": {
+              "format": "DemoOwnedResourcesV1",
+              "active": false,
+              "disposed": false,
+              "phase": null,
+              "pendingSourceLoads": 0,
+              "pendingPreparations": 0,
+              "scenes": 0,
+              "display": {
+                "canvases": 1,
+                "pixels": 442368,
+                "rgbaBytesEstimate": 1769472
+              },
+              "painters": [],
+              "transition": {
+                "canvases": 1,
+                "pixels": 45000,
+                "rgbaBytesEstimate": 180000,
+                "loading": false
+              },
+              "reward": {
+                "state": "idle",
+                "pendingPreparations": 0,
+                "poster": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0
+                },
+                "presentation": null,
+                "presentationUnavailable": false,
+                "accounting": "Pending acquisitions include canceled work until actual settlement; their native allocation is unknown."
+              },
+              "workers": {
+                "observedHandles": 0,
+                "created": 0,
+                "terminationRequests": 0,
+                "accounting": "Observed bot Worker handles; successful terminate() calls are requests, not proof of native thread exit."
+              },
+              "sharedImages": {
+                "categories": {
+                  "presentation": {
+                    "images": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "unknownDimensions": 0
+                  },
+                  "actors": {
+                    "images": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "unknownDimensions": 0
+                  },
+                  "backdrop": {
+                    "images": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "unknownDimensions": 0
+                  }
+                },
+                "uniqueObserved": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "unavailableSnapshots": 0,
+                "accounting": "Image identity is deduplicated within Demo only. Category rows overlap and are nonadditive with Solo, legacy, enemy and actor pools."
+              },
+              "accounting": "Manual owner snapshot only. Closed Demo retains its display canvas. Pending preparations include canceled work until settlement; unknown native allocations are not zero.",
+              "estimate": "Canvas/image RGBA8 dimensions only; browser/GPU copies and overhead are unobservable. No total memory is claimed."
+            },
+            "phaser": {
+              "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+              "displayed": {
+                "canvases": 1,
+                "width": 1152,
+                "height": 576,
+                "pixels": 663552,
+                "rgbaBytesEstimate": 2654208
+              },
+              "detachedBoard": {
+                "canvases": 1,
+                "width": 1152,
+                "height": 576,
+                "pixels": 663552,
+                "rgbaBytesEstimate": 2654208
+              },
+              "uniqueCanvases": 2,
+              "pixels": 1327104,
+              "rgbaBytesEstimate": 5308416,
+              "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+            },
+            "sharedPresentationImages": {
+              "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+              "categories": {
+                "pagePresentation": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "activePresentation": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "actorAppearance": {
+                  "images": 24,
+                  "pixels": 61440,
+                  "rgbaBytesEstimate": 245760,
+                  "unknownDimensions": 0
+                },
+                "activeBackdrop": {
+                  "images": 1,
+                  "pixels": 1573538,
+                  "rgbaBytesEstimate": 6294152,
+                  "unknownDimensions": 0
+                }
+              },
+              "uniqueObserved": {
+                "images": 25,
+                "pixels": 1634978,
+                "rgbaBytesEstimate": 6539912,
+                "unknownDimensions": 0
+              },
+              "sharedCategoryReferences": 0,
+              "unavailableSnapshots": 0,
+              "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+              "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+            },
+            "pcm": {
+              "effects": {
+                "decodedBytes": 0,
+                "decodedBytesLimit": 33554432,
+                "buffers": 0,
+                "loading": 0
+              },
+              "publishedOwner": {
+                "format": "SoloOptionalOwnerStateV1",
+                "state": "never-created"
+              },
+              "published": {
+                "decodedBytes": 0,
+                "decodedBytesLimit": 33554432,
+                "cacheEntries": 0,
+                "loading": 0
+              },
+              "proceduralNoise": {
+                "buffers": 0,
+                "decodedBytes": 0,
+                "durationLimitSeconds": 0.25
+              },
+              "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+              "reactions": {
+                "buffers": 0,
+                "decodedBytes": 0,
+                "decodedBytesLimit": 12582912,
+                "buffersLimit": 24,
+                "perDecodeBytesLimit": 6291456,
+                "loading": 0,
+                "generation": 2,
+                "closed": false
+              }
+            },
+            "media": {
+              "phase": "paused",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0,
+              "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+            },
+            "soundtrackOwner": {
+              "format": "SoloOptionalOwnerStateV1",
+              "state": "active",
+              "bootstrapMediaElementCreated": true
+            },
+            "soundtrack": {
+              "admission": {
+                "phase": "paused",
+                "queued": 0,
+                "active": {
+                  "fetch": 0,
+                  "decode": 0,
+                  "inspect": 0,
+                  "main": 0
+                },
+                "reservedDecodeBytes": 0
+              },
+              "inspection": {
+                "workerOwned": false,
+                "workerActive": false,
+                "workerOwnedBytes": 0,
+                "pendingRequests": 0
+              },
+              "playback": {
+                "ownedBlobURLCount": 0,
+                "ownedBlobBytes": 0,
+                "failedRevocationCount": 0,
+                "failedRevocationBytes": 0,
+                "decks": [
+                  {
+                    "index": 0,
+                    "ownedBlobURLCount": 0,
+                    "ownedBlobBytes": 0
+                  },
+                  {
+                    "index": 1,
+                    "ownedBlobURLCount": 0,
+                    "ownedBlobBytes": 0
+                  }
+                ]
+              }
+            }
+          },
+          "disabled": {
+            "demo-resume": false,
+            "demo-takeover": false,
+            "demo-next": false,
+            "demo-watch-pause": false,
+            "demo-return": false
+          }
+        },
+        {
+          "label": "prepared-first-source",
+          "atMs": 11936.399999999907,
+          "visible": true,
+          "focused": true,
+          "viewport": {
+            "width": 1280,
+            "height": 800,
+            "dpr": 1
+          },
+          "phase": "paused",
+          "open": true,
+          "practice": false,
+          "scene": "playing",
+          "watchPaused": "true",
+          "reducedPreference": false,
+          "mutePressed": "true",
+          "ordinary": {
+            "id": 1,
+            "tick": 18,
+            "status": "running",
+            "level": {
+              "version": "xonix-level.v5",
+              "id": "first-return",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+              "name": "First return",
+              "width": 72,
+              "height": 36,
+              "spawn": {
+                "x": 24.5,
+                "y": 0.5
+              },
+              "walls": [],
+              "foundations": [],
+              "goal": {
+                "coverage": 0.3
+              },
+              "encounter": null,
+              "classic": {
+                "version": "classic.v1",
+                "terrain": [],
+                "powerups": [],
+                "arcadeActions": {
+                  "version": "arcade-actions.v1"
+                }
+              },
+              "enemies": [
+                {
+                  "id": "keeper",
+                  "type": "bouncer",
+                  "x": 58.5,
+                  "y": 23.5,
+                  "vx": 7.81352993211135,
+                  "vy": -7.81352993211135,
+                  "course": "field-course.v2"
+                }
+              ],
+              "objectives": [],
+              "supplies": [],
+              "rules": {
+                "lives": 3,
+                "moveSpeed": 8.84,
+                "boostMultiplier": 1.5,
+                "respawnSeconds": 0.65,
+                "graceSeconds": 1,
+                "playerRadius": 0.18,
+                "pointsPerCell": 10,
+                "objectivePoints": 500,
+                "timeMedals": [
+                  90,
+                  150
+                ],
+                "switchCooldownSeconds": 2,
+                "timeLimitSeconds": 0,
+                "cutTimeLimitSeconds": 0,
+                "maxTrailCells": 0,
+                "stopOnCapture": true
+              },
+              "signalZones": [],
+              "hangars": [
+                {
+                  "id": "home-hangar",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ]
+            },
+            "classId": "scout",
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v6",
+              "hash": "e3663a524ef8890e",
+              "sections": {
+                "identity": "7f0adade50944b7a",
+                "configuration": "1f76b7254ac7d495",
+                "board": "1cdb1426df633e1f",
+                "player": "146dc49e566aa498",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "12ed982bd49a4ec1",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "09612b07b5ecb5a5",
+                "ability": "f6b5aef539d929bb",
+                "clock": "2d8a5353adba5199",
+                "continuation": "a1e7286b42b404e7",
+                "result": "5b9bc4ba528108e4",
+                "encounter": "5b9bc4ba528108e4",
+                "classic": "06558b7f15d44ccf",
+                "foundations": "60e21be6e6caf6b0"
+              }
+            }
+          },
+          "demo": {
+            "id": 2,
+            "tick": 44,
+            "status": "running",
+            "level": {
+              "version": "xonix-level.v1",
+              "id": "signal-01",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+              "name": "First Signal",
+              "width": 48,
+              "height": 36,
+              "spawn": {
+                "x": 24.5,
+                "y": 0.5
+              },
+              "walls": [],
+              "enemies": [
+                {
+                  "id": "roamer",
+                  "type": "bouncer",
+                  "x": 37.5,
+                  "y": 24.5,
+                  "vx": 8.936533731550234,
+                  "vy": 6.499297259309261,
+                  "radius": 0.3,
+                  "course": "field-course.v2"
+                }
+              ],
+              "objectives": [],
+              "supplies": [
+                {
+                  "id": "home",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ],
+              "goal": {
+                "coverage": 0.45
+              },
+              "rules": {
+                "lives": 3,
+                "moveSpeed": 8.84,
+                "boostMultiplier": 1.5,
+                "respawnSeconds": 0.7,
+                "graceSeconds": 0.7,
+                "playerRadius": 0.18,
+                "pointsPerCell": 10,
+                "objectivePoints": 500,
+                "timeMedals": [
+                  40,
+                  73
+                ],
+                "switchCooldownSeconds": 2,
+                "timeLimitSeconds": 0,
+                "cutTimeLimitSeconds": 0,
+                "maxTrailCells": 0
+              },
+              "signalZones": [],
+              "hangars": [
+                {
+                  "id": "home-hangar",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ]
+            },
+            "classId": "scout",
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "aba4fae51abc7591",
+              "sections": {
+                "identity": "2b1ecce1381bcd3b",
+                "configuration": "67780a210840e2ad",
+                "board": "fdfff9d1d17aa722",
+                "player": "24fef299027edf2c",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "4d8b702f787aef77",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "dc7ff7307891342f",
+                "clock": "3dd6c4042d1cc2b8",
+                "continuation": "a1e7286b42b404e7",
+                "result": "5b9bc4ba528108e4"
+              }
+            }
+          },
+          "painterId": 3,
+          "drawCount": 9,
+          "lastDraw": {
+            "quality": "full",
+            "reduced": false,
+            "paused": true,
+            "width": 565.3333333333334
+          },
+          "diagnosticsSource": "public-paused-export",
+          "quality": {
+            "tier": "full",
+            "reduced": false,
+            "minimal": false
+          },
+          "calibration": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 16.699999999999818,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          },
+          "resourceContract": {
+            "format": "DemoOwnedResourcesV1",
+            "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc"
+          },
+          "resources": {
+            "renderer": {
+              "layers": {
+                "layers": 4,
+                "pixels": 2654208
+              },
+              "ownedCanvases": {
+                "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+                "categories": {
+                  "staticLayers": {
+                    "canvases": 4,
+                    "pixels": 2654208,
+                    "rgbaBytesEstimate": 10616832
+                  },
+                  "sourceArt": {
+                    "canvases": 1,
+                    "pixels": 110592,
+                    "rgbaBytesEstimate": 442368
+                  },
+                  "battlefieldGround": {
+                    "canvases": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "lost": false
+                  },
+                  "adaptedSprites": {
+                    "canvases": 8,
+                    "pixels": 17408,
+                    "rgbaBytesEstimate": 69632,
+                    "lost": 0
+                  },
+                  "signalNoise": {
+                    "canvases": 1,
+                    "pixels": 16384,
+                    "rgbaBytesEstimate": 65536,
+                    "lost": false
+                  },
+                  "jammerSurface": {
+                    "canvases": 1,
+                    "pixels": 131072,
+                    "rgbaBytesEstimate": 524288,
+                    "lost": false
+                  },
+                  "jammerNoise": {
+                    "canvases": 1,
+                    "pixels": 16384,
+                    "rgbaBytesEstimate": 65536,
+                    "lost": false
+                  },
+                  "demoConcealment": {
+                    "canvases": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "lost": false,
+                    "pixelBufferBytes": 0
+                  }
+                },
+                "canvases": 16,
+                "pixels": 2946048,
+                "rgbaBytesEstimate": 11784192,
+                "retainedPixelBufferBytes": 0,
+                "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+              },
+              "enemyImages": {
+                "scope": "page",
+                "entries": 0,
+                "active": 0,
+                "queued": 0,
+                "reservedBytes": 0,
+                "decodedBytes": 0,
+                "ownedLeases": 0
+              },
+              "legacyImages": {
+                "scope": "page",
+                "pending": 0,
+                "active": 0,
+                "reservedPixels": 0,
+                "retainedPixels": 3931726,
+                "pixelLimit": 16777216
+              }
+            },
+            "demo": {
+              "format": "DemoOwnedResourcesV1",
+              "active": true,
+              "disposed": false,
+              "phase": "paused",
+              "pendingSourceLoads": 0,
+              "pendingPreparations": 0,
+              "scenes": 1,
+              "display": {
+                "canvases": 1,
+                "pixels": 442368,
+                "rgbaBytesEstimate": 1769472
+              },
+              "painters": [
+                {
+                  "layers": {
+                    "layers": 3,
+                    "pixels": 1327104
+                  },
+                  "ownedCanvases": {
+                    "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+                    "categories": {
+                      "staticLayers": {
+                        "canvases": 3,
+                        "pixels": 1327104,
+                        "rgbaBytesEstimate": 5308416
+                      },
+                      "sourceArt": {
+                        "canvases": 1,
+                        "pixels": 110592,
+                        "rgbaBytesEstimate": 442368
+                      },
+                      "battlefieldGround": {
+                        "canvases": 0,
+                        "pixels": 0,
+                        "rgbaBytesEstimate": 0,
+                        "lost": false
+                      },
+                      "adaptedSprites": {
+                        "canvases": 17,
+                        "pixels": 20992,
+                        "rgbaBytesEstimate": 83968,
+                        "lost": 0
+                      },
+                      "signalNoise": {
+                        "canvases": 1,
+                        "pixels": 16384,
+                        "rgbaBytesEstimate": 65536,
+                        "lost": false
+                      },
+                      "jammerSurface": {
+                        "canvases": 1,
+                        "pixels": 196608,
+                        "rgbaBytesEstimate": 786432,
+                        "lost": false
+                      },
+                      "jammerNoise": {
+                        "canvases": 1,
+                        "pixels": 16384,
+                        "rgbaBytesEstimate": 65536,
+                        "lost": false
+                      },
+                      "demoConcealment": {
+                        "canvases": 1,
+                        "pixels": 196608,
+                        "rgbaBytesEstimate": 786432,
+                        "lost": false,
+                        "pixelBufferBytes": 1572864
+                      }
+                    },
+                    "canvases": 25,
+                    "pixels": 1884672,
+                    "rgbaBytesEstimate": 7538688,
+                    "retainedPixelBufferBytes": 1572864,
+                    "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+                  },
+                  "enemyImages": {
+                    "scope": "page",
+                    "entries": 0,
+                    "active": 0,
+                    "queued": 0,
+                    "reservedBytes": 0,
+                    "decodedBytes": 0,
+                    "ownedLeases": 0
+                  },
+                  "legacyImages": {
+                    "scope": "page",
+                    "pending": 0,
+                    "active": 0,
+                    "reservedPixels": 0,
+                    "retainedPixels": 3931726,
+                    "pixelLimit": 16777216
+                  }
+                }
+              ],
+              "transition": {
+                "canvases": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "loading": false
+              },
+              "reward": {
+                "state": "idle",
+                "pendingPreparations": 0,
+                "poster": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0
+                },
+                "presentation": null,
+                "presentationUnavailable": false,
+                "accounting": "Pending acquisitions include canceled work until actual settlement; their native allocation is unknown."
+              },
+              "workers": {
+                "observedHandles": 0,
+                "created": 0,
+                "terminationRequests": 0,
+                "accounting": "Observed bot Worker handles; successful terminate() calls are requests, not proof of native thread exit."
+              },
+              "sharedImages": {
+                "categories": {
+                  "presentation": {
+                    "images": 75,
+                    "pixels": 78976,
+                    "rgbaBytesEstimate": 315904,
+                    "unknownDimensions": 0
+                  },
+                  "actors": {
+                    "images": 24,
+                    "pixels": 61440,
+                    "rgbaBytesEstimate": 245760,
+                    "unknownDimensions": 0
+                  },
+                  "backdrop": {
+                    "images": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "unknownDimensions": 0
+                  }
+                },
+                "uniqueObserved": {
+                  "images": 78,
+                  "pixels": 91264,
+                  "rgbaBytesEstimate": 365056,
+                  "unknownDimensions": 0
+                },
+                "unavailableSnapshots": 0,
+                "accounting": "Image identity is deduplicated within Demo only. Category rows overlap and are nonadditive with Solo, legacy, enemy and actor pools."
+              },
+              "accounting": "Manual owner snapshot only. Closed Demo retains its display canvas. Pending preparations include canceled work until settlement; unknown native allocations are not zero.",
+              "estimate": "Canvas/image RGBA8 dimensions only; browser/GPU copies and overhead are unobservable. No total memory is claimed."
+            },
+            "phaser": {
+              "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+              "displayed": {
+                "canvases": 1,
+                "width": 1152,
+                "height": 576,
+                "pixels": 663552,
+                "rgbaBytesEstimate": 2654208
+              },
+              "detachedBoard": {
+                "canvases": 1,
+                "width": 1152,
+                "height": 576,
+                "pixels": 663552,
+                "rgbaBytesEstimate": 2654208
+              },
+              "uniqueCanvases": 2,
+              "pixels": 1327104,
+              "rgbaBytesEstimate": 5308416,
+              "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+            },
+            "sharedPresentationImages": {
+              "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+              "categories": {
+                "pagePresentation": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "activePresentation": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "actorAppearance": {
+                  "images": 24,
+                  "pixels": 61440,
+                  "rgbaBytesEstimate": 245760,
+                  "unknownDimensions": 0
+                },
+                "activeBackdrop": {
+                  "images": 1,
+                  "pixels": 1573538,
+                  "rgbaBytesEstimate": 6294152,
+                  "unknownDimensions": 0
+                }
+              },
+              "uniqueObserved": {
+                "images": 25,
+                "pixels": 1634978,
+                "rgbaBytesEstimate": 6539912,
+                "unknownDimensions": 0
+              },
+              "sharedCategoryReferences": 0,
+              "unavailableSnapshots": 0,
+              "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+              "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+            },
+            "pcm": {
+              "effects": {
+                "decodedBytes": 0,
+                "decodedBytesLimit": 33554432,
+                "buffers": 0,
+                "loading": 0
+              },
+              "publishedOwner": {
+                "format": "SoloOptionalOwnerStateV1",
+                "state": "never-created"
+              },
+              "published": {
+                "decodedBytes": 0,
+                "decodedBytesLimit": 33554432,
+                "cacheEntries": 0,
+                "loading": 0
+              },
+              "proceduralNoise": {
+                "buffers": 0,
+                "decodedBytes": 0,
+                "durationLimitSeconds": 0.25
+              },
+              "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+              "reactions": {
+                "buffers": 0,
+                "decodedBytes": 0,
+                "decodedBytesLimit": 12582912,
+                "buffersLimit": 24,
+                "perDecodeBytesLimit": 6291456,
+                "loading": 0,
+                "generation": 2,
+                "closed": false
+              }
+            },
+            "media": {
+              "phase": "paused",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0,
+              "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+            },
+            "soundtrackOwner": {
+              "format": "SoloOptionalOwnerStateV1",
+              "state": "active",
+              "bootstrapMediaElementCreated": true
+            },
+            "soundtrack": {
+              "admission": {
+                "phase": "paused",
+                "queued": 0,
+                "active": {
+                  "fetch": 0,
+                  "decode": 0,
+                  "inspect": 0,
+                  "main": 0
+                },
+                "reservedDecodeBytes": 0
+              },
+              "inspection": {
+                "workerOwned": false,
+                "workerActive": false,
+                "workerOwnedBytes": 0,
+                "pendingRequests": 0
+              },
+              "playback": {
+                "ownedBlobURLCount": 0,
+                "ownedBlobBytes": 0,
+                "failedRevocationCount": 0,
+                "failedRevocationBytes": 0,
+                "decks": [
+                  {
+                    "index": 0,
+                    "ownedBlobURLCount": 0,
+                    "ownedBlobBytes": 0
+                  },
+                  {
+                    "index": 1,
+                    "ownedBlobURLCount": 0,
+                    "ownedBlobBytes": 0
+                  }
+                ]
+              }
+            }
+          },
+          "disabled": {
+            "demo-resume": false,
+            "demo-takeover": false,
+            "demo-next": false,
+            "demo-watch-pause": false,
+            "demo-return": false
+          }
+        },
+        {
+          "label": "resource-initial-closed",
+          "atMs": 12084,
+          "visible": true,
+          "focused": true,
+          "viewport": {
+            "width": 1280,
+            "height": 800,
+            "dpr": 1
+          },
+          "phase": "paused",
+          "open": false,
+          "practice": false,
+          "scene": "playing",
+          "watchPaused": "true",
+          "reducedPreference": false,
+          "mutePressed": "true",
+          "ordinary": {
+            "id": 1,
+            "tick": 18,
+            "status": "running",
+            "level": {
+              "version": "xonix-level.v5",
+              "id": "first-return",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+              "name": "First return",
+              "width": 72,
+              "height": 36,
+              "spawn": {
+                "x": 24.5,
+                "y": 0.5
+              },
+              "walls": [],
+              "foundations": [],
+              "goal": {
+                "coverage": 0.3
+              },
+              "encounter": null,
+              "classic": {
+                "version": "classic.v1",
+                "terrain": [],
+                "powerups": [],
+                "arcadeActions": {
+                  "version": "arcade-actions.v1"
+                }
+              },
+              "enemies": [
+                {
+                  "id": "keeper",
+                  "type": "bouncer",
+                  "x": 58.5,
+                  "y": 23.5,
+                  "vx": 7.81352993211135,
+                  "vy": -7.81352993211135,
+                  "course": "field-course.v2"
+                }
+              ],
+              "objectives": [],
+              "supplies": [],
+              "rules": {
+                "lives": 3,
+                "moveSpeed": 8.84,
+                "boostMultiplier": 1.5,
+                "respawnSeconds": 0.65,
+                "graceSeconds": 1,
+                "playerRadius": 0.18,
+                "pointsPerCell": 10,
+                "objectivePoints": 500,
+                "timeMedals": [
+                  90,
+                  150
+                ],
+                "switchCooldownSeconds": 2,
+                "timeLimitSeconds": 0,
+                "cutTimeLimitSeconds": 0,
+                "maxTrailCells": 0,
+                "stopOnCapture": true
+              },
+              "signalZones": [],
+              "hangars": [
+                {
+                  "id": "home-hangar",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ]
+            },
+            "classId": "scout",
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v6",
+              "hash": "e3663a524ef8890e",
+              "sections": {
+                "identity": "7f0adade50944b7a",
+                "configuration": "1f76b7254ac7d495",
+                "board": "1cdb1426df633e1f",
+                "player": "146dc49e566aa498",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "12ed982bd49a4ec1",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "09612b07b5ecb5a5",
+                "ability": "f6b5aef539d929bb",
+                "clock": "2d8a5353adba5199",
+                "continuation": "a1e7286b42b404e7",
+                "result": "5b9bc4ba528108e4",
+                "encounter": "5b9bc4ba528108e4",
+                "classic": "06558b7f15d44ccf",
+                "foundations": "60e21be6e6caf6b0"
+              }
+            }
+          },
+          "demo": {
+            "id": 2,
+            "tick": 44,
+            "status": "running",
+            "level": {
+              "version": "xonix-level.v1",
+              "id": "signal-01",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+              "name": "First Signal",
+              "width": 48,
+              "height": 36,
+              "spawn": {
+                "x": 24.5,
+                "y": 0.5
+              },
+              "walls": [],
+              "enemies": [
+                {
+                  "id": "roamer",
+                  "type": "bouncer",
+                  "x": 37.5,
+                  "y": 24.5,
+                  "vx": 8.936533731550234,
+                  "vy": 6.499297259309261,
+                  "radius": 0.3,
+                  "course": "field-course.v2"
+                }
+              ],
+              "objectives": [],
+              "supplies": [
+                {
+                  "id": "home",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ],
+              "goal": {
+                "coverage": 0.45
+              },
+              "rules": {
+                "lives": 3,
+                "moveSpeed": 8.84,
+                "boostMultiplier": 1.5,
+                "respawnSeconds": 0.7,
+                "graceSeconds": 0.7,
+                "playerRadius": 0.18,
+                "pointsPerCell": 10,
+                "objectivePoints": 500,
+                "timeMedals": [
+                  40,
+                  73
+                ],
+                "switchCooldownSeconds": 2,
+                "timeLimitSeconds": 0,
+                "cutTimeLimitSeconds": 0,
+                "maxTrailCells": 0
+              },
+              "signalZones": [],
+              "hangars": [
+                {
+                  "id": "home-hangar",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ]
+            },
+            "classId": "scout",
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "aba4fae51abc7591",
+              "sections": {
+                "identity": "2b1ecce1381bcd3b",
+                "configuration": "67780a210840e2ad",
+                "board": "fdfff9d1d17aa722",
+                "player": "24fef299027edf2c",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "4d8b702f787aef77",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "dc7ff7307891342f",
+                "clock": "3dd6c4042d1cc2b8",
+                "continuation": "a1e7286b42b404e7",
+                "result": "5b9bc4ba528108e4"
+              }
+            }
+          },
+          "painterId": 3,
+          "drawCount": 9,
+          "lastDraw": {
+            "quality": "full",
+            "reduced": false,
+            "paused": true,
+            "width": 565.3333333333334
+          },
+          "diagnosticsSource": "public-paused-export",
+          "quality": {
+            "tier": "full",
+            "reduced": false,
+            "minimal": false
+          },
+          "calibration": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 16.699999999999818,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          },
+          "resourceContract": {
+            "format": "DemoOwnedResourcesV1",
+            "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc"
+          },
+          "resources": {
+            "renderer": {
+              "layers": {
+                "layers": 4,
+                "pixels": 2654208
+              },
+              "ownedCanvases": {
+                "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+                "categories": {
+                  "staticLayers": {
+                    "canvases": 4,
+                    "pixels": 2654208,
+                    "rgbaBytesEstimate": 10616832
+                  },
+                  "sourceArt": {
+                    "canvases": 1,
+                    "pixels": 110592,
+                    "rgbaBytesEstimate": 442368
+                  },
+                  "battlefieldGround": {
+                    "canvases": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "lost": false
+                  },
+                  "adaptedSprites": {
+                    "canvases": 8,
+                    "pixels": 17408,
+                    "rgbaBytesEstimate": 69632,
+                    "lost": 0
+                  },
+                  "signalNoise": {
+                    "canvases": 1,
+                    "pixels": 16384,
+                    "rgbaBytesEstimate": 65536,
+                    "lost": false
+                  },
+                  "jammerSurface": {
+                    "canvases": 1,
+                    "pixels": 131072,
+                    "rgbaBytesEstimate": 524288,
+                    "lost": false
+                  },
+                  "jammerNoise": {
+                    "canvases": 1,
+                    "pixels": 16384,
+                    "rgbaBytesEstimate": 65536,
+                    "lost": false
+                  },
+                  "demoConcealment": {
+                    "canvases": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "lost": false,
+                    "pixelBufferBytes": 0
+                  }
+                },
+                "canvases": 16,
+                "pixels": 2946048,
+                "rgbaBytesEstimate": 11784192,
+                "retainedPixelBufferBytes": 0,
+                "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+              },
+              "enemyImages": {
+                "scope": "page",
+                "entries": 0,
+                "active": 0,
+                "queued": 0,
+                "reservedBytes": 0,
+                "decodedBytes": 0,
+                "ownedLeases": 0
+              },
+              "legacyImages": {
+                "scope": "page",
+                "pending": 0,
+                "active": 0,
+                "reservedPixels": 0,
+                "retainedPixels": 1572778,
+                "pixelLimit": 16777216
+              }
+            },
+            "demo": {
+              "format": "DemoOwnedResourcesV1",
+              "active": false,
+              "disposed": false,
+              "phase": null,
+              "pendingSourceLoads": 0,
+              "pendingPreparations": 0,
+              "scenes": 0,
+              "display": {
+                "canvases": 1,
+                "pixels": 442368,
+                "rgbaBytesEstimate": 1769472
+              },
+              "painters": [],
+              "transition": {
+                "canvases": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "loading": false
+              },
+              "reward": {
+                "state": "idle",
+                "pendingPreparations": 0,
+                "poster": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0
+                },
+                "presentation": null,
+                "presentationUnavailable": false,
+                "accounting": "Pending acquisitions include canceled work until actual settlement; their native allocation is unknown."
+              },
+              "workers": {
+                "observedHandles": 0,
+                "created": 0,
+                "terminationRequests": 0,
+                "accounting": "Observed bot Worker handles; successful terminate() calls are requests, not proof of native thread exit."
+              },
+              "sharedImages": {
+                "categories": {
+                  "presentation": {
+                    "images": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "unknownDimensions": 0
+                  },
+                  "actors": {
+                    "images": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "unknownDimensions": 0
+                  },
+                  "backdrop": {
+                    "images": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "unknownDimensions": 0
+                  }
+                },
+                "uniqueObserved": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "unavailableSnapshots": 0,
+                "accounting": "Image identity is deduplicated within Demo only. Category rows overlap and are nonadditive with Solo, legacy, enemy and actor pools."
+              },
+              "accounting": "Manual owner snapshot only. Closed Demo retains its display canvas. Pending preparations include canceled work until settlement; unknown native allocations are not zero.",
+              "estimate": "Canvas/image RGBA8 dimensions only; browser/GPU copies and overhead are unobservable. No total memory is claimed."
+            },
+            "phaser": {
+              "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+              "displayed": {
+                "canvases": 1,
+                "width": 1152,
+                "height": 576,
+                "pixels": 663552,
+                "rgbaBytesEstimate": 2654208
+              },
+              "detachedBoard": {
+                "canvases": 1,
+                "width": 1152,
+                "height": 576,
+                "pixels": 663552,
+                "rgbaBytesEstimate": 2654208
+              },
+              "uniqueCanvases": 2,
+              "pixels": 1327104,
+              "rgbaBytesEstimate": 5308416,
+              "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+            },
+            "sharedPresentationImages": {
+              "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+              "categories": {
+                "pagePresentation": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "activePresentation": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "actorAppearance": {
+                  "images": 24,
+                  "pixels": 61440,
+                  "rgbaBytesEstimate": 245760,
+                  "unknownDimensions": 0
+                },
+                "activeBackdrop": {
+                  "images": 1,
+                  "pixels": 1573538,
+                  "rgbaBytesEstimate": 6294152,
+                  "unknownDimensions": 0
+                }
+              },
+              "uniqueObserved": {
+                "images": 25,
+                "pixels": 1634978,
+                "rgbaBytesEstimate": 6539912,
+                "unknownDimensions": 0
+              },
+              "sharedCategoryReferences": 0,
+              "unavailableSnapshots": 0,
+              "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+              "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+            },
+            "pcm": {
+              "effects": {
+                "decodedBytes": 0,
+                "decodedBytesLimit": 33554432,
+                "buffers": 0,
+                "loading": 0
+              },
+              "publishedOwner": {
+                "format": "SoloOptionalOwnerStateV1",
+                "state": "never-created"
+              },
+              "published": {
+                "decodedBytes": 0,
+                "decodedBytesLimit": 33554432,
+                "cacheEntries": 0,
+                "loading": 0
+              },
+              "proceduralNoise": {
+                "buffers": 0,
+                "decodedBytes": 0,
+                "durationLimitSeconds": 0.25
+              },
+              "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+              "reactions": {
+                "buffers": 0,
+                "decodedBytes": 0,
+                "decodedBytesLimit": 12582912,
+                "buffersLimit": 24,
+                "perDecodeBytesLimit": 6291456,
+                "loading": 0,
+                "generation": 2,
+                "closed": false
+              }
+            },
+            "media": {
+              "phase": "paused",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0,
+              "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+            },
+            "soundtrackOwner": {
+              "format": "SoloOptionalOwnerStateV1",
+              "state": "active",
+              "bootstrapMediaElementCreated": true
+            },
+            "soundtrack": {
+              "admission": {
+                "phase": "paused",
+                "queued": 0,
+                "active": {
+                  "fetch": 0,
+                  "decode": 0,
+                  "inspect": 0,
+                  "main": 0
+                },
+                "reservedDecodeBytes": 0
+              },
+              "inspection": {
+                "workerOwned": false,
+                "workerActive": false,
+                "workerOwnedBytes": 0,
+                "pendingRequests": 0
+              },
+              "playback": {
+                "ownedBlobURLCount": 0,
+                "ownedBlobBytes": 0,
+                "failedRevocationCount": 0,
+                "failedRevocationBytes": 0,
+                "decks": [
+                  {
+                    "index": 0,
+                    "ownedBlobURLCount": 0,
+                    "ownedBlobBytes": 0
+                  },
+                  {
+                    "index": 1,
+                    "ownedBlobURLCount": 0,
+                    "ownedBlobBytes": 0
+                  }
+                ]
+              }
+            }
+          },
+          "disabled": {
+            "demo-resume": false,
+            "demo-takeover": false,
+            "demo-next": false,
+            "demo-watch-pause": false,
+            "demo-return": false
+          }
+        },
+        {
+          "label": "spectator-1-paused",
+          "atMs": 14333.599999999977,
+          "visible": true,
+          "focused": true,
+          "viewport": {
+            "width": 1280,
+            "height": 800,
+            "dpr": 1
+          },
+          "phase": "paused",
+          "open": true,
+          "practice": false,
+          "scene": "playing",
+          "watchPaused": "true",
+          "reducedPreference": false,
+          "mutePressed": "true",
+          "ordinary": {
+            "id": 1,
+            "tick": 18,
+            "status": "running",
+            "level": {
+              "version": "xonix-level.v5",
+              "id": "first-return",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+              "name": "First return",
+              "width": 72,
+              "height": 36,
+              "spawn": {
+                "x": 24.5,
+                "y": 0.5
+              },
+              "walls": [],
+              "foundations": [],
+              "goal": {
+                "coverage": 0.3
+              },
+              "encounter": null,
+              "classic": {
+                "version": "classic.v1",
+                "terrain": [],
+                "powerups": [],
+                "arcadeActions": {
+                  "version": "arcade-actions.v1"
+                }
+              },
+              "enemies": [
+                {
+                  "id": "keeper",
+                  "type": "bouncer",
+                  "x": 58.5,
+                  "y": 23.5,
+                  "vx": 7.81352993211135,
+                  "vy": -7.81352993211135,
+                  "course": "field-course.v2"
+                }
+              ],
+              "objectives": [],
+              "supplies": [],
+              "rules": {
+                "lives": 3,
+                "moveSpeed": 8.84,
+                "boostMultiplier": 1.5,
+                "respawnSeconds": 0.65,
+                "graceSeconds": 1,
+                "playerRadius": 0.18,
+                "pointsPerCell": 10,
+                "objectivePoints": 500,
+                "timeMedals": [
+                  90,
+                  150
+                ],
+                "switchCooldownSeconds": 2,
+                "timeLimitSeconds": 0,
+                "cutTimeLimitSeconds": 0,
+                "maxTrailCells": 0,
+                "stopOnCapture": true
+              },
+              "signalZones": [],
+              "hangars": [
+                {
+                  "id": "home-hangar",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ]
+            },
+            "classId": "scout",
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v6",
+              "hash": "e3663a524ef8890e",
+              "sections": {
+                "identity": "7f0adade50944b7a",
+                "configuration": "1f76b7254ac7d495",
+                "board": "1cdb1426df633e1f",
+                "player": "146dc49e566aa498",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "12ed982bd49a4ec1",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "09612b07b5ecb5a5",
+                "ability": "f6b5aef539d929bb",
+                "clock": "2d8a5353adba5199",
+                "continuation": "a1e7286b42b404e7",
+                "result": "5b9bc4ba528108e4",
+                "encounter": "5b9bc4ba528108e4",
+                "classic": "06558b7f15d44ccf",
+                "foundations": "60e21be6e6caf6b0"
+              }
+            }
+          },
+          "demo": {
+            "id": 4,
+            "tick": 42,
+            "status": "running",
+            "level": {
+              "version": "xonix-level.v1",
+              "id": "signal-01",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+              "name": "First Signal",
+              "width": 48,
+              "height": 36,
+              "spawn": {
+                "x": 24.5,
+                "y": 0.5
+              },
+              "walls": [],
+              "enemies": [
+                {
+                  "id": "roamer",
+                  "type": "bouncer",
+                  "x": 37.5,
+                  "y": 24.5,
+                  "vx": 8.936533731550234,
+                  "vy": 6.499297259309261,
+                  "radius": 0.3,
+                  "course": "field-course.v2"
+                }
+              ],
+              "objectives": [],
+              "supplies": [
+                {
+                  "id": "home",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ],
+              "goal": {
+                "coverage": 0.45
+              },
+              "rules": {
+                "lives": 3,
+                "moveSpeed": 8.84,
+                "boostMultiplier": 1.5,
+                "respawnSeconds": 0.7,
+                "graceSeconds": 0.7,
+                "playerRadius": 0.18,
+                "pointsPerCell": 10,
+                "objectivePoints": 500,
+                "timeMedals": [
+                  40,
+                  73
+                ],
+                "switchCooldownSeconds": 2,
+                "timeLimitSeconds": 0,
+                "cutTimeLimitSeconds": 0,
+                "maxTrailCells": 0
+              },
+              "signalZones": [],
+              "hangars": [
+                {
+                  "id": "home-hangar",
+                  "x": 24.5,
+                  "y": 0.5,
+                  "radius": 2
+                }
+              ]
+            },
+            "classId": "scout",
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "3574961a2321221c",
+              "sections": {
+                "identity": "2b1ecce1381bcd3b",
+                "configuration": "67780a210840e2ad",
+                "board": "fdfff9d1d17aa722",
+                "player": "24fef299027edf2c",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "5dd9144c2186aab1",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "dc7ff7307891342f",
+                "clock": "13761abec7b08184",
+                "continuation": "a1e7286b42b404e7",
+                "result": "5b9bc4ba528108e4"
+              }
+            }
+          },
+          "painterId": 5,
+          "drawCount": 18,
+          "lastDraw": {
+            "quality": "full",
+            "reduced": false,
+            "paused": true,
+            "width": 565.3333333333334
+          },
+          "diagnosticsSource": "public-paused-export",
+          "quality": {
+            "tier": "full",
+            "reduced": false,
+            "minimal": false
+          },
+          "calibration": {
+            "samples": 30,
+            "required": 30,
+            "baselineMs": 16.699999999999818,
+            "restartedSamples": 0,
+            "waiting": false,
+            "status": "measured-before-play"
+          },
+          "resourceContract": {
+            "format": "DemoOwnedResourcesV1",
+            "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc"
+          },
+          "resources": {
+            "renderer": {
+              "layers": {
+                "layers": 4,
+                "pixels": 2654208
+              },
+              "ownedCanvases": {
+                "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+                "categories": {
+                  "staticLayers": {
+                    "canvases": 4,
+                    "pixels": 2654208,
+                    "rgbaBytesEstimate": 10616832
+                  },
+                  "sourceArt": {
+                    "canvases": 1,
+                    "pixels": 110592,
+                    "rgbaBytesEstimate": 442368
+                  },
+                  "battlefieldGround": {
+                    "canvases": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "lost": false
+                  },
+                  "adaptedSprites": {
+                    "canvases": 8,
+                    "pixels": 17408,
+                    "rgbaBytesEstimate": 69632,
+                    "lost": 0
+                  },
+                  "signalNoise": {
+                    "canvases": 1,
+                    "pixels": 16384,
+                    "rgbaBytesEstimate": 65536,
+                    "lost": false
+                  },
+                  "jammerSurface": {
+                    "canvases": 1,
+                    "pixels": 131072,
+                    "rgbaBytesEstimate": 524288,
+                    "lost": false
+                  },
+                  "jammerNoise": {
+                    "canvases": 1,
+                    "pixels": 16384,
+                    "rgbaBytesEstimate": 65536,
+                    "lost": false
+                  },
+                  "demoConcealment": {
+                    "canvases": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "lost": false,
+                    "pixelBufferBytes": 0
+                  }
+                },
+                "canvases": 16,
+                "pixels": 2946048,
+                "rgbaBytesEstimate": 11784192,
+                "retainedPixelBufferBytes": 0,
+                "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+              },
+              "enemyImages": {
+                "scope": "page",
+                "entries": 0,
+                "active": 0,
+                "queued": 0,
+                "reservedBytes": 0,
+                "decodedBytes": 0,
+                "ownedLeases": 0
+              },
+              "legacyImages": {
+                "scope": "page",
+                "pending": 0,
+                "active": 0,
+                "reservedPixels": 0,
+                "retainedPixels": 3931726,
+                "pixelLimit": 16777216
+              }
+            },
+            "demo": {
+              "format": "DemoOwnedResourcesV1",
+              "active": true,
+              "disposed": false,
+              "phase": "paused",
+              "pendingSourceLoads": 0,
+              "pendingPreparations": 0,
+              "scenes": 1,
+              "display": {
+                "canvases": 1,
+                "pixels": 442368,
+                "rgbaBytesEstimate": 1769472
+              },
+              "painters": [
+                {
+                  "layers": {
+                    "layers": 3,
+                    "pixels": 1327104
+                  },
+                  "ownedCanvases": {
+                    "scope": "Unique canvases owned by this painter; excludes Phaser and shared source images.",
+                    "categories": {
+                      "staticLayers": {
+                        "canvases": 3,
+                        "pixels": 1327104,
+                        "rgbaBytesEstimate": 5308416
+                      },
+                      "sourceArt": {
+                        "canvases": 1,
+                        "pixels": 110592,
+                        "rgbaBytesEstimate": 442368
+                      },
+                      "battlefieldGround": {
+                        "canvases": 0,
+                        "pixels": 0,
+                        "rgbaBytesEstimate": 0,
+                        "lost": false
+                      },
+                      "adaptedSprites": {
+                        "canvases": 17,
+                        "pixels": 20992,
+                        "rgbaBytesEstimate": 83968,
+                        "lost": 0
+                      },
+                      "signalNoise": {
+                        "canvases": 1,
+                        "pixels": 16384,
+                        "rgbaBytesEstimate": 65536,
+                        "lost": false
+                      },
+                      "jammerSurface": {
+                        "canvases": 1,
+                        "pixels": 196608,
+                        "rgbaBytesEstimate": 786432,
+                        "lost": false
+                      },
+                      "jammerNoise": {
+                        "canvases": 1,
+                        "pixels": 16384,
+                        "rgbaBytesEstimate": 65536,
+                        "lost": false
+                      },
+                      "demoConcealment": {
+                        "canvases": 1,
+                        "pixels": 196608,
+                        "rgbaBytesEstimate": 786432,
+                        "lost": false,
+                        "pixelBufferBytes": 1572864
+                      }
+                    },
+                    "canvases": 25,
+                    "pixels": 1884672,
+                    "rgbaBytesEstimate": 7538688,
+                    "retainedPixelBufferBytes": 1572864,
+                    "estimate": "RGBA8 dimensions at four bytes per pixel; browser/GPU allocation, copies and overhead are unobservable."
+                  },
+                  "enemyImages": {
+                    "scope": "page",
+                    "entries": 0,
+                    "active": 0,
+                    "queued": 0,
+                    "reservedBytes": 0,
+                    "decodedBytes": 0,
+                    "ownedLeases": 0
+                  },
+                  "legacyImages": {
+                    "scope": "page",
+                    "pending": 0,
+                    "active": 0,
+                    "reservedPixels": 0,
+                    "retainedPixels": 3931726,
+                    "pixelLimit": 16777216
+                  }
+                }
+              ],
+              "transition": {
+                "canvases": 0,
+                "pixels": 0,
+                "rgbaBytesEstimate": 0,
+                "loading": false
+              },
+              "reward": {
+                "state": "idle",
+                "pendingPreparations": 0,
+                "poster": {
+                  "canvases": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0
+                },
+                "presentation": null,
+                "presentationUnavailable": false,
+                "accounting": "Pending acquisitions include canceled work until actual settlement; their native allocation is unknown."
+              },
+              "workers": {
+                "observedHandles": 0,
+                "created": 0,
+                "terminationRequests": 0,
+                "accounting": "Observed bot Worker handles; successful terminate() calls are requests, not proof of native thread exit."
+              },
+              "sharedImages": {
+                "categories": {
+                  "presentation": {
+                    "images": 75,
+                    "pixels": 78976,
+                    "rgbaBytesEstimate": 315904,
+                    "unknownDimensions": 0
+                  },
+                  "actors": {
+                    "images": 24,
+                    "pixels": 61440,
+                    "rgbaBytesEstimate": 245760,
+                    "unknownDimensions": 0
+                  },
+                  "backdrop": {
+                    "images": 0,
+                    "pixels": 0,
+                    "rgbaBytesEstimate": 0,
+                    "unknownDimensions": 0
+                  }
+                },
+                "uniqueObserved": {
+                  "images": 78,
+                  "pixels": 91264,
+                  "rgbaBytesEstimate": 365056,
+                  "unknownDimensions": 0
+                },
+                "unavailableSnapshots": 0,
+                "accounting": "Image identity is deduplicated within Demo only. Category rows overlap and are nonadditive with Solo, legacy, enemy and actor pools."
+              },
+              "accounting": "Manual owner snapshot only. Closed Demo retains its display canvas. Pending preparations include canceled work until settlement; unknown native allocations are not zero.",
+              "estimate": "Canvas/image RGBA8 dimensions only; browser/GPU copies and overhead are unobservable. No total memory is claimed."
+            },
+            "phaser": {
+              "scope": "Phaser-owned displayed canvas and detached board texture; separate from painter caches.",
+              "displayed": {
+                "canvases": 1,
+                "width": 1152,
+                "height": 576,
+                "pixels": 663552,
+                "rgbaBytesEstimate": 2654208
+              },
+              "detachedBoard": {
+                "canvases": 1,
+                "width": 1152,
+                "height": 576,
+                "pixels": 663552,
+                "rgbaBytesEstimate": 2654208
+              },
+              "uniqueCanvases": 2,
+              "pixels": 1327104,
+              "rgbaBytesEstimate": 5308416,
+              "estimate": "RGBA8 dimensions only; compositor/GPU copies and browser backing overhead are unobservable."
+            },
+            "sharedPresentationImages": {
+              "scope": "Observed base release/actor/backdrop images; live object identity is deduplicated within this section only.",
+              "categories": {
+                "pagePresentation": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "activePresentation": {
+                  "images": 0,
+                  "pixels": 0,
+                  "rgbaBytesEstimate": 0,
+                  "unknownDimensions": 0
+                },
+                "actorAppearance": {
+                  "images": 24,
+                  "pixels": 61440,
+                  "rgbaBytesEstimate": 245760,
+                  "unknownDimensions": 0
+                },
+                "activeBackdrop": {
+                  "images": 1,
+                  "pixels": 1573538,
+                  "rgbaBytesEstimate": 6294152,
+                  "unknownDimensions": 0
+                }
+              },
+              "uniqueObserved": {
+                "images": 25,
+                "pixels": 1634978,
+                "rgbaBytesEstimate": 6539912,
+                "unknownDimensions": 0
+              },
+              "sharedCategoryReferences": 0,
+              "unavailableSnapshots": 0,
+              "accounting": "Category rows overlap. Do not add this section to shared legacy/enemy/actor-pool counters; no cross-pool total is claimed.",
+              "estimate": "RGBA8 dimensions only; browser/GPU copies, internal decode storage and overhead are unobservable."
+            },
+            "pcm": {
+              "effects": {
+                "decodedBytes": 0,
+                "decodedBytesLimit": 33554432,
+                "buffers": 0,
+                "loading": 0
+              },
+              "publishedOwner": {
+                "format": "SoloOptionalOwnerStateV1",
+                "state": "never-created"
+              },
+              "published": {
+                "decodedBytes": 0,
+                "decodedBytesLimit": 33554432,
+                "cacheEntries": 0,
+                "loading": 0
+              },
+              "proceduralNoise": {
+                "buffers": 0,
+                "decodedBytes": 0,
+                "durationLimitSeconds": 0.25
+              },
+              "accounting": "Retained cache PCM and the owned noise buffer only, at four bytes per sample. Active voices may share these buffers or retain evicted buffers. Native decoder/storage copies, streamed media, synthesizer nodes and browser overhead are excluded. Admission reservations are separate declared estimates and must not be added as measured native memory.",
+              "reactions": {
+                "buffers": 0,
+                "decodedBytes": 0,
+                "decodedBytesLimit": 12582912,
+                "buffersLimit": 24,
+                "perDecodeBytesLimit": 6291456,
+                "loading": 0,
+                "generation": 2,
+                "closed": false
+              }
+            },
+            "media": {
+              "phase": "paused",
+              "queued": 0,
+              "active": {
+                "fetch": 0,
+                "decode": 0,
+                "inspect": 0,
+                "main": 0
+              },
+              "reservedDecodeBytes": 0,
+              "reservationAccounting": "reservedDecodeBytes is the sum of caller-declared admission estimates; depending on the loader, these can represent source bytes or estimated PCM. It is not measured native allocation, is retained until native decode settlement, and must not be added to retained cache bytes as total memory."
+            },
+            "soundtrackOwner": {
+              "format": "SoloOptionalOwnerStateV1",
+              "state": "active",
+              "bootstrapMediaElementCreated": true
+            },
+            "soundtrack": {
+              "admission": {
+                "phase": "paused",
+                "queued": 0,
+                "active": {
+                  "fetch": 0,
+                  "decode": 0,
+                  "inspect": 0,
+                  "main": 0
+                },
+                "reservedDecodeBytes": 0
+              },
+              "inspection": {
+                "workerOwned": false,
+                "workerActive": false,
+                "workerOwnedBytes": 0,
+                "pendingRequests": 0
+              },
+              "playback": {
+                "ownedBlobURLCount": 0,
+                "ownedBlobBytes": 0,
+                "failedRevocationCount": 0,
+                "failedRevocationBytes": 0,
+                "decks": [
+                  {
+                    "index": 0,
+                    "ownedBlobURLCount": 0,
+                    "ownedBlobBytes": 0
+                  },
+                  {
+                    "index": 1,
+                    "ownedBlobURLCount": 0,
+                    "ownedBlobBytes": 0
+                  }
+                ]
+              }
+            }
+          },
+          "disabled": {
+            "demo-resume": false,
+            "demo-takeover": false,
+            "demo-next": false,
+            "demo-watch-pause": false,
+            "demo-return": false
+          }
+        }
+      ],
+      "arms": [],
+      "qualityWindows": [],
+      "errors": [],
+      "failedRequests": [],
+      "sources": [
+        {
+          "url": "http://127.0.0.1:33871/game/app.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 482579,
+          "sha256": "a64aee0215a01d0dc95aa6ecae2b57cb6c11e9ada5e03547e27acdb70ad589c0",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/ui/visual-quality-policy.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 4584,
+          "sha256": "8343ccae5ff367b58d8d0a7259fff5866d4cd525ed53dac0eacead386e1a6e7e",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/core/index.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 23285,
+          "sha256": "d5fead46c41a9651da86003f70417a9d2bbd5a61830c007011b205581b2a3330",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/ui/render.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 50263,
+          "sha256": "08e6b44143934f11422a96a04f166e47e340fd599f44fc9c51b7b69f9819348e",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/ui/demo-host.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 39006,
+          "sha256": "ace07e601893ec1435649056769de62285fed3fa9ac5ab467d97b984ae5a049a",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/demo-sources.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 5783,
+          "sha256": "e86d06c2bc1b7aad5b0138cec74cf9600182125215fb069e35ff7d9c311e29f7",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/replay.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 33108,
+          "sha256": "04bbd4426dfe4528f7ae7028a61da65a318895bd318d26bb8d2ad1503c341a41",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/ui/demo-clock.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 7534,
+          "sha256": "839214720356f03438daa90ed0acea923d765b0ce38a311d55bef57c980bc03a",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/demo-experience.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 6149,
+          "sha256": "d51d37259f6099546b22b2bf94cf50e6bfa957bb9789fb11a9d3376ddd937fc7",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/demo-director.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 7405,
+          "sha256": "7a56e0ea15fcde19d2130262d2ff59637faeaaf505047151a64a5adcf053aa69",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/replay-player.mjs",
+          "role": "module",
+          "status": 200,
+          "responses": 1,
+          "bytes": 10545,
+          "sha256": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+          "verifiedResponses": 1
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/demo-data/catalog.json",
+          "role": "catalog",
+          "status": 200,
+          "responses": 2,
+          "bytes": 6839,
+          "sha256": "3d4fbe0437fb6dfc7e4140e72e597012e95ec82c007621e6dee358c38baf4078",
+          "text": "{\n  \"format\": \"revealline-demo-catalog.v1\",\n  \"clips\": [\n    {\n      \"id\": \"first-signal-left\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-01\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"d31dfb37580148ee\",\n      \"recordingIdentity\": \"c48b4182e13d1541\",\n      \"inputTraceIdentity\": \"004a620b36d19d0d\",\n      \"title\": \"First Signal\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"safe-ground\"],\n      \"durationSeconds\": 30.683333333333334,\n      \"turnPolicy\": \"immediate\",\n      \"replayURL\": \"./demo-data/first-signal-left.replay.json\",\n      \"replayVariants\": [\"./demo-data/first-signal-left.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"first-signal-right\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-01\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"d31dfb37580148ee\",\n      \"recordingIdentity\": \"c48b4182e13d1541\",\n      \"inputTraceIdentity\": \"0d05c1be36470add\",\n      \"title\": \"First Signal\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"safe-ground\"],\n      \"durationSeconds\": 31.908333333333335,\n      \"turnPolicy\": \"grid-center\",\n      \"replayURL\": \"./demo-data/first-signal-right.replay.json\",\n      \"replayVariants\": [\"./demo-data/first-signal-right.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"relay-orchard-loop\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-02\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"b89d47ba6cee39e0\",\n      \"recordingIdentity\": \"bc9e680741d45c5f\",\n      \"inputTraceIdentity\": \"6846dc10dc836abe\",\n      \"title\": \"Relay Orchard\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"relay\"],\n      \"durationSeconds\": 45.475,\n      \"turnPolicy\": \"immediate\",\n      \"replayURL\": \"./demo-data/relay-orchard-loop.replay.json\",\n      \"replayVariants\": [\"./demo-data/relay-orchard-loop.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"relay-orchard-stairs\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-02\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"b89d47ba6cee39e0\",\n      \"recordingIdentity\": \"bc9e680741d45c5f\",\n      \"inputTraceIdentity\": \"f1d666419fb5f5e0\",\n      \"title\": \"Relay Orchard\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"relay\"],\n      \"durationSeconds\": 45.675,\n      \"turnPolicy\": \"grid-center\",\n      \"replayURL\": \"./demo-data/relay-orchard-stairs.replay.json\",\n      \"replayVariants\": [\"./demo-data/relay-orchard-stairs.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"crosswind-openings\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-03\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"6fcd5c0f32ae8df5\",\n      \"recordingIdentity\": \"9fbdb29c9a7bab4f\",\n      \"inputTraceIdentity\": \"9e8557a13e622aa0\",\n      \"title\": \"Crosswind\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"multiple-enemies\"],\n      \"durationSeconds\": 46.7,\n      \"turnPolicy\": \"immediate\",\n      \"replayURL\": \"./demo-data/crosswind-openings.replay.json\",\n      \"replayVariants\": [\"./demo-data/crosswind-openings.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"night-patrol-loop\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-05\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"e36556a872307a25\",\n      \"recordingIdentity\": \"36805be586d77918\",\n      \"inputTraceIdentity\": \"b6b1b38a63b715ba\",\n      \"title\": \"Night Patrol\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"border-patrol\"],\n      \"durationSeconds\": 46.68333333333333,\n      \"turnPolicy\": \"grid-center\",\n      \"replayURL\": \"./demo-data/night-patrol-loop.replay.json\",\n      \"replayVariants\": [\"./demo-data/night-patrol-loop.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"stone-lanes-detour\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-04\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"2ee023b74e759091\",\n      \"recordingIdentity\": \"60e3faec76596c99\",\n      \"inputTraceIdentity\": \"02aee710343a0599\",\n      \"title\": \"Stone Lanes\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"walls\", \"relay\"],\n      \"durationSeconds\": 25.041666666666668,\n      \"turnPolicy\": \"immediate\",\n      \"replayURL\": \"./demo-data/stone-lanes-detour.replay.json\",\n      \"replayVariants\": [\"./demo-data/stone-lanes-detour.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"hidden-frequency-search\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-06\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"4fc5893da6d1c3a1\",\n      \"recordingIdentity\": \"54d2d9278ce14a0a\",\n      \"inputTraceIdentity\": \"806c350fdb164271\",\n      \"title\": \"Hidden Frequency\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"scan\", \"hidden-relay\"],\n      \"durationSeconds\": 44.391666666666666,\n      \"turnPolicy\": \"immediate\",\n      \"replayURL\": \"./demo-data/hidden-frequency-search.replay.json\",\n      \"replayVariants\": [\"./demo-data/hidden-frequency-search.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"the-crossing-windows\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-07\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"38dce72f946c8298\",\n      \"recordingIdentity\": \"36c63367fbb33169\",\n      \"inputTraceIdentity\": \"59808a071ea860a3\",\n      \"title\": \"The Crossing\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"lane-warning\"],\n      \"durationSeconds\": 34.608333333333334,\n      \"turnPolicy\": \"immediate\",\n      \"replayURL\": \"./demo-data/the-crossing-windows.replay.json\",\n      \"replayVariants\": [\"./demo-data/the-crossing-windows.chromium-macos.replay.json\"]\n    },\n    {\n      \"id\": \"signal-garden-route\",\n      \"campaignId\": \"first-signal\",\n      \"campaignKey\": \"first-signal/2/88639f3aab7b6cc1\",\n      \"levelId\": \"signal-09\",\n      \"levelRevision\": \"1\",\n      \"identity\": \"96349ac425c435a1\",\n      \"recordingIdentity\": \"586f07e8ab4ffd68\",\n      \"inputTraceIdentity\": \"6102f337b970c3f7\",\n      \"title\": \"Signal Garden\",\n      \"provenance\": \"authored\",\n      \"tags\": [\"capture\", \"bent-cut\", \"signal-zone\", \"hidden-relay\"],\n      \"durationSeconds\": 47.13333333333333,\n      \"turnPolicy\": \"immediate\",\n      \"replayURL\": \"./demo-data/signal-garden-route.replay.json\",\n      \"replayVariants\": [\"./demo-data/signal-garden-route.chromium-macos.replay.json\"]\n    }\n  ]\n}\n",
+          "verifiedResponses": 2
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/demo-data/first-signal-left.replay.json",
+          "role": "replay",
+          "status": 200,
+          "responses": 2,
+          "bytes": 10793,
+          "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a",
+          "text": "{\n  \"version\": \"xonix-replay.v3\",\n  \"build\": \"authored-attract-route.v1\",\n  \"ruleset\": \"xonix-core.v2\",\n  \"level\": {\n    \"version\": \"xonix-level.v1\",\n    \"id\": \"signal-01\",\n    \"revision\": \"gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66\",\n    \"name\": \"First Signal\",\n    \"width\": 48,\n    \"height\": 36,\n    \"spawn\": {\n      \"x\": 24.5,\n      \"y\": 0.5\n    },\n    \"walls\": [],\n    \"enemies\": [\n      {\n        \"id\": \"roamer\",\n        \"type\": \"bouncer\",\n        \"x\": 37.5,\n        \"y\": 24.5,\n        \"vx\": 8.936533731550234,\n        \"vy\": 6.499297259309261,\n        \"radius\": 0.3,\n        \"course\": \"field-course.v2\"\n      }\n    ],\n    \"objectives\": [],\n    \"supplies\": [\n      {\n        \"id\": \"home\",\n        \"x\": 24.5,\n        \"y\": 0.5,\n        \"radius\": 2\n      }\n    ],\n    \"goal\": {\n      \"coverage\": 0.45\n    },\n    \"rules\": {\n      \"lives\": 3,\n      \"moveSpeed\": 8.84,\n      \"boostMultiplier\": 1.5,\n      \"respawnSeconds\": 0.7,\n      \"graceSeconds\": 0.7,\n      \"playerRadius\": 0.18,\n      \"pointsPerCell\": 10,\n      \"objectivePoints\": 500,\n      \"timeMedals\": [40, 73],\n      \"switchCooldownSeconds\": 2,\n      \"timeLimitSeconds\": 0,\n      \"cutTimeLimitSeconds\": 0,\n      \"maxTrailCells\": 0\n    },\n    \"signalZones\": [],\n    \"hangars\": [\n      {\n        \"id\": \"home-hangar\",\n        \"x\": 24.5,\n        \"y\": 0.5,\n        \"radius\": 2\n      }\n    ]\n  },\n  \"options\": {\n    \"seed\": 35,\n    \"turnPolicy\": \"immediate\",\n    \"classId\": \"scout\",\n    \"classRecipes\": [\n      {\n        \"id\": \"scout\",\n        \"label\": \"Scout\",\n        \"description\": \"Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.\",\n        \"primitive\": \"scan\",\n        \"capacity\": 0,\n        \"cooldown\": 6,\n        \"duration\": 4,\n        \"radius\": 48,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"bomber\",\n        \"label\": \"Light carrier\",\n        \"description\": \"Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.\",\n        \"primitive\": \"stun-field\",\n        \"capacity\": 1,\n        \"cooldown\": 2,\n        \"duration\": 2.5,\n        \"radius\": 3,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"carrier\",\n        \"label\": \"Heavy carrier\",\n        \"description\": \"Carry two charges; each creates the same temporary stun field.\",\n        \"primitive\": \"stun-field\",\n        \"capacity\": 2,\n        \"cooldown\": 2,\n        \"duration\": 2.5,\n        \"radius\": 3,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"interceptor\",\n        \"label\": \"Interceptor\",\n        \"description\": \"Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.\",\n        \"primitive\": \"shield\",\n        \"capacity\": 0,\n        \"cooldown\": 9,\n        \"duration\": 1.5,\n        \"radius\": 0,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"fiber\",\n        \"label\": \"Fiber relay\",\n        \"description\": \"Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.\",\n        \"primitive\": \"scan\",\n        \"capacity\": 0,\n        \"cooldown\": 7,\n        \"duration\": 3,\n        \"radius\": 30,\n        \"signalResistance\": true,\n        \"moveSpeedMultiplier\": 1,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"impact\",\n        \"label\": \"Impact craft\",\n        \"description\": \"Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.\",\n        \"primitive\": \"impact-pulse\",\n        \"capacity\": 0,\n        \"cooldown\": 10,\n        \"duration\": 3,\n        \"radius\": 5,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"trapper\",\n        \"label\": \"Trapper\",\n        \"description\": \"Pick up one charge and place a four-second field that slows field enemies to one quarter speed.\",\n        \"primitive\": \"slow-field\",\n        \"capacity\": 1,\n        \"cooldown\": 2,\n        \"duration\": 4,\n        \"radius\": 4,\n        \"slowFactor\": 0.25,\n        \"revision\": \"1\"\n      }\n    ]\n  },\n  \"segments\": [\n    {\n      \"ticks\": 1,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": true,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 48,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 109,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 68,\n      \"input\": {\n        \"direction\": \"down\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 108,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 68,\n      \"input\": {\n        \"direction\": \"up\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 1,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": true,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 48,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 217,\n      \"input\": {\n        \"direction\": \"right\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 136,\n      \"input\": {\n        \"direction\": \"down\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 217,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 136,\n      \"input\": {\n        \"direction\": \"up\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 1,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": true,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 48,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 326,\n      \"input\": {\n        \"direction\": \"right\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 204,\n      \"input\": {\n        \"direction\": \"down\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 381,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 204,\n      \"input\": {\n        \"direction\": \"up\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 1,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": true,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 48,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 489,\n      \"input\": {\n        \"direction\": \"right\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 272,\n      \"input\": {\n        \"direction\": \"down\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 489,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 62,\n      \"input\": {\n        \"direction\": \"up\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    }\n  ],\n  \"releaseAfter\": false,\n  \"ticks\": 3682,\n  \"summary\": {\n    \"ruleset\": \"xonix-core.v2\",\n    \"levelId\": \"signal-01\",\n    \"revision\": \"gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66\",\n    \"seed\": 35,\n    \"turnPolicy\": \"immediate\",\n    \"classId\": \"scout\",\n    \"activeClassId\": \"scout\",\n    \"rosterHash\": \"roster-v1-e159e435\",\n    \"classHistory\": [\n      {\n        \"classId\": \"scout\",\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"tick\": 0\n      }\n    ],\n    \"switches\": 0,\n    \"failureCause\": null,\n    \"classRevision\": \"1\",\n    \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n    \"status\": \"won\",\n    \"won\": true,\n    \"tick\": 3682,\n    \"time\": 30.679939668173855,\n    \"lives\": 3,\n    \"score\": 7400,\n    \"coverage\": 0.4731457800511509,\n    \"claimedCount\": 740,\n    \"totalClaimable\": 1564,\n    \"medal\": \"gold\",\n    \"objectives\": {\n      \"captured\": 0,\n      \"total\": 0,\n      \"required\": 0\n    }\n  },\n  \"checkpoint\": {\n    \"algorithm\": \"fnv1a64-state-v2\",\n    \"hash\": \"456fdc8321bcf296\",\n    \"sections\": {\n      \"identity\": \"2b1ecce1381bcd3b\",\n      \"configuration\": \"67780a210840e2ad\",\n      \"board\": \"f8ff18bf7024ce13\",\n      \"player\": \"f2b207f7ef0648ec\",\n      \"trail\": \"f0ca473df9efdcc8\",\n      \"enemies\": \"b0361fc010857401\",\n      \"objectives\": \"09612b07b5ecb5a5\",\n      \"supplies\": \"e1b45854413ff5f8\",\n      \"ability\": \"2d7b5e5f3cefa19b\",\n      \"clock\": \"7d877b15c0101bab\",\n      \"continuation\": \"a9d828ced6380d30\",\n      \"result\": \"f4d01e4ae43a9351\"\n    }\n  }\n}\n",
+          "verifiedResponses": 2
+        },
+        {
+          "url": "http://127.0.0.1:33871/game/demo-data/first-signal-left.chromium-macos.replay.json",
+          "role": "replay",
+          "status": 200,
+          "responses": 2,
+          "bytes": 10801,
+          "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e",
+          "text": "{\n  \"version\": \"xonix-replay.v3\",\n  \"build\": \"authored-attract-route.v1-browser\",\n  \"ruleset\": \"xonix-core.v2\",\n  \"level\": {\n    \"version\": \"xonix-level.v1\",\n    \"id\": \"signal-01\",\n    \"revision\": \"gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66\",\n    \"name\": \"First Signal\",\n    \"width\": 48,\n    \"height\": 36,\n    \"spawn\": {\n      \"x\": 24.5,\n      \"y\": 0.5\n    },\n    \"walls\": [],\n    \"enemies\": [\n      {\n        \"id\": \"roamer\",\n        \"type\": \"bouncer\",\n        \"x\": 37.5,\n        \"y\": 24.5,\n        \"vx\": 8.936533731550234,\n        \"vy\": 6.499297259309261,\n        \"radius\": 0.3,\n        \"course\": \"field-course.v2\"\n      }\n    ],\n    \"objectives\": [],\n    \"supplies\": [\n      {\n        \"id\": \"home\",\n        \"x\": 24.5,\n        \"y\": 0.5,\n        \"radius\": 2\n      }\n    ],\n    \"goal\": {\n      \"coverage\": 0.45\n    },\n    \"rules\": {\n      \"lives\": 3,\n      \"moveSpeed\": 8.84,\n      \"boostMultiplier\": 1.5,\n      \"respawnSeconds\": 0.7,\n      \"graceSeconds\": 0.7,\n      \"playerRadius\": 0.18,\n      \"pointsPerCell\": 10,\n      \"objectivePoints\": 500,\n      \"timeMedals\": [40, 73],\n      \"switchCooldownSeconds\": 2,\n      \"timeLimitSeconds\": 0,\n      \"cutTimeLimitSeconds\": 0,\n      \"maxTrailCells\": 0\n    },\n    \"signalZones\": [],\n    \"hangars\": [\n      {\n        \"id\": \"home-hangar\",\n        \"x\": 24.5,\n        \"y\": 0.5,\n        \"radius\": 2\n      }\n    ]\n  },\n  \"options\": {\n    \"seed\": 35,\n    \"turnPolicy\": \"immediate\",\n    \"classId\": \"scout\",\n    \"classRecipes\": [\n      {\n        \"id\": \"scout\",\n        \"label\": \"Scout\",\n        \"description\": \"Mark hidden objectives permanently; show enemy direction hints for four seconds. No slowing.\",\n        \"primitive\": \"scan\",\n        \"capacity\": 0,\n        \"cooldown\": 6,\n        \"duration\": 4,\n        \"radius\": 48,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"bomber\",\n        \"label\": \"Light carrier\",\n        \"description\": \"Pick up one charge at a supply pad; drop a field that stuns nearby field enemies.\",\n        \"primitive\": \"stun-field\",\n        \"capacity\": 1,\n        \"cooldown\": 2,\n        \"duration\": 2.5,\n        \"radius\": 3,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"carrier\",\n        \"label\": \"Heavy carrier\",\n        \"description\": \"Carry two charges; each creates the same temporary stun field.\",\n        \"primitive\": \"stun-field\",\n        \"capacity\": 2,\n        \"cooldown\": 2,\n        \"duration\": 2.5,\n        \"radius\": 3,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"interceptor\",\n        \"label\": \"Interceptor\",\n        \"description\": \"Absorb one enemy or lane contact: cancel the cut and recover at spawn without losing a life. Self-crossing remains dangerous.\",\n        \"primitive\": \"shield\",\n        \"capacity\": 0,\n        \"cooldown\": 9,\n        \"duration\": 1.5,\n        \"radius\": 0,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"fiber\",\n        \"label\": \"Fiber relay\",\n        \"description\": \"Ignore signal interference and scan for hidden relays. Your cable is the live trail: enemy contact still breaks it.\",\n        \"primitive\": \"scan\",\n        \"capacity\": 0,\n        \"cooldown\": 7,\n        \"duration\": 3,\n        \"radius\": 30,\n        \"signalResistance\": true,\n        \"moveSpeedMultiplier\": 1,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"impact\",\n        \"label\": \"Impact craft\",\n        \"description\": \"Release a close-range stun pulse, abandon the unfinished cut and redeploy at home without losing a life. The pulse never captures territory.\",\n        \"primitive\": \"impact-pulse\",\n        \"capacity\": 0,\n        \"cooldown\": 10,\n        \"duration\": 3,\n        \"radius\": 5,\n        \"revision\": \"1\"\n      },\n      {\n        \"id\": \"trapper\",\n        \"label\": \"Trapper\",\n        \"description\": \"Pick up one charge and place a four-second field that slows field enemies to one quarter speed.\",\n        \"primitive\": \"slow-field\",\n        \"capacity\": 1,\n        \"cooldown\": 2,\n        \"duration\": 4,\n        \"radius\": 4,\n        \"slowFactor\": 0.25,\n        \"revision\": \"1\"\n      }\n    ]\n  },\n  \"segments\": [\n    {\n      \"ticks\": 1,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": true,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 48,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 109,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 68,\n      \"input\": {\n        \"direction\": \"down\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 108,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 68,\n      \"input\": {\n        \"direction\": \"up\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 1,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": true,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 48,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 217,\n      \"input\": {\n        \"direction\": \"right\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 136,\n      \"input\": {\n        \"direction\": \"down\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 217,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 136,\n      \"input\": {\n        \"direction\": \"up\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 1,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": true,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 48,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 326,\n      \"input\": {\n        \"direction\": \"right\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 204,\n      \"input\": {\n        \"direction\": \"down\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 381,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 204,\n      \"input\": {\n        \"direction\": \"up\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 1,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": true,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 48,\n      \"input\": {\n        \"direction\": null,\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 489,\n      \"input\": {\n        \"direction\": \"right\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 272,\n      \"input\": {\n        \"direction\": \"down\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 489,\n      \"input\": {\n        \"direction\": \"left\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    },\n    {\n      \"ticks\": 62,\n      \"input\": {\n        \"direction\": \"up\",\n        \"boost\": false,\n        \"action\": false,\n        \"pickup\": false,\n        \"switchClass\": null\n      },\n      \"releaseBefore\": false\n    }\n  ],\n  \"releaseAfter\": false,\n  \"ticks\": 3682,\n  \"summary\": {\n    \"ruleset\": \"xonix-core.v2\",\n    \"levelId\": \"signal-01\",\n    \"revision\": \"gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66\",\n    \"seed\": 35,\n    \"turnPolicy\": \"immediate\",\n    \"classId\": \"scout\",\n    \"activeClassId\": \"scout\",\n    \"rosterHash\": \"roster-v1-e159e435\",\n    \"classHistory\": [\n      {\n        \"classId\": \"scout\",\n        \"classRevision\": \"1\",\n        \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n        \"tick\": 0\n      }\n    ],\n    \"switches\": 0,\n    \"failureCause\": null,\n    \"classRevision\": \"1\",\n    \"loadoutHash\": \"loadout-v1-aaa4aadd\",\n    \"status\": \"won\",\n    \"won\": true,\n    \"tick\": 3682,\n    \"time\": 30.679939668173855,\n    \"lives\": 3,\n    \"score\": 7400,\n    \"coverage\": 0.4731457800511509,\n    \"claimedCount\": 740,\n    \"totalClaimable\": 1564,\n    \"medal\": \"gold\",\n    \"objectives\": {\n      \"captured\": 0,\n      \"total\": 0,\n      \"required\": 0\n    }\n  },\n  \"checkpoint\": {\n    \"algorithm\": \"fnv1a64-state-v2\",\n    \"hash\": \"3a51be5a501dc282\",\n    \"sections\": {\n      \"identity\": \"2b1ecce1381bcd3b\",\n      \"configuration\": \"67780a210840e2ad\",\n      \"board\": \"f8ff18bf7024ce13\",\n      \"player\": \"f2b207f7ef0648ec\",\n      \"trail\": \"f0ca473df9efdcc8\",\n      \"enemies\": \"71a8354812281008\",\n      \"objectives\": \"09612b07b5ecb5a5\",\n      \"supplies\": \"e1b45854413ff5f8\",\n      \"ability\": \"2d7b5e5f3cefa19b\",\n      \"clock\": \"7d877b15c0101bab\",\n      \"continuation\": \"a9d828ced6380d30\",\n      \"result\": \"f4d01e4ae43a9351\"\n    }\n  }\n}\n",
+          "verifiedResponses": 2
+        }
+      ],
+      "events": [],
+      "ownedProcess": {
+        "pid": 4264,
+        "profile": "/home/runner/work/_temp/sc-JTWS80/r00/demo-hhFPkG",
+        "executable": "/home/runner/work/_temp/solo-browser-binaries/chromium-1234/chrome-linux64/chrome",
+        "sandbox": "disabled, matching Playwright1.62.1 Chromium default; hosted functional stratum only",
+        "scope": "Fresh child of shared ownedCommand token; outer owner performs any forced cleanup.",
+        "exitCode": 0,
+        "exitSignal": null
+      },
+      "browserVersion": "151.0.7922.34",
+      "csp": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; manifest-src 'self'; frame-src 'self'; frame-ancestors 'self'; object-src 'none'; base-uri 'none'; form-action 'none'",
+      "buildIdentity": {
+        "url": "http://127.0.0.1:33871/game/build-info.json",
+        "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+        "version": "0.151.1",
+        "sha256": "838af092f174fff96c48c4024ebdb07e8782593f9479656082fc0cf72cbc8e6b"
+      },
+      "resourceNavigationStorageBefore": {
+        "localStorage": [
+          {
+            "key": "revealline.access.revealline.v1",
+            "bytes": 43,
+            "sha256": "ab8294ac3059fda7ab0afde6f7df9f66281926c3c5dc0731afb1a8d57518e603"
+          },
+          {
+            "key": "revealline.suspended.journey-opening.v1",
+            "bytes": 5605,
+            "sha256": "a4a22dc1d114e3662880b37067ecda431c4d69f274fdd11cd06d5928867433bc"
+          }
+        ],
+        "sessionStorage": []
+      },
+      "resourceStorageBaseline": {
+        "localStorage": [
+          {
+            "key": "revealline.access.revealline.v1",
+            "bytes": 43,
+            "sha256": "ab8294ac3059fda7ab0afde6f7df9f66281926c3c5dc0731afb1a8d57518e603"
+          },
+          {
+            "key": "revealline.suspended.journey-opening.v1",
+            "bytes": 5605,
+            "sha256": "0b67ed56962293bff6f766cb64cd192b886f3606a77ef9b807b24bf50bba2803"
+          }
+        ],
+        "sessionStorage": []
+      },
+      "failure": "page.evaluate: Error: Trusted Demo Close boundary missing\n    at Object.takeCloseBoundary (<anonymous>:159:15)\n    at eval (eval at evaluate (:311:30), <anonymous>:1:32)\n    at UtilityScript.evaluate (<anonymous>:313:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at resourceCycles (/home/runner/work/revealline/revealline/tools/scripts/observe-solo-demo-recovery.mjs:419:39)\n    at async observation (/home/runner/work/revealline/revealline/tools/scripts/observe-solo-demo-recovery.mjs:728:5)",
+      "observedBrowserClosed": true,
+      "observedBrowserClosedAt": "2026-10-18T15:52:20.640Z",
+      "observationSettled": true,
+      "completedAt": "2026-10-18T15:52:20.642Z"
+    }
+  },
+  "claims": {
+    "resourceQualification": false,
+    "timingQualification": false,
+    "physicalDeviceQualification": false,
+    "postDisposalDrawsKnown": false
+  }
+}
