@@ -65,8 +65,6 @@ async function projectGlobalServices() {
     'game/profile-database.mjs',
     'game/hunt/actor-art.mjs',
     'game/presentation/actor-animation.mjs',
-    'game/hunt/industrial-soldier-kit.mjs',
-    'game/ui/art-review-navigation.mjs',
     'game/ui/enemy-appearance-controls.mjs',
     'game/ui/mission-library-goal.mjs',
     'game/mission-library/goal-preferences.mjs',
@@ -77,6 +75,8 @@ async function projectGlobalServices() {
   const external = new Map([
     ['game/data-json.mjs', 'simGlobalData'],
     ['game/hunt/actor-catalog.mjs', 'simGlobalActorCatalog'],
+    ['game/hunt/industrial-soldier-kit.mjs', 'simGlobalActorKit'],
+    ['game/ui/art-review-navigation.mjs', 'simGlobalArtReview'],
     ['game/i18n/index.mjs', 'simGlobalI18n'],
     ['game/presentation/theme-system.mjs', 'simGlobalThemes'],
     ['game/hunt/preferences.mjs', 'simGlobalActorPreferences'],

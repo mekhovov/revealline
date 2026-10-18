@@ -12,6 +12,11 @@ import {
   actorCapability,
 } from '../hunt/actor-catalog.mjs';
 import {
+  INDUSTRIAL_SOLDIER_KIT_REVISION,
+  INDUSTRIAL_SOLDIER_KITS,
+} from '../hunt/industrial-soldier-kit.mjs';
+import { actorArtReviewRevision, nativeArtReviewURL } from '../ui/art-review-navigation.mjs';
+import {
   attachSimMissionLibraryChooser,
   createSimMissionLibrary,
 } from '../../optional-practice/civilian-fpv/flight-fullscreen.mjs';
@@ -207,6 +212,64 @@ test('SIM selector projection stays inside existing optional executable and styl
   assert.doesNotMatch(bytes.toString(), /modules\[['"]game\/hunt\/actor-catalog\.mjs['"]\]/);
   for (const name of ['ACTOR_CASTS', 'resolveActorFamily', 'actorDefinition', 'actorVisual'])
     assert.ok(bytes.toString().includes(`simGlobalActorCatalog['${name}']`));
+  for (const [module, namespace, names] of [
+    ['hunt/industrial-soldier-kit', 'simGlobalActorKit', ['INDUSTRIAL_SOLDIER_KITS']],
+    [
+      'ui/art-review-navigation',
+      'simGlobalArtReview',
+      ['actorArtReviewRevision', 'nativeArtReviewURL'],
+    ],
+  ]) {
+    assert.ok(
+      bytes.toString().includes(`import*as ${namespace} from'../../game/${module}.mjs';`),
+      'Shared stateless presentation services use the already admitted canonical module.',
+    );
+    assert.equal(bytes.toString().includes(`modules['game/${module}.mjs']`), false);
+    for (const name of names) assert.ok(bytes.toString().includes(`${namespace}['${name}']`));
+  }
+});
+
+test('shared artwork kits remain deeply immutable without changing their revision', () => {
+  assert.equal(INDUSTRIAL_SOLDIER_KIT_REVISION, 'industrial-roster-v3');
+  const frozen = (value) => {
+    if (!value || typeof value !== 'object') return;
+    assert.ok(Object.isFrozen(value));
+    Object.values(value).forEach(frozen);
+  };
+  frozen(INDUSTRIAL_SOLDIER_KITS);
+  for (const kit of Object.values(INDUSTRIAL_SOLDIER_KITS)) {
+    assert.throws(() => (kit.anchor[0] = 0), TypeError);
+    assert.throws(() => kit.rectangles.push(['#ffffff', 0, 0, 1, 1]), TypeError);
+  }
+});
+
+test('shared art-review navigation keeps exact native URL rules and no cross-call state', () => {
+  const root = 'https://example.test/revealline/',
+    source = root + 'optional-practice/fpv-worlds/index.html?artReview=industrial-roster-v3',
+    target = root + 'game/index.html?mode=solo#play',
+    selected = root + 'game/index.html?artReview=industrial-pilot-v1',
+    expected = root + 'game/index.html?mode=solo&artReview=industrial-roster-v3#play';
+  assert.equal(actorArtReviewRevision({ href: source }), 'industrial-roster-v3');
+  assert.equal(nativeArtReviewURL(target, source), expected);
+  assert.equal(nativeArtReviewURL('../../game/index.html?mode=solo#play', source), expected);
+  assert.equal(nativeArtReviewURL(selected, source), selected);
+  for (const rejected of [
+    'https://other.test/revealline/game/index.html',
+    'https://example.test/other/game/index.html',
+    root + 'community/index.html',
+    'https://user@example.test/revealline/game/index.html',
+    'http://[invalid',
+  ])
+    assert.equal(nativeArtReviewURL(rejected, source), rejected);
+  for (const rejected of [
+    source + '&artReview=industrial-roster-v3',
+    source.replace('industrial-roster-v3', 'future'),
+    'http://[invalid',
+  ]) {
+    assert.equal(actorArtReviewRevision({ href: rejected }), null);
+    assert.equal(nativeArtReviewURL(target, rejected), target);
+  }
+  assert.equal(nativeArtReviewURL(target, source), expected, 'Rejected calls retain no state.');
 });
 
 test('shared presentation catalog values stay deeply immutable and retain exact lookup capabilities', () => {

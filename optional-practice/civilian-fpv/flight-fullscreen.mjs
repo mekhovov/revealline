@@ -995,6 +995,8 @@ export function mountFlightPractice({
 // BEGIN GENERATED SHARED MODE SHELL
 import*as simGlobalData from'../../game/data-json.mjs';
 import*as simGlobalActorCatalog from'../../game/hunt/actor-catalog.mjs';
+import*as simGlobalActorKit from'../../game/hunt/industrial-soldier-kit.mjs';
+import*as simGlobalArtReview from'../../game/ui/art-review-navigation.mjs';
 import*as simGlobalI18n from'../../game/i18n/index.mjs';
 import*as simGlobalThemes from'../../game/presentation/theme-system.mjs';
 import*as simGlobalActorPreferences from'../../game/hunt/preferences.mjs';
@@ -4530,170 +4532,6 @@ sampleActorAnimation,
 createSoldierAnimation,
 };
 })();
-modules['game/hunt/industrial-soldier-kit.mjs']=(()=>{
-/** Exact original v3 live accessory geometry. Data only: positions are artwork
-     * pixels, never collider dimensions, capability declarations or simulation state.
-     * Both live renderers and defeat presentation resolve color roles from the same
-     * accepted actor palette. Historical art continues using its original recipes. */
-const INDUSTRIAL_SOLDIER_KIT_REVISION='industrial-roster-v3';
-const freeze=(value)=>{
-if(value&&typeof value==='object'){
-for(const child of Object.values(value))freeze(child);
-Object.freeze(value);
-}
-return value;
-};
-const INDUSTRIAL_SOLDIER_KITS=freeze({
-lookout:{
-id:'binoculars',
-material:'optics',
-anchor:[9,8],
-size:[14,4],
-rectangles:[
-['#192820',0,0,6,4],
-['#192820',8,0,6,4],
-['#81b1ac',1,0,3,2],
-['#b7d9cf',9,0,3,2],
-],
-},
-patroller:{
-id:'bedroll',
-material:'cloth',
-anchor:[9,21],
-size:[14,5],
-rectangles:[
-['#192820',0,0,14,5],
-['coat',1,1,12,3],
-['trim',2,1,2,3],
-['trim',10,1,2,3],
-],
-},
-runner:{
-id:'harness',
-material:'cloth',
-anchor:[11,19],
-size:[10,6],
-rectangles:[
-['#192820',0,0,3,6],
-['#192820',7,0,3,6],
-['trim',1,1,1,4],
-['trim',8,1,1,4],
-['dark',2,1,6,2],
-],
-},
-sprinter:{
-id:'headset',
-material:'electronics',
-anchor:[8,12],
-size:[16,5],
-rectangles:[
-['#192820',0,0,3,5],
-['#192820',13,0,3,5],
-['trim',1,0,1,4],
-['trim',14,0,1,4],
-],
-},
-courier:{
-id:'satchel',
-material:'canvas',
-anchor:[22,17],
-size:[7,7],
-rectangles:[
-['#192820',0,0,7,7],
-['#795e3f',1,1,5,5],
-['#be9b65',1,1,5,2],
-['#d9c296',3,1,1,5],
-],
-},
-guard:{
-id:'pouches',
-material:'cloth',
-anchor:[10,20],
-size:[14,4],
-rectangles:[
-['#192820',0,0,4,4],
-['trim',1,1,2,2],
-['#192820',5,0,4,4],
-['trim',6,1,2,2],
-['#192820',10,0,4,4],
-['trim',11,1,2,2],
-],
-},
-'refuge-seeker':{
-id:'shelter-roll',
-material:'cloth',
-anchor:[9,20],
-size:[14,7],
-rectangles:[
-['#192820',0,0,14,7],
-['dark',1,1,12,5],
-['light',1,1,12,2],
-['trim',4,1,2,5],
-['trim',10,1,2,5],
-],
-},
-switchback:{
-id:'scarf',
-material:'cloth',
-anchor:[23,20],
-size:[5,4],
-rectangles:[
-['#192820',0,0,5,4],
-['trim',0,0,4,2],
-['patch',1,2,2,2],
-],
-},
-'rendezvous-pair':{
-id:'radio',
-material:'electronics',
-anchor:[11,20],
-size:[11,6],
-rectangles:[
-['#192820',0,0,11,6],
-['dark',1,1,9,4],
-['trim',1,1,9,2],
-],
-},
-'shield-bearer':{
-id:'front-plate',
-material:'armor',
-anchor:[5,5],
-size:[22,5],
-rectangles:[
-['#192820',0,0,22,5],
-['#84928a',1,0,20,3],
-['#c8d0bd',2,0,18,1],
-['#384c46',6,1,10,2],
-['dark',2,3,4,2],
-['dark',16,3,4,2],
-],
-},
-'brace-trooper':{
-id:'brace-pack',
-material:'armor',
-anchor:[11,21],
-size:[10,5],
-rectangles:[
-['#192820',0,0,10,5],
-['dark',1,1,8,3],
-],
-},
-'relay-warden':{
-id:'command-pack',
-material:'electronics',
-anchor:[10,19],
-size:[13,8],
-rectangles:[
-['#192820',0,0,13,8],
-['dark',1,1,11,6],
-['trim',2,1,9,2],
-['light',2,4,3,1],
-],
-},
-});
-
-return{INDUSTRIAL_SOLDIER_KIT_REVISION,INDUSTRIAL_SOLDIER_KITS};
-})();
 modules['game/hunt/actor-art.mjs']=(()=>{
 const createSoldierAnimation=
 modules['game/presentation/actor-animation.mjs']['createSoldierAnimation'];
@@ -4702,8 +4540,7 @@ modules['game/presentation/actor-animation.mjs']['sampleActorAnimation'];
 const validateActorAnimation=
 modules['game/presentation/actor-animation.mjs']['validateActorAnimation'];
 const runtimeActorArtRevision=simGlobalActorPreferences['runtimeActorArtRevision'];
-const INDUSTRIAL_SOLDIER_KITS=
-modules['game/hunt/industrial-soldier-kit.mjs']['INDUSTRIAL_SOLDIER_KITS'];
+const INDUSTRIAL_SOLDIER_KITS=simGlobalActorKit['INDUSTRIAL_SOLDIER_KITS'];
 const actorVisual=simGlobalActorCatalog['actorVisual'];
 const resolveActorFamily=simGlobalActorCatalog['resolveActorFamily'];
 /** Original overhead pixel rigs. The host owns time, facing and vulnerability;
@@ -7242,72 +7079,12 @@ panel.remove();
 
 return{mountThemeMaterialPreview};
 })();
-modules['game/ui/art-review-navigation.mjs']=(()=>{
-/** Explicit, session-only art review pin; never changes a saved appearance or a
-     * gameplay recipe. Unrecognized revisions use the released artwork. */
-function actorArtReviewRevision(location=globalThis.location){
-try{
-const params=new URL(location.href).searchParams;
-return params.getAll('artReview').length===1&&
-['industrial-pilot-v1','industrial-overhead-v2','industrial-roster-v3'].includes(
-params.get('artReview'),
-)
-?params.get('artReview')
-:null;
-}catch{
-return null;
-}
-}
-
-// These are routes owned by this build, not a general-purpose URL allowlist.
-// Do not transfer preview choices to community/provider links or another edition.
-const ART_REVIEW_NATIVE_PAGE=
-/^(.*\/)(?:game\/(?:(?:index|company)\.html|couch\/(?:index\.html|relay-rescue\.html)?|snake\/(?:(?:index|play)\.html)?|overflight\/(?:play|raid)\.html|studio\/(?:(?:index|snake|overflight|raid)\.html)?|(?:hunt\/military-levels\.html|(?:playground|hunt|online|replay-theater|controller-lab)\/(?:index\.html)?))?|authoring\/(?:asset-studio|motion-lab|enemy-catalog|still-media|video-poster|design-atlas|industrial-art-review)\/(?:index\.html)?|optional-practice\/(?:civilian-fpv|fpv-worlds)\/(?:index\.html)?)$/;
-
-/** Inherit an explicit review-only art pin along a caller-owned native link.
-     * Does not validate arbitrary navigation, persist preferences, transfer content,
-     * or change an explicit destination choice. Missing/ambiguous pins stay absent.
-     */
-function nativeArtReviewURL(href,sourceHref){
-let source,target;
-try{
-source=new URL(sourceHref);
-target=new URL(href,source);
-}catch{
-return href;
-}
-const revision=actorArtReviewRevision(source),
-sourceRoot=ART_REVIEW_NATIVE_PAGE.exec(source.pathname)?.[1],
-targetRoot=ART_REVIEW_NATIVE_PAGE.exec(target.pathname)?.[1];
-if(
-revision&&
-['http:','https:','file:','capacitor:'].includes(source.protocol)&&
-source.protocol===target.protocol&&
-source.origin===target.origin&&
-source.host===target.host&&
-!source.username&&
-!source.password&&
-!target.username&&
-!target.password&&
-sourceRoot&&
-sourceRoot===targetRoot&&
-!target.searchParams.has('artReview')
-){
-target.searchParams.set('artReview',revision);
-return target.href;
-}
-return href;
-}
-
-return{actorArtReviewRevision,nativeArtReviewURL};
-})();
 modules['game/ui/enemy-appearance-controls.mjs']=(()=>{
 const sharedEnemyArtwork=simGlobalActorPreferences['sharedEnemyArtwork'];
 const sharedActorAppearance=simGlobalActorPreferences['sharedActorAppearance'];
 const ACTOR_CASTS=simGlobalActorCatalog['ACTOR_CASTS'];
-const actorArtReviewRevision=
-modules['game/ui/art-review-navigation.mjs']['actorArtReviewRevision'];
-const nativeArtReviewURL=modules['game/ui/art-review-navigation.mjs']['nativeArtReviewURL'];
+const actorArtReviewRevision=simGlobalArtReview['actorArtReviewRevision'];
+const nativeArtReviewURL=simGlobalArtReview['nativeArtReviewURL'];
 
 const COPY={
 en:{
