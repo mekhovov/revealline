@@ -584,14 +584,27 @@ const controllerState = () => ({
   achievedTorque: axisZero(),
 });
 
-export function createAircraftController({ aircraft: source, tune: sourceTune } = {}) {
+export function createAircraftController({
+  aircraft: source,
+  tune: sourceTune,
+  groundIntegralPolicy = 'legacy',
+} = {}) {
   const aircraft = validateAircraftPhysics(source),
     tune = sourceTune
       ? validateAircraftControllerTune(sourceTune)
       : createAircraftControllerTune(aircraft);
+  required(
+    ['legacy', 'supported-reset.v1'].includes(groundIntegralPolicy),
+    'Unsupported ground integral policy',
+  );
   const physicalAircraft = clone(aircraft);
   delete physicalAircraft.id;
-  const identity = dataIdentity({ backend: AIRCRAFT_CONTROLLER, aircraft: physicalAircraft, tune });
+  const identity = dataIdentity({
+    backend: AIRCRAFT_CONTROLLER,
+    aircraft: physicalAircraft,
+    tune,
+    ...(groundIntegralPolicy === 'legacy' ? {} : { groundIntegralPolicy }),
+  });
   let state = controllerState();
   return {
     identity,
@@ -606,6 +619,7 @@ export function createAircraftController({ aircraft: source, tune: sourceTune } 
       inputResponseCompatibility: 'independent-sim',
       controllerCompatibility: 'independent-sim',
       snapshotVersion: 'AircraftControllerState.v1',
+      ...(groundIntegralPolicy === 'legacy' ? {} : { groundIntegralPolicy }),
     }),
     initialize: () => {
       state = controllerState();
@@ -621,8 +635,10 @@ export function createAircraftController({ aircraft: source, tune: sourceTune } 
       voltage = aircraft.battery.fullVoltage,
       usedAh = 0,
       armed = true,
+      grounded = false,
     }) {
       required(finite(dt, 0.0001, 0.02) && finite(voltage, 0, 100), 'Invalid controller substep');
+      required(typeof grounded === 'boolean', 'Invalid controller support observation');
       required(
         controls &&
           AXES.every((a) => finite(controls[a], -1, 1)) &&
@@ -639,6 +655,11 @@ export function createAircraftController({ aircraft: source, tune: sourceTune } 
         sensors && AXES.every((a) => finite(sensors[a], -1e6, 1e6)),
         'Current body sensors required',
       );
+      // Ground reaction can prevent rotation even when the motors can deliver
+      // the requested torque. Motor-allocation anti-windup cannot observe that
+      // constraint. Clear only the stored integral while supported; retain the
+      // proportional/derivative/feedforward response and all airborne Airmode.
+      const resetIntegral = groundIntegralPolicy === 'supported-reset.v1' && grounded;
       const torque = axisZero();
       for (const axis of AXES) {
         const gains = tune.gains[axis];
@@ -662,11 +683,13 @@ export function createAircraftController({ aircraft: source, tune: sourceTune } 
           dt,
         );
         const error = state.target[axis] - state.gyro[axis];
-        state.integral[axis] = clamp(
-          state.integral[axis] + gains.i * error * dt,
-          -tune.integralLimit,
-          tune.integralLimit,
-        );
+        state.integral[axis] = resetIntegral
+          ? 0
+          : clamp(
+              state.integral[axis] + gains.i * error * dt,
+              -tune.integralLimit,
+              tune.integralLimit,
+            );
         torque[axis] =
           gains.p * error +
           state.integral[axis] -
@@ -690,12 +713,13 @@ export function createAircraftController({ aircraft: source, tune: sourceTune } 
       );
       const actual = aircraftBodyForces(aircraft, electrical).torque;
       const achieved = { roll: -actual.z, pitch: -actual.x, yaw: -actual.y };
-      for (const axis of AXES)
-        state.integral[axis] = clamp(
-          state.integral[axis] + tune.antiWindup * (achieved[axis] - torque[axis]) * dt,
-          -tune.integralLimit,
-          tune.integralLimit,
-        );
+      if (!resetIntegral)
+        for (const axis of AXES)
+          state.integral[axis] = clamp(
+            state.integral[axis] + tune.antiWindup * (achieved[axis] - torque[axis]) * dt,
+            -tune.integralLimit,
+            tune.integralLimit,
+          );
       state.motors = allocation.motors.map((v) => clamp(v, 0, 1));
       state.saturated = allocation.saturated || electrical.currentLimited;
       state.requestedTorque = torque;

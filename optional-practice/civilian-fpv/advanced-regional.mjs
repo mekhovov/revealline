@@ -797,7 +797,10 @@ export function createAdvancedRegionalSession(
           // live controller, input cursor, motors, battery or recording.
           candidate = createClient();
           recoveryClient = candidate;
-          await candidate.initialize(clone(options));
+          await candidate.initialize({
+            ...clone(options),
+            ...(aircraftPhysics ? { backend: saved.simulation?.config?.backend } : {}),
+          });
           current();
           const restored = await candidate.restore(saved.simulation);
           current();
