@@ -2166,6 +2166,7 @@ jobs:
             /package.json
             /publishing/vendor/acorn-8.18.0.mjs
             /scripts/brand-icons.mjs
+            /scripts/solo-overhead-acceptance.mjs
             /scripts/build-entry-writer.mjs
             /scripts/calibrate-solo-performance.mjs
             /scripts/core-soundtrack-publication.mjs
@@ -2403,6 +2404,7 @@ jobs:
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
+            /scripts/solo-overhead-acceptance.mjs
             /.github/workflows/solo-native-package-consumer.yml
             /docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json
             /.github/workflows/solo-remote-native-touch-temporary.yml
@@ -2973,6 +2975,7 @@ jobs:
             /scripts/optional-distribution.mjs
             /scripts/pack-indexes.mjs
             /scripts/qualify-solo-diagnostics.mjs
+            /scripts/solo-overhead-acceptance.mjs
             /scripts/qualify-solo-runtime.mjs
             /scripts/reviewed-soundtrack-batches.mjs
             /scripts/run-solo-remote-correctness.mjs
@@ -3518,6 +3521,9 @@ jobs:
             /scripts/pack-indexes.mjs
             /scripts/published-navigation.mjs
             /scripts/qualify-solo-diagnostics.mjs
+            /scripts/solo-overhead-acceptance.mjs
+            /scripts/solo-overhead-declared-source.mjs
+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json
             /scripts/reviewed-soundtrack-batches.mjs
             /scripts/run-solo-remote-correctness.mjs
             /scripts/serve-production-preview.mjs
@@ -4174,6 +4180,9 @@ jobs:
             /scripts/pack-indexes.mjs
             /scripts/published-navigation.mjs
             /scripts/qualify-solo-diagnostics.mjs
+            /scripts/solo-overhead-acceptance.mjs
+            /scripts/solo-overhead-declared-source.mjs
+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json
             /scripts/qualify-solo-runtime.mjs
             /scripts/reviewed-soundtrack-batches.mjs
             /scripts/run-solo-remote-correctness.mjs
@@ -4856,6 +4865,9 @@ jobs:
             /scripts/pack-indexes.mjs
             /scripts/published-navigation.mjs
             /scripts/qualify-solo-diagnostics.mjs
+            /scripts/solo-overhead-acceptance.mjs
+            /scripts/solo-overhead-declared-source.mjs
+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json
             /scripts/qualify-solo-runtime.mjs
             /scripts/reviewed-soundtrack-batches.mjs
             /scripts/run-solo-remote-correctness.mjs
@@ -5548,6 +5560,9 @@ jobs:
             /scripts/pack-indexes.mjs
             /scripts/published-navigation.mjs
             /scripts/qualify-solo-diagnostics.mjs
+            /scripts/solo-overhead-acceptance.mjs
+            /scripts/solo-overhead-declared-source.mjs
+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json
             /scripts/qualify-solo-runtime.mjs
             /scripts/reviewed-soundtrack-batches.mjs
             /scripts/run-solo-remote-correctness.mjs
@@ -7387,6 +7402,8 @@ jobs:
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /docs/performance/solo-readiness-preparation-rejoin-797e03-plan.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
+            /scripts/solo-overhead-declared-source.mjs
+            /docs/performance/fixtures/solo-overhead-acceptance/237b-declared-source.json
             /scripts/test-solo-native-consumer-shared-demo.mjs
             /scripts/solo-native-measurement-consumer.test.mjs
             /scripts/test-solo-native-consumer-preparation.mjs
