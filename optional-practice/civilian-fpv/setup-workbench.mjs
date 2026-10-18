@@ -79,6 +79,7 @@ export function mountWorkbenchChrome({
         (!expert &&
           node.dataset.customized !== 'true' &&
           !node.querySelector('[data-customized="true"]') &&
+          !node.contains(doc.activeElement) &&
           !(revealed && (node === revealed || node.contains(revealed) || revealed.contains(node))));
     }
   }
@@ -241,6 +242,7 @@ export function mountWorkbenchPhysics({
       input.setAttribute('aria-invalid', valid ? 'false' : 'true');
       row.dataset.customized = String(input.value !== String(get(baseline, path)));
       if (valid) set(configuration, path, value);
+      updateCustomizationGroups();
       onChange?.();
     }
     if (gain || path.includes('inertia')) {
@@ -285,8 +287,20 @@ export function mountWorkbenchPhysics({
   listen(airmode, 'change', () => {
     if (configuration?.aircraft.propulsion)
       configuration.aircraft.propulsion.airmode = airmode.checked;
+    updateCustomizationGroups();
     onChange?.();
   });
+  function updateCustomizationGroups() {
+    airmode.parentNode.dataset.customized = String(
+      configuration?.aircraft.format === 'AdvancedAircraft.v2' &&
+        airmode.checked !== baseline?.aircraft.propulsion?.airmode,
+    );
+    for (const parent of [physical, filters])
+      parent.dataset.customized = String(
+        controls.some(({ row }) => parent.contains(row) && row.dataset.customized === 'true') ||
+          (parent === physical && airmode.parentNode.dataset.customized === 'true'),
+      );
+  }
   const guide = el('details', undefined, controllerParent);
   el(
     'summary',
@@ -355,12 +369,9 @@ export function mountWorkbenchPhysics({
         row.dataset.customized = String(v !== get(saved, path));
       }
       physical.dataset.unavailable = filters.dataset.unavailable = String(!value);
-      for (const parent of [physical, filters])
-        parent.dataset.customized = String(
-          controls.some(({ row }) => parent.contains(row) && row.dataset.customized === 'true'),
-        );
       airmode.disabled = !isPhysical;
       airmode.checked = value?.aircraft.propulsion?.airmode ?? false;
+      updateCustomizationGroups();
     },
     read(commit = true) {
       for (const { input } of controls)
