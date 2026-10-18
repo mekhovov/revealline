@@ -233,11 +233,12 @@ jobs:
 
   focused:
     # Keep the existing required status: no individual shard can qualify the gate.
+    # Aggregate failed dependencies, but let cancellation retire an obsolete run.
     if: >-
-      always() && github.event_name == 'pull_request' &&
+      ${{ !cancelled() && github.event_name == 'pull_request' &&
       needs.preflight.result == 'success' &&
       needs.preflight.outputs.admission != 'hold' &&
-      needs.preflight.outputs.focusedRequired == 'true'
+      needs.preflight.outputs.focusedRequired == 'true' }}
     needs: [preflight, focused_shards]
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -438,7 +439,8 @@ jobs:
           node .source-gate-automation/scripts/check-source-identity.mjs --root .
 
   release-ready:
-    if: always() && github.event_name == 'pull_request'
+    # A cancelled run cannot qualify a head and must release its concurrency slot.
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
     needs: [preflight, focused, test, build]
     runs-on: ubuntu-latest
     steps:
