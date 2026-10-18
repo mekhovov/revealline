@@ -1,6 +1,6 @@
 # SIM completion plan — current status and remaining work
 
-Reviewed **18 October 2026, 21:00 CEST (Europe/Berlin)**. This is the current
+Reviewed **18 October 2026, 21:15 CEST (Europe/Berlin)**. This is the current
 execution index for the accepted rates, aircraft and Setup Workbench plans.
 It distinguishes implemented features, released corrections, remaining software
 work and qualification that requires outside evidence. It does not reopen
@@ -85,6 +85,31 @@ course objectives. The Cetus archive finished through 64.50 s, verified from res
 survived a normal same-tab reload and verified again. No archive deletion or
 saved-library change was performed. [Detailed limits](fpv-flight-continuation-20261018.md).
 The older missing inventory remains unresolved.
+
+### Newly reproduced lesson defect — P1
+
+A normal saved-Meteor75 **Meet your drone** practice attempt, entered through
+the teaching guide's **Practice with BETAFPV Meteor75** action, did not complete
+its initial on-pad condition. After settling upright with zero throttle, zero
+vertical speed/drift and centred sticks, the explanation showed **−0.0 m** against
+the **0.0–0.8 m** height band, with every other condition satisfied and zero hold
+progress. The physical contact solver settles approximately 1 mm below its plane;
+the mission adapter passed that small negative height straight to a strict bound.
+
+Source review also found that **56 Flight School courses and 30 World courses**
+request the authored `$floor` landing surface, while aircraft contacts supply
+`course-boundary-y-min`. A predicate-isolation reproduction completes 3/3 steps
+only after changing that support identifier; the original stays at 2/3. This
+does not mean all those courses were flown or that every failure has one cause.
+
+**R14 / P1: selected-aircraft mission completion** now precedes additional
+assurance work. A separate versioned mission adapter is being implemented after
+the Nazgul correction, preserving physical state/contacts and old recovery
+identities. It must pass full simulated ground/lift/landing progression, named
+platform and boundary negatives, historical recovery, independent review and
+rendered acceptance. Allow **1–2 engineering days**, including release gates,
+subject to newly found failures; no completion claim yet. PR #1626's independently
+verified pause/archive corrections remain on their unchanged release path.
 
 ## Delivered and retained
 
@@ -211,11 +236,14 @@ measurement bundle or catalog change. It does not delay PR #1626, activate measu
 aircraft physics or close R6. Inspector integration, command/voltage surfaces,
 allocation, versioned runtime integration and real measurements still remain.
 
-Non-activating inspector integration is now in progress on that follow-up branch:
+Non-activating inspector integration is committed as `9d4da6c13` after dependency
+commit `f9ddc2693` on that follow-up branch, not yet published:
 manual circuit assumptions, an explicit DC-input-current declaration and a
 user-requested calculation against the imported eligible voltage sweep. It has
-no aircraft write path or measured-default claim. Targeted UI, packaging and
-independent review gates must pass before this is marked implemented or released.
+no aircraft write path or measured-default claim. **46/46** targeted checks and
+**19/19** package checks pass, along with independent review. Rendered UI acceptance
+and hosted release remain. The unchanged bundled Academy byte budget has only
+**12,138 bytes** spare, so integration/rebase must remeasure it.
 
 ## Blockers, concerns and scope boundaries
 
