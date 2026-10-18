@@ -237,6 +237,12 @@ export function attachGameShell({
   };
   const refreshHomeCopy = () => {
     const continued = !isolated && canContinue();
+    if ($('shell-family-context')) {
+      $('shell-family-context').hidden = isolated;
+      localizedText($('shell-family-context'), () =>
+        t('interface:captureNavigation.context', { mode: t('interface:solo2') }),
+      );
+    }
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
     if ($('shell-destination'))

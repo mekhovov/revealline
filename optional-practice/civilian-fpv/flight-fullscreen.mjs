@@ -2266,6 +2266,7 @@ goalPreferenceOptions={},
 description=localizedMessage(
 'interface:allMissionsOneLibraryJourneyClassicAndCustomKeepTheir',
 ),
+browsingContext=null,
 random=Math.random,
 renderPreview=()=>null,
 createArtworkView=null,
@@ -2958,7 +2959,7 @@ randomLevel.disabled= !matches.some(
 localizedText(
 status,
 ()=>
-`${t('common:counts.missions',{count:matches.length})} · ${modeLabel(modeFilter.value)}${message?` · ${renderMessage(message)}`:''}`,
+`${t('common:counts.missions',{count:matches.length})} · ${browsingContext?.({mode:modeFilter.value,label:modeLabel(modeFilter.value)})??modeLabel(modeFilter.value)}${message?` · ${renderMessage(message)}`:''}`,
 );
 const filtersActive=
 !!collection.value||modeFilter.value!==mode||lifecycle.value!=='current';
