@@ -605,6 +605,9 @@
     transform: none !important;
   }
 }
+[data-effects='reduced'] .tuning-quad {
+  transform: none !important;
+}
 .fpv-tuning .workbench-header {
   display: block;
   flex: none;
@@ -704,4 +707,82 @@
 .fpv-tuning .workbench-help {
   font-size: 0.85rem;
   opacity: 0.8;
+}
+.fpv-tuning :is(.controller-tune-panel, .tuning-bench) {
+  min-width: 0;
+  padding: clamp(12px, 2vw, 20px);
+  border: 1px solid #52718b;
+  border-radius: 10px;
+  background: #142c3b;
+  overflow-wrap: anywhere;
+}
+.controller-tune-panel {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 14px;
+  align-items: start;
+}
+.controller-tune-panel > :is(h3, p, details, .controller-tune-preview) {
+  grid-column: 1 / -1;
+}
+.fpv-tuning :is(.controller-tune-panel, .tuning-bench) :is(label, select, input, textarea) {
+  min-width: 0;
+  width: 100%;
+}
+.fpv-tuning :is(.controller-tune-panel, .tuning-bench) button {
+  min-height: 44px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.controller-tune-panel > button {
+  width: 100%;
+}
+.controller-tune-panel > details > button {
+  margin: 6px 6px 6px 0;
+}
+.controller-tune-panel textarea {
+  resize: vertical;
+  font-family: var(--fk-font-mono, monospace);
+}
+.controller-tune-preview {
+  min-width: 0;
+  overscroll-behavior-inline: contain;
+}
+.controller-tune-preview table {
+  width: 100%;
+}
+.controller-tune-preview :is(th, td) {
+  white-space: nowrap;
+}
+.tuning-bench :is(.tuning-fields, .tuning-bench-results) {
+  min-width: 0;
+}
+.tuning-bench .tuning-fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.tuning-bench-chart {
+  margin: 16px 0;
+  min-width: 0;
+}
+.tuning-bench-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.tuning-bench :is(figcaption, legend, summary) {
+  overflow-wrap: anywhere;
+}
+.tuning-bench-results fieldset {
+  margin-block: 10px;
+}
+@media (max-width: 600px) {
+  .controller-tune-panel,
+  .tuning-bench .tuning-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .tuning-bench .tuning-actions > button,
+  .controller-tune-panel > details > button {
+    width: 100%;
+    margin-inline: 0;
+  }
 }
