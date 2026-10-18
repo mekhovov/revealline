@@ -749,6 +749,111 @@ test('Cocoa counterpart preserves original protocol and withholds media for unce
   assert.equal(backendPlan.maximumRecords, 64);
 });
 
+test('Cocoa parent retains the command failure before a missing or partial preflight report', async () => {
+  const source = await readFile(new URL('./solo-native-mp3-control.mjs', import.meta.url), 'utf8');
+  const parent = parse(source, { ecmaVersion: 'latest', sourceType: 'module' }).body.find(
+    (node) => node.type === 'FunctionDeclaration' && node.id.name === 'parent',
+  );
+  const boundary = parent.body.body.find((node) => node.type === 'TryStatement');
+  const variables = parent.body.body.find(
+    (node) =>
+      node.type === 'VariableDeclaration' &&
+      node.declarations.some((d) => d.id.name === 'preflight'),
+  );
+  // Execute the actual parent try/catch/finally. Only native/filesystem boundaries
+  // are modeled: no browser, owner process, server or fixture producer is launched.
+  const body = source
+    .slice(boundary.start, boundary.end)
+    .replace("await import('./solo-darwin-process-inventory.mjs')", 'await loadInventory()')
+    .replaceAll('import.meta.url', JSON.stringify('file:///scripts/solo-native-mp3-control.mjs'));
+  const partial = Buffer.from('{"status":"closed","owner":');
+  const original = Buffer.from(partial);
+  const clean = {
+    status: 'closed',
+    exitCode: 0,
+    signal: null,
+    violation: null,
+    forcedCleanup: false,
+    cleanupUnconfirmed: false,
+    survivors: [],
+    ambiguous: [],
+  };
+  for (const change of [
+    {
+      status: 'failed',
+      violation: 'unattributed-new-browser',
+      forcedCleanup: true,
+      exitCode: null,
+      signal: 'SIGTERM',
+    },
+    { exitCode: 1 },
+    { violation: 'deadline' },
+    { forcedCleanup: true },
+    { cleanupUnconfirmed: true },
+    { ambiguous: [{ pid: 3527 }] },
+    { survivors: [{ pid: 3524 }] },
+  ])
+    for (const report of [null, partial, Buffer.from('{"status":"closed"}')]) {
+      const ownerCommand = { ...clean, ...change };
+      const calls = [],
+        summary = { status: 'failed' },
+        process = { env: {}, execPath: '/node' };
+      const result = await runInNewContext(
+        `(async () => { ${source.slice(variables.start, variables.end)} ${body}; return summary; })()`,
+        {
+          assert,
+          Buffer,
+          process,
+          summary,
+          MP3_CONTROL: plan,
+          MP3_COCOA_CONTROL: cocoaPlan,
+          plan: cocoaPlan,
+          source: 'a'.repeat(40),
+          options: {},
+          cocoaEnvironment: {},
+          output: '/evidence',
+          scratch: '/scratch',
+          here: '/scripts',
+          fileURLToPath: () => '/scripts/solo-native-mp3-control.mjs',
+          join,
+          inspect: async () => {},
+          loadInventory: async () => ({
+            admitDarwinBuildReceipt: () => ({ bytes: Buffer.from('{}') }),
+          }),
+          writeFile: async () => {},
+          ownedCommand: async () => ownerCommand,
+          readFile: async () => {
+            calls.push('read');
+            if (report) return report;
+            throw Object.assign(Error('missing final'), { code: 'ENOENT' });
+          },
+          save: async () => {},
+          treeBytes: async () => 0,
+          failure: (error) => String(error.stack ?? error),
+          nativeOwnerPreflightComplete,
+        },
+        {
+          importModuleDynamically: () => {
+            throw Error('Unexpected module import');
+          },
+        },
+      );
+      assert.match(result.failure, /Cocoa owner preflight command failed/);
+      if (ownerCommand.violation) assert(result.failure.includes(ownerCommand.violation));
+      assert.doesNotMatch(result.failure, /ENOENT|missing final/);
+      assert.equal(result.ownerPreflightStatus, 'failed');
+      assert.equal(result.ownerPreflightCommandStatus, ownerCommand.status);
+      assert.equal(result.ownerPreflightCommandViolation, ownerCommand.violation);
+      assert.equal(result.ownerPreflightCommandExitCode, ownerCommand.exitCode);
+      assert.equal(result.ownerPreflightCommandSignal, ownerCommand.signal);
+      assert.equal(result.preparationStatus, 'not-run');
+      assert.equal(result.commandStatus, 'not-run');
+      assert.equal(process.exitCode, 1);
+      assert.deepEqual(calls, []);
+      assert.deepEqual(partial, original);
+    }
+});
+
 test('Cocoa is a distinct diagnostic format and cannot inherit a Linux backend result', () => {
   const result = completed();
   result.format = cocoaPlan.format;
