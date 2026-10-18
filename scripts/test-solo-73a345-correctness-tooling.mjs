@@ -23,6 +23,13 @@ const oldWorkflow = await read(RUNTIME73_EXECUTED_WORKFLOW);
 const workflow = (await read('.github/workflows/solo-native-package-consumer.yml')).toString();
 const job = workflow.split('\n  correctness:\n')[1].split('\n  declare:\n')[0];
 const proofPath = 'docs/performance/fixtures/solo-73a345-consumer/first-eight-39105055762.json';
+// The unexecuted73 tooling declaration stays separate from its immutable570 predecessor.
+const nextPlanPath = 'docs/performance/solo-remote-797e03-correctness-plan.json';
+const activePlanPath = job.includes(
+  '78m node scripts/run-solo-remote-correctness.mjs ' + nextPlanPath,
+)
+  ? nextPlanPath
+  : planPath;
 test('tooling successor preserves exact73 runtime, package, recipe, eight rows, baseline, numerical exclusions and bounds', () => {
   for (const key of [
     'format',
@@ -131,13 +138,15 @@ function workflowAdmission(text) {
   assert.equal(text.match(/^    if: (.+)$/m)?.[1], guard);
   assert.match(text, /^    timeout-minutes: 145$/m);
   assert(text.includes('timeout-minutes: 79\n        working-directory: tools'));
-  assert(text.includes('78m node scripts/run-solo-remote-correctness.mjs ' + planPath));
+  assert(text.includes('78m node scripts/run-solo-remote-correctness.mjs ' + activePlanPath));
   assert(text.includes('SOLO_TOOLING_REVISION: ${{ github.sha }}'));
   assert(text.includes('ref: ${{ github.sha }}'));
   assert(text.includes('scripts/test-solo-73a345-correctness-tooling.mjs'));
   assert(
     text.includes(
-      '73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e',
+      activePlanPath === planPath
+        ? '73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e'
+        : '797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
     ),
   );
   assert.equal((text.match(/if: \$\{\{ always\(\) \}\}/g) ?? []).length, 2);
@@ -149,11 +158,11 @@ function workflowAdmission(text) {
   ])
     assert(!text.includes(forbidden));
 }
-test('current manual job binds only the successor; original145/79/78m envelope and retained evidence remain', () => {
+test('current manual job retains its explicit source successor and original145/79/78m envelope', () => {
   workflowAdmission(job);
   for (const [a, b] of [
     [
-      '78m node scripts/run-solo-remote-correctness.mjs ' + planPath,
+      '78m node scripts/run-solo-remote-correctness.mjs ' + activePlanPath,
       '78m node scripts/run-solo-remote-correctness.mjs ' + priorPath,
     ],
     ['timeout-minutes: 145', 'timeout-minutes: 146'],

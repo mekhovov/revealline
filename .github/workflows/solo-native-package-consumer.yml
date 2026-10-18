@@ -380,7 +380,7 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-73a345-correctness" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-797e03-correctness" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         timeout-minutes: 3
         with:
@@ -410,6 +410,7 @@ jobs:
             /docs/performance/solo-remote-39774-correctness-plan.json
             /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
+            /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-73a345-earned-raster-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
@@ -602,6 +603,7 @@ jobs:
             /scripts/soundtrack-archive-admissions.mjs
             /scripts/soundtrack-distribution.mjs
             /scripts/test-solo-73a345-correctness-tooling.mjs
+            /scripts/test-solo-797e03-correctness.mjs
             /scripts/test-solo-73a345-correctness.mjs
             /scripts/test-solo-73a345-earned-raster.mjs
             /scripts/test-solo-build-worker-closure.mjs
@@ -630,7 +632,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 797e03f28743921842df6aa57520a72016ba3dfc bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5 > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         timeout-minutes: 3
         with:
@@ -660,13 +662,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-73a345-correctness-tooling.mjs scripts/test-solo-73a345-correctness.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-de332-correctness.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-797e03-correctness.mjs scripts/test-solo-73a345-correctness-tooling.mjs scripts/test-solo-73a345-correctness.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-de332-correctness.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
       - name: Run the eight fixed serial correctness rows
         timeout-minutes: 79
         working-directory: tools
         env:
           GH_TOKEN: ${{ github.token }}
-        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-73a345-correctness-tooling-plan.json "$OUTPUT"
+        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-797e03-correctness-plan.json "$OUTPUT"
       - name: Describe bounded setup evidence without claiming truncated output complete
         if: ${{ always() }}
         timeout-minutes: 2
@@ -696,9 +698,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-73a345-correctness-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-797e03-correctness-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-73a345-correctness/evidence/
+            ${{ runner.temp }}/solo-linux-797e03-correctness/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
@@ -1032,6 +1034,7 @@ jobs:
             /docs/performance/solo-remote-39774-correctness-plan.json
             /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
+            /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-73a345-earned-raster-plan.json
             /docs/performance/solo-remote-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
@@ -1384,6 +1387,7 @@ jobs:
             /docs/performance/solo-remote-39774-correctness-plan.json
             /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
+            /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-73a345-earned-raster-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
@@ -2683,6 +2687,7 @@ jobs:
             /docs/performance/solo-remote-39774-correctness-plan.json
             /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-73a345-correctness-tooling-plan.json
+            /docs/performance/solo-remote-797e03-correctness-plan.json
             /docs/performance/solo-remote-73a345-earned-raster-plan.json
             /docs/performance/solo-remote-cpu-profile-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json

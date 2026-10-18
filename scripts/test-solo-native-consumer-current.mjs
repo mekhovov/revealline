@@ -17,7 +17,7 @@ const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
 const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const workflow = (await read(workflowPath)).toString();
 const plans = {
-  correctness: 'docs/performance/solo-remote-73a345-correctness-tooling-plan.json',
+  correctness: 'docs/performance/solo-remote-797e03-correctness-plan.json',
   sustained: 'docs/performance/solo-next-geometric-de332-tooling-plan.json',
   raster: 'docs/performance/solo-remote-73a345-earned-raster-plan.json',
   'hud-cpu': 'docs/performance/solo-first-victory-cpu-de332-plan.json',
@@ -149,7 +149,7 @@ test('current Next admission still refuses changed tooling before package or nat
   assert.equal(effects, 0);
 });
 
-test('source73 first-eight stays manual while historical Next retains its guard and explicit phase order', async () => {
+test('current first-eight stays manual while historical Next retains its guard and explicit phase order', async () => {
   const historical = (await read(DE332_EXECUTED_WORKFLOW)).toString();
   function admission(text) {
     for (const name of ['declare']) {
