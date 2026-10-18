@@ -339,18 +339,61 @@
   "latestRuntimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
   "release": {
     "format": "SoloHostedTimingReleaseV1",
-    "status": "held-for-review",
+    "status": "reviewed-and-released",
     "phase": "warm-first30",
     "previousPhase": "cold-first30",
     "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
     "baselineRevision": "8b01991942dc764b8aa4726851699ce1985e53ae",
     "latestRuntimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
-    "noUnclosedOwners": false,
-    "allPriorPlannedJobsClosed": false,
-    "priorProofInspected": false,
-    "firstEightAllCorrectnessPassed": false,
+    "noUnclosedOwners": true,
+    "allPriorPlannedJobsClosed": true,
+    "priorProofInspected": true,
+    "firstEightAllCorrectnessPassed": true,
     "latestProductionPackageVerified": true,
-    "evidence": [],
+    "evidence": [
+      {
+        "runId": 39115166586,
+        "artifactId": 12131109991,
+        "artifactSHA256": "01a83cce62748376e96bc20f152f1e54564dbdf6610a76ee1616d0617b846047",
+        "summarySHA256": "c5a693cfb6500d7ec3582e609d4508f15b0584b3f0a501219d2cc3f8d9d6a241",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115166586,
+        "artifactId": 12131394558,
+        "artifactSHA256": "d09193067705484ff206738d42a13f6b537cc4e1f216ffe2e1c5cca960d8179d",
+        "summarySHA256": "bb413e11942e3b5a4277ae6c60d4c27ede49cbd8348f3cfb5be968817f58280d",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115166586,
+        "artifactId": 12132168724,
+        "artifactSHA256": "3bb8390149a9532f9216431bee495f6aa3eef85f2f2550109069a636b75b018e",
+        "summarySHA256": "4ad8243ab4dc0fe8c4c7be02a3578123cd22e915efe23a483386d835f481ddbb",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115166586,
+        "artifactId": 12133135391,
+        "artifactSHA256": "9be7d90772b0250850e62996bc95e95234c89ae3846b2d7cd91f43fc65691627",
+        "summarySHA256": "767efe01a945fb89eb5fe224638d808140ffee897cf66746587d765b58cce008",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115166586,
+        "artifactId": 12132972934,
+        "artifactSHA256": "07020bc1827f4708673626ced94b27b706de7161a67af8bc9aa4dbe4017b1a4b",
+        "summarySHA256": "ffd7ae0e66cdba7948c5c8d4ccc95883b56a044738a30f29570f6b25d9518451",
+        "disposition": "failed-reviewed"
+      },
+      {
+        "runId": 39115166586,
+        "artifactId": 12132319231,
+        "artifactSHA256": "8cfcad17a02bfb281d0215ee2c57ac5d3a1f51f1c9f038375dc5affb9ffd9ae3",
+        "summarySHA256": "bfbec8946ab180dcfab5bd3b17012518a3a3b03dc91f8b4a110884bda97f1aef",
+        "disposition": "failed-reviewed"
+      }
+    ],
     "automaticRetries": 0,
     "automaticPhaseContinuation": false,
     "sourceCohort": "timing-main8b-candidate797-v1",
@@ -361,7 +404,16 @@
       "phase": "warm-first30"
     },
     "firstEightRequired": true,
-    "firstEightEvidence": null
+    "firstEightEvidence": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    }
   },
   "scope": "Prospective matched main8b/797 timing: three counterbalanced source pairs per engine for this separately retained phase. Existing exact recipes, native protocol, calibration, replay, numerical and owner gates remain. No pooling, automatic retry/continuation or physical qualification.",
   "resources": {
@@ -420,5 +472,5 @@
   "performanceExclusion": false,
   "sourceCohort": "timing-main8b-candidate797-v1",
   "hitchJournal": "bounded-v1",
-  "executionAdmission": "Held until an actual source797 first-eight correctness/closed-owner receipt and every declared predecessor are independently reviewed. No source73 correctness or numerical result transfers; no automatic dispatch, continuation or retry."
+  "executionAdmission": "The exact source797 first-eight correctness proof and complete predecessor cohort were independently reviewed; all owners closed. Every predecessor failure remains failed-reviewed. This releases only the distinct declared phase after source CI and normal merge, with unchanged recipe, bounds, replay and numerical gates. No automatic continuation or retry; this is not a native result for the new phase."
 }

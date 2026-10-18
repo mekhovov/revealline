@@ -10134,6 +10134,9 @@ try {
         // retain their existing single-action continuation contract.
         if (skipped) rememberSelection({ skipped });
         if (briefingOnly) {
+          // The settled briefing already owns its accepted public Journey identity.
+          // Classic discovery stays optional because discoverClassic remains false.
+          void updatePlayedLevelLink();
           clearInput();
           focusMission();
           return !started && paused && run === nextRun;
@@ -11545,6 +11548,73 @@ try {
       throw error;
     }
   }
+  async function captureJourneyPerformanceLater(acceptedMission, acceptedClear) {
+    const acceptedRun = run,
+      acceptedRecorder = recorder,
+      acceptedRunId = runId;
+    const assertActive = () => {
+      if (!journeyPerformanceActive)
+        throw new DOMException('Journey comparison cancelled.', 'AbortError');
+    };
+    const currentResult = () =>
+      journeyPerformanceActive &&
+      run === acceptedRun &&
+      recorder === acceptedRecorder &&
+      runId === acceptedRunId;
+    const scheduleChunk = (work, options) =>
+      scheduleOptionalReplayChunk(() => {
+        assertActive();
+        return work();
+      }, options);
+    try {
+      // Terminal run/recorder references remain immutable after their final
+      // simulation step. Next may replace them, but must not discard a valid
+      // accepted personal best; only the result UI belongs to the current run.
+      await scheduleChunk(() => {}, {});
+      assertActive();
+      // Owner admission drains in microtasks. A timer task after admission
+      // gives the winning frame a real yield before taking the private snapshot.
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      assertActive();
+      let exported;
+      await scheduleChunk(() => {
+        const clear = journeyProfile.snapshot().clears.solo[acceptedMission.id];
+        if (
+          clear?.runId !== acceptedClear.runId ||
+          clear.gameplayId !== acceptedClear.gameplayId ||
+          clear.difficulty !== acceptedClear.difficulty
+        )
+          throw new DOMException('Journey comparison was replaced.', 'AbortError');
+        // Keep the existing optional array budget and public export contract.
+        const optionalReplay =
+          acceptedRecorder.segmentCount > JOURNEY_PERFORMANCE_LIMITS.arrayItems
+            ? Promise.reject(new RangeError('Journey performance array budget exceeded.'))
+            : exportReplayAsync(acceptedRecorder, acceptedRun, { scheduleChunk });
+        // Observe both outcomes immediately, but return no promise: the export's
+        // inner chunks need this same main slot after this callback releases it.
+        exported = optionalReplay.then(
+          (replay) => ({ replay }),
+          (error) => ({ error }),
+        );
+      }, {});
+      const outcome = await exported;
+      assertActive();
+      if ('error' in outcome) throw outcome.error;
+      const result = await journeyProfile.performance.capture({
+        mode: 'solo',
+        missionId: acceptedMission.id,
+        ...acceptedClear,
+        replay: outcome.replay,
+      });
+      if (!currentResult()) return;
+      journeyBestResult = { runId: acceptedRunId, result };
+      refreshJourneyBest();
+    } catch {
+      if (!currentResult()) return;
+      journeyBestResult = { runId: acceptedRunId, result: { error: 'unavailable' } };
+      refreshJourneyBest();
+    }
+  }
   const gameWakeLock = createGameWakeLock();
   window.addEventListener('pagehide', (event) => {
     if (!event.persisted) {
@@ -11922,45 +11992,11 @@ try {
           ) {
             const acceptedMission =
               candidateHost?.progressMission?.(activeEntry, levelIndex) ?? journeyMission();
-            const acceptedRun = run,
-              acceptedRunId = runId;
+            const acceptedRunId = runId;
             const acceptedClear =
               acceptedMission && journeyProfile?.snapshot().clears.solo[acceptedMission.id];
-            if (acceptedClear?.runId === acceptedRunId) {
-              try {
-                // This is the existing downstream JSON array budget, not a
-                // reduced replay limit. Such evidence can never be retained.
-                const optionalReplay =
-                  recorder.segmentCount > JOURNEY_PERFORMANCE_LIMITS.arrayItems
-                    ? Promise.reject(new RangeError('Journey performance array budget exceeded.'))
-                    : exportReplayAsync(recorder, acceptedRun, {
-                        scheduleChunk: scheduleOptionalReplayChunk,
-                      });
-                void optionalReplay
-                  .then((replay) =>
-                    journeyProfile.performance.capture({
-                      mode: 'solo',
-                      missionId: acceptedMission.id,
-                      ...acceptedClear,
-                      replay,
-                    }),
-                  )
-                  .then((result) => {
-                    if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
-                      return;
-                    journeyBestResult = { runId: acceptedRunId, result };
-                    refreshJourneyBest();
-                  })
-                  .catch(() => {
-                    if (!journeyPerformanceActive || run !== acceptedRun || runId !== acceptedRunId)
-                      return;
-                    journeyBestResult = { runId: acceptedRunId, result: { error: 'unavailable' } };
-                    refreshJourneyBest();
-                  });
-              } catch {
-                /* Comparison is optional; the accepted clear and Next remain available. */
-              }
-            }
+            if (acceptedClear?.runId === acceptedRunId)
+              void captureJourneyPerformanceLater(acceptedMission, acceptedClear);
           }
           if (!candidateHost?.owns(activeEntry)) {
             const previousBodies = availableBodies();

@@ -64,7 +64,7 @@ function check(text, lane) {
   assert(body.includes("node-version: '22.13.1'"));
   assert(body.includes('playwright@1.62.1'));
   const engines = lane === 'shared-return' ? 'chromium webkit' : 'chromium';
-  assert.equal(body.match(/playwright" install --with-deps (.+?) 2>&1/m)?.[1], engines);
+  assert.equal(body.match(/playwright" install --with-deps (.+?)(?: 2>&1|$)/m)?.[1], engines);
   assert(body.includes('npm ci --prefix tools --no-audit --no-fund 2>&1'));
   assert(body.includes('--ignore-scripts --save-exact playwright@1.62.1 2>&1'));
   const command = body.match(/^          node (--test [^\n]+?) 2>&1/m)?.[1];
