@@ -7271,7 +7271,17 @@ try {
       canonicalJSON(JSON.parse(raw)) === canonicalJSON(session)
     );
   }
-  function persistAttempt(notify = true) {
+  function markPauseWork(trace, kind, incomplete = false) {
+    if (!trace) return;
+    if (incomplete) trace.complete = false;
+    try {
+      trace.session.markEvent(kind, trace.generation, trace.tick);
+    } catch {
+      // Optional observations must never change the synchronous pause/save path.
+      trace.complete = false;
+    }
+  }
+  function persistAttempt(notify = true, pauseTrace = null) {
     if (titleFlightHold)
       throw new Error(t('interface:explicitlyResumeTheVerifiedFlightBeforeSavingAgain'));
     if (modeDepartureHold)
@@ -7279,23 +7289,37 @@ try {
     if (courseEntryHold)
       throw new Error(t('interface:theCourseHandoffKeepsThisFlightPausedResumeExplicitlyBefore'));
     assertWriter();
-    const session = snapshotAttempt();
+    markPauseWork(pauseTrace, 'pause-snapshot-begin');
+    let session;
+    try {
+      session = snapshotAttempt();
+      markPauseWork(pauseTrace, 'pause-snapshot-end');
+    } catch (error) {
+      markPauseWork(pauseTrace, 'pause-snapshot-failed', true);
+      throw error;
+    }
     let saved;
+    markPauseWork(pauseTrace, 'pause-save-begin');
     try {
       saved = saveSession(profileStorage(), sessionKey, session);
     } catch {
       saved = { ok: false, warning: t('interface:storageIsUnavailableExportThisAttempt') };
     }
+    markPauseWork(pauseTrace, saved.ok ? 'pause-save-end' : 'pause-save-failed', !saved.ok);
     if (saved.ok) {
+      markPauseWork(pauseTrace, 'pause-readback-begin');
       try {
         const raw = profileStorage().getItem(sessionKey);
         // The serializer already validated these bytes and their storage limit.
         // Keep semantic readback for equivalent encodings; changed content must
         // still pass the original validation before it grants slot ownership.
-        if (raw === saved.serialized || attemptReadbackMatches(raw, session))
+        if (raw === saved.serialized || attemptReadbackMatches(raw, session)) {
           lastOwnedAttempt = raw;
+          markPauseWork(pauseTrace, 'pause-readback-end');
+        } else markPauseWork(pauseTrace, 'pause-readback-failed', true);
       } catch {
         /* A successful write result alone is not readback authority. */
+        markPauseWork(pauseTrace, 'pause-readback-failed', true);
       }
     }
     if (notify)
@@ -10910,10 +10934,21 @@ try {
     if (defeatRemaining <= 1e-9) finishDefeatPresentation();
   }
   function pause(force, { preserveWorld = false } = {}) {
+    const pauseTrace =
+      performanceSession && performanceRunGeneration > 0
+        ? {
+            session: performanceSession,
+            generation: performanceRunGeneration,
+            tick: run?.tick,
+            complete: true,
+          }
+        : null;
+    markPauseWork(pauseTrace, 'pause-begin');
     setMediaPreparationPhase(document.hidden || !document.hasFocus() ? 'suspended' : 'paused');
     performanceSession?.setPhase(document.hidden ? 'hidden' : 'paused');
     if (practiceRenderFailure.failed) return;
     cancelPictureStart({ preserveRecovery: true, preserveWorld });
+    markPauseWork(pauseTrace, 'pause-phase');
     if (courseBlocked()) {
       clearInput();
       paused = true;
@@ -10942,6 +10977,7 @@ try {
     }
     clearInput();
     paused = true;
+    markPauseWork(pauseTrace, 'pause-input');
     if (journeyProfile && !journeyRewardsDurable) void journeyProfile.flush();
     sound.pause?.();
     if (runMessageCue === 'resumed')
@@ -10952,6 +10988,7 @@ try {
         'paused-resume',
         'host.paused',
       );
+    markPauseWork(pauseTrace, 'pause-audio');
     if (
       !practice &&
       !courseEntryHold &&
@@ -10961,13 +10998,21 @@ try {
       !sessionBusy
     ) {
       try {
-        persistAttempt(false);
-      } catch {}
-    }
+        persistAttempt(false, pauseTrace);
+      } catch {
+        markPauseWork(pauseTrace, 'pause-persist-failed', true);
+      }
+    } else markPauseWork(pauseTrace, 'pause-save-skipped');
     overlay('pause');
+    markPauseWork(pauseTrace, 'pause-overlay');
     localizedText($('pause-button'), () => '▶');
     refreshHUD();
+    markPauseWork(pauseTrace, 'pause-hud');
     void updatePlayedLevelLink({ discoverClassic: true });
+    markPauseWork(pauseTrace, 'pause-link');
+    // End is a completed synchronous span, never evidence of durable storage
+    // or asynchronous sharing/flush completion. Failed substages stay partial.
+    if (pauseTrace?.complete) markPauseWork(pauseTrace, 'pause-end');
   }
   function refreshHUDClocks() {
     localizedText($('time'), () =>

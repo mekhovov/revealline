@@ -43,6 +43,26 @@ const EVENT_KINDS = Object.freeze([
   'terminal-hud-values',
   'terminal-hud-controls',
   'terminal-hud-end',
+  // Rare synchronous pause/save substages reuse the same bounded ring.
+  'pause-begin',
+  'pause-phase',
+  'pause-input',
+  'pause-audio',
+  'pause-snapshot-begin',
+  'pause-snapshot-end',
+  'pause-snapshot-failed',
+  'pause-save-begin',
+  'pause-save-end',
+  'pause-save-failed',
+  'pause-readback-begin',
+  'pause-readback-end',
+  'pause-readback-failed',
+  'pause-persist-failed',
+  'pause-save-skipped',
+  'pause-overlay',
+  'pause-hud',
+  'pause-link',
+  'pause-end',
 ]);
 const EVENT_CAPACITY = 256;
 const clean = (value) => (Number.isFinite(value) && value >= 0 ? value : 0);
@@ -444,7 +464,7 @@ export function createPerformanceSession({
         eventWitnesses: {
           version: 1,
           definition:
-            'Host observations on the performance.now time origin. Accepted events are observed after stepRun returns; generation identifies a host-local accepted run, not a persistent identity. rAF stamps share this origin but are not callback execution start times. Markers do not change frame attribution or establish asynchronous durability. Terminal HUD markers delimit inclusive elapsed substages in the immediate post-terminal callback, not CPU time; a missing end marker remains incomplete.',
+            'Host observations on the performance.now time origin. Accepted events are observed after stepRun returns; generation identifies a host-local accepted run, not a persistent identity. rAF stamps share this origin but are not callback execution start times. Markers do not change frame attribution or establish asynchronous durability. Terminal HUD markers delimit inclusive elapsed substages in the immediate post-terminal callback, not CPU time; a missing end marker remains incomplete. Pause markers delimit the synchronous full unfinished-flight pause path: phase includes owner/phase/cancellation; input includes clearing/paused state; audio includes optional flush invocation, sound and warning; snapshot/save/readback have separate boundaries; overlay/HUD/link record synchronous work only. Failure kinds retain the failed substage and suppress pause-end. Early-return pause branches remain prefixes. A completed span does not prove storage durability, asynchronous flush/link completion, CPU time or the cause of the preceding frame gap.',
           capacity: EVENT_CAPACITY,
           total: eventCount,
           retained: recentEvents.length,
