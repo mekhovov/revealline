@@ -1,5 +1,12 @@
 import assert from 'node:assert/strict';
 import { diagnosticsSchedule } from './solo-diagnostics-analysis.mjs';
+import {
+  PROSPECTIVE_OVERHEAD_METHOD,
+  prospectiveOverhead,
+  overheadP95Bounds,
+  overheadLogRatioBounds,
+  overheadPairedBox,
+} from './solo-overhead-interval.mjs';
 
 export const JOURNAL_COST_RECIPE = Object.freeze({
   path: 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
@@ -21,7 +28,7 @@ const sameNumber = (actual, expected) =>
   Math.abs(actual - expected) <= Math.max(1e-8, Math.abs(expected) * 1e-10);
 const p95 = (values) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * 0.95) - 1];
 
-export function journalCostObservation(raw, execution, configuration) {
+export function journalCostObservation(raw, execution, configuration, quantum = null) {
   const reasons = [],
     reject = (condition, reason) => {
       if (condition) reasons.push(reason);
@@ -99,7 +106,8 @@ export function journalCostObservation(raw, execution, configuration) {
   let observedTier = null,
     activeCount = 0,
     firstActive = null,
-    lastActive = null;
+    lastActive = null,
+    p95BoundsMs = null;
   try {
     assert(cost);
     assert.deepEqual(cost.rowColumns, JOURNAL_COST_COLUMNS);
@@ -246,6 +254,8 @@ export function journalCostObservation(raw, execution, configuration) {
         cost.maximumUnassignedTailMs >= 100,
       'A severe application/hook interval needs investigation.',
     );
+    if (quantum !== null && reasons.length === 0)
+      p95BoundsMs = overheadP95Bounds(values, quantum, endpoints);
   } catch (error) {
     reasons.push(`Cost coverage: ${String(error.message).slice(0, 1024)}`);
   }
@@ -263,6 +273,7 @@ export function journalCostObservation(raw, execution, configuration) {
     totalMs: values.reduce((a, b) => a + b, 0),
     maximumMs: values.length ? Math.max(...values) : null,
     maximumEndpointCount: endpoints.length ? Math.max(...endpoints) : null,
+    ...(quantum !== null ? { p95BoundsMs } : {}),
     tailCosts: cost?.unassignedTailByPhase ?? null,
     nonActiveTailMs:
       cost?.unassignedTailByPhase?.filter((_, i) => i !== 2).reduce((a, b) => a + b, 0) ?? null,
@@ -273,6 +284,7 @@ export function journalCostObservation(raw, execution, configuration) {
 }
 
 export function analyzeJournalCost(manifest, reports) {
+  const prospective = prospectiveOverhead(manifest);
   const reasons = [],
     schedule = diagnosticsSchedule(10, 1544),
     observations = [];
@@ -286,14 +298,6 @@ export function analyzeJournalCost(manifest, reports) {
   }
   if (reports.length !== 20)
     reasons.push('All twenty declared arms must remain in the evidence inventory.');
-  for (let i = 0; i < 20; i++)
-    observations.push(
-      journalCostObservation(
-        reports[i],
-        manifest.executions[i] ?? schedule[i],
-        manifest.configuration,
-      ),
-    );
   const timer = manifest.timerResolution,
     q = timer?.minimumPositiveStepMs;
   const timerValid =
@@ -303,10 +307,20 @@ export function analyzeJournalCost(manifest, reports) {
     finite(q) &&
     q > 0 &&
     timer.positiveSteps >= 20;
+  for (let i = 0; i < 20; i++)
+    observations.push(
+      journalCostObservation(
+        reports[i],
+        manifest.executions[i] ?? schedule[i],
+        manifest.configuration,
+        prospective && timerValid ? q : null,
+      ),
+    );
   if (!timerValid) reasons.push('Compatible normal-precision timer probe missing.');
   const pairs = [],
     ratios = [],
-    allowances = [];
+    allowances = [],
+    bounds = [];
   for (let pair = 0; pair < 10; pair++) {
     const arms = observations.filter((value) => value.pair === pair),
       on = arms.find((value) => value.journal),
@@ -314,16 +328,22 @@ export function analyzeJournalCost(manifest, reports) {
     const valid = arms.length === 2 && on?.valid && off?.valid && on.tier === off.tier;
     const onError = timerValid && on ? q * on.maximumEndpointCount : null;
     const offError = timerValid && off ? q * off.maximumEndpointCount : null;
-    const resolvable = valid && on.p95Ms > onError && off.p95Ms > offError;
+    const resolvable =
+      valid &&
+      (prospective
+        ? timerValid && on.p95BoundsMs?.lower > 0 && off.p95BoundsMs?.lower > 0
+        : on.p95Ms > onError && off.p95Ms > offError);
     const ratio = resolvable ? Math.log(on.p95Ms / off.p95Ms) : null;
     if (resolvable) {
       ratios.push(ratio);
-      allowances.push(
-        Math.max(
-          Math.log((on.p95Ms + onError) / (off.p95Ms - offError)) - ratio,
-          ratio - Math.log((on.p95Ms - onError) / (off.p95Ms + offError)),
-        ),
-      );
+      if (prospective) bounds.push(overheadLogRatioBounds(on.p95BoundsMs, off.p95BoundsMs));
+      else
+        allowances.push(
+          Math.max(
+            Math.log((on.p95Ms + onError) / (off.p95Ms - offError)) - ratio,
+            ratio - Math.log((on.p95Ms - onError) / (off.p95Ms + offError)),
+          ),
+        );
     }
     pairs.push({
       pair,
@@ -332,8 +352,9 @@ export function analyzeJournalCost(manifest, reports) {
       tier: on?.tier ?? null,
       onP95Ms: on?.p95Ms ?? null,
       offP95Ms: off?.p95Ms ?? null,
-      onErrorMs: onError,
-      offErrorMs: offError,
+      ...(prospective
+        ? { onP95BoundsMs: on?.p95BoundsMs ?? null, offP95BoundsMs: off?.p95BoundsMs ?? null }
+        : { onErrorMs: onError, offErrorMs: offError }),
     });
   }
   if (pairs.some((pair) => !pair.valid))
@@ -343,22 +364,33 @@ export function analyzeJournalCost(manifest, reports) {
   let interval = null,
     status = 'unresolved';
   if (reasons.length === 0 && ratios.length === 10) {
-    const mean = ratios.reduce((a, b) => a + b, 0) / 10;
-    const sd = Math.sqrt(ratios.reduce((sum, x) => sum + (x - mean) ** 2, 0) / 9);
-    const statistical = (2.263 * sd) / Math.sqrt(10),
-      quantum = Math.max(...allowances) * (1 + 2.263 / 3);
-    interval = {
-      lower95: Math.expm1(mean - statistical - quantum),
-      upper95: Math.expm1(mean + statistical + quantum),
-      statisticalLogMargin: statistical,
-      endpointLogMargin: quantum,
-    };
-    if (interval.upper95 <= 0.05) status = 'pass-scoped-envelope';
-    else if (interval.lower95 > 0.05) status = 'fail-scoped-envelope';
-    else reasons.push('The uncertainty interval crosses the unchanged 5% limit.');
+    if (prospective) {
+      try {
+        interval = overheadPairedBox(bounds);
+      } catch (error) {
+        reasons.push(`Prospective interval unresolved: ${String(error.message).slice(0, 256)}`);
+      }
+    } else {
+      const mean = ratios.reduce((a, b) => a + b, 0) / 10;
+      const sd = Math.sqrt(ratios.reduce((sum, x) => sum + (x - mean) ** 2, 0) / 9);
+      const statistical = (2.263 * sd) / Math.sqrt(10),
+        quantum = Math.max(...allowances) * (1 + 2.263 / 3);
+      interval = {
+        lower95: Math.expm1(mean - statistical - quantum),
+        upper95: Math.expm1(mean + statistical + quantum),
+        statisticalLogMargin: statistical,
+        endpointLogMargin: quantum,
+      };
+    }
+    if (interval) {
+      if (interval.upper95 <= 0.05) status = 'pass-scoped-envelope';
+      else if (interval.lower95 > 0.05) status = 'fail-scoped-envelope';
+      else reasons.push('The uncertainty interval crosses the unchanged 5% limit.');
+    }
   }
   return {
     format: 'SoloJournalHookCostAnalysisV1',
+    ...(prospective ? { analysisMethod: PROSPECTIVE_OVERHEAD_METHOD } : {}),
     status,
     limit: 0.05,
     plannedPairs: 10,
@@ -375,10 +407,11 @@ export function analyzeJournalCost(manifest, reports) {
       'Non-active/mixed tails remain separately reported rather than credited as active work. ' +
       'Setup, observer registration/browser delivery, paused queued-entry drain/export, meter instructions outside ' +
       'endpoints, GPU work and total browser CPU are unobserved. No physical-device or gameplay qualification.',
-    method:
-      'Ten predeclared matched pairs; nearest-rank p95 of all stable active work windows plus assigned hook costs; ' +
-      'active terminal tails added to the final sample and retained totals. Paired log ratios with a two-sided95% ' +
-      'Student-t interval (df9, rounded-up2.263), expanded by conservative per-endpoint observed-quantum sensitivity. ' +
-      'No trimming, successful-subset pooling, optional stopping or automatic retries.',
+    method: prospective
+      ? 'Prospective paired-p95-endpoint-box-v1: all ten predeclared pairs; nearest-rank p95 of per-window lower/upper duration bounds including quantized-zero hook endpoints and active terminal tails. Exact 1,024-vertex extrema of the existing two-sided 95% Student-t interval under the assumed endpoint-error bounds. No historical verdict replacement, trimming, subset pooling, optional stopping or retries.'
+      : 'Ten predeclared matched pairs; nearest-rank p95 of all stable active work windows plus assigned hook costs; ' +
+        'active terminal tails added to the final sample and retained totals. Paired log ratios with a two-sided95% ' +
+        'Student-t interval (df9, rounded-up2.263), expanded by conservative per-endpoint observed-quantum sensitivity. ' +
+        'No trimming, successful-subset pooling, optional stopping or automatic retries.',
   };
 }
