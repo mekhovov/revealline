@@ -14,12 +14,12 @@
     "details": "Two managed implementation worktrees plus lightweight sparse checkouts; failed full checkouts self-cleaned after disk exhaustion. No unrelated data removed."
   },
   "nextPriority": [
-    "Correct the newly demonstrated primary200% reader layouts",
-    "Admit reviewed foundations through exact-head merge gates",
-    "Finish reconciling archive, mode-context, comfort and local-content stacks",
-    "Complete remaining P1 host adapters and evidence-based readability work",
-    "Deliver bounded upgrade-consequence improvements after the active comfort stack",
-    "Continue Demo-dependent work after D; physical-only gates remain Not tested"
+    "Finish the primary 200% briefing reader correction",
+    "Admit reviewed foundations through required checks on each current revision",
+    "Finish archive restore and local recovery/support integrations",
+    "Extend large-text support to the remaining game families",
+    "Deliver shield-refit consequences and existing paused mission progress",
+    "Continue Demo-dependent work after its predecessor; physical-only gates remain Not tested"
   ],
   "release": {
     "status": "source_delivery_in_progress",
@@ -627,7 +627,7 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1659",
           "commit": "cba3e73918eb8690cfc10efe9227bc9f98448b69",
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
+          "mergeState": "UNSTABLE",
           "observedRemoteHead": "cba3e73918eb8690cfc10efe9227bc9f98448b69",
           "next": "Await predecessor admission and current exact-head required checks."
         }
@@ -819,7 +819,7 @@
       "impact": "H/M",
       "effort": "First shield-refit slice 1–2d; commitments 2–4d; reroll policy 2–4d; optional utility copy 1–2d. Shared review may overlap.",
       "featureId": "F19",
-      "status": "assessment",
+      "status": "developing",
       "owner": "lane-c",
       "qualification": {
         "automated": "existing_comparison_24_passed",
@@ -829,7 +829,7 @@
       "blocker": null,
       "pr": null,
       "commit": null,
-      "next": "Implement bounded shield-refit available-charge/capacity consequences first; preserve native NOW/NEXT previews. Then assess commitment costs and separately bound reroll action policy.",
+      "next": "Complete first shield-refit consequence PR with native-model checks and EN/UK card review; commitments and replay-aware reroll policy remain separate.",
       "evidence": [
         "Current dd337 already provides native current/next Survival SVG and Raid canvas comparisons, rank/evolution markers, utility cap projections and same-rank refit explanations.24/24 existing card/preview/Raid-balance tests pass on byte-equivalent root snapshot, zero skips. Earlier actual normal390px Survival Wide Fan choice showed before/after1→3charges. No new feature complete or Raid earned-refit browser qualification claimed.",
         "Exactdd337 assessment credits existing current/next graphics, rank/evolution/refit labels and capped repair math. Executed legal plating2→ObjectiveShield2 refit advertises two hits but leaves available charges0/capacity2 and consumes one choice. First bounded P2 slice: truthful projected charges/capacity, current-rule recharge wording, EN/UK visible/accessible parity, no balance change. Further source-backed gaps: Survival primary/support/final-slot commitment, impossible-to-change reroll disclosure, utility choice-cost/up-to repair prose. Separate reroll behavior requires replay-aware policy; utility copy is P3 polish.31-file Git closure and executed model receipt retained."
@@ -844,8 +844,8 @@
         {
           "id": "shield-refit-consequences",
           "priority": "P2",
-          "status": "planned",
-          "next": "After current C integration gates, implement actual projected available charges/capacity without changing native balance.",
+          "status": "developing",
+          "next": "Implement presentation-only native available-charge/capacity consequences on current main; preserve legal choices, balance and replay state.",
           "effort": "1–2d"
         },
         {
@@ -1087,7 +1087,7 @@
           "pr": "https://github.com/mekhovov/revealline/pull/1657",
           "commit": "22772f197235be127485b92744c46981b899b489",
           "deliveryState": "draft",
-          "mergeState": "UNKNOWN",
+          "mergeState": "DIRTY",
           "observedRemoteHead": "22772f197235be127485b92744c46981b899b489"
         }
       ],
@@ -1226,7 +1226,7 @@
       "effort": "**3–6d**; F11a",
       "featureId": "F11",
       "status": "draft_review",
-      "owner": "lane-b",
+      "owner": "lane-a",
       "qualification": {
         "automated": "not_run",
         "browser": "guided_restore_and_extraction_scoped_passed",
@@ -1234,8 +1234,8 @@
       },
       "blocker": "Review/extraction draft stacks on F11a; guided application is a further complete slice.",
       "pr": "https://github.com/mekhovov/revealline/pull/1635",
-      "commit": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5",
-      "next": "Reconcile reviewed archive stack and required exact-head checks. Keep mobile export/return, large media and physical evidence separate.",
+      "commit": "07e4dca103e0eeb0440906121d3e560a70d9409d",
+      "next": "Complete guided-apply and nonempty-focus reconciliation, then predecessor admission and current required checks; large-media and mobile return evidence remain separate.",
       "evidence": [
         "14 initial parser tests pass for bounded ZIP records/paths/counts, CRC and manifest hashes. UI/lifecycle review in progress.",
         "64 focused tests, full lint/validate and changed formatting pass; reader accepts the real 11679-byte F11a browser export with all five member hashes. Eight full-format baseline failures unchanged.",
@@ -1246,13 +1246,17 @@
       "implementationSlices": [
         {
           "id": "review-extraction",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1635",
-          "commit": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5",
-          "evidence": "64 focused checks and source gates; independent source and actual browser extraction review passed; stack on1627.",
+          "commit": "07e4dca103e0eeb0440906121d3e560a70d9409d",
+          "evidence": [
+            "64 focused checks and source gates; independent source and actual browser extraction review passed; stack on1627.",
+            "Integrated07e on archive50adc: nine original feature blobs unchanged; all parent locale values plus exactly36 original additions per locale preserved across18 generated namespaces.64/64 focused checks, full lint/changed format and uninterrupted full validation pass; independent review clear. Published dependent draft; original936e actual extraction-only browser receipt retained."
+          ],
           "deliveryState": "draft",
-          "mergeState": "DIRTY",
-          "observedRemoteHead": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "07e4dca103e0eeb0440906121d3e560a70d9409d",
+          "next": "Await archive-export foundation admission and current required checks."
         },
         {
           "id": "guided-apply",
@@ -1261,7 +1265,7 @@
           "commit": "1e69df126b6de66dc756287b4ad34b882ea43b26",
           "evidence": "140 focused tests, full lint/validate and changed formatting passed. Independent source review verifies explicit per-component confirmation, order, partial/unconfirmed outcomes, generation ownership and actual commit reporting. Browser review pending; stack on1635. Actual browser at2c9e4a: real11679-byte archive, cancel kept later steps locked, explicit pictures/stories/music/Journey reviews reached4/4 saved; closing clears temporary receipt and restores focus. Archive has zero originals/music/clears; no nonempty asset or device claim. Three surrounding copy issues found; narrow follow-up developing. Copy follow-up1e69df corrected guided help/selection/order/download receipt, preserving extraction-only wording.24 focused checks/full source gates and independent review passed.",
           "deliveryState": "draft",
-          "mergeState": "CLEAN",
+          "mergeState": "UNKNOWN",
           "observedRemoteHead": "1e69df126b6de66dc756287b4ad34b882ea43b26"
         },
         {
@@ -1280,8 +1284,8 @@
         }
       ],
       "deliveryState": "draft",
-      "mergeState": "DIRTY",
-      "observedRemoteHead": "936e0b0ca48750ae8c9007a92e91a276bd2aa0a5"
+      "mergeState": "UNSTABLE",
+      "observedRemoteHead": "07e4dca103e0eeb0440906121d3e560a70d9409d"
     },
     {
       "id": "F14",
@@ -1439,7 +1443,9 @@
       "pr": null,
       "commit": null,
       "next": "Reconcile reviewed native/arcade/SIM/Creator/Rooms/gym preset stacks; preserve physical and release qualification separately.",
-      "evidence": [],
+      "evidence": [
+        "All identified F06 host integrations now have current independently reviewed source gates, including final Rooms67f and gym109. Each remains a complete dependent draft; this does not mark the parent feature or physical/live qualification complete."
+      ],
       "implementationSlices": [
         {
           "id": "native-presets",
@@ -1510,29 +1516,37 @@
             "Integrated copy289 onCreator190: both feature blobs identical;18/18 focused, full lint/format/projection and uninterrupted validation pass. Independent review clear; published dependent draft with original EN/UK copy/browser boundaries retained."
           ],
           "deliveryState": "draft",
-          "mergeState": "UNKNOWN",
+          "mergeState": "UNSTABLE",
           "observedRemoteHead": "289f4d8d4ecd91830c25f4050e89f93779345b68",
           "next": "Await predecessor admission and current exact-head required checks."
         },
         {
           "id": "rooms-presets",
-          "status": "draft_review",
+          "status": "reviewed_stack",
           "pr": "https://github.com/mekhovov/revealline/pull/1650",
-          "commit": "4ff083b438d798a96f4daf7bbf82e7f10e00179e",
-          "evidence": "37 scoped tests/full source gates; independent source review passed. Actual UI with modeled paused transport: preview0 Apply2 Undo4; zero transport calls, original preferences restored. New Ukrainian preset controls fit320px. Older static English fixture labels are not a full-host translation qualification. No room joined.",
+          "commit": "67f5aa5f31cc69057bfc8f4e2dd8664fc23abdb5",
+          "evidence": [
+            "37 scoped tests/full source gates; independent source review passed. Actual UI with modeled paused transport: preview0 Apply2 Undo4; zero transport calls, original preferences restored. New Ukrainian preset controls fit320px. Older static English fixture labels are not a full-host translation qualification. No room joined.",
+            "Integrated67f on copy289: three original feature blobs unchanged;37/37 focused checks, full lint/format and uninterrupted full validation pass. Independent review clear and exact reviewed draft published. Earlier modeled paused transport/UK320 browser scope retained; no room joined."
+          ],
           "deliveryState": "draft",
-          "mergeState": "CLEAN",
-          "observedRemoteHead": "4ff083b438d798a96f4daf7bbf82e7f10e00179e"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "67f5aa5f31cc69057bfc8f4e2dd8664fc23abdb5",
+          "next": "Await predecessor admission and current exact-head required checks."
         },
         {
           "id": "optional-2d-gym-presets",
-          "status": "draft_review",
-          "evidence": "37 host/shared/policy+14 optional-offline checks, i18n/lint/changed format/projection pass. Independent source review and actual gym Start/movement/Pause→Settings→preview0→partialApply2→Retry3→Undo5→Back passed with modeled preferences. Browser returns Settings opener focus; finite model returns Resume. Both retain pause. No new UK320/hidden transcript/device claim.",
+          "status": "reviewed_stack",
+          "evidence": [
+            "37 host/shared/policy+14 optional-offline checks, i18n/lint/changed format/projection pass. Independent source review and actual gym Start/movement/Pause→Settings→preview0→partialApply2→Retry3→Undo5→Back passed with modeled preferences. Browser returns Settings opener focus; finite model returns Resume. Both retain pause. No new UK320/hidden transcript/device claim.",
+            "Integrated109 on copy289: two original feature blobs unchanged;37/37 focused checks, full lint/format and uninterrupted full validation pass. Independent review clear and exact reviewed draft published. Earlier actual gym movement/Pause and modeled preference failure/Retry/Undo receipt retained; no new device or Ukrainian host qualification."
+          ],
           "pr": "https://github.com/mekhovov/revealline/pull/1660",
-          "commit": "47de8345c29c8f64fccd4aea76ead8f5679baca8",
+          "commit": "1094d6b5c17fb8e6f9d4e543f73c19d0796902ed",
           "deliveryState": "draft",
-          "mergeState": "CLEAN",
-          "observedRemoteHead": "47de8345c29c8f64fccd4aea76ead8f5679baca8"
+          "mergeState": "UNSTABLE",
+          "observedRemoteHead": "1094d6b5c17fb8e6f9d4e543f73c19d0796902ed",
+          "next": "Await predecessor admission and current exact-head required checks."
         }
       ]
     },
@@ -1676,7 +1690,7 @@
       "blocker": null,
       "pr": "https://github.com/mekhovov/revealline/pull/1668",
       "commit": "0fa88f0bed68de9730e8619528e712f361d73403",
-      "next": "Correct newly observed primary Field details and Mission brief enlarged-reader layouts, then re-review at320px and short landscape. Earlier briefing/pause/win passes remain valid; F09b follows.",
+      "next": "Finish primary200% direct-brief overlap correction and browser/source gates; then resume local recovery/support integration and other-host scaling.",
       "evidence": [
         "Source inventory confirms existing two-value shared preference, cross-tab/media lifecycle ownership and host-specific CSS. Existing Large is not a uniform200% scale. Root measurement branch codex/f09a-readable-scaling begins on cb8; no product changes or pass claimed.",
         "Actual1280x720 baseline Home and Settings16→20px, pausedHUD26→30px; existing Large is not200%. Measurement JSON and compatibility design prepared on root branch; no product change or compliance claim.",
@@ -1707,10 +1721,11 @@
             "Actual f6dc review: 320×720 Extra large/theme-font pause has full-width readable actions; briefing top/title now reachable by scrolling. At 844×390, Resume and lower Sound/Settings/Home are reachable with readable columns. Actual game EN→UK at 390×844 shows readable Accessibility heading, full labels/select values/checkboxes; Back returns same paused First return 0:00/3 lives/00000 with Settings focus. Briefing still incorrectly shows Sound/Config/Full screen: hidden ownership is data-kind CSS, so an attribute-only guard was insufficient. PR remains draft; no final acceptance claim.",
             "Actual7b browser fixes briefing Sound/Config/Fullscreen ownership and preserves pause controls. Auto-next/retry disabled through actual Settings; First return earned win34.3%,8160points,18seconds,3lives. Full-width result actions are scroll-reachable, but picture squeezes title into a narrow column.22a adds XL won-only vertical reading layout preserving hidden picture and ordinary/earned semantics; independent source review clear, actual corrected-win review pending.",
             "Final22a:168/168 in one serial no-skip focused run; uninterrupted full validation, full lint and changed format/diff pass. Eight full-format findings are byte-identical parent baseline. Independent source review clear. Actual320×720 Extra large/theme-font run earned First return100%,23800points,14seconds,3lives; corrected picture-above-title layout keeps whole words and full-width footer actions reachable with native scrolling. Briefing/pause and EN/UK landscape scopes remain as previously recorded. Screenshot f09-primary-result-title-corrected.png; no physical or all-theme compliance claim.",
-            "Additional actual22a review found two bounded reader gaps at320×720 XL/theme-font: Field details falls to its64px CSS minimum with only about one visible line; Read/End still scroll and Done/Back remain reachable. Mission brief header squeezes edition context into one-letter column beside Back/All missions and pushes the reader below view. Read Escape and both dialog returns preserve Choose your share17:16/3lives/0score and respective opener focus. Receipt /tmp/f09-primary-reader-followup-receipt.json. Layout correction now active; prior168-case/full-source and briefing/pause/win receipts remain valid for22a at their stated scopes, not final all-primary acceptance."
+            "Additional actual22a review found two bounded reader gaps at320×720 XL/theme-font: Field details falls to its64px CSS minimum with only about one visible line; Read/End still scroll and Done/Back remain reachable. Mission brief header squeezes edition context into one-letter column beside Back/All missions and pushes the reader below view. Read Escape and both dialog returns preserve Choose your share17:16/3lives/0score and respective opener focus. Receipt /tmp/f09-primary-reader-followup-receipt.json. Layout correction now active; prior168-case/full-source and briefing/pause/win receipts remain valid for22a at their stated scopes, not final all-primary acceptance.",
+            "Reader candidate742:15 layout checks pass and independent source review is clear. Broader372/381 keeps nine failures reproduced on unchanged22a; filtered cases are not passes. Actual EN theme-font320×720 and844×390 Field details now has multiple readable lines and reachable Done/Back; both retain First return paused0:09/3lives/0score and opener. Brief heading wraps whole words but inherited sticky header still covers controls/reader after scroll in both sizes. Changes requested for that exact owner; interrupted742 full scan excluded. Receipt /tmp/f09-742-readers-browser-receipt.json."
           ],
           "pr": "https://github.com/mekhovov/revealline/pull/1672",
-          "next": "Fix Field details one-line reading space and Mission brief one-letter header column at primary200%; retain text size, reading ownership and safe Back. Then rerun affected source/browser gates.",
+          "next": "Remove inherited sticky overlap only for primary200% direct Mission brief, then re-review portrait/short landscape and locale paths. Keep catalogue header and reading/paused ownership unchanged.",
           "deliveryState": "draft",
           "mergeState": "UNSTABLE",
           "observedRemoteHead": "22a2c244a02bdce8632c51ca552af4ab3b51c727"
@@ -3259,6 +3274,11 @@
       "date": "2026-10-19",
       "item": "Reader gaps discovered during deeper pause review",
       "reason": "Primary22a earned-win reflow remains passed, but Field details exposes a one-line reader and Mission brief an overcompressed header. Reopened bounded primary-layout correction before F09b. SIM/Creator presets, SIM Home and removal review integrations now pass exact gates. F22 narrowed to paused current/remaining progress in its existing owner."
+    },
+    {
+      "date": "2026-10-19",
+      "item": "Reader browser correction and completed comfort integrations",
+      "reason": "Archive inspection07e and final Rooms67f/gym109 reviewed drafts published with full source gates. Actual742 confirms multi-line Field details but exposes inherited sticky Brief overlap in portrait/landscape; acceptance remains open. F19 first shield-refit slice starts. Counts remain4merged/18ready/28draft; no new live/device claim."
     }
   ],
   "deliveryDependencies": [
