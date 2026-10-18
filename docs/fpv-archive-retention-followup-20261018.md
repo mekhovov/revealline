@@ -44,6 +44,23 @@ storage-context relationship is unknown. This positive same-tab result does not
 account for the six protected public records or establish durability across
 contexts, interruption, eviction or disk pressure.
 
+### Later local timing-panel acceptance
+
+A fresh local tab at `http://127.0.0.1:8786/optional-practice/fpv-worlds/index.html`
+on `a113208ce8e4076c19b2acc99332c3172e53bfcc` displayed a full sixteen-entry
+archive inventory, with entries from 17:57–18:09 UTC. It did not display the later
+Cetus archive described above. The initial setup export had revision 0; this
+check restored its exact pre-test content after temporary Meteor75 selection
+(the expected revision then became 2). The relationship between this tab and
+other local tabs, including any `localhost` versus `127.0.0.1` origin difference,
+was not established. This is not evidence that the missing public inventory was
+recovered, nor proof of data loss within one persistent native context.
+
+The Meteor75 lesson completed while archive saving remained stopped for full
+storage. Separate checkpoint recovery succeeded at 20.00 seconds. No archive
+was deleted. Same-tab recovery and earlier same-tab archive verification remain
+positive observations; cross-context durability remains unqualified.
+
 ## Remaining diagnostic gates
 
 The UI correction now removes only a confirmed deleted row from its cached list
