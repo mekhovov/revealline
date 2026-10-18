@@ -31,6 +31,9 @@ async function prepare(t, onHandoff = null) {
   h.$('shell-workshop').click();
   h.$('shell-library').click();
   h.doc.querySelector('[data-library-panel="saves"]').click();
+  await settle(
+    () => !h.$('library-saves').hidden && typeof h.$('save-file').onchange === 'function',
+  );
   const root = h.$('library-dialog'),
     opener = h.$('save-file'),
     cancel = h.$('library-operation-cancel');

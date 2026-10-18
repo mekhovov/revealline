@@ -83,7 +83,9 @@ export function saveCaptureSession(storage, key, candidate) {
     };
   try {
     storage.setItem(key, text);
-    return { ok: true, warning: '' };
+    // Keep the validated bytes for the caller's immediate storage readback.
+    // A successful write alone does not establish readback or slot ownership.
+    return { ok: true, warning: '', serialized: text };
   } catch {
     return {
       ok: false,

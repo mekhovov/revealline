@@ -1,0 +1,212 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "selected-font-cancel-first-return-readiness-joined-v2",
+  "kind": "lifecycle",
+  "timeoutMs": 240000,
+  "query": {
+    "journey": "opening"
+  },
+  "coverage": [
+    "One shared Field Kit Display face required by the explicitly selected Dnipro theme remains pending through public Start and Escape/Back cancellation.",
+    "Release the unchanged validated original font after cancellation; no automatic Start; require explicit Start and prepared tick-zero run.",
+    "Injected transport observation is correctness-only. Existing raw numerical statuses and source-native replay remain separate."
+  ],
+  "replayRequirements": {
+    "movingTicks": 120
+  },
+  "actions": [
+    {
+      "type": "click",
+      "selector": "#shell-options"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-tab-display"
+    },
+    {
+      "type": "click",
+      "selector": "#theme-card-dnipro-porcelain",
+      "label": "selected-theme"
+    },
+    {
+      "type": "expect",
+      "selector": "#theme-card-dnipro-porcelain",
+      "attribute": "aria-pressed",
+      "value": "true"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-dialog .dialog-close[data-close=\"settings-dialog\"]"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-dialog[open][data-settings-view=\"categories\"] button[data-close=\"settings-dialog\"]",
+      "optional": true,
+      "label": "close-settings-if-categories"
+    },
+    {
+      "type": "expect",
+      "selector": "body:not(:has(#settings-dialog[open])) #shell-home[open] #shell-featured:not(:disabled)",
+      "timeoutMs": 5000,
+      "label": "settings-actually-closed"
+    },
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "expect",
+      "selector": "body:not([data-flight-state=\"running\"]):not(:has(dialog[open])) #flight-preparation-status[data-state=\"busy\"]",
+      "timeoutMs": 5000,
+      "label": "selected-font-blocks-start"
+    },
+    {
+      "type": "key",
+      "key": "Escape",
+      "ms": 1,
+      "label": "public-cancel-back"
+    },
+    {
+      "type": "expect",
+      "selector": "#flight-preparation-status[data-state=\"cancelled\"]",
+      "timeoutMs": 5000,
+      "label": "public-cancelled"
+    },
+    {
+      "type": "expect",
+      "selector": "html[data-interface-theme=\"dnipro-porcelain\"] body:not([data-flight-state=\"running\"])",
+      "timeoutMs": 10000,
+      "label": "original-theme-accepted-after-cancel"
+    },
+    {
+      "type": "wait",
+      "ms": 400,
+      "label": "no-automatic-start-after-release"
+    },
+    {
+      "type": "expect",
+      "selector": "body:not([data-flight-state=\"running\"]):not(:has(dialog[open])) #start-button:not(:disabled)",
+      "timeoutMs": 1000
+    },
+    {
+      "type": "click",
+      "selector": "#start-button"
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 15000
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 1200,
+      "label": "safe-border-after-explicit-retry"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused",
+      "timeoutMs": 10000
+    },
+    {
+      "type": "snapshot",
+      "group": "after-selected-font-cancellation"
+    },
+    {
+      "type": "exportReplay",
+      "label": "after-selected-font-cancellation"
+    }
+  ],
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  },
+  "selectedFontCancellation": {
+    "protocol": "selected-font-cancel-v1",
+    "sourceRevision": "c696af41857840359ae473558b90682f3d71f2db",
+    "targetRelativeToEntry": "ui/fonts/field-kit/handjet-display-600.woff2",
+    "bytes": 38120,
+    "sha256": "4797c11d5e17c3f5f9b5b3fa96efb4fd2aabb877fb4d625dfc8eb7465464e145",
+    "fetchTimeoutMs": 10000,
+    "maximumHoldMs": 60000,
+    "claimBeforeNavigation": true,
+    "waitForValidatedHeldAfterLabel": "selected-theme",
+    "releaseAfterLabel": "public-cancelled",
+    "responsePolicy": "unchanged original APIResponse; no redirects or retries",
+    "sharedByDefaultAndSelectedThemes": true
+  }
+}
