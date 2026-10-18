@@ -16,7 +16,11 @@ import {
   initAdvancedRuntime,
 } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
 import { createAdvancedWorkerHandler } from '../../optional-practice/civilian-fpv/advanced-worker.mjs';
-import { createPresetConfiguration } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
+import {
+  AIRCRAFT_CATALOG_REVISION,
+  createPresetConfiguration,
+  listAircraftPresets,
+} from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 import { aircraftPerformance } from '../../optional-practice/civilian-fpv/aircraft-physics.mjs';
 import { withAircraftChallenge } from '../../optional-practice/civilian-fpv/aircraft-challenge.mjs';
 
@@ -25,8 +29,8 @@ const CURRENT = 'aircraft-course-practice.v2';
 const adapter = (floorHeightMm = 0) => ({ format: 'AircraftCourseMission.v2', floorHeightMm });
 const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
 const course = BEGINNER_CATALOGUE.find((entry) => entry.id === 'beginner-01').course;
-const configuration = () => {
-  const preset = createPresetConfiguration('meteor75-analog-2022');
+const configuration = (id = 'meteor75-analog-2022') => {
+  const preset = createPresetConfiguration(id);
   return {
     response: preset.response,
     camera: preset.camera,
@@ -224,57 +228,109 @@ test('the authored lesson landing predicate rejects raw boundary IDs and accepts
   }
 });
 
-test('Meteor75 completes ground check, takeoff and soft landing with ordinary controls in both modes', async (t) => {
+test('every catalog aircraft completes ground check, takeoff and soft landing with ordinary controls in both modes', async (t) => {
   await initAdvancedRuntime();
   await initWorldRuntime();
-  for (const mode of ['self-level', 'acro']) {
-    await t.test(mode, async () => {
-      const settings = configuration();
-      const session = build(CURRENT, { mode, configuration: settings });
-      try {
-        await session.prepare();
-        session.arm();
-        const hover = aircraftPerformance(settings.advanced.aircraft).hoverThrottle;
-        let airborneTicks = 0,
-          maxHeight = 0;
-        for (let tick = 0; tick < 600 && session.snapshot().step < 3; tick++) {
-          const state = session.snapshot();
-          const height = state.position.y / 1000,
-            climb = state.velocity.y / 1000;
-          const target = state.step === 1 ? 1.4 : -0.06;
-          const throttle =
-            state.step === 0 ||
-            (state.step >= 2 && (state.grounded || (height < 0.025 && climb < 0.1)))
-              ? 0
-              : Math.max(0, Math.min(0.65, hover + 0.1 * (target - height) - 0.12 * climb));
-          await session.step({ ...neutral, throttle });
-          airborneTicks += state.grounded ? 0 : 1;
-          maxHeight = Math.max(maxHeight, height);
+  for (const preset of listAircraftPresets())
+    for (const mode of ['self-level', 'acro']) {
+      await t.test(`${preset.id} · ${mode}`, async (child) => {
+        const settings = configuration(preset.id);
+        const session = build(CURRENT, { mode, configuration: settings });
+        const report = {
+          kind: 'aircraftMissionQualification',
+          catalogRevision: AIRCRAFT_CATALOG_REVISION,
+          aircraft: preset.id,
+          presetRevision: preset.revision,
+          mode,
+          course: course.id,
+          missionModel: session.identity.model,
+          passed: false,
+        };
+        try {
+          await session.prepare();
+          session.arm();
+          const hover = aircraftPerformance(settings.advanced.aircraft).hoverThrottle;
+          let airborneTicks = 0,
+            maxHeight = 0,
+            maxGroundedLandingSpeed = 0,
+            maxGroundedLandingTilt = 0;
+          const transitions = [];
+          for (let tick = 0; tick < 600 && session.snapshot().step < 3; tick++) {
+            const state = session.snapshot();
+            const height = state.position.y / 1000,
+              climb = state.velocity.y / 1000;
+            const target = state.step === 1 ? 1.4 : -0.06;
+            const throttle =
+              state.step === 0 ||
+              (state.step >= 2 && (state.grounded || (height < 0.025 && climb < 0.1)))
+                ? 0
+                : Math.max(0, Math.min(0.65, hover + 0.1 * (target - height) - 0.12 * climb));
+            const next = await session.step({ ...neutral, throttle });
+            airborneTicks += next.grounded ? 0 : 1;
+            maxHeight = Math.max(maxHeight, next.position.y / 1000);
+            if (next.step !== state.step)
+              transitions.push({ completedObjectives: next.step, seconds: next.ticks / 50 });
+            if (state.step >= 2 && next.grounded) {
+              maxGroundedLandingSpeed = Math.max(maxGroundedLandingSpeed, next.landingSpeed / 1000);
+              maxGroundedLandingTilt = Math.max(maxGroundedLandingTilt, next.landingTilt / 100);
+            }
+          }
+          const result = session.snapshot();
+          Object.assign(report, {
+            completedObjectives: result.step,
+            elapsedSeconds: result.ticks / 50,
+            airborneSeconds: airborneTicks / 50,
+            maximumHeightMetres: maxHeight,
+            maxGroundedLandingSpeedMps: maxGroundedLandingSpeed,
+            maxGroundedLandingTiltDegrees: maxGroundedLandingTilt,
+            objectiveTransitions: transitions,
+            missionSupport: result.support?.id ?? null,
+            physicalSupport: result.advancedTelemetry.contact.support?.id ?? null,
+            backend: result.advancedTelemetry.backend,
+          });
+          assert.equal(result.step, 3, `${preset.id}/${mode}: completed authored objectives`);
+          assert.equal(result.status, 'active');
+          assert.ok(
+            airborneTicks > 100 && maxHeight > 1,
+            'Includes sustained actual physical flight',
+          );
+          assert.equal(result.support.id, '$floor');
+          assert.ok(result.landingSpeed <= 1500 && result.landingTilt <= 2500);
+          assert.ok(maxGroundedLandingSpeed <= 1.5 && maxGroundedLandingTilt <= 25);
+          assert.deepEqual(
+            transitions.map((entry) => entry.completedObjectives),
+            [1, 2, 3],
+          );
+          assert.equal(result.advancedTelemetry.contact.support.id, 'course-boundary-y-min');
+          const tick = result.ticks;
+          await session.step(neutral);
+          assert.equal(session.snapshot().ticks, tick + 1);
+          session.pause();
+          const saved = await session.exportRecovery();
+          assert.deepEqual(saved.physical.config.configuration.missionAdapter, adapter());
+          assert.deepEqual(saved.physical.config.aircraft, settings.advanced.aircraft);
+          assert.deepEqual(saved.physical.config.controller, settings.advanced.controller);
+          assert.deepEqual(saved.physical.config.response.response, settings.response);
+          Object.assign(report, {
+            physicsFrequencyHz: saved.physical.config.frequency,
+            aircraftIdentity: dataIdentity(saved.physical.config.aircraft),
+            controllerIdentity: dataIdentity(saved.physical.config.controller),
+            responseIdentity: dataIdentity(saved.physical.config.response.response),
+            physicalConfigurationIdentity: saved.physical.identity,
+          });
+          await session.restoreRecovery(saved);
+          assert.equal(session.snapshot().step, 3);
+          assert.equal(session.snapshot().status, 'paused');
+          report.passed = true;
+        } catch (error) {
+          report.failure = error.message;
+          throw error;
+        } finally {
+          child.diagnostic(JSON.stringify(report));
+          await session.dispose();
         }
-        const result = session.snapshot();
-        assert.equal(result.step, 3, `${mode}: completed authored objectives`);
-        assert.equal(result.status, 'active');
-        assert.ok(
-          airborneTicks > 100 && maxHeight > 1,
-          'Includes sustained actual physical flight',
-        );
-        assert.equal(result.support.id, '$floor');
-        assert.ok(result.landingSpeed <= 1500 && result.landingTilt <= 2500);
-        assert.equal(result.advancedTelemetry.contact.support.id, 'course-boundary-y-min');
-        const tick = result.ticks;
-        await session.step(neutral);
-        assert.equal(session.snapshot().ticks, tick + 1);
-        session.pause();
-        const saved = await session.exportRecovery();
-        assert.deepEqual(saved.physical.config.configuration.missionAdapter, adapter());
-        await session.restoreRecovery(saved);
-        assert.equal(session.snapshot().step, 3);
-        assert.equal(session.snapshot().status, 'paused');
-      } finally {
-        await session.dispose();
-      }
-    });
-  }
+      });
+    }
 });
 
 test('pre-change v1 fixture retains exact raw floor behavior and worker-verified recovery semantics', async (t) => {
