@@ -2,9 +2,9 @@
 
 Updated 18 October 2026 for [draft PR #1544](https://github.com/mekhovov/revealline/pull/1544).
 
-The affected devices are **iPhone 17 Pro Safari on the published HTTPS site** and **Steam Deck OLED Chrome**. Work remains isolated on `codex/solo-performance`; latest fetched main `a3db2c95b4ce446f2232b829f9551b73e0f51514` was integrated in `a0c93ea1c5`. Its newer FPV content changes are preserved. The original checkout and unfinished FPV work are untouched.
+The affected devices are **iPhone 17 Pro Safari on the published HTTPS site** and **Steam Deck OLED Chrome**. Work remains isolated on `codex/solo-performance`; latest fetched main `ce98e93743c0eb2d393d1d24bcc907d728c94951` was integrated in `cb218aa1025590cb83e4d87ba205ffe3af0f7041`. Its newer FPV Workbench changes are preserved. The original checkout and unfinished FPV work are untouched.
 
-**Qualification is incomplete.** The principal Solo runtime fixes and identified shared-mode defects are implemented, but failed timing rows, earlier unattributed source-test timeouts and unavailable physical-device checks remain. Do not describe correctness checks or a successful build as a performance pass. Keep the PR draft.
+**Qualification is incomplete.** The principal Solo runtime fixes and identified shared-mode defects are implemented, but failed timing rows, earlier unattributed source-test timeouts and unavailable physical-device checks remain. Do not describe correctness checks or a successful build as a performance pass. On 18 October, the user authorized fixing and merging PR #1544 with priority for testing on GitHub Pages. Complete the release-blocking source/build checks, then publish the merged main revision through the existing Pages workflow. The remaining performance and physical-device qualification stays open; it is not a claimed release result.
 
 This revision consolidates the current decisions. The [previous complete plan at 397](https://github.com/mekhovov/revealline/blob/39774cce8697d412d138ef4da11ac547a5f8e535/docs/performance/solo-performance-followup-plan.md) and its linked reports preserve the full chronology, declarations, failed observations and source identities.
 
@@ -22,6 +22,8 @@ This revision consolidates the current decisions. The [previous complete plan at
 Mission URLs, campaign identities, simulation, capture rules, saves and replay formats remain unchanged. Renderer metadata stays outside authoritative checkpoints. There are no automatic diagnostic uploads. A renderer-worker migration, WebGL rewrite and blanket 60 FPS cap remain outside this implementation.
 
 ## Latest findings and fixes
+
+The latest Pages delivery follow-up removes a profiled image-bytes → base64 → image-bytes round trip from two existing media owners, repairs Replay Theater's callback-count fixture wait and rejects overflowing focused-runner timers. Complete local groups pass 62 media/header, 4 Countercurrent, 11 Replay Theater and 54 focused-runner cases with the original runtime validation and command budgets. Successor CI and publication remain required; these source checks are not a native performance pass. [Retained failures, profile, exact correction and Pages delivery scope](solo-pages-merge-followup-20261018.md).
 
 A new public source-host reproduction at `2c519bfe94b6364a57c71ba40b7212c71f0994ab` confirms that a delayed Missions response can construct its catalogue after Featured Start has entered active play. The integrated correction binds the builder and its nested continuations to the current run, phase and UI owner, retires late work, disposes partial owners and permits fresh explicit requests. Nine complete source files pass 199 controls, including delayed response → Start/Resume, teardown and fresh retry. Final packaged native coverage remains required. A separate source CPU profile attributes about eight seconds to unrelated catalogue construction, but neither this profile nor the new reproduction establishes the cause of every earlier CI startup timeout. [Reproduction, retained failures and scope](solo-startup-owner-investigation-20261018.md).
 
@@ -86,6 +88,10 @@ A separate CPU-report reader incorrectly expected generic `pass` while the actua
 
 ## Next execution order
 
+The current priority is an integrated, checked Pages build for device testing. Latest main `ce98e93743c0eb2d393d1d24bcc907d728c94951` is incorporated by merge `cb218aa1025590cb83e4d87ba205ffe3af0f7041`; the existing performance history and evidence bindings are preserved. Resolve the current source-test failures without weakening their assertions, complete the PR checks, and merge. The rolling-main Pages workflow then builds and deploys the merged revision automatically. Confirm that public `main-deployment.json` and `game/build-info.json` identify that revision before device testing. No release tag, version bump or frozen-release selector update is needed for this route.
+
+This changes delivery order, not the performance targets below. Keep the unsuccessful timing observations, incomplete diagnostic proposals and remaining device scenarios visible after publication. Native benchmarks must continue to use an explicitly identified build.
+
 The [remaining execution matrix](solo-final-execution-matrix-20261018.md) names the existing workload, runner, bounds, retained outcome and exact admission gap for each lane. The thirty-minute obligation remains a lifecycle session; report its active duty cycle rather than inventing an uninterrupted-play gate. The held Demo recovery observer's active-export conflict is [corrected through retained state and public paused exports](solo-demo-recovery-observer-20261018.md); all fourteen source controls pass, while its final-source native lane remains unexecuted. The existing overhead assessors already use raw p95; their measurement-resolution limits need a prospective bounded analysis, not a histogram change or a relaxed five-percent gate.
 
 1. Preserve the completed shared Team/Versus and controller source regression checks and run their final-package native scenarios. Retain and investigate the older intermittent Solo startup timeouts; current complete-file passes do not establish their cause. Verify explicit preparation failure/Retry on the final package.
@@ -93,7 +99,7 @@ The [remaining execution matrix](solo-final-execution-matrix-20261018.md) names 
 3. Retain the successful font readiness observation without repeating it for more favorable timing. Review the Cocoa ownership classifier against the actual root-owned Metal service before declaring any new codec attempt. Keep original native preflight failure, media not-run status and production-game timing separate.
 4. Measure the new terminal/progress/recorder paths with the unchanged public workloads and deadlines before expanding transition runs. Retain partial rows, calibration failures, automatic pauses and every hitch. Required saves and maximum profiles need separate attribution from optional work.
 5. Finish final-source three-run comparisons, ten Next transitions, twenty retries, resource retention, thirty-minute sustained play, recovery/orientation, audio, touch and native raster cases. Use the extended Demo owner observations to verify retained-resource plateaus; their source controls alone do not establish a native plateau.
-6. Complete source/build checks, review and push each remaining phase to the existing draft PR. Physical iPhone 17 Pro Safari and Steam Deck OLED Chrome checks remain unavailable here and cannot be replaced by desktop emulation.
+6. Record remaining qualification work after the checked PR is merged and the exact Pages revision is verified. Physical iPhone 17 Pro Safari and Steam Deck OLED Chrome checks cannot be replaced by desktop emulation; the public build enables those requested device observations.
 
 Keep local execution to source/model checks with the 256 MiB free-space reserve. Native browsers and production builds run remotely; retain every result and acquire only bounded evidence locally. Do not widen deadlines, alter workloads, weaken gates, mutate hidden application state or introduce benchmark-only quality resets to obtain a pass.
 
