@@ -33,6 +33,25 @@ const FIRST_VICTORY_239_CPU_CANDIDATE = Object.freeze({
   },
   manifestSHA256: 'abe173d91aece2ba590c0c2442d48f151b13e23a88fa0ead7b6690f4f95b9d36',
 });
+export const FIRST_VICTORY_DE332_CPU_SOURCE = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
+const FIRST_VICTORY_DE332_CPU_CANDIDATE = Object.freeze({
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+  run: 39091745654,
+  artifact: 12123463810,
+  outer: {
+    bytes: 1094606342,
+    sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+  },
+  inner: {
+    bytes: 1075789325,
+    sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+  },
+  manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+});
+const firstVictoryDe332 = (plan) =>
+  plan?.phase === 'first-victory-cpu-profile' &&
+  plan?.sourceCohort === 'first-victory-de332-main8b-v1';
 const firstVictory239 = (plan) =>
   plan?.phase === 'first-victory-cpu-profile' &&
   plan?.sourceCohort === 'first-victory-239-main8b-v1';
@@ -40,17 +59,21 @@ const firstVictory = (plan) => plan?.phase === 'first-victory-cpu-profile';
 const longRail = (plan) => plan?.phase === 'long-rail-cpu-profile';
 const source = (plan) =>
   firstVictory(plan)
-    ? firstVictory239(plan)
-      ? FIRST_VICTORY_239_CPU_SOURCE
-      : FIRST_VICTORY_CPU_SOURCE
+    ? firstVictoryDe332(plan)
+      ? FIRST_VICTORY_DE332_CPU_SOURCE
+      : firstVictory239(plan)
+        ? FIRST_VICTORY_239_CPU_SOURCE
+        : FIRST_VICTORY_CPU_SOURCE
     : longRail(plan)
       ? LONG_RAIL_CPU_SOURCE
       : CPU_PROFILE_SOURCE;
 const recipeHash = (plan) =>
   firstVictory(plan)
-    ? firstVictory239(plan)
-      ? '328ae1964a398623c9dd1b71ff14c91e3dbb4156670558bcf381306334e9cf4c'
-      : FIRST_VICTORY_CPU_RECIPE
+    ? firstVictoryDe332(plan)
+      ? 'b1f50b274862dbe09237011e40f5fced6042095e745f488c44d72933906ef5ba'
+      : firstVictory239(plan)
+        ? '328ae1964a398623c9dd1b71ff14c91e3dbb4156670558bcf381306334e9cf4c'
+        : FIRST_VICTORY_CPU_RECIPE
     : longRail(plan)
       ? LONG_RAIL_CPU_RECIPE
       : CPU_PROFILE_RECIPE;
@@ -121,6 +144,31 @@ export function firstVictoryProfileOrigin() {
   };
 }
 
+export function firstVictoryDe332ProfileOrigin() {
+  return {
+    run: 39098131087,
+    job: 117588741556,
+    artifact: 12125224496,
+    artifactBytes: 675224,
+    artifactSHA256: '87cd36fdda0b0703df7ba5407772441df4a19ed2969176f9f9a4f917c8d61f29',
+    calibrationSHA256: 'b2a2ccb1cee2590ae84b086de14311c5ac64c0926e477bda05b691b37fa5e2fb',
+    reportSHA256: '23d8edf87017318af9d0dd17311a3879e8f0d1b9f093edea052f1c488d1dda81',
+    commandSHA256: 'e376615aceb20d27d024481ce005dfe8580e2379cad59cee53b7a34e104c4306',
+    rate: 3.88,
+    originalTarget: 1000,
+    originalVerification: [1036, 1045, 1000.5],
+    newHostCalibration: false,
+    scope: 'fixed-diagnostic-factor-only',
+    predecessorScenarioStatus: 'pass',
+    predecessorPerformanceStatus: 'fail',
+    predecessorCommandStatus: 'closed',
+    predecessorExitCode: 2,
+    predecessorForcedCleanup: false,
+    predecessorSurvivors: 0,
+    predecessorAmbiguous: 0,
+  };
+}
+
 export function validateCpuProfilePlan(plan) {
   assert.equal(plan.format, 'SoloHostedCpuProfilePlanV1');
   assert.equal(plan.status, 'reviewed-diagnostic-only');
@@ -132,7 +180,11 @@ export function validateCpuProfilePlan(plan) {
   assert.equal(plan.repository, 'mekhovov/revealline');
   assert.equal(plan.candidate.revision, source(plan));
   if (victory) {
-    if (firstVictory239(plan)) {
+    if (firstVictoryDe332(plan)) {
+      for (const key of ['revision', 'tree', 'run', 'artifact', 'outer', 'inner', 'manifestSHA256'])
+        assert.deepEqual(plan.candidate[key], FIRST_VICTORY_DE332_CPU_CANDIDATE[key], key);
+      assert.equal(plan.runtimeRevision, FIRST_VICTORY_DE332_CPU_SOURCE);
+    } else if (firstVictory239(plan)) {
       for (const key of ['revision', 'tree', 'run', 'artifact', 'outer', 'inner', 'manifestSHA256'])
         assert.deepEqual(plan.candidate[key], FIRST_VICTORY_239_CPU_CANDIDATE[key], key);
       assert.equal(plan.runtimeRevision, FIRST_VICTORY_239_CPU_SOURCE);
@@ -195,7 +247,7 @@ export function validateCpuProfilePlan(plan) {
   }
   assert.equal(plan.node, '22.13.1');
   assert.equal(plan.playwright, '1.62.1');
-  assert.equal(plan.cpu, victory ? 2.42 : current ? 4.19 : 2.46);
+  assert.equal(plan.cpu, firstVictoryDe332(plan) ? 3.88 : victory ? 2.42 : current ? 4.19 : 2.46);
   assert.equal(plan.performanceExclusion, true);
   assert.equal(plan.automaticRetries, 0);
   assert.equal(plan.automaticPhaseContinuation, false);
@@ -207,13 +259,18 @@ export function validateCpuProfilePlan(plan) {
   assert.deepEqual(plan.rows, [rowDefinition(plan)]);
   assert.equal(plan.recipe.sha256, recipeHash(plan));
   if (current)
-    assert.equal(plan.recipe.bytes, victory ? (firstVictory239(plan) ? 3524 : 3527) : 4562);
+    assert.equal(
+      plan.recipe.bytes,
+      victory ? (firstVictoryDe332(plan) ? 3545 : firstVictory239(plan) ? 3524 : 3527) : 4562,
+    );
   assert.equal(
     plan.recipe.path,
     victory
-      ? firstVictory239(plan)
-        ? 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-239.qualification.fixture'
-        : 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-e1cc.qualification.fixture'
+      ? firstVictoryDe332(plan)
+        ? 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-de332.qualification.fixture'
+        : firstVictory239(plan)
+          ? 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-239.qualification.fixture'
+          : 'docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-e1cc.qualification.fixture'
       : current
         ? 'docs/performance/fixtures/solo-remote-timing/long-rail.qualification.fixture'
         : 'docs/performance/fixtures/solo-remote-timing/cold-first30.qualification.fixture',
@@ -233,16 +290,23 @@ export function validateCpuProfilePlan(plan) {
   } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
   assert.equal(plan.release.performanceQualification, 'excluded-cpu-profiling');
   if (victory) {
-    assert.equal(plan.release.predecessorRun, 39044567236);
+    assert.equal(plan.release.predecessorRun, firstVictoryDe332(plan) ? 39098131087 : 39044567236);
     assert.equal(plan.release.priorProofInspected, true);
     assert.equal(plan.release.noUnclosedOwners, true);
-    assert.equal(plan.release.ownerClosureScope, 'specific-next-chromium-r2-command-only');
+    assert.equal(
+      plan.release.ownerClosureScope,
+      firstVictoryDe332(plan)
+        ? 'specific-de332-next-chromium-r1-command-only'
+        : 'specific-next-chromium-r2-command-only',
+    );
     assert.equal(plan.release.allPriorPlannedJobsClosed, undefined);
     assert.equal(
       plan.release.onceOnlyBefore,
-      firstVictory239(plan)
-        ? FIRST_VICTORY_239_CPU_SOURCE
-        : '7c7cc2648331870683ac7b76850bbeff859f802e',
+      firstVictoryDe332(plan)
+        ? undefined
+        : firstVictory239(plan)
+          ? FIRST_VICTORY_239_CPU_SOURCE
+          : '7c7cc2648331870683ac7b76850bbeff859f802e',
     );
     if (firstVictory239(plan))
       assert.deepEqual(plan.release.priorProfileAttempt, {
@@ -258,7 +322,18 @@ export function validateCpuProfilePlan(plan) {
         inference: 'inconclusive-external-setup-timeout',
       });
     else assert.equal(plan.release.priorProfileAttempt, undefined);
-    assert.deepEqual(plan.stressOrigin, firstVictoryProfileOrigin());
+    assert.deepEqual(
+      plan.stressOrigin,
+      firstVictoryDe332(plan) ? firstVictoryDe332ProfileOrigin() : firstVictoryProfileOrigin(),
+    );
+    if (firstVictoryDe332(plan))
+      assert.deepEqual(plan.release.dispatch, {
+        workflow: '.github/workflows/solo-native-package-consumer.yml',
+        lane: 'hud-cpu',
+        ref: 'main',
+        source: FIRST_VICTORY_DE332_CPU_SOURCE,
+        automaticRetries: 0,
+      });
   } else if (current) {
     assert.equal(plan.release.predecessorRun, 39015298582);
     assert.equal(plan.release.priorProofInspected, true);
@@ -391,7 +466,7 @@ export function cpuProfileArguments(ctx, url, dir) {
     '--server-fixture-access',
     '--work-probe',
     '--cadence=settled120',
-    `--cpu=${firstVictory(ctx.plan) ? 2.42 : longRail(ctx.plan) ? 4.19 : 2.46}`,
+    `--cpu=${firstVictoryDe332(ctx.plan) ? 3.88 : firstVictory(ctx.plan) ? 2.42 : longRail(ctx.plan) ? 4.19 : 2.46}`,
     '--browser=chromium',
     `--source-revision=${source(ctx.plan)}`,
     '--cpu-profile',

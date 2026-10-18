@@ -1,3 +1,4 @@
+import { readExecutedDe332Source, assertExecutedDe332Ref } from './solo-de332-executed-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -10,7 +11,8 @@ const planPath = 'docs/performance/solo-remote-de332-correctness-plan.json';
 const workflowPath = '.github/workflows/solo-native-package-consumer.yml';
 const plan = await json(planPath);
 const prior = await json('docs/performance/solo-remote-39774-correctness-plan.json');
-const workflow = (await read(workflowPath)).toString();
+const executed = await readExecutedDe332Source(planPath);
+const workflow = executed.workflow;
 const job = workflow.split('  correctness:\n')[1].split('  declare:\n')[0];
 const source = 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4';
 const before = 'c82d0825999f014c7a5c17386542f3219f4f04e5';
@@ -212,17 +214,17 @@ async function current(ref) {
   assert.equal(b.length, ref.bytes, ref.path);
   assert.equal(createHash('sha256').update(b).digest('hex'), ref.sha256, ref.path);
 }
-test('current executable inputs and complete-control sparse reads are frozen without historical substitution', async () => {
+test('executed inputs and original complete-control sparse reads remain exact', async () => {
   const refs = [...plan.adapterInputs, ...plan.frozenTools, plan.fixture];
   assert.equal(plan.adapterInputs.length, 1);
   assert.equal(plan.adapterInputs[0].path, 'scripts/solo-remote-baseline.mjs');
   assert(refs.some((r) => r.path === 'scripts/run-solo-remote-correctness.mjs'));
   assert(refs.some((r) => r.path === 'scripts/solo-shared-source-checkout.sh'));
   assert.equal(refs.length, new Set(refs.map((r) => r.path)).size);
-  for (const ref of refs) await current(ref);
+  for (const ref of refs) assertExecutedDe332Ref(executed.refs, ref);
   const stale = refs.find((r) => r.path === 'scripts/run-solo-remote-correctness.mjs');
-  await assert.rejects(() => current({ ...stale, sha256: '0'.repeat(64) }));
-  await assert.rejects(() => current({ ...stale, bytes: stale.bytes + 1 }));
+  assert.throws(() => assertExecutedDe332Ref(executed.refs, { ...stale, sha256: '0'.repeat(64) }));
+  assert.throws(() => assertExecutedDe332Ref(executed.refs, { ...stale, bytes: stale.bytes + 1 }));
   const sparse = [...job.matchAll(/^            \/(.+)$/gm)].map((x) => x[1]);
   for (const p of [
     workflowPath,

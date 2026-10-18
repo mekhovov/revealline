@@ -127,9 +127,107 @@ export const DIAGNOSED_READINESS_PROTOCOL = Object.freeze({
   numericalGates: 'unchanged-raw',
   performanceQualification: false,
 });
+export const DE332_READINESS_SOURCE = Object.freeze({
+  revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+  tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+});
+export const DE332_READINESS_COHORT = 'readiness-preparation-candidatede332';
+export const DE332_READINESS_ROW = 'readiness-preparation-row-candidatede332';
+export const DE332_READINESS_FAULT_FIXTURES = Object.freeze({
+  'required-original-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-de332/required-original-cancel-start-v2.qualification.fixture',
+    bytes: 4546,
+    sha256: '88f5c21bd2bbd5f75eb99bcb848e053e1b6b96632ae49e7f4c870a0aed9c46a6',
+  },
+  'optional-icon-missing': {
+    path: 'docs/performance/fixtures/solo-readiness-de332/optional-icon-missing-v1.qualification.fixture',
+    bytes: 3233,
+    sha256: '2fe33ea0291018b09174338ac777a66ae62b22ccc9c911e02d4af1dcbe0ca1b7',
+  },
+  'selected-font-cancel': {
+    path: 'docs/performance/fixtures/solo-readiness-de332/selected-font-request-settlement-v4.qualification.fixture',
+    bytes: 5773,
+    sha256: '10e8ea2983a25dc3c7a4c5ff90a906256b1acf9ddd3f935faf9e0ce3b600565f',
+  },
+});
+export const DE332_READINESS_PROTOCOL = Object.freeze({
+  ...PREPARATION_READINESS_PROTOCOL,
+  name: 'geometry-and-source-bound-preparation-de332-v1',
+  selectedFontObservation: 'selected-font-request-settlement-v4',
+  requiredStartRetention: 'trusted-initial-start-v1',
+});
+const de332Plan = (plan) => plan?.sourceCohort === DE332_READINESS_COHORT;
+export function de332ReadinessSelection(plan) {
+  assert.equal(plan.sourceCohort, DE332_READINESS_ROW);
+  assert(PREPARATION_READINESS_PHASES.includes(plan.phase));
+  const common = { source: DE332_READINESS_SOURCE, de332: true, documents: 1 };
+  if (['cold-first30', 'warm-resume', 'saved-resume'].includes(plan.phase))
+    return {
+      ...common,
+      fixture:
+        plan.phase === 'cold-first30'
+          ? READINESS_FIXTURE
+          : plan.phase === 'warm-resume'
+            ? DIAGNOSED_READINESS_FIXTURES['warm-resume']
+            : COMPACT_READINESS_FIXTURES.saved,
+      protocol: plan.phase === 'cold-first30' ? 'first-running-v1' : plan.phase + '-v1',
+      geometry: true,
+      resume: plan.phase !== 'cold-first30',
+      compact: plan.phase !== 'cold-first30',
+      documents: plan.phase === 'saved-resume' ? 2 : 1,
+    };
+  if (plan.phase === 'selected-font-cancel')
+    return {
+      ...common,
+      fixture: DE332_READINESS_FAULT_FIXTURES[plan.phase],
+      protocol: 'selected-font-request-settlement-v4',
+      font: true,
+      settlement: true,
+      cancelBoundary: true,
+      requestPolicy: 'same-url-two-v2',
+    };
+  return {
+    ...common,
+    fixture: DE332_READINESS_FAULT_FIXTURES[plan.phase],
+    protocol: plan.phase + '-v1',
+    mediaFault: true,
+    ...(plan.phase === 'required-original-cancel'
+      ? { requiredStartRetention: 'trusted-initial-start-v1' }
+      : {}),
+  };
+}
+function assertDe332ReadinessCandidate(candidate) {
+  assert.deepEqual(
+    {
+      revision: candidate.revision,
+      tree: candidate.tree,
+      run: candidate.run,
+      artifact: candidate.artifact,
+      outer: candidate.outer,
+      inner: candidate.inner,
+      manifestSHA256: candidate.manifestSHA256,
+    },
+    {
+      revision: 'de3324607c82787c1a1fec9c13d4f8b5cb74cee4',
+      tree: '2954fef5b0f1293ff2e6a97ce978a673dddaa7db',
+      run: 39091745654,
+      artifact: 12123463810,
+      outer: {
+        bytes: 1094606342,
+        sha256: '47a1b17e91edd11434e2b9ad08883f43b0b3374c33569aebe24a4731cc8cba27',
+      },
+      inner: {
+        bytes: 1075789325,
+        sha256: 'd4e051135af877e6bb473b71713be4cc8a0b1bca877f892fa04675059fbe94aa',
+      },
+      manifestSHA256: '74525fe396c239be2950585cb28d32455706b27628e02e8cc194f770f885f10d',
+    },
+  );
+}
+
 const diagnosedPlan = (plan) => plan?.sourceCohort === DIAGNOSED_READINESS_COHORT;
 const preparationPlan = (plan) =>
-  plan?.sourceCohort === PREPARATION_READINESS_COHORT || diagnosedPlan(plan);
+  plan?.sourceCohort === PREPARATION_READINESS_COHORT || diagnosedPlan(plan) || de332Plan(plan);
 export function diagnosedReadinessRows(engine) {
   assert.equal(engine, 'webkit');
   return DIAGNOSED_READINESS_PHASES.map((phase) => ({ ...readinessRow(engine, phase), phase }));
@@ -138,6 +236,7 @@ export function preparationReadinessRows(engine) {
   return PREPARATION_READINESS_PHASES.map((phase) => ({ ...readinessRow(engine, phase), phase }));
 }
 export function preparationReadinessSelection(plan) {
+  if (plan.sourceCohort === DE332_READINESS_ROW) return de332ReadinessSelection(plan);
   if (plan.sourceCohort === 'readiness-diagnosed-row-candidate239') {
     assert.equal(plan.engine, 'webkit');
     assert(DIAGNOSED_READINESS_PHASES.includes(plan.phase));
@@ -199,9 +298,11 @@ function preparationRowPlan(plan, row) {
   for (const [key, value] of Object.entries(expected)) assert.deepEqual(row[key], value, key);
   const scoped = {
     ...plan,
-    sourceCohort: diagnosedPlan(plan)
-      ? 'readiness-diagnosed-row-candidate239'
-      : 'readiness-preparation-row-candidatee1cc',
+    sourceCohort: de332Plan(plan)
+      ? DE332_READINESS_ROW
+      : diagnosedPlan(plan)
+        ? 'readiness-diagnosed-row-candidate239'
+        : 'readiness-preparation-row-candidatee1cc',
     phase: expected.phase,
   };
   const selected = preparationReadinessSelection(scoped);
@@ -481,15 +582,19 @@ function selection(plan) {
   if (preparationPlan(plan))
     return preparationReadinessSelection({
       ...plan,
-      sourceCohort: diagnosedPlan(plan)
-        ? 'readiness-diagnosed-row-candidate239'
-        : 'readiness-preparation-row-candidatee1cc',
+      sourceCohort: de332Plan(plan)
+        ? DE332_READINESS_ROW
+        : diagnosedPlan(plan)
+          ? 'readiness-diagnosed-row-candidate239'
+          : 'readiness-preparation-row-candidatee1cc',
       phase: diagnosedPlan(plan) ? 'warm-resume' : 'cold-first30',
     });
   if (
-    ['readiness-preparation-row-candidatee1cc', 'readiness-diagnosed-row-candidate239'].includes(
-      plan.sourceCohort,
-    )
+    [
+      DE332_READINESS_ROW,
+      'readiness-preparation-row-candidatee1cc',
+      'readiness-diagnosed-row-candidate239',
+    ].includes(plan.sourceCohort)
   )
     return preparationReadinessSelection(plan);
   if (plan.sourceCohort === GEOMETRY_READINESS_COHORT) return geometryReadinessSelection(plan);
@@ -741,6 +846,25 @@ export function readinessRow(engine, phase = 'cold-first30') {
   };
 }
 export function validateReadinessPlan(plan) {
+  if (de332Plan(plan)) {
+    assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
+    assert.equal(plan.phase, 'geometry-and-preparation-faults');
+    assert.deepEqual(plan.protocol, DE332_READINESS_PROTOCOL);
+    assert.deepEqual(plan.rows, preparationReadinessRows(plan.engine));
+    assert.deepEqual(plan.fixture, READINESS_FIXTURE);
+    assert.deepEqual(plan.additionalFixtures, [
+      DIAGNOSED_READINESS_FIXTURES['warm-resume'],
+      COMPACT_READINESS_FIXTURES.saved,
+      DE332_READINESS_FAULT_FIXTURES['selected-font-cancel'],
+      DE332_READINESS_FAULT_FIXTURES['required-original-cancel'],
+      DE332_READINESS_FAULT_FIXTURES['optional-icon-missing'],
+    ]);
+    assert.equal(plan.release.comparisonScope, 'candidate-preparation-correctness-only');
+    for (const row of plan.rows) validateReadinessPlan(preparationRowPlan(plan, row));
+    const refs = combinedFixtureInputs(plan);
+    assert.equal(new Set(refs.map((r) => r.path)).size, refs.length);
+    return plan;
+  }
   if (diagnosedPlan(plan)) {
     assert.equal(plan.format, 'SoloHostedReadinessPlanV1');
     assert.equal(plan.phase, 'warm-and-required-original-corrections');
@@ -883,7 +1007,16 @@ export function validateReadinessPlan(plan) {
   assert.equal(plan.candidate.revision, selected.source.revision);
   assert.equal(plan.candidate.tree, selected.source.tree);
   assert.equal(plan.runtimeRevision, selected.source.revision);
-  if (selected.audioFault || selected.settlement) {
+  if (selected.de332) {
+    assertDe332ReadinessCandidate(plan.candidate);
+    assert.deepEqual(plan.release.dispatch, {
+      workflow: '.github/workflows/solo-native-package-consumer.yml',
+      lane: 'readiness',
+      source: DE332_READINESS_SOURCE.revision,
+    });
+    assert.equal(plan.release.onceOnlyBefore, undefined);
+  }
+  if (!selected.de332 && (selected.audioFault || selected.settlement)) {
     assert.deepEqual(plan.candidate.run, 39037874955);
     assert.deepEqual(plan.candidate.artifact, 12104590541);
     assert.deepEqual(plan.candidate.outer, {
@@ -994,7 +1127,7 @@ export function validateReadinessPlan(plan) {
     'diagnosticStatus-passed-and-readinessCorrectness-pass',
   );
   assert.equal(plan.release.candidateRevision, selected.source.revision);
-  if (selected.audioFault || selected.diagnosed || selected.settlement) {
+  if (selected.de332 || selected.audioFault || selected.diagnosed || selected.settlement) {
     assert.equal(plan.release.firstEightRequired, false);
     assert.equal(plan.release.firstEightAllCorrectnessPassed, undefined);
   } else assert.equal(plan.release.firstEightAllCorrectnessPassed, false);
@@ -1003,7 +1136,7 @@ export function validateReadinessPlan(plan) {
   assert.equal(plan.release.automaticRetries, 0);
   assert.equal(plan.release.priorProofInspected, true);
   assert.equal(plan.release.noUnclosedOwners, true);
-  assert.match(plan.release.onceOnlyBefore, /^[a-f0-9]{40}$/);
+  if (!selected.de332) assert.match(plan.release.onceOnlyBefore, /^[a-f0-9]{40}$/);
   for (const key of ['run', 'artifact'])
     assert(Number.isSafeInteger(plan.candidate[key]) && plan.candidate[key] > 0);
   for (const key of ['outer', 'inner']) {
@@ -1118,7 +1251,7 @@ export async function prepareReadinessMode(ctx) {
   assert.equal(a.manifestSHA256, ctx.plan.candidate.manifestSHA256);
   assert.deepEqual(a.archiveIdentity, ctx.plan.candidate.inner);
   ctx.report.performanceExclusion = true;
-  if (selected.audioFault || selected.diagnosed || selected.settlement)
+  if (selected.de332 || selected.audioFault || selected.diagnosed || selected.settlement)
     ctx.report.firstEightRequired = false;
   else ctx.report.firstEightAllCorrectnessPassed = false;
   return {
@@ -1225,6 +1358,7 @@ export async function readinessAssessment(
         raw?.readinessDocuments,
         raw?.selectedFontTransport,
         raw?.selectedFontSettlement,
+        selected.source.revision,
       )
     : selected.mediaFault
       ? assessReadinessMediaFault({
@@ -1419,7 +1553,7 @@ export async function readinessAssessment(
     rawPerformanceGateStatus: numeric,
     numericObservationStatus: numeric,
     hitchJournalVerification: journal,
-    ...(selected.audioFault || selected.diagnosed || selected.settlement
+    ...(selected.de332 || selected.audioFault || selected.diagnosed || selected.settlement
       ? { firstEightRequired: false }
       : { firstEightAllCorrectnessPassed: false }),
     performanceQualification: 'excluded',

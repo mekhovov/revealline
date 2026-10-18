@@ -1031,7 +1031,7 @@ async function parent(output, plan = MP3_CONTROL) {
     outputBytes: MP3_CONTROL.maximumLogBytes,
     inspect,
   };
-  let preparation, command, report, preflight;
+  let preparation, command, report, preflight, preflightCommand;
   const cocoaEnvironment = plan === MP3_COCOA_CONTROL ? nativeCocoaEnvironment(options.env) : null;
   const summary = {
     format: plan.format,
@@ -1047,7 +1047,7 @@ async function parent(output, plan = MP3_CONTROL) {
       const { admitDarwinBuildReceipt } = await import('./solo-darwin-process-inventory.mjs');
       const build = admitDarwinBuildReceipt(process.env, source);
       await writeFile(join(output, 'process-inventory-build.json'), build.bytes, { flag: 'wx' });
-      const ownerCommand = await ownedCommand(
+      preflightCommand = await ownedCommand(
         [process.execPath, fileURLToPath(import.meta.url), 'child-cocoa-owner', output, scratch],
         {
           ...options,
@@ -1060,12 +1060,34 @@ async function parent(output, plan = MP3_CONTROL) {
             : {}),
         },
       );
+      // Interrupted ownership can leave only the writer's original .partial.
+      // Keep that evidence untouched; it cannot admit media or mask the primary
+      // command failure with a subsequent missing-final-report error.
+      assert(
+        preflightCommand.status === 'closed' &&
+          preflightCommand.exitCode === 0 &&
+          !preflightCommand.violation &&
+          !preflightCommand.forcedCleanup &&
+          !preflightCommand.cleanupUnconfirmed &&
+          preflightCommand.ambiguous?.length === 0 &&
+          preflightCommand.survivors?.length === 0,
+        `Cocoa owner preflight command failed: ${JSON.stringify({
+          status: preflightCommand.status,
+          exitCode: preflightCommand.exitCode,
+          signal: preflightCommand.signal,
+          violation: preflightCommand.violation,
+          forcedCleanup: preflightCommand.forcedCleanup,
+          cleanupUnconfirmed: preflightCommand.cleanupUnconfirmed,
+          ambiguousCount: preflightCommand.ambiguous?.length,
+          survivorCount: preflightCommand.survivors?.length,
+        })}`,
+      );
       const bytes = await readFile(join(output, 'owner-preflight.json'));
       assert(bytes.length <= plan.maximumReportBytes, 'Owner preflight report cap');
       preflight = JSON.parse(bytes);
       assert.equal(preflight.sourceRevision, source);
       assert(
-        nativeOwnerPreflightComplete(preflight, ownerCommand),
+        nativeOwnerPreflightComplete(preflight, preflightCommand),
         'Cocoa process ownership is uncertain; media observation withheld',
       );
     }
@@ -1162,7 +1184,13 @@ async function parent(output, plan = MP3_CONTROL) {
   } catch (error) {
     summary.failure = failure(error);
   } finally {
-    if (plan === MP3_COCOA_CONTROL) summary.ownerPreflightStatus = preflight?.status ?? 'not-run';
+    if (plan === MP3_COCOA_CONTROL) {
+      summary.ownerPreflightStatus = preflight?.status ?? (preflightCommand ? 'failed' : 'not-run');
+      summary.ownerPreflightCommandStatus = preflightCommand?.status ?? 'not-run';
+      summary.ownerPreflightCommandViolation = preflightCommand?.violation ?? null;
+      summary.ownerPreflightCommandExitCode = preflightCommand?.exitCode ?? null;
+      summary.ownerPreflightCommandSignal = preflightCommand?.signal ?? null;
+    }
     summary.preparationStatus = preparation?.status ?? 'not-run';
     summary.commandStatus = command?.status ?? 'not-run';
     summary.observations =

@@ -918,6 +918,10 @@ export const FIRST_VICTORY_239_CPU_FIXTURE = Object.freeze({
   bytes: 3524,
   sha256: '328ae1964a398623c9dd1b71ff14c91e3dbb4156670558bcf381306334e9cf4c',
 });
+export const FIRST_VICTORY_DE332_CPU_FIXTURE = Object.freeze({
+  bytes: 3545,
+  sha256: 'b1f50b274862dbe09237011e40f5fced6042095e745f488c44d72933906ef5ba',
+});
 export function qualificationNextRouteOptions(flags, scenario, bytes) {
   const selected = flags.filter((value) => value.startsWith('--authored-next-route'));
   const declared =
@@ -934,13 +938,22 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
   assert.equal(scenario.nativeRouteProtocol, NEXT_ROUTE_PROTOCOL);
   if (scenario.nativeRouteCpuProfile !== undefined) {
     const current = scenario.nativeRouteCpuProfile === 'first-victory-239-v1';
+    const de332 = scenario.nativeRouteCpuProfile === 'first-victory-de332-v1';
     assert(
-      ['first-victory-e1cc-v1', 'first-victory-239-v1'].includes(scenario.nativeRouteCpuProfile),
+      ['first-victory-e1cc-v1', 'first-victory-239-v1', 'first-victory-de332-v1'].includes(
+        scenario.nativeRouteCpuProfile,
+      ),
     );
-    const profileSource = current
-      ? '239c574ecddd5bb6d5896e621d9edc53e7f6a313'
-      : NEXT_ROUTE_FINAL_SOURCE;
-    const profileFixture = current ? FIRST_VICTORY_239_CPU_FIXTURE : FIRST_VICTORY_CPU_FIXTURE;
+    const profileSource = de332
+      ? NEXT_ROUTE_DE332_SOURCE
+      : current
+        ? '239c574ecddd5bb6d5896e621d9edc53e7f6a313'
+        : NEXT_ROUTE_FINAL_SOURCE;
+    const profileFixture = de332
+      ? FIRST_VICTORY_DE332_CPU_FIXTURE
+      : current
+        ? FIRST_VICTORY_239_CPU_FIXTURE
+        : FIRST_VICTORY_CPU_FIXTURE;
     assert.equal(scenario.kind, 'performance');
     assert.equal(scenario.timeoutMs, 240000);
     assert.equal(scenario.requiredProfile, 'cpu');
@@ -949,7 +962,7 @@ export function qualificationNextRouteOptions(flags, scenario, bytes) {
     assert.deepEqual(scenario, JSON.parse(bytes), 'Profile recipe differs from admitted bytes');
     for (const [name, value] of [
       ['source-revision', profileSource],
-      ['cpu', '2.42'],
+      ['cpu', de332 ? '3.88' : '2.42'],
       ['browser', 'chromium'],
       ['cadence', 'settled120'],
     ])
