@@ -1,8 +1,10 @@
 # Aircraft implementation and remaining evidence gates
 
 Current progress and priorities: [SIM completion plan](fpv-current-completion-plan.md).
-The current catalog has thirteen aircraft after the [Mobula8 addition](fpv-civilian-kits.md);
-the twelve-aircraft release receipts below retain their original scope.
+The current catalog has fifteen aircraft after the [Mobula8 addition](fpv-civilian-kits.md)
+and [Cetus X / Protos additions](fpv-civilian-candidate-implementation.md).
+The twelve-aircraft release receipts below retain their original scope; newer
+flight corrections have their own publication and acceptance gates in the plan.
 
 This record follows the approved twelve-aircraft plan of 17 October 2026. The
 first live-testing release is independent of later archive and endurance work.
