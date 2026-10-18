@@ -564,7 +564,7 @@ test('CLI binds an exact supplied dependency and writes only an unscored report 
     'parsed report is not an in-process verification result',
   );
   assert.match(result.sourceRepository.revision, /^[a-f0-9]{40}$/);
-  assert.equal(Object.keys(result.selectedSourceSha256).length, 9);
+  assert.equal(Object.keys(result.selectedSourceSha256).length, 11);
   const original = await readFile(reportPath, 'utf8');
   assert.throws(
     () =>
