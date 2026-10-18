@@ -36,6 +36,22 @@ const runtime73Package = {
   },
   manifestSHA256: 'd16a636797b4269357cb6302211c71503819b0ca7ae333d244587cee7d159d93',
 };
+export const DEMO_RUNTIME797_COHORT = 'demo-runtime797-diagnostic-v1';
+const runtime797Package = {
+  revision: '797e03f28743921842df6aa57520a72016ba3dfc',
+  tree: 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5',
+  run: 39104551453,
+  artifact: 12128990483,
+  outer: {
+    bytes: 1094639112,
+    sha256: '76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897',
+  },
+  inner: {
+    bytes: 1075807530,
+    sha256: '5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c',
+  },
+  manifestSHA256: '497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0',
+};
 const de332Assets = [
   {
     role: 'catalog',
@@ -93,8 +109,11 @@ export function validateDemoResourceContract(contract, source) {
   });
 }
 
-function validateRuntime73FirstEight(evidence) {
-  assert(evidence && typeof evidence === 'object', 'Actual source73 first-eight evidence required');
+function validateRuntimeFirstEight(evidence, sourceRevision = runtime73Package.revision) {
+  assert(
+    evidence && typeof evidence === 'object',
+    'Actual same-source first-eight evidence required',
+  );
   assert.deepEqual(
     Object.keys(evidence).sort(),
     [
@@ -109,7 +128,7 @@ function validateRuntime73FirstEight(evidence) {
     ].sort(),
   );
   assert.equal(evidence.format, 'SoloFirstEightCorrectnessEvidenceV1');
-  assert.equal(evidence.sourceRevision, '73a345cec696d7789198cf295ca5c37b17ca0e71');
+  assert.equal(evidence.sourceRevision, sourceRevision);
   assert(Number.isSafeInteger(evidence.runId) && evidence.runId > 0);
   assert(Number.isSafeInteger(evidence.artifactId) && evidence.artifactId > 0);
   assert.match(evidence.artifactSHA256, /^[a-f0-9]{64}$/);
@@ -123,22 +142,37 @@ export function validateDemoPlan(plan) {
   assert(resources || plan.format === 'SoloHostedDemoRecoveryPlanV1');
   if (
     plan.sourceCohort !== undefined ||
-    [de332Package.revision, runtime73Package.revision].includes(plan.candidate?.revision)
+    [de332Package.revision, runtime73Package.revision, runtime797Package.revision].includes(
+      plan.candidate?.revision,
+    )
   ) {
+    const runtime797 = plan.sourceCohort === DEMO_RUNTIME797_COHORT;
     const runtime73 = plan.sourceCohort === DEMO_RUNTIME73_COHORT;
-    const candidate = runtime73 ? runtime73Package : de332Package;
-    assert.equal(plan.sourceCohort, runtime73 ? DEMO_RUNTIME73_COHORT : DEMO_DE332_COHORT);
+    const candidate = runtime797 ? runtime797Package : runtime73 ? runtime73Package : de332Package;
+    assert.equal(
+      plan.sourceCohort,
+      runtime797 ? DEMO_RUNTIME797_COHORT : runtime73 ? DEMO_RUNTIME73_COHORT : DEMO_DE332_COHORT,
+    );
     for (const [key, value] of Object.entries(candidate))
       assert.deepEqual(plan.candidate[key], value);
     assert.equal(plan.runtimeRevision, candidate.revision);
-    if (runtime73) {
+    if (runtime797) {
+      assert.equal(plan.release.firstEightRequired, true);
+      assert.equal(plan.release.firstEightSourceRevision, runtime797Package.revision);
+      assert.equal(plan.release.firstEightAllCorrectnessPassed, true);
+      validateRuntimeFirstEight(plan.release.firstEightEvidence, runtime797Package.revision);
+    } else if (runtime73) {
       assert.equal(plan.release.firstEightSourceRevision, runtime73Package.revision);
       assert.equal(plan.release.firstEightAllCorrectnessPassed, true);
-      validateRuntime73FirstEight(plan.release.firstEightEvidence);
+      validateRuntimeFirstEight(plan.release.firstEightEvidence);
     }
     assert.equal(
       plan.release?.format,
-      runtime73 ? 'SoloDemoRuntime73DiagnosticReleaseV1' : 'SoloDemoDe332DiagnosticReleaseV1',
+      runtime797
+        ? 'SoloDemoRuntime797DiagnosticReleaseV1'
+        : runtime73
+          ? 'SoloDemoRuntime73DiagnosticReleaseV1'
+          : 'SoloDemoDe332DiagnosticReleaseV1',
     );
     assert.equal(
       plan.release.scope,

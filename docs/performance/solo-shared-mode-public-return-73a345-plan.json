@@ -54,10 +54,7 @@
         "summarySHA256": "c67a520f87683b2a43479919f27e798c7cb3adff9a0d0896d815d554d5918955"
       }
     ],
-    "selectedJobs": [
-      "recovery-chromium",
-      "recovery-webkit"
-    ],
+    "selectedJobs": ["recovery-chromium", "recovery-webkit"],
     "dispatch": {
       "workflow": ".github/workflows/solo-native-package-consumer.yml",
       "ref": "refs/heads/main",
@@ -87,8 +84,8 @@
   "adapterInputs": [
     {
       "path": "scripts/solo-remote-auxiliary.mjs",
-      "bytes": 32732,
-      "sha256": "520d83b653a9de97ba38d8050eabffb42cc1acb55a6a84d321ff8e141d946012"
+      "bytes": 33833,
+      "sha256": "e8c4643047135099db345c416e103ff229780ec93018eeeebb54c0fe1f20f9a4"
     }
   ],
   "recipes": {
@@ -99,14 +96,7 @@
     }
   },
   "uploads": [],
-  "jobs": [
-    {
-      "id": "recovery-chromium"
-    },
-    {
-      "id": "recovery-webkit"
-    }
-  ],
+  "jobs": [{ "id": "recovery-chromium" }, { "id": "recovery-webkit" }],
   "frozenTools": [
     {
       "path": "scripts/brand-icons.mjs",
@@ -235,8 +225,8 @@
     },
     {
       "path": "scripts/solo-qualification-shared-mode.mjs",
-      "bytes": 19571,
-      "sha256": "62549c60c6d327745ee147c95580760c6afd28a8c7c87c8b357e49f87fa4aa6a"
+      "bytes": 19713,
+      "sha256": "291207acc273f49dbec297aec4a8c629309187119c6656e0a17a19875926a771"
     },
     {
       "path": "scripts/solo-qualification.mjs",
