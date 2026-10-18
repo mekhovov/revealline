@@ -52,6 +52,13 @@ outcome reporting without changing storage algorithms or explaining the missing
 public inventory. A new local 50.78-second Regional archive saved and verified
 from reset; that positive result does not close retention R13.
 
+The rebased candidate also has **30 rendered catalog smoke cases**: all fifteen
+presets launched and steered in both modes through the World workbench. The
+[receipt](fpv-rendered-catalog-20261018.json) preserves the excessive-throttle
+Meteor75 Pro ceiling contact and gentler retest. Archive-full status did not stop
+the remaining flights. These short checks advance R1; longer representative
+routes and acceptance on a frozen public release remain.
+
 ## Delivered and retained
 
 | Accepted area            | Completed behavior                                                                                                                                                                                                                   | Evidence / qualification boundary                                                                                                                                                                                                                                                                          |

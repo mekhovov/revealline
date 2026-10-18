@@ -36,6 +36,26 @@ The reloaded World host downloaded the 1.1 MiB **Canyon Badlands regional previe
 
 Hosted packaging/publication and acceptance on the deployed revision remain pending at this documentation checkpoint; see the [current completion plan](fpv-current-completion-plan.md).
 
+## Final candidate catalog smoke
+
+On rebased candidate `c7cafc72330271ed99ebf8f7b50b758beb8e7aa9`, all fifteen aircraft
+were selected through the World workbench and launched in **both Self-level and
+Acro** using normal keyboard throttle/yaw/pitch. The [DOM-observed receipt](fpv-rendered-catalog-20261018.json)
+retains each aircraft's displayed response. These are short launch/steering
+checks in Lift and land's unscored practice, not completed lessons or long routes.
+
+The first Meteor75 Pro Self-level check used too much throttle and contacted the
+10 m ceiling, becoming inverted. A fresh gentler 1600 ms ramp was observed upright
+at 0.6 m, climbing at 2.5 m/s with 57% throttle. That immediate observation is
+recorded separately from the later retained retry sample. Subsequent checks used
+gentler ramps. The original failed sample remains in the receipt.
+
+The local archive cap was reached during the repeated flights; flying continued.
+Draft changes were reverted and the original Self-level mode restored. Switching
+mode required waiting for the new paused attempt before reopening the workbench;
+an early activation during that transition did not remain open. No saved tuning
+library was changed. This receipt does not replace production-CSP/public checks.
+
 ## Open archive-retention incident
 
 The user authorized deleting exactly ten identified test archives while preserving six older records. The first attempted action reported a closing-database error; all sixteen entries remained in the cached list. After reload, a successful refresh exposed only a new test session. No successful ten-record cleanup or preservation of the six older archives is claimed. No further deletes were attempted. The [retention follow-up](fpv-archive-retention-followup-20261018.md) records the ownership audit and the earlier matching public negative. This remains P1.
