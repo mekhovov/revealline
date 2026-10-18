@@ -108,6 +108,27 @@ test('legacy callers still load without a pin and receive the measured identity'
   env.host.close();
 });
 
+test('verified image headers do not reread an asynchronous Blob before decoding', async (t) => {
+  const f = await fixture(),
+    env = environment(f, { document: {} });
+  t.mock.method(Blob.prototype, 'arrayBuffer', async () => {
+    throw new Error('A redundant Blob read outlived its document.');
+  });
+  try {
+    const snapshot = await env.host.load();
+    assert.equal(env.decoded.length, 1);
+    assert.equal(snapshot.image('player.scout.compact').image, env.decoded[0]);
+    assert.equal(env.urls.length, 1);
+  } finally {
+    env.host.close();
+  }
+  assert.equal(env.decoded[0].closes, 1);
+  assert.deepEqual(
+    env.revoked,
+    env.urls.map(({ url }) => url),
+  );
+});
+
 test('wrong manifest pin rejects before asset fetch, image decode or adoption', async () => {
   const f = await fixture(),
     env = environment(f),
@@ -205,7 +226,7 @@ test('cancelled pinned reads and superseded requests never replace the current s
   env.host.close();
 });
 
-test('independent hosts can prepare a pinned replacement while the old attempt remains usable', async () => {
+test('independent hosts share pinned page artwork while the old attempt remains usable', async () => {
   const f = await fixture(),
     live = environment(f),
     staged = environment(f);
@@ -214,9 +235,11 @@ test('independent hosts can prepare a pinned replacement while the old attempt r
   assert.notEqual(replacement, original);
   assert.equal(live.host.current(), original);
   assert.equal(live.decoded[0].closes, 0);
+  assert.equal(staged.decoded.length, 0);
+  assert.equal(replacement.image('player.scout.compact').image, live.decoded[0]);
   staged.host.close();
-  assert.equal(staged.decoded[0].closes, 1);
   assert.equal(live.decoded[0].closes, 0);
   assert.equal(original.image('player.scout.compact').image, live.decoded[0]);
   live.host.close();
+  assert.equal(live.decoded[0].closes, 1);
 });

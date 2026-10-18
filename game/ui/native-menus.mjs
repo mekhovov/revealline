@@ -624,6 +624,10 @@ export function prepareNativeMenus({
     }
   }
   const owner = {
+    get qualityObservationOwner() {
+      return scene.qualityObservationOwner;
+    },
+    setQuality: (tier) => scene.setQuality(tier),
     root,
     settings,
     panels,

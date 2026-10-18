@@ -31,77 +31,53 @@ Use HTTPS for a public site. Configure the host to serve `.mjs`/`.js` as JavaScr
 
 ## GitHub Pages
 
-Source pull requests use `.github/workflows/deploy-pages.yml`. While the temporary
-[fast-release mode](fast-release-mode.md) is active, one exact-source path performs release-critical
-validation and the ordinary static build. Full tests, lint, formatting, native formatting, and
-extended production checks are deferred from the pull-request workflow and do not block merge.
-Manual source qualification still requires the bounded lint, formatting, syntax, production
-reproduction/readiness, identity, validation, build and provenance gates before a release can be
-frozen. Full suites remain waived and are not represented as passing. An already qualified
-immutable release is published from its original ZIP; publication does not rerun today's test
-sharder inside an older tag.
+Source pull requests use [Validate source for continuous main](../.github/workflows/deploy-pages.yml).
+Its preflight selects the exact-source validation and focused checks required by the current policy;
+`release-ready` is the aggregate result. The temporary [fast-release mode](fast-release-mode.md)
+defers the full artifact build and some extended checks. Deferred checks are not recorded as passing.
+Pull-request admission and public deployment are separate workflows.
 
-`release-ready` is the stable aggregate PR result. In fast mode it requires successful policy preflight
-and the build. In restored full mode it also requires every test shard. Avoid configuring individual
-matrix job names as required checks; the aggregate avoids stale required contexts when the matrix
-changes.
+[Publish GitHub Pages from main](../.github/workflows/publish-main-pages.yml) publishes the rolling
+`main` channel on every push to `main`, including merged pull requests. It builds the exact triggering
+commit with Node 22.22.2 and locked dependencies, using the `main-pages` publication profile. The
+semantic game version comes from `game/build-config.json`; deployment metadata additionally records
+the full source SHA and `main-<first 12 SHA characters>`. Publishing a merged change does not require
+a version bump, release tag, or change to the historical frozen-release selector.
 
-The sole Pages publisher is `.github/workflows/publish-frozen-pages.yml`, running from `main`
-through the existing main-only `github-pages` environment. Its reviewed
-[`publication.json`](../publishing/pages-controller/publication.json) selects one exact frozen
-version and its six-gate source qualification. It must be enabled and match the highest published,
-non-draft, non-prerelease semantic version. Publishing a newer release never edits the selector or
-moves an old tag. Commit the reviewed selection after freezing the release and verifying its
-archive routes. The selector commit triggers publication; it preserves original file hashes and
-keeps every immutable semantic release tag in `/releases/`. The root game and `/game/` always
-point only to the newest published stable release; the explorer links historical tags to their
-own archive sites so a tester can compare them without replacing the player default. Tags that
-are still being prepared use explicitly reviewed `testingRoutes` and are never chosen as the
-default game. See the [controller contract](../publishing/pages-controller/README.md) for byte
-checks, capacity limits, and the distinction between the controller commit and the frozen game
-source.
+The publisher stages the reviewed optional practice packages, checks the exact inventory against
+the 980,000,000-byte Pages capacity guard, and verifies the uploaded Pages archive before deployment.
+It then deploys through the main-only `github-pages` environment and verifies the public source
+identity and selected practice dependencies. The repository Pages source must be **GitHub Actions**.
+The workflow uses `GITHUB_TOKEN` and the deployment job's Pages and OIDC permissions; no additional
+deployment secret is required.
 
-When publishing the newest intended stable release, explicitly set `make_latest: "true"`.
-After publication, read `GET /repos/mekhovov/revealline/releases/latest` and confirm the
-exact release ID and tag. GitHub's Latest pointer and the reviewed Pages selector are
-separate: a correct Pages deployment does not prove the release badge is current. If
-Latest is stale, reverify the existing release, immutable tag and all nine uploaded
-asset descriptors, update only that release's `make_latest` field, and repeat the
-readback. Preserve the initial attempt and original payloads. Drafts and prereleases
-cannot be Latest. See [GitHub release updates](https://docs.github.com/en/rest/releases/releases#update-a-release).
+After merging, follow the publisher for the resulting main SHA through its `build`, `deploy`, and
+`verify` jobs. Confirm that [main-deployment.json](https://mekhovov.github.io/revealline/main-deployment.json)
+and [game/build-info.json](https://mekhovov.github.io/revealline/game/build-info.json) identify that SHA,
+then open the [public game](https://mekhovov.github.io/revealline/game/) for device testing. A deployment
+or metadata check does not establish gameplay, saved-run ownership, offline behavior, or device
+performance; retain those observations separately.
 
-Set the repository Pages source to **GitHub Actions** once. Both workflows use `GITHUB_TOKEN`; no
-additional secret is required. Source checks and publication have separate concurrency groups,
-and neither cancels a healthy deployment. The publisher rechecks the latest stable release before
-assembly, artifact admission, and deployment, so an older request cannot roll Pages backward.
+Publication uses the `pages-production` concurrency group with `cancel-in-progress: false`. An active
+publication finishes before the newest pending run, so a new merge may queue behind an earlier build.
+If a corrected publication needs an explicit run, select **Actions → Publish GitHub Pages from main →
+Run workflow** and choose `main`; no release-tag input is used. This builds the selected current main
+revision again. Ordinary merges already trigger publication, so they do not need a duplicate dispatch.
 
-For a retry, select **Actions → Publish selected frozen game → Run workflow**, choose `main`, and
-provide the exact selected tag as `release_tag`. The legacy **Build and deploy GitHub Pages** manual
-entry on `main` accepts the same tag and dispatches that publisher after reading the current main
-selector. Future release tags containing this routing workflow can request publication on the
-`release.published` event. Historical tags keep their original workflow files: use the main dispatch
-for them, rather than assuming a new controller exists inside an old release. GitHub resolves event
-workflows from their associated commit or ref. [GitHub workflow events](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows)
+### Frozen releases and historical evidence
 
-Pull requests that change only the controller or its deployment instructions build a non-publishable
-preview. Focused controller test suites are deferred in fast mode, while selector validation,
-bounded extraction, artifact assembly, and an independent reread of every prepared byte remain
-mandatory. Pull requests cannot upload a Pages artifact or enter deployment. A successful build is
-not public acceptance: after deployment, verify the published bytes and test play, saved-run
-ownership, historical entries, and offline coexistence in the actual browser.
+Immutable tagged distributions remain a separate archival process. Use the [versioning instructions](versioning.md)
+to retain exact source, manifests and original distribution bytes, and keep qualification and device
+evidence attached to that version. The public `/releases/` page links to [GitHub releases](https://github.com/mekhovov/revealline/releases)
+for immutable downloads and release notes. Publishing or selecting a GitHub release does not select
+the rolling Pages game.
 
-Source test jobs keep the selected checkout in `source/` and obtain the shard utility from a
-separate `automation/` checkout pinned to `github.workflow_sha`. The utility accepts `--root .`
-from the source working directory, so discovery, imports, child processes and dependencies belong
-to that selected source. Generated `.cache` state is initialized before tests; no immutable test
-file is patched or replaced. Frozen publication continues to use accepted qualification and
-original distribution bytes rather than scheduling historical source checks.
-
-The [FPV redesign delivery record](../publishing/pages-controller/delivery/README.md) records final
-public byte, play, offline and retained-entry evidence separately from immutable source qualification.
-Changes confined to `publishing/pages-controller/delivery/**` retain pull-request preview checks but
-do not republish Pages when merged. A commit that also changes the selector or another publishing
-input still triggers the normal publisher.
+The earlier [frozen controller contract](../publishing/pages-controller/README.md), its
+[`publication.json`](../publishing/pages-controller/publication.json), and the
+[FPV delivery record](../publishing/pages-controller/delivery/README.md) preserve historical routing
+and acceptance evidence. Their frozen-publisher dispatch instructions describe the former deployment
+path; they are not prerequisites for publishing current main. Preserve existing release tags and
+accepted artifacts rather than rebuilding or relabeling them as the rolling deployment.
 
 ## Browser installation and offline use
 

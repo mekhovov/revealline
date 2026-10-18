@@ -67,6 +67,7 @@ async function fixture(t) {
     'game/soundtrack.mjs',
     'game/soundtrack-rights.mjs',
     'game/mp3.mjs',
+    'game/mp3-inspection.mjs',
     'game/data-json.mjs',
     'game/ui/music.mjs',
   ])

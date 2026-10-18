@@ -1,0 +1,357 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "first-fracture-large-capture-erosion-steering-v1",
+  "kind": "performance",
+  "timeoutMs": 240000,
+  "entryPath": "playground/",
+  "readySelector": "#import-file",
+  "coverage": [
+    "large-captures",
+    "earned-erosion",
+    "meaningful-steering"
+  ],
+  "replayRequirements": {
+    "closures": 3,
+    "eroded": 1,
+    "directionChangesWithMovement": 20,
+    "maximumCaptureCells": 600
+  },
+  "actions": [
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "upload",
+      "selector": "#import-file",
+      "file": "first-fracture.xonix.json",
+      "acceptedLevelSelector": "#level-json"
+    },
+    {
+      "type": "click",
+      "selector": "#preview-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "expect",
+      "selector": "#preview-load-status[data-state=\"ready\"]",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "follow",
+      "selector": "#open-preview",
+      "preparationStatusSelector": "[data-presentation-status=\"auxiliary\"]",
+      "timeoutMs": 120000
+    },
+    {
+      "type": "snapshot",
+      "group": "prepared"
+    },
+    {
+      "type": "click",
+      "selector": "#start-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 1500,
+      "label": "earned-capture-steering-1"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 3700,
+      "label": "earned-capture-steering-2"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 1800,
+      "label": "earned-capture-steering-3"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 4850,
+      "label": "earned-capture-steering-4"
+    },
+    {
+      "type": "key",
+      "key": "ArrowDown",
+      "ms": 3600,
+      "label": "earned-capture-steering-5"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 6500,
+      "label": "earned-capture-steering-6"
+    },
+    {
+      "type": "key",
+      "key": "ArrowUp",
+      "ms": 2500,
+      "label": "earned-capture-steering-7"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 1000,
+      "label": "earned-capture-steering-8"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-9"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-10"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-11"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-12"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-13"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-14"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-15"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-16"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-17"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-18"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-19"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-20"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-21"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-22"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-23"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-24"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-25"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-26"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-27"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-28"
+    },
+    {
+      "type": "key",
+      "key": "ArrowLeft",
+      "ms": 500,
+      "label": "earned-capture-steering-29"
+    },
+    {
+      "type": "key",
+      "key": "ArrowRight",
+      "ms": 500,
+      "label": "earned-capture-steering-30"
+    },
+    {
+      "type": "wait",
+      "phase": "running"
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "snapshot",
+      "group": "after-workload"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "readyHiddenSelector": "#boot-status",
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-fracture",
+      "revision": "greybox-1",
+      "name": "First fracture",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 35.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [
+        {
+          "x": 29,
+          "y": 13,
+          "w": 13,
+          "h": 5
+        }
+      ],
+      "goal": {
+        "coverage": 0.76
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "cutter",
+          "type": "eroder",
+          "x": 60.5,
+          "y": 8.5,
+          "vx": -2.4,
+          "vy": 0
+        },
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 12.5,
+          "y": 26.5,
+          "vx": 1.6970562748477138,
+          "vy": -1.6970562748477138
+        },
+        {
+          "id": "outer",
+          "type": "border-patrol",
+          "speed": 1.8,
+          "clockwise": true,
+          "x": 71.5,
+          "y": 27.5
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 10,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 35.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}
