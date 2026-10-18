@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join, dirname } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import test from 'node:test';
 import {
   RETIRED_SOLO_SOURCE,
@@ -43,32 +46,72 @@ test('no active workflow calls the retired diagnostics', async () => {
   }
 });
 
-test('active sparse consumers include the historical reader and its pinned source', async () => {
+test('active historical helper calls run without the retired module or fixture', async (t) => {
+  const directory = await mkdtemp(join(tmpdir(), 'solo-active-witness-'));
+  t.after(() => rm(directory, { recursive: true, force: true }));
   const retired = new Set(witness.workflows.map(({ path }) => path));
-  const names = await readdir(new URL('.github/workflows/', root));
-  let consumers = 0;
-  for (const name of names.filter((name) => /\.ya?ml$/.test(name))) {
-    const path = `.github/workflows/${name}`;
-    if (retired.has(path)) continue;
-    const source = (await load(path)).toString();
-    for (const block of source.split('sparse-checkout: |').slice(1)) {
-      const checkout = block.split(/\n      - /)[0];
-      if (!/\/scripts\/solo-(final-wave|page-error-source)-witness\.mjs/.test(checkout)) continue;
-      consumers++;
-      assert(checkout.includes('/scripts/solo-retired-diagnostic-source.mjs'), path);
-      assert(checkout.includes(`/${RETIRED_SOLO_SOURCE}`), path);
+  const metadata = [
+    'docs/performance/fixtures/solo-final-wave/a7e-execution-source.json',
+    'docs/performance/fixtures/solo-error-witness/historical-source.json',
+    'docs/performance/fixtures/solo-readiness/prior-tools-source.json',
+    'docs/performance/fixtures/solo-representative/prior-qualification-tools.json',
+  ];
+  const documents = await Promise.all(metadata.map(async (path) => JSON.parse(await load(path))));
+  const files = new Set([
+    ...metadata,
+    'scripts/solo-final-wave-witness.mjs',
+    'scripts/solo-page-error-source-witness.mjs',
+    'docs/performance/fixtures/solo-final-wave/a7e-correctness-workflow.yml',
+  ]);
+  for (const document of documents) {
+    for (const source of document.sources ?? [document]) {
+      for (const release of source.releases) {
+        if (retired.has(release.workflow)) continue;
+        files.add(release.workflow);
+        for (const manifest of release.manifest
+          ? [release.manifest]
+          : Object.keys(release.manifests))
+          files.add(manifest);
+      }
     }
   }
-  assert(consumers >= 4);
-  assert.equal(witness.sparseConsumers.length, 4);
-  for (const { path, source } of witness.sparseConsumers) {
-    const current = await load(path);
-    assert.equal(retiredSoloDiagnosticSource(path, current, witnessBytes).toString(), source);
-    assert.throws(() => retiredSoloDiagnosticSource(path, Buffer.from(source), witnessBytes));
-    assert.throws(() =>
-      retiredSoloDiagnosticSource(path, Buffer.concat([current, Buffer.from(' ')]), witnessBytes),
-    );
+  for (const path of files) {
+    const target = join(directory, path);
+    await mkdir(dirname(target), { recursive: true });
+    await writeFile(target, await load(path));
   }
+  const final = await import(pathToFileURL(join(directory, 'scripts/solo-final-wave-witness.mjs')));
+  const page = await import(
+    pathToFileURL(join(directory, 'scripts/solo-page-error-source-witness.mjs'))
+  );
+  const refs = new Map(documents[0].files.map((entry) => [entry.path, entry]));
+  let calls = 0;
+  for (const release of documents[0].releases) {
+    if (retired.has(release.workflow)) continue;
+    for (const [manifest, paths] of Object.entries(release.manifests)) {
+      await final.assertFinalWaveBindings(
+        manifest,
+        paths.map((path) => refs.get(path)),
+        release.workflow,
+      );
+      calls++;
+    }
+  }
+  for (const [document, read] of [
+    [documents[2], page.readHistoricalPageErrorRefs],
+    [documents[3], page.readHistoricalQualificationRefs],
+  ]) {
+    for (const source of document.sources) {
+      for (const release of source.releases) {
+        if (retired.has(release.workflow)) continue;
+        assert((await read(release.manifest, release.workflow)).size > 0);
+        calls++;
+      }
+    }
+  }
+  assert(calls >= 10);
+  await assert.rejects(readFile(join(directory, 'scripts/solo-retired-diagnostic-source.mjs')));
+  await assert.rejects(readFile(join(directory, RETIRED_SOLO_SOURCE)));
 });
 
 test('historical reader rejects trigger revival, weakened guards and changed execution bytes', async () => {

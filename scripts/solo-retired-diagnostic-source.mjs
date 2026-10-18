@@ -15,27 +15,12 @@ on:
 export function retiredSoloDiagnosticSource(path, current, witnessBytes) {
   assert.equal(
     createHash('sha256').update(witnessBytes).digest('hex'),
-    '901d9f2d67edfb8b82d771f00337750841e7330c78656ca42d836e0e0430ca33',
+    '4c0ba98e10b89dc19f338b22d76bc69bd1ee62cb4ded71837410b604aad17c28',
   );
   const witness = JSON.parse(witnessBytes);
   assert.equal(witness.format, 'RetiredSoloOneShotDiagnosticSourceV1');
   const record = witness.workflows.find((entry) => entry.path === path);
-  if (!record) {
-    const consumer = witness.sparseConsumers.find((entry) => entry.path === path);
-    if (!consumer) return current;
-    const expected = consumer.source.replace(
-      /^( +)\/scripts\/solo-(?:final-wave|page-error-source)-witness\.mjs\n/gm,
-      (line, indent) =>
-        line +
-        `${indent}/scripts/solo-retired-diagnostic-source.mjs\n${indent}/${RETIRED_SOLO_SOURCE}\n`,
-    );
-    assert.equal(
-      current.toString(),
-      expected,
-      `Sparse consumer changed outside its closure: ${path}`,
-    );
-    return Buffer.from(consumer.source);
-  }
+  if (!record) return current;
   const start = record.source.indexOf('on:\n');
   const end = record.source.indexOf('\npermissions:', start);
   assert(start > 0 && end > start, path);

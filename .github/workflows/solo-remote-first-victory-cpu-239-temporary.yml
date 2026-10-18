@@ -260,8 +260,6 @@ jobs:
             /scripts/solo-diagnostics-analysis.mjs
             /scripts/solo-observation-lifecycle.mjs
             /scripts/solo-page-error-source-witness.mjs
-            /scripts/solo-retired-diagnostic-source.mjs
-            /docs/performance/fixtures/solo-retired-diagnostics/source.json
             /scripts/solo-qualification-audio.mjs
             /scripts/solo-qualification-browser-context.mjs
             /scripts/solo-qualification-cadence.mjs
