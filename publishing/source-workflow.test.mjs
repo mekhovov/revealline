@@ -159,13 +159,14 @@ test('focused matrix retains trusted automation, two workers per host, limits an
   assert.match(shards, /timeout-minutes: 90/u);
   assert.match(
     shards,
-    /fail-fast: false\n      max-parallel: 4\n      matrix:\n        shard: \[1, 2, 3, 4\]/u,
+    /fail-fast: false\n      max-parallel: 4\n      matrix: \$\{\{ fromJSON\(needs.preflight.outputs.focusedMatrix\) \}\}/u,
   );
   assert.match(shards, /needs: preflight/u);
   for (const condition of [
     "needs.preflight.result == 'success'",
     "needs.preflight.outputs.admission != 'hold'",
-    "needs.preflight.outputs.focusedRequired == 'true'",
+    "needs.preflight.outputs.focusedContract == 'revealline-focused-plan.v2'",
+    "needs.preflight.outputs.focusedShards != '0'",
   ])
     assert.ok(shards.includes(condition), condition);
   for (const name of ['before', 'after'])
@@ -176,7 +177,8 @@ test('focused matrix retains trusted automation, two workers per host, limits an
   );
   assert.match(shards, /EXPECTED_AUTOMATION: \$\{\{ github.workflow_sha \}\}/u);
   assert.match(shards, /ref: \$\{\{ github.workflow_sha \}\}\n          path: automation/u);
-  assert.ok(shards.includes('--shard ${{ matrix.shard }}/4'));
+  assert.ok(shards.includes('--shard ${{ matrix.shard }}'));
+  assert.ok(shards.includes('--plan-sha256 "$EXPECTED_PLAN_SHA256"'));
   assert.ok(shards.includes('--receipt "$RUNNER_TEMP/focused-shard/receipt.json"'));
   assert.ok(shards.includes('--admission "$RUNNER_TEMP/preflight-admission/admission.json"'));
   assert.match(shards, /set -euo pipefail\n          mkdir -p "\$RUNNER_TEMP\/focused-shard"/u);
@@ -198,9 +200,11 @@ test('focused matrix retains trusted automation, two workers per host, limits an
     /runFocusedCommandsParallel\(partition\?\.commands \?\? execution.commands,\s*\{\s*root,\s*concurrency: 2/u,
   );
   assert.match(runner, /command\.timeoutMs \?\? timeoutMs/u);
+  const compact = await fs.readFile(new URL('./focused-compact.mjs', import.meta.url), 'utf8');
+  assert.match(compact, /execute\(commands, \{ root: options.root, concurrency: 2 \}\)/u);
 });
 
-test('aggregate preserves the required focused status and rejects any nonsuccess matrix result', async () => {
+test('positive-work aggregate preserves focused status and rejects nonsuccess or invalid matrix results', async () => {
   const { spawnSync } = await import('node:child_process');
   const source = await fs.readFile(new URL('deploy-pages.yml', workflows), 'utf8');
   const aggregate = source.split('\n  focused:\n')[1]?.split('\n  test:\n')[0];
@@ -208,7 +212,8 @@ test('aggregate preserves the required focused status and rejects any nonsuccess
   for (const condition of [
     "needs.preflight.result == 'success'",
     "needs.preflight.outputs.admission != 'hold'",
-    "needs.preflight.outputs.focusedRequired == 'true'",
+    "needs.preflight.outputs.focusedContract == 'revealline-focused-plan.v2'",
+    "needs.preflight.outputs.focusedShards != '0'",
   ])
     assert.ok(aggregate.includes(condition), condition);
   assert.match(aggregate, /needs: \[preflight, focused_shards\]/u);
@@ -216,30 +221,35 @@ test('aggregate preserves the required focused status and rejects any nonsuccess
   assert.match(aggregate, /ref: \$\{\{ github.workflow_sha \}\}\n          path: automation/u);
   assert.doesNotMatch(aggregate, /path: source|npm ci|working-directory: source/u);
   assert.match(aggregate, /SHARDS_RESULT: \$\{\{ needs.focused_shards.result \}\}/u);
-  const guard = aggregate.match(/        run: (test "\$SHARDS_RESULT" = success)\n/u)?.[1];
+  const guard = aggregate.match(/        run: \|\n([\s\S]*?)\n\n/u)?.[1];
   assert.ok(guard);
-  for (const status of ['success', 'failure', 'cancelled', 'skipped', '']) {
-    const result = spawnSync('bash', ['-c', guard], {
-      env: { ...process.env, SHARDS_RESULT: status },
-      timeout: 1000,
-    });
-    assert.equal(result.status === 0, status === 'success', status);
-  }
+  for (const count of ['0', '1', '2', '3', '4', '5', ''])
+    for (const status of ['success', 'failure', 'cancelled', 'skipped', '']) {
+      const result = spawnSync('bash', ['-c', guard], {
+        env: { ...process.env, SHARDS_RESULT: status, SHARDS_COUNT: count },
+        timeout: 1000,
+      });
+      assert.equal(
+        result.status === 0,
+        /^[1-4]$/u.test(count) && status === 'success',
+        `${count}/${status}`,
+      );
+    }
   assert.ok(
     aggregate.includes('pattern: focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-*'),
   );
   assert.match(aggregate, /merge-multiple: false/u);
-  assert.ok(aggregate.includes('--verify-shards "$RUNNER_TEMP/focused-shards"'));
+  assert.ok(aggregate.includes('focused-compact-cli.mjs verify'));
+  assert.ok(aggregate.includes('--receipts "$RUNNER_TEMP/focused-shards"'));
   assert.ok(
-    aggregate.includes(
-      '--artifact-prefix "focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-"',
-    ),
+    aggregate.includes('--prefix "focused-shard-${{ github.run_id }}-${{ github.run_attempt }}-"'),
   );
   assert.ok(aggregate.includes('--admission "$RUNNER_TEMP/preflight-admission/admission.json"'));
-  assert.ok(aggregate.includes('--test-policy automation/publishing/test-policy.json'));
+  assert.ok(aggregate.includes('--automation automation'));
+  assert.ok(aggregate.includes('--plan-sha256 "$EXPECTED_PLAN_SHA256"'));
   const ready = source.split('\n  release-ready:\n')[1];
-  assert.match(ready, /needs: \[preflight, focused, test, build\]/u);
+  assert.match(ready, /needs: \[preflight, focused_shards, focused, test, build\]/u);
   assert.match(ready, /FOCUSED_RESULT: \$\{\{ needs.focused.result \}\}/u);
   assert.ok(ready.includes('test "$FOCUSED_RESULT" = success'));
-  assert.ok(ready.includes('test "$FOCUSED_RESULT" = skipped'));
+  assert.ok(ready.includes('test "$FOCUSED_CONTRACT" = revealline-focused-plan.v2'));
 });
