@@ -56,3 +56,6 @@ import './test-solo-shared-mode-boot-admission.mjs';
 
 // Complete shared owner successor and immutable executed-input controls.
 import './test-solo-shared-mode-owner-admission.mjs';
+
+// Trusted public Demo Close boundary and immutable executed-input controls.
+import './test-solo-demo-trusted-close-admission.mjs';
