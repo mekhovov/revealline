@@ -92,6 +92,26 @@ required the local password again and showed a different archive inventory from
 the previous closed test tab; the browser storage-context relationship was not
 observed. Do not infer native deletion or recoverability from that difference.
 
+## Saved-aircraft lesson negative
+
+The source-frozen local host then exported its initial complete library through
+the normal backup UI, saved a Meteor75 setup, and entered **Meet your drone**
+through **Learn to fly → Practice with BETAFPV Meteor75**. This is the normal
+selected-aircraft lesson route, distinct from Test draft's free practice.
+The first flight contacted the ceiling and descended too quickly; it is not a
+valid gentle-landing acceptance. A deliberate retry used short keyboard segments
+with explicit pauses between observations. At **0:20.80**, after settling on the
+pad with zero throttle, the starting height condition still did not complete.
+
+The explanation UI reported **Height −0.0 m / required 0.0–0.8 m**, position
+inside, tilt **0.02° / ≤10°**, centred rotation **0.0% / ≤5%**, speed
+**0.0 m/s / ≤0.5 m/s**, and **Hold 0.0 / 0.8 s**. Only Height was unsatisfied.
+This confirms the small floor-contact offset can block the actual learning UI;
+the new versioned mission-adapter correction remains under implementation.
+The separate `$floor`/physical-support identifier mismatch is established by
+source and predicate-isolation tests, not by a completed rendered landing yet.
+The exported original library is retained for restoration after the test.
+
 ## Open archive-retention incident
 
 The user authorized deleting exactly ten identified test archives while preserving six older records. The first attempted action reported a closing-database error; all sixteen entries remained in the cached list. After reload, a successful refresh exposed only a new test session. No successful ten-record cleanup or preservation of the six older archives is claimed. No further deletes were attempted. The [retention follow-up](fpv-archive-retention-followup-20261018.md) records the ownership audit and the earlier matching public negative. This remains P1.
