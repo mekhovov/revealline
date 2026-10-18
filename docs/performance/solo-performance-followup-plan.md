@@ -45,7 +45,7 @@ The shared-mode review fixed missing required base artwork in Versus and invisib
 
 The generated Field Kit inventory also omitted one retained canonical104 alias. Authoritative generation produces the exact existing runtime bytes for that alias; other generated outputs are unchanged. Restore the alias and manifest together, keeping all retained byte-identity assertions. This is a generated-inventory correction, not a new artwork revision.
 
-The user-approved relocation of one retained 1.09 GB archive is complete: destination readback matches its original SHA-256. Acquisition metadata and reports remain local. This storage operation changes no qualification result.
+The user-approved relocation of one retained 1.09 GB archive is complete: destination readback matches its original SHA-256. A later reserve interruption stopped the current Library test after twenty-six passing cases without a final verdict. After separate approval, two older offline archives (245,380,136 bytes total) were moved to the same mounted evidence folder and independently verified against their retained API digests before removing local copies. Their receipt is `.cache/solo-followup/archive-relocation-20261018-two-offline.json`. Acquisition metadata, source and reports remain local. These storage operations change no qualification result; the interrupted test remains partial.
 
 Demo resource export now observes its existing scene painters, persistent display, transition canvas, reward media, shared images and bot Worker handles. Canceled preparation remains counted until settlement; active playback/practice cannot export. Eight complete source/model files pass 94/94. The new counters do not establish a leak, native allocation totals or repeated-transition plateaus. [Ownership and export boundaries](solo-demo-owned-resources-20261017.md).
 
@@ -128,6 +128,8 @@ Establish **B** during lightweight foreground preparation and record it. Do not 
 | Diagnostics overhead                   | ≤5% p95 application-work increase in matched enabled/disabled runs            |
 
 Retain all >33/50/100/250 ms intervals and every active-play task >50 ms. Percentiles cannot excuse repeated hitches. Input-to-render submission is application latency, not physical input-to-photon latency. Whole-session totals, partial samples, failures and pause-causing intervals remain visible.
+
+Keep browser callback cadence separate from physical display cadence. WebKit's historical GTK/WPE investigation demonstrates that callback timestamps can differ from actual displayed-frame spacing under load; it does not establish that this defect exists in the current hosted browser or the affected iPhone. Retain all failing hosted rows and require the exact browser/backend and separate device observations before attributing them. WebKit's animation-rate explainer also discusses variable-rate and power-policy limits, but its proposed APIs are not evidence of current support. Keep native callbacks and measure the available cadence rather than assuming the phone panel's maximum rate. [GTK/WPE timestamp example](https://bugs.webkit.org/show_bug.cgi?id=238999), [WebKit frame-rate proposal](https://webkit.github.io/explainers/animation-frame-rate/).
 
 ## Research review and resulting decisions
 
