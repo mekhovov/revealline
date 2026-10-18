@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       lane:
-        description: 'Fixed de332 package diagnostics or separate Cocoa codec control. Review first-eight before Next; no automatic retries.'
+        description: 'Fixed73 first-eight correctness, de332 diagnostics or separate Cocoa codec control. Review exact source before expansion; no automatic retries.'
         type: choice
         required: true
         default: first-eight
@@ -328,12 +328,12 @@ jobs:
           retention-days: 14
 
   correctness:
-    # Only the reviewed PR edge or explicit fixed-source manual selection; fresh owners remain mandatory.
-    if: github.repository == 'mekhovov/revealline' && ((github.event_name == 'pull_request' && github.event.pull_request.number == 1578 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c82d0825999f014c7a5c17386542f3219f4f04e5') || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'first-eight'))
+    # Explicit fixed-source manual selection on main; fresh owners remain mandatory.
+    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'first-eight'
     runs-on: ubuntu-24.04
     timeout-minutes: 145
     env:
-      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+      SOLO_TOOLING_REVISION: ${{ github.sha }}
       SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
       SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
       PYTHONDONTWRITEBYTECODE: 1
@@ -345,11 +345,11 @@ jobs:
           printf '%s\n' \
             "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-browser-tools/node_modules/playwright/index.mjs" \
             "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-browser-binaries" \
-            "OUTPUT=$RUNNER_TEMP/solo-linux-de332-correctness" >> "$GITHUB_ENV"
+            "OUTPUT=$RUNNER_TEMP/solo-linux-73a345-correctness" >> "$GITHUB_ENV"
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         timeout-minutes: 3
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          ref: ${{ github.sha }}
           path: tools
           persist-credentials: false
           fetch-depth: 1
@@ -364,13 +364,16 @@ jobs:
             /docs/performance/fixtures/solo-remote-sustained/first-victory-cpu-de332.qualification.fixture
             /docs/performance/fixtures/solo-remote-sustained/next-geometric.qualification.fixture
             /docs/performance/fixtures/solo-representative/first-fracture-earned-raster.fixture
+            /docs/performance/solo-de332-first-eight-outcome-20261018.md
             /docs/performance/solo-first-victory-cpu-de332-plan.json
             /docs/performance/solo-next-geometric-de332-plan.json
             /docs/performance/solo-next-geometric-de332-tooling-plan.json
             /docs/performance/solo-remote-39774-correctness-plan.json
+            /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
             /docs/performance/solo-remote-de332-earned-raster-plan.json
+            /docs/performance/solo-whole-app-regression-audit-20261018.md
             /game/build-config.json
             /game/campaign-contexts.mjs
             /game/campaign-difficulty.mjs
@@ -497,9 +500,9 @@ jobs:
             /game/ui/fpv-body-recipes.mjs
             /game/ui/jammer-picture.mjs
             /game/ui/music.mjs
-            /game/vendor/LZ-STRING-LICENSE.txt
             /game/vendor/i18next-26.4.2.min.js
             /game/vendor/lz-string-1.5.0.min.js
+            /game/vendor/LZ-STRING-LICENSE.txt
             /game/victory-story.mjs
             /game/video-poster.mjs
             /package-lock.json
@@ -556,6 +559,7 @@ jobs:
             /scripts/solo-worker-diagnostics.mjs
             /scripts/soundtrack-archive-admissions.mjs
             /scripts/soundtrack-distribution.mjs
+            /scripts/test-solo-73a345-correctness.mjs
             /scripts/test-solo-build-worker-closure.mjs
             /scripts/test-solo-de332-correctness.mjs
             /scripts/test-solo-first-victory-cpu-de332.mjs
@@ -582,7 +586,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p "$RUNNER_TEMP/solo-linux-setup"
-          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 de3324607c82787c1a1fec9c13d4f8b5cb74cee4 2954fef5b0f1293ff2e6a97ce978a673dddaa7db > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
+          bash tools/scripts/solo-shared-source-checkout.sh 8b01991942dc764b8aa4726851699ce1985e53ae 9373b6a74aea8fa1ef47aa17ace140b4cf714609 73a345cec696d7789198cf295ca5c37b17ca0e71 ea30e68636b3342f8e60664a79d425e11e27ff1e > "$RUNNER_TEMP/solo-linux-setup/source-checkout.json"
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         timeout-minutes: 3
         with:
@@ -612,13 +616,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test scripts/test-solo-native-consumer-current.mjs scripts/test-solo-de332-correctness.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test scripts/test-solo-73a345-correctness.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-de332-correctness.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-build-worker-closure.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-source-verifier-smoke.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
       - name: Run the eight fixed serial correctness rows
         timeout-minutes: 79
         working-directory: tools
         env:
           GH_TOKEN: ${{ github.token }}
-        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-de332-correctness-tooling-plan.json "$OUTPUT"
+        run: timeout --signal=TERM --kill-after=30s 78m node scripts/run-solo-remote-correctness.mjs docs/performance/solo-remote-73a345-correctness-plan.json "$OUTPUT"
       - name: Describe bounded setup evidence without claiming truncated output complete
         if: ${{ always() }}
         timeout-minutes: 2
@@ -648,9 +652,9 @@ jobs:
         timeout-minutes: 10
         uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: solo-linux-de332-correctness-${{ github.run_id }}-${{ github.run_attempt }}
+          name: solo-linux-73a345-correctness-${{ github.run_id }}-${{ github.run_attempt }}
           path: |
-            ${{ runner.temp }}/solo-linux-de332-correctness/evidence/
+            ${{ runner.temp }}/solo-linux-73a345-correctness/evidence/
             ${{ runner.temp }}/solo-linux-setup/
           if-no-files-found: warn
           compression-level: 6
@@ -707,6 +711,7 @@ jobs:
             /docs/performance/solo-remote-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
+            /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-de332-earned-raster-plan.json
             /game/build-config.json
             /game/campaign-contexts.mjs
@@ -976,6 +981,7 @@ jobs:
             /docs/performance/solo-remote-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
+            /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-de332-earned-raster-plan.json
             /game/build-config.json
             /game/campaign-contexts.mjs
@@ -1316,6 +1322,7 @@ jobs:
             /docs/performance/solo-remote-39774-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
+            /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-de332-earned-raster-plan.json
             /docs/performance/solo-remote-final-earned-raster-plan.json
             /docs/performance/solo-remote-final-earned-raster-v2-plan.json
@@ -2589,6 +2596,7 @@ jobs:
             /docs/performance/solo-remote-cpu-profile-plan.json
             /docs/performance/solo-remote-de332-correctness-plan.json
             /docs/performance/solo-remote-de332-correctness-tooling-plan.json
+            /docs/performance/solo-remote-73a345-correctness-plan.json
             /docs/performance/solo-remote-de332-earned-raster-plan.json
             /game/build-config.json
             /game/campaign-contexts.mjs
