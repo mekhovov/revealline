@@ -17,6 +17,11 @@ const css = await parsers.css.parse(
 const legacy = await parsers.css.parse(
   await readFile(new URL('../ui/device-controls.css', import.meta.url), 'utf8'),
 );
+const readerLayouts = await Promise.all(
+  ['flight-information-details.css', 'mission-brief.css'].map(async (file) =>
+    parsers.css.parse(await readFile(new URL(`../ui/${file}`, import.meta.url), 'utf8')),
+  ),
+);
 function descendants(nodes) {
   return nodes.flatMap((node) => [node, ...descendants(node.nodes ?? [])]);
 }
@@ -104,10 +109,15 @@ function computed(element, property, width) {
   function visit(nodes, layer) {
     for (const rule of nodes) {
       if (rule.type === 'css-atrule') {
-        assert.equal(rule.name, 'media');
-        const limit = rule.params.value.match(/^\(max-width:\s*(\d+)px\)$/);
-        assert.ok(limit, 'This finite sheet has only a max-width breakpoint.');
-        if (width <= Number(limit[1])) visit(rule.nodes, layer);
+        if (rule.name === 'layer') {
+          assert.equal(rule.params, 'legacy');
+          visit(rule.nodes, layer);
+        } else {
+          assert.equal(rule.name, 'media');
+          const limit = rule.params.value.match(/^\(max-width:\s*(\d+)px\)$/);
+          assert.ok(limit, 'These finite sheets have only max-width breakpoints.');
+          if (width <= Number(limit[1])) visit(rule.nodes, layer);
+        }
       }
       if (rule.type !== 'css-rule') continue;
       const declaration = rule.nodes.find((node) => node.prop === property);
@@ -120,7 +130,7 @@ function computed(element, property, width) {
       }
     }
   }
-  visit(stateRules, 0);
+  visit([...stateRules, ...readerLayouts.flatMap((sheet) => sheet.nodes)], 0);
   visit(css.nodes, 1);
   return (
     winner?.value ??
@@ -244,5 +254,60 @@ test('ordinary and earned results give enlarged copy the full reading width', ()
       setAttr(picture, 'hidden', null);
       assert.equal(computed(picture, 'inline-size', width), '100%');
     }
+  }
+});
+
+test('enlarged Field details and Mission brief retain useful readers outside header flex pressure', () => {
+  const { byId, root, body } = page();
+  const details = byId('flight-details-dialog'),
+    brief = byId('shell-missions'),
+    slot = byId('shell-brief-content'),
+    briefUnit = byId('mission-brief-unit');
+  setAttr(details, 'open', '');
+  setAttr(brief, 'open', '');
+  setAttr(brief, 'data-view', 'brief');
+  setAttr(slot, 'hidden', null);
+  // mountGameShell moves the existing reader into this slot for direct briefing.
+  briefUnit.parentNode.childNodes = briefUnit.parentNode.childNodes.filter(
+    (node) => node !== briefUnit,
+  );
+  briefUnit.parentNode = slot;
+  slot.childNodes.push(briefUnit);
+  const heading = elements(brief).find((node) => classed(node, 'shell-dialog-heading')),
+    actions = elements(brief).find((node) => classed(node, 'shell-mission-actions'));
+  for (const width of [320, 390, 844, 1280]) {
+    for (const dialog of [details, brief]) {
+      assert.equal(computed(dialog, 'display', width), 'block');
+      assert.equal(computed(dialog, 'block-size', width), 'auto');
+      assert.equal(computed(dialog, 'overflow', width), 'auto');
+    }
+    for (const unit of [byId('flight-details-unit'), briefUnit, slot])
+      assert.equal(computed(unit, 'display', width), 'block');
+    for (const reader of [byId('flight-details-reading'), byId('mission-brief-reading')]) {
+      assert.equal(computed(reader, 'flex', width), 'none');
+      assert.equal(computed(reader, 'min-block-size', width), '16rem');
+      assert.equal(
+        computed(reader, 'block-size', width),
+        'clamp(16rem, calc(var(--dialog-viewport-height, 100dvh) * 0.6), 32rem)',
+      );
+      assert.equal(computed(reader, 'overflow', width), 'auto');
+    }
+    assert.equal(computed(heading, 'grid-template-columns', width), 'minmax(0, 1fr)');
+    assert.equal(computed(actions, 'inline-size', width), '100%');
+    setAttr(slot, 'hidden', '');
+    assert.equal(computed(slot, 'display', width), 'none');
+    setAttr(slot, 'hidden', null);
+  }
+  for (const [owner, name, value] of [
+    [body, 'data-text-size', 'large'],
+    [root, 'data-text-scaling', 'unqualified'],
+  ]) {
+    setAttr(body, 'data-text-size', 'extra-large');
+    setAttr(root, 'data-text-scaling', 'solo');
+    setAttr(owner, name, value);
+    assert.equal(computed(details, 'display', 320), 'flex');
+    assert.equal(computed(brief, 'display', 320), 'flex');
+    assert.equal(computed(byId('flight-details-reading'), 'min-height', 320), '64px');
+    assert.equal(computed(byId('flight-details-reading'), 'min-block-size', 320), undefined);
   }
 });
