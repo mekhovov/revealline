@@ -2,20 +2,20 @@
 
 Updated **18 October 2026** (Europe/Berlin). The [approved plan](plan.md) covers **83 feature groups / 113 deliverables**. Implementation is continuing in three lanes, with independent review and browser qualification in parallel.
 
-**3 merged · 14 feature PRs ready for required checks · 27 draft feature PRs · 0 verified live.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
+**4 merged · 13 feature PRs ready for required checks · 30 draft feature PRs · 0 verified live.** These are PR counts, not a percentage of completed features. Several features need multiple host integrations. A reviewed draft stays draft until its predecessors and required checks are admitted.
 
 ## Current priorities
 
 | Priority | Work | Status / next result |
 | --- | --- | --- |
-| P1 | Delivery checks and merge admission | Prerequisite [#1633](https://github.com/mekhovov/revealline/pull/1633) passed all four focused shards; focused aggregate also passes; final release admission remains queued. Rebase dependent offline work after merge; F16 conflict reconciliation underway. No gates waived. |
-| P1 | **F04b — Survival suspend** · lane A | Draft1663 implements typed checkpoints, paused restore and durable result receipts. Full-capacity recovery and controller-entry corrections pass independent/source gates. Expanded package and actual Save/reload/paused Restore/writer refusal pass. Restored terminal loss saves its record and retires the checkpoint after reload. Reviewed stack awaits predecessor and exact integrated gates. |
-| P1 | **F11b — archive restore** · lane B → review | Nonempty round trip passed. Browser found backward focus after consecutive Keep choices; narrow correction passes source review and focused tests. Exact final browser check passes; reconcile the stack and required checks. |
-| P1 | **F07a/b — critical cues** · review | Inventory1656 ready. Active compact muted self-contact cause and sentry aim warning are visibly confirmed. Sentry-hit, cross-host and listening evidence remain separate. |
-| P1 | **F08 — two-seat keyboard bindings** · lane C | Duel1662 ready after full validation and browser review. Team1666 full/source/browser passes; Snake1667 enters review. Separate owners remain explicit. |
-| P1 | **F58a — local support summary** · lane B | Primary shell1661 ready: EN/UK preview and actual downloaded JSON equality pass. Snake1664 source/browser/export review passes; remaining host adapters stay open. |
-| P1 | **F01/F06/F79** reviewed stacks | Reconcile predecessors and exact-head checks. Simulator chooser and assisted gym browser reviews now pass. |
-| P1 | **F09** text/HUD scaling | Baseline measured: existing Large is roughly115–125% on checked text. Compatibility1668 passes426 checks/full source gates and enters independent/browser review before qualified200% presentation. |
+| P1 | Foundation integration and exact-head admission | F17 and delivery prerequisite1633 merged. F16 ready on its integrated head; F82 passes169 checks and full source gates. Reconcile F05/F01/F11a, Duel/audio/preferences, and offline/community/diagnostic foundations in three lanes. |
+| P1 | **F09 — readable text** | Compatibility1668 is ready after gym correction and real import/reload review. Primary200% candidate is frozen; full validation and actual compact/landscape layout checks remain. |
+| P1 | **F04b — Survival suspend** | Reviewed exact package passes Save → reload → paused Restore → terminal record → checkpoint retirement. Stack awaits1639 and exact integrated checks; hardware/capacity separate. |
+| P1 | **F08 — two-seat keyboard controls** | Duel, Team and Snake source/browser reviews pass at their stated scopes. Reconcile foundation first, then dependent Team/Snake PRs. |
+| P1 | **F15a / F81 — labels and navigation** | Touch translation1669 and About1670 ready after scoped browser review. Resizing while a nested tool is open exposed a separate focus-return gap, now tracked. |
+| P1 | **F11/F01/F06/F79 — reviewed stacks** | Archive restore, mode context, presets and local content recovery await reconciled predecessors and exact-head checks. |
+| P1 | **F58 — local support summaries** | Primary/Snake reviewed; five-operation Survival/Raid1671 passes source gates and independent review. Actual browser/export review remains. |
+| P1 | **F03/F07 — readable threats and critical cues** | Desktop and compact combat inspection continues. Preserve existing protections; implement demonstrated gaps with explicit silent-play evidence. |
 
 Estimates remain the plan’s developer-day ranges, excluding review/CI queues and unavailable hardware. No iPhone or Steam Deck is available; hardware-only gates stay **Not tested** while independent work continues.
 
@@ -28,15 +28,17 @@ Estimates remain the plan’s developer-day ranges, excluding review/CI queues a
 
 | **F75** long-flight save guidance · [#1630](https://github.com/mekhovov/revealline/pull/1630) | Merged at237b40543 after all exact-head required gates. Earlier actual paused-flight Saves/export/return review retained. | Live publication and real30-minute device run unverified. |
 
-## Ready for required checks
+| **F17** lesson mode choice · [#1625](https://github.com/mekhovov/revealline/pull/1625) | Merged at6acfa2fb6 after required exact-head gates. Reviewed actual coach with modeled paused host. | Real-flight/device acceptance and live publication remain separate. |
 
-All rows are **P1**. Ready means reviewed and eligible for checks, not merged or deployed.
+## Reviewed foundations and required checks
+
+All rows are **P1**. Ready means reviewed and eligible for checks, not merged or deployed. A foundation temporarily returns to draft while integration is being reviewed; the snapshot above records the live PR state.
 
 | Deliverable | Evidence | Remaining |
 | --- | --- | --- |
-| **F82** offline startup repair · [#1616](https://github.com/mekhovov/revealline/pull/1616) | 157 checks; actual activated built worker missing-file recovery → repair → offline Home. | #1633, rebase/exact checks; selected content, Pages capacity and hardware unqualified. |
+| **F82** offline startup repair · [#1616](https://github.com/mekhovov/revealline/pull/1616) | Integratedf3a1d4a passes169 checks/full source gates. All6feature files unchanged; earlier exactd706 built-worker repair → offline Home receipt retained. | Current exact-head CI; no new integrated build/browser claim. Selected content, Pages capacity and hardware unqualified. |
 | **F14** offline readiness · [#1624](https://github.com/mekhovov/revealline/pull/1624) | 51 checks; real EN/UK component with modeled readiness/storage states. | Exact checks, committed-package/device qualification. |
-| **F17** lesson mode choice · [#1625](https://github.com/mekhovov/revealline/pull/1625) | 114 checks; actual coach with modeled paused host and unscored alternative. | Real flight integration; exact checks. |
+
 | **F15b** automatic play preferences · [#1629](https://github.com/mekhovov/revealline/pull/1629) | 83+9 checks; modeled storage failure, Retry, cross-tab intent, EN/UK320px. | Exact checks; remaining owners/Demo separate. |
 | **F05** Continue destination · [#1622](https://github.com/mekhovov/revealline/pull/1622) | 158 checks/source gates; actual saved mission Continue and paused caption. | Exact checks and reconciliation. |
 | **F11a** portable archive · [#1627](https://github.com/mekhovov/revealline/pull/1627) | 82 checks; actual downloaded ZIP passes CRC and every member hash/size. | Exact checks; device export/return separate. |
@@ -50,6 +52,12 @@ All rows are **P1**. Ready means reviewed and eligible for checks, not merged or
 | **F58a** primary support summary · [#1661](https://github.com/mekhovov/revealline/pull/1661) |62 focused/full source gates;10 independent tests; actual EN/UK preview and downloaded JSON equality. | Exact checks; Snake/other hosts, real controller and native/device paths separate. |
 
 | **F08** Duel keyboard controls · [#1662](https://github.com/mekhovov/revealline/pull/1662) |95 focused, full validation and independent review; actual lock/Retry plus live Duel Pause/Resume pass. | Exact checks; Team/Snake separate. |
+
+| **F16** music recovery · [#1617](https://github.com/mekhovov/revealline/pull/1617) | Integratedf54 passes259 focused checks/lint/format; prior full validation and exact dependency equivalence independently reviewed. | Current exact-head CI; component/browser evidence retains original scope. |
+| **F09a** larger-text compatibility · [#1668](https://github.com/mekhovov/revealline/pull/1668) | Corrected0fa passes source review, actual preference changes and legacy import/reload. Gym UK fallback style/notice verified. | Exact checks; selectable200% layout is separate work. |
+| **F15a** live touch translations · [#1669](https://github.com/mekhovov/revealline/pull/1669) |53 focused/full validation; actual Duel menu and paused Team translation/value retention; UK316px review. | Exact checks; physical touch/listening and unavailable Duel picture path unqualified. |
+
+| **F15a** plain About title · [#1670](https://github.com/mekhovov/revealline/pull/1670) |36 focused + nested-host check; full source gates and actual EN/UK ordinary compact Back review pass. | Exact checks; existing resize-while-open focus gap is tracked separately. |
 
 ## Reviewed draft stacks
 
@@ -85,16 +93,20 @@ All rows are **P1**. The structured tracker pins every reviewed revision and dis
 
 | **F08** Team keyboard controls · [#1666](https://github.com/mekhovov/revealline/pull/1666) |67 focused+14 offline; independent30 checks. Six useful actions, separate Team record/lock and correct legends. Full validation and actual Support activation/paused edit/UK316px/reset isolation pass; stack on1662. |
 
-| **F16** music recovery integration · [#1617](https://github.com/mekhovov/revealline/pull/1617) | Temporarily drafted for main conflict. Rebase4850e8 preserves all current copy plus6 recovery keys per locale; old reviewed runtime unchanged.259 checks/lint pass; full/independent integration gates running. |
-| **F08** Snake keyboard · [#1667](https://github.com/mekhovov/revealline/pull/1667) |172 focused checks pass on349c; four directions per seat, separate Snake record, Solo unchanged. Full/independent/browser review pending; stack onTeam. |
-| **F09a** text-size compatibility · [#1668](https://github.com/mekhovov/revealline/pull/1668) |426 focused/full source gates on816dd. Preserve larger-size intent with honest Large fallback; no new200% layout or chooser yet. Independent/browser review pending. |
+
+| **F08** Snake keyboard · [#1667](https://github.com/mekhovov/revealline/pull/1667) |172 focused/full validation; independent15 checks. Actual conflict/reserved key, both-board K/J steering, Pause/Resume, Retry and reset isolation pass. Reviewed stack onTeam. |
+
+
+
+| **F58** Survival/Raid summary · [#1671](https://github.com/mekhovov/revealline/pull/1671) |55 focused/full source gates and independent review pass across five operations. Actual browser/export review pending; stack on1661. |
+| **F09a** primary200% layout · candidatea0f2cf175 |497 focused across runs; inherited timed Start case passes isolated. Explicit text/canvas coverage and defaultscale1; full validation and real compact/short-landscape layout review pending. |
 
 ## Phase picture
 
 | Phase | Progress | Main remaining work |
 | --- | --- | --- |
 | 0 — Baseline | Established | Maintain isolated branches, exact revisions and shared-file ownership. |
-| 1 — Reliability |3 merged; reviewed reliability slices queued | Merge reconciliation, localization findings and Demo-dependent reliability. |
+| 1 — Reliability |4 merged; reviewed reliability slices queued | Merge reconciliation, localization findings and Demo-dependent reliability. |
 | 2 — Learn and start | Capture/First Flight ready; inspected context hosts reviewed | Selection hierarchy, further onboarding, readability and guidance. |
 | 3 — Progress and offline | Archive/local recovery reviewed; Survival suspend active | Suspend stack admission, remaining diagnostic hosts, package capacity, device evidence. |
 | 4 — Comfort/input/audio | All identified preset hosts reviewed; bindings active | Critical cues, seat mappings, scaling, assistive technology and listening. |
@@ -110,8 +122,8 @@ All rows are **P1**. The structured tracker pins every reviewed revision and dis
 - **Hardware:** F14-Q/F83b/F54b remain blocked on physical evidence. Browser widths are layout checks, not iPhone/Deck qualification.
 - **Audio/accessibility:** DOM/AX cause text is not proof that a muted player can see it; audio import is not listening or mix qualification. F07 checks these separately.
 - **Backups:** nonempty desktop evidence uses exact owned test media and explicitly synthetic, unearned progress in an isolated origin. It does not establish large-media/device behavior, earned-gameplay correctness or multi-store atomicity.
-- **Demo predecessor D:** original WIP is preserved. Separate [#1615](https://github.com/mekhovov/revealline/pull/1615), latest390255e64, remains draft; its final source packaging is reported passed, while browser refresh, two-hour rotation, WebKit diagnostics and CI/device gates remain its owner’s responsibility. Its staged/archive figures do not replace this plan’s950MB prepared Pages gate. Dependent F02b/c/F15b/F76 work stays open.
+- **Demo predecessor D:** original WIP is preserved. Separate [#1615](https://github.com/mekhovov/revealline/pull/1615), latest observed e78c5812f, remains draft; its final source packaging is reported passed, while browser refresh, two-hour rotation, WebKit diagnostics and CI/device gates remain its owner’s responsibility. Its staged/archive figures do not replace this plan’s950MB prepared Pages gate. Dependent F02b/c/F15b/F76 work stays open.
 - **Baseline checks:** unchanged formatting debt and reproduced unrelated failures remain disclosed, never counted as passing. Missing local test dependencies/trimmed fixtures are repaired before interpreting results.
-- **Disk:** about2.1GiB free with the exact1.0GiB Survival package retained after safely trimming task-owned historical evidence hydration. Heavy builds remain serialized. Original WIP and unrelated files are untouched.
+- **Disk:** about1.6GiB free with the exact1.0GiB Survival package retained after safely trimming task-owned historical evidence hydration. Heavy builds remain serialized. Original WIP and unrelated files are untouched.
 
 The [structured tracker](progress.json) retains all113 deliverables, priorities, estimates, dependencies, exact source identities and detailed evidence. Assessment, reviewed, merged and verified-live are separate states. Substantial milestones update both records.
