@@ -186,6 +186,7 @@ export function mountAircraftPracticeControls({
   locale = () => 'en',
   getSession,
   onPause = () => {},
+  onRestored = () => {},
   key = 'academy',
   platformOptions = {},
   workerURL,
@@ -347,6 +348,11 @@ export function mountAircraftPracticeControls({
     signal.throwIfAborted();
     if (!same(session)) throw abortError();
     state = session.snapshot();
+    try {
+      onRestored(session, state);
+    } catch {
+      /* Optional observations cannot fail a committed restore. */
+    }
     lastAttempt = state.ticks ?? 0;
     durableTick = null;
     operationStatus.textContent = t(

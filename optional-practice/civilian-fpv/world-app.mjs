@@ -55,6 +55,7 @@ import { mountAdvancedPractice } from './advanced-practice.mjs';
 import { createAdvancedRegionalSession } from './advanced-regional.mjs';
 import { createAircraftCourseSession } from './aircraft-course-session.mjs';
 import { mountAircraftPracticeControls } from './aircraft-practice-controls.mjs';
+import { mountPracticeSplits } from './flight-sectors.mjs';
 import { prepareAircraftChallenge, withAircraftChallenge } from './aircraft-challenge.mjs';
 import { mountAircraftChallengeControls } from './aircraft-challenge-ui.mjs';
 import { aircraftCourseAdvice, mountAircraftCourseFilter } from './aircraft-course-advice.mjs';
@@ -1102,6 +1103,7 @@ export function mountWorldApp({
     tuning = null,
     tuningCalibrationReturn = null,
     aircraftControls = null,
+    practiceSplits = null,
     aircraftChallengeControls = null,
     aircraftAttemptConfiguration = null,
     workbenchAttemptConfiguration = null,
@@ -5174,6 +5176,10 @@ export function mountWorldApp({
   }
   function updateHUD(state) {
     aircraftControls?.update(state);
+    practiceSplits?.update(flight, state, {
+      enabled: !replayProof && Boolean(flight?.aircraft || current?.regional),
+      freeFlight: Boolean(current?.regional || current?.freeFlight),
+    });
     aircraftChallengeControls?.update(state);
     if (aircraftAdviceText) {
       aircraftAdviceText.hidden = !aircraftAdvice;
@@ -6065,6 +6071,7 @@ export function mountWorldApp({
             .then((state) => {
               if (disposed || flight !== selectedFlight) return;
               if (state.ticks > before) {
+                practiceSplits?.consume(selectedFlight, state);
                 inputDiagnostics.record(
                   selectedFlight,
                   inputSource,
@@ -9118,6 +9125,7 @@ export function mountWorldApp({
   aircraftAdviceText = doc.createElement('p');
   aircraftAdviceText.hidden = true;
   shellBriefing.append(aircraftAdviceText);
+  practiceSplits = mountPracticeSplits({ parent: playShell.elements.content.pause, locale: () => locale });
   aircraftControls = mountAircraftPracticeControls({
     parent: playShell.elements.content.pause,
     window: win,
@@ -9126,6 +9134,7 @@ export function mountWorldApp({
     locale: () => locale,
     getSession: () => (replayProof ? null : flight),
     onPause: () => pauseFlight(),
+    onRestored: (session, state) => practiceSplits.restored(session, state),
   });
   aircraftChallengeControls = mountAircraftChallengeControls({
     parents: [shellBriefing, playShell.elements.content.pause],
@@ -9446,6 +9455,7 @@ export function mountWorldApp({
         sectors: sectors.snapshot(),
         latest: sectors.latest(sectorReference?.sectors),
       },
+      observedSplits: practiceSplits?.snapshot() ?? null,
       ghost: {
         enabled: ghostEnabled,
         loading: Boolean(ghostLookup),
@@ -9565,6 +9575,7 @@ export function mountWorldApp({
           practiceFlow?.dispose();
           tuning?.dispose();
           aircraftControls?.dispose();
+          practiceSplits?.dispose();
           aircraftChallengeControls?.dispose();
           advancedPractice?.dispose();
           cameraControls?.dispose();
