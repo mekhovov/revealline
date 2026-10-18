@@ -1,5 +1,97 @@
 # Flight practice: integrated execution checkpoint — 18 October 2026
 
+## Follow-up: verified integration and recovery
+
+Later results on the same **3c6 runtime packages**, with clean observer
+`b8e0182de344fba5bf1541ddca753ac7769bdd60`:
+
+- All **six current full-production EN/UK journeys pass**: three cards, no
+  simulator dependency requests before Play, one Play to unarmed Home, personal
+  appearance transfer, packaged guide, directory and main-game return. All
+  **3,558 original members / 1,074,713,915 bytes** were verified before/after and
+  independently rehashed. The audit checks 452 original package members, 30
+  stable-launcher copies, regenerates all 489 overlay files and hashes 24 PNGs.
+  These are actual built files, not a source-shell fallback or public selector.
+- All **ten beginner exercises pass**: eight EN/UK Academy/Worlds Self-level/Acro
+  cases and two EN/UK assisted Gym cases. Native completion, real public exports,
+  independent exact-package replay and clean key/browser/server shutdown are
+  required. The audit reruns all ten replays. Vertical Acro is not rotational
+  proficiency, human learning or physical-input qualification.
+- **Gym genuine historical installed-session continuity passes** in 6.899 seconds
+  within the unchanged 30-second procedure: visible lift, actual native blur,
+  the same old document/time origin through upgrade, stable 0.35 m paused height,
+  explicit resume to 0.45 m and final menu pause. Ten all-three upgrade/rollback
+  checkpoints, seven saved-World database witnesses and 3,237 cache dependency
+  rows are checked. Its shared proof/profile fixtures are explicitly synthetic;
+  this is not a genuine persistent Gym record-restore claim.
+- **Academy's refreshed genuine historical installed-session continuity passes**
+  in 8.576 seconds, paused at 0.30 m then explicitly resumed to 0.40 m. Nine
+  installation/rollback checkpoints, five saved-World witnesses, all three owned
+  OS app removals and disposable-profile removal pass. Original immutable old
+  payload is still `98ad851…`, not a same-byte version alias.
+- **One actual Academy proof recovers after browser-managed eviction.** Under a
+  verified 512 KiB temporary-pool setting, Chrome reports one eviction in one
+  round after its normal startup interval. Both original prepared caches and the
+  previously populated Journey proof database disappear; the stale installation
+  pointer survives. An offline browser restart fails honestly. Normal online
+  preparation restores all 146 pinned dependencies; Notebook is first observed
+  empty, then public import/reverification restores the exact externally saved
+  genuine proof. A second offline browser restart exports the same proof again.
+  Total 328.931 seconds, unchanged 600-second diagnostic bound, clean disposal.
+  This is **one EN Academy proof**, not all-app/all-backup recovery or an offline
+  flight after recovery. No deletion/pressure API, filler writes or fake proof
+  produced the loss. Native quota UI showed available disk falling **3.46 →
+  1.83 GB**; ambient low disk remains a confounder. This does not isolate the
+  reduced pool as the sole cause or establish default-policy eviction. Initial
+  numeric counters were unavailable, not zero; no numeric delta is claimed.
+
+The owner explicitly chose to **leave the historical Worlds automated active
+check unverified for now**. No more fixes are attempted on that lane. Current
+Worlds exercise passes above do not retroactively pass that historical check.
+
+Evidence, including actual exports, audits, screenshots and original failures:
+
+- [Integration/Gym packet](flight-practice-integration-followup-20261018-evidence.tgz),
+  124 files, SHA-256 `d989b935b5c7509f14b53a556bd8126ff9ac7c08fd35496afa601c2317ba79f6`.
+- [Academy/recovery packet](flight-practice-recovery-followup-20261018-evidence.tgz),
+  27 files, SHA-256 `4979da8d673b3a5cb1e4639315da12ddee3af8539d45500e1d4679f86a03cd4c`.
+
+Both archives were extracted and checked against their inventories. The first
+recovery attempt failed at test-server directory routing before app setup. Audit
+script mistakes (reference-vs-structural equality and incorrect assumptions about
+different receipt schemas) are retained alongside corrected audits; native
+receipts and their source identities were never rewritten.
+
+PR #1554 was safely rebased/pushed to `b8e0182de…` using the preserved exact remote
+lease. It is now **draft and mergeable**, with new CI queued at inspection, not
+passed. Main subsequently advanced to `237b405437def3c41b01165fe057af1ab06f618c`:
+accepted SIM pause/throttle, archive-access/preset updates and capture-limit UI.
+Those changes require a new integration checkpoint and affected qualification;
+the evidence above must remain attributed to 3c6. No unmerged SIM work is copied.
+
+Low local space (about 1.8 GiB) pauses new large browser/build batches. Only this
+task's generated loose build is being copied to the existing external production
+folder's `site-original/`; the exact local directory is removed **only after**
+every destination file is hash-verified. Until its completion receipt exists,
+do not claim the move or recovered space is complete. No user data is cleaned.
+
+Remaining order is now **R1 accepted-main refresh/current CI → R3 remaining app
+and backup recovery → R4 native hash-overlap cancellation**. R5 is complete for
+the frozen 3c6 build, but must be repeated where the newer main changes inputs.
+Gym/Academy R2 are verified for that candidate; Worlds is owner-deferred (D3),
+not passed. R6–R9 and hosting/hardware keep their separate decision boundaries.
+
+For R4, current [Chromium WebCrypto source](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/components/webcrypto/webcrypto_impl.cc)
+exposes `DoDigest` / `DoDigestReply` trace events. A future finite native protocol
+should first verify their availability/worker identity for the installed build,
+then correlate actual Cancel input against outstanding digest work. Missing or
+non-overlapping events remain inconclusive. This research is a test-design lead,
+not installed-version proof or a completed check; the exact installed source was
+not retrievable through the web tool. Do not slow crypto, replace messaging,
+relax deadlines or call the existing delayed-ready response a hash interruption.
+
+The original execution checkpoint below remains source-bound history.
+
 This execution checkpoint supersedes the earlier **read-only** 18 October status
 and historical next-step statements. It does not relabel any original evidence.
 The implementation is substantial; non-hosting acceptance is **not complete**.
