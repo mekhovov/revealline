@@ -1,0 +1,855 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T20:49:17.026Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:beginner-15-self-level-451ad6d46ab40e85",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "6",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Your first Acro takeoff",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Познайомтеся з чотирма осями, свідомо увімкніть мотори й трохи підніміться."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-field-field-links:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Field Links",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Відкривайте два різні маршрути, поки рухлива здобич потрапляє під локальні перешкоди. Маячок антени й попередження видно навіть тоді, коли вороги зникають."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:relay-ruins-split-compound:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Split Compound",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 17
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-5107ade9c5d366bb",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon Spirals",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "browser-freeze-resume-and-paused-intent"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-woven-gauntlet:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Woven Gauntlet",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-solar-farm-02-self-level-1f47af7d5f8a2e2f",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Panel-edge precision",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-61e28381c52a36af",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Island outpost",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-survey-basin:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Survey Basin",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-46-acro-0c9d849f3be4be28",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Recognize inverted, recover",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-expedition-edge-of-reception:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Edge of Reception",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-e32d403f3f492be1",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Switchyard",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-snake-warning-courtyard:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Courtyard",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-44-acro-5f4e0c788f1171c3",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Forward and backward flip",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-bd23e3eb635875d1",
+      "phase": "playing",
+      "failure": "survival:relay-ruins-receiver-gardens:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "at": 1792356599028,
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Living border",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-operation-edge-pressure:standard",
+      "phase": "playing",
+      "failure": "survival:river-port-floodgate-yard:standard demo-load-timeout: Demo preparation exceeded its loading deadline.",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "at": 1792356657983,
+        "loadingMs": 15181.299999998882,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15181.3,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 3.899999998509884,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 15177.3,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18000,
+              "totalTicks": 19478,
+              "elapsedMs": 15177.3
+            }
+          ]
+        },
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "stack": "DemoLoadingTimeoutError: Demo preparation exceeded its loading deadline.\n    at timeoutFailure (http://127.0.0.1:8769/game/demo-loading.mjs:26:19)\n    at http://127.0.0.1:8769/game/demo-loading.mjs:51:43"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Edge Pressure",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T20:50:59.433Z",
+  "enduranceFinished": "2026-10-18T20:50:59.433Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T20:51:00.254Z"
+}

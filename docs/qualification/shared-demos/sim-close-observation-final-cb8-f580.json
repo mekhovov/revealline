@@ -1,0 +1,310 @@
+{
+  "format": "SimFreshCloseObservationV1",
+  "started": "2026-10-18T21:02:21.943Z",
+  "before": {
+    "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+    "runtime": {
+      "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "harness": {
+      "sha256": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+      "files": 923,
+      "bytes": 11055220
+    }
+  },
+  "complete": true,
+  "observer": {
+    "path": ".cache/sim-close-observer.mjs",
+    "sha256": "0e9dfb8074c267aaca89cc778712583337bf3f4cfe17a92758a57b1fdc40d13b",
+    "source": "import { openSync, writeSync, closeSync } from 'node:fs';\nimport { basename } from 'node:path';\nimport { pathToFileURL } from 'node:url';\n\n// Diagnostic only: observe public events/promises without joining, cancelling,\n// deleting or delaying any qualifier operation, export, context, or browser.\nexport function observePlaywrightClose(playwright, emit) {\n  const downloads = new Map();\n  let next = 0;\n  const summary = () => [...downloads.values()].map(value => ({ ...value }));\n  const observe = (work, id, field) => {\n    const timer = setTimeout(() => emit('download-observation-timeout', { id, field, timeoutMs: 10000 }), 10000);\n    timer.unref();\n    Promise.resolve().then(work).then(value => {\n      clearTimeout(timer);\n      const state = downloads.get(id);\n      state[field] = field === 'path' && value ? basename(value) : value;\n      state[`${field}Settled`] = true;\n      emit('download-observation-settled', { id, field, value: state[field] });\n    }, error => {\n      clearTimeout(timer);\n      downloads.get(id)[`${field}Error`] = String(error).slice(0, 1000);\n      emit('download-observation-error', { id, field, error: String(error).slice(0, 1000) });\n    });\n  };\n  const launch = playwright.chromium.launch;\n  playwright.chromium.launch = async function (...args) {\n    emit('launch-start');\n    const browser = await launch.apply(this, args);\n    emit('launch-complete');\n    browser.on('disconnected', () => emit('browser-disconnected', { downloads: summary() }));\n    const newContext = browser.newContext;\n    browser.newContext = async function (...args) {\n      const context = await newContext.apply(this, args);\n      context.on('page', page => {\n        page.on('download', download => {\n          const id = ++next;\n          downloads.set(id, { id, filename: download.suggestedFilename(), failureSettled: false, pathSettled: false });\n          emit('download-start', { ...downloads.get(id) });\n          observe(() => download.failure(), id, 'failure');\n          observe(() => download.path(), id, 'path');\n        });\n      });\n      context.on('close', () => emit('context-closed'));\n      return context;\n    };\n    const close = browser.close;\n    browser.close = function (...args) {\n      emit('browser-close-start', { downloads: summary() });\n      const pending = close.apply(this, args);\n      pending.then(() => emit('browser-close-settled', { outcome: 'fulfilled', downloads: summary() }),\n        error => emit('browser-close-settled', { outcome: 'rejected', error: String(error).slice(0, 1000), downloads: summary() }));\n      return pending;\n    };\n    return browser;\n  };\n  return { snapshot: summary };\n}\n\nif (process.env.DEMO_CLOSE_OBSERVER_ACTIVE === '1') {\n  const fd = openSync(process.env.DEMO_CLOSE_OBSERVER_LOG, 'wx');\n  const started = performance.now();\n  let count = 0;\n  const emit = (event, detail = {}) => {\n    if (++count > 128) return;\n    writeSync(fd, JSON.stringify({ event, at: new Date().toISOString(), elapsedMs: performance.now() - started, ...detail }) + '\\n');\n  };\n  const runtime = await import(pathToFileURL(process.env.DEMO_CLOSE_OBSERVER_RUNTIME).href);\n  const state = observePlaywrightClose(runtime, emit);\n  emit('observer-installed', { operations: 'Observe only; no joined download waits, artifact deletion, explicit context.close, or timeout change.' });\n  process.once('exit', code => {\n    emit('node-exit', { code, downloads: state.snapshot() });\n    closeSync(fd);\n  });\n}\n",
+    "scope": "Public download events and independently observed failure()/path() promises; browser.close entry/settlement/disconnected. No joined awaits, cancellation, deletion, explicit context.close, export suppression, or cleanup deadline change."
+  },
+  "runner": {
+    "path": ".cache/run-sim-close-diagnostic.mjs",
+    "sha256": "73e8b6c5cb4786464cfaa35664459f12545b3738d856b0ea55865b32d33fa88c"
+  },
+  "qualifier": {
+    "path": "scripts/qualify-sim-fresh-browser.mjs",
+    "sha256": "714fc37ab4605a6a06c9e0f93ff197f9dfcd4662323dd5ca54f7469ee04f4555",
+    "reportPath": "docs/qualification/shared-demos/sim-close-observation-final-cb8-f580-qualifier.json",
+    "result": {
+      "engine": "chromium",
+      "started": "2026-10-18T21:02:22.299Z",
+      "checks": [
+        {
+          "type": "fresh-start-exact-authored-setup-ready-disarmed",
+          "origin": "sim",
+          "course": "snake-hunt-approach-windows-roofline-exchange",
+          "mode": "self-level",
+          "ticks": 0,
+          "courseIdentity": "4e15f51c87eb2199",
+          "responseIdentity": "73833493634ba989",
+          "savedCustomAircraftTuningUnchanged": true
+        },
+        {
+          "type": "fresh-start-exact-authored-setup-ready-disarmed",
+          "origin": "solo",
+          "course": "beginner-23",
+          "mode": "self-level",
+          "ticks": 0,
+          "courseIdentity": "b19adee76b4c1b89",
+          "responseIdentity": "73833493634ba989",
+          "savedCustomAircraftTuningUnchanged": true
+        }
+      ],
+      "errors": [],
+      "complete": false,
+      "browserCloseAttempted": true,
+      "failure": "Error: Qualification browser cleanup failed.\n    at finishQualification (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:101:20)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-sim-fresh-browser.mjs:195:3",
+      "secondaryDiagnostics": [
+        {
+          "stage": "browser-close",
+          "error": "Error: Operation exceeded 10000ms.\n    at Timeout.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:22:24)\n    at listOnTimeout (node:internal/timers:581:17)\n    at process.processTimers (node:internal/timers:519:7)"
+        }
+      ],
+      "browserCloseCompleted": false,
+      "finished": "2026-10-18T21:02:40.110Z"
+    },
+    "reportSHA256": "d781840ef351ccd263273b69ac18312de30ec5365cd5c866bbed5c4e7ff4ff9e"
+  },
+  "preservedFailure": {
+    "path": "docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580.json",
+    "sha256": "c8900d17ca5cb4b6a9f3f0e05c58f13b1f28cf1b199ccaebdb25f29023eb449e"
+  },
+  "limitations": [
+    "One observation-only diagnostic; it cannot retroactively pass the failed qualification or prove causation from timing.",
+    "Public download observation adds protocol requests but no waits to the unchanged qualifier control flow.",
+    "DEBUG=pw:browser retained log is capped at128KiB; truncation counts are reported. No protocol log is enabled."
+  ],
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--import",
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/sim-close-observer.mjs",
+    "scripts/qualify-sim-fresh-browser.mjs",
+    "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "--browser=chromium",
+    "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "--url=http://127.0.0.1:8769",
+    "--report=docs/qualification/shared-demos/sim-close-observation-final-cb8-f580-qualifier.json"
+  ],
+  "childPID": 757,
+  "exit": {
+    "code": 1,
+    "signal": null
+  },
+  "childClosedAt": "2026-10-18T21:03:00.173Z",
+  "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/sim-close-observation-final-cb8-f580-qualifier.json\",\"complete\":false,\"checks\":2,\"failure\":\"Error: Qualification browser cleanup failed.\\n    at finishQualification (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:101:20)\\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-sim-fresh-browser.mjs:195:3\",\"browserCloseAttempted\":true,\"browserCloseCompleted\":false,\"secondaryDiagnostics\":[{\"stage\":\"browser-close\",\"error\":\"Error: Operation exceeded 10000ms.\\n    at Timeout.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:22:24)\\n    at listOnTimeout (node:internal/timers:581:17)\\n    at process.processTimers (node:internal/timers:519:7)\"}]}\n",
+  "debug": {
+    "path": "docs/qualification/shared-demos/sim-close-observation-final-cb8-f580.browser.log.txt",
+    "sha256": "c124cb45b15fa565c2d254813bddb839a3a68d0cc0d86767bdf813e46d2c4e45",
+    "receivedBytes": 6252,
+    "retainedBytes": 6252,
+    "truncated": false
+  },
+  "observedEvents": [
+    {
+      "event": "observer-installed",
+      "at": "2026-10-18T21:02:22.150Z",
+      "elapsedMs": 185.33125,
+      "operations": "Observe only; no joined download waits, artifact deletion, explicit context.close, or timeout change."
+    },
+    {
+      "event": "launch-start",
+      "at": "2026-10-18T21:02:22.299Z",
+      "elapsedMs": 334.325792
+    },
+    {
+      "event": "launch-complete",
+      "at": "2026-10-18T21:02:23.028Z",
+      "elapsedMs": 1063.4257499999999
+    },
+    {
+      "event": "download-start",
+      "at": "2026-10-18T21:02:26.271Z",
+      "elapsedMs": 4306.115833999999,
+      "id": 1,
+      "filename": "snake-hunt-approach-windows-roofline-exchange-flight.json",
+      "failureSettled": false,
+      "pathSettled": false
+    },
+    {
+      "event": "download-observation-settled",
+      "at": "2026-10-18T21:02:26.294Z",
+      "elapsedMs": 4329.4065,
+      "id": 1,
+      "field": "failure",
+      "value": null
+    },
+    {
+      "event": "download-observation-settled",
+      "at": "2026-10-18T21:02:26.294Z",
+      "elapsedMs": 4329.471417,
+      "id": 1,
+      "field": "path",
+      "value": "52dd80d0-139f-4a70-9680-044d91c45dfd"
+    },
+    {
+      "event": "download-start",
+      "at": "2026-10-18T21:02:30.104Z",
+      "elapsedMs": 8138.85625,
+      "id": 2,
+      "filename": "beginner-23-flight.json",
+      "failureSettled": false,
+      "pathSettled": false
+    },
+    {
+      "event": "browser-close-start",
+      "at": "2026-10-18T21:02:30.109Z",
+      "elapsedMs": 8144.403917,
+      "downloads": [
+        {
+          "id": 1,
+          "filename": "snake-hunt-approach-windows-roofline-exchange-flight.json",
+          "failureSettled": true,
+          "pathSettled": true,
+          "failure": null,
+          "path": "52dd80d0-139f-4a70-9680-044d91c45dfd"
+        },
+        {
+          "id": 2,
+          "filename": "beginner-23-flight.json",
+          "failureSettled": false,
+          "pathSettled": false
+        }
+      ]
+    },
+    {
+      "event": "download-observation-timeout",
+      "at": "2026-10-18T21:02:40.104Z",
+      "elapsedMs": 18139.619334000003,
+      "id": 2,
+      "field": "failure",
+      "timeoutMs": 10000
+    },
+    {
+      "event": "download-observation-timeout",
+      "at": "2026-10-18T21:02:40.104Z",
+      "elapsedMs": 18139.709000000003,
+      "id": 2,
+      "field": "path",
+      "timeoutMs": 10000
+    },
+    {
+      "event": "context-closed",
+      "at": "2026-10-18T21:03:00.130Z",
+      "elapsedMs": 38164.893375
+    },
+    {
+      "event": "browser-disconnected",
+      "at": "2026-10-18T21:03:00.130Z",
+      "elapsedMs": 38165.013458999994,
+      "downloads": [
+        {
+          "id": 1,
+          "filename": "snake-hunt-approach-windows-roofline-exchange-flight.json",
+          "failureSettled": true,
+          "pathSettled": true,
+          "failure": null,
+          "path": "52dd80d0-139f-4a70-9680-044d91c45dfd"
+        },
+        {
+          "id": 2,
+          "filename": "beginner-23-flight.json",
+          "failureSettled": false,
+          "pathSettled": false
+        }
+      ]
+    },
+    {
+      "event": "download-observation-settled",
+      "at": "2026-10-18T21:03:00.130Z",
+      "elapsedMs": 38165.060291999995,
+      "id": 2,
+      "field": "failure",
+      "value": "Target page, context or browser has been closed"
+    },
+    {
+      "event": "download-observation-error",
+      "at": "2026-10-18T21:03:00.130Z",
+      "elapsedMs": 38165.175875,
+      "id": 2,
+      "field": "path",
+      "error": "Error: download.path: Target page, context or browser has been closed"
+    },
+    {
+      "event": "browser-close-settled",
+      "at": "2026-10-18T21:03:00.166Z",
+      "elapsedMs": 38200.784667,
+      "outcome": "fulfilled",
+      "downloads": [
+        {
+          "id": 1,
+          "filename": "snake-hunt-approach-windows-roofline-exchange-flight.json",
+          "failureSettled": true,
+          "pathSettled": true,
+          "failure": null,
+          "path": "52dd80d0-139f-4a70-9680-044d91c45dfd"
+        },
+        {
+          "id": 2,
+          "filename": "beginner-23-flight.json",
+          "failureSettled": true,
+          "pathSettled": false,
+          "failure": "Target page, context or browser has been closed",
+          "pathError": "Error: download.path: Target page, context or browser has been closed"
+        }
+      ]
+    },
+    {
+      "event": "node-exit",
+      "at": "2026-10-18T21:03:00.166Z",
+      "elapsedMs": 38200.862,
+      "code": 1,
+      "downloads": [
+        {
+          "id": 1,
+          "filename": "snake-hunt-approach-windows-roofline-exchange-flight.json",
+          "failureSettled": true,
+          "pathSettled": true,
+          "failure": null,
+          "path": "52dd80d0-139f-4a70-9680-044d91c45dfd"
+        },
+        {
+          "id": 2,
+          "filename": "beginner-23-flight.json",
+          "failureSettled": true,
+          "pathSettled": false,
+          "failure": "Target page, context or browser has been closed",
+          "pathError": "Error: download.path: Target page, context or browser has been closed"
+        }
+      ]
+    }
+  ],
+  "eventsSHA256": "c1fae7f87fdbcb5601c2c3b62c49ebe99e7cdbf4fc8b8f1aaaf5875bed5f5b2d",
+  "cleanup": {
+    "launchedPIDs": [
+      758
+    ],
+    "ownedProfiles": [
+      "/tmp/playwright_chromiumdev_profile-jGzTOU"
+    ],
+    "remainingProcesses": [],
+    "remainingProfiles": []
+  },
+  "after": {
+    "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+    "runtime": {
+      "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "harness": {
+      "sha256": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+      "files": 923,
+      "bytes": 11055220
+    }
+  },
+  "finished": "2026-10-18T21:03:02.923Z"
+}

@@ -1,0 +1,36 @@
+{
+  "format": "SharedDemoBrowserCleanupFollowupV1",
+  "created": "2026-10-18T20:55:01.610159+00:00",
+  "sourceHead": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+  "sourceFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+  "harnessFingerprint": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+  "originalReceipt": "docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580.json",
+  "originalReceiptSHA256": "c8900d17ca5cb4b6a9f3f0e05c58f13b1f28cf1b199ccaebdb25f29023eb449e",
+  "qualificationStatus": "FAILED: browser.close exceeded the existing10000ms bound; eventual process exit does not turn the original receipt into a pass.",
+  "functionalChecks": 2,
+  "pageErrors": 0,
+  "childStarted": "2026-10-18T20:53:29.958Z",
+  "childExitObservedAt": "2026-10-18T20:54:10.998Z",
+  "childExit": {
+    "code": 1,
+    "signal": null
+  },
+  "processObservation": {
+    "selector": "Google Chrome command with --user-data-dir containing playwright_chromiumdev_profile, plus named SIM qualifier/final wrapper Node processes. The observer itself is not selected.",
+    "matchingProcesses": [],
+    "meaning": "No matching owned browser/qualifier process remains at this observation if list is empty. Launch PIDs were not recorded, so no exact browser shutdown timestamp is claimed."
+  },
+  "runtimeAndHarnessAfterMatchBefore": true,
+  "remainingUnrunJobs": [
+    "classic-builtins-chromium",
+    "classic-builtins-firefox",
+    "classic-builtins-webkit",
+    "graphics-chromium",
+    "offline-chromium",
+    "listeners-chromium",
+    "restoration-chromium",
+    "restoration-firefox",
+    "restoration-webkit"
+  ],
+  "nextAction": "Continue only unrun independent jobs once cleanup is confirmed. Do not relax the cleanup deadline or overwrite the failed report."
+}

@@ -1,0 +1,74 @@
+import assert from 'node:assert/strict';
+import { spawn, execFileSync } from 'node:child_process';
+import { readFile, writeFile, lstat } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { resolve } from 'node:path';
+
+const root = '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos';
+assert.equal(process.cwd(), root);
+const evidence = 'docs/qualification/shared-demos/';
+const stem = evidence + 'sim-close-observation-final-cb8-f580';
+const reportPath = stem + '.json';
+const qualifierReport = stem + '-qualifier.json';
+const eventsPath = stem + '.events.jsonl';
+const debugPath = stem + '.browser.log.txt';
+const observerPath = '.cache/sim-close-observer.mjs';
+const runtime = '/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs';
+const head = () => execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const runtimeFilter = path => /\.(mjs|js|json|css|html)$/.test(path) && !path.includes('/test/') && !path.endsWith('.test.mjs') && !path.endsWith('/coverage.json');
+async function fingerprint(dirs, filter) {
+  const paths = execFileSync('rg', ['--files', ...dirs], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }).trim().split('\n').filter(filter).sort();
+  const hash = createHash('sha256'); let bytes = 0;
+  for (const path of paths) { const value = await readFile(path); bytes += value.length; hash.update(path + '\0').update(createHash('sha256').update(value).digest()); }
+  return { sha256: hash.digest('hex'), files: paths.length, bytes };
+}
+for (const path of [reportPath, qualifierReport, eventsPath, debugPath]) {
+  try { await lstat(path); throw new Error(`Refusing existing diagnostic: ${path}`); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+}
+const snapshot = async () => ({ head: head(), runtime: await fingerprint(['game', 'optional-practice', 'publishing'], runtimeFilter), harness: await fingerprint(['scripts'], () => true) });
+const before = await snapshot();
+assert.equal(before.head, '390255e648b040dc3074a7a0fdff2e4cc393526a');
+assert.equal(before.runtime.sha256, 'f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591');
+const observerBytes = await readFile(observerPath), runnerBytes = await readFile(new URL(import.meta.url));
+const report = { format: 'SimFreshCloseObservationV1', started: new Date().toISOString(), before, complete: false,
+  observer: { path: observerPath, sha256: sha(observerBytes), source: observerBytes.toString(), scope: 'Public download events and independently observed failure()/path() promises; browser.close entry/settlement/disconnected. No joined awaits, cancellation, deletion, explicit context.close, export suppression, or cleanup deadline change.' },
+  runner: { path: '.cache/run-sim-close-diagnostic.mjs', sha256: sha(runnerBytes) },
+  qualifier: { path: 'scripts/qualify-sim-fresh-browser.mjs', sha256: sha(await readFile('scripts/qualify-sim-fresh-browser.mjs')), reportPath: qualifierReport },
+  preservedFailure: { path: evidence + 'sim-fresh-chromium-final-cb8-f580.json', sha256: sha(await readFile(evidence + 'sim-fresh-chromium-final-cb8-f580.json')) },
+  limitations: ['One observation-only diagnostic; it cannot retroactively pass the failed qualification or prove causation from timing.', 'Public download observation adds protocol requests but no waits to the unchanged qualifier control flow.', 'DEBUG=pw:browser retained log is capped at128KiB; truncation counts are reported. No protocol log is enabled.'] };
+let stdout = '', stderr = '', stderrBytes = 0;
+const pids = new Set(), profiles = new Set();
+const command = ['--import', resolve(observerPath), 'scripts/qualify-sim-fresh-browser.mjs', `--runtime=${runtime}`, '--browser=chromium', '--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '--url=http://127.0.0.1:8769', `--report=${qualifierReport}`];
+report.command = [process.execPath, ...command];
+const child = spawn(process.execPath, command, { stdio: ['ignore', 'pipe', 'pipe'], env: { ...process.env, DEBUG: 'pw:browser', DEBUG_COLORS: '0', NODE_DISABLE_COMPILE_CACHE: '1', DEMO_CLOSE_OBSERVER_ACTIVE: '1', DEMO_CLOSE_OBSERVER_LOG: resolve(eventsPath), DEMO_CLOSE_OBSERVER_RUNTIME: runtime } });
+report.childPID = child.pid;
+child.stdout.on('data', value => { stdout = (stdout + value.toString()).slice(-16384); });
+child.stderr.on('data', value => {
+  const text = value.toString(); stderrBytes += value.length; stderr = (stderr + text).slice(-131072);
+  for (const match of text.matchAll(/<launched> pid=(\d+)/g)) pids.add(Number(match[1]));
+  for (const match of text.matchAll(/--user-data-dir=([^\s]+)/g)) profiles.add(match[1]);
+});
+report.exit = await new Promise((resolve, reject) => { child.once('error', reject); child.once('close', (code, signal) => resolve({ code, signal })); });
+report.childClosedAt = new Date().toISOString();
+await writeFile(debugPath, stderr, { flag: 'wx' });
+report.stdout = stdout;
+report.debug = { path: debugPath, sha256: sha(stderr), receivedBytes: stderrBytes, retainedBytes: Buffer.byteLength(stderr), truncated: stderrBytes > Buffer.byteLength(stderr) };
+report.observedEvents = JSON.parse('[' + (await readFile(eventsPath, 'utf8')).trim().split('\n').join(',') + ']');
+report.eventsSHA256 = sha(await readFile(eventsPath));
+report.qualifier.result = JSON.parse(await readFile(qualifierReport));
+report.qualifier.reportSHA256 = sha(await readFile(qualifierReport));
+const processes = execFileSync('ps', ['-axo', 'pid=,ppid=,command='], { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 }).trim().split('\n');
+report.cleanup = { launchedPIDs: [...pids], ownedProfiles: [...profiles], remainingProcesses: processes.filter(line => pids.has(Number(line.trim().split(/\s+/)[0])) || [...profiles].some(path => line.includes(`--user-data-dir=${path}`))), remainingProfiles: [] };
+for (const path of profiles) { try { await lstat(path); report.cleanup.remainingProfiles.push(path); } catch (error) { if (error.code !== 'ENOENT') throw error; } }
+report.after = await snapshot();
+assert.deepEqual(report.after, report.before);
+assert.equal(sha(await readFile(observerPath)), report.observer.sha256);
+assert.equal(sha(await readFile(new URL(import.meta.url))), report.runner.sha256);
+assert.equal(sha(await readFile(report.preservedFailure.path)), report.preservedFailure.sha256);
+report.complete = report.cleanup.remainingProcesses.length === 0 && report.cleanup.remainingProfiles.length === 0;
+report.finished = new Date().toISOString();
+await writeFile(reportPath, JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
+console.log(JSON.stringify({ reportPath, diagnosticComplete: report.complete, qualifierComplete: report.qualifier.result.complete, exit: report.exit, downloadsAtClose: report.observedEvents.find(row => row.event === 'browser-close-start')?.downloads, events: report.observedEvents.map(row => ({ event: row.event, elapsedMs: Math.round(row.elapsedMs) })), cleanup: report.cleanup }));
+if (!report.complete) process.exitCode = 1;

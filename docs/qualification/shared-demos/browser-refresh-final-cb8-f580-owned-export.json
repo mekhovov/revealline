@@ -1,0 +1,101 @@
+{
+  "format": "SharedDemoFinalBrowserRefreshV1",
+  "started": "2026-10-18T21:06:34.006Z",
+  "complete": true,
+  "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "194a6ae89232f4cfcc823d10e30e807f716dcc62c98b8cd015ad2099676e691b",
+    "created": "2026-10-18T20:30:13.091774+00:00",
+    "integrationBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "files": 9994,
+    "bytes": 404341587
+  },
+  "authoritative": {
+    "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+    "base": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "fingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "files": 9994,
+    "bytes": 404341587
+  },
+  "wrapper": {
+    "path": ".cache/run-final-demo-refresh.mjs",
+    "sha256": "80cd5a1a85185515b3ef90e549a2cd49343d4f1d65d982a6ad3c473c37f61b58"
+  },
+  "hashScope": {
+    "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+  },
+  "selected": [
+    "sim-fresh-chromium"
+  ],
+  "jobs": [
+    {
+      "id": "sim-fresh-chromium",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-sim-fresh-browser.mjs",
+        "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+        "--browser=chromium",
+        "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+        "--url=http://127.0.0.1:8769",
+        "--report=docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580-owned-export.json"
+      ],
+      "scriptSHA256": "d9100fd9d610d22b811db7eb85374b550161347a78d6aa100ef5bd5eaacd9c53",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580-owned-export.json",
+      "started": "2026-10-18T21:06:37.921Z",
+      "stdout": "{\"reportPath\":\"docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580-owned-export.json\",\"complete\":true,\"checks\":2,\"browserCloseAttempted\":true,\"browserCloseCompleted\":true,\"secondaryDiagnostics\":[]}\n",
+      "stderr": "2026-10-18T21:06:38.327Z pw:browser <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-q2uGSH --remote-debugging-pipe --no-startup-window\n2026-10-18T21:06:38.329Z pw:browser <launched> pid=14923\n2026-10-18T21:06:39.883Z pw:browser [pid=14923][err] Trying to load the allocator multiple times. This is *not* supported.\n2026-10-18T21:06:39.943Z pw:browser [pid=14923][err] [14936:1542069:1018/230639.941524:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.943Z pw:browser [pid=14923][err] [14936:1542113:1018/230639.942127:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.955Z pw:browser [pid=14923][err] [14936:1542069:1018/230639.955460:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.956Z pw:browser [pid=14923][err] [14936:1542113:1018/230639.955525:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.956Z pw:browser [pid=14923][err] [14936:1542069:1018/230639.956494:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.956Z pw:browser [pid=14923][err] [14936:1542113:1018/230639.956543:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.957Z pw:browser [pid=14923][err] [14936:1542069:1018/230639.956990:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.957Z pw:browser [pid=14923][err] [14936:1542113:1018/230639.957023:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.957Z pw:browser [pid=14923][err] [14936:1542069:1018/230639.957109:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:39.957Z pw:browser [pid=14923][err] [14936:1542113:1018/230639.957152:ERROR:ui/display/mac/cv_display_link_mac.mm:188] CVDisplayLinkCreateWithCGDisplay failed. CVReturn: -6670\n2026-10-18T21:06:42.423Z pw:browser [pid=14923][err] [14923:1542044:1018/230642.422994:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n2026-10-18T21:06:42.453Z pw:browser [pid=14923][err] [14923:1542044:1018/230642.453561:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n2026-10-18T21:06:44.984Z pw:browser [pid=14923][err] [14923:1541972:1018/230644.984795:ERROR:components/policy/core/browser/policy_conversions_client.cc:306] CloudProfileReportingEnabled has an error of type: Ignored because the policy can only be set as a cloud user policy.\n2026-10-18T21:06:45.435Z pw:browser [pid=14923][err] [14923:1542044:1018/230645.435228:ERROR:google_apis/gcm/engine/mcs_client.cc:702]   Error code: 401  Error message: Authentication Failed: wrong_secret\n2026-10-18T21:06:45.435Z pw:browser [pid=14923][err] [14923:1542044:1018/230645.435241:ERROR:google_apis/gcm/engine/mcs_client.cc:704] Failed to log in to GCM, resetting connection.\n2026-10-18T21:06:45.435Z pw:browser [pid=14923][err] [14923:1542044:1018/230645.435700:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n2026-10-18T21:06:45.435Z pw:browser [pid=14923][err] [14923:1542044:1018/230645.435787:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n2026-10-18T21:06:45.436Z pw:browser [pid=14923][err] [14923:1542044:1018/230645.436151:ERROR:google_apis/gcm/engine/registration_request.cc:291] Registration response error message: PHONE_REGISTRATION_ERROR\n2026-10-18T21:06:50.293Z pw:browser [pid=14923] <gracefully close start>\n2026-10-18T21:06:50.310Z pw:browser [pid=14923][err] [14923:1542068:1018/230650.303925:ERROR:base/process/process_mac.cc:45] task_policy_set TASK_CATEGORY_POLICY: (os/kern) invalid argument (4)\n2026-10-18T21:06:50.310Z pw:browser [pid=14923][err] [14923:1542068:1018/230650.303940:ERROR:base/process/process_mac.cc:90] task_policy_set TASK_SUPPRESSION_POLICY: (os/kern) invalid argument (4)\n2026-10-18T21:06:51.036Z pw:browser [pid=14923] <process did exit: exitCode=0, signal=null>\n2026-10-18T21:06:51.036Z pw:browser [pid=14923] starting temporary directories cleanup\n2026-10-18T21:06:51.048Z pw:browser [pid=14923] finished temporary directories cleanup\n2026-10-18T21:06:51.048Z pw:browser [pid=14923] <gracefully close end>\n",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "finished": "2026-10-18T21:06:51.062Z",
+      "reportSHA256": "016b0dbf7626a645f1f89bf351f0ef3d306949af8ea9b2b5b7e9eab304f802b4",
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0,
+      "failure": null
+    }
+  ],
+  "failedJobs": [],
+  "limitations": [
+    "Existing durable qualifiers only, sequential isolated browsers. No production or harness changes are made by this wrapper. Each selected job runs once; a strict failure remains failed while later independent jobs may proceed only after confirmed browser/server cleanup.",
+    "Some durable qualifiers retain empty-stack pageerrors as empty strings; any pageerror still fails their strict count. Raw/name diagnostics require a separate bounded probe after preserving such a failed receipt.",
+    "Classic checks cover metadata union and three real selected base/current/archive performances per engine, not all 240 complete performances again.",
+    "The two-hour actual-wall-time rotation and outstanding physical-device/human review checks remain separate."
+  ],
+  "before": {
+    "runtime": {
+      "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "harness": {
+      "sha256": "c9b6a769c8b2a93b64ad307b6e3d5c437b3a001f60aff7d3b8cb6b892a634c55",
+      "files": 925,
+      "bytes": 11063094
+    }
+  },
+  "after": {
+    "runtime": {
+      "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "harness": {
+      "sha256": "c9b6a769c8b2a93b64ad307b6e3d5c437b3a001f60aff7d3b8cb6b892a634c55",
+      "files": 925,
+      "bytes": 11063094
+    }
+  },
+  "changedFiles": {
+    "runtime": [],
+    "harness": []
+  },
+  "finished": "2026-10-18T21:06:54.537Z"
+}

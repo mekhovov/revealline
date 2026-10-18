@@ -1,0 +1,572 @@
+{
+  "format": "SharedDemoFinalBrowserRefreshSummaryV1",
+  "created": "2026-10-18T21:04:36.296855+00:00",
+  "allRequestedJobsAttempted": true,
+  "complete": false,
+  "qualificationStatus": "15 jobs passed; SIM Fresh remains a strict cleanup failure although both functional handoffs passed. No failed receipt was retried, overwritten, or upgraded by this summary.",
+  "counts": {
+    "attemptedJobs": 16,
+    "passedJobs": 15,
+    "failedJobs": 1,
+    "recordedCheckEntries": 166,
+    "pageErrors": 0,
+    "recoveredUnforcedLoadingFailuresCaptured": 2,
+    "expectedInjectedFaultEventsCaptured": 2
+  },
+  "sourceBinding": {
+    "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+    "integrationBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+    "manifest": {
+      "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "sha256": "194a6ae89232f4cfcc823d10e30e807f716dcc62c98b8cd015ad2099676e691b",
+      "created": "2026-10-18T20:30:13.091774+00:00",
+      "integrationBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+      "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "sourceFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+      "files": 9994,
+      "bytes": 404341587
+    },
+    "hashScope": {
+      "runtime": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "harness": "Every rg --files scripts file, sorted; SHA256(path + NUL + raw SHA256(file bytes)). Includes test fixtures and shared helpers."
+    },
+    "before": {
+      "runtime": {
+        "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+        "files": 9994,
+        "bytes": 404341587
+      },
+      "harness": {
+        "sha256": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+        "files": 923,
+        "bytes": 11055220
+      }
+    },
+    "after": {
+      "runtime": {
+        "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+        "files": 9994,
+        "bytes": 404341587
+      },
+      "harness": {
+        "sha256": "9a92bc77b11c9ff60ee59548de2ad98891855b4377cf1fca8957cbdbdc7ae8a6",
+        "files": 923,
+        "bytes": 11055220
+      }
+    },
+    "changedFiles": {
+      "runtime": [],
+      "harness": []
+    },
+    "verification": "Both independently bracketed segments recomputed the complete scoped runtime and all scripts before and after; all four snapshots match. Their manifest and HEAD declarations also match. Every child report hash was rechecked while writing this summary."
+  },
+  "segments": [
+    {
+      "path": "docs/qualification/shared-demos/browser-refresh-final-cb8-f580.json",
+      "sha256": "d2cac489d021fd5ca28536eda149d3d4fd0212db823ebd9101eca77fe0dc890e",
+      "started": "2026-10-18T20:49:13.963Z",
+      "finished": "2026-10-18T20:54:14.844Z",
+      "complete": false,
+      "attemptedJobs": 7
+    },
+    {
+      "path": "docs/qualification/shared-demos/browser-refresh-final-cb8-f580-remaining.json",
+      "sha256": "fdd1a8700d5d1076f43723e0a8fc93e587a86105030308f71a3af158be52f6d2",
+      "started": "2026-10-18T20:55:14.999Z",
+      "finished": "2026-10-18T21:00:04.596Z",
+      "complete": true,
+      "attemptedJobs": 9
+    }
+  ],
+  "jobs": [
+    {
+      "id": "mixed-chromium",
+      "reportPath": "docs/qualification/shared-demos/mixed-chromium-final-cb8-f580.json",
+      "reportSHA256": "97258a93720de153cb89df611f31616c619a8c9a66ccf09affd3974b192e89db",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T20:49:16.998Z",
+      "finished": "2026-10-18T20:51:00.263Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 28,
+      "errorCount": 0
+    },
+    {
+      "id": "mixed-firefox",
+      "reportPath": "docs/qualification/shared-demos/mixed-firefox-final-cb8-f580.json",
+      "reportSHA256": "297861e1b5219bc033208b31a8d84707156aca7c22d8a851e94defa3f9f33fc8",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T20:51:00.266Z",
+      "finished": "2026-10-18T20:51:46.769Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 27,
+      "errorCount": 0
+    },
+    {
+      "id": "mixed-webkit",
+      "reportPath": "docs/qualification/shared-demos/mixed-webkit-final-cb8-f580.json",
+      "reportSHA256": "86bdb289fbd428aeca2923e67b6db9a783d9b324fe340f5b19810d391008cffe",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T20:51:46.771Z",
+      "finished": "2026-10-18T20:52:54.152Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 27,
+      "errorCount": 0
+    },
+    {
+      "id": "survival-fresh-chromium",
+      "reportPath": "docs/qualification/shared-demos/survival-fresh-chromium-final-cb8-f580.json",
+      "reportSHA256": "82904f62c774f4e0dd89d56051a19a592e7dbfbe054bbc68f980854396fb5a9e",
+      "scriptSHA256": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc",
+      "started": "2026-10-18T20:52:54.157Z",
+      "finished": "2026-10-18T20:53:04.637Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0
+    },
+    {
+      "id": "survival-fresh-firefox",
+      "reportPath": "docs/qualification/shared-demos/survival-fresh-firefox-final-cb8-f580.json",
+      "reportSHA256": "aa91f60e8324f3d234324b15faff924c93d26514bf75c792d4b5b7caf51945b3",
+      "scriptSHA256": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc",
+      "started": "2026-10-18T20:53:04.641Z",
+      "finished": "2026-10-18T20:53:19.584Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0
+    },
+    {
+      "id": "survival-fresh-webkit",
+      "reportPath": "docs/qualification/shared-demos/survival-fresh-webkit-final-cb8-f580.json",
+      "reportSHA256": "0c4e7b21301218954890c3b5ead57ff8468c44aa27ea90fbe9cffe110a50848a",
+      "scriptSHA256": "f24e6402be41868fb54cfc9da288673168b3b7a525482c0e57540f2553ee33dc",
+      "started": "2026-10-18T20:53:19.587Z",
+      "finished": "2026-10-18T20:53:29.956Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0
+    },
+    {
+      "id": "sim-fresh-chromium",
+      "reportPath": "docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580.json",
+      "reportSHA256": "c8900d17ca5cb4b6a9f3f0e05c58f13b1f28cf1b199ccaebdb25f29023eb449e",
+      "scriptSHA256": "714fc37ab4605a6a06c9e0f93ff197f9dfcd4662323dd5ca54f7469ee04f4555",
+      "started": "2026-10-18T20:53:29.958Z",
+      "finished": "2026-10-18T20:54:10.998Z",
+      "exit": {
+        "code": 1,
+        "signal": null
+      },
+      "complete": false,
+      "browserCloseCompleted": false,
+      "previewClosed": null,
+      "checks": 2,
+      "errorCount": 0
+    },
+    {
+      "id": "classic-builtins-chromium",
+      "reportPath": "docs/qualification/shared-demos/classic-builtins-chromium-final-cb8-f580-remaining.json",
+      "reportSHA256": "22ce8f9c510c8464bc4ae8e3934ce95ca6107fa8ad96148db97d6c59abebcbdf",
+      "scriptSHA256": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046",
+      "started": "2026-10-18T20:55:20.290Z",
+      "finished": "2026-10-18T20:55:24.688Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 5,
+      "errorCount": 0
+    },
+    {
+      "id": "classic-builtins-firefox",
+      "reportPath": "docs/qualification/shared-demos/classic-builtins-firefox-final-cb8-f580-remaining.json",
+      "reportSHA256": "036c45f3d6156fe1a5f8c15e7d646e286b0d265f41de4e4e53a8fd8a15b083f7",
+      "scriptSHA256": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046",
+      "started": "2026-10-18T20:55:24.692Z",
+      "finished": "2026-10-18T20:55:28.821Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 5,
+      "errorCount": 0
+    },
+    {
+      "id": "classic-builtins-webkit",
+      "reportPath": "docs/qualification/shared-demos/classic-builtins-webkit-final-cb8-f580-remaining.json",
+      "reportSHA256": "2f8ca724851b7084365a457443310d42e1bfd14d7f3f092b1b4e42dc9f642ed9",
+      "scriptSHA256": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046",
+      "started": "2026-10-18T20:55:28.822Z",
+      "finished": "2026-10-18T20:55:31.313Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 5,
+      "errorCount": 0
+    },
+    {
+      "id": "graphics-chromium",
+      "reportPath": "docs/qualification/shared-demos/graphics-chromium-final-cb8-f580-remaining.json",
+      "reportSHA256": "d155365adcbc556a257e8c6514fa37f75869352f0de7977e1c2437305b7abeff",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T20:55:31.314Z",
+      "finished": "2026-10-18T20:55:49.511Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 7,
+      "errorCount": 0
+    },
+    {
+      "id": "offline-chromium",
+      "reportPath": "docs/qualification/shared-demos/offline-chromium-final-cb8-f580-remaining.json",
+      "reportSHA256": "a5aa8086a510a5e0a7e58830fc5a0836d274383d09b1df746512fbcb715b85a0",
+      "scriptSHA256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+      "started": "2026-10-18T20:55:49.512Z",
+      "finished": "2026-10-18T20:56:05.808Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 8,
+      "errorCount": 0
+    },
+    {
+      "id": "listeners-chromium",
+      "reportPath": "docs/qualification/shared-demos/listeners-chromium-final-cb8-f580-remaining.json",
+      "reportSHA256": "9661b26c11ed0bd860a479db6ba98b888e1d45e7e50f272a2f1d538384a6e1dc",
+      "scriptSHA256": "63d6fbcd8971bed04a466af30497bfffb292592d3770da4b79622b5b0c67d762",
+      "started": "2026-10-18T20:56:05.809Z",
+      "finished": "2026-10-18T20:56:53.877Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": null,
+      "checks": 4,
+      "errorCount": 0
+    },
+    {
+      "id": "restoration-chromium",
+      "reportPath": "docs/qualification/shared-demos/restoration-chromium-final-cb8-f580-remaining.json",
+      "reportSHA256": "dcd56e40460be686f2c1fe7404d0e26e5b6bf20f59b4fb5b3ceaa3a386114908",
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "started": "2026-10-18T20:56:53.879Z",
+      "finished": "2026-10-18T20:57:41.069Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0
+    },
+    {
+      "id": "restoration-firefox",
+      "reportPath": "docs/qualification/shared-demos/restoration-firefox-final-cb8-f580-remaining.json",
+      "reportSHA256": "f371e2d7e7c0fab329e7520539aa034e0321bfcc76b84b81154525ffa6c37369",
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "started": "2026-10-18T20:57:41.071Z",
+      "finished": "2026-10-18T20:58:41.447Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0
+    },
+    {
+      "id": "restoration-webkit",
+      "reportPath": "docs/qualification/shared-demos/restoration-webkit-final-cb8-f580-remaining.json",
+      "reportSHA256": "b580242d907a5a40d0d2f3a492245375367786f40991ebea9b0bdea26e3332f9",
+      "scriptSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+      "started": "2026-10-18T20:58:41.449Z",
+      "finished": "2026-10-18T21:00:00.937Z",
+      "exit": {
+        "code": 0,
+        "signal": null
+      },
+      "complete": true,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "checks": 12,
+      "errorCount": 0
+    }
+  ],
+  "simFresh": {
+    "qualificationStatus": "FAILED: browser cleanup exceeded the unchanged 10000ms bound.",
+    "functionalChecks": [
+      {
+        "type": "fresh-start-exact-authored-setup-ready-disarmed",
+        "origin": "sim",
+        "course": "snake-hunt-loops-02",
+        "mode": "self-level",
+        "ticks": 0,
+        "courseIdentity": "c1cb9a00172ae05e",
+        "responseIdentity": "73833493634ba989",
+        "savedCustomAircraftTuningUnchanged": true
+      },
+      {
+        "type": "fresh-start-exact-authored-setup-ready-disarmed",
+        "origin": "solo",
+        "course": "woodland-08",
+        "mode": "acro",
+        "ticks": 0,
+        "courseIdentity": "8164cc42c8e5d330",
+        "responseIdentity": "f91eeb500cf8bc2d",
+        "savedCustomAircraftTuningUnchanged": true
+      }
+    ],
+    "pageErrors": [],
+    "failure": "Error: Qualification browser cleanup failed.\n    at finishQualification (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:101:20)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-sim-fresh-browser.mjs:195:3",
+    "secondaryDiagnostics": [
+      {
+        "stage": "browser-close",
+        "error": "Error: Operation exceeded 10000ms.\n    at Timeout.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:22:24)\n    at listOnTimeout (node:internal/timers:581:17)\n    at process.processTimers (node:internal/timers:519:7)"
+      }
+    ],
+    "receiptFinished": "2026-10-18T20:53:50.941Z",
+    "childExitObservedAt": "2026-10-18T20:54:10.998Z",
+    "childExit": {
+      "code": 1,
+      "signal": null
+    },
+    "cleanupFollowup": {
+      "path": "docs/qualification/shared-demos/sim-fresh-cleanup-followup-final-cb8-f580.json",
+      "sha256": "e6eb3557934c3da25741df3ff104eb5182cc9bbefe1b75fdb0d5b56d1fa4dc8b"
+    },
+    "cleanupLimit": "The later process observation found no matching owned browser/qualifier process. Launch PIDs and exact browser shutdown time were not recorded. Eventual absence is sufficient to continue independent jobs, not to pass the failed cleanup gate. A separate root-assigned diagnostic is outside this matrix."
+  },
+  "capturedFailures": {
+    "deduplication": "Exact (event.at, event.sourceId) key across recursively captured failureDetails; repeated snapshots of the same event count once.",
+    "events": [
+      {
+        "jobId": "mixed-chromium",
+        "event": "failed",
+        "at": 1792356599028,
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "loadingMs": 15198.099999999627,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15198.1,
+          "durationsMs": {
+            "preparation": 0.09999999962747097,
+            "prefetch": 3.200000001117587,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 0.09999999962747097,
+            "payload": 0,
+            "verification": 15194.7,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18960,
+              "totalTicks": 19598,
+              "elapsedMs": 15194.7
+            }
+          ]
+        },
+        "snapshotOccurrences": 11,
+        "expectedInjectedFault": false
+      },
+      {
+        "jobId": "mixed-chromium",
+        "event": "failed",
+        "at": 1792356657983,
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "message": "Demo preparation exceeded its loading deadline.",
+        "loadingMs": 15181.299999998882,
+        "preparation": {
+          "status": "failed",
+          "stage": "verification",
+          "elapsedMs": 15181.3,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 3.899999998509884,
+            "retirement": 0.10000000149011612,
+            "adapter": 0,
+            "source": 0,
+            "payload": 0,
+            "verification": 15177.3,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": [
+            {
+              "variant": "chromium",
+              "engineHint": "chromium",
+              "prefetched": true,
+              "status": "loading",
+              "code": null,
+              "tick": 18000,
+              "totalTicks": 19478,
+              "elapsedMs": 15177.3
+            }
+          ]
+        },
+        "snapshotOccurrences": 1,
+        "expectedInjectedFault": false
+      },
+      {
+        "jobId": "graphics-chromium",
+        "event": "playback-failed",
+        "at": 1792356948020,
+        "sourceId": "sim:flight-04-self-level-9f0f8cfdac49a166",
+        "modeId": "sim",
+        "code": "demo-mode-unavailable",
+        "message": "SIM graphics context was lost.",
+        "loadingMs": null,
+        "preparation": null,
+        "snapshotOccurrences": 1,
+        "expectedInjectedFault": true
+      },
+      {
+        "jobId": "offline-chromium",
+        "event": "failed",
+        "at": 1792356965229,
+        "sourceId": "sim:snake-hunt-route-choices-boundary-cutback-acro-acdb5b6cb78fd27f",
+        "modeId": "sim",
+        "code": null,
+        "message": "Failed to fetch",
+        "loadingMs": 2,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 1.099999999627471,
+            "adapter": 0,
+            "source": 0.9,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "snapshotOccurrences": 1,
+        "expectedInjectedFault": true
+      }
+    ],
+    "interpretation": "Both unforced Survival failures used a prefetched Chromium candidate and reached the 15-second source deadline during strict native verification; recorded artwork, renderer and mount durations were zero. Mixed Chromium nevertheless passed all 28 checks, including all four modes and resource behavior. The successful behavior gate does not erase either loading failure or establish predictable startup for those sources. The separate SIM graphics context loss and 2ms fetch failure were deliberate fault injections.",
+    "limits": "These are failures visible in saved bounded snapshots, not an exhaustive event log. Stage duration includes computation and cooperative yielding; it does not separately measure their contributions. No ambient CPU or storage cause is established, and this summary does not independently reconstruct the complete 30-second recovery interval."
+  },
+  "restoration": {
+    "restoration-chromium": {
+      "checks": 12,
+      "functionalComplete": true,
+      "strictDiagnosticGate": true,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "bfcacheObservations": 0
+    },
+    "restoration-firefox": {
+      "checks": 12,
+      "functionalComplete": true,
+      "strictDiagnosticGate": true,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "bfcacheObservations": 0
+    },
+    "restoration-webkit": {
+      "checks": 12,
+      "functionalComplete": true,
+      "strictDiagnosticGate": true,
+      "pageErrors": 0,
+      "browserCloseCompleted": true,
+      "previewClosed": true,
+      "bfcacheObservations": 0
+    }
+  },
+  "historicalWebKitDiagnostics": "This final WebKit restoration attempt passed 12 functional checks and the strict zero-pageerror gate. That single current pass does not establish the cause or elimination of earlier intermittent native Context is stopped/access-control diagnostics. Earlier failed receipts remain failed and retained; absence of DOM error/unhandledrejection events is not a harmlessness proof.",
+  "scopeLimits": [
+    "Serial local isolated browser qualification; no production, durable harness, manifest or deadline changes during the matrix. The first segment stopped on failed cleanup, and only nine previously unrun independent jobs resumed after the documented process-absence check.",
+    "Classic checks cover the dynamic 240-level clean-profile metadata union plus actual selected base/current/archive playback and isolated practice in each engine; this is not a fresh full replay of all 240 Solo levels or all 890 native catalog entries.",
+    "Direct listener qualification checks attached targets and explicit ownership counters through three close cycles; it does not measure every detached object, internal browser allocation, native worker exit, or GPU memory.",
+    "Restoration covers ordinary-control, watching and practice reloads in all four modes. Reload is not actual browser discard; no BFCache restoration was proved by this run.",
+    "The restoration formatter preserves native error names. Some unchanged mixed/Fresh/listener qualifiers can retain empty-stack pageerrors as empty strings; every captured pageerror still fails their strict count. No such pageerror occurred in these 16 jobs.",
+    "A fresh actual two-hour wall-clock rotation remains a separate acceptance gate; this roughly eleven-minute matrix cannot satisfy it. Physical controllers, mobile devices, audible quality and human learning review remain separate evidence."
+  ]
+}

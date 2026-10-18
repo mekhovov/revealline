@@ -1,0 +1,166 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T20:55:49.536Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-harbor-window:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Harbor Window",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-route-choices-boundary-cutback-acro-acdb5b6cb78fd27f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "2",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Boundary cutback",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-609112f5d34480ec",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Neon Pinwheels",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "offline-recovery-budget",
+      "loadingMs": 105,
+      "mode": "snake",
+      "source": "snake:classic-living-rendezvous-crossing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Rendezvous Crossing",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "offline-recovery-budget",
+      "loadingMs": 2561,
+      "mode": "solo",
+      "source": "",
+      "phase": "unavailable",
+      "failure": "sim:snake-hunt-route-choices-boundary-cutback-acro-acdb5b6cb78fd27f : Failed to fetch",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "sim:snake-hunt-route-choices-boundary-cutback-acro-acdb5b6cb78fd27f",
+        "modeId": "sim",
+        "at": 1792356965229,
+        "loadingMs": 2,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 2,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 1.099999999627471,
+            "adapter": 0,
+            "source": 0.9,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": "Failed to fetch",
+        "stack": "TypeError: Failed to fetch\n    at read (http://127.0.0.1:8769/game/demo-modes/sim.mjs:24:28)\n    at Object.create (http://127.0.0.1:8769/game/demo-modes/sim.mjs:108:37)\n    at prepareScene (http://127.0.0.1:8769/game/ui/demo-host.mjs:816:33)\n    at async prepare (http://127.0.0.1:8769/game/ui/demo-host.mjs:801:14)"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T20:56:05.238Z",
+  "enduranceFinished": "2026-10-18T20:56:05.238Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T20:56:05.800Z"
+}

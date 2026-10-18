@@ -1,0 +1,43 @@
+{
+  "format": "SimFreshCloseTriageV1",
+  "created": "2026-10-18T21:03:51.283Z",
+  "head": "390255e648b040dc3074a7a0fdff2e4cc393526a",
+  "runtimeFingerprint": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+  "evidence": "docs/qualification/shared-demos/sim-close-observation-final-cb8-f580.json",
+  "processLog": "docs/qualification/shared-demos/sim-close-observation-final-cb8-f580.browser.log.txt",
+  "eventLog": "docs/qualification/shared-demos/sim-close-observation-final-cb8-f580.events.jsonl",
+  "observerSource": {
+    "path": "docs/qualification/shared-demos/sim-close-observer-final-cb8-f580.mjs.txt",
+    "sha256": "0e9dfb8074c267aaca89cc778712583337bf3f4cfe17a92758a57b1fdc40d13b"
+  },
+  "runnerSource": {
+    "path": "docs/qualification/shared-demos/run-sim-close-diagnostic-final-cb8-f580.mjs.txt",
+    "sha256": "73e8b6c5cb4786464cfaa35664459f12545b3738d856b0ea55865b32d33fa88c"
+  },
+  "ordinaryQualifierUnchanged": true,
+  "originalFailurePreserved": {
+    "path": "docs/qualification/shared-demos/sim-fresh-chromium-final-cb8-f580.json",
+    "sha256": "c8900d17ca5cb4b6a9f3f0e05c58f13b1f28cf1b199ccaebdb25f29023eb449e"
+  },
+  "result": {
+    "functionalChecks": 2,
+    "pageErrors": 0,
+    "strictQualificationPassed": false,
+    "secondExportToCloseMs": 5.547666999999819,
+    "closeSettlementMs": 30056.38075,
+    "chromeForcedKillObserved": true,
+    "temporaryDirectoryCleanupMs": 21,
+    "remainingOwnedProcesses": [],
+    "remainingOwnedProfiles": [],
+    "sourceAndHarnessStable": true
+  },
+  "findings": [
+    "The first accepted export download completed successfully before the next origin. The second remained pending when unchanged browser.close began5.5ms later.",
+    "At10s, the unchanged qualifier cleanup bound and independent download observation bounds expired. The second download had no successful terminal event.",
+    "Playwright browser logs show graceful close starting21:02:30.109Z, forced kill21:03:00.111Z, process exit withSIGKILL21:03:00.144Z, and temporary-directory cleanup finishing21:03:00.165Z.",
+    "The second download reported TargetClosedError only after forced shutdown. It did not complete successfully.",
+    "This run identifies browser graceful-exit stall and excludes slow temporary-directory cleanup as the cause of its30s delay. It does not by itself establish whether an in-flight download is the exclusive cause or eliminate all game teardown interactions."
+  ],
+  "proposedNarrowNextStep": "Qualification-only ownership correction: pre-register the real download event, await its successful bounded completion, read/verify the completed exported proof, and retire its artifact before continuing. Retain the10s browser cleanup bound and preserve both failures. No production change or extra blind retry.",
+  "noFurtherBrowserRun": true
+}
