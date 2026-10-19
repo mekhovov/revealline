@@ -2120,6 +2120,7 @@ settingsView = mountModeSettings({
       $('difficulty-help'),
       field('airframes'),
       $('overflight-settings').querySelector('[data-copy="nextSortie"]'),
+      shell.elements.buttons['home-retry'],
     ],
     controls: [touchSettings],
     audio: [
@@ -2139,7 +2140,12 @@ settingsView = mountModeSettings({
     ],
     data: [el('section')],
     content: [offlineSettings],
-    extras: [$('overflight-studios'), shell.elements.buttons.help, shell.elements.buttons.workshop],
+    extras: [
+      $('overflight-studios'),
+      shell.elements.buttons.expert,
+      shell.elements.buttons.help,
+      shell.elements.buttons.workshop,
+    ],
   },
 });
 globalSettings = mountGlobalSettings({
