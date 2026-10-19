@@ -1,0 +1,101 @@
+{
+  "method": "Node createRequire.resolve filename lookup only; packages were not imported or executed.",
+  "rows": [
+    {
+      "root": "canonical",
+      "context": "package.json",
+      "package": "@gltf-transform/core",
+      "error": "MODULE_NOT_FOUND"
+    },
+    {
+      "root": "canonical",
+      "context": "package.json",
+      "package": "@gltf-transform/extensions",
+      "error": "MODULE_NOT_FOUND"
+    },
+    {
+      "root": "canonical",
+      "context": "package.json",
+      "package": "@gltf-transform/functions",
+      "error": "MODULE_NOT_FOUND"
+    },
+    {
+      "root": "canonical",
+      "context": "package.json",
+      "package": "gltf-validator",
+      "error": "MODULE_NOT_FOUND"
+    },
+    {
+      "root": "canonical",
+      "context": "authoring/fpv-worlds/package.json",
+      "package": "@gltf-transform/core",
+      "resolved": "<canonical-primary>/authoring/fpv-worlds/node_modules/@gltf-transform/core/dist/index.cjs"
+    },
+    {
+      "root": "canonical",
+      "context": "authoring/fpv-worlds/package.json",
+      "package": "@gltf-transform/extensions",
+      "resolved": "<canonical-primary>/authoring/fpv-worlds/node_modules/@gltf-transform/extensions/dist/index.cjs"
+    },
+    {
+      "root": "canonical",
+      "context": "authoring/fpv-worlds/package.json",
+      "package": "@gltf-transform/functions",
+      "resolved": "<canonical-primary>/authoring/fpv-worlds/node_modules/@gltf-transform/functions/dist/index.cjs"
+    },
+    {
+      "root": "canonical",
+      "context": "authoring/fpv-worlds/package.json",
+      "package": "gltf-validator",
+      "resolved": "<canonical-primary>/authoring/fpv-worlds/node_modules/gltf-validator/index.js"
+    },
+    {
+      "root": "historical",
+      "context": "package.json",
+      "package": "@gltf-transform/core",
+      "error": "MODULE_NOT_FOUND"
+    },
+    {
+      "root": "historical",
+      "context": "package.json",
+      "package": "@gltf-transform/extensions",
+      "error": "MODULE_NOT_FOUND"
+    },
+    {
+      "root": "historical",
+      "context": "package.json",
+      "package": "@gltf-transform/functions",
+      "error": "MODULE_NOT_FOUND"
+    },
+    {
+      "root": "historical",
+      "context": "package.json",
+      "package": "gltf-validator",
+      "resolved": "<internal-preservation>/saved-dependencies/gltf-validator-2.0.0-dev.3.10/index.js"
+    },
+    {
+      "root": "historical",
+      "context": "authoring/fpv-worlds/package.json",
+      "package": "@gltf-transform/core",
+      "resolved": "<canonical-primary>/authoring/fpv-worlds/node_modules/@gltf-transform/core/dist/index.cjs"
+    },
+    {
+      "root": "historical",
+      "context": "authoring/fpv-worlds/package.json",
+      "package": "@gltf-transform/extensions",
+      "resolved": "<canonical-primary>/authoring/fpv-worlds/node_modules/@gltf-transform/extensions/dist/index.cjs"
+    },
+    {
+      "root": "historical",
+      "context": "authoring/fpv-worlds/package.json",
+      "package": "@gltf-transform/functions",
+      "resolved": "<canonical-primary>/authoring/fpv-worlds/node_modules/@gltf-transform/functions/dist/index.cjs"
+    },
+    {
+      "root": "historical",
+      "context": "authoring/fpv-worlds/package.json",
+      "package": "gltf-validator",
+      "resolved": "<canonical-primary>/authoring/fpv-worlds/node_modules/gltf-validator/index.js"
+    }
+  ]
+}

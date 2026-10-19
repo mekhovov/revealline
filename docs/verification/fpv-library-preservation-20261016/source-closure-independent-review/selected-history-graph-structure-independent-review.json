@@ -1,0 +1,64 @@
+{
+  "format": "IndependentSelectedHistoryGraphStructureReview.v1",
+  "createdUTC": "2026-10-16T04:58:29.280376+00:00",
+  "inputs": [
+    {
+      "name": "complete-local-ancestry.json",
+      "bytes": 1113315,
+      "sha256": "6e277eb42ff8ccbe5c398e5fd419d02d2b620e006712c459590580fbe43d9831",
+      "stableRead": true
+    },
+    {
+      "name": "selected-local-ancestry.json",
+      "bytes": 1077265,
+      "sha256": "ba581b0c53fe893111dd17521c2dc8cb3c8ff1ce47c36446338696ff19c98368",
+      "stableRead": true
+    },
+    {
+      "name": "public-boundary-anchor.json",
+      "bytes": 57695,
+      "sha256": "06bf097111c5ad03725717181997eb8bbf5cb49e17f3290794b779588c31bf47",
+      "stableRead": true
+    }
+  ],
+  "originalLocalCommitCount": 2792,
+  "selectedLocalCommitCount": 2790,
+  "excludedRawCommits": [
+    "042733a8cae3d5926dfbb7577c6dba44321e8ba2",
+    "52e015e4831048b12f7fa69b3110f8d112ad73f7",
+    "8dc2818d315526507119ef036da4c9aee3d510b9",
+    "f095979b40906fd95f1c0dbfd841d77ceb7434f2"
+  ],
+  "safeTrackedSnapshots": [
+    {
+      "originalCommit": "8dc2818d315526507119ef036da4c9aee3d510b9",
+      "safeSnapshotCommit": "d1b6f2774eca0a5f9796cf2c4bb1ae56e9116291",
+      "tree": "2783f5c4e94758847f32da47e133d87055077517",
+      "parents": [
+        "a89a34b52ad6be291347b68ebde7e9ebcf8b8e45",
+        "69c5a21d392461c630749a878f8b88c89ff49788"
+      ]
+    },
+    {
+      "originalCommit": "f095979b40906fd95f1c0dbfd841d77ceb7434f2",
+      "safeSnapshotCommit": "db03b309ee2fdd6c97f5c6b68a3b402abcc818d6",
+      "tree": "d14de4955dc2855ba8584cf893b12be35aa16956",
+      "parents": [
+        "e4b323f6ba940e9bebeb766367d08baaefac052c",
+        "9d8a1f86e2c8aa494e603a8657e34aef8d0f156f"
+      ]
+    }
+  ],
+  "selectedPrivateTipCount": 754,
+  "declaredPublicBoundaryCount": 520,
+  "latestAnchoredPublicIdentityCount": 554,
+  "allSelectedParentsWithinSelectedOrPublicBoundary": true,
+  "allDeclaredPublicBoundariesHaveLatestAnchors": true,
+  "syntheticTrackedSnapshotTreesEqualTheirOriginalTrackedTrees": true,
+  "noExcludedRawCommitInSelectedGraph": true,
+  "graphAcyclic": true,
+  "allSelectedCommitsReachableFromSelectedTips": true,
+  "sourceMutation": false,
+  "rawPrivateObjectsReadByThisCheck": false,
+  "scope": "Structural consistency of the owner selected graph only. Does not independently establish all-store inventory completeness, private object hash/privacy closure, final bundle object allowlist or restore success. The selected privacy audit is still in progress."
+}
