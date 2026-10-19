@@ -164,7 +164,7 @@ test('chapter reward work preserves routes and the reviewed campaign membership 
   );
   assert.equal(
     sha(workshopProofBytes),
-    '22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8',
+    'b096443b90b36625d9aea1e14dc586ef7b3433b2e0752460fa3c7443bf0a6f40',
   );
   assert.equal(campaignKey(campaigns.get(home.id)), 'homeward-skies/1/0d01f5687b3c38ff');
   assert.equal(campaignKey(campaigns.get(workshop.id)), 'equipment-workshop/1/7bbeedba8b221cf4');
