@@ -135,6 +135,7 @@ export function menuAnimationBinding(win = globalThis.window) {
   };
   return {
     get: () => getMenuAnimation(win),
+    revision: () => owner(win).action,
     set: (value) => setMenuAnimation(value, win),
     subscribe: (listener) => subscribeMenuAnimation(listener, win),
     persistence,
