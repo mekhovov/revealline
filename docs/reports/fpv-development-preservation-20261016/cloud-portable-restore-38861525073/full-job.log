@@ -1,0 +1,442 @@
+﻿2026-10-16T06:29:57.8955681Z Current runner version: '2.337.0'
+2026-10-16T06:29:57.8976362Z ##[group]Runner Image Provisioner
+2026-10-16T06:29:57.8977096Z Hosted Compute Agent
+2026-10-16T06:29:57.8977630Z Version: 20261012.601
+2026-10-16T06:29:57.8978242Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T06:29:57.8978858Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T06:29:57.8979407Z Worker ID: {466cb6be-13d2-408d-89ce-90c3ff993f67}
+2026-10-16T06:29:57.8980047Z Region: westus3
+2026-10-16T06:29:57.8980541Z Cloud: Azure
+2026-10-16T06:29:57.8981014Z ##[endgroup]
+2026-10-16T06:29:57.8982080Z ##[group]Operating System
+2026-10-16T06:29:57.8982621Z Ubuntu
+2026-10-16T06:29:57.8983273Z 24.04.5
+2026-10-16T06:29:57.8983745Z LTS
+2026-10-16T06:29:57.8984218Z ##[endgroup]
+2026-10-16T06:29:57.8984691Z ##[group]Runner Image
+2026-10-16T06:29:57.8985197Z Image: ubuntu-24.04
+2026-10-16T06:29:57.8985708Z Version: 20261012.334.1
+2026-10-16T06:29:57.8986775Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T06:29:57.8988056Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T06:29:57.8988841Z ##[endgroup]
+2026-10-16T06:29:57.8989815Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T06:29:57.8991302Z Contents: write
+2026-10-16T06:29:57.8991864Z Metadata: read
+2026-10-16T06:29:57.8992329Z ##[endgroup]
+2026-10-16T06:29:57.8994314Z Secret source: Actions
+2026-10-16T06:29:57.8995110Z Cache mode: write
+2026-10-16T06:29:57.8995668Z Prepare workflow directory
+2026-10-16T06:29:57.9494908Z Prepare all required actions
+2026-10-16T06:29:57.9533593Z Getting action download info
+2026-10-16T06:29:58.2282356Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-10-16T06:29:58.4098744Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+2026-10-16T06:29:58.6878686Z Complete job name: restore
+2026-10-16T06:29:58.7421659Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-10-16T06:29:58.7422472Z with:
+2026-10-16T06:29:58.7422853Z   ref: 0942916a74c5ed6821e31b7d4ee34a66e97b9456
+2026-10-16T06:29:58.7423537Z   persist-credentials: false
+2026-10-16T06:29:58.7424356Z   sparse-checkout: authoring/fpv-development-preservation
+docs/reports/fpv-development-preservation-20261016/final-index
+
+2026-10-16T06:29:58.7425271Z   repository: mekhovov/revealline
+2026-10-16T06:29:58.7428527Z   token: ***
+2026-10-16T06:29:58.7428958Z   ssh-strict: true
+2026-10-16T06:29:58.7429314Z   ssh-user: git
+2026-10-16T06:29:58.7429657Z   clean: true
+2026-10-16T06:29:58.7430021Z   sparse-checkout-cone-mode: true
+2026-10-16T06:29:58.7430449Z   fetch-depth: 1
+2026-10-16T06:29:58.7430793Z   fetch-tags: false
+2026-10-16T06:29:58.7431142Z   show-progress: true
+2026-10-16T06:29:58.7431498Z   lfs: false
+2026-10-16T06:29:58.7431828Z   submodules: false
+2026-10-16T06:29:58.7432192Z   set-safe-directory: true
+2026-10-16T06:29:58.7432651Z   allow-unsafe-pr-checkout: false
+2026-10-16T06:29:58.7433345Z env:
+2026-10-16T06:29:58.7433750Z   EXPECTED_HEAD: 0942916a74c5ed6821e31b7d4ee34a66e97b9456
+2026-10-16T06:29:58.7434254Z   RESTORE_MODE: single
+2026-10-16T06:29:58.7434605Z ##[endgroup]
+2026-10-16T06:29:58.8251237Z Syncing repository: mekhovov/revealline
+2026-10-16T06:29:58.8253445Z ##[group]Getting Git version info
+2026-10-16T06:29:58.8254336Z Working directory is '/home/runner/work/revealline/revealline'
+2026-10-16T06:29:58.8255582Z [command]/usr/bin/git version
+2026-10-16T06:29:58.8311655Z git version 2.55.0
+2026-10-16T06:29:58.8328051Z ##[endgroup]
+2026-10-16T06:29:58.8346165Z Temporarily overriding HOME='/home/runner/work/_temp/524b445a-5e1a-42ad-a872-7c380c8f678c' before making global git config changes
+2026-10-16T06:29:58.8347973Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T06:29:58.8350177Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+2026-10-16T06:29:58.8401963Z Deleting the contents of '/home/runner/work/revealline/revealline'
+2026-10-16T06:29:58.8408245Z ##[group]Initializing the repository
+2026-10-16T06:29:58.8409581Z [command]/usr/bin/git init /home/runner/work/revealline/revealline
+2026-10-16T06:29:58.8491275Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T06:29:58.8492511Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T06:29:58.8493777Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T06:29:58.8494819Z hint: call:
+2026-10-16T06:29:58.8496085Z hint:
+2026-10-16T06:29:58.8496714Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T06:29:58.8497460Z hint:
+2026-10-16T06:29:58.8498161Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T06:29:58.8499339Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T06:29:58.8500315Z hint:
+2026-10-16T06:29:58.8500816Z hint: 	git branch -m <name>
+2026-10-16T06:29:58.8501386Z hint:
+2026-10-16T06:29:58.8502154Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T06:29:58.8503666Z Initialized empty Git repository in /home/runner/work/revealline/revealline/.git/
+2026-10-16T06:29:58.8505923Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline
+2026-10-16T06:29:58.8548389Z ##[endgroup]
+2026-10-16T06:29:58.8549181Z ##[group]Disabling automatic garbage collection
+2026-10-16T06:29:58.8551473Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T06:29:58.8578771Z ##[endgroup]
+2026-10-16T06:29:58.8579523Z ##[group]Setting up auth
+2026-10-16T06:29:58.8584535Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T06:29:58.8614305Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T06:29:58.9270688Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T06:29:58.9300633Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T06:29:58.9497119Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T06:29:58.9527781Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T06:29:58.9736808Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T06:29:58.9773500Z ##[endgroup]
+2026-10-16T06:29:58.9774517Z ##[group]Fetching the repository
+2026-10-16T06:29:58.9781555Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --filter=blob:none --depth=1 origin 0942916a74c5ed6821e31b7d4ee34a66e97b9456
+2026-10-16T06:30:00.0175699Z From https://github.com/mekhovov/revealline
+2026-10-16T06:30:00.0177117Z  * branch            0942916a74c5ed6821e31b7d4ee34a66e97b9456 -> FETCH_HEAD
+2026-10-16T06:30:00.0180321Z ##[endgroup]
+2026-10-16T06:30:00.0181449Z ##[group]Determining the checkout info
+2026-10-16T06:30:00.0183181Z ##[endgroup]
+2026-10-16T06:30:00.0184456Z ##[group]Setting up sparse checkout
+2026-10-16T06:30:00.0188851Z [command]/usr/bin/git sparse-checkout set authoring/fpv-development-preservation docs/reports/fpv-development-preservation-20261016/final-index
+2026-10-16T06:30:00.0237727Z ##[endgroup]
+2026-10-16T06:30:00.0238907Z ##[group]Checking out the ref
+2026-10-16T06:30:00.0241011Z [command]/usr/bin/git checkout --progress --force 0942916a74c5ed6821e31b7d4ee34a66e97b9456
+2026-10-16T06:30:02.3140281Z Updating files:   0% (1/1047)
+2026-10-16T06:30:02.3164177Z Updating files:   1% (11/1047)
+2026-10-16T06:30:02.3191986Z Updating files:   2% (21/1047)
+2026-10-16T06:30:02.3192870Z Updating files:   3% (32/1047)
+2026-10-16T06:30:02.3193631Z Updating files:   4% (42/1047)
+2026-10-16T06:30:02.3194094Z Updating files:   5% (53/1047)
+2026-10-16T06:30:02.3194534Z Updating files:   6% (63/1047)
+2026-10-16T06:30:02.3203767Z Updating files:   7% (74/1047)
+2026-10-16T06:30:02.3223696Z Updating files:   8% (84/1047)
+2026-10-16T06:30:02.3232695Z Updating files:   9% (95/1047)
+2026-10-16T06:30:02.3253621Z Updating files:  10% (105/1047)
+2026-10-16T06:30:02.3265976Z Updating files:  11% (116/1047)
+2026-10-16T06:30:02.3276024Z Updating files:  12% (126/1047)
+2026-10-16T06:30:02.3287515Z Updating files:  13% (137/1047)
+2026-10-16T06:30:02.3298109Z Updating files:  14% (147/1047)
+2026-10-16T06:30:02.3306371Z Updating files:  15% (158/1047)
+2026-10-16T06:30:02.3313399Z Updating files:  16% (168/1047)
+2026-10-16T06:30:02.3321903Z Updating files:  17% (178/1047)
+2026-10-16T06:30:02.3328949Z Updating files:  18% (189/1047)
+2026-10-16T06:30:02.3337209Z Updating files:  19% (199/1047)
+2026-10-16T06:30:02.3344561Z Updating files:  20% (210/1047)
+2026-10-16T06:30:02.3350770Z Updating files:  21% (220/1047)
+2026-10-16T06:30:02.3355861Z Updating files:  22% (231/1047)
+2026-10-16T06:30:02.3364337Z Updating files:  23% (241/1047)
+2026-10-16T06:30:02.3379527Z Updating files:  24% (252/1047)
+2026-10-16T06:30:02.3388310Z Updating files:  25% (262/1047)
+2026-10-16T06:30:02.3393494Z Updating files:  26% (273/1047)
+2026-10-16T06:30:02.3401445Z Updating files:  27% (283/1047)
+2026-10-16T06:30:02.3407212Z Updating files:  28% (294/1047)
+2026-10-16T06:30:02.3426900Z Updating files:  29% (304/1047)
+2026-10-16T06:30:02.3433349Z Updating files:  30% (315/1047)
+2026-10-16T06:30:02.3439543Z Updating files:  31% (325/1047)
+2026-10-16T06:30:02.3445395Z Updating files:  32% (336/1047)
+2026-10-16T06:30:02.3453197Z Updating files:  33% (346/1047)
+2026-10-16T06:30:02.3461270Z Updating files:  34% (356/1047)
+2026-10-16T06:30:02.3466688Z Updating files:  35% (367/1047)
+2026-10-16T06:30:02.3478652Z Updating files:  36% (377/1047)
+2026-10-16T06:30:02.3484315Z Updating files:  37% (388/1047)
+2026-10-16T06:30:02.3492160Z Updating files:  38% (398/1047)
+2026-10-16T06:30:02.3498908Z Updating files:  39% (409/1047)
+2026-10-16T06:30:02.3505389Z Updating files:  40% (419/1047)
+2026-10-16T06:30:02.3514202Z Updating files:  41% (430/1047)
+2026-10-16T06:30:02.3527718Z Updating files:  42% (440/1047)
+2026-10-16T06:30:02.3532393Z Updating files:  43% (451/1047)
+2026-10-16T06:30:02.3538961Z Updating files:  44% (461/1047)
+2026-10-16T06:30:02.3545014Z Updating files:  45% (472/1047)
+2026-10-16T06:30:02.3551008Z Updating files:  46% (482/1047)
+2026-10-16T06:30:02.3556551Z Updating files:  47% (493/1047)
+2026-10-16T06:30:02.3562320Z Updating files:  48% (503/1047)
+2026-10-16T06:30:02.3567611Z Updating files:  49% (514/1047)
+2026-10-16T06:30:02.3572422Z Updating files:  50% (524/1047)
+2026-10-16T06:30:02.3579420Z Updating files:  51% (534/1047)
+2026-10-16T06:30:02.3587445Z Updating files:  52% (545/1047)
+2026-10-16T06:30:02.3594112Z Updating files:  53% (555/1047)
+2026-10-16T06:30:02.3600015Z Updating files:  54% (566/1047)
+2026-10-16T06:30:02.3608606Z Updating files:  55% (576/1047)
+2026-10-16T06:30:02.3614450Z Updating files:  56% (587/1047)
+2026-10-16T06:30:02.3620067Z Updating files:  57% (597/1047)
+2026-10-16T06:30:02.3627379Z Updating files:  58% (608/1047)
+2026-10-16T06:30:02.3632800Z Updating files:  59% (618/1047)
+2026-10-16T06:30:02.3639650Z Updating files:  60% (629/1047)
+2026-10-16T06:30:02.3653742Z Updating files:  61% (639/1047)
+2026-10-16T06:30:02.3659356Z Updating files:  62% (650/1047)
+2026-10-16T06:30:02.3665474Z Updating files:  63% (660/1047)
+2026-10-16T06:30:02.3672471Z Updating files:  64% (671/1047)
+2026-10-16T06:30:02.3683906Z Updating files:  65% (681/1047)
+2026-10-16T06:30:02.3691944Z Updating files:  66% (692/1047)
+2026-10-16T06:30:02.3699517Z Updating files:  67% (702/1047)
+2026-10-16T06:30:02.3711870Z Updating files:  68% (712/1047)
+2026-10-16T06:30:02.3718987Z Updating files:  69% (723/1047)
+2026-10-16T06:30:02.3730162Z Updating files:  70% (733/1047)
+2026-10-16T06:30:02.3743439Z Updating files:  71% (744/1047)
+2026-10-16T06:30:02.3752500Z Updating files:  72% (754/1047)
+2026-10-16T06:30:02.3761008Z Updating files:  73% (765/1047)
+2026-10-16T06:30:02.3767382Z Updating files:  74% (775/1047)
+2026-10-16T06:30:02.3776828Z Updating files:  75% (786/1047)
+2026-10-16T06:30:02.3785071Z Updating files:  76% (796/1047)
+2026-10-16T06:30:02.3796237Z Updating files:  77% (807/1047)
+2026-10-16T06:30:02.4718828Z Updating files:  78% (817/1047)
+2026-10-16T06:30:02.4721183Z Updating files:  79% (828/1047)
+2026-10-16T06:30:02.4725228Z Updating files:  80% (838/1047)
+2026-10-16T06:30:02.4730360Z Updating files:  81% (849/1047)
+2026-10-16T06:30:02.4736602Z Updating files:  82% (859/1047)
+2026-10-16T06:30:02.4745078Z Updating files:  83% (870/1047)
+2026-10-16T06:30:02.4756212Z Updating files:  84% (880/1047)
+2026-10-16T06:30:02.4767149Z Updating files:  85% (890/1047)
+2026-10-16T06:30:02.4777497Z Updating files:  86% (901/1047)
+2026-10-16T06:30:02.4784518Z Updating files:  87% (911/1047)
+2026-10-16T06:30:02.4790104Z Updating files:  88% (922/1047)
+2026-10-16T06:30:02.4799025Z Updating files:  89% (932/1047)
+2026-10-16T06:30:02.4804826Z Updating files:  90% (943/1047)
+2026-10-16T06:30:02.4815185Z Updating files:  91% (953/1047)
+2026-10-16T06:30:02.4821147Z Updating files:  92% (964/1047)
+2026-10-16T06:30:02.4826800Z Updating files:  93% (974/1047)
+2026-10-16T06:30:02.4831698Z Updating files:  94% (985/1047)
+2026-10-16T06:30:02.4837820Z Updating files:  95% (995/1047)
+2026-10-16T06:30:02.4847999Z Updating files:  96% (1006/1047)
+2026-10-16T06:30:02.4852913Z Updating files:  97% (1016/1047)
+2026-10-16T06:30:02.4859683Z Updating files:  98% (1027/1047)
+2026-10-16T06:30:02.4868789Z Updating files:  99% (1037/1047)
+2026-10-16T06:30:02.4870331Z Updating files: 100% (1047/1047)
+2026-10-16T06:30:02.4870577Z Updating files: 100% (1047/1047), done.
+2026-10-16T06:30:02.5184196Z Note: switching to '0942916a74c5ed6821e31b7d4ee34a66e97b9456'.
+2026-10-16T06:30:02.5184788Z 
+2026-10-16T06:30:02.5185050Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-16T06:30:02.5185653Z changes and commit them, and you can discard any commits you make in this
+2026-10-16T06:30:02.5186235Z state without impacting any branches by switching back to a branch.
+2026-10-16T06:30:02.5186624Z 
+2026-10-16T06:30:02.5186909Z If you want to create a new branch to retain commits you create, you may
+2026-10-16T06:30:02.5187451Z do so (now or later) by using -c with the switch command. Example:
+2026-10-16T06:30:02.5187907Z 
+2026-10-16T06:30:02.5188042Z   git switch -c <new-branch-name>
+2026-10-16T06:30:02.5188261Z 
+2026-10-16T06:30:02.5188394Z Or undo this operation with:
+2026-10-16T06:30:02.5188581Z 
+2026-10-16T06:30:02.5188681Z   git switch -
+2026-10-16T06:30:02.5188825Z 
+2026-10-16T06:30:02.5189072Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-16T06:30:02.5189486Z 
+2026-10-16T06:30:02.5189820Z HEAD is now at 0942916 Start root-authorized full portable restore for original staging scope
+2026-10-16T06:30:02.5203253Z ##[endgroup]
+2026-10-16T06:30:02.5247736Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T06:30:02.5271852Z 0942916a74c5ed6821e31b7d4ee34a66e97b9456
+2026-10-16T06:30:02.5279715Z ##[group]Removing auth
+2026-10-16T06:30:02.5282657Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T06:30:02.5361093Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T06:30:02.5542053Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T06:30:02.5569358Z http.https://github.com/.extraheader
+2026-10-16T06:30:02.5575836Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-16T06:30:02.5606161Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T06:30:02.5828376Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T06:30:02.5861616Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T06:30:02.6084729Z ##[endgroup]
+2026-10-16T06:30:02.6261378Z ##[group]Run test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+2026-10-16T06:30:02.6261798Z [36;1mtest "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"[0m
+2026-10-16T06:30:02.6262103Z [36;1mcommand -v gh[0m
+2026-10-16T06:30:02.6262322Z [36;1msudo apt-get update -qq[0m
+2026-10-16T06:30:02.6262552Z [36;1msudo apt-get install -y zstd[0m
+2026-10-16T06:30:02.6480983Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-16T06:30:02.6481288Z env:
+2026-10-16T06:30:02.6481533Z   EXPECTED_HEAD: 0942916a74c5ed6821e31b7d4ee34a66e97b9456
+2026-10-16T06:30:02.6481791Z   RESTORE_MODE: single
+2026-10-16T06:30:02.6481976Z ##[endgroup]
+2026-10-16T06:30:02.6592618Z /usr/bin/gh
+2026-10-16T06:30:12.4876473Z Reading package lists...
+2026-10-16T06:30:12.7021879Z Building dependency tree...
+2026-10-16T06:30:12.7028013Z Reading state information...
+2026-10-16T06:30:12.8911432Z zstd is already the newest version (1.5.5+dfsg2-2build1.1).
+2026-10-16T06:30:12.8912064Z zstd set to manually installed.
+2026-10-16T06:30:12.8912331Z 0 upgraded, 0 newly installed, 0 to remove and 44 not upgraded.
+2026-10-16T06:30:12.8972348Z ##[group]Run mkdir "$RUNNER_TEMP/portable-restore-receipts"
+2026-10-16T06:30:12.8972722Z [36;1mmkdir "$RUNNER_TEMP/portable-restore-receipts"[0m
+2026-10-16T06:30:12.8973216Z [36;1mif [ "$RESTORE_MODE" = multi ]; then[0m
+2026-10-16T06:30:12.8973561Z [36;1m  python3 authoring/fpv-development-preservation/multi_restore_check.py \[0m
+2026-10-16T06:30:12.8974149Z [36;1m    --rollup docs/reports/fpv-development-preservation-20261016/final-index/preservation-rollup.json \[0m
+2026-10-16T06:30:12.8974606Z [36;1m    --work "$RUNNER_TEMP/portable-restore" \[0m
+2026-10-16T06:30:12.8974977Z [36;1m    --receipt "$RUNNER_TEMP/portable-restore-receipts/full-public-restore-set.json"[0m
+2026-10-16T06:30:12.8975335Z [36;1melif [ "$RESTORE_MODE" = single ]; then[0m
+2026-10-16T06:30:12.8975675Z [36;1m  python3 authoring/fpv-development-preservation/portable_restore_check.py \[0m
+2026-10-16T06:30:12.8976206Z [36;1m    --index docs/reports/fpv-development-preservation-20261016/final-index/preservation-index.json \[0m
+2026-10-16T06:30:12.8976643Z [36;1m    --work "$RUNNER_TEMP/portable-restore" \[0m
+2026-10-16T06:30:12.8976988Z [36;1m    --receipt "$RUNNER_TEMP/portable-restore-receipts/full-portable-restore.json"[0m
+2026-10-16T06:30:12.8977307Z [36;1melse[0m
+2026-10-16T06:30:12.8977468Z [36;1m  exit 1[0m
+2026-10-16T06:30:12.8977625Z [36;1mfi[0m
+2026-10-16T06:30:12.9037137Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-16T06:30:12.9037407Z env:
+2026-10-16T06:30:12.9037619Z   EXPECTED_HEAD: 0942916a74c5ed6821e31b7d4ee34a66e97b9456
+2026-10-16T06:30:12.9037865Z   RESTORE_MODE: single
+2026-10-16T06:30:12.9040450Z   GH_TOKEN: ***
+2026-10-16T06:30:12.9040631Z ##[endgroup]
+2026-10-16T06:34:48.8307243Z {"event": "restore-progress", "files": 1000, "bytes": 841986151}
+2026-10-16T06:34:51.3652249Z {"event": "restore-progress", "files": 2000, "bytes": 1454893925}
+2026-10-16T06:34:51.8920278Z {"event": "restore-progress", "files": 3000, "bytes": 1477963313}
+2026-10-16T06:34:53.9716728Z {"event": "restore-progress", "files": 4000, "bytes": 1561413307}
+2026-10-16T06:34:57.6804781Z {"event": "restore-progress", "files": 5000, "bytes": 1584591310}
+2026-10-16T06:35:01.5424600Z {"event": "restore-progress", "files": 6000, "bytes": 1607607682}
+2026-10-16T06:35:01.9190425Z {"event": "restore-progress", "files": 7000, "bytes": 1631296180}
+2026-10-16T06:35:02.1606895Z {"event": "restore-progress", "files": 8000, "bytes": 1654313805}
+2026-10-16T06:35:02.5001133Z {"event": "restore-progress", "files": 9000, "bytes": 1687515635}
+2026-10-16T06:35:03.1000588Z {"event": "restore-progress", "files": 10000, "bytes": 1780742393}
+2026-10-16T06:35:03.5132516Z {"event": "restore-progress", "files": 11000, "bytes": 1863666485}
+2026-10-16T06:35:04.0144597Z {"event": "restore-progress", "files": 12000, "bytes": 1937950703}
+2026-10-16T06:35:04.3107430Z {"event": "restore-progress", "files": 13000, "bytes": 1961003551}
+2026-10-16T06:35:04.5913311Z {"event": "restore-progress", "files": 14000, "bytes": 1988921988}
+2026-10-16T06:35:05.0952275Z {"event": "restore-progress", "files": 15000, "bytes": 2094996498}
+2026-10-16T06:35:06.2637220Z {"event": "restore-progress", "files": 16000, "bytes": 2431792089}
+2026-10-16T06:35:06.4896512Z {"event": "restore-progress", "files": 17000, "bytes": 2463307566}
+2026-10-16T06:35:06.8914674Z {"event": "restore-progress", "files": 18000, "bytes": 2486365248}
+2026-10-16T06:35:07.2339476Z {"event": "restore-progress", "files": 19000, "bytes": 2509841589}
+2026-10-16T06:35:07.4090680Z {"event": "restore-progress", "files": 20000, "bytes": 2532895528}
+2026-10-16T06:35:07.5852326Z {"event": "restore-progress", "files": 21000, "bytes": 2556332628}
+2026-10-16T06:35:07.7597239Z {"event": "restore-progress", "files": 22000, "bytes": 2579380083}
+2026-10-16T06:35:07.9468553Z {"event": "restore-progress", "files": 23000, "bytes": 2603505135}
+2026-10-16T06:35:08.3604694Z {"event": "restore-progress", "files": 24000, "bytes": 2694162285}
+2026-10-16T06:35:08.5547109Z {"event": "restore-progress", "files": 25000, "bytes": 2717218528}
+2026-10-16T06:35:09.3796398Z {"event": "restore-progress", "files": 26000, "bytes": 2740539170}
+2026-10-16T06:35:09.5551118Z {"event": "restore-progress", "files": 27000, "bytes": 2763590503}
+2026-10-16T06:35:09.7323170Z {"event": "restore-progress", "files": 28000, "bytes": 2786922903}
+2026-10-16T06:35:09.9092849Z {"event": "restore-progress", "files": 29000, "bytes": 2809966850}
+2026-10-16T06:35:10.0866746Z {"event": "restore-progress", "files": 30000, "bytes": 2833386001}
+2026-10-16T06:35:10.2617660Z {"event": "restore-progress", "files": 31000, "bytes": 2856420550}
+2026-10-16T06:35:10.4379459Z {"event": "restore-progress", "files": 32000, "bytes": 2879826067}
+2026-10-16T06:35:10.6132626Z {"event": "restore-progress", "files": 33000, "bytes": 2902843614}
+2026-10-16T06:35:10.7956022Z {"event": "restore-progress", "files": 34000, "bytes": 2925818005}
+2026-10-16T06:35:14.1490325Z {"event": "restore-progress", "files": 35000, "bytes": 3082886338}
+2026-10-16T06:35:20.9480913Z {"event": "restore-progress", "files": 36000, "bytes": 3118434581}
+2026-10-16T06:35:23.9398928Z {"event": "restore-progress", "files": 37000, "bytes": 3146873973}
+2026-10-16T06:35:24.5342495Z {"event": "restore-progress", "files": 38000, "bytes": 3172761881}
+2026-10-16T06:35:24.7078391Z {"event": "restore-progress", "files": 39000, "bytes": 3190635704}
+2026-10-16T06:35:25.1349259Z {"event": "restore-progress", "files": 40000, "bytes": 3219101830}
+2026-10-16T06:35:25.3145993Z {"event": "restore-progress", "files": 41000, "bytes": 3246108912}
+2026-10-16T06:35:26.2267076Z {"event": "restore-progress", "files": 42000, "bytes": 3324486259}
+2026-10-16T06:35:26.6198877Z {"event": "restore-progress", "files": 43000, "bytes": 3366767512}
+2026-10-16T06:35:27.0250579Z {"event": "restore-progress", "files": 44000, "bytes": 3394767250}
+2026-10-16T06:35:27.3601486Z {"event": "restore-progress", "files": 45000, "bytes": 3426277468}
+2026-10-16T06:35:27.5484017Z {"event": "restore-progress", "files": 46000, "bytes": 3453918616}
+2026-10-16T06:35:27.7298044Z {"event": "restore-progress", "files": 47000, "bytes": 3481636984}
+2026-10-16T06:35:27.9163518Z {"event": "restore-progress", "files": 48000, "bytes": 3512985668}
+2026-10-16T06:35:28.0974089Z {"event": "restore-progress", "files": 49000, "bytes": 3540344142}
+2026-10-16T06:35:28.6562192Z {"event": "restore-progress", "files": 50000, "bytes": 3571861893}
+2026-10-16T06:35:28.8443557Z {"event": "restore-progress", "files": 51000, "bytes": 3602995905}
+2026-10-16T06:35:29.0296256Z {"event": "restore-progress", "files": 52000, "bytes": 3632037303}
+2026-10-16T06:35:29.2218541Z {"event": "restore-progress", "files": 53000, "bytes": 3667200808}
+2026-10-16T06:35:29.3968782Z {"event": "restore-progress", "files": 54000, "bytes": 3690552917}
+2026-10-16T06:35:29.6271542Z {"event": "restore-progress", "files": 55000, "bytes": 3725226432}
+2026-10-16T06:35:29.8133554Z {"event": "restore-progress", "files": 56000, "bytes": 3754257376}
+2026-10-16T06:35:30.0341756Z {"event": "restore-progress", "files": 57000, "bytes": 3777532334}
+2026-10-16T06:35:30.2262807Z {"event": "restore-progress", "files": 58000, "bytes": 3812158016}
+2026-10-16T06:35:30.5848297Z {"event": "restore-progress", "files": 59000, "bytes": 3935806918}
+2026-10-16T06:35:31.0378928Z {"event": "restore-progress", "files": 60000, "bytes": 4084065644}
+2026-10-16T06:35:31.4833900Z {"event": "restore-progress", "files": 61000, "bytes": 4200027926}
+2026-10-16T06:35:33.5513340Z {"event": "restore-progress", "files": 62000, "bytes": 4380666913}
+2026-10-16T06:35:36.3489239Z {"event": "restore-progress", "files": 63000, "bytes": 4677443493}
+2026-10-16T06:35:41.3739699Z {"event": "restore-progress", "files": 64000, "bytes": 5085439361}
+2026-10-16T06:35:45.1854755Z {"event": "restore-progress", "files": 65000, "bytes": 5376370804}
+2026-10-16T06:35:46.1072468Z {"event": "restore-progress", "files": 66000, "bytes": 5621507176}
+2026-10-16T06:35:47.7300008Z {"event": "restore-progress", "files": 67000, "bytes": 5946817793}
+2026-10-16T06:35:49.1423974Z {"event": "restore-progress", "files": 68000, "bytes": 6153085100}
+2026-10-16T06:35:53.3404201Z {"event": "restore-progress", "files": 69000, "bytes": 6561069376}
+2026-10-16T06:35:57.2488008Z {"event": "restore-progress", "files": 70000, "bytes": 6985529369}
+2026-10-16T06:35:58.1933952Z {"event": "restore-progress", "files": 71000, "bytes": 7297570076}
+2026-10-16T06:36:03.1113815Z {"event": "restore-progress", "files": 72000, "bytes": 7914389923}
+2026-10-16T06:36:10.6304238Z {"event": "restore-progress", "files": 73000, "bytes": 8375510489}
+2026-10-16T06:36:13.2762731Z {"event": "restore-progress", "files": 74000, "bytes": 8764430123}
+2026-10-16T06:36:18.1291853Z {"event": "restore-progress", "files": 75000, "bytes": 9280588519}
+2026-10-16T06:36:24.7972164Z {"event": "restore-progress", "files": 76000, "bytes": 9682910300}
+2026-10-16T06:36:27.6649719Z {"event": "restore-progress", "files": 77000, "bytes": 10171998871}
+2026-10-16T06:36:29.4764048Z {"event": "restore-progress", "files": 78000, "bytes": 10469876201}
+2026-10-16T06:36:31.8654640Z {"event": "restore-progress", "files": 79000, "bytes": 10711333731}
+2026-10-16T06:36:40.5007125Z {"event": "restore-progress", "files": 80000, "bytes": 11006652201}
+2026-10-16T06:36:41.3233738Z {"event": "restore-progress", "files": 81000, "bytes": 11098161550}
+2026-10-16T06:36:41.7057373Z {"event": "restore-progress", "files": 82000, "bytes": 11177401428}
+2026-10-16T06:36:42.2014927Z {"event": "restore-progress", "files": 83000, "bytes": 11218573221}
+2026-10-16T06:36:42.7130670Z {"event": "restore-progress", "files": 84000, "bytes": 11272960576}
+2026-10-16T06:36:43.1097897Z {"event": "restore-progress", "files": 85000, "bytes": 11366095405}
+2026-10-16T06:36:43.7665451Z {"event": "restore-progress", "files": 86000, "bytes": 11459129334}
+2026-10-16T06:36:44.1215270Z {"event": "restore-progress", "files": 87000, "bytes": 11543148860}
+2026-10-16T06:36:44.7592542Z {"event": "restore-progress", "files": 88000, "bytes": 11611974675}
+2026-10-16T06:36:46.4341412Z {"event": "restore-progress", "files": 89000, "bytes": 11877489939}
+2026-10-16T06:36:47.5887696Z {"event": "restore-progress", "files": 90000, "bytes": 12138201288}
+2026-10-16T06:36:52.7148261Z {"event": "restore-progress", "files": 91000, "bytes": 12519223626}
+2026-10-16T06:36:56.8346051Z {"event": "restore-progress", "files": 92000, "bytes": 12684263343}
+2026-10-16T06:36:57.8740750Z {"event": "restore-progress", "files": 93000, "bytes": 12871473791}
+2026-10-16T06:36:58.4023464Z {"event": "restore-progress", "files": 94000, "bytes": 12963611181}
+2026-10-16T06:36:58.8470174Z {"event": "restore-progress", "files": 95000, "bytes": 13057085044}
+2026-10-16T06:36:59.4603138Z {"event": "restore-progress", "files": 96000, "bytes": 13140013575}
+2026-10-16T06:37:00.6252336Z {"event": "restore-progress", "files": 97000, "bytes": 13210079104}
+2026-10-16T06:37:01.7690656Z {"event": "restore-progress", "files": 98000, "bytes": 13290281009}
+2026-10-16T06:37:08.5391601Z {"event": "restore-progress", "files": 99000, "bytes": 14318725410}
+2026-10-16T06:37:43.4454081Z {"event": "restore-progress", "files": 100000, "bytes": 19365831537}
+2026-10-16T06:37:48.1532371Z {"event": "restore-progress", "files": 101000, "bytes": 19488269018}
+2026-10-16T06:37:48.9197316Z {"event": "restore-progress", "files": 102000, "bytes": 19641728022}
+2026-10-16T06:37:49.3427897Z {"event": "restore-progress", "files": 103000, "bytes": 19720047319}
+2026-10-16T06:37:51.3972828Z {"event": "restore-progress", "files": 104000, "bytes": 19798593971}
+2026-10-16T06:37:52.1344282Z {"event": "restore-progress", "files": 105000, "bytes": 19819535192}
+2026-10-16T06:37:52.4069287Z {"event": "restore-progress", "files": 106000, "bytes": 19872796209}
+2026-10-16T06:37:52.7075815Z {"event": "restore-progress", "files": 107000, "bytes": 19926191680}
+2026-10-16T06:37:52.8913685Z {"event": "restore-progress", "files": 108000, "bytes": 19944172770}
+2026-10-16T06:37:53.1509165Z {"event": "restore-progress", "files": 109000, "bytes": 19972009930}
+2026-10-16T06:37:53.6620416Z {"event": "restore-progress", "files": 110000, "bytes": 20016332719}
+2026-10-16T06:37:53.9956741Z {"event": "restore-progress", "files": 111000, "bytes": 20065243818}
+2026-10-16T06:37:54.1799770Z {"event": "restore-progress", "files": 112000, "bytes": 20084885515}
+2026-10-16T06:37:54.4417648Z {"event": "restore-progress", "files": 113000, "bytes": 20147142164}
+2026-10-16T06:37:54.6217130Z {"event": "restore-progress", "files": 114000, "bytes": 20164826543}
+2026-10-16T06:37:57.1751658Z {"event": "restore-progress", "files": 115000, "bytes": 20497416778}
+2026-10-16T06:37:57.9906332Z {"event": "restore-progress", "files": 116000, "bytes": 20550333820}
+2026-10-16T06:37:58.2401598Z {"event": "restore-progress", "files": 117000, "bytes": 20565756686}
+2026-10-16T06:37:59.0471201Z {"event": "restore-progress", "files": 118000, "bytes": 20576225250}
+2026-10-16T06:37:59.3736104Z {"event": "restore-progress", "files": 119000, "bytes": 20602316349}
+2026-10-16T06:37:59.5547995Z {"event": "restore-progress", "files": 120000, "bytes": 20618905911}
+2026-10-16T06:37:59.7280770Z {"event": "restore-progress", "files": 121000, "bytes": 20629608337}
+2026-10-16T06:37:59.9024143Z {"event": "restore-progress", "files": 122000, "bytes": 20640232068}
+2026-10-16T06:38:18.6924115Z {"format": "FPVPortableRestoreReceipt.v1", "files": 122706, "logicalBytes": 20682624334, "allFileHashesMatch": true, "allFileModesAndTimesMatch": true, "unresolvedInternalLinks": [], "githubDependencyFileCount": 39, "githubDependencyBytes": 1461705, "allGitHubDependencyFileHashesMatch": true, "diskPreflight": {"cacheEstimatedBytes": 19166652047, "logicalCopyEstimatedBytes": 20684086039, "existingCacheCapacityCreditBytes": 0, "additionalCacheEstimatedBytes": 19166652047, "metadataAllowanceBytes": 1464877056, "estimatedPeakBytes": 41315615142, "freeDiskReserveBytes": 2147483648, "cacheFreeBytesBeforeRestore": 91910565888, "targetFreeBytesBeforeRestore": 91910565888, "cacheAndTargetOnSameFilesystem": true}, "complete": true, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": true, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792132698.690704}
+2026-10-16T06:38:18.7532109Z {"format": "FPVFullPortableRestoreVerification.v1", "indexSHA256": "630438ac879a40577638e5b21706fea93b637b8a34dbc70ad3266248b2d9509e", "logicalFilePaths": 122706, "logicalBytes": 20682624334, "allFileHashesAndModesAndTimesMatch": true, "githubDependencyFiles": 39, "githubDependencyBytes": 1461705, "allGitHubDependencyFileHashesMatch": true, "actualRelativeLinksVerified": 282, "linkDispositionsSHA256": "93e396d6b0f56998e301175a5e5a2470d2cd965bdb898e107861c592dd8441e3", "allLinksResolveToExactWithinRootTerminal": true, "diskPreflight": {"cacheEstimatedBytes": 19166652047, "logicalCopyEstimatedBytes": 20684086039, "existingCacheCapacityCreditBytes": 0, "additionalCacheEstimatedBytes": 19166652047, "metadataAllowanceBytes": 1464877056, "estimatedPeakBytes": 41315615142, "freeDiskReserveBytes": 2147483648, "cacheFreeBytesBeforeRestore": 91910565888, "targetFreeBytesBeforeRestore": 91910565888, "cacheAndTargetOnSameFilesystem": true}, "detailedRestoreReceiptSHA256": "11eaea2362b8430aa60d7872b90b76d1ba30471220b34a100d9816aeae01bb86", "inventoriedPayloadPortableRestoreComplete": true, "sharedVerifiedCacheUsed": false, "oneShotPayloadMaterializationPerformed": true, "gitSourceAndReproducibleDependenciesRequireSeparateClosure": true, "overallDisconnectSafetyClaimed": false, "createdAtUnix": 1792132698.7394292}
+2026-10-16T06:38:18.7737933Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+2026-10-16T06:38:18.7738256Z with:
+2026-10-16T06:38:18.7738443Z   name: preservation-portable-restore
+2026-10-16T06:38:18.7738740Z   path: /home/runner/work/_temp/portable-restore-receipts/*.json
+
+2026-10-16T06:38:18.7739021Z   if-no-files-found: warn
+2026-10-16T06:38:18.7739205Z   retention-days: 90
+2026-10-16T06:38:18.7739379Z   compression-level: 6
+2026-10-16T06:38:18.7739550Z   overwrite: false
+2026-10-16T06:38:18.7739720Z   include-hidden-files: false
+2026-10-16T06:38:18.7739905Z env:
+2026-10-16T06:38:18.7740100Z   EXPECTED_HEAD: 0942916a74c5ed6821e31b7d4ee34a66e97b9456
+2026-10-16T06:38:18.7740348Z   RESTORE_MODE: single
+2026-10-16T06:38:18.7740516Z ##[endgroup]
+2026-10-16T06:38:19.2428972Z With the provided path, there will be 1 file uploaded
+2026-10-16T06:38:19.2438721Z Artifact name is valid!
+2026-10-16T06:38:19.2439449Z Root directory input is valid!
+2026-10-16T06:38:19.6528120Z Beginning upload of artifact content to blob storage
+2026-10-16T06:38:19.9901651Z Uploaded bytes 906
+2026-10-16T06:38:20.0508471Z Finished uploading artifact content to blob storage!
+2026-10-16T06:38:20.0509232Z SHA256 digest of uploaded artifact zip is e1dd80c687b5f0c2fc92dfe9027f8eb5ff64aae201e459eb911e9b0e832181b0
+2026-10-16T06:38:20.0510346Z Finalizing artifact upload
+2026-10-16T06:38:20.4249348Z Artifact preservation-portable-restore.zip successfully finalized. Artifact ID 12029467703
+2026-10-16T06:38:20.4250493Z Artifact preservation-portable-restore has been successfully uploaded! Final size is 906 bytes. Artifact ID is 12029467703
+2026-10-16T06:38:20.4253893Z Artifact download URL: https://github.com/mekhovov/revealline/actions/runs/38861525073/artifacts/12029467703
+2026-10-16T06:38:20.4449456Z Post job cleanup.
+2026-10-16T06:38:20.6184207Z [command]/usr/bin/git version
+2026-10-16T06:38:20.6232133Z git version 2.55.0
+2026-10-16T06:38:20.6267866Z Temporarily overriding HOME='/home/runner/work/_temp/d898efca-9add-483f-8a78-2cd5260e5aa7' before making global git config changes
+2026-10-16T06:38:20.6268625Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T06:38:20.6273380Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+2026-10-16T06:38:20.6315578Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T06:38:20.6352110Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T06:38:20.6697439Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T06:38:20.6735016Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T06:38:20.7005777Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T06:38:20.7046015Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T06:38:20.7436375Z Cleaning up orphan processes
